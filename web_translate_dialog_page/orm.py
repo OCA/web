@@ -141,12 +141,12 @@ def read_translations(self, cr, user, ids, fields=None, context=None, load='_cla
     select = map(lambda x: isinstance(x, dict) and x['id'] or x, select)
     result = self._read_flat(cr, user, select, fields, context, load)
 
-    fields_pre = [f for f in fields if
-                    (f in self._columns and
-                     getattr(self._columns[f], '_classic_write'))] + \
-                             self._inherits.values()
-
     if context.get('lang') and context['lang'] != 'en_US':
+        fields_pre = [f for f in fields if
+                        (f in self._columns and
+                         getattr(self._columns[f], '_classic_write'))] + \
+                                 self._inherits.values()
+
         for f in fields_pre:
             if self._columns[f].translate:
                 res_ids = [x['id'] for x in result]
