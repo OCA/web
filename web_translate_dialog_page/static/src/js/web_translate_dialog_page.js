@@ -62,7 +62,7 @@ openerp.web_translate_dialog_page = function (openerp) {
                     $(this).toggleClass('touched', ($(this).val() != $(this).attr('data-value')));
                 });
                 var $textarea = self.$fields_form.find('textarea.oe_trad_field');
-                $textarea.autosize();
+                $textarea.addClass('autosizeAnimated').autosize({append: "\n"});
                 $textarea.css({minHeight:'100px'});
             });
             return this;
