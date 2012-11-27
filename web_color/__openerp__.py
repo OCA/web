@@ -40,6 +40,6 @@
      ],
     'qweb' : ['static/src/xml/lib.xml'],
     'installable': True,
-    'auto_install': True,
+    'auto_install': False,
     'web_preload': False,
 }
