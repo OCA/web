@@ -21,8 +21,6 @@
 ##############################################################################*/
 
 openerp.web_color = function(instance) {
-    var _t = openerp.web._t;
-    var QWeb = openerp.web.qweb;
     
     widget_name = 'color';
     //Add in the widgets list
