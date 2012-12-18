@@ -54,6 +54,7 @@ openerp.web_translate_dialog_page = function (openerp) {
         },
         start: function() {
             var self = this;
+            var QWeb = openerp.web.qweb;
             this._super();
             $.when(this.languages_loaded).then(function() {
                 self.$element.html(QWeb.render('TranslateDialogPage', { widget: self }));
