@@ -41,9 +41,22 @@ openerp.web_export_view = function(openerp) {
         },
 
         on_sidebar_export_view: function() {
+            // Select the first list of the current (form) view
+            // or assume the main view is a list view and use that
             var self = this,
-            view = this.widget_parent,
-            columns = view.visible_columns;
+            view = this.widget_parent; // valid for list view
+            if (view.widget_children) {
+                view.widget_children.every(function(child) {
+                    if (child.field && (
+                        child.field.type == 'many2many'
+                            || child.field.type == 'one2many')) {
+                        view = child.viewmanager.views.list.controller;
+                        return false; // break out of the loop
+                    }
+                    return true;
+                });
+            }
+            var columns = view.visible_columns;
             export_columns_keys = [];
             export_columns_names = [];
             $.each(columns,function(){
