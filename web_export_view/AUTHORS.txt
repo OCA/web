@@ -3,4 +3,4 @@ Authors
 
 Simone Orsi <simone.orsi@domsense.com> [simahawk]
 Lorenzo Battistini <lorenzo.battistini@agilebg.com>
-Stefan Rijnhart
+Stefan Rijnhart <stefan@therp.nl>
