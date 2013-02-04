@@ -43,6 +43,6 @@ This bug does not affect OpenERP 7.0, in which the import function has
 been refactored.
     """,
     'js': [
-        'static/src/js/base_import.js',
+        'static/src/js/data_import.js',
         ],
 }
