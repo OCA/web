@@ -7,7 +7,7 @@
  */
    
 openerp.web_import_models_with_inherits = function(openerp) {
-    openerp.web.DataImport = openerp.web.DataImport.extend({
+    openerp.web.DataImport.include({
         /* At widget start, tag on to the 'ready' queue with a function to
            add the model's _inherits fields to the list that contains all
            fields that need not be provided by the import file even if they
