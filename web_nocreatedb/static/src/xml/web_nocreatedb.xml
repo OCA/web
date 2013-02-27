@@ -3,6 +3,7 @@
    <t t-extend="Login">
         <t t-jquery="div[class=oe_login_footer]" t-operation="replace">
             <div class="oe_login_footer">
+                <a href="http://www.openerp.com" target="_blank">Powered by <span>OpenERP</span></a>
            </div>
         </t>
    </t>
