@@ -27,11 +27,12 @@
     'author': "Vauxoo",
     'category': "Web",
     'description': """
+    This module hides "Manage Databases" link from login screen
     """,
     'version': "1.0",
-    'depends': ['web'],
+    'depends': ['web', 
+    ],
     'js': [
-       # 'static/src/js/base.js', 
     ],
     'css': [
     ],
