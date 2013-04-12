@@ -1,0 +1,6 @@
+.openerp .oe_form_field_text_ckeditor4.disabled {
+    /* here we need to reset openerp's styles to
+     * have the HTML display as (probably) intended
+     */
+    white-space: normal;
+}
