@@ -24,6 +24,45 @@ openerp.web_ckeditor4 = function(openerp)
 {
     CKEDITOR.lang.load(openerp.connection.user_context.lang.split('_')[0], 'en', function() {});
 
+    CKEDITOR.on('dialogDefinition', function(e)
+        {
+            _.each(e.data.definition.contents, function(element)
+            {
+                if(element.filebrowser!='uploadButton')
+                {
+                    return
+                }
+                _.each(element.elements, function(element)
+                {
+                    if(!element.onClick || element.type!='fileButton')
+                    {
+                        return
+                    }
+                    var onClick_org = element.onClick;
+                    element.onClick = function(e1)
+                    {
+                        onClick_org.apply(this, arguments);
+                        _.each(jQuery('#'+this.domId).closest('table')
+                            .find('iframe').contents().find(':file')
+                            .get(0).files,
+                            function(file)
+                            {
+                                var reader = new FileReader();
+                                reader.onload = function(load_event)
+                                {
+                                    CKEDITOR.tools.callFunction(
+                                        e.editor._.filebrowserFn,
+                                        load_event.target.result,
+                                        '');
+                                }
+                                reader.readAsDataURL(file);
+                            });
+                        return false;
+                    }
+                });
+            });
+        });
+
     openerp.web.form.widgets.add('text_ckeditor4',
             'openerp.web_ckeditor4.FieldCKEditor4');
     openerp.web.page.readonly.add('text_ckeditor4',
@@ -58,6 +97,8 @@ openerp.web_ckeditor4 = function(openerp)
     openerp.web_ckeditor4.FieldCKEditor4 = openerp.web.form.FieldText.extend({
         ckeditor_config: {
             removePlugins: 'iframe,flash,forms,smiley,pagebreak,stylescombo',
+            filebrowserImageUploadUrl: 'dummy',
+            extraPlugins: 'filebrowser',
         },
         ckeditor_filter: default_ckeditor_filter,
         ckeditor_writer: default_ckeditor_writer,
