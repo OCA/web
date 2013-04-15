@@ -89,6 +89,8 @@ openerp.web_ckeditor4 = function(openerp)
                 '*':
                 {
                     attributes: 'href,src,style,alt,width,height',
+                    styles: '*',
+                    classes: '*',
                 },
                 'html head title meta style body p div span a h1 h2 h3 h4 h5 img br hr table tr th td ul ol li dd dt': true,
             });
