@@ -84,6 +84,7 @@ openerp.web_ckeditor4 = function(openerp)
         fragment.writeHtml(ckeditor_writer);
         return ckeditor_writer.getHtml();
     };
+
     default_ckeditor_filter = new CKEDITOR.filter(
             {
                 '*':
@@ -122,10 +123,7 @@ openerp.web_ckeditor4 = function(openerp)
                         {
                             'beforeUndoImage': function()
                             {
-                                if(!self.is_dirty())
-                                {
-                                    self.on_ui_change();
-                                }
+                                self.on_ui_change();
                             },
                         },
                     }, 
@@ -163,7 +161,11 @@ openerp.web_ckeditor4 = function(openerp)
                     }
                     else
                     {
-                        self.editor.setData(value || '');
+                        //set_value is called shortly before saving and closing
+                        //popups. if we don't suppress ckeditor's events about
+                        //that, we get a lot of strange errors concerning
+                        //already cleaned up elements
+                        self.editor.setData(value || '', null, true);
                     }
                 }
                 this._super.apply(this, arguments);
@@ -174,7 +176,7 @@ openerp.web_ckeditor4 = function(openerp)
         {
             if(this.editor)
             {
-                this.$element.find('textarea').detach();
+                this.editor.destroy();
             }
             return this._super.apply(this, arguments);
         }
