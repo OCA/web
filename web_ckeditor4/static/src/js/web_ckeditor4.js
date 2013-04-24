@@ -22,6 +22,32 @@
 
 openerp.web_ckeditor4 = function(openerp)
 {
+    var ckeditor_addFunction_org = CKEDITOR.tools.addFunction;
+    //this is a quite complicated way to kind of monkey patch the private
+    //method onDomReady of ckeditor's plugin wysiwigarea, which causes problems
+    //when the editor is about to be destroyed but because of OpenERP's
+    //architecture updated one last time with its current value
+    CKEDITOR.tools.addFunction = function(fn, scope)
+    {
+        if(scope && scope._ && scope._.attrChanges && scope._.detach)
+        {
+            var scope_reference = scope;
+            return ckeditor_addFunction_org(function()
+                    {
+                        var self = this,
+                            self_arguments=arguments;
+                        setTimeout(function()
+                        {
+                            if(CKEDITOR.instances[self.editor.name])
+                            {
+                                fn.apply(self, self_arguments);
+                            }
+                        }, 0);
+                    }, scope);
+        }
+        return ckeditor_addFunction_org(fn, scope);
+    };
+
     CKEDITOR.lang.load(openerp.connection.user_context.lang.split('_')[0], 'en', function() {});
 
     CKEDITOR.on('dialogDefinition', function(e)
@@ -161,11 +187,7 @@ openerp.web_ckeditor4 = function(openerp)
                     }
                     else
                     {
-                        //set_value is called shortly before saving and closing
-                        //popups. if we don't suppress ckeditor's events about
-                        //that, we get a lot of strange errors concerning
-                        //already cleaned up elements
-                        self.editor.setData(value || '', null, true);
+                        self.editor.setData(value || '');
                     }
                 }
                 this._super.apply(this, arguments);
@@ -176,7 +198,7 @@ openerp.web_ckeditor4 = function(openerp)
         {
             if(this.editor)
             {
-                this.editor.destroy();
+                CKEDITOR.remove(this.editor);
             }
             return this._super.apply(this, arguments);
         }
