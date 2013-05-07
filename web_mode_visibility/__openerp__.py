@@ -26,8 +26,8 @@
     "category": "Tools",
     "depends": ['web'],
     "description": """
-Use the following context keys on fields to hide them in either page or form
-mode:
+Use the following boolean switches in the options dictionary on fields to hide
+them in either page or form mode:
 
 - page_invisible
 - form_invisible

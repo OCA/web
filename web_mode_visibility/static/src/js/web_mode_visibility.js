@@ -7,19 +7,20 @@
 */
 
 openerp.web_mode_visibility = function (openerp) {
-    openerp.web.form.Widget.include({
+    openerp.web.form.Field.include({
+
         init: function(view, node) {
             this._super(view, node);
             if (! this.invisible) {
+                var options = this.get_definition_options();
                 if (this.view.form_template == "PageView") {
-                    this.invisible = (this.node.attrs.context &&
-                                      this.node.attrs.context.page_invisible);
+                    this.invisible = options.page_invisible;
                 }
                 else if (this.view.form_template == "FormView") {
-                    this.invisible = (this.node.attrs.context &&
-                                      this.node.attrs.context.form_invisible);
+                    this.invisible = options.form_invisible;
                 }
             }
         },
+
     });
 }
