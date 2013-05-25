@@ -1,9 +1,6 @@
-
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    Financed and Planified by Vauxoo
 #    developed by: nhomar@vauxoo.com
 #
@@ -23,14 +20,40 @@
 ##############################################################################
 
 {
-    'name': "Hide create database from login page",
+    'name': "NO create database link",
     'author': "Vauxoo",
     'category': "Web",
+    'website': "http://vauxoo.com",
     'description': """
-    This module hides "Manage Databases" link from login screen
+After install this module, you will not see anymore the
+"Manage Databases" link in login screen.
+
+See the image bellow:
+
+.. image:: web_nocreatedb/static/src/img/screen.png
+
+How to use:
+
+When you start your server add the name of this module in the "load" option::
+
+    $./openerp-server --load=web,web_nocreatedb -u all -d database
+
+Then you can start your server without the -u and -d (just the first time you
+need update all to be sure all base and web will be fine).
+
+With this option you can just take off and restart the server if you need to show 
+the link temporaly again.
+
+TODO: It should be great add a parameter in the database to hide it configurable
+way and with web_preload: True, but BTW, in old versions of openerp it was a 
+parameter in the config file, i think as it is is fine for now.
+
+.. note:: This module probably will not be shown in your module list by default
+You should create a menu to see "All modules without filter."
     """,
     'version': "1.0",
-    'depends': ['web', 
+    'depends': [
+        'web',
     ],
     'js': [
     ],
@@ -41,5 +64,4 @@
     ],
     'installable': True,
     'auto_install': False,
-    'web_preload': True,
 }
