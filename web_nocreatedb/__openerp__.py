@@ -49,7 +49,7 @@ way and with web_preload: True, but BTW, in old versions of openerp it was a
 parameter in the config file, i think as it is is fine for now.
 
 .. note:: This module probably will not be shown in your module list by default
-You should create a menu to see "All modules without filter."
+You should create a menu to see "All modules without filter.
     """,
     'version': "1.0",
     'depends': [
