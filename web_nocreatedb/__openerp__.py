@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #    Financed and Planified by Vauxoo
-#    developed by: nhomar@vauxoo.com
+#    developed by: tulio@vauxoo.com
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the Licence: 
