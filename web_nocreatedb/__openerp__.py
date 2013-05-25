@@ -1,9 +1,6 @@
-
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    Financed and Planified by Vauxoo
 #    developed by: nhomar@vauxoo.com
 #
@@ -27,10 +24,12 @@
     'author': "Vauxoo",
     'category': "Web",
     'description': """
-    This module hides "Manage Databases" link from login screen
+After install this module, you will not see anymore the
+"Manage Databases" link in login screen
     """,
     'version': "1.0",
-    'depends': ['web', 
+    'depends': [
+        'web',
     ],
     'js': [
     ],
