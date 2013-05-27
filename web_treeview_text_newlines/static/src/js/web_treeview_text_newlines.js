@@ -28,7 +28,7 @@ openerp.web_treeview_text_newlines = function(openerp)
         result = format_cell_original(row_data, column, options);
         if(column.type == 'text')
         {
-            result = result.replace(/\n/g, '<br/>');
+            result = result.replace(/\n/g, '<br>');
         }
         return result;
     }
