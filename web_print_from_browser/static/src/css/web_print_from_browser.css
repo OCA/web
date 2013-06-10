@@ -1,0 +1,30 @@
+@media print
+{
+    .view-manager-main-sidebar,
+    .oe_view_manager_menu_tips,
+    .oe_vm_switch,
+    .oe_form_header,
+    .oe-list-pager,
+    .oe-listview-content thead tr:first-child,
+    .oe-listview-header-columns th:first-child,
+    .oe-listview-header-columns th:nth-child(2),
+    .oe-record-selector,
+    .oe-record-edit-link,
+    .oe-record-delete,
+    .oe_debug_view,
+    .oe_searchable_view,
+    .oe-process-view,
+    #oe_secondary_menu,
+    table.main_table > tbody > tr:first-child,
+    table.main_table > tbody > tr:last-child,
+    .view-manager-main-content > div[id$=search]
+    {
+        display: none;
+    }
+    *
+    {
+        height: auto !important;
+        width: auto !important;
+        overflow: show !important;
+    }
+}
