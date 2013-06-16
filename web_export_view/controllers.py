@@ -35,7 +35,7 @@ from web.controllers.main import ExcelExport
 class ExcelExportView(ExcelExport):
     _cp_path = '/web/export/xls_view'
 
-    def from_data(self, fields, rows):
+    def from_data(self, fields, rows, separators):
         workbook = xlwt.Workbook()
         worksheet = workbook.add_sheet('Sheet 1')
 
@@ -44,12 +44,12 @@ class ExcelExportView(ExcelExport):
             worksheet.col(i).width = 8000 # around 220 pixels
 
         style = xlwt.easyxf('align: wrap yes')
-
+        m =  "^[\d%s]+(\%s\d+)?$" % (separators['thousands_sep'], separators['decimal_point'])
         for row_index, row in enumerate(rows):
             for cell_index, cell_value in enumerate(row):
                 if isinstance(cell_value, basestring):
                     cell_value = re.sub("\r", " ", cell_value)
-                    if re.match('^[\d,]+(\.\d+)?$', cell_value):
+                    if re.match(m, cell_value):
                         cell_value = float(cell_value.replace(',',''))
                         style = xlwt.easyxf(num_format_str='#,##0.00')
                 if cell_value is False: cell_value = None
@@ -70,8 +70,12 @@ class ExcelExportView(ExcelExport):
         rows = data.get('rows',[])
 
         context = req.session.eval_context(req.context)
-
-        return req.make_response(self.from_data(columns_headers, rows),
+        lang = context.get('lang')
+        Model = req.session.model('res.lang')
+        ids = Model.search([['code','=',lang]])
+        record = Model.read(ids, ['decimal_point','thousands_sep'])
+        print record[0]
+        return req.make_response(self.from_data(columns_headers, rows, record[0]),
             headers=[('Content-Disposition', 'attachment; filename="%s"' % self.filename(model)),
                      ('Content-Type', self.content_type)],
             cookies={'fileToken': int(token)})
