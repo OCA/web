@@ -32,6 +32,10 @@ them in either page or form mode:
 - page_invisible
 - form_invisible
 
+For example:
+
+<field name="partner_id" options='{"page_invisible": true}' />
+
 This module is compatible with OpenERP 6.1.
     """,
     'js': [
