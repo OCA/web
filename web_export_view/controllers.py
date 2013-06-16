@@ -74,7 +74,7 @@ class ExcelExportView(ExcelExport):
         Model = req.session.model('res.lang')
         ids = Model.search([['code','=',lang]])
         record = Model.read(ids, ['decimal_point','thousands_sep'])
-        print record[0]
+
         return req.make_response(self.from_data(columns_headers, rows, record[0]),
             headers=[('Content-Disposition', 'attachment; filename="%s"' % self.filename(model)),
                      ('Content-Type', self.content_type)],
