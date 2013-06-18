@@ -66,10 +66,12 @@ openerp.web_export_view = function(openerp) {
             view = this.widget_parent; // valid for list view
             if (view.widget_children) {
                 view.widget_children.every(function(child) {
-                    if (child.field && (
-                        child.field.type == 'many2many'
-                            || child.field.type == 'one2many')) {
+                    if (child.field && child.field.type == 'one2many') {
                         view = child.viewmanager.views.list.controller;
+                        return false; // break out of the loop
+                    }
+                    if (child.field && child.field.type == 'many2many') {
+                        view = child.list_view;
                         return false; // break out of the loop
                     }
                     return true;
