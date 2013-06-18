@@ -50,7 +50,7 @@ class ExcelExportView(ExcelExport):
                 if isinstance(cell_value, basestring):
                     cell_value = re.sub("\r", " ", cell_value)
                     if re.match(m, cell_value):
-                        cell_value = float(cell_value.replace(',',''))
+                        cell_value = float(cell_value.replace(separators['thousands_sep'],'')replace(separators['decimal_point'],'.'))
                         style = xlwt.easyxf(num_format_str='#,##0.00')
                 if cell_value is False: cell_value = None
                 worksheet.write(row_index + 1, cell_index, cell_value, style)
@@ -70,7 +70,7 @@ class ExcelExportView(ExcelExport):
         rows = data.get('rows',[])
 
         context = req.session.eval_context(req.context)
-        lang = context.get('lang')
+        lang = context.get('lang', 'en_US')
         Model = req.session.model('res.lang')
         ids = Model.search([['code','=',lang]])
         record = Model.read(ids, ['decimal_point','thousands_sep'])
