@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-     
-    Licence: WTFPL – Do What the Fuck You Want to Public License 
-    More Information: http://www.wtfpl.net/ 
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
 -->
 <templates id="template" xml:space="preserve">
    <t t-extend="Login">
