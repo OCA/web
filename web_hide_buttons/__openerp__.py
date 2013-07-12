@@ -31,7 +31,7 @@ ir.actions.act_window:
 ''',
     'author': 'Therp B.V.',
     'website': 'http://www.therp.nl',
-    'license': 'AGPLv3',
+    'license': 'AGPL-3',
     'depends': [
         'web',
     ],
