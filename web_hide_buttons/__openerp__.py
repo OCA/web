@@ -29,7 +29,7 @@ To hide both buttons add the following element to the xml for the
 ir.actions.act_window:
 <field name="context">{'nodelete': '1', 'nocreate': '1'}</field>
 ''',
-    'author': 'Therp B.V.',
+    'author': 'Therp BV',
     'website': 'http://www.therp.nl',
     'license': 'AGPL-3',
     'depends': [
