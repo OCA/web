@@ -37,9 +37,9 @@ openerp.web_export_view = function(instance, m) {
             // or assume the main view is a list view and use that
             var self = this,
             view = this.getParent(),
-            columns = view.visible_columns;
-            if (view.widget_children) {
-                view.widget_children.every(function(child) {
+            children = view.getChildren();
+            if (children) {
+                children.every(function(child) {
                     if (child.field && child.field.type == 'one2many') {
                         view = child.viewmanager.views.list.controller;
                         return false; // break out of the loop
@@ -53,7 +53,7 @@ openerp.web_export_view = function(instance, m) {
             }
             export_columns_keys = [];
             export_columns_names = [];
-            $.each(columns,function(){
+            $.each(view.visible_columns, function(){
                 if(this.tag=='field'){
                     // non-fields like `_group` or buttons
                     export_columns_keys.push(this.id);
@@ -68,7 +68,7 @@ openerp.web_export_view = function(instance, m) {
                 if($row.attr('data-id')){
                     export_row = [];
                     checked = $row.find('th input[type=checkbox]').attr("checked");
-                    if (checked === "checked"){
+                    if (children || checked === "checked"){
                         $.each(export_columns_keys,function(){
                             cell = $row.find('td[data-field="'+this+'"]').get(0);
                             text = cell.text || cell.textContent || cell.innerHTML || "";
