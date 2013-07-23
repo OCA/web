@@ -45,5 +45,5 @@ class ExcelExportView(ExcelExport):
                     % self.filename(model)),
                 ('Content-Type', self.content_type)
             ],
-            cookies={'fileToken': int(token)}
+            cookies={'fileToken': token}
         )
