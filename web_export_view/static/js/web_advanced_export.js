@@ -73,7 +73,7 @@ openerp.web_export_view = function(instance, m) {
                             cell = $row.find('td[data-field="'+this+'"]').get(0);
                             text = cell.text || cell.textContent || cell.innerHTML || "";
                             if (cell.classList.contains("oe_list_field_float")){
-                               export_row.push(parseFloat(text));
+                                export_row.push(instance.web.parse_value(text, {'type': "float"}));
                             }
                             else if (cell.classList.contains("oe_list_field_integer")){
                                export_row.push(parseInt(text));
