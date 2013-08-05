@@ -72,7 +72,15 @@ openerp.web_export_view = function(instance, m) {
                         $.each(export_columns_keys,function(){
                             cell = $row.find('td[data-field="'+this+'"]').get(0);
                             text = cell.text || cell.textContent || cell.innerHTML || "";
-                            export_row.push(text.trim());
+                            if (cell.classList.contains("oe_list_field_float")){
+                               export_row.push(parseFloat(text));
+                            }
+                            else if (cell.classList.contains("oe_list_field_integer")){
+                               export_row.push(parseInt(text));
+                            }
+                            else{
+                               export_row.push(text.trim());
+                            }
                         });
                         export_rows.push(export_row);
                     };
