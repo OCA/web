@@ -50,7 +50,7 @@ class ExcelExportView(ExcelExport):
                 if isinstance(cell_value, basestring):
                     cell_value = re.sub("\r", " ", cell_value)
                     if re.match(m, cell_value):
-                        cell_value = float(cell_value.replace(separators['thousands_sep'],'')replace(separators['decimal_point'],'.'))
+                        cell_value = float(cell_value.replace(separators['thousands_sep'],'').replace(separators['decimal_point'],'.'))
                         style = xlwt.easyxf(num_format_str='#,##0.00')
                 if cell_value is False: cell_value = None
                 worksheet.write(row_index + 1, cell_index, cell_value, style)
