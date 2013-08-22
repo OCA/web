@@ -28,13 +28,12 @@ a window with an OpenERP form containing unsaved data.
 This functionality is browser dependent. Opera ignores it at all,
 while Firefox displays a generic confirmation message.
 
-This module is compatible with OpenERP 6.1.
+This module is compatible with OpenERP 7.0.
 ''',
-    'version': '6.1.1',
+    'version': '7.0.1',
     'author': 'Therp BV',
     'category': 'Usability',
-    'website': 'http://therp.nl',
-    'email': 'info@therp.nl',
+    'website': 'https://launchpad.net/web-addons',
     'license': 'AGPL-3',
     'depends': [
         'web',
