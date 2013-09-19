@@ -24,10 +24,10 @@
     "author": "Therp BV",
     "category": 'Usability',
     "description": """
-Pop-ups in the web client have a default width of 900 pixels by default.
+Pop-ups in the web client have a width of 900 pixels by default.
 This module changes this default width to 95% of the parent window.
     """,
-    'website': 'http://therp.nl',
+    'website': 'https://launchpad.net/web-addons',
     'depends': ['web'],
     "license": 'AGPL-3',
     "js": ['static/src/js/web_popup_large.js'],
