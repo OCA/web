@@ -31,6 +31,11 @@ from web.controllers.main import ExcelExport
 class ExcelExportView(ExcelExport):
     _cp_path = '/web/export/xls_view'
 
+    def __getattribute__(self, name):
+        if name == 'fmt':
+            raise AttributeError()
+        return super(ExcelExportView, self).__getattribute__(name)
+
     @openerpweb.httprequest
     def index(self, req, data, token):
         data = json.loads(data)
