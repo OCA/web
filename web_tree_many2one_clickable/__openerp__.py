@@ -36,7 +36,6 @@ will open the linked partner in a form view.
         'web',
     ],
     "data" : [
-        'security/ir.model.access.csv',
     ],
     "js": [
         'static/src/js/web_tree_many2one_clickable.js',
