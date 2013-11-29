@@ -8,7 +8,7 @@ openerp.web_m2o_enhanced = function (instance) {
         _t  = instance.web._t,
         _lt = instance.web._lt;
 
-    instance.web.form.FieldMany2One = instance.web.form.FieldMany2One.extend({
+    instance.web.form.FieldMany2One = instance.web.form.FieldMany2One.include({
 
         show_error_displayer: function () {
             if ((typeof this.options.m2o_dialog === 'undefined' && this.can_create) ||
@@ -129,7 +129,7 @@ openerp.web_m2o_enhanced = function (instance) {
         }
     });
 
-    instance.web.form.FieldMany2ManyTags = instance.web.form.FieldMany2ManyTags.extend({
+    instance.web.form.FieldMany2ManyTags = instance.web.form.FieldMany2ManyTags.include({
 
         show_error_displayer: function () {
             if ((typeof this.options.m2o_dialog === 'undefined' && this.can_create) ||
