@@ -1,6 +1,6 @@
 /*global openerp, _, $ */
 
-openerp.web_m2o_enhanced = function (instance) {
+openerp.web_m2x_options = function (instance) {
 
     "use strict";
 
