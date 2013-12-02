@@ -19,10 +19,10 @@
 //
 //############################################################################
 
-openerp.web_ir_actions_act_window_scroll = function(openerp)
+openerp.web_ir_actions_act_window_page = function(openerp)
 {
     openerp.web.ActionManager.include({
-        ir_actions_act_window_scroll_prev: function(action, options)
+        ir_actions_act_window_page_prev: function(action, options)
         {
             if(this.inner_widget && this.inner_widget.active_view == 'form' &&
                 this.inner_widget.views[this.inner_widget.active_view])
@@ -31,7 +31,7 @@ openerp.web_ir_actions_act_window_scroll = function(openerp)
                     .controller.execute_pager_action('previous');
             }
         },
-        ir_actions_act_window_scroll_next: function(action, options)
+        ir_actions_act_window_page_next: function(action, options)
         {
             if(this.inner_widget && this.inner_widget.active_view == 'form' &&
                 this.inner_widget.views[this.inner_widget.active_view])
