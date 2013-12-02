@@ -19,23 +19,23 @@
 #
 ##############################################################################
 {
-    "name" : "Window actions for client side scrolling",
+    "name" : "Window actions for client side paging",
     "version" : "1.0",
     "author" : "Therp BV",
     "complexity": "normal",
     "description": """
-Client side scrolling
+Client side paging
 =====================
 
 This addon enables buttons to return::
 
-{'type': 'ir.actions.act_window.scroll.next'}
+{'type': 'ir.actions.act_window.page.next'}
 
 or::
 
-{'type': 'ir.actions.act_window.scroll.prev'}
+{'type': 'ir.actions.act_window.page.prev'}
 
-which trigger the form's controller to scroll into the requested direction.
+which trigger the form's controller to page into the requested direction.
     """,
     "category" : "Dependency",
     "depends" : [
@@ -43,7 +43,7 @@ which trigger the form's controller to scroll into the requested direction.
     "data" : [
     ],
     "js": [
-        'static/src/js/web_ir_actions_act_window_scroll.js',
+        'static/src/js/web_ir_actions_act_window_page.js',
     ],
     "css": [
     ],
