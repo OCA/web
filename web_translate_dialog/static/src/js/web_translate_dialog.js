@@ -179,7 +179,15 @@ openerp.web_translate_dialog = function (instance) {
             _.each(trads, function(data, code) {
                 if (code === self.view_language) {
                     _.each(data, function(value, field) {
-                        self.view.fields[field].set_value(value);
+                        var view_field = self.view.fields[field];
+                        var is_dirty = view_field.view.$el.hasClass('oe_form_dirty');
+                        // update the field on the view
+                        view_field.set_value(value);
+                        if ( !is_dirty ) {
+                            // Avoid to set the view dirty when not necessary:
+                            // values have already been saved.
+                            view_field.view.$el.removeClass('oe_form_dirty');
+                        }
                     });
                 }
                 trads_mutex.exec(function() {
