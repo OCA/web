@@ -30,6 +30,7 @@ Replace the standard translation view by an alternative one:
  * The translation dialog displays empty fields for the untranslated fields,
    instead of the source values.
  * Support HTML fields
+ * Autosize the textareas to the size of the content
 
 """,
  "version": "1.0",
