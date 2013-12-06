@@ -15,18 +15,23 @@
                 <label class="oe_label"><t t-esc="field.string"/>:</label>
             </td>
             <td t-foreach="widget.languages" t-as="lg" class="oe_form_frame_cell">
-                <input t-if="field.type == 'char' || field.type == 'url'" type="text" t-attf-name="#{lg.code}-#{field.name}" value="" data-value="" class="oe_trad_field" style="width: 100%"/>
-                <textarea t-if="field.type == 'text'" t-attf-name="#{lg.code}-#{field.name}" data-value="" class="oe_trad_field" style="width: 100%"></textarea>
+                <input t-if="field.field.type == 'char' || field.field.type == 'url'" type="text" t-attf-name="#{lg.code}-#{field.name}" value="" data-value="" class="oe_trad_field" style="width: 100%"/>
+                <textarea t-if="field.field.type == 'text'" t-attf-name="#{lg.code}-#{field.name}" data-value="" class="oe_trad_field" style="width: 100%"></textarea>
             </td>
         </tr>
         </table>
     </t>
 
-    <t t-extend="PageView">
-        <t t-jquery=".oe_button.oe_form_button_edit" t-operation="after">
+    <t t-name="TranslateDialogPage.buttons">
+        <button class="oe_form_translate_dialog_save_button oe_button oe_highlight">Save</button>
+        <button class="oe_form_translate_dialog_cancel_button oe_button">Cancel</button>
+    </t>
+
+    <div t-extend="FormView.buttons">
+        <t t-jquery="span.oe_form_buttons_view" t-operation="append">
             <button type="button" class="oe_button oe_form_button_translate">Translate</button>
         </t>
-    </t>
+    </div>
 
 </templates>
 

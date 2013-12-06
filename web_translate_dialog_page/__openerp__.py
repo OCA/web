@@ -36,7 +36,6 @@ Replace the standard translation dialog by an alternative one:
     "version": "1.0",
     "depends": [
         'web',
-        'web_textarea_autosize',
         ],
     'js': [
         'static/src/js/web_translate_dialog_page.js',
