@@ -77,9 +77,6 @@ openerp.web_translate_dialog = function (instance) {
             this.$buttons.find(".oe_form_translate_dialog_cancel_button").click(function(){
                 self.on_button_close();
             });
-            var $textarea = self.$el.find('textarea.oe_trad_field');
-            $textarea.css({minHeight:'100px'});
-            $textarea.autosize();
             this.initialize_html_fields();
 
             this.do_load_fields_values();
@@ -158,6 +155,10 @@ openerp.web_translate_dialog = function (instance) {
                                 $tarea.cleditor()[0].updateFrame();
                             }
                         });
+                        var $textarea = self.$el.find('textarea.oe_trad_field');
+                        $textarea.css({minHeight:'100px'});
+                        $textarea.autosize();
+                        $(window).resize();  // triggers the autosize
                         deff.resolve();
                      });
             });
