@@ -8,9 +8,11 @@ openerp.web_translate_dialog_page = function (instance) {
 
     instance.web.FormView.include({
         load_form: function(data) {
+            var self = this;
             this._super(data);
-            this.$buttons.on('click', '.oe_form_button_translate',
-                             this.guard_active(this.on_button_translate));
+            this.sidebar.add_items('other', _.compact([
+                self.is_action_enabled('edit') && { label: _t('Translate'), callback: self.on_button_translate },
+            ]));
         },
         on_button_translate: function() {
             var self = this;
