@@ -27,8 +27,6 @@ Replace the standard translation view by an alternative one:
  * Add a "Translate" button item in the "More" menu
  * The translations are displayed in a dialog (much like the OpenERP
    6.1's one)
- * The translation dialog displays empty fields for the untranslated fields,
-   instead of the source values.
  * Support HTML fields
  * Autosize the textareas to the size of the content
 

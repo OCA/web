@@ -60,7 +60,6 @@ openerp.web_translate_dialog = function (instance) {
                 sup = this._super;
             // the template needs the languages
             $.when(this.languages_loaded).then(function() {
-                // if (self.view.translatable_fields && self.view.translatable_fields.length) {
                 return sup.call(self);
             });
         },
@@ -139,7 +138,7 @@ openerp.web_translate_dialog = function (instance) {
                 var callback = function(values) {
                 };
                 self.view.dataset.call(
-                    'read_translations',
+                    'read',
                     [[self.view.datarecord.id],
                      self.translatable_fields_keys,
                      self.view.dataset.get_context({
