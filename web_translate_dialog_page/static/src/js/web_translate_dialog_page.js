@@ -61,7 +61,7 @@ openerp.web_translate_dialog_page = function (instance) {
         },
         start: function() {
             var self = this;
-            self.$el.find('.oe_trad_field').change(function() {
+            this.$el.find('.oe_trad_field').change(function() {
                 $(this).toggleClass('touched', ($(this).val() != $(this).attr('data-value')));
             });
             this.$buttons.html(QWeb.render("TranslateDialogPage.buttons"));
@@ -72,11 +72,35 @@ openerp.web_translate_dialog_page = function (instance) {
             this.$buttons.find(".oe_form_translate_dialog_cancel_button").click(function(){
                 self.on_button_close();
             });
+            var $textarea = self.$el.find('textarea.oe_trad_field');
+            $textarea.css({minHeight:'100px'});
+            $textarea.autosize();
+            this.initialize_html_fields();
 
-            self.do_load_fields_values();
-            // var $textarea = self.$el.find('textarea.oe_trad_field');
-            // $textarea.addClass('autosizeAnimated').autosize({append: "\n"});
-            // $textarea.css({minHeight:'100px'});
+            this.do_load_fields_values();
+        },
+        initialize_html_fields: function() {
+            this.$el.find('.oe_form_field_html textarea').each(function() {
+                var $textarea = $(this);
+                var width = '100%';
+                var height = 250;
+                $textarea.cleditor({
+                    width:      width, // width not including margins, borders or padding
+                    height:     height, // height not including margins, borders or padding
+                    controls:   // controls to add to the toolbar
+                                "bold italic underline strikethrough " +
+                                "| removeformat | bullets numbering | outdent " +
+                                "indent | link unlink | source",
+                    bodyStyle:  // style to assign to document body contained within the editor
+                                "margin:4px; color:#4c4c4c; font-size:13px; font-family:'Lucida Grande',Helvetica,Verdana,Arial,sans-serif; cursor:text"
+                });
+
+                $textarea.cleditor()[0].change(function() {
+                    this.updateTextArea();
+                    this.$area.toggleClass('touched',
+                                        (this.$area.val() != this.$area.attr('data-value')));
+                });
+            });
         },
         // use a `read_translations` method instead of a `read`
         // this latter leave the fields empty if there is no
@@ -102,6 +126,11 @@ openerp.web_translate_dialog_page = function (instance) {
                             self.$el.find('.oe_trad_field[name="' + lg.code + '-' + f + '"]')
                                 .val(values[0][f] || '')
                                 .attr('data-value', values[0][f] || '');
+
+                            var $tarea = self.$el.find('.oe_form_field_html .oe_trad_field[name="' + lg.code + '-' + f + '"]');
+                            if ($tarea.length) {
+                                $tarea.cleditor()[0].updateFrame();
+                            }
                         });
                         deff.resolve();
                      });
@@ -133,7 +162,7 @@ openerp.web_translate_dialog_page = function (instance) {
         },
         on_button_close: function() {
             this.close();
-        }
+        },
 
     });
 
