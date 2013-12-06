@@ -82,7 +82,9 @@ openerp.web_translate_dialog_page = function (instance) {
         initialize_html_fields: function() {
             this.$el.find('.oe_form_field_html textarea').each(function() {
                 var $textarea = $(this);
-                var width = '100%';
+                var width = 100;  // forced to fixed size on initialization
+                                  // will be changed to percentage right after
+                                  // the creation
                 var height = 250;
                 $textarea.cleditor({
                     width:      width, // width not including margins, borders or padding
@@ -95,7 +97,26 @@ openerp.web_translate_dialog_page = function (instance) {
                                 "margin:4px; color:#4c4c4c; font-size:13px; font-family:'Lucida Grande',Helvetica,Verdana,Arial,sans-serif; cursor:text"
                 });
 
-                $textarea.cleditor()[0].change(function() {
+                var $cleditor = $textarea.cleditor()[0];
+                // Down to -- end, this is a workaround for the bug
+                // https://bugs.launchpad.net/openerp-web/+bug/1258463
+                // The editor is initially created with a fixed size so
+                // the buggy event is not bound to $(window), then we restore
+                // a percentage width and bind the "normal" event without the
+                // CHM's buggy change.
+                $cleditor.$main.width('100%');
+                $cleditor.options.width = '100%';
+                $(window).resize(function() {
+                    //Forcefully blurred iframe contentWindow, chrome, IE, safari doesn't trigger blur on window resize and due to which text disappears
+                    var contentWindow = $cleditor.$frame[0].contentWindow;
+                    if(!$.browser.mozilla && contentWindow){
+                        $(contentWindow).trigger('blur');
+                    }
+                });
+                $cleditor.refresh();
+                // -- end
+
+                $cleditor.change(function() {
                     this.updateTextArea();
                     this.$area.toggleClass('touched',
                                         (this.$area.val() != this.$area.attr('data-value')));
