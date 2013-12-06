@@ -10,9 +10,11 @@ openerp.web_translate_dialog = function (instance) {
         load_form: function(data) {
             var self = this;
             this._super(data);
-            this.sidebar.add_items('other', _.compact([
-                self.is_action_enabled('edit') && { label: _t('Translate'), callback: self.on_button_translate },
-            ]));
+            if (this.sidebar) {
+                this.sidebar.add_items('other', _.compact([
+                    self.is_action_enabled('edit') && { label: _t('Translate'), callback: self.on_button_translate },
+                ]));
+            }
         },
         on_button_translate: function() {
             var self = this;
@@ -199,4 +201,3 @@ openerp.web_translate_dialog = function (instance) {
         },
     });
 };
-
