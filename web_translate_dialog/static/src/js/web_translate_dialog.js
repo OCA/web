@@ -1,4 +1,4 @@
-openerp.web_translate_dialog_page = function (instance) {
+openerp.web_translate_dialog = function (instance) {
 
     "use strict";
 
@@ -24,12 +24,12 @@ openerp.web_translate_dialog_page = function (instance) {
 
     instance.web.View.include({
         open_translate_dialog: function() {
-            new instance.web_translate_dialog_page.TranslateDialogPage(this).open();
+            new instance.web_translate_dialog.TranslateDialog(this).open();
         }
     });
 
-    instance.web_translate_dialog_page.TranslateDialogPage = instance.web.Dialog.extend({
-        template: "TranslateDialogPage",
+    instance.web_translate_dialog.TranslateDialog = instance.web.Dialog.extend({
+        template: "TranslateDialog",
         dialog_title: {toString: function () { return _t("Translations"); }},
         init: function(parent, options, content) {
             this._super(parent,
@@ -69,7 +69,7 @@ openerp.web_translate_dialog_page = function (instance) {
             this.$el.find('.oe_trad_field').change(function() {
                 $(this).toggleClass('touched', ($(this).val() != $(this).attr('data-value')));
             });
-            this.$buttons.html(QWeb.render("TranslateDialogPage.buttons"));
+            this.$buttons.html(QWeb.render("TranslateDialog.buttons"));
             this.$buttons.find(".oe_form_translate_dialog_save_button").click(function(){
                 self.on_button_save();
                 self.on_button_close();
