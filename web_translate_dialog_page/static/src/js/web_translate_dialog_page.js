@@ -30,7 +30,10 @@ openerp.web_translate_dialog_page = function (instance) {
         template: "TranslateDialogPage",
         dialog_title: {toString: function () { return _t("Translations"); }},
         init: function(parent, options, content) {
-            this._super(parent, options, content);
+            this._super(parent,
+                        {width: '90%',
+                         height: '80%'},
+                        content);
             this.view_language = this.session.user_context.lang;
             this.view = parent;
             this.view_type = parent.fields_view.type || '';
@@ -104,8 +107,8 @@ openerp.web_translate_dialog_page = function (instance) {
                 // the buggy event is not bound to $(window), then we restore
                 // a percentage width and bind the "normal" event without the
                 // CHM's buggy change.
-                $cleditor.$main.width('100%');
-                $cleditor.options.width = '100%';
+                $cleditor.$main.width('95%');
+                $cleditor.options.width = '95%';
                 $(window).resize(function() {
                     //Forcefully blurred iframe contentWindow, chrome, IE, safari doesn't trigger blur on window resize and due to which text disappears
                     var contentWindow = $cleditor.$frame[0].contentWindow;
