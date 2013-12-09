@@ -32,10 +32,10 @@ openerp.web_translate_dialog = function (instance) {
 
     instance.web_translate_dialog.TranslateDialog = instance.web.Dialog.extend({
         template: "TranslateDialog",
-        dialog_title: {toString: function () { return _t("Translations"); }},
         init: function(parent, options, content) {
             this._super(parent,
-                        {width: '90%',
+                        {title: _t("Translations"),
+                         width: '90%',
                          height: '80%'},
                         content);
             this.view_language = this.session.user_context.lang;
