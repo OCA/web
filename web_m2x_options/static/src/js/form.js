@@ -186,7 +186,7 @@ openerp.web_m2x_options = function (instance) {
                 }
                 // quick create
 
-                if ((typeof self.options.create === 'undefined' && can_create) ||
+                if ((typeof self.options.create === 'undefined') ||
                     self.options.create) {
 
                     var raw_result = _(data.result).map(function(x) {return x[1];});
@@ -204,7 +204,7 @@ openerp.web_m2x_options = function (instance) {
 
                 // create...
 
-                if ((typeof self.options.create_edit === 'undefined' && can_create) ||
+                if ((typeof self.options.create_edit === 'undefined') ||
                     self.options.create_edit) {
 
                     values.push({
