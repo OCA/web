@@ -25,7 +25,18 @@
     "complexity": "normal",
     "description": """
     For simple UI changes, having classes attached to widgets giving
-    information about the model being dislpayed can be essential.
+    information about the model being displayed can be essential.
+
+    For instance, to apply some CSS to the name field in forms for tasks,
+    
+    ::
+
+      .oe_model_project_task input[name='name']
+      {
+          //your CSS
+      }
+
+    will be enough.
     """,
     "category" : "Dependency",
     "depends" : [
