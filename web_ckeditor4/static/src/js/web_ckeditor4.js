@@ -52,7 +52,7 @@ openerp.web_ckeditor4 = function(openerp)
         {
             _.each(e.data.definition.contents, function(element)
             {
-                if(element.filebrowser!='uploadButton')
+                if(!element || element.filebrowser!='uploadButton')
                 {
                     return
                 }
