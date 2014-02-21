@@ -3,7 +3,7 @@
 #    See Copyright and Licence Informations undermentioned.
 ################################################################################
 {
-    'name': 'Mathematic Formulas in Float fields',
+    'name': 'Web Widget - Formulas in Float fields',
     'version': '1.0',
     'category': 'web',
     'description': """
