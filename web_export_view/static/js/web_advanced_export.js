@@ -89,17 +89,29 @@ openerp.web_export_view = function(openerp) {
             });
             rows = view.$element.find('.ui-widget-content tr');
             export_rows = [];
-            $.each(rows,function(){
+            $.each(rows,function(){         
                 $row = $(this);
-                // find only rows with data
-                if($row.attr('data-id')){
-                    export_row = [];
+                // find only rows with data     
+                if($row.attr('data-id')){       
+                    export_row = [];                
                     $.each(export_columns_keys,function(){
                         cell = $row.find('td[data-field="'+this+'"]').get(0);
-                        text = cell.text || cell.textContent || cell.innerHTML || "";
-                        export_row.push(text.trim());
+                        var data_id = $( '<div>' + cell.innerHTML + '</div>');
+                        if(data_id.find('input').get(0) != undefined) {
+                                if(data_id.find('input').get(0).type == 'checkbox' &&
+                                        data_id.find('input').get(0).checked){
+                                        text = _t("True");                  
+                                }                               
+                                else {                          
+                                        text = _t("False");                 
+                                }                               
+                        }                               
+                        else{  
+                                text = cell.text || cell.textContent || cell.innerHTML || "";
+                        }      
+                        export_row.push(text.trim());   
                     });
-                    export_rows.push(export_row);
+                    export_rows.push(export_row);   
                 }
             });
             $.blockUI();
