@@ -1,0 +1,49 @@
+<template>
+<t t-name="field-selection">
+    <t t-if="widget.fields_selection">
+        <select id="field_name_selection"> 
+            <t t-foreach="widget.fields_selection" t-as="record">
+                <option t-att-value="record.id"><t t-esc="record.string"/></option>
+            </t>
+        </select>
+    </t>
+</t>
+
+<t t-extend="ViewManagerAction">
+    <t t-jquery=".oe_view_manager .oe_view_manager_header" t-operation="append">
+        <table class="search_filter">
+            <tr>
+                <th class="field_selection_column"/>
+                <th>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_a" title="A">A</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_b" title="B">B</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_c" title="C">C</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_d" title="D">D</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_e" title="E">E</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_f" title="F">F</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_g" title="G">G</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_h" title="H">H</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_i" title="I">I</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_j" title="J">J</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_k" title="K">K</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_l" title="L">L</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_m" title="M">M</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_n" title="N">N</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_o" title="O">O</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_p" title="P">P</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_q" title="Q">Q</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_r" title="R">R</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_s" title="S">S</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_t" title="T">T</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_u" title="U">U</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_v" title="V">V</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_w" title="W">W</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_x" title="X">X</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_y" title="Y">Y</button>
+                    <button type="button" autofocus="autofocus" class="oe_filter_label" id="filter_z" title="Z">z</button>
+                </th>
+            </tr>
+        </table>
+    </t>
+</t>
+</template>
