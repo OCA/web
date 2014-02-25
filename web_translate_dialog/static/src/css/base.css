@@ -1,6 +1,6 @@
-.openerp .oe_trad_field {
+.openerp .oe_translation_field {
   width: 95%;
 }
-.openerp .oe_trad_field.touched {
+.openerp .oe_translation_field.touched {
   border: 1px solid green !important;
 }
