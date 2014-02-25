@@ -67,7 +67,7 @@ openerp.web_translate_dialog = function (instance) {
         },
         start: function() {
             var self = this;
-            this.$el.find('.oe_trad_field').change(function() {
+            this.$el.find('.oe_translation_field').change(function() {
                 $(this).toggleClass('touched', ($(this).val() != $(this).attr('data-value')));
             });
             this.$buttons.html(QWeb.render("TranslateDialog.buttons"));
@@ -133,7 +133,7 @@ openerp.web_translate_dialog = function (instance) {
             var self = this,
                 deferred = [];
 
-            this.$el.find('.oe_trad_field').val('').removeClass('touched');
+            this.$el.find('.oe_translation_field').val('').removeClass('touched');
             _.each(self.languages, function(lg) {
                 var deff = $.Deferred();
                 deferred.push(deff);
@@ -147,16 +147,16 @@ openerp.web_translate_dialog = function (instance) {
                         'lang': lg.code
                      })]).done(function (values) {
                         _.each(self.translatable_fields_keys, function(f) {
-                            self.$el.find('.oe_trad_field[name="' + lg.code + '-' + f + '"]')
+                            self.$el.find('.oe_translation_field[name="' + lg.code + '-' + f + '"]')
                                 .val(values[0][f] || '')
                                 .attr('data-value', values[0][f] || '');
 
-                            var $tarea = self.$el.find('.oe_form_field_html .oe_trad_field[name="' + lg.code + '-' + f + '"]');
+                            var $tarea = self.$el.find('.oe_form_field_html .oe_translation_field[name="' + lg.code + '-' + f + '"]');
                             if ($tarea.length) {
                                 $tarea.cleditor()[0].updateFrame();
                             }
                         });
-                        var $textarea = self.$el.find('textarea.oe_trad_field');
+                        var $textarea = self.$el.find('textarea.oe_translation_field');
                         $textarea.css({minHeight:'100px'});
                         $textarea.autosize();
                         $(window).resize();  // triggers the autosize
@@ -166,17 +166,17 @@ openerp.web_translate_dialog = function (instance) {
             return deferred;
         },
         on_button_save: function() {
-            var trads = {},
+            var translations = {},
                 self = this,
-                trads_mutex = new $.Mutex();
-            self.$el.find('.oe_trad_field.touched').each(function() {
+                translation_mutex = new $.Mutex();
+            self.$el.find('.oe_translation_field.touched').each(function() {
                 var field = $(this).attr('name').split('-');
-                if (!trads[field[0]]) {
-                    trads[field[0]] = {};
+                if (!translations[field[0]]) {
+                    translations[field[0]] = {};
                 }
-                trads[field[0]][field[1]] = $(this).val();
+                translations[field[0]][field[1]] = $(this).val();
             });
-            _.each(trads, function(data, code) {
+            _.each(translations, function(data, code) {
                 if (code === self.view_language) {
                     _.each(data, function(value, field) {
                         var view_field = self.view.fields[field];
@@ -190,7 +190,7 @@ openerp.web_translate_dialog = function (instance) {
                         }
                     });
                 }
-                trads_mutex.exec(function() {
+                translation_mutex.exec(function() {
                     return new instance.web.DataSet(self, self.view.dataset.model, self.view.dataset.get_context()).write(self.view.datarecord.id, data, { context : { 'lang': code }});
                 });
             });
