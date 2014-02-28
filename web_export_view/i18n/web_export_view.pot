@@ -30,8 +30,6 @@ msgstr ""
 msgid "False"
 msgstr ""
 
-I have seen that there is no current pot file, so these are the other entries you need for the full translation of the module:
-
 #. module: web_export_view
 #. openerp-web
 #: code:addons/web_export_view/static/src/js/web_advanced_export.js:38
