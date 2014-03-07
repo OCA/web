@@ -68,7 +68,7 @@ openerp.web_export_view = function(instance, m) {
                 if($row.attr('data-id')){
                     export_row = [];
                     checked = $row.find('th input[type=checkbox]').attr("checked");
-                    if (children || checked === "checked"){
+                    if (children && checked === "checked"){
                         $.each(export_columns_keys,function(){
                             cell = $row.find('td[data-field="'+this+'"]').get(0);
                             text = cell.text || cell.textContent || cell.innerHTML || "";
