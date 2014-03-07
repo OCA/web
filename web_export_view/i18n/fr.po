@@ -19,7 +19,7 @@ msgstr ""
 #: code:addons/web_export_view/static/xml/web_advanced_export.xml:7
 #, python-format
 msgid "Export Current View"
-msgstr "Exporter la vue courrante"
+msgstr "Exporter la vue courante"
 
 #. module: web_export_view
 #. openerp-web
