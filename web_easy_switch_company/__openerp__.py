@@ -15,9 +15,6 @@ Functionnalities :
 ------------------
     * Add a new menu in the top bar to switch to another company more easily;
     * Remove the old behaviour to switch company;
-    * Remove the display of the current company after the name of the user, 
-    the information is redundant and because the name of the company is displayed
-    only if company_id != 1 by default.
 
 Documentations :
 ----------------
