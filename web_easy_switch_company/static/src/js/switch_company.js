@@ -40,16 +40,22 @@ openerp.web_easy_switch_company = function (instance) {
         renderElement: function() {
             var self = this;
             this._super();
-            this.$el.find('.easy_switch_company_company_item').on('click', function(ev) {
-                var company_id = $(ev.target).data("company-id");
-                if (company_id != self.current_company_id){
-                    var func = '/web_easy_switch_company/switch/change_current_company';
-                    var param = {'company_id': company_id}
-                    self.rpc(func, param).done(function(res) {
-                        window.location.reload()
-                    });
-                }
-            });
+            if (this.companies.length === 1) {
+                this.$el.hide();
+            }
+            else{
+                this.$el.show();
+                this.$el.find('.easy_switch_company_company_item').on('click', function(ev) {
+                    var company_id = $(ev.target).data("company-id");
+                    if (company_id != self.current_company_id){
+                        var func = '/web_easy_switch_company/switch/change_current_company';
+                        var param = {'company_id': company_id}
+                        self.rpc(func, param).done(function(res) {
+                            window.location.reload()
+                        });
+                    }
+                });
+            }
         },
 
         /***********************************************************************
