@@ -11,32 +11,28 @@
 Add menu to allow user to switch to another company more easily
 ===============================================================
 
-Functionnalities :
-------------------
+Functionnality:
+---------------
     * Add a new menu in the top bar to switch to another company more easily;
     * Remove the old behaviour to switch company;
 
-Documentations :
-----------------
+Documentations:
+---------------
     * Video : http://www.youtube.com/watch?v=Cpm6dg-IEQQ
     
-Technical informations :
-------------------------
+Technical informations:
+-----------------------
     * Create a field function 'logo_topbar' in res_company to have a good resized logo;
 
 Limits :
 --------
     * It would be interesting to show the structure of the companies;
 
-Copyright and Licence :
------------------------
-    * 2014, Groupement Régional Alimentaire de Proximité
-    * Licence : AGPL-3 (http://www.gnu.org/licenses/)
-
-Contacts :
-----------
-    * Sylvain LE GAL (https://twitter.com/legalsylvain);
-    * <informatique@grap.coop> for any help or question about this module.
+Copyright, Author and Licence:
+------------------------------
+    * Copyright: 2014, Groupement Régional Alimentaire de Proximité
+    * Author: Sylvain LE GAL (https://twitter.com/legalsylvain);
+    * Licence: AGPL-3 (http://www.gnu.org/licenses/)
     """,
     'author': 'GRAP',
     'website': 'http://www.grap.coop',
