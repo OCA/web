@@ -126,9 +126,6 @@ openerp.web_translate_dialog = function (instance) {
                 });
             });
         },
-        // use a `read_translations` method instead of a `read`
-        // this latter leave the fields empty if there is no
-        // translation for a field instead of taking the src field
         do_load_fields_values: function(callback) {
             var self = this,
                 deferred = [];
