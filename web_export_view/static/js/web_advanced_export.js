@@ -75,6 +75,15 @@ openerp.web_export_view = function(instance, m) {
                             if (cell.classList.contains("oe_list_field_float")){
                                 export_row.push(instance.web.parse_value(text, {'type': "float"}));
                             }
+                            else if (cell.classList.contains("oe_list_field_boolean")){
+                        	var data_id = $( '<div>' + cell.innerHTML + '</div>');
+                                if(data_id.find('input').get(0).checked){
+                                	export_row.push(_t("True"));
+                                }
+                                else {
+                                	export_row.push(_t("False"));
+                                }
+                            }
                             else if (cell.classList.contains("oe_list_field_integer")){
                                export_row.push(parseInt(text));
                             }
