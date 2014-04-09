@@ -27,3 +27,17 @@ msgstr ""
 #, python-format
 msgid "Excel"
 msgstr ""
+
+#. module: web_export_view
+#. openerp-web
+#: code:addons/web_export_view/static/src/js/web_advanced_export.js:81
+#, python-format
+msgid "True"
+msgstr ""
+
+#. module: web_export_view
+#. openerp-web
+#: code:addons/web_export_view/static/src/js/web_advanced_export.js:84
+#, python-format
+msgid "False"
+msgstr ""
