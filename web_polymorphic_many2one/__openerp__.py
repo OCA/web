@@ -19,8 +19,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{'name': 'Web Polymorphic',
- 'version': '0.1',
+{'name': 'Web Polymorphic Many2One',
+ 'version': '0.2',
  'category': 'Web',
  'depends': ['web'],
  'author': 'Elico Corp',
@@ -31,10 +31,16 @@ Add a new widget named "polymorphic"
 The polymorphic field allow to dynamically store an id linked to any model in
 OpenERP instead of the usual fixed one in the view definition
 
-E.g:
 
-<field name="model" invisible="1" />
-<field name="object_id" widget="polymorphic" polymorphic="model" />
+Python fields declaration:
+
+    'model': fields.many2one('ir.model', string='Model'),
+    'object_id': fields.integer("Resource")
+
+XML fields declaration:
+
+    <field name="model" invisible="1" />
+    <field name="object_id" widget="polymorphic" polymorphic="model" />
 """,
  'js': [
      'static/src/js/view_form.js'
