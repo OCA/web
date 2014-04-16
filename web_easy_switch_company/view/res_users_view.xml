@@ -8,7 +8,9 @@
             <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
             <field name="arch" type="xml">
                 <!-- hide old behaviour to change company -->
-                <field name="company_id" position="replace" />
+                <field name="company_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
             </field>
         </record>
     </data>
