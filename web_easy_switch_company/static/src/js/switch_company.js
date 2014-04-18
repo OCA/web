@@ -92,25 +92,38 @@ openerp.web_easy_switch_company = function (instance) {
         _load_data: function(){
             var self = this;
             // Request for current users information
-            this._fetch('res.users',['company_id','company_ids'],[['id','=',this.session.uid]]).then(function(res_users){
+            this._fetch('res.users',['company_id'],[['id','=',this.session.uid]]).then(function(res_users){
                 self.current_company_id = res_users[0].company_id[0];
                 self.current_company_name = res_users[0].company_id[1];
                 // Request for other companies
-                self._fetch('res.company',['name',],[['id','in', res_users[0].company_ids]]).then(function(res_company){
+                // We have to go through fields_view_get to emulate the
+                // exact (exotic) behavior of the user preferences form in 
+                // fetching the allowed companies wrt record rules.
+                // Note: calling res.company.name_search with 
+                //       user_preference=True in the context does 
+                //       not work either.
+                new instance.web.Model('res.users').call('fields_view_get',{context:{'form_view_ref':'base.view_users_form_simple_modif'}}).then(function(res){
+                    var res_company = res.fields.company_id.selection;
                     for ( var i=0 ; i < res_company.length; i++) {
-                        res_company[i]['logo_topbar'] = self.session.url(
+                        var logo_topbar, logo_state;
+                        logo_topbar = self.session.url(
                             '/web/binary/image', {
                                 model:'res.company', 
                                 field: 'logo_topbar', 
-                                id: res_company[i].id
+                                id: res_company[i][0]
                             });
-                        if (res_company[i].id == self.current_company_id){
-                            res_company[i]['logo_state'] = '/web_easy_switch_company/static/src/img/selection-on.png';
+                        if (res_company[i][0] == self.current_company_id){
+                            logo_state = '/web_easy_switch_company/static/src/img/selection-on.png';
                         }
                         else{
-                            res_company[i]['logo_state'] = '/web_easy_switch_company/static/src/img/selection-off.png';
+                            logo_state = '/web_easy_switch_company/static/src/img/selection-off.png';
                         }
-                        self.companies.push(res_company[i]);
+                        self.companies.push({
+                            id: res_company[i][0],
+                            name: res_company[i][1],
+                            logo_topbar: logo_topbar,
+                            logo_state: logo_state
+                        });
                     }
                     // Update rendering
                     self.renderElement();
