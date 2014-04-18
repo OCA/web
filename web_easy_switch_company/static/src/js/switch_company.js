@@ -106,6 +106,9 @@ openerp.web_easy_switch_company = function (instance) {
                     var res_company = res.fields.company_id.selection;
                     for ( var i=0 ; i < res_company.length; i++) {
                         var logo_topbar, logo_state;
+                        // TODO: fetching the logo of other companies fails with the
+                        //       default res.company record rule, so we should
+                        //       probably remove the logos from the menu :(
                         logo_topbar = self.session.url(
                             '/web/binary/image', {
                                 model:'res.company', 
