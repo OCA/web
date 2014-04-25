@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+  <t t-extend="mail.compose_message">
+    <t t-jquery="a.oe_compose_post:eq(0)" t-operation="replace">
+      <a class="oe_compose_post oe_full" t-if="widget.options.compose_placeholder"><t t-raw="widget.options.compose_placeholder"/></a>
+    </t>
+    <t t-jquery="a.oe_compose_post:eq(1)" t-operation="replace">
+      <a class="oe_compose_post oe_full" t-if="!widget.options.compose_placeholder and !widget.options.view_mailbox">Send a message</a>
+    </t>
+  </t>
+</template>
