@@ -126,10 +126,24 @@ openerp.web_translate_dialog = function (instance) {
                 });
             });
         },
-        // use a `read_translations` method instead of a `read`
-        // this latter leave the fields empty if there is no
-        // translation for a field instead of taking the src field
-        do_load_fields_values: function(callback) {
+        set_fields_values: function(lang, values) {
+            var self = this;
+            _.each(this.translatable_fields_keys, function(f) {
+                self.$el.find('.oe_translation_field[name="' + lang.code + '-' + f + '"]')
+                    .val(values[f] || '')
+                    .attr('data-value', values[f] || '');
+
+                var $tarea = self.$el.find('.oe_form_field_html .oe_translation_field[name="' + lang.code + '-' + f + '"]');
+                if ($tarea.length) {
+                    $tarea.cleditor()[0].updateFrame();
+                }
+            });
+            var $textarea = this.$el.find('textarea.oe_translation_field');
+            $textarea.css({minHeight:'100px'});
+            $textarea.autosize();
+            $(window).resize();  // triggers the autosize
+        },
+        do_load_fields_values: function() {
             var self = this,
                 deferred = [];
 
@@ -137,31 +151,25 @@ openerp.web_translate_dialog = function (instance) {
             _.each(self.languages, function(lg) {
                 var deff = $.Deferred();
                 deferred.push(deff);
-                var callback = function(values) {
-                };
-                self.view.dataset.call(
-                    'read',
-                    [[self.view.datarecord.id],
-                     self.translatable_fields_keys,
-                     self.view.dataset.get_context({
-                        'lang': lg.code
-                     })]).done(function (values) {
-                        _.each(self.translatable_fields_keys, function(f) {
-                            self.$el.find('.oe_translation_field[name="' + lg.code + '-' + f + '"]')
-                                .val(values[0][f] || '')
-                                .attr('data-value', values[0][f] || '');
-
-                            var $tarea = self.$el.find('.oe_form_field_html .oe_translation_field[name="' + lg.code + '-' + f + '"]');
-                            if ($tarea.length) {
-                                $tarea.cleditor()[0].updateFrame();
-                            }
+                if (lg.code === self.view_language) {
+                    var values = {};
+                    _.each(self.translatable_fields_keys, function(field) {
+                        values[field] = self.view.fields[field].get_value();
+                    });
+                    self.set_fields_values(lg, values);
+                    deff.resolve();
+                } else {
+                    self.view.dataset.call(
+                        'read',
+                        [[self.view.datarecord.id],
+                        self.translatable_fields_keys,
+                        self.view.dataset.get_context({
+                            'lang': lg.code
+                        })]).done(function (rows) {
+                            self.set_fields_values(lg, rows[0]);
+                            deff.resolve();
                         });
-                        var $textarea = self.$el.find('textarea.oe_translation_field');
-                        $textarea.css({minHeight:'100px'});
-                        $textarea.autosize();
-                        $(window).resize();  // triggers the autosize
-                        deff.resolve();
-                     });
+                };
             });
             return deferred;
         },
@@ -178,17 +186,7 @@ openerp.web_translate_dialog = function (instance) {
             });
             _.each(translations, function(data, code) {
                 if (code === self.view_language) {
-                    _.each(data, function(value, field) {
-                        var view_field = self.view.fields[field];
-                        var is_dirty = view_field.view.$el.hasClass('oe_form_dirty');
-                        // update the field on the view
-                        view_field.set_value(value);
-                        if ( !is_dirty ) {
-                            // Avoid to set the view dirty when not necessary:
-                            // values have already been saved.
-                            view_field.view.$el.removeClass('oe_form_dirty');
-                        }
-                    });
+                    self.view.set_values(data);
                 }
                 translation_mutex.exec(function() {
                     return new instance.web.DataSet(self, self.view.dataset.model, self.view.dataset.get_context()).write(self.view.datarecord.id, data, { context : { 'lang': code }});
