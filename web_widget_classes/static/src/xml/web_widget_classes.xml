@@ -6,4 +6,10 @@
             this.attr('class', null);
         </t>
     </t>
+    <t t-extend="ViewManagerAction">
+        <t t-jquery="table:first">
+            this.attr('t-att-class', '"' + this.attr('class') + ' oe_model_" + (self.dataset.model.replace(new RegExp("\\\\.","g"), "_"))');
+            this.attr('class', null);
+        </t>
+    </t>
 </templates>
