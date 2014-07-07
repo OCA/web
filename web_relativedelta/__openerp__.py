@@ -38,12 +38,13 @@ On top of what you can do with the original, you can use
 - relativedelta(minute=0-59, minutes=0-59)
 - relativedelta(seconds=0-59, seconds=0-59)
 - relativedelta(weekday=0) [MO] ... weekday=6 [SU]
-    
+
   - there's no MO(+n) syntax, but that can be simulated by
     relativedelta(weeks=+(n-1), days=1, weekday=0), this week's monday would
     be relativedelta(weeks=-1, days=1, weekday=0) etc.
 
-- all of them together in a predictable manner as detailed in https://labix.org/python-dateutil#head-72c4689ec5608067d118b9143cef6bdffb6dad4e
+- all of them together in a predictable manner as detailed in
+https://labix.org/python-dateutil#head-72c4689ec5608067d118b9143cef6bdffb6dad4e
 
 Usage
 =====
