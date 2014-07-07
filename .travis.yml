@@ -16,7 +16,7 @@ services:
 
 script:
     - travis_run_flake8
-    - travis_run_tests 6.1 openerp_test
+    - travis_run_tests 6.1
 
 after_success:
   coveralls
