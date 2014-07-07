@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
-#    
+#
 #    Copyright (C) 2013 Agile Business Group sagl (<http://www.agilebg.com>)
 #    Copyright (C) 2013 Domsense srl (<http://www.domsense.com>)
 #
@@ -23,20 +23,21 @@
     'name': 'Hide duplicate button',
     'version': '0.1',
     'category': 'Web',
-    'description': """As 'duplicate' button often produce inconveniences when modules don't correctly handle the 'copy' methods, this module allow to hide 'duplicate' button for every form view""",
+    'description': """As 'duplicate' button often produce inconveniences when
+modules don't correctly handle the 'copy' methods, this module allow to hide
+'duplicate' button for every form view""",
     'author': 'Agile Business Group',
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
     'depends': [
-         'web',
-     ],
+        'web',
+    ],
     'init_xml': [],
     'update_xml': [],
     'demo_xml': [],
     'active': False,
     'installable': True,
-    'css' : [
+    'css': [
         "static/css/duplicate_button.css",
     ],
 }
-

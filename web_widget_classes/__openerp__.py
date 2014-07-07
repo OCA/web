@@ -19,16 +19,16 @@
 #
 ##############################################################################
 {
-    "name" : "CSS classes for widgets",
-    "version" : "1.0",
-    "author" : "Therp BV",
+    "name": "CSS classes for widgets",
+    "version": "1.0",
+    "author": "Therp BV",
     "complexity": "normal",
     "description": """
     For simple UI changes, having classes attached to widgets giving
     information about the model being displayed can be essential.
 
     For instance, to apply some CSS to the name field in forms for tasks,
-    
+
     ::
 
       .oe_model_project_task input[name='name']
@@ -38,11 +38,11 @@
 
     will be enough.
     """,
-    "category" : "Dependency",
-    "depends" : [
+    "category": "Dependency",
+    "depends": [
         'web',
     ],
-    "data" : [
+    "data": [
     ],
     "js": [
     ],
@@ -53,7 +53,7 @@
     ],
     "auto_install": False,
     "installable": True,
-    "external_dependencies" : {
-        'python' : [],
+    "external_dependencies": {
+        'python': [],
     },
 }
