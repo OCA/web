@@ -19,9 +19,9 @@
 #
 ##############################################################################
 {
-    "name" : "Clickable many2one widget for tree views",
-    "version" : "1.0",
-    "author" : "Therp BV",
+    "name": "Clickable many2one widget for tree views",
+    "version": "1.0",
+    "author": "Therp BV",
     "complexity": "normal",
     "description": """
 This addon provides a widget to have many2one fields in a tree view open the
@@ -31,11 +31,11 @@ linked resource::
 
 will open the linked partner in a form view.
     """,
-    "category" : "Dependency",
-    "depends" : [
+    "category": "Dependency",
+    "depends": [
         'web',
     ],
-    "data" : [
+    "data": [
     ],
     "js": [
         'static/src/js/web_tree_many2one_clickable.js',
@@ -46,7 +46,7 @@ will open the linked partner in a form view.
     ],
     "auto_install": False,
     "installable": True,
-    "external_dependencies" : {
-        'python' : [],
+    "external_dependencies": {
+        'python': [],
     },
 }
