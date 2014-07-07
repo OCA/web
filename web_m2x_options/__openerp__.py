@@ -3,7 +3,8 @@
 {
     "name": 'web_m2x_options',
     "version": "0.1",
-    "description": """
+    "description":
+"""
 =====================================================
 Add new options for many2one and many2manytags field:
 =====================================================
@@ -32,12 +33,14 @@ Thanks to:
 """,
     "depends": [
         'base',
-        'web',
+	'web',
     ],
     "js": [
         'static/src/js/form.js',
     ],
     "author": "Tuxservices",
-    "installable": True,
-    "active": False,
+    "installable" : True,
+    "active" : False,
 }
+
+
