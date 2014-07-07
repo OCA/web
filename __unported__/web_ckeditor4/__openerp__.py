@@ -108,7 +108,7 @@
         #end of ckeditor debug
         'static/src/js/web_ckeditor4.js',
         ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'certificate': '',
 }

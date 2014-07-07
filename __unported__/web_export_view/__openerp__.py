@@ -53,7 +53,7 @@ the same data of the tree view you are looking at, headers included.
     # },
     'js': ['static/*/*.js', 'static/*/js/*.js'],
     'qweb': ['static/xml/web_advanced_export.xml'],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'web_preload': False,
 }

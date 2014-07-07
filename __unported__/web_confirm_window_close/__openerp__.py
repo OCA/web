@@ -2,8 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (c) 2010-2014 Elico Corp. All Rights Reserved.
-#    Augustin Cisterne-Kaas <augustin.cisterne-kaas@elico-corp.com>
+#    This module copyright (C) 2013 Therp BV (<http://therp.nl>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,31 +18,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{'name': 'Web Polymorphic Many2One',
- 'version': '0.2',
- 'category': 'Web',
- 'depends': ['web'],
- 'author': 'Elico Corp',
- 'license': 'AGPL-3',
- 'website': 'https://www.elico-corp.com',
- 'description': """
-Add a new widget named "polymorphic"
-The polymorphic field allow to dynamically store an id linked to any model in
-OpenERP instead of the usual fixed one in the view definition
 
+{
+    'name': 'Check for unsaved data when closing browser window',
+    'description': '''
+This addon will show a confirmation dialog when the user closes
+a window with an OpenERP form containing unsaved data.
 
-Python fields declaration:
+This functionality is browser dependent. Opera ignores it at all,
+while Firefox displays a generic confirmation message.
 
-    'model': fields.many2one('ir.model', string='Model'),
-    'object_id': fields.integer("Resource")
-
-XML fields declaration:
-
-    <field name="model" invisible="1" />
-    <field name="object_id" widget="polymorphic" polymorphic="model" />
-""",
- 'js': [
-     'static/src/js/view_form.js'
- ],
- 'installable': True,
- 'application': False}
+This module is compatible with OpenERP 7.0.
+''',
+    'version': '7.0.1',
+    'author': 'Therp BV',
+    'category': 'Usability',
+    'website': 'https://launchpad.net/web-addons',
+    'license': 'AGPL-3',
+    'installable': False,
+    'depends': [
+        'web',
+        ],
+    'js': [
+        'static/src/js/web_confirm_window_close.js'
+        ],
+}

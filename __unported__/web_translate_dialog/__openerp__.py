@@ -41,4 +41,5 @@ Replace the standard translation view by an alternative one:
  'qweb': ["static/src/xml/base.xml",
           ],
  'auto_install': False,
+ 'installable': False,
  }

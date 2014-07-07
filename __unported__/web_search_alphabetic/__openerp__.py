@@ -43,6 +43,7 @@ User also is able to change search field name instead of name field.
     'qweb' : [
         'static/src/xml/web_search.xml',
     ],
+    'installable': False,
     'auto_install': False
 }
 

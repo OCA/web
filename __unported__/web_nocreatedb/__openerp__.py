@@ -62,6 +62,6 @@ You should create a menu to see "All modules without filter.
     'qweb': [
         'static/src/xml/web_nocreatedb.xml',
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
 }

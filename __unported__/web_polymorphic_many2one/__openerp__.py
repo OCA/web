@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Guewen Baconnier
-#    Copyright 2014 Camptocamp SA
+#    OpenERP, Open Source Management Solution
+#    Copyright (c) 2010-2014 Elico Corp. All Rights Reserved.
+#    Augustin Cisterne-Kaas <augustin.cisterne-kaas@elico-corp.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,32 +19,31 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-{'name': 'Web Send Message as Popup',
- 'version': '1.0',
- 'author': 'Camptocamp',
- 'maintainer': 'Camptocamp',
+{'name': 'Web Polymorphic Many2One',
+ 'version': '0.2',
+ 'category': 'Web',
+ 'depends': ['web'],
+ 'author': 'Elico Corp',
  'license': 'AGPL-3',
- 'category': 'Hidden',
- 'depends': ['web',
-             ],
+ 'website': 'https://www.elico-corp.com',
  'description': """
-Web Send Message as Popup
-=========================
+Add a new widget named "polymorphic"
+The polymorphic field allow to dynamically store an id linked to any model in
+OpenERP instead of the usual fixed one in the view definition
 
-In the email/notes threads below the form views, the link 'Send a
-message' unfold a text field. From there, a button allows to open the
-text field in a full featured email popup with the subject, templates,
-attachments and followers.
 
-This module changes the link 'Send a message' so it opens directly the
-full featured popup instead of the text field, avoiding an extra click
-if the popup is always wanted.
+Python fields declaration:
 
- """,
- 'website': 'http://www.camptocamp.com',
- 'qweb': ['static/src/xml/mail.xml',
-          ],
- 'installable': True,
- 'auto_install': False,
-}
+    'model': fields.many2one('ir.model', string='Model'),
+    'object_id': fields.integer("Resource")
+
+XML fields declaration:
+
+    <field name="model" invisible="1" />
+    <field name="object_id" widget="polymorphic" polymorphic="model" />
+""",
+ 'js': [
+     'static/src/js/view_form.js'
+ ],
+ 'installable': False,
+ 'application': False}

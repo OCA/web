@@ -18,27 +18,40 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    'name': 'Check for unsaved data when closing browser window',
-    'description': '''
-This addon will show a confirmation dialog when the user closes
-a window with an OpenERP form containing unsaved data.
+    "name" : "Window actions for client side paging",
+    "version" : "1.0",
+    "author" : "Therp BV",
+    "complexity": "normal",
+    "description": """
+Client side paging
+=====================
 
-This functionality is browser dependent. Opera ignores it at all,
-while Firefox displays a generic confirmation message.
+This addon enables buttons to return::
 
-This module is compatible with OpenERP 7.0.
-''',
-    'version': '7.0.1',
-    'author': 'Therp BV',
-    'category': 'Usability',
-    'website': 'https://launchpad.net/web-addons',
-    'license': 'AGPL-3',
-    'depends': [
-        'web',
-        ],
-    'js': [
-        'static/src/js/web_confirm_window_close.js'
-        ],
+{'type': 'ir.actions.act_window.page.next'}
+
+or::
+
+{'type': 'ir.actions.act_window.page.prev'}
+
+which trigger the form's controller to page into the requested direction.
+    """,
+    "category" : "Dependency",
+    "depends" : [
+    ],
+    "data" : [
+    ],
+    "js": [
+        'static/src/js/web_ir_actions_act_window_page.js',
+    ],
+    "css": [
+    ],
+    "qweb": [
+    ],
+    "auto_install": False,
+    'installable': False,
+    "external_dependencies" : {
+        'python' : [],
+    },
 }

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
-#    This module copyright (C) 2013 Therp BV (<http://therp.nl>).
+#    Author: Guewen Baconnier
+#    Copyright 2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,40 +18,32 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name" : "Window actions for client side paging",
-    "version" : "1.0",
-    "author" : "Therp BV",
-    "complexity": "normal",
-    "description": """
-Client side paging
-=====================
 
-This addon enables buttons to return::
+{'name': 'Web Send Message as Popup',
+ 'version': '1.0',
+ 'author': 'Camptocamp',
+ 'maintainer': 'Camptocamp',
+ 'license': 'AGPL-3',
+ 'category': 'Hidden',
+ 'depends': ['web',
+             ],
+ 'description': """
+Web Send Message as Popup
+=========================
 
-{'type': 'ir.actions.act_window.page.next'}
+In the email/notes threads below the form views, the link 'Send a
+message' unfold a text field. From there, a button allows to open the
+text field in a full featured email popup with the subject, templates,
+attachments and followers.
 
-or::
+This module changes the link 'Send a message' so it opens directly the
+full featured popup instead of the text field, avoiding an extra click
+if the popup is always wanted.
 
-{'type': 'ir.actions.act_window.page.prev'}
-
-which trigger the form's controller to page into the requested direction.
-    """,
-    "category" : "Dependency",
-    "depends" : [
-    ],
-    "data" : [
-    ],
-    "js": [
-        'static/src/js/web_ir_actions_act_window_page.js',
-    ],
-    "css": [
-    ],
-    "qweb": [
-    ],
-    "auto_install": False,
-    "installable": True,
-    "external_dependencies" : {
-        'python' : [],
-    },
+ """,
+ 'website': 'http://www.camptocamp.com',
+ 'qweb': ['static/src/xml/mail.xml',
+          ],
+ 'installable': False,
+ 'auto_install': False,
 }

@@ -39,7 +39,7 @@ Thanks to:
         'static/src/js/form.js',
     ],
     "author": "Tuxservices",
-    "installable" : True,
+    'installable' : False,
     "active" : False,
 }
 
