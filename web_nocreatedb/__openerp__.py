@@ -15,7 +15,7 @@
 #    GNU General Public License for more details.
 #
 #    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>. 
 #
 ##############################################################################
 
@@ -41,11 +41,11 @@ When you start your server add the name of this module in the "load" option::
 Then you can start your server without the -u and -d (just the first time you
 need update all to be sure all base and web will be fine).
 
-With this option you can just take off and restart the server if you need to show
+With this option you can just take off and restart the server if you need to show 
 the link temporaly again.
 
 TODO: It should be great add a parameter in the database to hide it configurable
-way and with web_preload: True, but BTW, in old versions of openerp it was a
+way and with web_preload: True, but BTW, in old versions of openerp it was a 
 parameter in the config file, i think as it is is fine for now.
 
 .. note:: This module probably will not be shown in your module list by default
