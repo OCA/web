@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 ############################################################################
-#
+#    
 #    OpenERP, Open Source Web Color
 #    Copyright (C) 2012 Savoir-faire Linux (<http://www.savoirfairelinux.com>).
 #
@@ -15,8 +15,8 @@
 #    GNU General Public License for more details.
 #
 #    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+#  
 #    @author Étienne Beaudry Auger <etienne.b.auger@savoirfairelinux.com>
 #
 ##############################################################################

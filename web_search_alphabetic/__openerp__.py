@@ -22,8 +22,8 @@
 
 {
     'name': 'Web Alphabetical Search',
-    'author': 'Serpent Consulting Services Pvt. Ltd.',
-    'category': 'Web',
+    'author' : 'Serpent Consulting Services Pvt. Ltd.',
+    'category' : 'Web',
     'website': 'http://www.serpentcs.com',
     'description': """
 OpenERP Web Search Extended.
@@ -40,7 +40,7 @@ User also is able to change search field name instead of name field.
     'css': [
         'static/src/css/web_search.css'
     ],
-    'qweb': [
+    'qweb' : [
         'static/src/xml/web_search.xml',
     ],
     'auto_install': False

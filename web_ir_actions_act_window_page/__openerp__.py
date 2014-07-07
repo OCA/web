@@ -19,9 +19,9 @@
 #
 ##############################################################################
 {
-    "name": "Window actions for client side paging",
-    "version": "1.0",
-    "author": "Therp BV",
+    "name" : "Window actions for client side paging",
+    "version" : "1.0",
+    "author" : "Therp BV",
     "complexity": "normal",
     "description": """
 Client side paging
@@ -37,10 +37,10 @@ or::
 
 which trigger the form's controller to page into the requested direction.
     """,
-    "category": "Dependency",
-    "depends": [
+    "category" : "Dependency",
+    "depends" : [
     ],
-    "data": [
+    "data" : [
     ],
     "js": [
         'static/src/js/web_ir_actions_act_window_page.js',
@@ -51,7 +51,7 @@ which trigger the form's controller to page into the requested direction.
     ],
     "auto_install": False,
     "installable": True,
-    "external_dependencies": {
-        'python': [],
+    "external_dependencies" : {
+        'python' : [],
     },
 }
