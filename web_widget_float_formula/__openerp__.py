@@ -22,9 +22,11 @@ Documentations:
 
 Technical informations:
 ------------------------
-    * Overloads "instance.web.form.FieldFloat"; (so works for fields.integer & fields.float);
+    * Overloads "instance.web.form.FieldFloat"; (so works for fields.integer &
+      fields.float);
     * To compute, the module simply use the eval() javascript function;
-    * Rounding computation is not done by this module (The module has the same behaviour if the user tips "=1/3" or if he tips "0.33[...]");
+    * Rounding computation is not done by this module (The module has the same
+      behaviour if the user tips "=1/3" or if he tips "0.33[...]");
     * avoid code injonction by regexpr test: "=alert('security')" is not valid;
 
 Limits:
