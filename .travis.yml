@@ -16,6 +16,7 @@ env:
 
 # Need coveralls for coverage reports
 # Need flake8 for pep8 testing
+# Need pypdf
 # Manually get PyChart
 # Install tested version of odoo (official or ocb)
 # Get modules from other repos which have dependencies (in this case travel requires modules from lp:partner-contact-management and lp:openerp-hr
