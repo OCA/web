@@ -19,15 +19,15 @@
 #
 ##############################################################################
 
-{'name': 'Web Send Message as Popup',
- 'version': '1.0',
- 'author': 'Camptocamp',
- 'maintainer': 'Camptocamp',
- 'license': 'AGPL-3',
- 'category': 'Hidden',
- 'depends': ['web',
-             ],
- 'description': """
+{
+    'name': 'Web Send Message as Popup',
+    'version': '1.0',
+    'author': 'Camptocamp',
+    'maintainer': 'Camptocamp',
+    'license': 'AGPL-3',
+    'category': 'Hidden',
+    'depends': ['web'],
+    'description': """
 Web Send Message as Popup
 =========================
 
@@ -38,12 +38,9 @@ attachments and followers.
 
 This module changes the link 'Send a message' so it opens directly the
 full featured popup instead of the text field, avoiding an extra click
-if the popup is always wanted.
-
- """,
- 'website': 'http://www.camptocamp.com',
- 'qweb': ['static/src/xml/mail.xml',
-          ],
- 'installable': True,
- 'auto_install': False,
+if the popup is always wanted.""",
+    'website': 'http://www.camptocamp.com',
+    'qweb': ['static/src/xml/mail.xml'],
+    'installable': True,
+    'auto_install': False,
 }
