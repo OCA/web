@@ -1,0 +1,46 @@
+# Config file .travis.yml
+
+language: python
+
+python:
+#    - "pypy" # not supported by odoo 8
+#    - "3.4"  # not supported by odoo 8
+#    - "3.3"  # not supported by odoo 8
+    - "2.7"
+#    - "2.6"  # not supported by odoo 8
+
+env:
+    - ODOO="https://github.com/savoirfairelinux/odoo/archive/setuptools-addons.tar.gz"  # Temp until https://github.com/odoo/odoo/issues/185 or https://github.com/odoo/odoo/issues/441 is fixed
+#    - ODOO="https://github.com/odoo/odoo/archive/master.tar.gz"
+#    - ODOO="https://github.com/OCA/OCB/archive/master.zip"
+
+# Need coveralls for coverage reports
+# Need flake8 for pep8 testing
+# Need pypdf
+# Manually get PyChart
+# Install tested version of odoo (official or ocb)
+# Get modules from other repos which have dependencies (in this case travel requires modules from lp:partner-contact-management and lp:openerp-hr
+install: 
+    - pip install coveralls flake8
+    - pip install http://download.gna.org/pychart/PyChart-1.39.tar.gz
+    - pip install pypdf
+    - pip install ${ODOO}
+
+# Create databae
+# Pre-install modules and dependencies
+before_script: 
+    - createdb test
+
+# Test with flake, ignore F401 for __init__.py files, use a max length of 120
+# Run tests with coverage
+# Only test modules in repo (list populated by directories in repo)
+# Preload modules before testing to only run tests of repo's modules
+# Include current directory and dependent repos in addons-path as well as official addons
+script:
+    - flake8 . --max-line-length=120 --exclude=__unported__ --filename=__init__.py --ignore=F401
+    - flake8 . --max-line-length=120 --exclude=__unported__,__init__.py
+    - odoo.py -d test --stop-after-init --init=$(python -c 'import os; print(",".join(x for x in os.listdir(".") if os.path.isdir(x) and not x.startswith(".") and x != "__unported__"))') --addons-path=$(pwd),`python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())"`/addons
+    - coverage run $(which odoo.py) -d test --test-enable --log-level=test --stop-after-init --init=$(python -c 'import os; print(",".join(x for x in os.listdir(".") if os.path.isdir(x) and not x.startswith(".") and x != "__unported__"))') --addons-path=$(pwd),`python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())"`/addons
+
+after_success:
+  coveralls
