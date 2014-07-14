@@ -43,7 +43,10 @@ openerp.web_translate_dialog = function (instance) {
             this.view_type = parent.fields_view.type || '';
             this.$view_form = null;
             this.$sidebar_form = null;
-            this.translatable_fields_keys = _.map(this.view.translatable_fields || [], function(i) { return i.name;});
+            this.translatable_fields = _.filter(this.view.translatable_fields || [],
+                                                this.filter_translatable_fields);
+            this.translatable_fields_keys = _.map(this.translatable_fields,
+                                                  function(i) { return i.name;});
             this.languages = null;
             this.languages_loaded = $.Deferred();
             (new instance.web.DataSetSearch(this,
@@ -52,6 +55,9 @@ openerp.web_translate_dialog = function (instance) {
                                             [['translatable', '=', '1']]))
                 .read_slice(['code', 'name'], { sort: 'id' })
                 .then(this.on_languages_loaded);
+        },
+        filter_translatable_fields: function(field) {
+            return !field.field.readonly;
         },
         on_languages_loaded: function(langs) {
             this.languages = langs;
