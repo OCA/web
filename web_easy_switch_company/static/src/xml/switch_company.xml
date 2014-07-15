@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ********************************************************************** -->
+<!--                                                                        -->
+<!--Web Easy Switch Company module for OpenERP                              -->
+<!--Copyright (C) 2014 GRAP (http://www.grap.coop)                          -->
+<!--@author Sylvain LE GAL (https://twitter.com/legalsylvain)               -->
+
+<!--This program is free software: you can redistribute it and/or modify    -->
+<!--it under the terms of the GNU Affero General Public License as          -->
+<!--published by the Free Software Foundation, either version 3 of the      -->
+<!--License, or (at your option) any later version.                         -->
+<!--                                                                        -->
+<!--This program is distributed in the hope that it will be useful,         -->
+<!--but WITHOUT ANY WARRANTY; without even the implied warranty of          -->
+<!--MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           -->
+<!--GNU Affero General Public License for more details.                     -->
+<!--                                                                        -->
+<!--You should have received a copy of the GNU Affero General Public License-->
+<!--along with this program.  If not, see <http://www.gnu.org/licenses/>.   -->
+<!-- ********************************************************************** -->
+<template>
+
+    <t t-name="web_easy_switch_company.SwitchCompanyWidget">
+        <ul class="nav navbar-nav navbar-right oe_user_menu_placeholder" style="margin-right:10px">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <span class="oe_topbar_name">
+                        <t t-esc="widget.current_company_name"/>
+                    </span>
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <t t-foreach="widget.companies" t-as="company">
+                        <li>
+                            <a class="easy_switch_company_company_item"
+                               href="#"
+                               t-att-data-company-id="company.id">
+                                <img class="oe_topbar_avatar" t-att-src="company.logo_topbar"/>
+                                <img class="oe_topbar_avatar" t-att-src="company.logo_state"/>
+                                <t t-esc="company.name"/>
+                            </a>
+                        </li>
+                    </t>
+                </ul>
+            </li>
+        </ul>
+    </t>
+
+</template>
+
