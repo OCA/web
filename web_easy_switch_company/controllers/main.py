@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+#-*- encoding: utf-8 -*-
 ##############################################################################
 #
 #    Web Easy Switch Company module for OpenERP
@@ -23,14 +23,12 @@ import openerp
 import openerp.http as http
 from openerp.http import request
 
-class WebEasySwitchCompanyController(http.Controller):
 
+class WebEasySwitchCompanyController(http.Controller):
     @http.route('/web_easy_switch_company/switch/change_current_company', type='json', auth='none')
     def change_current_company(self, company_id):
         registry = openerp.modules.registry.RegistryManager.get(request.session.db)
         uid = request.session.uid
-        context = request.session.context
         with registry.cursor() as cr:
             res = registry.get("res.users").change_current_company(cr, uid, company_id)
             return res
-
