@@ -1,5 +1,5 @@
-#-*- encoding: utf-8 -*-
-##############################################################################
+# -*- encoding: utf-8 -*-
+# #############################################################################
 #
 #    Web Easy Switch Company module for OpenERP
 #    Copyright (C) 2014 GRAP (http://www.grap.coop)
@@ -18,7 +18,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+#############################################################################
 import openerp
 import openerp.http as http
 from openerp.http import request
