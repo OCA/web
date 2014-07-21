@@ -104,7 +104,7 @@
         # 'static/lib/trunk/core/dom/text.js',
         # 'static/lib/trunk/core/dom/rangelist.js',
         # 'static/lib/trunk/core/skin.js',
-        # 'static/lib/trunk/core/_bootstrap.js', 
+        # 'static/lib/trunk/core/_bootstrap.js',
         # end of ckeditor debug
         'static/src/js/web_ckeditor4.js',
         ],
