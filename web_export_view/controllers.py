@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
-#    
+#
 #    Copyright (C) 2012 Agile Business Group sagl (<http://www.agilebg.com>)
 #    Copyright (C) 2012 Domsense srl (<http://www.domsense.com>)
 #
@@ -75,9 +75,9 @@ class ExcelExportView(ExcelExport):
     @openerpweb.httprequest
     def index(self, req, data, token):
         data = json.loads(data)
-        model = data.get('model',[])
-        columns_headers = data.get('headers',[])
-        rows = data.get('rows',[])
+        model = data.get('model', [])
+        columns_headers = data.get('headers', [])
+        rows = data.get('rows', [])
 
         context = req.session.eval_context(req.context)
         lang = context.get('lang', 'en_US')

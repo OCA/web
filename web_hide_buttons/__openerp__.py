@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
-#    
+#
 #    Copyright (C) 2013 Therp B.V. (<http://www.therp.nl>)
 #
 #    This program is free software: you can redistribute it and/or modify

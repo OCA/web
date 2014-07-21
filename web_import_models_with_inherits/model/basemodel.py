@@ -20,6 +20,7 @@
 ##############################################################################
 from openerp.osv.orm import BaseModel
 
+
 def get_fields_inherits(self, cr, uid, context=None):
     """
     Pass the values of the _inherits dictionary
