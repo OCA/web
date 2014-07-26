@@ -20,7 +20,6 @@
 //#############################################################################
 openerp.web_export_view = function (instance) {
 
-    debugger;
     var _t = instance.web._t,
         QWeb = instance.web.qweb;
 
@@ -96,7 +95,6 @@ openerp.web_export_view = function (instance) {
                 }
             });
             $.blockUI();
-            debugger;
             view.session.get_file({
                 url: '/web/export/xls_view',
                 data: {data: JSON.stringify({
