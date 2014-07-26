@@ -20,8 +20,7 @@
 //#############################################################################
 openerp.web_export_view = function (instance) {
 
-    var _t = instance.web._t,
-        QWeb = instance.web.qweb;
+    var _t = instance.web._t, QWeb = instance.web.qweb;
 
     instance.web.Sidebar.include({
         redraw: function () {
@@ -32,7 +31,7 @@ openerp.web_export_view = function (instance) {
                 self.$el.find('.oe_sidebar_export_view_xls').on('click', self.on_sidebar_export_view_xls);
             }
         },
-        
+
         on_sidebar_export_view_xls: function () {
             // Select the first list of the current (form) view
             // or assume the main view is a list view and use that
