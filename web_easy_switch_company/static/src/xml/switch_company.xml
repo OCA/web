@@ -21,24 +21,29 @@
 <template>
 
     <t t-name="web_easy_switch_company.SwitchCompanyWidget">
-        <span class="oe_user_menu oe_topbar_item oe_dropdown_toggle oe_dropdown_arrow">
-            <span>
-                <t t-esc="widget.current_company_name"/>
-            </span>
-            <ul class="oe_dropdown_menu">
-                <t t-foreach="widget.companies" t-as="company">
-                    <li>
-                        <a class="easy_switch_company_company_item" 
-                                href="#" 
-                                t-att-data-company-id="company.id">
-                            <img class="oe_topbar_avatar" t-att-src="company.logo_topbar"/>
-                            <img class="oe_topbar_avatar" t-att-src="company.logo_state"/>
-                            <t t-esc="company.name"/>
-                        </a>
-                    </li>
-                </t>
-            </ul>
-        </span>
+        <ul class="nav navbar-nav navbar-right oe_user_menu_placeholder" style="margin-right:10px">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <span class="oe_topbar_name">
+                        <t t-esc="widget.current_company_name"/>
+                    </span>
+                    <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <t t-foreach="widget.companies" t-as="company">
+                        <li>
+                            <a class="easy_switch_company_company_item"
+                               href="#"
+                               t-att-data-company-id="company.id">
+                                <img class="oe_topbar_avatar" t-att-src="company.logo_topbar"/>
+                                <img class="oe_topbar_avatar" t-att-src="company.logo_state"/>
+                                <t t-esc="company.name"/>
+                            </a>
+                        </li>
+                    </t>
+                </ul>
+            </li>
+        </ul>
     </t>
 
 </template>

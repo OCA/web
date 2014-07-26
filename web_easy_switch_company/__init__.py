@@ -1,8 +1,9 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
-#    This module copyright (C) 2014 Therp BV (<http://therp.nl>).
+#    Web Easy Switch Company module for OpenERP
+#    Copyright (C) 2014 GRAP (http://www.grap.coop)
+#    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,34 +19,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name": "placeholder",
-    "version": "1.0",
-    "author": "Therp BV",
-    "license": "AGPL-3",
-    "complexity": "normal",
-    "description": """
-This is a placeholder module because odoo checks if an addons path contains
-addons at all. This makes travis fail, so we need this until the first addon is
-ported.
-
-Please remove as soon as you commit your first port!
-    """,
-    "category": "",
-    "depends": [
-    ],
-    "data": [
-    ],
-    "js": [
-    ],
-    "css": [
-    ],
-    "qweb": [
-    ],
-    "auto_install": False,
-    "installable": True,
-    "application": False,
-    "external_dependencies": {
-        'python': [],
-    },
-}
+from . import model
+from . import controllers

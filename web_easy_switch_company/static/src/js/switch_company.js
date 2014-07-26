@@ -62,6 +62,8 @@ openerp.web_easy_switch_company = function (instance) {
                 this.$el.show();
                 this.$el.find('.easy_switch_company_company_item').on('click', function(ev) {
                     var company_id = $(ev.target).data("company-id");
+
+
                     if (company_id != self.current_company_id){
                         var func = '/web_easy_switch_company/switch/change_current_company';
                         var param = {'company_id': company_id}
@@ -102,8 +104,8 @@ openerp.web_easy_switch_company = function (instance) {
                 // Note: calling res.company.name_search with 
                 //       user_preference=True in the context does 
                 //       not work either.
-                new instance.web.Model('res.users').call('fields_view_get',{context:{'form_view_ref':'base.view_users_form_simple_modif'}}).then(function(res){
-                    var res_company = res.fields.company_id.selection;
+                new instance.web.Model('res.company').call('name_search',{context:{'user_preference':'True'}}).then(function(res){
+                    var res_company = res;
                     for ( var i=0 ; i < res_company.length; i++) {
                         var logo_topbar, logo_state;
                         // TODO: fetching the logo of other companies fails with the
@@ -116,10 +118,10 @@ openerp.web_easy_switch_company = function (instance) {
                                 id: res_company[i][0]
                             });
                         if (res_company[i][0] == self.current_company_id){
-                            logo_state = '/web_easy_switch_company/static/src/img/selection-on.png';
+                            logo_state = '/web_easy_switch_company/static/description/selection-on.png';
                         }
                         else{
-                            logo_state = '/web_easy_switch_company/static/src/img/selection-off.png';
+                            logo_state = '/web_easy_switch_company/static/description/selection-off.png';
                         }
                         self.companies.push({
                             id: res_company[i][0],
@@ -145,7 +147,7 @@ openerp.web_easy_switch_company = function (instance) {
             this._super(parent);
             var switch_button = new instance.web.SwitchCompanyWidget();
             switch_button.appendTo(instance.webclient.$el.find('.oe_systray'));
-        },
+        }
 
     });
 
