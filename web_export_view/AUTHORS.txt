@@ -1,7 +1,0 @@
-Authors
-=======
-
-Simone Orsi <simone.orsi@domsense.com> [simahawk]
-Lorenzo Battistini <lorenzo.battistini@agilebg.com>
-Stefan Rijnhart <stefan@therp.nl>
-Leonardo Pistone <leonardo.pistone@agilebg.com>
