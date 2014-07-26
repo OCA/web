@@ -18,7 +18,6 @@
 //    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 //#############################################################################
-
 openerp.web_export_view = function (instance) {
 
     debugger;
@@ -94,21 +93,20 @@ openerp.web_export_view = function (instance) {
                         });
                         export_rows.push(export_row);
                     }
-                    ;
                 }
             });
             $.blockUI();
+            debugger;
             view.session.get_file({
                 url: '/web/export/xls_view',
                 data: {data: JSON.stringify({
                     model: view.model,
                     headers: export_columns_names,
-                    rows: export_rows,
+                    rows: export_rows
                 })},
                 complete: $.unblockUI
             });
-        },
-
+        }
     });
 
 };

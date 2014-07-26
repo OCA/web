@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-# #############################################################################
+##############################################################################
 #
-# Copyright (C) 2012 Domsense srl (<http://www.domsense.com>)
-# Copyright (C) 2012-2013 Agile Business Group sagl
-#    (<http://www.agilebg.com>)
+#    Copyright (C) 2012 Agile Business Group sagl (<http://www.agilebg.com>)
+#    Copyright (C) 2012 Domsense srl (<http://www.domsense.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -22,7 +21,7 @@
 
 {
     'name': 'Export Current View',
-    'version': '1.1',
+    'version': '1.2',
     'category': 'Web',
     'description': """
 WEB EXPORT VIEW
@@ -50,11 +49,11 @@ the same data of the tree view you are looking at, headers included.
     'depends': [
         'web',
     ],
-    'js': [
-        'static/src/js/web_advanced_export.js',
+    'data': [
+        'view/web_export_view.xml',
     ],
     'qweb': [
-        'static/src/xml/web_advanced_export.xml',
+        'static/src/xml/web_export_view_template.xml',
     ],
     'installable': True,
     'auto_install': False,
