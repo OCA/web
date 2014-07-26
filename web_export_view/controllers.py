@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+# #############################################################################
 #
 #    Copyright (C) 2012 Agile Business Group sagl (<http://www.agilebg.com>)
 #    Copyright (C) 2012 Domsense srl (<http://www.domsense.com>)
@@ -23,9 +23,10 @@ try:
 except ImportError:
     import simplejson as json
 
-import web.http as openerpweb
-
-from web.controllers.main import ExcelExport
+import openerp
+import openerp.http as http
+from openerp.http import request
+from openerp.addons.web.controllers.main import ExcelExport
 
 
 class ExcelExportView(ExcelExport):
@@ -36,19 +37,19 @@ class ExcelExportView(ExcelExport):
             raise AttributeError()
         return super(ExcelExportView, self).__getattribute__(name)
 
-    @openerpweb.httprequest
-    def index(self, req, data, token):
+    @http.route('/web/export/xls_view', type='json', auth='user')
+    def index(self, data, token):
         data = json.loads(data)
         model = data.get('model', [])
         columns_headers = data.get('headers', [])
         rows = data.get('rows', [])
-
-        return req.make_response(
-            self.from_data(columns_headers, rows),
-            headers=[
-                ('Content-Disposition', 'attachment; filename="%s"'
-                    % self.filename(model)),
-                ('Content-Type', self.content_type)
-            ],
-            cookies={'fileToken': token}
-        )
+        #
+        # return req.make_response(
+        #     self.from_data(columns_headers, rows),
+        #     headers=[
+        #         ('Content-Disposition', 'attachment; filename="%s"'
+        #             % self.filename(model)),
+        #         ('Content-Type', self.content_type)
+        #     ],
+        #     cookies={'fileToken': token}
+        # )

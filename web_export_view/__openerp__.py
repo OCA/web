@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+# #############################################################################
 #
-#    Copyright (C) 2012 Domsense srl (<http://www.domsense.com>)
-#    Copyright (C) 2012-2013 Agile Business Group sagl
+# Copyright (C) 2012 Domsense srl (<http://www.domsense.com>)
+# Copyright (C) 2012-2013 Agile Business Group sagl
 #    (<http://www.agilebg.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -47,13 +47,15 @@ the same data of the tree view you are looking at, headers included.
     'author': 'Agile Business Group',
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
-    'depends': ['web'],
-    # 'external_dependencies': {
-    #     'python': ['xlwt'],
-    # },
-    'js': ['static/*/*.js', 'static/*/js/*.js'],
-    'qweb': ['static/xml/web_advanced_export.xml'],
-    'installable': False,
+    'depends': [
+        'web',
+    ],
+    'js': [
+        'static/src/js/web_advanced_export.js',
+    ],
+    'qweb': [
+        'static/src/xml/web_advanced_export.xml',
+    ],
+    'installable': True,
     'auto_install': False,
-    'web_preload': False,
 }
