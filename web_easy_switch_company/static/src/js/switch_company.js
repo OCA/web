@@ -118,10 +118,10 @@ openerp.web_easy_switch_company = function (instance) {
                                 id: res_company[i][0]
                             });
                         if (res_company[i][0] == self.current_company_id){
-                            logo_state = '/web_easy_switch_company/static/src/img/selection-on.png';
+                            logo_state = '/web_easy_switch_company/static/description/selection-on.png';
                         }
                         else{
-                            logo_state = '/web_easy_switch_company/static/src/img/selection-off.png';
+                            logo_state = '/web_easy_switch_company/static/description/selection-off.png';
                         }
                         self.companies.push({
                             id: res_company[i][0],
