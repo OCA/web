@@ -27,10 +27,12 @@ openerp.web_export_view = function (instance) {
         redraw: function () {
             var self = this;
             this._super.apply(this, arguments);
-            self.$el.find('.oe_sidebar').append(QWeb.render('AddExportViewMain', {widget: self}));
-            self.$el.find('.oe_sidebar_export_view_xls').on('click', self.on_sidebar_export_view_xls);
+            if (self.getParent().ViewManager.active_view == 'list') {
+                self.$el.find('.oe_sidebar').append(QWeb.render('AddExportViewMain', {widget: self}));
+                self.$el.find('.oe_sidebar_export_view_xls').on('click', self.on_sidebar_export_view_xls);
+            }
         },
-
+        
         on_sidebar_export_view_xls: function () {
             // Select the first list of the current (form) view
             // or assume the main view is a list view and use that
