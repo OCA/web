@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
-################################################################################
+###############################################################################
 #    See Copyright and Licence Informations undermentioned.
-################################################################################
+###############################################################################
 {
     'name': 'Web Widget - Formulas in Float fields',
     'version': '1.0',
@@ -35,7 +35,8 @@ Limits:
 
 Copyright and Licence:
 -----------------------
-    * 2013, Groupement Régional Alimentaire de Proximité (http://www.grap.coop/)
+    * 2013, Groupement Régional Alimentaire de Proximité
+      (http://www.grap.coop/)
     * Licence: AGPL-3 (http://www.gnu.org/licenses/)
 
 Contacts :
