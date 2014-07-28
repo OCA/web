@@ -111,7 +111,8 @@ class IrFilters(Model):
                 'union_filter_ids': [(6, 0, [])],
                 'complement_filter_ids': [(6, 0, [])],
             })
-            #if we removed inactive filters which are orphaned now, delete them
+            # if we removed inactive filters which are orphaned now, delete
+            # them
             cr.execute('''delete from ir_filters
                        where
                         not active and id in %s
