@@ -21,7 +21,7 @@
 import itertools
 from openerp.osv.orm import Model
 from openerp.osv import fields, expression
-from openerp.tools.safe_eval import const_eval
+from openerp.tools.safe_eval import safe_eval
 from openerp.tools.translate import _
 
 
@@ -32,7 +32,7 @@ class IrFilters(Model):
         '''determine if this is fixed list of ids'''
         result = {}
         for this in self.browse(cr, uid, ids, context=context):
-            domain = const_eval(this.domain)
+            domain = safe_eval(this.domain)
             result[this.id] = (len(domain) == 1 and
                                expression.is_leaf(domain[0]) and
                                domain[0][0] == 'id')
@@ -44,7 +44,7 @@ class IrFilters(Model):
         def eval_n(domain):
             '''parse a domain and normalize it'''
             return expression.normalize_domain(
-                const_eval(domain) or [expression.FALSE_LEAF])
+                safe_eval(domain) or [expression.FALSE_LEAF])
         result = {}
         for this in self.read(
                 cr, uid, ids,
@@ -95,7 +95,7 @@ class IrFilters(Model):
         assert len(ids) == 1
         this = self.browse(cr, uid, ids[0], context=context)
         return self.pool[this.model_id].search(
-            cr, uid, const_eval(this.domain), context=const_eval(this.context))
+            cr, uid, safe_eval(this.domain), context=safe_eval(this.context))
 
     def button_save(self, cr, uid, ids, context=None):
         return {'type': 'ir.actions.act_window.close'}
