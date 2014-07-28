@@ -3,7 +3,8 @@
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
-#    Copyright (C) 2011-2014 Serpent Consulting Services (<http://www.serpentcs.com>)
+#    Copyright (C) 2011-2014 Serpent Consulting Services
+#    (<http://www.serpentcs.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -29,7 +30,8 @@
 OpenERP Web Search Extended.
 ============================
 
-This module used for search record base on alphabetical character be default it will search on name field.
+This module used for search record base on alphabetical character be default it
+will search on name field.
 User also is able to change search field name instead of name field.
     """,
     'version': '1.0',

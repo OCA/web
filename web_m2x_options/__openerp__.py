@@ -16,12 +16,14 @@ Add new options for many2one and many2manytags field:
 Example:
 --------
 
-<field name="partner_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
+``<field name="partner_id" options="{'limit': 10, 'create': false,
+'create_edit': false}"/>``
 
 Note:
 -----
 
-if one of those options are not set, many2one field use default many2one field options.
+If one of those options are not set, many2one field uses default many2one
+field options.
 
 Thanks to:
 ----------
