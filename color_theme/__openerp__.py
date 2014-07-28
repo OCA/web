@@ -1,15 +1,14 @@
 {
     'name' : 'Color Theme',
     'version' : '0.1',
-    'sequence' : 1,
     'category' : 'Tools',
-    'author': 'K-Omran ISFP Egypt',
+    'author': 'K-Omran',
     'description': """
-This Module Allows User To Easily Change OpenERP Color Theme.
+This module allows user to easily change OpenERP color theme.
 =============================================================
-This Module Allows User To Define New Color Theme And Save It For Future Use.
-Each User Can Select Any Stored Color Theme As His Theme And Also Can Make His Own Theme.
-Special Thanks To "Zesty Beanz Technologies" For Their Contributions.
+This module allows user To define new color theme and save it for future use.\n
+Each user can select any stored color theme as his theme and also can make his own theme.\n
+special thanks to "Zesty Beanz Technologies" for their contributions.
 """,
 
     'depends' : ['base', 'web'],
