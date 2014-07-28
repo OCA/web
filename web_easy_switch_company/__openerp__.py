@@ -60,9 +60,6 @@ Copyright, Author and Licence:
     'data': [
         'view/res_users_view.xml',
     ],
-    'js': [
-        'static/src/js/switch_company.js',
-    ],
     'qweb': [
         'static/src/xml/switch_company.xml',
     ],
