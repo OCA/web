@@ -99,7 +99,7 @@ openerp.advanced_filters = function(instance)
                         },
                     },
                     {
-                        label: _t('Whole result set'),
+                        label: _t('Whole selection'),
                         classname: 'oe_advanced_filters_header',
                     },
                     {
