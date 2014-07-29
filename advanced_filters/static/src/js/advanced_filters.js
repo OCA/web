@@ -49,11 +49,11 @@ openerp.advanced_filters = function(instance)
                     {
                         $e.find('a[data-index="0"],a[data-index="1"],' +
                                 'a[data-index="2"],a[data-index="3"]')
-                            .parent().toggle(ids.length);
+                            .parent().toggle(ids.length > 0);
                     }
                     else
                     {
-                        $e.toggle(ids.length);
+                        $e.toggle(ids.length > 0);
                     }
                 });
             }
