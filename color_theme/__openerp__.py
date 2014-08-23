@@ -11,25 +11,24 @@ Each user can select any stored color theme as his theme and also can make his o
 special thanks to "Zesty Beanz Technologies" for their contributions.
 """,
 
-    'depends' : ['base', 'web'],
-    'data' : [
+    'depends':['base', 'web'],
+    'data':[
               'security/ir.model.access.csv',
               'views/color_theme_view.xml',
               ],
-    'js': [
+    'js':[
            'static/lib/colorpicker/js/colorpicker.js',
            'static/lib/colorpicker/js/eye.js',
            'static/lib/colorpicker/js/utils.js',
            'static/lib/colorpicker/js/layout.js?ver=1.0.2',
            'static/src/js/color_theme.js',
            ],
-           
-    'qweb': [],
-    'css': [
+
+    'qweb':[],
+    'css':[
             'static/lib/colorpicker/css/colorpicker.css',
             'static/lib/colorpicker/css/layout.css',
             ],
-    
+
     'web_preload': False,
-    
 }
