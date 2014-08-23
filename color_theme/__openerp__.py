@@ -17,17 +17,17 @@ special thanks to "Zesty Beanz Technologies" for their contributions.
               'views/color_theme_view.xml',
               ],
     'js': [
-           'static/src/colorpicker/js/colorpicker.js',
-           'static/src/colorpicker/js/eye.js',
-           'static/src/colorpicker/js/utils.js',
-           'static/src/colorpicker/js/layout.js?ver=1.0.2',
+           'static/lib/colorpicker/js/colorpicker.js',
+           'static/lib/colorpicker/js/eye.js',
+           'static/lib/colorpicker/js/utils.js',
+           'static/lib/colorpicker/js/layout.js?ver=1.0.2',
            'static/src/js/color_theme.js',
            ],
            
     'qweb': [],
     'css': [
-            'static/src/colorpicker/css/colorpicker.css',
-            'static/src/colorpicker/css/layout.css',
+            'static/lib/colorpicker/css/colorpicker.css',
+            'static/lib/colorpicker/css/layout.css',
             ],
     
     'web_preload': False,
