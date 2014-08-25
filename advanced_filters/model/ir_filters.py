@@ -101,7 +101,7 @@ class IrFilters(Model):
         return {'type': 'ir.actions.act_window.close'}
 
     def button_freeze(self, cr, uid, ids, context=None):
-        '''evaluate the filter and write a fixed [('ids', 'in', [])] domain'''
+        '''evaluate the filter and write a fixed [('id', 'in', [])] domain'''
         for this in self.browse(cr, uid, ids, context=context):
             ids = this._evaluate()
             removed_filter_ids = [f.id for f in itertools.chain(
@@ -125,7 +125,7 @@ class IrFilters(Model):
                        (tuple(removed_filter_ids),))
 
     def button_test(self, cr, uid, ids, context=None):
-        for this in self.browse(cr, uid, ids, context=None):
+        for this in self.browse(cr, uid, ids, context=context):
             return {
                 'type': 'ir.actions.act_window',
                 'name': _('Testing %s') % this.name,
