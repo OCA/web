@@ -47,8 +47,8 @@ openerp.advanced_filters = function(instance)
                     $e = jQuery(e)
                     if($e.find('li.oe_advanced_filters_header').length)
                     {
-                        $e.find('a[data-index="0"],a[data-index="1"],' +
-                                'a[data-index="2"],a[data-index="3"]')
+                        $e.find('a[data-index="3"],a[data-index="4"],' +
+                                'a[data-index="5"],a[data-index="6"]')
                             .parent().toggle(ids.length > 0);
                     }
                     else
