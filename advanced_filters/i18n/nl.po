@@ -52,7 +52,7 @@ msgstr "Verwijder uit bestaand filter"
 #: code:addons/advanced_filters/model/ir_filters.py:131
 #, python-format
 msgid "Testing %s"
-msgstr "Testen"
+msgstr "Testen %s"
 
 #. module: advanced_filters
 #: view:ir.filters:0
