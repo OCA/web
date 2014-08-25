@@ -27,7 +27,7 @@ msgstr "Union"
 #. module: advanced_filters
 #: view:ir.filters:0
 msgid "Add the result of following filters"
-msgstr "Voeg resultaat to aan de filters"
+msgstr "Voeg resultaat van onderstaande filteringen toe aan filter"
 
 #. module: advanced_filters
 #: view:ir.filters:0
@@ -45,8 +45,8 @@ msgstr "Bevries filter"
 #: code:addons/advanced_filters/static/src/js/advanced_filters.js:94
 #: code:addons/advanced_filters/static/src/js/advanced_filters.js:114
 #, python-format
-msgid "Remove from existing selection"
-msgstr "Verwijder uit bestaande selectie"
+msgid "Remove from existing filter"
+msgstr "Verwijder uit bestaand filter"
 
 #. module: advanced_filters
 #: code:addons/advanced_filters/model/ir_filters.py:131
@@ -70,8 +70,8 @@ msgstr "Verwijder resultaat van filters"
 #: code:addons/advanced_filters/static/src/js/advanced_filters.js:86
 #: code:addons/advanced_filters/static/src/js/advanced_filters.js:106
 #, python-format
-msgid "To existing selection"
-msgstr "Naar bestaande selectie"
+msgid "To existing filter"
+msgstr "Voeg toe aan bestaand  filter"
 
 #. module: advanced_filters
 #: view:ir.filters.combine.with.existing:0
@@ -88,7 +88,7 @@ msgstr "Laat deze filter precies deze records bevatten, zonder veranderingen in 
 #: code:addons/advanced_filters/static/src/js/advanced_filters.js:32
 #, python-format
 msgid "Advanced filters"
-msgstr "Geavanceerd filters"
+msgstr "Geavanceerde filters"
 
 #. module: advanced_filters
 #: field:ir.filters,active:0
@@ -100,7 +100,7 @@ msgstr "Actief"
 #: code:addons/advanced_filters/static/src/js/advanced_filters.js:74
 #, python-format
 msgid "Marked records"
-msgstr "Gemarkeerde records"
+msgstr "Aangevinkte records (verzameling)"
 
 #. module: advanced_filters
 #: field:ir.filters,is_frozen:0
@@ -121,8 +121,8 @@ msgstr "Test filter"
 #. openerp-web
 #: code:addons/advanced_filters/static/src/js/advanced_filters.js:78
 #, python-format
-msgid "To new selection"
-msgstr "Naar nieuwe selectie"
+msgid "To new filter"
+msgstr "Opslaan als nieuw filter"
 
 #. module: advanced_filters
 #: field:ir.filters,domain_this:0
@@ -132,7 +132,7 @@ msgstr "Deze filters eigen domein"
 #. module: advanced_filters
 #: view:ir.filters:0
 msgid "Remove the result of following filters"
-msgstr "Verwijder het resultaat uit de volgende filters"
+msgstr "Verwijder resultaat van onderstaande filteringen uit filter"
 
 #. module: advanced_filters
 #: field:ir.filters.combine.with.existing,context:0
@@ -153,8 +153,8 @@ msgstr "Model"
 #. openerp-web
 #: code:addons/advanced_filters/static/src/js/advanced_filters.js:102
 #, python-format
-msgid "Whole selection"
-msgstr "Hele selectie"
+msgid "Whole selection (criteria)"
+msgstr "Alle records (als criteria)"
 
 #. module: advanced_filters
 #: field:ir.filters.combine.with.existing,domain:0

@@ -71,39 +71,11 @@ openerp.advanced_filters = function(instance)
                 'advanced_filters',
                 [
                     {
-                        label: _t('Marked records'),
+                        label: _t('Whole selection (criteria)'),
                         classname: 'oe_advanced_filters_header',
                     },
                     {
-                        label: _t('To new selection'),
-                        callback: function ()
-                        {
-                            self.advanced_filters_save_selection.apply(
-                                self, arguments);
-                        },
-                    },
-                    {
-                        label: _t('To existing selection'),
-                        callback: function (item)
-                        {
-                            self.advanced_filters_combine_with_existing.apply(
-                                self, ['union', 'ids', item]);
-                        },
-                    },
-                    {
-                        label: _t('Remove from existing selection'),
-                        callback: function (item)
-                        {
-                            self.advanced_filters_combine_with_existing.apply(
-                                self, ['complement', 'ids', item]);
-                        },
-                    },
-                    {
-                        label: _t('Whole selection'),
-                        classname: 'oe_advanced_filters_header',
-                    },
-                    {
-                        label: _t('To existing selection'),
+                        label: _t('To existing filter'),
                         callback: function (item)
                         {
                             self.advanced_filters_combine_with_existing.apply(
@@ -111,11 +83,39 @@ openerp.advanced_filters = function(instance)
                         },
                     },
                     {
-                        label: _t('Remove from existing selection'),
+                        label: _t('Remove from existing filter'),
                         callback: function (item)
                         {
                             self.advanced_filters_combine_with_existing.apply(
                                 self, ['complement', 'domain', item]);
+                        },
+                    },
+                    {
+                        label: _t('Marked records'),
+                        classname: 'oe_advanced_filters_header',
+                    },
+                    {
+                        label: _t('To new filter'),
+                        callback: function ()
+                        {
+                            self.advanced_filters_save_selection.apply(
+                                self, arguments);
+                        },
+                    },
+                    {
+                        label: _t('To existing filter'),
+                        callback: function (item)
+                        {
+                            self.advanced_filters_combine_with_existing.apply(
+                                self, ['union', 'ids', item]);
+                        },
+                    },
+                    {
+                        label: _t('Remove from existing filter'),
+                        callback: function (item)
+                        {
+                            self.advanced_filters_combine_with_existing.apply(
+                                self, ['complement', 'ids', item]);
                         },
                     },
                  ]
