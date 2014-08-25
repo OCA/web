@@ -39,24 +39,7 @@ openerp.advanced_filters = function(instance)
         do_select: function (ids, records)
         {
             var result = this._super(this, arguments);
-            if(this.sidebar)
-            {
-                this.sidebar.$el.show();
-                this.sidebar.$el.children().children().each(function(i, e)
-                {
-                    $e = jQuery(e)
-                    if($e.find('li.oe_advanced_filters_header').length)
-                    {
-                        $e.find('a[data-index="3"],a[data-index="4"],' +
-                                'a[data-index="5"],a[data-index="6"]')
-                            .parent().toggle(ids.length > 0);
-                    }
-                    else
-                    {
-                        $e.toggle(ids.length > 0);
-                    }
-                });
-            }
+            this.advanced_filters_show(ids);
             return result;
         },
         load_list: function(data)
@@ -65,6 +48,7 @@ openerp.advanced_filters = function(instance)
                 self = this;
             if(!this.sidebar || this.sidebar.items.advanced_filters.length)
             {
+                this.advanced_filters_show([]);
                 return result;
             }
             this.sidebar.add_items(
@@ -122,6 +106,27 @@ openerp.advanced_filters = function(instance)
             );
             this.do_select([], []);
             return result;
+        },
+        advanced_filters_show: function(ids)
+        {
+            if(this.sidebar)
+            {
+                this.sidebar.$el.show();
+                this.sidebar.$el.children().children().each(function(i, e)
+                {
+                    $e = jQuery(e)
+                    if($e.find('li.oe_advanced_filters_header').length)
+                    {
+                        $e.find('a[data-index="3"],a[data-index="4"],' +
+                                'a[data-index="5"],a[data-index="6"]')
+                            .parent().toggle(ids.length > 0);
+                    }
+                    else
+                    {
+                        $e.toggle(ids.length > 0);
+                    }
+                });
+            }
         },
         advanced_filters_save_selection: function(item)
         {
