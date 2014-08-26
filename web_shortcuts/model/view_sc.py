@@ -29,39 +29,36 @@
 from openerp.osv import orm, fields
 
 
-class view_sc(orm.Model):
-    _name = 'ir.ui.view_sc'
+class web_shortcut(orm.Model):
+    _name = 'web.shortcut'
     _columns = {
-        'name': fields.char('Shortcut Name', size=64), # Kept for backwards compatibility only - resource name used instead (translatable)
-        'res_id': fields.integer('Resource Ref.', help="Reference of the target resource, whose model/table depends on the 'Resource Name' field."),
-        'sequence': fields.integer('Sequence'),
-        'user_id': fields.many2one('res.users', 'User Ref.', required=True, ondelete='cascade', select=True),
-        'resource': fields.char('Resource Name', size=64, required=True, select=True)
+        'name': fields.char('Shortcut Name', size=64),
+        'menu_id': fields.many2one('ir.ui.menu'),
+        'user_id': fields.many2one('res.users', 'User Ref.', required=True,
+                                   ondelete='cascade', select=True),
     }
 
-    def _auto_init(self, cr, context=None):
-        super(view_sc, self)._auto_init(cr, context)
-        cr.execute('SELECT indexname FROM pg_indexes WHERE indexname = \'ir_ui_view_sc_user_id_resource\'')
-        if not cr.fetchone():
-            cr.execute('CREATE INDEX ir_ui_view_sc_user_id_resource ON ir_ui_view_sc (user_id, resource)')
-
-    def get_sc(self, cr, uid, user_id, model='ir.ui.menu', context=None):
-        ids = self.search(cr, uid, [('user_id','=',user_id),('resource','=',model)], context=context)
-        results = self.read(cr, uid, ids, ['res_id'], context=context)
-        name_map = dict(self.pool.get(model).name_get(cr, uid, [x['res_id'] for x in results], context=context))
+    def get_user_shortcuts(self, cr, uid, user_id, context=None):
+        ids = self.search(cr, uid, [('user_id', '=', user_id)],
+                          context=context)
+        results = self.read(cr, uid, ids, ['menu_id'], context=context)
+        name_map = dict(self.pool.get('ir.ui.menu')
+                        .name_get(cr, uid, [x['menu_id'][0] for x in results],
+                                  context=context))
         # Make sure to return only shortcuts pointing to exisintg menu items.
-        filtered_results = filter(lambda result: result['res_id'] in name_map, results)
+        filtered_results = filter(lambda result: result['menu_id'][0] in
+                                  name_map, results)
         for result in filtered_results:
-            result.update(name=name_map[result['res_id']])
+            result.update(name=name_map[result['menu_id'][0]])
         return filtered_results
 
-    _order = 'sequence,name'
+    _order = 'name'
     _defaults = {
-        'resource': 'ir.ui.menu',
         'user_id': lambda obj, cr, uid, context: uid,
     }
     _sql_constraints = [
-        ('shortcut_unique', 'unique(res_id, resource, user_id)', 'Shortcut for this menu already exists!'),
+        ('shortcut_unique', 'unique(menu_id,user_id)',
+         'Shortcut for this menu already exists!'),
     ]
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

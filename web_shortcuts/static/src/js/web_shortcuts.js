@@ -33,7 +33,7 @@ instance.web_shortcuts.Shortcuts = instance.web.Widget.extend({
         this.on('display', this, this.display);
         this.on('remove', this, this.remove);
         this.on('click', this, this.click);
-        this.model = new instance.web.Model('ir.ui.view_sc');
+        this.model = new instance.web.Model('web.shortcut');
     },
     start: function() {
         var self = this;
@@ -46,9 +46,8 @@ instance.web_shortcuts.Shortcuts = instance.web.Widget.extend({
     load: function() {
         var self = this;
         this.$el.find('.oe_systray_shortcuts_items').empty();
-        return this.model.call('get_sc', [
+        return this.model.call('get_user_shortcuts', [
             instance.session.uid,
-            'ir.ui.menu',
             instance.web.pyeval.eval('context', {})
         ]).done(function(shortcuts) {
             _.each(shortcuts, function(sc) {
@@ -138,8 +137,7 @@ instance.web.ViewManagerAction.include({
                 } else {
                     shortcuts_menu.trigger('add', {
                         'user_id': self.session.uid,
-                        'res_id': self.session.active_id,
-                        'resource': 'ir.ui.menu',
+                        'menu_id': self.session.active_id,
                         'name': self.action.name
                     });
                 }

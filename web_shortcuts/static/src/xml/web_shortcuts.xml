@@ -13,7 +13,7 @@
 </t>
 <t t-name="Systray.Shortcuts.Item">
     <li>
-        <a href="#" t-att-data-id="shortcut.res_id" t-att-data-shortcut-id="shortcut.id">
+        <a href="#" t-att-data-id="shortcut.menu_id[0]" t-att-data-shortcut-id="shortcut.id">
             <t t-esc="shortcut.name"/>
         </a>
     </li>
