@@ -14,12 +14,12 @@ special thanks to "Zesty Beanz Technologies" for their contributions.
 
     'depends': ['base', 'web', ],
     'data': ['security/ir.model.access.csv',
-            'views/color_theme_view.xml', ],
+             'views/color_theme_view.xml', ],
     'js': ['static/lib/colorpicker/js/colorpicker.js',
-            'static/lib/colorpicker/js/eye.js',
-            'static/lib/colorpicker/js/utils.js',
-            'static/lib/colorpicker/js/layout.js?ver=1.0.2',
-            'static/src/js/color_theme.js', ],
+           'static/lib/colorpicker/js/eye.js',
+           'static/lib/colorpicker/js/utils.js',
+           'static/lib/colorpicker/js/layout.js?ver=1.0.2',
+           'static/src/js/color_theme.js', ],
 
     'qweb': [],
     'css': ['static/lib/colorpicker/css/colorpicker.css',
