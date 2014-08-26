@@ -27,4 +27,4 @@
 #
 #
 
-from . import view_sc
+from . import web_shortcut
