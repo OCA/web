@@ -1,0 +1,7 @@
+<templates>
+    <t t-extend="FieldStatus.content">
+        <t t-jquery="li">
+            this.attr('t-att-data-id', 'widget.to_show[i][0]')
+        </t>
+    </t>
+</templates>
