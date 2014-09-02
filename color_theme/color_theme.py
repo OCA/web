@@ -1,9 +1,6 @@
 from openerp.osv import orm, fields
 
 
-# ============================Color Theme Model==============================
-
-
 class color_theme(orm.Model):
     """This Model To Store Color Themes To be Selectd Later"""
 

@@ -1,6 +1,6 @@
 {
     'name': 'Color Theme',
-    'version': '0.1',
+    'version': '1.0',
     'category': 'Tools',
     'author': 'K-Omran',
     'description': """
@@ -9,7 +9,6 @@ This module allows user to easily change OpenERP color theme.
 This module allows user To define new color theme and save it for future use.\n
 Each user can select any stored color theme as his theme\n
 and also can make his own theme.\n
-special thanks to "Zesty Beanz Technologies" for their contributions.
 """,
 
     'depends': ['base', 'web', ],
