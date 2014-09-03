@@ -24,7 +24,7 @@ Then the web client can access these files using the url path:
 To use it in on_change methods just add the the url path of the
 audio file in the result dictionary under the key 'sound'. Example::
 
-    res['sound'] = '/module_name/static/path/to/audio/file/mysound.wav'
+    res['sound'] = '/module_name/static/mysound.wav'
     res['warning'] = {
         'title': _('Cannot do something'),
         'message': _('The reason why...'),
@@ -35,7 +35,7 @@ On orm_except put the url path of the file inside '{{}}' as in this example::
 
     raise orm_except(
         'Cannot do something',
-        'The reason why... {{ sound: /module_name/static/path/to/audio/file/mysound.wav }}'
+        'The reason why... {{ sound: /module_name/static/mysound.wav }}'
     )
 """,
     'depends': [
