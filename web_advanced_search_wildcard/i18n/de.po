@@ -1,0 +1,6 @@
+#. module: web
+#. openerp-web
+#: code:addons/search_enhanced_operators/static/src/js/search.js:3
+#, python-format
+msgid "matches"
+msgstr "entspricht"
