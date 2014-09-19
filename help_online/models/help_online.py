@@ -40,7 +40,7 @@ class HelpOnline(orm.TransientModel):
         ir_model = self.env['ir.model']
         description = self.env[model]._description
         res = ir_model.name_search(model, operator='=')
-        if(res):
+        if res:
             description = res[0][1]
         name = self._get_view_name(model, view_type, domain, context)
         if self.page_exists(name):
