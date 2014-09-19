@@ -1,0 +1,13 @@
+<templates>
+    <t t-name='HelpOnline.Buttons'>
+        <div  class='oe_help_online_buttons'>
+            <ul class='oe_view_manager_switch oe_button_group oe_right'>
+                <li class='oe_i'>
+                    <a class='oe_list_button_help_online'
+                       t-att-title='url_info.title'
+                       t-att-href='url_info.url' target='_blank'></a>
+                </li>
+            </ul>
+        </div>
+   </t>
+</templates>
