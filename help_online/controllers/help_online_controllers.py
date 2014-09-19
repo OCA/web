@@ -29,4 +29,4 @@ class HelpOnlineController(http.Controller):
     def build_url(self, model, view_type, domain=None, context=None):
         help_online_model = request.env['help.online']
         return help_online_model.get_page_url(
-            model, view_type, domain=None, context=None)
+            model, view_type, domain=domain, context=context)
