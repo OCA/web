@@ -20,6 +20,7 @@
 			<field name="arch" type="xml">
 				<tree string="Outside Work Types">
 					<field name="theme_name"/>
+					<field name="user"/>
 				</tree>
 			</field>
 		</record>
@@ -128,7 +129,7 @@
 	                <div name="user_theme_selection">
 	                	<separator string="User Theme Selection"/>
 	                	<group name="user_theme_selection">
-	                		<field name="color_theme" class="oe_inline"/>
+	                		<field name="color_theme" widget="selection" class="oe_inline"/>
 	                	</group>
 	                </div>
 	            </form>
