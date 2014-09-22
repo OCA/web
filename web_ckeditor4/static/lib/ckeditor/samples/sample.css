@@ -1,11 +1,11 @@
 /*
-Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
-For licensing, see LICENSE.html or http://ckeditor.com/license
+Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
 */
 
 html, body, h1, h2, h3, h4, h5, h6, div, span, blockquote, p, address, form, fieldset, img, ul, ol, dl, dt, dd, li, hr, table, td, th, strong, em, sup, sub, dfn, ins, del, q, cite, var, samp, code, kbd, tt, pre
 {
-	line-height: 1.5em;
+	line-height: 1.5;
 }
 
 body
@@ -18,6 +18,14 @@ input, textarea, select, option, optgroup, button, td, th
 	font-size: 100%;
 }
 
+pre
+{
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	-webkit-tab-size: 4;
+	tab-size: 4;
+}
+
 pre, code, kbd, samp, tt
 {
 	font-family: monospace,monospace;
@@ -25,8 +33,8 @@ pre, code, kbd, samp, tt
 }
 
 body {
-    width: 960px;
-    margin: 0 auto;
+	width: 960px;
+	margin: 0 auto;
 }
 
 code
@@ -46,25 +54,42 @@ abbr
 	cursor: pointer;
 }
 
-.new
+.new, .beta
 {
-	background: #FF7E00;
-	border: 1px solid #DA8028;
-	color: #fff;
+	text-transform: uppercase;
 	font-size: 10px;
 	font-weight: bold;
 	padding: 1px 4px;
-	text-shadow: 0 1px 0 #C97626;
-	text-transform: uppercase;
-	margin: 0 0 0 3px;
+	margin: 0 0 0 5px;
+	color: #fff;
+	float: right;
 
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
+}
+
+.new
+{
+	background: #FF7E00;
+	border: 1px solid #DA8028;
+	text-shadow: 0 1px 0 #C97626;
 
 	-moz-box-shadow: 0 2px 3px 0 #FFA54E inset;
 	-webkit-box-shadow: 0 2px 3px 0 #FFA54E inset;
 	box-shadow: 0 2px 3px 0 #FFA54E inset;
+}
+
+.beta
+{
+	background: #18C0DF;
+	border: 1px solid #19AAD8;
+	text-shadow: 0 1px 0 #048CAD;
+	font-style: italic;
+
+	-moz-box-shadow: 0 2px 3px 0 #50D4FD inset;
+	-webkit-box-shadow: 0 2px 3px 0 #50D4FD inset;
+	box-shadow: 0 2px 3px 0 #50D4FD inset;
 }
 
 h1.samples
@@ -148,10 +173,6 @@ pre.samples
 	padding: 0.25em;
 	white-space: pre-wrap; /* CSS 2.1 */
 	word-wrap: break-word; /* IE7 */
-	-moz-tab-size: 4;
-	-o-tab-size: 4;
-	-webkit-tab-size: 4;
-	tab-size: 4;
 }
 
 #footer
@@ -291,9 +312,9 @@ dl.samples > dd
 }
 .warning
 {
-    color: #ff0000;
+	color: #ff0000;
 	background-color: #FFCCBA;
-    border: 2px dotted #ff0000;
+	border: 2px dotted #ff0000;
 	padding: 15px 10px;
 	margin: 10px 0;
 }
@@ -325,15 +346,20 @@ blockquote
 }
 
 img.right {
-    border: 1px solid #ccc;
-    float: right;
-    margin-left: 15px;
-    padding: 5px;
+	border: 1px solid #ccc;
+	float: right;
+	margin-left: 15px;
+	padding: 5px;
 }
 
 img.left {
-    border: 1px solid #ccc;
-    float: left;
-    margin-right: 15px;
-    padding: 5px;
+	border: 1px solid #ccc;
+	float: left;
+	margin-right: 15px;
+	padding: 5px;
+}
+
+.marker
+{
+	background-color: Yellow;
 }
