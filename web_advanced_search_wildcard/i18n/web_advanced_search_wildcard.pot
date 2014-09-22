@@ -14,9 +14,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 
-#. module: search_enhanced_operators
+#. module: web_advanced_search_wildcard
 #. openerp-web
-#: code:addons/search_enhanced_operators/static/src/js/search.js:4
+#: code:addons/web_advanced_search_wildcard/static/src/js/search.js:4
 #, python-format
 msgid "matches"
 msgstr ""
