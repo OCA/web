@@ -3,9 +3,10 @@
     'version': '0.2',
     'description': """
 Fields masks
-================================================================================
+==============================================================================
 
-Based on jquery.inputmask 3.x (https://github.com/RobinHerbots/jquery.inputmask)
+Based on jquery.inputmask 3.x
+(https://github.com/RobinHerbots/jquery.inputmask)
 
 An inputmask helps the user with the input by ensuring a predefined format.
 This can be useful for dates, numerics, phone numbers, ...
