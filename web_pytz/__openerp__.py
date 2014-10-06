@@ -47,7 +47,7 @@ Usage
 
 Depend on this module and use filters like::
 
-  [('write_date', '>=', utc_today().strftime('%Y-%m-%d'))]
+    [('write_date', '>=', utc_today().strftime('%Y-%m-%d %H:%M:%S'))]
 
 which displays records changed in the user's conception of today.""",
     "category": "Dependency",
