@@ -9,32 +9,10 @@ openerp.web_warning_sound = function(instance) {
                     var audio = new Audio(result.sound);
                     audio.play();
                 }
-                if (result.value) {
-                    this._internal_set_values(result.value, processed);
-                }
-                if (!_.isEmpty(result.warning)) {
-                    instance.web.dialog($(QWeb.render("CrashManager.warning", result.warning)), {
-                        title:result.warning.title,
-                        modal: true,
-                        buttons: [
-                            {text: _t("Ok"), click: function() { $(this).dialog("close"); }}
-                        ]
-                    });
-                }
-
-                var fields = this.fields;
-                _(result.domain).each(function (domain, fieldname) {
-                    var field = fields[fieldname];
-                    if (!field) { return; }
-                    field.node.attrs.domain = domain;
-                });
-
-                return $.Deferred().resolve();
             } catch(e) {
                 console.error(e);
-                instance.webclient.crashmanager.show_message(e);
-                return $.Deferred().reject();
             }
+            return this._super.apply(this, arguments);
         },
     });
 
