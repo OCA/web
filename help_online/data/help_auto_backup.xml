@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+        <record id="wz_auto_backup" model="export.help.wizard">
+        </record>       
+
+        <function model="export.help.wizard" name="auto_backup"/>
+    </data>
+</openerp>
