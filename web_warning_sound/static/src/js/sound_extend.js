@@ -28,12 +28,7 @@ openerp.web_warning_sound = function(instance) {
                 audio.play();
                 error.data.fault_code = error.data.fault_code.replace(re, '');
             }
-            instance.web.dialog($('<div>' + QWeb.render('CrashManager.warning', {error: error}) + '</div>'), {
-                title: "OpenERP " + _.str.capitalize(error.type),
-                buttons: [
-                    {text: _t("Ok"), click: function() { $(this).dialog("close"); }}
-                ]
-            });
+            return this._super.apply(this, arguments);
         },
     });
 }
