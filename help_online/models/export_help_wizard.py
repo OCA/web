@@ -121,11 +121,11 @@ class ExportHelpWizard(models.TransientModel):
                 continue
             page_url = '/page/%s' % page_prefix
             template_url = '/page/%s' % template_prefix
-            if not page_url in href and not template_url in href:
+            if page_url not in href and template_url not in href:
                 continue
-            elif page_url in href and not template_url in href:
+            elif page_url in href and template_url not in href:
                 pass
-            elif not page_url in href and template_url in href:
+            elif page_url not in href and template_url in href:
                 page_url = template_url
             else:
                 if page_prefix in template_prefix:
@@ -157,17 +157,17 @@ class ExportHelpWizard(models.TransientModel):
         thumbnail = ET.SubElement(main_div,
                                   'div',
                                   attrib={'class': 'oe_snippet_thumbnail'})
-        img = ET.SubElement(thumbnail,
-                            'img',
-                            attrib={'class': 'oe_snippet_thumbnail_img',
-                                    'src': HELP_ONLINE_SNIPPET_IMAGE_PATH})
+        ET.SubElement(thumbnail,
+                      'img',
+                      attrib={'class': 'oe_snippet_thumbnail_img',
+                              'src': HELP_ONLINE_SNIPPET_IMAGE_PATH})
         span = ET.SubElement(thumbnail,
                              'span',
                              attrib={'class': 'oe_snippet_thumbnail_title'})
         span.text = page_node.attrib['name'].replace(template_prefix, '')
         body = ET.SubElement(main_div,
                              'section',
-                             attrib={'class': 'oe_snippet_body '\
+                             attrib={'class': 'oe_snippet_body '
                                               'mt_simple_snippet'})
 
         template = page.find(".//div[@id='wrap']")
@@ -272,6 +272,6 @@ class ExportHelpWizard(models.TransientModel):
                 backup_file.write(xml_data)
                 backup_file.close
             except:
-                _logger.warning(_('Unable to write autobackup file '\
-                                         'in given directory: %s'
-                                         % autobackup_path))
+                _logger.warning(_('Unable to write autobackup file '
+                                  'in given directory: %s'
+                                  % autobackup_path))
