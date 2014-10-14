@@ -50,9 +50,10 @@ class ExportHelpWizard(models.TransientModel):
             - Replace db id in url with xml id
         '''
 
-        def substitute_id_by_xml_id():
+        def substitute_id_by_xml_id(img_elem):
             new_src = False
             attach_id = False
+            img_src = img_elem.get('src')
             if 'id=' in img_src:
                 id_pos = img_src.index('id=') + 3
                 attach_id = img_elem.get('src')[id_pos:]
@@ -71,9 +72,8 @@ class ExportHelpWizard(models.TransientModel):
                 i_img += 1
                 xml_id = "%s_img_%s" % \
                     (page_node.attrib['name'], str(i_img).rjust(2, '0'))
-                img_src = img_elem.get('src')
 
-                new_src, attach_id = substitute_id_by_xml_id()
+                new_src, attach_id = substitute_id_by_xml_id(img_elem)
 
                 if not attach_id:
                     continue
