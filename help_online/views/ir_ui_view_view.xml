@@ -8,7 +8,7 @@
             <field name="model">ir.ui.view</field>
             <field name="arch" type="xml">
                 <xpath expr="//filter[@string='QWeb']" position="after">
-                    <filter string="Website Page" domain="[('type', '=', 'qweb'),('page', '=', True)]"/>
+                    <filter name="website" string="Website Page" domain="[('type', '=', 'qweb'),('page', '=', True)]"/>
                 </xpath>
             </field>
         </record>
