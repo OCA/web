@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/OCA/web.svg?branch=master)](https://travis-ci.org/OCA/web)
-[![Coverage Status](https://img.shields.io/coveralls/OCA/web.svg)](https://coveralls.io/r/OCA/web?branch=master)
+[![Build Status](https://travis-ci.org/OCA/web.svg?branch=8.0)](https://travis-ci.org/OCA/web)
+[![Coverage Status](https://coveralls.io/repos/OCA/web/badge.png?branch=8.0)](https://coveralls.io/r/OCA/web?branch=8.0)
 
 Web addons for Odoo
 ===================
