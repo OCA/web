@@ -58,7 +58,7 @@ class test_export_help_wizard(object):
                                 attrib={'class': 'row'})
         bodyDivNode = ET.SubElement(rowNode,
                                     'div',
-                                    attrib={'class': 'col-md-12 '\
+                                    attrib={'class': 'col-md-12 '
                                                      'text-center mt16 mb32'})
         style = "font-family: 'Helvetica Neue', Helvetica,"\
                 " Arial, sans-serif; color: rgb(51, 51, 51);"\
@@ -73,18 +73,18 @@ class test_export_help_wizard(object):
                                        attrib={'style': 'text-align: left;'})
             src = "/website/image?field=datas&"\
                   "model=ir.attachment&id=%s" % str(imgId)
-            imgNode = ET.SubElement(imgDivNode,
-                                    'img',
-                                    attrib={'class': 'img-thumbnail',
-                                            'src': src})
+            ET.SubElement(imgDivNode,
+                          'img',
+                          attrib={'class': 'img-thumbnail',
+                                  'src': src})
             imgDivNode = ET.SubElement(bodyDivNode,
                                        'div',
                                        attrib={'style': 'text-align: left;'})
             src = "/website/image/ir.attachment/%s_ccc838d/datas" % str(imgId)
-            imgNode = ET.SubElement(imgDivNode,
-                                    'img',
-                                    attrib={'class': 'img-thumbnail',
-                                            'src': src})
+            ET.SubElement(imgDivNode,
+                          'img',
+                          attrib={'class': 'img-thumbnail',
+                                  'src': src})
         arch = ET.tostring(rootNode, encoding='utf-8', xml_declaration=False)
         vals = {
             'name': pageName,
@@ -128,7 +128,7 @@ class test_export_help_wizard(object):
             for imgElem in templateNodeList[0].iter('img'):
                 imgSrc = imgElem.get('src')
                 if '/ir.attachment/' in imgSrc:
-                    self.assertIn("/ir.attachment/%s_img_02|" \
+                    self.assertIn("/ir.attachment/%s_img_02|"
                                   % self.pageName, imgSrc)
                 else:
                     self.assertIn("id=%s_img_01" % self.pageName, imgSrc)
@@ -151,11 +151,11 @@ class test_export_help_with_image(test_export_help_wizard,
 
 
 class test_export_help_template(test_export_help_wizard,
-                                  SharedSetupTransactionCase):
+                                SharedSetupTransactionCase):
     def setUp(self):
         super(test_export_help_template, self).setUp()
         parameter_model = self.env['ir.config_parameter']
-        template_prefix = parameter_model.get_param(
-                                                'help_online_template_prefix')
+        param = 'help_online_template_prefix'
+        template_prefix = parameter_model.get_param(param)
         self.pageName = '%stest-template' % template_prefix
         self.pageTemplate = True
