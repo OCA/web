@@ -117,7 +117,7 @@ class ExportHelpWizard(models.TransientModel):
             if not a_elem.get('href'):
                 continue
             href = a_elem.get('href')
-            if not href.startswith('http:'):
+            if not href.startswith('http'):
                 continue
             page_url = '/page/%s' % page_prefix
             template_url = '/page/%s' % template_prefix
