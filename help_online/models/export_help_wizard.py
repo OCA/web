@@ -24,7 +24,6 @@ import time
 import copy
 
 from lxml import etree as ET
-from xml.dom import minidom as minidom
 from openerp import models, fields, api, exceptions
 from openerp.tools.translate import _
 
@@ -220,10 +219,9 @@ class ExportHelpWizard(models.TransientModel):
                 data_node.append(snippet)
 
         if len(view_data_list) > 0:
-            rough_string = ET.tostring(xml_to_export, encoding='utf-8',
-                                       xml_declaration=True)
-            reparsed = minidom.parseString(rough_string)
-            return reparsed.toprettyxml(indent="  ", encoding='utf-8')
+            return ET.tostring(xml_to_export, encoding='utf-8',
+                               xml_declaration=True,
+                               pretty_print=True)
         else:
             return False
 
@@ -275,3 +273,4 @@ class ExportHelpWizard(models.TransientModel):
                 _logger.warning(_('Unable to write autobackup file '
                                   'in given directory: %s'
                                   % autobackup_path))
+
