@@ -102,9 +102,9 @@ class test_export_help_wizard(object):
         self.pageTemplate = False
 
     def test_export_help(self):
-        '''
+        """
             Export help data
-        '''
+        """
         self.createPage(pageName=self.pageName, imgXmlId=self.imgXmlId)
 
         wizardPool = self.env['export.help.wizard']
