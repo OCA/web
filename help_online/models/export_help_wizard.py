@@ -273,4 +273,3 @@ class ExportHelpWizard(models.TransientModel):
                 _logger.warning(_('Unable to write autobackup file '
                                   'in given directory: %s'
                                   % autobackup_path))
-
