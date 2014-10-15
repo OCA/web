@@ -45,10 +45,10 @@ class ExportHelpWizard(models.TransientModel):
     export_filename = fields.Char('Export XML Filename', size=128)
 
     def _manage_images_on_page(self, page_node, data_node):
-        '''
+        """
             - Extract images from page and generate a xml node
             - Replace db id in url with xml id
-        '''
+        """
 
         def substitute_id_by_xml_id(img_elem):
             new_src = False
@@ -110,9 +110,9 @@ class ExportHelpWizard(models.TransientModel):
                 data_node.append(img_node)
 
     def _clean_href_urls(self, page_node, page_prefix, template_prefix):
-        '''
+        """
             Remove host address for href urls
-        '''
+        """
         for a_elem in page_node.iter('a'):
             if not a_elem.get('href'):
                 continue
@@ -139,9 +139,9 @@ class ExportHelpWizard(models.TransientModel):
 
     def _generate_snippet_from_template(self, page_node,
                                         template_id, template_prefix):
-        '''
+        """
             Generate a website snippet from a template
-        '''
+        """
         page = copy.deepcopy(page_node)
         snippet = ET.Element('template')
         snippet.attrib['id'] = template_id + '_snippet'
