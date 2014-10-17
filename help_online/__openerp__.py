@@ -44,7 +44,8 @@ help page.
 
 The help pages are created and managed via the website Module.
 
-Note: When updating the page prefix parameters, the record rules must be adapted.
+Note: When updating the page prefix parameters, the record rules must be
+      adapted.
     """,
     'data': [
         'data/help_auto_backup.xml',  # must always be the first
