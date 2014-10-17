@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
+    <data noupdate="1">
 	    <record id="online_help_confidential_rule" model="ir.rule">
 	        <field name="name">Online Help Hidden by Default</field>
 	        <field name="model_id" ref="base.model_ir_ui_view"/>
