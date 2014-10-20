@@ -48,9 +48,5 @@
             <field name="target">new</field>
             <field name="type">ir.actions.act_window</field>
         </record>
-        
-        <menuitem id="menu_help" name="Help Online" parent="base.menu_administration" sequence="30" groups="help_online_group_writer"/>
-        <menuitem id="menu_help_export" name="Export Help Online" parent="menu_help" action="action_export_help_wizard"/>
-
-    </data>
+     </data>
 </openerp>
