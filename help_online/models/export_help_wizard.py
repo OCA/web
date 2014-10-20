@@ -240,7 +240,7 @@ class ExportHelpWizard(models.TransientModel):
                     'export_filename': 'help_online_data.xml'})
 
         return {
-            'name': 'Help Online Export',
+            'name': _('Export Help'),
             'type': 'ir.actions.act_window',
             'res_model': self._name,
             'view_mode': 'form',
