@@ -39,7 +39,7 @@ msgstr "Confirmer"
 #: code:addons/help_online/models/help_online.py:60
 #, python-format
 msgid "Create Help page for %s"
-msgstr "Créer lapage d'aide pour %s"
+msgstr "Créer la page d'aide pour %s"
 
 #. module: help_online
 #: field:export.help.wizard,create_uid:0
@@ -63,7 +63,7 @@ msgstr "Export"
 #. module: help_online
 #: model:ir.actions.act_window,name:help_online.action_export_help_wizard
 msgid "Export Help"
-msgstr "Export Help"
+msgstr "Export des pages d'aide"
 
 #. module: help_online
 #: view:export.help.wizard:help_online.export_help_wizard_view
