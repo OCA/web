@@ -154,7 +154,7 @@ msgstr "Aucune page à exporter !"
 #: code:addons/help_online/models/help_online.py:33
 #, python-format
 msgid "No page prefix parameter specified !"
-msgstr "Le paramètre spécifiant le préfixe des page n'est pas configuré !"
+msgstr "Le paramètre spécifiant le préfixe des pages n'est pas configuré !"
 
 #. module: help_online
 #. openerp-web
