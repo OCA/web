@@ -1,0 +1,4 @@
+.oe_form_status_clickable li:hover
+{
+    cursor: pointer;
+}
