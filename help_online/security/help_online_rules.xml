@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+	    <record id="online_help_confidential_rule" model="ir.rule">
+	        <field name="name">Online Help Hidden by Default</field>
+	        <field name="model_id" ref="base.model_ir_ui_view"/>
+	        <field name="domain_force">[
+	            '|',
+	            ('type', '!=', 'qweb'),
+	            ('name','not like','help-%'),
+	        ]</field>
+	        <field name="groups" eval="[(6, 0, [
+	            ref('base.group_portal'),
+	            ref('base.group_public'),
+	            ref('base.group_user'),
+	        ])]"/>
+	        <field name="perm_read" eval="1"/><field name="perm_write" eval="0"/>
+	        <field name="perm_create" eval="0"/><field name="perm_unlink" eval="0"/>
+	    </record>
+	
+	    <record id="online_help_reader_rule" model="ir.rule">
+	        <field name="name">Online Help for Help Reader</field>
+	        <field name="model_id" ref="base.model_ir_ui_view"/>
+	        <field name="domain_force">[(1, '=', 1)]</field>
+	        <field name="groups" eval="[(6, 0, [
+	            ref('help_online.help_online_group_reader'),
+	        ])]"/>
+	        <field name="perm_read" eval="1"/><field name="perm_write" eval="0"/>
+	        <field name="perm_create" eval="0"/><field name="perm_unlink" eval="0"/>
+	    </record>
+    </data>
+</openerp>

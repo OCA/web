@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+
+        <record id="view_view_search" model="ir.ui.view">
+            <field name="name">ir.ui.view search (help_online)</field>
+            <field name="inherit_id" ref="base.view_view_search"/>
+            <field name="model">ir.ui.view</field>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@string='QWeb']" position="after">
+                    <filter name="website" string="Website Page" domain="[('type', '=', 'qweb'),('page', '=', True)]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_view_form" model="ir.ui.view">
+            <field name="name">ir.ui.view form (help_online)</field>
+            <field name="inherit_id" ref="base.view_view_form"/>
+            <field name="model">ir.ui.view</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='type']" position="after">
+                    <field name="page" string="Website Page?" readonly="1" attrs="{'invisible': [('type', '!=', 'qweb')]}"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

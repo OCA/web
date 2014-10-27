@@ -18,15 +18,20 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import orm
+from openerp import models, exceptions
 from openerp.tools.translate import _
 
 
-class HelpOnline(orm.TransientModel):
+class HelpOnline(models.TransientModel):
     _name = 'help.online'
 
     def _get_view_name(self, model, view_type, domain=None, context=None):
-        name = 'help-%s' % model.replace('.', '-')
+        parameter_model = self.env['ir.config_parameter']
+        page_prefix = parameter_model.get_param('help_online_page_prefix',
+                                                False)
+        if not page_prefix:
+            raise exceptions.Warning(_('No page prefix parameter specified !'))
+        name = '%s-%s' % (page_prefix, model.replace('.', '-'))
         return name
 
     def page_exists(self, name):

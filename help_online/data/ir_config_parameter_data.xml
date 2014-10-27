@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<openerp>
+
+    <data noupdate="1">
+        <record id="help_online_autobackup_path" model="ir.config_parameter">
+            <field name="key">help_online_autobackup_path</field>
+            <field name="value">False</field>
+        </record>
+    </data>
+    
+    <data noupdate="1">
+        <record id="help_online_page_prefix" model="ir.config_parameter">
+            <field name="key">help_online_page_prefix</field>
+            <field name="value">help</field>
+        </record>
+    </data>
+    
+    <data noupdate="1">
+        <record id="help_online_template_prefix" model="ir.config_parameter">
+            <field name="key">help_online_template_prefix</field>
+            <field name="value">help-template</field>
+        </record>
+    </data>
+
+</openerp>

@@ -43,11 +43,20 @@ the group 'Help writer', the module generate a button allowing the creation an
 help page.
 
 The help pages are created and managed via the website Module.
+
+Note: When updating the page prefix parameters, the record rules must be
+      adapted.
     """,
     'data': [
+        'data/help_auto_backup.xml',  # must always be the first
         'security/help_online_groups.xml',
+        'security/help_online_rules.xml',
+        'views/export_help_wizard_view.xml',
+        'views/import_help_wizard_view.xml',
+        'views/ir_ui_view_view.xml',
         'views/help_online_view.xml',
         'views/website_help_online.xml',
+        'data/ir_config_parameter_data.xml',
     ],
     'qweb': [
         'static/src/xml/help_online.xml',

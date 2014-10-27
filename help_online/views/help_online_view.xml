@@ -9,5 +9,20 @@
                 <script type="text/javascript" src="/help_online/static/src/js/help_online.js"></script>
             </xpath>
         </template>
+        
+        <record model="ir.actions.act_window" id="action_website_pages">
+            <field name="name">Website Pages</field>
+            <field name="res_model">ir.ui.view</field>
+            <field name="search_view_id" ref="view_view_search" />
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{"search_default_website":1}</field>
+        </record>
+        
+        <menuitem id="menu_help_main" name="Help Online" groups="help_online_group_writer"/>
+        <menuitem id="menu_help" name="Help Online" parent="menu_help_main" sequence="90" groups="help_online_group_writer"/>
+        <menuitem id="menu_help_pages" name="Website Pages" parent="menu_help" sequence="10" action="action_website_pages" groups="help_online_group_writer"/>    
+        <menuitem id="menu_help_import" name="Import Help Online" parent="menu_help" sequence="20" action="action_import_help_wizard" groups="help_online_group_writer"/>
+        <menuitem id="menu_help_export" name="Export Help Online" parent="menu_help" sequence="30" action="action_export_help_wizard" groups="help_online_group_writer"/>
     </data>
 </openerp>

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Authors: Nemry Jonathan
 #    Copyright (c) 2014 Acsone SA/NV (http://www.acsone.eu)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -18,7 +17,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import help_online
-from . import export_help_wizard
-from . import import_help_wizard
-from . import ir_model
+from . import test_export_help_wizard
+
+fast_suite = [
+]
+
+checks = [
+    test_export_help_wizard,
+]
