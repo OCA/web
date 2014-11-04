@@ -121,17 +121,17 @@ class test_export_help_wizard(object):
         self.assertNotIn("website.", templateNodeList[0].attrib['name'])
 
         if self.imgXmlId:
-            xPath = ".//record[@id='%s_img_01']" % self.pageName
+            xPath = ".//record[@id='%s']" % self.imgXmlId
             imgNodeList = rootXml.findall(xPath)
-            self.assertEqual(len(imgNodeList), 1)
+            self.assertEqual(len(imgNodeList), 2)
 
             for imgElem in templateNodeList[0].iter('img'):
                 imgSrc = imgElem.get('src')
                 if '/ir.attachment/' in imgSrc:
-                    self.assertIn("/ir.attachment/%s_img_02|"
-                                  % self.pageName, imgSrc)
+                    self.assertIn("/ir.attachment/%s|"
+                                  % self.imgXmlId, imgSrc)
                 else:
-                    self.assertIn("id=%s_img_01" % self.pageName, imgSrc)
+                    self.assertIn("id=%s" % self.imgXmlId, imgSrc)
 
         if self.pageTemplate:
             xPath = ".//template[@id='website.%s_snippet']" % self.pageName
