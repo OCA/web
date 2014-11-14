@@ -38,8 +38,8 @@ This module is compatible with OpenERP 7.0.
     'installable': False,
     'depends': [
         'web',
-        ],
+    ],
     'js': [
         'static/src/js/web_confirm_window_close.js'
-        ],
+    ],
 }
