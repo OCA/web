@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-extend="SearchView.addtodashboard">
+        <t t-jquery="form" t-operation="after">
+            <div>
+                <label for="dashboard_tile_new_name">Tile:</label>
+                <input id="dashboard_tile_new_name" />
+                <button id="add_dashboard_tile">Okay</button>
+            </div>
+        </t>
+    </t>
+</templates>

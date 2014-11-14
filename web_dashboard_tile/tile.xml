@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+       <record model="ir.ui.view" id="dashboard_tile_tree_view">
+            <field name="name">tile.tree</field>
+            <field name="model">tile</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Dashboard tiles">
+                    <field name="name"/>
+                    <field name="domain"/>
+                    <field name="model_id"/>
+                    <field name="action_id"/>
+                    <field name="count"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="dashboard_tile_form_view">
+            <field name="name">tile.form</field>
+            <field name="model">tile</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Dashboard tiles" version="7.0">
+                    <group>
+                        <field name="name"/>
+                        <field name="domain"/>
+                        <field name="model_id"/>
+                        <field name="user_id"/>
+                        <field name="action_id"/>
+                        <!-- field name="count"/> -->
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- CRM Lead Kanban View  -->
+       <record model="ir.ui.view" id="dashboard_tile_kanban_view">
+            <field name="name">tile.kanban</field>
+            <field name="model">tile</field>
+            <field name="type">kanban</field>
+            <field name="arch" type="xml">
+                <kanban edit="false" create="false">
+                    <field name="name"/>
+                    <field name="domain"/>
+                    <field name="model_id"/>
+                    <field name="action_id"/>
+                    <field name="count"/>
+                    <field name="color"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_tile_color_#{kanban_getcolor(record.color.raw_value)} oe_dashbaord_tile oe_kanban_global_click" >
+                                <div class="oe_dropdown_toggle oe_dropdown_kanban">
+                                    <span class="oe_e">í</span>
+                                    <ul class="oe_dropdown_menu">
+                                        <t t-if="widget.view.is_action_enabled('edit')"><li><a type="edit">Edit...</a></li></t>
+                                        <t t-if="widget.view.is_action_enabled('delete')"><li><a type="delete">Delete</a></li></t>
+                                        <li><ul class="oe_kanban_colorpicker" data-field="color"/></li>
+                                    </ul>
+                                </div>
+                                <div class="oe_kanban_content">
+                                    <a type="object" name="open_link" args="[]">
+                                        <div class="tile_label">
+                                            <b><field name="name"/></b>
+                                        </div>
+                                        <div style="padding-left: 0.5em; height: 115px;">
+                                            
+                                        </div>
+                                        <div class="tile_count">
+                                            <span><field name="count"/></span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="oe_clear"></div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="actoin_tree_dashboard_tile">
+            <field name="name">Dashboard</field>
+            <field name="res_model">tile</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="view_id" ref="dashboard_tile_tree_view"/>
+        </record>
+
+        <menuitem id="menue_dashboard_tile" 
+            name="Dashboard Tile" parent="base.next_id_2"
+            action="actoin_tree_dashboard_tile" sequence="50"/>
+
+        <record model="ir.actions.act_window" id="actoin_kanban_dashboard_tile">
+            <field name="name">Dashboard</field>
+            <field name="res_model">tile</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban</field>
+            <field name="domain">['|',('user_id','=',False),('user_id','=',uid)]</field>
+            <field name="view_id" ref="dashboard_tile_tree_view"/>
+        </record>
+
+        <record id="mail_dashbaord" model="ir.ui.menu">
+          <field name="name">Dashboard</field>
+          <field name="sequence" eval="9"/>
+          <field name="action" ref="actoin_kanban_dashboard_tile"/>
+          <field name="parent_id" ref="mail.mail_feeds"/>
+        </record>
+
+    </data>
+</openerp>
