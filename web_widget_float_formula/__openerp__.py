@@ -49,7 +49,7 @@ Contacts :
     'license': 'AGPL-3',
     'depends': [
         'web',
-        ],
+    ],
     'data': [],
     'demo': [],
     'js': [
