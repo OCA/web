@@ -34,12 +34,12 @@
     "category": "Tools",
     "depends": [
         'web',
-        ],
+    ],
     'css': [
         'static/src/css/web_ckeditor4.css',
-        ],
+    ],
     'data': [
-        ],
+    ],
     'js': [
         'static/src/js/ckeditor_basepath.js',
         'static/lib/ckeditor/ckeditor.js',
@@ -107,7 +107,7 @@
         # 'static/lib/trunk/core/_bootstrap.js',
         # end of ckeditor debug
         'static/src/js/web_ckeditor4.js',
-        ],
+    ],
     'installable': True,
     'auto_install': False,
     'certificate': '',

@@ -37,8 +37,8 @@ This module is compatible with OpenERP 7.0.
     'license': 'AGPL-3',
     'depends': [
         'web',
-        ],
+    ],
     'js': [
         'static/src/js/web_confirm_window_close.js'
-        ],
+    ],
 }
