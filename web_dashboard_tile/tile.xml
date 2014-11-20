@@ -79,7 +79,7 @@
             </field>
         </record>
 
-        <record model="ir.actions.act_window" id="actoin_tree_dashboard_tile">
+        <record model="ir.actions.act_window" id="action_tree_dashboard_tile">
             <field name="name">Dashboard</field>
             <field name="res_model">tile</field>
             <field name="view_type">form</field>
@@ -89,9 +89,9 @@
 
         <menuitem id="menue_dashboard_tile" 
             name="Dashboard Tile" parent="base.next_id_2"
-            action="actoin_tree_dashboard_tile" sequence="50"/>
+            action="action_tree_dashboard_tile" sequence="50"/>
 
-        <record model="ir.actions.act_window" id="actoin_kanban_dashboard_tile">
+        <record model="ir.actions.act_window" id="action_kanban_dashboard_tile">
             <field name="name">Dashboard</field>
             <field name="res_model">tile</field>
             <field name="view_type">form</field>
@@ -103,7 +103,7 @@
         <record id="mail_dashbaord" model="ir.ui.menu">
           <field name="name">Dashboard</field>
           <field name="sequence" eval="9"/>
-          <field name="action" ref="actoin_kanban_dashboard_tile"/>
+          <field name="action" ref="action_kanban_dashboard_tile"/>
           <field name="parent_id" ref="mail.mail_feeds"/>
         </record>
 

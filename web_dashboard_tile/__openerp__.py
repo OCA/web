@@ -23,7 +23,7 @@
 {
     "name": "Dashboard Tile",
     "version": "0.3",
-    "depends": ['web', 'board'],
+    "depends": ['web', 'board', 'mail'],
     'author': 'initOS GmbH & Co. KG',
     "category": "",
     'license': 'AGPL-3',
