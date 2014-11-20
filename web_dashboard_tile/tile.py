@@ -65,7 +65,7 @@ class tile(orm.Model):
             act_obj = self.pool.get('ir.actions.act_window')
             result = act_obj.read(cr, uid, [tile_object.action_id.id],
                                   context=context)[0]
-            #FIXME: restore original Domain + Filter would be better
+            # FIXME: restore original Domain + Filter would be better
             result['domain'] = tile_object.domain
             return result
 
@@ -85,9 +85,9 @@ class tile(orm.Model):
         }
 
     def add(self, cr, uid, vals, context=None):
-        #TODO: check if string
+        # TODO: check if string
         if 'model_id' in vals:
-            # need to relace model_name with its id
+            # need to replace model_name with its id
             model_ids = self.pool.get('ir.model').search(cr, uid,
                                                          [('model', '=',
                                                            vals['model_id'])])
