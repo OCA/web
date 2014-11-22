@@ -43,36 +43,60 @@ class ExportHelpWizard(models.TransientModel):
     data = fields.Binary('XML', readonly=True)
     export_filename = fields.Char('Export XML Filename', size=128)
 
-    def _manage_images_on_page(self, page_node, data_node):
+    def _manage_images_on_page(self, page_node, data_node, images_reference):
         """
             - Extract images from page and generate a xml node
             - Replace db id in url with xml id
         """
 
-        def substitute_id_by_xml_id(img_elem):
-            new_src = False
+        def get_attach_id(images_reference,
+                          img_model, img_src, generated_xml_id=False):
             attach_id = False
-            img_src = img_elem.get('src')
             if 'id=' in img_src:
                 id_pos = img_src.index('id=') + 3
-                attach_id = img_elem.get('src')[id_pos:]
+                attach_id = img_src[id_pos:]
+            else:
+                fragments = img_src.split('ir.attachment/')
+                attach_id, _ = fragments[1].split('_', 1)
+
+            if attach_id in images_reference:
+                xml_id = images_reference[attach_id]
+            else:
+                ir_data = self.env['ir.model.data'].search(
+                    [('model', '=', img_model),
+                     ('res_id', '=', attach_id)])
+                xml_id = generated_xml_id
+                if ir_data:
+                    xml_id = ir_data[0].name
+                images_reference[attach_id] = xml_id
+
+            return attach_id, xml_id
+
+        def substitute_id_by_xml_id(img_src, attach_id, xml_id):
+            new_src = False
+            if 'id=' in img_src:
                 new_src = img_src.replace(attach_id, xml_id)
             else:
                 fragments = img_src.split('ir.attachment/')
-                attach_id, trail = fragments[1].split('_', 1)
+                _, trail = fragments[1].split('_', 1)
                 new_src = "/website/image/ir.attachment/%s|%s" % \
                     (xml_id, trail)
-            return new_src, attach_id
+            return new_src
 
         i_img = 0
         img_model = 'ir.attachment'
         for img_elem in page_node.iter('img'):
-            if img_model in img_elem.get('src'):
+            img_src = img_elem.get('src')
+            if img_model in img_src:
                 i_img += 1
-                xml_id = "%s_img_%s" % \
+                generated_xml_id = "%s_img_%s" % \
                     (page_node.attrib['name'], str(i_img).rjust(2, '0'))
+                attach_id, xml_id = get_attach_id(images_reference,
+                                                  img_model,
+                                                  img_src,
+                                                  generated_xml_id)
 
-                new_src, attach_id = substitute_id_by_xml_id(img_elem)
+                new_src = substitute_id_by_xml_id(img_src, attach_id, xml_id)
 
                 if not attach_id:
                     continue
@@ -197,7 +221,7 @@ class ExportHelpWizard(models.TransientModel):
                                                             order='name')
         xml_to_export = ET.Element('openerp')
         data_node = ET.SubElement(xml_to_export, 'data')
-
+        images_reference = {}
         for view_data in view_data_list:
             parser = ET.XMLParser(remove_blank_text=True)
             root = ET.XML(view_data['arch'], parser=parser)
@@ -208,7 +232,7 @@ class ExportHelpWizard(models.TransientModel):
             root.attrib['id'] = template_id
             root.attrib['page'] = 'True'
 
-            self._manage_images_on_page(root, data_node)
+            self._manage_images_on_page(root, data_node, images_reference)
             self._clean_href_urls(root, page_prefix, template_prefix)
             data_node.append(root)
 
