@@ -1,5 +1,5 @@
 # This file contains the translation of the following modules:
-#   * advanced_filters
+#   * web_advanced_filters
 #
 msgid ""
 msgstr ""
@@ -14,180 +14,180 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #: view:ir.filters:0
 msgid "Save filter"
 msgstr "Opslaan filter"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #: selection:ir.filters.combine.with.existing,action:0
 msgid "Union"
 msgstr "Union"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #: view:ir.filters:0
 msgid "Add the result of following filters"
 msgstr "Voeg resultaat van onderstaande filteringen toe aan filter"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #: view:ir.filters:0
 #: view:ir.filters.combine.with.existing:0
 msgid "Save"
 msgstr "Opslaan"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #: view:ir.filters:0
 msgid "Freeze filter"
 msgstr "Bevries filter"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #. openerp-web
-#: code:addons/advanced_filters/static/src/js/advanced_filters.js:94
-#: code:addons/advanced_filters/static/src/js/advanced_filters.js:114
+#: code:addons/web_advanced_filters/static/src/js/web_advanced_filters.js:94
+#: code:addons/web_advanced_filters/static/src/js/web_advanced_filters.js:114
 #, python-format
 msgid "Remove from existing filter"
 msgstr "Verwijder uit bestaand filter"
 
-#. module: advanced_filters
-#: code:addons/advanced_filters/model/ir_filters.py:131
+#. module: web_advanced_filters
+#: code:addons/web_advanced_filters/model/ir_filters.py:131
 #, python-format
 msgid "Testing %s"
 msgstr "Testen %s"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #: view:ir.filters:0
 #: view:ir.filters.combine.with.existing:0
 msgid "or"
 msgstr "or"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #: field:ir.filters,complement_filter_ids:0
 msgid "Remove result of filters"
 msgstr "Verwijder resultaat van filters"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #. openerp-web
-#: code:addons/advanced_filters/static/src/js/advanced_filters.js:86
-#: code:addons/advanced_filters/static/src/js/advanced_filters.js:106
+#: code:addons/web_advanced_filters/static/src/js/web_advanced_filters.js:86
+#: code:addons/web_advanced_filters/static/src/js/web_advanced_filters.js:106
 #, python-format
 msgid "To existing filter"
 msgstr "Voeg toe aan bestaand  filter"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #: view:ir.filters.combine.with.existing:0
 msgid "Combine with existing filter"
 msgstr "Combineer met bestaande filter"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #: view:ir.filters:0
 msgid "Have this filter contain exactly the records it currently contains, with no changes in the future. Be careful, you can't undo this operation!"
 msgstr "Laat deze filter precies deze records bevatten, zonder veranderingen in de toekomst. Wees voorzichtig, je kan dit niet meer veranderen!"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #. openerp-web
-#: code:addons/advanced_filters/static/src/js/advanced_filters.js:32
+#: code:addons/web_advanced_filters/static/src/js/web_advanced_filters.js:32
 #, python-format
 msgid "Advanced filters"
 msgstr "Geavanceerde filters"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #: field:ir.filters,active:0
 msgid "Active"
 msgstr "Actief"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #. openerp-web
-#: code:addons/advanced_filters/static/src/js/advanced_filters.js:74
+#: code:addons/web_advanced_filters/static/src/js/web_advanced_filters.js:74
 #, python-format
 msgid "Marked records"
 msgstr "Aangevinkte records (verzameling)"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #: field:ir.filters,is_frozen:0
 msgid "Frozen"
 msgstr "Bevroren"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #: field:ir.filters.combine.with.existing,filter_id:0
 msgid "Filter"
 msgstr "Filter"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #: view:ir.filters:0
 msgid "Test filter"
 msgstr "Test filter"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #. openerp-web
-#: code:addons/advanced_filters/static/src/js/advanced_filters.js:78
+#: code:addons/web_advanced_filters/static/src/js/web_advanced_filters.js:78
 #, python-format
 msgid "To new filter"
 msgstr "Opslaan als nieuw filter"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #: field:ir.filters,domain_this:0
 msgid "This filter's own domain"
 msgstr "Deze filters eigen domein"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #: view:ir.filters:0
 msgid "Remove the result of following filters"
 msgstr "Verwijder resultaat van onderstaande filteringen uit filter"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #: field:ir.filters.combine.with.existing,context:0
 msgid "Context"
 msgstr "Context"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #: field:ir.filters.combine.with.existing,action:0
 msgid "Action"
 msgstr "Actie"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #: field:ir.filters.combine.with.existing,model:0
 msgid "Model"
 msgstr "Model"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #. openerp-web
-#: code:addons/advanced_filters/static/src/js/advanced_filters.js:102
+#: code:addons/web_advanced_filters/static/src/js/web_advanced_filters.js:102
 #, python-format
 msgid "Whole selection (criteria)"
 msgstr "Alle records (als criteria)"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #: field:ir.filters.combine.with.existing,domain:0
 msgid "Domain"
 msgstr "Domein"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #: field:ir.filters,union_filter_ids:0
 msgid "Add result of filters"
 msgstr "Voeg resultaat toe aan filters"
 
-#. module: advanced_filters
-#: model:ir.model,name:advanced_filters.model_ir_filters_combine_with_existing
+#. module: web_advanced_filters
+#: model:ir.model,name:web_advanced_filters.model_ir_filters_combine_with_existing
 msgid "Combine a selection with an existing filter"
 msgstr "Combineer een selectie met een bestaande filter"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #: view:ir.filters:0
 msgid "Are you sure? You can't undo this operation!"
 msgstr "Weet u het zeker? U kan deze operatie niet meer ongedaan maken"
 
-#. module: advanced_filters
-#: model:ir.model,name:advanced_filters.model_ir_filters
+#. module: web_advanced_filters
+#: model:ir.model,name:web_advanced_filters.model_ir_filters
 msgid "Filters"
 msgstr "Filters"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #: view:ir.filters:0
 #: view:ir.filters.combine.with.existing:0
 msgid "Cancel"
 msgstr "Annuleren"
 
-#. module: advanced_filters
+#. module: web_advanced_filters
 #: selection:ir.filters.combine.with.existing,action:0
 msgid "Complement"
 msgstr "Aanvullen"
