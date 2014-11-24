@@ -61,10 +61,10 @@ this query before uninstalling to avoid that:
         "view/ir_filters.xml",
     ],
     "js": [
-        'static/src/js/advanced_filters.js',
+        'static/src/js/web_advanced_filters.js',
     ],
     "css": [
-        'static/src/css/advanced_filters.css',
+        'static/src/css/web_advanced_filters.css',
     ],
     "qweb": [
     ],
