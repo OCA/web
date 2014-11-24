@@ -1,0 +1,14 @@
+li.oe_advanced_filters_header
+{
+    font-weight: bold;
+}
+.openerp .oe_dropdown_menu > li.oe_advanced_filters_header:hover
+{
+    background-color: inherit;
+    background-image: inherit;
+    box-shadow: none;
+}
+.openerp .oe_dropdown_menu > li.oe_advanced_filters_header a:hover
+{
+    cursor: default !important;
+}
