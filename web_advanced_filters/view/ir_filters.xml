@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="ir_filters_view_form" model="ir.ui.view">
+            <field name="model">ir.filters</field>
+            <field name="inherit_id" ref="base.ir_filters_view_form" />
+            <field name="arch" type="xml">
+                <sheet position="before">
+                    <header>
+                        <button type="object" string="Test filter" name="button_test" class="oe_highlight" />
+                        <button type="object" string="Freeze filter" name="button_freeze" attrs="{'invisible': [('is_frozen', '=', True)]}" help="Have this filter contain extly the records it currently contains, with no changes in the future. Be careful, you can&apos;t undo this operation!" confirm="Are you sure? You can&apos;t undo this operation!" />
+                    </header>
+                </sheet>
+                <group position="after">
+                    <field name="is_frozen" invisible="True" />
+                    <field name="id" invisible="True" />
+                    <group string="Add the result of following filters">
+                        <field name="union_filter_ids" nolabel="1" domain="[('user_id', 'in', [False, uid]), ('id', '!=', id), ('model_id', '=', model_id)]" />
+                    </group>
+                    <group string="Remove the result of following filters">
+                        <field name="complement_filter_ids" nolabel="1" domain="[('user_id', 'in', [False, uid]),('id', '!=', id), ('model_id', '=', model_id)]" />
+                    </group>
+                </group>
+            </field>
+        </record>
+        <record id="form_ir_filters_save_new" model="ir.ui.view">
+            <field name="model">ir.filters</field>
+            <field name="priority">999</field>
+            <field name="arch" type="xml">
+                <form string="Save filter" version="7.0">
+                    <group>
+                        <field name="name" />
+                        <field name="is_default"/>
+                    </group>
+                    <footer>
+                        <button class="oe_highlight" type="object" name="button_save" string="Save" />
+                        or
+                        <button class="oe_link" special="cancel" string="Cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>
