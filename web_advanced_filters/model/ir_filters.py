@@ -32,7 +32,10 @@ class IrFilters(Model):
         '''determine if this is fixed list of ids'''
         result = {}
         for this in self.browse(cr, uid, ids, context=context):
-            domain = safe_eval(this.domain)
+            try:
+                domain = safe_eval(this.domain)
+            except:
+                domain = [expression.FALSE_LEAF]
             result[this.id] = (len(domain) == 1 and
                                expression.is_leaf(domain[0]) and
                                domain[0][0] == 'id')
@@ -43,8 +46,13 @@ class IrFilters(Model):
         this works recursively'''
         def eval_n(domain):
             '''parse a domain and normalize it'''
+            try:
+                domain = safe_eval(domain)
+            except:
+                domain = [expression.FALSE_LEAF]
             return expression.normalize_domain(
-                safe_eval(domain) or [expression.FALSE_LEAF])
+                domain or [expression.FALSE_LEAF])
+
         result = {}
         for this in self.read(
                 cr, uid, ids,
