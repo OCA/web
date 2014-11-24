@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="form_ir_filters_combine_with_existing" model="ir.ui.view">
+            <field name="model">ir.filters.combine.with.existing</field>
+            <field name="arch" type="xml">
+                <form string="Combine with existing filter" version="7.0">
+                    <group>
+                        <field name="model" invisible="1" />
+                        <field name="filter_id" domain="[('model_id', '=', model)]" />
+                    </group>
+                    <footer>
+                        <button class="oe_highlight" type="object" name="button_save" string="Save" />
+                        or
+                        <button class="oe_link" special="cancel" string="Cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>

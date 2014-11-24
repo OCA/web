@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+        <function name="_migrate_name_change" model="ir.filters" />
+    </data>
+</openerp>
