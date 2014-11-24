@@ -19,7 +19,7 @@
 //
 //############################################################################
 
-openerp.advanced_filters = function(instance)
+openerp.web_advanced_filters = function(instance)
 {
     var _t = instance.web._t;
 
@@ -145,7 +145,7 @@ openerp.advanced_filters = function(instance)
                         ]
                     ),
                     default_context: JSON.stringify({}),
-                    form_view_ref: 'advanced_filters.form_ir_filters_save_new',
+                    form_view_ref: 'web_advanced_filters.form_ir_filters_save_new',
                 },
             },
             {
