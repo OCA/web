@@ -117,6 +117,7 @@ openerp.web_advanced_filters = function(instance)
         },
         advanced_filters_show: function(ids)
         {
+            var self = this;
             if(this.sidebar)
             {
                 this.sidebar.$el.show();
@@ -125,9 +126,20 @@ openerp.web_advanced_filters = function(instance)
                     $e = jQuery(e)
                     if($e.find('li.oe_advanced_filters_header').length)
                     {
+                        var search = self.ViewManager.searchview
+                            .build_search_data();
+                        $e.find('a[data-index="0"],a[data-index="1"],' +
+                                'a[data-index="2"],a[data-index="3"]')
+                            .parent().toggle(
+                                    search.contexts.length > 0 ||
+                                    search.domains.length > 0);
                         $e.find('a[data-index="4"],a[data-index="5"],' +
                                 'a[data-index="6"],a[data-index="7"]')
                             .parent().toggle(ids.length > 0);
+                        $e.toggle(
+                                search.contexts.length > 0 ||
+                                search.domains.length > 0 ||
+                                ids.length > 0);
                     }
                     else
                     {
