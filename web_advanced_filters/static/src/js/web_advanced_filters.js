@@ -59,6 +59,14 @@ openerp.web_advanced_filters = function(instance)
                         classname: 'oe_advanced_filters_header',
                     },
                     {
+                        label: _t('To new filter'),
+                        callback: function ()
+                        {
+                            self.advanced_filters_save_criteria.apply(
+                                self, arguments);
+                        },
+                    },
+                    {
                         label: _t('To existing filter'),
                         callback: function (item)
                         {
@@ -117,8 +125,8 @@ openerp.web_advanced_filters = function(instance)
                     $e = jQuery(e)
                     if($e.find('li.oe_advanced_filters_header').length)
                     {
-                        $e.find('a[data-index="3"],a[data-index="4"],' +
-                                'a[data-index="5"],a[data-index="6"]')
+                        $e.find('a[data-index="4"],a[data-index="5"],' +
+                                'a[data-index="6"],a[data-index="7"]')
                             .parent().toggle(ids.length > 0);
                     }
                     else
@@ -127,6 +135,42 @@ openerp.web_advanced_filters = function(instance)
                     }
                 });
             }
+        },
+        advanced_filters_save_criteria: function(item)
+        {
+            var search = this.ViewManager.searchview.build_search_data(),
+                self = this;
+            instance.web.pyeval.eval_domains_and_contexts({
+                domains: search.domains,
+                contexts: search.contexts,
+                group_by_seq: search.groupbys || []
+            }).done(function(search)
+            {
+                var ctx = search.context;
+                _(_.keys(instance.session.user_context)).each(
+                    function (key) {delete ctx[key]});
+                self.do_action({
+                    name: item.label,
+                    type: 'ir.actions.act_window',
+                    res_model: 'ir.filters',
+                    views: [[false, 'form']],
+                    target: 'new',
+                    context: {
+                        default_model_id: self.dataset._model.name,
+                        default_domain: JSON.stringify(search.domain),
+                        default_context: JSON.stringify(ctx),
+                        form_view_ref: 'web_advanced_filters.form_ir_filters_save_new',
+                    },
+                },
+                {
+                    on_close: function()
+                    {
+                        self.ViewManager.setup_search_view(
+                            self.ViewManager.searchview.view_id,
+                            self.ViewManager.searchview.defaults);
+                    },
+                });
+            });
         },
         advanced_filters_save_selection: function(item)
         {
