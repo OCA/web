@@ -56,6 +56,7 @@ this query before uninstalling to avoid that:
         'web',
     ],
     "data": [
+        "data/migration.xml",
         "wizard/ir_filters_combine_with_existing.xml",
         "view/ir_filters.xml",
     ],

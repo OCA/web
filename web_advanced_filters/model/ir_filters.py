@@ -148,3 +148,20 @@ class IrFilters(Model):
             cr.execute(
                 'ALTER table %s RENAME domain TO domain_this' % self._table)
         return super(IrFilters, self)._auto_init(cr, context=context)
+
+    def _migrate_name_change(self, cr, uid, context=None):
+        cr.execute(
+            "select id from ir_module_module where name='advanced_filters' "
+            "and author='Therp BV'")
+        old_name_installed = cr.fetchall()
+        if not old_name_installed:
+            return
+        cr.execute(
+            "delete from ir_model_data where module='web_advanced_filters'")
+        cr.execute(
+            "update ir_model_data set module='web_advanced_filters' "
+            "where module='advanced_filters'")
+        cr.execute(
+            "update ir_module_module set state='to remove' where "
+            "name='advanced_filters' and state not in "
+            "('uninstalled', 'to remove')")
