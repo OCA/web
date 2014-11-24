@@ -21,7 +21,7 @@
 import time
 from openerp.osv.orm import TransientModel
 from openerp.osv import fields, expression
-from openerp.tools.safe_eval import const_eval
+from openerp.tools.safe_eval import safe_eval
 
 
 class IrFiltersCombineWithExisting(TransientModel):
@@ -41,7 +41,7 @@ class IrFiltersCombineWithExisting(TransientModel):
     def button_save(self, cr, uid, ids, context=None):
         assert len(ids) == 1
         this = self.browse(cr, uid, ids[0], context=context)
-        domain = const_eval(this.domain)
+        domain = safe_eval(this.domain)
         is_frozen = (len(domain) == 1 and
                      expression.is_leaf(domain[0]) and
                      domain[0][0] == 'id')
@@ -49,7 +49,7 @@ class IrFiltersCombineWithExisting(TransientModel):
         if this.action == 'union':
             if is_frozen and this.filter_id.is_frozen:
                 domain[0][2] = list(set(domain[0][2]).union(
-                    set(const_eval(this.filter_id.domain)[0][2])))
+                    set(safe_eval(this.filter_id.domain)[0][2])))
                 this.filter_id.write({'domain': str(domain)})
             else:
                 this.filter_id.write(
@@ -66,7 +66,7 @@ class IrFiltersCombineWithExisting(TransientModel):
                     })
         elif this.action == 'complement':
             if is_frozen and this.filter_id.is_frozen:
-                complement_set = set(const_eval(this.filter_id.domain)[0][2])
+                complement_set = set(safe_eval(this.filter_id.domain)[0][2])
                 domain[0][2] = list(
                     complement_set.difference(set(domain[0][2])))
                 this.filter_id.write({'domain': str(domain)})
