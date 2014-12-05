@@ -292,7 +292,7 @@ class ExportHelpWizard(models.TransientModel):
                 backup_file = open(filename,
                                    'w')
                 backup_file.write(xml_data)
-                backup_file.close
+                backup_file.close()
             except:
                 _logger.warning(_('Unable to write autobackup file '
                                   'in given directory: %s'
