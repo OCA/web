@@ -42,6 +42,7 @@ example, 'gtk-open'
 * A dynamic image in a data url base 64 format. Prefix with \
 'data:image/png;base64,'
     """,
+    'url': 'https://github.com/OCA/Web',
     'depends': [
         'web',
     ],
