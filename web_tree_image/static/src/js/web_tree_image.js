@@ -32,6 +32,7 @@ openerp.web_tree_image = function (instance) {
             var value = row_data[this.id].value, src;
             if (this.type === 'binary') {
                 if (value && value.substr(0, 10).indexOf(' ') === -1) {
+                    // The media subtype (png) seems to be arbitrary
                     src = "data:image/png;base64," + value;
                 } else {
                     src = instance.session.url('/web/binary/image', {model: options.model, field: this.id, id: options.id});
