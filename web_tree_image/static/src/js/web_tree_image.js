@@ -47,5 +47,5 @@ openerp.web_tree_image = function (instance) {
             return instance.web.qweb.render('ListView.row.image', {widget: this, src: src});
         }
     });
-    instance.web.list.columns.add('field.tree_image', 'instance.web.list.Image');
+    instance.web.list.columns.add('field.image', 'instance.web.list.Image');
 };
