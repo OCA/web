@@ -26,37 +26,34 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-from openerp.osv import orm, fields
+from openerp import models, fields, api
 
 
-class web_shortcut(orm.Model):
+class web_shortcut(models.Model):
     _name = 'web.shortcut'
-    _columns = {
-        'name': fields.char('Shortcut Name', size=64),
-        'menu_id': fields.many2one('ir.ui.menu'),
-        'user_id': fields.many2one('res.users', 'User Ref.', required=True,
-                                   ondelete='cascade', select=True),
-    }
 
-    def get_user_shortcuts(self, cr, uid, user_id, context=None):
-        ids = self.search(cr, uid, [('user_id', '=', user_id)],
-                          context=context)
-        results = self.read(cr, uid, ids, ['menu_id'], context=context)
-        name_map = dict(self.pool.get('ir.ui.menu')
-                        .name_get(cr, uid, [x['menu_id'][0] for x in results],
-                                  context=context))
-        # Make sure to return only shortcuts pointing to exisintg menu items.
+    name = fields.Char('Shortcut Name', size=64)
+    menu_id = fields.Many2one('ir.ui.menu')
+    user_id = fields.Many2one('res.users', 'User Ref.', required=True,
+                              ondelete='cascade', select=True,
+                              default=lambda obj, cr, uid, context: uid)
+
+    _sql_constraints = [
+        ('shortcut_unique', 'unique(menu_id,user_id)',
+         'Shortcut for this menu already exists!'),
+    ]
+
+    @api.model
+    def get_user_shortcuts(self, user_id):
+        shortcuts = self.search([('user_id', '=', user_id)])
+        results = shortcuts.read(['menu_id'])
+        ir_ui_menu_obj = self.env['ir.ui.menu']
+        menus = ir_ui_menu_obj.search([('id', 'in', [x['menu_id'][0]
+                                                     for x in results])])
+        name_map = dict(menus.name_get())
+        # Make sure to return only shortcuts pointing to existing menu items.
         filtered_results = filter(lambda result: result['menu_id'][0] in
                                   name_map, results)
         for result in filtered_results:
             result.update(name=name_map[result['menu_id'][0]])
         return filtered_results
-
-    _order = 'name'
-    _defaults = {
-        'user_id': lambda obj, cr, uid, context: uid,
-    }
-    _sql_constraints = [
-        ('shortcut_unique', 'unique(menu_id,user_id)',
-         'Shortcut for this menu already exists!'),
-    ]
