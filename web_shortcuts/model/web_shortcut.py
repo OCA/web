@@ -60,5 +60,3 @@ class web_shortcut(orm.Model):
         ('shortcut_unique', 'unique(menu_id,user_id)',
          'Shortcut for this menu already exists!'),
     ]
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
