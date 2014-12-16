@@ -4,9 +4,10 @@ python:
   - "2.7"
 
 env:
-  - VERSION="8.0" ODOO_REPO="odoo/odoo"
-  - VERSION="8.0" ODOO_REPO="OCA/OCB"
-  - VERSION="8.0" UNIT_TEST="1"
+  - VERSION="8.0" LINT_CHECK="1"
+  - VERSION="8.0" ODOO_REPO="odoo/odoo" LINT_CHECK="0"
+  - VERSION="8.0" ODOO_REPO="OCA/OCB" LINT_CHECK="0"
+  - VERSION="8.0" UNIT_TEST="1" LINT_CHECK="0"
 
 virtualenv:
   system_site_packages: true
