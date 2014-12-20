@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+  <data>
+
+    <template id="assets_backend" name="mail_uncheck_recipients_view assets" inherit_id="mail.assets_backend">
+      <xpath expr="." position="inside">
+        <script type="text/javascript" src="/web_recipients_uncheck/static/src/js/web_recipients_uncheck.js"></script>
+      </xpath>
+    </template>
+
+  </data>
+</openerp>
