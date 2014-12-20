@@ -1,0 +1,5 @@
+.openerp .oe_form_sheet_full_screen {
+  min-width: 650px;
+  max-width: none;
+  margin: 0 auto;
+}

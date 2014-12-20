@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+    <template id="assets_backend" name="form_sheet_full_screen assets" inherit_id="web.assets_backend">
+      <xpath expr="//link[@href='/web/static/src/css/base.css']" position="after">
+        <link rel="stylesheet" href="/form_sheet_full_screen/static/src/css/sheet.css"/>
+      </xpath>
+    </template>
+
+  </data>
+</openerp>
