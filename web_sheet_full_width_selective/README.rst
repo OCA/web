@@ -13,3 +13,8 @@ inherited view with the following content:
 
 Install the 'web_sheet_full_width' module if you want to have a full screen
 behaviour in all sheets.
+
+
+Acknowledgements
+''''''''''''''''
+Icon courtesy of http://www.picol.org/ (size_width.svg)
