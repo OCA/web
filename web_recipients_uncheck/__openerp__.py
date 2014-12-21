@@ -25,9 +25,6 @@
     'version': '0.3',
     'author': 'initOS GmbH & Co. KG',
     'category': 'Web',
-    'description': """Uncheck additional recipients and followers when
-sending a message at the customer view.
-    """,
     'website': 'http://www.initos.com',
     'license': 'AGPL-3',
     'images': [],
