@@ -1,0 +1,26 @@
+.openerp .oe_form .oe_form_field_markdown .oe_form_text_content {
+    text-overflow: ellipsis;
+    display: inline-block;
+    white-space: pre-wrap;
+    overflow-x: hidden;
+    width: 100%;
+    background-color: #eee;
+    padding: 10px;
+}
+
+.oe_form_text_markdown pre {
+    background-color: #333;
+    padding: 10px;
+}
+
+.md-editor.md-fullscreen-mode .md-input, .md-editor.md-fullscreen-mode .md-preview {
+    font-size: 13px!important;
+}
+
+.md-editor.md-fullscreen-mode {
+    margin-top: 50px;
+}
+
+.md-editor.md-fullscreen-mode .md-header {
+    top: 70px;
+}
