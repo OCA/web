@@ -1,10 +1,10 @@
-openerp.web_bootstrap_markdown = function (oe) {
+openerp.web_widget_text_markdown = function (oe) {
 
     var _lt = oe.web._lt;
 
-    oe.web.form.widgets.add('bootstrap_markdown', 'openerp.web_bootstrap_markdown.FieldTextMarkDown');
+    oe.web.form.widgets.add('bootstrap_markdown', 'openerp.web_widget_text_markdown.FieldTextMarkDown');
 
-    oe.web_bootstrap_markdown.FieldTextMarkDown = oe.web.form.AbstractField.extend(
+    oe.web_widget_text_markdown.FieldTextMarkDown = oe.web.form.AbstractField.extend(
         oe.web.form.ReinitializeFieldMixin,
         {
 

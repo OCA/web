@@ -1,5 +1,5 @@
 {
-    'name': 'web_bootstrap_markdown',
+    'name': 'web_widget_text_markdown',
     'version': '1.0',
     'author': 'Sudokeys',
     'maintainer': 'Sudokeys',
@@ -7,7 +7,7 @@
     'license': 'AGPL-3',
     'depends': ['base','web'],
     'website': 'http://www.sudokey.com',
-    'data': ['views/web_bootstrap_markdown.xml',],
+    'data': ['views/main.xml',],
     "qweb": ["static/src/xml/bootstrap_markdown.xml",
              ],
     'demo': [],
