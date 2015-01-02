@@ -7,7 +7,7 @@ Description
 
 This modules add a new widget for text field in form view on Odoo:
 
-- In readonly mode, it use marked to parse and render to html markdown syntaxe.
+- In readonly mode, it uses marked to parse and render to html markdown syntax.
 - In write mode, use [bootstrap-markdown][1]
 
 [1]: http://www.codingdrama.com/bootstrap-markdown/    "bootstrap-markdown"
@@ -23,14 +23,14 @@ Example
 Your XML form view definition should contain::
 
     ...
-    <field name="description" widget="bootstrap_markdown"/>
+    <field name="field_name" widget="bootstrap_markdown"/>
     ...
 
 Note / Todo
 -----------
 
-- Improve user experience with Odoo specific syntaxe
-- Improve user experience with Github specific syntaxe
+- Improve user experience with Odoo specific syntax
+- Improve user experience with Github specific syntax
 - Add a working parsed field in tree view
 - Add ir.attachment support
 - Add images support (with drag'n'drop)
