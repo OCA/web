@@ -1,13 +1,13 @@
-==================================
-Add new options for many2one field
-==================================
+======================================================
+Add new options for many2one and many2manytags widgets
+======================================================
 
 
 Description
 -----------
 
-This modules modifies "many2one" and "many2manytags" form fields so as to add some new display
-control options.
+This modules modifies "many2one" and "many2manytags" form widgets so as to add
+some new display control options.
 
 **New: support many2manytags widget !**
 
@@ -25,11 +25,11 @@ if the current user have no permission rights to create the related object.
 Requirements
 ------------
 
-Was tested on openerp saas-3, saas-4 branch
+Was tested on openerp 7.0, saas-3, saas-4 branch
 
 
-New option
-----------
+New options
+-----------
 
 ``create`` *boolean* (Default: depends if user have create rights)
 
@@ -50,22 +50,32 @@ New option
 ir.config_parameter options
 ---------------------------
 
-Now you can disable "Create..." and "Create and Edit..." entry for all fields in the odoo instance.
-If you disable one option, you can enable it for particular field by setting "create: True" option directly on the field definition.
+Now you can disable "Create..." and "Create and Edit..." entry for all widgets
+in the odoo instance.
+If you disable one option, you can enable it for particular field by setting
+"create: True" option directly on the field definition.
 
-``web_m2x_options.create`` *boolean* (Default: depends if user have create rights)
+``web_m2x_options.create`` *boolean*
+(Default: depends if user have create rights)
 
-  Whether to display the "Create..." entry in dropdown panel for all fields in the odoo instance.
+  Whether to display the "Create..." entry in dropdown panel for all fields in
+  the odoo instance.
 
-``web_m2x_options.create_edit`` *boolean* (Default: depends if user have create rights)
+``web_m2x_options.create_edit`` *boolean*
+(Default: depends if user have create rights)
 
-  Whether to display "Create and Edit..." entry in dropdown panel for all fields in the odoo instance.
+  Whether to display "Create and Edit..." entry in dropdown panel for all
+  fields in the odoo instance.
 
-``web_m2x_options.limit`` *int* (Default: openerp default value is ``7``)
+``web_m2x_options.limit`` *int*
+(Default: openerp default value is ``7``)
 
-  Number of displayed record in drop-down panel for all fields in the odoo instance
+  Number of displayed record in drop-down panel for all fields in the odoo
+  instance
 
-To add these parameters go to Configuration -> Technical -> Parameters -> System Parameters and add new parameters like:
+To add these parameters go to
+Configuration -> Technical -> Parameters -> System Parameters and add new
+parameters like:
 
 - web_m2x_options.create: False
 - web_m2x_options.create_edit: False
@@ -78,12 +88,15 @@ Example
 Your XML form view definition could contain::
 
     ...
-    <field name="partner_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
+    <field name="partner_id"
+           options="{'limit': 10, 'create': false, 'create_edit': false}"/>
     ...
 
 Note
 ----
 
-Double check that you have no inherited view that remote ``options`` you set on a field ! 
-If nothing work, add a debugger in the first ligne of ``get_search_result method`` and enable debug mode in OpenERP. When you write something in a many2one field, javascript debugger should pause. If not verify your installation.
-
+Double check that you have no inherited view that remote ``options`` you set
+on a field ! If nothing work, add a debugger in the first ligne of
+``get_search_result method`` and enable debug mode in OpenERP.
+When you write something in a many2one field, javascript debugger should pause.
+If not verify your installation.

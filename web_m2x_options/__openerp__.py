@@ -2,7 +2,7 @@
 
 {
     "name": 'web_m2x_options',
-    "version": "0.1",
+    "version": "1.0",
     "description": """
 =====================================================
 Add new options for many2one and many2manytags field:
@@ -28,7 +28,7 @@ field options.
 Thanks to:
 ----------
 
-- Nicolas JEUDY <njeudy@tuxservices.com>
+- Nicolas JEUDY <njeudy@txs.fr>
 - Valentin LAB <valentin.lab@kalysto.org>
 
 """,
@@ -39,7 +39,7 @@ Thanks to:
     "js": [
         'static/src/js/form.js',
     ],
-    "author": "Tuxservices",
+    "author": "0k.io",
     "installable": True,
     "active": False,
 }
