@@ -5,7 +5,7 @@
     'maintainer': 'Sudokeys',
     'category': '',
     'license': 'AGPL-3',
-    'depends': ['base'],
+    'depends': ['base','web'],
     'website': 'http://www.sudokey.com',
     'data': ['views/web_bootstrap_markdown.xml',],
     "qweb": ["static/src/xml/bootstrap_markdown.xml",
