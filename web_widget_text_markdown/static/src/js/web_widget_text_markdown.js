@@ -22,6 +22,10 @@ openerp.web_widget_text_markdown = function (oe) {
                 this.old_value = null;
             },
 
+            parse_value: function(val, def) {
+                return oe.web.parse_value(val, this, def);
+            },
+
             initialize_content: function () {
                 // Gets called at each redraw of widget
                 //  - switching between read-only mode and edit mode
@@ -31,6 +35,30 @@ openerp.web_widget_text_markdown = function (oe) {
                     this.$txt.markdown({autofocus: false, savable: false});
                 }
                 this.old_value = null; // will trigger a redraw
+            },
+
+            store_dom_value: function () {
+                if (!this.get('effective_readonly') &&
+                    this._get_raw_value() !== '' &&
+                    this.is_syntax_valid()) {
+                        // We use internal_set_value because we were called by
+                        // ``.commit_value()`` which is called by a ``.set_value()``
+                        // itself called because of a ``onchange`` event
+                        this.internal_set_value(
+                            this.parse_value(
+                                this._get_raw_value()));
+                            }
+                        },
+
+            commit_value: function () {
+                this.store_dom_value();
+                return this._super();
+            },
+
+            _get_raw_value: function() {
+                if (this.$txt === false)
+                    return '';
+                    return this.$txt.val();
             },
 
             render_value: function () {
