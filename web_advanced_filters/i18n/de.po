@@ -175,8 +175,7 @@ msgstr "Eine Auswahl mit bestehendem Filter kombinieren"
 #. module: web_advanced_filters
 #: view:ir.filters:0
 msgid "Are you sure? You can't undo this operation!"
-msgstr ""
-"Sind Sie sicher? Sie können diesen Vorgang nicht mehr rückgängig machen!"
+msgstr "Sind Sie sicher? Sie können diesen Vorgang nicht mehr rückgängig machen!"
 
 #. module: web_advanced_filters
 #: model:ir.model,name:web_advanced_filters.model_ir_filters
