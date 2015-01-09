@@ -28,7 +28,8 @@
     "category": "",
     'license': 'AGPL-3',
     "description": """
-
+    module to give you a dashboard where you can configure tile from any view
+    and add them as short cut.
     """,
     "summary": "Add tile to dashboard",
     'data': ['tile.xml',
