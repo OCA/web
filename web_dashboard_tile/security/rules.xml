@@ -2,7 +2,7 @@
 <openerp>
 <data noupdate="1">
 
-    <record id="payment_method_rule" model="ir.rule">
+    <record id="model_tile_rule" model="ir.rule">
         <field name="name">tile.owner</field>
         <field name="model_id" ref="model_tile" />
         <field name="groups" eval="[(4, ref('base.group_user'))]"/>
