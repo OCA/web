@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+        <record forcecreate="True" id="ir_cron_publish_blog"
+            model="ir.cron">
+            <field name="name">Publish blog post</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall" />
+            <field name="model">blog.post</field>
+            <field name="function">cron_publish_posts</field>
+            <field name="args">()</field>
+        </record>
+    </data>
+</openerp>
