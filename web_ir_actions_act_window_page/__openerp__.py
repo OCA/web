@@ -21,8 +21,7 @@
 {
     "name": "Window actions for client side paging",
     "summary": ("Allows a developer to trigger a pager to show the previous "
-                "or next next record in the form view by returning the "
-                "appropriate window action"),
+                "or next next record in the form view"),
     "version": "1.0",
     "author": "Therp BV",
     "category": "Dependency",
