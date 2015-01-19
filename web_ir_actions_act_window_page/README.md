@@ -1,5 +1,5 @@
 Client side paging
-=====================
+==================
 
 This addon enables buttons to return::
 
