@@ -11,4 +11,3 @@ or::
 
 which trigger the form's controller to page into the requested direction on the
 client side.
-
