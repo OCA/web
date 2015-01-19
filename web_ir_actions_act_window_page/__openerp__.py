@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    This module copyright (C) 2013 Therp BV (<http://therp.nl>).
+#    This module copyright (C) 2013-2015 Therp BV (<http://therp.nl>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,39 +19,14 @@
 #
 ##############################################################################
 {
-    "name" : "Window actions for client side paging",
-    "version" : "1.0",
-    "author" : "Therp BV",
-    "complexity": "normal",
-    "description": """
-Client side paging
-=====================
-
-This addon enables buttons to return::
-
-{'type': 'ir.actions.act_window.page.next'}
-
-or::
-
-{'type': 'ir.actions.act_window.page.prev'}
-
-which trigger the form's controller to page into the requested direction.
-    """,
-    "category" : "Dependency",
-    "depends" : [
-    ],
-    "data" : [
-    ],
-    "js": [
-        'static/src/js/web_ir_actions_act_window_page.js',
-    ],
-    "css": [
-    ],
-    "qweb": [
-    ],
-    "auto_install": False,
-    'installable': False,
-    "external_dependencies" : {
-        'python' : [],
-    },
+    "name": "Window actions for client side paging",
+    "summary": ("Allows a developer to trigger a pager to show the previous "
+                "or next next record in the form view by returning the "
+                "appropriate window action"),
+    "version": "1.0",
+    "author": "Therp BV",
+    "category": "Dependency",
+    "depends": ['web'],
+    'data': ['view/qweb.xml'],
+    'installable': True,
 }

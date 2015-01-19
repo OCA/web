@@ -2,7 +2,7 @@
 //############################################################################
 //
 //   OpenERP, Open Source Management Solution
-//   This module copyright (C) 2013 Therp BV (<http://therp.nl>).
+//   This module copyright (C) 2013-2015 Therp BV (<http://therp.nl>).
 //
 //   This program is free software: you can redistribute it and/or modify
 //   it under the terms of the GNU Affero General Public License as
@@ -19,9 +19,9 @@
 //
 //############################################################################
 
-openerp.web_ir_actions_act_window_page = function(openerp)
+openerp.web_ir_actions_act_window_page = function(instance)
 {
-    openerp.web.ActionManager.include({
+    instance.web.ActionManager.include({
         ir_actions_act_window_page_prev: function(action, options)
         {
             if(this.inner_widget && this.inner_widget.active_view == 'form' &&
