@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    This module copyright (C) 2013 Therp BV (<http://therp.nl>)
+#    This module copyright (C) 2013-2015 Therp BV (<http://therp.nl>)
 #    All Rights Reserved
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -23,18 +23,16 @@
 {
     'name': 'CKEditor 4.x widget',
     'version': '1.0',
-    'description': """
-    This addon provides a widget for editing html fields via CKEditor 4.x
-
-    Use widget="text_html" if you need just html display. In the unlikely case
-    you need specific features of ckeditor, use widget="text_ckeditor4".
-    """,
     'author': 'Therp BV',
-    'website': 'http://www.therp.nl',
+    'website': 'https://github.com/OCA/web',
+    'summary': 'Provides a widget for editing HTML fields using CKEditor 4.x',
     "category": "Tools",
     "depends": [
         'web',
-        ],
+    ],
+    'data': [
+        'views/qweb.xml',
+    ],
     'css': [
         'static/src/css/web_ckeditor4.css',
         ],
@@ -107,7 +105,7 @@
 #        'static/lib/trunk/core/_bootstrap.js', 
         #end of ckeditor debug
         'static/src/js/web_ckeditor4.js',
-        ],
+    ],
     'installable': True,
     'auto_install': False,
     'certificate': '',

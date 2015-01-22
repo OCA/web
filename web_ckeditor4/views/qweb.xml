@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="web_ckeditor4 assets"
+                  inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript"
+                        src="/web_ckeditor4/static/src/js/ckeditor_basepath.js"></script>
+                <script type="text/javascript"
+                        src="/web_ckeditor4/static/lib/ckeditor/ckeditor.js"></script>
+                <script type="text/javascript"
+                        src="/web_ckeditor4/static/lib/ckeditor/config.js"></script>
+                <script type="text/javascript"
+                        src="/web_ckeditor4/static/src/js/web_ckeditor4.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>
