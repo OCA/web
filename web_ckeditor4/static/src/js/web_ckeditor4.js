@@ -20,7 +20,7 @@
 #
 ############################################################################*/
 
-openerp.web_ckeditor4 = function(openerp)
+openerp.web_ckeditor4 = function(instance)
 {
     var ckeditor_addFunction_org = CKEDITOR.tools.addFunction;
     //this is a quite complicated way to kind of monkey patch the private
@@ -87,14 +87,14 @@ openerp.web_ckeditor4 = function(openerp)
             });
         });
 
-    openerp.web.form.widgets.add('text_ckeditor4',
-            'openerp.web_ckeditor4.FieldCKEditor4');
-    openerp.web.form.widgets.add('text_ckeditor4_raw',
-            'openerp.web_ckeditor4.FieldCKEditor4Raw');
-    openerp.web.form.widgets.add('text_html',
-            'openerp.web_ckeditor4.FieldCKEditor4');
-    openerp.web.form.widgets.add('html',
-            'openerp.web_ckeditor4.FieldCKEditor4');
+    instance.web.form.widgets.add('text_ckeditor4',
+            'instance.web_ckeditor4.FieldCKEditor4');
+    instance.web.form.widgets.add('text_ckeditor4_raw',
+            'instance.web_ckeditor4.FieldCKEditor4Raw');
+    instance.web.form.widgets.add('text_html',
+            'instance.web_ckeditor4.FieldCKEditor4');
+    instance.web.form.widgets.add('html',
+            'instance.web_ckeditor4.FieldCKEditor4');
 
     function filter_html(value, ckeditor_filter, ckeditor_writer)
     {
@@ -117,11 +117,13 @@ openerp.web_ckeditor4 = function(openerp)
             });
     default_ckeditor_writer = new CKEDITOR.htmlParser.basicWriter();
 
-    openerp.web_ckeditor4.FieldCKEditor4 = openerp.web.form.FieldText.extend({
+    instance.web_ckeditor4.FieldCKEditor4 = instance.web.form.FieldText.extend({
         ckeditor_config: {
             removePlugins: 'iframe,flash,forms,smiley,pagebreak,stylescombo',
             filebrowserImageUploadUrl: 'dummy',
             extraPlugins: 'filebrowser',
+            // this is '#39' per default which screws up single quoted text in ${}
+            entities_additional: '',
         },
         ckeditor_filter: default_ckeditor_filter,
         ckeditor_writer: default_ckeditor_writer,
@@ -129,7 +131,7 @@ openerp.web_ckeditor4 = function(openerp)
         {
             this._super.apply(this, arguments);
     
-            CKEDITOR.lang.load(openerp.session.user_context.lang.split('_')[0], 'en', function() {});
+            CKEDITOR.lang.load(instance.session.user_context.lang.split('_')[0], 'en', function() {});
         },
         initialize_content: function()
         {
@@ -142,7 +144,7 @@ openerp.web_ckeditor4 = function(openerp)
             this.editor = CKEDITOR.replace(this.$textarea.get(0),
                 _.extend(
                     {
-                        language: openerp.session.user_context.lang.split('_')[0],
+                        language: instance.session.user_context.lang.split('_')[0],
                         on:
                         {
                             'change': function()
@@ -155,7 +157,7 @@ openerp.web_ckeditor4 = function(openerp)
         },
         store_dom_value: function()
         {
-            this.internal_set_value(this.editor ? this.editor.getData() : openerp.web.parse_value(this.get('value'), this));
+            this.internal_set_value(this.editor ? this.editor.getData() : instance.web.parse_value(this.get('value'), this));
         },
         filter_html: function(value)
         {
@@ -207,7 +209,7 @@ openerp.web_ckeditor4 = function(openerp)
             this._cleanup_editor();
         }
     });
-    openerp.web_ckeditor4.FieldCKEditor4Raw = openerp.web_ckeditor4.FieldCKEditor4.extend({
+    instance.web_ckeditor4.FieldCKEditor4Raw = instance.web_ckeditor4.FieldCKEditor4.extend({
         filter_html: function(value)
         {
             return value;
