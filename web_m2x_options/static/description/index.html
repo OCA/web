@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.11: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.12: http://docutils.sourceforge.net/" />
 <title>Add new options for many2one field</title>
 <style type="text/css">
 
@@ -343,9 +343,10 @@ ul.auto-toc {
 
 <div class="section" id="description">
 <h1>Description</h1>
-<p>This modules modifies &quot;many2one&quot; form fields so as to add some new display
+<p>This modules modifies &quot;many2one&quot; and &quot;many2manytags&quot; form widgets so as to add some new display
 control options.</p>
-<p>** New: support many2manytags widget ! **</p>
+<p><strong>New: support many2manytags widget !</strong></p>
+<p><strong>New: support global option management with ir.config_parameter !</strong></p>
 <p>Options provided includes possibility to remove &quot;Create...&quot; and/or &quot;Create and
 Edit...&quot; entries from many2one drop down. You can also change default number of
 proposition appearing in the drop-down. Or prevent the dialog box poping in
@@ -355,10 +356,10 @@ if the current user have no permission rights to create the related object.</p>
 </div>
 <div class="section" id="requirements">
 <h1>Requirements</h1>
-<p>Was tested on openerp v7.0</p>
+<p>Was tested on openerp 8.0, trunk, saas-5 branch. New way to import js file. (thanks to tfossoul)</p>
 </div>
-<div class="section" id="new-option">
-<h1>New option</h1>
+<div class="section" id="new-options">
+<h1>New options</h1>
 <p><tt class="docutils literal">create</tt> <em>boolean</em> (Default: depends if user have create rights)</p>
 <blockquote>
 Whether to display the &quot;Create...&quot; entry in dropdown panel.</blockquote>
@@ -371,6 +372,26 @@ Whether to display the many2one dialog in case of validation error.</blockquote>
 <p><tt class="docutils literal">limit</tt> <em>int</em> (Default: openerp default value is <tt class="docutils literal">7</tt>)</p>
 <blockquote>
 Number of displayed record in drop-down panel</blockquote>
+</div>
+<div class="section" id="ir-config-parameter-options">
+<h1>ir.config_parameter options</h1>
+<p>Now you can disable &quot;Create...&quot; and &quot;Create and Edit...&quot; entry for all widgets in the odoo instance.
+If you disable one option, you can enable it for particular field by setting &quot;create: True&quot; option directly on the field definition.</p>
+<p><tt class="docutils literal">web_m2x_options.create</tt> <em>boolean</em> (Default: depends if user have create rights)</p>
+<blockquote>
+Whether to display the &quot;Create...&quot; entry in dropdown panel for all fields in the odoo instance.</blockquote>
+<p><tt class="docutils literal">web_m2x_options.create_edit</tt> <em>boolean</em> (Default: depends if user have create rights)</p>
+<blockquote>
+Whether to display &quot;Create and Edit...&quot; entry in dropdown panel for all fields in the odoo instance.</blockquote>
+<p><tt class="docutils literal">web_m2x_options.limit</tt> <em>int</em> (Default: openerp default value is <tt class="docutils literal">7</tt>)</p>
+<blockquote>
+Number of displayed record in drop-down panel for all fields in the odoo instance</blockquote>
+<p>To add these parameters go to Configuration -&gt; Technical -&gt; Parameters -&gt; System Parameters and add new parameters like:</p>
+<ul class="simple">
+<li>web_m2x_options.create: False</li>
+<li>web_m2x_options.create_edit: False</li>
+<li>web_m2x_options.limit: 10</li>
+</ul>
 </div>
 <div class="section" id="example">
 <h1>Example</h1>
