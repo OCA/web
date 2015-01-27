@@ -19,13 +19,13 @@
 #
 ##############################################################################
 {
-    "name" : "Context in colors and fonts",
+    "name": "Context in colors and fonts",
     "summary": "Use the context in a tree view's colors and fonts attribute",
-    "version" : "1.1",
-    "author" : "Therp BV",
+    "version": "1.1",
+    "author": "Therp BV",
     "complexity": "normal",
-    "category" : "Hidden/Dependency",
-    "depends" : [
+    "category": "Hidden/Dependency",
+    "depends": [
         'web',
     ],
     "data": [
