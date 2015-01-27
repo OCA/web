@@ -24,7 +24,7 @@
     "author": "Therp BV",
     "complexity": "normal",
     "summary": "Allows small UI changes with simple CSS",
-    "category": "Dependency",
+    "category": "Hidden/Dependency",
     "depends": [
         'web',
     ],
