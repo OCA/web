@@ -24,7 +24,7 @@
     "version" : "1.1",
     "author" : "Therp BV",
     "complexity": "normal",
-    "category" : "Dependency",
+    "category" : "Hidden/Dependency",
     "depends" : [
         'web',
     ],
