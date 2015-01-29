@@ -5,7 +5,7 @@
             <div>
                 <label for="dashboard_tile_new_name">Tile:</label>
                 <input id="dashboard_tile_new_name" />
-                <button id="add_dashboard_tile">Okay</button>
+                <button id="add_dashboard_tile">Create</button>
             </div>
         </t>
     </t>
