@@ -1,24 +1,20 @@
-==============================
 Add new text field form widget
 ==============================
 
-Description
------------
+This module adds a new widget for text field in form view on Odoo:
 
-This modules add a new widget for text field in form view on Odoo:
-
-- In readonly mode, it uses marked to parse and render to html markdown syntax.
+- In readonly mode, it uses text contents to parse and render them to html markdown syntax.
 - In write mode, use [bootstrap-markdown][1]
 
 [1]: http://www.codingdrama.com/bootstrap-markdown/    "bootstrap-markdown"
 
-Requirements
-------------
+Installation
+============
 
-Was tested on openerp trunk, 8.0 branch.
+It was tested on openerp trunk, 8.0 branch.
 
-Example
--------
+Usage
+=====
 
 Your XML form view definition should contain::
 
@@ -26,19 +22,33 @@ Your XML form view definition should contain::
     <field name="field_name" widget="bootstrap_markdown"/>
     ...
 
-Note / Todo
------------
+Known issues / Roadmap
+======================
 
-- Improve user experience with Odoo specific syntax
-- Improve user experience with Github specific syntax
-- Add a working parsed field in tree view
-- Add ir.attachment support
-- Add images support (with drag'n'drop)
-- ...
+* Improve user experience with Odoo specific syntax
+* Improve user experience with Github specific syntax
+* Add a working parsed field in tree view
+* Add ir.attachment support
+* Add images support (with drag'n'drop)
 
-Thanks to
----------
+Credits
+=======
 
-- Nicolas JEUDY <nicolas@sudokeys.com>
+Contributors
+------------
 
-If you have questions, please email one of them, or report issue on github
+* Nicolas Jeudy <nicolas@sudokeys.com>
+
+Maintainer
+----------
+
+.. image:: http://odoo-community.org/logo.png
+   :alt: Odoo Community Association
+   :target: http://odoo-community.org
+
+This module is maintained by the OCA.
+
+OCA, or the Odoo Community Association, is a nonprofit organization whose mission is to support the collaborative development of Odoo features and promote its widespread use.
+
+To contribute to this module, please visit http://odoo-community.org.
+
