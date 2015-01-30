@@ -50,6 +50,8 @@
                     <templates>
                         <t t-name="kanban-box">
                             <div t-attf-class="oe_tile_color_#{kanban_getcolor(record.color.raw_value)} oe_dashbaord_tile oe_kanban_global_click" >
+				<!-- FIXME: icon is hidden and edit not working if you have no form view
+                                            need more JS in the future -->
                                 <div class="oe_dropdown_toggle oe_dropdown_kanban">
                                     <span class="oe_e">í</span>
                                     <ul class="oe_dropdown_menu">
@@ -100,7 +102,7 @@
             <field name="view_id" ref="dashboard_tile_tree_view"/>
         </record>
 
-        <record id="mail_dashbaord" model="ir.ui.menu">
+        <record id="mail_dashboard" model="ir.ui.menu">
           <field name="name">Dashboard</field>
           <field name="sequence" eval="9"/>
           <field name="action" ref="action_kanban_dashboard_tile"/>
