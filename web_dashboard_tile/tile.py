@@ -58,9 +58,6 @@ class tile(orm.Model):
         tile_id = ids[0]
         tile_object = self.browse(cr, uid, tile_id, context=context)
 
-        if not context:
-            context = {}
-
         if tile_object.action_id:
             act_obj = self.pool.get('ir.actions.act_window')
             result = act_obj.read(cr, uid, [tile_object.action_id.id],
