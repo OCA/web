@@ -85,7 +85,8 @@ openerp.web_export_view = function (instance) {
                                 }
                             }
                             else if (cell.classList.contains("oe_list_field_integer")) {
-                                export_row.push(parseInt(text));
+                                tmp2 = text.replace(instance.web._t.database.parameters.thousands_sep, "");
+                                export_row.push(parseInt(tmp2));
                             }
                             else {
                                 export_row.push(text.trim());
