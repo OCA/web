@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template">
+    <t t-extend="ViewManagerAction">
+        <t t-jquery="div:first">
+            this.attr('t-att-class', '"' + this.attr('class') + ' oe_model_" + (widget.dataset.model.replace(new RegExp("\\\\.","g"), "_"))');
+            this.attr('class', null);
+        </t>
+    </t>
+</templates>
