@@ -191,7 +191,7 @@ class IrFilters(Model):
                 'res_model': this.model_id,
                 'domain': this.domain,
                 'view_type': 'form',
-                'view_mode': 'tree',
+                'view_mode': 'tree,form',
                 'context': {
                     'default_filter_id': this.id,
                 },
