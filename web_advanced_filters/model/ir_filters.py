@@ -27,6 +27,7 @@ from openerp.tools.translate import _
 
 class IrFilters(Model):
     _inherit = 'ir.filters'
+    _evaluate_before_negate = ['one2many', 'many2many']
 
     def _is_frozen_get(self, cr, uid, ids, field_name, args, context=None):
         '''determine if this is fixed list of ids'''
@@ -65,16 +66,61 @@ class IrFilters(Model):
                     cr, uid, this['union_filter_ids'], ['domain'],
                     context=context)])
             for c in self.read(cr, uid, this['complement_filter_ids'],
-                               ['domain'], context=context):
-                domain = expression.AND([
-                    domain,
-                    ['!'] + eval_n(c['domain'])])
-            result[this['id']] = str(domain)
+                               ['domain', 'evaluate_before_negate',
+                                'model_id'],
+                               context=context):
+                if c['evaluate_before_negate']:
+                    domain = expression.AND([
+                        domain,
+                        [
+                            [
+                                'id', 'not in',
+                                self.pool[c['model_id']].search(
+                                    cr, uid, eval_n(c['domain']),
+                                    context=context)
+                            ]
+                        ]])
+                else:
+                    domain = expression.AND([
+                        domain,
+                        ['!'] + eval_n(c['domain'])])
+            result[this['id']] = str(expression.normalize_domain(domain))
         return result
 
     def _domain_set(self, cr, uid, ids, field_name, field_value, args,
                     context=None):
         self.write(cr, uid, ids, {'domain_this': field_value})
+
+    def _evaluate_before_negate_get(self, cr, uid, ids, field_name, args,
+                                    context=None):
+        """check if this filter contains references to x2many fields. If so,
+        then negation goes wrong in nearly all cases, so we evaluate the
+        filter and remove its resulting ids"""
+        result = {}
+        for this in self.read(cr, uid, ids, ['model_id', 'domain'],
+                              context=context):
+            result[this['id']] = False
+            complement_domain = expression.normalize_domain(
+                safe_eval(this['domain'] or 'False') or [expression.FALSE_LEAF])
+            for arg in complement_domain:
+                if not expression.is_leaf(arg):
+                    continue
+                current_model = self.pool.get(this['model_id'])
+                if not current_model:
+                    continue
+                has_x2many = False
+                for field_name in arg[0].split('.'):
+                    field = current_model._all_columns[field_name].column
+                    has_x2many |= field._type in self._evaluate_before_negate
+                    has_x2many |= isinstance(field, fields.function)
+                    if hasattr(field, '_obj'):
+                        current_model = self.pool.get(field._obj)
+                    if not current_model or has_x2many:
+                        break
+                if has_x2many:
+                    result[this['id']] = True
+                    break
+        return result
 
     _columns = {
         'is_frozen': fields.function(
@@ -93,6 +139,11 @@ class IrFilters(Model):
             fnct_inv=_domain_set),
         'domain_this': fields.text(
             'This filter\'s own domain', oldname='domain'),
+        'evaluate_before_negate': fields.function(
+            _evaluate_before_negate_get, type='boolean',
+            string='Evaluate this filter before negating',
+            help='This is necessary if this filter contains positive operators'
+            'on x2many fields')
     }
 
     _defaults = {
