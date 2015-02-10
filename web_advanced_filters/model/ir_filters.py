@@ -101,7 +101,8 @@ class IrFilters(Model):
                               context=context):
             result[this['id']] = False
             complement_domain = expression.normalize_domain(
-                safe_eval(this['domain'] or 'False') or [expression.FALSE_LEAF])
+                safe_eval(this['domain'] or 'False')
+                or [expression.FALSE_LEAF])
             for arg in complement_domain:
                 if not expression.is_leaf(arg):
                     continue
