@@ -21,6 +21,12 @@
                         <field name="complement_filter_ids" nolabel="1" domain="[('user_id', 'in', [False, uid]),('id', '!=', id), ('model_id', '=', model_id)]" />
                     </group>
                 </group>
+                <field name="domain" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('union_filter_ids', '!=', [[6, False, []]]), ('complement_filter_ids', '!=', [[6, False, []]])]}</attribute>
+                </field>
+                <field name="domain" position="after">
+                    <field name="domain_this" attrs="{'invisible': [('union_filter_ids', '=', [[6, False, []]]), ('complement_filter_ids', '=', [[6, False, []]])]}" />
+                </field>
             </field>
         </record>
         <record id="form_ir_filters_save_new" model="ir.ui.view">
