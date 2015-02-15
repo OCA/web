@@ -26,7 +26,7 @@ import random
 
 
 class tile(orm.Model):
-    _name = 'tile'
+    _name = 'tile.tile'
 
     def _get_tile_count(self, cr, uid, ids, field_name, field_value,
                         arg, context=None):

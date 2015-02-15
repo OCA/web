@@ -54,7 +54,7 @@ _.mixin({
             
             var $name = this.$('#dashboard_tile_new_name');
             
-            this.tile = new instance.web.Model('tile');
+            this.tile = new instance.web.Model('tile.tile');
             
             var private_filter = !this.$('#oe_searchview_custom_public').prop('checked');
             if (_.isEmpty($name.val())){

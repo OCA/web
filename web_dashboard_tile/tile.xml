@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-       <record model="ir.ui.view" id="dashboard_tile_tree_view">
-            <field name="name">tile.tree</field>
-            <field name="model">tile</field>
+       <record model="ir.ui.view" id="dashboard_tile_tile_tree_view">
+            <field name="name">tile.tile.tree</field>
+            <field name="model">tile.tile</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Dashboard tiles">
@@ -16,9 +16,9 @@
             </field>
         </record>
         
-        <record model="ir.ui.view" id="dashboard_tile_form_view">
-            <field name="name">tile.form</field>
-            <field name="model">tile</field>
+        <record model="ir.ui.view" id="dashboard_tile_tile_form_view">
+            <field name="name">tile.tile.form</field>
+            <field name="model">tile.tile</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Dashboard tiles" version="7.0">
@@ -28,16 +28,15 @@
                         <field name="model_id"/>
                         <field name="user_id"/>
                         <field name="action_id"/>
-                        <!-- field name="count"/> -->
                     </group>
                 </form>
             </field>
         </record>
 
         <!-- CRM Lead Kanban View  -->
-       <record model="ir.ui.view" id="dashboard_tile_kanban_view">
-            <field name="name">tile.kanban</field>
-            <field name="model">tile</field>
+       <record model="ir.ui.view" id="dashboard_tile_tile_kanban_view">
+            <field name="name">tile.tile.kanban</field>
+            <field name="model">tile.tile</field>
             <field name="type">kanban</field>
             <field name="arch" type="xml">
                 <kanban edit="false" create="false">
@@ -83,10 +82,10 @@
 
         <record model="ir.actions.act_window" id="action_tree_dashboard_tile">
             <field name="name">Dashboard</field>
-            <field name="res_model">tile</field>
+            <field name="res_model">tile.tile</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,kanban,form</field>
-            <field name="view_id" ref="dashboard_tile_tree_view"/>
+            <field name="view_id" ref="dashboard_tile_tile_tree_view"/>
         </record>
 
         <menuitem id="menue_dashboard_tile" 
@@ -95,11 +94,11 @@
 
         <record model="ir.actions.act_window" id="action_kanban_dashboard_tile">
             <field name="name">Dashboard</field>
-            <field name="res_model">tile</field>
+            <field name="res_model">tile.tile</field>
             <field name="view_type">form</field>
             <field name="view_mode">kanban</field>
             <field name="domain">['|',('user_id','=',False),('user_id','=',uid)]</field>
-            <field name="view_id" ref="dashboard_tile_tree_view"/>
+            <field name="view_id" ref="dashboard_tile_tile_tree_view"/>
         </record>
 
         <record id="mail_dashboard" model="ir.ui.menu">

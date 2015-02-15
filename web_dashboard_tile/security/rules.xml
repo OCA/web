@@ -4,7 +4,7 @@
 
     <record id="model_tile_rule" model="ir.rule">
         <field name="name">tile.owner</field>
-        <field name="model_id" ref="model_tile" />
+        <field name="model_id" ref="model_tile_tile" />
         <field name="groups" eval="[(4, ref('base.group_user'))]"/>
         <field name="domain_force">[('user_id','in',[False,user.id])]</field>
     </record>
