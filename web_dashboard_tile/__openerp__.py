@@ -22,7 +22,7 @@
 ##############################################################################
 {
     "name": "Dashboard Tile",
-    "version": "0.3",
+    "version": "0.4",
     "depends": ['web', 'board', 'mail'],
     'author': 'initOS GmbH & Co. KG',
     "category": "",
@@ -30,12 +30,27 @@
     "description": """
     module to give you a dashboard where you can configure tile from any view
     and add them as short cut.
+
+    Kown issues/limits:
+    * change color picks wrong color
+    * can not edit tile from dashboard
+    * context are ignored
+    * date filter can not be relative
+    * combine domain of menue and filter so can not restore origin filter
+
+    possible future improvments:
+    * support context_today
+    * add icons
+    * support client side action (like inbox)
+    * support select int/float column with min/max/avg/sum to display
+    * change position (maybe drag&drop)
     """,
     "summary": "Add tile to dashboard",
     'data': ['tile.xml',
              'security/ir.model.access.csv',
              'security/rules.xml'],
     'css': ['static/src/css/tile.css'],
+
     'demo': [
     ],
     'test': [
