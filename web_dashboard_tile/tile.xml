@@ -4,7 +4,6 @@
        <record model="ir.ui.view" id="dashboard_tile_tile_tree_view">
             <field name="name">tile.tile.tree</field>
             <field name="model">tile.tile</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Dashboard tiles">
                     <field name="name"/>
@@ -19,7 +18,6 @@
         <record model="ir.ui.view" id="dashboard_tile_tile_form_view">
             <field name="name">tile.tile.form</field>
             <field name="model">tile.tile</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Dashboard tiles" version="7.0">
                     <group>
@@ -37,7 +35,6 @@
        <record model="ir.ui.view" id="dashboard_tile_tile_kanban_view">
             <field name="name">tile.tile.kanban</field>
             <field name="model">tile.tile</field>
-            <field name="type">kanban</field>
             <field name="arch" type="xml">
                 <kanban edit="false" create="false">
                     <field name="name"/>
