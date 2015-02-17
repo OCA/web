@@ -64,15 +64,8 @@ openerp.web_graph_improved = function(instance) {
 
             nv.addGraph(function () {
                 var chart = nv.models.multiBarChart()
-                // .reduceXTicks(false)
                     .stacked(self.bar_ui === 'stack')
                     .showControls(show_controls);
-
-                // if (self.width / data[0].values.length < 80) {
-                //     chart.rotateLabels(-15);
-                //     chart.reduceXTicks(true);
-                //     chart.margin({bottom:40});
-                // }
 
                 d3.select(self.svg)
                     .datum(data)

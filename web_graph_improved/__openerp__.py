@@ -25,6 +25,7 @@
     'category': 'Web',
     'summary': 'Improves graph views.',
     'author': 'Leonardo Donelli',
+    'license': 'AGPL-3',
     'website': 'http://learts.glaucus.in',
     'depends': ['web_graph'],
     'data': ['view/graph_improved_view.xml'],
