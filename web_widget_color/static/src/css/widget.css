@@ -1,0 +1,23 @@
+.openerp .oe_form .oe_form_field_color input {
+    width: 100%;
+}
+
+.openerp .oe_form .oe_form_field_color div {
+    border: 1px solid;
+    display: inline-block;
+    height: 14px;
+    margin-right: 10px;
+    position: relative;
+    top: 3px;
+    width: 40px;
+}
+
+.oe_list_field_color div {
+    border: 1px solid;
+    display: inline-block;
+    height: 14px;
+    margin-right: 10px;
+    position: relative;
+    top: 3px;
+    width: 40px;
+}
