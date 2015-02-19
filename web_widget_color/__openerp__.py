@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ############################################################################
 #
-# OpenERP, Open Source Web Color
+# OpenERP, Open Source Web Widget Color
 # Copyright (C) 2012 Savoir-faire Linux (<http://www.savoirfairelinux.com>).
 # Copyright (C) 2014 Anybox <http://anybox.fr>
 # Copyright (C) 2015 Taktik SA <http://taktik.be>
@@ -24,7 +24,7 @@
 #
 ##############################################################################
 {
-    'name': "Web Color",
+    'name': "Web Widget Color",
     'category': "web",
     'description': """
     This module aims to add a color picker to openERP/Odoo.
@@ -32,7 +32,7 @@
     'version': "1.0",
     'depends': ['base', 'web'],
     'data': [
-        'view/web_color_view.xml'
+        'view/web_widget_color_view.xml'
     ],
     'qweb': [
         'static/src/xml/widget.xml',

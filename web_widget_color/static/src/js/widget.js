@@ -1,4 +1,4 @@
-openerp.web_color = function (instance) {
+openerp.web_widget_color = function (instance) {
 
     instance.web.form.widgets.add('color', 'instance.web.form.FieldColor');
 

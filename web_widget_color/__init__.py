@@ -23,39 +23,4 @@
 # @author Adil Houmadi <ah@taktik.be>
 #
 ##############################################################################
-import openerp.http as http
-from openerp.http import request
-from os.path import join, abspath, exists
-import mimetypes
-
-
-class JsColor(http.Controller):
-    @http.route("/jscolor/<string:image>", type="http", auth="user")
-    def jscolor(self, image):
-        addons_path = http.addons_manifest['web_color']['addons_path']
-        path = join(
-            addons_path,
-            'web_color',
-            'static',
-            'lib',
-            'jscolor',
-            image
-        )
-        if not exists(path):
-            return request.not_found()
-        try:
-            image_file = open(abspath(path))
-            image_data = image_file.read()
-            image_file.close()
-            mime_type = mimetypes.guess_type(path)
-            if len(mime_type) > 1:
-                mime_type = mime_type[0]
-            else:
-                return request.not_found()
-        except:
-            return request.not_found()
-        headers = [
-            ('Content-Type', '%s' % mime_type),
-            ('Content-Length', len(image_data)),
-        ]
-        return request.make_response(image_data, headers)
+import controller
