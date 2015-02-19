@@ -23,4 +23,4 @@
 # @author Adil Houmadi <ah@taktik.be>
 #
 ##############################################################################
-import controller
+from . import controller
