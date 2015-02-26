@@ -1,0 +1,17 @@
+.modal .modal-header button.dialog_button_extend {
+  padding-top: 0px;
+  padding-right: 3px;
+}
+
+.modal .modal-header button.dialog_button_restore {
+  padding-top: 1px;
+  padding-right: 5px;
+}
+
+.modal .modal-header .dialog_button_hide {
+    display: none;
+}
+
+.dialog_full_screen {
+    width: calc(100% - 50px);
+}
