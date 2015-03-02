@@ -24,7 +24,7 @@
     "name":     "Webmodule add wildcard operators for advanced search",
     "version":  "0.1",
     "depends":  ["web"],
-    'author':   'initOS GmbH & Co. KG',
+    'author': "initOS GmbH & Co. KG,Odoo Community Association (OCA)",
     "category": "",
     "summary":  "Simular search in searchbar",
     'license':  'AGPL-3',
