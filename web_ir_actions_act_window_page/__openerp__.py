@@ -21,7 +21,7 @@
 {
     "name": "Window actions for client side paging",
     "version": "1.0",
-    "author": "Therp BV",
+    "author": "Therp BV,Odoo Community Association (OCA)",
     "complexity": "normal",
     "description": """
 Client side paging

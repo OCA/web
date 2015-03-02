@@ -26,7 +26,7 @@
     'description': """As 'duplicate' button often produce inconveniences when
 modules don't correctly handle the 'copy' methods, this module allow to hide
 'duplicate' button for every form view""",
-    'author': 'Agile Business Group',
+    'author': "Agile Business Group,Odoo Community Association (OCA)",
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
     'depends': [

@@ -26,7 +26,7 @@
     'description': """ This addons provides a stylesheet that removes the menu
     and controls when printing an OpenERP screen through the browser's print
     button.""",
-    'author': 'Therp BV',
+    'author': "Therp BV,Odoo Community Association (OCA)",
     'website': 'http://www.therp.nl',
     "category": "Tools",
     "depends": [

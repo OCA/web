@@ -31,7 +31,7 @@ while Firefox displays a generic confirmation message.
 This module is compatible with OpenERP 6.1.
 ''',
     'version': '6.1.1',
-    'author': 'Therp BV',
+    'author': "Therp BV,Odoo Community Association (OCA)",
     'category': 'Usability',
     'website': 'http://therp.nl',
     'email': 'info@therp.nl',

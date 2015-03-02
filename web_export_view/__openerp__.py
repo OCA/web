@@ -45,7 +45,7 @@ After you installed it, you’ll find an additional link ‘Export current view�
 right below the ‘Export’ one. By clicking on it you’ll get a XLS file contains
 the same data of the tree view you are looking at, headers included.
 """,
-    'author': 'Agile Business Group',
+    'author': "Agile Business Group,Odoo Community Association (OCA)",
     'website': 'http://www.agilebg.com',
     'license': 'AGPL-3',
     'depends': ['web'],

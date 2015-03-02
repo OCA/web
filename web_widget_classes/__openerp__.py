@@ -21,7 +21,7 @@
 {
     "name": "CSS classes for widgets",
     "version": "1.0",
-    "author": "Therp BV",
+    "author": "Therp BV,Odoo Community Association (OCA)",
     "complexity": "normal",
     "description": """
     For simple UI changes, having classes attached to widgets giving

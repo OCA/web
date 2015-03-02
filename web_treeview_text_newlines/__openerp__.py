@@ -24,7 +24,7 @@
     'name': 'Show newlines in treeview',
     'version': '1.0',
     'description': "This addons makes textfields in treeview show newlines",
-    'author': 'Therp BV',
+    'author': "Therp BV,Odoo Community Association (OCA)",
     'website': 'http://www.therp.nl',
     "category": "Tools",
     "depends": [

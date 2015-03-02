@@ -22,7 +22,7 @@
 {
     "name": "Web: allow import of models with '_inherits'",
     "version": "1.0r1",
-    "author": "Therp BV",
+    "author": "Therp BV,Odoo Community Association (OCA)",
     "category": "Tools",
     "depends": ['web'],
     "description": """

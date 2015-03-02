@@ -22,7 +22,7 @@
 {
     "name": "Visibility depending on view mode",
     "version": "6.1.1.0r1",
-    "author": "Therp BV",
+    "author": "Therp BV,Odoo Community Association (OCA)",
     "category": "Tools",
     "depends": ['web'],
     "description": """
