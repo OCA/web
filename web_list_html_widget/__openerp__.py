@@ -24,7 +24,7 @@
     "name": "HTML widget for list/tree views",
     "version": "0.1",
     "depends": ["web"],
-    'author': 'initOS GmbH & Co. KG',
+    'author': "initOS GmbH & Co. KG,Odoo Community Association (OCA)",
     "category": "",
     'license': 'AGPL-3',
     "description": """This module allows to use a widget="html" for fields in
