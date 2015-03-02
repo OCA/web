@@ -70,16 +70,13 @@ class IrFilters(Model):
                                 'model_id'],
                                context=context):
                 if c['evaluate_before_negate']:
+                    matching_ids = self.pool[c['model_id']].search(
+                        cr, uid, eval_n(c['domain']),
+                        context=context)
                     domain = expression.AND([
                         domain,
-                        [
-                            [
-                                'id', 'not in',
-                                self.pool[c['model_id']].search(
-                                    cr, uid, eval_n(c['domain']),
-                                    context=context)
-                            ]
-                        ]])
+                        [('id', 'not in', matching_ids)],
+                    ])
                 else:
                     domain = expression.AND([
                         domain,
@@ -101,7 +98,8 @@ class IrFilters(Model):
                               context=context):
             result[this['id']] = False
             complement_domain = expression.normalize_domain(
-                safe_eval(this['domain'] or 'False') or [expression.FALSE_LEAF])
+                safe_eval(this['domain'] or 'False') or
+                [expression.FALSE_LEAF])
             for arg in complement_domain:
                 if not expression.is_leaf(arg):
                     continue
