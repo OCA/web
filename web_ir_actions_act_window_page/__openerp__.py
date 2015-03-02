@@ -23,7 +23,7 @@
     "summary": ("Allows a developer to trigger a pager to show the previous "
                 "or next next record in the form view"),
     "version": "1.0",
-    "author": "Therp BV",
+    "author": "Therp BV,Odoo Community Association (OCA)",
     "category": "Dependency",
     "depends": ['web'],
     'data': ['view/qweb.xml'],

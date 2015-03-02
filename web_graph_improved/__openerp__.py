@@ -24,7 +24,7 @@
     'version': '0.1',
     'category': 'Web',
     'summary': 'Improves graph views.',
-    'author': 'Leonardo Donelli',
+    'author': "Leonardo Donelli,Odoo Community Association (OCA)",
     'license': 'AGPL-3',
     'website': 'http://learts.glaucus.in',
     'depends': ['web_graph'],

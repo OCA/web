@@ -21,7 +21,7 @@
 {
     "name": "CSS classes for widgets",
     "version": "1.0",
-    "author": "Therp BV",
+    "author": "Therp BV,Odoo Community Association (OCA)",
     "complexity": "normal",
     "summary": "Allows small UI changes with simple CSS",
     "category": "Hidden/Dependency",

@@ -22,7 +22,7 @@
     'name': 'Web Shortcuts',
     'version': '1.0',
     'category': 'Tools',
-    'author': 'OpenERP SA',
+    'author': "OpenERP SA,Odoo Community Association (OCA)",
     'website': 'http://openerp.com',
     'depends': ['base'],
     'data': [

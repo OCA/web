@@ -22,7 +22,7 @@
     "name": "Context in colors and fonts",
     "summary": "Use the context in a tree view's colors and fonts attribute",
     "version": "1.1",
-    "author": "Therp BV",
+    "author": "Therp BV,Odoo Community Association (OCA)",
     "complexity": "normal",
     "category": "Hidden/Dependency",
     "depends": [

@@ -22,7 +22,7 @@
 ##############################################################################
 {
     'name': "Web Color",
-    'author': "Savoir-faire Linux",
+    'author': "Savoir-faire Linux,Odoo Community Association (OCA)",
     'category' : "Hidden",
     'description': """
     This module provides a color widget to display the color from
