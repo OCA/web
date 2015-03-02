@@ -24,7 +24,7 @@
 {
     "name": "Show images in tree views",
     "version": "1.0",
-    "author": "Therp BV",
+    "author": "Therp BV,Odoo Community Association (OCA)",
     'url': 'https://github.com/OCA/Web',
     'depends': [
         'web',
