@@ -21,7 +21,7 @@
 {
     'name': 'web_widget_text_markdown',
     'version': '1.0',
-    'author': 'Sudokeys',
+    'author': "Sudokeys,Odoo Community Association (OCA)",
     'maintainer': 'Sudokeys',
     'category': '',
     'license': 'AGPL-3',
