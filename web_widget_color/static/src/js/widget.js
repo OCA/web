@@ -1,5 +1,14 @@
 openerp.web_widget_color = function (instance) {
 
+    var _super_getDir = jscolor.getDir.prototype;
+    jscolor.getDir = function () {
+        var dir = _super_getDir.constructor();
+        if (dir.indexOf('web_widget_color') === -1) {
+            jscolor.dir = 'web_widget_color/static/lib/jscolor/';
+        }
+        return jscolor.dir;
+    };
+
     instance.web.form.widgets.add('color', 'instance.web.form.FieldColor');
 
     instance.web.search.fields.add('color', 'instance.web.search.CharField');
