@@ -8,7 +8,7 @@
         'web',
     ],
     'data': ['views/view.xml'],
-    "author": "0k.io",
+    "author": "0k.io,Odoo Community Association (OCA)",
     "installable": True,
     "active": False,
 }
