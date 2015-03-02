@@ -21,7 +21,7 @@
 {
     "name": "Clickable many2one widget for tree views",
     "version": "1.0",
-    "author": "Therp BV",
+    "author": "Therp BV,Odoo Community Association (OCA)",
     "complexity": "normal",
     "description": """
 This addon provides a widget to have many2one fields in a tree view open the

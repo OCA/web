@@ -4,7 +4,7 @@
 {
     'name': 'Web Warning Sounds',
     'version': '0.1',
-    'author': 'HacBee UAB',
+    'author': "HacBee UAB,Odoo Community Association (OCA)",
     'category': 'Custom',
     'website': 'http://www.hbee.eu',
     'summary': '',

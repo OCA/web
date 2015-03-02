@@ -23,7 +23,7 @@
 {
     'name': 'Uncheck recipients on res.partner',
     'version': '0.2',
-    'author': 'initOS GmbH & Co. KG',
+    'author': "initOS GmbH & Co. KG,Odoo Community Association (OCA)",
     'category': '',
     'description': """Uncheck additional recipients and followers when
 sending a message at the customer view.

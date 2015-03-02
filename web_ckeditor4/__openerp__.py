@@ -29,7 +29,7 @@
     Use widget="text_html" if you need just html display. In the unlikely case
     you need specific features of ckeditor, use widget="text_ckeditor4".
     """,
-    'author': 'Therp BV',
+    'author': "Therp BV,Odoo Community Association (OCA)",
     'website': 'http://www.therp.nl',
     "category": "Tools",
     "depends": [

@@ -21,7 +21,7 @@
 
 {
     'name': "NO create database link",
-    'author': "Vauxoo",
+    'author': "Vauxoo,Odoo Community Association (OCA)",
     'category': "Web",
     'website': "http://vauxoo.com",
     'description': """

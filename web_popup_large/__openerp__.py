@@ -21,7 +21,7 @@
 {
     "name": "Large pop-ups in web client",
     "version": "7.0.1.0",
-    "author": "Therp BV",
+    "author": "Therp BV,Odoo Community Association (OCA)",
     "category": 'Usability',
     "description": """
 Pop-ups in the web client have a width of 900 pixels by default.
