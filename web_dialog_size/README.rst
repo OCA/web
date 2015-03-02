@@ -1,7 +1,7 @@
 Expand Dialog
 =============
 
-A module that let the user expand a dialog box to the full screen width.
+A module that lets the user expand a dialog box to the full screen width.
 
 It is named web_dialog_size as it could be extended to propose other dialog size management feature.
 
