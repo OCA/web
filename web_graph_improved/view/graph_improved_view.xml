@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+  <data>
+
+    <template id="assets_backend"
+              name="web_graph_improved assets"
+              inherit_id="web.assets_backend">
+      <xpath expr="." position="inside">
+        <script type="text/javascript"
+                src="/web_graph_improved/static/src/js/web_graph_improved.js">
+        </script>
+      </xpath>
+    </template>
+
+  </data>
+</openerp>
