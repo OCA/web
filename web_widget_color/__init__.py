@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ############################################################################
 #
-# OpenERP, Open Source Web Color
+# Odoo, Open Source Web Color
 # Copyright (C) 2012 Savoir-faire Linux (<http://www.savoirfairelinux.com>).
 # Copyright (C) 2014 Anybox <http://anybox.fr>
 # Copyright (C) 2015 Taktik SA <http://taktik.be>
