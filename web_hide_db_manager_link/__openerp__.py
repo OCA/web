@@ -30,31 +30,7 @@
     'author': 'Alejandro Santana, Odoo Community Association (OCA)',
     'website': 'http://anubia.es',
     'summary': 'Hide link to database manager in login screen',
-    'description': '''
-**Hide link to database manager in login screen**
-
-This module hides the "Manage Databases" link at the bottom of login screen.
-As in Odoo v8 templates only live in the database, this module must be
-installed in each database you want this to be in effect.
-
-The image below shows the resulting loging screen:
-
-.. image:: web_hide_db_manager_link/static/src/img/screenshot.png
-
-**Notes:**
-
-- In case this module is not shown in your module list by default,
-click on "Update Module List" and clear any filter to show all modules.
-- Loosely based on the idea from Vauxoo OpeERP v7.0 module "web_nocreatedb":
-  https://github.com/OCA/web/tree/7.0/web_nocreatedb
-
-''',
-    'depends': [
-        'web',
-    ],
-    'data': [
-        'views/webclient_templates.xml',
-    ],
-    'icon': 'web_hide_db_manager_link/static/src/img/icon.png',
+    'depends': ['web'],
+    'data': ['views/webclient_templates.xml'],
     'installable': True,
 }
