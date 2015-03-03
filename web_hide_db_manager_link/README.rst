@@ -21,8 +21,8 @@ To install this module, you need to:
  
 In case this module is not shown in your module list by default, click on "Update Module List" and clear any filter to show all modules.
 
-Usage
-=====
+Known issues
+============
 
 To use this module, you need to:
 
