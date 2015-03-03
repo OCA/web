@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+    <data>
+
+        <template id="login_layout_no_db" inherit_id="web.login_layout" name="Login Layout">
+            <xpath expr="//div[@class='oe_single_form_footer']" position="before">
+                <t t-set="disable_database_manager" t-value="1"/>
+            </xpath>
+        </template>
+
+    </data>
+</openerp>
