@@ -1,8 +1,8 @@
 ===========================
-OpenERP web_widget_color module
+Odoo web_widget_color module
 ===========================
 
-This module aims to add a color picker to openERP/Odoo.
+This module aims to add a color picker to Odoo.
 
 It's a `jsColor <http://jscolor.com/>`_ lib integration.
 
@@ -37,13 +37,11 @@ This module has been ported to 8.0
 Usage
 =====
 
-It adds a new data type ``color``. To apply it, simply change the field
-declaration as following::
+You need to declare a char field of at least size 7::
 
     _columns = {
         'color': fields.char(
             u"Couleur",
-            size=7,
             help=u"Toutes couleur valid css, exemple blue ou #f57900"
         ),
     }
@@ -52,13 +50,11 @@ declaration as following::
 
     color = fields.Char(
         string="Color",
-        size=7,
         help="Choose your color"
     )
 
 
-In the view declaration there is nothing especial to do, 
-add the field as any other one. Here is a part of tree view example::
+In the view declaration, put widget='color' attribute in the field tag::
 
     ...
     <field name="arch" type="xml">
