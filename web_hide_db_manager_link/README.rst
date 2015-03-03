@@ -24,9 +24,7 @@ In case this module is not shown in your module list by default, click on "Updat
 Known issues
 ============
 
-To use this module, you need to:
-
- * As in Odoo v8 templates only live in the database, this module must be installed in each database you want this to be in effect.
+As Odoo v8 templates only live in the database, this module must be installed in each database you want this to be in effect.
 
 Credits
 =======
