@@ -23,7 +23,8 @@
 
 {
     'name': 'Web Alphabetical Search',
-    'author': "Serpent Consulting Services Pvt. Ltd.,Odoo Community Association (OCA)",
+    'author': "Serpent Consulting Services Pvt. Ltd.,"
+              "Odoo Community Association (OCA)",
     'category': 'Web',
     'website': 'http://www.serpentcs.com',
     'description': """
