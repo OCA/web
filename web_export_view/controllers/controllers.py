@@ -36,7 +36,7 @@ class ExcelExportView(ExcelExport):
         return super(ExcelExportView, self).__getattribute__(name)
 
     @http.route('/web/export/xls_view', type='http', auth='user')
-    def index(self, data, token):
+    def export_xls_view(self, data, token):
         data = json.loads(data)
         model = data.get('model', [])
         columns_headers = data.get('headers', [])
