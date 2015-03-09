@@ -18,8 +18,6 @@ To install this module, you need to:
  * Go to Settings / Local Modules
  * Search by module name "Hide link to database manager in login screen" or by module technical name "*web_hide_db_manager_link*" 
  * Click install button
- 
-In case this module is not shown in your module list by default, click on "Update Module List" and clear any filter to show all modules.
 
 Known issues
 ============
