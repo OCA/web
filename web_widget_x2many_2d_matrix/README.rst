@@ -29,10 +29,28 @@ attributes::
 <field name="my_field" widget="x2many_2d_matrix"
  field_x_axis="my_field1" field_y_axis="my_field2" field_value="my_field3" />
 
+You can pass the following parameters:
+
+field_x_axis
+    The field that indicates the x value of a point
+field_y_axis
+    The field that indicates the y value of a point
+field_label_x_axis
+    Use another field to display in the table header
+field_label_y_axis
+    Use another field to display in the table header
+field_value
+    Show this field as value
+show_row_totals
+    If field_value is a numeric field, calculate row totals
+show_column_totals
+    If field_value is a numeric field, calculate column totals
+
 Known issues / Roadmap
 ======================
 
-* ...
+* no validation yet
+* it would be better to instantiate the proper field widget and let it render the input
 
 Credits
 =======
