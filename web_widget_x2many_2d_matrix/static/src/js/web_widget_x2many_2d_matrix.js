@@ -230,6 +230,7 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
         compute_totals: function()
         {
             var self = this,
+                grand_total = 0,
                 totals_x = {},
                 totals_y = {};
             return self.dataset.read_ids(self.dataset.ids).then(function(rows)
@@ -240,6 +241,7 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
                         key_y = self.get_field_value(row, self.field_y_axis);
                     totals_x[key_x] = (totals_x[key_x] || 0) + self.get_field_value(row, self.field_value);
                     totals_y[key_y] = (totals_y[key_y] || 0) + self.get_field_value(row, self.field_value);
+                    grand_total += self.get_field_value(row, self.field_value);
                 });
             }).then(function()
             {
@@ -255,6 +257,8 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
                         _.str.sprintf('td.column_total[data-x="%s"]', x)).text(
                             self.format_xy_value(total));
                 });
+                self.$el.find('.grand_total').text(
+                    self.format_xy_value(grand_total))
             });
         },
 
