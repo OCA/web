@@ -14,19 +14,20 @@
                 <tbody>
                     <tr t-foreach="widget.get_y_axis_values()" t-as="y" t-att-data-y="y">
                         <th><t t-esc="widget.get_y_axis_label(y)" /></th>
-                        <td t-foreach="widget.get_x_axis_values()" t-as="x" class="oe_list_field_cell">
+                        <td t-foreach="widget.get_x_axis_values()" t-as="x" t-att-class="'oe_list_field_cell' + (widget.is_numeric ? ' oe_number' : '')">
                             <span t-att-class="widget.get_xy_value_class()">
-                                <input t-att-data-x="x" t-att-data-y="y" t-att-data-id="widget.get_xy_id(x, y)" t-att-value="widget.format_xy_value(widget.get_xy_value(x, y))" />
+                                <input t-if="!widget.get('effective_readonly')" t-att-data-x="x" t-att-data-y="y" t-att-data-id="widget.get_xy_id(x, y)" t-att-value="widget.format_xy_value(widget.get_xy_value(x, y))" />
+                                <t t-if="widget.get('effective_readonly')" t-esc="widget.format_xy_value(widget.get_xy_value(x, y))" />
                             </span>
                         </td>
-                        <td t-if="widget.show_row_totals" class="row_total" t-att-data-y="y"/>
+                        <td t-if="widget.show_row_totals" class="row_total oe_number" t-att-data-y="y"/>
                     </tr>
                 </tbody>
                 <tfoot t-if="widget.show_column_totals">
                     <tr>
                         <th>Total</th>
                         <td t-foreach="widget.get_x_axis_values()" t-as="x" class="oe_list_footer oe_number column_total" t-att-data-x="x" />
-                        <td />
+                        <td class="grand_total oe_number" />
                     </tr>
                 </tfoot>
             </table>
