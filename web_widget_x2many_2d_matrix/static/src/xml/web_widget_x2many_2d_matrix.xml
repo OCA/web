@@ -1,18 +1,18 @@
 <templates>
     <t t-name="FieldX2Many2dMatrix">
-        <div>
+        <div t-att-class="widget.widget_class">
             <table class="oe_list_content">
                 <thead>
                     <tr class="oe_list_header_columns">
                         <th />
-                        <th t-foreach="widget.get_x_axis_labels()" t-as="label">
-                            <t t-esc="label" />
+                        <th t-foreach="widget.get_x_axis_values()" t-as="x" t-att-data-x="x">
+                            <t t-esc="widget.get_x_axis_label(x)" />
                         </th>
                         <th t-if="widget.show_row_totals">Total</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr t-foreach="widget.get_y_axis_values()" t-as="y">
+                    <tr t-foreach="widget.get_y_axis_values()" t-as="y" t-att-data-y="y">
                         <th><t t-esc="widget.get_y_axis_label(y)" /></th>
                         <td t-foreach="widget.get_x_axis_values()" t-as="x" class="oe_list_field_cell">
                             <span t-att-class="widget.get_xy_value_class()">

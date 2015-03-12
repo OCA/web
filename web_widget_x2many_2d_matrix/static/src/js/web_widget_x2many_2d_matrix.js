@@ -166,18 +166,12 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
             return _.keys(this.by_y_axis);
         },
 
-        // get x axis labels
-        get_x_axis_labels: function()
+        // get the label for a value on the x axis
+        get_x_axis_label: function(x)
         {
-            var self = this;
-            return _.map(
-                this.get_x_axis_values(),
-                function(val)
-                {
-                    return self.get_field_value(
-                        _.first(_.values(self.by_x_axis[val])),
-                        self.field_label_x_axis, true);
-                });
+            return this.get_field_value(
+                _.first(_.values(this.by_x_axis[x])),
+                this.field_label_x_axis, true);
         },
 
         // get the label for a value on the y axis
@@ -264,6 +258,36 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
             });
         },
 
+        setup_many2one_axes: function()
+        {
+            if(this.fields[this.field_x_axis].type == 'many2one')
+            {
+                this.$el.find('th[data-x]').addClass('oe_link')
+                .click(_.partial(
+                    this.proxy(this.many2one_axis_click),
+                    this.field_x_axis, 'x'));
+            }
+            if(this.fields[this.field_y_axis].type == 'many2one')
+            {
+                this.$el.find('tr[data-y] th').addClass('oe_link')
+                .click(_.partial(
+                    this.proxy(this.many2one_axis_click),
+                    this.field_y_axis, 'y'));
+            }
+        },
+
+        many2one_axis_click: function(field, id_attribute, e)
+        {
+            this.do_action({
+                type: 'ir.actions.act_window',
+                name: this.fields[field].string,
+                res_model: this.fields[field].relation,
+                res_id: jQuery(e.currentTarget).data(id_attribute),
+                views: [[false, 'form']],
+                target: 'current',
+            })
+        },
+
         start: function()
         {
             var self = this;
@@ -288,6 +312,7 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
 
                 });
             this.compute_totals();
+            this.setup_many2one_axes();
             return this._super.apply(this, arguments);
         },
 
