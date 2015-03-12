@@ -221,14 +221,8 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
         // parse a value from user input
         parse_xy_value: function(val)
         {
-            if(this.is_numeric)
-            {
-                return parseFloat(val);
-            }
-            else
-            {
-                return val;
-            }
+            return instance.web.parse_value(
+                val, {'type': this.fields[this.field_value].type});
         },
 
         // format a value from the database for display
