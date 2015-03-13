@@ -338,6 +338,7 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
             this.$el
             .find('tbody td.oe_list_field_cell span.oe_form_field>span')
             .toggle(this.get('effective_readonly'));
+            this.$el.find('input').first().focus();
         },
 
         // deactivate view related functions
