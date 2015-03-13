@@ -49,8 +49,7 @@ show_column_totals
 Known issues / Roadmap
 ======================
 
-* no validation yet
-* it would be better to instantiate the proper field widget and let it render the input
+* it would be worth trying to instantiate the proper field widget and let it render the input
 
 Credits
 =======
