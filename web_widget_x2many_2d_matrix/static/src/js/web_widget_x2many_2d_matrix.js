@@ -305,6 +305,8 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
                     {
                         data = {}
                         data[self.field_value] = self.parse_xy_value(val);
+                        $this.siblings('span').text(
+                                self.format_xy_value(self.parse_xy_value(val)));
                         self.dataset.write($this.data('id'), data);
                         $this.parent().removeClass('oe_form_invalid');
                         self.compute_totals();
