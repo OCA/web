@@ -209,6 +209,14 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
         // validate a value
         validate_xy_value: function(val)
         {
+            try
+            {
+                this.parse_xy_value(val);
+            }
+            catch(e)
+            {
+                return false;
+            }
             return true;
         },
 
@@ -308,10 +316,12 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
                         val = $this.val()
                     if(self.validate_xy_value(val))
                     {
-                        data = {}
-                        data[self.field_value] = self.parse_xy_value(val);
-                        $this.siblings('span').text(
-                                self.format_xy_value(self.parse_xy_value(val)));
+                        var data = {}, value = self.parse_xy_value(val);
+                        data[self.field_value] = value;
+
+                        $this.siblings('span').text(self.format_xy_value(value));
+                        $this.val(self.format_xy_value(value));
+
                         self.dataset.write($this.data('id'), data);
                         $this.parent().removeClass('oe_form_invalid');
                         self.compute_totals();
@@ -339,6 +349,11 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
             .find('tbody td.oe_list_field_cell span.oe_form_field>span')
             .toggle(this.get('effective_readonly'));
             this.$el.find('input').first().focus();
+        },
+
+        is_syntax_valid: function()
+        {
+            return this.$el.find('.oe_form_invalid').length == 0;
         },
 
         // deactivate view related functions
