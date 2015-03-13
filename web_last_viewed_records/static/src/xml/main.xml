@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+
+	<t t-name="web_last_viewed_records.header">
+        <tr class="oe_header_row">
+            <td t-att-colspan="colspan or '3'">
+                <div class="oe_view_manager_last_viewed"/>
+            </td>
+			<td></td>
+		</tr>
+	</t>
+    <t t-extend="ViewManagerAction">
+		<t t-jquery="tr.oe_header_row_top" t-operation="after">
+			<t t-call="web_last_viewed_records.header"/>
+		</t>
+	</t>
+	<t t-extend="mail.wall">
+		<t t-jquery="tr.oe_header_row_top" t-operation="after">
+			<t t-call="web_last_viewed_records.header">
+				<t t-set="colspan" t-value="2"/>
+			</t>
+		</t>
+	</t>
+</templates>

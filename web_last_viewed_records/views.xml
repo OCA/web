@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="custom bar assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/web_last_viewed_records/static/src/css/main.css"/>
+                <script type="text/javascript" src="/web_last_viewed_records/static/src/js/main.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>
+
