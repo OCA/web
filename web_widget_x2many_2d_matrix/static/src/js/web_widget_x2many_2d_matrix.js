@@ -259,6 +259,11 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
                 });
                 self.$el.find('.grand_total').text(
                     self.format_xy_value(grand_total))
+                return {
+                    totals_x: totals_x,
+                    totals_y: totals_y,
+                    grand_total: grand_total,
+                };
             });
         },
 
