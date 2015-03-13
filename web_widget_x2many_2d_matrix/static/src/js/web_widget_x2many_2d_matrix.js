@@ -317,7 +317,20 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
                 });
             this.compute_totals();
             this.setup_many2one_axes();
+            this.on("change:effective_readonly",
+                    this, this.proxy(this.effective_readonly_change));
+            this.effective_readonly_change();
             return this._super.apply(this, arguments);
+        },
+
+        effective_readonly_change: function()
+        {
+            this.$el
+            .find('tbody td.oe_list_field_cell span.oe_form_field>input')
+            .toggle(!this.get('effective_readonly'));
+            this.$el
+            .find('tbody td.oe_list_field_cell span.oe_form_field>span')
+            .toggle(this.get('effective_readonly'));
         },
 
         // deactivate view related functions
