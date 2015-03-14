@@ -9,7 +9,7 @@
         'views.xml',
         ],
     'qweb': [
-        "static/src/xml/*.xml",
+        "static/src/xml/main.xml",
     ],
     'installable': True
 }
