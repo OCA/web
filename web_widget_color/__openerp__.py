@@ -26,9 +26,6 @@
 {
     'name': "Web Widget Color",
     'category': "web",
-    'description': """
-    This module aims to add a color picker to Odoo.
-    """,
     'version': "1.0",
     'depends': ['base', 'web'],
     'data': [

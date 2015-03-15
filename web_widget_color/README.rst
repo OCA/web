@@ -1,6 +1,5 @@
-===========================
-Odoo web_widget_color module
-===========================
+Color widget for Odoo web client
+================================
 
 This module aims to add a color picker to Odoo.
 
@@ -67,6 +66,29 @@ In the view declaration, put widget='color' attribute in the field tag::
     </field>
     ...
 
-.. |picker| image:: ./doc/picker.png
-.. |formview| image:: ./doc/form_view.png
-.. |listview| image:: ./doc/list_view.png
+.. |picker| image:: ./images/picker.png
+.. |formview| image:: ./images/form_view.png
+.. |listview| image:: ./images/list_view.png
+
+Credits
+=======
+
+Contributors
+------------
+
+* Adil Houmadi <adil.houmadi@gmail.com>
+
+Maintainer
+----------
+
+.. image:: http://odoo-community.org/logo.png
+   :alt: Odoo Community Association
+   :target: http://odoo-community.org
+
+This module is maintained by the OCA.
+
+OCA, or the Odoo Community Association, is a nonprofit organization whose
+mission is to support the collaborative development of Odoo features and
+promote its widespread use.
+
+To contribute to this module, please visit http://odoo-community.org.
