@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="assets_backend" name="Many2one clickable assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/web_tree_many2one_clickable/static/src/js/web_tree_many2one_clickable.js"></script>
+            </xpath>
+        </template>
+
+    </data>
+</openerp>
