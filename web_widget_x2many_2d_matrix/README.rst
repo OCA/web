@@ -4,16 +4,22 @@
 This module allows to show an x2many field with 3-tuples
 ($x_value, $y_value, $value) in a table
 
-+-----------+-----------+-----------+
-|           | $x_value1 | $x_value2 |
-+===========+===========+===========+
-| $y_value1 | $value1/1 | $value2/1 |
-+-----------+-----------+-----------+
-| $y_value2 | $value1/2 | $value2/2 |
-+-----------+-----------+-----------+
+          $x_value1   $x_value2 
+========= =========== ===========
+$y_value1 $value(1/1) $value(2/1)
+$y_value2 $value(1/2) $value(2/2)
+========= =========== ===========
 
-where `valuen/n` is editable.
+where `value(n/n)` is editable.
 
+An example use case would be: Select some projects and some employees so that
+a manager can easily fill in the planned_hours for one task per employee. The
+result could look like this:
+
+.. image:: /web_widget_x2many_2d_matrix/static/description/screenshot.png
+    :alt: Screenshot
+
+The beauty of this is that you have an arbitrary amount of columns with this widget, trying to get this in standard x2many lists involves some quite agly hacks.
 
 Usage
 =====
@@ -26,8 +32,7 @@ This assumes that my_field refers to a model with the fields `x`, `y` and
 `value`. If your fields are named differently, pass the correct names as
 attributes::
 
-<field name="my_field" widget="x2many_2d_matrix"
- field_x_axis="my_field1" field_y_axis="my_field2" field_value="my_field3" />
+<field name="my_field" widget="x2many_2d_matrix" field_x_axis="my_field1" field_y_axis="my_field2" field_value="my_field3" />
 
 You can pass the following parameters:
 
