@@ -1,4 +1,9 @@
 openerp.web_last_viewed_records = function(instance){
+    var localStorage = {};
+    if (typeof window.localStorage !== "undefined"){
+        localStorage = window.localStorage;
+    }
+
     instance.web.ActionManager.include({
         last_viewed_history_var: 'odoo_last_viewed',
         last_viewed_history_size: 8,
