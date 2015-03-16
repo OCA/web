@@ -308,30 +308,8 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
         start: function()
         {
             var self = this;
-            this.$el.find('input').on(
-                'change',
-                function()
-                {
-                    var $this = jQuery(this),
-                        val = $this.val()
-                    if(self.validate_xy_value(val))
-                    {
-                        var data = {}, value = self.parse_xy_value(val);
-                        data[self.field_value] = value;
-
-                        $this.siblings('span').text(self.format_xy_value(value));
-                        $this.val(self.format_xy_value(value));
-
-                        self.dataset.write($this.data('id'), data);
-                        $this.parent().removeClass('oe_form_invalid');
-                        self.compute_totals();
-                    }
-                    else
-                    {
-                        $this.parent().addClass('oe_form_invalid');
-                    }
-
-                });
+            this.$el.find('.edit').on(
+                'change', self.proxy(this.xy_value_change));
             this.compute_totals();
             this.setup_many2one_axes();
             this.on("change:effective_readonly",
@@ -340,15 +318,38 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
             return this._super.apply(this, arguments);
         },
 
+        xy_value_change: function(e)
+        {
+            var $this = jQuery(e.currentTarget),
+                val = $this.val();
+            if(this.validate_xy_value(val))
+            {
+                var data = {}, value = this.parse_xy_value(val);
+                data[this.field_value] = value;
+
+                $this.siblings('.read').text(this.format_xy_value(value));
+                $this.val(this.format_xy_value(value));
+
+                this.dataset.write($this.data('id'), data);
+                $this.parent().removeClass('oe_form_invalid');
+                this.compute_totals();
+            }
+            else
+            {
+                $this.parent().addClass('oe_form_invalid');
+            }
+
+        },
+
         effective_readonly_change: function()
         {
             this.$el
-            .find('tbody td.oe_list_field_cell span.oe_form_field>input')
+            .find('tbody td.oe_list_field_cell span.oe_form_field .edit')
             .toggle(!this.get('effective_readonly'));
             this.$el
-            .find('tbody td.oe_list_field_cell span.oe_form_field>span')
+            .find('tbody td.oe_list_field_cell span.oe_form_field .read')
             .toggle(this.get('effective_readonly'));
-            this.$el.find('input').first().focus();
+            this.$el.find('.edit').first().focus();
         },
 
         is_syntax_valid: function()
