@@ -39,5 +39,6 @@
 .openerp .oe_last_viewed_item .diagram:after {
   content: "f";
 }
-.oe_last_viewed_icon{
+.oe_last_viewed_icon.fa{
+	display: inline;
 }
