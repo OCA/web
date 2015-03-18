@@ -24,7 +24,7 @@
     "author": "Therp BV",
     "license": "AGPL-3",
     "category": "Hidden/Dependency",
-    "summary": "Show a warning to users",
+    "summary": "Show a message box to users",
     "depends": [
         'web',
     ],
