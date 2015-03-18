@@ -61,8 +61,8 @@ class IrFilters(Model):
                 context=context):
             domain = eval_n(this['domain_this'])
             for u in self.read(cr, uid, this['union_filter_ids'],
-                                ['domain', 'evaluate_always', 'model_id'],
-                                context=context):
+                               ['domain', 'evaluate_always', 'model_id'],
+                               context=context):
                 if u['evaluate_always']:
                     matching_ids = self.pool[u['model_id']].search(
                         cr, uid, eval_n(u['domain']),
@@ -96,8 +96,7 @@ class IrFilters(Model):
                     context=None):
         self.write(cr, uid, ids, {'domain_this': field_value})
 
-    def _evaluate_get(self, cr, uid, ids, field_name, args,
-                                    context=None):
+    def _evaluate_get(self, cr, uid, ids, field_name, args, context=None):
         """check if this filter contains references to x2many fields. If so,
         then negation goes wrong in nearly all cases, so we evaluate the
         filter and remove its resulting ids"""
