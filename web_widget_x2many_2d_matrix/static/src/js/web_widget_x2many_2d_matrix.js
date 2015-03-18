@@ -110,12 +110,7 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
                         // setup data structure
                         _.each(rows, function(row)
                         {
-                            var x = self.get_field_value(row, self.field_x_axis),
-                                y = self.get_field_value(row, self.field_y_axis);
-                            self.by_x_axis[x] = self.by_x_axis[x] || {};
-                            self.by_y_axis[y] = self.by_y_axis[y] || {};
-                            self.by_x_axis[x][y] = row;
-                            self.by_y_axis[y][x] = row;
+                            self.add_xy_row(row);
                             _.each(read_many2one, function(rows, field)
                             {
                                 if(!_.isArray(row[field]))
@@ -152,6 +147,17 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
                     });
                 });
             });
+        },
+
+        // to whatever needed to setup internal data structure
+        add_xy_row: function(row)
+        {
+            var x = this.get_field_value(row, this.field_x_axis),
+                y = this.get_field_value(row, this.field_y_axis);
+            this.by_x_axis[x] = this.by_x_axis[x] || {};
+            this.by_y_axis[y] = this.by_y_axis[y] || {};
+            this.by_x_axis[x][y] = row;
+            this.by_y_axis[y][x] = row;
         },
 
         // get x axis values in the correct order
