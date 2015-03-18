@@ -12,13 +12,11 @@ Depend on this module and return
 
     {
         'type': 'ir.actions.act_window.message',
-        'title': 'My title',
-        'message': 'My message'
+        'title': _('My title'),
+        'message': _('My message'),
     }
 
 You are responsible for translating the messages.
-
-* https://www.odoo.com/forum/help-1
 
 Known issues / Roadmap
 ======================
