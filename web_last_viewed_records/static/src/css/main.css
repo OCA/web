@@ -1,0 +1,44 @@
+.oe_last_viewed_item.selected{
+	font-weight:bold;
+}
+
+.openerp .oe_last_viewed_item .oe_e {
+  font-size: 22px;
+  font-weight: 300 !important;
+}
+
+.openerp .oe_last_viewed_item .list:after, .openerp .oe_last_viewed_item .tree:after {
+  padding: 2px;
+  content: "i";
+}
+.openerp .oe_last_viewed_item .form:after {
+  content: "m";
+}
+.openerp .oe_last_viewed_item .graph:after {
+  font-family: "mnmliconsRegular" !important;
+  font-size: 21px;
+  font-weight: 300 !important;
+  content: "}";
+  top: -2px;
+  position: relative;
+}
+.openerp .oe_last_viewed_item .gantt:after {
+  font-family: "mnmliconsRegular" !important;
+  font-size: 21px;
+  font-weight: 300 !important;
+  content: "y";
+  top: -2px;
+  position: relative;
+}
+.openerp .oe_last_viewed_item .calendar:after {
+  content: "P";
+}
+.openerp .oe_last_viewed_item .kanban:after {
+  content: "k";
+}
+.openerp .oe_last_viewed_item .diagram:after {
+  content: "f";
+}
+.oe_last_viewed_icon.fa{
+	display: inline;
+}
