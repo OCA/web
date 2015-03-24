@@ -31,7 +31,6 @@ Allow passing options to datepicker widgets
 This will set all options specified in the "datepicker" option of datetime
 fields to the datepicker.
 
-See http://api.jqueryui.com/datepicker/ for options
 
 Example:
 --------
@@ -41,7 +40,6 @@ Example:
 Contributors:
 -------------
 
-- Vincent Vinet <vincent.vinet@savoirfairelinux.com>
 
 """,
     "depends": [
