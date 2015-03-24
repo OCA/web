@@ -21,8 +21,8 @@
 ##############################################################################
 
 {
-    "name": 'web_datetime_options',
-    "version": "0.1",
+    "name": 'web_widget_datepicker_options',
+    "version": "1.0",
     "description": """
 ===========================================
 Allow passing options to datepicker widgets
