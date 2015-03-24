@@ -5,9 +5,8 @@ Datepicker Widget Options
 This module allows passing options to the jquery datepicker for fields that use
 the datepicker widget. The option are passed as-is and are not validated.
 
-To see all supported options, see the [api-documentation][1]
-
-[1]: http://api.jqueryui.com/datepicker/ "api-documentation"
+To see all supported options, see the `API documentation
+<http://api.jqueryui.com/datepicker/>`_.
 
 
 Usage
