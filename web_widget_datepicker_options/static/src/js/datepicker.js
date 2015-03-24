@@ -18,11 +18,11 @@
 */
 /*global openerp, _, $ */
 
-openerp.web_datetime_options = function (instance) {
+openerp.web_widget_datepicker_options = function (instance) {
 
     "use strict";
 
-    instance.web.form.FieldDatetime = instance.web.form.FieldDatetime.extend({
+    instance.web.form.FieldDatetime.include({
         initialize_content: function() {
             this._super();
             var self = this;
@@ -36,7 +36,7 @@ openerp.web_datetime_options = function (instance) {
         }
     });
 
-    instance.web.form.FieldDate = instance.web.form.FieldDate.extend({
+    instance.web.form.FieldDate.include({
         initialize_content: function() {
             this._super();
             var self = this;
