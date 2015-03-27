@@ -60,6 +60,11 @@ openerp.web_m2x_options = function (instance) {
             if (typeof this.options.limit === 'number') {
                 this.limit = this.options.limit;
             }
+            
+            // add options search_more to force enable or disable search_more button
+            if(typeof this.options.search_more === 'boolean') {
+                this.search_more = this.options.search_more
+            }
 
             var dataset = new instance.web.DataSet(this, this.field.relation,
                                                    self.build_context());
@@ -100,7 +105,7 @@ openerp.web_m2x_options = function (instance) {
 
                 // search more... if more results than max
 
-                if (values.length > self.limit) {
+                if (values.length > self.limit || self.search_more) {
                     values = values.slice(0, self.limit);
                     values.push({
                         label: _t("Search More..."),
