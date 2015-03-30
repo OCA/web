@@ -116,10 +116,17 @@ openerp.web_m2x_options = function (instance) {
                                 .filter([['id', 'in', value_ids]])
                                 .all().done(function (objects) {
                                     for (var index in objects) {
-                                        var value = values[index];
-                                        // Find color with field value as key
-                                        var color = self.colors[objects[index][self.field_color]] || 'black';
-                                        value.label = '<span style="color:'+color+'">'+value.label+'</span>';
+                                        for (var index_value in values) {
+                                            if (values[index_value].id == objects[index].id) {
+                                                // Find value in values by comparing ids
+                                                var value = values[index_value];
+                                                
+                                                // Find color with field value as key
+                                                var color = self.colors[objects[index][self.field_color]] || 'black';
+                                                value.label = '<span style="color:'+color+'">'+value.label+'</span>';
+                                                break;
+                                            }
+                                        }
                                     }
                                     def.resolve(values);
                                 });
