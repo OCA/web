@@ -115,10 +115,10 @@ openerp.web_m2x_options = function (instance) {
                     Objects.query([self.field_color])
                                 .filter([['id', 'in', value_ids]])
                                 .all().done(function (objects) {
-                                    console.log(objects);
                                     for (var index in objects) {
                                         var value = values[index];
-                                        var color = self.colors[objects[index].state] || 'black';
+                                        // Find color with field value as key
+                                        var color = self.colors[objects[index][self.field_color]] || 'black';
                                         value.label = '<span style="color:'+color+'">'+value.label+'</span>';
                                     }
                                     def.resolve(values);
