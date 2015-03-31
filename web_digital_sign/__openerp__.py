@@ -3,7 +3,8 @@
 #    
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2010 OpenERP SA (<http://www.openerp.com>)
-#    Copyright (C) 2011-2015 Serpent Consulting Services Pvt. Ltd. (<http://www.serpentcs.com>).
+#    Copyright (C) 2011-2015 Serpent Consulting Services Pvt. Ltd. 
+#                                    (<http://www.serpentcs.com>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -28,8 +29,10 @@
     'complexity': "easy",
     'depends': ['web'],
     "description": """
-        This module provides the functionality to store digital signature image for a record.
-        The example can be seen into the User's form view where we have added a test field under signature.
+        This module provides the functionality to store digital signature image 
+        for a record.
+        The example can be seen into the User's form view where we have added a 
+        test field under signature.
     """,
     'data': ['users_view.xml'],
     'js':[
