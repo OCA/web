@@ -46,6 +46,18 @@ New options
 ``limit`` *int* (Default: openerp default value is ``7``)
 
   Number of displayed record in drop-down panel
+  
+``field_color`` *string*
+
+  A string to define the field used to define color.
+  This option has to be used with colors.
+  
+``colors`` *dictionary*
+
+  A dictionary to link field value with a HTML color.
+  This option has to be used with field_color.
+  
+
 
 ir.config_parameter options
 ---------------------------
@@ -78,7 +90,7 @@ Example
 Your XML form view definition could contain::
 
     ...
-    <field name="partner_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
+    <field name="partner_id" options="{'limit': 10, 'create': false, 'create_edit': false, 'field_color':'state', 'colors':{'active':'green'}}"/>
     ...
 
 Note
