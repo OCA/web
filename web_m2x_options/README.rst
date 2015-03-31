@@ -46,6 +46,10 @@ New options
 ``limit`` *int* (Default: openerp default value is ``7``)
 
   Number of displayed record in drop-down panel
+
+``search_more`` *boolean* 
+
+  Used to force disable/enable search more button.
   
 ``field_color`` *string*
 
@@ -90,7 +94,7 @@ Example
 Your XML form view definition could contain::
 
     ...
-    <field name="partner_id" options="{'limit': 10, 'create': false, 'create_edit': false, 'field_color':'state', 'colors':{'active':'green'}}"/>
+    <field name="partner_id" options="{'limit': 10, 'create': false, 'create_edit': false, 'search_more':true 'field_color':'state', 'colors':{'active':'green'}}"/>
     ...
 
 Note
