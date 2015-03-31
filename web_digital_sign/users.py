@@ -20,13 +20,11 @@
 #
 ##############################################################################
 
-from openerp.osv import osv, fields
+from openerp.osv import orm, fields
 
-class Users(osv.Model):
+class Users(orm.Model):
     _inherit = 'res.users'
     
     _columns = {
         'signature_image': fields.binary('Signature')
     }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
