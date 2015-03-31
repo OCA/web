@@ -12,12 +12,16 @@ Add new options for many2one and many2manytags field:
 - create_edit: true/false -> disable "create and edit" entry in dropdown panel
 - limit: 10 (int) -> change number of selected record return in dropdown panel
 - m2o_dialog: true/false -> disable quick create M20Dialog triggered on error.
+- search_more: true/false -> force disable/enable search more button.
+- field_color -> define the field used to define color.
+- colors -> link field values to a HTML color.
+
 
 Example:
 --------
 
 ``<field name="partner_id" options="{'limit': 10, 'create': false,
-'create_edit': false}"/>``
+'create_edit': false, 'field_color':'state', colors:{'active':'green'}}"/>``
 
 Note:
 -----
