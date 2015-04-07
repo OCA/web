@@ -1,0 +1,133 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* web_dashboard_tile
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-04-05 19:42+0000\n"
+"PO-Revision-Date: 2015-04-05 19:42+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,action_id:0
+msgid "Action"
+msgstr ""
+
+#. module: web_dashboard_tile
+#. openerp-web
+#: code:addons/web_dashboard_tile/static/src/xml/custom_xml.xml:8
+#, python-format
+msgid "Create"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: model:ir.actions.act_window,name:web_dashboard_tile.action_kanban_dashboard_tile
+#: model:ir.actions.act_window,name:web_dashboard_tile.action_tree_dashboard_tile
+#: model:ir.ui.menu,name:web_dashboard_tile.mail_dashboard
+msgid "Dashboard"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: model:ir.ui.menu,name:web_dashboard_tile.menue_dashboard_tile
+msgid "Dashboard Tile"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: view:tile.tile:0
+msgid "Dashboard tiles"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: view:tile.tile:0
+msgid "Delete"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: field:tile.tile,domain:0
+msgid "Domain"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: view:tile.tile:0
+msgid "Edit..."
+msgstr ""
+
+#. module: web_dashboard_tile
+#. openerp-web
+#: code:addons/web_dashboard_tile/static/src/js/custom_js.js:61
+#, python-format
+msgid "Error"
+msgstr ""
+
+#. module: web_dashboard_tile
+#. openerp-web
+#: code:addons/web_dashboard_tile/static/src/js/custom_js.js:61
+#, python-format
+msgid "Filter name is required."
+msgstr ""
+
+#. module: web_dashboard_tile
+#: field:tile.tile,color:0
+msgid "Kanban Color"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: field:tile.tile,model_id:0
+msgid "Model"
+msgstr ""
+
+#. module: web_dashboard_tile
+#. openerp-web
+#: code:addons/web_dashboard_tile/static/src/js/custom_js.js:100
+#, python-format
+msgid "Success"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: field:tile.tile,name:0
+msgid "Tile Name"
+msgstr ""
+
+#. module: web_dashboard_tile
+#. openerp-web
+#: code:addons/web_dashboard_tile/static/src/js/custom_js.js:100
+#, python-format
+msgid "Tile is created"
+msgstr ""
+
+#. module: web_dashboard_tile
+#. openerp-web
+#: code:addons/web_dashboard_tile/static/src/xml/custom_xml.xml:6
+#, python-format
+msgid "Tile:"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: field:tile.tile,user_id:0
+msgid "User"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: code:_description:0
+#: model:ir.model,name:web_dashboard_tile.model_tile_tile
+#, python-format
+msgid "tile.tile"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: field:tile.tile,count:0
+msgid "unknown"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: view:tile.tile:0
+msgid "í"
+msgstr ""
+
