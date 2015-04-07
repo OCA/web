@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Odoo Addon, Open Source Management Solution
-#    Copyright (C) 2014-now Equitania Software GmbH(<http://www.equitania.de>).
+#    This file is part of web_clean_navbar, an Odoo module.
+#    Copyright (C) 2015-now Equitania Software GmbH(<http://www.equitania.de>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -21,14 +21,18 @@
 
 {
     'name': 'Web Clean Navbar',
+    
     'version': '1.0.0',
-    'category': 'Backend',
+    'category': 'Web',
     'description': """
         Better visibility for the main backend navigation-bar
     """,
+    'license': 'AGPL-3',
     'author': 'Equitania Software GmbH',
     'website': 'www.myodoo.de',
-    'depends': [],
+    'depends': [
+        'web',
+    ],
     'summary': 'backend, navigation',
     'data': [
         'views/clean_navbar.xml',
