@@ -20,7 +20,7 @@
 ##############################################################################
 
 {
-    'name': 'web_clean_navbar',
+    'name': 'Web Clean Navbar',
     'version': '1.0.0',
     'category': 'Backend',
     'description': """
@@ -30,9 +30,6 @@
     'website': 'www.myodoo.de',
     'depends': [],
     'summary': 'backend, navigation',
-    #'init': [
-    #         'eq_install_func.xml', 
-    #         ],
     'data': [
         'views/clean_navbar.xml',
     ],
