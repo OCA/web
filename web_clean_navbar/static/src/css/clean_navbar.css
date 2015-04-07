@@ -1,0 +1,36 @@
+
+.navbar-inverse .navbar-nav > li > a {
+	color:white!important; /* ?? green */
+}
+
+ul.navbar-left li > a:hover, ul.navbar-right li > a:hover {
+  background-color:#777!important; /* ?? #F00 */
+}
+ul.navbar-left li.active {
+  background-color:#fff!important;
+}
+
+ul.navbar-left li.active > a, ul.navbar-right li.active > a {
+  
+  background-color:#444!important;
+
+background: rgba(119,119,119,1);
+background: -moz-linear-gradient(top, rgba(119,119,119,1) 0%, rgba(68,68,68,1) 100%);
+background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(119,119,119,1)), color-stop(100%, rgba(68,68,68,1)));
+background: -webkit-linear-gradient(top, rgba(119,119,119,1) 0%, rgba(68,68,68,1) 100%);
+background: -o-linear-gradient(top, rgba(119,119,119,1) 0%, rgba(68,68,68,1) 100%);
+background: -ms-linear-gradient(top, rgba(119,119,119,1) 0%, rgba(68,68,68,1) 100%);
+background: linear-gradient(to bottom, rgba(119,119,119,1) 0%, rgba(68,68,68,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#777777', endColorstr='#444444', GradientType=0 );
+
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:hover {
+	color:blue!important;
+}
+
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+	color:white!important;
+}
+
