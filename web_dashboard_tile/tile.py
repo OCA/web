@@ -28,14 +28,36 @@ import random
 class tile(orm.Model):
     _name = 'tile.tile'
 
-    def _get_tile_count(self, cr, uid, ids, field_name, field_value,
-                        arg, context=None):
-        result = {}
-        records = self.browse(cr, uid, ids)
+    def _get_tile_info(self, cr, uid, ids, fields, args, context=None):
+        ima_obj = self.pool['ir.model.access']
+        res = {}
+        records = self.browse(cr, uid, ids, context=context)
         for r in records:
-            model = self.pool.get(r.model_id.model)
-            result[r.id] = model.search_count(cr, uid, eval(r.domain), context)
-        return result
+            if ima_obj.check(
+                    cr, uid, r.model_id.model, 'read', False, context):
+                model = self.pool.get(r.model_id.model)
+                res[r.id] = {
+                    'active': True,
+                    'count': model.search_count(
+                        cr, uid, eval(r.domain), context),
+                    }
+            else:
+                res[r.id] = {'active': False, 'count': 0}
+        return res
+
+    def _search_active(self, cr, uid, obj, name, arg, context=None):
+        ima_obj = self.pool['ir.model.access']
+        ids = []
+        cr.execute("""
+            SELECT tt.id, im.model
+            FROM tile_tile tt
+            INNER JOIN ir_model im
+                ON tt.model_id = im.id""")
+        for result in cr.fetchall():
+            if (ima_obj.check(cr, uid, result[1], 'read', False) ==
+                    arg[0][2]):
+                ids.append(result[0])
+        return [('id', 'in', ids)]
 
     _columns = {
         'name': fields.char('Tile Name'),
@@ -43,9 +65,13 @@ class tile(orm.Model):
         'user_id': fields.many2one('res.users', 'User'),
         'domain': fields.text('Domain'),
         'action_id': fields.many2one('ir.actions.act_window', 'Action'),
-        'count': fields.function(_get_tile_count, type='int', String='Count',
-                                 readonly=True),
-        'color': fields.char('Kanban Color')
+        'count': fields.function(
+            _get_tile_info, type='int', string='Count',
+            multi='tile_info', readonly=True),
+        'active': fields.function(
+            _get_tile_info, type='boolean', string='Active',
+            multi='tile_info', readonly=True, fnct_search=_search_active),
+        'color': fields.char('Kanban Color'),
     }
 
     _defaults = {

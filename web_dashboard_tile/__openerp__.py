@@ -30,6 +30,10 @@
     "description": """
     module to give you a dashboard where you can configure tile from any view
     and add them as short cut.
+    Tile can be:
+        * affected to a user;
+        * be global for all users (In that case, some tiles will be hidden if
+          the current user doesn't have access to the given model);
 
     Kown issues/limits:
     * change color picks wrong color
