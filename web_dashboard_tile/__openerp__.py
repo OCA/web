@@ -47,7 +47,7 @@
     * add icons
     * support client side action (like inbox)
     * support select int/float column with min/max/avg/sum to display
-    * change position (maybe drag&drop)
+
     """,
     "summary": "Add tile to dashboard",
     'data': ['tile.xml',

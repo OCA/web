@@ -29,6 +29,7 @@ import random
 
 class tile(orm.Model):
     _name = 'tile.tile'
+    _order = 'sequence, name'
 
     def _get_tile_info(self, cr, uid, ids, fields, args, context=None):
         ima_obj = self.pool['ir.model.access']
@@ -74,11 +75,14 @@ class tile(orm.Model):
             _get_tile_info, type='boolean', string='Active',
             multi='tile_info', readonly=True, fnct_search=_search_active),
         'color': fields.char('Kanban Color'),
+        'sequence': fields.integer(
+            'Sequence', required=True),
     }
 
     _defaults = {
         'domain': '[]',
         'color': 0,
+        'sequence': 0,
     }
 
     def open_link(self, cr, uid, ids, context=None):
