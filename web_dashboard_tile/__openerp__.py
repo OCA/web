@@ -56,6 +56,8 @@
     'css': ['static/src/css/tile.css'],
 
     'demo': [
+        'demo/res_groups.yml',
+        'demo/tile_tile.yml',
     ],
     'test': [
     ],
