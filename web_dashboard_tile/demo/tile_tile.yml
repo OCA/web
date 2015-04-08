@@ -19,7 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-# domain: u"[('state', 'in', ['installed', 'to upgrade', 'to remove']), (u'author', u'ilike', u'Odoo Community Association (OCA)')]"
+
 - !record {model: tile.tile, id: installed_modules}:
     name: Installed Modules
     model_id: base.model_ir_module_module
