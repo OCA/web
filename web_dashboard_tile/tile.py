@@ -62,16 +62,16 @@ class tile(orm.Model):
                     desc = r.field_id.field_description
                     if r.field_function == 'min':
                         value = min(vals)
-                        helper = _("'Minimum value of %s'" % desc)
+                        helper = _("Minimum value of '%s'" % desc)
                     elif r.field_function == 'max':
                         value = max(vals)
-                        helper = _("'Maximum value of %s'" % desc)
+                        helper = _("Maximum value of '%s'" % desc)
                     elif r.field_function == 'sum':
                         value = sum(vals)
-                        helper = _("'Total value of %s'" % desc)
+                        helper = _("Total value of '%s'" % desc)
                     elif r.field_function == 'avg':
                         value = sum(vals) / len(vals)
-                        helper = _("'Average value of %s'" % desc)
+                        helper = _("Average value of '%s'" % desc)
                     res[r.id].update({
                         'computed_value': value,
                         'helper': helper,
@@ -105,7 +105,7 @@ class tile(orm.Model):
             _get_tile_info, type='float', string='Computed Value',
             multi='tile_info', readonly=True),
         'helper': fields.function(
-            _get_tile_info, type='char', string='Helper',
+            _get_tile_info, type='char', string='Helper Text',
             multi='tile_info', readonly=True),
         'field_function': fields.selection([
             ('min', 'Minimum'),
@@ -142,7 +142,7 @@ class tile(orm.Model):
     _constraints = [
         (
             _check_model_id_field_id,
-            "Error ! Please select a field of the select model.",
+            "Error ! Please select a field of the selected model.",
             ['model_id', 'field_id']),
         (
             _check_field_id_field_function,
