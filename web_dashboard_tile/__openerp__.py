@@ -72,7 +72,7 @@ possible future improvments:
 * support client side action (like inbox);
     """,
     'data': [
-        'tile.xml',
+        'view/tile.xml',
         'security/ir.model.access.csv',
         'security/rules.xml',
     ],
