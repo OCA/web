@@ -27,6 +27,8 @@
                         <field name="model_id"/>
                         <field name="user_id"/>
                         <field name="action_id"/>
+                        <field name="field_function"/>
+                        <field name="field_id"/>
                         <field name="color" widget="color"/>
                         <field name="font_color" widget="color"/>
                     </group>
@@ -47,6 +49,9 @@
                     <field name="count"/>
                     <field name="color"/>
                     <field name="font_color"/>
+                    <field name="field_id" />
+                    <field name="field_function" />
+                    <field name="helper" />
                     <templates>
                         <t t-name="kanban-box">
                             <div t-attf-class="oe_dashbaord_tile oe_kanban_global_click" t-attf-style="background-color:#{record.color.raw_value}" >
@@ -67,9 +72,20 @@
                                         <div style="padding-left: 0.5em; height: 115px;">
                                             
                                         </div>
-                                        <div class="tile_count">
-                                            <span><field name="count"/></span>
-                                        </div>
+                                        <t t-if="record.field_id.raw_value != '' and record.field_function.raw_value != ''">
+                                            <div class="tile_count_with_computed_value">
+                                                <span><field name="count"/></span>
+                                            </div>
+                                            <div class="tile_computed_value" t-att-title="record.helper.raw_value">
+                                                <img t-att-src="_s + '/web_dashboard_tile/static/src/img/' + record.field_function.raw_value + '.png'"/>
+                                                <span><field name="computed_value"/></span>
+                                            </div>
+                                        </t>
+                                        <t t-if="!(record.field_id.raw_value != '' and record.field_function.raw_value != '')">
+                                            <div class="tile_count_without_computed_value">
+                                                <span><field name="count"/></span>
+                                            </div>
+                                        </t>
                                     </a>
                                 </div>
                                 <div class="oe_clear"></div>
