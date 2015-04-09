@@ -74,14 +74,16 @@ class tile(orm.Model):
         'active': fields.function(
             _get_tile_info, type='boolean', string='Active',
             multi='tile_info', readonly=True, fnct_search=_search_active),
-        'color': fields.char('Kanban Color'),
+        'color': fields.char('Background color'),
+        'font_color': fields.char('Font Color'),
         'sequence': fields.integer(
             'Sequence', required=True),
     }
 
     _defaults = {
         'domain': '[]',
-        'color': 0,
+        'color': '#0E6C7E',
+        'font_color': '#FFFFFF',
         'sequence': 0,
     }
 

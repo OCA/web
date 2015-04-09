@@ -22,8 +22,13 @@
 ##############################################################################
 {
     "name": "Dashboard Tile",
-    "version": "0.4",
-    "depends": ['web', 'board', 'mail'],
+    "version": "1.0",
+    "depends": [
+        'web',
+        'board',
+        'mail',
+        'web_widget_color',
+    ],
     'author': "initOS GmbH & Co. KG,GRAP,Odoo Community Association (OCA)",
     "category": "",
     'license': 'AGPL-3',

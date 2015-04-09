@@ -20,14 +20,29 @@
 #
 ##############################################################################
 
-- !record {model: tile.tile, id: installed_modules}:
-    name: Installed Modules
-    model_id: base.model_ir_module_module
-    domain: [['state', 'in', ['installed', 'to upgrade', 'to remove']]]
-    action_id: base.open_module_tree
 
-- !record {model: tile.tile, id: installed_OCA_modules}:
-    name: Installed OCA Modules
-    model_id: base.model_ir_module_module
-    domain: [['state', 'in', ['installed', 'to upgrade', 'to remove']], ['author', 'ilike', 'Odoo Community Association (OCA)']]
-    action_id: base.open_module_tree
+COLOR_NUMERIC_TO_RVB = {
+    0: '#006015',
+    1: '#CD2513',
+    2: '#CDC713',
+    3: '#57158A',
+    4: '#0E9B2D',
+    5: '#7F0C00',
+    6: '#7F7B00',
+    7: '#320455',
+    8: '#CD6E13',
+    9: '#0E6C7E',
+}
+
+
+def migrate_color(cr):
+    for old, new in COLOR_NUMERIC_TO_RVB.iteritems():
+        cr.execute("""
+            UPDATE tile_tile
+            SET color='%s', font_color='#FFFFFF'
+            WHERE color='%s'
+        """ % (new, old))
+
+
+def migrate(cr, installed_version):
+    migrate_color(cr)
