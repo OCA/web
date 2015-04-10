@@ -31,6 +31,14 @@ class tile(orm.Model):
     _name = 'tile.tile'
     _order = 'sequence, name'
 
+    def median(self, aList):
+        # https://docs.python.org/3/library/statistics.html#statistics.median
+        # TODO : refactor, using statistics.median when Odoo will be available
+        #  in Python 3.4
+            even = (0 if len(aList) % 2 else 1) + 1
+            half = (len(aList) - 1) / 2
+            return sum(sorted(aList)[half:half + even]) / float(even)
+
     def _get_tile_info(self, cr, uid, ids, fields, args, context=None):
         ima_obj = self.pool['ir.model.access']
         res = {}
@@ -72,6 +80,9 @@ class tile(orm.Model):
                     elif r.field_function == 'avg':
                         value = sum(vals) / len(vals)
                         helper = _("Average value of '%s'" % desc)
+                    elif r.field_function == 'median':
+                        value = self.median(vals)
+                        helper = _("Median value of '%s'" % desc)
                     res[r.id].update({
                         'computed_value': value,
                         'helper': helper,
@@ -111,7 +122,9 @@ class tile(orm.Model):
             ('min', 'Minimum'),
             ('max', 'Maximum'),
             ('sum', 'Sum'),
-            ('avg', 'Average')], 'Function'),
+            ('avg', 'Average'),
+            ('median', 'Median'),
+            ], 'Function'),
         'field_id': fields.many2one(
             'ir.model.fields', 'Field',
             domain="[('model_id', '=', model_id),"

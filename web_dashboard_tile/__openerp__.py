@@ -47,7 +47,7 @@ and add them as short cut.
       the current user doesn't have access to the given model);
 * The tile displays items count of a given model restricted to a given domain;
 * Optionnaly, the tile can display the result of a function of a field;
-    * Function is one of sum/avg/min/max;
+    * Function is one of sum/avg/min/max/median;
     * Field must be integer or float;
 
 Screenshot:
