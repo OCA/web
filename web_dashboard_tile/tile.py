@@ -70,19 +70,19 @@ class tile(orm.Model):
                     desc = r.field_id.field_description
                     if r.field_function == 'min':
                         value = min(vals)
-                        helper = _("Minimum value of '%s'" % desc)
+                        helper = _("Minimum value of '%s'") % desc
                     elif r.field_function == 'max':
                         value = max(vals)
-                        helper = _("Maximum value of '%s'" % desc)
+                        helper = _("Maximum value of '%s'") % desc
                     elif r.field_function == 'sum':
                         value = sum(vals)
-                        helper = _("Total value of '%s'" % desc)
+                        helper = _("Total value of '%s'") % desc
                     elif r.field_function == 'avg':
                         value = sum(vals) / len(vals)
-                        helper = _("Average value of '%s'" % desc)
+                        helper = _("Average value of '%s'") % desc
                     elif r.field_function == 'median':
                         value = self.median(vals)
-                        helper = _("Median value of '%s'" % desc)
+                        helper = _("Median value of '%s'") % desc
                     res[r.id].update({
                         'computed_value': value,
                         'helper': helper,

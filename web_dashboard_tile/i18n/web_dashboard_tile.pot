@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-05 19:42+0000\n"
-"PO-Revision-Date: 2015-04-05 19:42+0000\n"
+"POT-Creation-Date: 2015-04-10 01:03+0000\n"
+"PO-Revision-Date: 2015-04-10 01:03+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,6 +18,37 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,action_id:0
 msgid "Action"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: field:tile.tile,active:0
+msgid "Active"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: selection:tile.tile,field_function:0
+msgid "Average"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: code:addons/web_dashboard_tile/tile.py:82
+#, python-format
+msgid "Average value of '%s'"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: field:tile.tile,color:0
+msgid "Background color"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: field:tile.tile,computed_value:0
+msgid "Computed Value"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: field:tile.tile,count:0
+msgid "Count"
 msgstr ""
 
 #. module: web_dashboard_tile
@@ -67,6 +98,21 @@ msgid "Error"
 msgstr ""
 
 #. module: web_dashboard_tile
+#: constraint:tile.tile:0
+msgid "Error ! Please select a field of the selected model."
+msgstr ""
+
+#. module: web_dashboard_tile
+#: constraint:tile.tile:0
+msgid "Error ! Please set both fields: 'Field' and 'Function'."
+msgstr ""
+
+#. module: web_dashboard_tile
+#: field:tile.tile,field_id:0
+msgid "Field"
+msgstr ""
+
+#. module: web_dashboard_tile
 #. openerp-web
 #: code:addons/web_dashboard_tile/static/src/js/custom_js.js:61
 #, python-format
@@ -74,8 +120,51 @@ msgid "Filter name is required."
 msgstr ""
 
 #. module: web_dashboard_tile
-#: field:tile.tile,color:0
-msgid "Kanban Color"
+#: field:tile.tile,font_color:0
+msgid "Font Color"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: field:tile.tile,field_function:0
+msgid "Function"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: field:tile.tile,helper:0
+msgid "Helper Text"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: selection:tile.tile,field_function:0
+msgid "Maximum"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: code:addons/web_dashboard_tile/tile.py:76
+#, python-format
+msgid "Maximum value of '%s'"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: selection:tile.tile,field_function:0
+msgid "Median"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: code:addons/web_dashboard_tile/tile.py:85
+#, python-format
+msgid "Median value of '%s'"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: selection:tile.tile,field_function:0
+msgid "Minimum"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: code:addons/web_dashboard_tile/tile.py:73
+#, python-format
+msgid "Minimum value of '%s'"
 msgstr ""
 
 #. module: web_dashboard_tile
@@ -84,10 +173,20 @@ msgid "Model"
 msgstr ""
 
 #. module: web_dashboard_tile
+#: field:tile.tile,sequence:0
+msgid "Sequence"
+msgstr ""
+
+#. module: web_dashboard_tile
 #. openerp-web
 #: code:addons/web_dashboard_tile/static/src/js/custom_js.js:100
 #, python-format
 msgid "Success"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: selection:tile.tile,field_function:0
+msgid "Sum"
 msgstr ""
 
 #. module: web_dashboard_tile
@@ -110,6 +209,12 @@ msgid "Tile:"
 msgstr ""
 
 #. module: web_dashboard_tile
+#: code:addons/web_dashboard_tile/tile.py:79
+#, python-format
+msgid "Total value of '%s'"
+msgstr ""
+
+#. module: web_dashboard_tile
 #: field:tile.tile,user_id:0
 msgid "User"
 msgstr ""
@@ -122,12 +227,6 @@ msgid "tile.tile"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: field:tile.tile,count:0
-msgid "unknown"
-msgstr ""
-
-#. module: web_dashboard_tile
 #: view:tile.tile:0
 msgid "í"
 msgstr ""
-
