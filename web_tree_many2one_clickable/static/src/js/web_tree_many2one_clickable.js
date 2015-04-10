@@ -47,7 +47,9 @@ openerp.web_tree_many2one_clickable = function(instance, local)
                     .filter([['key', '=', 'web_tree_many2one_clickable.default']])
                     .first()
                     .then(function(param) {
-                        self.use_many2one_clickable = (param.value == 'true');
+                        if (param) {
+                            self.use_many2one_clickable = (param.value == 'true');
+                        }
                         self.ir_option_clickable_loaded.resolve();
                     });
                 return this.ir_option_clickable_loaded;
