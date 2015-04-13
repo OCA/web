@@ -14,9 +14,9 @@ add some new display control options.
 ** New: support global option management with ir.config_parameter ! **
 
 The options provided include the possibility to remove "Create..." and/or
-"Create and Edit..." entries from many2one drop down. You can also change
-the default number of entries appearing in the drop-down, or prevent the
-dialog box poping in case of validation error.
+"Create and Edit..." entries from many2one and many2many drop down lists. You
+can also change the default number of entries appearing in the drop-down, or
+ prevent the dialog box poping in case of validation error occurring.
 
 If not specified, the module will avoid proposing any of the create options
 if the current user have no permission rights to create the related object.
