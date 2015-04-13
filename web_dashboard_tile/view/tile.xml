@@ -72,7 +72,7 @@
                                         <div style="padding-left: 0.5em; height: 115px;">
                                             
                                         </div>
-                                        <t t-if="record.field_id.raw_value != '' and record.field_function.raw_value != ''">
+                                        <t t-if="record.field_id.raw_value != '' and record.field_function.raw_value != '' and record.count.raw_value !=0">
                                             <div class="tile_count_with_computed_value">
                                                 <span><field name="count"/></span>
                                             </div>
@@ -81,7 +81,7 @@
                                                 <span><field name="computed_value"/></span>
                                             </div>
                                         </t>
-                                        <t t-if="!(record.field_id.raw_value != '' and record.field_function.raw_value != '')">
+                                        <t t-if="!(record.field_id.raw_value != '' and record.field_function.raw_value != '' and record.count.raw_value !=0)">
                                             <div class="tile_count_without_computed_value">
                                                 <span><field name="count"/></span>
                                             </div>
