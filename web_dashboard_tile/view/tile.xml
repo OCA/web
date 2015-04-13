@@ -10,8 +10,9 @@
                     <field name="name"/>
                     <field name="domain"/>
                     <field name="model_id"/>
-                    <field name="action_id"/>
-                    <field name="count"/>
+                    <field name="field_function"/>
+                    <field name="field_id"/>
+                    <field name="user_id"/>
                 </tree>
             </field>
         </record>
