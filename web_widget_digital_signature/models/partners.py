@@ -20,10 +20,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 
-from openerp import models, fields, api, _
+from openerp import models, fields
 
-
-class Users(models.Model):
-    _inherit = 'res.users'
+class Partner(models.Model):
+    _inherit = 'res.partner'
 
     signature_image = fields.Binary('Signature')
