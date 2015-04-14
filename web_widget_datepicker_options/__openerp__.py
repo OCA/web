@@ -23,25 +23,6 @@
 {
     "name": 'web_widget_datepicker_options',
     "version": "1.0",
-    "description": """
-===========================================
-Allow passing options to datepicker widgets
-===========================================
-
-This will set all options specified in the "datepicker" option of datetime
-fields to the datepicker.
-
-
-Example:
---------
-
-  <field name="birthdate" options="{'datepicker':{'yearRange': 'c-100:c+0'}}"/>
-
-Contributors:
--------------
-
-
-""",
     "depends": [
         'base',
         'web',
