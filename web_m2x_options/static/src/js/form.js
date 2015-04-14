@@ -10,7 +10,7 @@ openerp.web_m2x_options = function (instance) {
 
     var OPTIONS = ['web_m2x_options.create',
                    'web_m2x_options.create_edit',
-		           'web_m2x_options.limit',];
+                   'web_m2x_options.limit',];
 
     instance.web.form.FieldMany2One.include({
 
