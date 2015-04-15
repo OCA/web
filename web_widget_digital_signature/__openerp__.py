@@ -2,8 +2,8 @@
 ##############################################################################
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2010 OpenERP SA (<http://www.openerp.com>)
-#    Copyright (C) 2011-2015 Serpent Consulting Services Pvt. Ltd. 
-#                                    (<http://www.serpentcs.com>).
+#    Copyright (C) 2011-2015 Serpent Consulting Services Pvt. Ltd.
+#                                           (<http://www.serpentcs.com>).
 #    Copyright (C) 2015 Taktik SA (<http://www.taktik.be>)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -23,15 +23,14 @@
 {
     "name": "Web Widget Digital Signature",
     "version": "1.0",
-    "author": "Serpent Consulting Services Pvt. Ltd.,Taktik,Odoo Community Association (OCA)",
+    "author": "Serpent Consulting Services Pvt. Ltd.,Taktik,"
+              "Odoo Community Association (OCA)",
     "category": '',
     'complexity': "easy",
     'depends': ['base', 'web'],
-    "description": """
-        This module provides the functionality to store digital signature image 
-        for a record.
-        The example can be seen into the Partner's form view where we have added
-        page 'Signature'
+    "description": """This module provides the functionality to store digital
+        signature image for a record. The example can be seen into the
+        Partner's form view where we have added page 'Signature'.
     """,
     'data': ['partner_view.xml'],
     'website': 'http://www.serpentcs.com',
