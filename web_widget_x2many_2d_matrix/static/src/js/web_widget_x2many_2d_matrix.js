@@ -143,6 +143,13 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
                                     });
                                 }));
                         })
+                        if(self.is_started && !self.no_rerender)
+                        {
+                            self.renderElement();
+                            self.$el.find('.edit').on(
+                                    'change', self.proxy(self.xy_value_change));
+                            self.effective_readonly_change();
+                        }
                         return jQuery.when.apply(jQuery, deferrends);
                     });
                 });
