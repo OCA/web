@@ -57,7 +57,6 @@ openerp.web_widget_options = function(instance, m) {
        * Extend the view to check for create_rule
        */
       var res = this._super.apply(this, arguments),
-          action_id = this.view.options.action.id,
           view = this.views[0].embedded_view,
           view_name = this.name,
           view_root = this.view,
