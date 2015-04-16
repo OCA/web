@@ -27,22 +27,23 @@
 Date range selelction toolbar for list view widget.
 ===================================================
 
-* Defines a new 'listview_date_range_bar' toolbar widget the lines of a list view
-  with two date selector widgets that allow you to specifiy a date range.
-* To use this in your models list view set 'listview_date_range_bar' as view_mode
-  for the window action that shows your view.
+* Defines a new 'listview_date_range_bar' toolbar widget the lines of a list
+  view with two date selector widgets that allow you to specifiy a date range.
+* To use this in your models list view set 'listview_date_range_bar' as
+  view_mode for the window action that shows your view.
 * Everytime a date is changed a reload of the current content of the list view
   is triggered.
-* The selected start and end dates are accessible in the context of the search()
-  function in your model and subsequently called functions like read().
-* To use the generic start/end dates from context to filter your model by custom
-  fields, override search() in your model and modify the domain with the date
-  range given in context before calling the super class search().
+* The selected start and end dates are accessible in the context of the
+  search() function in your model and subsequently called functions like
+  read().
+* To use the generic start/end dates from context to filter your model by
+  custom fields, override search() in your model and modify the domain with
+  the date range given in context before calling the super class search().
 * The context fields to use are:
     'list_date_range_bar_start' / 'list_date_range_bar_end'
-* By default the date fields are empty. If 'list_date_range_bar_start'/ 'list_date_range_bar_end'
-  are already present in context when showing the widget than their values are
-  used to set the initial date range.
+* By default the date fields are empty. If 'list_date_range_bar_start'/
+  'list_date_range_bar_end' are already present in context when showing the
+  widget than their values are used to set the initial date range.
 
 """,
     'author': 'initOS GmbH & Co. KG',
