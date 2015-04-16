@@ -146,6 +146,8 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
                         if(self.is_started && !self.no_rerender)
                         {
                             self.renderElement();
+                            self.compute_totals();
+                            self.setup_many2one_axes();
                             self.$el.find('.edit').on(
                                     'change', self.proxy(self.xy_value_change));
                             self.effective_readonly_change();
