@@ -27,8 +27,9 @@
 Date range selection toolbar for list view widget.
 ===================================================
 
-* Defines a new 'listview_date_range_bar' toolbar widget the lines of a list
-  view with two date selector widgets that allow you to specifiy a date range.
+* Defines a new 'listview_date_range_bar' toolbar widget shown above the lines
+  of a list view with two date selector widgets that allow you to specifiy a
+  date range.
 * To use this in your models list view set 'listview_date_range_bar' as
   view_mode for the window action that shows your view.
 * Everytime a date is changed a reload of the current content of the list view
