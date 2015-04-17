@@ -36,7 +36,6 @@ Example
 Your window action could look like::
 
     <record id="my_view_id" model="ir.actions.act_window">
-        <field name="type">ir.actions.act_window</field>
         ...
         <field name="view_type">form</field>
         <field name="view_mode">listview_date_range_bar</field>
