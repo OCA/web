@@ -61,16 +61,18 @@ openerp.web_m2x_options = function (instance) {
             if (typeof this.options.limit === 'number') {
                 this.limit = this.options.limit;
             }
-            
+
             // add options search_more to force enable or disable search_more button
-            if(typeof this.options.search_more === 'boolean') {
-                this.search_more = this.options.search_more
+            var search_more_defined = !_.isUndefined(this.options.search_more)
+            if((search_more_defined && this.options.search_more.toLowerCase() === "true") ||
+               !(search_more_defined && this.options.search_more.toLowerCase() === "false") && (self.view.ir_options['web_m2x_options.search_more'] === "True")) {
+                this.search_more = true
             }
-            
+
             // add options field_color and colors to color item(s) depending on field_color value
             this.field_color = this.options.field_color
             this.colors = this.options.colors
-            
+
             var dataset = new instance.web.DataSet(this, this.field.relation,
                                                    self.build_context());
             var blacklist = this.get_search_blacklist();
