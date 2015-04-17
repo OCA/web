@@ -81,11 +81,16 @@ If you disable one option, you can enable it for particular field by setting "cr
 
   Number of displayed record in drop-down panel for all fields in the odoo instance
 
+``web_m2x_options.search_more`` *boolean* (Default: default value is ``False``)
+
+  Whether the field should always show "Search more..." entry or not.
+
 To add these parameters go to Configuration -> Technical -> Parameters -> System Parameters and add new parameters like:
 
 - web_m2x_options.create: False
 - web_m2x_options.create_edit: False
 - web_m2x_options.limit: 10
+- web_m2x_options.search_more: True
 
 
 Example
