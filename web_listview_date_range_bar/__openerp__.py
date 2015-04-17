@@ -24,7 +24,7 @@
     'category': '',
     'summary': 'Add date range selector bar widget above list view rows.',
     'description': """
-Date range selelction toolbar for list view widget.
+Date range selection toolbar for list view widget.
 ===================================================
 
 * Defines a new 'listview_date_range_bar' toolbar widget the lines of a list
