@@ -19,6 +19,7 @@
 #
 ##############################################################################
 import time
+import json
 from openerp.osv.orm import TransientModel
 from openerp.osv import fields, expression
 from openerp.tools.safe_eval import safe_eval
@@ -41,7 +42,7 @@ class IrFiltersCombineWithExisting(TransientModel):
     def button_save(self, cr, uid, ids, context=None):
         assert len(ids) == 1
         this = self.browse(cr, uid, ids[0], context=context)
-        domain = safe_eval(this.domain)
+        domain = json.loads(this.domain)
         is_frozen = (len(domain) == 1 and
                      expression.is_leaf(domain[0]) and
                      domain[0][0] == 'id')
