@@ -21,7 +21,7 @@ Example:
 --------
 
 ``<field name="partner_id" options="{'limit': 10, 'create': false,
-'create_edit': false, 'field_color':'state', colors:{'active':'green'}}"/>``
+'create_edit': false, 'field_color':'state', 'colors':{'active':'green'}}"/>``
 
 Note:
 -----
