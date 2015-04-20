@@ -37,6 +37,7 @@
                     <group>
                         <field name="name" />
                         <field name="is_default"/>
+                        <field name="user_id" domain="[('id', '=', uid)]" widget="selection" />
                     </group>
                     <footer>
                         <button class="oe_highlight" type="object" name="button_save" string="Save" />

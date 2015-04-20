@@ -171,6 +171,7 @@ openerp.web_advanced_filters = function(instance)
                         default_model_id: self.dataset._model.name,
                         default_domain: JSON.stringify(search.domain),
                         default_context: JSON.stringify(ctx),
+                        default_user_id: JSON.stringify(false),
                         form_view_ref: 'web_advanced_filters.form_ir_filters_save_new',
                     },
                 },
@@ -201,6 +202,7 @@ openerp.web_advanced_filters = function(instance)
                         ]
                     ),
                     default_context: JSON.stringify({}),
+                    default_user_id: JSON.stringify(false),
                     form_view_ref: 'web_advanced_filters.form_ir_filters_save_new',
                 },
             },
