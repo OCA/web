@@ -61,6 +61,11 @@ msgid "or"
 msgstr "or"
 
 #. module: web_advanced_filters
+#: field:ir.filters,save_as_public:0
+msgid "Share with all users"
+msgstr "Deel met alle gebruikers"
+
+#. module: web_advanced_filters
 #: field:ir.filters,complement_filter_ids:0
 msgid "Remove result of filters"
 msgstr "Verwijder resultaat van filters"
