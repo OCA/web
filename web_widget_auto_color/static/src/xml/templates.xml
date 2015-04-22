@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <tr t-extend="ListView.row">
+        <t t-jquery="td[t-att-data-field='column.id']">
+            this.attr('t-att-style', "column.widget =='autocolor' and view.auto_color_cell_style(record, column)")
+        </t>
+    </tr>
+</templates>
