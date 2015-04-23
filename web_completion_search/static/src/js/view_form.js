@@ -14,6 +14,15 @@ openerp.web_completion_search = function(instance, local) {
     instance.web.form.CompletionFieldMixin._search_create_popup = function(view, ids, context) {
         var self = this;
         var pop = new instance.web.form.SelectCreatePopup(this);
+        var domain = self.build_domain();
+
+        if (self.field.type == 'many2many') {
+            var selected_ids =self.get_search_blacklist();
+            if (selected_ids.length > 0) {
+                domain = new instance.web.CompoundDomain(domain, ["!", ["id", "in", selected_ids]]);
+            }
+        }
+
         pop.select_element(
             self.field.relation,
             {
@@ -22,7 +31,7 @@ openerp.web_completion_search = function(instance, local) {
                 initial_view: view,
                 disable_multiple_selection: this.field.type != 'many2many',
             },
-            self.build_domain(),
+            domain,
             new instance.web.CompoundContext(self.build_context(), context || {})
         );
         pop.on("elements_selected", self, function(element_ids) {
