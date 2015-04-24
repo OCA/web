@@ -147,6 +147,13 @@ openerp.web_easy_switch_company = function (instance) {
             this._super(parent);
             var switch_button = new instance.web.SwitchCompanyWidget();
             switch_button.appendTo(instance.webclient.$el.find('.oe_systray'));
+
+            // When everything is rendered, this recalculates the width of the top left menu structure
+            //     and thus solves issue #116 with menu elements wrapping
+            //     Doing it in document.ready feels like a hack though, perhaps there's a better place for it
+            $(document).ready(function(ev) {
+                openerp.web.bus.trigger('resize');
+            });
         }
 
     });
