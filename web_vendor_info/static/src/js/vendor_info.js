@@ -59,10 +59,10 @@ openerp.web_vendor_info = function (instance) {
     });
 
     /**************************************************************************
-    Extend 'WebClient' Widget to insert a 'VendorInfoWidget' widget
+    Extend 'Menu' Widget to insert a 'VendorInfoWidget' widget
     only if required data to display are available.
     **************************************************************************/
-    instance.web.WebClient.include({
+    instance.web.Menu.include({
 
         start: function() {
             return $.when(this._super()).then(function() {
