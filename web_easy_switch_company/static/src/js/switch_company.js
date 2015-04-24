@@ -152,7 +152,9 @@ openerp.web_easy_switch_company = function (instance) {
             //     and thus solves issue #116 with menu elements wrapping
             //     Doing it in document.ready feels like a hack though, perhaps there's a better place for it
             $(document).ready(function(ev) {
-                openerp.web.bus.trigger('resize');
+                setTimeout(function() {
+                    openerp.web.bus.trigger('resize');
+                }, 3000);
             });
         }
 
