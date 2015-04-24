@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="ir_config_parameter_vendor_name" model="ir.config_parameter">
+            <field name="key">web_vendor_name</field>
+            <field name="value" eval="''"/>
+        </record>
+
+        <record id="ir_config_parameter_vendor_release" model="ir.config_parameter">
+            <field name="key">web_vendor_release</field>
+            <field name="value" eval="''"/>
+        </record>
+
+    </data>
+</openerp>
