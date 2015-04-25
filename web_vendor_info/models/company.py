@@ -57,7 +57,8 @@ class res_company(osv.Model):
             res[company_id] = vendor_release
         return res
 
-    def _vendor_release_inv(self, cr, uid, id_, name, value, arg, context=None):
+    def _vendor_release_inv(
+            self, cr, uid, id_, name, value, arg, context=None):
         if context is None:
             context = {}
         config_model = self.pool.get('ir.config_parameter')
