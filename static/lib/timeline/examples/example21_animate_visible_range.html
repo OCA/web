@@ -1,0 +1,117 @@
+<html>
+<head>
+    <title>Timeline animate visible range</title>
+
+    <style type="text/css">
+        body {
+            font-size: 10pt;
+            font-family: verdana, sans, arial, sans-serif;
+        }
+    </style>
+
+    <script type="text/javascript" src="../timeline.js"></script>
+    <link rel="stylesheet" type="text/css" href="../timeline.css">
+
+    <script type="text/javascript">
+        var timeline;
+        var data;
+
+        // Called when the Visualization API is loaded.
+        function drawVisualization() {
+            // Create a JSON data table
+            data = [];
+            for (var i = 0; i < 10; i++) {
+                var date = new Date(2012, i, 1);
+                data.push({
+                    "start": date,
+                    "content": "item " + i
+                });
+            }
+
+            // specify options
+            var options = {
+                'width':  '100%',
+                'height': '300px',
+                'showCustomTime': true
+            };
+
+            // Instantiate our timeline object.
+            timeline = new links.Timeline(document.getElementById('mytimeline'), options);
+
+            // cancel any running animation as soon as the user changes the range
+            links.events.addListener(timeline, 'rangechange', function (properties) {
+                animateCancel();
+            });
+
+            // Draw our timeline with the created data and options
+            timeline.draw(data);
+        }
+
+        // create a simple animation
+        var animateTimeout = undefined;
+        var animateFinal = undefined;
+        function animateTo(date) {
+            // get the new final date
+            animateFinal = date.valueOf();
+            timeline.setCustomTime(date);
+
+            // cancel any running animation
+            animateCancel();
+
+            // animate towards the final date
+            var animate = function () {
+                var range = timeline.getVisibleChartRange();
+                var current = (range.start.getTime() + range.end.getTime())/ 2;
+                var width = (range.end.getTime() - range.start.getTime());
+                var minDiff = Math.max(width / 1000, 1);
+                var diff = (animateFinal - current);
+                if (Math.abs(diff) > minDiff) {
+                    // move towards the final date
+                    var start = new Date(range.start.getTime() + diff / 4);
+                    var end = new Date(range.end.getTime() + diff / 4);
+                    timeline.setVisibleChartRange(start, end);
+
+                    // start next timer
+                    animateTimeout = setTimeout(animate, 50);
+                }
+            };
+            animate();
+        }
+        function animateCancel () {
+            if (animateTimeout) {
+                clearTimeout(animateTimeout);
+                animateTimeout = undefined;
+            }
+        }
+
+        function go () {
+            // interpret the value as a date formatted as "yyyy-MM-dd"
+            var v = document.getElementById('animateDate').value.split('-');
+            var date = new Date(v[0], v[1], v[2]);
+            if (date.toString() == "Invalid Date") {
+                alert("Invalid Date");
+            }
+            else {
+                animateTo(date);
+            }
+        }
+
+    </script>
+</head>
+
+<body onload="drawVisualization();">
+<h1>Timeline - animate visible range</h1>
+<p>
+    This demo shows how to to animate the timeline visible range to another date
+</p>
+
+<div>
+    <input id="animateDate" value="2012-09-13" placeholder="yyyy-MM-dd">
+    <button id="go" onclick="go()">Animate to</button>
+</div>
+<br>
+
+<div id="mytimeline"></div>
+
+</body>
+</html>

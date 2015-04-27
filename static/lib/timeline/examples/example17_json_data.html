@@ -1,0 +1,103 @@
+<html>
+<head>
+    <title>Timeline JSON data</title>
+
+    <style type="text/css">
+        body {
+            font-size: 10pt;
+            font-family: verdana, sans, arial, sans-serif;
+        }
+    </style>
+
+    <script type="text/javascript" src="../timeline.js"></script>
+    <link rel="stylesheet" type="text/css" href="../timeline.css">
+
+    <script type="text/javascript">
+        var timeline;
+        var data;
+
+        // Called when the Visualization API is loaded.
+        function drawVisualization() {
+            // Create a JSON data table
+            data = [
+                {
+                    'start': new Date(2010,7,23),
+                    'content': 'Conversation<br><img src="img/comments-icon.png" style="width:32px; height:32px;">'
+                },
+                {
+                    'start': new Date(2010,7,23,23,0,0),
+                    'content': 'Mail from boss<br><img src="img/mail-icon.png" style="width:32px; height:32px;">'
+                },
+                {
+                    'start': new Date(2010,7,24,16,0,0),
+                    'content': 'Report'
+                },
+                {
+                    'start': new Date(2010,7,26),
+                    'end': new Date(2010,8,2),
+                    'content': 'Traject A'
+                },
+                {
+                    'start': new Date(2010,7,28),
+                    'content': 'Memo<br><img src="img/notes-edit-icon.png" style="width:48px; height:48px;">'
+                },
+                {
+                    'start': new Date(2010,7,29),
+                    'content': 'Phone call<br><img src="img/Hardware-Mobile-Phone-icon.png" style="width:32px; height:32px;">'
+                },
+                {
+                    'start': new Date(2010,7,31),
+                    'end': new Date(2010,8,3),
+                    'content': 'Traject B'
+                },
+                {
+                    'start': new Date(2010,8,4,12,0,0),
+                    'content': 'Report<br><img src="img/attachment-icon.png" style="width:32px; height:32px;">'
+                }
+            ];
+
+            // specify options
+            var options = {
+                'width':  '100%',
+                'height': '300px',
+                'editable': true,   // enable dragging and editing events
+                'style': 'box'
+            };
+
+            // Instantiate our timeline object.
+            timeline = new links.Timeline(document.getElementById('mytimeline'), options);
+
+            function onRangeChanged(properties) {
+                document.getElementById('info').innerHTML += 'rangechanged ' +
+                        properties.start + ' - ' + properties.end + '<br>';
+            }
+
+            // attach an event listener using the links events handler
+            links.events.addListener(timeline, 'rangechanged', onRangeChanged);
+
+            // Draw our timeline with the created data and options
+            timeline.draw(data);
+        }
+    </script>
+</head>
+
+<body onload="drawVisualization();">
+<h1>Timeline JSON data</h1>
+<p>
+    This demo shows how to feed the Timeline with JSON data.
+    No Google DataTable is used, and therefore the Google JSAPI is
+    not needed by the Timeline, which can thus be used offline.
+</p>
+
+<div id="mytimeline"></div>
+
+<!-- Information about where the used icons come from -->
+<p style="color:gray; font-size:10px; font-style:italic;">
+    Icons by <a href="http://dryicons.com" target="_blank" title="Aesthetica 2 Icons by DryIcons" style="color:gray;" >DryIcons</a>
+    and <a href="http://www.tpdkdesign.net" target="_blank" title="Refresh Cl Icons by TpdkDesign.net" style="color:gray;" >TpdkDesign.net</a>
+</p>
+
+<div id="info"></div>
+
+</body>
+</html>

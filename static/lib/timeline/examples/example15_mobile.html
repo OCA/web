@@ -1,0 +1,201 @@
+<html>
+<head>
+<title>Timeline mobile demo</title>
+
+<!-- for mobile devices like android and iphone -->
+<meta content="True" name="HandheldFriendly" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript" src="../timeline.js"></script>
+<link rel="stylesheet" type="text/css" href="../timeline.css">
+
+<style type="text/css">
+        /* Styles for the page */
+    html, body {
+        font: 10pt arial;
+    }
+
+    #mytimeline {
+    }
+
+    #new {
+        position: absolute;
+        left: 25px;
+        top: 8px;
+
+        text-transform: uppercase;
+        color: white;
+        font-weight: bold;
+        font-size: 40px;
+        text-decoration: none;
+    }
+
+        /* Custom styles for the Timeline */
+    div.timeline-frame {
+        border-color: #5D99C3;
+
+        border-radius: 5px;
+        -moz-border-radius: 5px; /* For Firefox 3.6 and older */
+    }
+    div.timeline-axis {
+        border-color: #5D99C3;
+
+        background-color: #5D99C3;
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#5D99C3', endColorstr='#3A6DA0'); /* for IE */
+        background: -webkit-gradient(linear, left top, left bottom, from(#5D99C3), to(#3A6DA0)); /* for webkit browsers */
+        background: -moz-linear-gradient(top,  #5D99C3,  #3A6DA0); /* for firefox 3.6+ */
+    }
+    div.timeline-axis-grid {
+    }
+    div.timeline-groups-axis {
+        border-color: #5D99C3;
+    }
+    div.timeline-axis-text {
+        color: white;
+    }
+    div.timeline-groups-text {
+        color: #4D4D4D;
+    }
+    div.timeline-event {
+        color: white;
+        border-radius: 5px;
+    }
+    div.timeline-event-content {
+        padding: 5px;
+    }
+
+    div.unavailable {
+        background-color: #F03030; /* red */
+        border-color: #bd2828;     /* red */
+    }
+    div.available {
+        background-color: #1AA11A; /* green */
+        border-color: #136e13;     /* green */
+    }
+    div.maybe {
+        background-color: #FFA500; /* orange */
+        border-color: #cc8100;     /* orange */
+    }
+</style>
+
+<script type="text/javascript">
+    var timeline = undefined;
+    var data = undefined;
+
+    google.load("visualization", "1");
+
+    // Set callback to run when API is loaded
+    google.setOnLoadCallback(drawVisualization);
+
+    // Called when the Visualization API is loaded.
+    function drawVisualization() {
+        // Create and populate a data table.
+        data = new google.visualization.DataTable();
+        data.addColumn('datetime', 'start');
+        data.addColumn('datetime', 'end');
+        data.addColumn('string', 'content');
+        data.addColumn('string', 'group');
+        data.addColumn('string', 'className');
+
+        // create some random data
+        var names = ["Algie", "Barney", "Chris"];
+        for (var n = 0, len = names.length; n < len; n++) {
+            var name = names[n];
+            var now = new Date();
+            var end = new Date(now.getTime() - 12 * 60 * 60 * 1000);
+            for (var i = 0; i < 5; i++) {
+                var start = new Date(end.getTime() + Math.round(Math.random() * 5) * 60 * 60 * 1000);
+                var end = new Date(start.getTime() + Math.round(4 + Math.random() * 5) * 60 * 60 * 1000);
+
+                var r = Math.round(Math.random() * 2);
+                var availability = (r === 0 ? "Unavailable" : (r === 1 ? "Available" : "Maybe"));
+                var group = availability.toLowerCase();
+                var content = availability;
+                data.addRow([start, end, content, name, group]);
+            }
+        }
+
+        // specify options
+        var options = {
+            width:  "100%",
+            height: "99%",
+            layout: "box",
+            axisOnTop: true,
+            eventMargin: 10,  // minimal margin between events
+            eventMarginAxis: 0, // minimal margin beteen events and the axis
+            editable: true,
+            showNavigation: true
+        };
+
+        // Instantiate our timeline object.
+        timeline = new links.Timeline(document.getElementById('mytimeline'), options);
+
+        // register event listeners
+        google.visualization.events.addListener(timeline, 'edit', onEdit);
+
+        // Draw our timeline with the created data and options
+        timeline.draw(data);
+
+        // Set a customized visible range
+        var start = new Date(now.getTime() - 4 * 60 * 60 * 1000);
+        var end = new Date(now.getTime() + 8 * 60 * 60 * 1000);
+        timeline.setVisibleChartRange(start, end);
+    }
+
+    function getRandomName() {
+        var names = ["Algie", "Barney", "Grant", "Mick", "Langdon"];
+
+        var r = Math.round(Math.random() * (names.length - 1));
+        return names[r];
+    }
+
+    function getSelectedRow() {
+        var row = undefined;
+        var sel = timeline.getSelection();
+        if (sel.length) {
+            if (sel[0].row != undefined) {
+                row = sel[0].row;
+            }
+        }
+        return row;
+    }
+
+    function strip(html)
+    {
+        var tmp = document.createElement("DIV");
+        tmp.innerHTML = html;
+        return tmp.textContent||tmp.innerText;
+    }
+
+    // Make a callback function for the select event
+    var onEdit = function (event) {
+        var row = getSelectedRow();
+        var content = data.getValue(row, 2);
+        var availability = strip(content);
+        var newAvailability = prompt("Enter status\n\n" +
+                "Choose from: Available, Unavailable, Maybe", availability);
+        if (newAvailability != undefined) {
+            var newContent = newAvailability;
+            data.setValue(row, 2, newContent);
+            data.setValue(row, 4, newAvailability.toLowerCase());
+            timeline.draw(data);
+        }
+    };
+
+    var onNew = function () {
+        alert("Clicking this NEW button should open a popup window where " +
+                "a new status event can be created.\n\n" +
+                "Apperently this is not yet implemented...");
+    };
+
+</script>
+</head>
+
+<body onresize="timeline.redraw();">
+<div id="mytimeline"></div>
+
+<a id="new" title="Add new status event" href="javascript:void(0);" onclick="onNew();">+</a>
+
+</body>
+</html>

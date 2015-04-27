@@ -1,0 +1,106 @@
+<html>
+<head>
+    <title>Timeline demo</title>
+
+    <style type="text/css">
+        body {font: 10pt arial;}
+    </style>
+
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="../timeline.js"></script>
+    <link rel="stylesheet" type="text/css" href="../timeline.css">
+
+    <script type="text/javascript">
+        google.load("visualization", "1");
+
+        var urlSpreadsheet = "https://spreadsheets.google.com/a/almende.org/ccc?key=tpN13qnPm37g3qTXT5Hc9sg&hl=en#gid=0";
+        var urlData = "data.php";
+
+        var initialized = false;
+        var query;
+        var vis;
+
+        // Set callback to run when API is loaded
+        google.setOnLoadCallback(initialize);
+
+        function initialize() {
+            initialized = true;
+        }
+
+        function load(url) {
+            if (!initialized) {
+                alert("One moment please... still busy loading Google Visualization API");
+                return;
+            }
+
+            if (url == undefined) {
+                dataSourceUrl = document.getElementById("dataSourceUrl").value
+            } else {
+                dataSourceUrl = url;
+            }
+
+            // if the entered url is a google spreadsheet url, replace the part
+            // "/ccc?" with "/tq?" in order to retrieve a neat data query result
+            if (dataSourceUrl.indexOf("/ccc?")) {
+                dataSourceUrl.replace("/ccc?", "/tq?");
+            }
+
+            var handleQueryResponse = function(response) {
+                if (response.isError()) {
+                    alert('Error in query: ' + response.getMessage() + ', ' + response.getDetailedMessage());
+                    return;
+                }
+
+                // retrieve the data from the query response
+                var data = response.getDataTable();
+
+                // specify options
+                var options = {
+                    width:  "100%",
+                    height: "300px",
+                    editable: true,
+                    layout: "box"
+                };
+
+                // Instantiate our timeline object.
+                vis = new links.Timeline(document.getElementById('mytimeline'), options);
+
+                // Draw our timeline with the created data and options
+                vis.draw(data);
+            }
+
+            query && query.abort();
+            query = new google.visualization.Query(dataSourceUrl);
+            query.send(handleQueryResponse);
+        }
+
+        function loadDataHtml() {
+            document.getElementById("dataSourceUrl").value = urlData;
+            load(urlData);
+        }
+
+        function loadSpreadSheet() {
+            document.getElementById("dataSourceUrl").value = urlSpreadsheet;
+            load(urlSpreadsheet);
+        }
+    </script>
+</head>
+
+<body>
+<p>Enter a datasource and click the button "Go".</p>
+<p>
+    Datasource: <input type="text" id="dataSourceUrl" value="data.php" style="width: 600px;">
+    <input type="button" value="Go" onclick="load();">
+</p>
+<p>
+    Examples:
+</p>
+<p>
+    <a href="javascript:loadDataHtml();">Open data.php</a> (Works only if you run the example on a PHP server)<br>
+    <a href="javascript:loadSpreadSheet();">Open a Google spreadsheet</a>
+    (or <a href="" onclick="window.open(urlSpreadsheet); return false;">view</a> this sheet)<br>
+</p>
+<div id="mytimeline"></div>
+
+</body>
+</html>

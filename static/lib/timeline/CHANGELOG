@@ -1,0 +1,199 @@
+CHAP Links Library - Timeline
+
+
+2015-03-04, version 2.9.1
+
+- Fixed broken option `groupsWidth`.
+- Fixed group height collapsing when there are no items, height now reckons
+  with the label height.
+- Added Brazilian Portuguese locale, thanks @gmmoreira.
+- Added locales Portuguese, Chinese, Arabic, Japanese, Korean. Thanks Mario
+  Fischer.
+- Added Polish locale, thanks @pbrzoski.
+
+
+2014-07-28, version 2.9.0
+
+- Implemented function `getCluster()`, `getClusterIndex()` and `getSelection()`.
+  Thanks @igui.
+- Added option `clusterMaxItems`. Thanks @igui.
+- Fixed 'change' event not being fired when dragging the left or right side
+  of a range.
+- Fixed restoring original dates after canceling a changed item.
+
+
+2014-05-16, version 2.8.0
+
+- Implemented a new item type, `FloatingRange`. Thanks Nick Hardy (@NickHardy).
+- Implemented options `groupMinHeight`. Thanks @sapeish.
+- Fixed event `add` not triggered in case of ctrl+click to add a new item.
+  Thanks @sapeish.
+
+
+2014-04-09, version 2.7.0
+
+- Implemented option `timeChangeable` which allows to have items which can be
+  moved to a different group but not moved in time.
+  Thanks Martin Fischer (hansmaulwurf23).
+- Implemented function `getVisibleItems(start, end)`. Thanks StephanieHe.
+- Added Finish locale. Thanks magandrez.
+- Changed default type of a newly created item from range to box.
+
+
+2014-01-14, version 2.6.1
+
+- Function `Timeline.getItem` now also returns foreign fields available in the
+  items data.
+
+
+2014-01-13, version 2.6.0
+
+- Implemented support for stacking items within groups. Thanks Stefano Fornari.
+- Added Turkish locale. Thanks Batuhan Kucukali (LadyArch3r).
+
+
+2013-12-13, version 2.5.1
+
+- Added option groupsOrder, which is `true` by default and can be used to provide
+  a custom group order (or no ordering at all by setting the option to `false`).
+  (Thanks hansmaulwurf23).
+- Rename event `change` to `changed`, added event `change` which fires
+  repeatedly when an item is being changed. (Thanks bensleveritt).
+- Fixed an off-by-one error in mapping columns of a Google DataTable.
+- Fixed `type` not being read correctly from a Google DataTable.
+  Thanks boblepepeur.
+- Fixed getting the className of an item. Thanks Pedro Heliodoro.
+
+
+2013-08-20, version 2.5.0
+
+- Added French and Dutch localization. Thanks sp0ken and jeroenvg.
+- Integration with jQuery Themeroller. Thanks Oleg Varaksin.
+- Implemented Shift+Scroll to move the timeline. Thanks Olivier Aubert (oaubert).
+- Implemented support for a field `type` to give events a type individually.
+- Improved: Timeline is more robust against invalid data (data without
+  start and end fields). Thanks Roberto Tyley.
+- Added an option 'unselectable'. Thanks judge.
+- Fixed: when updating a selected item using changeItem, the selection was not
+  restored correctly.
+- Fixed not being able to define columns for fields `group`, `className`, and
+  `editable` in a Google SpreadSheet.
+- Fixed non-working touch events.
+
+
+2013-04-18, version 2.4.2
+
+- Implemented localization. (Thanks bjarkebech and José Renato).
+- Changed: renamed option intervalMin to zoomMin and intervalMax to zoomMax
+  (Thanks Oleg Varaksin).
+- Fixed: could not change an items field editable using method changeItem.
+- Fixed: fields editable and className could not be retrieved from method
+  getItem (Thanks Oleg Varaksin).
+
+
+2013-03-04, version 2.4.1
+
+- Fixed: issue with calculating absolute positions of mouse and elements in
+  scrolled elements or body.
+
+
+2013-02-26, version 2.4.0
+
+- Added a new scale "WEEKDAY", which shows the weekday in the minor label.
+- Implemented clustering of items.
+- Implemented support for custom item types (besides the built in types box,
+  range, and dot). See example 25. Thanks Alexander Parshin.
+- events can be made editable/read-only on an individual basis by providing
+  them with a field "editable".
+- changed: data can now have custom fields (like an id).
+- changed: method addItem has a second, optional parameter "preventRedraw",
+  which can be used to prevent redrawing the timeline after every addItem.
+- changed: option showButtonAdd renamed to showButtonNew, and is now false by
+  default.
+- changed: new items created via a double-click or the "Add" button are now
+  rendered after add trigger (which can cancel the create action).
+- fixed: issues with dates on millisecond scale or with negative years
+  (issues #19 and #54).
+- fixed: options scale and step did not work (method setScale worked correctly
+  though).
+- fixed: alignment of the delete button for selected events with style box,
+  when the option box.align was "left" or "right" instead of the default
+  "center".
+- fixed: DataTable columns may now have their name defined as label or id,
+  and the first three columns can have any order now. More robust and flexible.
+- fixed: when deleting an item via deleteItem, the currently selection is
+  maintained instead of unselected (issue #47).
+- fixed: When dragging the edges of a range, it was possible to move the range
+  to another group.
+- fixed: non reachable event 'ready" (issue #69).
+
+
+2012-09-18, version 2.3.2
+
+- fixed mouseover/dragging of the vertical lines with current time and custom
+  time, which did only work in the axis area but not in the contents area.
+
+
+2012-09-13, version 2.3.1
+
+- added: double tap events on mobile devices will now fire the edit/new event.
+- fixed/updated example 09, 15, 17, and 18.
+- created example 21.
+
+
+2012-09-05, version 2.3.0
+
+- new: items can now have an individual class name which allows styling of
+  individual items. This gives a lot of extra flexibility.
+- fixed issue #26: pinching on Ipad did throw an error "ReferenceError: Can't
+  find variable: timeline".
+- fixed issue #28: in some cases, clicking an item would not select the item
+  but move the timeline slightly (less than 1px).
+
+
+2012-07-30, version 2.2.1
+
+- fixed the 'select' event not being fired when an item gets unselected.
+- fixed method changeItem not dealing with changing the type of the item
+  from box to range or vice versa.
+
+
+2012-07-27, version 2.2.0
+
+- added an option showMinorLabels. By setting both showMinorLabels and
+  showMajorLabels, true, the axis will not be visible.
+- fixed issue #6: items and axis did not move with the speed when moving
+  the Timeline under IE8 and older.
+- fixed issue #8: start, end, min, max not working correctly around Date(0).
+- fixed issue #9. It is now possible to specify only start or end in the
+  options, instead of having to specify both.
+- fixed issue #12: the group of an item was not restored after canceling a
+  change.
+
+
+2012-06-18, version 2.1.2
+
+- fixed issue #4 again: sorting groups still not working correctly
+
+
+2012-06-15, version 2.1.1
+
+- fixed issue #3: broken option stackEvents=false
+- fixed issue #4: sorting groups not working correctly
+
+
+2012-06-04, version 2.1
+
+- Documentation has a new layout
+- Source code cleaned up
+
+
+2012-05-02, version 2.0.1
+
+- bug fix: areas on the left and right end of a range (for changing start/end)
+  where displayed below the range instead of on top of it.
+
+
+2012-05-02, version 2.0
+
+- initial upload to github (formerly located at sourceforge)

@@ -1,0 +1,1696 @@
+<html>
+
+<head>
+    <title>Timeline documentation</title>
+    <link rel='stylesheet' href='default.css' type='text/css'>
+
+    <link href="prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="prettify/prettify.js"></script>
+</head>
+
+<body onload="prettyPrint();">
+<div id="container">
+
+<h1>Timeline documentation</h1>
+
+<table>
+    <tr>
+        <td>Author</td>
+        <td>Jos de Jong, <a href="http://www.almende.com" target="_blank">Almende B.V.</a></td>
+    </tr>
+    <tr>
+        <td>Webpage</td>
+        <td><a href="http://almende.github.com/chap-links-library" target="_blank">Chap Links Library</a></td>
+    </tr>
+    <tr>
+        <td>License</td>
+        <td> <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License, Version 2.0</a></td>
+    </tr>
+
+</table>
+
+
+<h2 id="Contents">Contents</h2>
+<ul>
+    <li><a href="#Overview">Overview</a></li>
+    <li><a href="#Example">Example</a></li>
+    <li><a href="#Loading">Loading</a></li>
+    <li><a href="#Data_Format">Data Format</a></li>
+    <li><a href="#Configuration_Options">Configuration Options</a></li>
+    <li><a href="#Methods">Methods</a></li>
+    <li><a href="#Events">Events</a></li>
+    <li><a href="#Styles">Styles</a></li>
+    <li><a href="#Themeroller">jQuery Themeroller integration</a></li>
+    <li><a href="#Data_Policy">Data Policy</a></li>
+</ul>
+
+<h2 id="Overview">Overview</h2>
+<p>
+    The Timeline is an interactive visualization chart to visualize events in time.
+    The events can take place on a single date, or have a start and end date (a range).
+    You can freely move and zoom in the timeline by dragging and scrolling in the
+    Timeline. Events can be created, edited, and deleted in the timeline.
+    The time scale on the axis is adjusted automatically, and supports scales ranging
+    from milliseconds to years.
+</p>
+
+<p>
+    When the timeline is defined as editable (and groupsChangeable and timeChangeable are set accordingly), events can be moved to another time
+    by dragging them. By double clicking, the contents of an event can be changed.
+    An event can be deleted by clicking the delete button on the upper right.
+    A new event can be added in different
+    ways: by double clicking in the timeline, or by keeping the Ctrl key down and
+    clicking or dragging in the timeline, or by clicking the add button in the
+    upper left of the timeline, and then clicking or dragging at the right location
+    in the timeline.
+
+</p>
+
+<p>
+    The Timeline is developed as a Google Visualization Chart in javascript.
+    It runs in every browser without additional requirements.
+    There is a GWT wrapper available to use the Timeline in GWT (Google Web Toolkit),
+    you can find relevant documentation <a href="../../gwt/doc">here</a>.
+</p>
+
+<p>
+    The Timeline is designed to display up to 1000 events smoothly on any modern browser.
+</p>
+
+<h2 id="Example">Example</h2>
+<p>
+    Here a timeline example. Click and drag to move the timeline, scroll to zoom the timeline.
+</p>
+<p>
+    More examples can be found in the <a href="../examples">examples</a> directory.
+</p>
+
+<iframe src="../examples/example01_basis.html" style="border:none; width:100%; height:350px;"></iframe>
+
+<pre class="prettyprint lang-html">&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Timeline demo&lt;/title&gt;
+
+    &lt;style&gt;
+      body {font: 10pt arial;}
+    &lt;/style&gt;
+
+    &lt;script type="text/javascript" src="http://www.google.com/jsapi"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript" src="../timeline.js"&gt;&lt;/script&gt;
+    &lt;link rel="stylesheet" type="text/css" href="../timeline.css"&gt;
+
+    &lt;script type="text/javascript"&gt;
+      google.load("visualization", "1");
+
+      // Set callback to run when API is loaded
+      google.setOnLoadCallback(drawVisualization);
+
+      // Called when the Visualization API is loaded.
+      function drawVisualization() {
+        // Create and populate a data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('datetime', 'start');
+        data.addColumn('datetime', 'end');
+        data.addColumn('string', 'content');
+
+        data.addRows([
+          [new Date(2010,7,23), , 'Conversation&lt;br&gt;' +
+            '&lt;img src="img/comments-icon.png" style="width:32px; height:32px;"&gt;'],
+          [new Date(2010,7,23,23,0,0), , 'Mail from boss&lt;br&gt;' +
+            '&lt;img src="img/mail-icon.png" style="width:32px; height:32px;"&gt;'],
+          [new Date(2010,7,24,16,0,0), , 'Report'],
+          [new Date(2010,7,26), new Date(2010,8,2), 'Traject A'],
+          [new Date(2010,7,28), , 'Memo&lt;br&gt;' +
+            '&lt;img src="img/notes-edit-icon.png" style="width:48px; height:48px;"&gt;'],
+          [new Date(2010,7,29), , 'Phone call&lt;br&gt;' +
+            '&lt;img src="img/Hardware-Mobile-Phone-icon.png" style="width:32px; height:32px;"&gt;'],
+          [new Date(2010,7,31), new Date(2010,8,3), 'Traject B'],
+          [new Date(2010,8,4,12,0,0), , 'Report&lt;br&gt;' +
+            '&lt;img src="img/attachment-icon.png" style="width:32px; height:32px;"&gt;']
+        ]);
+
+        // specify options
+        var options = {
+          "width":  "100%",
+          "height": "99%",
+          "style": "box" // optional
+        };
+
+        // Instantiate our timeline object.
+        var timeline = new links.Timeline(document.getElementById('mytimeline'));
+
+        // Draw our timeline with the created data and options
+        timeline.draw(data, options);
+      }
+   &lt;/script&gt;
+  &lt;/head&gt;
+
+  &lt;body&gt;
+    &lt;div id="mytimeline"&gt;&lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+
+<h2 id="Loading">Loading</h2>
+
+<p>
+    To load the Timeline, download the file
+    <a href="http://almende.github.com/chap-links-library/downloads.html"><code>timeline.zip</code></a>
+    and unzip it in a sub directory timeline on your html page.
+    Include the two downloaded files (timeline.js and timeline.css) in the head of your html code.
+    When you use a Google DataTable for providing the data,
+    the Google API must be included too.
+
+    Note that the Google API is only available online, so it is not possible
+    to use it in an offline application.
+</p>
+
+<pre class="prettyprint lang-html">&lt;script type="text/javascript" src="http://www.google.com/jsapi"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="timeline/timeline.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" type="text/css" href="timeline/timeline.css"&gt;</pre>
+
+<p>
+    When the Google API is used, the google visualization tools needs to be
+    loaded. This is not needed when using a JSON Array as data type.
+</p>
+<pre class="prettyprint lang-js">google.load("visualization", "1");
+google.setOnLoadCallback(drawTimeline);
+function drawTimeline() {
+  // load data and create the timeline here
+}
+</pre>
+
+The class name of the Timeline is <code>links.Timeline</code>
+<pre class="prettyprint lang-js">var timeline = new links.Timeline(container);</pre>
+
+After being loaded, the timeline can be drawn via the method <code>draw</code>,
+provided with data and options.
+<pre class="prettyprint lang-js">timeline.draw(data, options);</pre>
+<p>
+    where data is a <code>DataTable</code> or a JSON <code>Array</code>,
+    and options is a name-value map in the JSON format.
+</p>
+
+<p>
+    The Timeline stores a link to the original data table, and applies changes
+    made from within the Timeline to this data table.
+    When the data table is changed externally, the Timeline can be updated by executing
+    <code>redraw()</code>. The Timeline can be linked to an other/new table
+    via <code>draw(data)</code> (without providing options).
+    When the website layout has been changed or resized, use <code>checkResize()</code>
+    to update the size of the timeline.
+</p>
+
+
+<h2 id="Data_Format">Data Format</h2>
+<p>
+    The Timeline supports two data types: a JSON Array or a Google DataTable.
+</p>
+
+
+<h3>JSON</h3>
+<p>
+    The Timeline supports a JSON Array as data format. The Array must contain
+    JSON Objects with fields <code>start</code>, <code>end</code> (optional),
+    <code>content</code>, <code>group</code> (optional), and
+    <code>className</code> (optional).
+    When JSON is used as data format (instead of Google DataTable), the
+    Timeline can be used offline.
+</p>
+
+<p>
+    A table is constructed as:
+</p>
+
+<pre class="prettyprint lang-js">
+var data = [];
+
+data.push({
+  'start': new Date(2010, 7, 15),
+  'end': new Date(2010, 8, 2),  // end is optional
+  'content': 'Trajectory A'
+  // Optional: a field 'group'
+  // Optional: a field 'className'
+  // Optional: a field 'editable'
+});
+</pre>
+
+
+<h3>Google DataTable</h3>
+<p>
+    The Timeline requires a data table with two required and three optional
+    columns.
+    It is possible to use a Google DataTable or DataView, and the data
+    can be queried from an external data source using Google Query.
+    Note that the needed Google API is only available online and cannot be
+    downloaded for offline usage.
+</p>
+
+<p>
+    A table is constructed as:
+</p>
+
+<pre class="prettyprint lang-js">
+var data = new google.visualization.DataTable();
+data.addColumn('datetime', 'start');
+data.addColumn('datetime', 'end');
+data.addColumn('string', 'content');
+// Optional: a column 'group'
+// Optional: a column 'className'
+// Optional: a column 'editable'
+// Optional: a column 'type'
+
+data.addRow([new Date(2010,7,15), new Date(2010,8,2), "Trajectory A"]);
+// ...
+</pre>
+
+<p>
+    The Timeline checks the type of the columns by first reading the
+    column id, and if not provided read the column label.
+    If both the column id's and label's are undefined, the Timeline will use
+    column 0 as start, column 1 as end, column 2 as content, column 3 as group,
+    column 4 as className, and column 5 as editable.
+</p>
+
+<h3>Fields</h3>
+
+<p>
+    The fields are defined as:
+</p>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Required</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>start</td>
+        <td>Date</td>
+        <td>yes*</td>
+        <td>
+            The start date of the event, for example <code>new Date(2010,2,23)</code>.
+            <br>
+            <blockquote style="color: red; font-style: italic;">
+                Remark: Months in the JavaScript Date object are zero-based,<br>
+                so <code>new Date(2010,2,23)</code> represents 23th of March, 2010.
+            </blockquote>
+			* If the type is set to floatingRange, the start is optional.
+        </td>
+    </tr>
+    <tr>
+        <td>end</td>
+        <td>Date</td>
+        <td>no</td>
+        <td>The end date of the event. The end date is optional, and can be left <code>null</code>.
+            If end date is provided, the event is displayed as a range.
+            If not, the event is displayed as a box.</td>
+    </tr>
+    <tr>
+        <td>content</td>
+        <td>String</td>
+        <td>yes</td>
+        <td>The contents of the event. This can be plain text or html code.</td>
+    </tr>
+    <tr>
+        <td>group</td>
+        <td>any type</td>
+        <td>no</td>
+        <td>This field is optional. When the group column is provided,
+            all events with the same group are placed on one line.
+            A vertical axis is displayed showing the groups.
+            Grouping events can be useful for example when showing availability of multiple
+            people, rooms, or other resources next to each other.<br>
+
+            If none of the events has a group,
+            the events will be drawn on top of the horizontal axis.
+            When events overlap each other, the will be stacked automatically.
+        </td>
+    </tr>
+    <tr>
+        <td>className</td>
+        <td>String</td>
+        <td>no</td>
+        <td>This field is optional. A className can be used to give events
+            and individual css style. For example, when an event has className
+            'red', one can define a css style
+            <code>
+                .red {
+                    background-color: red;
+                    border-color: dark-red;
+                }
+            </code>.
+            Depending on how you apply your css styles, it may be needed to
+            (re)define the style for selected events
+            (class <code>timeline-event-selected</code>).
+            More details on how to style events can be found in the section
+            <a href="#Styles">Styles</a>.
+        </td>
+    </tr>
+    <tr>
+        <td>editable</td>
+        <td>Boolean</td>
+        <td>no</td>
+        <td>This field is optional. By providing the field editable, events
+            can be made editable or read-only on an individual basis.
+            If editable is true, the event can be edited and deleted.
+            The editable setting of an individual event overwrites the global
+            setting options.editable. So when the Timeline as a whole is
+            read-only, individual events may be made editable, and vice versa.
+        </td>
+    </tr>
+    <tr>
+        <td>type</td>
+        <td>String</td>
+        <td>no</td>
+        <td>Type of the event, optional. Available values: "box", "range", "dot", "floatingRange".
+            By default, the type is "range" for events having a start and end
+            date, and "box" for events with a start date. This default can be
+            overwritten by the global option "style".
+        </td>
+    </tr>
+</table>
+
+<h3>Custom fields</h3>
+
+It is possible to add custom fields to items. The Timeline will ignore them and leave
+them intact. When retrieving an item via <code>getItem</code>, these custom fields
+will be returned along with the known fields.
+
+
+<h2 id="Configuration_Options">Configuration Options</h2>
+
+<p>
+    Options can be used to customize the timeline. Options are defined as a JSON object.
+    All options are optional.
+</p>
+
+<pre class="prettyprint lang-js">
+var options = {
+  "width":  "100%",
+  "height": "auto",
+  "style": "box",
+  "editable": true
+};
+</pre>
+
+<p>
+    The following options are available.
+</p>
+
+<table>
+<tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Default</th>
+    <th>Description</th>
+</tr>
+<tr>
+    <td>animate</td>
+    <td>boolean</td>
+    <td>true</td>
+    <td>When true, events are moved animated when resizing or moving them.
+        This is very pleasing for the eye, but does require more computational power.</td>
+</tr>
+<tr>
+    <td>animateZoom</td>
+    <td>boolean</td>
+    <td>true</td>
+    <td>When true, events are moved animated when zooming the Timeline.
+        This looks cool, but does require more computational power.</td>
+</tr>
+
+<tr>
+    <td>axisOnTop</td>
+    <td>boolean</td>
+    <td>false</td>
+    <td>If false (default), the horizontal axis is drawn at the bottom.
+        If true, the axis is drawn on top.</td>
+</tr>
+
+<tr>
+    <td>cluster</td>
+    <td>boolean</td>
+    <td>false</td>
+    <td>If true, events will be clustered together when zooming out.
+        This keeps the Timeline clear and fast also with a larger amount of
+        events.
+        <br><span style="background-color: orangered; color: white; padding: 3px; border-radius: 3px; font-size: 80%;"
+                  title="This feature is currently in an experimental phase, and not yet suitable for a production environment."
+                >experimental</span>
+    </td>
+</tr>
+
+<tr>
+    <td>clusterMaxItems</td>
+    <td>Number</td>
+    <td>5</td>
+    <td>The maximum quantity of items that can be shown outside a cluster. Setting a low value is useful to limit the
+        height of the container element. This value must be at least one.
+        <br><span style="background-color: orangered; color: white; padding: 3px; border-radius: 3px; font-size: 80%;"
+                  title="This feature is currently in an experimental phase, and not yet suitable for a production environment."
+                >experimental</span>
+    </td>
+</tr>
+
+<tr>
+    <td>customStackOrder</td>
+    <td>function</td>
+    <td>none</td>
+    <td>Provide a custom sort function to order the items. The order of the
+        items is determining the way they are stacked. The function
+        customStackOrder is called with two parameters, both of type
+        `timeline.Item`.
+    </td>
+</tr>
+
+<tr>
+    <td>box.align</td>
+    <td>String</td>
+    <td>"center"</td>
+    <td>Alignment of items with style "box". Available values are
+        "center" (default), "left", or "right").</td>
+</tr>
+
+<tr>
+    <td>dragAreaWidth</td>
+    <td>Number</td>
+    <td>10</td>
+    <td>The width of the drag areas in pixels.
+        When an event range is selected, it has a drag area on the left and right
+        side, with which the start or end time of the even can be manipulated.</td>
+</tr>
+
+<tr>
+    <td>editable</td>
+    <td>boolean</td>
+    <td>false</td>
+    <td>If true, the events can be edited, created and deleted.
+        Events can only be editable when th option <code>selectable</code> is true
+        (default). When editable is true, the Timeline can fire events
+        <code>change</code>, <code>changed</code>, <code>edit</code>,
+        <code>add</code>, <code>delete</code>.
+        <br>
+        This global setting editable can be overwritten for individual events
+        by providing the events with a field editable,
+        as described in section <a href="#Data_Format">Data Format.</a>
+    </td>
+</tr>
+
+<tr>
+    <td>end</td>
+    <td>Date</td>
+    <td>none</td>
+    <td>The initial end date for the axis of the timeline.
+        If not provided, the latest date present in the events is taken as end date.</td>
+</tr>
+
+<tr>
+    <td>eventMargin</td>
+    <td>int</td>
+    <td>10</td>
+    <td>The minimal margin in pixels between events.</td>
+</tr>
+<tr>
+    <td>eventMarginAxis</td>
+    <td>int</td>
+    <td>10</td>
+    <td>The minimal margin in pixels between events and the horizontal axis.</td>
+</tr>
+
+<tr>
+    <td>groupsChangeable</td>
+    <td>boolean</td>
+    <td>false</td>
+    <td>If true, items can be moved from one group to another.
+        Only applicable when groups are used. See also option <code>timeChangeable</code>.</td>
+</tr>
+<tr>
+    <td>groupsOnRight</td>
+    <td>boolean</td>
+    <td>false</td>
+    <td>If false, the groups legend is drawn at the left side of the timeline.
+        If true, the groups legend is drawn on the right side.</td>
+</tr>
+
+<tr>
+    <td>groupsOrder</td>
+    <td>boolean | function</td>
+    <td>true</td>
+    <td>
+      Allows to customize the way groups are ordered.
+      When true (default), groups will be ordered alphabetically.
+      When false, groups will not be ordered at all.
+      When a function, groups will be ordered using this sort function.
+      While sorting, the sort function is called with two groups to compare
+      as parameters, and the function must return 0 when a and b are equal,
+      a value larger than 0 when a is larger than b,
+      and a value smaller than 0 when a is smaller than b.
+    </td>
+</tr>
+
+<tr>
+    <td>groupsWidth</td>
+    <td>string</td>
+    <td>none</td>
+    <td>By default, the width of the groups legend is adjusted to the group
+        names. A fixed width can be set for the groups legend by specifying the
+        groupsWidth as a string, for example "200px".</td>
+</tr>
+
+<tr>
+    <td>groupMinHeight</td>
+    <td>int</td>
+    <td>0</td>
+    <td>The minimum height of each individual group even if they have no items.
+        The group height is set as the greatest value between items height and the groupMinHeight.</td>
+</tr>
+
+<tr>
+    <td>height</td>
+    <td>string</td>
+    <td>"auto"</td>
+    <td>The height of the timeline in pixels, as a percentage, or "auto".
+        When the height is set to "auto", the height of the timeline is automatically
+        adjusted to fit the contents. If not, it is possible that events get stacked
+        so high, that they are not visible in the timeline.
+        When height is set to "auto", a minimum height can be specified with the
+        option <code>minHeight</code>.
+    </td>
+</tr>
+
+<tr>
+    <td>locale</td>
+    <td>string</td>
+    <td>"en"</td>
+    <td>Choose locale for the Timeline.
+        The Built-in locale is english (<code>en</code>).
+        More locales are available in the file <code>timeline-locales.js</code>:
+
+        <ul>
+            <li>Arabic, <code>ar</code> (aliases: <code>ar_AR</code>)</li>
+            <li>Catalan, <code>ca</code> (aliases: <code>ca_ES</code>)</li>
+            <li>Brazilian Portuguese, <code>pt_BR</code></li>
+            <li>Chinese, <code>zh</code> (aliases: <code>zh_CN</code>, <code>zh_TR</code>)</li>
+            <li>Danish, <code>da</code> (aliases: <code>da_DK</code>)</li>
+            <li>Dutch, <code>nl</code> (aliases: <code>nl_NL</code>, <code>nl_BE</code>)</li>
+            <li>English, <code>en</code> (aliases: <code>en_US</code>, <code>en_UK</code>)</li>
+            <li>Finnish, <code>fi</code> (aliases: <code>fi_FI</code>)</li>
+            <li>French, <code>fr</code> (aliases: <code>fr_FR</code>, <code>fr_BE</code>, <code>fr_CA</code>)</li>
+            <li>German, <code>de</code> (aliases: <code>de_DE</code>, <code>de_CH</code>)</li>
+            <li>Hungarian, <code>hu</code> (aliases: <code>hu_HU</code>)</li>
+            <li>Japanese, <code>ja</code> (aliases: <code>ja_JA</code>)</li>
+            <li>Korean, <code>ko</code> (aliases: <code>ko_KO</code>)</li>
+            <li>Portuguese, <code>pt</code> (aliases: <code>pt_PT</code>)</li>
+            <li>Russian, <code>ru</code> (aliases: <code>ru_RU</code>)</li>
+            <li>Spanish, <code>es</code> (aliases: <code>es_ES</code>)</li>
+            <li>Turkish, <code>tr</code> (aliases: <code>tr_TR</code>)</li>
+        </ul>
+    </td>
+</tr>
+
+<tr>
+    <td>max</td>
+    <td>Date</td>
+    <td>none</td>
+    <td>Set a maximum Date for the visible range.
+        It will not be possible to move beyond this maximum.
+        The maximum date itself is excluded.
+    </td>
+</tr>
+
+<tr>
+    <td>min</td>
+    <td>Date</td>
+    <td>none</td>
+    <td>Set a minimum Date for the visible range.
+        It will not be possible to move beyond this minimum.
+    </td>
+</tr>
+
+<tr>
+    <td>minHeight</td>
+    <td>Number</td>
+    <td>0</td>
+    <td>Specifies a minimum height for the Timeline in pixels.
+        Useful when <code>height</code> is set to <code>"auto"</code>.
+    </td>
+</tr>
+
+<tr>
+    <td>moveable</td>
+    <td>boolean</td>
+    <td>true</td>
+    <td>If true, the timeline is movable.
+        When the timeline moved, the <code>rangechange</code> events are fired.
+    </td>
+</tr>
+<tr>
+    <td>scale</td>
+    <td>links.Timeline.StepDate.SCALE</td>
+    <td>none</td>
+    <td>Set a custom scale. Automatic scaling will be disabled.
+        Both options <code>scale</code> and <code>step</code> must be set.
+
+        For example scale=SCALE.MINUTES and step=5 will result in minor steps of
+        5 minutes, and major steps of an hour.
+        Available scales: <code>MILLISECOND</code>, <code>SECOND</code>,
+        <code>MINUTE</code>, <code>HOUR</code>, <code>WEEKDAY</code>,
+        <code>DAY</code>, <code>MONTH</code>, <code>YEAR</code>.
+        As step size, choose for example 1, 2, 5, or 10.
+    </td>
+</tr>
+<tr>
+    <td>selectable</td>
+    <td>boolean</td>
+    <td>true</td>
+    <td>If true, the events on the timeline are selectable.
+        When an event is selected, the <code>select</code> event is fired.
+    </td>
+</tr>
+
+<tr>
+    <td>snapEvents</td>
+    <td>boolean</td>
+    <td>true</td>
+    <td>If true, the start and end of an event will be snapped nice integer
+        values when moving or resizing the event.
+    </td>
+</tr>
+
+<tr>
+    <td>stackEvents</td>
+    <td>boolean</td>
+    <td>true</td>
+    <td>If true, the events are stacked above each other to prevent overlapping events.
+        This option cannot be used in combination with grouped events.</td>
+</tr>
+<tr>
+    <td>start</td>
+    <td>Date</td>
+    <td>none</td>
+    <td>The initial start date for the axis of the timeline.
+        If not provided, the earliest date present in the events is taken as start date.</td>
+</tr>
+
+<tr>
+    <td>step</td>
+    <td>number</td>
+    <td>none</td>
+    <td>See option <code>scale</code>.
+    </td>
+</tr>
+
+<tr>
+    <td>style</td>
+    <td>string</td>
+    <td>"box"</td>
+    <td>Specifies the style for the timeline events.
+        Choose from "dot" or "box".
+        Note that the content of the events may contain additional html formatting.
+        It is possible to implement custom styles using the method <code>addItemType</code>.
+    </td>
+</tr>
+
+<tr>
+    <td>showCurrentTime</td>
+    <td>boolean</td>
+    <td>true</td>
+    <td>If true, the timeline shows a red, vertical line displaying the current
+        time. This time can be synchronized with a server via the method
+        <code>setCurrentTime</code>.</td>
+</tr>
+<tr>
+    <td>showCustomTime</td>
+    <td>boolean</td>
+    <td>false</td>
+    <td>If true, the timeline shows a blue vertical line displaying a custom
+        time. This line can be dragged by the user.
+        The custom time can be utilized to show a state in the past or in the future.
+        When the custom time bar is dragged by the user, an event is triggered, on
+        which the contents of the timeline can be changed in to the state at that
+        moment in time.
+    </td>
+</tr>
+<tr>
+    <td>showMajorLabels</td>
+    <td>boolean</td>
+    <td>true</td>
+    <td>By default, the timeline shows both minor and major date labels on the
+        horizontal axis.
+        For example the minor labels show minutes and the major labels show hours.
+        When <code>showMajorLabels</code> is <code>false</code>, no major labels
+        are shown.</td>
+</tr>
+<tr>
+    <td>showMinorLabels</td>
+    <td>boolean</td>
+    <td>true</td>
+    <td>By default, the timeline shows both minor and major date labels on the
+        horizontal axis.
+        For example the minor labels show minutes and the major labels show hours.
+        When <code>showMinorLabels</code> is <code>false</code>, no minor labels
+        are shown. When both <code>showMajorLabels</code> and
+        <code>showMinorLabels</code> are false, no horizontal axis will be
+        visible.</td>
+</tr>
+
+<tr>
+    <td>showButtonNew</td>
+    <td>boolean</td>
+    <td>false</td>
+    <td>Show the button "Create new event" in the a navigation menu.
+    Only applicable when option `editable` is true.</td>
+</tr>
+<tr>
+    <td>showNavigation</td>
+    <td>boolean</td>
+    <td>false</td>
+    <td>Show a navigation menu with buttons to move and zoom the timeline.
+        The zoom buttons are only visible when option `zoomable` is true,
+        and and move buttons are only visible when option `moveable` is true.
+    </td>
+</tr>
+
+<tr>
+    <td>timeChangeable</td>
+    <td>boolean</td>
+    <td>true</td>
+    <td>If false, items can not be moved or dragged horizontally (neither start time nor end time is changable).
+        This is useful when items should be editable but can only be changed regarding group or content (typical use case: scheduling events). See also the option <code>groupsChangeable</code>.</td>
+</tr>
+
+
+<tr>
+    <td>unselectable</td>
+    <td>boolean</td>
+    <td>true</td>
+    <td>If true, a selected event on the timeline can be un unselected.
+        If false, a selected event cannot be unselected unless when selecting
+        an other event. This means that as soon as the Timeline has a selected
+        event, it will remain in a state where there is always an event selected.
+        See also the option <code>selectable</code>.
+    </td>
+</tr>
+
+<tr>
+    <td>width</td>
+    <td>string</td>
+    <td>"100%"</td>
+    <td>The width of the timeline in pixels or as a percentage.</td>
+</tr>
+
+<tr>
+    <td>zoomable</td>
+    <td>boolean</td>
+    <td>true</td>
+    <td>If true, the timeline is zoomable.
+        When the timeline is zoomed, the <code>rangechange</code> event is fired.
+    </td>
+</tr>
+
+<tr>
+    <td>zoomMax</td>
+    <td>Number</td>
+    <td>315360000000000</td>
+    <td>Set a maximum zoom interval for the visible range in milliseconds.
+        It will not be possible to zoom out further than this maximum.
+        Default value equals about 10000 years.
+    </td>
+</tr>
+
+<tr>
+    <td>zoomMin</td>
+    <td>Number</td>
+    <td>10</td>
+    <td>Set a minimum zoom interval for the visible range in milliseconds.
+        It will not be possible to zoom in further than this minimum.
+    </td>
+</tr>
+
+
+</table>
+
+<h2 id="Methods">Methods</h2>
+<p>
+    The Timeline supports the following methods.
+</p>
+
+<table>
+<tr>
+    <th>Method</th>
+    <th>Return Type</th>
+    <th>Description</th>
+</tr>
+
+<tr>
+    <td>addItem(properties)</td>
+    <td>none</td>
+    <td>Add an item to the Timeline.
+        The provided parameter <code>properties</code> is an Object,
+        containing parameters <code>start</code> (Date), <code>end</code> (Date),
+        <code>content</code> (String), <code>group</code> (String),
+        <code>className</code> (String), and <code>editable</code> (Boolean).
+        Parameters <code>start</code> and <code>content</code> are required,
+        the others are optional.
+    </td>
+</tr>
+<tr>
+    <td>addItemType(typeName, typeFactory)</td>
+    <td>none</td>
+    <td>Add a custom item type to the Timeline, extending the built-in types
+        "box" and "dot".
+        Parameter <code>typeName</code> is a String,
+        and <code>typeFactory</code> is a constructor implementing the abstract
+        prototype <code>links.Timeline.Item</code>. To use a custom type,
+        specify the option <code>style</code> with the name of the custom type.
+        <br>
+
+        See
+        <a href="../examples/example25_new_item_type.html">example25_new_item_type.html</a>
+        for an example, or study the implementations of <code>links.Timeline.ItemBox</code>,
+        <code>links.Timeline.ItemRange</code>,
+        and <code>links.Timeline.ItemDot</code> in the sourcecode of the Timeline.
+    </td>
+</tr>
+
+
+
+<tr>
+    <td>cancelAdd()</td>
+    <td>none</td>
+    <td>An <code>add</code> event can be canceled by calling the method
+        <code>cancelAdd</code> from within an event listener that listens for
+        <code>add</code> events. This is useful when additions need to be approved.
+    </td>
+</tr>
+
+<tr>
+    <td>cancelChange()</td>
+    <td>none</td>
+    <td>A <code>changed</code> event can be canceled by calling the method
+        <code>cancelChange</code> from within an event listener that listens for
+        <code>changed</code> events. This is useful when changes need to be approved.
+    </td>
+</tr>
+
+<tr>
+    <td>cancelDelete()</td>
+    <td>none</td>
+    <td>A <code>delete</code> event can be canceled by calling the method
+        <code>cancelDelete</code> from within an event listener that listens for
+        <code>delete</code> events. This is useful when deletions need to be
+        approved.
+    </td>
+</tr>
+
+<tr>
+    <td>changeItem(index, properties)</td>
+    <td>none</td>
+    <td>Change properties of an existing item in the Timeline.
+        <code>index</code> (Number) is the index of the item.
+        The provided parameter <code>properties</code> is an Object,
+        and can contain parameters <code>start</code> (Date),
+        <code>end</code> (Date), <code>content</code> (String),
+        <code>group</code> (String), <code>className</code> (String),
+        and <code>editable</code> (Boolean).
+    </td>
+</tr>
+
+<tr>
+    <td>checkResize()</td>
+    <td>none</td>
+    <td>Check if the timeline container is resized, and if so, resize the timeline.
+        Useful when the webpage is resized.</td>
+</tr>
+
+<tr>
+    <td>deleteAllItems()</td>
+    <td>none</td>
+    <td>Delete all items from the timeline.
+    </td>
+</tr>
+
+<tr>
+    <td>deleteItem(index, preventRender)</td>
+    <td>none</td>
+    <td>Delete an existing item.
+        <code>index</code> (Number) is the index of the item.
+        <code>preventRender</code> (Boolean) is optional parameter to prevent re-render timeline immediately after delete (for multiple deletions). Default is false.
+    </td>
+</tr>
+
+<tr>
+    <td>draw(data, options)</td>
+    <td>none</td>
+    <td>Loads data, sets options, adjusts the visible range,
+        and lastly (re)draws the Timeline.
+        <code>data</code> is a Google DataTable or a JSON Array.
+        <code>options</code> is an (optional) JSON Object containing values for options.
+    </td>
+</tr>
+
+<tr>
+    <td>getCluster(index)</td>
+    <td>Object</td>
+    <td>Retrieve the properties of a single cluster. The returned object can
+        contain parameters <code>start</code> (Date), and <code>items</code> that has
+        each item contained in the cluster. Each item have the same properties as in a call to
+        <code>getItem</code>.
+</tr>
+
+<tr>
+    <td>getCustomTime()</td>
+    <td>Date</td>
+    <td>Retrieve the custom time.
+        Only applicable when the option <code>showCustomTime</code> is true.
+
+        <code>time</code> is a Date object.
+    </td>
+</tr>
+
+<tr>
+    <td>getData()</td>
+    <td>Google DataTable or JSON Array</td>
+    <td>Retrieve the current datatable from the Timeline.</td>
+</tr>
+
+<tr>
+    <td>getItem(index)</td>
+    <td>Object</td>
+    <td>Retrieve the properties of a single item. The returned object can
+        contain parameters <code>start</code> (Date), <code>end</code> (Date),
+        <code>content</code> (String), <code>group</code> (String).</td>
+</tr>
+
+<tr>
+    <td>getSelection()</td>
+    <td>Array of selection elements</td>
+    <td>Standard <code>getSelection()</code> implementation.
+        Returns an array with one or multiple selections. Each selection contains
+        the property <code>row</code> (if an item is selected) or <code>cluster</code> if
+        a cluster is selected.
+    </td>
+</tr>
+
+<tr>
+    <td>getVisibleChartRange()</td>
+    <td>An object with <code>start</code> and <code>end</code> properties</td>
+    <td>Returns an object with <code>start</code> and <code>end</code> properties,
+        which each one of them is a Date object,
+        representing the currently visible time range.</td>
+</tr>
+
+<tr>
+    <td>getVisibleItems(start, end)</td>
+    <td>Array of row indices </td>
+    <td>Returns an array of item indices whose range or value falls within the 
+        <code>start</code> and <code>end</code> properties, which each one of 
+        them is a Date object. 
+    </td>
+</tr>
+
+<tr>
+    <td>redraw()</td>
+    <td>none</td>
+    <td>Redraw the timeline.
+        Reloads the (linked) data table and redraws the timeline when resized.
+        See also the method checkResize.</td>
+</tr>
+
+<tr>
+    <td>setAutoScale(enable)</td>
+    <td>none</td>
+    <td>Enable or disable autoscaling.
+        If <code>enable</code> true or not defined, autoscaling is enabled.
+        If false, autoscaling is disabled.
+    </td>
+</tr>
+
+<tr>
+    <td>setCurrentTime(time)</td>
+    <td>none</td>
+    <td>Adjust the current time of the timeline. This can for example be
+        changed to match the time of a server or a time offset of another time zone.
+        <code>time</code> is a Date object.
+    </td>
+</tr>
+
+<tr>
+    <td>setCustomTime(time)</td>
+    <td>none</td>
+    <td>Adjust the custom time in the timeline.
+        Only applicable when the option <code>showCustomTime</code> is true.
+        <code>time</code> is a Date object.
+    </td>
+</tr>
+
+<tr>
+    <td>setData(data)</td>
+    <td>none</td>
+    <td>Set new data in the Timeline. All settings (such as visible range) stay
+        unchanged, and the timeline must be redrawn afterwards with the method
+        <code>redraw</code>.
+        <code>data</code> is a Google DataTable object or a JSON Array.
+    </td>
+</tr>
+
+<tr>
+    <td>setSelection(selection)</td>
+    <td>none</td>
+    <td>Standard <code>setSelection(selection)</code> implementation.
+        <code>selection</code> is an array with selection elements. The timeline
+        accepts only one selection element, which must have the property <code>row</code>.
+        The visible chart range will be moved such that the selected event is placed in the middle.
+        To unselect all items, use set selection with an empty array.
+        Example usage: <code>timeline.setSelection([{row: 3}]);</code>.
+    </td>
+</tr>
+
+<tr>
+    <td>setSize(width, height)</td>
+    <td>none</td>
+    <td>Parameters <code>width</code> and <code>height</code> are strings,
+        containing a new size for the timeline. Size can be provided in pixels
+        or in percentages.</td>
+</tr>
+
+<tr>
+    <td>setScale(scale, step)</td>
+    <td>none</td>
+    <td>Set a custom scale. Automatic scaling will be disabled.
+        For example setScale(SCALE.MINUTES, 5) will result in minor steps of
+        5 minutes, and major steps of an hour.
+        Available scales: <code>MILLISECOND</code>, <code>SECOND</code>,
+        <code>MINUTE</code>, <code>HOUR</code>, <code>WEEKDAY</code>,
+        <code>DAY</code>, <code>MONTH</code>, <code>YEAR</code>.
+        As step size, choose for example 1, 2, 5, or 10.
+    </td>
+</tr>
+
+<tr>
+    <td>setVisibleChartRange(start, end)</td>
+    <td>none</td>
+    <td>Sets the visible range (zoom) to the specified range.
+        Accepts two parameters of type Date that represent the first and last times
+        of the wanted selected visible range.
+        Set start to null to include everything from the earliest date to end;
+        set end to null to include everything from start to the last date.</td>
+</tr>
+
+<tr>
+    <td>setVisibleChartRangeNow()</td>
+    <td>none</td>
+    <td>Move the visible range such that the current time is located in the
+        center of the timeline. This method does not trigger a
+        <code>rangechange</code> event.</td>
+</tr>
+
+<tr>
+    <td>setVisibleChartRangeAuto()</td>
+    <td>none</td>
+    <td>Adjust the visible time range such that all events are visible.</td>
+</tr>
+
+<tr>
+    <td>move(moveFactor)</td>
+    <td>none</td>
+    <td>Move the timeline the given movefactor to the left or right.
+        Start and end date will be adjusted, and the timeline will be redrawn.
+        For example, try moveFactor = 0.1 or -0.1.
+        <code>moveFactor</code> is a Number that determines the moving amount.
+        A positive value will move right, a negative value will move left.
+    </td>
+</tr>
+
+<tr>
+    <td>zoom(zoomFactor, zoomAroundDate)</td>
+    <td>none</td>
+    <td>Zoom the timeline the given zoomfactor in or out. Start and end date
+        will be adjusted, and the timeline will be redrawn.
+        You can optionally give a date around which to zoom.
+        For example, try zoomfactor = 0.1 or -0.1.
+        <code>zoomFactor</code> is a Number that determines the zooming amount.
+        Positive value will zoom in, negative value will zoom out.
+        <code>zoomAroundDate</code> is a Date around which to zoom and it is optional.
+    </td>
+</tr>
+</table>
+
+<h2 id="Events">Events</h2>
+
+<p>
+    The Timeline fires events after an event is selected, the visible range changed,
+    or when an event is changed. The events can be cached by creating a listener.
+    Listeners can be registered using the event messages from the Google API
+    or event messages from the CHAP Links library.
+</p>
+<p>
+    Here an example on how to catch a <code>select</code> event.
+</p>
+
+<pre class="prettyprint lang-js">
+function onselect() {
+  var sel = mytimeline.getSelection();
+  if (sel.length) {
+    if (sel[0].row != undefined) {
+      var row = sel[0].row;
+      document.title = "event " + row + " selected";
+    }
+  }
+}
+
+google.visualization.events.addListener(mytimeline, 'select', onselect);
+// Or, when not using the Google API:
+//   links.events.addListener(mytimeline, 'select', onselect);
+</pre>
+
+<p>
+    The following events are available.
+</p>
+
+<table>
+    <col width="10%">
+    <col width="60%">
+    <col width="30%">
+
+    <tr>
+        <th>name</th>
+        <th>Description</th>
+        <th>Properties</th>
+    </tr>
+
+
+    <tr>
+        <td>add</td>
+        <td>An event is about the be added.
+            Fired after the user has clicked the button "Add event" and created a new
+            event by clicking or moving an event into the Timeline.
+            <br>
+            The selected row can be retrieved via the method <code>getSelection</code>,
+            and new start and end data can be read in the according row in the data table.
+            <br>
+            The <code>add</code> event can be canceled by calling the method
+            <code>cancelAdd</code> from within the event listener. This is useful
+            when additions need to be approved.
+        </td>
+        <td>
+            none
+        </td>
+    </tr>
+
+    <tr>
+        <td>change</td>
+        <td>The properties of an event are changing.
+            Fired repeatedly while the user is modifying the start date or end
+            date of an event by moving (dragging) the event in the Timeline.
+            <br>
+            The selected row can be retrieved via the method <code>getSelection</code>,
+            and new start and end data can be read in the according row in the data table.
+            <br>
+        </td>
+        <td>
+            none
+        </td>
+    </tr>
+
+    <tr>
+        <td>changed</td>
+        <td>The properties of an event changed.
+            Fired after the user modified the start date or end date of an event
+            by moving (dragging) the event in the Timeline.
+            <br>
+            The selected row can be retrieved via the method <code>getSelection</code>,
+            and new start and end data can be read in the according row in the data table.
+            <br>
+            The <code>changed</code> event can be canceled by calling the method
+            <code>cancelChange</code> from within the event listener. This is useful
+            when changes need to be approved.
+        </td>
+        <td>
+            none
+        </td>
+    </tr>
+
+    <tr>
+        <td>edit</td>
+        <td>An event is about to be edited.
+            This event is fired when the user double clicks on an event.
+            The selected row can be retrieved via the method <code>getSelection</code>.
+        </td>
+        <td>
+            none
+        </td>
+    </tr>
+
+    <tr>
+        <td>delete</td>
+        <td>An event is about to be deleted.
+            Fired after the user clicked the "Delete Event" button on the right of
+            an event.
+            <br>
+            The selected row can be retrieved via the method <code>getSelection</code>,
+            and new start and end data can be read in the according row in the data table.
+            <br>
+            The <code>delete</code> event can be canceled by calling the method
+            <code>cancelDelete</code> from within the event listener. This is useful
+            when deletions need to be approved.
+        </td>
+        <td>
+            none
+        </td>
+    </tr>
+
+    <tr>
+        <td>rangechange</td>
+        <td>Visible range is changing. Fired repeatedly while the user is modifying
+            the visible time by moving (dragging) the timeline, or by zooming (scrolling),
+            but not after a call to <code>setVisibleChartRange</code> or
+            <code>setRangeToCurrentTime</code> methods.
+            The new range can be retrieved by calling <code>getVisibleChartRange</code>
+            method.</td>
+        <td>
+            <ul>
+                <li><code>start</code>: Date. The start time of the visible range.</li>
+                <li><code>end</code>: Date. The end time of the visible range.</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>rangechanged</td>
+        <td>Visible range has been changed. Fired once after the user has modified
+            the visible time by moving (dragging) the timeline, or by zooming (scrolling),
+            but not after a call to <code>setVisibleChartRange</code> or
+            <code>setRangeToCurrentTime</code> methods.
+            The new range can be retrieved by calling <code>getVisibleChartRange</code>
+            method.</td>
+        <td>
+            <ul>
+                <li><code>start</code>: Date. The start time of the visible range.</li>
+                <li><code>end</code>: Date. The end time of the visible range.</li>
+            </ul>
+        </td>
+    </tr>
+
+    <tr>
+        <td>ready</td>
+        <td>The chart is ready for external method calls.
+            If you want to interact with the chart, and call methods after you draw it,
+            you should set up a listener for this event before you call the draw method,
+            and call them only after the event was fired.</td>
+        <td>none</td>
+    </tr>
+
+    <tr>
+        <td>select</td>
+        <td>When the user clicks on an event or a cluster on the timeline,
+            the corresponding row in the data table is selected.
+            The visualization then fires this event.
+            <br>
+            The selected row or cluster can be retrieved via the method <code>getSelection</code>.
+        </td>
+        <td>none</td>
+    </tr>
+
+    <tr>
+        <td>timechange</td>
+        <td>The custom time bar is changing. Fired repeatedly when the user is
+            dragging the blue custom time bar, but not after a call to the
+            <code>setCustomTime</code> method.
+            The new custom time can be retrieved by calling <code>getCustomTime</code>
+            method.</td>
+        <td>
+            <ul>
+                <li><code>time</code>: Date. The new custom time.</li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>timechanged</td>
+        <td>The custom time bar has been changed. Fired once after the user has
+            dragged the blue custom time bar, but not after a call to the
+            <code>setCustomTime</code> method. The new custom time can be retrieved by
+            calling <code>getCustomTime</code> method.</td>
+        <td>
+            <ul>
+                <li><code>time</code>: Date. The new custom time.</li>
+            </ul>
+        </td>
+    </tr>
+
+</table>
+
+<h2 id="Styles">Styles</h2>
+<p>
+    All parts of the Timeline have a class name and a default css style.
+    The styles can be overwritten, which enables full customization of the layout
+    of the Timeline.
+</p>
+
+<p>For example, to change the border and background color of all events, include the
+    following code inside the head of your html code or in a separate stylesheet.</p>
+<pre class="prettyprint lang-html">
+&lt;style&gt;
+div.timeline-event {
+  border-color: orange;
+  background-color: yellow;
+}
+&lt;/style&gt;
+</pre>
+
+
+<h3>Structure</h3>
+
+<p>
+    The events of type <code>box</code>, <code>range</code>, and <code>dot</code>
+    have the following structure.
+</p>
+
+<h4>Box</h4>
+<img alt="Box structure" src="img/structure_box.png" class="structure">
+<h4>Range</h4>
+<img alt="Range structure" src="img/structure_range.png" class="structure">
+<h4>Dot</h4>
+<img alt="Dot structure" src="img/structure_dot.png" class="structure">
+
+
+
+<h3>Definitions</h3>
+
+<table>
+<col width="25%">
+<col width="50%">
+<col width="25%">
+
+<tr>
+    <th>Class name</th>
+    <th>Description</th>
+    <th>Default style</th>
+</tr>
+
+<tr>
+    <td>div.timeline-frame</td>
+    <td>The frame contains the canvas.
+        It determines the size and the border of the Timeline.</td>
+    <td>
+        border: 1px solid #BEBEBE;<br>
+        overflow: hidden;<br>
+    </td>
+</tr>
+
+<tr>
+    <td>div.timeline-axis</td>
+    <td>A horizontal line forms the axis.</td>
+    <td>
+        border-color: #BEBEBE;<br>
+        border-width: 1px;<br>
+        border-top-style: solid;<br>
+    </td>
+</tr>
+
+<tr>
+    <td>div.timeline-axis-grid</td>
+    <td>The axis has a horizontal grid.</td>
+    <td>
+        border-left-style: solid;<br>
+        border-width: 1px;<br>
+    </td>
+</tr>
+
+<tr>
+    <td>div.timeline-axis-grid-minor</td>
+    <td>The axis has two grid lines: minor and major. When the scale is in days,
+        each day gets a minor grid line, and each month a major grid line.</td>
+    <td>
+        border-color: #e5e5e5;<br>
+    </td>
+</tr>
+
+<tr>
+    <td>div.timeline-axis-grid-major</td>
+    <td>See <code>div.timeline-axis-grid-major</code></td>
+    <td>
+        border-color: #bfbfbf;<br>
+    </td>
+</tr>
+
+<tr>
+    <td>div.timeline-axis-text</td>
+    <td>Both <code>div.timeline-axis-text-minor</code> and <code>div.timeline-axis-text-major</code> have
+        also the class <code>div.timeline-axis-text</code>. Use this class to set font styles
+        for both classes at once.</td>
+    <td>
+        color: #4D4D4D;<br>
+        padding: 3px;<br>
+        white-space: nowrap;<br>
+    </td>
+</tr>
+
+<tr>
+    <td>div.timeline-axis-text-minor</td>
+    <td>The axis has two grid types: minor and major. When the scale is in days,
+        each day gets a minor text, and each month a major text.</td>
+    <td>
+    </td>
+</tr>
+
+<tr>
+    <td>div.timeline-axis-text-major</td>
+    <td>See <code>div.timeline-axis-text-minor</code></td>
+    <td>
+    </td>
+</tr>
+
+<tr>
+    <td>div.timeline-event</td>
+    <td>All different events (box, dot, range, line) have the class div.timeline-event.
+        Use this class for example to set background and foreground colors.</td>
+    <td>
+        color: #1A1A1A;<br>
+        border-color: #97B0F8;<br>
+        background-color: #D5DDF6;<br>
+    </td>
+</tr>
+
+<tr>
+    <td>div.timeline-event-selected</td>
+    <td>All different events (box, dot, range, line) get the class
+        div.timeline-event-selected when they are currently selected.
+        Use this class to visually show the currently selected event.</td>
+    <td>
+        border-color: #FFC200;<br>
+        background-color: #FFF785;<br>
+        z-index: 999;<br>
+    </td>
+</tr>
+
+<tr>
+    <td>div.timeline-event-box</td>
+    <td>By default (option style="box"), events with only a start-date are drawn as a Box, having
+        this class name.</td>
+    <td>
+        text-align: center;<br>
+        border-style: solid;<br>
+        border-width: 1px;<br>
+        border-radius: 5px;<br>
+        -moz-border-radius: 5px;<br>
+    </td>
+</tr>
+
+<tr>
+    <td>div.timeline-event-dot</td>
+    <td>Divs with the class <code>div.timeline-event-dot</code> are used
+        when the option style="dot" is used: a dot is drawn left from the event text.
+        Dots are also drawn with style="box", to draw the dot at the axis below each event.</td>
+    <td>
+        border-style: solid;<br>
+        border-width: 5px;<br>
+        border-radius: 5px;<br>
+        -moz-border-radius: 5px;<br>
+    </td>
+</tr>
+
+<tr>
+    <td>div.timeline-event-range</td>
+    <td>A range is drawn when an event has both start date and end date provided.</td>
+    <td>
+        border-width: 1px;<br>
+        border-style: solid;<br>
+        border-radius: 2px;<br>
+        -moz-border-radius: 2px;<br>
+    </td>
+</tr>
+
+<tr>
+    <td>div.timeline-event-range-drag-left</td>
+    <td>Drag area on the left side of the range</td>
+    <td>
+        cursor: w-resize;<br>
+        z-index: 1000;<br>
+    </td>
+</tr>
+
+<tr>
+    <td>div.timeline-event-range-drag-right</td>
+    <td>Drag area on the right side of the range</td>
+    <td>
+        cursor: e-resize;<br>
+        z-index: 1000;<br>
+    </td>
+</tr>
+
+<tr>
+    <td>div.timeline-event-line</td>
+    <td>When option style="box" is used (the default value), each event
+        is drawn as a box with a vertical line towards the axis. This line has the
+        class <code>div.timeline-event-line</code>.</td>
+    <td>
+        border-left-width: 1px;<br>
+        border-left-style: solid;<br>
+    </td>
+</tr>
+
+<tr>
+    <td>div.timeline-event-content</td>
+    <td>Each events from class box, dot, and range contain a div with class
+        <code>div.timeline-event-content</code>. This class contains the text of the event.</td>
+    <td>
+        margin: 5px;<br>
+        white-space: nowrap;<br>
+        overflow: hidden;<br>
+    </td>
+</tr>
+
+<tr>
+    <td>div.timeline-groups-axis</td>
+    <td>The right border of the vertical axis showing the different event groups.</td>
+    <td>
+        border-color: #BEBEBE;<br>
+        border-width: 1px;<br>
+    </td>
+</tr>
+<tr>
+    <td>div.timeline-groups-text</td>
+    <td>The text labels of the event groups on the vertical axis.</td>
+    <td>
+        color: #4D4D4D;<br>
+        padding-left: 10px;<br>
+        padding-right: 10px;<br>
+    </td>
+</tr>
+
+<tr>
+    <td>div.timeline-currenttime </td>
+    <td>The vertical line showing the current time.</td>
+    <td>
+        border-color: #FF7F6E;<br>
+        border-right-width: 2px;<br>
+        border-right-style: solid;<br>
+    </td>
+</tr>
+
+<tr>
+    <td>div.timeline-navigation </td>
+    <td>The navigation menu. Only visible when option <code>showNavigation</code>
+        is true.</td>
+    <td>
+        font-family: arial;<br>
+        font-size: 20px;<br>
+        font-weight: bold;<br>
+        color: gray;<br>
+        border: 1px solid #BEBEBE;<br>
+        background-color: #F5F5F5;<br>
+        border-radius: 5px;<br>
+        -moz-border-radius: 5px;<br>
+    </td>
+</tr>
+<tr>
+    <td>div.timeline-navigation-new, div.timeline-navigation-delete,
+        div.timeline-navigation-zoom-in,  div.timeline-navigation-zoom-out,
+        div.timeline-navigation-move-left, div.timeline-navigation-move-right </td>
+    <td>The menu buttons in the navigation menu.
+        You can change the images to your own icon set.
+    </td>
+    <td>
+        cursor: pointer;<br>
+        margin: 2px 10px;<br>
+        float: left;<br>
+        text-decoration: none;<br>
+        border-color: #BEBEBE;<br>
+    </td>
+</tr>
+<tr>
+    <td>div.timeline-navigation-new</td>
+    <td>Menu button to create a new event.
+    </td>
+    <td>
+        background: url('img/16/new.png') no-repeat center;<br>
+    </td>
+</tr>
+<tr>
+    <td>div.timeline-navigation-delete</td>
+    <td>Button to delete a selected event.
+        The button is displayed at the top right of a selected event.
+    </td>
+    <td>
+        padding: 0px;<br>
+        padding-left: 5px;<br>
+        background: url('img/16/delete.png') no-repeat center;<br>
+    </td>
+</tr>
+<tr>
+    <td>div.timeline-navigation-zoom-in</td>
+    <td>Button to zoom in on the timeline.
+    </td>
+    <td>
+        background: url('img/16/zoomin.png') no-repeat center;<br>
+    </td>
+</tr>
+<tr>
+    <td>div.timeline-navigation-zoom-out</td>
+    <td>Button to zoom out on the timeline.
+    </td>
+    <td>
+        background: url('img/16/zoomout.png') no-repeat center;<br>
+    </td>
+</tr>
+<tr>
+    <td>div.timeline-navigation-move-left</td>
+    <td>Button to move the timeline to the right,
+        such that more of the left side of the timeline becomes visible.
+    </td>
+    <td>
+        background: url('img/16/moveleft.png') no-repeat center;<br>
+    </td>
+</tr>
+<tr>
+    <td>div.timeline-navigation-move-right</td>
+    <td>Button to move the timeline to the left,
+        such that more of the right side of the timeline becomes visible.
+    </td>
+    <td>
+        background: url('img/16/moveright.png') no-repeat center;<br>
+    </td>
+</tr>
+
+</table>
+
+<h2 id="Themeroller">jQuery Themeroller integration</h2>
+<p>
+    Most of jQuery widgets are theme aware in terms of <a href="http://jqueryui.com/themeroller/">jQuery Themeroller CSS framework</a>.
+    If you would like to make the Timeline aware of jQuery themes, please include in your page a Themeroller theme of your choice
+    (<strong>ui.theme.css</strong>) and the CSS file <strong>timeline-theme.css</strong>. The file <strong>timeline.css</strong> should not be included.
+    These two files are enough to style the Timeline according to the selected theme.
+</p>
+
+
+<h2 id="Data_Policy">Data Policy</h2>
+<p>
+    All code and data are processed and rendered in the browser. No data is sent to any server.
+</p>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<html >
+<head>
+    <title>Timeline demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="../timeline.js"></script>
+    <link rel="stylesheet" type="text/css" href="../timeline.css">
+
+    <style type="text/css">
+        body {font: 10pt arial;}
+
+        div.timeline-frame {
+            border-color: #103E9C;
+        }
+
+        div.timeline-axis {
+            border-color: #103E9C;
+
+            background-color: #EEEFF1;
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F9F9F9', endColorstr='#EEEFF1'); /* for IE */
+            background: -webkit-gradient(linear, left top, left bottom, from(#F9F9F9), to(#EEEFF1)); /* for webkit browsers */
+            background: -moz-linear-gradient(top,  #F9F9F9,  #EEEFF1); /* for firefox 3.6+ */
+        }
+
+        div.timeline-axis-text {
+            font: bold 12px arial ;
+            color: #103E9C;
+        }
+
+        div.timeline-event {
+            border: none;
+            background-color: white;
+        }
+        div.timeline-event-selected {
+            background-color: #C0D8E1;
+        }
+        div.timeline-event-content {
+            margin: 0;
+        }
+
+        div.timeline-groups-axis {
+            border-color: #103E9C;
+        }
+        div.timeline-groups-text {
+            font: bold 12px arial ;
+            color: #103E9C;
+        }
+
+        div.order {
+            border: 1px solid #FB3738;
+            border-radius: 2px;
+            -moz-border-radius: 2px;
+
+            font: bold 12px arial ;
+            color: #103E9C;
+
+            padding: 2px;
+            margin:1px;
+            overflow: hidden;
+        }
+
+    </style>
+
+
+    <script type="text/javascript">
+        var timeline = null;
+
+        google.load("visualization", "1");
+
+        // Set callback to run when API is loaded
+        google.setOnLoadCallback(drawVisualization);
+
+        // Called when the Visualization API is loaded.
+        function drawVisualization() {
+            // Create and populate a data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('datetime', 'start');
+            data.addColumn('datetime', 'end');
+            data.addColumn('string', 'content');
+            data.addColumn('string', 'group');
+
+            var order = 1;
+            for (var truck = 11; truck < 15; truck++) {
+                var date = new Date(2010, 12, 14, 8, 0, 0);
+                for (var i = 0; i < 10; i++) {
+                    date.setHours(date.getHours() +  4 * (Math.random() < 0.2));
+                    var start = new Date(date);
+
+                    date.setHours(date.getHours() + 2 + Math.floor(Math.random()*4));
+                    var end = new Date(date);
+
+                    var orderText = "Order " + order;
+                    if (Math.random() < 0.25) {
+                        orderText = "<img src='img/product-icon.png' style='width:32px; height:32px; vertical-align: middle'> " + orderText;
+                    }
+                    orderText = "<div title='Order " + order + "' class='order'>" + orderText + "</div>";
+
+                    var truckText = "<img src='img/truck-icon.png' style='width:24px; height:24px; vertical-align: middle'>" +
+                            "Truck " + truck;
+                    data.addRow([start, end, orderText, truckText]);
+                    order++;
+                }
+            }
+
+            // specify options
+            var options = {
+                width:  "100%",
+                height: "auto",
+                layout: "box",
+                editable: false,
+                selectable: false,
+                eventMargin: 10,  // minimal margin between events
+                eventMarginAxis: 20, // minimal margin beteen events and the axis
+                showMajorLabels: false,
+                axisOnTop: true,
+                groupsChangeable : false,
+                groupsOnRight: false
+            };
+
+            // Instantiate our timeline object.
+            timeline = new links.Timeline(document.getElementById('mytimeline'), options);
+
+            // Draw our timeline with the created data and options
+            timeline.draw(data);
+        }
+    </script>
+</head>
+
+<body>
+<h1>Stacking with grouping example</h1>
+
+<div id="mytimeline"></div>
+
+<!-- Information about where the used icons come from -->
+<p style="color:gray; font-size:10px; font-style:italic;">
+    Icons by <a href="http://dryicons.com" target="_blank" title="Aesthetica 2 Icons by DryIcons" style="color:gray;" >DryIcons</a>
+    and <a href="http://www.tpdkdesign.net" target="_blank" title="Refresh Cl Icons by TpdkDesign.net" style="color:gray;" >TpdkDesign.net</a>
+</p>
+
+</body>
+</html>

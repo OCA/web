@@ -1,0 +1,125 @@
+<html>
+<head>
+    <title>Timeline demo</title>
+
+    <style type="text/css">
+        body {
+            font: 10pt arial;
+        }
+    </style>
+
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="../timeline.js"></script>
+    <link rel="stylesheet" type="text/css" href="../timeline.css">
+
+    <script type="text/javascript">
+        google.load("visualization", "1");
+
+        // Set callback to run when API is loaded
+        google.setOnLoadCallback(drawVisualization);
+
+        var data;
+        var options;
+        var timeline;
+
+        function go() {
+            var eventnum = parseInt(document.getElementById("eventnum").value);
+            createEvents(eventnum);
+        }
+
+        function createEvents(eventnum) {
+            // clear the table
+            data.removeRows(0, data.getNumberOfRows());
+
+            // insert new events
+            var startDate = new Date(2010, 7, 1);
+            var date = new Date(startDate);
+            for (var i = 0; i < eventnum; i++) {
+                data.addRow([new Date(date), null, "event" + i]);
+                date.setDate(date.getDate() + 1);
+            }
+            var endDate = new Date(date);
+
+            timeline.setVisibleChartRange(startDate, endDate);
+
+            // load the new data in the timeline
+            timeline.redraw();
+        }
+
+        // Called when the Visualization API is loaded.
+        function drawVisualization() {
+            // Create and populate a data table.
+            data = new google.visualization.DataTable();
+            data.addColumn('datetime', 'start');
+            data.addColumn('datetime', 'end');
+            data.addColumn('string', 'content');
+
+            // specify options
+            options = {
+                'width':  '100%',
+                'height': '300px',
+                'editable': true, // make the events dragable
+                'style': 'box',
+                'intervalMax': 1000 * 60 * 60 * 24 * 90,
+                'start': new Date(2010, 7, 1),
+                'end': new Date(2010, 10, 1)
+            };
+
+            // Instantiate our timeline object.
+            timeline = new links.Timeline(document.getElementById('mytimeline'), options);
+
+            // Make a callback function for the select event
+            var onselect = function () {
+                var sel = timeline.getSelection();
+                if (sel.length) {
+                    if (sel[0].row != undefined) {
+                        var row = sel[0].row;
+                        document.getElementById("info").innerHTML += "event " + row + " selected<br>";
+
+                        // Note: you can retrieve the contents of the selected row with
+                        //       data.getValue(row, 2);
+                    }
+                }
+            };
+
+            // callback function for the change event
+            var onchange = function () {
+                var sel = timeline.getSelection();
+                if (sel.length) {
+                    if (sel[0].row != undefined) {
+                        var row = sel[0].row;
+                        document.getElementById("info").innerHTML += "event " + row + " changed<br>";
+                    }
+                }
+            };
+
+            // Add event listeners
+            google.visualization.events.addListener(timeline, 'select', onselect);
+            google.visualization.events.addListener(timeline, 'change', onchange);
+
+            // Draw our timeline with the created data and options
+            timeline.draw(data);
+
+            // load initial data
+            go();
+        }
+    </script>
+</head>
+
+<body>
+<p>
+    You can test the performance of the timeline visualization here.
+    Note that stacking events is relatively heavy.
+</p>
+
+<form onsubmit='go(); return false;'>
+    number of events: <input type="input" id="eventnum" value="50" size="5">
+    <input type="submit" value="Go">
+</form>
+
+<div id="mytimeline"></div>
+<br>
+
+<div id="info"></div>
+</body>
+</html>

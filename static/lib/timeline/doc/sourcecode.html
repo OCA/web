@@ -1,0 +1,63 @@
+<html>
+
+<head>
+  <title>Timeline sourcecode documentation</title>
+  <link rel='stylesheet' href='default.css' type='text/css'>
+</head>
+
+<body>
+<h1>Timeline sourcecode documentation</h1>
+<p>
+The timeline is written in pure Javascript. There is a GWT wrapper written
+that enables you to use the Timeline from within GWT (Google Web Toolkit).
+This page explains how the sourcecode is built up. 
+For detailed information about all functions, one can use the 
+<a href="jsdoc">JsDoc</a> reference pages.
+</p>
+
+<h2>Timeline Javascript</h2>
+<p>
+The sourcecode of the Timeline is in one javascript file, <code>timeline.js</code>.
+
+The file contains a class <code>Timeline</code>, which is defined in the 
+namespace <code>links</code>.
+
+All important local variables and constants are defined in the constructor. 
+The constructor requires a parameter with teh container element inside which
+Timeline will be created.
+</p>
+
+<p>
+The constructor calls the function <code>create()</code>. This function creates
+a frame element. Inside the frame, a canvas is created. The html elements for
+the axis and the events are added to the canvas.    
+</p>
+
+<p>
+After the Timeline is constructed, it can be filled and drawn via the function
+<code>draw(data, options)</code>. The parameter <code>data</code> is a DataTable which
+contains the events. <code>options</code> is an optional name-value map containing 
+settings for the timeline such as startDate, endDate, widht, height, layout.
+
+The function <code>draw()</code> loads the data, draws the axis, and draws the
+events.
+</p>
+
+<p>
+The Timeline can be moved by dragging it. When moving the Timeline, the canvas 
+is moved inside the frame. To prevent the user from seeing an undrawn area
+when moving, the actual with of the canvas is three times the width of the 
+screen, and only the middle part is visible.
+After the mouse button is up again, the the whole timeline is redrawn again.
+
+When zooming, the timeline is redrawn after each zoom action. This is needed
+because the axis changes and possibly the scale too.
+</p>
+
+<p>
+Todo...
+</p>
+
+
+</body>
+</html>

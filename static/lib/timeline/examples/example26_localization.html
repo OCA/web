@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Timeline localization demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <style>
+        body {
+            font: 10pt verdana;
+        }
+    </style>
+
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="../timeline.js"></script>
+    <script type="text/javascript" src="../timeline-locales.js"></script>
+    <link rel="stylesheet" type="text/css" href="../timeline.css">
+
+    <script type="text/javascript">
+        google.load("visualization", "1");
+
+        // Set callback to run when API is loaded
+        google.setOnLoadCallback(drawVisualization);
+
+        var timeline;
+        var data;
+
+        // Called when the Visualization API is loaded.
+        function drawVisualization() {
+            // Create and populate a data table.
+            data = new google.visualization.DataTable();
+            data.addColumn('datetime', 'start');
+            data.addColumn('datetime', 'end');
+            data.addColumn('string', 'content');
+
+            data.addRows([
+                [new Date(2011, 01, 23), , '<div>Conversation</div><img src="../examples/img/comments-icon.png" style="width:32px; height:32px;">'],
+                [new Date(2011, 01, 23, 23, 00, 00), , '<div>Mail from boss</div><img src="../examples/img/mail-icon.png" style="width:32px; height:32px;">'],
+                [new Date(2011, 01, 24, 16, 00, 00), , '<span onclick="alert(\'test\')">Click here!</span>'],
+                [new Date(2011, 01, 26), new Date(2011, 02, 02), 'Traject A'],
+                [new Date(2011, 01, 27), , '<div>Memo</div><img src="../examples/img/notes-edit-icon.png" style="width:48px; height:48px;">'],
+                [new Date(2011, 01, 28), new Date(2011, 02, 03), 'Traject B'],
+                [new Date(2011, 02, 04, 12, 00, 00), , '<div>Report</div><img src="../examples/img/attachment-icon.png" style="width:32px; height:32px;">']
+            ]);
+
+            // specify options
+            var options = {
+                width: "100%",
+                height: "200px",
+                editable: true,   // enable dragging and editing events
+                enableKeys: true,
+                axisOnTop: false,
+                showNavigation: true,
+                showButtonNew: true,
+                animate: true,
+                animateZoom: true,
+                layout: "box"
+            };
+
+            timeline = new links.Timeline(document.getElementById('mytimeline1'), options);
+            options.locale = "de";
+            timeline.draw(data);
+
+            timeline = new links.Timeline(document.getElementById('mytimeline2'), options);
+            options.locale = "es";
+            timeline.draw(data);
+
+            timeline = new links.Timeline(document.getElementById('mytimeline3'), options);
+            options.locale = "ru";
+            timeline.draw(data);
+        }
+    </script>
+
+</head>
+
+<body>
+<p><strong>This page demonstrates the timeline localization (i18n text).</strong></p>
+
+<p><strong>German Timeline</strong></p>
+<div id="mytimeline1"></div>
+
+<p><strong>Spanish Timeline</strong></p>
+<div id="mytimeline2"></div>
+
+<p><strong>Russian Timeline</strong></p>
+<div id="mytimeline3"></div>
+
+<!-- Information about where the used icons come from -->
+<p style="color:gray; font-size:10px; font-style:italic;">
+    Icons by <a href="http://dryicons.com" target="_blank" title="Aesthetica 2 Icons by DryIcons" style="color:gray;">DryIcons</a>
+    and <a href="http://www.tpdkdesign.net" target="_blank" title="Refresh Cl Icons by TpdkDesign.net" style="color:gray;">TpdkDesign.net</a>
+</p>
+</body>
+</html>

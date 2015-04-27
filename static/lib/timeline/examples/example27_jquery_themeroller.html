@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Timeline jQuery Themeroller demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="../lib/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="../lib/jquery-ui.js"></script>
+    <script type="text/javascript" src="../lib/jquery.themeswitcher.js"></script>
+
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="../timeline.js"></script>
+    <link rel="stylesheet" type="text/css" href="../timeline-theme.css">
+
+    <style>
+        body,
+        .ui-widget,
+        .ui-widget input,
+        .ui-widget select,
+        .ui-widget textarea,
+        .ui-widget button,
+        .ui-widget-header,
+        .ui-widget-content,
+        .ui-widget-header .ui-widget-header,
+        .ui-widget-content .ui-widget-content {
+            font-family: Arial, "Trebuchet MS", Verdana, sans-serif !important;
+            font-size: 12px !important;
+        }
+    </style>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#switcher").themeswitcher({
+                imgpath: "../img/themeswitcher/",
+                loadtheme: "sunny"
+            });
+        });
+
+        google.load("visualization", "1");
+
+        // Set callback to run when API is loaded
+        google.setOnLoadCallback(drawVisualization);
+
+        var timeline;
+        var data;
+
+        function getSelectedRow() {
+            var row = undefined
+            var sel = timeline.getSelection();
+            if (sel.length) {
+                if (sel[0].row != undefined) {
+                    var row = sel[0].row;
+                }
+            }
+            return row;
+        }
+
+        // Called when the Visualization API is loaded.
+        function drawVisualization() {
+            // Create and populate a data table.
+            data = new google.visualization.DataTable();
+            data.addColumn('datetime', 'start');
+            data.addColumn('datetime', 'end');
+            data.addColumn('string', 'content');
+
+            data.addRows([
+                [new Date(2011, 01, 23), , '<div>Conversation</div><img src="../examples/img/comments-icon.png" style="width:32px; height:32px;">'],
+                [new Date(2011, 01, 23, 23, 00, 00), , '<div>Mail from boss</div><img src="../examples/img/mail-icon.png" style="width:32px; height:32px;">'],
+                [new Date(2011, 01, 24, 16, 00, 00), , '<span onclick="alert(\'test\')">Click here!</span>'],
+                [new Date(2011, 01, 26), new Date(2011, 02, 02), 'Traject A'],
+                [new Date(2011, 01, 27), , '<div>Memo</div><img src="../examples/img/notes-edit-icon.png" style="width:48px; height:48px;">'],
+                [new Date(2011, 01, 28), new Date(2011, 02, 03), 'Traject B'],
+                [new Date(2011, 02, 04, 12, 00, 00), , '<div>Report</div><img src="../examples/img/attachment-icon.png" style="width:32px; height:32px;">']
+            ]);
+
+            // specify options
+            var options = {
+                width: "100%",
+                editable: true,   // enable dragging and editing events
+                enableKeys: true,
+                axisOnTop: false,
+                showNavigation: true,
+                showButtonNew: true,
+                animate: true,
+                animateZoom: true,
+                layout: "box"
+            };
+
+            timeline = new links.Timeline(document.getElementById('mytimeline'), options);
+            timeline.draw(data);
+        }
+    </script>
+</head>
+
+<body>
+<h1><strong>This page demonstrates the timeline intergation with jQuery Themeroller CSS framework.</strong></h1>
+
+<p>
+
+<div id="switcher"></div>
+</p>
+
+<div id="mytimeline"></div>
+
+<!-- Information about where the used icons come from -->
+<p style="color:gray; font-size:10px; font-style:italic;">
+    Icons by <a href="http://dryicons.com" target="_blank" title="Aesthetica 2 Icons by DryIcons" style="color:gray;">DryIcons</a>
+    and <a href="http://www.tpdkdesign.net" target="_blank" title="Refresh Cl Icons by TpdkDesign.net" style="color:gray;">TpdkDesign.net</a>
+</p>
+</body>
+</html>

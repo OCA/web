@@ -1,0 +1,182 @@
+<html>
+<head>
+    <title>Timeline demo</title>
+
+    <style type="text/css">
+        body {font: 10pt arial;}
+    </style>
+
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="../timeline.js"></script>
+    <link rel="stylesheet" type="text/css" href="../timeline.css">
+    
+    <style type="text/css">
+        .item-line
+        {
+            border-left-width: 3px;
+            border-left-style: solid;
+        }
+    </style>
+
+    <script type="text/javascript">
+
+        /**
+         * @constructor links.Timeline.ItemLine
+         * @extends links.Timeline.Item
+         * User defined item type "line".
+         */
+        var ItemLine = function (data, options) {
+            links.Timeline.Item.call(this, data, options);
+        };
+
+        ItemLine.prototype = new links.Timeline.Item();
+
+        ItemLine.prototype.createDOM = function () {
+            var _this = this;
+            var divLine = document.createElement("DIV");
+            divLine.style.position = "absolute";
+            divLine.style.width = "0px";
+            
+            this.dom = divLine;
+            this.updateDOM();
+
+            return divLine;
+        };
+
+        ItemLine.prototype.showDOM = function (container) {
+            var dom = this.dom;
+            if (!dom) {
+                dom = this.createDOM();
+            }
+
+            if (dom.parentNode != container) {
+                if (dom.parentNode) {
+                    this.hideDOM();
+                }
+
+                container.insertBefore(dom, container.firstChild);
+                this.rendered = true;
+            }
+        };
+
+        ItemLine.prototype.hideDOM = function () {
+            var dom = this.dom;
+            if (dom) {
+                var parent = dom.parentNode;
+                if (parent) {
+                    parent.removeChild(dom);
+                    this.rendered = false;
+                }
+            }
+        };
+
+        ItemLine.prototype.updateDOM = function () {
+            var divLine = this.dom;
+            if (divLine) {
+
+                // update class
+                divLine.className = "timeline-event item-line";
+
+                if (this.isCluster) {
+                    links.Timeline.addClassName(divLine, 'timeline-event-cluster');
+                }
+
+                // add item specific class name when provided
+                if (this.className) {
+                    links.Timeline.addClassName(divLine, this.className);
+                }
+            }
+        };
+
+        ItemLine.prototype.updatePosition = function (timeline) {
+            var dom = this.dom;
+            if (dom) {
+                var left = timeline.timeToScreen(this.start),
+                    axisOnTop = timeline.options.axisOnTop,
+                    axisTop = timeline.size.axis.top,
+                    axisHeight = timeline.size.axis.height
+
+                dom.style.left = (left - this.lineWidth / 2) + "px";
+                dom.style.top = "0px";
+                dom.style.height = axisTop + "px";
+            }
+        };
+
+        ItemLine.prototype.isVisible = function (start, end) {
+            if (this.cluster) {
+                return false;
+            }
+
+            return (this.start > start)
+                && (this.start < end);
+        };
+
+        ItemLine.prototype.setPosition = function (left, right) {
+            var dom = this.dom;
+            dom.style.left = (left - this.lineWidth / 2) + "px";
+        };
+
+        ItemLine.prototype.getRight = function (timeline) {
+            return timeline.timeToScreen(this.start);
+        };
+    
+        var timeline;
+
+        google.load("visualization", "1");
+
+        // Set callback to run when API is loaded
+        google.setOnLoadCallback(drawVisualization);
+
+        // Called when the Visualization API is loaded.
+        function drawVisualization() {
+            // Create and populate a data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('datetime', 'start');
+            data.addColumn('datetime', 'end');
+            data.addColumn('string', 'content');
+
+            data.addRows([
+                [new Date(2010,7,23), , 'Conversation<br>' +
+                        '<img src="img/comments-icon.png" style="width:32px; height:32px;">'],
+                [new Date(2010,7,23,23,0,0), , 'Mail from boss<br>' +
+                        '<img src="img/mail-icon.png" style="width:32px; height:32px;">'],
+                [new Date(2010,7,24,16,0,0), , 'Report'],
+                [new Date(2010,7,26), new Date(2010,8,2), 'Traject A'],
+                [new Date(2010,7,28), , 'Memo<br>' +
+                        '<img src="img/notes-edit-icon.png" style="width:48px; height:48px;">'],
+                [new Date(2010,7,29), , 'Phone call<br>' +
+                        '<img src="img/Hardware-Mobile-Phone-icon.png" style="width:32px; height:32px;">'],
+                [new Date(2010,7,31), new Date(2010,8,3), 'Traject B'],
+                [new Date(2010,8,4,12,0,0), , 'Report<br>' +
+                        '<img src="img/attachment-icon.png" style="width:32px; height:32px;">']
+            ]);
+            
+            // specify options
+            var options = {
+                "width":  "100%",
+                "height": "300px",
+                "style": "line"
+            };
+
+            // Instantiate our timeline object.
+            timeline = new links.Timeline(document.getElementById('mytimeline'), options);
+
+            timeline.addItemType('line', ItemLine);
+            
+            // Draw our timeline with the created data and options
+            timeline.draw(data);
+        }
+    </script>
+</head>
+
+<body>
+<div id="mytimeline"></div>
+
+<!-- Information about where the used icons come from -->
+<p style="color:gray; font-size:10px; font-style:italic;">
+    Icons by <a href="http://dryicons.com" target="_blank" title="Aesthetica 2 Icons by DryIcons" style="color:gray;" >DryIcons</a>
+    and <a href="http://www.tpdkdesign.net" target="_blank" title="Refresh Cl Icons by TpdkDesign.net" style="color:gray;" >TpdkDesign.net</a>
+</p>
+
+</body>
+</html>
