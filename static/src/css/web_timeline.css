@@ -1,0 +1,17 @@
+/* Button style */
+.openerp .oe_view_manager .oe_view_manager_switch .oe_vm_switch_timeline:after {
+    content: "N";
+}
+.timeline-navigation-zoom-in .ui-icon{
+  background: none !important;
+}
+
+.timeline-navigation-zoom-out .ui-icon{
+  background: none !important;
+}
+.timeline-navigation-move-left .ui-icon{
+  background: none !important;
+}
+.timeline-navigation-move-right .ui-icon{
+  background: none !important;
+}  
