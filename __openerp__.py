@@ -7,9 +7,10 @@
     "author": "ACSONE SA/NV",
     "category": "Acsone",
     "website": "http://acsone.eu",
-    'depends': ['web'],
-    'qweb': ['static/src/xml/timeline.xml'],
+    'depends': ['web', 'project'],
+    'qweb': ['static/src/xml/web_timeline.xml'],
     'data': [
         'views/web_timeline.xml',
+        'project_view.xml',
     ],
 }
