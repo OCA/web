@@ -1,0 +1,196 @@
+<html>
+<head>
+    <title>Timeline demo</title>
+
+    <style type="text/css">
+        body {font: 10pt arial;}
+        #mytimeline {
+            width: 100%;
+            height: 300px;
+        }
+    </style>
+
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="../timeline.js"></script>
+    <link rel="stylesheet" type="text/css" href="../timeline.css">
+
+    <script type="text/javascript">
+        var timeline;
+        var data;
+
+        google.load("visualization", "1");
+
+        // Set callback to run when API is loaded
+        google.setOnLoadCallback(drawVisualization);
+
+        // Called when the Visualization API is loaded.
+        function drawVisualization() {
+            // Create and populate a data table.
+            data = new google.visualization.DataTable();
+            data.addColumn('datetime', 'start');
+            data.addColumn('datetime', 'end');
+            data.addColumn('string', 'content');
+
+            data.addRows([
+                [new Date(2010,7,23), , '<div>Conversation</div><img src="img/comments-icon.png" style="width:32px; height:32px;">'],
+                [new Date(2010,7,23,23,0,0), , '<div>Mail from boss</div><img src="img/mail-icon.png" style="width:32px; height:32px;">'],
+                [new Date(2010,7,24,16,0,0), , 'Report'],
+                [new Date(2010,7,26), new Date(2010,8,2), 'Traject A'],
+                [new Date(2010,7,28), , '<div>Memo</div><img src="img/notes-edit-icon.png" style="width:48px; height:48px;">'],
+                [new Date(2010,7,29), , '<div>Phone call</div><img src="img/Hardware-Mobile-Phone-icon.png" style="width:32px; height:32px;">'],
+                [new Date(2010,7,31), new Date(2010,8,3), 'Traject B'],
+                [new Date(2010,8,4,12,0,0), , '<div>Report</div><img src="img/attachment-icon.png" style="width:32px; height:32px;">']
+            ]);
+
+            // specify options
+            var options = {
+                'width':  "100%",
+                'height': "300px",
+                'editable': true, // make the events dragable
+                'layout': "box"
+            };
+
+            // Instantiate our timeline object.
+            timeline = new links.Timeline(document.getElementById('mytimeline'), options);
+
+            // Make a callback function for the select event
+            var onselect = function (event) {
+                var row = undefined;
+                var sel = timeline.getSelection();
+                if (sel.length) {
+                    if (sel[0].row != undefined) {
+                        var row = sel[0].row;
+                    }
+                }
+
+                if (row != undefined) {
+                    var content = data.getValue(row, 2);
+                    document.getElementById("txtContent").value = content;
+                    document.getElementById("info").innerHTML += "event " + row + " selected<br>";
+
+                }
+            };
+
+            // callback function for the change event
+            var onchange = function () {
+                var sel = timeline.getSelection();
+                if (sel.length) {
+                    if (sel[0].row != undefined) {
+                        var row = sel[0].row;
+                        document.getElementById("info").innerHTML += "event " + row + " changed<br>";
+                    }
+                }
+            };
+
+            // callback function for the delete event
+            var ondelete = function () {
+                var sel = timeline.getSelection();
+                if (sel.length) {
+                    if (sel[0].row != undefined) {
+                        var row = sel[0].row;
+                        document.getElementById("info").innerHTML += "event " + row + " deleted<br>";
+                    }
+                }
+            };
+
+            // callback function for the add event
+            var onadd = function () {
+                var count = data.getNumberOfRows();
+                document.getElementById("info").innerHTML += "event " + (count-1) + " added<br>";
+            };
+
+            // Add event listeners
+            google.visualization.events.addListener(timeline, 'select', onselect);
+            google.visualization.events.addListener(timeline, 'change', onchange);
+            google.visualization.events.addListener(timeline, 'delete', ondelete);
+            google.visualization.events.addListener(timeline, 'add', onadd);
+
+            // Draw our timeline with the created data and options
+            timeline.draw(data);
+        }
+
+        /**
+         * Add a new event
+         */
+        function add() {
+            var range = timeline.getVisibleChartRange();
+            var start = new Date((range.start.valueOf() + range.end.valueOf()) / 2);
+            var content = document.getElementById("txtContent").value;
+
+            timeline.addItem({
+                'start': start,
+                'content': content
+            });
+
+            var count = data.getNumberOfRows();
+            timeline.setSelection([{
+                'row': count-1
+            }]);
+        }
+
+        /**
+         * Change the content of the currently selected event
+         */
+        function change() {
+            // retrieve the selected row
+            var sel = timeline.getSelection();
+            if (sel.length) {
+                if (sel[0].row != undefined) {
+                    var row = sel[0].row;
+                }
+            }
+
+            if (row != undefined) {
+                var content = document.getElementById("txtContent").value;
+                timeline.changeItem(row, {
+                    'content': content
+                    // Note: start, end, and group can be added here too.
+                });
+            } else {
+                alert("First select an event, then press remove again");
+            }
+        }
+
+        /**
+         * Delete the currently selected event
+         */
+        function doDelete() {
+            // retrieve the selected row
+            var sel = timeline.getSelection();
+            if (sel.length) {
+                if (sel[0].row != undefined) {
+                    var row = sel[0].row;
+                }
+            }
+
+            if (row != undefined) {
+                timeline.deleteItem(row);
+            } else {
+                alert("First select an event, then press remove again");
+            }
+        }
+    </script>
+</head>
+
+<body>
+<p>This page demonstrates the timeline visualization.</p>
+<p>Click and drag to move the timeline, scroll to zoom the timeline. Click and drag events to change there date.</p>
+
+<p>
+    <input type="text" value="New text" id="txtContent">
+    <input type="button" value="Add" title="Add new event" onclick="add();">
+    <input type="button" value="Change" title="Change content of selected event" onclick="change();">
+    <input type="button" value="Delete" title="Delete selected event" onclick="doDelete();">
+</p>
+
+<div id="mytimeline"></div>
+
+<!-- Information about where the used icons come from -->
+<p style="color:gray; font-size:10px; font-style:italic;">
+    Icons by <a href="http://dryicons.com" target="_blank" title="Aesthetica 2 Icons by DryIcons" style="color:gray;" >DryIcons</a>
+    and <a href="http://www.tpdkdesign.net" target="_blank" title="Refresh Cl Icons by TpdkDesign.net" style="color:gray;" >TpdkDesign.net</a>
+</p>
+
+<div id="info"></div>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!--
+http://code.google.com/apis/gdata/samples/cal_sample.html
+-->
+
+<html>
+<head>
+    <title>Timeline demo</title>
+
+    <style type="text/css">
+        body {font: 10pt arial;}
+    </style>
+
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="../timeline.js"></script>
+    <link rel="stylesheet" type="text/css" href="../timeline.css">
+
+    <script type="text/javascript">
+        var cal;
+
+        // load the google calendar feed
+        function insertAgenda(calendar) {
+            cal = calendar;
+        }
+    </script>
+
+    <script type="text/javascript" src="http://www.google.com/calendar/feeds/developer-calendar@google.com/public/full?alt=json-in-script&callback=insertAgenda&orderby=starttime&max-results=20&singleevents=true&sortorder=ascending&futureevents=true"></script>
+
+    <script type="text/javascript">
+        var timeline;
+
+        google.load("visualization", "1");
+
+        // Set callback to run when API is loaded
+        google.setOnLoadCallback(drawVisualization);
+
+        /**
+         * Parse a date like "2010-10-07T17:00:00.000-07:00" or "2010-10-07"
+         * @param {string} googledate
+         * @return {Date}
+         */
+        function parseGoogleDate(googledate) {
+            var year = parseInt(googledate.substr(0,4), 10);
+            var month = parseInt(googledate.substr(5,2), 10) - 1;
+            var date = parseInt(googledate.substr(8,2), 10);
+            var dateObj;
+
+            if (googledate.length <= 10) {
+                dateObj = new Date(year, month, date);
+            } else {
+                var hour = parseInt(googledate.substr(11,2), 10) - parseInt(googledate.substr(25,2), 10);
+                var minute = parseInt(googledate.substr(14,2), 10) - parseInt(googledate.substr(28,2), 10);
+                var second = parseInt(googledate.substr(17,2), 10);
+
+                dateObj = new Date(year, month, date, hour, minute, second);
+                dateObj.setMinutes(dateObj.getMinutes() - dateObj.getTimezoneOffset());
+            }
+            return dateObj;
+        }
+
+        // Called when the Visualization API is loaded.
+        function drawVisualization() {
+            // Create and populate a data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('datetime', 'start');
+            data.addColumn('datetime', 'end');
+            data.addColumn('string', 'content');
+
+            for (i = 0; i < cal.feed.entry.length; i++) {
+                var start   = parseGoogleDate(cal.feed.entry[i].gd$when[0].startTime);
+                var end     = parseGoogleDate(cal.feed.entry[i].gd$when[0].endTime);
+                var title   = cal.feed.entry[i].title.$t;
+                var content = cal.feed.entry[i].content.$t;
+                var href    = cal.feed.entry[i].link[0].href;
+
+                var eventcontent = "<a href='" + href + "'>" + title + "</a>";
+                data.addRow([start, undefined, eventcontent]);
+            }
+
+            // specify options
+            var options = {
+                'width':  "100%",
+                'height': "auto",
+                'style': "dot"
+            };
+
+            // Instantiate our timeline object.
+            timeline = new links.Timeline(document.getElementById('mytimeline'), options);
+
+            // Draw our timeline with the created data and options
+            timeline.draw(data);
+        }
+    </script>
+</head>
+
+<body>
+<h1>Google upcoming events</h1>
+<div id="mytimeline"></div>
+</body>
+</html>

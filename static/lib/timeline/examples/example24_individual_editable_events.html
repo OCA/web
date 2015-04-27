@@ -1,0 +1,100 @@
+<html>
+<head>
+    <title>Timeline</title>
+
+    <script type="text/javascript" src="../timeline.js"></script>
+    <link rel="stylesheet" type="text/css" href="../timeline.css">
+
+    <style type="text/css">
+        body {
+            font-size: 10pt;
+            font-family: verdana, sans, arial, sans-serif;
+        }
+        div.readonly {
+            background-color: #ff4500;
+            border-color: red;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+<h1>Timeline - editable/read-only events</h1>
+<p style="max-width: 600px;">
+    In the demo below, events are made editable or read-only on an individual
+    basis.
+    To check whether an item is editable, the Timeline first checks
+    if the item has the field 'editable' defined, and if not, uses the global
+    options.editable.
+</p>
+
+<div id="mytimeline"></div>
+
+<script type="text/javascript">
+    // Create some JSON data
+    var data = [
+        {
+            'start': new Date(2010,7,23),
+            'content': 'Editable',
+            'editable': true
+        },
+        {
+            'start': new Date(2010,7,23,23,0,0),
+            'content': 'Editable',
+            'editable': true
+        },
+        {
+            'start': new Date(2010,7,24,16,0,0),
+            'content': 'Read-only',
+            'className': 'readonly',
+            'editable': false
+        },
+        {
+            'start': new Date(2010,7,26),
+            'end': new Date(2010,8,2),
+            'content': 'Read-only',
+            'className': 'readonly',
+            'editable': false
+        },
+        {
+            'start': new Date(2010,7,28),
+            'content': 'Editable',
+            'editable': true
+        },
+        {
+            'start': new Date(2010,7,29),
+            'content': 'Read-only',
+            'className': 'readonly',
+            'editable': false
+        },
+        {
+            'start': new Date(2010,7,31),
+            'end': new Date(2010,8,3),
+            'content': 'Editable',
+            'editable': true
+        },
+        {
+            'start': new Date(2010,8,4,12,0,0),
+            'className': 'readonly',
+            'content': 'Read-only',
+            'editable': false
+        }
+    ];
+
+    // specify options
+    var options = {
+        'width':  '100%',
+        'height': '300px',
+        'editable': true,   // enable dragging and editing events
+        'style': 'box'
+    };
+
+    // Instantiate our timeline object.
+    var timeline = new links.Timeline(document.getElementById('mytimeline'), options);
+
+    // Draw our timeline with the created data and options
+    timeline.draw(data);
+</script>
+
+</body>
+</html>

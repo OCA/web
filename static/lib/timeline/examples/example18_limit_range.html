@@ -1,0 +1,49 @@
+<html>
+<head>
+    <title>Timeline demo</title>
+
+    <script type="text/javascript" src="../timeline.js"></script>
+    <link rel="stylesheet" type="text/css" href="../timeline.css">
+
+    <script type="text/javascript">
+        var timeline;
+        function drawVisualization() {
+            // create and populate an array with data
+            var data = [
+                {'start': new Date(2012, 4, 25), 'content': 'First'},
+                {'start': new Date(2012, 4, 26), 'content': 'Last'}
+            ];
+
+            // specify options
+            var options = {
+                "width":  "100%",
+                "height": "300px",
+                "min": new Date(2012, 0, 1),                // lower limit of visible range
+                "max": new Date(2013, 0, 1),                // upper limit of visible range
+                "zoomMin": 1000 * 60 * 60 * 24,             // one day in milliseconds
+                "zoomMax": 1000 * 60 * 60 * 24 * 31 * 3     // about three months in milliseconds
+            };
+
+            // Instantiate our timeline object.
+            timeline = new links.Timeline(document.getElementById('mytimeline'), options);
+
+            // Draw our timeline with the created data and options
+            timeline.draw(data);
+        }
+    </script>
+</head>
+
+<body onload="drawVisualization();">
+<p>
+    The visible range is limited in this demo:
+</p>
+<ul>
+    <li>minimum visible date is limited to 2012-01-01 using option <code>min</code></li>
+    <li>maximum visible date is limited to 2013-01-01 (excluded) using option <code>max</code></li>
+    <li>visible interval is limited to a minimum of 24 hours using option <code>zoomMin</code></li>
+    <li>visible interval is limited to a maximum of about 3 months using option <code>zoomMax</code></li>
+</ul>
+
+<div id="mytimeline"></div>
+</body>
+</html>

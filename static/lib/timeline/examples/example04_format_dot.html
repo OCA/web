@@ -1,0 +1,80 @@
+<html>
+<head>
+    <title>Timeline demo</title>
+
+    <style type="text/css">
+        body {font: 10pt arial;}
+    </style>
+
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="../timeline.js"></script>
+    <link rel="stylesheet" type="text/css" href="../timeline.css">
+
+    <script type="text/javascript">
+        var timeline;
+        var data;
+        var options;
+
+        google.load("visualization", "1");
+
+        // Set callback to run when API is loaded
+        google.setOnLoadCallback(drawVisualization);
+
+        // Called when the Visualization API is loaded.
+        function drawVisualization() {
+            // Create and populate a data table.
+            data = new google.visualization.DataTable();
+            data.addColumn('datetime', 'start');
+            data.addColumn('datetime', 'end');
+            data.addColumn('string', 'content');
+
+            data.addRows([
+                [new Date(1939,8,1), , 'German Invasion of Poland'],
+                [new Date(1940,4,10), , 'Battle of France and the Low Countries'],
+                [new Date(1940,7,13), , 'Battle of Britain - RAF vs. Luftwaffe'],
+                [new Date(1941,1,14), , 'German Afrika Korps arrives in North Africa'],
+                [new Date(1941,5,22), , 'Third Reich Invades the USSR'],
+                [new Date(1941,11,7), , 'Japanese Attack Pearl Harbor'],
+                [new Date(1942,5,4), , 'Battle of Midway in the Pacific'],
+                [new Date(1942,10,8), , 'Americans open Second Front in North Africa'],
+                [new Date(1942,10,19), , 'Battle of Stalingrad in Russia'],
+                [new Date(1943,6,5), , 'Battle of Kursk - Last German Offensive on Eastern Front'],
+                [new Date(1943,6,10), , 'Anglo-American Landings in Sicily'],
+                [new Date(1944,2,8), , 'Japanese Attack British India'],
+                [new Date(1944,5,6), , 'D-Day - Allied Invasion of Normandy'],
+                [new Date(1944,5,22), , 'Destruction of Army Group Center in Byelorussia'],
+                [new Date(1944,7,1), , 'The Warsaw Uprising in Occupied Poland'],
+                [new Date(1944,9,20), , 'American Liberation of the Philippines'],
+                [new Date(1944,11,16), , 'Battle of the Bulge in the Ardennes'],
+                [new Date(1944,1,19), , 'American Landings on Iwo Jima'],
+                [new Date(1945,3,1), , 'US Invasion of Okinawa'],
+                [new Date(1945,3,16), ,'Battle of Berlin - End of the Third Reich']
+            ]);
+
+            // specify options
+            options = {
+                'width':  '100%',
+                'height': 'auto',
+                'start': new Date(1942, 6, 1),
+                'end': new Date(1946, 6, 1),
+                'editable': false,
+                'animate': false,
+                'style': 'dot'
+            };
+
+            // Instantiate our timeline object.
+            timeline = new links.Timeline(document.getElementById('mytimeline'), options);
+
+            // Draw our timeline with the created data and options
+            timeline.draw(data);
+        }
+    </script>
+</head>
+
+<body>
+<h1>World War II timeline</h1>
+<p>Source: <a href="http://www.onwar.com/chrono/index.htm" target="_blank">http://www.onwar.com/chrono/index.htm</a></p>
+<div id="mytimeline" style="background-color: #FAFAFA;"></div>
+
+</body>
+</html>

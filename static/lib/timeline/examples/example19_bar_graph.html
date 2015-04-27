@@ -1,0 +1,145 @@
+<html>
+<head>
+    <title>Timeline demo</title>
+
+    <script type="text/javascript" src="../timeline.js"></script>
+    <link rel="stylesheet" type="text/css" href="../timeline.css">
+
+    <style type="text/css">
+        body {font: 10pt arial;}
+
+        div.timeline-event {
+            border: none;
+            background: none;
+            border-radius: 0;
+        }
+        div.timeline-event-selected {
+            border: none;
+            background: none;
+        }
+        div.timeline-event-content {
+            margin: 0;
+        }
+        div.timeline-event-range {
+            border: none;
+            border-radius: 0;
+            height: 100px;
+            width: 100%;
+            position: relative;
+            overflow: visible;
+        }
+        div.bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: white;
+            /* height and color is set for each individual bar */
+        }
+        div.requirement {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            border-top: 2px solid gray;
+            background: #e5e5e5;
+            opacity: 0.5;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var timeline;
+
+        /**
+         * Calculate the color based on the given value.
+         * @param {number} H   Hue, a value be between 0 and 360
+         * @param {number} S   Saturation, a value between 0 and 1
+         * @param {number} V   Value, a value between 0 and 1
+         */
+        var hsv2rgb = function(H, S, V) {
+            var R, G, B, C, Hi, X;
+
+            C = V * S;
+            Hi = Math.floor(H/60);  // hi = 0,1,2,3,4,5
+            X = C * (1 - Math.abs(((H/60) % 2) - 1));
+
+            switch (Hi) {
+                case 0: R = C; G = X; B = 0; break;
+                case 1: R = X; G = C; B = 0; break;
+                case 2: R = 0; G = C; B = X; break;
+                case 3: R = 0; G = X; B = C; break;
+                case 4: R = X; G = 0; B = C; break;
+                case 5: R = C; G = 0; B = X; break;
+
+                default: R = 0; G = 0; B = 0; break;
+            }
+
+            return "RGB(" + parseInt(R*255) + "," + parseInt(G*255) + "," + parseInt(B*255) + ")";
+        };
+
+        // Called when the Visualization API is loaded.
+        function drawVisualization() {
+            // Create and populate a data table.
+            var data = [];
+
+            var maxNum = 20;
+            var d = new Date(2012, 6, 5);
+            for (var i = 0; i < 20; i++) {
+                var hours = Math.round(1 + Math.random() * 7);
+                var start = new Date(d);
+                var end = new Date(d);
+                end.setHours(end.getHours() + hours);
+
+                // create item with minimum requirement
+                var num = Math.round(Math.random() * maxNum);    // number of members available
+                var height = Math.round(num / maxNum * 80 + 20); // a percentage, with a lower bound on 20%
+                var style = 'height:' + height + 'px;';
+                var requirement = '<div class="requirement" style="' + style + '" ' +
+                        'title="Minimum requirement: ' + num + ' people"></div>';
+
+                // create item with actual number
+                num = Math.round(Math.random() * maxNum);    // number of members available
+                height = Math.round(num / maxNum * 70 + 20); // a percentage, with a lower bound on 20%
+                var hue = Math.min(Math.max(height, 20), 80) * 1.2; // hue between 0 (red) and 120 (green)
+                var color = hsv2rgb(hue, 0.95, 0.95);
+                var borderColor = hsv2rgb(hue, 0.9, 0.9);
+                style = 'height:' + height + 'px;' +
+                        'background-color: ' + color + ';' +
+                        'border-top: 2px solid ' + borderColor + ';';
+                var actual = '<div class="bar" style="' + style + '" ' +
+                        ' title="Actual: ' + num + ' people">' + num + '</div>';
+                var item = {
+                    'group': 'Team',
+                    'start': start,
+                    'end': end,
+                    'content': requirement + actual
+                };
+                data.push(item);
+
+                d = new Date(end);
+            }
+
+            // specify options
+            var options = {
+                "width":  "100%",
+                "height": "300px",
+                "style": "box",
+                "stackEvents": false
+            };
+
+            // Instantiate our timeline object.
+            timeline = new links.Timeline(document.getElementById('mytimeline'), options);
+
+            // Draw our timeline with the created data and options
+            timeline.draw(data);
+        }
+    </script>
+</head>
+
+<body onload="drawVisualization();">
+<h1>Timeline - Bar Graph Example</h1>
+<div id="mytimeline"></div>
+
+</body>
+</html>

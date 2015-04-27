@@ -1,0 +1,127 @@
+<html>
+<head>
+    <title>Timeline demo</title>
+
+    <script type="text/javascript" src="../timeline.js"></script>
+    <link rel="stylesheet" type="text/css" href="../timeline.css">
+
+    <style type="text/css">
+        body {
+            font: 14pt arial;
+        }
+        input {
+            font: 14pt arial;
+        }
+
+        /* custom styles for individual items, load this after timeline.css */
+
+        div.green {
+            background-color: greenyellow;
+            border-color: green;
+        }
+
+        /* create a custom sized dot at the bottom of the red item */
+        div.red {
+            background-color: red;
+            border-color: darkred;
+            color: white;
+            font-family: monospace;
+            box-shadow: 0 0 10px gray;
+        }
+        div.timeline-event-dot.red {
+            border-radius: 10px;
+            border-width: 10px;
+        }
+        div.timeline-event-line.red {
+            border-width: 5px;
+        }
+        div.timeline-event-box.red {
+            border-radius: 0;
+            border-width: 2px;
+            font-size: 24pt;
+            font-weight: bold;
+        }
+
+        div.orange {
+            background-color: gold;
+            border-color: orange;
+        }
+        div.timeline-event-selected.orange {
+            /* custom colors for selected orange items */
+            background-color: orange;
+            border-color: orangered;
+        }
+
+        div.magenta {
+            background-color: magenta;
+            border-color: purple;
+            color: white;
+        }
+
+        /* our custom classes overrule the styles for selected events,
+           so lets define a new style for the selected events */
+        div.timeline-event-selected {
+            background-color: white;
+            border-color: black;
+            color: black;
+            box-shadow: 0 0 10px gray;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var timeline;
+        var data;
+
+        // Called when the page is loaded
+        function drawVisualization() {
+            // Create and populate a data table.
+            data = [
+                {
+                    'start': new Date(2012,7,19),
+                    'content': 'default'
+                },
+                {
+                    'start': new Date(2012,7,23),
+                    'content': 'green',
+                    'className': 'green'
+                },
+                {
+                    'start': new Date(2012,7,29),
+                    'content': 'red',
+                    'className': 'red'
+                },
+                {
+                    'start': new Date(2012,7,27),
+                    'end': new Date(2012,8,1),
+                    'content': 'orange',
+                    'className': 'orange'
+                },
+                {
+                    'start': new Date(2012,8,2),
+                    'content': 'magenta',
+                    'className': 'magenta'
+                }
+            ];
+
+            // specify options
+            var options = {
+                //'editable': true
+            };
+
+            // Instantiate our table object.
+            timeline = new links.Timeline(document.getElementById('mytimeline'), options);
+
+            // Draw our table with the data we created locally.
+            timeline.draw(data);
+        }
+
+    </script>
+</head>
+<body onload="drawVisualization()">
+<p>This page demonstrates the timeline visualization with custom css classes
+    for individual items.</p>
+
+<div id="mytimeline"></div>
+
+</body>
+</html>

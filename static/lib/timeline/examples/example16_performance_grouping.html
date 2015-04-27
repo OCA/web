@@ -1,0 +1,159 @@
+<html>
+<head>
+    <title>Timeline demo</title>
+
+
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="../timeline.js"></script>
+    <link rel="stylesheet" type="text/css" href="../timeline.css">
+
+    <style type="text/css">
+        body {
+            color: #4D4D4D;
+            font: 10pt arial;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var timeline = null;
+        var data = null;
+        var order = 1;
+        var truck = 1;
+
+        google.load("visualization", "1");
+
+        // Set callback to run when API is loaded
+        google.setOnLoadCallback(drawVisualization);
+
+        // Called when the Visualization API is loaded.
+        function drawVisualization() {
+            
+            // specify options
+            var options = {
+                stackEvents: false,
+                start: new Date(),
+                end: new Date(1000*60*60*24 + (new Date()).valueOf()),
+                editable: true,
+                animate: false,
+                eventMargin: 10,  // minimal margin between events
+                eventMarginAxis: 5, // minimal margin between events and the axis
+                showMajorLabels: true,
+                cluster: true,
+                axisOnTop: true,
+                snapEvents: true,
+                dragAreaWidth: 20
+            };
+
+            // Instantiate our timeline object.
+            timeline = new links.Timeline(document.getElementById('mytimeline'), options);
+
+            // Create and populate a data table.
+            data = new google.visualization.DataTable();
+            data.addColumn('datetime', 'start');
+            data.addColumn('datetime', 'end');
+            data.addColumn('string', 'content');
+            data.addColumn('string', 'group');
+
+            addData();
+
+            // Draw our timeline with the created data and options
+            timeline.draw(data);
+
+            google.visualization.events.addListener(timeline, 'select',
+                    function () {
+                        //console.log('select', timeline.getSelection()[0]);
+                    }
+            );
+
+            google.visualization.events.addListener(timeline, 'edit',
+                    function() {
+                        //console.log('edit')
+                    }
+            );
+
+            google.visualization.events.addListener(timeline, 'change',
+                    function() {
+                        //console.log('change')
+                        //timeline.cancelChange();
+                    }
+            );
+
+            google.visualization.events.addListener(timeline, 'add',
+                    function() {
+                        //console.log('add')
+                        //timeline.cancelAdd();
+                    }
+            );
+
+            /*
+             console.profile();
+             var count = 10;
+             for (var i = 0; i < count; i++) {
+             timeline.redraw();
+             }
+             console.profileEnd();
+             //*/
+        }
+
+        /**
+         * Get URL parameter
+         * http://www.netlobo.com/url_query_string_javascript.html
+         */
+        function gup( name ) {
+            name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+            var regexS = "[\\?&]"+name+"=([^&#]*)";
+            var regex = new RegExp( regexS );
+            var results = regex.exec( window.location.href );
+            if( results == null )
+                return "";
+            else
+                return results[1];
+        }
+
+        var count = (Number(gup('count')) || 100);
+
+        function addData() {
+            for (var j = 0; j < 4; j++) {
+                var date = new Date();
+                for (var i = 0; i < count/4; i++) {
+                    date.setHours(date.getHours() +  4 * (Math.random() < 0.2));
+                    var start = new Date(date);
+
+                    date.setHours(date.getHours() + 2 + Math.floor(Math.random()*4));
+                    var end = new Date(date);
+
+                    var orderText = "Order " + order;
+                    var truckText = "Truck " + truck;
+                    data.addRow([start, end, orderText, truckText]);
+                    order++;
+                }
+                truck++;
+            }
+        }
+    </script>
+</head>
+
+<body onresize="/*timeline.checkResize();*/">
+<h1>Timeline grouping performance</h1>
+
+<p>
+    Choose a number of items:
+    <a href="?count=20">20</a>,
+    <a href="?count=100">100</a>,
+    <a href="?count=1000">1000</a>,
+    <a href="?count=10000">10000</a>
+<p>
+<p>
+    Current number of items: <span id='count'>100</span>
+</p>
+
+<div id="mytimeline"></div>
+
+<div id="info"></div>
+
+<script>
+    document.getElementById('count').innerHTML = count;
+</script>
+
+</body>
+</html>

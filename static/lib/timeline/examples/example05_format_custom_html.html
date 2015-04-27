@@ -1,0 +1,174 @@
+<html>
+<head>
+    <title>Timeline demo</title>
+
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="../timeline.js"></script>
+    <link rel="stylesheet" type="text/css" href="../timeline.css">
+
+    <style type="text/css">
+        body {font: 11pt arial;}
+        input {font: 11pt arial;}
+
+        div.myParagraph {
+            width: 200px;
+            white-space: normal;
+        }
+    </style>
+
+    <script type="text/javascript">
+        google.load("visualization", "1");
+
+        // Set callback to run when API is loaded
+        google.setOnLoadCallback(drawVisualization);
+
+        var timeline;
+        var data;
+
+        // Called when the timelineualization API is loaded.
+        function drawVisualization() {
+            // Create and populate a data table.
+            data = new google.visualization.DataTable();
+            data.addColumn('datetime', 'start');
+            data.addColumn('datetime', 'end');
+            data.addColumn('string', 'content');
+
+            function addRow(startDate, endDate, content, backgroundColor, borderColor)
+            {
+                // we make our own customized layout for the events
+
+                if (backgroundColor == undefined)
+                    backgroundColor = "yellow";
+                if (borderColor == undefined)
+                    borderColor = "gold";
+
+                var fill = endDate ? "pink" : "yellow";
+                var div = '<div style="background-color:' + backgroundColor +
+                        '; border:1px solid ' + borderColor + ';padding:5px;">' +
+                        content + '</div>';
+
+                data.addRows([
+                    [startDate, endDate, div]
+                ]);
+            }
+
+            data.addRows([
+                [
+                    new Date(2010, 7, 19),
+                    null,
+                    'Some html<br>containing an image<br>' +
+                    '<img src="img/notes-edit-icon.png">'
+                ],
+                [
+                    new Date(2010, 7, 23),
+                    null,
+                    '<h3>Lorem ipsum</h3>' +
+                    '<div class="myParagraph">' +
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eget sem arcu. Pellentesque habitant morbi tristique senectus et netus et.' +
+                    '</div>'
+                ],
+                [
+                    new Date(2010, 7, 22),
+                    new Date(2010, 7, 30),
+                    'This text contains some <span style="font-weight: bold;">bold</span> text,<br>' +
+                    'some <span style="font-style: italic;">italic</span> text,<br>' +
+                    'and some <span style="color: red;">red</span> text.'
+                ],
+                [
+                    new Date(2010, 7, 29),
+                    null,
+                    '<div style="text-align:left;">There are a few limitations<br>' +
+                    '<ul>' +
+                    '<li>A box can have either non-wrapped text and a<br>flexible width, or a fixed width and wrapping text.</li>' +
+                    '<li>A range cannot automatically wrap text</li>' +
+                    '<li>The css styles <i>min-width</i> and <i>max-width</i><br>are not working well together with the timeline.</li>' +
+                    '</ul></div>'
+                ]
+            ]);
+
+            // specify options
+            var options = {
+                width:     "75%",
+                height:    "auto",
+                start: new Date(2010, 7, 17),
+                end:   new Date(2010, 8, 2),
+                style:    "box"    // optional. choose "dot" (default), "box", or "none"
+            };
+
+            // Instantiate our table object.
+            timeline = new links.Timeline(document.getElementById('mytimeline'), options);
+
+            // Attach event listeners
+            google.visualization.events.addListener(timeline, 'select', onselect);
+            google.visualization.events.addListener(timeline, 'rangechange', onrangechange);
+
+            // Draw our table with the data we created locally.
+            timeline.draw(data);
+
+            // Set the scale by hand. Autoscaling will be disabled.
+            // Note: you can achieve the same by specifying scale and step in the
+            // options for the timeline.
+            timeline.setScale(links.Timeline.StepDate.SCALE.DAY, 1);
+        }
+
+        // adjust start and end time.
+        function setTime() {
+            if (!timeline) return;
+
+            var newStartDate = new Date(document.getElementById('startDate').value);
+            var newEndDate   = new Date(document.getElementById('endDate').value);
+            timeline.setVisibleChartRange(newStartDate, newEndDate);
+            timeline.redraw();
+        }
+
+        function onrangechange() {
+            // adjust the values of startDate and endDate
+            var range = timeline.getVisibleChartRange();
+            document.getElementById('startDate').value = dateFormat(range.start);
+            document.getElementById('endDate').value   = dateFormat(range.end);
+        }
+
+        function onselect() {
+            var sel = timeline.getSelection();
+            if (sel.length) {
+                if (sel[0].row != undefined) {
+                    var row = sel[0].row;
+                    alert("event " + row + " selected");
+                }
+            }
+        }
+
+        // Format given date as "yyyy-mm-dd hh:ii:ss"
+        // @param datetime   A Date object.
+        function dateFormat(date) {
+            var datetime = date.getFullYear() + "-" +
+                    ((date.getMonth()   <  9) ? "0" : "") + (date.getMonth() + 1) + "-" +
+                    ((date.getDate()    < 10) ? "0" : "") +  date.getDate() + " " +
+                    ((date.getHours()   < 10) ? "0" : "") +  date.getHours() + ":" +
+                    ((date.getMinutes() < 10) ? "0" : "") +  date.getMinutes() + ":" +
+                    ((date.getSeconds() < 10) ? "0" : "") +  date.getSeconds();
+            return datetime;
+        }
+
+    </script>
+</head>
+<body onresize="if (timeline) {timeline.redraw();}">
+<p>This page demonstrates the timeline visualization.</p>
+<p>Click and drag to move the timeline, scroll to zoom the timeline.</p>
+<p>
+    Starttime: <input type="text" id="startDate" value="2010-08-16">
+    Endtime:   <input type="text" id="endDate" value="2010-09-07">
+    <input type="button" id="setStartDate" value="set" onclick="setTime();">
+</p>
+
+<div id="mytimeline"></div>
+
+<!-- Information about where the used icons come from -->
+<p style="color:gray; font-size:10px; font-style:italic;">
+    Icons by <a href="http://dryicons.com" target="_blank" title="Aesthetica 2 Icons by DryIcons" style="color:gray;" >DryIcons</a>
+    and <a href="http://www.tpdkdesign.net" target="_blank" title="Refresh Cl Icons by TpdkDesign.net" style="color:gray;" >TpdkDesign.net</a>
+</p>
+
+<div id="info"></div>
+</body>
+</html>

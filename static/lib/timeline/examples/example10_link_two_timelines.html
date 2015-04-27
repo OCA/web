@@ -1,0 +1,120 @@
+<html>
+<head>
+    <title>Timeline demo</title>
+
+    <style type="text/css">
+        body {font: 10pt arial;}
+    </style>
+
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="../timeline.js"></script>
+    <link rel="stylesheet" type="text/css" href="../timeline.css">
+
+    <script type="text/javascript">
+        google.load("visualization", "1");
+
+        // Set callback to run when API is loaded
+        google.setOnLoadCallback(drawVisualization);
+
+        var vis1;
+        var vis2;
+
+        function createTimeline1() {
+            // Create and populate a data table.
+            var data1 = new google.visualization.DataTable();
+            data1.addColumn('datetime', 'start');
+            data1.addColumn('datetime', 'end');
+            data1.addColumn('string', 'content');
+
+            data1.addRows([
+                [new Date(2010,7,23), , 'Conversation<br>' +
+                        '<img src="img/comments-icon.png" style="width:32px; height:32px;">'],
+                [new Date(2010,7,23,23,0,0), , 'Mail from boss<br>' +
+                        '<img src="img/mail-icon.png" style="width:32px; height:32px;">'],
+                [new Date(2010,7,24,16,0,0), , 'Report'],
+                [new Date(2010,7,26), new Date(2010,8,2), 'Traject A'],
+                [new Date(2010,7,28), , 'Memo<br>' +
+                        '<img src="img/notes-edit-icon.png" style="width:48px; height:48px;">'],
+                [new Date(2010,7,29), , 'Phone call<br>' +
+                        '<img src="img/Hardware-Mobile-Phone-icon.png" style="width:32px; height:32px;">'],
+                [new Date(2010,7,31), new Date(2010,8,3), 'Traject B'],
+                [new Date(2010,8,1,12,0,0), , 'Report<br>' +
+                        '<img src="img/attachment-icon.png" style="width:32px; height:32px;">']
+            ]);
+
+            // specify options
+            options1 = {width:  "100%",
+                height: "300px",
+                layout: "box"
+            };
+
+            // Instantiate our timeline object.
+            vis1 = new links.Timeline(document.getElementById('timeline1'), options1);
+
+            google.visualization.events.addListener(vis1, 'rangechange', onrangechange1);
+
+            // Draw our timeline with the created data and options
+            vis1.draw(data1);
+        }
+
+        function createTimeline2() {
+            // Create and populate a data table.
+            var data2 = new google.visualization.DataTable();
+            data2.addColumn('datetime', 'start');
+            data2.addColumn('datetime', 'end');
+            data2.addColumn('string', 'content');
+
+            data2.addRows([
+                [new Date(2010,7,23), new Date(2010,7,30), 'Traject C'],
+                [new Date(2010,7,27), new Date(2010,7,31), 'Traject D']
+            ]);
+
+            // specify options
+            var options2 = {
+                width:  "100%",
+                height: "300px"
+            };
+
+            // Instantiate our timeline object.
+            vis2 = new links.Timeline(document.getElementById('timeline2'), options2);
+
+            google.visualization.events.addListener(vis2, 'rangechange', onrangechange2);
+
+            // Draw our timeline with the created data and options
+            vis2.draw(data2);
+
+            onrangechange1();  // to set the range equal initially
+        }
+
+        // Called when the Visualization API is loaded.
+        function drawVisualization() {
+            createTimeline1();
+            createTimeline2();
+        }
+
+        function onrangechange1() {
+            var range = vis1.getVisibleChartRange();
+            vis2.setVisibleChartRange(range.start, range.end);
+        }
+
+        function onrangechange2() {
+            var range = vis2.getVisibleChartRange();
+            vis1.setVisibleChartRange(range.start, range.end);
+        }
+    </script>
+</head>
+
+<body>
+<p>When moving one timeline, the other moves along.</p>
+<div id="timeline1"></div>
+<br>
+<div id="timeline2"></div>
+
+<!-- Information about where the used icons come from -->
+<p style="color:gray; font-size:10px; font-style:italic;">
+    Icons by <a href="http://dryicons.com" target="_blank" title="Aesthetica 2 Icons by DryIcons" style="color:gray;" >DryIcons</a>
+    and <a href="http://www.tpdkdesign.net" target="_blank" title="Refresh Cl Icons by TpdkDesign.net" style="color:gray;" >TpdkDesign.net</a>
+</p>
+
+</body>
+</html>
