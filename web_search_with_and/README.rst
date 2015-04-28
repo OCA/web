@@ -1,8 +1,8 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
     :alt: License: AGPL-3
 
-Force AND on Search Input
-=========================
+Use AND conditions on omnibar search
+====================================
 
 When searching for records on same field Odoo joins multiple queries with OR.
 For example:
@@ -18,7 +18,7 @@ and Odoo finds customers containing "John" AND "Smith"
 Usage
 =====
 
-* Enter your value in Search Input field
+* Enter your value in omnibar search field
 * Press and hold Shift key
 * Select field with mouse or keyboard to perform search on
 
