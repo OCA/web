@@ -4,7 +4,7 @@
 
 {
     'name': "Use AND conditions on omnibar search",
-    'version': '0.1',
+    'version': '1.0',
     'author': 'Versada UAB, Odoo Community Association (OCA)',
     'category': 'web',
     'website': 'http://www.versada.lt',
