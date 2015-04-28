@@ -1,8 +1,8 @@
 ##############################################################################
 #
 # OpenERP, Open Source Management Solution
-# Copyright (C) 2014 by UAB Versada (Ltd.) <http://www.versada.lt>
-# and contributors. See AUTHORS for more details.
+# Copyright (C) 2015 by UAB Versada (Ltd.) <http://www.versada.lt>
+# and contributors.
 #
 # All Rights Reserved.
 #
@@ -28,10 +28,26 @@
     'category': 'web',
     'website': 'http://www.versada.lt',
     'description': """
-When searching on same field multiple times Odoo joins queries with OR.
-Press Shift key to join them with AND.
+Force AND on Search Input
+=========================
 
-This gives the same affect as using Advanced Search on same field several times.
+When searching for records on same field Odoo joins multiple queries with OR.
+For example:
+
+* Perform a search for customer "John" on field Name
+* Odoo displays customers containing "John"
+* Search for "Smith" on same field Name
+* Odoo displays customers containing "John" OR "Smith"
+
+With this module installed you can press Shift key before searching for "Smith"
+and Odoo finds customers containing "John" AND "Smith"
+
+Usage
+=====
+
+* Enter your value in Search Input field
+* Press and hold Shift key
+* Select field with mouse or keyboard to perform search on
     """,
     'depends': [
         'web',
