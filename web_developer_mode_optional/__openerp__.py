@@ -34,9 +34,9 @@
         'web',
     ],
     'data': [
-         'security/web_developer_mode_optional_security.xml',
-         'views/webclient_templates.xml',
-     ],
+        'security/web_developer_mode_optional_security.xml',
+        'views/webclient_templates.xml',
+    ],
     'js': [
         'static/src/js/chrome.js',
     ],
