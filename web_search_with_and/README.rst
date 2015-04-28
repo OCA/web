@@ -2,7 +2,7 @@
     :alt: License: AGPL-3
 
 Force AND on Search Input
-===========
+=========================
 
 When searching for records on same field Odoo joins multiple queries with OR.
 For example:
