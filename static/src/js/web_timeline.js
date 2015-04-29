@@ -61,8 +61,8 @@ openerp.web_timeline = function(instance) {
 
         view_loading: function (fv) {
             /* xml view timeline options */
-            var attrs = fv.arch.attrs,
-                self = this;
+            var attrs = fv.arch.attrs;
+            var self = this;
             this.fields_view = fv;
             this.parse_colors();
             this.$timeline = this.$el.find(".oe_timeline_widget");
@@ -80,8 +80,7 @@ openerp.web_timeline = function(instance) {
 
             this.mode = attrs.mode;                 // one of month, week or day
             this.date_start = attrs.date_start;     // Field name of starting
-													// date field
-            this.date_delay = attrs.date_delay;     // duration
+                                                    // date field
             this.date_stop = attrs.date_stop;
             
             if (!isNullOrUndef(attrs.quick_create_instance)) {
@@ -89,7 +88,7 @@ openerp.web_timeline = function(instance) {
             }
 
                        // If this field is set ot true, we don't open the event in form
-			// view, but in a popup with the view_id passed by this parameter
+            // view, but in a popup with the view_id passed by this parameter
             if (isNullOrUndef(attrs.event_open_popup) || !_.str.toBoolElse(attrs.event_open_popup, true)) {
                 this.open_popup_action = false;
             } else {
@@ -128,19 +127,22 @@ openerp.web_timeline = function(instance) {
                         self.ready.resolve();
                     });
                 });
-            return $.when(unlink_check.then(edit_check).then(init), fields_get);
+            return $.when(fields_get.then(unlink_check).then(edit_check).then(init));
         },
 
         init_timeline: function() {
             var self = this;
             var options = {
-                        "editable": self.write_right,
-                        "groupsChangeable": self.write_right,
-                        "timeChangeable": self.write_right,
-                        "showNavigation": true,
-                        "start": new Date(),
-                      };
-            self.timeline = new links.Timeline(self.$timeline.get(0));
+                editable: {
+                    add: self.write_right,         // add new items by double tapping
+                    updateTime: self.write_right,  // drag items horizontally
+                    updateGroup: self.write_right, // drag items from one group to another
+                    remove: self.unlink_right,       // delete an item by tapping the delete button top right
+                },
+                showCurrentTime: true,
+                start: new Date(),
+            };
+            self.timeline = new vis.Timeline(self.$timeline.get(0));
             self.timeline.setOptions(options);
             self.register_events();
             return $.when();
@@ -148,7 +150,7 @@ openerp.web_timeline = function(instance) {
 
         register_events: function(){
             var self = this;
-            links.events.addListener(self.timeline, 'edit', function() {
+            self.timeline.on('edit', function() {
                 var sel = self.timeline.getSelection();
                 if (sel.length) {
                   if (sel[0].row != undefined) {
@@ -157,7 +159,7 @@ openerp.web_timeline = function(instance) {
                   }
                }
             });
-            links.events.addListener(self.timeline, 'delete', function() {
+            self.timeline.on('delete', function() {
                 if(! self.unlink_right){
                     self.timeline.cancelDelete();
                     alert(_t("You are not allowed to delete this event ?"));
@@ -170,7 +172,7 @@ openerp.web_timeline = function(instance) {
                   }
                }
             });
-            links.events.addListener(self.timeline, 'changed', function() {
+            self.timeline.on('changed', function() {
                var sel = self.timeline.getSelection();
                 if (sel.length) {
                   if (sel[0].row != undefined) {
@@ -183,8 +185,8 @@ openerp.web_timeline = function(instance) {
 
           
         /**
-		 * Transform OpenERP event object to fulltimeline event object
-		 */
+         * Transform OpenERP event object to fulltimeline event object
+         */
         event_data_transform: function(evt) {
             var self = this;
 
@@ -209,14 +211,11 @@ openerp.web_timeline = function(instance) {
             if(!date_stop) {
                 date_stop = date_start.clone().addHours(date_delay);
             }
-            var group = 'Unassigned';
-            
-            if (evt.user_id){
-                var info = evt.user_id.slice(0, 2);
-                var id = info[0];
-                var name = info[1];
-                self.group_by_name[name] = id; 
-                group = name;
+            var group = evt[self.last_group_bys[0]];
+            if (group){
+                    group = _.first(group);
+            } else {
+                    group = -1;
             }
             var r = {
                 'start': date_start,
@@ -242,118 +241,78 @@ openerp.web_timeline = function(instance) {
             return r;
         },
         
-        /**
-		 * Transform fulltimeline event object to OpenERP Data object
-		 */
-        get_event_data: function(event) {
 
-            // Normalize event_end without changing fulltimelines event.
-            var data = {
-                name: event.title
-            };            
-            
-            var event_end = event.end;
-            // Bug when we move an all_day event from week or day view, we don't
-			// have a dateend or duration...
-            if (event_end == null) {
-                event_end = new Date(event.start).addHours(2);
+        do_search: function (domains, contexts, group_bys) {
+            var self = this;
+            self.last_domains = domains;
+            self.last_contexts = contexts;
+            // self.reload_gantt();
+            // select the group by
+            var n_group_bys = [];
+            if (this.fields_view.arch.attrs.default_group_by) {
+                n_group_bys = this.fields_view.arch.attrs.default_group_by.split(',');
             }
+            if (group_bys.length) {
+                n_group_bys = group_bys;
+            }
+            self.last_group_bys = n_group_bys;
+            // gather the fields to get
+            var fields = _.compact(_.map(["date_start", "date_delay", "date_stop", "progress"], function(key) {
+                return self.fields_view.arch.attrs[key] || '';
+            }));
 
-            if (event.allDay) {
-                // Sometimes fulltimeline doesn't give any event.end.
-                if (event_end == null || _.isUndefined(event_end)) {
-                    event_end = new Date(event.start);
-                }
-                if (this.all_day) {
-                    // event_end = (new Date(event_end.getTime())).addDays(1);
-                    date_start_day = new Date(Date.UTC(event.start.getFullYear(),event.start.getMonth(),event.start.getDate()));
-                    date_stop_day = new Date(Date.UTC(event_end.getFullYear(),event_end.getMonth(),event_end.getDate()));                    
-                }
-                else {
-                    date_start_day = new Date(event.start.getFullYear(),event.start.getMonth(),event.start.getDate(),7);
-                    date_stop_day = new Date(event_end.getFullYear(),event_end.getMonth(),event_end.getDate(),19);
-                }
-                data[this.date_start] = instance.web.parse_value(date_start_day, this.fields[this.date_start]);
-                if (this.date_stop) {
-                    data[this.date_stop] = instance.web.parse_value(date_stop_day, this.fields[this.date_stop]);
-                }
-                diff_seconds = Math.round((date_stop_day.getTime() - date_start_day.getTime()) / 1000);
-                                
-            }
-            else {
-                data[this.date_start] = instance.web.parse_value(event.start, this.fields[this.date_start]);
-                if (this.date_stop) {
-                    data[this.date_stop] = instance.web.parse_value(event_end, this.fields[this.date_stop]);
-                }
-                diff_seconds = Math.round((event_end.getTime() - event.start.getTime()) / 1000);
-            }
+            fields = _.uniq(fields.concat(_.pluck(this.colors, "field").concat(n_group_bys)));
+            var group_by = self.fields[_.first(n_group_bys)]
+            var read_groups = new instance.web.DataSet(this, group_by.relation, group_by.context)
+                .name_search('', group_by.domain)
+                .then(function(groups){
+                    self.groups = groups;
+                });
 
-            if (this.all_day) {
-                data[this.all_day] = event.allDay;
-            }
-
-            if (this.date_delay) {
-                
-                data[this.date_delay] = diff_seconds / 3600;
-            }
-            return data;
+            return $.when(this.has_been_loaded, read_groups).then(function() {
+                return self.dataset.read_slice(fields, {
+                    domain: domains,
+                    context: contexts
+                }).then(function(data) {
+                    return self.on_data_loaded(data, n_group_bys);
+                });
+            });
         },
 
-         do_search: function (domains, contexts, group_bys) {
-        var self = this;
-        self.last_domains = domains;
-        self.last_contexts = contexts;
-        self.last_group_bys = group_bys;
-        // self.reload_gantt();
-        // select the group by
-        var n_group_bys = [];
-        if (this.fields_view.arch.attrs.default_group_by) {
-            n_group_bys = this.fields_view.arch.attrs.default_group_by.split(',');
-        }
-        if (group_bys.length) {
-            n_group_bys = group_bys;
-        }
-        // gather the fields to get
-        var fields = _.compact(_.map(["date_start", "date_delay", "date_stop", "progress"], function(key) {
-            return self.fields_view.arch.attrs[key] || '';
-        }));
-        fields = _.uniq(fields.concat(_.pluck(this.colors, "field").concat(n_group_bys)));
         
-        return $.when(this.has_been_loaded).then(function() {
-            return self.dataset.read_slice(fields, {
-                domain: domains,
-                context: contexts
-            }).then(function(data) {
-                return self.on_data_loaded(data, n_group_bys);
+        reload: function() {
+            var self = this;
+            if (this.last_domains !== undefined)
+                return this.do_search(this.last_domains, this.last_contexts, this.last_group_bys);
+        },
+
+        on_data_loaded: function(tasks, group_bys) {
+            var self = this;
+            var ids = _.pluck(tasks, "id");
+            return this.dataset.name_get(ids).then(function(names) {
+                var ntasks = _.map(tasks, function(task) {
+                    return _.extend({__name: _.detect(names, function(name) { return name[0] == task.id; })[1]}, task); 
+                });
+                return self.on_data_loaded_2(ntasks, group_bys);
             });
-        });
-    },
-    reload: function() {
-        var self = this;
-        if (this.last_domains !== undefined)
-            return this.do_search(this.last_domains, this.last_contexts, this.last_group_bys);
-    },
-    on_data_loaded: function(tasks, group_bys) {
-        var self = this;
-        var ids = _.pluck(tasks, "id");
-        return this.dataset.name_get(ids).then(function(names) {
-            var ntasks = _.map(tasks, function(task) {
-                return _.extend({__name: _.detect(names, function(name) { return name[0] == task.id; })[1]}, task); 
-            });
-            return self.on_data_loaded_2(ntasks, group_bys);
-        });
-    },
-    
+        },
+
         on_data_loaded_2: function(tasks, group_bys) {
             var self = this;
             var data = [];
+            var groups = [];
+            groups.push({id:-1, content:'undefined'})
             self.group_by_name = {};
             _.each(tasks, function(event) {
-                    data.push(self.event_data_transform(event));
+                data.push(self.event_data_transform(event));
             });
-            this.timeline.draw(data);
-            this.timeline.setVisibleChartRange(new Date(), null);
-            this.timeline.zoom(0.5, new Date());
+            _.each(self.groups, function(group){
+                groups.push({id: group[0], content: group[1]});
+            });
+            this.timeline.setGroups(groups);
+            this.timeline.setItems(data);
+            this.timeline.moveTo(new Date(), true);
+            //this.timeline.zoom(0.5, new Date());
         },
             
         set_records: function(events){
@@ -448,19 +407,19 @@ openerp.web_timeline = function(instance) {
         },
 
         /**
-		 * Handles a newly created record
-		 * 
-		 * @param {id} id of the newly created record
-		 */
+         * Handles a newly created record
+         * 
+         * @param {id} id of the newly created record
+         */
         quick_created: function (id) {
 
             /**
-			 * Note: it's of the most utter importance NOT to use inplace
-			 * modification on this.dataset.ids as reference to this data is
-			 * spread out everywhere in the various widget. Some of these
-			 * reference includes values that should trigger action upon
-			 * modification.
-			 */
+             * Note: it's of the most utter importance NOT to use inplace
+             * modification on this.dataset.ids as reference to this data is
+             * spread out everywhere in the various widget. Some of these
+             * reference includes values that should trigger action upon
+             * modification.
+             */
             this.dataset.ids = this.dataset.ids.concat([id]);
             this.dataset.trigger("dataset_changed", id);
             this.refresh_event(id);
@@ -471,7 +430,7 @@ openerp.web_timeline = function(instance) {
             function do_it() {
                 return $.when(self.dataset.unlink([item.evt.id])).then(function() {
                     if(! isNullOrUndef(index)){
-                    	self.timeline.deleteItem(index);
+                        self.timeline.deleteItem(index);
                     }
                 });
             }
