@@ -1,16 +1,6 @@
 openerp.web_completion_search = function(instance, local) {
     var _t = instance.web._t;
 
-
-    instance.web.form.CompletionFieldMixin.init = function() {
-        if (this.field.type == 'many2many') {
-            this.limit = 0;
-        } else {
-            this.limit = 7;
-        }
-        this.orderer = new instance.web.DropMisordered();
-    };
-
     instance.web.form.CompletionFieldMixin._search_create_popup = function(view, ids, context) {
         var self = this;
         var pop = new instance.web.form.SelectCreatePopup(this);
