@@ -1,4 +1,5 @@
-openerp.web_completion_search = function(instance, local) {
+openerp.web_m2m_tags_multiple_selection = function(instance, local) {
+
     var _t = instance.web._t;
 
     instance.web.form.CompletionFieldMixin._search_create_popup = function(view, ids, context) {
