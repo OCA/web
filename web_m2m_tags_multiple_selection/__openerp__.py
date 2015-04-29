@@ -20,7 +20,7 @@
 ##############################################################################
 
 {
-    'name': 'Web completion_search',
+    'name': 'Web many2many_tags multiple selection',
     'version': '0.1',
     'author': 'Akretion, Odoo Community Association (OCA)',
     'depends': [
@@ -29,7 +29,7 @@
     'demo': [],
     'website': 'https://www.akretion.com',
     'data': [
-        'views/web_completion_search.xml',
+        'views/web_m2m_tags_multiple_selection.xml',
     ],
     'installable': True,
     'auto_install': False,
