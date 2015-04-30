@@ -1,4 +1,4 @@
-openerp.web_m2m_tags_multiple_selection = function(instance, local) {
+openerp.web_widget_many2many_tags_multi_selection = function(instance, local) {
 
     var _t = instance.web._t;
 
@@ -8,7 +8,7 @@ openerp.web_m2m_tags_multiple_selection = function(instance, local) {
         var domain = self.build_domain();
 
         if (self.field.type == 'many2many') {
-            var selected_ids =self.get_search_blacklist();
+            var selected_ids = self.get_search_blacklist();
             if (selected_ids.length > 0) {
                 domain = new instance.web.CompoundDomain(domain, ["!", ["id", "in", selected_ids]]);
             }
