@@ -133,23 +133,64 @@ openerp.web_timeline = function(instance) {
         init_timeline: function() {
             var self = this;
             var options = {
+                groupOrder: 'content',
                 editable: {
                     add: self.write_right,         // add new items by double tapping
                     updateTime: self.write_right,  // drag items horizontally
                     updateGroup: self.write_right, // drag items from one group to another
                     remove: self.unlink_right,       // delete an item by tapping the delete button top right
                 },
+                selectable: true,
                 showCurrentTime: true,
                 start: new Date(),
+                
+                onAdd: function (item, callback) {
+                    self.on_task_create(item);
+                },
+
+                onMove: function (item, callback) {
+                    self.on_item_changed(item);
+                    callback(item); // send back adjusted item
+                },
+
+                onUpdate: function (item, callback) {
+                  self.on_item_changed(item);
+                  callback(item); // send back adjusted item
+                },
+
+                onRemove: function (item, callback) {
+                  self.remove_event(item, callback);
+                },
             };
             self.timeline = new vis.Timeline(self.$timeline.get(0));
             self.timeline.setOptions(options);
-            self.register_events();
             return $.when();
         },
 
+        on_task_create: function(item) {
+            var self = this;
+            var pop = new instance.web.form.SelectCreatePopup(this);
+            pop.on("elements_selected", self, function() {
+                self.reload();
+            });
+            context = {};
+            context['default_'.concat(self.date_start)] = item.start;
+            context['default_'.concat(self.last_group_bys[0])] = item.group;
+            pop.select_element(
+                self.dataset.model,
+                {
+                    title: _t("Create"),
+                    initial_view: "form",
+                },
+                null,
+               context
+            );
+        },
         register_events: function(){
             var self = this;
+            var options = {
+                            };
+            self.timeline.setOptions(options);
             self.timeline.on('edit', function() {
                 var sel = self.timeline.getSelection();
                 if (sel.length) {
@@ -352,18 +393,11 @@ openerp.web_timeline = function(instance) {
 
                var form_controller = pop.view_form;
                form_controller.on("load_record", self, function(){
-                    button_delete = _.str.sprintf("<button class='oe_button oe_bold delme'><span> %s </span></button>",_t("Delete"));
                     button_edit = _.str.sprintf("<button class='oe_button oe_bold editme oe_highlight'><span> %s </span></button>",_t("Edit Event"));
                     
                     pop.$el.closest(".modal").find(".modal-footer").prepend(button_delete);
                     pop.$el.closest(".modal").find(".modal-footer").prepend(button_edit);
                     
-                    $('.delme').click(
-                        function() {
-                            $('.oe_form_button_cancel').trigger('click');
-                            self.remove_event(item, index);
-                        }
-                    );
                     $('.editme').click(
                         function() {
                             $('.oe_form_button_cancel').trigger('click');
@@ -393,8 +427,8 @@ openerp.web_timeline = function(instance) {
             var start = item.start;
             var end = item.end;
             var group = false;
-            if (item.group in self.group_by_name) {
-                group = self.group_by_name[item.group];
+            if (item.group) {
+                group = item.group;
             }
             var data = {};
            data[self.fields_view.arch.attrs.date_start] =
@@ -425,13 +459,11 @@ openerp.web_timeline = function(instance) {
             this.refresh_event(id);
         },
 
-        remove_event: function(item, index) {
+        remove_event: function(item, callback) {
             var self = this;
             function do_it() {
                 return $.when(self.dataset.unlink([item.evt.id])).then(function() {
-                    if(! isNullOrUndef(index)){
-                        self.timeline.deleteItem(index);
-                    }
+                    callback(item);
                 });
             }
             if (this.options.confirm_on_delete) {
