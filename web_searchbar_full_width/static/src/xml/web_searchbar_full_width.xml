@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-extend="ViewManagerAction">
+        <t t-jquery="tr.oe_header_row_top td:nth-child(1)">
+            jQuery(this).attr('colspan', 4);
+        </t>
+        <t t-jquery="tr.oe_header_row_top td:nth-child(2)">
+            var $new_row = jQuery('<tr class="oe_header_row"/>');
+            jQuery(this)
+            .parents('tr')
+            .after($new_row);
+            $new_row.append(jQuery(this).attr('colspan', 4));
+        </t>
+    </t>
+</templates>
