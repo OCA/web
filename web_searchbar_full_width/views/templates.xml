@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="web_searchbar_full_width assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/web_searchbar_full_width/static/src/css/web_searchbar_full_width.css"/>
+            </xpath>
+        </template>
+    </data>
+</openerp>
