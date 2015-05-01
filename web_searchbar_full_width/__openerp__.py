@@ -26,6 +26,7 @@
     "category": "Tools",
     "summary": "Show search bar in full screen width",
     "depends": [
+        'web',
     ],
     "data": [
         'views/templates.xml',
