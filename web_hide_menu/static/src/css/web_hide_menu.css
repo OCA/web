@@ -2,7 +2,7 @@
 {
     height: 100%;
 }
-.oe_leftbar
+.openerp .oe_leftbar
 {
     display: block;
     position: absolute;
@@ -10,10 +10,19 @@
     top: 0px;
     bottom: 0px;
     z-index: 100;
+    width: auto;
 }
 .openerp .oe_leftbar > div
 {
-    width: 100%;
+    width: auto;
+}
+.openerp .oe_leftbar > div > div > div
+{
+    overflow-y: auto;
+}
+.openerp .oe_leftbar > div > div > div > div.oe_secondary_menus_container
+{
+    position: static;
 }
 #oe_main_menu_navbar
 {
