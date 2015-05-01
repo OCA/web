@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="param_show_bar_treshold" model="ir.config_parameter">
+            <field name="key">web_hide_menu.show_bar_treshold</field>
+            <field name="value">10</field>
+        </record>
+        <record id="param_hide_delay" model="ir.config_parameter">
+            <field name="key">web_hide_menu.hide_delay</field>
+            <field name="value">10000</field>
+        </record>
+    </data>
+</openerp>
