@@ -131,30 +131,29 @@ openerp.web_hide_menu = function(instance)
         },
     });
     instance.web.Menu.include({
+        close_leftbar: false,
         start: function()
         {
             this.on('menu_click', this, this.on_menu_click_with_action);
             openerp.client.toggle_left_bar(false, openerp.client.hide_delay);
             return this._super.apply(this, arguments);
         },
-        on_top_menu_click: function()
+        on_menu_click_with_action: function(menu, $element)
         {
-            this.top_menu_click = true;
-            return this._super.apply(this, arguments);
-        },
-        on_menu_click_with_action: function()
-        {
-            this.close_menu = !this.top_menu_click;
-            this.top_menu_click = false;
+            //close if it's not a menu containing other menus
+            this.close_leftbar = (
+                $element.parents('#oe_main_menu_navbar').length == 0 &&
+                $element.parent().children('ul').length == 0
+            );
         },
         open_menu: function()
         {
             this._super.apply(this, arguments);
-            if(this.close_menu)
+            if(this.close_leftbar)
             {
                 openerp.client.toggle_left_bar(false);
             }
-            this.close_menu = false;
+            this.close_leftbar = false;
         },
     });
 }
