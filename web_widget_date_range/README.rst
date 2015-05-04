@@ -18,14 +18,11 @@ Usage
 
 To use this module, you need to:
 
-* To use this list view we need to set the ``web_widget_date_range`` as
-  view_mode for the window action that shows your view.
+* To use this list view we need to set the ``web_widget_date_range`` as view_mode for the window action that shows your view.
 
-* Once on view, we can select the date for which we want to filter via
-``Field Date`` selector
+* Once on view, we can select the date for which we want to filter via ``Field Date`` selector
 
-* To apply the query, you need to press the ``Apply``, there is also a
-``Reset`` button via which we can reset the current query
+* To apply the query, you need to press the ``Apply``, there is also a ``Reset`` button via which we can reset the current query
 
 Example
 -------
