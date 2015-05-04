@@ -1,7 +1,7 @@
 Hide menus
 ==========
 
-This addon hides the top menu bar and the left menu bar. They become visible again when you move the mouse towards the border of the screen (the distance is configurable). Moving the mouse out of a menu causes it to disappear after a configurable delay.
+This addon hides the top and left menu bars. They become visible again when you move the mouse towards the border of the screen (the distance is configurable). Moving the mouse out of a menu causes it to disappear after a configurable delay.
 
 Configuration
 =============
@@ -9,8 +9,8 @@ Configuration
 To configure this module, you need to:
 
 * go to Settings / Technical / Parameters / System Parameters
-* adjust `web_hide_menu.show_bar_treshold` to set the distance in pixels from the border from which the menu appears
-* adjust `web_hide_menu.hide_delay` to set the amount of milliseconds after which the menu disappears if the mouse left it
+* adjust `web_hide_menu.show_bar_treshold` to set the distance in pixels from the border from which the menu appears (default is 10 pixels)
+* adjust `web_hide_menu.hide_delay` to set the amount of milliseconds after which the menu disappears if the mouse left it (default is 10 seconds)
 
 Known issues / Roadmap
 ======================
