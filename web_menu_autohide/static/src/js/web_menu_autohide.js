@@ -32,7 +32,7 @@ openerp.web_hide_menu = function(instance)
             return this._super.apply(this, arguments)
             .then(function()
             {
-                var addon_name = 'web_hide_menu',
+                var addon_name = 'web_menu_autohide',
                     parameters = _.map(
                         ['show_bar_treshold', 'hide_delay'],
                         function(a) { return addon_name + '.' + a });

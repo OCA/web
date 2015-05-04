@@ -3,8 +3,8 @@
     <data>
         <template id="assets_backend" name="web_hide_menu assets" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
-                <script type="text/javascript" src="/web_hide_menu/static/src/js/web_hide_menu.js"></script>
-                <link rel="stylesheet" href="/web_hide_menu/static/src/css/web_hide_menu.css"/>
+                <script type="text/javascript" src="/web_menu_autohide/static/src/js/web_menu_autohide.js"></script>
+                <link rel="stylesheet" href="/web_menu_autohide/static/src/css/web_menu_autohide.css"/>
             </xpath>
         </template>
     </data>
