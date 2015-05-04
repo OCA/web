@@ -10,9 +10,9 @@
             <field name="arch" type="xml">
                 <timeline date_start="date_start" 
                           date_stop="date_end"
-                          progress="progress"
+                          date_delay='1'
                           string="Tasks"
-                          default_group_by="user_id" event_open_popup="true" colors="#ec7063:kanban_state=='blocked';#2ecb71:kanban_state=='done';#95a5a5:kanban_state=='normal';">
+                          default_group_by="user_id" event_open_popup="true" colors="#ec7063:user_id == false;#2ecb71:kanban_state=='done';">
                 </timeline>
             </field>
         </record>

@@ -25,10 +25,10 @@ openerp.web_timeline = function(instance) {
         template: "TimelineView",
         display_name: _lt('Timeline'),
         quick_create_instance: 'instance.web_timeline.QuickCreate',
-
         init: function (parent, dataset, view_id, options) {
             this._super(parent);
             this.ready = $.Deferred();
+            this.permissions = {};
             this.set_default_options(options);
             this.dataset = dataset;
             this.model = dataset.model;
@@ -39,7 +39,24 @@ openerp.web_timeline = function(instance) {
             this.range_start = null;
             this.range_stop = null;
             this.selected_filters = [];
-            this.group_by_name = {};
+            this.current_window = null;
+        },
+
+        get_perm: function(name){
+            var self = this;
+            var promise = self.permissions[name];
+            if(!promise) {
+                var defer = $.Deferred();
+                new instance.web.Model(this.dataset.model)
+                .call("check_access_rights", [name, false])
+                .then(function (value) {
+                    self.permissions[name] = value;
+                    defer.resolve();
+                });
+                return defer;
+            } else {
+              return promise;
+            }
         },
 
         set_default_options: function(options) {
@@ -66,7 +83,11 @@ openerp.web_timeline = function(instance) {
             this.fields_view = fv;
             this.parse_colors();
             this.$timeline = this.$el.find(".oe_timeline_widget");
-
+            this.$el.find(".oe_timeline_button_today").click(self.on_today_clicked);
+            this.current_window = {
+                  start: new Date(),
+                  end : new Date().addHours(24),
+            }
             this.info_fields = [];
 
             if (!attrs.date_start) {
@@ -117,116 +138,54 @@ openerp.web_timeline = function(instance) {
                     self.write_right = write_right;
                     
                 });
-            var init = new instance.web.Model(this.dataset.model)
-                .call("check_access_rights", ["create", false])
-                .then(function (create_right) {
-                    self.create_right = create_right;
+            var init = function () {
                     self.init_timeline().then(function() {
                         $(window).trigger('resize');
                         self.trigger('timeline_view_loaded', fv);
                         self.ready.resolve();
                     });
-                });
-            return $.when(fields_get.then(unlink_check).then(edit_check).then(init));
+                };
+            
+            var test = $.when(self.fields_get, self.get_perm('unlink'), self.get_perm('write'), self.get_perm('create'));
+            return $.when(test).then(init);
         },
 
         init_timeline: function() {
             var self = this;
             var options = {
-                groupOrder: 'content',
+                groupOrder: self.group_order,
                 editable: {
-                    add: self.write_right,         // add new items by double tapping
-                    updateTime: self.write_right,  // drag items horizontally
-                    updateGroup: self.write_right, // drag items from one group to another
-                    remove: self.unlink_right,       // delete an item by tapping the delete button top right
+                    add: self.permissions['create'],         // add new items by double tapping
+                    updateTime: self.permissions['write'],  // drag items horizontally
+                    updateGroup: self.permissions['write'], // drag items from one group to another
+                    remove: self.permissions['unlink'],       // delete an item by tapping the delete button top right
                 },
                 selectable: true,
                 showCurrentTime: true,
-                start: new Date(),
-                
-                onAdd: function (item, callback) {
-                    self.on_task_create(item);
-                },
-
-                onMove: function (item, callback) {
-                    self.on_item_changed(item);
-                    callback(item); // send back adjusted item
-                },
-
-                onUpdate: function (item, callback) {
-                  self.on_item_changed(item);
-                  callback(item); // send back adjusted item
-                },
-
-                onRemove: function (item, callback) {
-                  self.remove_event(item, callback);
-                },
+                onAdd: self.on_add,
+                onMove: self.on_move,
+                onUpdate: self.on_update,
+                onRemove: self.on_remove,
             };
             self.timeline = new vis.Timeline(self.$timeline.get(0));
             self.timeline.setOptions(options);
             return $.when();
         },
 
-        on_task_create: function(item) {
-            var self = this;
-            var pop = new instance.web.form.SelectCreatePopup(this);
-            pop.on("elements_selected", self, function() {
-                self.reload();
-            });
-            context = {};
-            context['default_'.concat(self.date_start)] = item.start;
-            context['default_'.concat(self.last_group_bys[0])] = item.group;
-            pop.select_element(
-                self.dataset.model,
-                {
-                    title: _t("Create"),
-                    initial_view: "form",
-                },
-                null,
-               context
-            );
-        },
-        register_events: function(){
-            var self = this;
-            var options = {
-                            };
-            self.timeline.setOptions(options);
-            self.timeline.on('edit', function() {
-                var sel = self.timeline.getSelection();
-                if (sel.length) {
-                  if (sel[0].row != undefined) {
-                    var row = sel[0].row;
-                    self.open_event(row);
-                  }
-               }
-            });
-            self.timeline.on('delete', function() {
-                if(! self.unlink_right){
-                    self.timeline.cancelDelete();
-                    alert(_t("You are not allowed to delete this event ?"));
-                }
-                var sel = self.timeline.getSelection();
-                if (sel.length) {
-                  if (sel[0].row != undefined) {
-                    var row = sel[0].row;
-                    self.remove_event(self.timeline.getItem(row), undefined);
-                  }
-               }
-            });
-            self.timeline.on('changed', function() {
-               var sel = self.timeline.getSelection();
-                if (sel.length) {
-                  if (sel[0].row != undefined) {
-                    var row = sel[0].row;
-                    self.on_item_changed(self.timeline.getItem(row));
-                  }
-               }
-            });
+        group_order: function(grp1, grp2) {
+            // display non grouped elements first
+            if (grp1.id === -1){
+                return -1;
+            }
+            if (grp2.id === -1){
+                return +1;
+            }
+            return grp1.content - grp2.content;
+            
         },
 
-          
         /**
-         * Transform OpenERP event object to fulltimeline event object
+         * Transform OpenERP event object to timeline event object
          */
         event_data_transform: function(evt) {
             var self = this;
@@ -258,6 +217,10 @@ openerp.web_timeline = function(instance) {
             } else {
                     group = -1;
             }
+            _.each(self.colors, function(color){
+                if(eval("'" + evt[color.field] + "' " + color.opt + " '" + color.value + "'"))
+                    self.color = color.color;
+            });
             var r = {
                 'start': date_start,
                 'end': date_stop,
@@ -265,20 +228,10 @@ openerp.web_timeline = function(instance) {
                 'id': evt.id,
                 'group': group,
                 'evt': evt,
+                'style': 'background-color: ' + self.color + ';',
                 
             };
-            if (!self.useContacts || self.all_filters[evt[this.color_field]] !== undefined) {
-                if (this.color_field && evt[this.color_field]) {
-                    var color_key = evt[this.color_field];
-                    if (typeof color_key === "object") {
-                        color_key = color_key[0];
-                    }
-                    r.className = 'cal_opacity timeline_color_'+ this.get_color(color_key);
-                }
-            }
-            else  { // if form all, get color -1
-                  r.className = 'cal_opacity timeline_color_'+ self.all_filters[-1].color;
-            }
+            self.color = undefined;
             return r;
         },
         
@@ -323,8 +276,10 @@ openerp.web_timeline = function(instance) {
         
         reload: function() {
             var self = this;
-            if (this.last_domains !== undefined)
+            if (this.last_domains !== undefined){
+                self.current_window = self.timeline.getWindow();
                 return this.do_search(this.last_domains, this.last_contexts, this.last_group_bys);
+            }
         },
 
         on_data_loaded: function(tasks, group_bys) {
@@ -342,8 +297,7 @@ openerp.web_timeline = function(instance) {
             var self = this;
             var data = [];
             var groups = [];
-            groups.push({id:-1, content:'undefined'})
-            self.group_by_name = {};
+            groups.push({id:-1, content: _t('Undefined')})
             _.each(tasks, function(event) {
                 data.push(self.event_data_transform(event));
             });
@@ -352,62 +306,9 @@ openerp.web_timeline = function(instance) {
             });
             this.timeline.setGroups(groups);
             this.timeline.setItems(data);
-            this.timeline.moveTo(new Date(), true);
+            this.timeline.setWindow(this.current_window);
+            //this.timeline.moveTo(new Date(), true);
             //this.timeline.zoom(0.5, new Date());
-        },
-            
-        set_records: function(events){
-            var self = this;
-            var data = [];
-            _.each(events, function(event) {
-                this.push(this.event_data_transform(event));
-            });
-            this.timeline.draw(data);   
-        },
-
-        open_event: function(index) {
-            var self = this;
-            var item = self.timeline.getItem(index);
-            var id = item.evt.id;
-            var title = item.evt.__name;
-            var index = index;
-            if (! this.open_popup_action) {
-                var index = this.dataset.get_id_index(id);
-                this.dataset.index = index;
-                if (this.write_right) {
-                    this.do_switch_view('form', null, { mode: "edit" });
-                } else {
-                    this.do_switch_view('form', null, { mode: "view" });
-                }
-            }
-            else {
-                var pop = new instance.web.form.FormOpenPopup(this);
-                var id_cast = parseInt(id).toString() == id ? parseInt(id) : id;
-                pop.show_element(this.dataset.model, id_cast, this.dataset.get_context(), {
-                    title: _.str.sprintf(_t("View: %s"),title),
-                    view_id: +this.open_popup_action,
-                    res_id: id_cast,
-                    target: 'new',
-                    readonly:true
-                });
-
-               var form_controller = pop.view_form;
-               form_controller.on("load_record", self, function(){
-                    button_edit = _.str.sprintf("<button class='oe_button oe_bold editme oe_highlight'><span> %s </span></button>",_t("Edit Event"));
-                    
-                    pop.$el.closest(".modal").find(".modal-footer").prepend(button_delete);
-                    pop.$el.closest(".modal").find(".modal-footer").prepend(button_edit);
-                    
-                    $('.editme').click(
-                        function() {
-                            $('.oe_form_button_cancel').trigger('click');
-                            self.dataset.index = self.dataset.get_id_index(id);
-                            self.do_switch_view('form', null, { mode: "edit" });
-                        }
-                    );
-               });
-            }
-            return false;
         },
 
         do_show: function() {
@@ -421,25 +322,6 @@ openerp.web_timeline = function(instance) {
             }
             return this._super(action);
         },
-
-        on_item_changed: function(item) {
-            var self = this;
-            var start = item.start;
-            var end = item.end;
-            var group = false;
-            if (item.group) {
-                group = item.group;
-            }
-            var data = {};
-           data[self.fields_view.arch.attrs.date_start] =
-               instance.web.auto_date_to_str(start, self.fields[self.fields_view.arch.attrs.date_start].type);
-           data[self.fields_view.arch.attrs.date_stop] = 
-                instance.web.auto_date_to_str(end, self.fields[self.fields_view.arch.attrs.date_stop].type);
-           data[self.fields_view.arch.attrs.default_group_by] = group; 
-           var id = item.evt.id;
-           this.dataset.write(id, data);
-        },
-
         /**
          * Handles a newly created record
          * 
@@ -459,7 +341,110 @@ openerp.web_timeline = function(instance) {
             this.refresh_event(id);
         },
 
-        remove_event: function(item, callback) {
+        on_add: function(item, callback) {
+            var self = this;
+            var pop = new instance.web.form.SelectCreatePopup(this);
+            pop.on("elements_selected", self, function(element_ids) {
+                self.reload().then(function() {
+                    self.timeline.focus(element_ids);
+                });
+            });
+            context = {};
+            context['default_'.concat(self.date_start)] = item.start;
+            context['default_'.concat(self.last_group_bys[0])] = item.group;
+            context['default_'.concat(self.date_stop)] = item.start.clone().addHours(this.date_delay || 1);
+            pop.select_element(
+                self.dataset.model,
+                {
+                    title: _t("Create"),
+                    initial_view: "form",
+                },
+                null,
+               context
+            );
+        },
+
+        on_update: function(item, callback) {
+            var self = this;
+            var id = item.evt.id;
+            var title = item.evt.__name;
+            if (! this.open_popup_action) {
+                var index = this.dataset.get_id_index(id);
+                this.dataset.index = index;
+                if (this.write_right) {
+                    this.do_switch_view('form', null, { mode: "edit" });
+                } else {
+                    this.do_switch_view('form', null, { mode: "view" });
+                }
+            }
+            else {
+                var id_cast = parseInt(id).toString() == id ? parseInt(id) : id;
+                var pop = new instance.web.form.FormOpenPopup(self);
+                pop.on('write_completed', self, self.reload);
+                pop.show_element(
+                    self.dataset.model,
+                    id_cast,
+                    null,
+                    {readonly: true, title: title}
+                );
+                //pop.on('closed', self, self.reload);
+                var form_controller = pop.view_form;
+                form_controller.on("load_record", self, function() {
+                     var footer = pop.$el.closest(".modal").find(".modal-footer");
+                     footer.find('.oe_form_button_edit,.oe_form_button_save').remove();
+                     footer.find(".oe_form_button_cancel").prev().remove();
+                     footer.find('.oe_form_button_cancel').before("<span> or </span>");
+                     button_edit = _.str.sprintf("<button class='oe_button oe_form_button_edit oe_bold oe_highlight'><span> %s </span></button>",_t("Edit"));
+                     button_save = _.str.sprintf("<button class='oe_button oe_form_button_save oe_bold oe_highlight'><span> %s </span></button>",_t("Save"));
+                     footer.prepend(button_edit + button_save);
+                     footer.find('.oe_form_button_save').hide();
+                     footer.find('.oe_form_button_edit').on('click', function() {
+                         form_controller.to_edit_mode();
+                         footer.find('.oe_form_button_edit,.oe_form_button_save').toggle();
+                     });
+                     footer.find('.oe_form_button_save').on('click', function() {
+                         form_controller.save();
+                         form_controller.to_view_mode();
+                         footer.find('.oe_form_button_edit,.oe_form_button_save').toggle();
+                     });
+                     var chatter = pop.$el.closest(".modal").find(".oe_chatter");
+                     if(chatter.length){
+                         var chatter_toggler = $($.parseHTML(_.str.sprintf('<div class="oe_chatter_toggle fa fa-plus-circle"><span> %s </span><div class="oe_chatter_content"></div></div>', _t("Messages"))));
+                         chatter.before(chatter_toggler)
+                         var chatter_content = chatter_toggler.find(".oe_chatter_content");
+                         chatter_content.prepend(chatter); 
+                         chatter_content.toggle();
+                         chatter_toggler.click(function(){
+                             chatter_content.toggle();
+                             chatter_toggler.toggleClass('fa-plus-circle fa-minus-circle');
+                         });
+                     }
+                });
+            }
+            return false;
+        },
+
+        on_move: function(item, callback) {
+            var self = this;
+            var start = item.start;
+            var end = item.end;
+            var group = false;
+            if (item.group != -1) {
+                group = item.group;
+            }
+            var data = {};
+            data[self.fields_view.arch.attrs.date_start] =
+                instance.web.auto_date_to_str(start, self.fields[self.fields_view.arch.attrs.date_start].type);
+            data[self.fields_view.arch.attrs.date_stop] = 
+                 instance.web.auto_date_to_str(end, self.fields[self.fields_view.arch.attrs.date_stop].type);
+            data[self.fields_view.arch.attrs.default_group_by] = group; 
+            var id = item.evt.id;
+            this.dataset.write(id, data).then(function() {
+                self.reload();
+            });
+        },
+
+        on_remove: function(item, callback) {
             var self = this;
             function do_it() {
                 return $.when(self.dataset.unlink([item.evt.id])).then(function() {
@@ -473,5 +458,17 @@ openerp.web_timeline = function(instance) {
             } else
                 return do_it();
         },
+
+        on_today_clicked: function(){
+            this.current_window = {
+                    start: new Date(),
+                    end : new Date().addHours(24),
+              }
+            
+          if (this.timeline){
+              this.timeline.setWindow(this.current_window);
+          }  
+        },
+
     });
 };

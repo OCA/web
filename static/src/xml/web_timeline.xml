@@ -1,6 +1,10 @@
 <template>
   <t t-name="TimelineView">
     <div class="oe_timeline_view">
+        <div class="oe_timeline_buttons btn-group btn-sm">
+          <button class="btn btn-default btn-sm oe_timeline_button_today">Today</button>
+          
+      </div>
       <div class="oe_timeline_widget" />
     </div>
   </t>
