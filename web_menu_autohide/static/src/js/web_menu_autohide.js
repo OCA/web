@@ -19,7 +19,7 @@
 //
 //############################################################################
 
-openerp.web_hide_menu = function(instance)
+openerp.web_menu_autohide = function(instance)
 {
     instance.web.WebClient.include({
         show_bar_treshold: 10,
