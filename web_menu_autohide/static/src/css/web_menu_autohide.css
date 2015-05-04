@@ -16,14 +16,6 @@
 {
     width: auto;
 }
-.openerp .oe_leftbar > div > div > div
-{
-    overflow-y: auto;
-}
-.openerp .oe_leftbar > div > div > div > div.oe_secondary_menus_container
-{
-    position: static;
-}
 #oe_main_menu_navbar
 {
     position: absolute;
