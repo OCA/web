@@ -31,7 +31,7 @@ Example
 -------
 
 Your window action could look like::
-    ``
+
     <record id="my_view_id" model="ir.actions.act_window">
         <field name="type">ir.actions.act_window</field>
         ...
@@ -39,7 +39,6 @@ Your window action could look like::
         <field name="view_mode">web_widget_date_range</field>
         ...
     </record>
-    ``
 
 Credits
 =======
