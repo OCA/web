@@ -30,15 +30,8 @@ To use this module, you need to:
 Example
 -------
 
-Your window action could look like::
-
-    <record id="my_view_id" model="ir.actions.act_window">
-        <field name="type">ir.actions.act_window</field>
-        ...
-        <field name="view_type">form</field>
-        <field name="view_mode">web_widget_date_range</field>
-        ...
-    </record>
+.. image:: /web_widget_date_range/static/description/code.png
+    :alt: Example Web Widget Date Range
 
 Credits
 =======
