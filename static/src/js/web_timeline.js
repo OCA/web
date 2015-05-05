@@ -84,6 +84,10 @@ openerp.web_timeline = function(instance) {
             this.parse_colors();
             this.$timeline = this.$el.find(".oe_timeline_widget");
             this.$el.find(".oe_timeline_button_today").click(self.on_today_clicked);
+            this.$el.find(".oe_timeline_button_scale_day").click(self.on_scale_day_clicked);
+            this.$el.find(".oe_timeline_button_scale_week").click(self.on_scale_week_clicked);
+            this.$el.find(".oe_timeline_button_scale_month").click(self.on_scale_month_clicked);
+            this.$el.find(".oe_timeline_button_scale_year").click(self.on_scale_year_clicked);
             this.current_window = {
                   start: new Date(),
                   end : new Date().addHours(24),
@@ -160,12 +164,14 @@ openerp.web_timeline = function(instance) {
                     updateGroup: self.permissions['write'], // drag items from one group to another
                     remove: self.permissions['unlink'],       // delete an item by tapping the delete button top right
                 },
+                orientation: 'both',
                 selectable: true,
                 showCurrentTime: true,
                 onAdd: self.on_add,
                 onMove: self.on_move,
                 onUpdate: self.on_update,
                 onRemove: self.on_remove,
+                orientation: 'both',
             };
             self.timeline = new vis.Timeline(self.$timeline.get(0));
             self.timeline.setOptions(options);
@@ -469,6 +475,45 @@ openerp.web_timeline = function(instance) {
               this.timeline.setWindow(this.current_window);
           }  
         },
+        
+        get_middel_date: function(start, end){
+            //Get 1 hour in milliseconds
+            var one_hour=1000*60*60;
+
+            // Convert both dates to milliseconds
+            var date1_ms = start.getTime();
+            var date2_ms = end.getTime();
+
+            // Calculate the difference in milliseconds
+            var difference_ms = date2_ms - date1_ms;
+                
+            // Convert back to days and return
+            nb_hours = Math.round(difference_ms/one_hour);
+            return start.clone().addHours(nb_hours/2)
+          },
+
+          scale_current_window: function(factor){
+              if (this.timeline){
+                  this.current_window = this.timeline.getWindow();
+                  this.current_window.end = this.current_window.start.clone().addHours(factor);
+                  this.timeline.setWindow(this.current_window);
+              }    
+          },
+          
+          on_scale_day_clicked: function(){
+              this.scale_current_window(24);
+          },
+          
+          on_scale_week_clicked: function(){
+              this.scale_current_window(24 * 7);
+          },
+
+          on_scale_month_clicked: function(){
+              this.scale_current_window(24 * 30);
+          },
+          on_scale_year_clicked: function(){
+              this.scale_current_window(24 * 365);
+          },
 
     });
 };
