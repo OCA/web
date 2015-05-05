@@ -20,7 +20,7 @@
 ##############################################################################
 
 {
-    'name': 'web_widget_many2many_tags_multi_selection',
+    'name': 'Tags multiple selection',
     'version': '0.1',
     'author': 'Akretion, Odoo Community Association (OCA)',
     'depends': [
