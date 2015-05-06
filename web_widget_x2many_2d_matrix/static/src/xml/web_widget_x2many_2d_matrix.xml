@@ -1,0 +1,36 @@
+<templates>
+    <t t-name="FieldX2Many2dMatrix">
+        <div t-att-class="widget.widget_class">
+            <table class="oe_list_content">
+                <thead>
+                    <tr class="oe_list_header_columns">
+                        <th />
+                        <th t-foreach="widget.get_x_axis_values()" t-as="x" t-att-data-x="x">
+                            <t t-esc="widget.get_x_axis_label(x)" />
+                        </th>
+                        <th t-if="widget.show_row_totals">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="widget.get_y_axis_values()" t-as="y" t-att-data-y="y">
+                        <th><t t-esc="widget.get_y_axis_label(y)" /></th>
+                        <td t-foreach="widget.get_x_axis_values()" t-as="x" t-att-class="'oe_list_field_cell' + (widget.is_numeric ? ' oe_number' : '')" t-att-data-x="x">
+                            <span t-att-class="widget.get_xy_value_class()">
+                                <input class="edit" t-att-data-id="widget.get_xy_id(x, y)" t-att-value="widget.format_xy_value(widget.get_xy_value(x, y))" />
+                                <span class="read"><t t-esc="widget.format_xy_value(widget.get_xy_value(x, y))" /></span>
+                            </span>
+                        </td>
+                        <td t-if="widget.show_row_totals" class="row_total oe_number" t-att-data-y="y"/>
+                    </tr>
+                </tbody>
+                <tfoot t-if="widget.show_column_totals">
+                    <tr>
+                        <th>Total</th>
+                        <td t-foreach="widget.get_x_axis_values()" t-as="x" class="oe_list_footer oe_number column_total" t-att-data-x="x" />
+                        <td class="grand_total oe_number" />
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </t>
+</templates>
