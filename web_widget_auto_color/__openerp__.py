@@ -24,7 +24,7 @@
 ##############################################################################
 {
     'name': "Web Widget Auto Color",
-    'author': "ACSONE SA/NV",
+    'author': "ACSONE SA/NV,Odoo Community Association (OCA)",
     'website': "http://acsone.eu",
     'category': 'web',
     'version': '0.1',
