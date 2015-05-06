@@ -66,7 +66,7 @@ openerp.web_menu_autohide = function(instance)
             this.toggle_main_menu(hide);
             this.toggle_left_bar(hide);
         },
-        toggle_menu_element(selector, timeout_id, show, delay)
+        toggle_menu_element: function(selector, timeout_id, show, delay)
         {
             if(this[timeout_id])
             {
