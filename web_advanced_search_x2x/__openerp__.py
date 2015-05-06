@@ -32,7 +32,7 @@
         'views/templates.xml',
     ],
     "qweb": [
-        'static/src/xml/web_advanced_search_x2many.xml',
+        'static/src/xml/web_advanced_search_x2x.xml',
     ],
     "test": [
     ],
