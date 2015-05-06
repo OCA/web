@@ -19,13 +19,13 @@
 //
 //############################################################################
 
-openerp.web_advanced_search_x2many = function(instance)
+openerp.web_advanced_search_x2x = function(instance)
 {
-    instance.web_advanced_search_x2many.ExtendedSearchPropositionMany2One = 
+    instance.web_advanced_search_x2x.ExtendedSearchPropositionMany2One = 
     instance.web.search.ExtendedSearchProposition.Char.extend(
     instance.web.form.FieldManagerMixin,
     {
-        template: 'web_advanced_search_x2many.extended_search.proposition.many2one',
+        template: 'web_advanced_search_x2x.extended_search.proposition.many2one',
         searchfield: null,
         start: function()
         {
@@ -102,11 +102,11 @@ openerp.web_advanced_search_x2many = function(instance)
     });
     instance.web.search.custom_filters.add(
         'one2many',
-        'instance.web_advanced_search_x2many.ExtendedSearchPropositionMany2One');
+        'instance.web_advanced_search_x2x.ExtendedSearchPropositionMany2One');
     instance.web.search.custom_filters.add(
         'many2many',
-        'instance.web_advanced_search_x2many.ExtendedSearchPropositionMany2One');
+        'instance.web_advanced_search_x2x.ExtendedSearchPropositionMany2One');
     instance.web.search.custom_filters.add(
         'many2one',
-        'instance.web_advanced_search_x2many.ExtendedSearchPropositionMany2One');
+        'instance.web_advanced_search_x2x.ExtendedSearchPropositionMany2One');
 }
