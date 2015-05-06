@@ -1,7 +1,7 @@
 .openerp .oe_kanban_view .oe_dashbaord_tile{
     width: 150px;
     height: 150px;
-    border: 1px solid;
+    border: 0;
     border-radius: 0;
 }
 
