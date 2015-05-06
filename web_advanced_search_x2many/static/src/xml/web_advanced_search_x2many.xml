@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="web_advanced_search_x2many.extended_search.proposition.many2one">
+        <t t-if="!widget.show_searchfield()">
+            <t t-call="SearchView.extended_search.proposition.char" />
+        </t>
+        <span />
+    </t>
+</templates>
