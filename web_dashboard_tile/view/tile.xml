@@ -56,15 +56,6 @@
                     <templates>
                         <t t-name="kanban-box">
                             <div t-attf-class="oe_dashbaord_tile oe_kanban_global_click" t-attf-style="background-color:#{record.color.raw_value}" >
-    <!-- FIXME: icon is hidden and edit not working if you have no form view need more JS in the future -->
-                                <div class="oe_dropdown_toggle oe_dropdown_kanban">
-                                    <span class="oe_e">í</span>
-                                    <ul class="oe_dropdown_menu">
-                                        <t t-if="widget.view.is_action_enabled('edit')"><li><a type="edit">Edit...</a></li></t>
-                                        <t t-if="widget.view.is_action_enabled('delete')"><li><a type="delete">Delete</a></li></t>
-                                        <li><ul class="oe_kanban_colorpicker" data-field="color"/></li>
-                                    </ul>
-                                </div>
                                 <div class="oe_kanban_content">
                                     <a type="object" name="open_link" args="[]" t-attf-style="color:#{record.font_color.raw_value};">
                                         <div class="tile_label">
