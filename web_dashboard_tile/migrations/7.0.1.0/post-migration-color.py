@@ -2,10 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2010-2013 OpenERP s.a. (<http://openerp.com>).
-#    Copyright (C) 2014 initOS GmbH & Co. KG (<http://www.initos.com>).
 #    Copyright (C) 2015-Today GRAP
-#    Author Markus Schneider <markus.schneider at initos.com>
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -23,4 +20,29 @@
 #
 ##############################################################################
 
-from . import tile
+
+COLOR_NUMERIC_TO_RVB = {
+    0: '#006015',
+    1: '#CD2513',
+    2: '#CDC713',
+    3: '#57158A',
+    4: '#0E9B2D',
+    5: '#7F0C00',
+    6: '#7F7B00',
+    7: '#320455',
+    8: '#CD6E13',
+    9: '#0E6C7E',
+}
+
+
+def migrate_color(cr):
+    for old, new in COLOR_NUMERIC_TO_RVB.iteritems():
+        cr.execute("""
+            UPDATE tile_tile
+            SET color='%s', font_color='#FFFFFF'
+            WHERE color='%s'
+        """ % (new, old))
+
+
+def migrate(cr, installed_version):
+    migrate_color(cr)

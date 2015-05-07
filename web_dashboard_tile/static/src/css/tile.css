@@ -4,72 +4,41 @@
     border: 0;
     border-radius: 0;
 }
-.openerp .oe_kanban_view .oe_dashbaord_tile .tile_count{
-    font-size: 48px;
-    font-weight: bold;
-    position: absolute;
-    left: 9px;
-    bottom: 9px;
+
+.openerp .oe_kanban_view .oe_dashbaord_tile .tile_label,
+.openerp .oe_kanban_view .oe_dashbaord_tile .tile_count_without_computed_value,
+.openerp .oe_kanban_view .oe_dashbaord_tile .tile_count_with_computed_value,
+.openerp .oe_kanban_view .oe_dashbaord_tile .tile_computed_value {
+    width: 140px;
+    text-align: center;
 }
+
 .openerp .oe_kanban_view .oe_dashbaord_tile .tile_label{
-    padding: 9px;
+    padding: 5px;
     font-size: 15px;
 }
-.openerp .oe_kanban_view .oe_dashbaord_tile a{
-    color: #fff;
+
+.openerp .oe_kanban_view .oe_dashbaord_tile .tile_count_without_computed_value{
+    font-size: 52px;
+    font-weight: bold;
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
 }
-.openerp .oe_kanban_view .oe_dashbaord_tile.oe_tile_color_,
-.openerp .oe_kanban_view .oe_dashbaord_tile.oe_tile_color_ a,
-.openerp .oe_kanban_view .oe_dashbaord_tile .oe_dropdown_menu a{
-    color: #000;
+
+.openerp .oe_kanban_view .oe_dashbaord_tile .tile_count_with_computed_value{
+    font-size: 38px;
+    font-weight: bold;
+    position: absolute;
+    left: 5px;
+    bottom: 30px;
 }
-.openerp .oe_kanban_view .oe_tile_color_1, 
-.openerp .oe_dashbaord_tile a.oe_kanban_color_1{
-    background: #CD2513;
-    color: #fff;
-}
-.openerp .oe_kanban_view .oe_tile_color_2,
-.openerp .oe_dashbaord_tile a.oe_kanban_color_2{
-    background: #CDC713;
-    color: #fff;
-}
-.openerp .oe_kanban_view .oe_tile_color_3,
-.openerp .oe_dashbaord_tile a.oe_kanban_color_3{
-    background: #57158A;
-    color: #fff;
-}
-.openerp .oe_kanban_view .oe_tile_color_4, 
-.openerp .oe_dashbaord_tile a.oe_kanban_color_4{
-    background: #0E9B2D;
-    color: #fff;
-}
-.openerp .oe_kanban_view .oe_tile_color_5,
-.openerp .oe_dashbaord_tile a.oe_kanban_color_5{
-    background: #7F0C00;
-    color: #fff;
-}
-.openerp .oe_kanban_view .oe_tile_color_6,
-.openerp .oe_dashbaord_tile a.oe_kanban_color_6{
-    background: #7F7B00;
-    color: #fff;
-}
-.openerp .oe_kanban_view .oe_tile_color_7,
-.openerp .oe_dashbaord_tile a.oe_kanban_color_7{
-    background: #320455;
-    color: #fff;
-}
-.openerp .oe_kanban_view .oe_tile_color_8,
-.openerp .oe_dashbaord_tile a.oe_kanban_color_8{
-    background: #CD6E13;
-    color: #fff;
-}
-.openerp .oe_kanban_view .oe_tile_color_9,
-.openerp .oe_dashbaord_tile a.oe_kanban_color_9{
-    background: #0E6C7E;
-    color: #fff;
-}
-.openerp .oe_kanban_view .oe_tile_color_0,
-.openerp .oe_dashbaord_tile a.oe_kanban_color_0{
-    background: #006015;
-    color: #fff;
+
+.openerp .oe_kanban_view .oe_dashbaord_tile .tile_computed_value{
+    font-size: 18px;
+    font-weight: bold;
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+    font-style: italic;
 }
