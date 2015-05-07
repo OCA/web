@@ -54,8 +54,4 @@ openerp.web_widget_auto_color = function(instance) {
             return style
         }
     });
-    
-
-    instance.web.form.widgets.add('autocolor', 'instance.web.form.AbstractField');
-
 };

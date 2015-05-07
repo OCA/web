@@ -4,9 +4,9 @@
 Web Widget Auto Color
 =====================
 
-This module was written to offer a new autocolor widget which can be used on
-field in trees view. Using this widget causes an identical coloration for cells
-of the same value in a list view.
+This module was written to offer a new autocolor attribute which can be used on
+field in trees view. Using this attribute causes an identical coloration for
+cells of the same value in a list view.
 
 Installation
 ============
@@ -18,14 +18,14 @@ To install this module, you need to:
  Usage
  =====
  
- In the view declaration, put widget='autocolor' attribute in the field tag::
+ In the view declaration, put autocolor="1" attribute in the field tag::
 
     ...
     <field name="arch" type="xml">
         <tree string="View name">
             ...
             <field name="name"/>
-            <field name="name" widget="autocolor"/>
+            <field name="name2" autocolor="1"/>
             ...
         </tree>
     </field>
