@@ -43,10 +43,9 @@ openerp.web_widget_auto_color = function(instance) {
             return sum
         },
 
-        auto_color_cell_style: function(record, column){
+        auto_color_cell_style: function(value){
             style = ''
-            value = record.get(column.name)
-            if (value != false && value != undefined) {
+            if (value != "" && value != undefined) {
                 var intValue = this.getIntValue(value)
                 bgcolor = this.get_seed_random_color(intValue)
                 fontcolor = this.inverse_color(bgcolor)
@@ -57,9 +56,6 @@ openerp.web_widget_auto_color = function(instance) {
     });
     
 
-    instance.web.form.widgets.add('autocolor', 'instance.web.form.FieldAutoColor');
-    
-    instance.web.form.FieldAutoColor = instance.web.form.FieldChar.extend({
-    });
+    instance.web.form.widgets.add('autocolor', 'instance.web.form.AbstractField');
 
 };
