@@ -1,7 +1,7 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
     :alt: License
 
-Web Widget Auto Color
+Web Option Auto Color
 =====================
 
 This module was written to offer a new autocolor attribute which can be used on
