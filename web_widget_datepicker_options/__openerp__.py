@@ -27,8 +27,8 @@
         'base',
         'web',
     ],
-    "js": [
-        'static/src/js/datepicker.js',
+    "data": [
+        'view/qweb.xml',
     ],
     "author": "Vincent Vinet",
     "installable": True,
