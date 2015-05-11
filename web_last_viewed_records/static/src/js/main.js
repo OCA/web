@@ -129,6 +129,8 @@ openerp.web_last_viewed_records = function(instance){
             }
             if (view_type=='form' && !url['id'])
                 return false;
+            if (act.context && act.context.active_id)
+                url['active_id'] = act.context.active_id;
             var last_viewed_item = {
                 'title': title,
                 'url': url,
