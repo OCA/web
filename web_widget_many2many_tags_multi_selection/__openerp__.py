@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2012 Agile Business Group sagl (<http://www.agilebg.com>)
-#    Copyright (C) 2012 Domsense srl (<http://www.domsense.com>)
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2015-TODAY Akretion (<http://www.akretion.com>).
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published
-#    by the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -20,20 +20,16 @@
 ##############################################################################
 
 {
-    'name': 'Export Current View',
-    'version': '1.2',
-    'category': 'Web',
-    'author': "Agile Business Group,Odoo Community Association (OCA)",
-    'website': 'http://www.agilebg.com',
-    'license': 'AGPL-3',
+    'name': 'Tags multiple selection',
+    'version': '0.1',
+    'author': 'Akretion, Odoo Community Association (OCA)',
     'depends': [
         'web',
     ],
+    'demo': [],
+    'website': 'https://www.akretion.com',
     'data': [
-        'view/web_export_view.xml',
-    ],
-    'qweb': [
-        'static/src/xml/web_export_view_template.xml',
+        'views/web_widget_many2many_tags_multi_selection.xml',
     ],
     'installable': True,
     'auto_install': False,
