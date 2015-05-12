@@ -9,7 +9,7 @@
     left: 0px;
     top: 0px;
     bottom: 0px;
-    z-index: 100;
+    z-index: 1110;
     width: auto;
 }
 .openerp .oe_leftbar > div
@@ -22,4 +22,5 @@
     left: 0px;
     right: 0px;
     top: 0px;
+    z-index: 1110;
 }
