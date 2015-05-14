@@ -1,7 +1,12 @@
-sudo: required
 language: python
 python:
   - "2.7"
+
+addons:
+  apt:
+    packages:
+      - expect-dev  # provides unbuffer utility
+      - python-lxml  # because pip installation is slow
 
 virtualenv:
   system_site_packages: true
