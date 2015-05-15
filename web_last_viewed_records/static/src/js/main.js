@@ -22,7 +22,7 @@ openerp.web_last_viewed_records = function(instance){
                         x['view_type'] != item['view_type'] ||
                         x['url']['model'] != item['url']['model'])
                         return false;
-                    if (x['view_type'] == 'form' && x['id'] != item['id'])
+                    if (x['view_type'] == 'form' && x['url']['id'] != item['url']['id'])
                         return false;
                     return true;
                 }))
