@@ -19,7 +19,7 @@
 #
 ##############################################################################
 import itertools
-from openerp.osv.orm import Model
+from openerp.osv.orm import Model, MAGIC_COLUMNS
 from openerp.osv import fields, expression
 from openerp.tools.safe_eval import safe_eval
 from openerp.tools.translate import _
@@ -60,11 +60,19 @@ class IrFilters(Model):
                 ['domain_this', 'union_filter_ids', 'complement_filter_ids'],
                 context=context):
             domain = eval_n(this['domain_this'])
-            domain = expression.OR(
-                [domain] +
-                [eval_n(u['domain']) for u in self.read(
-                    cr, uid, this['union_filter_ids'], ['domain'],
-                    context=context)])
+            for u in self.read(cr, uid, this['union_filter_ids'],
+                               ['domain', 'evaluate_always', 'model_id'],
+                               context=context):
+                if u['evaluate_always']:
+                    matching_ids = self.pool[u['model_id']].search(
+                        cr, uid, eval_n(u['domain']),
+                        context=context)
+                    domain = expression.OR([
+                        domain,
+                        [('id', 'in', matching_ids)],
+                    ])
+                else:
+                    domain = expression.OR([domain, eval_n(u['domain'])])
             for c in self.read(cr, uid, this['complement_filter_ids'],
                                ['domain', 'evaluate_before_negate',
                                 'model_id'],
@@ -88,35 +96,45 @@ class IrFilters(Model):
                     context=None):
         self.write(cr, uid, ids, {'domain_this': field_value})
 
-    def _evaluate_before_negate_get(self, cr, uid, ids, field_name, args,
-                                    context=None):
+    def _evaluate_get(self, cr, uid, ids, field_name, args, context=None):
         """check if this filter contains references to x2many fields. If so,
         then negation goes wrong in nearly all cases, so we evaluate the
         filter and remove its resulting ids"""
         result = {}
         for this in self.read(cr, uid, ids, ['model_id', 'domain'],
                               context=context):
-            result[this['id']] = False
-            complement_domain = expression.normalize_domain(
+            result[this['id']] = {
+                'evaluate_before_negate': False,
+                'evaluate_always': False,
+            }
+            domain = expression.normalize_domain(
                 safe_eval(this['domain'] or 'False') or
                 [expression.FALSE_LEAF])
-            for arg in complement_domain:
-                if not expression.is_leaf(arg):
+            for arg in domain:
+                if not expression.is_leaf(arg) or not isinstance(
+                        arg[0], basestring):
                     continue
                 current_model = self.pool.get(this['model_id'])
                 if not current_model:
                     continue
                 has_x2many = False
+                has_auto_join = False
                 for field_name in arg[0].split('.'):
+                    if field_name in MAGIC_COLUMNS:
+                        continue
                     field = current_model._all_columns[field_name].column
                     has_x2many |= field._type in self._evaluate_before_negate
                     has_x2many |= isinstance(field, fields.function)
+                    has_auto_join |= field._auto_join
+                    has_auto_join |= isinstance(field, fields.function)
                     if hasattr(field, '_obj'):
                         current_model = self.pool.get(field._obj)
-                    if not current_model or has_x2many:
+                    if not current_model or has_x2many and has_auto_join:
                         break
-                if has_x2many:
-                    result[this['id']] = True
+                result[this['id']]['evaluate_before_negate'] |= has_x2many
+                result[this['id']]['evaluate_always'] |= has_auto_join
+                if result[this['id']]['evaluate_before_negate'] and\
+                        result[this['id']]['evaluate_always']:
                     break
         return result
 
@@ -138,10 +156,15 @@ class IrFilters(Model):
         'domain_this': fields.text(
             'This filter\'s own domain', oldname='domain'),
         'evaluate_before_negate': fields.function(
-            _evaluate_before_negate_get, type='boolean',
+            _evaluate_get, type='boolean', multi='evaluate',
             string='Evaluate this filter before negating',
             help='This is necessary if this filter contains positive operators'
-            'on x2many fields')
+            'on x2many fields'),
+        'evaluate_always': fields.function(
+            _evaluate_get, type='boolean', multi='evaluate',
+            string='Always evaluate this filter before using it',
+            help='This is necessary if this filter contains x2many fields with'
+            '_auto_join activated')
     }
 
     _defaults = {
