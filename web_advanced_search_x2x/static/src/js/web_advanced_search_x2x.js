@@ -33,7 +33,7 @@ openerp.web_advanced_search_x2x = function(instance)
             .on('change', this.proxy('operator_changed'));
             return this._super.apply(this, arguments);
         },
-        get_field_desc()
+        get_field_desc: function()
         {
             return this.field;
         },
