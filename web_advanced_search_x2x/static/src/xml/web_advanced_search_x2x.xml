@@ -4,6 +4,9 @@
         <t t-if="!widget.show_searchfield()">
             <t t-call="SearchView.extended_search.proposition.char" />
         </t>
+        <t t-if="widget.show_domain_selection()">
+            <span class="web_advanced_search_x2x_domain" /><button class="web_advanced_search_x2x_search" type="button">Search</button>
+        </t>
         <span />
     </t>
 </templates>
