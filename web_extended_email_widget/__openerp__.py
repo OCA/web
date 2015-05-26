@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': "Web Extended Email Widget",
-    'description': "Allows to add cc, bcc, subject to email links",
+    'summary': "Allows to add cc, bcc, subject to email links",
     'category': "Web",
     'version': "1.0",
     'license': 'AGPL-3',
