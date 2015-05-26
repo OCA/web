@@ -209,6 +209,7 @@ openerp.web_advanced_search_x2x = function(instance)
                 {
                     self.$buttonpane.find(".oe_selectcreatepopup-search-create").remove();
                     self.$buttonpane.prepend(
+                        //TODO: take care that this is only clicked if we have a domain
                         jQuery('<button />')
                         .addClass('oe_highlight')
                         .text(instance.web._lt('Use criteria'))
@@ -239,9 +240,16 @@ openerp.web_advanced_search_x2x = function(instance)
         {
             var self = this,
                 search = this.searchview.build_search_data();
-            //TODO: get representation from search view
-            self.trigger('domain_selected', search.domain, String(search.domain));
-            self.destroy();
+            instance.web.pyeval.eval_domains_and_contexts({
+                domains: search.domains,
+                contexts: search.contexts,
+                groupbys: search.groupbys || []
+            }).then(function(search)
+            {
+                //TODO: get representation from search view
+                self.trigger('domain_selected', search.domain, String(search.domain));
+                self.destroy();
+            })
          },
         select_elements: function(ids)
         {
