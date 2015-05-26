@@ -27,11 +27,30 @@ openerp.web_advanced_search_x2x = function(instance)
     {
         template: 'web_advanced_search_x2x.extended_search.proposition.many2one',
         searchfield: null,
+        init: function()
+        {
+            this.operators = _.sortBy(
+                this.operators,
+                function(op)
+                {
+                    switch(op.value)
+                    {
+                        case '=':
+                            return -2;
+                        case '!=':
+                            return -1;
+                        default:
+                            return 0;
+                    }
+                });
+            return this._super.apply(this, arguments);
+        },
         start: function()
         {
             this.getParent().$('.searchview_extended_prop_op')
             .on('change', this.proxy('operator_changed'));
-            return this._super.apply(this, arguments);
+            return this._super.apply(this, arguments).then(
+                this.proxy(this.operator_changed));
         },
         get_field_desc: function()
         {
