@@ -149,9 +149,15 @@ openerp.web_advanced_search_x2x = function(instance)
         },
         get_domain: function()
         {
-            if(this.show_domain_selection() && this.domain)
+            if(this.show_domain_selection())
             {
                 var self = this;
+                if(!this.domain || this.domain.length == 0)
+                {
+                    throw new instance.web.search.Invalid(
+                        this.field.string, this.domain_representation,
+                        instance.web._lt('invalid search domain'));
+                }
                 return _.extend(new instance.web.CompoundDomain(), {
                     __domains: [
                         _.map(this.domain, function(leaf)
@@ -209,12 +215,14 @@ openerp.web_advanced_search_x2x = function(instance)
                 {
                     self.$buttonpane.find(".oe_selectcreatepopup-search-create").remove();
                     self.$buttonpane.prepend(
-                        //TODO: take care that this is only clicked if we have a domain
-                        jQuery('<button />')
+                        jQuery('<button/>')
                         .addClass('oe_highlight')
+                        .addClass('oe_selectcreatepopup-search-select-domain')
                         .text(instance.web._lt('Use criteria'))
                         .click(self.proxy(self.select_domain))
                     );
+                    self.$buttonpane.find('.oe_selectcreatepopup-search-select-domain')
+                        .prop('disabled', self.searchview.build_search_data().domains.length == 0);
                     self.$buttonpane.find(".oe_selectcreatepopup-search-select")
                         .unbind('click')
                         .click(function()
@@ -246,8 +254,17 @@ openerp.web_advanced_search_x2x = function(instance)
                 groupbys: search.groupbys || []
             }).then(function(search)
             {
-                //TODO: get representation from search view
-                self.trigger('domain_selected', search.domain, String(search.domain));
+                var representation = self.searchview.query.reduce(function(memo, term)
+                {
+                    return _.str.sprintf(
+                        '%s%s(%s: %s)', memo, (memo ? ' ' : ''),
+                        term.attributes.category,
+                        _.reduce(term.get('values'), function(memo, value)
+                        {
+                            return memo + (memo ? ', ' : '') + value.label;
+                        }, ''));
+                }, '');
+                self.trigger('domain_selected', search.domain, representation);
                 self.destroy();
             })
          },
