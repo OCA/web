@@ -1,7 +1,7 @@
 Search for x2x records in advanced search
 =========================================
 
-Standard behavior in advanced search for one2many, many2many and many2one fields is to do a `name_search`. This oft is not satisfactionary as you might want to search for other properties. There might also be cases where you don't exactly know what you're searching for, then a list of possible options is necessary too. This module enables you to have a full search view to select the record in question.
+Standard behavior in advanced search for one2many, many2many and many2one fields is to do a `name_search`. This often is not satisfactionary as you might want to search for other properties. There might also be cases where you don't exactly know what you're searching for, then a list of possible options is necessary too. This module enables you to have a full search view to select the record in question, and either select specific records or select them using a search query of its own.
 
 Usage
 =====
