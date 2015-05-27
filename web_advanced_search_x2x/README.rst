@@ -1,7 +1,7 @@
 Search for x2x records in advanced search
 =========================================
 
-Standard behavior in advanced search for one2many, many2many and many2one fields is to do a `name_search`. This is not always satisfactionary as you might want to search for other properties. There might also be cases where you don't exactly know what you're searching for, then a list of possible options is necessary too. This module enables you to have a full search view to select the record in question.
+Standard behavior in advanced search for one2many, many2many and many2one fields is to do a `name_search`. This oft is not satisfactionary as you might want to search for other properties. There might also be cases where you don't exactly know what you're searching for, then a list of possible options is necessary too. This module enables you to have a full search view to select the record in question.
 
 Usage
 =====
@@ -12,16 +12,24 @@ To use this module, you need to:
 * select a one2many, many2many or many2one field
 * select operator `is equal to` or `is not equal to`
 * the textfield changes to a many2one selection field where you can search for the record in question
-* to select multiple records, add another condition for the same field before applying the conditions (that's standard behavior)
+
+To search for properties of linked records (ie invoices for customers with a credit limit higher than X):
+
+* open the advanced search options in a search view
+* select a one2many, many2many or many2one field
+* select operator `is in selection`
+* in the search view that pops up, select the criteria
+* click `Use criteria`
+* if you're only interested in certain records, mark them en click `Select`
+* if you want to change your selection afterwards, click the search symbol right of the selection term
+
+In both cases, don't forget to click `Apply` to actually execute the search.
+
+Note that you can stack searching for properties: Simply add another advanced search in the selection search window. You can do this indefinetely, so it is possible to search for moves belonging to a journal which has a user who is member of a certain group etc.
 
 For further information, please visit:
 
 * https://www.odoo.com/forum/help-1
-
-Known issues / Roadmap
-======================
-
-* from what we have now, it shouldn't be too difficult to add an operator `use condition`, show a search view for the field's model and use the domain filled in there. This way we can have conditions like `[('journal_id.user_id.groups_id.name', '=', 'test')]`
 
 Credits
 =======
