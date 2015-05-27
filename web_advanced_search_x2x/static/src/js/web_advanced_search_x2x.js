@@ -292,7 +292,7 @@ openerp.web_advanced_search_x2x = function(instance)
             this._super.apply(this, arguments);
             this.view.query.each(function(element)
             {
-                if(element.attributes.category != _t("Advanced"))
+                if(element.attributes.category != instance.web._t("Advanced"))
                 {
                     return;
                 }
@@ -319,7 +319,7 @@ openerp.web_advanced_search_x2x = function(instance)
                 }
                 self.view.query.remove(element.cid);
                 self.view.query.add({
-                    category: _t("Advanced"),
+                    category: instance.web._t("Advanced"),
                     values: element.attributes.values,
                     field: _.extend(
                         element.attributes.field, {
