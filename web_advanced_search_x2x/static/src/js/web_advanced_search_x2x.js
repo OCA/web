@@ -282,54 +282,47 @@ openerp.web_advanced_search_x2x = function(instance)
         },
     });
 
-    instance.web.search.Advanced.include({
-        commit_search: function()
+    instance.web.SearchView.include({
+        build_search_data: function()
         {
-            //the original can only cope with propositions (=domain leaves),
+            //Advanced.commit_search can only cope with propositions
+            //(=domain leaves),
             //so we need to rebuild the domain if one of our CompoundDomains
             //is involved
-            var self = this;
-            this._super.apply(this, arguments);
-            this.view.query.each(function(element)
+            var result = this._super.apply(this, arguments);
+            _.each(result.domains, function(domain, index)
             {
-                if(element.attributes.category != instance.web._t("Advanced"))
+                if(!_.isArray(domain))
                 {
                     return;
                 }
-                var has_compound_domain = false,
-                    compound_domain = new instance.web.CompoundDomain();
-                _.each(element.attributes.values, function(value)
+                var compound_domains = [], leaves = [];
+                _.each(domain, function(leaf)
                 {
-                    if(value.value instanceof instance.web.CompoundDomain)
+                    if(leaf instanceof instance.web.CompoundDomain)
                     {
-                        has_compound_domain = true;
-                        _.each(value.value.__domains, function(domain)
-                        {
-                            compound_domain.add(domain);
-                        });
+                        compound_domains.push(leaf);
                     }
-                    else
+                    if(_.isArray(leaf))
                     {
-                        compound_domain.add(value.value);
+                        leaves.push(leaf);
                     }
-                })
-                if(!has_compound_domain)
-                {
-                    return;
-                }
-                self.view.query.remove(element.cid);
-                self.view.query.add({
-                    category: instance.web._t("Advanced"),
-                    values: element.attributes.values,
-                    field: _.extend(
-                        element.attributes.field, {
-                            get_domain: function()
-                            {
-                                return compound_domain.eval();
-                            }
-                        }),
                 });
+                if(compound_domains.length)
+                {
+                    var combined = new instance.web.CompoundDomain();
+                    _.each(compound_domains, function(domain)
+                    {
+                        combined.add(domain.eval());
+                    })
+                    _.each(leaves, function(leaf)
+                    {
+                        combined.add([leaf])
+                    });
+                    result.domains[index] = combined;
+                }
             });
+            return result;
         },
     })
 }
