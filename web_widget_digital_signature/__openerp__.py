@@ -32,7 +32,7 @@ Web Widget Digital Signature
 ============================
 
 There are certain occasions where you need to add the signature on display
-(like baking sector), on reports when sending digital papers/statements/
+(like banking sector), on reports when sending digital papers/statements/
 documents/invoices in order to avoid physical efforts. This module fills
 the gap at certain extent and by providing basic Signature Widget.
 
@@ -42,9 +42,9 @@ a test field under signature.
     """,
     'data': ['views/res_users_view.xml'],
     'js': [
-          "static/lib/excanvas.js",
-          "static/lib/jquery.signature.js",
-          "static/src/js/digital_sign.js",
+        "static/lib/excanvas.js",
+        "static/lib/jquery.signature.js",
+        "static/src/js/digital_sign.js",
     ],
     'css': [
         "static/src/css/digital.css",
