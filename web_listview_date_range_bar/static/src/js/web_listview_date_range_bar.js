@@ -19,7 +19,7 @@ openerp.web_listview_date_range_bar = function(instance)
                 this._super.apply(this, arguments);
 
                 var ctx = this.dataset.get_context().eval()
-                this.date_from = ctx.list_date_range_bar_start || ''
+                this.date_start = ctx.list_date_range_bar_start || ''
                 this.date_end = ctx.list_date_range_bar_end || ''
                 },
 
@@ -29,12 +29,12 @@ openerp.web_listview_date_range_bar = function(instance)
 
                 this.$el.parent().prepend(QWeb.render("list_date_range_bar_selector", {widget: this}));
 
-                var date_from_widget = new instance.web.DateWidget(this);
-                date_from_widget.appendTo(this.$el.parent().find('.oe_list_date_range_bar_start'));
-                date_from_widget.set_value( self.date_from );
+                var date_start_widget = new instance.web.DateWidget(this);
+                date_start_widget.appendTo(this.$el.parent().find('.oe_list_date_range_bar_start'));
+                date_start_widget.set_value( self.date_start );
 
-                date_from_widget.on('datetime_changed', this, _.bind(function() {
-                    self.date_from = date_from_widget.get_value();
+                date_start_widget.on('datetime_changed', this, _.bind(function() {
+                    self.date_start = date_start_widget.get_value();
                     self.do_search(self.last_domain, self.last_context, self.last_group_by);
                 }), this);
 
@@ -57,7 +57,7 @@ openerp.web_listview_date_range_bar = function(instance)
                 this.last_group_by = group_by;
                 this.old_search = _.bind(this._super, this);
 
-                self.last_context["list_date_range_bar_start"] = self.date_from;
+                self.last_context["list_date_range_bar_start"] = self.date_start;
                 self.last_context["list_date_range_bar_end"] = self.date_end;
 
                 return self.old_search(self.last_domain, self.last_context, self.last_group_by);

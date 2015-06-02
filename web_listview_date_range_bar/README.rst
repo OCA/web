@@ -46,9 +46,9 @@ Your models search function could look like this to filter on field ``my_date``:
 
     def search(self, cr, user, args, offset=0, limit=None, order=None,
                context=None, count=False):
-        date_from = context and context.get('list_date_range_bar_start')
-        if date_from:
-            args.append(('my_date','>=', date_from))
+        date_start = context and context.get('list_date_range_bar_start')
+        if date_start:
+            args.append(('my_date','>=', date_start))
         return super(my_model_class, self).\
             search(cr, user, args, offset=offset, limit=limit, order=order,
                    context=context, count=count)
