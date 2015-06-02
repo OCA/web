@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data noupdate="1">
-        <record id="param_show_bar_treshold" model="ir.config_parameter">
-            <field name="key">web_menu_autohide.show_bar_treshold</field>
+        <record id="param_show_bar_threshold_navbar" model="ir.config_parameter">
+            <field name="key">web_menu_autohide.show_bar_threshold_navbar</field>
             <field name="value">10</field>
         </record>
-        <record id="param_hide_delay" model="ir.config_parameter">
-            <field name="key">web_menu_autohide.hide_delay</field>
+        <record id="param_show_bar_threshold_leftbar" model="ir.config_parameter">
+            <field name="key">web_menu_autohide.show_bar_threshold_leftbar</field>
+            <field name="value">10</field>
+        </record>
+        <record id="param_hide_delay_navbar" model="ir.config_parameter">
+            <field name="key">web_menu_autohide.hide_delay_navbar</field>
+            <field name="value">10000</field>
+        </record>
+        <record id="param_hide_delay_leftbar" model="ir.config_parameter">
+            <field name="key">web_menu_autohide.hide_delay_leftbar</field>
             <field name="value">10000</field>
         </record>
     </data>

@@ -22,10 +22,14 @@
 openerp.web_menu_autohide = function(instance)
 {
     instance.web.WebClient.include({
-        show_bar_treshold: 10,
-        hide_delay: 10000,
+        show_bar_threshold_navbar: 10,
+        show_bar_threshold_leftbar: 10,
+        hide_delay_navbar: 10000,
+        hide_delay_leftbar: 10000,
         leftbar_hide_timeout_id: null,
         main_menu_hide_timeout_id: null,
+        navbar_query: '#oe_main_menu_navbar',
+        leftbar_query: '.oe_leftbar',
         start: function()
         {
             var self = this;
@@ -34,7 +38,9 @@ openerp.web_menu_autohide = function(instance)
             {
                 var addon_name = 'web_menu_autohide',
                     parameters = _.map(
-                        ['show_bar_treshold', 'hide_delay'],
+                        ['show_bar_threshold_navbar', 'hide_delay_navbar',
+                         'show_bar_threshold_leftbar', 'hide_delay_leftbar',
+                        ],
                         function(a) { return addon_name + '.' + a });
                 return (new openerp.web.Model('ir.config_parameter'))
                 .query(['key', 'value'])
@@ -51,15 +57,46 @@ openerp.web_menu_autohide = function(instance)
             })
             .then(function()
             {
-                self.$el
-                .bind('mousemove', _.bind(self.on_mousemove, self))
-                .bind('click', _.bind(self.on_click, self));
+                if(self.hide_delay_navbar)
+                {
+                    jQuery('.openerp.openerp_webclient_container')
+                        .css('height', '100%');
+                    jQuery(self.navbar_query)
+                        .css({
+                            position: 'absolute',
+                            left: '0px',
+                            right: '0px',
+                            top: '0px',
+                            'z-index': 1110
+                        });
+                }
+                if(self.hide_delay_leftbar)
+                {
+                    jQuery(self.leftbar_query)
+                        .css({
+                            display: 'block',
+                            position: 'absolute',
+                            left: '0px',
+                            top: '0px',
+                            bottom: '0px',
+                            'z-index': 1110,
+                            width: 'auto',
+                        });
+                    jQuery('.openerp .oe_leftbar > div')
+                        .css('width', 'auto');
+                }
+                if(self.hide_delay_navbar || self.hide_delay_leftbar)
+                {
+                    self.$el
+                    .bind('mousemove', _.bind(self.on_mousemove, self))
+                    .bind('click', _.bind(self.on_click, self));
+                }
             })
         },
         show_application: function()
         {
             this._super.apply(this, arguments);
-            openerp.client.toggle_main_menu(false, this.hide_delay);
+            openerp.client.toggle_main_menu(false, this.hide_delay_navbar);
         },
         toggle_bars: function(hide)
         {
@@ -88,21 +125,29 @@ openerp.web_menu_autohide = function(instance)
         },
         toggle_main_menu: function(show, delay)
         {
+            if(!this.hide_delay_navbar)
+            {
+                return;
+            }
             this.toggle_menu_element(
-                '#oe_main_menu_navbar', 'main_menu_hide_timeout_id', show,
+                this.navbar_query, 'main_menu_hide_timeout_id', show,
                 delay);
         },
         toggle_left_bar: function(show, delay)
         {
+            if(!this.hide_delay_leftbar)
+            {
+                return;
+            }
             this.toggle_menu_element(
-                '.oe_leftbar', 'leftbar_hide_timeout_id', show, delay);
+                this.leftbar_query, 'leftbar_hide_timeout_id', show, delay);
         },
         on_click: function(e)
         {
             var on_main_menu = jQuery(e.target)
-                .parents('#oe_main_menu_navbar').length > 0,
+                .parents(this.navbar_query).length > 0,
                 on_left_bar = jQuery(e.target)
-                .parents('.oe_leftbar').length > 0;
+                .parents(this.leftbar_query).length > 0;
             if(!on_left_bar && !on_main_menu && openerp.client.leftbar_hide_timeout_id)
             {
                 clearTimeout(openerp.client.leftbar_hide_timeout_id);
@@ -113,9 +158,9 @@ openerp.web_menu_autohide = function(instance)
         on_mousemove: function(e)
         {
             var on_main_menu = jQuery(e.target)
-                .parents('#oe_main_menu_navbar').length > 0,
+                .parents(this.navbar_query).length > 0,
                 on_left_bar = jQuery(e.target)
-                .parents('.oe_leftbar').length > 0;
+                .parents(this.leftbar_query).length > 0;
             if(on_left_bar && openerp.client.leftbar_hide_timeout_id)
             {
                 clearTimeout(openerp.client.leftbar_hide_timeout_id);
@@ -128,17 +173,17 @@ openerp.web_menu_autohide = function(instance)
             }
             if(!on_left_bar && !openerp.client.leftbar_hide_timeout_id)
             {
-                this.toggle_left_bar(false, openerp.client.hide_delay);
+                this.toggle_left_bar(false, openerp.client.hide_delay_leftbar);
             }
             if(!on_main_menu && !openerp.client.main_menu_hide_timeout_id)
             {
                 this.toggle_main_menu(false);
             }
-            if(e.pageX < this.show_bar_treshold)
+            if(e.pageX < this.show_bar_threshold_leftbar)
             {
                 this.toggle_left_bar(true);
             }
-            if(e.pageY < this.show_bar_treshold)
+            if(e.pageY < this.show_bar_threshold_navbar)
             {
                 this.toggle_main_menu(true);
             }
@@ -149,14 +194,14 @@ openerp.web_menu_autohide = function(instance)
         start: function()
         {
             this.on('menu_click', this, this.on_menu_click_with_action);
-            openerp.client.toggle_left_bar(false, openerp.client.hide_delay);
+            openerp.client.toggle_left_bar(false, openerp.client.hide_delay_leftbar);
             return this._super.apply(this, arguments);
         },
         on_menu_click_with_action: function(menu, $element)
         {
             //close if it's not a menu containing other menus
             this.close_leftbar = (
-                $element.parents('#oe_main_menu_navbar').length == 0 &&
+                $element.parents(openerp.client.leftbar_query).length == 0 &&
                 $element.parent().children('ul').length == 0
             );
         },
