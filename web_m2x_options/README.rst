@@ -77,6 +77,10 @@ If you disable one option, you can enable it for particular field by setting "cr
 
   Whether to display "Create and Edit..." entry in dropdown panel for all fields in the odoo instance.
 
+``web_m2x_options.m2o_dialog`` *boolean* (Default: depends if user have create rights)
+
+  Whether to display the many2one dialog in case of validation error for all fields in the odoo instance.
+
 ``web_m2x_options.limit`` *int* (Default: openerp default value is ``7``)
 
   Number of displayed record in drop-down panel for all fields in the odoo instance
@@ -89,6 +93,7 @@ To add these parameters go to Configuration -> Technical -> Parameters -> System
 
 - web_m2x_options.create: False
 - web_m2x_options.create_edit: False
+- web_m2x_options.m2o_dialog: False
 - web_m2x_options.limit: 10
 - web_m2x_options.search_more: True
 
