@@ -9,8 +9,8 @@ Configuration
 To configure this module, you need to:
 
 * go to Settings / Technical / Parameters / System Parameters
-* adjust `web_menu_autohide.show_bar_treshold` to set the distance in pixels from the border from which the menu appears (default is 10 pixels)
-* adjust `web_menu_autohide.hide_delay` to set the amount of milliseconds after which the menu disappears if the mouse left it (default is 10 seconds)
+* adjust `web_menu_autohide.show_bar_threshold_navbar` and `web_menu_autohide.show_bar_threshold_leftbar` to set the distance in pixels from the border from which the menu appears (default is 10 pixels, a value of `0` disables hiding)
+* adjust `web_menu_autohide.hide_delay_navbar` and `web_menu_autohide.hide_delay_leftbar` to set the amount of milliseconds after which the menu disappears if the mouse left it (default is 10 seconds)
 
 Known issues / Roadmap
 ======================
