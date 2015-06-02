@@ -32,29 +32,26 @@ openerp.web_menu_autohide = function(instance)
         leftbar_query: '.oe_leftbar',
         start: function()
         {
-            var self = this;
-            return this._super.apply(this, arguments)
-            .then(function()
+            var self = this,
+                addon_name = 'web_menu_autohide',
+                parameters = _.map(
+                    ['show_bar_threshold_navbar', 'hide_delay_navbar',
+                     'show_bar_threshold_leftbar', 'hide_delay_leftbar',
+                    ],
+                    function(a) { return addon_name + '.' + a });
+            return (new openerp.web.Model('ir.config_parameter'))
+            .query(['key', 'value'])
+            .filter([['key', 'in', parameters]])
+            .all()
+            .then(function(params)
             {
-                var addon_name = 'web_menu_autohide',
-                    parameters = _.map(
-                        ['show_bar_threshold_navbar', 'hide_delay_navbar',
-                         'show_bar_threshold_leftbar', 'hide_delay_leftbar',
-                        ],
-                        function(a) { return addon_name + '.' + a });
-                return (new openerp.web.Model('ir.config_parameter'))
-                .query(['key', 'value'])
-                .filter([['key', 'in', parameters]])
-                .all()
-                .then(function(params)
+                _.each(params, function(param)
                 {
-                    _.each(params, function(param)
-                    {
-                        self[param.key.replace(addon_name + '.', '')] =
-                            parseInt(param.value);
-                    });
+                    self[param.key.replace(addon_name + '.', '')] =
+                        parseInt(param.value);
                 });
             })
+            .then(this.proxy(this._super))
             .then(function()
             {
                 if(self.hide_delay_navbar)
