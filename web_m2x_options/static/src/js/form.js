@@ -11,36 +11,37 @@ openerp.web_m2x_options = function (instance) {
     var OPTIONS = ['web_m2x_options.create',
                    'web_m2x_options.create_edit',
                    'web_m2x_options.limit',
-                   'web_m2x_options.search_more',];
+                   'web_m2x_options.search_more',
+                   'web_m2x_options.m2o_dialog',];
 
     instance.web.form.FieldMany2One = instance.web.form.FieldMany2One.extend({
 
-	start: function() {
-	    this._super.apply(this, arguments);
-	    return this.get_options();
-	},
- 
-	get_options: function() {
-	    var self = this;
-	    if (!_.isUndefined(this.view) && _.isUndefined(this.view.ir_options_loaded)) {
-		this.view.ir_options_loaded = $.Deferred();
-		this.view.ir_options = {};
-		(new instance.web.Model("ir.config_parameter"))
-		    .query(["key", "value"]).filter([['key', 'in', OPTIONS]])
-		    .all().then(function(records) {
-			_(records).each(function(record) {
-			    self.view.ir_options[record.key] = record.value;
-			});
-			self.view.ir_options_loaded.resolve();
-		    });
-	        return this.view.ir_options_loaded;
-	    }
-	    return $.when();
-	},
-	
-     show_error_displayer: function () {
-            if ((typeof this.options.m2o_dialog === 'undefined' && this.can_create) ||
-                this.options.m2o_dialog) {
+        start: function() {
+            this._super.apply(this, arguments);
+            return this.get_options();
+        },
+
+        get_options: function() {
+            var self = this;
+            if (!_.isUndefined(this.view) && _.isUndefined(this.view.ir_options_loaded)) {
+            this.view.ir_options_loaded = $.Deferred();
+            this.view.ir_options = {};
+            (new instance.web.Model("ir.config_parameter"))
+                .query(["key", "value"]).filter([['key', 'in', OPTIONS]])
+                .all().then(function(records) {
+                _(records).each(function(record) {
+                    self.view.ir_options[record.key] = record.value;
+                });
+                self.view.ir_options_loaded.resolve();
+                });
+                return this.view.ir_options_loaded;
+            }
+            return $.when();
+        },
+
+        show_error_displayer: function () {
+            if (((typeof this.options.m2o_dialog === 'undefined' && this.can_create) ||
+                this.options.m2o_dialog) && (!this.view.ir_options['web_m2x_options.search_more'] === "False")) {
                 new instance.web.form.M2ODialog(this).open();
             }
         },
