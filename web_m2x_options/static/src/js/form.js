@@ -11,7 +11,8 @@ openerp.web_m2x_options = function (instance) {
     var OPTIONS = ['web_m2x_options.create',
                    'web_m2x_options.create_edit',
                    'web_m2x_options.limit',
-                   'web_m2x_options.search_more',];
+                   'web_m2x_options.search_more',
+                   'web_m2x_options.m2o_dialog',];
 
     instance.web.form.FieldMany2One = instance.web.form.FieldMany2One.extend({
 
@@ -39,8 +40,8 @@ openerp.web_m2x_options = function (instance) {
         },
 
         show_error_displayer: function () {
-            if ((typeof this.options.m2o_dialog === 'undefined' && this.can_create) ||
-                this.options.m2o_dialog) {
+            if (((typeof this.options.m2o_dialog === 'undefined' && this.can_create) ||
+                this.options.m2o_dialog) && (!this.view.ir_options['web_m2x_options.search_more'] === "False")) {
                 new instance.web.form.M2ODialog(this).open();
             }
         },
