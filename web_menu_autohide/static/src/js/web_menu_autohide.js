@@ -198,7 +198,7 @@ openerp.web_menu_autohide = function(instance)
         {
             //close if it's not a menu containing other menus
             this.close_leftbar = (
-                $element.parents(openerp.client.leftbar_query).length == 0 &&
+                $element.parents(openerp.client.navbar_query).length == 0 &&
                 $element.parent().children('ul').length == 0
             );
         },
