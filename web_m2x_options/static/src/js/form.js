@@ -39,9 +39,24 @@ openerp.web_m2x_options = function (instance) {
             return $.when();
         },
 
+        is_option_set: function(option) {
+            if (_.isUndefined(option)) {
+                return false
+            }
+            var is_string = typeof option === 'string'
+            var is_bool = typeof option === 'boolean'
+            if (is_string) {
+                return option === 'true' || option === 'True'
+            } else if (is_bool) {
+                return option
+            }
+            return false
+        },
+
         show_error_displayer: function () {
-            if (((typeof this.options.m2o_dialog === 'undefined' && this.can_create) ||
-                this.options.m2o_dialog) && (!this.view.ir_options['web_m2x_options.search_more'] === "False")) {
+            if(this.is_option_set(this.options.m2o_dialog) ||
+               _.isUndefined(this.options.m2o_dialog) && this.is_option_set(this.view.ir_options['web_m2x_options.m2o_dialog']) ||
+               this.can_create && _.isUndefined(this.options.m2o_dialog) && _.isUndefined(this.view.ir_options['web_m2x_options.m2o_dialog'])) {
                 new instance.web.form.M2ODialog(this).open();
             }
         },
@@ -64,9 +79,7 @@ openerp.web_m2x_options = function (instance) {
             }
 
             // add options search_more to force enable or disable search_more button
-            var search_more_defined = !_.isUndefined(this.options.search_more)
-            if((search_more_defined && this.options.search_more.toLowerCase() === "true") ||
-               !(search_more_defined && this.options.search_more.toLowerCase() === "false") && (self.view.ir_options['web_m2x_options.search_more'] === "True")) {
+            if (this.is_option_set(this.options.search_more) || _.isUndefined(this.options.search_more) && this.is_option_set(self.view.ir_options['web_m2x_options.search_more'])) {
                 this.search_more = true
             }
 
