@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    This module copyright (C) 2014 Therp BV (<http://therp.nl>).
+#    This module copyright (C) 2015 Therp BV <http://therp.nl>.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,54 +19,50 @@
 #
 ##############################################################################
 {
-    "name": "pytz support for filter domains",
+    "name": "Moment.js for Odoo",
     "version": "1.0",
     "author": "Therp BV,Odoo Community Association (OCA)",
     "license": "AGPL-3",
-    "complexity": "normal",
-    "description": """
-Introduction
+    "category": "Hidden/Dependency",
+    "description": '''
+Moment.js for Odoo
+==================
+
+This module contains moment.js in order for other modules to depend on it
+avoiding version clashes in case multiple modules need moment.js
+
+Credits
+=======
+
+Contributors
 ------------
-This module allows complex timezone operations in domains mimicing python's
-pytz. The heavy lifting is done by http://momentjs.com/timezone.
 
-It is meant to allow correct filters for 'Today', 'Yesterday' etc.
+* Holger Brunn <hbrunn@therp.nl>
 
-In addition to implementing a subset of `pytz.tzinfo` and
-`datetime.astimezone`, there's a shortcut called `utc_today()` which returns
-the beginning of the day in the current user's time zone translated to UTC,
-this is equivalent to::
+The actual work
+---------------
 
-  pytz.timezone(tz).localize(datetime.datetime.now().replace(hour=0, minute=0,
-      second=0)).astimezone(pytz.utc)
+* http://momentjs.com
 
-in python.
+Maintainer
+----------
 
-Usage
------
+.. image:: http://odoo-community.org/logo.png
+    :alt: Odoo Community Association
+    :target: http://odoo-community.org
 
-Depend on this module and use filters like::
+This module is maintained by the OCA.
 
-    [('write_date', '>=', utc_today().strftime('%Y-%m-%d %H:%M:%S'))]
+OCA, or the Odoo Community Association, is a nonprofit organization whose
+mission is to support the collaborative development of Odoo features and
+promote its widespread use.
 
-which displays records changed in the user's conception of today.""",
-    "category": "Dependency",
+To contribute to this module, please visit http://odoo-community.org.''',
     "depends": [
         'web',
-        'web_lib_moment',
-    ],
-    "data": [
     ],
     "js": [
-        'static/src/js/web_pytz.js',
-        'static/lib/moment-timezone.js',
-    ],
-    "css": [
-    ],
-    "qweb": [
-    ],
-    "test": [
-        'static/test/web_pytz.js',
+        'static/lib/moment.js',
     ],
     "auto_install": False,
     "installable": True,
