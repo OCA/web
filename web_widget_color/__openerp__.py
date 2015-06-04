@@ -27,6 +27,10 @@
     'name': "Web Widget Color",
     'category': "web",
     'version': "1.0",
+    "author": "Savoir-faire Linux, "
+              "Anybox, "
+              "Taktik SA, "
+              "Odoo Community Association (OCA)",
     'depends': ['base', 'web'],
     'data': [
         'view/web_widget_color_view.xml'
