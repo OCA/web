@@ -30,7 +30,8 @@
     "data": [
         'view/qweb.xml',
     ],
-    "author": "Vincent Vinet",
+    "author": "Vincent Vinet, "
+              "Odoo Community Association (OCA)",
     "installable": True,
     "active": False,
 }

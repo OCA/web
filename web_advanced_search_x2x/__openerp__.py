@@ -21,7 +21,8 @@
 {
     "name": "Search x2x fields",
     "version": "1.0",
-    "author": "Therp BV",
+    "author": "Therp BV, "
+              "Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "category": "Usability",
     "summary": "Use a search widget in advanced search for x2x fields",
