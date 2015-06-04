@@ -55,11 +55,11 @@ functionality
     "category": "Dependency",
     "depends": [
         'web',
+        'web_lib_moment',
     ],
     "data": [
     ],
     "js": [
-        'static/lib/moment.js',
         'static/src/js/web_relativedelta.js'
     ],
     "css": [
