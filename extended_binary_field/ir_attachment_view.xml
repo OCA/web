@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- show code an version, nice for debugging -->
+        <record id="view_attachment_form_extended" model="ir.ui.view">
+            <field name="name">ir.attachment.form.extended</field>
+            <field name="model">ir.attachment</field>
+            <field name="priority">2</field>
+            <field name="inherit_id" ref="base.view_attachment_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <group string="Data" position="inside">
+                        <field name="code" placeholder="code" readonly="1"/>
+                    </group>
+                    <group string="History" position="attributes">
+                        <attribute name="groups"></attribute>
+                    </group>
+                    <group string="History" position="inside">
+                        <field name="version" placeholder="version" readonly="1"/>
+                    </group>
+                    <label string="Creation" position="attributes">
+                        <attribute name="groups">base.group_no_one</attribute>
+                    </label>
+                    <div name="creation_div" position="attributes">
+                        <attribute name="groups">base.group_no_one</attribute>
+                    </div>
+                    <label for="write_uid" position="attributes">
+                        <attribute name="groups">base.group_no_one</attribute>
+                    </label>
+                    <xpath expr="//group[@string='History']/div[2]" position="attributes">
+                        <attribute name="groups">base.group_no_one</attribute>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+        <record id="view_attachment_tree_extended" model="ir.ui.view">
+            <field name="name">ir.attachment.tree.extended</field>
+            <field name="model">ir.attachment</field>
+            <field name="priority">2</field>
+            <field name="inherit_id" ref="document.view_document_file_tree"/>
+            <field name="arch" type="xml">
+                <field name="create_date" position="before">
+                    <field name="version"/>
+                    <field name="code"/>
+                </field>
+            </field>
+        </record>
+        <!-- little tree for attachments, nice for embedding -->
+        <record id="view_attachment_small_tree" model="ir.ui.view">
+            <field name="model">ir.attachment</field>
+            <field name="priority">32</field>
+            <field name="arch" type="xml">
+                <tree string="Attachments" editable="bottom" edit="false" create="false">
+                    <field name="name" readonly="1"/>
+                    <field name="code" readonly="1"/>
+                    <field name="datas_fname" invisible="1" readonly="1"/>
+                    <field name="delay_dummy_datas" filename="datas_fname" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</openerp>
