@@ -1,8 +1,8 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
     :alt: License: AGPL-3
 
-web_warning_on_save
-===========
+Raise warning when saving
+=========================
 
 This module was written to extend the functionality of saving a record in the web interface.
 /!\/!\/!\ In no way this module stops the save of the record. You must consider this as a warning displayed 

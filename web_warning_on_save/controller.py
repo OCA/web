@@ -23,7 +23,7 @@ import openerp
 
 
 class WarningOnSaveController(openerp.addons.web.http.Controller):
-    _cp_path = "/web/warning_on_save"
+    _cp_path = "/web_warning_on_save"
 
     @openerp.addons.web.http.jsonrequest
     def check_warning_on_save(self, req, model, id):
@@ -32,8 +32,8 @@ class WarningOnSaveController(openerp.addons.web.http.Controller):
          if method does not exist in the model, do nothing
         """
         m = req.session.model(model)
-        try:
+        if hasattr(m, 'check_warning_on_save'):
             return getattr(m, 'check_warning_on_save')(id, req.context)
 
-        except:
+        else:
             return False
