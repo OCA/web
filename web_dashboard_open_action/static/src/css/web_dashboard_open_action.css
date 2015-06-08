@@ -1,4 +1,7 @@
-.openerp .oe_dashboard .oe_action span.oe_web_dashboard_open_action
+.openerp .oe_dashboard .oe_action span.oe_web_dashboard_open_action:before
 {
-    margin-right: .2em;
+    font-size: 10px;
+    margin-left: 4px;
+    position: relative;
+    top: -1px;
 }
