@@ -25,6 +25,12 @@ openerp.web_dashboard_open_action = function(instance)
         on_load_action: function(result, index, action_attrs)
         {
             var self = this, action = _.extend({flags: {}}, result);
+            action.context_string = action_attrs.context;
+            action.context = instance.web.pyeval.eval(
+                'context', action_attrs.context || {});
+            action.domain_string = action_attrs.domain;
+            action.domain = instance.web.pyeval.eval(
+                'domain', action_attrs.domain || [], action_attrs.context);
             jQuery('#' + this.view.element_id + '_action_' + index)
                 .parent()
                 .find('.oe_web_dashboard_open_action')
