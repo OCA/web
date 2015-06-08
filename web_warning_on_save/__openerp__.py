@@ -25,6 +25,36 @@
     "author": "Camptocamp,Odoo Community Association (OCA)",
     'license': 'AGPL-3',
     'website': 'http://www.camptocamp.com',
+    'description': """
+    This module was written to extend the functionality of
+    saving a record in the web interface.
+    /!\/!\/!\ In no way this module stops the save of the record.
+    You must consider this as a warning displayed
+    to the user AFTER save completed. /!\/!\/!\
+    If you don't want OpenERP to save the record, you should use constraints.
+
+    Usage
+    =====
+
+    To use this module, you need to:
+
+    * write a method called 'check_warning_on_save' which will make some checks
+      and return a string
+
+    example :
+
+    def check_warning_on_save(self, cr, uid, id, context=None):
+        '''
+            @param: int: record_id
+            @return: string: message that should be displayed to the user
+        '''
+        res = ""
+
+        record = self.browse(cr, uid, id, context=context)
+        # ... make some checks
+
+        return res
+    """,
     'data': [
     ],
     'js': [
@@ -37,4 +67,3 @@
     'installable': True,
     'auto_install': False,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

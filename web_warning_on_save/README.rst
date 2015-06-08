@@ -1,26 +1,13 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
     :alt: License: AGPL-3
 
-Module name
+web_warning_on_save
 ===========
 
 This module was written to extend the functionality of saving a record in the web interface.
 /!\/!\/!\ In no way this module stops the save of the record. You must consider this as a warning displayed 
 to the user AFTER save completed. /!\/!\/!\
-
-Installation
-============
-
-To install this module, you need to:
-
-* install it
-
-Configuration
-=============
-
-To configure this module, you need to:
-
-* nothing
+If you don't want OpenERP to save the record, you should use constraints.
 
 Usage
 =====
@@ -46,9 +33,6 @@ example :
 For further information, please visit:
 
 * https://www.odoo.com/forum/help-1
-
-Known issues / Roadmap
-======================
 
 
 Bug Tracker
