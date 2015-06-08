@@ -68,6 +68,12 @@ openerp.web_custom_search_quantity = function (instance) {
                         }).blur(function() {
                             $(this).trigger('change');
                         })
+                        .keypress(function(e) {
+                            if(e.which == 13) {
+                                $(this).trigger('change');
+                            }
+                        })
+                        .focus()
                         .val(self._limit || '0');
                 });
             }
