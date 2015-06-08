@@ -12,10 +12,6 @@
                     <h2>
                         <field name="signature_image" widget="signature"/>
                     </h2>
-                    <label for="signature_image2" class="oe_edit_only"/>
-                    <h2>
-                        <field name="signature_image2" widget="signature"/>
-                    </h2>
                 </xpath>
             </field>
         </record>
