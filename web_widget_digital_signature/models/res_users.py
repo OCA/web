@@ -29,5 +29,4 @@ class Users(orm.Model):
 
     _columns = {
         'signature_image': fields.binary('Signature'),
-        'signature_image2': fields.binary('sSignature'),
     }
