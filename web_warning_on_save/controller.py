@@ -19,7 +19,10 @@
 #
 ##############################################################################
 
+import xmlrpclib
+
 import openerp
+
 
 
 class WarningOnSaveController(openerp.addons.web.http.Controller):
@@ -32,8 +35,12 @@ class WarningOnSaveController(openerp.addons.web.http.Controller):
          if method does not exist in the model, do nothing
         """
         m = req.session.model(model)
-        if hasattr(m, 'check_warning_on_save'):
+        try:
             return getattr(m, 'check_warning_on_save')(id, req.context)
 
-        else:
-            return False
+        except xmlrpclib.Fault as e:
+            if 'AttributeError' in e.faultString:
+                return False
+            else:
+                raise openerp.osv.osv.except_osv('Error', e.faultCode) 
+
