@@ -21,17 +21,16 @@
 
 
 import openerp
-from openerp.osv import orm
+from openerp.models import BaseModel
 from openerp import models, api
 
 
-class mail_notification(models.Model):
-    """ Employee """
+class MailNotification(models.Model):
     _inherit = 'mail.notification'
 
     @api.model
     def create(self, vals):
-        res = super(mail_notification, self).create(vals)
+        res = super(MailNotification, self).create(vals)
         bus = self.env['bus.bus']
         user_obj = self.env['res.users']
         users = user_obj.search([('partner_id', '=', res.partner_id.id)])
@@ -40,7 +39,7 @@ class mail_notification(models.Model):
         return res
 
 
-create_original = orm.BaseModel.create
+create_original = BaseModel.create
 
 
 @openerp.api.model
@@ -49,10 +48,10 @@ def create(self, vals):
     record_id = create_original(self, vals)
     auto_refresh_kanban_list(self)
     return record_id
-orm.BaseModel.create = create
+BaseModel.create = create
 
 
-write_original = orm.BaseModel.write
+write_original = BaseModel.write
 
 
 @openerp.api.multi
@@ -60,10 +59,10 @@ def write(self, vals):
     result = write_original(self, vals)
     auto_refresh_kanban_list(self)
     return result
-orm.BaseModel.write = write
+BaseModel.write = write
 
 
-unlink_original = orm.BaseModel.unlink
+unlink_original = BaseModel.unlink
 
 
 @openerp.api.multi
@@ -71,7 +70,7 @@ def unlink(self):
     result = unlink_original(self)
     auto_refresh_kanban_list(self)
     return result
-orm.BaseModel.unlink = unlink
+BaseModel.unlink = unlink
 
 
 def auto_refresh_kanban_list(model):
