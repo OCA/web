@@ -19,30 +19,4 @@
 #
 ##############################################################################
 
-{
-    'name': 'When in display mode,Auto Refresh inbox message, Kanban and list view right after model data get changed',
-    'version': '1.0',
-    'author': 'Fisher',
-    'website': 'https://github.com/szufisher/web',
-    'category': 'hidden',
-    'sequence': 100,
-    'summary': 'auto refresh inbox message, kanban and list view via notification push',
-    'images': [
-            ],
-    'depends': [
-       'bus_enhanced'
-    ],
-    'description': """
-    auto refresh inbox mail wall,kanban and list view based on longpolling notification mechanism
-    dependent module is available at https://bitbucket.org/anybox/bus_enhanced
-    """,
-    'data': [
-        'views/ssmr_auto_refresh_kanban_list.xml',
-    ],
-    'test': [
-    ],
-    'installable': True,
-    'auto_install': False,
-    'application': False,
-    'license': 'AGPL-3',
-}
+import web_auto_refresh
