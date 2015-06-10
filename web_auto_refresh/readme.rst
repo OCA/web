@@ -1,8 +1,6 @@
 web auto refresh
 
-Standard odoo does not support auto refresh the inbox message, kanban and list view when underlying model data updated by
-others, even though there is auto refresh option in ir.actions.act_window, this only works for GUI client. for inbound 
-message, orders, tickets etc auto refresh function will be very useful.
+Standard odoo does not support auto refresh the inbox message, kanban and list view when underlying model data updated by others, even though there is auto refresh option in ir.actions.act_window, this only works for old GUI client(version < 7.0). for inbound message, orders, tickets etc auto refresh function will be very useful.
 
 Usage
 
