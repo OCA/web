@@ -3,9 +3,9 @@
 -->
 <openerp>
     <data>
-        <template id="assets_backend" name="ssmr auto_refresh_kanban_list" inherit_id="web.assets_backend">
+        <template id="assets_backend" name="web_auto_refresh" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
-                <script type="text/javascript" src="/ssmr_auto_refresh_kanban_list/static/src/js/ssmr_auto_refresh_kanban_list.js"></script>
+                <script type="text/javascript" src="/web_auto_refresh/static/src/js/web_auto_refresh.js"></script>
             </xpath>
         </template>
         
