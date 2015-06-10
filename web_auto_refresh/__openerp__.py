@@ -37,7 +37,7 @@
     dependent module is available at https://bitbucket.org/anybox/bus_enhanced
     """,
     'data': [
-        'views/ssmr_auto_refresh_kanban_list.xml',
+        'views/web_auto_refresh.xml',
     ],
     'test': [
     ],
