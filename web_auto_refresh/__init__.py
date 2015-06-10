@@ -19,4 +19,4 @@
 #
 ##############################################################################
 
-import web_auto_refresh
+from . import web_auto_refresh
