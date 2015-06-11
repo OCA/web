@@ -11,7 +11,7 @@ Installation
 
 To install this module, you need to:
 
-*you can check the original author's repository https://bitbucket.org/anybox/bus_enhanced/ 
+* you can check the original author's repository https://bitbucket.org/anybox/bus_enhanced/ 
 
 Configuration
 =============
