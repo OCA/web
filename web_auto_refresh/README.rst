@@ -67,7 +67,7 @@ Credits
 Contributors
 ------------
 
-* Fisher Yu <szufisher@gmail.com
+* Fisher Yu <szufisher@gmail.com>
 
 Maintainer
 ----------
