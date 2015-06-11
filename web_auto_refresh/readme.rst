@@ -27,6 +27,7 @@ Usage
 =====
 
 To use this module, you need to:
+
 * For kanban and list view
     1. goes to the list or kanban view of the selected model, in display mode
     2. in another session(login via another browser and other computer), create, change or delete records of the model, then save
