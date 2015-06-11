@@ -32,8 +32,6 @@
     'depends': [
        'bus_enhanced'
     ],
-    'description': """
-    """,
     'data': [
         'views/web_auto_refresh.xml',
     ],
