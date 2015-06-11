@@ -19,19 +19,20 @@ Configuration
 
 To configure this module, you need to:
 
-*for inbox message auto refresh, no configuration needed
-*for kanban and list view auto refresh, go to setting->technical->actions->window actions, find the desired action, set auto refresh parameter(>0 is enough) 
+* for inbox message auto refresh, no configuration needed
+* for kanban and list view auto refresh, 
+go to setting->technical->actions->window actions, find the desired action, set auto refresh parameter(>0 is enough) 
 
 Usage
 =====
 
 To use this module, you need to:
-    -For kanban and list view
+* For kanban and list view
     1. goes to the list or kanban view of the selected model, in display mode
     2. in another session(login via another browser and other computer), create, change or delete records of the model, then save
     3. the original list or kanban view in display mode will be auto refreshed
     
-    -For inbox message/ mail wall auto refresh
+* For inbox message/ mail wall auto refresh
     1. login to system and stay at the initial inbox screen, in display mode( do not invoke the compose message)
     2. from another session, create internal message on documents which you are the follower
     3. the inbox message will be auto refreshed
