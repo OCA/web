@@ -21,8 +21,8 @@ No configuration needed
 Usage
 =====
 * backend(Python): generate one record into model bus.bus(notification) when relevant model data updated(create/write/unlink) by calling the bus.sendone('channel','message') in overwritten method create/write/unlink
-*frontend(javascript): declare the event listener to handle the notification message, check to see whether the notification(message)  is relevant for the current view/ user, if so auto refresh the view, either call reload(),do_reload(), or do_search_view_search()
-*you can have web_auto_refresh as reference
+* frontend(javascript): declare the event listener to handle the notification message, check to see whether the notification(message)  is relevant for the current view/ user, if so auto refresh the view, either call reload(),do_reload(), or do_search_view_search()
+* you can have web_auto_refresh as reference
     
 For further information, please visit:
 
