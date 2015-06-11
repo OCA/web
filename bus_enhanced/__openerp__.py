@@ -28,7 +28,7 @@
     'category': 'Anybox',
     'description': """
     """,
-    'author': 'ANYBOX',
+    'author': 'ANYBOX','OCA'
     'website': 'www.anybox.fr',
     'depends': [
         'base',
