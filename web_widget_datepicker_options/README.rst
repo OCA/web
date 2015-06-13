@@ -1,28 +1,29 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
-    :alt: License
+    :alt: License: AGPL-3
 
-Last viewed records
-===================
+Datepicker Widget Options
+=========================
 
-The module shows links to last viewed records and pages.
+This module allows passing options to the jquery datepicker for fields that use
+the datepicker widget. The option are passed as-is and are not validated.
 
-The module doesn't affect on server performance, because it uses
-browser's localStorage to save history. But dissadvantage is that
-history is not synced accross browsers.
+To see all supported options, see the `API documentation
+<http://api.jqueryui.com/datepicker/>`_.
+
 
 Usage
 =====
 
-There are no any settings to configure. Just install module and continue to use odoo in a usual way. You will see links to last visited pages.
+You must pass all options through the "datepicker" field in the options::
 
-For further information, please visit:
-
- * https://yelizariev.github.io/odoo/module/2015/02/18/last-viewed-records.html
+    ...
+    <field name="date" options="{'datepicker':{'yearRange': 'c-100:c+0'}}"/>
+    ...
 
 Known issues / Roadmap
 ======================
 
- * FIXME: doesn't work in a res.config view
+* Absolutely no validation on options.
 
 
 Bug Tracker
@@ -31,7 +32,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed feedback
-`here <https://github.com/OCA/web/issues/new?body=module:%20web_last_viewed_records%0Aversion:%208.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`here <https://github.com/OCA/web/issues/new?body=module:%20web_widget_datepicker_options%0Aversion:%208.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 
 Credits
@@ -40,7 +41,7 @@ Credits
 Contributors
 ------------
 
-* Ivan Yelizariev <yelizariev@it-projects.info>
+* Vincent Vinet <vincent.vinet@savoirfairelinux.com>
 
 Maintainer
 ----------
@@ -54,3 +55,4 @@ This module is maintained by the OCA.
 OCA, or the Odoo Community Association, is a nonprofit organization whose mission is to support the collaborative development of Odoo features and promote its widespread use.
 
 To contribute to this module, please visit http://odoo-community.org.
+

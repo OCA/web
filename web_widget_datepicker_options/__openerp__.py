@@ -1,8 +1,9 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    This module copyright (C) 2015 Therp BV <http://therp.nl>.
+#    This module copyright (C) 2015 Savoir-faire Linux
+#    (<http://www.savoirfairelinux.com>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,27 +19,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 {
-    "name": "Client side message boxes",
+    "name": 'web_widget_datepicker_options',
     "version": "1.0",
-    "author": "Therp BV, "
-              "Odoo Community Association (OCA)",
-    "license": "AGPL-3",
-    "category": "Hidden/Dependency",
-    "summary": "Show a message box to users",
     "depends": [
+        'base',
         'web',
     ],
     "data": [
-        'views/templates.xml',
+        'view/qweb.xml',
     ],
-    "qweb": [
-        'static/src/xml/web_ir_actions_act_window_message.xml',
-    ],
-    "auto_install": False,
+    "author": "Vincent Vinet, "
+              "Odoo Community Association (OCA)",
     "installable": True,
-    "application": False,
-    "external_dependencies": {
-        'python': [],
-    },
+    "active": False,
 }

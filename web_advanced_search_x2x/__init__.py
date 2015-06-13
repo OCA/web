@@ -18,27 +18,3 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name": "Client side message boxes",
-    "version": "1.0",
-    "author": "Therp BV, "
-              "Odoo Community Association (OCA)",
-    "license": "AGPL-3",
-    "category": "Hidden/Dependency",
-    "summary": "Show a message box to users",
-    "depends": [
-        'web',
-    ],
-    "data": [
-        'views/templates.xml',
-    ],
-    "qweb": [
-        'static/src/xml/web_ir_actions_act_window_message.xml',
-    ],
-    "auto_install": False,
-    "installable": True,
-    "application": False,
-    "external_dependencies": {
-        'python': [],
-    },
-}

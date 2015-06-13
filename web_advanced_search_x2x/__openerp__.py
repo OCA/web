@@ -19,13 +19,13 @@
 #
 ##############################################################################
 {
-    "name": "Client side message boxes",
+    "name": "Search x2x fields",
     "version": "1.0",
     "author": "Therp BV, "
               "Odoo Community Association (OCA)",
     "license": "AGPL-3",
-    "category": "Hidden/Dependency",
-    "summary": "Show a message box to users",
+    "category": "Usability",
+    "summary": "Use a search widget in advanced search for x2x fields",
     "depends": [
         'web',
     ],
@@ -33,7 +33,9 @@
         'views/templates.xml',
     ],
     "qweb": [
-        'static/src/xml/web_ir_actions_act_window_message.xml',
+        'static/src/xml/web_advanced_search_x2x.xml',
+    ],
+    "test": [
     ],
     "auto_install": False,
     "installable": True,

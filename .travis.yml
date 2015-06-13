@@ -1,8 +1,13 @@
-sudo: required
 language: python
 
 python:
   - "2.7"
+  
+addons:
+  apt:
+    packages:
+      - expect-dev  # provides unbuffer utility
+      - python-lxml  # because pip installation is slow
 
 env:
   - VERSION="8.0" LINT_CHECK="1"
