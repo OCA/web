@@ -76,8 +76,8 @@ BaseModel.unlink = unlink
 def auto_refresh_kanban_list(model):
     if model._name != 'bus.bus':
         module = model._name.split('.')[0]
-        if module not in ['ir', 'res', 'base', 'bus', 'im_chat', 'mail', 'email', 'temp', 'workflow', 
-                          'wizard', 'email_template', 'mass']:
+        if module not in ['ir', 'res', 'base', 'bus', 'im_chat', 'mail', 'email', 
+            'temp', 'workflow', 'wizard', 'email_template', 'mass']:
             action = model.env['ir.actions.act_window']
             cnt = action.search_count([('res_model', '=', model._name), ('auto_refresh', '>', '0')])
             if cnt > 0:
