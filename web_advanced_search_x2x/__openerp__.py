@@ -29,12 +29,11 @@
     "depends": [
         'web',
     ],
-    "data": [
-        'views/templates.xml',
-    ],
     "qweb": [
         'static/src/xml/web_advanced_search_x2x.xml',
     ],
+    'js': ['static/src/js/*.js'],
+    'css': ['static/src/css/*.css'],
     "test": [
     ],
     "auto_install": False,
