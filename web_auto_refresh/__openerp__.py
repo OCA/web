@@ -29,8 +29,7 @@
     'summary': 'auto refresh inbox message, kanban and list view ',
     'images': [
             ],
-    'depends': [
-       'mail', 'bus_enhanced'
+    'depends': ['mail', 'bus_enhanced'
     ],
     'data': [
         'views/web_auto_refresh.xml',
