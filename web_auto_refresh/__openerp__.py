@@ -22,14 +22,15 @@
 {
     'name': 'Auto Refresh inbox message, Kanban and list view'
     'version': '1.0',
-    'author': 'Fisher', 'OCA'
+    'author': 'Fisher', 'OCA',
     'website': 'https://github.com/szufisher/web',
     'category': 'hidden',
     'sequence': 100,
     'summary': 'auto refresh inbox message, kanban and list view ',
     'images': [
             ],
-    'depends': ['mail', 'bus_enhanced'
+    'depends': [
+        'mail', 'bus_enhanced'
     ],
     'data': [
         'views/web_auto_refresh.xml',
