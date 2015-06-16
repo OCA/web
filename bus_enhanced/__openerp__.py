@@ -26,7 +26,7 @@
     'version': '1.0.0',
     'sequence': 150,
     'category': 'Anybox',
-    'author': 'ANYBOX','OCA'
+    'author': 'ANYBOX', 'OCA'
     'website': 'www.anybox.fr',
     'depends': [
         'base',
