@@ -20,8 +20,7 @@
 ##############################################################################
 
 {
-    'name': 'When in display mode,Auto Refresh inbox message, Kanban and list view right 
-            after model data get changed',
+    'name': 'Auto Refresh inbox message, Kanban and list view'
     'version': '1.0',
     'author': 'Fisher', 'OCA'
     'website': 'https://github.com/szufisher/web',
