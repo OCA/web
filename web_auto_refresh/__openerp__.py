@@ -30,7 +30,7 @@
     'images': [
             ],
     'depends': [
-       'bus_enhanced'
+       'mail','bus_enhanced'
     ],
     'data': [
         'views/web_auto_refresh.xml',
