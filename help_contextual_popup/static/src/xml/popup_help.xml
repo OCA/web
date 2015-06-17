@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="ViewManagerAction" t-extend="ViewManagerAction">
+        <t t-jquery="h2.oe_view_title" t-operation="before">
+            <span class="oe_button view_help">?</span>
+        </t>
+    </t>
+</templates>
