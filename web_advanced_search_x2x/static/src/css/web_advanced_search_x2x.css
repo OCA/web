@@ -4,7 +4,7 @@
 }
 .openerp .oe_searchview_drawer .web_advanced_search_x2x_domain
 {
-    max-width: 20em;
+    max-width: 50em;
     overflow: hidden;
     text-overflow: ellipsis;
     display: inline-block;
