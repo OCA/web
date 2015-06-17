@@ -1,10 +1,17 @@
+.oe_m2o_drop_down_button
+{
+position:relative;
+left:11em;
+}
+
 .openerp .searchview_extended_prop_value .oe_form_field_with_button
 {
     position: relative;
 }
+
 .openerp .oe_searchview_drawer .web_advanced_search_x2x_domain
 {
-    max-width: 20em;
+    max-width: 30em;
     overflow: hidden;
     text-overflow: ellipsis;
     display: inline-block;

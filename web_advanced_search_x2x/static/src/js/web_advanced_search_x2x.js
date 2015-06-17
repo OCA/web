@@ -60,7 +60,7 @@ openerp.web_advanced_search_x2x = function(instance)
             return this.field;
         },
         create_searchfield_node: function()
-        {
+        { 
             return {
                 attrs: {
                     name: this.field.name,
@@ -325,5 +325,45 @@ openerp.web_advanced_search_x2x = function(instance)
             return result;
         },
     })
-}
 
+
+    instance.web.SearchView.include({
+        start: function()
+              {   var self = this;
+                  var p = this._super();
+                  instance.web.bus.on('click', this, function(ev) {
+                  //check if there is a class, avoid crashes
+                  if (( ev.target.attributes.class) &&  (ev.target.attributes)) 
+                      {
+                       curr_class = ev.target.attributes.class.value;
+                       //if the class is one of the search popups defined in this module, please don't close the search view when using them.
+                       if ((curr_class == "oe_button oe_selectcreatepopup-search-select oe_highlight") || 
+                           (curr_class == "oe_highlight oe_selectcreatepopup-search-select-domain")    ||
+                           (curr_class == "oe_button oe_selectcreatepopup-search-close oe_bold oe_form_button_cancel") ||
+                           (curr_class == "ui-dialog-titlebar-close ui-corner-all"))
+                           {
+                            if (this.$el)
+                                {
+                                 this.$el.addClass('oe_searchview_open_drawer');
+                                }
+                           }
+                      }
+                  //again, check if there are two parentelements, attributes and  a class , avoid crashes
+                  if (ev.target &&  
+                      ev.target.parentElement &&  
+                      ev.target.parentElement.parentElement &&  
+                      ev.target.parentElement.parentElement.attributes 
+                      && ev.target.parentElement.parentElement.attributes.class 
+                      && this.el.className)
+                           { //if the target element of the event is a search or a create or anything from the the autocomplete AND the element is part of a search view, also please don't close the searchview.
+                            if ((ev.target.parentElement.parentElement.attributes.class.value == "ui-autocomplete ui-menu ui-widget ui-widget-content ui-corner-all openerp") && (this.el.className.indexOf("oe_searchview")!= -1 ))
+                               {
+                                this.$el.addClass('oe_searchview_open_drawer');
+                               }
+                            }
+                      
+                  })
+                  return $.when(p);
+              },
+         });
+  }
