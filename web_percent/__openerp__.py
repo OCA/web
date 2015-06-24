@@ -21,7 +21,8 @@
 {
     'name': 'Percent widget',
     'category': 'Web widgets',
-    'author': 'TeMPO Consulting, Therp BV',
+    'author': 'TeMPO Consulting, Therp BV,Odoo Community Association (OCA)',
+    'license': 'AGPL-3',
     'description':"""
 Percent widget for form and tree views
 ======================================
@@ -41,7 +42,6 @@ Known limitations
     'js': [
         'static/src/js/resource.js',
     ],
-    'css': [],
     'qweb': [
         'static/src/xml/percent.xml',
     ],
