@@ -42,7 +42,7 @@ openerp.web_custom_search_quantity = function (instance) {
                 this.$pager.find('.oe_list_pager_state').click(function (e) {
                     e.stopPropagation();
                     var $this = $(this);
-                    var $select = $('<input list="page_value" class="custom_search_quantity" type="text">')
+                    var $select = $('<input list="page_value" class="custom_search_quantity" type="text" placeholder="' + (self._limit || '0') + '">')
                         .appendTo($this.empty())
                         .click(function (e) {e.stopPropagation();})
                         .append(
@@ -74,7 +74,6 @@ openerp.web_custom_search_quantity = function (instance) {
                             }
                         })
                         .focus()
-                        .val(self._limit || '0');
                 });
             }
         },
