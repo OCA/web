@@ -30,6 +30,7 @@
     'images': [
             ],
     'depends': [
+        'web',
         'mail', 
         'bus_enhanced',
     ],
