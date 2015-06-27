@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Web - Custom Search Quantity module for Odoo
+#    Web - Custom Element Number in ListView module for Odoo
 #    Copyright (C) 2015-Today Akretion (http://www.akretion.com)
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
@@ -21,7 +21,7 @@
 ##############################################################################
 
 {
-    'name': 'Web - Custom Search Quantity',
+    'name': 'Web - Custom Element Number in ListView',
     'version': '1.0',
     'category': 'web',
     'description': """
@@ -59,9 +59,9 @@ Copyright, Author and Licence:
         'web',
     ],
     'js': [
-        'static/src/js/web_custom_search_quantity.js',
+        'static/src/js/web_listview_custom_element_number.js',
     ],
     'css': [
-        "static/src/css/web_custom_search_quantity.css",
+        'static/src/css/web_listview_custom_element_number.css',
     ],
 }

@@ -1,5 +1,5 @@
 /******************************************************************************
-    Web - Custom Search Quantity module for Odoo
+    Web - Custom Element Number in ListView module for Odoo
     Copyright (C) 2015-Today Akretion (http://www.akretion.com)
     @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 
@@ -17,7 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ******************************************************************************/
 
-openerp.web_custom_search_quantity = function (instance) {
+openerp.web_listview_custom_element_number = function (instance) {
     module = instance.web;
     _t = module._t;
 
@@ -42,7 +42,7 @@ openerp.web_custom_search_quantity = function (instance) {
                 this.$pager.find('.oe_list_pager_state').click(function (e) {
                     e.stopPropagation();
                     var $this = $(this);
-                    var $select = $('<input list="page_value" class="custom_search_quantity" type="text" placeholder="' + (self._limit || '0') + '">')
+                    var $select = $('<input list="page_value" class="custom_element_number" type="text" placeholder="' + (self._limit || '0') + '">')
                         .appendTo($this.empty())
                         .click(function (e) {e.stopPropagation();})
                         .append(

@@ -1,5 +1,5 @@
 /******************************************************************************
-    Web - Custom Search Quantity module for Odoo
+    Web - Custom Element Number in ListView module for Odoo
     Copyright (C) 2015-Today Akretion (http://www.akretion.com)
     @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 
@@ -17,6 +17,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ******************************************************************************/
 
-.custom_search_quantity {
+.custom_element_number {
     width:50px;
 }
