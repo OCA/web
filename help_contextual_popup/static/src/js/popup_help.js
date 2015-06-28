@@ -12,8 +12,11 @@ openerp.help_contextual_popup = function(instance, local) {
                     return true;
                 }
                 $elem.data('click-init', true);
-                
+
                 var help_html = '';
+                help_html += '<a href="http://localhost:8069/help" target="_blank" onclick="window.open(this.href,\'nom_Popup\','
+                help_html += '\'​height=400 , width=400 , location=no , resizable=yes , scrollbars=no\');return false;">'
+                help_html += '&rarr; Exemple &larr;</a>'
                 if (self.action.help) {
                     help_html += '<h3>Odoo Help</h3>'
                     help_html += '<div id="erp_help">' + self.action.help + '</div>';
