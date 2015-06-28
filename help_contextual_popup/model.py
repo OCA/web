@@ -20,6 +20,7 @@
 ##############################################################################
 
 from openerp import models, fields
+from openerp.http import Controller, route
 
 
 class IrActionsActwindow(models.Model):
@@ -29,3 +30,8 @@ class IrActionsActwindow(models.Model):
         string="Custom Help",
         help="Use this field to add custom content for documentation purpose")
 
+
+class MyController(Controller):
+    @route('/help', auth='public')
+    def handler(self):
+        return 'blabla'
