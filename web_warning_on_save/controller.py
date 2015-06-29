@@ -20,9 +20,7 @@
 ##############################################################################
 
 import xmlrpclib
-
 import openerp
-
 
 
 class WarningOnSaveController(openerp.addons.web.http.Controller):
@@ -42,5 +40,4 @@ class WarningOnSaveController(openerp.addons.web.http.Controller):
             if 'AttributeError' in e.faultString:
                 return False
             else:
-                raise openerp.osv.osv.except_osv('Error', e.faultCode) 
-
+                raise openerp.osv.osv.except_osv('Error', e.faultCode)

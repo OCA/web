@@ -5,8 +5,14 @@ Raise warning when saving
 =========================
 
 This module was written to extend the functionality of saving a record in the web interface.
-/!\/!\/!\ In no way this module stops the save of the record. You must consider this as a warning displayed 
-to the user AFTER save completed. /!\/!\/!\
+
+/!\\/!\\/!\\
+
+In no way this module stops the save of the record. You must consider this as a warning displayed 
+to the user AFTER save completed.
+
+/!\\/!\\/!\\
+
 If you don't want OpenERP to save the record, you should use constraints.
 
 Usage
@@ -18,16 +24,18 @@ To use this module, you need to:
 
 example :
 
-	def check_warning_on_save(self, cr, uid, id, context=None):
+.. code:: python
+
+    def check_warning_on_save(self, cr, uid, id, context=None):
         """
             @param: int: record_id
             @return: string: message that should be displayed to the user
         """
         res = ""
-        
+
         record = self.browse(cr, uid, id, context=context)
-		# ... make some checks
-		        
+        # ... make some checks
+
         return res
 
 For further information, please visit:
@@ -41,7 +49,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/{project_repo}/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed feedback
-`here <https://github.com/OCA/{project_repo}/issues/new?body=module:%20{module_name}%0Aversion:%20{version}%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`here <https://github.com/OCA/web/issues/new?body=module:%20web_warning_on_save%0Aversion:%207.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 
 Credits
