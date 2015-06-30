@@ -123,9 +123,12 @@ openerp.web_ckeditor4 = function(instance)
             filebrowserImageUploadUrl: 'dummy',
             extraPlugins: 'filebrowser',
             protectedSource: [
-                /\n*\s*%.*\n*/gm, // line expressions, keep newline if any
-                /\${[\s\S]*?}/g, // variable expressions
-                /<%[\s\S]*?%>/g, // blocks
+                // line expressions, keep newline if any
+                /\n*\s*%.*\n*/gm,
+                // variable expressions
+                /\${[\s\S]*?}/g,
+                // blocks
+                /<%[\s\S]*?%>/g,
             ],
         },
         ckeditor_filter: default_ckeditor_filter,
