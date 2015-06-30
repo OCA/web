@@ -122,8 +122,11 @@ openerp.web_ckeditor4 = function(instance)
             removePlugins: 'iframe,flash,forms,smiley,pagebreak,stylescombo',
             filebrowserImageUploadUrl: 'dummy',
             extraPlugins: 'filebrowser',
-            // this is '#39' per default which screws up single quoted text in ${}
-            entities_additional: '',
+            protectedSource: [
+                /\n*\s*%.*\n*/gm, // line expressions, keep newline if any
+                /\${[\s\S]*?}/g, // variable expressions
+                /<%[\s\S]*?%>/g, // blocks
+            ],
         },
         ckeditor_filter: default_ckeditor_filter,
         ckeditor_writer: default_ckeditor_writer,
