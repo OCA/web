@@ -12,29 +12,13 @@ openerp.help_contextual_popup = function(instance, local) {
                     return true;
                 }
                 $elem.data('click-init', true);
-
-                var help_html = '';
-                help_html += '<a href="http://localhost:8069/help" target="_blank" onclick="window.open(this.href,\'nom_Popup\','
-                help_html += '\'​height=400 , width=400 , location=no , resizable=yes , scrollbars=no\');return false;">'
-                help_html += '&rarr; Exemple &larr;</a>'
-                if (self.action.help) {
-                    help_html += '<h3>Odoo Help</h3>'
-                    help_html += '<div id="erp_help">' + self.action.help + '</div>';
-                }
-                if (self.action.custom_help) {
-                    help_html += '<h3>Specific Help</h3>'
-                    help_html += '<div id="custom_help">' + self.action.custom_help + '</div>'
-                }
-
                 $elem.on('click', function(e) {
-
-                    new instance.web.Dialog(self, {
-                        size: 'medium',
-                        title: _t("Help: ") + self.action.name,
-                        buttons: [
-                            {text: _t("Ok"), click: function() { this.parents('.modal').modal('hide');}}
-                        ]
-                    }, help_html).open(); // self.action.res_model
+                    var params = 'height=400, width=600, location=no, ';
+                    params += 'resizable=yes, menubar=yes, titlebar=Bla';
+                    path = self.action.id;
+                    my_window = window.open('/help/' + path, 'Help', params);
+                    // allows to back to the window if opened previoulsy
+                    setTimeout('my_window.focus()', 1);
                 });
 
                 return true;
