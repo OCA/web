@@ -8,6 +8,7 @@
            ref="base.view_window_action_form"/>
     <field name="arch" type="xml">
         <field name="help" position="after">
+            <field name="owner_help"/>
             <field name="custom_help"/>
         </field>
     </field>

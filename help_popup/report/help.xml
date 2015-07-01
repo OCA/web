@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+<data>
+
+<template id="tpl_help">
+
+<t t-call="report.html_container">
+<t t-call="report.internal_layout">
+
+
+<t t-foreach="docs" t-as="o">
+
+<div class="page">
+
+<b><h1 t-field="o.name"/></b>
+
+<div t-raw="o.owner_help"/>
+
+<hr width="70%"/>
+
+<h3 t-if="o.custom_help">Help from developer</h3>
+<div t-raw="o.custom_help"/>
+
+<hr width="70%"/>
+
+<h3 t-if="o.help">Help from Odoo</h3>
+<div t-raw="o.help"/>
+
+</div>
+
+<!--end foreach-->
+</t>
+
+</t>
+</t>
+
+</template>
+
+
+</data>
+</openerp>
