@@ -1,0 +1,48 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* support_branding
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-01-30 10:05+0000\n"
+"PO-Revision-Date: 2015-01-30 10:05+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: support_branding
+#: view:website:web.menu_secondary
+msgid "Version "
+msgstr "Versie "
+
+#. module: support_branding
+#: view:website:web.menu_secondary
+msgid ", supported by"
+msgstr ", ondersteund door"
+
+#. module: support_branding
+#. openerp-web
+#: code:addons/support_branding/static/src/js/support_branding.js:39
+#, python-format
+msgid "Email to %s"
+msgstr "E-mail naar %s"
+
+#. module: support_branding
+#. openerp-web
+#: code:addons/support_branding/static/src/xml/base.xml:9
+#, python-format
+msgid "Email to support company"
+msgstr "E-mail naar ondersteunend bedrijf"
+
+#. module: support_branding
+#. openerp-web
+#: code:addons/support_branding/static/src/xml/base.xml:9
+#, python-format
+msgid "Please fill in how you produced this error..."
+msgstr "Beschrijft u alstublieft de stappen om deze fout te reproduceren..."
+
