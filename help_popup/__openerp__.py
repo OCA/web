@@ -20,8 +20,8 @@
 ##############################################################################
 
 {
-    'name': 'Help Contextual Popup',
-    'version': '0.1',
+    'name': 'Help Popup',
+    'version': '0.5',
     'author': 'Akretion, Odoo Community Association (OCA)',
     'depends': [
         'web',
@@ -31,6 +31,11 @@
     'data': [
         'views/popup_help_view.xml',
         'views/action_view.xml',
+        'report/report.xml',
+        'report/help.xml',
+    ],
+    'demo': [
+        'demo/help.xml',
     ],
     'qweb': [
         'static/src/xml/popup_help.xml',

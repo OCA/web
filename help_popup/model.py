@@ -19,25 +19,17 @@
 #
 ##############################################################################
 
-from openerp.http import Controller, route, request
+from openerp import models, fields
 
 
-class MyController(Controller):
-    @route([
-        "/help/<int:action_id>",
-    ], type='http', auth="public")
-    def handler(self, action_id, *args, **kwargs):
-        req = request.session.model('ir.actions.act_window')
-        return 'blabla %s db %s' % (action_id, req)
+class IrActionsActwindow(models.Model):
+    _inherit = 'ir.actions.act_window'
 
-    def _get_html_tpl(self):
-        return """<html>
-  <head>
-    <title>{{title}}</title>
-    {{head}}
-  </head>
-  <body>
-    <h1>{{h1}}</h1>
-{{body}}
-  </body>
-</html>"""
+    owner_help = fields.Html(
+        string="Owner Help",
+        help="Use this field to add custom content for documentation purpose\n"
+             "mainly for the ERP owner")
+    custom_help = fields.Text(
+        string="Custom Help",
+        help="Use this field to add custom content for documentation purpose\n"
+             "mainly for module developers")

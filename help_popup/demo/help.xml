@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data noupdate="1">
+
+        <record id="base.action_partner_form" model="ir.actions.act_window">
+            <field name="owner_help"><![CDATA[
+<b>Hi Odooer,</b>
+
+<br/>
+<br/>
+<p>
+I'm the field 'owner_help' in the Customer action model
+</p>
+<p>
+I'm displayed in a Qweb html report
+</p>
+
+<p>
+Don't hesitate to customized me with your own words and syntax
+</p>
+
+          ]]></field>
+        </record>
+    </data>
+
+    <data noupdate="0">
+        <record id="base.action_partner_form" model="ir.actions.act_window">
+            <field name="custom_help"><![CDATA[
+<b>Hi developers,</b>
+
+<br/>
+<br/>
+<p>
+I'm the field 'custom_help' in the customer action also displayed in Qweb report.
+</p>
+<p>
+<b>Akretion</b> wrote these words to explain my main purpose:
+    <blockquote>
+Allows to developers to write documentation on their work.
+    </blockquote>
+</p>
+<p>
+
+</p>
+
+<p>You can write any html tag. Here is an image with img tag</p>
+
+<img src="http://www.akretion.com/sites/50443990c3c67e1bf3000004/theme/images/logo.png"/>
+
+          ]]></field>
+        </record>
+
+</data>
+</openerp>
