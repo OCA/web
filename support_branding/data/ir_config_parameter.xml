@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-    <data noupdate="1">
+    <data noupdate="0">
         <record id="config_parameter_company_name" model="ir.config_parameter">
             <field name="key">support_branding.company_name</field>
             <field name="value">Odoo Community Association (OCA)</field>
