@@ -3,7 +3,7 @@ openerp.one2many_multi_select_input = function(instance){
         view_loading: function(r){
            this._super(r);
            // var team_id = openerp.webclient.action_manager.inner_widget.views.form.controller.fields.team_id.get_value()
-           var button = $('.multi_sn')[0]
+           var button = $('.multi_select')[0]
            if (! _.isUndefined(button)) {
               button.onclick = function(e){
                 //if (! openerp.webclient.action_manager.inner_widget.views.form.controller.$el[0].className.contains('oe_form_editable')){
