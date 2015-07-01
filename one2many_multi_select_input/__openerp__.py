@@ -1,5 +1,5 @@
 {
-    'name': 'paste_from_clipboard',
+    'name': 'Select multi items for one2many ',
     'category': 'Hidden',
     'version': '1.0',
     'description':
