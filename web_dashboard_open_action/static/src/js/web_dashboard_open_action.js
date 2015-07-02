@@ -26,11 +26,12 @@ openerp.web_dashboard_open_action = function(instance)
         {
             var self = this, action = _.extend({flags: {}}, result);
             action.context_string = action_attrs.context;
-            action.context = instance.web.pyeval.eval(
-                'context', action_attrs.context || {});
             action.domain_string = action_attrs.domain;
+            action.context = instance.web.pyeval.eval(
+                'contexts', [action.context || {}, action_attrs.context || {}]);
             action.domain = instance.web.pyeval.eval(
-                'domain', action_attrs.domain || [], action_attrs.context);
+                'domains', [action_attrs.domain || [], action.domain || []],
+                action.context);
             jQuery('#' + this.view.element_id + '_action_' + index)
                 .parent()
                 .find('.oe_web_dashboard_open_action')
