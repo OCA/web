@@ -36,5 +36,4 @@
         "data/ir_config_parameter.xml",
         'views/qweb.xml',
     ],
-    'active': True,
 }
