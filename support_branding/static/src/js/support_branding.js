@@ -121,8 +121,8 @@ openerp.support_branding = function(instance) {
                         })
                         .then(function()
                         {
-                            //TODO close the dialog
-                            $form.parents('.ui-dialog').hide();
+                            $form.parents('.ui-dialog').dialog().dialog("close");
+                            $('.ui-widget-overlay').hide()
                         });
                         ev.preventDefault();
                     });
