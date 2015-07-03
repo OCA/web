@@ -1,13 +1,13 @@
-# Translation of Odoo Server.
+# Translation of OpenERP Server.
 # This file contains the translation of the following modules:
 #	* support_branding
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-30 10:05+0000\n"
-"PO-Revision-Date: 2015-01-30 10:05+0000\n"
+"POT-Creation-Date: 2015-07-03 18:00+0000\n"
+"PO-Revision-Date: 2015-07-03 18:00+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,22 +17,36 @@ msgstr ""
 
 #. module: support_branding
 #. openerp-web
-#: code:addons/support_branding/static/src/xml/base.xml:16
+#: code:addons/support_branding/static/src/xml/base.xml:12
 #, python-format
-msgid ", supported by"
+msgid "Email to support company"
 msgstr ""
 
 #. module: support_branding
 #. openerp-web
-#: code:addons/support_branding/static/src/js/support_branding.js:39
+#: code:addons/support_branding/static/src/js/support_branding.js:139
 #, python-format
 msgid "Email to %s"
 msgstr ""
 
 #. module: support_branding
 #. openerp-web
-#: code:addons/support_branding/static/src/xml/base.xml:9
+#: code:addons/support_branding/static/src/xml/base.xml:19
 #, python-format
-msgid "Email to Company"
+msgid ", supported by"
+msgstr ""
+
+#. module: support_branding
+#. openerp-web
+#: code:addons/support_branding/static/src/js/support_branding.js:164
+#, python-format
+msgid "Version"
+msgstr ""
+
+#. module: support_branding
+#. openerp-web
+#: code:addons/support_branding/static/src/xml/base.xml:10
+#, python-format
+msgid "Please fill in how you produced this error..."
 msgstr ""
 
