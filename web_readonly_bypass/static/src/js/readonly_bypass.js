@@ -2,7 +2,7 @@
  * Allow to bypass readonly fi the value is changed
  */
 
-openerp.readonly_bypass = function(instance) {
+openerp.web_readonly_bypass = function(instance) {
 
     var QWeb = instance.web.qweb, _t = instance.web._t;
     /**
@@ -19,8 +19,8 @@ openerp.readonly_bypass = function(instance) {
      */
     function ignore_readonly(data, options, mode, context){
         if (options){
-            if (!('filter_out_readonly' in context && context['filter_out_readonly'] == true
-                    && 'readonly_fields' in options && options['readonly_fields'])) {
+            if ('readonly_fields' in options && options['readonly_fields'] &&
+                    !('filter_out_readonly' in context && context['filter_out_readonly'] == true )) {
                 if(mode){
                     $.each( options.readonly_fields, function( key, value ) {
                         if(value==false){

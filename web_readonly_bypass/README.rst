@@ -56,7 +56,7 @@ Contributors
 ------------
 
 * Jonathan Nemry <jonathan.nemry@acsone.eu>
-* Laetitia Gangloff <laetitia.gangloff.eu>
+* Laetitia Gangloff <laetitia.gangloff@acsone.eu>
 
 Maintainer
 ----------
