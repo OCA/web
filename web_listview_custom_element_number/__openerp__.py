@@ -45,6 +45,11 @@ Technical information:
       user to select manually a value);
       See browser Support: http://www.w3schools.com/tags/tag_datalist.asp
 
+Roadmap:
+--------
+    * When pressing Esc key, it could be user friendly to return to the
+     previous state (before editing the quantity).
+
 Copyright, Author and Licence:
 ------------------------------
     * Copyright:
