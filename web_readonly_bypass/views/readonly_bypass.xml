@@ -5,7 +5,7 @@
     <data>
         <template id="assets_backend" name="readonly_bypass" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
-                <script type="text/javascript" src="/readonly_bypass/static/src/js/readonly_bypass.js"></script>
+                <script type="text/javascript" src="/web_readonly_bypass/static/src/js/readonly_bypass.js"></script>
             </xpath>
         </template>
     </data>
