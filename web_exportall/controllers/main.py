@@ -27,8 +27,9 @@ try:
 except ImportError:
     xlwt = None
 
-from openerp.addons.web.controllers.main import Export
-import web.common.http as openerpweb
+from openerp.addons.web.controllers.main import ExportFormat
+from openerp.addons.web import http
+openerpweb = http
 
 
 def itter_ids(all_ids, step_size=250):
@@ -56,8 +57,9 @@ def itter_data(Model, all_ids, field_names, context):
     return
 
 
-class CSVExportAll(Export):
+class CSVExportAll(ExportFormat, http.Controller):
     _cp_path = '/web/export/csv_all'
+    fmt = {'tag': 'csv', 'label': 'CSV'}
 
     @property
     def content_type(self):
@@ -74,8 +76,7 @@ class CSVExportAll(Export):
         ids = data_dict.get('ids', [])
         domain = data_dict.get('domain', False)
         import_compat = data_dict.get('import_compat', False)
-        context = data_dict.get('context',
-                                req.session.eval_context(req.context))
+        context = data_dict.get('context', req.context)
         Model = req.session.model(model)
         ids = itter_ids(Model.search(domain, 0, False, False, context))
 
@@ -129,8 +130,13 @@ class CSVExportAll(Export):
         return
 
 
-class ExcelExportAll(Export):
+class ExcelExportAll(ExportFormat, http.Controller):
     _cp_path = '/web/export/xls_all'
+    fmt = {
+        'tag': 'xls',
+        'label': 'Excel',
+        'error': None if xlwt else "XLWT required"
+    }
 
     @property
     def content_type(self):
@@ -147,10 +153,8 @@ class ExcelExportAll(Export):
         ids = data_dict.get('ids', [])
         domain = data_dict.get('domain', False)
         import_compat = data_dict.get('import_compat', False)
-        context = data_dict.get('context',
-                                req.session.eval_context(req.context))
+        context = data_dict.get('context', req.context)
 
-        context = req.session.eval_context(req.context)
         Model = req.session.model(model)
         ids = itter_ids(Model.search(domain, 0, False, False, context))
 
