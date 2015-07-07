@@ -6,7 +6,8 @@ Help Popup
 ===========
 
 This module adds an html help popup on each model action.
-Two help fields are added to actions: owner_help and custom_help.
+Two help fields are added to actions: owner_help (html widget)
+and custom_help.
 
 
 Installation
@@ -21,20 +22,29 @@ Configuration
 Go to the action of your choice to add some help content
 or put data in some modules.
 
+To display the button which open the popup, owner_help or custom_help field
+should be set to any value.
+
 
 Usage
 =====
 
 Click on ? button
 
+
 .. image:: help_popup/static/description/popup.png
     :alt: License: Help Popup
 
 
-Known issues / Roadmap
-======================
+Alternative
+-----------
+If you have website module installed, it could be an option
+to install help_online instead of this module.
 
-* ...
+Help Online is more advanced (allow to end user to add help)
+but depends on an other module.
+Help popup is more like an embedded help that use power users for end users.
+
 
 Bug Tracker
 ===========
