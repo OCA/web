@@ -150,7 +150,6 @@ class ExcelExportAll(Export):
         context = data_dict.get('context',
                                 req.session.eval_context(req.context))
 
-        context = req.session.eval_context(req.context)
         Model = req.session.model(model)
         ids = itter_ids(Model.search(domain, 0, False, False, context))
 
