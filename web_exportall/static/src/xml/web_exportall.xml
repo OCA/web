@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+    <t t-extend="ExportTreeView" t-name="ExportTreeView">
+        <t t-jquery="tr:eq(1) td:first" t-operation="prepend">
+            <label for="export_all_data">Export Selection:</label>
+            <select id="export_all_data" name="export_all_data">
+                <option value="" selected="selected">Selected Page/Records Only</option>
+                <option value="_all">All Rows</option>
+            </select>
+        </t>
+    </t>
+</template>
