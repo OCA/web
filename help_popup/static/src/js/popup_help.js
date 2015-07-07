@@ -12,9 +12,12 @@ openerp.help_popup = function(instance, local) {
                     return true;
                 }
                 $elem.data('click-init', true);
+                if (self.action.custom_help == '' && self.action.owner_help == '') {
+                    self.$el.find('span.view_help').hide()
+                }
                 $elem.on('click', function(e) {
                     var params = 'height=650, width=800, location=no, ';
-                    params += 'resizable=yes, menubar=yes, titlebar=Bla';
+                    params += 'resizable=yes, menubar=yes';
                     path = self.action.id;
                     my_window = window.open('/report/html/help_popup.tpl_help/' + path, 'Help', params);
                     // allows to back to the window if opened previoulsy
