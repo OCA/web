@@ -1,18 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <template>
-<!-- vim:fdl=1:
--->
     <t t-extend="ExportTreeView" t-name="ExportTreeView">
-	<t t-jquery="#import_compat" t-operation="replace">
-            <select id="import_compat" name="import_compat">
-                <option value="yes">Import Compatible Export</option>
-                <option value="" selected="selected">Export all Data</option>
-            </select>
-	</t>
         <t t-jquery="tr:eq(1) td:first" t-operation="prepend">
             <label for="export_all_data">Export Selection:</label>
             <select id="export_all_data" name="export_all_data">
-                <option value="">Selected Page/Records Only</option>
-                <option value="_all" selected="selected">All Rows</option>
+                <option value="" selected="selected">Selected Page/Records Only</option>
+                <option value="_all">All Rows</option>
             </select>
         </t>
     </t>
