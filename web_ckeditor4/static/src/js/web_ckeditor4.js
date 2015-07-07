@@ -199,10 +199,15 @@ openerp.web_ckeditor4 = function(instance)
         {
             if(this.editor)
             {
-                CKEDITOR.remove(this.editor);
                 this.editor.removeAllListeners();
+                this.editor.destroy();
                 this.editor = null;
             }
+        },
+        destroy: function()
+        {
+            this.destroy_content();
+            this._super();
         },
         destroy_content: function()
         {
