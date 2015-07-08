@@ -22,14 +22,18 @@ import operator
 import simplejson
 import re
 from cStringIO import StringIO
+import werkzeug.wrappers
 try:
     import xlwt
 except ImportError:
     xlwt = None
 
-from openerp.addons.web.controllers.main import ExportFormat
-from openerp.addons.web import http
-openerpweb = http
+import openerp
+from openerp import sql_db
+from openerp.addons.web.controllers.main import (ExportFormat,
+                                                 serialize_exception)
+from openerp import http
+from openerp.http import request
 
 
 def itter_ids(all_ids, step_size=250):
@@ -45,21 +49,69 @@ def itter_ids(all_ids, step_size=250):
             return
 
 
-def itter_data(Model, all_ids, field_names, context):
+def itter_data(Model, dbname, uid, all_ids, field_names, raw_data, context):
     """ Reads data in chunks of ids from all_ids and
         yields the rows one by one """
-    offset = 0
-    for ids in all_ids:
-        import_data = Model.export_data(ids,
-                                        field_names, context).get('datas', [])
-        for data in import_data:
-            yield data
+    cr = sql_db.db_connect(dbname).cursor()
+    with cr:
+        with openerp.api.Environment.manage():
+            offset = 0
+            for ids in all_ids:
+                import_data = Model.export_data(cr,
+                                                uid,
+                                                ids,
+                                                field_names,
+                                                raw_data,
+                                                context=context
+                                                ).get('datas', [])
+                for data in import_data:
+                    yield data
     return
 
 
-class CSVExportAll(ExportFormat, http.Controller):
-    _cp_path = '/web/export/csv_all'
-    fmt = {'tag': 'csv', 'label': 'CSV'}
+class ExportAllBase(ExportFormat):
+    raw_data = False
+
+    def base(self, data, token):
+        data_dict = simplejson.loads(data)
+        model = data_dict.get('model', False)
+        fields = data_dict.get('fields', [])
+        ids = data_dict.get('ids', [])
+        domain = data_dict.get('domain', False)
+        import_compat = data_dict.get('import_compat', False)
+        context = data_dict.get('context', request.context)
+
+        field_names = map(operator.itemgetter('name'), fields)
+
+        Model = request.registry.get(model)
+        ids = itter_ids(Model.search(request.cr,
+                                     request.uid,
+                                     domain,
+                                     context=context))
+        import_data = itter_data(Model,
+                                 request.cr.dbname,
+                                 request.uid,
+                                 ids,
+                                 field_names,
+                                 self.raw_data,
+                                 context)
+
+        if import_compat:
+            columns_headers = field_names
+        else:
+            columns_headers = [val['label'].strip() for val in fields]
+
+        return request.make_response(self.from_data(columns_headers,
+                                                    import_data),
+                                     headers=[('Content-Disposition',
+                                               'attachment; filename="%s"'
+                                               % self.filename(model)),
+                                              ('Content-Type',
+                                               self.content_type)],
+                                     cookies={'fileToken': token})
+
+
+class CSVExportAll(ExportAllBase, http.Controller):
 
     @property
     def content_type(self):
@@ -68,32 +120,10 @@ class CSVExportAll(ExportFormat, http.Controller):
     def filename(self, base):
         return base + '.csv'
 
-    @openerpweb.httprequest
-    def index(self, req, data, token):
-        data_dict = simplejson.loads(data)
-        model = data_dict.get('model', False)
-        fields = data_dict.get('fields', [])
-        ids = data_dict.get('ids', [])
-        domain = data_dict.get('domain', False)
-        import_compat = data_dict.get('import_compat', False)
-        context = data_dict.get('context', req.context)
-        Model = req.session.model(model)
-        ids = itter_ids(Model.search(domain, 0, False, False, context))
-
-        field_names = map(operator.itemgetter('name'), fields)
-        import_data = itter_data(Model, ids, field_names, context)
-
-        if import_compat:
-            columns_headers = field_names
-        else:
-            columns_headers = [val['label'].strip() for val in fields]
-
-        return req.make_response(self.from_data(columns_headers, import_data),
-                                 headers=[('Content-Disposition',
-                                           'attachment; filename="%s"'
-                                           % self.filename(model)),
-                                          ('Content-Type', self.content_type)],
-                                 cookies={'fileToken': token})
+    @http.route('/web/export/csv_all', type='http', auth="user")
+    @serialize_exception
+    def index(self, data, token):
+        return self.base(data, token)
 
     def from_data(self, fields, rows):
         fp = StringIO()
@@ -130,13 +160,8 @@ class CSVExportAll(ExportFormat, http.Controller):
         return
 
 
-class ExcelExportAll(ExportFormat, http.Controller):
-    _cp_path = '/web/export/xls_all'
-    fmt = {
-        'tag': 'xls',
-        'label': 'Excel',
-        'error': None if xlwt else "XLWT required"
-    }
+class ExcelExportAll(ExportAllBase, http.Controller):
+    raw_data = True
 
     @property
     def content_type(self):
@@ -145,33 +170,10 @@ class ExcelExportAll(ExportFormat, http.Controller):
     def filename(self, base):
         return base + '.xls'
 
-    @openerpweb.httprequest
-    def index(self, req, data, token):
-        data_dict = simplejson.loads(data)
-        model = data_dict.get('model', False)
-        fields = data_dict.get('fields', [])
-        ids = data_dict.get('ids', [])
-        domain = data_dict.get('domain', False)
-        import_compat = data_dict.get('import_compat', False)
-        context = data_dict.get('context', req.context)
-
-        Model = req.session.model(model)
-        ids = itter_ids(Model.search(domain, 0, False, False, context))
-
-        field_names = map(operator.itemgetter('name'), fields)
-        import_data = itter_data(Model, ids, field_names, context)
-
-        if import_compat:
-            columns_headers = field_names
-        else:
-            columns_headers = [val['label'].strip() for val in fields]
-
-        return req.make_response(self.from_data(columns_headers, import_data),
-                                 headers=[('Content-Disposition',
-                                           'attachment; filename="%s"'
-                                           % self.filename(model)),
-                                          ('Content-Type', self.content_type)],
-                                 cookies={'fileToken': token})
+    @http.route('/web/export/xls_all', type='http', auth="user")
+    @serialize_exception
+    def index(self, data, token):
+        return self.base(data, token)
 
     # Unable to yield the workbook as we create it
     # as all data must be known on save

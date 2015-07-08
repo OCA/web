@@ -22,12 +22,6 @@
     'application': False,
     'version': '1.1',
     'category': 'Web',
-    'description': '''
-Allows all rows to be exported from a search view including
-the ones not on the current page. Data is streamed back from
-the server to prevent timeouts and memory issues when exporting
-many records.
-        ''',
     'author': 'credativ Ltd,Odoo Community Association (OCA)',
     'website': 'http://credativ.co.uk',
     'license': 'AGPL-3',
@@ -38,8 +32,8 @@ many records.
     'update_xml': [],
     'demo_xml': [],
     'installable': True,
-    "js": [
-        "static/src/js/data_export.js",
+    'data': [
+        'view/assets.xml',
     ],
     "qweb": [
         "static/src/xml/web_exportall.xml",
