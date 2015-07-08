@@ -48,7 +48,6 @@ def itter_ids(all_ids, step_size=250):
 def itter_data(Model, all_ids, field_names, context):
     """ Reads data in chunks of ids from all_ids and
         yields the rows one by one """
-    offset = 0
     for ids in all_ids:
         import_data = Model.export_data(ids,
                                         field_names, context).get('datas', [])
