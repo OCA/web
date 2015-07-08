@@ -22,7 +22,6 @@ import operator
 import simplejson
 import re
 from cStringIO import StringIO
-import werkzeug.wrappers
 try:
     import xlwt
 except ImportError:
@@ -55,7 +54,6 @@ def itter_data(Model, dbname, uid, all_ids, field_names, raw_data, context):
     cr = sql_db.db_connect(dbname).cursor()
     with cr:
         with openerp.api.Environment.manage():
-            offset = 0
             for ids in all_ids:
                 import_data = Model.export_data(cr,
                                                 uid,
