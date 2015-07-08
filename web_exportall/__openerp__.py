@@ -28,9 +28,6 @@
     "depends": [
         'web'
     ],
-    'init_xml': [],
-    'update_xml': [],
-    'demo_xml': [],
     'installable': True,
     'data': [
         'view/assets.xml',
