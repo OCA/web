@@ -22,43 +22,12 @@
 
 {
     'name': 'Web - Custom Element Number in ListView',
+    'summary': 'Allow users to set manually a quantity of items to display'
+        ' in a tree view',
     'version': '1.0',
     'category': 'web',
-    'description': """
-Allow users to set manually a quantity of items to display in a tree view
-=========================================================================
-
-Functionality:
---------------
-    * By default, in Odoo, user can display 80 / 200 / 500 / 2000 elements in
-    a tree view;
-    With that module, user can select a custom number of items to display;
-
-Technical information:
-----------------------
-    * replace a select element by an input with datalist option. That allows
-      to set a custom value, or to select an option. (same options as before:
-      80 / 200 / 500 / 2000 / unlimited);
-
-    * WARNING: 'Datalist' is a HTML5 tag; If your browser is not HTML5
-      compliant, the options will not be displayed (but it is possible for
-      user to select manually a value);
-      See browser Support: http://www.w3schools.com/tags/tag_datalist.asp
-
-Roadmap:
---------
-    * When pressing Esc key, it could be user friendly to return to the
-     previous state (before editing the quantity).
-
-Copyright, Author and Licence:
-------------------------------
-    * Copyright:
-        * 2015-Today, Akretion;
-    * Author:
-        * Sylvain LE GAL (https://twitter.com/legalsylvain);
-    * Licence: AGPL-3 (http://www.gnu.org/licenses/)""",
     'author': "Akretion,Odoo Community Association (OCA)",
-    'website': 'http://www.grap.coop',
+    'website': 'http://www.akretion.com',
     'license': 'AGPL-3',
     'depends': [
         'web',
