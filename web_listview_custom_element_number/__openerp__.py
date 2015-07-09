@@ -63,10 +63,7 @@ Copyright, Author and Licence:
     'depends': [
         'web',
     ],
-    'js': [
-        'static/src/js/web_listview_custom_element_number.js',
-    ],
-    'css': [
-        'static/src/css/web_listview_custom_element_number.css',
+    'data': [
+        'views/templates.xml',
     ],
 }
