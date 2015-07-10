@@ -7,6 +7,9 @@
         'base',
         'web',
     ],
+    'qweb': [
+        'static/src/xml/base.xml',
+    ],
     'data': ['views/view.xml'],
     "author": "0k.io,Odoo Community Association (OCA)",
     "installable": True,
