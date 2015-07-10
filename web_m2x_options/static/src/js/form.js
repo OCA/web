@@ -336,6 +336,30 @@ openerp.web_m2x_options = function (instance) {
                 return values;
             })
         },
+
+        render_value: function()
+        {
+            var self = this;
+            return jQuery.when(this._super.apply(this, arguments))
+            .then(function()
+            {
+                if(self.options.open)
+                {
+                    self.$el.find('.oe_tag')
+                    .css('cursor', 'pointer')
+                    .click(function(e)
+                    {
+                        var id = parseInt(jQuery(this).attr('data-id'));
+                        self.do_action({
+                            type: 'ir.actions.act_window',
+                            res_model: self.field.relation,
+                            views: [[false, 'form']],
+                            res_id: id,
+                        });
+                    });
+                }
+            });
+        },
     });
 };
 
