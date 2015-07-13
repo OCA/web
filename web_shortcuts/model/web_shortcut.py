@@ -22,11 +22,11 @@
 from openerp import models, fields, api
 
 
-class web_shortcut(models.Model):
+class WebShortcut(models.Model):
     _name = 'web.shortcut'
 
     name = fields.Char('Shortcut Name', size=64)
-    menu_id = fields.Many2one('ir.ui.menu')
+    menu_id = fields.Many2one('ir.ui.menu', ondelete='cascade')
     user_id = fields.Many2one('res.users', 'User Ref.', required=True,
                               ondelete='cascade', select=True,
                               default=lambda obj, cr, uid, context: uid)
@@ -51,4 +51,16 @@ class web_shortcut(models.Model):
                     'menu_id': (_id, _name)
                 }
             )
+        return res
+
+
+class IrUiView(models.Model):
+    _inherit = 'ir.ui.menu'
+
+    @api.multi
+    def unlink(self):
+        res = super(IrUiView, self).unlink()
+        shortcuts = self.env['web.shortcut'].search([('menu_id', '=', False)])
+        for shortcut in shortcuts:
+            shortcut.unlink()
         return res
