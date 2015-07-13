@@ -27,6 +27,7 @@
     'website': 'https://github.com/OCA/web',
     'summary': 'Provides a widget for editing HTML fields using CKEditor 4.x',
     "category": "Tools",
+    'license': 'AGPL-3',
     "depends": [
         'web',
     ],
