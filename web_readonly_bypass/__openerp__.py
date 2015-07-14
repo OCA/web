@@ -108,8 +108,14 @@ promote its widespread use.
 
 To contribute to this module, please visit http://odoo-community.org.
     """,
+    "depends": [
+        'web',
+    ],
     'js': [
         'static/src/js/readonly_bypass.js',
+    ],
+    'test': [
+        'static/test/web_readonly_bypass.js',
     ],
     'installable': True,
     'auto_install': False,

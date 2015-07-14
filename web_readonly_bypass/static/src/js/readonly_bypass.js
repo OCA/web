@@ -5,34 +5,69 @@
 openerp.web_readonly_bypass = function(instance) {
 
     var QWeb = instance.web.qweb, _t = instance.web._t;
-    /**
-     * ignore readonly: place options['readonly_fields'] into the data
-     * if nothing is specified into the context
-     *
-     * create mode: remove read-only keys having a 'false' value
-     *
-     * @param boolean mode: True case of create, false case of write
-     * @param {Object} context->filter_out_readonly
-     * @param {Object} data field values to possibly be updated
-     * @param {Object} options Dictionary that can contain the following keys:
-     *   - readonly_fields: Values from readonly fields to merge into the data object
-     */
-    function ignore_readonly(data, options, mode, context){
-        if (options){
-            if ('readonly_fields' in options && options['readonly_fields'] &&
-                !('filter_out_readonly' in context &&
-                  context['filter_out_readonly'] == true)) {
-                if(mode){
+    var instance = instance;
+
+    instance.web_readonly_bypass = {
+        /**
+         * ignore readonly: place options['readonly_fields'] into the data
+         * if nothing is specified into the context
+         *
+         * create mode: remove read-only keys having a 'false' value
+         *
+         * @param {Object} data field values to possibly be updated
+         * @param {Object} options Dictionary that can contain the following keys:
+         *   - readonly_fields: Values from readonly fields to merge into the data object
+         * @param boolean mode: True case of create, false case of write
+         * @param {Object} context->readonly_by_pass
+         */
+        ignore_readonly: function(data, options, mode, context){
+            console.log(options );
+            console.log(context );
+            var readonly_by_pass_fields = this.retrieve_readonly_by_pass_fields(
+                options, context);
+            console.log(readonly_by_pass_fields );
+            if(mode){
+                $.each( readonly_by_pass_fields, function( key, value ) {
+                    if(value==false){
+                        delete(readonly_by_pass_fields[key]);
+                    }
+                });
+            }
+            data = $.extend(data,readonly_by_pass_fields);
+            console.log(data );
+        },
+
+        /**
+         * retrieve_readonly_by_pass_fields: retrieve readonly fields to save
+         * according context.
+         *
+         * @param {Object} options Dictionary that can contain the following keys:
+         *   - readonly_fields: all values from readonly fields
+         * @param {Object} context->readonly_by_pass: Can be true if all
+         *   all readonly fields should be saved or an array of field name to
+         *   save ie: ['readonly_field_1', 'readonly_field_2']
+         * @returns {Object}: readonly key/value fields to save according context
+         */
+        retrieve_readonly_by_pass_fields: function(options, context){
+            var readonly_by_pass_fields = {};
+            if (options && 'readonly_fields' in options &&
+               options['readonly_fields'] && context &&
+               'readonly_by_pass' in context && context['readonly_by_pass']){
+                if (_.isArray(context['readonly_by_pass'])){
                     $.each( options.readonly_fields, function( key, value ) {
-                        if(value==false){
-                            delete(options.readonly_fields[key]);
+                        if(_.contains(context['readonly_by_pass'], key)){
+                            readonly_by_pass_fields[key] = value;
                         }
                     });
+                }else{
+                    readonly_by_pass_fields = options.readonly_fields;
                 }
-                data = $.extend(data,options['readonly_fields'])
             }
-        }
+            return readonly_by_pass_fields;
+        },
     };
+
+    readonly_bypass = instance.web_readonly_bypass;
 
     instance.web.BufferedDataSet.include({
 
@@ -50,7 +85,7 @@ openerp.web_readonly_bypass = function(instance) {
          */
         create : function(data, options) {
             var self = this;
-            ignore_readonly(data, options, true, self.context);
+            readonly_bypass.ignore_readonly(data, options, true, self.context);
             return self._super(data,options);
         },
         /**
@@ -64,7 +99,7 @@ openerp.web_readonly_bypass = function(instance) {
          */
         write : function(id, data, options) {
             var self = this;
-            ignore_readonly(data, options, false, self.context);
+            readonly_bypass.ignore_readonly(data, options, false, self.context);
             return self._super(id,data,options);
         },
 
@@ -88,7 +123,7 @@ openerp.web_readonly_bypass = function(instance) {
          */
         create : function(data, options) {
             var self = this;
-            ignore_readonly(data, options, true, self.context);
+            readonly_bypass.ignore_readonly(data, options, true, self.context);
             return self._super(data,options);
         },
         /**
@@ -102,7 +137,7 @@ openerp.web_readonly_bypass = function(instance) {
          */
         write : function(id, data, options) {
             var self = this;
-            ignore_readonly(data, options, false, self.context);
+            readonly_bypass.ignore_readonly(data, options, false, self.context);
             return self._super(id,data,options);
         },
 
