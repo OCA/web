@@ -41,7 +41,7 @@ Alternative
 If you have website module installed, it could be an option
 to install help_online instead of this module.
 
-Help Online is more advanced (allow to end user to add help)
+Help Online is more advanced (allow the end user to add help)
 but depends on an other module.
 Help popup is more like an embedded help that use power users for end users.
 
