@@ -10,7 +10,8 @@ saving onchange modifications to readonly fields.
 
 Behavior: add readonly fields changed by `on_change` methods to the values
 passed to write or create. If `readonly_by_pass` is in the context and
-True then by pass readonly fields and save its change.
+True then it will by pass readonly fields and save its data provide by onchange
+method.
 
 Installation
 ============
@@ -35,7 +36,7 @@ To change that behavior you have to set context on ``ur.actions.act_window``::
         <field name="context">{'readonly_by_pass': True}</field>
     </record>
 
-or by telling fields allow to change::
+or by telling fields allowed to change::
 
     <record id="sale.action_quotations" model="ir.actions.act_window">
         <field name="context">
@@ -50,9 +51,7 @@ For further information, please visit:
 Known issues / Roadmap
 ======================
 
- * At this point, bypass on a field on o2m field (like field on sale order line)
-   are not working, because context from action is not take on consideration
-   when loosing focus on the line in the ``BufferedDataSet`` js Class.
+ *
 
 Bug Tracker
 ===========

@@ -21,11 +21,8 @@ openerp.web_readonly_bypass = function(instance) {
          * @param {Object} context->readonly_by_pass
          */
         ignore_readonly: function(data, options, mode, context){
-            console.log(options );
-            console.log(context );
             var readonly_by_pass_fields = this.retrieve_readonly_by_pass_fields(
                 options, context);
-            console.log(readonly_by_pass_fields );
             if(mode){
                 $.each( readonly_by_pass_fields, function( key, value ) {
                     if(value==false){
@@ -34,7 +31,6 @@ openerp.web_readonly_bypass = function(instance) {
                 });
             }
             data = $.extend(data,readonly_by_pass_fields);
-            console.log(data );
         },
 
         /**
@@ -85,7 +81,9 @@ openerp.web_readonly_bypass = function(instance) {
          */
         create : function(data, options) {
             var self = this;
-            readonly_bypass.ignore_readonly(data, options, true, self.context);
+            var context = instance.web.pyeval.eval('contexts',
+                                                   self.context.__eval_context);
+            readonly_bypass.ignore_readonly(data, options, true, context);
             return self._super(data,options);
         },
         /**
@@ -99,7 +97,9 @@ openerp.web_readonly_bypass = function(instance) {
          */
         write : function(id, data, options) {
             var self = this;
-            readonly_bypass.ignore_readonly(data, options, false, self.context);
+            var context = instance.web.pyeval.eval('contexts',
+                                                   self.context.__eval_context);
+            readonly_bypass.ignore_readonly(data, options, false, context);
             return self._super(id,data,options);
         },
 
