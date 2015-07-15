@@ -1,7 +1,6 @@
 openerp.testing.section( 'web_readonly_bypass', {},
 function(test){
         test('ignore_readonly', function(instance){
-            openerp.web_readonly_bypass(instance);
             var data = {};
             var mode_create = true;
             var options = {};
@@ -63,7 +62,6 @@ function(test){
         });
 
         test('retrieve_readonly_by_pass_fields', function(instance){
-            openerp.web_readonly_bypass(instance);
             var context = {'readonly_by_pass': true}
             var options = {'readonly_fields': {'field_1': 'va1-1',
                                                'field_2': 'val-2',
