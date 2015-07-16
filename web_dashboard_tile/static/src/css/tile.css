@@ -1,0 +1,44 @@
+.openerp .oe_kanban_view .oe_dashbaord_tile{
+    width: 150px;
+    height: 150px;
+    border: 0;
+    border-radius: 0;
+}
+
+.openerp .oe_kanban_view .oe_dashbaord_tile .tile_label,
+.openerp .oe_kanban_view .oe_dashbaord_tile .tile_count_without_computed_value,
+.openerp .oe_kanban_view .oe_dashbaord_tile .tile_count_with_computed_value,
+.openerp .oe_kanban_view .oe_dashbaord_tile .tile_computed_value {
+    width: 140px;
+    text-align: center;
+}
+
+.openerp .oe_kanban_view .oe_dashbaord_tile .tile_label{
+    padding: 5px;
+    font-size: 15px;
+}
+
+.openerp .oe_kanban_view .oe_dashbaord_tile .tile_count_without_computed_value{
+    font-size: 52px;
+    font-weight: bold;
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+}
+
+.openerp .oe_kanban_view .oe_dashbaord_tile .tile_count_with_computed_value{
+    font-size: 38px;
+    font-weight: bold;
+    position: absolute;
+    left: 5px;
+    bottom: 30px;
+}
+
+.openerp .oe_kanban_view .oe_dashbaord_tile .tile_computed_value{
+    font-size: 18px;
+    font-weight: bold;
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+    font-style: italic;
+}
