@@ -30,5 +30,7 @@ This module changes this default width to 95% of the parent window.
     'website': 'https://launchpad.net/web-addons',
     'depends': ['web'],
     "license": 'AGPL-3',
-    "js": ['static/src/js/web_popup_large.js'],
+    'data': [
+        'views/templates.xml',
+    ],
 }
