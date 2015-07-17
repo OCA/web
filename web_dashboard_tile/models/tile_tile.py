@@ -123,7 +123,7 @@ class TileTile(Model):
         " ('ttype', 'in', ['float', 'int'])]")
     active=fields.Boolean(
         compute='_get_tile_info', readonly=True, search='_search_active')
-    color=fields.Char(default='#0E6C7E', string='Background Color')
+    background_color=fields.Char(default='#0E6C7E', oldname='color')
     font_color=fields.Char(default='#FFFFFF')
     sequence=fields.Integer(default=0, required=True)
 
