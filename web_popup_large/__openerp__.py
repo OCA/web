@@ -19,17 +19,15 @@
 #
 ##############################################################################
 {
-    "name": "Large pop-ups in web client",
-    "version": "7.0.1.0",
-    "author": "Therp BV,Odoo Community Association (OCA)",
-    "category": 'Usability',
-    "description": """
-Pop-ups in the web client have a width of 900 pixels by default.
-This module changes this default width to 95% of the parent window.
-    """,
-    'website': 'https://launchpad.net/web-addons',
-    'depends': ['web'],
-    "license": 'AGPL-3',
+    'name': 'Large pop-ups in web client',
+    'version': '1.1',
+    'author': 'Therp BV,GRAP,Odoo Community Association (OCA)',
+    'category': 'Usability',
+    'website': 'http://therp.nl',
+    'depends': [
+        'web',
+    ],
+    'license': 'AGPL-3',
     'data': [
         'views/templates.xml',
     ],
