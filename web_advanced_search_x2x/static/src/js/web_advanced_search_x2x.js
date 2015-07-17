@@ -190,7 +190,8 @@ openerp.web_advanced_search_x2x = function(instance)
             });
             popup.select_element(
                 this.field.relation, {}, this.field.domain,
-                this.field.context);
+                new instance.web.CompoundContext(
+                    instance.session.user_context, this.field.context));
         },
     });
 
