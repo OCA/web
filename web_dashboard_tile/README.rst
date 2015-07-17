@@ -16,8 +16,6 @@ and add them as short cut.
 Usage
 =====
 
-After installation, a dashboard has a `Maximize`-button that loads the dashboard's action in a normal view.
-
 * Dashboad sample, displaying Sale Orders to invoice:
 .. image:: web_dashboard_tile/static/src/img/screenshot_dashboard.png
 * Tree view displayed when user click on the tile:
