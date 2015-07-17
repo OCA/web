@@ -23,11 +23,13 @@
 #
 ##############################################################################
 
-from openerp.osv import orm, fields
+from openerp import api, fields
+from openerp.models import Model
+from openerp.exceptions import except_orm
 from openerp.tools.translate import _
 
 
-class tile(orm.Model):
+class TileTile(Model):
     _name = 'tile.tile'
     _order = 'sequence, name'
 
@@ -39,58 +41,49 @@ class tile(orm.Model):
             half = (len(aList) - 1) / 2
             return sum(sorted(aList)[half:half + even]) / float(even)
 
-    def _get_tile_info(self, cr, uid, ids, fields, args, context=None):
-        ima_obj = self.pool['ir.model.access']
+    def _get_tile_info(self):
+        ima_obj = self.env['ir.model.access']
         res = {}
-        records = self.browse(cr, uid, ids, context=context)
-        for r in records:
-            res[r.id] = {
-                'active': False,
-                'count': 0,
-                'computed_value': 0,
-                'helper': '',
-            }
-            if ima_obj.check(
-                    cr, uid, r.model_id.model, 'read', False, context):
+        for r in self:
+            r.active = False
+            r.count = 0
+            r.computed_value = 0
+            helper = ''
+            if ima_obj.check(r.model_id.model, 'read', False):
                 # Compute count item
-                model = self.pool.get(r.model_id.model)
-                count = model.search_count(
-                    cr, uid, eval(r.domain), context=context)
-                res[r.id].update({
-                    'active': True,
-                    'count': count,
-                })
+                model = self.env[r.model_id.model]
+                r.count = model.search_count(eval(r.domain))
+                r.active = True
 
                 # Compute datas for field_id depending of field_function
-                if r.field_function and r.field_id and count != 0:
-                    ids = model.search(
-                        cr, uid, eval(r.domain), context=context)
-                    vals = [x[r.field_id.name] for x in model.read(
-                        cr, uid, ids, [r.field_id.name], context=context)]
+                if r.field_function and r.field_id and r.count != 0:
+                    records = model.search(eval(r.domain))
+                    vals = [x[r.field_id.name] for x in records]
                     desc = r.field_id.field_description
                     if r.field_function == 'min':
-                        value = min(vals)
-                        helper = _("Minimum value of '%s'") % desc
+                        r.computed_value = min(vals)
+                        r.helper = _("Minimum value of '%s'") % desc
                     elif r.field_function == 'max':
-                        value = max(vals)
-                        helper = _("Maximum value of '%s'") % desc
+                        r.computed_value = max(vals)
+                        r.helper = _("Maximum value of '%s'") % desc
                     elif r.field_function == 'sum':
-                        value = sum(vals)
-                        helper = _("Total value of '%s'") % desc
+                        r.computed_value = sum(vals)
+                        r.helper = _("Total value of '%s'") % desc
                     elif r.field_function == 'avg':
-                        value = sum(vals) / len(vals)
-                        helper = _("Average value of '%s'") % desc
+                        r.computed_value = sum(vals) / len(vals)
+                        r.helper = _("Average value of '%s'") % desc
                     elif r.field_function == 'median':
-                        value = self.median(vals)
-                        helper = _("Median value of '%s'") % desc
-                    res[r.id].update({
-                        'computed_value': value,
-                        'helper': helper,
-                    })
+                        r.computed_value = self.median(vals)
+                        r.helper = _("Median value of '%s'") % desc
         return res
 
-    def _search_active(self, cr, uid, obj, name, arg, context=None):
-        ima_obj = self.pool['ir.model.access']
+    def _search_active(self, operator, value):
+        cr = self.env.cr
+        if operator != '=':
+            raise except_orm(
+                'Unimplemented Feature',
+                'Search on Active field disabled.')
+        ima_obj = self.env['ir.model.access']
         ids = []
         cr.execute("""
             SELECT tt.id, im.model
@@ -98,45 +91,41 @@ class tile(orm.Model):
             INNER JOIN ir_model im
                 ON tt.model_id = im.id""")
         for result in cr.fetchall():
-            if (ima_obj.check(cr, uid, result[1], 'read', False) ==
-                    arg[0][2]):
+            if (ima_obj.check(result[1], 'read', False) == value):
                 ids.append(result[0])
         return [('id', 'in', ids)]
 
-    _columns = {
-        'name': fields.char('Tile Name'),
-        'model_id': fields.many2one('ir.model', 'Model', required=True),
-        'user_id': fields.many2one('res.users', 'User'),
-        'domain': fields.text('Domain'),
-        'action_id': fields.many2one('ir.actions.act_window', 'Action'),
-        'count': fields.function(
-            _get_tile_info, type='int', string='Count',
-            multi='tile_info', readonly=True),
-        'computed_value': fields.function(
-            _get_tile_info, type='float', string='Computed Value',
-            multi='tile_info', readonly=True),
-        'helper': fields.function(
-            _get_tile_info, type='char', string='Helper Text',
-            multi='tile_info', readonly=True),
-        'field_function': fields.selection([
-            ('min', 'Minimum'),
-            ('max', 'Maximum'),
-            ('sum', 'Sum'),
-            ('avg', 'Average'),
-            ('median', 'Median'),
-            ], 'Function'),
-        'field_id': fields.many2one(
-            'ir.model.fields', 'Field',
-            domain="[('model_id', '=', model_id),"
-            " ('ttype', 'in', ['float', 'int'])]"),
-        'active': fields.function(
-            _get_tile_info, type='boolean', string='Active',
-            multi='tile_info', readonly=True, fnct_search=_search_active),
-        'color': fields.char('Background color'),
-        'font_color': fields.char('Font Color'),
-        'sequence': fields.integer(
-            'Sequence', required=True),
-    }
+    # Column Section
+    name=fields.Char(required=True)
+    model_id=fields.Many2one(
+        comodel_name='ir.model', string='Model', required=True)
+    user_id=fields.Many2one(
+        comodel_name='res.users', string='User')
+    domain=fields.Text(default='[]')
+    action_id=fields.Many2one(
+        comodel_name='ir.actions.act_window', string='Action')
+    count=fields.Integer(
+        compute='_get_tile_info', readonly=True) #readonly usefull ?
+    computed_value=fields.Float(
+        compute='_get_tile_info', readonly=True) #readonly usefull ?
+    helper=fields.Char(
+        compute='_get_tile_info', readonly=True) #readonly usefull ?
+    field_function=fields.Selection(selection=[
+        ('min', 'Minimum'),
+        ('max', 'Maximum'),
+        ('sum', 'Sum'),
+        ('avg', 'Average'),
+        ('median', 'Median'),
+        ], string='Function')
+    field_id=fields.Many2one(
+        comodel_name='ir.model.fields', string='Field',
+        domain="[('model_id', '=', model_id),"
+        " ('ttype', 'in', ['float', 'int'])]")
+    active=fields.Boolean(
+        compute='_get_tile_info', readonly=True, search='_search_active')
+    color=fields.Char(default='#0E6C7E', string='Background Color')
+    font_color=fields.Char(default='#FFFFFF')
+    sequence=fields.Integer(default=0, required=True)
 
     # Constraint Section
     def _check_model_id_field_id(self, cr, uid, ids, context=None):
@@ -163,47 +152,31 @@ class tile(orm.Model):
             ['field_id', 'field_function']),
     ]
 
-    _defaults = {
-        'domain': '[]',
-        'color': '#0E6C7E',
-        'font_color': '#FFFFFF',
-        'sequence': 0,
-    }
-
-    def open_link(self, cr, uid, ids, context=None):
-
-        tile_id = ids[0]
-        tile_object = self.browse(cr, uid, tile_id, context=context)
-
-        if tile_object.action_id:
-            act_obj = self.pool.get('ir.actions.act_window')
-            result = act_obj.read(cr, uid, [tile_object.action_id.id],
-                                  context=context)[0]
-            # FIXME: restore original Domain + Filter would be better
-            result['domain'] = tile_object.domain
-            return result
-
-        # we have no action_id stored,
-        # so try to load a default tree view
-        return {
-            'name': tile_object.name,
+    # View / action Section
+    @api.multi
+    def open_link(self):
+        res = {
+            'name': self.name,
             'view_type': 'form',
             'view_mode': 'tree',
             'view_id': [False],
-            'res_model': tile_object.model_id.model,
+            'res_model': self.model_id.model,
             'type': 'ir.actions.act_window',
-            'context': context,
+            'context': self.env.context,
             'nodestroy': True,
             'target': 'current',
-            'domain': tile_object.domain,
+            'domain': self.domain,
         }
+        if self.action_id:
+            res.update(self.action_id.read(
+                ['view_type', 'view_mode', 'view_id', 'type'])[0])
+            # FIXME: restore original Domain + Filter would be better
+        return res
 
-    def add(self, cr, uid, vals, context=None):
-        # TODO: check if string
-        if 'model_id' in vals:
+    @api.model
+    def add(self, vals):
+        if 'model_id' in vals and not vals['model_id'].isdigit():
             # need to replace model_name with its id
-            model_ids = self.pool.get('ir.model').search(cr, uid,
-                                                         [('model', '=',
-                                                           vals['model_id'])])
-            vals['model_id'] = model_ids[0]
-        return self.create(cr, uid, vals, context)
+            vals['model_id'] = self.env['ir.model'].search(
+                [('model', '=', vals['model_id'])]).id
+        self.create(vals)
