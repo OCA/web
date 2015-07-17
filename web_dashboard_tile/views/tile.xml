@@ -2,7 +2,6 @@
 <openerp>
     <data>
        <record model="ir.ui.view" id="dashboard_tile_tile_tree_view">
-            <field name="name">tile.tile.tree</field>
             <field name="model">tile.tile</field>
             <field name="arch" type="xml">
                 <tree string="Dashboard tiles">
@@ -19,28 +18,34 @@
         </record>
         
         <record model="ir.ui.view" id="dashboard_tile_tile_form_view">
-            <field name="name">tile.tile.form</field>
             <field name="model">tile.tile</field>
             <field name="arch" type="xml">
-                <form string="Dashboard tiles" version="7.0">
-                    <group>
-                        <field name="name"/>
-                        <field name="domain"/>
-                        <field name="model_id"/>
-                        <field name="user_id"/>
-                        <field name="action_id"/>
-                        <field name="field_function"/>
-                        <field name="field_id"/>
-                        <field name="background_color" widget="color"/>
-                        <field name="font_color" widget="color"/>
-                    </group>
+                <form string="Dashboard tiles">
+                    <sheet>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                        <group col="4">
+                            <separator string="Display" colspan="4"/>
+                            <field name="background_color" widget="color"/>
+                            <field name="font_color" widget="color"/>
+                            <field name="user_id"/>
+                            <separator string="Technical Informations" colspan="4"/>
+                            <field name="model_id"/>
+                            <field name="action_id"/>
+                            <field name="domain" colspan="4"/>
+                            <separator string="Optional Field Informations" colspan="4"/>
+                            <field name="field_function"/>
+                            <field name="field_id"/>
+                            <field name="helper" colspan="4"/>
+                        </group>
+                    </sheet>
                 </form>
             </field>
         </record>
 
         <!-- CRM Lead Kanban View  -->
        <record model="ir.ui.view" id="dashboard_tile_tile_kanban_view">
-            <field name="name">tile.tile.kanban</field>
             <field name="model">tile.tile</field>
             <field name="arch" type="xml">
                 <kanban edit="false" create="false">
