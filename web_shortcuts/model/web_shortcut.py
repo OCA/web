@@ -22,11 +22,11 @@
 from openerp import models, fields, api
 
 
-class web_shortcut(models.Model):
+class WebShortcut(models.Model):
     _name = 'web.shortcut'
 
     name = fields.Char('Shortcut Name', size=64)
-    menu_id = fields.Many2one('ir.ui.menu')
+    menu_id = fields.Many2one('ir.ui.menu', ondelete='cascade')
     user_id = fields.Many2one('res.users', 'User Ref.', required=True,
                               ondelete='cascade', select=True,
                               default=lambda obj, cr, uid, context: uid)
@@ -39,14 +39,28 @@ class web_shortcut(models.Model):
     @api.model
     def get_user_shortcuts(self, user_id):
         shortcuts = self.search([('user_id', '=', user_id)])
-        results = shortcuts.read(['menu_id'])
-        ir_ui_menu_obj = self.env['ir.ui.menu']
-        menus = ir_ui_menu_obj.search([('id', 'in', [x['menu_id'][0]
-                                                     for x in results])])
-        name_map = dict(menus.name_get())
-        # Make sure to return only shortcuts pointing to existing menu items.
-        filtered_results = filter(lambda result: result['menu_id'][0] in
-                                  name_map, results)
-        for result in filtered_results:
-            result.update(name=name_map[result['menu_id'][0]])
-        return filtered_results
+        res = []
+        for shortcut in shortcuts.filtered('menu_id'):
+            _name = shortcut.menu_id.name_get()
+            _name = _name[0][1] if len(_name) else ''
+            _id = shortcut.menu_id.id
+            res.append(
+                {
+                    'id': shortcut.id,
+                    'name': _name,
+                    'menu_id': (_id, _name)
+                }
+            )
+        return res
+
+
+class IrUiView(models.Model):
+    _inherit = 'ir.ui.menu'
+
+    @api.multi
+    def unlink(self):
+        res = super(IrUiView, self).unlink()
+        shortcuts = self.env['web.shortcut'].search([('menu_id', '=', False)])
+        for shortcut in shortcuts:
+            shortcut.unlink()
+        return res
