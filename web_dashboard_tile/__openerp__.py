@@ -73,18 +73,13 @@ possible future improvments:
     """,
     'data': [
         'view/tile.xml',
+        'view/templates.xml',
         'security/ir.model.access.csv',
         'security/rules.xml',
-    ],
-    'css': [
-        'static/src/css/tile.css',
     ],
     'demo': [
         'demo/res_groups.yml',
         'demo/tile_tile.yml',
-    ],
-    'js': [
-        'static/src/js/custom_js.js',
     ],
     'qweb': [
         'static/src/xml/custom_xml.xml',
