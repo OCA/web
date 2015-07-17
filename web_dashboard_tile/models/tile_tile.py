@@ -48,7 +48,7 @@ class TileTile(Model):
             r.active = False
             r.count = 0
             r.computed_value = 0
-            helper = ''
+            r.helper = ''
             if ima_obj.check(r.model_id.model, 'read', False):
                 # Compute count item
                 model = self.env[r.model_id.model]
@@ -96,36 +96,33 @@ class TileTile(Model):
         return [('id', 'in', ids)]
 
     # Column Section
-    name=fields.Char(required=True)
-    model_id=fields.Many2one(
+    name = fields.Char(required=True)
+    model_id = fields.Many2one(
         comodel_name='ir.model', string='Model', required=True)
-    user_id=fields.Many2one(
+    user_id = fields.Many2one(
         comodel_name='res.users', string='User')
-    domain=fields.Text(default='[]')
-    action_id=fields.Many2one(
+    domain = fields.Text(default='[]')
+    action_id = fields.Many2one(
         comodel_name='ir.actions.act_window', string='Action')
-    count=fields.Integer(
-        compute='_get_tile_info', readonly=True) #readonly usefull ?
-    computed_value=fields.Float(
-        compute='_get_tile_info', readonly=True) #readonly usefull ?
-    helper=fields.Char(
-        compute='_get_tile_info', readonly=True) #readonly usefull ?
-    field_function=fields.Selection(selection=[
+    count = fields.Integer(compute='_get_tile_info')
+    computed_value = fields.Float(compute='_get_tile_info')
+    helper = fields.Char(compute='_get_tile_info')
+    field_function = fields.Selection(selection=[
         ('min', 'Minimum'),
         ('max', 'Maximum'),
         ('sum', 'Sum'),
         ('avg', 'Average'),
         ('median', 'Median'),
         ], string='Function')
-    field_id=fields.Many2one(
+    field_id = fields.Many2one(
         comodel_name='ir.model.fields', string='Field',
         domain="[('model_id', '=', model_id),"
         " ('ttype', 'in', ['float', 'int'])]")
-    active=fields.Boolean(
+    active = fields.Boolean(
         compute='_get_tile_info', readonly=True, search='_search_active')
-    background_color=fields.Char(default='#0E6C7E', oldname='color')
-    font_color=fields.Char(default='#FFFFFF')
-    sequence=fields.Integer(default=0, required=True)
+    background_color = fields.Char(default='#0E6C7E', oldname='color')
+    font_color = fields.Char(default='#FFFFFF')
+    sequence = fields.Integer(default=0, required=True)
 
     # Constraint Section
     def _check_model_id_field_id(self, cr, uid, ids, context=None):
