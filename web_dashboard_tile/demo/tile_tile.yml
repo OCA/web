@@ -31,3 +31,10 @@
     model_id: base.model_ir_module_module
     domain: [['state', 'in', ['installed', 'to upgrade', 'to remove']], ['author', 'ilike', 'Odoo Community Association (OCA)']]
     action_id: base.open_module_tree
+
+- !record {model: tile.tile, id: all_currency_with_rate}:
+    name: Currencies (Max Rate)
+    model_id: base.model_res_currency
+    domain: []
+    field_function: max
+    field_id: base.field_res_currency_rate
