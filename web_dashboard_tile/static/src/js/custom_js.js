@@ -45,25 +45,20 @@ _.mixin({
         },
         save_tile: function () {
             var self = this;
-            var getParent = this.getParent();
             var view_parent = this.getParent().getParent();
-            if (! view_parent.action || ! this.$el.find("select").val()) {
-                this.do_warn("Can't find dashboard action");
-                return;
-            }
-            
+
             var $name = this.$('#dashboard_tile_new_name');
-            
+
             this.tile = new instance.web.Model('tile.tile');
-            
+
             var private_filter = !this.$('#oe_searchview_custom_public').prop('checked');
             if (_.isEmpty($name.val())){
                 this.do_warn(_t("Error"), _t("Filter name is required."));
                 return false;
             }
             var search = this.view.build_search_data();
-            var context = new instance.web.CompoundContext(getParent.dataset.get_context() || []);
-            var domain = new instance.web.CompoundDomain(getParent.dataset.get_domain() || []);
+            var context = new instance.web.CompoundContext(view_parent.dataset.get_context() || []);
+            var domain = new instance.web.CompoundDomain(view_parent.dataset.get_domain() || []);
             _.each(search.contexts, context.add, context);
             _.each(search.domains, domain.add, domain);
 
