@@ -34,8 +34,8 @@
     "category": "web",
     'license': 'AGPL-3',
     'data': [
-        'view/tile.xml',
-        'view/templates.xml',
+        'views/tile.xml',
+        'views/templates.xml',
         'security/ir.model.access.csv',
         'security/rules.xml',
     ],
