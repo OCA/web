@@ -31,46 +31,8 @@
         'web_widget_color',
     ],
     'author': "initOS GmbH & Co. KG,GRAP,Odoo Community Association (OCA)",
-    "category": "",
+    "category": "web",
     'license': 'AGPL-3',
-    "description": """
-Add Tiles to Dashboard
-======================
-Features:
----------
-module to give you a dashboard where you can configure tile from any view
-and add them as short cut.
-
-* Tile can be:
-    * displayed only for a user;
-    * global for all users (In that case, some tiles will be hidden if
-      the current user doesn't have access to the given model);
-* The tile displays items count of a given model restricted to a given domain;
-* Optionnaly, the tile can display the result of a function of a field;
-    * Function is one of sum/avg/min/max/median;
-    * Field must be integer or float;
-
-Screenshot:
------------
-* Dashboad sample, displaying Sale Orders to invoice:
-.. image:: web_dashboard_tile/static/src/img/screenshot_dashboard.png
-* Tree view displayed when user click on the tile:
-.. image:: web_dashboard_tile/static/src/img/screenshot_action_click.png
-
-
-Kown issues/limits:
--------------------
-* can not edit tile from dashboard (color, sequence, function, ...);
-* context are ignored;
-* date filter can not be relative;
-* combine domain of menue and filter so can not restore origin filter;
-
-possible future improvments:
-----------------------------
-* support context_today;
-* add icons;
-* support client side action (like inbox);
-    """,
     'data': [
         'view/tile.xml',
         'view/templates.xml',
