@@ -13,8 +13,6 @@
 
 <div class="page">
 
-<b><h1 t-field="o.name"/></b>
-
 <div t-raw="o.owner_help"/>
 
 <hr width="70%"/>
