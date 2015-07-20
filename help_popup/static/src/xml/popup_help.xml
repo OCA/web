@@ -2,7 +2,7 @@
 <templates>
     <t t-name="ViewManagerAction" t-extend="ViewManagerAction">
         <t t-jquery="h2.oe_view_title" t-operation="before">
-            <span class="oe_button view_help">?</span>
+            <span> &amp;nbsp; </span><span class="oe_button oe_highlight view_help">?</span>
         </t>
     </t>
 </templates>
