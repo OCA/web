@@ -1,0 +1,34 @@
+<templates>
+
+    <t t-name="TranslateDialog">
+        <table t-if="widget.view.translatable_fields" class="oe_frame oe_forms oe_translation_form" border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td class="oe_form_separator" width="1%" nowrap="nowrap">
+                <div class="separator horizontal">Field</div>
+            </td>
+            <th t-foreach="widget.languages" align="left">
+                <div class="separator horizontal"><t t-esc="name"/></div>
+            </th>
+        </tr>
+        <tr t-foreach="widget.view.translatable_fields" t-as="field" t-att-data-field="field.name">
+            <td class="oe_form_frame_cell" width="1%" nowrap="nowrap">
+                <label class="oe_label"><t t-esc="field.string"/>:</label>
+            </td>
+            <td t-foreach="widget.languages" t-as="lg" class="oe_form_frame_cell">
+                <input t-if="field.field.type == 'char' || field.field.type == 'url'" type="text" t-attf-name="#{lg.code}-#{field.name}" value="" data-value="" class="oe_translation_field"/>
+                <textarea t-if="field.field.type == 'text'" t-attf-name="#{lg.code}-#{field.name}" data-value="" class="oe_translation_field" ></textarea>
+                <div t-if="field.field.type == 'html'" class="oe_form_field_html">
+                    <textarea class="oe_translation_field oe_form_field" t-attf-name="#{lg.code}-#{field.name}" data-value=""/>
+                </div>
+            </td>
+        </tr>
+        </table>
+    </t>
+
+    <t t-name="TranslateDialog.buttons">
+        <button class="oe_form_translate_dialog_save_button oe_button oe_highlight">Save</button>
+        <button class="oe_form_translate_dialog_cancel_button oe_button">Cancel</button>
+    </t>
+
+</templates>
+
