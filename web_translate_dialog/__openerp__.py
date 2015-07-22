@@ -32,14 +32,9 @@ Replace the standard translation view by an alternative one:
 
 """,
  "version": "1.0",
- "depends": ['web',
-             ],
- 'js': ['static/src/js/web_translate_dialog.js',
-        ],
- 'css': ['static/src/css/base.css',
-         ],
- 'qweb': ["static/src/xml/base.xml",
-          ],
+ "depends": ['web'],
+ 'data': ['view/web_translate.xml'],
+ 'qweb': ["static/src/xml/base.xml"],
  'auto_install': False,
- 'installable': False,
+ 'installable': True,
  }
