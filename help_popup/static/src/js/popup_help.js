@@ -12,7 +12,9 @@ openerp.help_popup = function(instance, local) {
                     return true;
                 }
                 $elem.data('click-init', true);
-                if (self.action.custom_help == '' && self.action.owner_help == '') {
+                //alert('ee' + self.action)
+                console.log(self.action.id)
+                if (self.action.id == undefined || (self.action.custom_help == '' && self.action.owner_help == '')) {
                     self.$el.find('span.view_help').hide()
                 }
                 $elem.on('click', function(e) {
