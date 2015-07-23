@@ -38,7 +38,7 @@ openerp.web_ckeditor4 = function(instance)
                             self_arguments=arguments;
                         setTimeout(function()
                         {
-                            if(CKEDITOR.instances[self.editor.name])
+                            if(self.editor)
                             {
                                 fn.apply(self, self_arguments);
                             }
