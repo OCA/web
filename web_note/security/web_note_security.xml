@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+        <!-- Record Rules for Notes -->
+        <record id="rule_web_note_private" model="ir.rule">
+            <field name="name">Note private</field>
+            <field name="model_id" ref="web_note.model_web_note"/>
+            <field name="domain_force">[('type', '=', 'private'), ('create_uid', '=', user.id)]</field>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+    </data>
+</openerp>
