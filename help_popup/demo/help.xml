@@ -4,13 +4,13 @@
     <data noupdate="1">
 
         <record id="base.action_partner_form" model="ir.actions.act_window">
-            <field name="owner_help"><![CDATA[
+            <field name="enduser_help"><![CDATA[
 <b>Hi Odooer,</b>
 
 <br/>
 <br/>
 <p>
-I'm the field 'owner_help' in the Customer action model
+I'm the field 'enduser_help' in the Customer action model
 </p>
 <p>
 I'm displayed in a Qweb html report
@@ -26,13 +26,13 @@ Don't hesitate to customized me with your own words and syntax
 
     <data noupdate="0">
         <record id="base.action_partner_form" model="ir.actions.act_window">
-            <field name="custom_help"><![CDATA[
+            <field name="advanced_help"><![CDATA[
 <b>Hi developers,</b>
 
 <br/>
 <br/>
 <p>
-I'm the field 'custom_help' in the customer action also displayed in Qweb report.
+I'm the field 'advanced_help' in the customer action also displayed in Qweb report.
 </p>
 <p>
 <b>Akretion</b> wrote these words to explain my main purpose:
