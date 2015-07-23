@@ -25,11 +25,11 @@ from openerp import models, fields
 class IrActionsActwindow(models.Model):
     _inherit = 'ir.actions.act_window'
 
-    owner_help = fields.Html(
-        string="Owner Help",
+    enduser_help = fields.Html(
+        string="End User Help",
         help="Use this field to add custom content for documentation purpose\n"
-             "mainly for the ERP owner")
-    custom_help = fields.Text(
-        string="Custom Help",
+             "mainly by power users ")
+    advanced_help = fields.Text(
+        string="Advanced Help",
         help="Use this field to add custom content for documentation purpose\n"
-             "mainly for module developers")
+             "mainly by developers")

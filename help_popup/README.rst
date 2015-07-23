@@ -6,8 +6,8 @@ Help Popup
 ===========
 
 This module adds an html help popup on each model action.
-Two help fields are added to actions: owner_help (html widget)
-and custom_help.
+Two help fields are added to actions: enduser_help (html widget)
+and advanced_help.
 
 
 Installation
@@ -22,7 +22,7 @@ Configuration
 Go to the action of your choice to add some help content
 or put data in some modules.
 
-To display the button which open the popup, owner_help or custom_help field
+To display the button which open the popup, enduser_help or advanced_help field
 should be set to any value.
 
 
