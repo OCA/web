@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+<record id="view_window_action_form" model="ir.ui.view">
+    <field name="model">ir.actions.act_window</field>
+    <field name="inherit_id"
+           ref="base.view_window_action_form"/>
+    <field name="arch" type="xml">
+        <field name="help" position="after">
+            <field name="enduser_help"/>
+            <field name="advanced_help"/>
+        </field>
+    </field>
+</record>
+
+    </data>
+</openerp>

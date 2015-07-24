@@ -1,0 +1,54 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* help_popup
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-23 13:41+0000\n"
+"PO-Revision-Date: 2015-07-23 13:41+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: help_popup
+#: model:ir.actions.report.xml,name:help_popup.report_help_popup
+msgid "Contextual Help"
+msgstr ""
+
+#. module: help_popup
+#: field:ir.actions.act_window,advanced_help:0
+msgid "Custom Help"
+msgstr ""
+
+#. module: help_popup
+#: field:ir.actions.act_window,enduser_help:0
+msgid "End User Help"
+msgstr ""
+
+#. module: help_popup
+#: view:website:help_popup.tpl_help
+msgid "Help from Odoo"
+msgstr ""
+
+#. module: help_popup
+#: view:website:help_popup.tpl_help
+msgid "Help from developer"
+msgstr ""
+
+#. module: help_popup
+#: help:ir.actions.act_window,advanced_help:0
+msgid "Use this field to add custom content for documentation purpose\n"
+"mainly by developers"
+msgstr ""
+
+#. module: help_popup
+#: help:ir.actions.act_window,enduser_help:0
+msgid "Use this field to add custom content for documentation purpose\n"
+"mainly by power users "
+msgstr ""
+
