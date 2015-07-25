@@ -1,0 +1,21 @@
+.test-ribbon{
+    width: 200px;
+    background: #e43;
+    position: absolute;
+    top: 25px;
+    left: -50px;
+    text-align: center;
+    line-height: 50px;
+    letter-spacing: 1px;
+    color: #f0f0f0;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    z-index: 10000;
+    position: fixed;
+    box-shadow: 0 0 3px rgba(0,0,0,.3);
+    background: #e43;
+}
+
+.test-ribbon b {
+    font-size: 20px;
+}
