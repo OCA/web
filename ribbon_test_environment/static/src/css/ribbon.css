@@ -8,8 +8,11 @@
     line-height: 50px;
     letter-spacing: 1px;
     color: #f0f0f0;
-    transform: rotate(-45deg);
     -webkit-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
     z-index: 10000;
     position: fixed;
     box-shadow: 0 0 3px rgba(0,0,0,.3);
