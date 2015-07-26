@@ -23,7 +23,7 @@
     'name': "Ribbon Test Environment",
     'version': '0.1',
     'category': 'Web',
-    'author': 'Francesco OpenCode Apruzzese',
+    'author': 'Francesco OpenCode Apruzzese,Odoo Community Association (OCA)',
     'website': 'https://it.linkedin.com/in/francescoapruzzese',
     'license': 'AGPL-3',
     "depends": [
