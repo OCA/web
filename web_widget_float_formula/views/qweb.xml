@@ -1,0 +1,9 @@
+<openerp>
+    <data>
+       <template id="assets_backend" name="web_widget_float_formula assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/web_widget_float_formula/static/src/js/models.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>
