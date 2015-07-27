@@ -5,7 +5,7 @@
     <!-- Load css for ribbons -->
     <template id="assets_backend" name="ribbon_test assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
-            <link rel="stylesheet" href="/ribbon_test_environment/static/src/css/ribbon.css"/>
+            <link rel="stylesheet" href="/web_environment_ribbon/static/src/css/ribbon.css"/>
         </xpath>
     </template>
 

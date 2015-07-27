@@ -20,7 +20,7 @@
 ##############################################################################
 
 {
-    'name': "Ribbon Test Environment",
+    'name': "Web Environment Ribbon",
     'version': '0.1',
     'category': 'Web',
     'author': 'Francesco OpenCode Apruzzese,Odoo Community Association (OCA)',
