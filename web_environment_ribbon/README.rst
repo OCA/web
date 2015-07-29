@@ -22,8 +22,15 @@ Configuration
 Usage
 =====
 
-To use this module, you need only to install it. After installation, a red ribbon will be visible on top left corner of every Odoo page
+To use this module, you need only to install it. After installation, a red
+ribbon will be visible on top left corner of every Odoo backend page
 
+
+Known issues / Roadmap
+======================
+
+* Allow to define in some place (system parameter, configuration file...) the
+  text for the ribbon and the ribbon color.
 
 Bug Tracker
 ===========
