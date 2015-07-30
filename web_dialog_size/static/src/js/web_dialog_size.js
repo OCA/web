@@ -5,7 +5,8 @@ openerp.web_dialog_size= function (instance) {
         init_dialog: function () {
             var self = this;
             this._super();
-            self.$dialog_box.find('.dialog_button_restore').addClass('dialog_button_hide');
+            self.$dialog_box.find('.modal-dialog').addClass('dialog_full_screen');
+            self.$dialog_box.find('.dialog_button_extend').addClass('dialog_button_hide');
             if (this.dialog_options.size !== 'large'){
                 self.$dialog_box.find('.dialog_button_extend').addClass('dialog_button_hide');
             }
