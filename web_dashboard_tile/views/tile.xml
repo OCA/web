@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+       <record model="ir.ui.view" id="dashboard_tile_tile_tree_view">
+            <field name="model">tile.tile</field>
+            <field name="arch" type="xml">
+                <tree string="Dashboard tiles">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="domain"/>
+                    <field name="model_id"/>
+                    <field name="field_function"/>
+                    <field name="field_id"/>
+                    <field name="user_id"/>
+                    <field name="background_color" widget="color"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="dashboard_tile_tile_form_view">
+            <field name="model">tile.tile</field>
+            <field name="arch" type="xml">
+                <form string="Dashboard tiles">
+                    <sheet>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                        <group col="4">
+                            <separator string="Display" colspan="4"/>
+                            <field name="background_color" widget="color"/>
+                            <field name="font_color" widget="color"/>
+                            <field name="user_id"/>
+                            <separator string="Technical Informations" colspan="4"/>
+                            <field name="model_id"/>
+                            <field name="action_id"/>
+                            <field name="domain" colspan="4"/>
+                            <separator string="Optional Field Informations" colspan="4"/>
+                            <field name="field_function"/>
+                            <field name="field_id"/>
+                            <field name="helper" colspan="4"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- CRM Lead Kanban View  -->
+       <record model="ir.ui.view" id="dashboard_tile_tile_kanban_view">
+            <field name="model">tile.tile</field>
+            <field name="arch" type="xml">
+                <kanban edit="false" create="false">
+                    <field name="name"/>
+                    <field name="domain"/>
+                    <field name="model_id"/>
+                    <field name="action_id"/>
+                    <field name="count"/>
+                    <field name="background_color"/>
+                    <field name="font_color"/>
+                    <field name="field_id" />
+                    <field name="field_function" />
+                    <field name="helper" />
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_dashbaord_tile oe_kanban_global_click" t-attf-style="background-color:#{record.background_color.raw_value}" >
+                                <div class="oe_kanban_content">
+                                    <a type="object" name="open_link" args="[]" t-attf-style="color:#{record.font_color.raw_value};">
+                                        <div class="tile_label">
+                                            <b><field name="name"/></b>
+                                        </div>
+                                        <div style="padding-left: 0.5em; height: 115px;">
+                                            
+                                        </div>
+                                        <t t-if="record.field_id.raw_value != '' and record.field_function.raw_value != '' and record.count.raw_value !=0">
+                                            <div class="tile_count_with_computed_value">
+                                                <span><field name="count"/></span>
+                                            </div>
+                                            <div class="tile_computed_value" t-att-title="record.helper.raw_value">
+                                                <img t-att-src="_s + '/web_dashboard_tile/static/src/img/' + record.field_function.raw_value + '.png'"/>
+                                                <span><field name="computed_value"/></span>
+                                            </div>
+                                        </t>
+                                        <t t-if="!(record.field_id.raw_value != '' and record.field_function.raw_value != '' and record.count.raw_value !=0)">
+                                            <div class="tile_count_without_computed_value">
+                                                <span><field name="count"/></span>
+                                            </div>
+                                        </t>
+                                    </a>
+                                </div>
+                                <div class="oe_clear"></div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_tree_dashboard_tile">
+            <field name="name">Dashboard</field>
+            <field name="res_model">tile.tile</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="view_id" ref="dashboard_tile_tile_tree_view"/>
+        </record>
+
+        <menuitem id="menue_dashboard_tile" 
+            name="Dashboard Tile" parent="base.next_id_2"
+            action="action_tree_dashboard_tile" sequence="50"/>
+
+        <record model="ir.actions.act_window" id="action_kanban_dashboard_tile">
+            <field name="name">Dashboard</field>
+            <field name="res_model">tile.tile</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban</field>
+            <field name="domain">['|',('user_id','=',False),('user_id','=',uid)]</field>
+            <field name="view_id" ref="dashboard_tile_tile_tree_view"/>
+        </record>
+
+        <record id="mail_dashboard" model="ir.ui.menu">
+          <field name="name">Dashboard</field>
+          <field name="sequence" eval="9"/>
+          <field name="action" ref="action_kanban_dashboard_tile"/>
+          <field name="parent_id" ref="mail.mail_feeds"/>
+        </record>
+
+    </data>
+</openerp>
