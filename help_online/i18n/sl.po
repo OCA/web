@@ -1,22 +1,22 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* help_online
+# 	* help_online
 #
 # Matjaž Mozetič <m.mozetic@matmoz.si>, 2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-24 05:56+0000\n"
-"PO-Revision-Date: 2015-04-24 08:06+0100\n"
-"Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
+"POT-Creation-Date: 2015-08-02 10:20+0200\n"
+"PO-Revision-Date: 2015-08-02 10:20+0200\n"
+"Last-Translator: Matjaz Mozetic <m.mozetic@matmoz.si>\n"
 "Language-Team: Slovenian <translate@matmoz.si>\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"Language: sl\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Poedit 1.8.2\n"
 
 #. module: help_online
 #: view:export.help.wizard:help_online.export_help_wizard_view
@@ -25,15 +25,13 @@ msgid "Close"
 msgstr "Zaključi"
 
 #. module: help_online
-#: field:export.help.wizard,create_uid:0
-#: field:help.online,create_uid:0
+#: field:export.help.wizard,create_uid:0 field:help.online,create_uid:0
 #: field:import.help.wizard,create_uid:0
 msgid "Created by"
 msgstr "Ustvaril"
 
 #. module: help_online
-#: field:export.help.wizard,create_date:0
-#: field:help.online,create_date:0
+#: field:export.help.wizard,create_date:0 field:help.online,create_date:0
 #: field:import.help.wizard,create_date:0
 msgid "Created on"
 msgstr "Ustvarjeno"
@@ -81,8 +79,7 @@ msgid "Help writer"
 msgstr "Avtor navodil"
 
 #. module: help_online
-#: field:export.help.wizard,id:0
-#: field:help.online,id:0
+#: field:export.help.wizard,id:0 field:help.online,id:0
 #: field:import.help.wizard,id:0
 msgid "ID"
 msgstr "ID"
@@ -108,15 +105,13 @@ msgid "Import Help Online"
 msgstr "Uvoz spletnih navodil"
 
 #. module: help_online
-#: field:export.help.wizard,write_uid:0
-#: field:help.online,write_uid:0
+#: field:export.help.wizard,write_uid:0 field:help.online,write_uid:0
 #: field:import.help.wizard,write_uid:0
 msgid "Last Updated by"
 msgstr "Zadnjič posodobil"
 
 #. module: help_online
-#: field:export.help.wizard,write_date:0
-#: field:help.online,write_date:0
+#: field:export.help.wizard,write_date:0 field:help.online,write_date:0
 #: field:import.help.wizard,write_date:0
 msgid "Last Updated on"
 msgstr "Zadnjič posodobljeno"
@@ -175,5 +170,3 @@ msgstr "XML"
 #: view:import.help.wizard:help_online.import_help_wizard_view
 msgid "or"
 msgstr "ali"
-
-
