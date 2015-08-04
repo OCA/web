@@ -32,8 +32,8 @@
     """,
     'data': ['views/res_users_view.xml'],
     'js': [
-        "static/lib/excanvas.js",
-        "static/lib/jquery.signature.js",
+        "static/src/excanvas.js",
+        "static/src/jquery.signature.js",
         "static/src/js/digital_sign.js",
     ],
     'css': [
