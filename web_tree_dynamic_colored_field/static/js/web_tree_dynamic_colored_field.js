@@ -1,4 +1,4 @@
-openerp.web_widget_color_tree_field = function(instance){
+openerp.web_tree_dynamic_colored_field = function(instance){
     var _t = instance.web._t,
         _lt = instance.web._lt;
     var QWeb = instance.web.qweb;
