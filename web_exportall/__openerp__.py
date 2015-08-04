@@ -32,7 +32,4 @@
     'data': [
         'view/assets.xml',
     ],
-    "qweb": [
-        "static/src/xml/web_exportall.xml",
-    ],
 }
