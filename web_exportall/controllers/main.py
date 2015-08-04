@@ -27,44 +27,33 @@ try:
 except ImportError:
     xlwt = None
 
-import openerp
-from openerp import sql_db
+from openerp import sql_db, api
 from openerp.addons.web.controllers.main import (ExportFormat,
                                                  serialize_exception)
 from openerp import http
 from openerp.http import request
 
 
-def itter_ids(all_ids, step_size=250):
+def iter_ids(all_ids, step_size=250):
     """ Splits all_ids into more manageable chunks of
         size step_size and yields them """
-    offset = 0
-    while True:
+    for offset in xrange(0, len(all_ids), step_size):
         id_set = all_ids[offset:offset+step_size]
-        offset += step_size
-        if len(id_set):
-            yield id_set
-        else:
-            return
+        if not id_set:
+            break
+        yield id_set
 
 
-def itter_data(Model, dbname, uid, all_ids, field_names, raw_data, context):
+def iter_data(Model, dbname, uid, all_ids, field_names, raw_data, context):
     """ Reads data in chunks of ids from all_ids and
         yields the rows one by one """
-    cr = sql_db.db_connect(dbname).cursor()
-    with cr:
-        with openerp.api.Environment.manage():
-            for ids in all_ids:
-                import_data = Model.export_data(cr,
-                                                uid,
-                                                ids,
-                                                field_names,
-                                                raw_data,
-                                                context=context
-                                                ).get('datas', [])
-                for data in import_data:
-                    yield data
-    return
+    with sql_db.db_connect(dbname).cursor() as cr, api.Environment.manage():
+        for ids in all_ids:
+            import_data = Model.export_data(
+                cr, uid, ids, field_names, raw_data, context=context
+            ).get('datas', [])
+            for data in import_data:
+                yield data
 
 
 class ExportAllBase(ExportFormat):
@@ -82,31 +71,27 @@ class ExportAllBase(ExportFormat):
         field_names = map(operator.itemgetter('name'), fields)
 
         Model = request.registry.get(model)
-        ids = itter_ids(Model.search(request.cr,
-                                     request.uid,
-                                     domain,
-                                     context=context))
-        import_data = itter_data(Model,
-                                 request.cr.dbname,
-                                 request.uid,
-                                 ids,
-                                 field_names,
-                                 self.raw_data,
-                                 context)
+        ids = iter_ids(Model.search(
+            request.cr, request.uid, domain, context=context
+        ))
+        import_data = iter_data(
+            Model, request.cr.dbname, request.uid, ids, field_names,
+            self.raw_data, context
+        )
 
         if import_compat:
             columns_headers = field_names
         else:
             columns_headers = [val['label'].strip() for val in fields]
 
-        return request.make_response(self.from_data(columns_headers,
-                                                    import_data),
-                                     headers=[('Content-Disposition',
-                                               'attachment; filename="%s"'
-                                               % self.filename(model)),
-                                              ('Content-Type',
-                                               self.content_type)],
-                                     cookies={'fileToken': token})
+        return request.make_response(
+            self.from_data(columns_headers, import_data),
+            headers=[('Content-Disposition',
+                     'attachment; filename="%s"'
+                      % self.filename(model)),
+                     ('Content-Type', self.content_type)],
+            cookies={'fileToken': token}
+        )
 
 
 class CSVExportAll(ExportAllBase, http.Controller):
