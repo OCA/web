@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
-    <t t-name="FieldSignature"  >
+    <t t-name="FieldSignature">
         <div>
             <div class="signature oe_edit_only"/><br/>
             <button class="oe_form_binary_file_clear oe_edit_only clear_sign">
