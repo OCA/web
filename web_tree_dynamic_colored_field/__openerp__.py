@@ -19,7 +19,7 @@
 #
 ##############################################################################
 {
-    'name': 'web_widget_color_tree_field',
+    'name': 'web tree dynamic colored field',
     'category': 'Hidden',
     'version': '1.0',
     'depends': ['web'],
@@ -27,7 +27,7 @@
     'license': 'AGPL-3',
     'website': 'http://www.camptocamp.com',
     'data': [
-        'views/web_widget_color_tree_field.xml',
+        'views/web_tree_dynamic_colored_field.xml',
     ],
     'qweb': [
         'static/xml/*.xml',
