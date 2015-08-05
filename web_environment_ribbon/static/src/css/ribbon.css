@@ -16,7 +16,7 @@
     z-index: 10000;
     position: fixed;
     box-shadow: 0 0 3px rgba(0,0,0,.3);
-    background: #e43;
+    background: rgba(255, 0, 0, .6);;
 }
 
 .test-ribbon b {
