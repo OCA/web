@@ -26,7 +26,7 @@ There is nothing to configure.
 Usage
 =====
 
-This module changes the default behaviour of Odoo by propagating
+This module changes the behaviour of Odoo by propagating
 on_change modifications to readonly fields to the backend create and write
 methods.
 
