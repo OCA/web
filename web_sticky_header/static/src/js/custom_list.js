@@ -27,7 +27,7 @@ openerp.web.ListView.include({
             even_set = $._data($('.oe_view_manager_body')[0], 'events').scroll.some(function(element, index, array) {
                 return element.namespace == 'sticky_header';
             });
-        };
+        }
         if (! event_set) {
             $('.oe_view_manager_body').first().on('scroll.sticky_header', self.do_sticky_headers);
         }
@@ -61,7 +61,7 @@ openerp.web.ListView.include({
          **/
         if ($('.oe_list_sticky_top_anchor').length > 0) {
             $('.oe_list_sticky_top_anchor').empty();
-        };
+        }
 
         // $('.oe_list_content').find('thead').css('visibility', 'visible');
         this.scroll_start = false;
