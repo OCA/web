@@ -2,7 +2,7 @@
 <templates>
     <t t-name="web_last_viewed_records.header">
         <tr class="oe_header_row">
-            <td t-att-colspan="colspan or '3'">
+            <td t-att-colspan="colspan or '4'">
                 <div class="oe_view_manager_last_viewed"/>
             </td>
             <td></td>
@@ -16,7 +16,7 @@
     <t t-extend="mail.wall">
         <t t-jquery="tr.oe_header_row_top" t-operation="after">
             <t t-call="web_last_viewed_records.header">
-                <t t-set="colspan" t-value="2"/>
+                <t t-set="colspan" t-value="3"/>
             </t>
         </t>
     </t>
