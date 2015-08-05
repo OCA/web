@@ -6,6 +6,7 @@ openerp.web.ListView.include({
     var self = this;
     self._super(parent, dataset, view_id, options);
     this.scroll_start = false;
+
   },
 
   do_show: function(){
@@ -13,7 +14,7 @@ openerp.web.ListView.include({
      * Move search div to a sticky location.
      * Add scroll event listener and remove leftover headers
      **/
-     var self = this;
+    var self = this;
     self._super();
     if (self instanceof openerp.web.form.One2ManyListView){
       return;
@@ -36,7 +37,7 @@ openerp.web.ListView.include({
     var sticky_top_anchor = $(document.createElement('div'));
     sticky_top_anchor.addClass('oe_list_sticky_top_anchor');
     search_div.after(sticky_top_anchor);
-    sticky_top_anchor.height(self.get_original_headers().height() + 10);
+    sticky_top_anchor.height(self.get_original_headers().height() + 20);
     this.scroll_start = false;
   },
 
