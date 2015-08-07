@@ -37,7 +37,7 @@ openerp.web.ListView.include({
         var sticky_top_anchor = $(document.createElement('div'));
         sticky_top_anchor.addClass('oe_list_sticky_top_anchor');
         search_div.after(sticky_top_anchor);
-        sticky_top_anchor.height(self.get_original_headers().height() + 15);
+        sticky_top_anchor.height(self.get_original_headers().height() + 35);
         this.scroll_start = false;
     },
     do_hide: function() {
