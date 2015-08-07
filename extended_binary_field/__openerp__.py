@@ -38,6 +38,8 @@ Use:
     ex.:
         'test_binary': versionedAttachment('Test binary')
 
+With appreciation to Akretion and
+Sébastien BEAU <sebastian.beau@akretion.com> for inspiring us.
 """,
     'website': 'http://www.initos.com',
     'license': 'AGPL-3',
