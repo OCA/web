@@ -1,7 +1,7 @@
 Web Translate Dialog
 ====================
 
-This module replaces the standard translation view by an easy-to-use pop-up view where you can translate all the fields of the object in all the installed languages (for the old users of OpenERP, it may remind them the translation pop-up of OpenERP 6.1).
+This module replaces the standard translation view by an easy-to-use pop-up view where you can translate all the fields of the object in all the installed languages (for the ancient users, it may remind them the translation pop-up of OpenERP 6.1).
 
 This module also features :
 * Adds a *Translate* button item in the *More* menu
@@ -11,7 +11,7 @@ This module also features :
 Usage
 =====
 
-Go to an object that has translatable fields (*Products* for example) and select *More > Translate* (or click on *Edit* and then click on the flag at the top-right of one of the translatable fields): the translation view will pop-up on your screen.
+Go to an object that has translatable fields (*Products* for example) and select *More > Translate* (or click on *Edit* and then click on the flag at the top-right of one of the translatable fields): the translation view will pop-up on your screen. This translation view contains all the translatable fields of the object.
 
 Credits
 =======
