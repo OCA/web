@@ -21,25 +21,11 @@
 
 {"name": "Web Translate Dialog",
  "category": "Hidden",
- "description": """
-Replace the standard translation view by an alternative one:
-
- * Add a "Translate" button item in the "More" menu
- * The translations are displayed in a dialog (much like the OpenERP
-   6.1's one)
- * Support HTML fields
- * Autosize the textareas to the size of the content
-
-""",
+ "summary": "Easy-to-use pop-up to translate fields in several languages",
+ "description": "",
  "version": "1.0",
- "depends": ['web',
-             ],
- 'js': ['static/src/js/web_translate_dialog.js',
-        ],
- 'css': ['static/src/css/base.css',
-         ],
- 'qweb': ["static/src/xml/base.xml",
-          ],
- 'auto_install': False,
- 'installable': False,
+ "depends": ['web'],
+ 'data': ['view/web_translate.xml'],
+ 'qweb': ["static/src/xml/base.xml"],
+ 'installable': True,
  }
