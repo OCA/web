@@ -1,3 +1,4 @@
+"use strict";
 openerp.web_group_expand = function(openerp) {
     var QWeb = openerp.web.qweb;
     openerp.web.ViewManager.include({
@@ -19,7 +20,7 @@ openerp.web_group_expand = function(openerp) {
         expand: function(domains, contexts, groupbys) {
             this.$el.find("ul#oe_group_by").remove();
             if(groupbys.length && this.active_view == 'list') {
-            	this.load_expand_buttons();	
+                this.load_expand_buttons();
                 this.$el.find("a#oe_group_by_reset").click(function(){
                     $('span.ui-icon-triangle-1-s').click()
                 });
@@ -34,8 +35,8 @@ openerp.web_group_expand = function(openerp) {
             this.$el.find("ul.oe_view_manager_switch.oe_button_group.oe_right").before(this.$ExpandButtons);
         },
         setup_search_view: function(view_id, search_defaults) {
-            self = this;
-            res = this._super.apply(this, arguments);
+            var self = this;
+            var res = this._super.apply(this, arguments);
             this.searchview.on('search_data', self, this.expand);
             return res
         },
