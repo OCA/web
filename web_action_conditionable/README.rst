@@ -5,10 +5,20 @@ Web Action Conditionable
 ========================
 
 This module was written to extend the functionality of actions in tree views.
-Odoo by default support delete="false" create="false", with this module you can:
-delete="state=='draft'".
+Odoo by default support:
+
+::
+
+   <tree delete="false" create="false">
+
+with this module you can:
+
+::
+   
+   <tree delete="state=='draft'">
 
 It works in any tree view, so you can use it in One2many.
+
 
 Installation
 ============
@@ -19,7 +29,7 @@ To install this module, just follow basic steps to install an odoo module.
 Configuration
 =============
 
-No needed.
+Not needed.
 
 Usage
 =====
