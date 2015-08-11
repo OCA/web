@@ -10,5 +10,4 @@
     'data': ['views/view.xml'],
     "author": "Cristian Salamea,Odoo Community Association (OCA)",
     "installable": True,
-    "active": False,
 }
