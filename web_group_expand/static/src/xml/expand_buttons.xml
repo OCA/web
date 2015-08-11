@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- vim:fdl=1:
+-->
+<templates id="template" xml:space="preserve">
+   <t t-name="GroupExpand.Buttons">
+       <div class="oe_list_buttons"><ul id="oe_group_by" class="oe_view_manager_switch oe_button_group oe_right"><li class="oe_i oe_group_expand"><a id="oe_group_by_expand"><hr class="oe_expand_button_hr"/>( )</a></li><li class="oe_i"><a id="oe_group_by_reset">P</a></li></ul></div>
+   </t>
+</templates>
