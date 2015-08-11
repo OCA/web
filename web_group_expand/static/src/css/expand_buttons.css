@@ -1,0 +1,18 @@
+
+.openerp ul#oe_group_by li.oe_group_expand{
+    border: none;
+    border-top: 1px solid #ababab;
+    position:relative;
+    font-size:13px;
+    transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+}
+.openerp hr.oe_expand_button_hr{
+    height:2px;
+    visibility:hidden;
+    margin-bottom:-7px;
+}
+.openerp #oe_group_by_reset {
+    top:3px;
+    position:relative;
+}
