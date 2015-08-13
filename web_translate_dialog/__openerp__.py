@@ -20,11 +20,10 @@
 ##############################################################################
 
 {"name": "Web Translate Dialog",
- "category": "Hidden",
+ "category": "Web",
  "summary": "Easy-to-use pop-up to translate fields in several languages",
  "license": "AGPL-3",
  "author": "Camptocamp,Odoo Community Association (OCA)",
- "description": "",
  "version": "1.0",
  "depends": ['web'],
  'data': ['view/web_translate.xml'],
