@@ -32,6 +32,6 @@
     'data': [
         'views/templates.xml',
     ],
-    "qweb": [ "static/src/xml/web_groups_expand.xml"],
+    "qweb": ["static/src/xml/web_groups_expand.xml"],
     "auto_install": False,
 }
