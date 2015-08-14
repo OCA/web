@@ -1,0 +1,9 @@
+<templates id="template" xml:space="preserve">
+    <t t-name="ViewManagerAction" t-extend="ViewManager"> 
+        <t t-jquery="ul.oe_view_manager_switch" t-operation="append">
+            <li class="oe-list-expand" style="display:none;" title="Expand">
+                <i class="fa fa-expand" id="expand_icon" style="line-height: 25px;"></i>
+            </li>
+        </t>
+    </t>
+</templates>
