@@ -25,15 +25,13 @@
     "version": "1.2",
     "author": "Serpent Consulting Services Pvt. Ltd.",
     "website": "http://www.serpentcs.com",
-    'category' : 'Web',
+    'category': 'Web',
     "description": "Adds Expand button to expand all groups on a list view.",
     "depends": ["web"],
-    'demo' : [],
+    'demo': [],
     'data': [
         'views/templates.xml',
     ],
-    "qweb": [ "static/src/xml/web_groups_expand.xml" ],
+    "qweb": [ "static/src/xml/web_groups_expand.xml"],
     "auto_install": False,
 }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
