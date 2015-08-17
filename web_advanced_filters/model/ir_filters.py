@@ -164,11 +164,18 @@ class IrFilters(Model):
             _evaluate_get, type='boolean', multi='evaluate',
             string='Always evaluate this filter before using it',
             help='This is necessary if this filter contains x2many fields with'
-            '_auto_join activated')
+            '_auto_join activated'),
+        'save_as_public': fields.function(
+            lambda self, cr, uid, ids, *args, **kwargs:
+            dict((i, False) for i in ids),
+            fnct_inv=lambda *args, **kwargs: None,
+            type='boolean',
+            string='Share with all users'),
     }
 
     _defaults = {
         'active': True,
+        'save_as_public': False,
     }
 
     def _evaluate(self, cr, uid, ids, context=None):
@@ -245,3 +252,8 @@ class IrFilters(Model):
             "update ir_module_module set state='to remove' where "
             "name='advanced_filters' and state not in "
             "('uninstalled', 'to remove')")
+
+    def create(self, cr, uid, values, context=None):
+        values.setdefault(
+            'user_id', False if values.get('save_as_public') else uid)
+        return super(IrFilters, self).create(cr, uid, values, context=context)
