@@ -6,8 +6,7 @@ openerp.web_action_conditionable = function (instance) {
       var attrs = this.fields_view.arch.attrs;
       if (action in attrs) {
 	try {
-	  data = JSON.parse(attrs[action]);
-	  return data;
+	  return this._super(action);
 	} catch(error) {
 	  var expr = attrs[action];
 	  var expression = py.parse(py.tokenize(expr));
