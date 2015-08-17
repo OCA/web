@@ -45,9 +45,6 @@ add the following XML::
   <record id="support_branding.config_parameter_support_email" model="ir.config_parameter">
       <field name="value">support@yourwebsite.com</field>
   </record>
-  <record id="support_branding.config_parameter_support_email" model="ir.config_parameter">
-      <field name="value">support@yourwebsite.com</field>
-  </record>
   <record id="config_parameter_release" model="ir.config_parameter">
       <field name="value">42</field>
   </record>Configuration
