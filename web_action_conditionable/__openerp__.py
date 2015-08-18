@@ -2,7 +2,7 @@
 
 {
     "name": 'web_action_conditionable',
-    "version": "0.1",
+    "version": "8.0.0.1.0",
     "depends": [
         'base',
         'web',
