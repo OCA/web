@@ -1,0 +1,61 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* help_popup
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-08-02 10:26+0200\n"
+"PO-Revision-Date: 2015-08-02 10:28+0200\n"
+"Last-Translator: Matjaz Mozetic <m.mozetic@matmoz.si>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+"X-Generator: Poedit 1.8.2\n"
+"Language: sl\n"
+
+#. module: help_popup
+#: model:ir.actions.report.xml,name:help_popup.report_help_popup
+msgid "Contextual Help"
+msgstr "Kontekstna pomoč"
+
+#. module: help_popup
+#: field:ir.actions.act_window,advanced_help:0
+msgid "Custom Help"
+msgstr "Prilagojena pomoč"
+
+#. module: help_popup
+#: field:ir.actions.act_window,enduser_help:0
+msgid "End User Help"
+msgstr "Pomoč za končnega uporabnika"
+
+#. module: help_popup
+#: view:website:help_popup.tpl_help
+msgid "Help from Odoo"
+msgstr "Pomoč iz Odoo"
+
+#. module: help_popup
+#: view:website:help_popup.tpl_help
+msgid "Help from developer"
+msgstr "Pomoč razvijalca"
+
+#. module: help_popup
+#: help:ir.actions.act_window,advanced_help:0
+msgid ""
+"Use this field to add custom content for documentation purpose\n"
+"mainly by developers"
+msgstr ""
+"Uporabite to polje za dodajanje prilagojenih vsebin za namen\n"
+"dokumentiranja, v glavnem za razvijalce"
+
+#. module: help_popup
+#: help:ir.actions.act_window,enduser_help:0
+msgid ""
+"Use this field to add custom content for documentation purpose\n"
+"mainly by power users "
+msgstr ""
+"Uporabite to polje za dodajanje prilagojenih vsebin za namen\n"
+"dokumentiranja, v glavnem za napredne uporabnike"

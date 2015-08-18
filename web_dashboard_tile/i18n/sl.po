@@ -1,0 +1,233 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+# 	* web_dashboard_tile
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-08-02 10:08+0200\n"
+"PO-Revision-Date: 2015-08-02 10:17+0200\n"
+"Last-Translator: Matjaz Mozetic <m.mozetic@matmoz.si>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+"X-Generator: Poedit 1.8.2\n"
+"Language: sl\n"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,action_id:0
+msgid "Action"
+msgstr "Dejanje"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,active:0
+msgid "Active"
+msgstr "Aktivno"
+
+#. module: web_dashboard_tile
+#: selection:tile.tile,field_function:0
+msgid "Average"
+msgstr "Povprečje"
+
+#. module: web_dashboard_tile
+#: code:addons/web_dashboard_tile/tile.py:82
+#, python-format
+msgid "Average value of '%s'"
+msgstr "Povprečna vrednost '%s'"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,color:0
+msgid "Background color"
+msgstr "Barva ozadja"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,computed_value:0
+msgid "Computed Value"
+msgstr "Izračunana vrednost"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,count:0
+msgid "Count"
+msgstr "Štetje"
+
+#. module: web_dashboard_tile
+#. openerp-web
+#: code:addons/web_dashboard_tile/static/src/xml/custom_xml.xml:8
+#, python-format
+msgid "Create"
+msgstr "Ustvari"
+
+#. module: web_dashboard_tile
+#: model:ir.actions.act_window,name:web_dashboard_tile.action_kanban_dashboard_tile
+#: model:ir.actions.act_window,name:web_dashboard_tile.action_tree_dashboard_tile
+#: model:ir.ui.menu,name:web_dashboard_tile.mail_dashboard
+msgid "Dashboard"
+msgstr "Nadzorna plošča"
+
+#. module: web_dashboard_tile
+#: model:ir.ui.menu,name:web_dashboard_tile.menue_dashboard_tile
+msgid "Dashboard Tile"
+msgstr "Okvir nadzorne plošče"
+
+#. module: web_dashboard_tile
+#: view:tile.tile:0
+msgid "Dashboard tiles"
+msgstr "Okvirji nadzorne plošče"
+
+#. module: web_dashboard_tile
+#: view:tile.tile:0
+msgid "Delete"
+msgstr "Izbris"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,domain:0
+msgid "Domain"
+msgstr "Domena"
+
+#. module: web_dashboard_tile
+#: view:tile.tile:0
+msgid "Edit..."
+msgstr "Urejanje..."
+
+#. module: web_dashboard_tile
+#. openerp-web
+#: code:addons/web_dashboard_tile/static/src/js/custom_js.js:61
+#, python-format
+msgid "Error"
+msgstr "Napaka"
+
+#. module: web_dashboard_tile
+#: constraint:tile.tile:0
+msgid "Error ! Please select a field of the selected model."
+msgstr "Napaka! Izberite polje izbranega modela."
+
+#. module: web_dashboard_tile
+#: constraint:tile.tile:0
+msgid "Error ! Please set both fields: 'Field' and 'Function'."
+msgstr "Napaka! Določite obe polji: 'Polje' in 'Funkcija'."
+
+#. module: web_dashboard_tile
+#: field:tile.tile,field_id:0
+msgid "Field"
+msgstr "Polje"
+
+#. module: web_dashboard_tile
+#. openerp-web
+#: code:addons/web_dashboard_tile/static/src/js/custom_js.js:61
+#, python-format
+msgid "Filter name is required."
+msgstr "Zahtevan je naziv filtra."
+
+#. module: web_dashboard_tile
+#: field:tile.tile,font_color:0
+msgid "Font Color"
+msgstr "Barva pisave"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,field_function:0
+msgid "Function"
+msgstr "Funkcija"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,helper:0
+msgid "Helper Text"
+msgstr "Besedilo pomoči"
+
+#. module: web_dashboard_tile
+#: selection:tile.tile,field_function:0
+msgid "Maximum"
+msgstr "Maksimum"
+
+#. module: web_dashboard_tile
+#: code:addons/web_dashboard_tile/tile.py:76
+#, python-format
+msgid "Maximum value of '%s'"
+msgstr "Maksimalna vrednost '%s'"
+
+#. module: web_dashboard_tile
+#: selection:tile.tile,field_function:0
+msgid "Median"
+msgstr "Sredina"
+
+#. module: web_dashboard_tile
+#: code:addons/web_dashboard_tile/tile.py:85
+#, python-format
+msgid "Median value of '%s'"
+msgstr "Srednja vrednost '%s'"
+
+#. module: web_dashboard_tile
+#: selection:tile.tile,field_function:0
+msgid "Minimum"
+msgstr "Minimum"
+
+#. module: web_dashboard_tile
+#: code:addons/web_dashboard_tile/tile.py:73
+#, python-format
+msgid "Minimum value of '%s'"
+msgstr "Minimalna vrednost '%s'"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,model_id:0
+msgid "Model"
+msgstr "Model"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,sequence:0
+msgid "Sequence"
+msgstr "Zaporedje"
+
+#. module: web_dashboard_tile
+#. openerp-web
+#: code:addons/web_dashboard_tile/static/src/js/custom_js.js:100
+#, python-format
+msgid "Success"
+msgstr "Uspeh"
+
+#. module: web_dashboard_tile
+#: selection:tile.tile,field_function:0
+msgid "Sum"
+msgstr "Vsota"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,name:0
+msgid "Tile Name"
+msgstr "Naziv okvirja"
+
+#. module: web_dashboard_tile
+#. openerp-web
+#: code:addons/web_dashboard_tile/static/src/js/custom_js.js:100
+#, python-format
+msgid "Tile is created"
+msgstr "Okvir je ustvarjen"
+
+#. module: web_dashboard_tile
+#. openerp-web
+#: code:addons/web_dashboard_tile/static/src/xml/custom_xml.xml:6
+#, python-format
+msgid "Tile:"
+msgstr "Okvir:"
+
+#. module: web_dashboard_tile
+#: code:addons/web_dashboard_tile/tile.py:79
+#, python-format
+msgid "Total value of '%s'"
+msgstr "Skupna vrednost '%s'"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,user_id:0
+msgid "User"
+msgstr "Uporabnik"
+
+#. module: web_dashboard_tile
+#: code:_description:0 model:ir.model,name:web_dashboard_tile.model_tile_tile
+#, python-format
+msgid "tile.tile"
+msgstr "tile.tile"
+
+#. module: web_dashboard_tile
+#: view:tile.tile:0
+msgid "í"
+msgstr "í"
