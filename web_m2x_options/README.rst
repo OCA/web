@@ -47,6 +47,22 @@ New option
 
   Number of displayed record in drop-down panel
 
+``search_more`` *boolean* 
+
+  Used to force disable/enable search more button.
+  
+``field_color`` *string*
+
+  A string to define the field used to define color.
+  This option has to be used with colors.
+  
+``colors`` *dictionary*
+
+  A dictionary to link field value with a HTML color.
+  This option has to be used with field_color.
+  
+
+
 
 ir.config_parameter options
 ---------------------------
@@ -62,15 +78,25 @@ If you disable one option, you can enable it for particular field by setting "cr
 
   Whether to display "Create and Edit..." entry in dropdown panel for all fields in the odoo instance.
 
+``web_m2x_options.m2o_dialog`` *boolean* (Default: depends if user have create rights)
+
+  Whether to display the many2one dialog in case of validation error for all fields in the odoo instance.
+
 ``web_m2x_options.limit`` *int* (Default: openerp default value is ``7``)
 
   Number of displayed records in drop-down panel for all fields in the odoo instance
+
+``web_m2x_options.search_more`` *boolean* (Default: default value is ``False``)
+
+  Whether the field should always show "Search more..." entry or not.
 
 To add these parameters go to Configuration -> Technical -> Parameters -> System Parameters and add new parameters like:
 
 - web_m2x_options.create: False
 - web_m2x_options.create_edit: False
+- web_m2x_options.m2o_dialog: False
 - web_m2x_options.limit: 10
+- web_m2x_options.search_more: True
 
 
 Example
@@ -79,7 +105,7 @@ Example
 Your XML form view definition could contain::
 
     ...
-    <field name="partner_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
+    <field name="partner_id" options="{'limit': 10, 'create': false, 'create_edit': false, 'search_more':true 'field_color':'state', 'colors':{'active':'green'}}"/>
     ...
 
 Note
