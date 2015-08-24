@@ -42,7 +42,7 @@ msgstr "Usar criterio"
 #: code:addons/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js:159
 #, python-format
 msgid "invalid search domain"
-msgstr "filtro de búsqueda inválido"
+msgstr "dominio de búsqueda inválido"
 
 #. module: web_advanced_search_x2x
 #. openerp-web
