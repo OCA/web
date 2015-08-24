@@ -1,4 +1,4 @@
-openerp.web_exportall = function(instance) {
+openerp.web_export_streamed = function(instance) {
 var QWeb = instance.web.qweb,
       _t = instance.web._t;
 instance.web.DataExport = instance.web.DataExport.extend({

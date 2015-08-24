@@ -18,7 +18,7 @@
 #
 ##############################################################################
 {
-    'name': 'Web Export All',
+    'name': 'Web Export Streamed',
     'application': False,
     'version': '1.1',
     'category': 'Web',

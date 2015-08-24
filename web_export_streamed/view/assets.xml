@@ -3,7 +3,7 @@
     <data>
         <template id="assets_backend" name="tree icon assets" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
-                <script type="text/javascript" src="/web_exportall/static/src/js/data_export.js"></script>
+                <script type="text/javascript" src="/web_export_streamed/static/src/js/data_export.js"></script>
             </xpath>
         </template>
     </data>
