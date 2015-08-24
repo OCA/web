@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Copyright (C) 2012-2015 credativ Ltd (<http://credativ.co.uk>).
@@ -20,7 +20,7 @@
 {
     'name': 'Web Export Streamed',
     'application': False,
-    'version': '1.1',
+    'version': '8.0.1.1',
     'category': 'Web',
     'author': 'credativ Ltd,Odoo Community Association (OCA)',
     'website': 'http://credativ.co.uk',

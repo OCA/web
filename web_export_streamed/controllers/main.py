@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Copyright (C) 2012-2015 credativ Ltd (<http://credativ.co.uk>).
@@ -94,7 +94,7 @@ class ExportAllBase(ExportFormat):
         )
 
 
-class CSVExportAll(ExportAllBase, http.Controller):
+class CsvExportAll(ExportAllBase, http.Controller):
 
     @property
     def content_type(self):
