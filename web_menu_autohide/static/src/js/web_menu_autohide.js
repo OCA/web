@@ -145,10 +145,8 @@ openerp.web_menu_autohide = function(instance)
                 .parents(this.navbar_query).length > 0,
                 on_left_bar = jQuery(e.target)
                 .parents(this.leftbar_query).length > 0;
-            if(!on_left_bar && !on_main_menu && openerp.client.leftbar_hide_timeout_id)
+            if(!on_left_bar && !on_main_menu)
             {
-                clearTimeout(openerp.client.leftbar_hide_timeout_id);
-                openerp.client.leftbar_hide_timeout_id = null;
                 this.toggle_left_bar(false);
             }
         },
