@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="web_menu_navbar_needaction assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/web_menu_navbar_needaction/static/src/js/web_menu_navbar_needaction.js"></script>
+                <link rel="stylesheet" href="/web_menu_navbar_needaction/static/src/css/web_menu_navbar_needaction.css"/>
+            </xpath>
+        </template>
+    </data>
+</openerp>
