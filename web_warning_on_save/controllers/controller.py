@@ -34,7 +34,7 @@ class WarningOnSaveController(openerp.addons.web.http.Controller):
         """
         m = req.session.model(model)
         try:
-            return getattr(m, 'check_warning_on_save')(id, req.context)
+            return m.check_warning_on_save(id, req.context)
 
         except xmlrpclib.Fault as e:
             if 'AttributeError' in e.faultString:
