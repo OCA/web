@@ -19,5 +19,10 @@
 #
 ##############################################################################
 
-from . import controllers
-from . import orm
+from openerp.osv import orm
+
+
+def check_warning_on_save(self, cr, uid, id, context=None):
+    return False
+
+orm.BaseModel.check_warning_on_save = check_warning_on_save
