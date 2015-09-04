@@ -139,7 +139,7 @@ openerp.web_ckeditor4 = function(instance)
     function fix_protected_source_line_statement(element)
     {
         element.value = element.value.replace(
-            protected_source_marker, protected_source_marker + '%13\n') + '%13\n';
+            protected_source_marker, protected_source_marker + '\n') + '\n';
     }
     function fix_protected_source(e)
     {
