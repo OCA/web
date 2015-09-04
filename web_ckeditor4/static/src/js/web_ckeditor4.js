@@ -130,7 +130,7 @@ openerp.web_ckeditor4 = function(instance)
         start: function()
         {
             this._super.apply(this, arguments);
-    
+
             CKEDITOR.lang.load(instance.session.user_context.lang.split('_')[0], 'en', function() {});
         },
         initialize_content: function()
@@ -152,7 +152,7 @@ openerp.web_ckeditor4 = function(instance)
                                 self.store_dom_value();
                             },
                         },
-                    }, 
+                    },
                     this.ckeditor_config));
         },
         store_dom_value: function()
