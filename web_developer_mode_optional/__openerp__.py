@@ -21,7 +21,7 @@
 ##############################################################################
 {
     'name': 'Optional Developer Mode link',
-    'version': '0.4',
+    'version': '8.0.1.0.0',
     'category': 'Generic Modules/Others',
     'summary': ('This module adds group-based permissions '
                 'for the Developer Mode.'),
@@ -41,6 +41,6 @@
         'static/src/js/chrome.js',
     ],
     'installable': True,
-    'application': True,
+    'application': False,
     'auto_install': False,
 }
