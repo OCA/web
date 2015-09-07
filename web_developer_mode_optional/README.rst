@@ -3,9 +3,9 @@
    :alt: License: AGPL-3
 
 
-=========================
-Developer Mode restricted
-=========================
+=======================
+Developer Mode optional
+=======================
 
 This module makes *Developer Mode* link (in the *About Odoo* dialog) visibility optional based on users' groups.
 
