@@ -8,5 +8,5 @@ li.oe_help_online_not_found {
   text-align: center;
   margin: 3px auto 4px;
   position: relative;
-  display: block;
+  display: inline-block;
 }
