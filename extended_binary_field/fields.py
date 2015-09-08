@@ -151,7 +151,6 @@ class versionedAttachment(fields.function):
                     if record[filename_field].endswith('.pdf') is not True:
                         raise osv.except_osv(_(u'File type'),
                                              u'Only pdf files can be attached')
-                        return False
 
             for record in obj.browse(cr, uid, ids, context=context):
                 db_fields = {}
