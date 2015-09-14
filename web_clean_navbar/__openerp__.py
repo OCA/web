@@ -18,27 +18,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    'name': 'Web Clean Navbar',
-    
-    'version': '1.0.0',
-    'category': 'Web',
-    'description': """
-        Better visibility for the main backend navigation-bar
-    """,
+    'name': 'Clean Navbar',
+    'version': '8.0.1.0.0',
+    'category': 'Tools',
+    'summary': 'Better visibility for the backend\'s main menu',
     'license': 'AGPL-3',
-    'author': 'Equitania Software GmbH',
-    'website': 'www.myodoo.de',
+    'author': 'Equitania Software GmbH,Odoo Community Association (OCA)',
+    'website': 'https://github.com/OCA/web',
     'depends': [
         'web',
     ],
-    'summary': 'backend, navigation',
     'data': [
         'views/clean_navbar.xml',
     ],
-    'demo': [],
-    'css': ['base.css'],
     'installable': True,
-    'auto_install': False,
 }
