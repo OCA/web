@@ -26,7 +26,6 @@
     'depends': [
         'web',
     ],
-    'demo': [],
     'website': 'https://www.akretion.com',
     'data': [
         'views/popup_help_view.xml',
