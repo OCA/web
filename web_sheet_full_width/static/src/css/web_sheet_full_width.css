@@ -1,7 +1,9 @@
 .openerp .oe_form_sheet_width
 {
-    max-width: none;
+  min-width: 650px;
+  max-width: none !important;
 }
+
 .openerp .oe_form_sheetbg
 {
     padding: 16px;

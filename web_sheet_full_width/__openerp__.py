@@ -40,7 +40,9 @@ Icon courtesy of http://www.picol.org/ (size_width.svg)
         'web',
     ],
     "data": [
-        "view/qweb.xml",
+    ],
+    'css': [
+        'static/src/css/web_sheet_full_width.css',
     ],
     "auto_install": False,
     "installable": True,
