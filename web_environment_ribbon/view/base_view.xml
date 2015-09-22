@@ -6,16 +6,16 @@
     <template id="assets_backend" name="ribbon_test assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
             <link rel="stylesheet" href="/web_environment_ribbon/static/src/css/ribbon.css"/>
+            <script type="text/javascript" src="/web_environment_ribbon/static/src/js/ribbon.js"/>
         </xpath>
     </template>
 
     <!-- Add ribbon to page -->
     <template id="body_with_ribbon_test" name="ribbon_test web.webclient_bootstrap" inherit_id="web.webclient_bootstrap">
         <xpath expr="//div[@class='openerp openerp_webclient_container']" position="before">
-            <div class="test-ribbon"><b>TEST</b></div>
+            <div class="test-ribbon"/>
         </xpath>
     </template>
-
 
 </data>
 </openerp>
