@@ -34,7 +34,7 @@ Known issues / Roadmap
 ======================
 
 * Allow to define in some place (system parameter, configuration file...) the
-  text for the ribbon and the ribbon color.
+  ribbon color.
 
 Bug Tracker
 ===========
