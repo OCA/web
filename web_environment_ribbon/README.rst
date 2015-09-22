@@ -17,7 +17,11 @@ Installation
 Configuration
 =============
 
- * No special setup
+ * You can change the ribbon's name ("TEST") by editing
+   the default system parameter "ribbon.name"
+   (in the menu Settings > Parameters > System Parameters)
+   To hide the ribbon, set this parameter to "False" or
+   delete it.
 
 Usage
 =====
@@ -30,7 +34,7 @@ Known issues / Roadmap
 ======================
 
 * Allow to define in some place (system parameter, configuration file...) the
-  text for the ribbon and the ribbon color.
+  ribbon color.
 
 Bug Tracker
 ===========

@@ -22,13 +22,12 @@ openerp.web_environment_ribbon = function(instance) {
     ribbon.hide();
 
     var model = new instance.web.Model('ir.config_parameter');
-    var query = [['key', '=', 'ribbon.name']];
-    var fields = ['value'];
+    var key = 'ribbon.name';
 
-    var res = model.call('search_read', [query, fields]).then(
-        function (result) {
-            if (result.length) {
-                ribbon.html(result[0].value);
+    var res = model.call('get_param', [key]).then(
+        function (name) {
+            if (name && name != 'False') {
+                ribbon.html(name);
                 ribbon.show();
             }
         }

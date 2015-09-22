@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <!-- Add ribbon name default configuration parameter -->
+        <record id="default_ribbon_name" model="ir.config_parameter">
+            <field name="key">ribbon.name</field>
+            <field name="value">TEST</field>
+        </record>
+
+    </data>
+</openerp>
