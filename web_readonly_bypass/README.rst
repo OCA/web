@@ -8,9 +8,10 @@ This module provides a solution to the problem of the interaction between
 'readonly' attribute and 'on_change' attribute when used together. It allows
 saving onchange modifications to readonly fields.
 
-Behavior: add readonly fields changed by `on_change` methods to the values 
-passed to write or create. If `filter_out_readonly` is in the context and 
-True then apply native behavior.
+Behavior: add readonly fields changed by `on_change` methods to the values
+passed to write or create. If `readonly_by_pass` is in the context and
+True then it will by pass readonly fields and save its data provide by onchange
+method.
 
 Installation
 ============
@@ -25,11 +26,23 @@ There is nothing to configure.
 Usage
 =====
 
-This module changes the default behaviour of Odoo by propagating
+This module changes the behaviour of Odoo by propagating
 on_change modifications to readonly fields to the backend create and write
 methods.
 
-To restore the standard behaviour, set `filter_out_readonly` in the context.
+To change that behavior you have to set context on ``ur.actions.act_window``::
+
+    <record id="sale.action_quotations" model="ir.actions.act_window">
+        <field name="context">{'readonly_by_pass': True}</field>
+    </record>
+
+or by telling fields allowed to change::
+
+    <record id="sale.action_quotations" model="ir.actions.act_window">
+        <field name="context">
+            {'readonly_by_pass': ['readonly_field_1', 'readonly_field_2',]}
+        </field>
+    </record>
 
 For further information, please visit:
 
@@ -38,7 +51,6 @@ For further information, please visit:
 Known issues / Roadmap
 ======================
 
-None
 
 Bug Tracker
 ===========
