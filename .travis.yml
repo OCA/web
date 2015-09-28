@@ -17,7 +17,7 @@ env:
   global:
   - VERSION="7.0" TESTS="0" LINT_CHECK="0" TRANSIFEX="0"
   - TRANSIFEX_USER='transbot@odoo-community.org'
-  - secure: PjP88tPSwimBv4tsgn3UcQAD1heK/wcuSaSfhi2xUt/jSrOaTmWzjaW2gH/eKM1ilxPXwlPGyAIShJ2JJdBiA97hQufOeiqxdkWDctnNVVEDx2Tk0BiG3PPYyhXPgUZ+FNOnjZFF3pNWvzXTQaB0Nvz8plqp93Ov/DEyhrCxHDs=
+  - secure: GzvUeJ2NRqb1+zQFgBcWmKqa9i3GtwD0XJP05UTGVYIBQ1oCuieB20LF8YhbXE/yI5fbbsc6AEfp3BJ579eD1vkcPFT2jyKawbVEi9NIaoKt/0KBhJJMjcLWqdCookEjdZvzRjOPbQav2o45guVZQNuxVuyIuR2gBJb8kIQ24VM=
 
   matrix:
   - LINT_CHECK="1"
