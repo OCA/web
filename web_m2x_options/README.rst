@@ -15,7 +15,7 @@ proposition appearing in the drop-down. Or prevent the dialog box poping in
 case of validation error.
 
 If not specified, the module will avoid proposing any of the create options
-if the current has no permission rights to create the related object.
+if the current user has no permission rights to create the related object.
 
 Usage
 =====
