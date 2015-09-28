@@ -25,7 +25,7 @@
     "author": "Camptocamp,Odoo Community Association (OCA)",
     'license': 'AGPL-3',
     'website': 'http://www.camptocamp.com',
-    'description': """
+    'description': u"""
     This module was written to extend the functionality of
     saving a record in the web interface.
     /!\/!\/!\ In no way this module stops the save of the record.
