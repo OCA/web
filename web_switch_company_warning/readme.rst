@@ -2,9 +2,9 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-==============
+==========================
 Web Switch Company Warning
-==============
+==========================
 
 Shows a warning if current company has been switched in another tab or window.
 
