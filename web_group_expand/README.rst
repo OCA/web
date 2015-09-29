@@ -40,7 +40,8 @@ Contributors
 
 * Mantavya Gajjar <mga@openerp.com>
 * Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>
-* Pedro Baeza <pedro.baeza@serviciosbaeza.com>
+* Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>
+* Jay Vora (SerpentCS) for their alternative implementation
 
 Maintainer
 ----------
