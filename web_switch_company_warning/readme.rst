@@ -2,41 +2,22 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-==========================
+===========================
 Web Switch Company Warning
-==========================
+===========================
+
 
 Shows a warning if current company has been switched in another tab or window.
 
 
-Configuration
-=============
-
-No configuration.
-
-Usage
-=====
-
-
-* go to ...
-
-.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
-   :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/{repo_id}/{branch}
-
-.. repo_id is available in https://github.com/OCA/maintainer-tools/blob/master/tools/repos_with_ids.txt
-.. branch is "8.0" for example
-
 Known issues / Roadmap
 ======================
+
 
     * If the browser don't implement Sharded Worker (http://www.w3.org/TR/workers/#sharedworker), the warning message will not be displayed (there is no polyfill).
 
     * Switching company in a separate browser or in private browsing mode will not be detected by this module. It's a limitation of Shared Wworker(limit to browser session, server:port...)
 
-
-
-* ...
 
 Bug Tracker
 ===========
