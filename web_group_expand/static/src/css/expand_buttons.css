@@ -1,0 +1,8 @@
+
+.openerp ul#oe_group_by li.oe_group_expand{
+    line-height: 25px;
+}
+.openerp .fa-expand, .openerp .fa-compress {
+    font-size:15px;
+    font-weight:bold;
+}
