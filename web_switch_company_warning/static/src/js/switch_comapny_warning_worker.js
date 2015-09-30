@@ -1,3 +1,4 @@
+"use strict";
 //Show a big banner in the top of the page if the company has been
 //changed in another tab or window (in the same browser)
 
@@ -14,7 +15,7 @@ addEventListener("connect", function(ee) {
 
         if (lastCtx && newCtx != lastCtx) {
             con.map(function (eport) {
-                eport.postMessage({ type: 'newCtx', "newCtx": newCtx, "lastCtx": lastCtx});
+                eport.postMessage({ type: "newCtx", "newCtx": newCtx, "lastCtx": lastCtx});
             });
         }
         lastCtx = newCtx;

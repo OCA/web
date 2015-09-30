@@ -1,3 +1,5 @@
+'use strict';
+
 openerp.web_switch_company_warning = function (instance) {
 
     //Show a big banner in the top of the page if the company has been
