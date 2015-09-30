@@ -4,7 +4,7 @@
 {
     "name": "Multicompany - Switch Company Warning",
     "summary": "Show a warning if current company has been switched"
-    " in another tab or window."
+    " in another tab or window.",
     "version": "0.1",
     "category": "web",
     "website": "http://akretion.com",
