@@ -1,3 +1,4 @@
+"use strict";
 (function(){
     var instance = openerp;
     var QWeb = instance.web.qweb, _t = instance.web._t;
@@ -58,7 +59,7 @@
         },
     };
 
-    readonly_bypass = instance.web_readonly_bypass;
+    var readonly_bypass = instance.web_readonly_bypass;
 
     instance.web.BufferedDataSet.include({
 
