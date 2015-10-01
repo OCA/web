@@ -1,6 +1,8 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
-    :alt: License: AGPL-3
+   :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   :alt: License: AGPL-3
 
+================
 Read Only ByPass
 ================
 
@@ -12,16 +14,6 @@ Behavior: add readonly fields changed by `on_change` methods to the values
 passed to write or create. If `readonly_by_pass` is in the context and
 True then it will by pass readonly fields and save its data provide by onchange
 method.
-
-Installation
-============
-
-There are no specific installation instructions for this module.
-
-Configuration
-=============
-
-There is nothing to configure.
 
 Usage
 =====
@@ -48,8 +40,9 @@ For further information, please visit:
 
 * https://www.odoo.com/forum/help-1
 
-Known issues / Roadmap
-======================
+.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
+   :alt: Try me on Runbot
+   :target: https://runbot.odoo-community.org/runbot/162/8.0
 
 
 Bug Tracker
