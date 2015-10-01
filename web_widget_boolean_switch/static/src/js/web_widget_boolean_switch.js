@@ -13,63 +13,64 @@ openerp.web_widget_boolean_switch = function(instance){
             var options = options ? options : {};
             this.checkboxes = checkboxes;
             var switchOptions = {
-                'readonly': options.hasOwnProperty('readonly') ? options.readonly : true,
+                'readonly': options.hasOwnProperty('readonly') ? options.readonly : false,
+                'disabled': options.hasOwnProperty('disabled') ? options.disabled : false,
             };
-            if(options.hasOwnProperty('readonly')){
+            if(options.hasOwnProperty('onSwitchChange')){
                 switchOptions.onSwitchChange = options.onSwitchChange
             }
-                'onSwitchChange'
             this.checkboxes.bootstrapSwitch(switchOptions);
-        },
-        start: function(){
-            debugger;
         },
         set_value: function(value){
             // the third parameter tell if we should skip to fire evnets
-            this.checkboxes.bootstrapSwitch('state', value, false);
+            this.checkboxes.bootstrapSwitch('state', value, true);
         },
-//        set_readonly: function(value){
-//            // the third parameter tell if we should skip to fire evnets
-//            this.checkboxes.bootstrapSwitch({'readonly': value});
-//        },
+        set_readonly: function(value){
+            this.checkboxes.bootstrapSwitch('readonly', value);
+        },
+        set_disabled: function(value){
+            this.checkboxes.bootstrapSwitch('disabled', value);
+        },
     });
 
     // Form view
 
-    instance.web.form.FieldBooleanSwitch = instance.web.form.AbstractField.extend(
-            instance.web.form.ReinitializeFieldMixin, {
+    instance.web.form.FieldBooleanSwitch = instance.web.form.AbstractField.extend({
 
         template: 'FieldBooleanSwitch',
 
-        start: function() {
-            var self = this;
-            //TODO: Get options from xmlview to init widget
+        init: function(field_manager, node){
+            this._super(field_manager, node);
+        },
+        start: function(){
             this.$checkbox = $("input", this.$el);
-            this.widget = new openerp.instances.instance0.web.BooleanSwitchWidget(
+            var readonly = this.modifiers &&
+                this.modifiers.hasOwnProperty('readonly') ?
+                this.modifiers.readonly : false;
+            this.quick_edit = this.options &&
+                this.options.hasOwnProperty('quick_edit') ?
+                this.options.quick_edit : false;
+            var disabled = !this.quick_edit;
+            this.switcher = new openerp.instances.instance0.web.BooleanSwitchWidget(
                 this.$checkbox, {
+                'readonly': readonly,
+                'disabled': disabled,
                 onSwitchChange: _.bind(function(event, state) {
                     this.internal_set_value(this.$checkbox.is(':checked'));
                     event.preventDefault();
                 }, this)
             });
-
-            this.setupFocus(this.$checkbox);
-            //TODO: use initialize_content to change
-//            var check_readonly = function() {
-//                self.$checkbox.prop('disabled', self.get("effective_readonly"));
-//            };
-//            this.on("change:effective_readonly", this, check_readonly);
-//            check_readonly.call(this);
-            this._super.apply(this, arguments);
+            this.on("change:effective_readonly", this, this.switcher_states);
+            this._super();
+        },
+        switcher_states: function () {
+            if (this.quick_edit)
+                return;
+            this.switcher.set_disabled(this.get('effective_readonly'))
         },
         render_value: function() {
-            this.widget.set_value(this.get('value'));
-            //this.$checkbox.bootstrapSwitch('state', this.get('value'), true);
+            this.switcher.set_value(this.get('value'));
         },
-        focus: function() {
-            var input = this.$checkbox && this.$checkbox[0];
-            return input ? input.focus() : false;
-        }
     });
 
     // List view
