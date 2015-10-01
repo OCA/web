@@ -13,8 +13,10 @@ openerp.web_widget_boolean_switch = function(instance){
             var options = options ? options : {};
             this.checkboxes = checkboxes;
             var switchOptions = {
-                'readonly': options.hasOwnProperty('readonly') ? options.readonly : false,
-                'disabled': options.hasOwnProperty('disabled') ? options.disabled : false,
+                'readonly': options.hasOwnProperty('readonly') ?
+                    options.readonly : false,
+                'disabled': options.hasOwnProperty('disabled') ?
+                    options.disabled : false,
             };
             if(options.hasOwnProperty('onSwitchChange')){
                 switchOptions.onSwitchChange = options.onSwitchChange
@@ -50,11 +52,10 @@ openerp.web_widget_boolean_switch = function(instance){
             this.quick_edit = this.options &&
                 this.options.hasOwnProperty('quick_edit') ?
                 this.options.quick_edit : false;
-            var disabled = !this.quick_edit;
             this.switcher = new openerp.instances.instance0.web.BooleanSwitchWidget(
                 this.$checkbox, {
                 'readonly': readonly,
-                'disabled': disabled,
+                'disabled': !this.quick_edit,
                 onSwitchChange: _.bind(function(event, state) {
                     this.internal_set_value(this.$checkbox.is(':checked'));
                     event.preventDefault();
@@ -82,14 +83,24 @@ openerp.web_widget_boolean_switch = function(instance){
         switch_fields.forEach(function(field){
             if(view.grouped){
                 //Manage if it's grouped by boolean_switch widget field
-                var checkboxes = view.$el.find('th.oe_list_group_name input[type="checkbox"]');
-                new openerp.instances.instance0.web.BooleanSwitchWidget(checkboxes, {'readonly': true});
+                var checkboxes = view.$el.find(
+                    'th.oe_list_group_name input[type="checkbox"]');
+                new openerp.instances.instance0.web.BooleanSwitchWidget(
+                    checkboxes, {'readonly': true, 'disabled': true});
             }
-            var quick_edit = false;
-            quick_edit = py.eval(field.options).quick_edit ? py.eval(field.options).quick_edit : false;
-            var checkboxes = view.$el.find(
-                'td[data-field=' + field.name + '].oe_list_field_boolean_switch > input[type="checkbox"]');
-            new openerp.instances.instance0.web.BooleanSwitchWidget(checkboxes, {'readonly': !quick_edit});
+
+            var readonly = field.modifiers &&
+                field.modifiers.hasOwnProperty('readonly') ?
+                field.modifiers.readonly : false;
+            var options = py.eval(field.options)
+            var quick_edit = options &&
+                options.hasOwnProperty('quick_edit') ?
+                options.quick_edit : false;
+
+            var checkboxes = view.$el.find('td[data-field=' + field.name +
+                '].oe_list_field_boolean_switch > input[type="checkbox"]');
+            new openerp.instances.instance0.web.BooleanSwitchWidget(
+                checkboxes, {'readonly': readonly, 'disabled': !quick_edit});
         });
     }
 
