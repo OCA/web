@@ -12,11 +12,17 @@ openerp.web_widget_boolean_switch = function(instance){
         init: function(checkboxes, options){
             var options = options ? options : {};
             this.checkboxes = checkboxes;
+
+            this.quick_edit = options.hasOwnProperty('quick_edit') ?
+                options.quick_edit : false;
+            var readonly = options.hasOwnProperty('readonly') ?
+                options.readonly : false;
+
             var switchOptions = {
                 'readonly': options.hasOwnProperty('readonly') ?
-                    options.readonly : false,
+                    options.readonly : readonly,
                 'disabled': options.hasOwnProperty('disabled') ?
-                    options.disabled : false,
+                    options.disabled : !this.quick_edit,
             };
             if(options.hasOwnProperty('onSwitchChange')){
                 switchOptions.onSwitchChange = options.onSwitchChange
@@ -46,26 +52,23 @@ openerp.web_widget_boolean_switch = function(instance){
         },
         start: function(){
             this.$checkbox = $("input", this.$el);
-            var readonly = this.modifiers &&
-                this.modifiers.hasOwnProperty('readonly') ?
-                this.modifiers.readonly : false;
-            this.quick_edit = this.options &&
-                this.options.hasOwnProperty('quick_edit') ?
-                this.options.quick_edit : false;
-            this.switcher = new openerp.instances.instance0.web.BooleanSwitchWidget(
-                this.$checkbox, {
-                'readonly': readonly,
-                'disabled': !this.quick_edit,
+
+            var options = {
                 onSwitchChange: _.bind(function(event, state) {
                     this.internal_set_value(this.$checkbox.is(':checked'));
                     event.preventDefault();
-                }, this)
-            });
+                }, this),
+            }
+            _.extend(options, this.modifiers ? this.modifiers : {});
+            _.extend(options, this.options ? this.options : {});
+
+            this.switcher = new openerp.instances.instance0.web.BooleanSwitchWidget(
+                this.$checkbox, options);
             this.on("change:effective_readonly", this, this.switcher_states);
             this._super();
         },
         switcher_states: function () {
-            if (this.quick_edit)
+            if (this.switcher.quick_edit)
                 return;
             this.switcher.set_disabled(this.get('effective_readonly'))
         },
@@ -86,21 +89,16 @@ openerp.web_widget_boolean_switch = function(instance){
                 var checkboxes = view.$el.find(
                     'th.oe_list_group_name input[type="checkbox"]');
                 new openerp.instances.instance0.web.BooleanSwitchWidget(
-                    checkboxes, {'readonly': true, 'disabled': true});
+                    checkboxes, {'readonly': true});
             }
 
-            var readonly = field.modifiers &&
-                field.modifiers.hasOwnProperty('readonly') ?
-                field.modifiers.readonly : false;
             var options = py.eval(field.options)
-            var quick_edit = options &&
-                options.hasOwnProperty('quick_edit') ?
-                options.quick_edit : false;
+            _.extend(options, field.modifiers ? field.modifiers : {});
 
             var checkboxes = view.$el.find('td[data-field=' + field.name +
                 '].oe_list_field_boolean_switch > input[type="checkbox"]');
             new openerp.instances.instance0.web.BooleanSwitchWidget(
-                checkboxes, {'readonly': readonly, 'disabled': !quick_edit});
+                checkboxes, options);
         });
     }
 
