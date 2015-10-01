@@ -135,6 +135,9 @@
         if (typeof value === "undefined") {
           return this.options.state;
         }
+        if (!skip && (this.options.disabled || this.options.readonly)) {
+          return this.$element;
+        }
         if (this.options.state && !this.options.radioAllOff && this.$element.is(":radio")) {
           return this.$element;
         }
