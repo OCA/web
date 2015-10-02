@@ -19,11 +19,11 @@ field using this widget.
 Example
 -------
 
-```xml
+```
    <field name="active"
           widget="boolean_switch"
           context="{'fake_parameter': 'foo'}"
-          options="{'quick_edit': True, 'extra': {'onText': 'Yes', 'offText': 'No' }"/>
+          options="{'quick_edit': True, 'extra': {'onText': 'Yes', 'offText': 'No' }}"/>
 ```
 
 .. note::
@@ -43,7 +43,7 @@ extra
 ``extra`` is used to set
 `bootstrap-switch <http://www.bootstrap-switch.org/options.html>`_ options.
 
-Available::
+*Available options*:
 
    * **size**: The checkbox size - default: `null` - values: null, 'mini', 'small', 'normal', 'large'
    * **animate**: Animate the switch - default: `true`
@@ -60,24 +60,17 @@ Available::
    * **wrapperClass**: Container element class(es) - default: `"wrapper"`,
 
 
-.. warning::
+..warning::
 
-   Those parameters are overwritten by this module or highly discouraged::
+    Those parameters are overwritten by this module or highly discouraged:
 
-      * **radioAllOff**: Allow this radio button to be unchecked by the user - default: `false`
-      * **state**: The checkbox state - default: `true`
-      * **disabled**: Disable state - default: `false`
-      * **readonly**: Readonly state - default: `false`
-      * **onInit**: Callback function to execute on initialization - default: `function() {}`,
-      * **onSwitchChange**: Callback function to execute on switch state change - default: `function() {}`
+    * **radioAllOff**: Allow this radio button to be unchecked by the user - default: `false`
+    * **state**: The checkbox state - default: `true`
+    * **disabled**: Disable state - default: `false`
+    * **readonly**: Readonly state - default: `false`
+    * **onInit**: Callback function to execute on initialization - default: `function() {}`,
+    * **onSwitchChange**: Callback function to execute on switch state change - default: `function() {}`
 
-
-Usage
-=====
-
-To use this module, you need to:
-
-* go to ...
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
