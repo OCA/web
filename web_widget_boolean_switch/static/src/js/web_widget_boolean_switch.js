@@ -15,28 +15,14 @@ openerp.web_widget_boolean_switch = function(instance){
 
             this.quick_edit = options.hasOwnProperty('quick_edit') ?
                 options.quick_edit : false;
-            var readonly = options.hasOwnProperty('readonly') ?
-                options.readonly : false;
             var switchOptions = options.hasOwnProperty('extra') ?
                 options.extra : {};
 
-            // in case of domain (using attrs={...}), readonly is set afterward
-            if(!_.isBoolean(options.readonly)){
-                options.readonly = false;
-            }
             _.extend(switchOptions, {
-                'readonly': options.hasOwnProperty('readonly') ?
-                    options.readonly : readonly,
                 'disabled': options.hasOwnProperty('disabled') ?
                     options.disabled : !this.quick_edit,
             });
 
-            //finnaly if readonly is false, we remove it to init widget
-            //with the value of its attributes well managed by qweb and
-            //FieldBooleanSwitch class
-            if(!switchOptions.readonly){
-                delete switchOptions.readonly;
-            }
             if(options.hasOwnProperty('onSwitchChange')){
                 switchOptions.onSwitchChange = options.onSwitchChange;
             }
@@ -133,7 +119,7 @@ openerp.web_widget_boolean_switch = function(instance){
                 //Manage if it's grouped by boolean_switch widget field
                 var opt = {};
                 _.extend(opt, options);
-                opt.readonly = true;
+                opt.disabled = true;
                 checkboxes = view.$el.find(
                     'th.oe_list_group_name input[type="checkbox"]');
                 new openerp.instances.instance0.web.BooleanSwitchWidget(
