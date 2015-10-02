@@ -6,17 +6,15 @@
 Web widget boolean switch
 =========================
 
-This module add a widget to render boolean fields
+This module add a widget ``boolean_switch`` to render boolean fields. One
+of it's main features is to quick edit that field without enter in edit mode.
 
-Installation
-============
-
-To install this module, you need to:
-
-* do this ...
 
 Configuration
 =============
+
+In the view (test on tree view and form view), you can declare any boolean
+field using this widget.
 
 Example
 -------
@@ -24,8 +22,14 @@ Example
 ```xml
    <field name="active"
           widget="boolean_switch"
+          context="{'fake_parameter': 'foo'}"
           options="{'quick_edit': True, extra: {'onText': 'Yes', 'offText': 'No' }"/>
 ```
+
+.. note::
+
+   ``context`` is sent to the ``write`` method of the field model in case of
+   special needs with the quick edition.
 
 Options
 -------
@@ -41,31 +45,31 @@ extra
 
 Available::
 
-   * **size**: - default: `null`
-   * **animate**: - default: `true`
-   * **indeterminate**: `false`
-   * **inverse**: `false`
-   * **radioAllOff**: `false`
-   * **onColor**: `"primary"`
-   * **offColor**: `default`
-   * **onText**: `"ON"`,
-   * **offText**: `"OFF"`,
-   * **labelText**: `"&nbsp;"`,
-   * **handleWidth**: `"auto"`,
-   * **labelWidth**: `"auto"`,
-   * **baseClass**: `"bootstrap-switch"`,
-   * **wrapperClass**: `"wrapper"`,
+   * **size**: The checkbox size - default: `null` - values: null, 'mini', 'small', 'normal', 'large'
+   * **animate**: Animate the switch - default: `true`
+   * **indeterminate**: Indeterminate state - default: `false`
+   * **inverse**: Inverse switch direction - default: `false`
+   * **onColor**: Color of the left side of the switch - default: `"primary"` - values: 'primary', 'info', 'success', 'warning', 'danger', 'default'
+   * **offColor**: Color of the right side of the switch - default: `default` - values: 'primary', 'info', 'success', 'warning', 'danger', 'default'
+   * **onText**: Text of the left side of the switch - default: `"ON"`
+   * **offText**: Text of the right side of the switch - default: `"OFF"`,
+   * **labelText**: Text of the center handle of the switch - default: `"&nbsp;"`,
+   * **handleWidth**: Width of the left and right sides in pixels - default:  `"auto"`,
+   * **labelWidth**: Width of the center handle in pixels - default: `"auto"`,
+   * **baseClass**: Global class prefix - default: `"bootstrap-switch"`,
+   * **wrapperClass**: Container element class(es) - default: `"wrapper"`,
 
 
 .. warning::
 
-   Those parameters are overwritten by this module or highly discourage::
+   Those parameters are overwritten by this module or highly discouraged::
 
-      * **state**: true,
-      * **disabled**: `false`
-      * **readonly**: `false`
-      * **onInit**: `function() {}`,
-      * **onSwitchChange**: `function() {}`
+      * **radioAllOff**: Allow this radio button to be unchecked by the user - default: `false`
+      * **state**: The checkbox state - default: `true`
+      * **disabled**: Disable state - default: `false`
+      * **readonly**: Readonly state - default: `false`
+      * **onInit**: Callback function to execute on initialization - default: `function() {}`,
+      * **onSwitchChange**: Callback function to execute on switch state change - default: `function() {}`
 
 
 Usage
@@ -77,26 +81,23 @@ To use this module, you need to:
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/{repo_id}/{branch}
-
-.. repo_id is available in https://github.com/OCA/maintainer-tools/blob/master/tools/repos_with_ids.txt
-.. branch is "8.0" for example
+   :target: https://runbot.odoo-community.org/runbot/162/7.0
 
 Known issues / Roadmap
 ======================
 
-* ...
+* Manage Null values
+*
 
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/OCA/
-{project_repo}/issues>`_.
+Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
-If you spotted it first, help us smashing it by providing a detailed and welcomed feedback `here <https://github.com/OCA/
-{project_repo}/issues/new?body=module:%20
-{module_name}%0Aversion:%20
-{version}%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+If you spotted it first, help us smashing it by providing a detailed and
+welcomed feedback `here <https://github.com/OCA/web/issues/new?body=module:%20
+web_widget_boolean_switch%0Aversion:%207.0%0A%0A**Steps%20to%20reproduce**%0A-
+%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 
 Credits
