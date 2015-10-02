@@ -19,7 +19,8 @@
             <field name="sequence">20</field>
             <field name="arch" type="xml">
                 <field name="login" position="after">
-                    <field name="active" widget="boolean_switch" options="{'quick_edit': True}"/>
+                    <field name="active" widget="boolean_switch"
+                           options="{'quick_edit': True, 'extra': {'onText': 'Yes', 'offText': 'No'}}"/>
                 </field>
             </field>
         </record>
@@ -29,7 +30,8 @@
             <field name="model">res.users</field>
             <field name="arch" type="xml">
                 <field name="active" position="replace">
-                    <field name="active" widget="boolean_switch" options="{'quick_edit': True}"/>
+                    <field name="active" widget="boolean_switch" readonly="0"
+                           options="{'quick_edit': True, 'extra': {'onText': 'Yes', 'offText': 'No'}}"/>
                 </field>
             </field>
         </record>
@@ -43,7 +45,8 @@
                     <field name="name"/>
                     <field name="login"/>
                     <field name="lang"/>
-                    <field name="active" widget="boolean_switch" options="{'quick_edit': True}"/>
+                    <field name="active" widget="boolean_switch"
+                           options="{'quick_edit': True, 'extra': {'onText': 'Yes', 'offText': 'No'}}"/>
                 </tree>
             </field>
         </record>

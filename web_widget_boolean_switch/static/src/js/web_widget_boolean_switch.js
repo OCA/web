@@ -17,17 +17,37 @@ openerp.web_widget_boolean_switch = function(instance){
                 options.quick_edit : false;
             var readonly = options.hasOwnProperty('readonly') ?
                 options.readonly : false;
+            var switchOptions = options.hasOwnProperty('extra') ?
+                options.extra : {};
 
-            var switchOptions = {
+
+            _.extend(switchOptions, {
                 'readonly': options.hasOwnProperty('readonly') ?
                     options.readonly : readonly,
                 'disabled': options.hasOwnProperty('disabled') ?
                     options.disabled : !this.quick_edit,
-            };
+            });
             if(options.hasOwnProperty('onSwitchChange')){
                 switchOptions.onSwitchChange = options.onSwitchChange
             }
             this.checkboxes.bootstrapSwitch(switchOptions);
+            if(this.quick_edit){
+                this.checkboxes.on('switchChange.bootstrapSwitch',
+                                   function(event, state) {
+                    var model_name = 'res.users';
+                    var id = 4;
+                    var values = {};
+                    values['active'] = state;
+                    var some_context = {};
+
+                    var model = new openerp.instances.instance0.web.Model(model_name);
+
+                    model.call('write', [[id], values],
+                               {context: some_context}).then(function (result) {
+                        console.log('success');
+                    });
+                });
+            }
         },
         set_value: function(value){
             // the third parameter tell if we should skip to fire evnets
@@ -55,8 +75,16 @@ openerp.web_widget_boolean_switch = function(instance){
 
             var options = {
                 onSwitchChange: _.bind(function(event, state) {
-                    this.internal_set_value(this.$checkbox.is(':checked'));
-                    event.preventDefault();
+                    // Test effective_readonly in case we are using quick_edit,
+                    // and we are not in edit mode.
+                    // We could use this.view.get('actual_mode') which sons
+                    // semantically better, possible values are
+                    // at least `view`, `edit`, `create`, ...? to avoid doupt
+                    // using bool seems safer!
+                    if(!this.get('effective_readonly')){
+                        this.internal_set_value(state);
+                        event.preventDefault();
+                    }
                 }, this),
             }
             _.extend(options, this.modifiers ? this.modifiers : {});

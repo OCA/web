@@ -18,9 +18,55 @@ To install this module, you need to:
 Configuration
 =============
 
-To configure this module, you need to:
+Example
+-------
 
-* go to ...
+```xml
+   <field name="active"
+          widget="boolean_switch"
+          options="{'quick_edit': True, extra: {'onText': 'Yes', 'offText': 'No' }"/>
+```
+
+Options
+-------
+
+
+quick_edit
+~~~~~~~~~~
+
+extra
+~~~~~
+``extra`` is used to set
+`bootstrap-switch <http://www.bootstrap-switch.org/options.html>`_ options.
+
+Available::
+
+   * **size**: - default: `null`
+   * **animate**: - default: `true`
+   * **indeterminate**: `false`
+   * **inverse**: `false`
+   * **radioAllOff**: `false`
+   * **onColor**: `"primary"`
+   * **offColor**: `default`
+   * **onText**: `"ON"`,
+   * **offText**: `"OFF"`,
+   * **labelText**: `"&nbsp;"`,
+   * **handleWidth**: `"auto"`,
+   * **labelWidth**: `"auto"`,
+   * **baseClass**: `"bootstrap-switch"`,
+   * **wrapperClass**: `"wrapper"`,
+
+
+.. warning::
+
+   Those parameters are overwritten by this module or highly discourage::
+
+      * **state**: true,
+      * **disabled**: `false`
+      * **readonly**: `false`
+      * **onInit**: `function() {}`,
+      * **onSwitchChange**: `function() {}`
+
 
 Usage
 =====
