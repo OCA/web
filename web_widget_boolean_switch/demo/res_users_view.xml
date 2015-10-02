@@ -20,7 +20,8 @@
             <field name="arch" type="xml">
                 <field name="login" position="after">
                     <field name="active" widget="boolean_switch"
-                           options="{'quick_edit': True, 'extra': {'onText': 'Yes', 'offText': 'No'}}"/>
+                           options="{'quick_edit': True, 'extra': {'onText': 'Yes', 'offText': 'No'}}"
+                           context="{'test': 'test value'}"/>
                 </field>
             </field>
         </record>
@@ -31,7 +32,8 @@
             <field name="arch" type="xml">
                 <field name="active" position="replace">
                     <field name="active" widget="boolean_switch" readonly="0"
-                           options="{'quick_edit': True, 'extra': {'onText': 'Yes', 'offText': 'No'}}"/>
+                           options="{'quick_edit': True, 'extra': {'onText': 'Yes', 'offText': 'No'}}"
+                           context="{'test': 'test value'}"/>
                 </field>
             </field>
         </record>
@@ -46,7 +48,8 @@
                     <field name="login"/>
                     <field name="lang"/>
                     <field name="active" widget="boolean_switch"
-                           options="{'quick_edit': True, 'extra': {'onText': 'Yes', 'offText': 'No'}}"/>
+                           options="{'quick_edit': True, 'extra': {'onText': 'Yes', 'offText': 'No'}}"
+                           context="{'test': 'test value'}" />
                 </tree>
             </field>
         </record>
