@@ -113,17 +113,21 @@ openerp.web_widget_boolean_switch = function(instance){
         });
         switch_fields.forEach(function(field){
             var checkboxes;
+
+            var options = py.eval(field.options);
+
             if(view.grouped){
                 //Manage if it's grouped by boolean_switch widget field
+                var opt = {};
+                _.extend(opt, options);
+                opt.readonly = true;
                 checkboxes = view.$el.find(
                     'th.oe_list_group_name input[type="checkbox"]');
                 new openerp.instances.instance0.web.BooleanSwitchWidget(
-                    checkboxes, {'readonly': true}, null);
+                    checkboxes, opt, null);
             }
 
-            var options = py.eval(field.options);
             _.extend(options, field.modifiers ? field.modifiers : {});
-
             checkboxes = view.$el.find('td[data-field=' + field.name +
                 '].oe_list_field_boolean_switch > input[type="checkbox"]');
             new openerp.instances.instance0.web.BooleanSwitchWidget(
