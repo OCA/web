@@ -22,18 +22,13 @@ Example
 ```
    <field name="active"
           widget="boolean_switch"
+          attrs="{'readonly': [('login', '=', 'admin')]}"
           context="{'fake_parameter': 'foo'}"
           options="{'quick_edit': True, 'extra': {'onText': 'Yes', 'offText': 'No' }}"/>
 ```
 
-.. note::
-
-   ``context`` is sent to the ``write`` method of the field model in case of
-   special needs with the quick edition.
-
 Options
 -------
-
 
 quick_edit
 ~~~~~~~~~~
@@ -60,7 +55,7 @@ extra
    * **wrapperClass**: Container element class(es) - default: `"wrapper"`,
 
 
-..warning::
+.. warning::
 
     Those parameters are overwritten by this module or highly discouraged:
 
@@ -70,6 +65,17 @@ extra
     * **readonly**: Readonly state - default: `false`
     * **onInit**: Callback function to execute on initialization - default: `function() {}`,
     * **onSwitchChange**: Callback function to execute on switch state change - default: `function() {}`
+
+attrs
+-----
+
+This attribute is supported as expected!
+
+context
+-------
+
+``context`` is sent to the ``write`` method of the field model in case of
+special needs with the quick edition.
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas

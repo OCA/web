@@ -9,8 +9,8 @@ openerp.web_widget_boolean_switch = function(instance){
 
     instance.web.BooleanSwitchWidget = instance.web.Class.extend({
 
-        init: function(checkboxes, options, quick_edit_callback){
-            options = options ? options : {};
+        init: function(checkboxes, opts, quick_edit_callback){
+            var options = _.extend({}, opts ? opts : {});
             this.checkboxes = checkboxes;
 
             this.quick_edit = options.hasOwnProperty('quick_edit') ?
@@ -20,12 +20,23 @@ openerp.web_widget_boolean_switch = function(instance){
             var switchOptions = options.hasOwnProperty('extra') ?
                 options.extra : {};
 
+            // in case of domain (using attrs={...}), readonly is set afterward
+            if(!_.isBoolean(options.readonly)){
+                options.readonly = false;
+            }
             _.extend(switchOptions, {
                 'readonly': options.hasOwnProperty('readonly') ?
                     options.readonly : readonly,
                 'disabled': options.hasOwnProperty('disabled') ?
                     options.disabled : !this.quick_edit,
             });
+
+            //finnaly if readonly is false, we remove it to init widget
+            //with the value of its attributes well managed by qweb and
+            //FieldBooleanSwitch class
+            if(!switchOptions.readonly){
+                delete switchOptions.readonly;
+            }
             if(options.hasOwnProperty('onSwitchChange')){
                 switchOptions.onSwitchChange = options.onSwitchChange;
             }
@@ -73,7 +84,7 @@ openerp.web_widget_boolean_switch = function(instance){
 
             this.switcher = new openerp.instances.instance0.web.BooleanSwitchWidget(
                 this.$checkbox, options, _.bind(function(event, state) {
-                    // get in mind that in case of view list editable
+                    // keep in mind that in case of view list editable
                     // actual_mode is undefined...
                     if(this.view.get('actual_mode') === 'view'){
                         var id = this.view.dataset.ids[this.view.dataset.index];
@@ -87,8 +98,9 @@ openerp.web_widget_boolean_switch = function(instance){
                         this.internal_set_value(state, {'silent': true});
                     }
                 }, this));
-            this.on("change:effective_readonly", this, this.switcher_states);
+            this.on("change:readonly", this, this.switcher_states);
             this._super();
+            this.switcher_states.call(this);
         },
         internal_set_value: function(value_, options) {
             var tmp = this.no_rerender;
@@ -97,9 +109,10 @@ openerp.web_widget_boolean_switch = function(instance){
             this.no_rerender = tmp;
         },
         switcher_states: function () {
-            if (this.switcher.quick_edit)
-                return;
-            this.switcher.set_disabled(this.get('effective_readonly'));
+            this.switcher.set_readonly(this.get('readonly'));
+            if (!this.switcher.quick_edit){
+                this.switcher.set_disabled(this.get('effective_readonly'));
+            }
         },
         render_value: function() {
             this.switcher.set_value(this.get('value'));
@@ -155,10 +168,26 @@ openerp.web_widget_boolean_switch = function(instance){
     instance.web.list.columns.add('field.boolean_switch', 'instance.web.list.FieldBooleanSwitch');
 
     instance.web.list.FieldBooleanSwitch = instance.web.list.Column.extend({
+        format: function (row_data, options) {
+            options = options || {};
+            var attrs = {};
+            if (options.process_modifiers !== false) {
+                attrs = this.modifiers_for(row_data);
+            }
+            if (attrs.invisible) { return ''; }
 
-        _format: function (row_data, options) {
-            return _.str.sprintf('<input type="checkbox" %s readonly="readonly" data-rowid="%d"/>',
+            if (!row_data[this.id]) {
+                return options.value_if_empty === undefined ?
+                    '' : options.value_if_empty;
+            }
+            var readonly = attrs.hasOwnProperty('readonly') ? attrs.readonly : false;
+            return this._format(row_data, options, readonly);
+        },
+
+        _format: function (row_data, options, readonly) {
+            return _.str.sprintf('<input type="checkbox" %s %s data-rowid="%d"/>',
                      row_data[this.id].value ? 'checked="checked"' : '',
+                     readonly ? 'readonly' : '',
                      row_data.hasOwnProperty('id') ? row_data.id.value : -1);
         }
     });
