@@ -23,7 +23,7 @@ Example
    <field name="active"
           widget="boolean_switch"
           context="{'fake_parameter': 'foo'}"
-          options="{'quick_edit': True, extra: {'onText': 'Yes', 'offText': 'No' }"/>
+          options="{'quick_edit': True, 'extra': {'onText': 'Yes', 'offText': 'No' }"/>
 ```
 
 .. note::
