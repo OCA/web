@@ -1,7 +1,6 @@
-'use strict';
 openerp.web_widget_boolean_switch = function(instance){
+    "use strict";
 
-    var instance = instance;
     instance.web.form.widgets.add('boolean_switch',
                                   'instance.web.form.FieldBooleanSwitch');
 
@@ -11,7 +10,7 @@ openerp.web_widget_boolean_switch = function(instance){
     instance.web.BooleanSwitchWidget = instance.web.Class.extend({
 
         init: function(checkboxes, options, quick_edit_callback){
-            var options = options ? options : {};
+            options = options ? options : {};
             this.checkboxes = checkboxes;
 
             this.quick_edit = options.hasOwnProperty('quick_edit') ?
@@ -21,7 +20,6 @@ openerp.web_widget_boolean_switch = function(instance){
             var switchOptions = options.hasOwnProperty('extra') ?
                 options.extra : {};
 
-
             _.extend(switchOptions, {
                 'readonly': options.hasOwnProperty('readonly') ?
                     options.readonly : readonly,
@@ -29,7 +27,7 @@ openerp.web_widget_boolean_switch = function(instance){
                     options.disabled : !this.quick_edit,
             });
             if(options.hasOwnProperty('onSwitchChange')){
-                switchOptions.onSwitchChange = options.onSwitchChange
+                switchOptions.onSwitchChange = options.onSwitchChange;
             }
             this.checkboxes.bootstrapSwitch(switchOptions);
             if(this.quick_edit && quick_edit_callback){
@@ -50,7 +48,6 @@ openerp.web_widget_boolean_switch = function(instance){
     });
 
     // Form view
-
     instance.web.form.FieldBooleanSwitch = instance.web.form.AbstractField.extend({
 
         template: 'FieldBooleanSwitch',
@@ -70,7 +67,7 @@ openerp.web_widget_boolean_switch = function(instance){
                         event.preventDefault();
                     }
                 }, this),
-            }
+            };
             _.extend(options, this.modifiers ? this.modifiers : {});
             _.extend(options, this.options ? this.options : {});
 
@@ -83,7 +80,7 @@ openerp.web_widget_boolean_switch = function(instance){
                         var values = {};
                         values[this.name] = state;
                         var context = openerp.instances.instance0.web.pyeval.eval(
-                            'contexts', this.build_context())
+                            'contexts', this.build_context());
                         var model = new openerp.instances.instance0.web.Model(this.view.model);
                         model.call('write', [[id], values],
                                    {'context': this.build_context()});
@@ -102,7 +99,7 @@ openerp.web_widget_boolean_switch = function(instance){
         switcher_states: function () {
             if (this.switcher.quick_edit)
                 return;
-            this.switcher.set_disabled(this.get('effective_readonly'))
+            this.switcher.set_disabled(this.get('effective_readonly'));
         },
         render_value: function() {
             this.switcher.set_value(this.get('value'));
@@ -115,18 +112,19 @@ openerp.web_widget_boolean_switch = function(instance){
             return c.widget === 'boolean_switch';
         });
         switch_fields.forEach(function(field){
+            var checkboxes;
             if(view.grouped){
                 //Manage if it's grouped by boolean_switch widget field
-                var checkboxes = view.$el.find(
+                checkboxes = view.$el.find(
                     'th.oe_list_group_name input[type="checkbox"]');
                 new openerp.instances.instance0.web.BooleanSwitchWidget(
                     checkboxes, {'readonly': true}, null);
             }
 
-            var options = py.eval(field.options)
+            var options = py.eval(field.options);
             _.extend(options, field.modifiers ? field.modifiers : {});
 
-            var checkboxes = view.$el.find('td[data-field=' + field.name +
+            checkboxes = view.$el.find('td[data-field=' + field.name +
                 '].oe_list_field_boolean_switch > input[type="checkbox"]');
             new openerp.instances.instance0.web.BooleanSwitchWidget(
                 checkboxes, options, _.bind(function(event, state) {
@@ -134,7 +132,7 @@ openerp.web_widget_boolean_switch = function(instance){
                     var values = {};
                     values[this.field.name] = state;
                     var context = py.eval(field.context);
-                    _.extend(context, view.session.user_context)
+                    _.extend(context, view.session.user_context);
                     var model = new openerp.instances.instance0.web.Model(this.view.model);
                     model.call('write', [[id], values],
                                {'context': context});
@@ -151,7 +149,7 @@ openerp.web_widget_boolean_switch = function(instance){
         _format: function (row_data, options) {
             return _.str.sprintf('<input type="checkbox" %s readonly="readonly" data-rowid="%d"/>',
                      row_data[this.id].value ? 'checked="checked"' : '',
-                     row_data.hasOwnProperty('id') ? row_data['id'].value : -1);
+                     row_data.hasOwnProperty('id') ? row_data.id.value : -1);
         }
     });
 
