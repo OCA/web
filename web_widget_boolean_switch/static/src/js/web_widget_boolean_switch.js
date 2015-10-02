@@ -63,7 +63,7 @@ openerp.web_widget_boolean_switch = function(instance){
                     // and we are not in edit mode.
                     // We could use this.view.get('actual_mode') which sons
                     // semantically better, possible values are
-                    // at least `view`, `edit`, `create`, ...? to avoid doupt
+                    // at least `view`, `edit`, `create`... ? to avoid doupt
                     // using bool seems safer!
                     if(!this.get('effective_readonly')){
                         this.internal_set_value(state);
@@ -76,15 +76,19 @@ openerp.web_widget_boolean_switch = function(instance){
 
             this.switcher = new openerp.instances.instance0.web.BooleanSwitchWidget(
                 this.$checkbox, options, _.bind(function(event, state) {
-                    var id = this.view.dataset.ids[this.view.dataset.index];
-                    var values = {};
-                    values[this.name] = state;
-                    var context = openerp.instances.instance0.web.pyeval.eval(
-                        'contexts', this.build_context())
-                    var model = new openerp.instances.instance0.web.Model(this.view.model);
-                    model.call('write', [[id], values],
-                               {'context': this.build_context()});
-                    this.internal_set_value(state, {'silent': true});
+                    // get in mind that in case of view list editable
+                    // actual_mode is undefined...
+                    if(this.view.get('actual_mode') === 'view'){
+                        var id = this.view.dataset.ids[this.view.dataset.index];
+                        var values = {};
+                        values[this.name] = state;
+                        var context = openerp.instances.instance0.web.pyeval.eval(
+                            'contexts', this.build_context())
+                        var model = new openerp.instances.instance0.web.Model(this.view.model);
+                        model.call('write', [[id], values],
+                                   {'context': this.build_context()});
+                        this.internal_set_value(state, {'silent': true});
+                    }
                 }, this));
             this.on("change:effective_readonly", this, this.switcher_states);
             this._super();
@@ -130,6 +134,7 @@ openerp.web_widget_boolean_switch = function(instance){
                     var values = {};
                     values[this.field.name] = state;
                     var context = py.eval(field.context);
+                    _.extend(context, view.session.user_context)
                     var model = new openerp.instances.instance0.web.Model(this.view.model);
                     model.call('write', [[id], values],
                                {'context': context});
