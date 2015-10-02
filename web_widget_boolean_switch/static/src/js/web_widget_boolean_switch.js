@@ -172,9 +172,10 @@ openerp.web_widget_boolean_switch = function(instance){
 
         _format: function (row_data, options, readonly) {
             return _.str.sprintf('<input type="checkbox" %s %s data-rowid="%d"/>',
-                     row_data[this.id].value ? 'checked="checked"' : '',
-                     readonly ? 'readonly' : '',
-                     row_data.hasOwnProperty('id') ? row_data.id.value : -1);
+                row_data[this.id].value ? 'checked="checked"' : '',
+                readonly ? 'readonly' : '',
+                row_data.hasOwnProperty('id') && _.isNumber(row_data.id.value) ?
+                    row_data.id.value : -1);
         }
     });
 
