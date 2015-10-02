@@ -113,7 +113,7 @@ openerp.web_widget_boolean_switch = function(instance){
         switch_fields.forEach(function(field){
             var checkboxes;
 
-            var options = py.eval(field.options);
+            var options = field.options ? py.eval(field.options) : {};
 
             if(view.grouped){
                 //Manage if it's grouped by boolean_switch widget field
@@ -134,7 +134,7 @@ openerp.web_widget_boolean_switch = function(instance){
                     var id = $(event.target).data('rowid');
                     var values = {};
                     values[this.field.name] = state;
-                    var context = py.eval(field.context);
+                    var context = field.context ? py.eval(field.context) : {};
                     _.extend(context, view.session.user_context);
                     var model = new openerp.instances.instance0.web.Model(this.view.model);
                     model.call('write', [[id], values],
