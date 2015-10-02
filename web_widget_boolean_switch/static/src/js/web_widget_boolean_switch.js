@@ -139,12 +139,13 @@ openerp.web_widget_boolean_switch = function(instance){
                     _.extend(context, view.session.user_context);
                     var model = new openerp.instances.instance0.web.Model(this.view.model);
                     model.call('write', [[id], values],
-                               {'context': context}).then(_.bind(function(){
-                                    if(!this.view.grouped){
-                                        this.view.records._byId[this.id].attributes[this.field.name] = this.state;
-                                    }
-                               }, {'view': this.view, 'field': this.field,
-                                   'id': id, 'state': state}));
+                       {'context': context}).then(_.bind(function(){
+                            if(!this.view.grouped){
+                                this.view.records._byId[this.id].attributes[
+                                    this.field.name] = this.state;
+                            }
+                       }, {'view': this.view, 'field': this.field,
+                           'id': id, 'state': state}));
                 }, {'view': view, 'field': field})
             );
         });
