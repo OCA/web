@@ -7,7 +7,8 @@ Web widget boolean switch
 =========================
 
 This module add a widget ``boolean_switch`` to render boolean fields. One
-of it's main features is to quick edit that field without enter in edit mode.
+of it's main features is to quick edit that field without enter in edit mode
+from list view or form view.
 
 
 Configuration
@@ -24,7 +25,7 @@ Example
           widget="boolean_switch"
           attrs="{'readonly': [('login', '=', 'admin')]}"
           context="{'fake_parameter': 'foo'}"
-          options="{'quick_edit': True, 'extra': {'onText': 'Yes', 'offText': 'No' }}"/>
+          options="{'quick_edit': True, 'extra': {'onText': 'Yes', 'offText': 'No'}}"/>
 ```
 
 Options
@@ -40,31 +41,39 @@ extra
 
 *Available options*:
 
-   * **size**: The checkbox size - default: `null` - values: null, 'mini', 'small', 'normal', 'large'
+   * **size**: The checkbox size - default: `null` - values: null, 'mini',
+     'small', 'normal', 'large'
    * **animate**: Animate the switch - default: `true`
    * **indeterminate**: Indeterminate state - default: `false`
    * **inverse**: Inverse switch direction - default: `false`
-   * **onColor**: Color of the left side of the switch - default: `"primary"` - values: 'primary', 'info', 'success', 'warning', 'danger', 'default'
-   * **offColor**: Color of the right side of the switch - default: `default` - values: 'primary', 'info', 'success', 'warning', 'danger', 'default'
+   * **onColor**: Color of the left side of the switch - default: `"primary"` -
+     values: 'primary', 'info', 'success', 'warning', 'danger', 'default'
+   * **offColor**: Color of the right side of the switch - default: `default` -
+     values: 'primary', 'info', 'success', 'warning', 'danger', 'default'
    * **onText**: Text of the left side of the switch - default: `"ON"`
-   * **offText**: Text of the right side of the switch - default: `"OFF"`,
-   * **labelText**: Text of the center handle of the switch - default: `"&nbsp;"`,
-   * **handleWidth**: Width of the left and right sides in pixels - default:  `"auto"`,
-   * **labelWidth**: Width of the center handle in pixels - default: `"auto"`,
-   * **baseClass**: Global class prefix - default: `"bootstrap-switch"`,
-   * **wrapperClass**: Container element class(es) - default: `"wrapper"`,
+   * **offText**: Text of the right side of the switch - default: `"OFF"`
+   * **labelText**: Text of the center handle of the switch - default:
+     `"&nbsp;"`,
+   * **handleWidth**: Width of the left and right sides in pixels - default:
+     `"auto"`,
+   * **labelWidth**: Width of the center handle in pixels - default: `"auto"`
+   * **baseClass**: Global class prefix - default: `"bootstrap-switch"`
+   * **wrapperClass**: Container element class(es) - default: `"wrapper"`
 
 
 .. warning::
 
     Those parameters are overwritten by this module or highly discouraged:
 
-    * **radioAllOff**: Allow this radio button to be unchecked by the user - default: `false`
+    * **radioAllOff**: Allow this radio button to be unchecked by the user -
+      default: `false`
     * **state**: The checkbox state - default: `true`
     * **disabled**: Disable state - default: `false`
     * **readonly**: Readonly state - default: `false`
-    * **onInit**: Callback function to execute on initialization - default: `function() {}`,
-    * **onSwitchChange**: Callback function to execute on switch state change - default: `function() {}`
+    * **onInit**: Callback function to execute on initialization - default:
+      `function() {}`,
+    * **onSwitchChange**: Callback function to execute on switch state change -
+      default: `function() {}`
 
 attrs
 -----

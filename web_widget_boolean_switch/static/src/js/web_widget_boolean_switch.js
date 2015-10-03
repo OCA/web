@@ -18,22 +18,21 @@ openerp.web_widget_boolean_switch = function(instance){
             var switchOptions = options.hasOwnProperty('extra') ?
                 options.extra : {};
 
-            _.extend(switchOptions, {
-                'disabled': options.hasOwnProperty('disabled') ?
-                    options.disabled : !this.quick_edit,
-            });
 
             if(options.hasOwnProperty('onSwitchChange')){
                 switchOptions.onSwitchChange = options.onSwitchChange;
             }
             this.checkboxes.bootstrapSwitch(switchOptions);
+            this.set_disabled(options.hasOwnProperty('disabled') ?
+                              options.disabled : !this.quick_edit);
             if(this.quick_edit && quick_edit_callback){
                 this.checkboxes.on('switchChange.bootstrapSwitch',
                                    quick_edit_callback);
             }
         },
         set_value: function(value){
-            // the third parameter tell if we should skip to fire evnets
+            // the third parameter tell if we should skip to fire events
+            // and force change the state whatever it's readonly or disabled
             this.checkboxes.bootstrapSwitch('state', value, true);
         },
         set_readonly: function(value){
