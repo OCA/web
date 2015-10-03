@@ -32,6 +32,7 @@ addon | version | summary
 [web_environment_ribbon](web_environment_ribbon/) | 0.1 | Web Environment Ribbon
 [web_export_view](web_export_view/) | 1.2 | Export Current View
 [web_graph_improved](web_graph_improved/) | 0.1 | Improves graph views.
+[web_group_expand](web_group_expand/) | 1.0 | Group Expand Buttons
 [web_hide_db_manager_link](web_hide_db_manager_link/) | 1.0 | Hide link to database manager in login screen
 [web_ir_actions_act_window_message](web_ir_actions_act_window_message/) | 1.0 | Show a message box to users
 [web_ir_actions_act_window_page](web_ir_actions_act_window_page/) | 1.0 | Allows a developer to trigger a pager to show the previous or next next record in the form view
@@ -45,6 +46,7 @@ addon | version | summary
 [web_sheet_full_width](web_sheet_full_width/) | 1.0 | Use the whole available screen width when displaying sheets
 [web_sheet_full_width_selective](web_sheet_full_width_selective/) | 0.1 | Show selected sheets with full width
 [web_shortcuts](web_shortcuts/) | 1.0 | Web Shortcuts
+[web_switch_company_warning](web_switch_company_warning/) | 0.1 | Show a warning if current company has been switched in another tab or window.
 [web_translate_dialog](web_translate_dialog/) | 1.0 | Easy-to-use pop-up to translate fields in several languages
 [web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 1.0 | web tree dynamic colored field
 [web_tree_image](web_tree_image/) | 1.0 | Show images in tree views
