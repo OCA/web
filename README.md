@@ -41,6 +41,7 @@ addon | version | summary
 [web_m2x_options](web_m2x_options/) | 8.0.0.2 | web_m2x_options
 [web_menu_navbar_needaction](web_menu_navbar_needaction/) | 8.0.1.0.0 | Show the sum of submenus' needaction counters in main menu
 [web_option_auto_color](web_option_auto_color/) | 0.1 | Web Option Auto Color
+[web_readonly_bypass](web_readonly_bypass/) | 8.0.1.0.0 | Allow to save onchange modifications to readonly fields
 [web_recipients_uncheck](web_recipients_uncheck/) | 0.3 | Uncheck recipients on res.partner
 [web_searchbar_full_width](web_searchbar_full_width/) | 1.0 | Show search bar in full screen width
 [web_sheet_full_width](web_sheet_full_width/) | 1.0 | Use the whole available screen width when displaying sheets
