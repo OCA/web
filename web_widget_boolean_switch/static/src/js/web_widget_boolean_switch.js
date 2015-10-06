@@ -84,6 +84,7 @@ openerp.web_widget_boolean_switch = function(instance){
                     }
                 }, this));
             this.on("change:readonly", this, this.switcher_states);
+            this.setupFocus(this.$checkbox);
             this._super();
             this.switcher_states.call(this);
         },
@@ -101,6 +102,10 @@ openerp.web_widget_boolean_switch = function(instance){
         },
         render_value: function() {
             this.switcher.set_value(this.get('value'));
+        },
+        focus: function() {
+            var input = this.$checkbox && this.$checkbox[0];
+            return input ? input.focus() : false;
         },
     });
 
@@ -171,7 +176,8 @@ openerp.web_widget_boolean_switch = function(instance){
 
         _format: function (row_data, options, readonly) {
             options = options ? options : {};
-            var autofocus = this.hasOwnProperty('autofocus') ? true : false;
+            var autofocus = this.hasOwnProperty('autofocus') ?
+                this.autofocus : false;
             var tabindex = this.hasOwnProperty('tabindex') ?
                 parseInt(this.tabindex) : 0;
             return _.str.sprintf('<input type="checkbox" %s %s data-rowid="%d" %s %s/>',
