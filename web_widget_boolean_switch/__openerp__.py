@@ -65,7 +65,8 @@ Example
           widget="boolean_switch"
           attrs="{'readonly': [('login', '=', 'admin')]}"
           context="{'fake_parameter': 'foo'}"
-          options="{'quick_edit': True, 'extra': {'onText': 'Yes', 'offText': 'No'}}"/>
+          options="{'quick_edit': True, 'extra': {'onText': 'Yes',
+                                                  'offText': 'No'}}"/>
 ```
 
 Options
@@ -127,7 +128,8 @@ context
 special needs with the quick edition.
 
 
-.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
+.. image:: https://odoo-community.org/website/image/ir.attachment/
+           5784_f2813bd/datas
    :alt: Try me on Runbot
    :target: https://runbot.odoo-community.org/runbot/162/7.0
 

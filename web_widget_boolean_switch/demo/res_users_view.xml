@@ -45,11 +45,12 @@
             <field name="name">res.users.tree</field>
             <field name="model">res.users</field>
             <field name="arch" type="xml">
-                <tree string="Users" editable="top">
+                <tree string="Users" editable="top" version="7.0">
                     <field name="name"/>
                     <field name="login"/>
                     <field name="lang"/>
                     <field name="active" widget="boolean_switch"
+                           tabindex="-1"
                            attrs="{'readonly': [('login', '=', 'admin')]}"
                            options="{'quick_edit': True, 'extra': {'onText': 'Yes', 'offText': 'No'}}"
                            context="{'test': 'test value'}" />

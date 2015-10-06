@@ -170,11 +170,17 @@ openerp.web_widget_boolean_switch = function(instance){
         },
 
         _format: function (row_data, options, readonly) {
-            return _.str.sprintf('<input type="checkbox" %s %s data-rowid="%d"/>',
+            options = options ? options : {};
+            var autofocus = this.hasOwnProperty('autofocus') ? true : false;
+            var tabindex = this.hasOwnProperty('tabindex') ?
+                parseInt(this.tabindex) : 0;
+            return _.str.sprintf('<input type="checkbox" %s %s data-rowid="%d" %s %s/>',
                 row_data[this.id].value ? 'checked="checked"' : '',
                 readonly ? 'readonly' : '',
                 row_data.hasOwnProperty('id') && _.isNumber(row_data.id.value) ?
-                    row_data.id.value : -1);
+                    row_data.id.value : -1,
+                autofocus ? 'autofocus' : '',
+                'tabindex="' + tabindex + '"');
         }
     });
 
