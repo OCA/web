@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 {
     'name' : 'Bootstrap Toggle Widget',
     'version': '1.0',
