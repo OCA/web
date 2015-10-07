@@ -201,6 +201,37 @@ openerp.web_widget_boolean_switch = function(instance){
         },
     });
 
+    instance.web.ListView.List.include({
+        init: function(){
+            //This is the case when on each line, a request to name_get
+            //id done, this cause a record to be re-render though on change.
+            //So we have to overide the events as I haven't found any good hooks
+            this._super.apply(this, arguments);
+            var self = this;
+            this.records.unbind('change');
+            this.record_callbacks.change = function (event, record, attribute, value, old_value) {
+                var $row;
+                if (attribute === 'id') {
+                    if (old_value) {
+                        throw new Error(_.str.sprintf( _t("Setting 'id' attribute on existing record %s"),
+                            JSON.stringify(record.attributes) ));
+                    }
+                    self.dataset.add_ids([value], self.records.indexOf(record));
+                    // Set id on new record
+                    $row = self.$current.children('[data-id=false]');
+                } else {
+                    $row = self.$current.children(
+                        '[data-id=' + record.get('id') + ']');
+                }
+                $row.replaceWith(self.render_record(record));
+                self.afterRowChanged($row, record, attribute);
+            };
+            this.records.bind('change', this.record_callbacks.change);
+        },
+        afterRowChanged: function($row, record, attribute){
+            apply_switcher(this.view, this.columns, $row);
+        },
+    });
     instance.web.ListView.include({
         reload_record: function(record){
             // in case of editable list, only update record is reloaded
