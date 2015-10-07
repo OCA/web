@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name' : 'Bootstrap Toggle Widget',
+    'name': 'Bootstrap Toggle Widget',
     'version': '1.0',
     'summary': 'Odoo Checkbox Widget',
     'category': 'Tools',
@@ -12,7 +12,7 @@ Checkbox Toggle Widget
     'data': [
         "toggle_widget.xml",
     ],
-    'depends' : ['base'],
+    'depends': ['base'],
     'qweb': ['static/src/xml/*.xml'],
     'application': True,
 }
