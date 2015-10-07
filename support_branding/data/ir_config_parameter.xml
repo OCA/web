@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="0">
+        <record id="config_parameter_company_name" model="ir.config_parameter">
+            <field name="key">support_branding.company_name</field>
+            <field name="value">Odoo Community Association (OCA)</field>
+        </record>
+        <record id="config_parameter_company_url" model="ir.config_parameter">
+            <field name="key">support_branding.company_url</field>
+            <field name="value">https://odoo-community.org</field>
+        </record>
+        <record id="config_parameter_company_color" model="ir.config_parameter">
+            <field name="key">support_branding.company_color</field>
+            <field name="value">#b163a3</field>
+        </record>
+        <record id="config_parameter_support_email" model="ir.config_parameter">
+            <field name="key">support_branding.support_email</field>
+            <field name="value" eval="''"/>
+        </record>
+        <record id="config_parameter_release" model="ir.config_parameter">
+            <field name="key">support_branding.release</field>
+            <field name="value" eval="''"/>
+        </record>
+    </data>
+</openerp>
