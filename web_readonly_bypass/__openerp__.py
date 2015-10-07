@@ -25,10 +25,6 @@
     "maintainer": "ACSONE SA/NV, Odoo Community Association (OCA)",
     "website": "http://www.acsone.eu",
     'category': 'Technical Settings',
-    'depends': [
-        'base',
-        'web',
-    ],
     'description': """
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
     :alt: License: AGPL-3

@@ -62,5 +62,4 @@ Contacts :
     'application': False,
     'installable': True,
     'auto_install': False,
-    'images': [],
 }
