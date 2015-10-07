@@ -1,11 +1,11 @@
 {
-    'name' : 'AIM Bootstrap Toggle Widget',
+    'name' : 'Bootstrap Toggle Widget',
     'version': '1.0',
     'summary': 'Odoo Checkbox Widget',
     'category': 'Tools',
     'description':
         """
-AIM Checkbox Toggle Widget
+Checkbox Toggle Widget
 =================
         """,
     'data': [
