@@ -82,6 +82,7 @@ class additional_field(orm.AbstractModel):
 class Storage(object):
 
     def __init__(self, cr, uid, record, field_name):
+        # initialization function for class Storage
         self.cr = cr
         self.uid = uid
         self.pool = record._model.pool
@@ -98,6 +99,10 @@ class Storage(object):
             self.location = None
 
     def add(self, value):
+        '''
+        Function to add file to ir_attachment
+        :param binary value - file that will be add to the field
+        '''
         if not value:
             return {}
         file_size = sys.getsizeof(value.decode('base64'))
@@ -117,6 +122,7 @@ class Storage(object):
 class versionedAttachment(fields.function):
 
     def __init__(self, string, filters=None, get_storage=Storage, **kwargs):
+        # initialization function for class versionedAttachment
         new_kwargs = {
             'type': 'binary',
             'string': string,
@@ -136,7 +142,15 @@ class versionedAttachment(fields.function):
 
     def _fnct_write(self, obj, cr, uid, ids, field_name, value, args,
                     context=None):
-
+        '''
+        Function that implements the write operation for the versionAttachment
+        field and have the following parameters:
+        :param int/list ids: the identifier of the object/s to write on
+        :param str field_name: name of the field to set
+        :param binary value: field value
+        :param args: arbitrary value passed when declaring the function field
+        :return: True
+        '''
         if value:
             if not isinstance(ids, (list, tuple)):
                 ids = [ids]
@@ -240,6 +254,13 @@ class versionedAttachment(fields.function):
             return True
 
     def _fnct_read(self, obj, cr, uid, ids, field_name, args, context=None):
+        '''
+        Function that will compute the field value.
+        :param str field_name: name of the field to compute
+        :param dict arg: arbitrary value passed when declaring
+        the function field
+        :return: mapping of ``ids`` to computed values
+        '''
         result = {}
         for record in obj.browse(cr, uid, ids, context=context):
             storage = self.get_storage(cr, uid, record, field_name)
