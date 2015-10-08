@@ -5,8 +5,7 @@ var QWeb = instance.web.qweb;
 var _t = instance.web._t;
 
 
-instance.web_text_widget.FieldTextLimited = instance.web.form.FieldText.extend(
-    instance.web.form.ReinitializeFieldMixin, {
+instance.web.form.FieldText.include({
     template: 'FieldText',
     LIMIT_LINES_CONTEXT_KEY: 'limit_lines',
     LIMIT_LINES_DEFAULT: 10,
@@ -53,16 +52,5 @@ instance.web_text_widget.FieldTextLimited = instance.web.form.FieldText.extend(
         this.$el.find('span.length_limit').html(value.length + '/' + limit_chars);
     },
 
-    initialize_content: function() {
-        return this._super();
-    },
-
-    store_dom_value: function () {
-        this.limit_value(this.$textarea);
-        return this._super();
-    },
 });
-
-instance.web.form.widgets.add('text_limited',
-    'instance.web_text_widget.FieldTextLimited');
-};
+}

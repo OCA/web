@@ -26,7 +26,7 @@
     'category': '',
     'description': """
 
-* Add new 'text_limited' widget for TextField, but data are limited to
+* Add new functionality for TextField, but data are limited to
 10 lines or 500 characters (by default).
 You can change default values by context varibles 'limit_lines' and
 'limit_chars'.
@@ -49,7 +49,6 @@ Example of usage:
         'static/src/js/text_limited.js',
     ],
     'qweb': [
-        'static/src/xml/text_limited.xml',
     ],
     'css': [
         'static/src/css/text_limited.css',
