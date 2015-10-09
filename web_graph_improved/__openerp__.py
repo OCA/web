@@ -21,7 +21,7 @@
 
 {
     'name': 'Better Charts',
-    'version': '0.1',
+    'version': '8.0.0.1.0',
     'category': 'Web',
     'summary': 'Improves graph views.',
     'author': "Leonardo Donelli,Odoo Community Association (OCA)",

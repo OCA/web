@@ -22,7 +22,7 @@
     "name": "Window actions for client side paging",
     "summary": ("Allows a developer to trigger a pager to show the previous "
                 "or next next record in the form view"),
-    "version": "1.0",
+    "version": "8.0.1.0.0",
     "author": "Therp BV,Odoo Community Association (OCA)",
     "category": "Dependency",
     "depends": ['web'],
