@@ -24,7 +24,7 @@
     'name': 'Web - Custom Element Number in ListView',
     'summary': 'Allow users to set manually a quantity of items to display'
             ' in a tree view',
-    'version': '1.0',
+    'version': '8.0.1.0.0',
     'category': 'web',
     'author': "Akretion,Odoo Community Association (OCA)",
     'website': 'http://www.akretion.com',

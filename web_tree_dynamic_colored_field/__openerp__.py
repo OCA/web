@@ -21,7 +21,7 @@
 {
     'name': 'web tree dynamic colored field',
     'category': 'Hidden',
-    'version': '1.0',
+    'version': '8.0.1.0.0',
     'depends': ['web'],
     'author': "Camptocamp,Odoo Community Association (OCA)",
     'license': 'AGPL-3',

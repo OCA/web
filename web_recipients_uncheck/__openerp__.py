@@ -22,7 +22,7 @@
 ##############################################################################
 {
     'name': 'Uncheck recipients on res.partner',
-    'version': '0.3',
+    'version': '8.0.0.3.0',
     'author': "initOS GmbH & Co. KG,Odoo Community Association (OCA)",
     'category': 'Web',
     'website': 'http://www.initos.com',

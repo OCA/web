@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Web Shortcuts',
-    'version': '1.0',
+    'version': '8.0.1.0.0',
     'category': 'Tools',
     'author': "OpenERP SA,Odoo Community Association (OCA)",
     'website': 'http://openerp.com',
