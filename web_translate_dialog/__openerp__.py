@@ -24,7 +24,7 @@
  "summary": "Easy-to-use pop-up to translate fields in several languages",
  "license": "AGPL-3",
  "author": "Camptocamp,Odoo Community Association (OCA)",
- "version": "1.0",
+ "version": "8.0.1.0.0",
  "depends": ['web'],
  'data': ['view/web_translate.xml'],
  'qweb': ["static/src/xml/base.xml"],
