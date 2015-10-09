@@ -5,7 +5,7 @@
     "name": "Multicompany - Switch Company Warning",
     "summary": "Show a warning if current company has been switched"
     " in another tab or window.",
-    "version": "0.1",
+    "version": "8.0.0.1.0",
     "category": "web",
     "website": "http://akretion.com",
     "license": "AGPL-3",
