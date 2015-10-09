@@ -20,7 +20,7 @@
 
 {
     'name': 'web_widget_text_markdown',
-    'version': '1.0',
+    'version': '8.0.1.0.0',
     'author': "Sudokeys,Odoo Community Association (OCA)",
     'maintainer': 'Sudokeys',
     'category': '',
