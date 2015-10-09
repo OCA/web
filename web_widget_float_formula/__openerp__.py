@@ -4,7 +4,7 @@
 ###############################################################################
 {
     'name': 'Web Widget - Formulas in Float fields',
-    'version': '1.0',
+    'version': '8.0.1.0.0',
     'category': 'web',
     'author': 'GRAP,Odoo Community Association (OCA)',
     'website': 'http://www.grap.coop',
