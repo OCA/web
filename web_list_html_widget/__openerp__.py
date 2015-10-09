@@ -24,21 +24,13 @@
     "name": "HTML widget for list/tree views",
     "version": "0.1",
     "depends": ["web"],
-    'author': "initOS GmbH & Co. KG,Odoo Community Association (OCA)",
+    'author': "initOS GmbH & Co. KG, Odoo Community Association (OCA), "
+              "Camptocamp",
     "category": "",
     'license': 'AGPL-3',
-    "description": """This module allows to use a widget="html" for fields in
-list(tree) views.
-
-*WARNING* The content of the field will be rendered without HTML escaping and
-without any other security measure.""",
     'data': [
+        'views.xml',
     ],
-    'demo': [
-    ],
-    'test': [
-    ],
-    'js': ['static/src/js/view_list.js'],
-    'installable': True,
+    'qweb': [],
     'auto_install': False,
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="web_list_html_widget assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/web_list_html_widget/static/src/js/view_list.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>
+
