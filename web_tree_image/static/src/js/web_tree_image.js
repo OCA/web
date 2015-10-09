@@ -35,7 +35,15 @@ openerp.web_tree_image = function (instance) {
                     // The media subtype (png) seems to be arbitrary
                     src = "data:image/png;base64," + value;
                 } else {
-                    src = instance.session.url('/web/binary/image', {model: options.model, field: this.id, id: options.id});
+                    var imageArgs = {
+                        model: options.model,
+                        field: this.id,
+                        id: options.id
+                    }
+                    if (this.resize) {
+                        imageArgs.resize = this.resize;
+                    }
+                    src = instance.session.url('/web/binary/image', imageArgs);
                 }
             } else {
                 if (!/\//.test(row_data[this.id].value)) {
