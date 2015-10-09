@@ -24,7 +24,7 @@
 
 {
     'name': 'Hide link to database manager in login screen',
-    'version': "1.0",
+    'version': "8.0.1.0.0",
     'category': 'Web',
     'license': 'AGPL-3',
     'author': 'Alejandro Santana, Odoo Community Association (OCA)',
