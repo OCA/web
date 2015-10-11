@@ -9,96 +9,96 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-07 17:50+0000\n"
 "PO-Revision-Date: 2015-10-07 17:50+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: French (http://www.transifex.com/oca/OCA-web-7-0/language/fr/)\n"
+"Last-Translator: <>\n"
+"Language-Team: Dutch (http://www.transifex.com/oca/OCA-web-7-0/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: web_dashboard_tile
 #. openerp-web
 #: code:addons/web_dashboard_tile/static/src/xml/custom_xml.xml:8
 #, python-format
 msgid "Create"
-msgstr "Créer"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: field:tile.tile,field_id:0
 msgid "Field"
-msgstr "Champ"
+msgstr "Veld"
 
 #. module: web_dashboard_tile
 #. openerp-web
 #: code:addons/web_dashboard_tile/static/src/js/custom_js.js:100
 #, python-format
 msgid "Tile is created"
-msgstr "L'indicateur a été créé"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: field:tile.tile,name:0
 msgid "Tile Name"
-msgstr "Nom de l'indicateur"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: model:ir.ui.menu,name:web_dashboard_tile.menue_dashboard_tile
 msgid "Dashboard Tile"
-msgstr "Indicateur de tableau de bord"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: field:tile.tile,field_function:0
 msgid "Function"
-msgstr "Fonction"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: field:tile.tile,color:0
 msgid "Background color"
-msgstr "Couleur de fond"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: constraint:tile.tile:0
 msgid "Error ! Please select a field of the selected model."
-msgstr "Erreur ! Veuillez sélectioner un champ qui correspond au modèle."
+msgstr ""
 
 #. module: web_dashboard_tile
 #: field:tile.tile,user_id:0
 msgid "User"
-msgstr "Utilisateur"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: field:tile.tile,active:0
 msgid "Active"
-msgstr "Actif"
+msgstr "Actief"
 
 #. module: web_dashboard_tile
 #: selection:tile.tile,field_function:0
 msgid "Sum"
-msgstr "Somme"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: field:tile.tile,count:0
 msgid "Count"
-msgstr "Quantité"
+msgstr ""
 
 #. module: web_dashboard_tile
 #. openerp-web
 #: code:addons/web_dashboard_tile/static/src/js/custom_js.js:61
 #, python-format
 msgid "Filter name is required."
-msgstr "Le nom du filtre est requis."
+msgstr ""
 
 #. module: web_dashboard_tile
 #: constraint:tile.tile:0
 msgid "Error ! Please set both fields: 'Field' and 'Function'."
-msgstr "Erreur ! Veuillez renseigner les deux champs : 'Champ' et 'Fonction'."
+msgstr ""
 
 #. module: web_dashboard_tile
 #. openerp-web
 #: code:addons/web_dashboard_tile/static/src/js/custom_js.js:100
 #, python-format
 msgid "Success"
-msgstr "Succès"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: model:ir.model,name:web_dashboard_tile.model_tile_tile
@@ -108,110 +108,110 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,font_color:0
 msgid "Font Color"
-msgstr "Couleur du texte"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: selection:tile.tile,field_function:0
 msgid "Average"
-msgstr "Moyenne"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: selection:tile.tile,field_function:0
 msgid "Median"
-msgstr "Médiane"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: selection:tile.tile,field_function:0
 msgid "Maximum"
-msgstr "Maximum"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: field:tile.tile,computed_value:0
 msgid "Computed Value"
-msgstr "Valeur calculée"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: view:tile.tile:0
 msgid "Dashboard tiles"
-msgstr "Indicateurs de tableau de bord"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: model:ir.actions.act_window,name:web_dashboard_tile.action_kanban_dashboard_tile
 #: model:ir.actions.act_window,name:web_dashboard_tile.action_tree_dashboard_tile
 #: model:ir.ui.menu,name:web_dashboard_tile.mail_dashboard
 msgid "Dashboard"
-msgstr "Tableau de bord"
+msgstr ""
 
 #. module: web_dashboard_tile
 #. openerp-web
 #: code:addons/web_dashboard_tile/static/src/js/custom_js.js:61
 #, python-format
 msgid "Error"
-msgstr "Erreur"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: field:tile.tile,action_id:0
 msgid "Action"
-msgstr "Action"
+msgstr "Actie"
 
 #. module: web_dashboard_tile
 #: code:addons/web_dashboard_tile/tile.py:73
 #, python-format
 msgid "Minimum value of '%s'"
-msgstr "Valeur minimale du champ '%s'"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: field:tile.tile,model_id:0
 msgid "Model"
-msgstr "Modèle"
+msgstr "Model"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,domain:0
 msgid "Domain"
-msgstr "Domaine"
+msgstr "Domein"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,helper:0
 msgid "Helper Text"
-msgstr "Texte Descriptif"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: field:tile.tile,sequence:0
 msgid "Sequence"
-msgstr "Séquence"
+msgstr ""
 
 #. module: web_dashboard_tile
 #. openerp-web
 #: code:addons/web_dashboard_tile/static/src/xml/custom_xml.xml:6
 #, python-format
 msgid "Tile:"
-msgstr "Indicateur :"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: code:addons/web_dashboard_tile/tile.py:79
 #, python-format
 msgid "Total value of '%s'"
-msgstr "Somme du champ '%s'"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: selection:tile.tile,field_function:0
 msgid "Minimum"
-msgstr "Minimum"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: code:addons/web_dashboard_tile/tile.py:82
 #, python-format
 msgid "Average value of '%s'"
-msgstr "Valeur moyenne du champ '%s'"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: code:addons/web_dashboard_tile/tile.py:85
 #, python-format
 msgid "Median value of '%s'"
-msgstr "Valeur médian du champ '%s'"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: code:addons/web_dashboard_tile/tile.py:76
 #, python-format
 msgid "Maximum value of '%s'"
-msgstr "Valeur maximale du champ '%s'"
+msgstr ""
