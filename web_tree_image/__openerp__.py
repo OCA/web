@@ -3,6 +3,7 @@
 #
 #    OpenERP, Open Source Management Solution
 #    This module copyright (C) 2014 Therp BV (<http://therp.nl>).
+#    copyright (C) 2015 Leonardo Donelli @ MONKSoftware
 #
 #    Snippet from https://github.com/hsd/listview_images
 #    Copyright (C) 2013 Marcel van der Boom <marcel@hsdev.com>
@@ -22,10 +23,12 @@
 #
 ##############################################################################
 {
-    "name": "Show images in tree views",
-    "version": "8.0.1.0.0",
-    "author": "Therp BV,Odoo Community Association (OCA)",
-    'url': 'https://github.com/OCA/Web',
+    'name': 'Show images in tree views',
+    'version': '8.0.1.1.0',
+    'author': 'Therp BV, MONK Software, Odoo Community Association (OCA)',
+    'website': 'https://github.com/OCA/Web',
+    'license': 'AGPL-3',
+    'category': 'Web',
     'depends': [
         'web',
     ],
