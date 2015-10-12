@@ -26,14 +26,6 @@
     'website': 'https://github.com/OCA/web',
     'summary': 'Odoo Checkbox Toggle Widget',
     'category': 'Tools',
-    'description':
-        """
-Checkbox Toggle Widget
-=================
-Turns ordinary checkboxes(booleans) into switches very similar to settings on most modern phones. Instead of simply 
-displaying checked or not checked you now have the options of 'On' or 'Off', 'Yes' or 'No', 'True' or 'False'. Really
-the possibilities are endless as you can configure the toggle widget to use whatever colours or words you wish.
-        """,
     'data': [
         "toggle_widget.xml",
     ],
