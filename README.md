@@ -50,7 +50,7 @@ addon | version | summary
 [web_switch_company_warning](web_switch_company_warning/) | 8.0.0.1.0 | Show a warning if current company has been switched in another tab or window.
 [web_translate_dialog](web_translate_dialog/) | 8.0.1.0.0 | Easy-to-use pop-up to translate fields in several languages
 [web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 8.0.1.0.0 | web tree dynamic colored field
-[web_tree_image](web_tree_image/) | 8.0.1.0.0 | Show images in tree views
+[web_tree_image](web_tree_image/) | 8.0.1.1.0 | Show images in tree views
 [web_tree_many2one_clickable](web_tree_many2one_clickable/) | 8.0.1.0.0 | Clickable many2one fields for tree views
 [web_widget_color](web_widget_color/) | 8.0.1.0.0 | Web Widget Color
 [web_widget_datepicker_options](web_widget_datepicker_options/) | 8.0.1.0.0 | web_widget_datepicker_options
