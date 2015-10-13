@@ -63,11 +63,11 @@ Unported addons
 ---------------
 addon | version | summary
 --- | --- | ---
-[web_color](__unported__/web_color/) | 1.0 (unported) | Web Color
-[web_confirm_window_close](__unported__/web_confirm_window_close/) | 7.0.1 (unported) | Check for unsaved data when closing browser window
-[web_polymorphic_many2one](__unported__/web_polymorphic_many2one/) | 0.2 (unported) | Web Polymorphic Many2One
-[web_popup_large](__unported__/web_popup_large/) | 7.0.1.0 (unported) | Large pop-ups in web client
-[web_search_alphabetic](__unported__/web_search_alphabetic/) | 1.0 (unported) | Web Alphabetical Search
-[web_send_message_popup](__unported__/web_send_message_popup/) | 1.0 (unported) | Web Send Message as Popup
+[web_color](web_color/) | 1.0 (unported) | Web Color
+[web_confirm_window_close](web_confirm_window_close/) | 7.0.1 (unported) | Check for unsaved data when closing browser window
+[web_polymorphic_many2one](web_polymorphic_many2one/) | 0.2 (unported) | Web Polymorphic Many2One
+[web_popup_large](web_popup_large/) | 7.0.1.0 (unported) | Large pop-ups in web client
+[web_search_alphabetic](web_search_alphabetic/) | 1.0 (unported) | Web Alphabetical Search
+[web_send_message_popup](web_send_message_popup/) | 1.0 (unported) | Web Send Message as Popup
 
 [//]: # (end addons)
