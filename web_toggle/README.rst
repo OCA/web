@@ -2,7 +2,7 @@
     :alt: License
 
 Boolean Bootstrap Toggle
-===================
+========================
 
 This widget provides more options on displaying a boolean field within Odoo's backend form views. Instead of 
 'Checked' or 'Not Checked' you can now use this widget to display a Switch Button which will slide from 'On' to 
@@ -21,15 +21,7 @@ many options within the bootstrap-toggle library which you can use to make addit
 utilized by providing an options dictionary. Go to bootstrap-toggle documentation to learn about all available 
 options such as colours, size, text, shapes, etc. Here is a full example usage.
 
-<field name="my_boolean" 
-       widget='boolean_switch' 
-       options="{
-                 'data-on':'Yes',
-                 'data-off':'No',
-                 'data-onstyle':'primary',
-                 'data-offstyle':'danger',
-                 'data-size':'mini'
-                }"/>
+<field name="my_boolean" widget='boolean_switch' options="{'data-on':'Yes','data-off':'No','data-onstyle':'primary','data-offstyle':'danger','data-size':'mini'}"/>
 
 The above example would create a mini size swich which displayed a 'Yes' when true and 'No' when false would 
 display bootstrap's primary class colour when true and the danger class colour when false.
@@ -39,9 +31,8 @@ display bootstrap's primary class colour when true and the danger class colour w
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
+Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>.
 In case of trouble, please check there if your issue has already been reported.
-If you spotted it first, help us smashing it by providing a detailed and welcomed feedback
 
 
 Credits
