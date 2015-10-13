@@ -31,7 +31,7 @@ display bootstrap's primary class colour when true and the danger class colour w
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>.
+Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`.
 In case of trouble, please check there if your issue has already been reported.
 
 
