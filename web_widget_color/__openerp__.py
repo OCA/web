@@ -39,6 +39,6 @@
         'static/src/xml/widget.xml',
     ],
     'auto_install': False,
-    'installable': True,
+    'installable': False,
     'web_preload': True,
 }
