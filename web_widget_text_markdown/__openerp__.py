@@ -31,7 +31,7 @@
     "qweb": ["static/src/xml/bootstrap_markdown.xml",
              ],
     'demo': [],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': False
 }
