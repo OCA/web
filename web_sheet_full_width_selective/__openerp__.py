@@ -33,5 +33,5 @@
         'views/sheet.xml',
     ],
     'active': False,
-    'installable': True,
+    'installable': False,
     }

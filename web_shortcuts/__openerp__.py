@@ -30,7 +30,7 @@
         'view/web_shortcuts.xml',
         ],
     'qweb': ['static/src/xml/web_shortcuts.xml'],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
 }
 

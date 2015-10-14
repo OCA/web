@@ -32,5 +32,5 @@
     'summary': 'Hide link to database manager in login screen',
     'depends': ['web'],
     'data': ['views/webclient_templates.xml'],
-    'installable': True,
+    'installable': False,
 }

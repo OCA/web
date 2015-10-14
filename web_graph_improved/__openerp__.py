@@ -29,6 +29,6 @@
     'website': 'http://learts.glaucus.in',
     'depends': ['web_graph'],
     'data': ['view/graph_improved_view.xml'],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
 }

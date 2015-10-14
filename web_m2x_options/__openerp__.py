@@ -9,6 +9,6 @@
     ],
     'data': ['views/view.xml'],
     "author": "0k.io,Odoo Community Association (OCA)",
-    "installable": True,
+    'installable': False,
     "active": False,
 }

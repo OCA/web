@@ -19,6 +19,6 @@
     "qweb": [
         "static/src/xml/switch_company_warning.xml",
     ],
-    "installable": True,
+    'installable': False,
     "application": False,
 }

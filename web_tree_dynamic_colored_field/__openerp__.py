@@ -33,4 +33,5 @@
         'static/xml/*.xml',
     ],
     'auto_install': False
+    'installable': False,
 }
