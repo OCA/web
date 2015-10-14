@@ -15,4 +15,5 @@
     'data': [
         'views/qweb.xml',
     ],
+    'installable': False,
 }
