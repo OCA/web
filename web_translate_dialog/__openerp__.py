@@ -28,5 +28,5 @@
  "depends": ['web'],
  'data': ['view/web_translate.xml'],
  'qweb': ["static/src/xml/base.xml"],
- 'installable': True,
+ 'installable': False,
  }
