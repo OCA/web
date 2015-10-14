@@ -46,4 +46,5 @@
     'qweb': [
         'static/src/xml/custom_xml.xml',
     ],
+    'installable': False,
 }
