@@ -18,7 +18,7 @@
 *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *
 ******************************************************************************/
-openerp.web_polymorphic = function (instance) {
+openerp.web_polymorphic_many2one = function (instance) {
     instance.web.form.FieldPolymorphic = instance.web.form.FieldMany2One.extend( {
         template: "FieldMany2One",
         events: {
