@@ -21,20 +21,18 @@
 ##############################################################################
 {
     'name': 'Web text limited widget',
-    'version': '0.1.0',
+    'version': '7.0.1.0.0',
     'author': 'initOS GmbH & Co. KG',
-    'category': '',
+    'category': 'web',
     'description': """
 
-* Add new functionality for TextField, but data are limited to
-10 lines or 500 characters (by default).
-You can change default values by context varibles 'limit_lines' and
-'limit_chars'.
+* Add new functionality for TextField.
+You can change default values by context varibles 'maxlines' and
+'maxlength'.
 If data contains more characters or lines, it will be cut.
 Example of usage:
 <field name="some_text_field"
-       widget="text_limited"
-       context="{'limit_lines': 8, 'limit_chars': 400}"
+       context="{'maxlines': 8, 'maxlength': 400}"
 />
 """,
     'website': 'http://www.initos.com',
