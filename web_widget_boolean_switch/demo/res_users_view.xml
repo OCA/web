@@ -16,7 +16,6 @@
             <field name="inherit_id" ref="base.view_users_tree"/>
             <field name="name">res.users.tree</field>
             <field name="model">res.users</field>
-            <field name="sequence">20</field>
             <field name="arch" type="xml">
                 <field name="login" position="after">
                     <field name="active" widget="boolean_switch"
