@@ -21,7 +21,7 @@
 
 {
     'name': 'Tags multiple selection',
-    'version': '0.1',
+    'version': '7.0.1.0',
     'author': 'Akretion, Anybox, Odoo Community Association (OCA)',
     'descriptions': """
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
