@@ -20,12 +20,10 @@ will change the checkbox to an 'On' or 'Off' button which slide from one to the 
 many options within the bootstrap-toggle library which you can use to make additional changes. They can all be 
 utilized by providing an options dictionary. Go to bootstrap-toggle documentation to learn about all available 
 options such as colours, size, text, shapes, etc. Here is a full example usage.
-
-
-
-...
-<field name="my_boolean" widget='boolean_switch' options="{'data-on':'Yes','data-off':'No','data-onstyle':'primary','data-offstyle':'danger','data-size':'mini'}"/>
-...
+   
+    ...
+    <field name="my_boolean" widget='boolean_switch' options="{'data-on':'Yes','data-off':'No','data-onstyle':'primary','data-offstyle':'danger','data-size':'mini'}"/>
+    ...   
 
 
 The above example would create a mini size swich which displayed a 'Yes' when true and 'No' when false would 
