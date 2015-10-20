@@ -75,4 +75,15 @@ openerp.web_menu_navbar_needaction = function(instance)
             });
         },
     })
+
+    instance.mail.Thread.include({
+        message_fetch_set_read: function (message_list)
+        {
+            this._super.apply(this, arguments);
+            return this.render_mutex.exec(function()
+            {
+                instance.client.menu.refresh_navbar_needaction();
+            });
+        },
+    })
 }
