@@ -22,7 +22,7 @@
 {
     'name': 'Web text limited widget',
     'version': '7.0.1.0.0',
-    'author': 'initOS GmbH & Co. KG',
+    'author': 'initOS GmbH',
     'category': 'web',
     'description': """
 
