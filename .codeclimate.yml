@@ -1,0 +1,7 @@
+languages:
+  JavaScript: true
+  Python: true
+exclude_paths:
+- "__unported__/*"
+- "*/__openerp__.py"   # because this is fed to eval
+- "*/migrations/*"     # without OpenUpgrade, repetitions can be necessary

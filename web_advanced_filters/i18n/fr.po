@@ -1,0 +1,231 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+# * web_advanced_filters
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: web (7.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-07 17:50+0000\n"
+"PO-Revision-Date: 2015-10-07 17:50+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: French (http://www.transifex.com/oca/OCA-web-7-0/language/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: web_advanced_filters
+#: view:ir.filters:0
+msgid "Save filter"
+msgstr ""
+
+#. module: web_advanced_filters
+#: selection:ir.filters.combine.with.existing,action:0
+msgid "Union"
+msgstr ""
+
+#. module: web_advanced_filters
+#: field:ir.filters,evaluate_always:0
+msgid "Always evaluate this filter before using it"
+msgstr ""
+
+#. module: web_advanced_filters
+#: view:ir.filters:0
+msgid "Add the result of following filters"
+msgstr ""
+
+#. module: web_advanced_filters
+#: help:ir.filters,evaluate_before_negate:0
+msgid ""
+"This is necessary if this filter contains positive operatorson x2many fields"
+msgstr ""
+
+#. module: web_advanced_filters
+#: view:ir.filters:0 view:ir.filters.combine.with.existing:0
+msgid "Save"
+msgstr ""
+
+#. module: web_advanced_filters
+#: view:ir.filters:0
+msgid "Freeze filter"
+msgstr ""
+
+#. module: web_advanced_filters
+#: help:ir.filters,evaluate_always:0
+msgid ""
+"This is necessary if this filter contains x2many fields with_auto_join "
+"activated"
+msgstr ""
+
+#. module: web_advanced_filters
+#: code:addons/web_advanced_filters/model/ir_filters.py:218
+#, python-format
+msgid "Testing %s"
+msgstr ""
+
+#. module: web_advanced_filters
+#: view:ir.filters:0 view:ir.filters.combine.with.existing:0
+msgid "or"
+msgstr ""
+
+#. module: web_advanced_filters
+#: field:ir.filters,complement_filter_ids:0
+msgid "Remove result of filters"
+msgstr ""
+
+#. module: web_advanced_filters
+#: view:ir.filters:0
+msgid ""
+"{'readonly': ['|', ('union_filter_ids', '!=', [[6, False, []]]), "
+"('complement_filter_ids', '!=', [[6, False, []]])]}"
+msgstr ""
+
+#. module: web_advanced_filters
+#: view:ir.filters.combine.with.existing:0
+msgid "Combine with existing filter"
+msgstr ""
+
+#. module: web_advanced_filters
+#: field:ir.filters,evaluate_before_negate:0
+msgid "Evaluate this filter before negating"
+msgstr ""
+
+#. module: web_advanced_filters
+#: view:ir.filters:0
+msgid ""
+"Have this filter contain extly the records it currently contains, with no "
+"changes in the future. Be careful, you can't undo this operation!"
+msgstr ""
+
+#. module: web_advanced_filters
+#. openerp-web
+#: code:addons/web_advanced_filters/static/src/js/web_advanced_filters.js:32
+#, python-format
+msgid "Advanced filters"
+msgstr ""
+
+#. module: web_advanced_filters
+#: field:ir.filters,active:0
+msgid "Active"
+msgstr "Actif"
+
+#. module: web_advanced_filters
+#. openerp-web
+#: code:addons/web_advanced_filters/static/src/js/web_advanced_filters.js:86
+#, python-format
+msgid "Marked records"
+msgstr ""
+
+#. module: web_advanced_filters
+#: field:ir.filters,save_as_public:0
+msgid "Share with all users"
+msgstr ""
+
+#. module: web_advanced_filters
+#: field:ir.filters,is_frozen:0
+msgid "Frozen"
+msgstr ""
+
+#. module: web_advanced_filters
+#: field:ir.filters.combine.with.existing,filter_id:0
+msgid "Filter"
+msgstr ""
+
+#. module: web_advanced_filters
+#: view:ir.filters:0
+msgid "Test filter"
+msgstr ""
+
+#. module: web_advanced_filters
+#. openerp-web
+#: code:addons/web_advanced_filters/static/src/js/web_advanced_filters.js:58
+#, python-format
+msgid "Whole selection (criteria)"
+msgstr ""
+
+#. module: web_advanced_filters
+#: field:ir.filters,domain_this:0
+msgid "This filter's own domain"
+msgstr ""
+
+#. module: web_advanced_filters
+#: view:ir.filters:0
+msgid "Remove the result of following filters"
+msgstr ""
+
+#. module: web_advanced_filters
+#: field:ir.filters.combine.with.existing,context:0
+msgid "Context"
+msgstr ""
+
+#. module: web_advanced_filters
+#: field:ir.filters.combine.with.existing,action:0
+msgid "Action"
+msgstr "Action"
+
+#. module: web_advanced_filters
+#: field:ir.filters.combine.with.existing,model:0
+msgid "Model"
+msgstr "Modèle"
+
+#. module: web_advanced_filters
+#. openerp-web
+#: code:addons/web_advanced_filters/static/src/js/web_advanced_filters.js:62
+#: code:addons/web_advanced_filters/static/src/js/web_advanced_filters.js:90
+#, python-format
+msgid "To new filter"
+msgstr ""
+
+#. module: web_advanced_filters
+#. openerp-web
+#: code:addons/web_advanced_filters/static/src/js/web_advanced_filters.js:78
+#: code:addons/web_advanced_filters/static/src/js/web_advanced_filters.js:106
+#, python-format
+msgid "Remove from existing filter"
+msgstr ""
+
+#. module: web_advanced_filters
+#: field:ir.filters.combine.with.existing,domain:0
+msgid "Domain"
+msgstr "Domaine"
+
+#. module: web_advanced_filters
+#: field:ir.filters,union_filter_ids:0
+msgid "Add result of filters"
+msgstr ""
+
+#. module: web_advanced_filters
+#. openerp-web
+#: code:addons/web_advanced_filters/static/src/js/web_advanced_filters.js:70
+#: code:addons/web_advanced_filters/static/src/js/web_advanced_filters.js:98
+#, python-format
+msgid "To existing filter"
+msgstr ""
+
+#. module: web_advanced_filters
+#: model:ir.model,name:web_advanced_filters.model_ir_filters_combine_with_existing
+msgid "Combine a selection with an existing filter"
+msgstr ""
+
+#. module: web_advanced_filters
+#: view:ir.filters:0
+msgid "Are you sure? You can't undo this operation!"
+msgstr ""
+
+#. module: web_advanced_filters
+#: model:ir.model,name:web_advanced_filters.model_ir_filters
+msgid "Filters"
+msgstr ""
+
+#. module: web_advanced_filters
+#: view:ir.filters:0 view:ir.filters.combine.with.existing:0
+msgid "Cancel"
+msgstr ""
+
+#. module: web_advanced_filters
+#: selection:ir.filters.combine.with.existing,action:0
+msgid "Complement"
+msgstr ""

@@ -3,8 +3,9 @@
 # This file is distributed under the same license as the openerp-web package.
 # Etienne Beaudry Auger <etienne.b.auger@savoirfairelinux.com>, 2012.
 #
-
+#. module: web_color
 #. openerp-web
-#: addons/web_color/static/src/xml/lib.xml
-msgid "Select color"
+#: code:addons/web_color/static/src/xml/lib.xml:15
+#, fuzzy, python-format
+msgid "Select color value"
 msgstr "Choix de couleur"

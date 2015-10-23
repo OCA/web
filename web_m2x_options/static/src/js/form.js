@@ -10,9 +10,11 @@ openerp.web_m2x_options = function (instance) {
 
     var OPTIONS = ['web_m2x_options.create',
                    'web_m2x_options.create_edit',
-                   'web_m2x_options.limit',];
+                   'web_m2x_options.limit',
+                   'web_m2x_options.search_more',
+                   'web_m2x_options.m2o_dialog',];
 
-    instance.web.form.FieldMany2One.include({
+    instance.web.form.FieldMany2One = instance.web.form.FieldMany2One.extend({
 
         start: function() {
             this._super.apply(this, arguments);
@@ -37,15 +39,30 @@ openerp.web_m2x_options = function (instance) {
             return $.when();
         },
 
+        is_option_set: function(option) {
+            if (_.isUndefined(option)) {
+                return false
+            }
+            var is_string = typeof option === 'string'
+            var is_bool = typeof option === 'boolean'
+            if (is_string) {
+                return option === 'true' || option === 'True'
+            } else if (is_bool) {
+                return option
+            }
+            return false
+        },
+
         show_error_displayer: function () {
-            if ((typeof this.options.m2o_dialog === 'undefined' && this.can_create) ||
-                this.options.m2o_dialog) {
+            if(this.is_option_set(this.options.m2o_dialog) ||
+               _.isUndefined(this.options.m2o_dialog) && this.is_option_set(this.view.ir_options['web_m2x_options.m2o_dialog']) ||
+               this.can_create && _.isUndefined(this.options.m2o_dialog) && _.isUndefined(this.view.ir_options['web_m2x_options.m2o_dialog'])) {
                 new instance.web.form.M2ODialog(this).open();
             }
         },
 
         get_search_result: function (search_val) {
-
+            var Objects = new instance.web.Model(this.field.relation);
             var def = $.Deferred();
             var self = this;
             // add options limit used to change number of selections record
@@ -60,6 +77,15 @@ openerp.web_m2x_options = function (instance) {
             if (typeof this.options.limit === 'number') {
                 this.limit = this.options.limit;
             }
+
+            // add options search_more to force enable or disable search_more button
+            if (this.is_option_set(this.options.search_more) || _.isUndefined(this.options.search_more) && this.is_option_set(self.view.ir_options['web_m2x_options.search_more'])) {
+                this.search_more = true
+            }
+
+            // add options field_color and colors to color item(s) depending on field_color value
+            this.field_color = this.options.field_color
+            this.colors = this.options.colors
 
             var dataset = new instance.web.DataSet(this, this.field.relation,
                                                    self.build_context());
@@ -97,10 +123,39 @@ openerp.web_m2x_options = function (instance) {
                         id: x[0],
                     };
                 });
+                
+                // Search result value colors
+
+                if (self.colors && self.field_color) {
+                    var value_ids = [];
+                    for (var index in values) {
+                        value_ids.push(values[index].id);
+                    }
+                    
+                    // RPC request to get field_color from Objects
+                    Objects.query([self.field_color])
+                                .filter([['id', 'in', value_ids]])
+                                .all().done(function (objects) {
+                                    for (var index in objects) {
+                                        for (var index_value in values) {
+                                            if (values[index_value].id == objects[index].id) {
+                                                // Find value in values by comparing ids
+                                                var value = values[index_value];
+                                                
+                                                // Find color with field value as key
+                                                var color = self.colors[objects[index][self.field_color]] || 'black';
+                                                value.label = '<span style="color:'+color+'">'+value.label+'</span>';
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    def.resolve(values);
+                                });
+                }
 
                 // search more... if more results than max
 
-                if (values.length > self.limit) {
+                if (values.length > self.limit || self.search_more) {
                     values = values.slice(0, self.limit);
                     values.push({
                         label: _t("Search More..."),
@@ -157,8 +212,11 @@ openerp.web_m2x_options = function (instance) {
                         classname: 'oe_m2o_dropdown_option'
                     });
                 }
-
-                def.resolve(values);
+                
+                // Check if colors specified to wait for RPC
+                if (!(self.field_color && self.colors)){
+                    def.resolve(values);
+                }
             });
 
             return def;

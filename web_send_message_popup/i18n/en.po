@@ -1,0 +1,24 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: web (7.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-07 17:50+0000\n"
+"PO-Revision-Date: 2015-10-07 17:51+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"Language-Team: English (http://www.transifex.com/oca/OCA-web-7-0/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: web_send_message_popup
+#. openerp-web
+#: code:addons/web_send_message_popup/static/src/xml/mail.xml:8
+#, python-format
+msgid "Send a message"
+msgstr "Send a message"

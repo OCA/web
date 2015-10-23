@@ -62,7 +62,7 @@ class IrFiltersCombineWithExisting(TransientModel):
                             'domain': str(domain),
                             'context': this.context,
                             'model_id': this.model,
-                            'user_id': uid,
+                            'user_id': this.filter_id.user_id.id or False,
                         })],
                     })
         elif this.action == 'complement':
@@ -81,7 +81,7 @@ class IrFiltersCombineWithExisting(TransientModel):
                             'domain': str(domain),
                             'context': this.context,
                             'model_id': this.model,
-                            'user_id': uid,
+                            'user_id': this.filter_id.user_id.id or False,
                         })],
                     })
 
