@@ -70,5 +70,5 @@ local.FieldBooleanToggle = instance.web.form.AbstractField.extend({
         });
     }
 });
-instance.web.form.widgets.add('bs_toggle','instance.web_toggle.FieldBooleanToggle');
+instance.web.form.widgets.add('boolean_switch','instance.web_toggle.FieldBooleanToggle');
 }

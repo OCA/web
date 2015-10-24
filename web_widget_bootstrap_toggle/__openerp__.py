@@ -1,11 +1,11 @@
 {
-    'name' : 'AIM Bootstrap Toggle Widget',
-    'version': '1.0',
+    'name' : 'web_widget_bootstrap_toggle',
+    'version': '8.0',
     'summary': 'Odoo Checkbox Widget',
     'category': 'Tools',
     'description':
         """
-AIM Checkbox Toggle Widget
+Boolean Bootstrap Toggle Widget
 =================
         """,
     'data': [
@@ -14,5 +14,5 @@ AIM Checkbox Toggle Widget
     ],
     'depends' : ['base'],
     'qweb': ['static/src/xml/*.xml'],
-    'application': True,
+    'installable': True,
 }
