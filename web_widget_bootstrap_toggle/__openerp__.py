@@ -29,5 +29,5 @@
     'data': ["views/users.xml","toggle_widget.xml"],
     'depends': ['base', 'web'],
     'qweb': ['static/src/xml/*.xml'],
-    'installable': True,
+    'installable': True
 }
