@@ -30,8 +30,4 @@
     'depends': ['base', 'web'],
     'qweb': ['static/src/xml/*.xml'],
     'installable': True,
-<<<<<<< HEAD
-    'installable': True,
-=======
->>>>>>> 5e5a4c44874f378daa8ba8b14079e5669b0d3f1e
 }
