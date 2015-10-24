@@ -1,26 +1,42 @@
-Replaces boolean Checkbox with Bootstrap Toggle
-==================================================
+.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
+    :alt: License
 
-This widget provides all of the functionality of Bootstrap's Toggle widget. All the data-attr parameters can be passed through an options dictionary. For full documentation on all available options go to `<http://www.bootstraptoggle.com/>`_
+Boolean Bootstrap Toggle
+========================
 
-Installation
-============
+This widget provides more options on displaying a boolean field within Odoo's backend form views. Instead of 
+'Checked' or 'Not Checked' you can now use this widget to display a Switch Button which will slide from 'On' to 
+'Off' or 'Yes' to 'No' or whatever you have configured in your options. 
 
-It was tested on Odoo 8.0 branch. This widget comes with an example which uses the user's active field and replaces it with a toggle. 
+This widget is capable of utilizing all of bootstrap toggle's options including varrying colours, sizes, text and 
+shape of the toggle widget. For instance you could display a "Yes" in Green and "No" in Red to contrast the two 
+options.
 
 Usage
 =====
 
-Simply define your boolean field as always. Within your view.xml file pass all attributes through the options dictionary.::
+After you installed it, you can add the text widget='boolean_switch' to any boolean within a form view. This 
+will change the checkbox to an 'On' or 'Off' button which slide from one to the other upon clicking. There are 
+many options within the bootstrap-toggle library which you can use to make additional changes. They can all be 
+utilized by providing an options dictionary. Go to bootstrap-toggle documentation to learn about all available 
+options such as colours, size, text, shapes, etc. Here is a full example usage.
+   
+    ...
+    <field name="my_boolean" widget='boolean_switch' options="{'data-on':'Yes','data-off':'No','data-onstyle':'primary','data-offstyle':'danger','data-size':'mini'}"/>
+    ...   
 
-    <field name="myboolean" widget="boolean_switch" options="{'data-on':'Active','data-off':'Inactive','data-onstyle':'primary','data-offstyle':'danger','data-size':'mini'}"/>
+
+The above example would create a mini size swich which displayed a 'Yes' when true and 'No' when false would 
+display bootstrap's primary class colour when true and the danger class colour when false.
+
 
 
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
+Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`.
 In case of trouble, please check there if your issue has already been reported.
+
 
 Credits
 =======
@@ -28,7 +44,7 @@ Credits
 Contributors
 ------------
 
-* AIM Systems <phillips@aimsystems.ca>
+ * AIM Systems <phillips@aimsystems.ca>
 
 Maintainer
 ----------
