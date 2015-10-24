@@ -1,5 +1,5 @@
 {
-    'name' : 'web_widget_bootstrap_toggle',
+    'name': 'web_widget_bootstrap_toggle',
     'version': '8.0',
     'summary': 'Odoo Checkbox Widget',
     'category': 'Tools',
@@ -12,7 +12,7 @@ Boolean Bootstrap Toggle Widget
         "views/users.xml",
         "toggle_widget.xml",
     ],
-    'depends' : ['base'],
+    'depends': ['base'],
     'qweb': ['static/src/xml/*.xml'],
     'installable': True,
 }
