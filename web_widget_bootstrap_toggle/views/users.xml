@@ -8,7 +8,7 @@
             <field name="arch" type="xml">
                         <xpath expr="//field[@name='active']" position="replace">
                            <div>
-                              <field name="active" class="oe_inline" widget="bs_toggle" options="{'data-on':'Active','data-off':'Inactive','data-onstyle':'primary','data-offstyle':'danger','data-size':'mini'}"/>
+                              <field name="active" class="oe_inline" widget="boolean_switch" options="{'data-on':'Active','data-off':'Inactive','data-onstyle':'primary','data-offstyle':'danger','data-size':'mini'}"/>
                            </div>
                         </xpath>
             </field>
