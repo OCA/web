@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 {
     'name': 'web_widget_bootstrap_toggle',
     'version': '8.0',
