@@ -2,11 +2,7 @@
 <openerp>
     <data>
         <template id="assets_backend" name="web_toggle_assets" inherit_id="web.assets_backend">
-<<<<<<< HEAD:web_widget_bootstrap_toggle/toggle_widget.xml
-            <xpath expr="link[last()" position="after">
-=======
             <xpath expr="link[last()]" position="after">
->>>>>>> 2a5ec4e716b5005d2465754fea89c9979de8f679:web_toggle/toggle_widget.xml
                 <link rel="stylesheet" href="/web_toggle/static/src/css/bootstrap-toggle.css"/>
             </xpath>
             <xpath expr="script[last()]" position="after">
