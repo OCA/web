@@ -19,7 +19,7 @@
 ##############################################################################
 
 {
-    'name': 'web_toggle',
+    'name': 'web_widget_bootstrap_toggle',
     'version': '8.0.1.0.0',
     'author': "aimsystems,Odoo Community Association (OCA)",
     'license': 'AGPL-3',

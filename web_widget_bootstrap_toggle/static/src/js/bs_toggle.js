@@ -1,4 +1,4 @@
-openerp.web_toggle = function(instance, local) {
+openerp.web_widget_bootstrap_toggle = function(instance, local) {
     var _t = instance.web._t,
         _lt = instance.web._lt;
     var QWeb = instance.web.qweb;
@@ -70,5 +70,5 @@ local.FieldBooleanToggle = instance.web.form.AbstractField.extend({
         });
     }
 });
-instance.web.form.widgets.add('boolean_switch','instance.web_toggle.FieldBooleanToggle');
+instance.web.form.widgets.add('boolean_switch','instance.web_widget_bootstrap_toggle.FieldBooleanToggle');
 }
