@@ -28,11 +28,7 @@
     'category': 'Tools',
     'data': ["views/users.xml","toggle_widget.xml"],
     'depends': ['base', 'web'],
-<<<<<<< HEAD
     'qweb': ['static/src/xml/*.xml'],
     'installable': True,
-=======
     'installable': True,
-    'qweb': ['static/src/xml/*.xml'],
->>>>>>> 56c6f522fa48e2b69a3c93e854628ca1088ade46
 }
