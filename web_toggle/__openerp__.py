@@ -27,5 +27,7 @@
     'summary': 'Odoo Checkbox Toggle Widget',
     'category': 'Tools',
     'data': ["views/users.xml","toggle_widget.xml"],
-    'depends': ['base', 'web']
+    'depends': ['base', 'web'],
+    'installable': True,
+    'qweb': ['static/src/xml/*.xml'],
 }
