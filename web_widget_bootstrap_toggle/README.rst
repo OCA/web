@@ -23,7 +23,7 @@ options such as colours, size, text, shapes, etc. Here is a full example usage.
 
 You need to declare a boolean field with widget='boolean_switch'::
 
-    _<field name="my_boolean" widget='boolean_switch' options="{'data-on':'Yes','data-off':'No','data-onstyle':'primary','data-offstyle':'danger','data-size':'mini'}"/>
+    <field name="my_boolean" widget='boolean_switch' options="{'data-on':'Yes','data-off':'No','data-onstyle':'primary','data-offstyle':'danger','data-size':'mini'}"/>
 
 The above example would create a mini size swich which displayed a 'Yes' when true and 'No' when false would 
 display bootstrap's primary class colour when true and the danger class colour when false.
