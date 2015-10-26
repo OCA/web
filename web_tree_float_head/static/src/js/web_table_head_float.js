@@ -26,13 +26,14 @@ openerp.web.ListView.include({
      * Override all list view to add sticky header behavior
      **/
     init: function(parent, dataset, view_id, options) {
-        var self = this;
-        self._super(parent, dataset, view_id, options);
-        var $table = $("table.oe_list_content");
+     var self = this;
+     self._super(parent, dataset, view_id, options);
+     self.on("list_view_loaded", self, function() {
+        var $table = self.$el.find("table.oe_list_content");
         $table.floatThead({
-        	scrollContainer: function($table){
-        		return $table.closest('.wrapper');
-        	}
+            scrollContainer: function($table){
+                return $table.closest('.wrapper');
+            }
         });
-    },
+     },
 });
