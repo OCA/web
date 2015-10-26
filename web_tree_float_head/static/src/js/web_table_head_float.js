@@ -29,7 +29,7 @@ openerp.web.ListView.include({
      var self = this;
      self._super(parent, dataset, view_id, options);
      self.on("list_view_loaded", self, function() {
-        var $table = self.$el.find("table.oe_list_content");
+        var $table = self.$.find("table.oe_list_content");
         $table.floatThead({
             scrollContainer: function($table){
                 return $table.closest('.wrapper');
