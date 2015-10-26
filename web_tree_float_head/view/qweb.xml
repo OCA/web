@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="Many2one clickable assets"
+            inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript"
+                    src="/web_table_head_float/static/lib/jquery.floatThead.min.js"></script>
+                <script type="text/javascript"
+                    src="/web_table_head_float/static/src/js/web_table_head_float.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>
