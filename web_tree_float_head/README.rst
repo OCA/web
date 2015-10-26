@@ -6,7 +6,7 @@
 Display float head in tree view
 =====================================
 
-This module set head as float in tree view.
+This module sets the header always visible in the tree view.
 
 Usage
 =====
