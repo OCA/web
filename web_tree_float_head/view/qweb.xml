@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
-        <template id="assets_backend" name="Many2one clickable assets"
+        <template id="assets_backend" name="floatThead tree view"
             inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
                 <script type="text/javascript"
