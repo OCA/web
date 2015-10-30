@@ -39,16 +39,17 @@ openerp.web_widget_text_markdown = function (oe) {
 
             store_dom_value: function () {
                 if (!this.get('effective_readonly') &&
-                    this._get_raw_value() !== '' &&
                     this.is_syntax_valid()) {
-                        // We use internal_set_value because we were called by
-                        // ``.commit_value()`` which is called by a ``.set_value()``
-                        // itself called because of a ``onchange`` event
-                        this.internal_set_value(
-                            this.parse_value(
-                                this._get_raw_value()));
-                            }
-                        },
+                    // We use internal_set_value because we were called by
+                    // ``.commit_value()`` which is called by a ``.set_value()``
+                    // itself called because of a ``onchange`` event
+                    this.internal_set_value(
+                        this.parse_value(
+                            this._get_raw_value()
+                        )
+                    );
+                }
+            },
 
             commit_value: function () {
                 this.store_dom_value();
@@ -58,7 +59,7 @@ openerp.web_widget_text_markdown = function (oe) {
             _get_raw_value: function() {
                 if (this.$txt === false)
                     return '';
-                    return this.$txt.val();
+                return this.$txt.val();
             },
 
             render_value: function () {
@@ -85,5 +86,36 @@ openerp.web_widget_text_markdown = function (oe) {
                 return oe.web.format_value(val, this, def);
             }
         }
+    );
+
+    /**
+     * bootstrap_markdown support on list view
+     **/
+    oe.web_widget_text_markdown.FieldTextMarkDownList = oe.web.list.Char.extend({
+
+        init: function(){
+            this._super.apply(this, arguments);
+            hljs.initHighlightingOnLoad();
+            marked.setOptions({
+                sanitize: true,
+                highlight: function (code) {
+                    return hljs.highlightAuto(code).value;
+                }
+            });
+        },
+
+        _format: function(row_data, options){
+            options = options || {};
+            var markdown_text = marked(
+                oe.web.format_value(
+                    row_data[this.id].value, this, options.value_if_empty
+                )
+            );
+            return markdown_text;
+        }
+    });
+
+    oe.web.list.columns.add(
+        "field.bootstrap_markdown", "oe.web_widget_text_markdown.FieldTextMarkDownList"
     );
 };
