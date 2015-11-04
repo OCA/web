@@ -53,8 +53,11 @@ openerp.web_ckeditor4 = function(instance)
     //cleaning up
     CKEDITOR.tools.setTimeout = function(func, milliseconds, scope, args, ownerWindow)
     {
+        if(scope && scope.editor && scope.editor.status == 'destroyed')
+        {
+            return 0;
+        }
         var result = ckeditor_setTimeout_org.apply(this, arguments);
-        console.log(arguments);
         if(!ckeditor_timeouts[scope])
         {
             ckeditor_timeouts[scope] = [];
