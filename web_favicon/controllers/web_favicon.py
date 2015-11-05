@@ -20,14 +20,14 @@
 import StringIO
 import base64
 from openerp import http
-from openerp.http import request
 from openerp.tools.misc import file_open
 
 
-class WebShortcutIcon(http.Controller):
+class WebFavicon(http.Controller):
 
     @http.route('/web_favicon/favicon', type='http', auth="none")
     def icon(self):
+        request = http.request
         company = request.env['res.company'].search([], limit=1)
         if 'uid' in request.env.context:
             user = request.env['res.users'].browse(request.env.context['uid'])
