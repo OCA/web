@@ -3,7 +3,7 @@
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2010-2014 OpenERP s.a. (<http://openerp.com>).
-#    Copyright (C) 2014 initOS GmbH & Co. KG (<http://www.initos.com>).
+#    Copyright (C) 2014 initOS GmbH(<http://www.initos.com>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
