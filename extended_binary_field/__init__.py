@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2014-2015 initOS GmbH & Co. KG (<http://www.initos.com>).
+#    Copyright (C) 2014-2015 initOS GmbH(<http://www.initos.com>).
 #    Author Nikolina Todorova <nikolina.todorova@initos.com>
 #
 #    This program is free software: you can redistribute it and/or modify
