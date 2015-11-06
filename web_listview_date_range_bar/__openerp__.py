@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 #
-#   Copyright (C) 2015 initOS GmbH & Co. KG (<http://www.initos.com>).
+#   Copyright (C) 2015 initOS GmbH(<http://www.initos.com>).
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU Affero General Public License as
@@ -47,7 +47,7 @@ Date range selection toolbar for list view widget.
   widget than their values are used to set the initial date range.
 
 """,
-    'author': 'initOS GmbH & Co. KG',
+    'author': 'initOS GmbH',
     'website': 'http://www.initos.com',
     'depends': [
         'web',
