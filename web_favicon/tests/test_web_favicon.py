@@ -37,8 +37,6 @@ class FakeResponse(object):
         self.headers = dict(headers)
 
 
-
-
 class TestWebFavicon(TransactionCase):
     def test_web_favicon(self):
         original_request = http.request
