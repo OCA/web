@@ -3,7 +3,7 @@
     <data>
         <template id="layout" inherit_id="web.layout">
             <xpath expr="//link[@rel='shortcut icon']" position="replace">
-                <link rel="shortcut icon" href="/web_favicon/favicon" />
+                <link rel="icon" href="/web_favicon/favicon" />
             </xpath>
         </template>
     </data>

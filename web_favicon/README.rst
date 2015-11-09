@@ -25,9 +25,7 @@ Usage
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
     :alt: Try me on Runbot
-    :target: https://runbot.odoo-community.org/runbot/{repo_id}/8.0
-
-.. repo_id is available in https://github.com/OCA/maintainer-tools/blob/master/tools/repos_with_ids.txt
+    :target: https://runbot.odoo-community.org/runbot/162/8.0
 
 For further information, please visit:
 
