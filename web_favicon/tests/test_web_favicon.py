@@ -18,7 +18,6 @@
 #
 ##############################################################################
 import base64
-import werkzeug.local
 from openerp.tests.common import TransactionCase
 from openerp.tools.misc import file_open
 from openerp import http
@@ -27,6 +26,7 @@ from openerp import http
 class FakeRequest(object):
     def __init__(self, env):
         self.env = env
+
     def make_response(self, data, headers):
         return FakeResponse(data, headers)
 
@@ -51,7 +51,6 @@ class TestWebFavicon(TransactionCase):
         })
         data = WebFavicon().icon()
         self.assertEqual(data.headers['Content-Type'], 'image/x-icon')
-        default_icon_data = data.data
         # our own icon
         company.write({
             'favicon_backend': base64.b64encode(file_open(
