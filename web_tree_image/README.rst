@@ -28,10 +28,14 @@ This module defines a new widget type for tree views columns.
 
 Set the attribute ``widget=image`` in a ``field`` tag in a tree view.
 You can also set ``height=<height>`` to set the height the image will have.
-Note that this just sets the CSS ``max-height`` attribute,
-if you want to make the server return a resized, maybe to save data by making it
-return a smaller one or to have uniform images, use the
+Note that this just sets the image ``height`` attribute,
+if you want to make the server return a resized image, maybe to reduce the size
+of the transferred file or to have uniform images, use the
 ``resize="<width>,<height>"`` attribute.
+
+You can set ``display=icon`` in order to get a clickable picture icon that will
+open a full screen preview of the image. Set ``display=thumbnail`` to get a
+clickable thumbnail.
 
 Credits
 =======
