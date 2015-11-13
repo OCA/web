@@ -31,6 +31,11 @@ For further information, please visit:
 
 * https://www.odoo.com/forum/help-1
 
+Known issues / Roadmap
+======================
+
+* allow to upload some big icon (preferrably SVG or the like) and generate icons suitable for mobile devices
+
 Bug Tracker
 ===========
 
