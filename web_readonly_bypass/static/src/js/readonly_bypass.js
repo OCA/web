@@ -136,6 +136,45 @@ odoo.define('web_readonly_bypass', function(require) {
 
     });
 
-    return readonly_bypass;
+    data.ProxyDataSet.include({
+        /*
+        ProxyDataSet: case of 'pop-up'
+        */
+        init : function() {
+            this._super.apply(this, arguments);
+        },
+        /**
+         * Create Overriding
+         *
+         * @param {Object} data field values to set on the new record
+         * @param {Object} options Dictionary that can contain the following keys:
+         *   - readonly_fields: Values from readonly fields that were updated by
+         *     on_changes. Only used by the BufferedDataSet to make the o2m work correctly.
+         * @returns super {$.Deferred}
+         */
+        create : function(data, options) {
+            var self = this;
+            var context = pyeval.eval('contexts', self.context.get_eval_context());
+            readonly_bypass.ignore_readonly(data, options, true, context);
+            return self._super(data,options);
+        },
+        /**
+         * Write Overriding
+         *
+         * @param {Object} data field values to set on the new record
+         * @param {Object} options Dictionary that can contain the following keys:
+         *   - readonly_fields: Values from readonly fields that were updated by
+         *     on_changes. Only used by the BufferedDataSet to make the o2m work correctly.
+         * @returns super {$.Deferred}
+         */
+        write : function(id, data, options) {
+            var self = this;
+            var context = pyeval.eval('contexts', self.context.get_eval_context());
+            readonly_bypass.ignore_readonly(data, options, false, context);
+            return self._super(id,data,options);
+        },
 
+    });
+
+    return readonly_bypass;
 });

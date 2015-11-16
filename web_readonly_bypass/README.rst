@@ -63,7 +63,8 @@ Contributors
 * Jonathan Nemry <jonathan.nemry@acsone.eu>
 * Laetitia Gangloff <laetitia.gangloff@acsone.eu>
 * Pierre Verkest <pverkest@anybox.fr>
-* Kalpana Hemnani <???>
+* Kalpana Hemnani <hemnani.kalpana@gmail.com>
+* Agathe Mollé <agathe.molle@savoirfairelinux.com>
 * Simone Orsi <simone.orsi@camptocamp.com>
 
 
