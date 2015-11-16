@@ -316,8 +316,7 @@ openerp.web_m2x_options = function (instance) {
                 var m2x_create_undef = _.isUndefined(self.view.ir_options['web_m2x_options.create'])
                 var m2x_create = self.view.ir_options['web_m2x_options.create'] == "True"
 
-                if (!no_quick_create && ((m2x_create_undef && can_create) ||
-                                         m2x_create)) {
+                if (!no_quick_create && (m2x_create_undef || m2x_create)) {
 
                     var raw_result = _(data.result).map(function(x) {return x[1];});
                     if (search_val.length > 0 && !_.include(raw_result, search_val)) {
@@ -340,8 +339,7 @@ openerp.web_m2x_options = function (instance) {
                 var m2x_create_edit_undef = _.isUndefined(self.view.ir_options['web_m2x_options.create_edit'])
                 var m2x_create_edit = self.view.ir_options['web_m2x_options.create_edit'] == "True"
 
-                if (!no_create_edit && ((m2x_create_edit_undef && can_create) ||
-                                        m2x_create_edit)) {
+                if (!no_create_edit && (m2x_create_edit_undef || m2x_create_edit)) {
 
                     values.push({
                         label: _t("Create and Edit..."),
