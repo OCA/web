@@ -22,7 +22,7 @@
 
 {
     'name': 'Multicompany - Easy Switch Company',
-    'version': '8.0.1.0.0',
+    'version': '9.0.1.0.0',
     'category': 'web',
     'description': """
 Add menu to allow user to switch to another company more easily
@@ -50,6 +50,7 @@ Copyright, Author and Licence:
 ------------------------------
     * Copyright: 2014, Groupement Régional Alimentaire de Proximité;
     * Author: Sylvain LE GAL (https://twitter.com/legalsylvain);
+    * Contributor: Nicolas JEUDY (https://github.com/njeudy);
     * Licence: AGPL-3 (http://www.gnu.org/licenses/)""",
     'author': "GRAP,Odoo Community Association (OCA)",
     'website': 'http://www.grap.coop',
@@ -63,6 +64,6 @@ Copyright, Author and Licence:
     'qweb': [
         'static/src/xml/switch_company.xml',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
 }
