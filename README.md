@@ -36,7 +36,7 @@ addon | version | summary
 [web_dashboard_tile](web_dashboard_tile/) | 8.0.1.0.0 (unported) | Add Tiles to Dashboard
 [web_dialog_size](web_dialog_size/) | 8.0.0.1.0 (unported) | A module that lets the user expand a dialog box to the full screen width.
 [web_dom_model_classes](web_dom_model_classes/) | 8.0.1.0.0 (unported) | Allows small UI changes with simple CSS
-[web_easy_switch_company](web_easy_switch_company/) | 8.0.1.0.0 (unported) | Multicompany - Easy Switch Company
+[web_easy_switch_company](web_easy_switch_company/) | 9.0.1.0.0 | Multicompany - Easy Switch Company
 [web_environment_ribbon](web_environment_ribbon/) | 8.0.0.1.0 (unported) | Web Environment Ribbon
 [web_export_view](web_export_view/) | 8.0.1.2.0 (unported) | Export Current View
 [web_graph_improved](web_graph_improved/) | 8.0.0.1.0 (unported) | Improves graph views.
