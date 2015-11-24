@@ -1,47 +1,47 @@
-# Translation of OpenERP Server.
+# Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#
-# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015.
+# * web_export_view
+# 
+# Translators:
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 7.0\n"
+"Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-21 11:59+0000\n"
-"PO-Revision-Date: 2015-04-24 08:07+0100\n"
+"POT-Creation-Date: 2015-11-23 13:46+0000\n"
+"PO-Revision-Date: 2015-11-08 05:45+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
-"Language-Team: Slovenian <translate@matmoz.si>\n"
+"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-web-8-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
 "Language: sl\n"
-"X-Generator: Lokalize 2.0\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
 
 #. module: web_export_view
 #. openerp-web
-#: code:addons/web_export_view/static/xml/web_advanced_export.xml:7
-#, python-format
-msgid "Export Current View"
-msgstr "Izvoz trenutnega pogleda"
-
-#. module: web_export_view
-#. openerp-web
-#: code:addons/web_export_view/static/xml/web_advanced_export.xml:9
+#: code:addons/web_export_view/static/src/xml/web_export_view_template.xml:8
 #, python-format
 msgid "Excel"
 msgstr "Excel"
 
 #. module: web_export_view
 #. openerp-web
-#: code:addons/web_export_view/static/src/js/web_advanced_export.js:81
+#: code:addons/web_export_view/static/src/xml/web_export_view_template.xml:6
 #, python-format
-msgid "True"
-msgstr "Pravilno"
+msgid "Export Current View"
+msgstr "Izvoz trenutnega pogleda"
 
 #. module: web_export_view
 #. openerp-web
-#: code:addons/web_export_view/static/src/js/web_advanced_export.js:84
+#: code:addons/web_export_view/static/src/js/web_export_view.js:84
 #, python-format
 msgid "False"
 msgstr "Nepravilno"
 
+#. module: web_export_view
+#. openerp-web
+#: code:addons/web_export_view/static/src/js/web_export_view.js:81
+#, python-format
+msgid "True"
+msgstr "Pravilno"

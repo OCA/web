@@ -1,0 +1,233 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_dashboard_tile
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: web (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-23 13:46+0000\n"
+"PO-Revision-Date: 2015-11-07 11:19+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: Spanish (http://www.transifex.com/oca/OCA-web-8-0/language/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,action_id:0
+msgid "Action"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: selection:tile.tile,field_function:0
+msgid "Average"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: code:addons/web_dashboard_tile/models/tile_tile.py:74
+#, python-format
+msgid "Average value of '%s'"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: field:tile.tile,background_color:0
+msgid "Background color"
+msgstr ""
+
+#. module: web_dashboard_tile
+#. openerp-web
+#: code:addons/web_dashboard_tile/static/src/xml/custom_xml.xml:8
+#, python-format
+msgid "Create"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: field:tile.tile,create_uid:0
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,create_date:0
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: web_dashboard_tile
+#: model:ir.actions.act_window,name:web_dashboard_tile.action_kanban_dashboard_tile
+#: model:ir.actions.act_window,name:web_dashboard_tile.action_tree_dashboard_tile
+#: model:ir.ui.menu,name:web_dashboard_tile.mail_dashboard
+msgid "Dashboard"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: model:ir.ui.menu,name:web_dashboard_tile.menue_dashboard_tile
+msgid "Dashboard Tile"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: view:tile.tile:web_dashboard_tile.dashboard_tile_tile_form_view
+#: view:tile.tile:web_dashboard_tile.dashboard_tile_tile_tree_view
+msgid "Dashboard tiles"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: view:tile.tile:web_dashboard_tile.dashboard_tile_tile_form_view
+msgid "Display"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: field:tile.tile,domain:0
+msgid "Domain"
+msgstr ""
+
+#. module: web_dashboard_tile
+#. openerp-web
+#: code:addons/web_dashboard_tile/static/src/js/custom_js.js:56
+#, python-format
+msgid "Error"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: constraint:tile.tile:0
+msgid "Error ! Please select a field of the selected model."
+msgstr ""
+
+#. module: web_dashboard_tile
+#: constraint:tile.tile:0
+msgid "Error ! Please set both fields: 'Field' and 'Function'."
+msgstr ""
+
+#. module: web_dashboard_tile
+#: field:tile.tile,field_id:0
+msgid "Field"
+msgstr "Campo"
+
+#. module: web_dashboard_tile
+#. openerp-web
+#: code:addons/web_dashboard_tile/static/src/js/custom_js.js:56
+#, python-format
+msgid "Filter name is required."
+msgstr ""
+
+#. module: web_dashboard_tile
+#: field:tile.tile,font_color:0
+msgid "Font color"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: field:tile.tile,field_function:0
+msgid "Function"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: field:tile.tile,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,write_uid:0
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,write_date:0
+msgid "Last Updated on"
+msgstr "Última actualización en"
+
+#. module: web_dashboard_tile
+#: selection:tile.tile,field_function:0
+msgid "Maximum"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: code:addons/web_dashboard_tile/models/tile_tile.py:68
+#, python-format
+msgid "Maximum value of '%s'"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: selection:tile.tile,field_function:0
+msgid "Median"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: code:addons/web_dashboard_tile/models/tile_tile.py:77
+#, python-format
+msgid "Median value of '%s'"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: selection:tile.tile,field_function:0
+msgid "Minimum"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: code:addons/web_dashboard_tile/models/tile_tile.py:65
+#, python-format
+msgid "Minimum value of '%s'"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: field:tile.tile,model_id:0
+msgid "Model"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: field:tile.tile,name:0
+msgid "Name"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: view:tile.tile:web_dashboard_tile.dashboard_tile_tile_form_view
+msgid "Optional Field Informations"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: field:tile.tile,sequence:0
+msgid "Sequence"
+msgstr ""
+
+#. module: web_dashboard_tile
+#. openerp-web
+#: code:addons/web_dashboard_tile/static/src/js/custom_js.js:95
+#, python-format
+msgid "Success"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: selection:tile.tile,field_function:0
+msgid "Sum"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: view:tile.tile:web_dashboard_tile.dashboard_tile_tile_form_view
+msgid "Technical Informations"
+msgstr ""
+
+#. module: web_dashboard_tile
+#. openerp-web
+#: code:addons/web_dashboard_tile/static/src/js/custom_js.js:95
+#, python-format
+msgid "Tile is created"
+msgstr ""
+
+#. module: web_dashboard_tile
+#. openerp-web
+#: code:addons/web_dashboard_tile/static/src/xml/custom_xml.xml:6
+#, python-format
+msgid "Tile:"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: code:addons/web_dashboard_tile/models/tile_tile.py:71
+#, python-format
+msgid "Total value of '%s'"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: field:tile.tile,user_id:0
+msgid "User"
+msgstr ""
