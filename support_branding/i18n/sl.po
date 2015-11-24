@@ -1,26 +1,22 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* support_branding
-#
+# * support_branding
+# 
+# Translators:
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-02 10:23+0200\n"
-"PO-Revision-Date: 2015-08-02 10:24+0200\n"
-"Last-Translator: Matjaz Mozetic <m.mozetic@matmoz.si>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2015-11-23 13:46+0000\n"
+"PO-Revision-Date: 2015-11-08 05:43+0000\n"
+"Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
+"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-web-8-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
-"X-Generator: Poedit 1.8.2\n"
+"Content-Transfer-Encoding: \n"
 "Language: sl\n"
-
-#. module: support_branding
-#: view:website:web.menu_secondary
-msgid "Version "
-msgstr "Verzija"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
 
 #. module: support_branding
 #: view:website:web.menu_secondary
@@ -29,21 +25,26 @@ msgstr ", podpora"
 
 #. module: support_branding
 #. openerp-web
-#: code:addons/support_branding/static/src/js/support_branding.js:39
+#: code:addons/support_branding/static/src/js/support_branding.js:106
 #, python-format
 msgid "Email to %s"
 msgstr "E-pošta za %s"
 
 #. module: support_branding
 #. openerp-web
-#: code:addons/support_branding/static/src/xml/base.xml:9
+#: code:addons/support_branding/static/src/xml/base.xml:12
 #, python-format
-msgid "Email to Company"
-msgstr "E-pošta za družbo"
+msgid "Email to support company"
+msgstr "Pošlji e-pošto družbi za podporo"
 
 #. module: support_branding
 #. openerp-web
-#: code:addons/support_branding/static/src/xml/base.xml:9
+#: code:addons/support_branding/static/src/xml/base.xml:10
 #, python-format
 msgid "Please fill in how you produced this error..."
 msgstr "Opišite, kako ste prišli do te napake..."
+
+#. module: support_branding
+#: view:website:web.menu_secondary
+msgid "Version"
+msgstr "Verzija"
