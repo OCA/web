@@ -36,9 +36,9 @@ or by telling fields allowed to change::
         </field>
     </record>
 
-For further information, please visit:
+On one2many fields, you can also pass the context in the field definition:
 
-* https://www.odoo.com/forum/help-1
+    <field name="one2many_field" context="{'readonly_by_pass': True}"/>
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
