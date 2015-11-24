@@ -3,52 +3,52 @@
 # * web_translate_dialog
 # 
 # Translators:
-# Pedro M. Baeza <pedro.baeza@gmail.com>, 2015
+# SaFi J. <safi2266@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-23 13:46+0000\n"
-"PO-Revision-Date: 2015-11-07 11:25+0000\n"
-"Last-Translator: Pedro M. Baeza <pedro.baeza@gmail.com>\n"
-"Language-Team: Spanish (http://www.transifex.com/oca/OCA-web-8-0/language/es/)\n"
+"POT-Creation-Date: 2015-12-16 07:41+0000\n"
+"PO-Revision-Date: 2015-12-16 17:26+0000\n"
+"Last-Translator: SaFi J. <safi2266@gmail.com>\n"
+"Language-Team: Arabic (http://www.transifex.com/oca/OCA-web-8-0/language/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #. module: web_translate_dialog
 #. openerp-web
 #: code:addons/web_translate_dialog/static/src/xml/base.xml:30
 #, python-format
 msgid "Cancel"
-msgstr "Cancelar"
+msgstr "إلغاء"
 
 #. module: web_translate_dialog
 #. openerp-web
 #: code:addons/web_translate_dialog/static/src/xml/base.xml:7
 #, python-format
 msgid "Field"
-msgstr "Campo"
+msgstr "الحقل"
 
 #. module: web_translate_dialog
 #. openerp-web
 #: code:addons/web_translate_dialog/static/src/xml/base.xml:29
 #, python-format
 msgid "Save"
-msgstr "Guardar"
+msgstr "حفظ"
 
 #. module: web_translate_dialog
 #. openerp-web
 #: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:15
 #, python-format
 msgid "Translate"
-msgstr "Traducir"
+msgstr "ترجم"
 
 #. module: web_translate_dialog
 #. openerp-web
 #: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:37
 #, python-format
 msgid "Translations"
-msgstr "Traducciones"
+msgstr "الترجمات"
