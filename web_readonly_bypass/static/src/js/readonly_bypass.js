@@ -138,4 +138,47 @@
         },
 
     });
+
+    instance.web.ProxyDataSet.include({
+        /*
+        ProxyDataSet: case of 'pop-up'
+        */
+        init : function() {
+            this._super.apply(this, arguments);
+        },
+        /**
+         * Creates Overriding
+         *
+         * @param {Object} data field values to set on the new record
+         * @param {Object} options Dictionary that can contain the following keys:
+         *   - readonly_fields: Values from readonly fields that were updated by
+         *     on_changes. Only used by the BufferedDataSet to make the o2m work correctly.
+         * @returns super {$.Deferred}
+         */
+        create : function(data, options) {
+            var self = this;
+            var context = instance.web.pyeval.eval('contexts',
+                    self.context.__eval_context);
+            readonly_bypass.ignore_readonly(data, options, true, context);
+            return self._super(data,options);
+        },
+        /**
+         * Creates Overriding
+         *
+         * @param {Object} data field values to set on the new record
+         * @param {Object} options Dictionary that can contain the following keys:
+         *   - readonly_fields: Values from readonly fields that were updated by
+         *     on_changes. Only used by the BufferedDataSet to make the o2m work correctly.
+         * @returns super {$.Deferred}
+         */
+        write : function(id, data, options) {
+            var self = this;
+            var context = instance.web.pyeval.eval('contexts',
+                    self.context.__eval_context);
+            readonly_bypass.ignore_readonly(data, options, false, context);
+            return self._super(id,data,options);
+        },
+
+    });
+
 })();
