@@ -73,6 +73,7 @@ openerp.web_menu_navbar_needaction = function(instance)
                         {widget : {needaction_counter: needaction_count}}));
                 }
             });
+            instance.web.bus.trigger('resize');
         },
     })
 
