@@ -1,0 +1,31 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * tree_date_search_extension
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0-20150601\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-06-16 15:10+0000\n"
+"PO-Revision-Date: 2015-06-16 15:10+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: tree_date_search_extension
+#. openerp-web
+#: code:addons/tree_date_search_extension/static/src/js/search_extension.js:72
+#, python-format
+msgid "From"
+msgstr "De"
+
+#. module: tree_date_search_extension
+#. openerp-web
+#: code:addons/tree_date_search_extension/static/src/js/search_extension.js:74
+#, python-format
+msgid "To"
+msgstr "à"
+
