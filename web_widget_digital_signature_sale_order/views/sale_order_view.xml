@@ -10,7 +10,7 @@
             	<xpath expr="//field[@name='note']" position="after">
                     <div class="oe_clear"/>
 					<label for="signature_image" class="oe_edit_only"/>
-					<h2><field name="signature_image" widget="signature"/></h2>
+					<h2><field name="signature_image" widget="signature" width="400" height="100"/></h2>
 				</xpath>
             </field>
         </record>
