@@ -7,7 +7,7 @@
             <field name="model">res.users</field>
             <field name="inherit_id" ref="base.view_users_form"/>
             <field name="arch" type="xml">
-            	<xpath expr="//field[@name='signature']" position="replace">
+            	<xpath expr="//field[@name='signature']" position="after">
 					<label for="signature_image" class="oe_edit_only"/>
 					<h2><field name="signature_image" widget="signature"/></h2>
 				</xpath>
