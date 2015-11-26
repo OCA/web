@@ -1,4 +1,4 @@
-openerp.web_digital_sign = function(instance) {
+openerp.web_widget_digital_signature = function(instance) {
     var _t = instance.web._t;
     var QWeb = instance.web.qweb;
     var images = {}
