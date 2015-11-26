@@ -2,7 +2,8 @@
     Web Easy Switch Company module for OpenERP
     Copyright (C) 2014 GRAP (http://www.grap.coop)
     @author Sylvain LE GAL (https://twitter.com/legalsylvain)
-
+    @migrator version 9 Hans Falinwa (https://falinwa.com)
+    
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
     published by the Free Software Foundation, either version 3 of the
@@ -17,13 +18,24 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ******************************************************************************/
 
-openerp.web_easy_switch_company = function (instance) {
+odoo.define('web_easy_switch_company.web_easy_switch_company', function (require) {
+'use strict';
+
+var ajax = require('web.ajax');
+var core = require('web.core');
+var Widget = require('web.Widget');
+var UserMenu = require('web.UserMenu');
+var qweb = core.qweb;
+var Model = require('web.Model');
+var session = require('web.session');
+var webclient = require('web.web_client');
+var SystrayMenu = require('web.SystrayMenu');
 
     /***************************************************************************
     Create an new 'SwitchCompanyWidget' widget that allow users to switch 
     from a company to another more easily.
     ***************************************************************************/
-    instance.web.SwitchCompanyWidget = instance.web.Widget.extend({
+    var SwitchCompanyWidget = Widget.extend({
 
         template:'web_easy_switch_company.SwitchCompanyWidget',
 
@@ -84,7 +96,7 @@ openerp.web_easy_switch_company = function (instance) {
          * helper function to load data from the server
          */
         _fetch: function(model, fields, domain, ctx){
-            return new instance.web.Model(model).query(fields).filter(domain).context(ctx).all();
+            return new Model(model).query(fields).filter(domain).context(ctx).all();
         },
 
         /**
@@ -94,7 +106,8 @@ openerp.web_easy_switch_company = function (instance) {
         _load_data: function(){
             var self = this;
             // Request for current users information
-            this._fetch('res.users',['company_id'],[['id','=',this.session.uid]]).then(function(res_users){
+            var Users = new Model('res.users');
+            Users.query(['company_id']).filter([['id','=',session.uid]]).all().then(function(res_users){
                 self.current_company_id = res_users[0].company_id[0];
                 self.current_company_name = res_users[0].company_id[1];
                 // Request for other companies
@@ -104,7 +117,7 @@ openerp.web_easy_switch_company = function (instance) {
                 // Note: calling res.company.name_search with 
                 //       user_preference=True in the context does 
                 //       not work either.
-                new instance.web.Model('res.company').call('name_search',{context:{'user_preference':'True'}}).then(function(res){
+                new Model('res.company').call('name_search',{context:{'user_preference':'True'}}).then(function(res){
                     var res_company = res;
                     for ( var i=0 ; i < res_company.length; i++) {
                         var logo_topbar, logo_state;
@@ -141,15 +154,8 @@ openerp.web_easy_switch_company = function (instance) {
     /***************************************************************************
     Extend 'UserMenu' Widget to insert a 'SwitchCompanyWidget' widget.
     ***************************************************************************/
-    instance.web.UserMenu =  instance.web.UserMenu.extend({
 
-        init: function(parent) {
-            this._super(parent);
-            var switch_button = new instance.web.SwitchCompanyWidget();
-            switch_button.appendTo(instance.webclient.$el.find('.oe_systray'));
-        }
-
-    });
-
-};
+    SystrayMenu.Items.push(SwitchCompanyWidget);
+      
+});
 
