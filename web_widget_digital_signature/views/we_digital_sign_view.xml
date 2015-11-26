@@ -1,0 +1,13 @@
+<openerp>
+    <data>
+        <template id="sale_order_backend" name="sale_order assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/web_widget_digital_signature/static/src/css/digital.css"/>
+                <link rel="stylesheet" href="/web_widget_digital_signature/static/src/css/jquery.signature.css"/>
+                <script type="text/javascript" src="/web_widget_digital_signature/static/lib/excanvas.js"></script>
+                <script type="text/javascript" src="/web_widget_digital_signature/static/lib/jquery.signature.js"></script>
+                <script type="text/javascript" src="/web_widget_digital_signature/static/src/js/digital_sign.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>
