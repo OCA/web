@@ -1,4 +1,5 @@
 openerp.web_widget_digital_signature = function(instance) {
+    "use strict";
     var _t = instance.web._t;
     var QWeb = instance.web.qweb;
     var images = {}
@@ -57,22 +58,22 @@ openerp.web_widget_digital_signature = function(instance) {
                 this.$el.find('> canvas').remove();
                 if(! this.get('value')){
                     this.$el.find('> img').remove();
-                    $(this.$el[0]).find(".signature").signature(sign_options);
+                    this.$el.find(".signature").signature(sign_options);
                 }else if(this.get('value')){
                     this.$el.prepend($img);
                 }
             }
-            $(this.$el[0]).find('.clear_sign').click(function(){
+            this.$el.find('.clear_sign').click(function(){
                 self.$el.find('> img').remove();
                 images[self.name] = ""
-                $(self.$el[0]).find(".signature").show();
-                $(self.$el[0]).find(".signature").signature('clear');
+                self.$el.find(".signature").show();
+                self.$el.find(".signature").signature('clear');
             });
             $('.save_sign').click(function(){
                 var val
-                if($(self.$el[0]).find(".signature").hasClass( "kbw-signature" ) && ! $(self.$el[0]).find(".signature").signature('isEmpty')){
-                    $(self.$el[0]).find(".signature").hide();
-                    val = $(self.$el[0]).find(".signature > canvas")[0].toDataURL();
+                if(self.$el.find(".signature").hasClass( "kbw-signature" ) && ! self.$el.find(".signature").signature('isEmpty')){
+                    self.$el.find(".signature").hide();
+                    val = self.$el.find(".signature > canvas")[0].toDataURL();
                     images[self.name] = val.split(',')[1]
                     var $img = $(QWeb.render("FieldBinaryImage-extend", { widget: self, url: val }));
                     self.$el.find('> img').remove();
