@@ -21,14 +21,9 @@
 odoo.define('web_easy_switch_company.web_easy_switch_company', function (require) {
 'use strict';
 
-var ajax = require('web.ajax');
-var core = require('web.core');
 var Widget = require('web.Widget');
-var UserMenu = require('web.UserMenu');
-var qweb = core.qweb;
 var Model = require('web.Model');
 var session = require('web.session');
-var webclient = require('web.web_client');
 var SystrayMenu = require('web.SystrayMenu');
 
     /***************************************************************************
