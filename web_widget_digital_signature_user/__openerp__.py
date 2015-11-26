@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #    
-#    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2010 OpenERP SA (<http://www.openerp.com>)
-#    Copyright (C) 2011-2015 Serpent Consulting Services Pvt. Ltd. (<http://www.serpentcs.com>).
+#    Copyright (C) 2011-2015 Serpent Consulting Services Pvt. Ltd.
+#    (<http://www.serpentcs.com>).
+#    Copyright 2015 Lorenzo Battistini - Agile Business Group
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,12 +20,19 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api
-
-class Users(models.Model):
-    _name = 'res.users'
-    _inherit = 'res.users'
-
-    signature_image= fields.Binary(string='Signature')
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+{
+    "name" : "Web Digital Signature for users",
+    "version" : "8.0.1.0.0",
+    "author" : "Serpent Consulting Services Pvt. Ltd., "
+               "Odoo Community Association (OCA)",
+    "category": 'web',
+    "license": "AGPL-3",
+    'complexity': "easy",
+    'depends': ['web_widget_digital_signature'],
+    'data': [
+        'views/users_view.xml'
+    ],
+    'website': 'http://www.serpentcs.com',
+    'installable': True,
+    'auto_install': False,
+}

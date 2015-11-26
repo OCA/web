@@ -1,6 +1,6 @@
 <openerp>
     <data>
-        <template id="sale_order_backend" name="sale_order assets" inherit_id="web.assets_backend">
+        <template id="signature_backend" name="signature assets" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
                 <link rel="stylesheet" href="/web_widget_digital_signature/static/src/css/digital.css"/>
                 <link rel="stylesheet" href="/web_widget_digital_signature/static/src/css/jquery.signature.css"/>
