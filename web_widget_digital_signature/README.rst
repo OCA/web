@@ -12,6 +12,8 @@ Usage
 =====
 
 To use this module, you need to add ``widget="signature"`` to your binary field in your view.
+You can specifify signature dimensions like the following:
+``<field name="signature_image" widget="signature" width="400" height="100"/>``
 
 See ``web_widget_digital_signature_user`` and ``web_widget_digital_signature_sale_order`` modules as examples.
 
