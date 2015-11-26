@@ -39,6 +39,13 @@ openerp.web_widget_digital_signature = function(instance) {
             }
             var $img = $(QWeb.render("FieldBinaryImage-img", { widget: this, url: url }));
             this.$el.find('img').remove();
+            var sign_options = {}
+            if ('width' in self.node.attrs){
+                sign_options.width = self.node.attrs.width;
+            }
+            if ('height' in self.node.attrs){
+                sign_options.height = self.node.attrs.height;
+            }
             if(this.view.get("actual_mode") !== 'edit' && this.view.get("actual_mode") !== 'create'){
                 this.$el.prepend($img);
             }else if(this.view.get("actual_mode") == 'edit' ){
@@ -46,7 +53,7 @@ openerp.web_widget_digital_signature = function(instance) {
                 this.$el.find('> canvas').remove();
                 if(! this.get('value')){
                     this.$el.find('> img').remove();
-                    $(this.$el[0]).find(".signature").signature();
+                    $(this.$el[0]).find(".signature").signature(sign_options);
                 }else if(this.get('value')){
                     this.$el.prepend($img);
                 }
@@ -56,7 +63,7 @@ openerp.web_widget_digital_signature = function(instance) {
                 this.$el.find('> canvas').remove();
                 if(! this.get('value')){
                     this.$el.find('> img').remove();
-                    $(this.$el[0]).find(".signature").signature();
+                    $(this.$el[0]).find(".signature").signature(sign_options);
                 }else if(this.get('value')){
                     this.$el.prepend($img);
                 }

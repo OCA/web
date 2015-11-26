@@ -14,7 +14,9 @@ var signatureOverrides = {
 		guidelineIndent: 10, // Guide line indent from the edges
 		notAvailable: 'Your browser doesn\'t support signing', // Error message when no canvas
 		syncField: null, // Selector for synchronised text field
-		change: null // Callback when signature changed
+		change: null, // Callback when signature changed
+        width: 170,
+        height: 50
 	},
 
 	/* Initialise a new signature area. */
@@ -23,8 +25,8 @@ var signatureOverrides = {
 		  
 		this.element.addClass(this.widgetFullName || this.widgetBaseClass);
 		try {
-			this.canvas = $('<canvas width="' + 170 + '" height="' +
-				50 + '">' + '' + '</canvas>')[0];
+			this.canvas = $('<canvas width="' + this.options.width + '" height="' +
+				this.options.height + '">' + '' + '</canvas>')[0];
 		 	this.element.prepend(this.canvas);
 		 	this.element.find('img').remove();
 			this.ctx = this.canvas.getContext('2d');
