@@ -4,6 +4,7 @@
 #    Web Easy Switch Company module for OpenERP
 #    Copyright (C) 2014 GRAP (http://www.grap.coop)
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
+#    @migrator version 9 Hans Falinwa (https://falinwa.com)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -22,7 +23,7 @@
 
 {
     'name': 'Multicompany - Easy Switch Company',
-    'version': '8.0.1.0.0',
+    'version': '9.0',
     'category': 'web',
     'description': """
 Add menu to allow user to switch to another company more easily
@@ -50,8 +51,9 @@ Copyright, Author and Licence:
 ------------------------------
     * Copyright: 2014, Groupement Régional Alimentaire de Proximité;
     * Author: Sylvain LE GAL (https://twitter.com/legalsylvain);
+    * Migrator version 9 Hans Falinwa (https://falinwa.com)
     * Licence: AGPL-3 (http://www.gnu.org/licenses/)""",
-    'author': "GRAP,Odoo Community Association (OCA)",
+    'author': 'GRAP,Odoo Community Association (OCA),Falinwa Hans',
     'website': 'http://www.grap.coop',
     'license': 'AGPL-3',
     'depends': [
@@ -63,6 +65,6 @@ Copyright, Author and Licence:
     'qweb': [
         'static/src/xml/switch_company.xml',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
 }
