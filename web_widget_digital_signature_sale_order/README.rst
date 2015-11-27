@@ -6,8 +6,7 @@
 Web Digital Signature for sale orders
 =====================================
 
-This module adds a signature field to sale order form.
-So that salesman can let customers sign their quotations.
+This module adds a signature field to sale order form, so that salesman can let customers sign their quotations.
 
 Usage
 =====
@@ -27,7 +26,7 @@ check there if your issue has already been reported. If you spotted it first,
 help us smashing it by providing a detailed and welcomed `feedback
 <https://github.com/OCA/
 web/issues/new?body=module:%20
-web_widget_digital_signature%0Aversion:%20
+web_widget_digital_signature_sale_order%0Aversion:%20
 8.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Credits

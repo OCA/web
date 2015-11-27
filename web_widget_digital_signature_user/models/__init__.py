@@ -7,7 +7,7 @@
 #    (<http://www.serpentcs.com>).
 #    Copyright 2015 Lorenzo Battistini - Agile Business Group
 #
-#    About License, see __openerp__.py
+#    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 #
 ##############################################################################
 

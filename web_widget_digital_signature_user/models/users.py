@@ -6,7 +6,7 @@
 #    Copyright (C) 2011-2015 Serpent Consulting Services Pvt. Ltd.
 #    (<http://www.serpentcs.com>).
 #
-#    About License, see __openerp__.py
+#    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 #
 ##############################################################################
 
