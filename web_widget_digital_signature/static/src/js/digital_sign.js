@@ -117,18 +117,9 @@ openerp.web_widget_digital_signature = function(instance) {
         },
     });
     instance.web.FormView.include({
-        save: function(prepend_on_create) {
-            var self = this;
-            $('.save_sign').click()
-            var save_obj = {prepend_on_create: prepend_on_create, ret: null};
-            this.save_list.push(save_obj);
-            return this._process_operations().then(function() {
-                if (save_obj.error)
-                    return $.Deferred().reject();
-                return $.when.apply($, save_obj.ret);
-            }).done(function() {
-                self.$el.removeClass('oe_form_dirty');
-            });
+        save: function() {
+            $('.save_sign').click();
+            return this._super.apply(this, arguments);
         },
     })
 }
