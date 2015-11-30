@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
-#    
+#
 #    Copyright (C) 2011-2015 Serpent Consulting Services Pvt. Ltd.
 #    (<http://www.serpentcs.com>).
 #    Copyright 2015 Lorenzo Battistini - Agile Business Group
@@ -10,9 +10,9 @@
 ##############################################################################
 
 {
-    "name" : "Web Digital Signature for users",
-    "version" : "8.0.1.0.0",
-    "author" : "Serpent Consulting Services Pvt. Ltd., "
+    "name": "Web Digital Signature for users",
+    "version": "8.0.1.0.0",
+    "author": "Serpent Consulting Services Pvt. Ltd., "
                "Odoo Community Association (OCA)",
     "category": 'web',
     "license": "AGPL-3",

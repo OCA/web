@@ -8,15 +8,18 @@
 ##############################################################################
 
 {
-    "name" : "Web Digital Signature for sale orders",
-    "version" : "8.0.1.0.0",
-    "author" : "Agile Business Group, "
+    "name": "Web Digital Signature for sale orders",
+    "version": "8.0.1.0.0",
+    "author": "Agile Business Group, "
                "Odoo Community Association (OCA)",
     "category": 'web',
     "license": "AGPL-3",
     'depends': ['web_widget_digital_signature', 'sale'],
     'data': [
         'views/sale_order_view.xml'
+    ],
+    'images': [
+        'images/so_signature.png',
     ],
     'website': 'http://www.agilebg.com',
     'installable': True,
