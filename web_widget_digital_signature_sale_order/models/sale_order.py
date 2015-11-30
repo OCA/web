@@ -7,9 +7,10 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api
+from openerp import models, fields
+
 
 class Users(models.Model):
     _inherit = 'sale.order'
 
-    signature_image= fields.Binary(string='Signature')
+    signature_image = fields.Binary(string='Signature')
