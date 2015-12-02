@@ -19,8 +19,30 @@
 
 openerp.web_tree_image = function(instance) {
     "use strict";
+
+    // unique DOM id for the popup DOM node
+    function popup_id(name, id) {
+        return "o_web_tree_image_popup-" + name + "-" + id;
+    }
+
+    // unique DOM id for the clickable DOM node
+    function clickable_id(name, id) {
+        return "o_web_tree_image_clickable-" + name + "-" + id;
+    }
+
+    // add callback for click on image icon/thumbnail for given row name/id
+    function make_clickable(name, id) {
+        // defer execution until after DOM elements have been rendered
+        window.setTimeout(function() {
+            $("#" + clickable_id(name, id)).click(function() {
+                $('#' + popup_id(name, id)).modal('show');
+                return false;
+            });
+        }, 0);
+    }
+
     var QWeb = instance.web.qweb;
-    instance.web.list.Image = instance.web.list.Column.extend({
+    instance.web.list.ImagePreview = instance.web.list.Column.extend({
         format: function (row_data, options) {
             /* Return a valid img tag. For image fields, test if the
              field's value contains just the binary size and retrieve
@@ -71,34 +93,40 @@ openerp.web_tree_image = function(instance) {
 
             if (self.display == 'icon' || self.display == 'thumbnail')
             {
-                // use a unique id for the popup DOM node
-                var popupId = "o_web_tree_image_popup-" + row_data.id.value;
-                // use a unique id for the clickable DOM node
-                var clickableId = "o_web_tree_image_clickable-" +
-                                  row_data.id.value;
-
-                if (!$('#' + popupId).length)
-                {
-                    // add full screen preview to DOM
-                    $("body").append(QWeb.render("ListView.row.image.imageData",
-                                                 {widget: self,
-                                                  popupId: popupId}));
-                }
-
-                // defer execution until after this function has returned and
-                // DOM elements have been rendered
-                window.setTimeout(function() {
-                    // enable full screen preview on click on icon
-                        $("#" + clickableId).click(function() {
-                        $('#' + popupId).modal('show');
-                        return false;
-                    });
-                }, 0);
+                var id = row_data.id.value;
+                var popupId = popup_id(self.name, id);
+                // add full screen preview to DOM
+                $('#' + popupId).remove();
+                $("body").append(QWeb.render("ListView.row.image.imageData", {
+                    widget: self,
+                    popupId: popupId,
+                }));
+                make_clickable(self.name, id);
             }
 
-            return QWeb.render('ListView.row.image',
-                               {widget: self, clickableId: clickableId});
+            return QWeb.render('ListView.row.image', {
+                widget: self,
+                clickableId: clickable_id(self.name, id),
+            });
         },
     });
-    instance.web.list.columns.add('field.image', 'instance.web.list.Image');
+    instance.web.list.columns.add('field.image',
+                                  'instance.web.list.ImagePreview');
+    instance.web.list.columns.add('field.image_preview',
+                                  'instance.web.list.ImagePreview');
+
+    instance.web.form.ImagePreview = instance.web.form.FieldBinary.extend({
+        template: 'FieldBinaryImage',
+        render_value: function() {
+            var id = this.view.datarecord.id;
+            make_clickable(this.name, id);
+            var content = {
+                widget: {display: 'icon'},
+                clickableId: clickable_id(this.name, id),
+            };
+            this.$el.html($(QWeb.render('ListView.row.image', content)));
+        },
+    });
+    instance.web.form.widgets.add('image_preview',
+                                  'instance.web.form.ImagePreview');
 };

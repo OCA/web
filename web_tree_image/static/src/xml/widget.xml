@@ -8,12 +8,13 @@
         Icon that can be clicked for a full screen preview of the image.
         --><span t-if="widget.display == 'icon'"
                  t-att-id="clickableId"
-                 class="fa fa-picture-o" /><!--
+                 class="o_web_tree_image_clickable fa fa-picture-o" /><!--
         Thumbnail that can be clicked for a full screen preview of the image.
         --><img t-if="widget.display == 'thumbnail'"
                 t-att-id="clickableId"
                 t-att-height="widget.height || 16"
-                t-att-src="widget.src" />
+                t-att-src="widget.src"
+                class="o_web_tree_image_clickable" />
     </t>
 
     <!-- Use a separate template for the content of the full screen preview,
