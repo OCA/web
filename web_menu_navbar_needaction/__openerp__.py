@@ -26,6 +26,7 @@
     "summary": "Show the sum of submenus' needaction counters in main menu",
     "depends": [
         'web',
+        'mail',
     ],
     "data": [
         "data/ir_config_parameter.xml",

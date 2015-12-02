@@ -1,6 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<templates id="template" xml:space="preserve">
-    <img t-name="ListView.row.image"
-         t-att-height="widget.height || 16"
-         t-att-src="src" />
+<templates id="template">
+    <t t-name="ListView.row.image"><!--
+        Inline display of the image.
+        --><img t-if="widget.display == 'inline'"
+                t-att-height="widget.height || 16"
+                t-att-src="widget.src" /><!--
+        Icon that can be clicked for a full screen preview of the image.
+        --><span t-if="widget.display == 'icon'"
+                 t-att-id="clickableId"
+                 class="fa fa-picture-o" /><!--
+        Thumbnail that can be clicked for a full screen preview of the image.
+        --><img t-if="widget.display == 'thumbnail'"
+                t-att-id="clickableId"
+                t-att-height="widget.height || 16"
+                t-att-src="widget.src" />
+    </t>
+
+    <!-- Use a separate template for the content of the full screen preview,
+         as it has to be inserted into the DOM separately, otherwise its
+         z-index is affected by parent elements and it does not appear
+         correctly in the foreground. -->
+    <div t-name="ListView.row.image.imageData" t-att-id="popupId"
+         class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        x
+                    </button>
+                    <h4 class="modal-title">Image preview</h4>
+                </div>
+                <div class="modal-body">
+                    <img t-att-src="widget.src" class="img-responsive" />
+                </div>
+            </div>
+        </div>
+    </div>
 </templates>

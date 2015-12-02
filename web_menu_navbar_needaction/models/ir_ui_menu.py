@@ -27,10 +27,15 @@ class IrUiMenu(models.Model):
     def get_navbar_needaction_data(self):
         result = {}
         for this in self:
-            result[this.id] = sum(map(
-                lambda x: x['needaction_counter'],
-                self.search([('id', 'child_of', this.ids)])
-                ._filter_visible_menus().get_needaction_data()
-                .itervalues())
-            )
+            count_per_model = {}
+            for menu_id, needaction in self.search(
+                    [('id', 'child_of', this.ids)])._filter_visible_menus()\
+                    .get_needaction_data().iteritems():
+                if needaction['needaction_enabled']:
+                    model = self.env['ir.ui.menu'].browse(menu_id).action\
+                        .res_model
+                    count_per_model[model] = max(
+                        count_per_model.get(model),
+                        needaction['needaction_counter'])
+            result[this.id] = sum(count_per_model.itervalues())
         return result

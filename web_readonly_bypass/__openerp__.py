@@ -24,7 +24,7 @@
 ##############################################################################
 {
     'name': 'Read Only ByPass',
-    'version': '8.0.1.0.0',
+    'version': '8.0.1.0.1',
     "author": "ACSONE SA/NV, Odoo Community Association (OCA)",
     "maintainer": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "http://www.acsone.eu",

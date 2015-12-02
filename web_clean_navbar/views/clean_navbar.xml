@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<template id="clean_navbar" name="Clean Navbar" inherit_id="web.assets_backend" active="True">
+	<xpath expr="//link[@href='/web/static/src/css/base.css']" position='after'>
+            <link rel="stylesheet" href="/web_clean_navbar/static/src/css/clean_navbar.css"/>
+    </xpath>
+</template>
+</data>
+</openerp>

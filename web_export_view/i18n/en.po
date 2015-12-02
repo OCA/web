@@ -1,0 +1,46 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_export_view
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: web (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-23 13:46+0000\n"
+"PO-Revision-Date: 2015-11-07 11:20+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"Language-Team: English (http://www.transifex.com/oca/OCA-web-8-0/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: web_export_view
+#. openerp-web
+#: code:addons/web_export_view/static/src/xml/web_export_view_template.xml:8
+#, python-format
+msgid "Excel"
+msgstr "Excel"
+
+#. module: web_export_view
+#. openerp-web
+#: code:addons/web_export_view/static/src/xml/web_export_view_template.xml:6
+#, python-format
+msgid "Export Current View"
+msgstr "Export Current View"
+
+#. module: web_export_view
+#. openerp-web
+#: code:addons/web_export_view/static/src/js/web_export_view.js:84
+#, python-format
+msgid "False"
+msgstr "False"
+
+#. module: web_export_view
+#. openerp-web
+#: code:addons/web_export_view/static/src/js/web_export_view.js:81
+#, python-format
+msgid "True"
+msgstr "True"

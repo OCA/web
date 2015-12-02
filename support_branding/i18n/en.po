@@ -1,0 +1,49 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * support_branding
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: web (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-23 13:46+0000\n"
+"PO-Revision-Date: 2015-11-07 11:19+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"Language-Team: English (http://www.transifex.com/oca/OCA-web-8-0/language/en/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: support_branding
+#: view:website:web.menu_secondary
+msgid ", supported by"
+msgstr ", supported by"
+
+#. module: support_branding
+#. openerp-web
+#: code:addons/support_branding/static/src/js/support_branding.js:106
+#, python-format
+msgid "Email to %s"
+msgstr "Email to %s"
+
+#. module: support_branding
+#. openerp-web
+#: code:addons/support_branding/static/src/xml/base.xml:12
+#, python-format
+msgid "Email to support company"
+msgstr "Email to support company"
+
+#. module: support_branding
+#. openerp-web
+#: code:addons/support_branding/static/src/xml/base.xml:10
+#, python-format
+msgid "Please fill in how you produced this error..."
+msgstr "Please fill in how you produced this error..."
+
+#. module: support_branding
+#: view:website:web.menu_secondary
+msgid "Version"
+msgstr "Version"
