@@ -13,6 +13,7 @@ openerp.web_dialog_size= function (instance) {
                 self.$dialog_box.find('.dialog_button_extend').on('click', self._extending);
                 self.$dialog_box.find('.dialog_button_restore').on('click', self._restore);
             }
+            $(".modal-dialog").draggable();
         },
 
         _extending: function() {
