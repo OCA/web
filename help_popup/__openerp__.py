@@ -39,5 +39,5 @@
     'qweb': [
         'static/src/xml/popup_help.xml',
     ],
-    'installable': True,
+    'installable': False,
 }

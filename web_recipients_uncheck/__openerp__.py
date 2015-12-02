@@ -32,4 +32,5 @@
     'data': [
         'view/web_recipients_uncheck.xml',
     ],
+    'installable': False,
 }

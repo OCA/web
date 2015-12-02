@@ -32,5 +32,5 @@
         'static/src/xml/web_widget_classes.xml',
     ],
     "auto_install": False,
-    "installable": True,
+    'installable': False,
 }

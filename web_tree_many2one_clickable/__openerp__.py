@@ -34,5 +34,5 @@
     "data": [
         'views/asset.xml',
     ],
-    "installable": True,
+    'installable': False,
 }

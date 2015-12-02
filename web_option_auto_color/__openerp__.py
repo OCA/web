@@ -38,4 +38,5 @@
     'qweb': [
         'static/src/xml/templates.xml',
     ],
+    'installable': False,
 }

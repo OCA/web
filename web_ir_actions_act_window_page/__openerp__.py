@@ -27,5 +27,5 @@
     "category": "Dependency",
     "depends": ['web'],
     'data': ['view/qweb.xml'],
-    'installable': True,
+    'installable': False,
 }
