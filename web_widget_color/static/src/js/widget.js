@@ -11,8 +11,6 @@ openerp.web_widget_color = function (instance) {
 
     instance.web.form.widgets.add('color', 'instance.web.form.FieldColor');
 
-    instance.web.search.fields.add('color', 'instance.web.search.CharField');
-
     instance.web.form.FieldColor = instance.web.form.FieldChar.extend({
         template: 'FieldColor',
         widget_class: 'oe_form_field_color',
