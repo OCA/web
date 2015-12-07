@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
-# This file is part of OpenERP. The COPYRIGHT file at the top level of
-# this module contains the full copyright notices and license terms.
+# © 2015 Andrius Preimantas <andrius@versada.lt>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
     'name': "Use AND conditions on omnibar search",
-    'version': '1.0',
+    'version': '8.0.1.0.0',
     'author': 'Versada UAB, Odoo Community Association (OCA)',
+    'license': 'AGPL-3',
     'category': 'web',
     'website': 'http://www.versada.lt',
-    'description': "",
     'depends': [
         'web',
     ],
     'data': [
-        'data.xml',
+        'data/data.xml',
     ],
     'installable': True,
     'application': False,
