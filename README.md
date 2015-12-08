@@ -44,6 +44,7 @@ addon | version | summary
 [web_option_auto_color](web_option_auto_color/) | 8.0.0.1.0 | Web Option Auto Color
 [web_readonly_bypass](web_readonly_bypass/) | 8.0.1.0.1 | Allow to save onchange modifications to readonly fields
 [web_recipients_uncheck](web_recipients_uncheck/) | 8.0.0.3.0 | Uncheck recipients on res.partner
+[web_search_with_and](web_search_with_and/) | 8.0.1.0.0 | Use AND conditions on omnibar search
 [web_searchbar_full_width](web_searchbar_full_width/) | 8.0.1.0.0 | Show search bar in full screen width
 [web_sheet_full_width](web_sheet_full_width/) | 8.0.1.0.0 | Use the whole available screen width when displaying sheets
 [web_sheet_full_width_selective](web_sheet_full_width_selective/) | 8.0.0.1.0 | Show selected sheets with full width
