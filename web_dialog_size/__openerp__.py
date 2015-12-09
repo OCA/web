@@ -30,6 +30,7 @@
 
     'author': "ACSONE SA/NV,"
               "Serv. Tecnol. Avanzados - Pedro M. Baeza,"
+              "Therp BV,"
               "Odoo Community Association (OCA)",
     'website': "http://acsone.eu",
 

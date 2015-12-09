@@ -5,10 +5,12 @@ A module that lets the user expand/restore the dialog box size through a button
 in the upper right corner (mimicking most windows managers). By default,
 all dialog boxes are expanded.
 
-Known issues / Roadmap
-======================
+Configuration
+=============
 
-* Provide a system parameter that allows to set default size (normal/expanded).
+By default, the module respects the caller's `dialog_size` option. If you want
+to override this and have all dialogs maximized by default, set the configuration
+parameter `web_dialog_size.default_maximize` to `1`.
 
 Credits
 =======
@@ -19,6 +21,7 @@ Contributors
 * Anthony Muschang <anthony.muschang@acsone.eu>
 * Stéphane Bidoul <stephane.bidoul@acsone.eu>
 * Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>
+* Holger Brunn <hbrunn@therp.nl>
 
 Maintainer
 ----------
