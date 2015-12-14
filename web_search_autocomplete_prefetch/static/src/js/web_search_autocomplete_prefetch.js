@@ -11,6 +11,10 @@ openerp.web_search_autocomplete_prefetch = function(instance)
         {
             return data;
         }
+        if(!self.autocomplete_mutex)
+        {
+            self.autocomplete_mutex = new instance.Mutex()
+        }
         var facet = {
             get: function(name)
             {
@@ -25,23 +29,26 @@ openerp.web_search_autocomplete_prefetch = function(instance)
             self.get_domain({values: [facet]}),
             self.view.dataset.domain);
         domain.set_eval_context(self.view.dataset.get_context());
-        return self.view.dataset._model.call(
-            'search_count', [domain.eval()])
-            .then(function(count)
-            {
-                if(count)
+        return self.autocomplete_mutex.exec(function()
+        {
+            return self.view.dataset._model.call(
+                'search_count', [domain.eval()])
+                .then(function(count)
                 {
-                    _.each(data, function(obj)
+                    if(count)
                     {
-                        obj.label += _.str.sprintf(' (%s)', count);
-                    });
-                    return data;
-                }
-                else
-                {
-                    return null;
-                }
-            });
+                        _.each(data, function(obj)
+                        {
+                            obj.label += _.str.sprintf(' (%s)', count);
+                        });
+                        return data;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                });
+        });
     }
 
     instance.web.search.CharField.include({
