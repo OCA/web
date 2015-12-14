@@ -1,26 +1,92 @@
-openerp.testing.section('web_widget_boolean_switch',
+openerp.testing.section('BooleanSwitchWidget.behaviors',
+                        {dependences: ['web.web_widget_boolean_switch'],
+                         rpc: 'mock',
+                         templates: true,
+                        }, function(test){
+    test('BooleanSwitchWidget quick edit - enter in edit mode - cancel',
+         {asserts: 30}, function (instance, $fix, mock) {
+
+        mock('demo:read', function () {
+            console.log("read data");
+            return [{ id: 1, a: true, b: 'bar', c: 'baz' }];
+        });
+        mock('demo:fields_view_get', function () {
+            return {
+                type: 'form',
+                fields: {
+                    a: {type: 'boolean', string: "A"},
+                    b: {type: 'char', string: "B"},
+                    c: {type: 'char', string: "C"}
+                },
+                arch: '<form>' +
+                      '  <field name="a"  widget="boolean_switch" options="{\'quick_edit\': True}"/>' +
+                      '  <field name="b"/>' +
+                      '  <field name="c"/>' +
+                      '</form>',
+            };
+        });
+        var ds = new instance.web.DataSetStatic(null, 'demo', null, [1]);
+        ds.index = 0;
+        var form = new instance.web.FormView({}, ds, false, {
+                    initial_mode: 'view',
+                    disable_autofocus: false,
+                    $buttons: $(),
+                    $pager: $()
+            });
+        var numTest = 1;
+        form.appendTo($fix);
+        var promise = form.do_show();
+        check_values(form.$el.find(".oe_form_field_boolean_switch"),
+                     true, false, false,
+                     numTest++ + " - Init state: quick editable with true value");
+        form.fields.a.switcher.checkboxes.click();
+        check_values(form.$el.find('.oe_form_field_boolean_switch'),
+                     false, false, false,
+                     numTest++ + " - Quick edit to `false` value");
+        form.to_edit_mode();
+        check_values(form.$el.find('.oe_form_field_boolean_switch'),
+                     false, false, false,
+                     numTest++ + " - Move to edit mode value still false");
+        form.fields.a.switcher.checkboxes.click();
+        check_values(form.$el.find('.oe_form_field_boolean_switch'),
+                     true, false, false,
+                     numTest++ + " - edit to True");
+        // remove class oe_form_dirty to avoid popup in unit test while canceling
+        form.$el.removeClass('oe_form_dirty');
+        form.on_button_cancel.call(form);
+        check_values(form.$el.find('.oe_form_field_boolean_switch'),
+                     false, false, false,
+                     numTest++ + " - Cancel edit mode return still False");
+        return promise;
+
+    });
+
+});
+
+var check_values = function (scratchpad, value, readonly, disabled,
+                             message){
+    var $container = scratchpad.children();
+    var $input = $container.find('input');
+    strictEqual($input[0].checked, value, message + " - Input value");
+    strictEqual($input[0].readOnly && $input[0].readOnly ? true : false,
+                readonly, message + " - Input readonly");
+    strictEqual($input[0].disabled && $input[0].disabled ? true : false, disabled,
+                message + " - Input disabled");
+
+    var prefix = 'bootstrap-switch-';
+    ok($container[0].classList.contains(prefix + (value ? 'on' : 'off')),
+       message + " - Bootstrap-switch value class");
+    strictEqual($container[0].classList.contains(prefix + "readonly"),
+                readonly, message + " - Bootstrap-switch readonly class");
+    strictEqual($container[0].classList.contains(prefix + "disabled"),
+                disabled, message + " - Bootstrap-switch disabled class");
+
+};
+
+openerp.testing.section('BooleanSwitchWidget.tests',
                         {'dependences': ['web.web_widget_boolean_switch'],
                          }, function(test){
     "use strict";
-    var check_values = function (scratchpad, value, readonly, disabled,
-                                 message){
-        var $container = scratchpad.children();
-        var $input = $container.find('input');
-        strictEqual($input[0].checked, value, message + " - Input value");
-        strictEqual($input[0].readOnly && $input[0].readOnly ? true : false,
-                    readonly, message + " - Input readonly");
-        strictEqual($input[0].disabled && $input[0].disabled ? true : false, disabled,
-                    message + " - Input disabled");
-
-        var prefix = 'bootstrap-switch-';
-        ok($container[0].classList.contains(prefix + (value ? 'on' : 'off')),
-           message + " - Bootstrap-switch value class");
-        strictEqual($container[0].classList.contains(prefix + "readonly"),
-                    readonly, message + " - Bootstrap-switch readonly class");
-        strictEqual($container[0].classList.contains(prefix + "disabled"),
-                    disabled, message + " - Bootstrap-switch disabled class");
-
-    };
 
     var init_check_values = function(instance, scratchpad, html, options,
                                      checked, readonly, disabled, message){

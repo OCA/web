@@ -81,6 +81,7 @@ openerp.web_widget_boolean_switch = function(instance){
                         model.call('write', [[id], values],
                                    {'context': this.build_context()});
                         this.internal_set_value(state, {'silent': true});
+                        this.getParent().datarecord[this.name] = state;
                     }
                 }, this));
             this.on("change:readonly", this, this.switcher_states);
