@@ -9,6 +9,8 @@ web_sheet_full_width
 This module was written to extend the functionality of web to support full width
 for form view
 
+Note: Due to licence incompatibility you have not legal right to install this module on enterprise version.
+
 Usage
 =====
 
