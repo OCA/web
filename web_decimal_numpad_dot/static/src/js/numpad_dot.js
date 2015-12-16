@@ -11,12 +11,18 @@
             }
         },
         floatKeypress: function(e){
-            if(e.keyCode == '46' || e.charCode == '46'){
-                //Cancel the keypress
+            if (e.keyCode == '46' || e.charCode == '46') {
+                // Cancel the keypress
                 e.preventDefault();
                 // Add the comma to the value of the input field
-                 this.$("input").val(this.$("input").val() + ',');
+                this.$("input").val(this.$("input").val() + instance.web._t.database.parameters.decimal_point);
              }
+            else if (e.keyCode == '44' || e.charCode == '44') {
+                // Cancel the keypress
+                e.preventDefault();
+                // Add the comma to the value of the input field
+                this.$("input").val(this.$("input").val() + instance.web._t.database.parameters.thousands_sep);
+            }
         },
     });
 })();
