@@ -73,6 +73,7 @@ Contributors
 ------------
 
 * Cristian Salamea <cristian.salamea@gmail.com>
+* Clovis Nzouendjou <clovis@anybox.fr>
 
 Maintainer
 ----------
