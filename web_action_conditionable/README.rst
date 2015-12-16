@@ -16,6 +16,9 @@ with this module you can:
 ::
    
    <tree delete="state=='draft'">
+or ::
+
+   <tree create="state in ('draft', 'confirm')">
 
 It works in any tree view, so you can use it in One2many.
 
@@ -40,10 +43,10 @@ To use this module, you need to:
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/web/8.0
+   :target: https://runbot.odoo-community.org/runbot/web/7.0
 
 .. repo_id is available in https://github.com/OCA/maintainer-tools/blob/master/tools/repos_with_ids.txt
-.. branch is "8.0" for example
+.. branch is "7.0" for example
 
 For further information, please visit:
 
