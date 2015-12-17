@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-# © <2015> <Cristian Salamea, Clovis Nzouendjou, Odoo Community Association (OCA)>
+# © 2015 Cristian Salamea, Clovis Nzouendjou, Odoo Community Association (OCA)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
     "name": 'web_action_conditionable',
-    "version": "7.0.0.1.0",
+    "version": "7.0.1.0.0",
     "license": "AGPL-3",
     "category": "Usability",
     "summary": """Web Action Conditionable: This module was written to extend the \
@@ -14,7 +14,7 @@ functionality of actions in tree views""",
 Web Action Conditionable
 ========================
 
-This module was written to extend the functionality of actions in tree views. \
+This module was written to extends the functionality of actions in tree views. \
 Odoo by default support::
 
     <tree delete="false" create="false">
