@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-23 13:46+0000\n"
+"POT-Creation-Date: 2015-12-16 07:41+0000\n"
 "PO-Revision-Date: 2015-11-08 05:44+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-web-8-0/language/sl/)\n"
@@ -27,14 +27,14 @@ msgstr "Iskanje"
 
 #. module: web_advanced_search_x2x
 #. openerp-web
-#: code:addons/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js:222
+#: code:addons/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js:235
 #, python-format
 msgid "Use criteria"
 msgstr "Uporabi kriterij"
 
 #. module: web_advanced_search_x2x
 #. openerp-web
-#: code:addons/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js:159
+#: code:addons/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js:172
 #, python-format
 msgid "invalid search domain"
 msgstr "neveljavna iskalna domena"

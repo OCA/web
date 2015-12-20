@@ -1,0 +1,225 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * help_online
+# 
+# Translators:
+# SaFi J. <safi2266@gmail.com>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: web (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-12-16 07:41+0000\n"
+"PO-Revision-Date: 2015-12-16 16:57+0000\n"
+"Last-Translator: SaFi J. <safi2266@gmail.com>\n"
+"Language-Team: Arabic (http://www.transifex.com/oca/OCA-web-8-0/language/ar/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#. module: help_online
+#. openerp-web
+#: code:addons/help_online/static/src/js/help_online.js:83
+#, python-format
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: help_online
+#: view:export.help.wizard:help_online.export_help_wizard_view
+#: view:import.help.wizard:help_online.import_help_wizard_view
+msgid "Close"
+msgstr "إغلاق"
+
+#. module: help_online
+#. openerp-web
+#: code:addons/help_online/static/src/js/help_online.js:81
+#, python-format
+msgid "Confirm"
+msgstr "تأكييد"
+
+#. module: help_online
+#: code:addons/help_online/models/help_online.py:60
+#, python-format
+msgid "Create Help page for %s"
+msgstr "إنشاء صفحة دعم إلى %s"
+
+#. module: help_online
+#: field:export.help.wizard,create_uid:0 field:help.online,create_uid:0
+#: field:import.help.wizard,create_uid:0
+msgid "Created by"
+msgstr "تم الإنشاء بواسطة"
+
+#. module: help_online
+#: field:export.help.wizard,create_date:0 field:help.online,create_date:0
+#: field:import.help.wizard,create_date:0
+msgid "Created on"
+msgstr "تم الإنشاء في"
+
+#. module: help_online
+#: view:export.help.wizard:help_online.export_help_wizard_view
+msgid "Export"
+msgstr "تصدير"
+
+#. module: help_online
+#: code:addons/help_online/models/export_help_wizard.py:267
+#: model:ir.actions.act_window,name:help_online.action_export_help_wizard
+#, python-format
+msgid "Export Help"
+msgstr "تصدير المساعدة"
+
+#. module: help_online
+#: view:export.help.wizard:help_online.export_help_wizard_view
+msgid "Export Help Data"
+msgstr "تصدير بيانات المساعدة"
+
+#. module: help_online
+#: model:ir.model,name:help_online.model_export_help_wizard
+#: model:ir.ui.menu,name:help_online.menu_help_export
+msgid "Export Help Online"
+msgstr "تصدير المساعدة الحية"
+
+#. module: help_online
+#: field:export.help.wizard,export_filename:0
+msgid "Export XML Filename"
+msgstr "اسم ملف XML المصدر"
+
+#. module: help_online
+#: model:ir.ui.menu,name:help_online.menu_help
+#: model:ir.ui.menu,name:help_online.menu_help_main
+msgid "Help Online"
+msgstr "المساعدة الحية"
+
+#. module: help_online
+#: code:addons/help_online/models/help_online.py:55
+#, python-format
+msgid "Help on %s"
+msgstr "المساعدة الى %s"
+
+#. module: help_online
+#: model:res.groups,name:help_online.help_online_group_reader
+msgid "Help reader"
+msgstr "قارئ المساعدة"
+
+#. module: help_online
+#: model:res.groups,name:help_online.help_online_group_writer
+msgid "Help writer"
+msgstr "كاتب المساعدة"
+
+#. module: help_online
+#: field:export.help.wizard,id:0 field:help.online,id:0
+#: field:import.help.wizard,id:0
+msgid "ID"
+msgstr "المعرف"
+
+#. module: help_online
+#: view:import.help.wizard:help_online.import_help_wizard_view
+msgid "Import"
+msgstr "إستيراد"
+
+#. module: help_online
+#: model:ir.actions.act_window,name:help_online.action_import_help_wizard
+msgid "Import Help"
+msgstr "استراد المساعدة"
+
+#. module: help_online
+#: view:import.help.wizard:help_online.import_help_wizard_view
+msgid "Import Help Data"
+msgstr "استيراد بيانات المساعدة"
+
+#. module: help_online
+#: model:ir.ui.menu,name:help_online.menu_help_import
+msgid "Import Help Online"
+msgstr "استيراد المساعدة الحية"
+
+#. module: help_online
+#: field:export.help.wizard,write_uid:0 field:help.online,write_uid:0
+#: field:import.help.wizard,write_uid:0
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: help_online
+#: field:export.help.wizard,write_date:0 field:help.online,write_date:0
+#: field:import.help.wizard,write_date:0
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: help_online
+#: code:addons/help_online/models/export_help_wizard.py:260
+#, python-format
+msgid "No data to export !"
+msgstr "لا بيانات لتصديرها !"
+
+#. module: help_online
+#: code:addons/help_online/models/help_online.py:33
+#, python-format
+msgid "No page prefix parameter specified !"
+msgstr "لاتوجد معلمة بادئة محددة للصفحة ! "
+
+#. module: help_online
+#. openerp-web
+#: code:addons/help_online/static/src/js/help_online.js:88
+#, python-format
+msgid "Ok"
+msgstr "موافق"
+
+#. module: help_online
+#. openerp-web
+#: code:addons/help_online/static/src/js/help_online.js:107
+#, python-format
+msgid "Page does not exist. Do you want to create?"
+msgstr "الصفحة غير موجودة. هل تريد الإنشاء ؟"
+
+#. module: help_online
+#: field:import.help.wizard,source_file:0
+msgid "Source File"
+msgstr "الملف المصدر"
+
+#. module: help_online
+#: view:export.help.wizard:help_online.export_help_wizard_view
+msgid ""
+"This wizard allow you to export all QWeb views\n"
+"                        related to help online. The result will be an Odoo\n"
+"                        data xml file."
+msgstr "هذا المعالج يسمح لك بتصدير كل عروض QWeb \n                        المرتبطة بالمساعدة الحية. النتيجة ستكون ملف بيانات xml\n                        لأودو."
+
+#. module: help_online
+#: view:import.help.wizard:help_online.import_help_wizard_view
+msgid ""
+"This wizard allow you to import QWeb views\n"
+"                        related to help online. The required file format is an Odoo\n"
+"                        data xml file."
+msgstr "هذا المعالج يسمح لك بإستيراد عروض QWeb \n                        المرتبطة بالمساعدة الحية. تنسيق الملف المطلوب هو ملف بيانات xml\n                        في أودو."
+
+#. module: help_online
+#: code:addons/help_online/models/export_help_wizard.py:297
+#, python-format
+msgid "Unable to write autobackup file in given directory: %s"
+msgstr "تعذر كتابة ملف النسخ الاحتياطي التلقائي في الدليل المعين : %s"
+
+#. module: help_online
+#: view:ir.ui.view:help_online.view_view_search
+msgid "Website Page"
+msgstr "صفحة موقع الانترنت"
+
+#. module: help_online
+#: view:ir.ui.view:help_online.view_view_form
+msgid "Website Page?"
+msgstr "هل هي صفحة لموقع الانترنت ؟"
+
+#. module: help_online
+#: model:ir.actions.act_window,name:help_online.action_website_pages
+#: model:ir.ui.menu,name:help_online.menu_help_pages
+msgid "Website Pages"
+msgstr "صفحات موقع الانترنت"
+
+#. module: help_online
+#: field:export.help.wizard,data:0
+msgid "XML"
+msgstr "XML"
+
+#. module: help_online
+#: view:export.help.wizard:help_online.export_help_wizard_view
+#: view:import.help.wizard:help_online.import_help_wizard_view
+msgid "or"
+msgstr "أو"
