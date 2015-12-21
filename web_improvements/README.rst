@@ -40,11 +40,6 @@ To use this module, you need to:
 .. repo_id is available in https://github.com/OCA/maintainer-tools/blob/master/tools/repos_with_ids.txt
 .. branch is "8.0" for example
 
-Known issues / Roadmap
-======================
-
-* ...
-
 Bug Tracker
 ===========
 
