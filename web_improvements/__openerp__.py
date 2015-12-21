@@ -19,10 +19,10 @@
     "depends": [
         "web",
     ],
-    "data" : [
+    "data": [
         "theme.xml",
         "views/webclient_templates.xml"],
-    "qweb" : [
+    "qweb": [
         "static/src/xml/*.xml",
     ],
     "images": [
