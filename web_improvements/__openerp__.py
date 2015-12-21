@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Web Improvements",
-    "summary": "This modules aims to be a compilation of community improvements for the standard web module",
+    "summary": "A compilation of community improvements for the web module",
     "version": "8.0.1.0.0",
     "category": "web",
     "website": "http://www.rossa.com.py",
@@ -22,7 +22,7 @@
     "data": [
         "theme.xml",
         "views/webclient_templates.xml"],
-    "qweb": [
+    "qweb" : [
         "static/src/xml/*.xml",
     ],
     "images": [
