@@ -2,19 +2,19 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-==============
-Community Web Improvements
-==============
+================
+Web Improvements
+================
 
 This modules aims to be a compilation of community improvements for the standard web module
 
-* Currently this modules does:
+Currently this modules does:
 * Changes the web interface colors from the default boring gray and pink to beautiful blue and graphite
 * Changes the brand signature at the secondary menu bottom and login page
 * Changes the drill-down symbol by a plus symbol
 * Remove “Your Odoo is not supported.” warning
-...waiting for you to add more
 
+waiting for you to add more features
 
 Installation
 ============
