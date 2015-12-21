@@ -43,7 +43,7 @@ Icon courtesy of http://www.picol.org/ (size_width.svg)
         "view/qweb.xml",
     ],
     "auto_install": False,
-    'installable': False,
+    'installable': True,
     "application": False,
     "external_dependencies": {
         'python': [],
