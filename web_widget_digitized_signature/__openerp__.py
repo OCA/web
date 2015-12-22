@@ -12,7 +12,7 @@
 ##############################################################################
 
 {
-    "name": "Web Digital Signature",
+    "name": "Web Widget Digitized Signature",
     "version": "8.0.1.0.0",
     "author": "Serpent Consulting Services Pvt. Ltd., "
                "Odoo Community Association (OCA)",
