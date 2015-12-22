@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="FieldEmailIntern" t-extend="FieldEmail">
+        <t t-jquery="span:first">
+            this.removeClass('oe_form_field_email').addClass('oe_form_field_email_intern');
+        </t>
+    </t>
+</templates>
