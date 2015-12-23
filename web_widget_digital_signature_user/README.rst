@@ -6,7 +6,7 @@
 Web Digital Signature for users
 ===============================
 
-This module adds a signature field (using ``web_widget_digital_signature``) to user form.
+This module adds a signature field (using ``web_widget_digitized_signature``) to user form.
 
 Usage
 =====
