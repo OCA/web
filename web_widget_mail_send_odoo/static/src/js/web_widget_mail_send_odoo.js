@@ -13,8 +13,8 @@ instance.web.form.FieldEmailIntern = instance.web.form.FieldChar.extend({
     template: 'FieldEmailIntern',
     initialize_content: function() {
         this._super();
-        var $button = this.$el.find('button');
-        $button.click(this.on_button_clicked);
+        var $button = this.$el.find('a');
+        $button.click(this.on_clicked);
         this.setupFocus($button);
     },
     render_value: function() {
@@ -23,28 +23,26 @@ instance.web.form.FieldEmailIntern = instance.web.form.FieldChar.extend({
             this._super();
         } else {
             this.$el.find('a')
-                    //.attr('href', 'nix:' + this.get('value'))
                     .removeAttr('href')
-                    .text(this.get('value') || '')
-                    .unbind('click')
-                    .click(function () {
-                        self.do_action('mail.action_email_compose_message_wizard',{
-                            additional_context:{
-                                default_partner_ids: self.field_manager.get_selected_ids()
-                        }})
-                    });
-
+                    .removeAttr('target')
+                    .text(this.get('value') || '');
         }
     },
-    on_button_clicked: function() {
-        if (!this.get('value') || !this.is_syntax_valid()) {
-            this.do_warn(_t("E-mail Error"), _t("Can't send email to invalid e-mail address"));
+    on_clicked: function() {
+        var self = this;
+        if (!self.get('value') || !self.is_syntax_valid()) {
+            self.do_warn(_t("E-mail Error"), _t("Can't send email to invalid e-mail address"));
         } else {
-            // action to open: mail.action_email_compose_message_wizard
-            //location.href = 'mailto:' + this.get('value');
-            self.do_action('mail.action_email_compose_message_wizard')
+            self.do_action(
+                'mail.action_email_compose_message_wizard',{
+                    additional_context:{
+                        // getting partner this way is wrong, need to search in
+                        // res.partner by email
+                        default_partner_ids: self.field_manager.get_selected_ids()
+                }}
+            )
         }
-    }
+    },
 });
 
 instance.web.form.widgets.add('email', 'instance.web.form.FieldEmailIntern')
