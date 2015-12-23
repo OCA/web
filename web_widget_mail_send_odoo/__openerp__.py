@@ -4,7 +4,7 @@
 
 {
     'name': 'Mail open internally',
-    'summary': 'Open mail in new window',
+    'summary': 'Send mail using internal composition wizard.',
     'version': '8.0.1.0.0',
     "category": "Social Network",
     'website': 'https://odoo-community.org',
