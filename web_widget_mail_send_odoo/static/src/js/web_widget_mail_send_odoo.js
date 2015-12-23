@@ -39,13 +39,19 @@ instance.web.form.FieldEmailIntern = instance.web.form.FieldChar.extend({
                 .filter([['email','=',self.get('value')]])
                 .first().then(function(partner){
                     if(partner){
+                        var fm = self.field_manager
                         self.do_action(
                             'mail.action_email_compose_message_wizard',{
                             additional_context:{
                                 default_partner_ids: [partner.id],
-                                //default_res_id: // current object id
-                                //default_model: // current model
-                                //default_email_to: self.get('value'),
+                                default_composition_mode: 'comment',
+                                /* write to active model:
+                                I think we do not want't this on res.partner?
+                                Make this configurable?
+
+                                default_model: fm.dataset._model.name,
+                                default_res_id: fm.datarecord.id,
+                                */
                             }}
                         )
                     } else {
@@ -59,6 +65,8 @@ instance.web.form.FieldEmailIntern = instance.web.form.FieldChar.extend({
     },
 });
 
+// Todo: Do not replace the default widget by default, make this configurable
+//       or put in an extra module
 instance.web.form.widgets.add('email', 'instance.web.form.FieldEmailIntern')
 //instance.web.form.widgets.add('email-intern', 'instance.web.form.FieldEmailIntern')
 
