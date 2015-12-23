@@ -1,4 +1,4 @@
-openerp.web_widget_digital_signature = function(instance) {
+openerp.web_widget_digitized_signature = function(instance) {
     "use strict";
     var _t = instance.web._t;
     var QWeb = instance.web.qweb;
