@@ -20,12 +20,12 @@ instance.web.form.FieldEmailIntern = instance.web.form.FieldChar.extend({
     render_value: function() {
         var self = this;
         if (!this.get("effective_readonly")) {
-            this._super();
+            self._super();
         } else {
-            this.$el.find('a')
-                    .removeAttr('href')
-                    .removeAttr('target')
-                    .text(this.get('value') || '');
+            self.$el.find('a')
+                .removeAttr('href')
+                .removeAttr('target')
+                .text(self.get('value') || '');
         }
     },
     on_clicked: function() {
@@ -33,14 +33,28 @@ instance.web.form.FieldEmailIntern = instance.web.form.FieldChar.extend({
         if (!self.get('value') || !self.is_syntax_valid()) {
             self.do_warn(_t("E-mail Error"), _t("Can't send email to invalid e-mail address"));
         } else {
-            self.do_action(
-                'mail.action_email_compose_message_wizard',{
-                    additional_context:{
-                        // getting partner this way is wrong, need to search in
-                        // res.partner by email
-                        default_partner_ids: self.field_manager.get_selected_ids()
-                }}
-            )
+            // find partner id for email
+            var res_partner = new openerp.Model('res.partner');
+            res_partner.query(['id'])
+                .filter([['email','=',self.get('value')]])
+                .first().then(function(partner){
+                    if(partner){
+                        self.do_action(
+                            'mail.action_email_compose_message_wizard',{
+                            additional_context:{
+                                default_partner_ids: [partner.id],
+                                //default_res_id: // current object id
+                                //default_model: // current model
+                                //default_email_to: self.get('value'),
+                            }}
+                        )
+                    } else {
+                        self.do_warn(_t("E-mail Error"),
+                            _t("No partner for email."));
+                        // fall back to mailto:
+                        location.href = 'mailto:' + self.get('value');
+                    }
+                })
         }
     },
 });
