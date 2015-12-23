@@ -16,7 +16,7 @@
                "Odoo Community Association (OCA)",
     "category": 'web',
     "license": "AGPL-3",
-    'depends': ['web_widget_digital_signature'],
+    'depends': ['web_widget_digitized_signature'],
     'data': [
         'views/users_view.xml'
     ],
