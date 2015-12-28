@@ -2,9 +2,9 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-=====================
-Web Digital Signature
-=====================
+=======================
+Web Digitized Signature
+=======================
 
 This module provides the functionality to store digital signature image for a record.
 
@@ -15,7 +15,7 @@ To use this module, you need to add ``widget="signature"`` to your binary field 
 You can specifify signature dimensions like the following:
 ``<field name="signature_image" widget="signature" width="400" height="100"/>``
 
-See ``web_widget_digital_signature_user`` and ``sale_order_widget_digitized_signature`` modules as examples.
+See ``web_widget_digitized_signature_user`` and ``sale_order_widget_digitized_signature`` modules as examples.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot

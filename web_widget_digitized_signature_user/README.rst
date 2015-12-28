@@ -2,9 +2,9 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-===============================
-Web Digital Signature for users
-===============================
+=================================
+Web Digitized Signature for users
+=================================
 
 This module adds a signature field (using ``web_widget_digitized_signature``) to user form.
 
@@ -24,7 +24,7 @@ check there if your issue has already been reported. If you spotted it first,
 help us smashing it by providing a detailed and welcomed `feedback
 <https://github.com/OCA/
 web/issues/new?body=module:%20
-web_widget_digital_signature_user%0Aversion:%20
+web_widget_digitized_signature_user%0Aversion:%20
 8.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Credits
