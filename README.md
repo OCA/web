@@ -13,6 +13,12 @@ This project aims to deal with modules related to the webclient of Odoo. You'll 
 - Generally add clientside functionality
 
 [//]: # (addons)
+Available addons
+----------------
+addon | version | summary
+--- | --- | ---
+[web_sheet_full_width](web_sheet_full_width/) | 9.0.1.0.0 | Use the whole available screen width when displaying sheets
+
 Unported addons
 ---------------
 addon | version | summary
@@ -50,7 +56,6 @@ addon | version | summary
 [web_search_alphabetic](web_search_alphabetic/) | 1.0 (unported) | Web Alphabetical Search
 [web_searchbar_full_width](web_searchbar_full_width/) | 8.0.1.0.0 (unported) | Show search bar in full screen width
 [web_send_message_popup](web_send_message_popup/) | 1.0 (unported) | Web Send Message as Popup
-[web_sheet_full_width](web_sheet_full_width/) | 9.0.1.0.0 | Use the whole available screen width when displaying sheets
 [web_sheet_full_width_selective](web_sheet_full_width_selective/) | 8.0.0.1.0 (unported) | Show selected sheets with full width
 [web_shortcuts](web_shortcuts/) | 8.0.1.0.0 (unported) | Web Shortcuts
 [web_switch_company_warning](web_switch_company_warning/) | 8.0.0.1.0 (unported) | Show a warning if current company has been switched in another tab or window.
