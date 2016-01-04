@@ -22,11 +22,11 @@
 ##############################################################################
 {
     "name": "HTML widget for list/tree views",
-    "version": "0.1",
+    "version": "8.0.1.0.0",
     "depends": ["web"],
     'author': "initOS GmbH & Co. KG, Odoo Community Association (OCA), "
               "Camptocamp",
-    "category": "",
+    "category": "Web",
     'license': 'AGPL-3',
     'data': [
         'views.xml',
