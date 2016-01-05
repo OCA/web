@@ -35,11 +35,13 @@ odoo.define('web_access_rule_buttons.main', function (require) {
     },
 
     show_hide_edit_button: function(access) {
-      var button = this.$buttons.find('.oe_form_button_edit');
-      if(access) {
-        button.removeAttr('disabled');
-      } else {
-        button.attr('disabled', true);
+      if (this.$buttons) {
+          var button = this.$buttons.find('.oe_form_button_edit');
+          if(access) {
+            button.removeAttr('disabled');
+          } else {
+            button.attr('disabled', true);
+          }
       }
     }
 
