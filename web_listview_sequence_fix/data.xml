@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        <template id="web_sequence_fix_assets_backend" name="web_sequence_fix assets" inherit_id="web.assets_backend">
+        <template id="web_listview_sequence_fix_assets_backend" name="web_listview_sequence_fix assets" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
-                <script type="text/javascript" src="/web_sequence_fix/static/src/js/view_form.js"></script>
+                <script type="text/javascript" src="/web_listview_sequence_fix/static/src/js/view_form.js"></script>
             </xpath>
         </template>
     </data>

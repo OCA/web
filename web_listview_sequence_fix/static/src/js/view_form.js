@@ -1,4 +1,4 @@
-openerp.web_sequence_fix = function (instance) {
+openerp.web_listview_sequence_fix = function (instance) {
 
     instance.web.FormView.include({
         load_defaults: function () {
