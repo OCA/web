@@ -4,7 +4,7 @@
 
 {
     'name': 'Web Sequence Fix',
-    'version': '0.1',
+    'version': '8.0.1.0.0',
     'author': 'Versada UAB,Odoo Community Association (OCA)',
     'category': 'web',
     'website': 'http://www.versada.lt',
