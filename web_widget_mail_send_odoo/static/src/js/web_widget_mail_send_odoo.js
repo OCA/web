@@ -41,18 +41,19 @@ instance.web.form.FieldEmailIntern = instance.web.form.FieldChar.extend({
                     if(partner){
                         var fm = self.field_manager
                         self.do_action(
-                            'mail.action_email_compose_message_wizard',{
-                            additional_context:{
-                                default_partner_ids: [partner.id],
-                                default_composition_mode: 'comment',
-                                /* write to active model:
-                                I think we do not want't this on res.partner?
-                                Make this configurable?
-
-                                default_model: fm.dataset._model.name,
-                                default_res_id: fm.datarecord.id,
-                                */
-                            }}
+                            'mail.action_email_compose_message_wizard', {
+                                additional_context: {
+                                    default_partner_ids: [partner.id],
+                                    default_composition_mode: 'comment',
+                                    // write to active model:
+                                    default_model: fm.dataset._model.name,
+                                    default_res_id: fm.datarecord.id,
+                                },
+                                on_close: function(){
+                                    /* Todo: refresh the chatter widget here
+                                    */
+                                },
+                            }
                         )
                     } else {
                         self.do_warn(_t("E-mail Error"),
@@ -65,9 +66,6 @@ instance.web.form.FieldEmailIntern = instance.web.form.FieldChar.extend({
     },
 });
 
-// Todo: Do not replace the default widget by default, make this configurable
-//       or put in an extra module
 instance.web.form.widgets.add('email', 'instance.web.form.FieldEmailIntern')
-//instance.web.form.widgets.add('email-intern', 'instance.web.form.FieldEmailIntern')
 
 })()
