@@ -54,12 +54,24 @@ instance.web.form.FieldEmailIntern = instance.web.form.FieldChar.extend({
                                     */
                                 },
                             }
-                        )
+                        );
                     } else {
-                        self.do_warn(_t("E-mail Error"),
-                            _t("No partner for email."));
-                        // fall back to mailto:
-                        location.href = 'mailto:' + self.get('value');
+                        console.log(self.build_context());
+                        var pop = new instance.web.form.FormOpenPopup(self);
+                        var context = new instance.web.CompoundContext(self.build_context(), {
+                            default_email: self.get('value'),
+                        });
+                        pop.show_element(
+                            'res.partner',
+                            false,
+                            context,
+                            {
+                                title: _t("Please complete partner's information."),
+                            }
+                        );
+                        pop.on('create_completed', self, function (id) {
+                            self.on_clicked()
+                        });
                     }
                 })
         }
