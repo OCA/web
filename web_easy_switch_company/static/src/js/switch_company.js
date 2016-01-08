@@ -16,14 +16,16 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ******************************************************************************/
-
-openerp.web_easy_switch_company = function (instance) {
+odoo.define('web.SwitchCompanyWidget', function (require) {
+    var Widget = require('web.Widget')
+    var UserMenu = require('web.UserMenu')
+    var Model = require('web.Model')
 
     /***************************************************************************
     Create an new 'SwitchCompanyWidget' widget that allow users to switch 
     from a company to another more easily.
     ***************************************************************************/
-    instance.web.SwitchCompanyWidget = instance.web.Widget.extend({
+    var SwitchCompanyWidget = Widget.extend({
 
         template:'web_easy_switch_company.SwitchCompanyWidget',
 
@@ -84,7 +86,7 @@ openerp.web_easy_switch_company = function (instance) {
          * helper function to load data from the server
          */
         _fetch: function(model, fields, domain, ctx){
-            return new instance.web.Model(model).query(fields).filter(domain).context(ctx).all();
+            return new Model(model).query(fields).filter(domain).context(ctx).all();
         },
 
         /**
@@ -104,7 +106,7 @@ openerp.web_easy_switch_company = function (instance) {
                 // Note: calling res.company.name_search with 
                 //       user_preference=True in the context does 
                 //       not work either.
-                new instance.web.Model('res.company').call('name_search',{context:{'user_preference':'True'}}).then(function(res){
+                new Model('res.company').call('name_search',{context:{'user_preference':'True'}}).then(function(res){
                     var res_company = res;
                     for ( var i=0 ; i < res_company.length; i++) {
                         var logo_topbar, logo_state;
@@ -138,18 +140,33 @@ openerp.web_easy_switch_company = function (instance) {
 
     });
 
+    return SwitchCompanyWidget;
+})
+
+odoo.define('web_easy_switch_company', function (require) {
+    var Widget = require('web.Widget')
+    var UserMenu = require('web.UserMenu')
+    var Model = require('web.Model')
+    var SwitchCompanyWidget = require("web.SwitchCompanyWidget")
+
     /***************************************************************************
     Extend 'UserMenu' Widget to insert a 'SwitchCompanyWidget' widget.
     ***************************************************************************/
-    instance.web.UserMenu =  instance.web.UserMenu.extend({
+    var UserMenu = UserMenu.include({
 
-        init: function(parent) {
+        start: function(parent) {
+            var self = this
             this._super(parent);
-            var switch_button = new instance.web.SwitchCompanyWidget();
-            switch_button.appendTo(instance.webclient.$el.find('.oe_systray'));
+            var webclient = this.getParent().getParent();
+
+            var switch_button = new SwitchCompanyWidget(self);
+            var systray = self.$el.parent('ul')
+            var li = $('<li />')
+            li.appendTo(systray)
+            switch_button.appendTo(li)
         }
 
     });
 
-};
-
+    return UserMenu;
+})

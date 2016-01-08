@@ -63,6 +63,6 @@ Copyright, Author and Licence:
     'qweb': [
         'static/src/xml/switch_company.xml',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
 }
