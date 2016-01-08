@@ -3,13 +3,13 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
-    'name': 'Mail open internally',
+    'name': 'Web Widget - Email internal mail link',
     'summary': 'Send mail using internal composition wizard.',
     'version': '8.0.1.0.0',
-    "category": "Social Network",
+    'category': 'Social Network',
     'website': 'https://odoo-community.org',
     'author': 'initOS GmbH, Odoo Community Association (OCA)',
-    "license": "AGPL-3",
+    'license': 'AGPL-3',
     'application': False,
     'installable': True,
     'auto_install': False,
