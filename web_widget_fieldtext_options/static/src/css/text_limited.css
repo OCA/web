@@ -1,0 +1,8 @@
+div.oe_form_field.oe_form_field_text {
+    position: relative;
+}
+
+span.length_limit {
+    position: absolute;
+    right: 0;
+}
