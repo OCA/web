@@ -35,8 +35,9 @@ instance.web.form.FieldEmailIntern = instance.web.form.FieldChar.extend({
         } else {
             // find partner id for email
             var res_partner = new openerp.Model('res.partner');
+            var parsed_email = instance.mail.ChatterUtils.parse_email(self.get('value'));
             res_partner.query(['id'])
-                .filter([['email','=',self.get('value')]])
+                .filter([['email', '=', parsed_email[1]]])
                 .first().then(function(partner){
                     if(partner){
                         var fm = self.field_manager
@@ -59,7 +60,8 @@ instance.web.form.FieldEmailIntern = instance.web.form.FieldChar.extend({
                         console.log(self.build_context());
                         var pop = new instance.web.form.FormOpenPopup(self);
                         var context = new instance.web.CompoundContext(self.build_context(), {
-                            default_email: self.get('value'),
+                            default_name: parsed_email[0],
+                            default_email: parsed_email[1],
                         });
                         pop.show_element(
                             'res.partner',
