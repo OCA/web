@@ -3,18 +3,18 @@
 More completion options for datetime fields
 ===========================================
 
-This module was written to extend the offers shown to the user when starting to fill in a date. In standard odoo, the only offer is the date at 00:00:00 hours, while it can be convenient for the user to have other options, too. When searching for the end of a period, `23:59:59` would come to mind, and there also might be domain specific times that make sense.
+This module was written to extend the offers shown to the user when starting to fill in a date. In standard odoo, the only offer is the date at 00:00:00 hours, while it can be convenient for the user to have other options, too. When searching for the end of a period, ``23:59:59`` would come to mind, and there also might be domain specific times that make sense.
 
 Configuration
 =============
 
-If you do nothing, only the time `23:59:59` is added to the completion dropdown.
+If you do nothing, only the time ``23:59:59`` is added to the completion dropdown.
 
-In your code, you can add an options dictionary with a key `completion_options` which contains a list if dictionaries detailing the offsets that should be added to the parsed date, like::
+In your code, you can add an options dictionary with a key ``completion_options`` which contains a list if dictionaries detailing the offsets that should be added to the parsed date, like::
 
 <field name="my_datetime_field" options="{'completion_options': [{'hours': 12, 'minutes': 30, 'seconds': 0}]}" />
 
-which would offer to search for the date at half past twelve. Note that when you set `completion_options`, you have to list all options you want to see, as the standard options will be replaced with your list.
+which would offer to search for the date at half past twelve. Note that when you set ``completion_options``, you have to list all options you want to see, as the standard options will be replaced with your list.
 
 Usage
 =====
@@ -54,4 +54,4 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-To contribute to this module, please visit http://odoo-community.org.
+To contribute to this module, please visit https://odoo-community.org.

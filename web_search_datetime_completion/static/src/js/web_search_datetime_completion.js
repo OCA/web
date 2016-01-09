@@ -57,7 +57,8 @@ openerp.web_search_datetime_completion = function(instance)
                         date, self.attrs);
                     options.push({
                         label: _.str.sprintf(_.str.escapeHTML(
-                            _t("Search %(field)s at: %(value)s")), {
+                            instance.web._t("Search %(field)s at: %(value)s")),
+                            {
                                 field: _.str.sprintf(
                                     '<em>%s</em>',
                                     _.escape(self.attrs.string)),
