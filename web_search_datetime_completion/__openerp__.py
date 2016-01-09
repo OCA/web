@@ -20,8 +20,8 @@
 ##############################################################################
 {
     "name": "More completion options for datetime fields",
-    "version": "1.0",
-    "author": "Therp BV",
+    "version": "8.0.1.0.0",
+    "author": "Therp BV,Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "category": "Usability",
     "summary": "Offer more completion options for datetime fields while "
