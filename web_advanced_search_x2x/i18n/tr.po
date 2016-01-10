@@ -1,10 +1,9 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * web_translate_dialog
+# * web_advanced_search_x2x
 # 
 # Translators:
 # Ahmet Altınışık <aaltinisik@altinkaya.com.tr>, 2015
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
@@ -19,37 +18,30 @@ msgstr ""
 "Language: tr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#. module: web_translate_dialog
+#. module: web_advanced_search_x2x
 #. openerp-web
-#: code:addons/web_translate_dialog/static/src/xml/base.xml:30
+#: code:addons/web_advanced_search_x2x/static/src/xml/web_advanced_search_x2x.xml:8
 #, python-format
-msgid "Cancel"
-msgstr "İptal"
+msgid "Search"
+msgstr "Ara"
 
-#. module: web_translate_dialog
+#. module: web_advanced_search_x2x
 #. openerp-web
-#: code:addons/web_translate_dialog/static/src/xml/base.xml:7
+#: code:addons/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js:235
 #, python-format
-msgid "Field"
-msgstr "Alan"
+msgid "Use criteria"
+msgstr "Kullanım Kriteri"
 
-#. module: web_translate_dialog
+#. module: web_advanced_search_x2x
 #. openerp-web
-#: code:addons/web_translate_dialog/static/src/xml/base.xml:29
+#: code:addons/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js:172
 #, python-format
-msgid "Save"
-msgstr "Kaydet"
+msgid "invalid search domain"
+msgstr "Geçersiz arama alanı"
 
-#. module: web_translate_dialog
+#. module: web_advanced_search_x2x
 #. openerp-web
-#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:15
+#: code:addons/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js:47
 #, python-format
-msgid "Translate"
-msgstr "Çeviri"
-
-#. module: web_translate_dialog
-#. openerp-web
-#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:37
-#, python-format
-msgid "Translations"
-msgstr "daha çevrilmedi"
+msgid "is in selection"
+msgstr ""
