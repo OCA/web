@@ -17,9 +17,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ******************************************************************************/
 odoo.define('web.SwitchCompanyWidget', function (require) {
-    var Widget = require('web.Widget')
-    var UserMenu = require('web.UserMenu')
-    var Model = require('web.Model')
+    var Widget = require('web.Widget');
+    var UserMenu = require('web.UserMenu');
+    var Model = require('web.Model');
 
     /***************************************************************************
     Create an new 'SwitchCompanyWidget' widget that allow users to switch 
