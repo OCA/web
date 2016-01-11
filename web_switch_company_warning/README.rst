@@ -7,17 +7,21 @@ Web Switch Company Warning
 ===========================
 
 
-Shows a warning if current company has been switched in another tab or window.
+Shows a warning if current (company|user|db) has been changed within another tab or window.
 
 
-Known issues / Roadmap
-======================
+Known issues
+============
 
 
     * If the browser don't implement Sharded Worker (http://www.w3.org/TR/workers/#sharedworker), the warning message will not be displayed (there is no polyfill).
 
     * Switching company in a separate browser or in private browsing mode will not be detected by this module. It's a limitation of Shared Wworker(limit to browser session, server:port...)
 
+Updates
+=======
+	* Jan 2016 : [IMP] add user and db in change detection
+	* Sep 2015 : First version
 
 Bug Tracker
 ===========
