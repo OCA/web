@@ -10,10 +10,6 @@ odoo.define('web_access_rule_buttons.main', function (require) {
   var FormView = require('web.FormView');
   var ListView = require('web.ListView');
 
-  var QWeb = core.qweb;
-
-  var _t = core._t;
-
   FormView.include({
 
     load_record: function() {
