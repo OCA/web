@@ -17,13 +17,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ******************************************************************************/
 odoo.define('web_easy_switch_company', function (require) {
-    var Widget = require('web.Widget')
     var UserMenu = require('web.UserMenu')
-    var Model = require('web.Model')
+    var SystrayMenu = require('web.SystrayMenu');
     var SwitchCompanyWidget = require("web.SwitchCompanyWidget")
 
     /***************************************************************************
-    Extend 'UserMenu' Widget to insert a 'SwitchCompanyWidget' widget.
+    * Extend 'UserMenu' Widget to insert a 'SwitchCompanyWidget' widget on the
+    * dashboard view
     ***************************************************************************/
     var UserMenu = UserMenu.include({
 
@@ -41,5 +41,6 @@ odoo.define('web_easy_switch_company', function (require) {
 
     });
 
-    return UserMenu;
+    // Add to systray on usual screens
+    SystrayMenu.Items.push(SwitchCompanyWidget)
 })
