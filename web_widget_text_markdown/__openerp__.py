@@ -19,19 +19,19 @@
 ##############################################################################
 
 {
-    'name': 'web_widget_text_markdown',
-    'version': '8.0.1.0.0',
+    'name': 'Markdown text widget',
+    'version': '9.0.1.0.0',
     'author': "Sudokeys,Odoo Community Association (OCA)",
     'maintainer': 'Sudokeys',
     'category': '',
     'license': 'AGPL-3',
-    'depends': ['base', 'web'],
+    'depends': ['base', 'web', 'web_widget_text_ace'],
     'website': 'http://www.sudokey.com',
     'data': ['views/main.xml', ],
     "qweb": ["static/src/xml/bootstrap_markdown.xml",
              ],
     'demo': [],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False
 }

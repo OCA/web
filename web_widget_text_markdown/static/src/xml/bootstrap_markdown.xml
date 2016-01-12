@@ -5,34 +5,31 @@
 
     <t t-name="FieldMarkDown">
 
-        <div t-attf-class="oe_form_field oe_form_field_markdown markdown-body" t-att-style="widget.node.attrs.style">
+        <div t-att-style="widget.node.attrs.style" t-attf-class="oe_form_field oe_form_field_markdown markdown-body col-md-12 col-xs-12">
 
             <t t-if="!widget.get('effective_readonly')">
-                <textarea rows="6"
-                    t-att-name="widget.name"
-                    class="field_text"
-                    t-att-tabindex="widget.node.attrs.tabindex"
-                    t-att-autofocus="widget.node.attrs.autofocus"
-                    t-att-placeholder="! widget.get('effective_readonly') ? widget.node.attrs.placeholder : ''"
-                    t-att-maxlength="widget.field.size"
-                    ></textarea><img class="oe_field_translate oe_input_icon"
-                    t-if="widget.field.translate and !widget.get('effective_readonly')"
-                    t-att-src='_s + "/web/static/src/img/icons/terp-translate.png"'
-                    width="16"
-                    height="16"
-                    border="0"
-                    />
-                </t>
-                <t t-if="widget.get('effective_readonly')">
-                    <span class="oe_form_text_content"></span>
-                </t>
-            </div>
-        </t>
+                <textarea class="field_text" rows="6" t-att-autofocus="widget.node.attrs.autofocus" t-att-maxlength="widget.field.size" t-att-name="widget.name" t-att-placeholder="! widget.get('effective_readonly') ? widget.node.attrs.placeholder : ''"
+                    t-att-tabindex="widget.node.attrs.tabindex"></textarea><img border="0" class="oe_field_translate oe_input_icon" height="16" t-att-src='_s + "/web/static/src/img/icons/terp-translate.png"' t-if="widget.field.translate and !widget.get('effective_readonly')" width="16"/>
+                <div class="md-toolbar">
+                    <div class="btn-toolbar">
+                        <div class="btn-group pull-right">
+                            <button class="md-btn btn btn-sm btn-default btn-edit active" data-btn="edit" type="button">
+                                <i class="fa fa-pencil"></i>
+                                Edit</button>
+                        </div>
+                    </div>
+                </div>
+                <div t-att-id="widget.ace_editor_id" t-att-style="widget.node.attrs.style" t-attf-class="md-editor col-md-12 col-xs-12"/>
+                <div class="md-preview" style="display:none"></div>
+            </t>
+            <t t-if="widget.get('effective_readonly')">
+                <span class="oe_form_text_content"></span>
+            </t>
+        </div>
+    </t>
 
-        <t t-name="FieldTextRst2HtmlReadOnly">
-            <div class="oe_form_field_html oe_form_field_rst2html_readonly"
-                t-att-style="widget.node.attrs.style">
-            </div>
-        </t>
+    <t t-name="FieldTextRst2HtmlReadOnly">
+        <div class="oe_form_field_html oe_form_field_rst2html_readonly col-md-12 col-xs-12" t-att-style="widget.node.attrs.style"></div>
+    </t>
 
-    </templates>
+</templates>

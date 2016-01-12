@@ -27,7 +27,7 @@
 .markdown-body {
   font-size: 15px;
   line-height: 1.7;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 .markdown-body > *:first-child {
   margin-top: 0 !important;
