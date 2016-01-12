@@ -84,7 +84,6 @@ odoo.define('web.web_widget_text_ace', function(require) {
                             enableSnippets: true,
                             enableLiveAutocompletion: true
                         });
-                        this.addcompleter();
                     }
                     this.$txt = this.$el.find('.ace_text-input')
                     this.silent = true;
