@@ -22,9 +22,7 @@ odoo.define('web.web_easy_switch_company',function (require) {
 
     "use strict";
 
-    var core = require('web.core');
     var Widget = require('web.Widget');
-    var UserMenu = require('web.UserMenu');
     var SystrayMenu = require('web.SystrayMenu');
     var web_client = require('web.web_client');
     var Model = require('web.Model');
