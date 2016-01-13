@@ -63,8 +63,8 @@ odoo.define('web.SwitchCompanyWidget', function (require) {
             else{
                 this.$el.show();
                 this.$el.find('.easy_switch_company_company_item').on('click', function(ev) {
+                    ev.preventDefault()
                     var company_id = $(ev.target).data("company-id");
-
 
                     if (company_id != self.current_company_id){
                         var func = '/web_easy_switch_company/switch/change_current_company';
