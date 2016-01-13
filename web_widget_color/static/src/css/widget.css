@@ -21,3 +21,10 @@
     top: 3px;
     width: 40px;
 }
+
+.color_box {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    margin-right: 5px;
+}
