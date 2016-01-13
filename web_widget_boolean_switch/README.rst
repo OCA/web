@@ -44,7 +44,6 @@ extra
    * **size**: The checkbox size - default: `null` - values: null, 'mini',
      'small', 'normal', 'large'
    * **animate**: Animate the switch - default: `true`
-   * **indeterminate**: Indeterminate state - default: `false`
    * **inverse**: Inverse switch direction - default: `false`
    * **onColor**: Color of the left side of the switch - default: `"primary"` -
      values: 'primary', 'info', 'success', 'warning', 'danger', 'default'
@@ -74,6 +73,7 @@ extra
       `function() {}`,
     * **onSwitchChange**: Callback function to execute on switch state change -
       default: `function() {}`
+    * **indeterminate**: Indeterminate state - default: `false`
 
 attrs
 -----
