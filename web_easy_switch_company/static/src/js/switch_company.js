@@ -20,6 +20,11 @@ odoo.define('web_easy_switch_company', function (require) {
     var UserMenu = require('web.UserMenu');
     var SystrayMenu = require('web.SystrayMenu');
     var SwitchCompanyWidget = require("web.SwitchCompanyWidget");
+    var Model = require('web.DataModel');
+
+    var web_client = require('web.web_client');
+    var session = require('web.session');
+    var core = require('web.core');
 
     /***************************************************************************
     * Extend 'UserMenu' Widget to insert a 'SwitchCompanyWidget' widget on the
@@ -28,19 +33,51 @@ odoo.define('web_easy_switch_company', function (require) {
     var UserMenu = UserMenu.include({
 
         start: function(parent) {
-            var self = this
+            /*
+            * Add the switch button to the user menu for odoo enterprise
+            */
+            var self = this;
             this._super(parent);
-            var webclient = this.getParent().getParent();
 
-            var switch_button = new SwitchCompanyWidget(self);
-            var systray = self.$el.parent('ul')
-            var li = $('<li />')
-            li.appendTo(systray)
-            switch_button.appendTo(li)
+            var menu = self.$el.parent('ul');
+
+            if (!menu.next().hasClass('oe_systray')) {
+              var switch_button = new SwitchCompanyWidget(self);
+              self.switch_company = switch_button;
+              switch_button.prependTo(menu);
+            }
+        },
+
+        do_update: function () {
+          /*
+          * Prevent the company name to appear twice in the user name field
+          */
+          var self = this;
+          self._super();
+
+          var fct = function () {
+            if (!session.uid)
+                return;
+
+            var func = new Model("res.users").get_func("read");
+
+            return self.alive(func(session.uid, ["name", "company_id"])).then(function(res) {
+                var topbar_name = res.name;
+
+                if(session.debug)
+                    topbar_name = _.str.sprintf("%s (%s)", topbar_name, session.db);
+
+                self.$el.find('.oe_topbar_name').text(topbar_name);
+
+                core.bus.trigger('resize');  // Re-trigger the reflow logic
+            })
+  
+          }
+
+          this.update_promise = this.update_promise.then(fct, fct);
         }
-
     });
 
     // Add to systray on usual screens
-    SystrayMenu.Items.push(SwitchCompanyWidget)
+    SystrayMenu.Items.push(SwitchCompanyWidget);
 })
