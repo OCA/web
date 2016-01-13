@@ -22,7 +22,6 @@ odoo.define('web_easy_switch_company', function (require) {
     var SwitchCompanyWidget = require("web.SwitchCompanyWidget");
     var Model = require('web.DataModel');
 
-    var web_client = require('web.web_client');
     var session = require('web.session');
     var core = require('web.core');
 
@@ -31,22 +30,6 @@ odoo.define('web_easy_switch_company', function (require) {
     * dashboard view
     ***************************************************************************/
     var UserMenu = UserMenu.include({
-
-        start: function(parent) {
-            /*
-            * Add the switch button to the user menu for odoo enterprise
-            */
-            var self = this;
-            this._super(parent);
-
-            var menu = self.$el.parent('ul');
-
-            if (!menu.next().hasClass('oe_systray')) {
-              var switch_button = new SwitchCompanyWidget(self);
-              self.switch_company = switch_button;
-              switch_button.prependTo(menu);
-            }
-        },
 
         do_update: function () {
           /*
