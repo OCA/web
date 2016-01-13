@@ -87,6 +87,7 @@ Contributors
 ------------
 
 * Adil Houmadi <adil.houmadi@gmail.com>
+* Nicolas JEUDY (Sudokeys) <https://www.github.com/njeudy>
 
 Maintainer
 ----------
