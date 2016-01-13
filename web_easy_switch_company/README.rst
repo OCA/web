@@ -6,7 +6,7 @@
 web_easy_switch_company
 =======================
 
-This module extend web backend and allow user to switch to another company more easyly.
+This module extend web backend and allow user to switch to another company more easily.
 
 Configuration
 =============
@@ -14,28 +14,32 @@ Configuration
 To configure this module, you need to:
 
 * Enable multi company in your odoo instance
-* Add your user in at least 2 company, and you will see the switch at the upper right corner
+* Add your user in at least 2 companies, and you will see the switch at the upper right corner
 
 Usage
 =====
 
 Functionality:
 --------------
-    * Add a new menu in the top bar to switch to another company more easily;
-    * Remove the old behaviour to switch company;
+
+* Add a new menu in the top bar to switch to another company more easily;
+* Remove the old behaviour to switch company;
 
 Documentations:
 ---------------
-    * Video : http://www.youtube.com/watch?v=Cpm6dg-IEQQ
+
+* Video : http://www.youtube.com/watch?v=Cpm6dg-IEQQ
 
 Technical information:
 ----------------------
-    * Create a field function 'logo_topbar' in res_company to have a good"""
+
+* Create a field function 'logo_topbar' in res_company to have a good"""
     """resized logo;
 
 Limits:
 -------
-    * It would be interesting to show the structure of the companies;
+
+* It would be interesting to show the structure of the companies;
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
