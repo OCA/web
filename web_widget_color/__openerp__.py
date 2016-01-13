@@ -30,6 +30,7 @@
     "author": "Savoir-faire Linux, "
               "Anybox, "
               "Taktik SA, "
+              "Sudokeys, "
               "Odoo Community Association (OCA)",
     'depends': ['base', 'web'],
     'data': [
