@@ -38,6 +38,7 @@ The other two types can be used for creating different views.
     'data': [
         "web_note_view.xml",
         "security/web_note_security.xml",
+        "security/ir.model.access.csv",
     ],
     'js': [
     ],

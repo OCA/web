@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_web_note,access.web.note,model_web_note,group_web_note_user,1,1,1,1
+access_web_note_container,access.web.note.container,model_web_note_container,group_web_note_user,1,1,1,1
