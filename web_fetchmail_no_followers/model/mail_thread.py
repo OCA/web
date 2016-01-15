@@ -30,9 +30,9 @@ message_post_super = mail_thread.message_post
 
 @api.cr_uid_ids_context
 def MailNoFollowersMessagePost(self, cr, uid, thread_id, body='', subject=None,
-                 type='notification', subtype=None, parent_id=False,
-                 attachments=None, context=None, content_subtype='html',
-                 **kwargs):
+                               type='notification', subtype=None,
+                               parent_id=False, attachments=None, context=None,
+                               content_subtype='html', **kwargs):
 
     nosub_ctx = dict(context, mail_create_nosubscribe=True,
                      mail_create_nolog=True)
@@ -49,7 +49,7 @@ class MailNoFollowers(models.Model):
     ''' I define this class so this code will be executed only if module
         is installed in database. Otherwise it will be always executed.
         Odoo call __init__ once on install and once on uninstall.
-        This way we switch to standard method without a server restart. 
+        This way we switch to standard method without a server restart.
     '''
     _name = 'mail.thread'
 
