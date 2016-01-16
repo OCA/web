@@ -29,10 +29,11 @@ message_post_super = mail_thread.message_post
 
 
 @api.cr_uid_ids_context
-def MailNoFollowersMessageFetch(self, cr, uid, thread_id, body='', subject=None,
-                               type='notification', subtype=None,
-                               parent_id=False, attachments=None, context=None,
-                               content_subtype='html', **kwargs):
+def MailNoFollowersMessageFetch(self, cr, uid, thread_id, body='',
+                                subject=None, type='notification',
+                                subtype=None, parent_id=False,
+                                attachments=None, context=None,
+                                content_subtype='html', **kwargs):
 
     nosub_ctx = dict(context, mail_create_nosubscribe=True,
                      mail_create_nolog=True)
