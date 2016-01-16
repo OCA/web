@@ -29,7 +29,7 @@ message_post_super = mail_thread.message_post
 
 
 @api.cr_uid_ids_context
-def MailNoFollowersMessagePost(self, cr, uid, thread_id, body='', subject=None,
+def MailNoFollowersMessageFetch(self, cr, uid, thread_id, body='', subject=None,
                                type='notification', subtype=None,
                                parent_id=False, attachments=None, context=None,
                                content_subtype='html', **kwargs):
@@ -53,4 +53,4 @@ class MailNoFollowers(models.Model):
     _name = 'mail.thread'
 
     def __init__(self, *arg, **kwargs):
-        mail_thread.message_post = MailNoFollowersMessagePost
+        mail_thread.message_post = MailNoFollowersMessageFetch
