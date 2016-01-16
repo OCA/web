@@ -48,13 +48,9 @@ def MailNoFollowersMessagePost(self, cr, uid, thread_id, body='', subject=None,
 class MailNoFollowers(models.Model):
     ''' I define this class so this code will be executed only if module
         is installed in database. Otherwise it will be always executed.
-        Odoo call __init__ once on install and once on uninstall.
         This way we switch to standard method without a server restart.
     '''
     _name = 'mail.thread'
 
     def __init__(self, *arg, **kwargs):
-        if mail_thread.message_post == message_post_super:
-            mail_thread.message_post = MailNoFollowersMessagePost
-        else:
-            mail_thread.message_post = message_post_super
+        mail_thread.message_post = MailNoFollowersMessagePost
