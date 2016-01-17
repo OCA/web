@@ -35,8 +35,13 @@ def MailNoFollowersMessageFetch(self, cr, uid, thread_id, body='',
                                 attachments=None, context=None,
                                 content_subtype='html', **kwargs):
 
-    nosub_ctx = dict(context, mail_create_nosubscribe=True,
-                     mail_create_nolog=True)
+    # add mail_create_nosubscribe to not subscribe any messages for fetchmail
+    nosub_ctx = dict(context, mail_create_nosubscribe=True)
+    # remove key mail_create_nosubscribe to not subscribe partners on send
+    if 'mail_post_autofollow' in nosub_ctx:
+        del nosub_ctx['mail_post_autofollow']
+    if 'mail_post_autofollow_partner_ids1' in nosub_ctx:
+        del nosub_ctx['mail_post_autofollow_partner_ids']
 
     thread_id = message_post_super(self, cr, uid, thread_id, body=body,
                                    subject=subject, type=type,
@@ -49,7 +54,6 @@ def MailNoFollowersMessageFetch(self, cr, uid, thread_id, body='',
 class MailNoFollowers(models.Model):
     ''' I define this class so this code will be executed only if module
         is installed in database. Otherwise it will be always executed.
-        This way we switch to standard method without a server restart.
     '''
     _name = 'mail.thread'
 

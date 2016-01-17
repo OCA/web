@@ -22,7 +22,7 @@
 ##############################################################################
 
 {
-    'name': 'Do not add followers on fetching mail',
+    'name': 'Do not add followers on sending or receiving mails',
     'version': '8.0.0.1.0',
     'author': "ThinkOpen Solutions Brasil, Odoo Community Association (OCA)",
     'category': 'Web',
