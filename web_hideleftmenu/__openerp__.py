@@ -22,10 +22,8 @@
 ##############################################################################
 
 {
-    'name': "Web Hide Left Menu",
-    'author': "Vauxoo",
-    'category': "Hidden",
-    'description': """
+    "name": "Web Hide Left Menu",
+    "summary": """
 Hide Left menu:
 ===============
 
@@ -35,18 +33,27 @@ when you are analysing a bunch of data.
 Original module by Vauxoo, Migrated to V8.0 by Ahmet Altinisik
 
     """,
-    'version': "8.0",
-    'depends': ['web'],
-    'js': [
-        'static/src/js/lib.js',
+    "version": "8.0.1.0.0",
+    "category": "Hidden",
+    "website": "https://odoo-community.org/",
+    "author": "Vauxoo, Odoo Community Association (OCA)",
+    "license": "AGPL-3",
+    "application": False,
+    "installable": True,
+    "external_dependencies": {
+        "python": [],
+        "bin": [],
+    },
+    "depends": [
+        "web",
     ],
-    'css': [
-        'static/src/css/lib.css',
+    "js": [
+        "static/src/js/lib.js",
     ],
-    'qweb': [
-        'static/src/xml/lib.xml',
+    "css": [
+        "static/src/css/lib.css",
     ],
-    'installable': True,
-    'auto_install': False,
-    'web_preload': False,
+    "qweb": [
+        "static/src/xml/lib.xml",
+    ]
 }
