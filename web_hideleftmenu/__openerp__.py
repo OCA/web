@@ -40,10 +40,6 @@ Original module by Vauxoo, Migrated to V8.0 by Ahmet Altinisik
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "external_dependencies": {
-        "python": [],
-        "bin": [],
-    },
     "depends": [
         "web",
     ],
