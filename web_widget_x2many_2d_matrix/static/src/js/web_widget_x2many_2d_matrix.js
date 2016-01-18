@@ -31,6 +31,8 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
         // those will be filled with rows from the dataset
         by_x_axis: {},
         by_y_axis: {},
+        by_id: {},
+        // configuration values
         field_x_axis: 'x',
         field_label_x_axis: 'x',
         field_y_axis: 'y',
@@ -81,7 +83,8 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
 
             self.by_x_axis = {};
             self.by_y_axis = {};
-                
+            self.by_id = {};
+
             return jQuery.when(result).then(function()
             {
                 return self.dataset._model.call('fields_get').then(function(fields)
@@ -90,7 +93,35 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
                     self.is_numeric = fields[self.field_value].type == 'float';
                     self.show_row_totals &= self.is_numeric;
                     self.show_column_totals &= self.is_numeric;
-                }).then(function()
+                })
+                // if there are cached writes on the parent dataset, read below
+                // only returns the written data, which is not enough to properly
+                // set up our data structure. Read those ids here and patch the
+                // cache
+                .then(function()
+                {
+                    var ids_written = _.map(
+                        self.dataset.to_write, function(x) { return x.id });
+                    if(!ids_written.length)
+                    {
+                        return;
+                    }
+                    return (new instance.web.Query(self.dataset._model))
+                    .filter([['id', 'in', ids_written]])
+                    .all()
+                    .then(function(rows)
+                    {
+                        _.each(rows, function(row)
+                        {
+                            var cache = _.find(
+                                self.dataset.cache,
+                                function(x) { return x.id == row.id }
+                            );
+                            _.extend(cache.values, row, _.clone(cache.values));
+                        })
+                    })
+                })
+                .then(function()
                 {
                     return self.dataset.read_ids(self.dataset.ids).then(function(rows)
                     {
@@ -158,15 +189,31 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
             });
         },
 
-        // to whatever needed to setup internal data structure
+        // do whatever needed to setup internal data structure
         add_xy_row: function(row)
         {
             var x = this.get_field_value(row, this.field_x_axis),
                 y = this.get_field_value(row, this.field_y_axis);
+            // row is a *copy* of a row in dataset.cache, fetch
+            // a reference to this row in order to have the
+            // internal data structure point to the same data
+            // the dataset manipulates
+            _.every(this.dataset.cache, function(cached_row)
+            {
+                if(cached_row.id == row.id)
+                {
+                    row = cached_row.values;
+                    // new rows don't have that
+                    row.id = cached_row.id;
+                    return false;
+                }
+                return true;
+            });
             this.by_x_axis[x] = this.by_x_axis[x] || {};
             this.by_y_axis[y] = this.by_y_axis[y] || {};
             this.by_x_axis[x][y] = row;
             this.by_y_axis[y][x] = row;
+            this.by_id[row.id] = row;
         },
 
         // get x axis values in the correct order
@@ -255,39 +302,38 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
             var self = this,
                 grand_total = 0,
                 totals_x = {},
-                totals_y = {};
-            return self.dataset.read_ids(self.dataset.ids).then(function(rows)
+                totals_y = {},
+                rows = this.by_id,
+                deferred = jQuery.Deferred();
+            _.each(rows, function(row)
             {
-                _.each(rows, function(row)
-                {
-                    var key_x = self.get_field_value(row, self.field_x_axis),
-                        key_y = self.get_field_value(row, self.field_y_axis);
-                    totals_x[key_x] = (totals_x[key_x] || 0) + self.get_field_value(row, self.field_value);
-                    totals_y[key_y] = (totals_y[key_y] || 0) + self.get_field_value(row, self.field_value);
-                    grand_total += self.get_field_value(row, self.field_value);
-                });
-            }).then(function()
-            {
-                _.each(totals_y, function(total, y)
-                {
-                    self.$el.find(
-                        _.str.sprintf('td.row_total[data-y="%s"]', y)).text(
-                            self.format_xy_value(total));
-                });
-                _.each(totals_x, function(total, x)
-                {
-                    self.$el.find(
-                        _.str.sprintf('td.column_total[data-x="%s"]', x)).text(
-                            self.format_xy_value(total));
-                });
-                self.$el.find('.grand_total').text(
-                    self.format_xy_value(grand_total))
-                return {
-                    totals_x: totals_x,
-                    totals_y: totals_y,
-                    grand_total: grand_total,
-                };
+                var key_x = self.get_field_value(row, self.field_x_axis),
+                    key_y = self.get_field_value(row, self.field_y_axis);
+                totals_x[key_x] = (totals_x[key_x] || 0) + self.get_field_value(row, self.field_value);
+                totals_y[key_y] = (totals_y[key_y] || 0) + self.get_field_value(row, self.field_value);
+                grand_total += self.get_field_value(row, self.field_value);
             });
+            _.each(totals_y, function(total, y)
+            {
+                self.$el.find(
+                    _.str.sprintf('td.row_total[data-y="%s"]', y)).text(
+                        self.format_xy_value(total));
+            });
+            _.each(totals_x, function(total, x)
+            {
+                self.$el.find(
+                    _.str.sprintf('td.column_total[data-x="%s"]', x)).text(
+                        self.format_xy_value(total));
+            });
+            self.$el.find('.grand_total').text(
+                self.format_xy_value(grand_total))
+            deferred.resolve({
+                totals_x: totals_x,
+                totals_y: totals_y,
+                grand_total: grand_total,
+                rows: rows,
+            });
+            return deferred;
         },
 
         setup_many2one_axes: function()
