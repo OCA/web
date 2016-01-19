@@ -12,7 +12,13 @@
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "depends": ["web",],
-    "data": ["web_hideleftmenu_js.xml",],
-    "qweb": ["static/src/xml/lib.xml",],
+    "depends": [
+        "web",
+    ],
+    "data": [
+        "web_hideleftmenu_js.xml",
+    ],
+    "qweb": [
+        "static/src/xml/lib.xml",
+    ],
 }
