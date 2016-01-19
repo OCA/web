@@ -4,16 +4,7 @@
 
 {
     "name": "Web Hide Left Menu",
-    "summary": """
-Hide Left menu:
-===============
-
-This module just add a button un User Menu to hide the left menu specially useful
-when you are analysing a bunch of data.
-
-Original module by Vauxoo, Migrated to V8.0 by Ahmet Altinisik
-
-    """,
+    "summary": "Hide left Menu in Web interface",
     "version": "8.0.1.0.0",
     "category": "Hidden",
     "website": "https://odoo-community.org/",
