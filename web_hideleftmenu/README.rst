@@ -39,7 +39,9 @@ Original module by Vauxoo, Migrated to V8.0 by Ahmet Altinisik
 
 Images
 ------
-.. image:: web_hideleftmenu/static/description/icon.png
+.. image:: web_hideleftmenu/static/description/1.png
+
+.. image:: web_hideleftmenu/static/description/2.png
 
 Contributors
 ------------
