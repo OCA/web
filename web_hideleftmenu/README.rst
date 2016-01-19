@@ -35,11 +35,11 @@ web_hideleftmenu%0Aversion:%20
 
 Credits
 =======
-
+Original module by Vauxoo, Migrated to V8.0 by Ahmet Altinisik
 
 Images
 ------
-
+.. image:: web_hideleftmenu/static/description/icon.png
 
 Contributors
 ------------

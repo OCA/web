@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template>
-        <t t-jquery="ul.dropdown-menu li:last" t-operation="after">
+
+<t t-extend="UserMenu">
+    <t t-name="web_hideleftmenu.hidemenu" t-jquery="ul.dropdown-menu li:last" t-operation="after">
                 <li class="oe_hidemenu">
                     <a href="#">Hide/Show Menu</a>
                 </li>
         </t>
-
+</t>
 </template>
