@@ -2,9 +2,9 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-===============================
+================================
 Hide left Menu in Web interface
-===============================
+================================
 
 This module adds a menu item after logout link to hide or show left menu.
 It is useful on small screens or tree views with many columns.
@@ -43,8 +43,7 @@ Images
 
 Contributors
 ------------
-
-* Vauxoo <nhomar@vauxoo.com>
+* Nhomar Hernández <nhomar@vauxoo.com>
 * Ahmet Altinisik <aaltinisik@altinkaya.com.tr>
 
 
