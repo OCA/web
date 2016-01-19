@@ -4,7 +4,7 @@
 
 {
     "name": "Web Hide Left Menu",
-    "summary": "Hide left Menu in Web interface",
+    "summary": "Hide Left Menu in Web Interface",
     "version": "8.0.1.0.0",
     "category": "Hidden",
     "website": "https://odoo-community.org/",
