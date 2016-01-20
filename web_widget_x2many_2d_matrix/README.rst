@@ -13,8 +13,26 @@ $y_value2 $value(1/2) $value(2/2)
 where `value(n/n)` is editable.
 
 An example use case would be: Select some projects and some employees so that
-a manager can easily fill in the planned_hours for one task per employee. The
-result could look like this:
+a manager can easily fill in the planned_hours for one task per employee. 
+
+::
+
+ class Manager(models.Model):
+    _name = 'model.manager'
+    task_id = fields.One2many('model.task', 'manager_id', string='Tasks')
+    date_begin = fields.Date(string='From')
+    date_end = fields.Date(string='To')
+    
+ class Task(models.Model):
+    _name = 'model.task'
+    employee_id = fields.Many2one('model.employee', string='Employee')
+    project_id = fields.Many2one('model.project', string='Project')
+    planned_hours = fields.Integer(string='Hours Assigned')
+    manager_id = fields.Many2one('model.manager', string='Manager')
+
+
+
+The result could look like this:
 
 .. image:: /web_widget_x2many_2d_matrix/static/description/screenshot.png
     :alt: Screenshot
@@ -50,6 +68,28 @@ show_row_totals
     If field_value is a numeric field, calculate row totals
 show_column_totals
     If field_value is a numeric field, calculate column totals
+
+Note
+======================
+
+web_widget_x2many_2d_matrix is only a widget, it takes care of displaying stuff. You need to take care of the content yourself. So you must give the field content like: (using the above example)
+
+::
+
+ def default_get(self):
+    defaults = super(Manager, self).default_get()
+    defaults['task_id'] = [
+        (0, 0, {
+            'employee_id': e,
+            'project_id': p,
+            'planned_hours': 0.0
+        })
+        for e in self.env['model.employee'].search([])
+        for p in self.env['model.project'].search([])
+        # {or a function that generates values for all employee/project combinations}
+     ]
+     return defaults
+        
 
 Known issues / Roadmap
 ======================
