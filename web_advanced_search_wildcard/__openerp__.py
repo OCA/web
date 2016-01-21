@@ -22,26 +22,17 @@
 ##############################################################################
 {
     "name":     "Webmodule add wildcard operators for advanced search",
-    "version":  "0.1",
-    "depends":  ["web"],
-    'author': "initOS GmbH & Co. KG,Odoo Community Association (OCA)",
-    "category": "",
     "summary":  "Simular search in searchbar",
-    'license':  'AGPL-3',
-    "description": """
-    Allows =ilike operator to advanced search option.
-    Use % as a placeholder.
-    Example: "Zip matches 1%" gives all zip starting with 1
-    Also allows insensitive exact search.
-    Example "Name matches john" will find "John" and "john" but not "Johnson".
-    """,
+    "version":  "8.0.1.0.0",
+    "category": "Uncategorized",
+    "license":  'AGPL-3',
+    "author": "initOS GmbH & Co. KG,Odoo Community Association (OCA), Therp BV",
+    "application": False,
+    "installable": True,
+    "depends":  [
+        "web"
+    ],
     'data': [
+        "views/template.xml",
     ],
-    'demo': [
-    ],
-    'test': [
-    ],
-    'js': ['static/src/js/search.js'],
-    'installable': True,
-    'auto_install': False,
 }
