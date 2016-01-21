@@ -25,7 +25,7 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 Contributors
 ------------
 
-* Markus Schneider <>
+* Markus Schneider <markus.schneider@initos.com>
 * L Freeke <lfreeke@therp.nl>
 
 Maintainer
