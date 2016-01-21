@@ -4,14 +4,13 @@
 ============================
 Web advanced search wildcard
 ============================
- 
+
 Allows =ilike operator to advanced search option.
 
 Use % as a placeholder.
 Example: "Zip matches 1%" gives all zip starting with 1
 Also allows insensitive exact search.
 Example "Name matches john" will find "John" and "john" but not "Johnson".
-             
 
 Bug Tracker
 ===========
