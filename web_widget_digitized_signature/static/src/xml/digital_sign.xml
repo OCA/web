@@ -7,7 +7,7 @@
             <span class="oe_edit_only save_sign"></span>
         </div>
     </t>
-    <t t-name="FieldBinaryImage-extend">
+    <t t-name="FieldBinaryImage-signature">
     <img t-att-src='url'
         t-att-border="widget.readonly ? 0 : 1"
         t-att-name="widget.name"
