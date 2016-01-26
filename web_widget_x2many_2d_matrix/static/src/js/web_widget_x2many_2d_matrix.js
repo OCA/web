@@ -175,6 +175,8 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
                 if(cached_row.id == row.id)
                 {
                     row = cached_row.values;
+                    // new rows don't have that
+                    row.id = cached_row.id;
                     return false;
                 }
                 return true;
