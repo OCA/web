@@ -75,7 +75,7 @@ openerp.web_widget_digitized_signature = function(instance) {
                     self.$el.find(".signature").hide();
                     val = self.$el.find(".signature > canvas")[0].toDataURL();
                     images[self.name] = val.split(',')[1]
-                    var $img = $(QWeb.render("FieldBinaryImage-extend", { widget: self, url: val }));
+                    var $img = $(QWeb.render("FieldBinaryImage-signature", { widget: self, url: val }));
                     self.$el.find('> img').remove();
                     self.$el.prepend($img);
                     self.set('value',val.split(',')[1])
@@ -98,7 +98,7 @@ openerp.web_widget_digitized_signature = function(instance) {
                                 field: field,
                                 t: (new Date().getTime()),
                         });
-                       var $img = $(QWeb.render("FieldBinaryImage-extend", { widget: self, url: url }));
+                       var $img = $(QWeb.render("FieldBinaryImage-signature", { widget: self, url: url }));
                        self.$el.find('> img').remove();
                 }
             });
