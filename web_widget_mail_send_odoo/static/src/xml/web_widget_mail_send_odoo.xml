@@ -2,7 +2,7 @@
 <templates>
     <t t-name="FieldEmailIntern" t-extend="FieldEmail">
         <t t-jquery="span:first">
-            this.removeClass('oe_form_field_email').addClass('oe_form_field_email_intern');
+            this.removeClass('oe_form_field_email').addClass('oe_form_field_email_internal');
         </t>
     </t>
 </templates>
