@@ -85,5 +85,6 @@ openerp.web_widget_mail_send_odoo = function(instance) {
         },
     });
 
+    instance.web.form.widgets.add('email_mailto', 'instance.web.form.FieldEmail')
     instance.web.form.widgets.add('email', 'instance.web.form.FieldEmailIntern')
 }
