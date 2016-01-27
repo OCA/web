@@ -62,7 +62,6 @@ openerp.web_widget_mail_send_odoo = function(instance) {
                                 }
                             );
                         } else {
-                            console.log(self.build_context());
                             var pop = new instance.web.form.FormOpenPopup(self);
                             var context = new instance.web.CompoundContext(self.build_context(), {
                                 default_name: parsed_email[0],
