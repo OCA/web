@@ -51,8 +51,14 @@ instance.web.form.FieldEmailIntern = instance.web.form.FieldChar.extend({
                                     default_res_id: fm.datarecord.id,
                                 },
                                 on_close: function(){
-                                    /* Todo: refresh the chatter widget here
-                                    */
+                                    // refresh the chatter widget here
+                                    $.each(self.view.getChildren(),
+                                        function(index, value){
+                                            if(value.widget=='mail_thread'){
+                                                value.root.thread.message_fetch()
+                                            }
+                                        }
+                                    );
                                 },
                             }
                         );
