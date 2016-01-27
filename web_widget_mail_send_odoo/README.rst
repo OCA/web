@@ -10,8 +10,8 @@ This module was written to provide a new widget for Email fields to replace the
 standard behaviour of displaying a 'mailto:' link with JS to open the internal
 Email wizard from Odoo for message composition.
 
-The message you sent gets appended to the chatter as if you where using internal
-mail functions of Odoo.
+The message you sent gets appended to the chatter as if you where using the
+internal mail functions of Odoo.
 
 Usage
 =====
