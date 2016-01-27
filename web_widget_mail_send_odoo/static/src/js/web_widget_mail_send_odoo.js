@@ -53,7 +53,7 @@ openerp.web_widget_mail_send_odoo = function(instance) {
                                         // refresh the chatter widget here
                                         $.each(self.view.getChildren(),
                                             function(index, value){
-                                                if(value.widget=='mail_thread'){
+                                                if(value.root && value.root.thread && value.root.thread.message_fetch){
                                                     value.root.thread.message_fetch()
                                                 }
                                             }
