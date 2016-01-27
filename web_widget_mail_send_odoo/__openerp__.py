@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
-    'name': 'Web Widget - Email internal mail link',
+    'name': 'Web Widget - Internal mail wizard for email links',
     'summary': 'Send mail using internal composition wizard.',
     'version': '8.0.1.0.0',
     'category': 'Social Network',
@@ -14,7 +14,6 @@
     'installable': True,
     'auto_install': False,
     'depends': [
-        'web',
         'mail',
     ],
     'data': [

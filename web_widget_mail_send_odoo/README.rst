@@ -2,9 +2,9 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-=====================================
-Web Widget - Email internal mail link
-=====================================
+=================================================
+Web Widget - Internal mail wizard for email links
+=================================================
 
 This module was written to provide a new widget for Email fields to replace the
 standard behaviour of displaying a 'mailto:' link with JS to open the internal
@@ -54,4 +54,4 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-To contribute to this module, please visit http://odoo-community.org.
+To contribute to this module, please visit https://odoo-community.org.
