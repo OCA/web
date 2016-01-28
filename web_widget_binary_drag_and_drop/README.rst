@@ -5,7 +5,7 @@
    alt: License: AGPL-3
 
 ==============
-{Web Widget Bindary Drag and Drop}
+Web Widget Bindary Drag and Drop
 ==============
 
 This module extends the functionality of the Sidebar to support Drag and Drop Fileuploads.
