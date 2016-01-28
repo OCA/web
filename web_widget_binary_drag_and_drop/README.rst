@@ -1,13 +1,15 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
-   :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
-   :alt: License: AGPL-3
+   /files/files
+   target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   /files/files
+   alt: License: AGPL-3
 
 ==============
 {Web Widget Bindary Drag and Drop}
 ==============
 
 This module extends the functionality of the Sidebar to support Drag and Drop Fileuploads.
-Also multiple fileds can be uploaded at the same time.
+Also multiple files can be uploaded at the same time.
 
 Additionally you can use it as widget.
 
