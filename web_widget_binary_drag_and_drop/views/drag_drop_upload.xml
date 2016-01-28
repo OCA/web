@@ -4,8 +4,8 @@
     <data>
         <template id="assets_backend" name="drag and drop assets" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
-                <script type="text/javascript" src="/web_widget_binary_drag_drop/static/src/js/drag_drop_upload.js"></script>
-                <link rel="stylesheet" href="/web_widget_binary_drag_drop/static/src/css/drag_drop_upload.css"/>
+                <script type="text/javascript" src="/web_widget_binary_drag_and_drop/static/src/js/drag_drop_upload.js"></script>
+                <link rel="stylesheet" href="/web_widget_binary_drag_and_drop/static/src/css/drag_drop_upload.css"/>
             </xpath>
         </template>
     </data>
