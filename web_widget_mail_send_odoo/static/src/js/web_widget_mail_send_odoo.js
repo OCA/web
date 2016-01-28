@@ -66,6 +66,7 @@ openerp.web_widget_mail_send_odoo = function(instance) {
                             var context = new instance.web.CompoundContext(self.build_context(), {
                                 default_name: parsed_email[0],
                                 default_email: parsed_email[1],
+                                force_email: true,
                             });
                             pop.show_element(
                                 'res.partner',
