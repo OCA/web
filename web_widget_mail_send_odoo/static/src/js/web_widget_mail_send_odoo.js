@@ -27,6 +27,23 @@ openerp.web_widget_mail_send_odoo = function(instance) {
                     .text(self.get('value') || '');
             }
         },
+        is_syntax_valid: function(){
+            var self = this;
+            if(!self._super())
+                return false;
+            if (!self.get("effective_readonly") && 0 < self.$("input").size() && self.$("input").val()) {
+                try {
+                    var parsed_email = instance.mail.ChatterUtils.parse_email(self.$("input").val());
+                    console.log(parsed_email)
+                    if(!parsed_email[1])
+                        return false;
+                    return true;
+                } catch(e) {
+                    return false;
+                }
+            }
+            return true;
+        },
         on_clicked: function() {
             var self = this;
             if (!self.get('value') || !self.is_syntax_valid()) {
