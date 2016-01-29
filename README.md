@@ -17,6 +17,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
+[web_access_rule_buttons](web_access_rule_buttons/) | 9.0.1.0.0 | Disable Edit button if access rules prevent this action
 [web_sheet_full_width](web_sheet_full_width/) | 9.0.1.0.0 | Use the whole available screen width when displaying sheets
 
 Unported addons
