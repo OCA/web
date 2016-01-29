@@ -21,7 +21,7 @@
 ##############################################################################
 {
     'name': 'Web Note',
-    'version': '0.1',
+    'version': '7.0.1.0',
     'author': 'initOS GmbH',
     'category': '',
     'description':

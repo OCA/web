@@ -30,7 +30,7 @@ To use this module, you need to:
 Versions
 ========
 
-v0.1
+v7.0.1.0
 ----
    
 
