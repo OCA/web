@@ -25,7 +25,7 @@ openerp.web_switch_company_warning = function (instance) {
               if (msg.data.type !== 'newCtx')
                 return;
 
-                if(msg.data.newCtx != self.session.company_id) {
+                if(msg.data.newCtx != self.signature(self.session)) {
                     self.$el.show();
                 } else {
                     self.$el.hide();
@@ -33,7 +33,10 @@ openerp.web_switch_company_warning = function (instance) {
             });
 
             w.port.start();
-            w.port.postMessage(this.session.company_id);
+            w.port.postMessage(self.signature(this.session));
+        },
+        signature: function (session) {
+                return [session.db, session.uid, session.company_id].join();
         }
     });
 
