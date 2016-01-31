@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * web_export_view
+# * web_advanced_search_x2x
 # 
 # Translators:
 # Rudolf Schnapka <rs@techno-flex.de>, 2016
@@ -18,30 +18,30 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. module: web_export_view
+#. module: web_advanced_search_x2x
 #. openerp-web
-#: code:addons/web_export_view/static/src/xml/web_export_view_template.xml:8
+#: code:addons/web_advanced_search_x2x/static/src/xml/web_advanced_search_x2x.xml:8
 #, python-format
-msgid "Excel"
-msgstr "Excel"
+msgid "Search"
+msgstr "Suche"
 
-#. module: web_export_view
+#. module: web_advanced_search_x2x
 #. openerp-web
-#: code:addons/web_export_view/static/src/xml/web_export_view_template.xml:6
+#: code:addons/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js:235
 #, python-format
-msgid "Export Current View"
-msgstr "Aktuelle Liste exportieren"
+msgid "Use criteria"
+msgstr "Verwende Kriterien"
 
-#. module: web_export_view
+#. module: web_advanced_search_x2x
 #. openerp-web
-#: code:addons/web_export_view/static/src/js/web_export_view.js:84
+#: code:addons/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js:172
 #, python-format
-msgid "False"
-msgstr "Falsch"
+msgid "invalid search domain"
+msgstr "Ungültige Sucheingrenzung"
 
-#. module: web_export_view
+#. module: web_advanced_search_x2x
 #. openerp-web
-#: code:addons/web_export_view/static/src/js/web_export_view.js:81
+#: code:addons/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js:47
 #, python-format
-msgid "True"
-msgstr "Wahr"
+msgid "is in selection"
+msgstr "Ist in Auswahl"
