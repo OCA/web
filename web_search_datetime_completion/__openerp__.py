@@ -32,6 +32,9 @@
     "data": [
         'views/templates.xml',
     ],
+    "images": [
+        "static/src/datetime_completion.img",
+    ],
     "auto_install": False,
     "installable": True,
     "application": False,
