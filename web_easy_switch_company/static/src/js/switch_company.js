@@ -16,140 +16,51 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ******************************************************************************/
+odoo.define('web_easy_switch_company', function (require) {
+    var UserMenu = require('web.UserMenu');
+    var SystrayMenu = require('web.SystrayMenu');
+    var SwitchCompanyWidget = require("web.SwitchCompanyWidget");
+    var Model = require('web.DataModel');
 
-openerp.web_easy_switch_company = function (instance) {
-
-    /***************************************************************************
-    Create an new 'SwitchCompanyWidget' widget that allow users to switch 
-    from a company to another more easily.
-    ***************************************************************************/
-    instance.web.SwitchCompanyWidget = instance.web.Widget.extend({
-
-        template:'web_easy_switch_company.SwitchCompanyWidget',
-
-        /***********************************************************************
-        Overload section 
-        ***********************************************************************/
-
-        /**
-         * Overload 'init' function to initialize the values of the widget.
-         */
-        init: function(parent){
-            this._super(parent);
-            this.companies = [];
-            this.current_company_id = 0;
-            this.current_company_name = '';
-        },
-
-        /**
-         * Overload 'start' function to load datas from DB.
-         */
-        start: function () {
-            this._super();
-            this._load_data();
-        },
-
-        /**
-         * Overload 'renderElement' function to set events on company items.
-         */
-        renderElement: function() {
-            var self = this;
-            this._super();
-            if (this.companies.length === 1) {
-                this.$el.hide();
-            }
-            else{
-                this.$el.show();
-                this.$el.find('.easy_switch_company_company_item').on('click', function(ev) {
-                    var company_id = $(ev.target).data("company-id");
-
-
-                    if (company_id != self.current_company_id){
-                        var func = '/web_easy_switch_company/switch/change_current_company';
-                        var param = {'company_id': company_id}
-                        self.rpc(func, param).done(function(res) {
-                            window.location.reload()
-                        });
-                    }
-                });
-            }
-        },
-
-
-        /***********************************************************************
-        Custom section 
-        ***********************************************************************/
-
-        /**
-         * helper function to load data from the server
-         */
-        _fetch: function(model, fields, domain, ctx){
-            return new instance.web.Model(model).query(fields).filter(domain).context(ctx).all();
-        },
-
-        /**
-         * - Load data of the companies allowed to the current users;
-         * - Launch the rendering of the current widget;
-         */
-        _load_data: function(){
-            var self = this;
-            // Request for current users information
-            this._fetch('res.users',['company_id'],[['id','=',this.session.uid]]).then(function(res_users){
-                self.current_company_id = res_users[0].company_id[0];
-                self.current_company_name = res_users[0].company_id[1];
-                // Request for other companies
-                // We have to go through fields_view_get to emulate the
-                // exact (exotic) behavior of the user preferences form in 
-                // fetching the allowed companies wrt record rules.
-                // Note: calling res.company.name_search with 
-                //       user_preference=True in the context does 
-                //       not work either.
-                new instance.web.Model('res.company').call('name_search',{context:{'user_preference':'True'}}).then(function(res){
-                    var res_company = res;
-                    for ( var i=0 ; i < res_company.length; i++) {
-                        var logo_topbar, logo_state;
-                        // TODO: fetching the logo of other companies fails with the
-                        //       default res.company record rule, so we should
-                        //       probably remove the logos from the menu :(
-                        logo_topbar = self.session.url(
-                            '/web/binary/image', {
-                                model:'res.company', 
-                                field: 'logo_topbar', 
-                                id: res_company[i][0]
-                            });
-                        if (res_company[i][0] == self.current_company_id){
-                            logo_state = '/web_easy_switch_company/static/description/selection-on.png';
-                        }
-                        else{
-                            logo_state = '/web_easy_switch_company/static/description/selection-off.png';
-                        }
-                        self.companies.push({
-                            id: res_company[i][0],
-                            name: res_company[i][1],
-                            logo_topbar: logo_topbar,
-                            logo_state: logo_state
-                        });
-                    }
-                    // Update rendering
-                    self.renderElement();
-                });
-            });
-        },
-
-    });
+    var session = require('web.session');
+    var core = require('web.core');
 
     /***************************************************************************
-    Extend 'UserMenu' Widget to insert a 'SwitchCompanyWidget' widget.
+    * Extend 'UserMenu' Widget to insert a 'SwitchCompanyWidget' widget on the
+    * dashboard view
     ***************************************************************************/
-    instance.web.UserMenu =  instance.web.UserMenu.extend({
+    var UserMenu = UserMenu.include({
 
-        init: function(parent) {
-            this._super(parent);
-            var switch_button = new instance.web.SwitchCompanyWidget();
-            switch_button.appendTo(instance.webclient.$el.find('.oe_systray'));
+        do_update: function () {
+          /*
+          * Prevent the company name to appear twice in the user name field
+          */
+          var self = this;
+          self._super();
+
+          var fct = function () {
+            if (!session.uid)
+                return;
+
+            var func = new Model("res.users").get_func("read");
+
+            return self.alive(func(session.uid, ["name", "company_id"])).then(function(res) {
+                var topbar_name = res.name;
+
+                if(session.debug)
+                    topbar_name = _.str.sprintf("%s (%s)", topbar_name, session.db);
+
+                self.$el.find('.oe_topbar_name').text(topbar_name);
+
+                core.bus.trigger('resize');  // Re-trigger the reflow logic
+            })
+  
+          }
+
+          this.update_promise = this.update_promise.then(fct, fct);
         }
-
     });
 
-};
-
+    // Add to systray on usual screens
+    SystrayMenu.Items.push(SwitchCompanyWidget);
+})

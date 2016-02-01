@@ -22,7 +22,7 @@
 
 {
     'name': 'Multicompany - Easy Switch Company',
-    'version': '8.0.1.0.0',
+    'version': '9.0.1.0.0',
     'category': 'web',
     'description': """
 Add menu to allow user to switch to another company more easily
@@ -63,6 +63,6 @@ Copyright, Author and Licence:
     'qweb': [
         'static/src/xml/switch_company.xml',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
 }

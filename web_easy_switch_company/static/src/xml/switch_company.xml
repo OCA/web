@@ -21,29 +21,27 @@
 <template>
 
     <t t-name="web_easy_switch_company.SwitchCompanyWidget">
-        <ul class="nav navbar-nav navbar-right oe_user_menu_placeholder" style="margin-right:10px">
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <span class="oe_topbar_name">
-                        <t t-esc="widget.current_company_name"/>
-                    </span>
-                    <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
-                    <t t-foreach="widget.companies" t-as="company">
-                        <li>
-                            <a class="easy_switch_company_company_item"
-                               href="#"
-                               t-att-data-company-id="company.id">
-                                <img class="oe_topbar_avatar" t-att-src="company.logo_topbar"/>
-                                <img class="oe_topbar_avatar" t-att-src="company.logo_state"/>
-                                <t t-esc="company.name"/>
-                            </a>
-                        </li>
-                    </t>
-                </ul>
-            </li>
-        </ul>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <span class="oe_topbar_name">
+                    <t t-esc="widget.current_company_name"/>
+                </span>
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <t t-foreach="widget.companies" t-as="company">
+                    <li>
+                        <a class="easy_switch_company_company_item"
+                           href="#"
+                           t-att-data-company-id="company.id">
+                            <img class="oe_topbar_avatar" t-att-src="company.logo_topbar"/>
+                            <img class="oe_topbar_avatar" t-att-src="company.logo_state"/>
+                            <t t-esc="company.name"/>
+                        </a>
+                    </li>
+                </t>
+            </ul>
+        </li>
     </t>
 
 </template>
