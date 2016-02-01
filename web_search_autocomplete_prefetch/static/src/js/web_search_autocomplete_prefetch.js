@@ -20,6 +20,7 @@ openerp.web_search_autocomplete_prefetch = function(instance)
             {
                 switch(name)
                 {
+                    case 'label': return value;
                     case 'value': return value;
                     case 'operator': return 'ilike';
                 }
