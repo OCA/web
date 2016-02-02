@@ -1,4 +1,4 @@
-openerp.web_drag_drop_upload = function (instance) {
+openerp.web_widget_binary_drag_and_drop = function (instance) {
     var rowCount = 0;
     var status = 0;
 
