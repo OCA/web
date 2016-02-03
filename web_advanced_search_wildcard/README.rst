@@ -2,15 +2,24 @@
     :alt: License: AGPL-3
 
 ============================
-Web advanced search wildcard
+Wildcard in advanced search
 ============================
 
-Allows =ilike operator to advanced search option.
+Allows =ilike ('matches') operator to advanced search option.
 
+
+Usage
+=====
 Use % as a placeholder.
-Example: "Zip matches 1%" gives all zip starting with 1
+
+Example: "Zip" - 'matches' - "1%" gives all zip starting with 1
+
+.. image:: /web_advanced_search_wildcard/static/description/screenshot.png
+    :alt: Screenshot
+
+
 Also allows insensitive exact search.
-Example "Name matches john" will find "John" and "john" but not "Johnson".
+Example "Name" - 'matches' - "john" will find "John" and "john" but not "Johnson".
 
 Bug Tracker
 ===========
