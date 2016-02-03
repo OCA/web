@@ -99,6 +99,33 @@ To add these parameters go to Configuration -> Technical -> Parameters -> System
 - web_m2x_options.search_more: True
 
 
+ir.actions.act_window context options
+-------------------------------------
+
+The following options can be specified in the ``context`` field of an
+``ir.actions.act_window`` to provide the same functionality at the form level:
+
+``create`` *boolean* (Default: depends if user have create rights)
+
+  Whether to display the "Create..." entry in dropdown panels.
+
+``create_edit`` *boolean* (Default: depends if user have create rights)
+
+  Whether to display the "Create and Edit..." entry in dropdown panels.
+
+``m2o_dialog`` *boolean* (Default: depends if user have create rights)
+
+  Whether to display the many2one dialog in case of validation error.
+
+``limit`` *int* (Default: openerp default value is ``7``)
+
+  Number of displayed records in drop-down panels.
+
+``search_more`` *boolean*
+
+  Whether to always display the "Search More..." entry in dropdown panels.
+
+
 Example
 -------
 
