@@ -374,7 +374,7 @@ openerp.web_m2x_options = function (instance) {
                 }
                 // quick create
 
-                var allow_create = can_create;
+                var allow_create = true;
                 if (!_.isUndefined(self.view.ir_options['web_m2x_options.create'])) {
                     allow_create = self.is_option_set(self.view.ir_options['web_m2x_options.create']);
                 }
@@ -401,7 +401,7 @@ openerp.web_m2x_options = function (instance) {
                 }
                 // create...
 
-                var allow_create_edit = can_create;
+                var allow_create_edit = true;
                 if (!_.isUndefined(self.view.ir_options['web_m2x_options.create_edit'])) {
                     allow_create_edit = self.is_option_set(self.view.ir_options['web_m2x_options.create_edit']);
                 }
