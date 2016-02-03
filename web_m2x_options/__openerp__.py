@@ -43,7 +43,7 @@ Thanks to:
     "js": [
         'static/src/js/form.js',
     ],
-    "author": "Tuxservices,Odoo Community Association (OCA)",
+    "author": "Tuxservices,initOS GmbH,Odoo Community Association (OCA)",
     "installable": True,
     "active": False,
 }
