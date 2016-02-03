@@ -54,9 +54,15 @@ openerp.web_m2x_options = function (instance) {
         },
 
         show_error_displayer: function () {
-            if(this.is_option_set(this.options.m2o_dialog) ||
-               _.isUndefined(this.options.m2o_dialog) && this.is_option_set(this.view.ir_options['web_m2x_options.m2o_dialog']) ||
-               this.can_create && _.isUndefined(this.options.m2o_dialog) && _.isUndefined(this.view.ir_options['web_m2x_options.m2o_dialog'])) {
+            var allow_dialog = this.can_create;
+            if (!_.isUndefined(this.view.ir_options['web_m2x_options.m2o_dialog'])) {
+                allow_dialog = this.is_option_set(this.view.ir_options['web_m2x_options.m2o_dialog']);
+            }
+            if (!_.isUndefined(this.options.m2o_dialog)) {
+                allow_dialog = this.is_option_set(this.options.m2o_dialog);
+            }
+
+            if (allow_dialog) {
                 new instance.web.form.M2ODialog(this).open();
             }
         },
@@ -70,17 +76,21 @@ openerp.web_m2x_options = function (instance) {
 
             if (_.isUndefined(this.view))
                     return this._super.apply(this, arguments);
+
             if (!_.isUndefined(this.view.ir_options['web_m2x_options.limit'])) {
                 this.limit = parseInt(this.view.ir_options['web_m2x_options.limit']);
             }
-
             if (typeof this.options.limit === 'number') {
                 this.limit = this.options.limit;
             }
 
             // add options search_more to force enable or disable search_more button
-            if (this.is_option_set(this.options.search_more) || _.isUndefined(this.options.search_more) && this.is_option_set(self.view.ir_options['web_m2x_options.search_more'])) {
-                this.search_more = true
+            this.search_more = false
+            if (!_.isUndefined(this.view.ir_options['web_m2x_options.search_more'])) {
+                this.search_more = this.is_option_set(this.view.ir_options['web_m2x_options.search_more']);
+            }
+            if (!_.isUndefined(this.options.search_more)) {
+                this.search_more = this.is_option_set(this.options.search_more);
             }
 
             // add options field_color and colors to color item(s) depending on field_color value
@@ -176,9 +186,15 @@ openerp.web_m2x_options = function (instance) {
                     return x[1];
                 });
 
-                if ((_.isUndefined(self.options.create) && _.isUndefined(self.view.ir_options['web_m2x_options.create']) && can_create) ||
-		            (_.isUndefined(self.options.create) && self.view.ir_options['web_m2x_options.create'] == "True") ||
-                    self.options.create) {
+                var allow_create = can_create;
+                if (!_.isUndefined(self.view.ir_options['web_m2x_options.create'])) {
+                    allow_create = self.is_option_set(self.view.ir_options['web_m2x_options.create']);
+                }
+                if (!_.isUndefined(self.options.create)) {
+                    allow_create = self.is_option_set(self.options.create);
+                }
+
+                if (allow_create) {
 
                     if (search_val.length > 0 &&
                         !_.include(raw_result, search_val)) {
@@ -198,9 +214,15 @@ openerp.web_m2x_options = function (instance) {
 
                 // create...
 
-                if ((_.isUndefined(self.options.create_edit) && _.isUndefined(self.view.ir_options['web_m2x_options.create_edit']) && can_create) ||
-		            (_.isUndefined(self.options.create) && self.view.ir_options['web_m2x_options.create_edit'] == "True") ||
-                    self.options.create_edit) {
+                var allow_create_edit = can_create;
+                if (!_.isUndefined(self.view.ir_options['web_m2x_options.create_edit'])) {
+                    allow_create_edit = self.is_option_set(self.view.ir_options['web_m2x_options.create_edit']);
+                }
+                if (!_.isUndefined(self.options.create_edit)) {
+                    allow_create_edit = self.is_option_set(self.options.create_edit);
+                }
+
+                if (allow_create_edit) {
 
                     values.push({
                         label: _t("Create and Edit..."),
@@ -225,13 +247,6 @@ openerp.web_m2x_options = function (instance) {
 
     instance.web.form.FieldMany2ManyTags.include({
 
-        show_error_displayer: function () {
-            if ((typeof this.options.m2o_dialog === 'undefined' && this.can_create) ||
-                this.options.m2o_dialog) {
-                new instance.web.form.M2ODialog(this).open();
-            }
-        },
-
         start: function() {
             this._super.apply(this, arguments);
             return this.get_options();
@@ -254,6 +269,34 @@ openerp.web_m2x_options = function (instance) {
             return this.view.ir_options_loaded;
         },
 
+        is_option_set: function(option) {
+            if (_.isUndefined(option)) {
+                return false
+            }
+            var is_string = typeof option === 'string'
+            var is_bool = typeof option === 'boolean'
+            if (is_string) {
+                return option === 'true' || option === 'True'
+            } else if (is_bool) {
+                return option
+            }
+            return false
+        },
+
+        show_error_displayer: function () {
+            var allow_dialog = this.can_create;
+            if (!_.isUndefined(this.view.ir_options['web_m2x_options.m2o_dialog'])) {
+                allow_dialog = this.is_option_set(this.view.ir_options['web_m2x_options.m2o_dialog']);
+            }
+            if (!_.isUndefined(this.options.m2o_dialog)) {
+                allow_dialog = this.is_option_set(this.options.m2o_dialog);
+            }
+
+            if (allow_dialog) {
+                new instance.web.form.M2ODialog(this).open();
+            }
+        },
+
         /**
         * Call this method to search using a string.
         */
@@ -267,7 +310,6 @@ openerp.web_m2x_options = function (instance) {
             if (!_.isUndefined(this.view.ir_options['web_m2x_options.limit'])) {
                 this.limit = parseInt(this.view.ir_options['web_m2x_options.limit']);
             }
-
             if (typeof this.options.limit === 'number') {
                 this.limit = this.options.limit;
             }
@@ -306,9 +348,15 @@ openerp.web_m2x_options = function (instance) {
                 }
                 // quick create
 
-                if ((_.isUndefined(self.options.create) && _.isUndefined(self.view.ir_options['web_m2x_options.create'])) ||
-		            (_.isUndefined(self.options.create) && self.view.ir_options['web_m2x_options.create'] == 'True') ||
-                    self.options.create) {
+                var allow_create = can_create;
+                if (!_.isUndefined(self.view.ir_options['web_m2x_options.create'])) {
+                    allow_create = self.is_option_set(self.view.ir_options['web_m2x_options.create']);
+                }
+                if (!_.isUndefined(self.options.create)) {
+                    allow_create = self.is_option_set(self.options.create);
+                }
+
+                if (allow_create) {
 
                     var raw_result = _(data.result).map(function(x) {return x[1];});
                     if (search_val.length > 0 && !_.include(raw_result, search_val)) {
@@ -324,9 +372,15 @@ openerp.web_m2x_options = function (instance) {
                 }
                 // create...
 
-                if ((_.isUndefined(self.options.create_edit === 'undefined') && _.isUndefined(self.view.ir_options['web_m2x_options.create_edit'])) ||
-	            (_.isUndefined(self.options.create) && self.view.ir_options['web_m2x_options.create_edit'] == 'True') ||
-                    self.options.create_edit) {
+                var allow_create_edit = can_create;
+                if (!_.isUndefined(self.view.ir_options['web_m2x_options.create_edit'])) {
+                    allow_create_edit = self.is_option_set(self.view.ir_options['web_m2x_options.create_edit']);
+                }
+                if (!_.isUndefined(self.options.create_edit)) {
+                    allow_create_edit = self.is_option_set(self.options.create_edit);
+                }
+
+                if (allow_create_edit) {
 
                     values.push({
                         label: _t("Create and Edit..."),
