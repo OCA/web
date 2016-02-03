@@ -29,7 +29,8 @@ class CkeditorMonkeypatch(models.AbstractModel):
 
     def _register_hook(self, cr):
         marker = self._name.replace('.', '_')
-        if not hasattr(clean, marker):
+        if not hasattr(clean, marker) \
+                and not hasattr(clean, '_is_image_dataurl'):
             # monkey patch lxml's html cleaner to allow image data urls
             if hasattr(clean, '_is_javascript_scheme'):
                 # this is the case in lxml >= 3.3
