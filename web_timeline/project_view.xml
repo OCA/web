@@ -17,12 +17,8 @@
             </field>
         </record>
 
-        <record id="action_view_task" model="ir.actions.act_window">
-            <field name="name">Tasks</field>
-            <field name="res_model">project.task</field>
+        <record id="project.action_view_task" model="ir.actions.act_window">
             <field name="view_mode">kanban,tree,form,calendar,gantt,timeline,graph</field>
-            <field name="search_view_id" ref="project.view_task_search_form"/>
-            <field name="inherit_id" ref="project.action_view_task"/>
         </record>
     </data>
 </openerp>
