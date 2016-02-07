@@ -1,104 +1,152 @@
-# Translation of Odoo Server.
-# This file contains the translation of the following modules:
-# * web_timeline
-# 
-# Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2016
-# Esther Martín Menéndez <esthermartin001@gmail.com>, 2017
+# Basque translation for openerp-web
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
+# This file is distributed under the same license as the openerp-web package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-06 08:58+0000\n"
-"PO-Revision-Date: 2016-12-06 08:58+0000\n"
-"Last-Translator: Esther Martín Menéndez <esthermartin001@gmail.com>, 2017\n"
-"Language-Team: Basque (https://www.transifex.com/oca/teams/23907/eu/)\n"
+"Project-Id-Version: openerp-web\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2015-01-21 14:08+0000\n"
+"PO-Revision-Date: 2014-08-14 16:14+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Basque <eu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Language: eu\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2015-01-22 08:55+0000\n"
+"X-Generator: Launchpad (build 17306)\n"
 
-#. module: web_timeline
+#. module: web_calendar
 #. openerp-web
-#: code:addons/web_timeline/static/src/js/web_timeline.js:484
+#: code:addons/web_calendar/static/src/js/web_calendar.js:1295
+#, python-format
+msgid "Add"
+msgstr ""
+
+#. module: web_calendar
+#. openerp-web
+#: code:addons/web_calendar/static/src/js/web_calendar.js:27
+#, python-format
+msgid "All day"
+msgstr ""
+
+#. module: web_calendar
+#. openerp-web
+#: code:addons/web_calendar/static/src/js/web_calendar.js:917
 #, python-format
 msgid "Are you sure you want to delete this record ?"
 msgstr ""
 
-#. module: web_timeline
+#. module: web_calendar
 #. openerp-web
-#: code:addons/web_timeline/static/src/js/web_timeline.js:377
+#: code:addons/web_calendar/static/src/js/web_calendar.js:75
+#, python-format
+msgid "Calendar"
+msgstr "Egutegia"
+
+#. module: web_calendar
+#. openerp-web
+#: code:addons/web_calendar/static/src/js/web_calendar.js:131
+#, python-format
+msgid "Calendar view has not defined 'date_start' attribute."
+msgstr ""
+
+#. module: web_calendar
+#. openerp-web
+#: code:addons/web_calendar/static/src/js/web_calendar.js:950
 #, python-format
 msgid "Create"
 msgstr ""
 
-#. module: web_timeline
+#. module: web_calendar
 #. openerp-web
-#: code:addons/web_timeline/static/src/xml/web_timeline.xml:8
+#: code:addons/web_calendar/static/src/xml/web_fullcalendar.xml:66
+#, python-format
+msgid "Create event"
+msgstr ""
+
+#. module: web_calendar
+#. openerp-web
+#: code:addons/web_calendar/static/src/js/web_calendar.js:955
+#, python-format
+msgid "Create: "
+msgstr ""
+
+#. module: web_calendar
+#. openerp-web
+#: code:addons/web_calendar/static/src/js/web_calendar.js:1227
+#, python-format
+msgid "Dataset for type '%s' is not defined."
+msgstr ""
+
+#. module: web_calendar
+#. openerp-web
+#: code:addons/web_calendar/static/src/js/web_calendar.js:32
 #, python-format
 msgid "Day"
-msgstr "Eguna"
+msgstr ""
 
-#. module: web_timeline
+#. module: web_calendar
 #. openerp-web
-#: code:addons/web_timeline/static/src/js/web_timeline.js:426
+#: code:addons/web_calendar/static/src/js/web_calendar.js:837
 #, python-format
-msgid "Edit"
-msgstr "Editatu"
+msgid "Delete"
+msgstr ""
 
-#. module: web_timeline
+#. module: web_calendar
 #. openerp-web
-#: code:addons/web_timeline/static/src/js/web_timeline.js:441
+#: code:addons/web_calendar/static/src/js/web_calendar.js:838
+#: code:addons/web_calendar/static/src/xml/web_fullcalendar.xml:67
 #, python-format
-msgid "Messages"
-msgstr "Mezuak"
+msgid "Edit Event"
+msgstr ""
 
-#. module: web_timeline
+#. module: web_calendar
 #. openerp-web
-#: code:addons/web_timeline/static/src/xml/web_timeline.xml:10
+#: code:addons/web_calendar/static/src/xml/web_fullcalendar.xml:60
+#, python-format
+msgid "Event summary:"
+msgstr ""
+
+#. module: web_calendar
+#. openerp-web
+#: code:addons/web_calendar/static/src/js/web_calendar.js:1205
+#, python-format
+msgid "Missing required fields %s"
+msgstr ""
+
+#. module: web_calendar
+#. openerp-web
+#: code:addons/web_calendar/static/src/js/web_calendar.js:30
 #, python-format
 msgid "Month"
-msgstr "Hilabete"
-
-#. module: web_timeline
-#. openerp-web
-#: code:addons/web_timeline/static/src/js/web_timeline.js:427
-#, python-format
-msgid "Save"
-msgstr "Gorde"
-
-#. module: web_timeline
-#. openerp-web
-#: code:addons/web_timeline/static/src/js/web_timeline.js:27
-#, python-format
-msgid "Timeline"
 msgstr ""
 
-#. module: web_timeline
+#. module: web_calendar
 #. openerp-web
-#: code:addons/web_timeline/static/src/js/web_timeline.js:99
+#: code:addons/web_calendar/static/src/js/web_calendar.js:1347
 #, python-format
-msgid "Timeline view has not defined 'date_start' attribute."
+msgid "Open: "
 msgstr ""
 
-#. module: web_timeline
+#. module: web_calendar
 #. openerp-web
-#: code:addons/web_timeline/static/src/xml/web_timeline.xml:5
+#: code:addons/web_calendar/static/src/js/web_calendar.js:29
 #, python-format
 msgid "Today"
-msgstr "Gaur"
+msgstr ""
 
-#. module: web_timeline
+#. module: web_calendar
 #. openerp-web
-#: code:addons/web_timeline/static/src/xml/web_timeline.xml:9
+#: code:addons/web_calendar/static/src/js/web_calendar.js:828
+#, python-format
+msgid "View: %s"
+msgstr ""
+
+#. module: web_calendar
+#. openerp-web
+#: code:addons/web_calendar/static/src/js/web_calendar.js:31
 #, python-format
 msgid "Week"
-msgstr "Astea"
-
-#. module: web_timeline
-#. openerp-web
-#: code:addons/web_timeline/static/src/xml/web_timeline.xml:11
-#, python-format
-msgid "Year"
-msgstr "Urtea"
+msgstr ""
