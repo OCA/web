@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_task_timeline" model="ir.ui.view">
+            <field name="name">project.task.timeline</field>
+            <field name="model">project.task</field>
+            <field name="type">timeline</field>
+            <field eval="2" name="priority"/>
+            <field name="arch" type="xml">
+                <timeline date_start="date_start" 
+                          date_stop="date_end"
+                          date_delay='1'
+                          string="Tasks"
+                          default_group_by="user_id" event_open_popup="true" colors="#ec7063:user_id == false;#2ecb71:kanban_state=='done';">
+                </timeline>
+            </field>
+        </record>
+
+        <record id="project.action_view_task" model="ir.actions.act_window">
+            <field name="view_mode">kanban,tree,form,calendar,gantt,timeline,graph</field>
+        </record>
+    </data>
+</openerp>
