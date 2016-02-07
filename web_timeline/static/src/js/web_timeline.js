@@ -1,5 +1,6 @@
 /*---------------------------------------------------------
- * OpenERP web_timeline
+ * Odoo web_timeline
+ * Copyright 2015 ACSONE SA/NV
  *---------------------------------------------------------*/
 
 _.str.toBoolElse = function (str, elseValues, trueValues, falseValues) {
