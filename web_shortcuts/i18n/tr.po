@@ -3,14 +3,15 @@
 # * web_shortcuts
 # 
 # Translators:
+# Ahmet Altınışık <aaltinisik@altinkaya.com.tr>, 2015-2016
 # Ahmet Altınışık <aaltinisik@altinkaya.com.tr>, 2015
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-08 21:34+0000\n"
-"PO-Revision-Date: 2015-12-30 22:16+0000\n"
+"POT-Creation-Date: 2016-01-10 07:31+0000\n"
+"PO-Revision-Date: 2016-01-31 11:39+0000\n"
 "Last-Translator: Ahmet Altınışık <aaltinisik@altinkaya.com.tr>\n"
 "Language-Team: Turkish (http://www.transifex.com/oca/OCA-web-8-0/language/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -64,7 +65,7 @@ msgstr "Kısayol Adı"
 #. module: web_shortcuts
 #: sql_constraint:web.shortcut:0
 msgid "Shortcut for this menu already exists!"
-msgstr ""
+msgstr "Bu menü için kısayol zaten mevcut !"
 
 #. module: web_shortcuts
 #: field:web.shortcut,user_id:0
