@@ -37,7 +37,7 @@
     'css': [
         'static/src/css/web_ckeditor4.css',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'certificate': '',
 }
