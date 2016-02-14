@@ -24,4 +24,3 @@ Widget use Number.prototype.toLocaleString()
     'installable': True,
     'auto_install': False
 }
-
