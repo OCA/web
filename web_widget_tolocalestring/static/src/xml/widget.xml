@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <div t-name="ListView.row.tolocalestring" t-att-style="style"><t t-raw="value" /></div>
+</templates>
