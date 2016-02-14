@@ -3,7 +3,10 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Web Widget toLocaleString",
-    "summary": "This module add 'tolocalestring' widget in tree view for formatting numbers or not to display the values 0",
+    "summary": """
+This module add 'tolocalestring' widget in tree view for formatting
+numbers or not to display the values 0""",
+    "description": "",
     "version": "8.0.1.0.0",
     "category": "web",
     "website": "https://odoo-community.org/",
