@@ -25,6 +25,7 @@
 
 from openerp.osv import orm, fields
 from openerp.tools.translate import _
+from openerp.tools.safe_eval import safe_eval
 
 
 class tile(orm.Model):
@@ -55,7 +56,7 @@ class tile(orm.Model):
                 # Compute count item
                 model = self.pool.get(r.model_id.model)
                 count = model.search_count(
-                    cr, uid, eval(r.domain), context=context)
+                    cr, uid, safe_eval(r.domain), context=context)
                 res[r.id].update({
                     'active': True,
                     'count': count,
@@ -64,7 +65,7 @@ class tile(orm.Model):
                 # Compute datas for field_id depending of field_function
                 if r.field_function and r.field_id and count != 0:
                     ids = model.search(
-                        cr, uid, eval(r.domain), context=context)
+                        cr, uid, safe_eval(r.domain), context=context)
                     vals = [x[r.field_id.name] for x in model.read(
                         cr, uid, ids, [r.field_id.name], context=context)]
                     desc = r.field_id.field_description
