@@ -20,8 +20,7 @@ openerp.web_widget_tolocalestring = function (instance) {
                     }
                 }
             }
-            if (value!=="") {                                                    
-                //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toLocaleString
+            if (value!=="") {
                 value=value.toLocaleString(locales, options);
             }
             return instance.web.qweb.render('ListView.row.tolocalestring', {widget: this, style: "", value: value});

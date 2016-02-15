@@ -3,29 +3,24 @@
    :alt: License: AGPL-3
 
 ==============
-Web Widget toLocaleString
+"toLocaleString" Web Widget
 ==============
 
-This module add 'tolocalestring' widget in tree view for formatting numbers or not to display the values 0 : 
-
+This module adds the possibility to use 'tolocalestring' widget in tree view, 
+in order to improve numbers formatting or allows to not display the 0 values:
 
 .. image:: /web_widget_tolocalestring/static/description/screenshot1.png
     :alt: Screenshot
-
-
 
 Installation
 ============
 
 It was tested on Odoo trunk, 8.0 branch.
 
-
-
-
 Usage
 =====
 
-To use this module, you need in the view declaration, put widget='tolocalestring' and tolocalestring='...' attribute in the field tag::
+To use this module, you need to add inside the view declaration widget='tolocalestring' and tolocalestring='...' attribute such as:
 
     ...
     <field name="arch" type="xml">
@@ -39,17 +34,13 @@ To use this module, you need in the view declaration, put widget='tolocalestring
     </field>
     ...
 
-
 All options  : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toLocaleString
-
-
-
 
 Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues
-<https://github.com/OCA/{project_repo}/issues>`_. In case of trouble, please
+<https://github.com/OCA/web/issues>`_. In case of trouble, please
 check there if your issue has already been reported. If you spotted it first,
 help us smashing it by providing a detailed and welcomed `feedback
 <https://github.com/OCA/
@@ -64,7 +55,6 @@ Contributors
 ------------
 
 * Tony Galmiche <tony.galmiche@infosaone.com>
-
 
 Maintainer
 ----------
