@@ -11,6 +11,9 @@ openerp.web_fullscreen = function(instance, local) {
         toggle: function() {
             $("#oe_main_menu_navbar").toggle();
             $(".oe_leftbar").toggle();
+        },
+        start: function() {
+            this.$el.find('a').tooltip();
         }
     });
     

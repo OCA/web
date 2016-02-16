@@ -2,7 +2,7 @@
 <templates xml:space="preserve">
     <t t-name="FullscreenButton">
         <li class="oe_e">    
-            <a>ò</a>
+            <a data-original-title="Fullscreen">ò</a>
         </li>
     </t>
 </templates>
