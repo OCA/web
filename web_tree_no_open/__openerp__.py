@@ -16,4 +16,5 @@
     'data': [
         'assets.xml',
     ],
+    'images': [],
 }
