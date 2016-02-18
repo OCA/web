@@ -1,15 +1,13 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
     :alt: License: AGPL-3
 
+================
 Web Tree No Open
 ================
 
-This module extends the functionality of tree views.
-It adds a new configuration attribute 'open' to trees, very similiar to the
-existing attributes 'edit', 'create' and 'delete'
-
-The new attribute makes it possible to deactivate the onclick behaviour in tree
-views.
+This module extends the functionality of tree views and adds a new attribute 
+to deactivate the onclick behaviour in them. The new configuration attribute 'open' 
+is to be used in the same way as existing ones 'edit', 'create' and 'delete'.
 ::
 
    <tree open="false" >
@@ -17,13 +15,13 @@ views.
 Installation
 ============
 
-To install this module, just follow basic steps to install an odoo module.
+To install this module, just follow basic steps to install an Odoo module.
 
 
 Configuration
 =============
 
-Not needed.
+No configuration needed.
 
 Usage
 =====
@@ -35,18 +33,6 @@ To use this module, you need to:
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
    :target: https://runbot.odoo-community.org/runbot/web/8.0
-
-.. repo_id is available in https://github.com/OCA/maintainer-tools/blob/master/tools/repos_with_ids.txt
-.. branch is "8.0" for example
-
-For further information, please visit:
-
-* https://www.odoo.com/forum/help-1
-
-Known issues / Roadmap
-======================
-
-* ...
 
 Bug Tracker
 ===========
@@ -78,4 +64,4 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-To contribute to this module, please visit http://odoo-community.org.
+To contribute to this module, please visit https://odoo-community.org.
