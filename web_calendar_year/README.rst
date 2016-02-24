@@ -15,7 +15,7 @@ Usage
 
 To use this module, you need to:
 
-* Go to ...
+* Go to the calendar and select the "Year" view.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
