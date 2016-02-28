@@ -1,0 +1,40 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_widget_digitized_signature
+# 
+# Translators:
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: web (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-02-26 02:05+0000\n"
+"PO-Revision-Date: 2016-02-27 16:56+0000\n"
+"Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
+"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-web-8-0/language/sl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: sl\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+
+#. module: web_widget_digitized_signature
+#. openerp-web
+#: code:addons/web_widget_digitized_signature/static/src/xml/digital_sign.xml:6
+#, python-format
+msgid "Clear"
+msgstr "Počisti"
+
+#. module: web_widget_digitized_signature
+#. openerp-web
+#: code:addons/web_widget_digitized_signature/static/src/js/digital_sign.js:115
+#, python-format
+msgid "Could not display the selected image."
+msgstr "Ni mogoče prikazati izbrane slike."
+
+#. module: web_widget_digitized_signature
+#. openerp-web
+#: code:addons/web_widget_digitized_signature/static/src/js/digital_sign.js:115
+#, python-format
+msgid "Image"
+msgstr "Slika"
