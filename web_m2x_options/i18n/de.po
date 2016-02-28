@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-10 07:31+0000\n"
+"POT-Creation-Date: 2016-02-26 02:05+0000\n"
 "PO-Revision-Date: 2016-01-18 20:15+0000\n"
 "Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-web-8-0/language/de/)\n"
@@ -20,16 +20,16 @@ msgstr ""
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:188
-#: code:addons/web_m2x_options/static/src/js/form.js:324
+#: code:addons/web_m2x_options/static/src/js/form.js:191
+#: code:addons/web_m2x_options/static/src/js/form.js:330
 #, python-format
 msgid "Create \"<strong>%s</strong>\""
 msgstr "Anlegen \"<strong>%s</strong>"
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:210
-#: code:addons/web_m2x_options/static/src/js/form.js:345
+#: code:addons/web_m2x_options/static/src/js/form.js:213
+#: code:addons/web_m2x_options/static/src/js/form.js:351
 #, python-format
 msgid "Create and Edit..."
 msgstr "Anlegen und Bearbeiten"
@@ -37,7 +37,7 @@ msgstr "Anlegen und Bearbeiten"
 #. module: web_m2x_options
 #. openerp-web
 #: code:addons/web_m2x_options/static/src/js/form.js:156
-#: code:addons/web_m2x_options/static/src/js/form.js:302
+#: code:addons/web_m2x_options/static/src/js/form.js:305
 #, python-format
 msgid "Search More..."
 msgstr "Suche weitere..."
