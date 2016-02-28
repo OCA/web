@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-10 07:31+0000\n"
-"PO-Revision-Date: 2016-01-18 20:15+0000\n"
-"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
+"POT-Creation-Date: 2016-02-26 02:05+0000\n"
+"PO-Revision-Date: 2016-02-25 15:12+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-web-8-0/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,8 +29,8 @@ msgstr "Neu laden"
 #. openerp-web
 #: code:addons/web_switch_company_warning/static/src/xml/switch_company_warning.xml:5
 #, python-format
-msgid "You switched to a different company with another tab or window"
-msgstr "Sie haben, mit anderem Tab oder Fenster, das Unternehmen gewechselt"
+msgid "You switched to a different company or user with another tab or window"
+msgstr ""
 
 #. module: web_switch_company_warning
 #. openerp-web

@@ -4,12 +4,13 @@
 # 
 # Translators:
 # Antonio Trueba, 2016
+# Antonio Trueba, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-10 07:31+0000\n"
-"PO-Revision-Date: 2016-02-10 16:42+0000\n"
+"POT-Creation-Date: 2016-02-26 02:04+0000\n"
+"PO-Revision-Date: 2016-02-23 12:54+0000\n"
 "Last-Translator: Antonio Trueba\n"
 "Language-Team: Spanish (http://www.transifex.com/oca/OCA-web-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -38,28 +39,28 @@ msgstr "Ayuda contextual"
 #. module: help_popup
 #: field:ir.actions.act_window,enduser_help:0
 msgid "End User Help"
-msgstr ""
+msgstr "Ayuda de usuario final"
 
 #. module: help_popup
 #: view:website:help_popup.tpl_help
 msgid "Help from Odoo"
-msgstr ""
+msgstr "Ayuda de Odoo"
 
 #. module: help_popup
 #: view:website:help_popup.tpl_help
 msgid "Help from developer"
-msgstr ""
+msgstr "Ayuda del desarrollador"
 
 #. module: help_popup
 #: help:ir.actions.act_window,advanced_help:0
 msgid ""
 "Use this field to add custom content for documentation purpose\n"
 "mainly by developers"
-msgstr ""
+msgstr "Use este campo para añadir contenido personalizado como documentación (principalmente para desarrolladores)"
 
 #. module: help_popup
 #: help:ir.actions.act_window,enduser_help:0
 msgid ""
 "Use this field to add custom content for documentation purpose\n"
 "mainly by power users "
-msgstr ""
+msgstr "Use este campo para añadir contenido personalizado como documentación (principalmente para usuarios avanzados)"

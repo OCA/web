@@ -4,12 +4,13 @@
 # 
 # Translators:
 # Antonio Trueba, 2016
+# Antonio Trueba, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-10 07:31+0000\n"
-"PO-Revision-Date: 2016-02-10 16:43+0000\n"
+"POT-Creation-Date: 2016-02-26 02:04+0000\n"
+"PO-Revision-Date: 2016-02-23 12:58+0000\n"
 "Last-Translator: Antonio Trueba\n"
 "Language-Team: Spanish (http://www.transifex.com/oca/OCA-web-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -66,12 +67,12 @@ msgstr "Exportar"
 #: model:ir.actions.act_window,name:help_online.action_export_help_wizard
 #, python-format
 msgid "Export Help"
-msgstr ""
+msgstr "Exportar ayuda"
 
 #. module: help_online
 #: view:export.help.wizard:help_online.export_help_wizard_view
 msgid "Export Help Data"
-msgstr ""
+msgstr "Exportar información de ayuda"
 
 #. module: help_online
 #: model:ir.model,name:help_online.model_export_help_wizard
@@ -82,7 +83,7 @@ msgstr ""
 #. module: help_online
 #: field:export.help.wizard,export_filename:0
 msgid "Export XML Filename"
-msgstr ""
+msgstr "Exportar fichero XML"
 
 #. module: help_online
 #: model:ir.ui.menu,name:help_online.menu_help
@@ -94,17 +95,17 @@ msgstr ""
 #: code:addons/help_online/models/help_online.py:55
 #, python-format
 msgid "Help on %s"
-msgstr ""
+msgstr "Ayuda sobre %s"
 
 #. module: help_online
 #: model:res.groups,name:help_online.help_online_group_reader
 msgid "Help reader"
-msgstr ""
+msgstr "Lector de ayuda"
 
 #. module: help_online
 #: model:res.groups,name:help_online.help_online_group_writer
 msgid "Help writer"
-msgstr ""
+msgstr "Editor de ayuda"
 
 #. module: help_online
 #: field:export.help.wizard,id:0 field:help.online,id:0
@@ -120,12 +121,12 @@ msgstr "Importar"
 #. module: help_online
 #: model:ir.actions.act_window,name:help_online.action_import_help_wizard
 msgid "Import Help"
-msgstr ""
+msgstr "Importar ayuda"
 
 #. module: help_online
 #: view:import.help.wizard:help_online.import_help_wizard_view
 msgid "Import Help Data"
-msgstr ""
+msgstr "Importar información de ayuda"
 
 #. module: help_online
 #: model:ir.ui.menu,name:help_online.menu_help_import
@@ -148,7 +149,7 @@ msgstr "Última actualización en"
 #: code:addons/help_online/models/export_help_wizard.py:260
 #, python-format
 msgid "No data to export !"
-msgstr ""
+msgstr "No hay información a exportar."
 
 #. module: help_online
 #: code:addons/help_online/models/help_online.py:33
@@ -168,12 +169,12 @@ msgstr ""
 #: code:addons/help_online/static/src/js/help_online.js:107
 #, python-format
 msgid "Page does not exist. Do you want to create?"
-msgstr ""
+msgstr "La página no existe. ¿Quiere crearla?"
 
 #. module: help_online
 #: field:import.help.wizard,source_file:0
 msgid "Source File"
-msgstr ""
+msgstr "Archivo origen"
 
 #. module: help_online
 #: view:export.help.wizard:help_online.export_help_wizard_view
@@ -181,7 +182,7 @@ msgid ""
 "This wizard allow you to export all QWeb views\n"
 "                        related to help online. The result will be an Odoo\n"
 "                        data xml file."
-msgstr ""
+msgstr "Este asistente le permite exportar todas las vistas QWeb relacionadas con la ayuda en línea. El resultado será un archivo XML en formato de Odoo."
 
 #. module: help_online
 #: view:import.help.wizard:help_online.import_help_wizard_view
@@ -189,13 +190,13 @@ msgid ""
 "This wizard allow you to import QWeb views\n"
 "                        related to help online. The required file format is an Odoo\n"
 "                        data xml file."
-msgstr ""
+msgstr "Este asistente le permite importar vistas QWeb relacionadas con la ayuda en linea. Debe ser un archivo XML en formato de Odoo."
 
 #. module: help_online
 #: code:addons/help_online/models/export_help_wizard.py:297
 #, python-format
 msgid "Unable to write autobackup file in given directory: %s"
-msgstr ""
+msgstr "No se ha podido escribir la copia de seguridad automática en el directorio especificado: %s"
 
 #. module: help_online
 #: view:ir.ui.view:help_online.view_view_search
