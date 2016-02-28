@@ -1,9 +1,9 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * web_switch_company_warning
+# * web_widget_digitized_signature
 # 
 # Translators:
-# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015-2016
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
@@ -18,23 +18,23 @@ msgstr ""
 "Language: sl\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
 
-#. module: web_switch_company_warning
+#. module: web_widget_digitized_signature
 #. openerp-web
-#: code:addons/web_switch_company_warning/static/src/xml/switch_company_warning.xml:6
+#: code:addons/web_widget_digitized_signature/static/src/xml/digital_sign.xml:6
 #, python-format
-msgid "Reload"
-msgstr "Ponovno naloži"
+msgid "Clear"
+msgstr "Počisti"
 
-#. module: web_switch_company_warning
+#. module: web_widget_digitized_signature
 #. openerp-web
-#: code:addons/web_switch_company_warning/static/src/xml/switch_company_warning.xml:5
+#: code:addons/web_widget_digitized_signature/static/src/js/digital_sign.js:115
 #, python-format
-msgid "You switched to a different company or user with another tab or window"
-msgstr "Preklopili ste na drugo družbo ali uporabnika z drugim zavihkom ali oknom"
+msgid "Could not display the selected image."
+msgstr "Ni mogoče prikazati izbrane slike."
 
-#. module: web_switch_company_warning
+#. module: web_widget_digitized_signature
 #. openerp-web
-#: code:addons/web_switch_company_warning/static/src/xml/switch_company_warning.xml:6
+#: code:addons/web_widget_digitized_signature/static/src/js/digital_sign.js:115
 #, python-format
-msgid "to refresh your session"
-msgstr "za osvežitev seje"
+msgid "Image"
+msgstr "Slika"
