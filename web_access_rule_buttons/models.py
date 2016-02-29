@@ -19,6 +19,12 @@ def check_access_rule_all(self, operations=None):
         operations = ['read', 'create', 'write', 'unlink']
     result = {}
     for operation in operations:
+        if self.is_transient() and not self.ids:
+            # If we call check_access_rule() without id, it will try to run a
+            # SELECT without ID which will crash, so we just blindly allow the
+            # operations
+            result[operation] = True
+            continue
         try:
             self.check_access_rule(operation)
         except exceptions.AccessError:
