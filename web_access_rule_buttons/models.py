@@ -15,10 +15,17 @@ def check_access_rule_all(self, operations=None):
    :param operation: a list of ``read``, ``create``, ``write``, ``unlink``
    :return: {operation: access} (access is a boolean)
     """
+    self.ensure_one()
     if operations is None:
         operations = ['read', 'create', 'write', 'unlink']
     result = {}
     for operation in operations:
+        if self.is_transient() and not self.id:
+            # If we call check_access_rule() without id, it will try to run a
+            # SELECT without ID which will crash, so we just blindly allow the
+            # operations
+            result[operation] = True
+            continue
         try:
             self.check_access_rule(operation)
         except exceptions.AccessError:
