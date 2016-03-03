@@ -14,6 +14,11 @@ Depend on this module and return
         'type': 'ir.actions.act_window.message',
         'title': _('My title'),
         'message': _('My message'),
+        # optional title of the close button, if not set, will be _('Close')
+        # if set False, no close button will be shown
+        # you can create your own close button with an action of type
+        # ir.actions.act_window_close
+        'close_button_title': 'Make this window go away',
         # this is an optional list of buttons to show
         'buttons': [
             # a button can be any action (also ir.actions.report.xml et al)
@@ -47,7 +52,6 @@ Known issues / Roadmap
 
 * add `message_type` to differenciate between warnings, errors, etc.
 * have one `message_type` to show a nonmodal warning on top right
-* have `button_title` to set the button title
 
 
 Bug Tracker

@@ -25,18 +25,24 @@ openerp.web_ir_actions_act_window_message = function(instance)
         ir_actions_act_window_message: function(action, options)
         {
             var self = this,
-                dialog = new instance.web.Dialog(
+                buttons = [];
+
+            if(action.close_button_title !== false)
+            {
+                buttons.push({
+                    text: action.close_button_title ||
+                    instance.web._t('Close'),
+                    click: function() { dialog.close() },
+                    oe_link_class: 'oe_highlight',
+                })
+            }
+
+            var dialog = new instance.web.Dialog(
                 this,
                 {
                     size: 'medium',
                     title: action.title,
-                    buttons: [
-                        {
-                            text: instance.web._t('Close'),
-                            click: function() { dialog.close() },
-                            oe_link_class: 'oe_highlight',
-                        },
-                    ].concat(
+                    buttons: buttons.concat(
                         this.ir_actions_act_window_message_get_buttons(
                             action, function() { dialog.close() })
                     ),
