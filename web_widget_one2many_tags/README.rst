@@ -36,6 +36,7 @@ Contributors
 ------------
 
 * Holger Brunn <hbrunn@therp.nl>
+* Iván Todorovich <ivan.todorovich@gmail.com>
 
 Maintainer
 ----------

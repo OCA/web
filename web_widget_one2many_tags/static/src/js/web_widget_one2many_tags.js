@@ -72,8 +72,22 @@ openerp.web_widget_one2many_tags = function(instance)
             return result;
         },
     });
+
     instance.web.form.widgets.add(
         'one2many_tags',
         'instance.web_widget_one2many_tags.FieldOne2ManyTags'
+    );
+
+    instance.web.list.One2ManyTags = instance.web.list.Many2Many.extend({
+        init: function () {
+            this._super.apply(this, arguments);
+            // Treat it as many2many to trick odoo into populating '__display'.
+            this.type = 'many2many';
+        },
+    });
+
+    instance.web.list.columns.add(
+        'field.one2many_tags',
+        'instance.web.list.One2ManyTags'
     );
 }
