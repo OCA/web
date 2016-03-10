@@ -5,7 +5,7 @@
 {
     'name': 'Web Calendar Year',
     'images': ['static/description/main_screenshot.png'],
-    'summary': """Year view on Odoo calendar""",
+    'summary': 'Year view on Odoo calendar',
     'author': 'ONESTEiN BV,Odoo Community Association (OCA)',
     'license': 'AGPL-3',
     'website': 'http://www.onestein.eu',
@@ -15,8 +15,4 @@
     'data': [
         'views/web_calendar_year.xml',
     ],
-    'demo': [],
-    'installable': True,
-    'auto_install': False,
-    'application': False,
 }

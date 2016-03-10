@@ -3,7 +3,7 @@
     <data>
         <template id="assets_backend" name="web_calendar_year assets" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
-                <script type="text/javascript" src="/web_calendar_year/static/src/js/fullcalendar.js"></script>
+                <script type="text/javascript" src="/web_calendar_year/static/lib/fullcalendar/js/fullcalendar.js"></script>
                 <script type="text/javascript" src="/web_calendar_year/static/src/js/web_calendar_year.js"></script>
             </xpath>
         </template>
