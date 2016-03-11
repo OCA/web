@@ -26,6 +26,13 @@ No configuration is needed.
    :alt: Try me on Runbot
    :target: https://runbot.odoo-community.org/runbot/162/8.0
 
+
+Known issues / Roadmap
+======================
+
+* There's no visual hint about the collapsed/uncollapsed state of a menu on second level menus
+
+
 Bug Tracker
 ===========
 
