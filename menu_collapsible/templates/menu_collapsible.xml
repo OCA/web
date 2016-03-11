@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend_menu_collapsible" name="assets.backend.menu.collapsible" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/menu_collapsible/static/src/css/menu_collapsible.css" />
+                <script type="text/javascript" src="/menu_collapsible/static/src/js/menu_collapsible.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>
