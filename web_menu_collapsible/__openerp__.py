@@ -5,7 +5,7 @@
 {
     'name': 'Collapsible menu',
     'license': 'AGPL-3',
-    'images': ['static/description/main_screenshot.png'],
+    'images': [],
     'summary': 'Foldable second level Odoo menu',
     'author': 'ONESTEiN BV,Odoo Community Association (OCA)',
     'website': 'http://www.onestein.eu',

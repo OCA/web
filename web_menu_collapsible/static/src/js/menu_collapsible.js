@@ -1,4 +1,4 @@
-openerp.menu_collapsible = function(instance) {
+openerp.web_menu_collapsible = function(instance) {
     instance.web.Menu.include({
         self: this,
         start: function() {
