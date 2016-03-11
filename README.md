@@ -41,6 +41,7 @@ addon | version | summary
 [web_ir_actions_act_window_page](web_ir_actions_act_window_page/) | 8.0.1.0.0 | Allows a developer to trigger a pager to show the previous or next next record in the form view
 [web_last_viewed_records](web_last_viewed_records/) | 8.0.1.0.0 | Last viewed records
 [web_listview_custom_element_number](web_listview_custom_element_number/) | 8.0.1.0.0 | Allow users to set manually a quantity of items to display in a tree view
+[web_listview_show_advanced_search](web_listview_show_advanced_search/) | 1.0 | Web Show Advanced Search by default on list view
 [web_m2x_options](web_m2x_options/) | 8.0.0.2 | web_m2x_options
 [web_menu_autohide](web_menu_autohide/) | 1.0 | Hide top and left menu bar
 [web_menu_navbar_needaction](web_menu_navbar_needaction/) | 8.0.1.0.0 | Show the sum of submenus' needaction counters in main menu
@@ -65,6 +66,7 @@ addon | version | summary
 [web_widget_float_formula](web_widget_float_formula/) | 8.0.1.0.0 | Web Widget - Formulas in Float fields
 [web_widget_mail_send_odoo](web_widget_mail_send_odoo/) | 8.0.1.0.0 | Send mail using internal composition wizard.
 [web_widget_many2many_tags_multi_selection](web_widget_many2many_tags_multi_selection/) | 8.0.0.1.0 | Tags multiple selection
+[web_widget_one2many_tags](web_widget_one2many_tags/) | 8.0.1.0.0 | Provides a widget similar to many2many_tags for one2many fields
 [web_widget_text_markdown](web_widget_text_markdown/) | 8.0.1.0.0 | web_widget_text_markdown
 [web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 8.0.1.0.0 | Show list fields as a matrix
 
