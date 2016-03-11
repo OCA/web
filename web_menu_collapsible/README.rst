@@ -8,6 +8,14 @@ Collapsible menu
 
 This module makes all menus collapsible for all users.
 
+Second level menus are collapsed by default.
+
+.. image:: /web_menu_collapsible/static/description/menu_collapsible_1.png
+    :alt: In case first level menu is collapsed, click it to expand.
+
+.. image:: /web_menu_collapsible/static/description/menu_collapsible_2.png
+    :alt: In case first level menu is expanded, click it to collapse.
+
 
 Configuration
 =============
