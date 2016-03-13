@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * web_switch_company_warning
+# * web_widget_digitized_signature
 # 
 # Translators:
 # Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016
@@ -18,23 +18,23 @@ msgstr ""
 "Language: fi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. module: web_switch_company_warning
+#. module: web_widget_digitized_signature
 #. openerp-web
-#: code:addons/web_switch_company_warning/static/src/xml/switch_company_warning.xml:6
+#: code:addons/web_widget_digitized_signature/static/src/xml/digital_sign.xml:6
 #, python-format
-msgid "Reload"
-msgstr "Lataa uudelleen"
+msgid "Clear"
+msgstr "Tyhjennä"
 
-#. module: web_switch_company_warning
+#. module: web_widget_digitized_signature
 #. openerp-web
-#: code:addons/web_switch_company_warning/static/src/xml/switch_company_warning.xml:5
+#: code:addons/web_widget_digitized_signature/static/src/js/digital_sign.js:115
 #, python-format
-msgid "You switched to a different company or user with another tab or window"
-msgstr "Olet vaihtanut toiseen yritykseen tai käyttäjään toisessa välilehdellä"
+msgid "Could not display the selected image."
+msgstr "Valittua kuvaa ei voida näyttää."
 
-#. module: web_switch_company_warning
+#. module: web_widget_digitized_signature
 #. openerp-web
-#: code:addons/web_switch_company_warning/static/src/xml/switch_company_warning.xml:6
+#: code:addons/web_widget_digitized_signature/static/src/js/digital_sign.js:115
 #, python-format
-msgid "to refresh your session"
-msgstr "päivittääksesi istunnon"
+msgid "Image"
+msgstr "Kuva"
