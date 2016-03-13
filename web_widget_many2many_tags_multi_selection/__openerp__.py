@@ -21,8 +21,8 @@
 
 {
     'name': 'Tags multiple selection',
-    'version': '8.0.0.1.0',
-    'author': 'Akretion, Odoo Community Association (OCA)',
+    'version': '9.0.1.1.0',
+    'author': 'Akretion, Odoo Community Association (OCA), Jamin Shah',
     'depends': [
         'web',
     ],
@@ -31,6 +31,6 @@
     'data': [
         'views/web_widget_many2many_tags_multi_selection.xml',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
 }

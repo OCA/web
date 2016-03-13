@@ -29,6 +29,7 @@ Contributors
 ------------
 
 * Sylvain Calador <sylvain.calador@akretion.com>
+* Jamin Shah <jaiminshah2009@gmail.com>
 
 Maintainer
 ----------
