@@ -20,6 +20,7 @@ addon | version | summary
 [web_access_rule_buttons](web_access_rule_buttons/) | 9.0.1.0.0 | Disable Edit button if access rules prevent this action
 [web_easy_switch_company](web_easy_switch_company/) | 9.0.1.0.0 | Multicompany - Easy Switch Company
 [web_sheet_full_width](web_sheet_full_width/) | 9.0.1.0.0 | Use the whole available screen width when displaying sheets
+[web_widget_many2many_tags_multi_selection](web_widget_many2many_tags_multi_selection/) | 9.0.1.1.0 | Tags multiple selection
 
 Unported addons
 ---------------
@@ -67,7 +68,6 @@ addon | version | summary
 [web_widget_color](web_widget_color/) | 8.0.1.0.0 (unported) | Web Widget Color
 [web_widget_datepicker_options](web_widget_datepicker_options/) | 8.0.1.0.0 (unported) | web_widget_datepicker_options
 [web_widget_float_formula](web_widget_float_formula/) | 8.0.1.0.0 (unported) | Web Widget - Formulas in Float fields
-[web_widget_many2many_tags_multi_selection](web_widget_many2many_tags_multi_selection/) | 8.0.0.1.0 (unported) | Tags multiple selection
 [web_widget_text_markdown](web_widget_text_markdown/) | 8.0.1.0.0 (unported) | web_widget_text_markdown
 [web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 8.0.1.0.0 (unported) | Show list fields as a matrix
 
