@@ -37,6 +37,7 @@ Contributors
 
 * Holger Brunn <hbrunn@therp.nl>
 * Iván Todorovich <ivan.todorovich@gmail.com>
+* Peter Hahn <peter.hahn@initos.com>
 
 Maintainer
 ----------
