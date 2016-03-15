@@ -85,6 +85,12 @@ openerp.web_widget_one2many_tags = function(instance)
             // note: this has been fixed in core OCB recently
             this.type = 'many2many';
         },
+        _format: function (row_data, options) {
+            if (_.isEmpty(row_data[this.id].value)) {
+                row_data[this.id] = {'value': false};
+            }
+            return this._super(row_data, options);
+        }
     });
 
     instance.web.list.columns.add(
