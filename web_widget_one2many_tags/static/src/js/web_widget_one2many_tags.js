@@ -82,6 +82,7 @@ openerp.web_widget_one2many_tags = function(instance)
         init: function () {
             this._super.apply(this, arguments);
             // Treat it as many2many to trick odoo into populating '__display'.
+            // note: this has been fixed in core OCB recently
             this.type = 'many2many';
         },
     });
