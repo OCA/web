@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+  <data>
+
+    <template id="assets_backend"
+              name="web_graph_radar assets"
+              inherit_id="web.assets_backend">
+      <xpath expr="." position="inside">
+        <script type="text/javascript"
+                src="/web_graph_radar/static/lib/nvd3-radar.js">
+        </script>
+        <script type="text/javascript"
+                src="/web_graph_radar/static/src/js/web_graph_radar.js">
+        </script>
+      </xpath>
+    </template>
+
+  </data>
+</openerp>
