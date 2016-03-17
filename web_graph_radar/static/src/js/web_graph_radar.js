@@ -63,7 +63,6 @@ openerp.web_graph_radar = function(instance) {
                     return {key:key, values: values};
                 });
             }
-            console.log(data);
             nv.addGraph(function () {
                 var chart = nv.models.radarChart();
                     // .stacked(self.bar_ui === 'stack')
