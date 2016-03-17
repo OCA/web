@@ -24,7 +24,7 @@
     'version': '8.0.0.1.0',
     'category': 'Web',
     'summary': 'Add graph radar view.',
-    'author': "Veronika Kotovich,Odoo Community Association (OCA)",
+    'author': "Veronika Kotovich,IT-Projects LLC,Odoo Community Association (OCA)",
     'license': 'AGPL-3',
     'website': 'https://twitter.com/vkotovi4',
     'depends': ['web_graph'],
