@@ -22,10 +22,10 @@ openerp.web_widget_one2many_tags = function(instance)
             result.ext.arrow = {
                 onArrowClick: function(e)
                 {
-                    var context = {},
+                    var context = self.build_context(),
                         key = _.str.sprintf(
                             'default_%s', self.field.relation_field)
-                    context[key] = self.field_manager.datarecord.id;
+                    context.add({[key]: self.field_manager.datarecord.id});
                     self._search_create_popup('form', undefined, context);
                 },
             }
