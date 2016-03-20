@@ -1,0 +1,40 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_switch_company_warning
+# 
+# Translators:
+# Paolo Valier, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: web (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-03-17 07:30+0000\n"
+"PO-Revision-Date: 2016-03-19 10:10+0000\n"
+"Last-Translator: Paolo Valier\n"
+"Language-Team: Italian (http://www.transifex.com/oca/OCA-web-8-0/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: web_switch_company_warning
+#. openerp-web
+#: code:addons/web_switch_company_warning/static/src/xml/switch_company_warning.xml:6
+#, python-format
+msgid "Reload"
+msgstr "Ricarica"
+
+#. module: web_switch_company_warning
+#. openerp-web
+#: code:addons/web_switch_company_warning/static/src/xml/switch_company_warning.xml:5
+#, python-format
+msgid "You switched to a different company or user with another tab or window"
+msgstr ""
+
+#. module: web_switch_company_warning
+#. openerp-web
+#: code:addons/web_switch_company_warning/static/src/xml/switch_company_warning.xml:6
+#, python-format
+msgid "to refresh your session"
+msgstr ""
