@@ -4,14 +4,20 @@ Colorize field in tree views
 This module aims to add support for dynamically coloring fields in tree view
 according to data in the record.
 
-It provides new attributes with the same syntax as 'colors' attribute in tree tag.
+It provides attributes on fields with the same syntax as the 'colors' attribute
+in tree tags.
+
+Further, it provides a ``color_field`` attribute on tree tags to use a field's
+value as color.
 
 Features
 ========
 
-* Add attribute 'bg_color' to color background of a cell in tree view
+* Add attribute ``bg_color`` on fields to color background of a cell in tree view
 
-* Add attribute 'fg_color' to change text color of a cell in tree view
+* Add attribute ``fg_color`` on fields to change text color of a cell in tree view
+
+* Add attribute ``color_field`` on the tree element to use as color
 
 
 Usage
@@ -45,7 +51,23 @@ Usage
     
     With this example, column which renders 'name' field will have its text colored in white.
 
+* In the tree view declaration, use color_field="color" attribute in the tree tag::
 
+    ...
+    <field name="arch" type="xml">
+        <tree string="View name" color_field="color">
+            ...
+            <field name="color" invisible="1" />
+            ...
+        </tree>
+    </field>
+    ...
+
+    With this example, the content of the field named `color` will be used to
+    populate the `color` CSS calue. Use a function field to return whichever
+    color you want depending on the other record values. Note this this
+    overrides the `colors` attribute, and that you need the tree to load your
+    field in the first place by adding it as invisible field.
 
 Bug Tracker
 ===========
@@ -63,6 +85,7 @@ Contributors
 ------------
 
 * Damien Crier <damien.crier@camptocamp.com>
+* Holger Brunn <hbrunn@therp.nl>
 
 Maintainer
 ----------
