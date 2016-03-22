@@ -1,8 +1,4 @@
 openerp.web_tree_dynamic_colored_field = function(instance){
-    var _t = instance.web._t,
-        _lt = instance.web._lt;
-    var QWeb = instance.web.qweb;
-    
     var pair_colors = function(pair_color){
         if (pair_color != ""){
             var pair_list = pair_color.split(':'),
@@ -10,6 +6,14 @@ openerp.web_tree_dynamic_colored_field = function(instance){
                 expression = pair_list[1];
             return [color, py.parse(py.tokenize(expression)), expression]
         }
+    };
+
+    var get_eval_context = function(record){
+        return _.extend(
+            {},
+            record.attributes,
+            instance.web.pyeval.context()
+        );
     };
 
     var colorize_helper = function(obj, record, column, field_attribute, css_attribute){
@@ -22,14 +26,7 @@ openerp.web_tree_dynamic_colored_field = function(instance){
             var colors = colors.filter(function CheckUndefined(value, index, ar) {
                 return value != undefined;
             })
-            var ctx = _.extend(
-                    {},
-                    record.attributes,
-                    {
-                        uid: obj.session.uid,
-                        current_date: new Date().toString('yyyy-MM-dd')
-                    }    
-            );
+            var ctx = get_eval_context(record);
             for(i=0, len=colors.length; i<len; ++i) {
                 pair = colors[i];
                 var color = pair[0];
@@ -41,46 +38,38 @@ openerp.web_tree_dynamic_colored_field = function(instance){
         }
         return result
     };
-    
+
     var colorize = function(record, column){
         var res = '';
         res += colorize_helper(this, record, column, 'bg_color', 'background-color');
         res += colorize_helper(this, record, column, 'fg_color', 'color');
         return res;
     };
-    
+
     instance.web.ListView.List.include({
         init: function(group, opts){
             this._super(group, opts);
             this.columns.fct_colorize = colorize;
         },
-        fct_colorize: colorize,
-        render: function() {
-            this.$current.empty().append(
-                QWeb.render('ListView.rows', _.extend({
-                        render_cell: function () {
-                            return self.render_cell.apply(self, arguments); },
-                        fct_colorize: function(){
-                            return self.fct_colorize.apply(self, arguments);
-                        }
-                    }, this)));
-            this.pad_table_to(4);
-        },
-        render_record: function(record) {
-            var self = this;
-            var index = this.records.indexOf(record);
-            return QWeb.render('ListView.row', {
-                columns: this.columns,
-                options: this.options,
-                record: record,
-                row_parity: (index % 2 === 0) ? 'even' : 'odd',
-                view: this.view,
-                render_cell: function () {
-                    return self.render_cell.apply(self, arguments); },
-                fct_colorize: function(){
-                    return self.fct_colorize.apply(self, arguments);
+    });
+
+    instance.web.ListView.include({
+        style_for: function (record)
+        {
+            var result = this._super.apply(this, arguments);
+            if(this.fields_view.arch.attrs.color_field)
+            {
+                var color = py.evaluate(
+                    py.parse(py.tokenize(
+                        this.fields_view.arch.attrs.color_field
+                    )),
+                    get_eval_context(record)).toJSON();
+                if(color)
+                {
+                    result += 'color: ' + color;
                 }
-            });
-        }
+            }
+            return result;
+        },
     });
 }
