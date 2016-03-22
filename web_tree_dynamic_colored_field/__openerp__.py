@@ -19,9 +19,10 @@
 #
 ##############################################################################
 {
-    'name': 'web tree dynamic colored field',
+    'name': 'Colorize field in tree views',
+    'summary': 'Allows you to dynamically color fields on tree views',
     'category': 'Hidden',
-    'version': '8.0.1.0.0',
+    'version': '8.0.1.0.1',
     'depends': ['web'],
     'author': "Camptocamp,Odoo Community Association (OCA)",
     'license': 'AGPL-3',
@@ -32,6 +33,4 @@
     'qweb': [
         'static/src/xml/*.xml',
     ],
-    'auto_install': False,
-    'installable': False,
 }
