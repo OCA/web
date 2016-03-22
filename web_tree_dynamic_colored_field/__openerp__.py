@@ -30,7 +30,7 @@
         'views/web_tree_dynamic_colored_field.xml',
     ],
     'qweb': [
-        'static/xml/*.xml',
+        'static/src/xml/*.xml',
     ],
     'auto_install': False
 }
