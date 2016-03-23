@@ -12,11 +12,11 @@
    being supported.
            
  */
-   
+
 openerp.support_branding = function(instance) {
     var QWeb = instance.web.qweb,
     _t = instance.web._t;
-    
+
     instance.web.CrashManager.include({
         init: function()
         {
@@ -67,7 +67,7 @@ openerp.support_branding = function(instance) {
                             'create',
                             [{
                                 state: 'outgoing',
-                                auto_delete: false,
+                                auto_delete: true,
                                 email_to: self.support_branding_support_email,
                                 subject: $subject.val(),
                                 body_html: jQuery('<div/>').append(
