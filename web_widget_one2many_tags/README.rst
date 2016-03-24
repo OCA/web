@@ -29,6 +29,16 @@ In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed feedback
 `here <https://github.com/OCA/web/issues/new?body=module:%20web_widget_one2many_tags%0Aversion:%208.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
+Known issues / Roadmap
+======================
+
+* as one2many fields are cached on the client side until the user hits `Save`
+  on the main form, no ``name_get`` can be called on those records, which is
+  why changes that update the display name are not reflected until saving, and
+  new records are displayed as `New record` until then. If you don't like this,
+  add the field `display_name` to your form and have it recomputed in an
+  @onchange handler.
+
 Credits
 =======
 

@@ -5,71 +5,137 @@
 openerp.web_widget_one2many_tags = function(instance)
 {
     openerp.web_widget_one2many_tags.FieldOne2ManyTags =
-    instance.web.form.FieldMany2ManyTags.extend({
+    instance.web.form.FieldOne2Many.extend(instance.web.form.ReinitializeFieldMixin, {
+        template: "FieldOne2ManyTags",
+        tag_template: "FieldOne2ManyTag",
+        disable_utility_classes: false,
         initialize_texttext: function()
         {
-            var self = this,
-                result = this._super.apply(this, arguments),
-                removeTag = result.ext.tags.removeTag;
-            result.plugins = 'tags arrow filter';
-            result.ext.core.onSetInputData = function(e, data)
-            {
-                this.input().val(data);
-            };
-            result.filter = {
-                items: []
-            };
-            result.ext.arrow = {
-                onArrowClick: function(e)
-                {
-                    var context = self.build_context(),
-                        key = _.str.sprintf(
-                            'default_%s', self.field.relation_field)
-                    context.add({[key]: self.field_manager.datarecord.id});
-                    self._search_create_popup('form', undefined, context);
+            var self = this;
+            return {
+                plugins: 'tags arrow filter',
+                ext: {
+                    itemManager: {
+                        itemToString: function(item) {
+                            return item.name;
+                        },
+                    },
+                    arrow: {
+                        onArrowClick: function(e)
+                        {
+                            var list_view = new instance.web.form.One2ManyListView(
+                                self, self.dataset);
+                            list_view.o2m = self;
+                            list_view.editable = function() { return false };
+                            list_view.do_add_record();
+                        },
+                    },
+                    tags: {
+                        isTagAllowed: function(tag) {
+                            return tag.name;
+                        },
+                        removeTag: function(tag)
+                        {
+                            self.dataset.unlink([tag.data('id')]);
+                            return $.fn.textext.TextExtTags.prototype.removeTag
+                                .call(this, tag);
+                        },
+                        renderTag: function(tag) {
+                            return $.fn.textext.TextExtTags.prototype.renderTag
+                                .call(this, tag).data("id", tag.id);
+                        },
+                    },
                 },
-            }
-            result.ext.tags.removeTag = function(tag)
-            {
-                var id = tag.data("id"),
-                    dataset = new instance.web.DataSet(
-                        self, self.field.relation, self.build_context());
-                dataset.unlink([id]);
-                return removeTag(tag);
+                filter: {
+                    items: []
+                },
             };
+        },
+        build_context: function()
+        {
+            var context = this._super.apply(this, arguments),
+                key = _.str.sprintf('default_%s', this.field.relation_field);
+            context.add({[key]: this.field_manager.datarecord.id});
+            return context;
+        },
+        reload_current_view: function()
+        {
+            var self = this;
+            if(!self.$el.length)
+            {
+                return jQuery.when();
+            }
+            if(!self.get("effective_readonly"))
+            {
+                self.ignore_blur = false;
+                if(self.tags)
+                {
+                    self.tags.tagElements().remove();
+                }
+                if(!self.$text || !self.$text.length)
+                {
+                    self.$text = this.$("textarea");
+                    self.$text.textext(self.initialize_texttext());
+                    self.$text.bind('tagClick', function(e, tag, value, callback)
+                    {
+                        var list_view = new instance.web.form.One2ManyViewManager(
+                            self, self.dataset);
+                        list_view.o2m = self;
+                        self.dataset.select_id(value.id);
+                        list_view.switch_mode('form');
+                    });
+                }
+                if(self.$text.textext().length)
+                {
+                    self.tags = self.$text.textext()[0].tags();
+                }
+            }
+            else
+            {
+                self.tags = null;
+                self.$text = null;
+            }
+            return self.dataset.read_ids(self.dataset.ids, ['display_name'])
+            .then(function(names)
+            {
+                if(self.get("effective_readonly"))
+                {
+                    self.$el.html(instance.web.qweb.render(
+                        self.tag_template,
+                        {
+                            elements: _(names).map(function(name)
+                            {
+                                return [name.id, name.display_name];
+                            })
+                        }
+                    ));
+                }
+                else if(self.$text.textext().length)
+                {
+                    self.tags.addTags(_(names).map(function(name)
+                    {
+                        return {
+                            name: name.display_name || instance.web._t('New record'),
+                            id: name.id,
+                        }
+                    }));
+                }
+            });
+        },
+        reinitialize: function()
+        {
+            var result = instance.web.form.ReinitializeFieldMixin.reinitialize.call(this);
+            this.reload_current_view();
             return result;
         },
-        initialize_content: function()
+        // defuse some functions we don't need
+        get_active_view: function()
         {
-            var self = this,
-                result = this._super.apply(this, arguments);
-            if(!this.$text)
-            {
-                return result;
-            }
-            this.$text.bind('tagClick', function(e, tag, value, callback)
-            {
-                var popup = new instance.web.form.FormOpenPopup(self);
-                popup.show_element(
-                    self.field.relation, value.id, self.build_context(),
-                    {
-                        title: instance.web._t("Open: ") + value.name,
-                        readonly: self.get("effective_readonly"),
-                    });
-                popup.on('write_completed', self, function()
-                {
-                    popup.dataset.name_get(popup.dataset.ids)
-                    .then(function(names)
-                    {
-                        _(names).each(function(name)
-                        {
-                            value.name = name[1];
-                            callback(value, true);
-                        })
-                    });
-                });
-            });
-            return result;
+            return false;
+        },
+        load_views: function()
+        {
+            return jQuery.when();
         },
     });
 
