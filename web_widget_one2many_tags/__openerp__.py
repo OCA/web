@@ -15,4 +15,7 @@
     "data": [
         'views/templates.xml',
     ],
+    "qweb": [
+        'static/src/xml/web_widget_one2many_tags.xml',
+    ],
 }
