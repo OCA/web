@@ -93,7 +93,35 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
                     self.is_numeric = fields[self.field_value].type == 'float';
                     self.show_row_totals &= self.is_numeric;
                     self.show_column_totals &= self.is_numeric;
-                }).then(function()
+                })
+                // if there are cached writes on the parent dataset, read below
+                // only returns the written data, which is not enough to properly
+                // set up our data structure. Read those ids here and patch the
+                // cache
+                .then(function()
+                {
+                    var ids_written = _.map(
+                        self.dataset.to_write, function(x) { return x.id });
+                    if(!ids_written.length)
+                    {
+                        return;
+                    }
+                    return (new instance.web.Query(self.dataset._model))
+                    .filter([['id', 'in', ids_written]])
+                    .all()
+                    .then(function(rows)
+                    {
+                        _.each(rows, function(row)
+                        {
+                            var cache = _.find(
+                                self.dataset.cache,
+                                function(x) { return x.id == row.id }
+                            );
+                            _.extend(cache.values, row, _.clone(cache.values));
+                        })
+                    })
+                })
+                .then(function()
                 {
                     return self.dataset.read_ids(self.dataset.ids).then(function(rows)
                     {
