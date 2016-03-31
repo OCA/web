@@ -2,7 +2,7 @@
 # © 2016 Pierre Verkest <pverkest@anybox.fr>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
-    "name": "web_duplicate_visibility",
+    "name": "web duplicate visibility",
     "summary": "Manage the duplicate button visibiliy",
     "version": "9.0.1.0.0",
     "category": "web",

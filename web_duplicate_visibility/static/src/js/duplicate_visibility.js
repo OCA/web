@@ -16,28 +16,19 @@ odoo.define('web.DuplicateVisibility',function (require) {
          * div of its template
          **/
         render_sidebar: function($node) {
-            if (!this.sidebar && this.options.sidebar) {
-                this.sidebar = new Sidebar(
-                    this,
-                    {editable: this.is_action_enabled('edit')}
-                );
-                if (this.fields_view.toolbar) {
-                    this.sidebar.add_toolbar(this.fields_view.toolbar);
+            var res = this._super.apply(this, arguments);
+            if (this.sidebar) {
+                if(!this.is_action_enabled('duplicate') &&
+                   this.sidebar.items.hasOwnProperty('other')){
+                    this.sidebar.items.other = this.sidebar.items.other.filter(
+                        function(item){
+                            return item.label !== _t("Duplicate");
+                        }
+                    );
+                    this.sidebar.redraw();
                 }
-                this.sidebar.add_items('other', _.compact([
-                    this.is_action_enabled('delete') &&
-                    {label: _t('Delete'), callback: this.on_button_delete},
-                    this.is_action_enabled('duplicate') &&
-                    this.is_action_enabled('create') &&
-                    {label: _t('Duplicate'), callback: this.on_button_duplicate}
-                ]));
-
-                $node = $node || this.$('.oe_form_sidebar');
-                this.sidebar.appendTo($node);
-
-                // Show or hide the sidebar according to the view mode
-                this.toggle_sidebar();
             }
+            return res;
         },
     });
 
