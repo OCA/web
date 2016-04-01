@@ -21,18 +21,16 @@ Usage
 * Tree view displayed when user click on the tile:
 .. image:: /web_dashboard_tile/static/src/img/screenshot_action_click.png
 
-Kown issues/limits
-==================
-* can not edit tile from dashboard (color, sequence, function, ...);
-* context are ignored;
-* date filter can not be relative;
-* combine domain of menue and filter so can not restore origin filter;
+Known issues / Roadmap
+======================
 
-possible future improvments
-===========================
-* support context_today;
-* add icons;
-* support client side action (like inbox);
+* Can not edit tile from dashboard (color, sequence, function, ...);
+* Context are ignored;
+* Date filter can not be relative;
+* Combine domain of menue and filter so can not restore origin filter;
+* Support context_today;
+* Add icons;
+* Support client side action (like inbox);
 
 Bug Tracker
 ===========
@@ -40,7 +38,10 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed feedback
-`here <https://github.com/OCA/web/issues/new?body=module:%20web_dashboard_tile%0Aversion:%208.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`here <https://github.com/OCA/
+web/issues/new?body=module:%20
+web_dashboard_tile%0Aversion:%20
+8.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 
 Credits
