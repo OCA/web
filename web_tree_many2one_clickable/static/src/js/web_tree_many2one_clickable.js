@@ -27,10 +27,13 @@ openerp.web_tree_many2one_clickable = function(openerp)
     openerp.web_tree_many2one_clickable.Many2OneClickable = openerp.web.list.Column.extend({
         _format: function (row_data, options)
         {
-            return _.str.sprintf('<a class="oe_form_uri" data-many2one-clickable-model="%s" data-many2one-clickable-id="%s">%s</a>',
-                this.relation,
-                row_data[this.id].value[0],
-                _.escape(row_data[this.id].value[1] || options.value_if_empty));
+            if (row_data[this.id].value)
+            {
+                return _.str.sprintf('<a class="oe_form_uri" data-many2one-clickable-model="%s" data-many2one-clickable-id="%s">%s</a>',
+                    this.relation,
+                    row_data[this.id].value[0],
+                    _.escape(row_data[this.id].value[1] || options.value_if_empty));
+            }
         },
     });
 
