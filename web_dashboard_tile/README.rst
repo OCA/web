@@ -17,9 +17,9 @@ Usage
 =====
 
 * Dashboad sample, displaying Sale Orders to invoice:
-.. image:: web_dashboard_tile/static/src/img/screenshot_dashboard.png
+.. image:: /web_dashboard_tile/static/src/img/screenshot_dashboard.png
 * Tree view displayed when user click on the tile:
-.. image:: web_dashboard_tile/static/src/img/screenshot_action_click.png
+.. image:: /web_dashboard_tile/static/src/img/screenshot_action_click.png
 
 Kown issues/limits
 ==================
