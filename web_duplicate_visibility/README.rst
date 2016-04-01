@@ -6,15 +6,15 @@
 Web duplicate visibility
 ========================
 
-This module allow to manage the visibility of duplicate button from the form
+This module allows to manage the visibility of duplicate button from the form
 view declaration.
 
 Usage
 =====
 
 While the default behavior of odoo is to display the duplicate button when user
-is allowed to create a new object. Your are now able to remove duplicate button
-explicitly even if he is able to create new object::
+is allowed to create a new object. You are now able to remove duplicate button
+explicitly even if you are able to create new object::
 
     <record id="view_form_id" model="ir.ui.view">
       <field name="name">view name</field>
