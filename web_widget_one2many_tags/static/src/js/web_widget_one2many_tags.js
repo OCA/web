@@ -4,7 +4,7 @@
 
 openerp.web_widget_one2many_tags = function(instance)
 {
-    openerp.web_widget_one2many_tags.FieldOne2ManyTags =
+    instance.web_widget_one2many_tags.FieldOne2ManyTags =
     instance.web.form.FieldOne2Many.extend(instance.web.form.ReinitializeFieldMixin, {
         template: "FieldOne2ManyTags",
         tag_template: "FieldOne2ManyTag",
@@ -55,7 +55,10 @@ openerp.web_widget_one2many_tags = function(instance)
         {
             var context = this._super.apply(this, arguments),
                 key = _.str.sprintf('default_%s', this.field.relation_field);
-            context.add({[key]: this.field_manager.datarecord.id});
+            if(this.field_manager.datarecord.id)
+            {
+                context.add({[key]: this.field_manager.datarecord.id});
+            }
             return context;
         },
         reload_current_view: function()
@@ -144,23 +147,65 @@ openerp.web_widget_one2many_tags = function(instance)
         'instance.web_widget_one2many_tags.FieldOne2ManyTags'
     );
 
-    instance.web.list.One2ManyTags = instance.web.list.Many2Many.extend({
-        init: function () {
-            this._super.apply(this, arguments);
-            // Treat it as many2many to trick odoo into populating '__display'.
-            // note: this has been fixed in core OCB recently
-            this.type = 'many2many';
-        },
-        _format: function (row_data, options) {
-            if (_.isEmpty(row_data[this.id].value)) {
-                row_data[this.id] = {'value': false};
+    instance.web.list.One2ManyTags = instance.web.list.Column.extend({
+        _format: function (row_data, options)
+        {
+            if(!_.isEmpty(row_data[this.id].value) && row_data[this.id + '__display'])
+            {
+                row_data[this.id] = row_data[this.id + '__display'];
             }
             return this._super(row_data, options);
-        }
+        },
     });
 
     instance.web.list.columns.add(
         'field.one2many_tags',
         'instance.web.list.One2ManyTags'
     );
+
+    instance.web.ListView.List.include({
+        render_cell: function (record, column)
+        {
+            if(column.widget == 'one2many_tags')
+            {
+                var dataset = new instance.web.form.One2ManyDataSet(
+                        this, column.relation),
+                    fake_widget = {
+                        dataset: dataset,
+                        trigger_on_change: function() {},
+                        get_active_view: function () {},
+                        _super: function() {},
+                        set: function() {},
+                        build_context: function()
+                        {
+                            return column.context;
+                        },
+                    },
+                    value = record.get(column.id);
+                dataset.o2m = fake_widget;
+                openerp.web_widget_one2many_tags.FieldOne2ManyTags
+                    .prototype.set_value.apply(fake_widget, [value])
+                dataset.read_ids(dataset.ids, ['display_name'])
+                .then(function(names) {
+                    if(!names.length)
+                    {
+                        return;
+                    }
+                    record.set(
+                        column.id + '__display',
+                        _(names)
+                            .map(function(name)
+                            {
+                                return name.display_name ||
+                                    instance.web._t('New record');
+                            })
+                            .join(', ')
+                    );
+                    console.log(record.get(column.id + '__display'));
+                });
+                column = _(column).extend({type: 'one2many_tags'});
+            }
+            return this._super(record, column);
+        },
+    });
 }
