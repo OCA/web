@@ -64,7 +64,7 @@ Usage
     ...
 
     With this example, the content of the field named `color` will be used to
-    populate the `color` CSS calue. Use a function field to return whichever
+    populate the `color` CSS value. Use a function field to return whichever
     color you want depending on the other record values. Note this this
     overrides the `colors` attribute, and that you need the tree to load your
     field in the first place by adding it as invisible field.
