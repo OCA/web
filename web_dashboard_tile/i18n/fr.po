@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (7.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-07 17:50+0000\n"
+"POT-Creation-Date: 2016-04-01 09:25+0000\n"
 "PO-Revision-Date: 2015-10-07 17:50+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: French (http://www.transifex.com/oca/OCA-web-7-0/language/fr/)\n"
@@ -155,7 +155,7 @@ msgid "Action"
 msgstr "Action"
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/tile.py:73
+#: code:addons/web_dashboard_tile/tile.py:74
 #, python-format
 msgid "Minimum value of '%s'"
 msgstr "Valeur minimale du champ '%s'"
@@ -188,7 +188,7 @@ msgid "Tile:"
 msgstr "Indicateur :"
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/tile.py:79
+#: code:addons/web_dashboard_tile/tile.py:80
 #, python-format
 msgid "Total value of '%s'"
 msgstr "Somme du champ '%s'"
@@ -199,19 +199,19 @@ msgid "Minimum"
 msgstr "Minimum"
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/tile.py:82
+#: code:addons/web_dashboard_tile/tile.py:83
 #, python-format
 msgid "Average value of '%s'"
 msgstr "Valeur moyenne du champ '%s'"
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/tile.py:85
+#: code:addons/web_dashboard_tile/tile.py:86
 #, python-format
 msgid "Median value of '%s'"
 msgstr "Valeur médian du champ '%s'"
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/tile.py:76
+#: code:addons/web_dashboard_tile/tile.py:77
 #, python-format
 msgid "Maximum value of '%s'"
 msgstr "Valeur maximale du champ '%s'"
