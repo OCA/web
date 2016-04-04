@@ -30,7 +30,7 @@ or several dates:
 
 .. image:: web_tree_date_search/static/src/img/demo.png
 
-.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
+.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas # noqa: skip 79 char
    :alt: Try me on Runbot
    :target: https://runbot.odoo-community.org/runbot/162/7.0
 
@@ -44,7 +44,7 @@ help us smashing it by providing a detailed and welcomed `feedback
 <https://github.com/OCA/
 web/issues/new?body=module:%20
 web_tree_date_search%0Aversion:%20
-7.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+7.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_. # noqa: skip 79 char
 
 Credits
 =======
