@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    © 2016-TODAY LasLabs Inc.
+    @license AGPL-3 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<odoo>
+    <template id="assets_slick" name="web_widget_slick Assets" inherit_id="web.assets_backend">
+        <xpath expr="//script[last()]" position="after">
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.css" rel="stylesheet" type="text/css" />
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick-theme.min.css" rel="stylesheet" type="text/css" />
+            <link href="/web_widget_slick/static/src/css/slick.css" rel="stylesheet" type="text/css" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.js" />
+            <script src="/web_widget_slick/static/src/js/widget_slick.js" />
+        </xpath>
+    </template>
+</odoo>
