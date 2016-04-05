@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    © 2016-TODAY LasLabs Inc.
+    @license AGPL-3 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<templates id="field_templates" xml:space="preserve">
+    <t t-name="FieldSlickImages">
+        <span t-att-style="widget.node.attrs.style">
+            <t t-if="!widget.get('effective_readonly')">
+                
+            </t>
+        </span>
+    </t>
+</templates>
