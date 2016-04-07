@@ -18,6 +18,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [web_access_rule_buttons](web_access_rule_buttons/) | 9.0.1.0.0 | Disable Edit button if access rules prevent this action
+[web_duplicate_visibility](web_duplicate_visibility/) | 9.0.1.0.0 | Manage the duplicate button visibiliy
 [web_easy_switch_company](web_easy_switch_company/) | 9.0.1.0.0 | Multicompany - Easy Switch Company
 [web_searchbar_full_width](web_searchbar_full_width/) | 9.0.1.0.0 | Show search bar in full screen width
 [web_sheet_full_width](web_sheet_full_width/) | 9.0.1.0.0 | Use the whole available screen width when displaying sheets
