@@ -247,7 +247,6 @@ openerp.web_timeline = function(instance) {
             var self = this;
             self.last_domains = domains;
             self.last_contexts = contexts;
-            // self.reload_gantt();
             // select the group by
             var n_group_bys = [];
             if (this.fields_view.arch.attrs.default_group_by) {
@@ -263,14 +262,7 @@ openerp.web_timeline = function(instance) {
             }));
 
             fields = _.uniq(fields.concat(_.pluck(this.colors, "field").concat(n_group_bys)));
-            var group_by = self.fields[_.first(n_group_bys)]
-            var read_groups = new instance.web.DataSet(this, group_by.relation, group_by.context)
-                .name_search('', group_by.domain)
-                .then(function(groups){
-                    self.groups = groups;
-                });
-
-            return $.when(this.has_been_loaded, read_groups).then(function() {
+            return $.when(this.has_been_loaded).then(function() {
                 return self.dataset.read_slice(fields, {
                     domain: domains,
                     context: contexts
@@ -304,18 +296,33 @@ openerp.web_timeline = function(instance) {
             var self = this;
             var data = [];
             var groups = [];
-            groups.push({id:-1, content: _t('Undefined')})
             _.each(tasks, function(event) {
-                data.push(self.event_data_transform(event));
+                if (event[self.date_start]){
+                    data.push(self.event_data_transform(event));
+                }
             });
-            _.each(self.groups, function(group){
-                groups.push({id: group[0], content: group[1]});
-            });
+         // get the groups
+            var split_groups = function(tasks, group_bys) {
+                if (group_bys.length === 0)
+                    return tasks;
+                var groups = [];
+                groups.push({id:-1, content: _t('-')})
+                _.each(tasks, function(task) {
+                    var group_name = task[_.first(group_bys)];
+                    if (group_name) {
+                        var group = _.find(groups, function(group) { return _.isEqual(group.id, group_name[0]); });
+                        if (group === undefined) {
+                            group = {id: group_name[0], content: group_name[1]};
+                            groups.push(group);
+                        }
+                    }
+                });
+                return groups;
+            }
+            var groups = split_groups(tasks, group_bys);
             this.timeline.setGroups(groups);
             this.timeline.setItems(data);
             this.timeline.setWindow(this.current_window);
-            //this.timeline.moveTo(new Date(), true);
-            //this.timeline.zoom(0.5, new Date());
         },
 
         do_show: function() {
@@ -394,7 +401,6 @@ openerp.web_timeline = function(instance) {
                     null,
                     {readonly: true, title: title}
                 );
-                //pop.on('closed', self, self.reload);
                 var form_controller = pop.view_form;
                 form_controller.on("load_record", self, function() {
                      var footer = pop.$el.closest(".modal").find(".modal-footer");
