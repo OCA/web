@@ -306,11 +306,26 @@ openerp.web_timeline = function(instance) {
             var groups = [];
             groups.push({id:-1, content: _t('Undefined')})
             _.each(tasks, function(event) {
-                data.push(self.event_data_transform(event));
+                if (event[self.date_start]){
+                    data.push(self.event_data_transform(event));
+                }
             });
-            _.each(self.groups, function(group){
-                groups.push({id: group[0], content: group[1]});
-            });
+         // get the groups
+            var split_groups = function(tasks, group_bys) {
+                if (group_bys.length === 0)
+                    return tasks;
+                var groups = [];
+                _.each(tasks, function(task) {
+                    var group_name = task[_.first(group_bys)];
+                    var group = _.find(groups, function(group) { return _.isEqual(group.id, group_name[0]); });
+                    if (group === undefined) {
+                        group = {id: group_name[0], content: group_name[1]};
+                        groups.push(group);
+                    }
+                });
+                return groups;
+            }
+            var groups = split_groups(tasks, group_bys);
             this.timeline.setGroups(groups);
             this.timeline.setItems(data);
             this.timeline.setWindow(this.current_window);
