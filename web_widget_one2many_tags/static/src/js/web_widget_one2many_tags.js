@@ -201,7 +201,6 @@ openerp.web_widget_one2many_tags = function(instance)
                             })
                             .join(', ')
                     );
-                    console.log(record.get(column.id + '__display'));
                 });
                 column = _(column).extend({type: 'one2many_tags'});
             }
