@@ -1,0 +1,66 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * help_popup
+# 
+# Translators:
+# Antonio Trueba, 2016
+# Antonio Trueba, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: web (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-02-26 02:04+0000\n"
+"PO-Revision-Date: 2016-02-23 12:54+0000\n"
+"Last-Translator: Antonio Trueba\n"
+"Language-Team: Spanish (http://www.transifex.com/oca/OCA-web-8-0/language/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: help_popup
+#. openerp-web
+#: code:addons/help_popup/static/src/xml/popup_help.xml:5
+#, python-format
+msgid "&nbsp;"
+msgstr ""
+
+#. module: help_popup
+#: field:ir.actions.act_window,advanced_help:0
+msgid "Advanced Help"
+msgstr "Ayuda avanzada"
+
+#. module: help_popup
+#: model:ir.actions.report.xml,name:help_popup.report_help_popup
+msgid "Contextual Help"
+msgstr "Ayuda contextual"
+
+#. module: help_popup
+#: field:ir.actions.act_window,enduser_help:0
+msgid "End User Help"
+msgstr "Ayuda de usuario final"
+
+#. module: help_popup
+#: view:website:help_popup.tpl_help
+msgid "Help from Odoo"
+msgstr "Ayuda de Odoo"
+
+#. module: help_popup
+#: view:website:help_popup.tpl_help
+msgid "Help from developer"
+msgstr "Ayuda del desarrollador"
+
+#. module: help_popup
+#: help:ir.actions.act_window,advanced_help:0
+msgid ""
+"Use this field to add custom content for documentation purpose\n"
+"mainly by developers"
+msgstr "Use este campo para añadir contenido personalizado como documentación (principalmente para desarrolladores)"
+
+#. module: help_popup
+#: help:ir.actions.act_window,enduser_help:0
+msgid ""
+"Use this field to add custom content for documentation purpose\n"
+"mainly by power users "
+msgstr "Use este campo para añadir contenido personalizado como documentación (principalmente para usuarios avanzados)"

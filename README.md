@@ -21,6 +21,7 @@ addon | version | summary
 [help_popup](help_popup/) | 8.0.0.5.0 | Help Popup
 [support_branding](support_branding/) | 8.0.2.0.0 | Adds your branding to an Odoo instance
 [web_action_conditionable](web_action_conditionable/) | 8.0.0.1.0 | web_action_conditionable
+[web_advanced_search_wildcard](web_advanced_search_wildcard/) | 8.0.1.0.0 | Webmodule to add wildcard operators in advanced search field
 [web_advanced_search_x2x](web_advanced_search_x2x/) | 8.0.1.0.0 | Use a search widget in advanced search for x2x fields
 [web_ckeditor4](web_ckeditor4/) | 8.0.1.0.0 | Provides a widget for editing HTML fields using CKEditor 4.x
 [web_clean_navbar](web_clean_navbar/) | 8.0.1.0.0 | Better visibility for the backend's main menu
@@ -32,18 +33,24 @@ addon | version | summary
 [web_easy_switch_company](web_easy_switch_company/) | 8.0.1.0.0 | Multicompany - Easy Switch Company
 [web_environment_ribbon](web_environment_ribbon/) | 8.0.0.1.0 | Web Environment Ribbon
 [web_export_view](web_export_view/) | 8.0.1.2.0 | Export Current View
+[web_favicon](web_favicon/) | 8.0.1.0.0 | Allows to set a custom shortcut icon (aka favicon)
 [web_graph_improved](web_graph_improved/) | 8.0.0.1.0 | Improves graph views.
 [web_group_expand](web_group_expand/) | 8.0.1.0.0 | Group Expand Buttons
 [web_hide_db_manager_link](web_hide_db_manager_link/) | 8.0.1.0.0 | Hide link to database manager in login screen
+[web_hideleftmenu](web_hideleftmenu/) | 8.0.1.0.0 | Hide Left Menu in Web Interface
 [web_ir_actions_act_window_message](web_ir_actions_act_window_message/) | 8.0.1.0.0 | Show a message box to users
 [web_ir_actions_act_window_page](web_ir_actions_act_window_page/) | 8.0.1.0.0 | Allows a developer to trigger a pager to show the previous or next next record in the form view
 [web_last_viewed_records](web_last_viewed_records/) | 8.0.1.0.0 | Last viewed records
 [web_listview_custom_element_number](web_listview_custom_element_number/) | 8.0.1.0.0 | Allow users to set manually a quantity of items to display in a tree view
+[web_listview_show_advanced_search](web_listview_show_advanced_search/) | 1.0 | Web Show Advanced Search by default on list view
 [web_m2x_options](web_m2x_options/) | 8.0.0.2 | web_m2x_options
+[web_menu_autohide](web_menu_autohide/) | 1.0 | Hide top and left menu bar
 [web_menu_navbar_needaction](web_menu_navbar_needaction/) | 8.0.1.0.0 | Show the sum of submenus' needaction counters in main menu
 [web_option_auto_color](web_option_auto_color/) | 8.0.0.1.0 | Web Option Auto Color
 [web_readonly_bypass](web_readonly_bypass/) | 8.0.1.0.1 | Allow to save onchange modifications to readonly fields
 [web_recipients_uncheck](web_recipients_uncheck/) | 8.0.0.3.0 | Uncheck recipients on res.partner
+[web_search_datetime_completion](web_search_datetime_completion/) | 8.0.1.0.0 | Offer more completion options for datetime fields while searching
+[web_search_with_and](web_search_with_and/) | 8.0.1.0.0 | Use AND conditions on omnibar search
 [web_searchbar_full_width](web_searchbar_full_width/) | 8.0.1.0.0 | Show search bar in full screen width
 [web_sheet_full_width](web_sheet_full_width/) | 8.0.1.0.0 | Use the whole available screen width when displaying sheets
 [web_sheet_full_width_selective](web_sheet_full_width_selective/) | 8.0.0.1.0 | Show selected sheets with full width
@@ -55,8 +62,12 @@ addon | version | summary
 [web_tree_many2one_clickable](web_tree_many2one_clickable/) | 8.0.1.0.0 | Clickable many2one fields for tree views
 [web_widget_color](web_widget_color/) | 8.0.1.0.0 | Web Widget Color
 [web_widget_datepicker_options](web_widget_datepicker_options/) | 8.0.1.0.0 | web_widget_datepicker_options
+[web_widget_digitized_signature](web_widget_digitized_signature/) | 8.0.1.0.0 | Web Widget Digitized Signature
+[web_widget_digitized_signature_user](web_widget_digitized_signature_user/) | 8.0.1.0.0 | Web Digitized Signature for users
 [web_widget_float_formula](web_widget_float_formula/) | 8.0.1.0.0 | Web Widget - Formulas in Float fields
+[web_widget_mail_send_odoo](web_widget_mail_send_odoo/) | 8.0.1.0.0 | Send mail using internal composition wizard.
 [web_widget_many2many_tags_multi_selection](web_widget_many2many_tags_multi_selection/) | 8.0.0.1.0 | Tags multiple selection
+[web_widget_one2many_tags](web_widget_one2many_tags/) | 8.0.1.0.0 | Provides a widget similar to many2many_tags for one2many fields
 [web_widget_text_markdown](web_widget_text_markdown/) | 8.0.1.0.0 | web_widget_text_markdown
 [web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 8.0.1.0.0 | Show list fields as a matrix
 

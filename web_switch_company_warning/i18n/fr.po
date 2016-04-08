@@ -1,21 +1,21 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* web_switch_company_warning
-#
+# * web_switch_company_warning
+# 
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-20 22:08+0000\n"
-"PO-Revision-Date: 2015-10-21 00:15+0100\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
-"Language: fr\n"
+"POT-Creation-Date: 2016-02-26 02:05+0000\n"
+"PO-Revision-Date: 2016-02-25 15:12+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"Language-Team: French (http://www.transifex.com/oca/OCA-web-8-0/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: Poedit 1.7.5\n"
+"Content-Transfer-Encoding: \n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: web_switch_company_warning
 #. openerp-web
@@ -28,8 +28,8 @@ msgstr "Recharger"
 #. openerp-web
 #: code:addons/web_switch_company_warning/static/src/xml/switch_company_warning.xml:5
 #, python-format
-msgid "You switched to a different company with another tab or window"
-msgstr "Vous avez basculé vers une société différente depuis un autre onglet ou fenêtre."
+msgid "You switched to a different company or user with another tab or window"
+msgstr ""
 
 #. module: web_switch_company_warning
 #. openerp-web

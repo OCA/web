@@ -9,7 +9,7 @@
                        t-att-autofocus="widget.node.attrs.autofocus"
                        t-att-placeholder="widget.node.attrs.placeholder"
                        t-att-maxlength="widget.field.size"
-                       class="color {hash:true}"
+                       class="color {hash:true, required:false}"
                         />
             </t>
             <t t-if="widget.get('effective_readonly')">

@@ -1,0 +1,225 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * help_online
+# 
+# Translators:
+# Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: web (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-01-10 07:31+0000\n"
+"PO-Revision-Date: 2016-02-01 09:50+0000\n"
+"Last-Translator: Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>\n"
+"Language-Team: Finnish (http://www.transifex.com/oca/OCA-web-8-0/language/fi/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: fi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: help_online
+#. openerp-web
+#: code:addons/help_online/static/src/js/help_online.js:83
+#, python-format
+msgid "Cancel"
+msgstr "Peru"
+
+#. module: help_online
+#: view:export.help.wizard:help_online.export_help_wizard_view
+#: view:import.help.wizard:help_online.import_help_wizard_view
+msgid "Close"
+msgstr "Sulje"
+
+#. module: help_online
+#. openerp-web
+#: code:addons/help_online/static/src/js/help_online.js:81
+#, python-format
+msgid "Confirm"
+msgstr "Vahvista"
+
+#. module: help_online
+#: code:addons/help_online/models/help_online.py:60
+#, python-format
+msgid "Create Help page for %s"
+msgstr "Luo ohjesivu %s:lle"
+
+#. module: help_online
+#: field:export.help.wizard,create_uid:0 field:help.online,create_uid:0
+#: field:import.help.wizard,create_uid:0
+msgid "Created by"
+msgstr "Luonut"
+
+#. module: help_online
+#: field:export.help.wizard,create_date:0 field:help.online,create_date:0
+#: field:import.help.wizard,create_date:0
+msgid "Created on"
+msgstr "Luotu"
+
+#. module: help_online
+#: view:export.help.wizard:help_online.export_help_wizard_view
+msgid "Export"
+msgstr "Vie"
+
+#. module: help_online
+#: code:addons/help_online/models/export_help_wizard.py:267
+#: model:ir.actions.act_window,name:help_online.action_export_help_wizard
+#, python-format
+msgid "Export Help"
+msgstr "Vie ohje"
+
+#. module: help_online
+#: view:export.help.wizard:help_online.export_help_wizard_view
+msgid "Export Help Data"
+msgstr "Vie ohjeen sisältö"
+
+#. module: help_online
+#: model:ir.model,name:help_online.model_export_help_wizard
+#: model:ir.ui.menu,name:help_online.menu_help_export
+msgid "Export Help Online"
+msgstr "Vie verkko-ohje"
+
+#. module: help_online
+#: field:export.help.wizard,export_filename:0
+msgid "Export XML Filename"
+msgstr "Vie XML-tiedoston nimi"
+
+#. module: help_online
+#: model:ir.ui.menu,name:help_online.menu_help
+#: model:ir.ui.menu,name:help_online.menu_help_main
+msgid "Help Online"
+msgstr "Verkko-ohje"
+
+#. module: help_online
+#: code:addons/help_online/models/help_online.py:55
+#, python-format
+msgid "Help on %s"
+msgstr "Ohje aiheelle %s"
+
+#. module: help_online
+#: model:res.groups,name:help_online.help_online_group_reader
+msgid "Help reader"
+msgstr "Ohjeen luku"
+
+#. module: help_online
+#: model:res.groups,name:help_online.help_online_group_writer
+msgid "Help writer"
+msgstr "Ohjeen kirjoittaminen"
+
+#. module: help_online
+#: field:export.help.wizard,id:0 field:help.online,id:0
+#: field:import.help.wizard,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: help_online
+#: view:import.help.wizard:help_online.import_help_wizard_view
+msgid "Import"
+msgstr "Tuo"
+
+#. module: help_online
+#: model:ir.actions.act_window,name:help_online.action_import_help_wizard
+msgid "Import Help"
+msgstr "Tuo ohje"
+
+#. module: help_online
+#: view:import.help.wizard:help_online.import_help_wizard_view
+msgid "Import Help Data"
+msgstr "Tuo ohjeen sisältö"
+
+#. module: help_online
+#: model:ir.ui.menu,name:help_online.menu_help_import
+msgid "Import Help Online"
+msgstr "Tuo verkko-ohje"
+
+#. module: help_online
+#: field:export.help.wizard,write_uid:0 field:help.online,write_uid:0
+#: field:import.help.wizard,write_uid:0
+msgid "Last Updated by"
+msgstr "Viimeksi päivittänyt"
+
+#. module: help_online
+#: field:export.help.wizard,write_date:0 field:help.online,write_date:0
+#: field:import.help.wizard,write_date:0
+msgid "Last Updated on"
+msgstr "Viimeksi päivitetty"
+
+#. module: help_online
+#: code:addons/help_online/models/export_help_wizard.py:260
+#, python-format
+msgid "No data to export !"
+msgstr "Ei vietävää dataa!"
+
+#. module: help_online
+#: code:addons/help_online/models/help_online.py:33
+#, python-format
+msgid "No page prefix parameter specified !"
+msgstr "Sivun etuliitettä ei ole määritetty!"
+
+#. module: help_online
+#. openerp-web
+#: code:addons/help_online/static/src/js/help_online.js:88
+#, python-format
+msgid "Ok"
+msgstr "Ok"
+
+#. module: help_online
+#. openerp-web
+#: code:addons/help_online/static/src/js/help_online.js:107
+#, python-format
+msgid "Page does not exist. Do you want to create?"
+msgstr "Sivua ei ole olemassa. Haluatko luoda sivun?"
+
+#. module: help_online
+#: field:import.help.wizard,source_file:0
+msgid "Source File"
+msgstr "Lähdetiedosto"
+
+#. module: help_online
+#: view:export.help.wizard:help_online.export_help_wizard_view
+msgid ""
+"This wizard allow you to export all QWeb views\n"
+"                        related to help online. The result will be an Odoo\n"
+"                        data xml file."
+msgstr "Tämä ohjattu toiminto sallii kaikkien verkko-ohjeisiin liittyvien\nQWeb-näkymien viennin. Tuloksena on Odoon tiedot sisältävä XML-tiedosto."
+
+#. module: help_online
+#: view:import.help.wizard:help_online.import_help_wizard_view
+msgid ""
+"This wizard allow you to import QWeb views\n"
+"                        related to help online. The required file format is an Odoo\n"
+"                        data xml file."
+msgstr "Tämä ohjattu toiminto sallii kaikkien verkko-ohjeisiin liittyvien QWeb-näkymien viennin. Tuloksena on Odoon tiedot sisältävä XML-tiedosto."
+
+#. module: help_online
+#: code:addons/help_online/models/export_help_wizard.py:297
+#, python-format
+msgid "Unable to write autobackup file in given directory: %s"
+msgstr "Kohdekahsioon \"%s\" ei voitu kirjoittaa automaattista varmuuskopiota."
+
+#. module: help_online
+#: view:ir.ui.view:help_online.view_view_search
+msgid "Website Page"
+msgstr "Verkkosivu"
+
+#. module: help_online
+#: view:ir.ui.view:help_online.view_view_form
+msgid "Website Page?"
+msgstr "Verkkosivu?"
+
+#. module: help_online
+#: model:ir.actions.act_window,name:help_online.action_website_pages
+#: model:ir.ui.menu,name:help_online.menu_help_pages
+msgid "Website Pages"
+msgstr "Verkkosivut"
+
+#. module: help_online
+#: field:export.help.wizard,data:0
+msgid "XML"
+msgstr "XML"
+
+#. module: help_online
+#: view:export.help.wizard:help_online.export_help_wizard_view
+#: view:import.help.wizard:help_online.import_help_wizard_view
+msgid "or"
+msgstr "tai"

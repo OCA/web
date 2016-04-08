@@ -47,6 +47,24 @@ openerp.web_ckeditor4 = function(instance)
         }
         return ckeditor_addFunction_org(fn, scope);
     };
+    var ckeditor_setTimeout_org = CKEDITOR.tools.setTimeout,
+        ckeditor_timeouts = {};
+    //we need to collect timeouts in order to cancel them to avoid errors on
+    //cleaning up
+    CKEDITOR.tools.setTimeout = function(func, milliseconds, scope, args, ownerWindow)
+    {
+        if(scope && scope.editor && scope.editor.status == 'destroyed')
+        {
+            return 0;
+        }
+        var result = ckeditor_setTimeout_org.apply(this, arguments);
+        if(!ckeditor_timeouts[scope])
+        {
+            ckeditor_timeouts[scope] = [];
+        }
+        ckeditor_timeouts[scope].push(result);
+        return result;
+    }
 
     CKEDITOR.on('dialogDefinition', function(e)
         {
@@ -130,7 +148,7 @@ openerp.web_ckeditor4 = function(instance)
         start: function()
         {
             this._super.apply(this, arguments);
-    
+
             CKEDITOR.lang.load(instance.session.user_context.lang.split('_')[0], 'en', function() {});
         },
         initialize_content: function()
@@ -152,7 +170,7 @@ openerp.web_ckeditor4 = function(instance)
                                 self.store_dom_value();
                             },
                         },
-                    }, 
+                    },
                     this.ckeditor_config));
         },
         store_dom_value: function()
@@ -199,8 +217,16 @@ openerp.web_ckeditor4 = function(instance)
         {
             if(this.editor)
             {
-                this.editor.removeAllListeners();
-                this.editor.destroy();
+                this.editor._.editable = null;
+                this.editor.destroy(true);
+                if(ckeditor_timeouts[this.editor])
+                {
+                    _.each(ckeditor_timeouts[this.editor], function(timeout)
+                    {
+                        clearTimeout(timeout);
+                    });
+                    delete ckeditor_timeouts[this.editor];
+                }
                 this.editor = null;
             }
         },

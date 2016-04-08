@@ -155,9 +155,12 @@ openerp.web_m2x_options = function (instance) {
                     values.push({
                         label: _t("Search More..."),
                         action: function () {
+                            // limit = 80 for improving performance, similar
+                            // to Odoo implementation here:
+                            // https://github.com/odoo/odoo/commit/8c3cdce539d87775b59b3f2d5ceb433f995821bf
                             dataset.name_search(
                                 search_val, self.build_domain(),
-                                'ilike', false).done(function (data) {
+                                'ilike', 80).done(function (data) {
                                     self._search_create_popup("search", data);
                                 });
                         },
@@ -301,7 +304,10 @@ openerp.web_m2x_options = function (instance) {
                     values.push({
                         label: _t("Search More..."),
                         action: function() {
-                            dataset.name_search(search_val, self.build_domain(), 'ilike', false).done(function(data) {
+                            // limit = 80 for improving performance, similar
+                            // to Odoo implementation here:
+                            // https://github.com/odoo/odoo/commit/8c3cdce539d87775b59b3f2d5ceb433f995821bf
+                            dataset.name_search(search_val, self.build_domain(), 'ilike', 80).done(function(data) {
                                 self._search_create_popup("search", data);
                             });
                         },
@@ -352,6 +358,30 @@ openerp.web_m2x_options = function (instance) {
 
                 return values;
             })
+        },
+
+        render_value: function()
+        {
+            var self = this;
+            return jQuery.when(this._super.apply(this, arguments))
+            .then(function()
+            {
+                if(self.options.open)
+                {
+                    self.$el.find('.oe_tag')
+                    .css('cursor', 'pointer')
+                    .click(function(e)
+                    {
+                        var id = parseInt(jQuery(this).attr('data-id'));
+                        self.do_action({
+                            type: 'ir.actions.act_window',
+                            res_model: self.field.relation,
+                            views: [[false, 'form']],
+                            res_id: id,
+                        });
+                    });
+                }
+            });
         },
     });
 };

@@ -76,6 +76,19 @@ openerp.web_advanced_search_x2x = function(instance)
             }
             this.searchfield = new instance.web.form.FieldMany2One(
                 this, this.create_searchfield_node());
+            if(this.searchfield.field.domain)
+            {
+                try
+                {
+                    // if this is a domain that depends on values we don't have
+                    // remove it
+                    jQuery.parseJSON(this.searchfield.field.domain);
+                }
+                catch(error)
+                {
+                    this.searchfield.field.domain = [];
+                }
+            }
             return this.searchfield;
         },
         operator_changed: function(e)
