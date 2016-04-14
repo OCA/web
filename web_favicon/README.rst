@@ -23,6 +23,8 @@ the used browser, but most modern browsers do.
 
 Note that most browsers cache favicons basically forever, so if you want your
 icon to show up, you'll most probably have to delete you browser cache.
+Some browsers can refresh the favicon, accessing the URL
+<base_url>/web_favicon/favicon.
 
 You have a sample SVG that can be used as template for generating your icon
 in /static/src/img/master_original_favicon.svg. You can also search for some
@@ -33,7 +35,7 @@ Usage
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
     :alt: Try me on Runbot
-    :target: https://runbot.odoo-community.org/runbot/162/8.0
+    :target: https://runbot.odoo-community.org/runbot/162/9.0
 
 Known issues / Roadmap
 ======================
@@ -53,7 +55,7 @@ In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed feedback
 `here <https://github.com/OCA/web/issues/new?body=module:%20
 web_favicon%0Aversion:%20
-8.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+9.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Credits
 =======
