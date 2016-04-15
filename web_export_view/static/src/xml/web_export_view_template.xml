@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- -*- coding: utf-8 -*-
+© 2016 Agile Business Group
+ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).-->
 
 <templates id="template" xml:space="preserve">
 <t t-name="AddExportViewMain">
-    <div class="oe_form_dropdown_section">
-        <button class="oe_dropdown_toggle oe_dropdown_arrow">Export Current View</button>
-        <ul class="oe_dropdown_menu">
+    <div class="oe_form_dropdown_section btn-group btn-group-sm">
+        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button">Export Current View</button>
+        <ul class="dropdown-menu" role="menu">
             <li class="oe_sidebar_export_view_xls"><span>Excel</span></li>
         </ul>
     </div>

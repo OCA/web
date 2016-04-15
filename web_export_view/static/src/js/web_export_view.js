@@ -1,23 +1,7 @@
-//  @@@ web_export_view custom JS @@@
-//#############################################################################
-//    
-//    Copyright (C) 2012 Agile Business Group sagl (<http://www.agilebg.com>)
-//    Copyright (C) 2012 Therp BV (<http://therp.nl>)
-//
-//    This program is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU Affero General Public License as published
-//    by the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//
-//    This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU Affero General Public License for more details.
-//
-//    You should have received a copy of the GNU Affero General Public License
-//    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//
-//#############################################################################
+//# -*- coding: utf-8 -*-
+//# © 2016 Agile Business Group
+//# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 openerp.web_export_view = function (instance) {
 
     var _t = instance.web._t, QWeb = instance.web.qweb;
@@ -26,7 +10,7 @@ openerp.web_export_view = function (instance) {
         redraw: function () {
             var self = this;
             this._super.apply(this, arguments);
-            if (self.getParent().ViewManager.active_view == 'list') {
+            if (self.getParent().ViewManager.active_view.type == 'list') {
                 self.$el.find('.oe_sidebar').append(QWeb.render('AddExportViewMain', {widget: self}));
                 self.$el.find('.oe_sidebar_export_view_xls').on('click', self.on_sidebar_export_view_xls);
             }
@@ -67,8 +51,8 @@ openerp.web_export_view = function (instance) {
                 // find only rows with data
                 if ($row.attr('data-id')) {
                     export_row = [];
-                    checked = $row.find('th input[type=checkbox]').attr("checked");
-                    if (children && checked === "checked") {
+                    checked = $row.find('th input[type=checkbox]').is(':checked');
+                    if (children && checked === true) {
                         $.each(export_columns_keys, function () {
                             cell = $row.find('td[data-field="' + this + '"]').get(0);
                             text = cell.text || cell.textContent || cell.innerHTML || "";
