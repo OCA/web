@@ -65,8 +65,6 @@ openerp.web_graph_radar = function(instance) {
             }
             nv.addGraph(function () {
                 var chart = nv.models.radarChart();
-                    // .stacked(self.bar_ui === 'stack')
-                    // .showControls(show_controls);
 
                 chart.margin({left:200, top:20, bottom:20});
 
@@ -76,7 +74,6 @@ openerp.web_graph_radar = function(instance) {
                     .attr('height', self.height)
                     .call(chart);
 
-                // nv.utils.windowResize(chart.update);
                 return chart;
             });
 
