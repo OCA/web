@@ -1,0 +1,63 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_favicon
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: web (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-14 08:27+0000\n"
+"PO-Revision-Date: 2016-04-07 13:51+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: German (http://www.transifex.com/oca/OCA-web-8-0/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: web_favicon
+#: model:ir.model,name:web_favicon.model_res_company
+msgid "Companies"
+msgstr "Unternehmen"
+
+#. module: web_favicon
+#: view:res.company:web_favicon.view_company_form
+msgid "Configuration"
+msgstr ""
+
+#. module: web_favicon
+#: view:res.company:web_favicon.view_company_form
+msgid "Favicon"
+msgstr ""
+
+#. module: web_favicon
+#: field:res.company,favicon_backend:0
+msgid "Favicon backend"
+msgstr ""
+
+#. module: web_favicon
+#: field:res.company,favicon_backend_mimetype:0
+msgid "Favicon backend mimetype"
+msgstr ""
+
+#. module: web_favicon
+#: help:res.company,favicon_backend_mimetype:0
+msgid "Set the mimetype of your file."
+msgstr ""
+
+#. module: web_favicon
+#: selection:res.company,favicon_backend_mimetype:0
+msgid "image/gif"
+msgstr ""
+
+#. module: web_favicon
+#: selection:res.company,favicon_backend_mimetype:0
+msgid "image/png"
+msgstr ""
+
+#. module: web_favicon
+#: selection:res.company,favicon_backend_mimetype:0
+msgid "image/x-icon"
+msgstr ""
