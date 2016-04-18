@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- vim:fdl=1:
+-->
+<templates id="template" xml:space="preserve">
+
+<t t-name="GraphWidgetRadar" t-extend="GraphWidget">
+    <t t-jquery=".graph_options_selection" t-operation="append">
+        <label class="btn btn-default" data-choice="export_png" title="Export PNG">
+            <span class="fa fa-file-image-o"></span>
+        </label>
+    </t>
+</t>
+
+</templates>
