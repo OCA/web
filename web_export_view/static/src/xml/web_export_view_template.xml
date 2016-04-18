@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- -*- coding: utf-8 -*-
-© 2016 Agile Business Group
- License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).-->
 
 <templates id="template" xml:space="preserve">
 <t t-name="AddExportViewMain">
