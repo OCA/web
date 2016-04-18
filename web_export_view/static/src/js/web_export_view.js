@@ -1,5 +1,6 @@
 //# -*- coding: utf-8 -*-
-//# © 2016 Agile Business Group
+//# © 2012 Agile Business Group
+//# © 2012 Therp BV 
 //# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 openerp.web_export_view = function (instance) {
