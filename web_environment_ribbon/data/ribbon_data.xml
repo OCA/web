@@ -8,5 +8,17 @@
             <field name="value">TEST</field>
         </record>
 
+        <!-- Add ribbon color configuration parameter -->
+        <record id="set_ribbon_color" model="ir.config_parameter">
+            <field name="key">ribbon.color</field>
+            <field name="value">#f0f0f0</field>
+        </record>
+
+        <!-- Add ribbon background color configuration parameter -->
+        <record id="set_ribbon_background_color" model="ir.config_parameter">
+            <field name="key">ribbon.background.color</field>
+            <field name="value">rgba(255,0,0,.6)</field>
+        </record>
+
     </data>
 </openerp>
