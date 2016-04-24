@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-23 13:46+0000\n"
+"POT-Creation-Date: 2016-04-22 15:47+0000\n"
 "PO-Revision-Date: 2015-11-07 11:18+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: English (http://www.transifex.com/oca/OCA-web-8-0/language/en/)\n"
@@ -38,7 +38,7 @@ msgid "Confirm"
 msgstr "Confirm"
 
 #. module: help_online
-#: code:addons/help_online/models/help_online.py:60
+#: code:addons/help_online/models/help_online.py:57
 #, python-format
 msgid "Create Help page for %s"
 msgstr "Create Help page for %s"
@@ -90,7 +90,7 @@ msgid "Help Online"
 msgstr "Help Online"
 
 #. module: help_online
-#: code:addons/help_online/models/help_online.py:55
+#: code:addons/help_online/models/help_online.py:52
 #, python-format
 msgid "Help on %s"
 msgstr "Help on %s"
