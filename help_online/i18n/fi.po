@@ -3,14 +3,22 @@
 # * help_online
 # 
 # Translators:
+# Ahmet Altınışık <aaltinisik@altinkaya.com.tr>, 2015
+# Antonio Trueba, 2016
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012,2014
+# Hotellook, 2014
 # Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015-2016
+# Paolo Valier, 2016
+# Rudolf Schnapka <rs@techno-flex.de>, 2016
+# Thomas A. Jaeger, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-10 07:31+0000\n"
-"PO-Revision-Date: 2016-02-01 09:50+0000\n"
-"Last-Translator: Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>\n"
+"POT-Creation-Date: 2016-04-22 15:47+0000\n"
+"PO-Revision-Date: 2016-03-08 08:14+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Finnish (http://www.transifex.com/oca/OCA-web-8-0/language/fi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -39,7 +47,7 @@ msgid "Confirm"
 msgstr "Vahvista"
 
 #. module: help_online
-#: code:addons/help_online/models/help_online.py:60
+#: code:addons/help_online/models/help_online.py:57
 #, python-format
 msgid "Create Help page for %s"
 msgstr "Luo ohjesivu %s:lle"
@@ -91,7 +99,7 @@ msgid "Help Online"
 msgstr "Verkko-ohje"
 
 #. module: help_online
-#: code:addons/help_online/models/help_online.py:55
+#: code:addons/help_online/models/help_online.py:52
 #, python-format
 msgid "Help on %s"
 msgstr "Ohje aiheelle %s"

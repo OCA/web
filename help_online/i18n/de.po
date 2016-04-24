@@ -3,12 +3,24 @@
 # * help_online
 # 
 # Translators:
+# Ahmet Altınışık <aaltinisik@altinkaya.com.tr>, 2015-2016
+# Alejandro Santana <alejandrosantana@anubia.es>, 2015
+# Antonio Trueba, 2016
+# Artūras Griškonis <ArtX38@gmail.com>, 2012,2015-2016
+# Artūras Griškonis <xbmc.lt@gmail.com>, 2012
+# Carles Antoli <carlesantoli@hotmail.com>, 2015-2016
+# danimaribeiro <danimaribeiro@gmail.com>, 2016
+# Dorin Hongu <dhongu@gmail.com>, 2015
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010,2012
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015-2016
 # Rudolf Schnapka <rs@techno-flex.de>, 2016
+# SaFi J. <safi2266@gmail.com>, 2015
+# Zapata11 <raimondas.duzinskas@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-10 07:31+0000\n"
+"POT-Creation-Date: 2016-04-22 15:47+0000\n"
 "PO-Revision-Date: 2016-01-18 21:15+0000\n"
 "Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-web-8-0/language/de/)\n"
@@ -39,7 +51,7 @@ msgid "Confirm"
 msgstr "Bestätigen"
 
 #. module: help_online
-#: code:addons/help_online/models/help_online.py:60
+#: code:addons/help_online/models/help_online.py:57
 #, python-format
 msgid "Create Help page for %s"
 msgstr "Hilfe-Seite für %s anlegen"
@@ -91,7 +103,7 @@ msgid "Help Online"
 msgstr "Online-Hilfe"
 
 #. module: help_online
-#: code:addons/help_online/models/help_online.py:55
+#: code:addons/help_online/models/help_online.py:52
 #, python-format
 msgid "Help on %s"
 msgstr "Hilfe zu %s"
