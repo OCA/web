@@ -21,7 +21,7 @@
 
 {
     'name': "Web Environment Ribbon",
-    'version': '8.0.0.1.0',
+    'version': '8.0.1.0.0',
     'category': 'Web',
     'author': 'Francesco OpenCode Apruzzese,Odoo Community Association (OCA)',
     'website': 'https://it.linkedin.com/in/francescoapruzzese',
