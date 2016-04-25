@@ -1,7 +1,5 @@
 .test-ribbon{
     width: 200px;
-    background: #e43;
-    position: absolute;
     top: 50px;
     left: -50px;
     text-align: center;
@@ -16,7 +14,7 @@
     z-index: 1000;
     position: fixed;
     box-shadow: 0 0 3px rgba(0,0,0,.3);
-    background: rgba(255, 0, 0, .6);;
+    background: rgba(255,0,0,.6);
 }
 
 .test-ribbon b {
