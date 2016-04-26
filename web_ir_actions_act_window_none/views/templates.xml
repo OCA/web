@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="web_ir_actions_act_window_none assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/web_ir_actions_act_window_none/static/src/js/web_ir_actions_act_window_none.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>
