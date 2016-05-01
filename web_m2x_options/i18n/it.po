@@ -3,13 +3,25 @@
 # * web_m2x_options
 # 
 # Translators:
+# Ahmet Altınışık <aaltinisik@altinkaya.com.tr>, 2015
+# Antonio Trueba, 2016
+# Armando Vulcano Junior <vulcano@uol.com.br>, 2015
+# Carles Antoli <carlesantoli@hotmail.com>, 2015
+# Bole <bole@dajmi5.com>, 2015
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012,2014
+# Giacomo <giacomo.spettoli@gmail.com>, 2015
+# Hotellook, 2014
+# Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016
 # Paolo Valier, 2016
+# Paolo Valier, 2016
+# Rudolf Schnapka <rs@techno-flex.de>, 2016
+# Thomas A. Jaeger, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-17 07:29+0000\n"
-"PO-Revision-Date: 2016-03-19 10:13+0000\n"
+"POT-Creation-Date: 2016-04-28 07:09+0000\n"
+"PO-Revision-Date: 2016-04-28 06:46+0000\n"
 "Last-Translator: Paolo Valier\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-web-8-0/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -40,4 +52,4 @@ msgstr "Crea e Modifica..."
 #: code:addons/web_m2x_options/static/src/js/form.js:305
 #, python-format
 msgid "Search More..."
-msgstr ""
+msgstr "Cerca altro..."
