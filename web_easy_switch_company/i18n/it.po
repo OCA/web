@@ -3,13 +3,22 @@
 # * web_easy_switch_company
 # 
 # Translators:
+# Antonio Trueba, 2016
+# Carles Antoli <carlesantoli@hotmail.com>, 2015
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010,2012-2014
+# Gustavo Lepri <gustavolepri@gmail.com>, 2015
+# Hotellook, 2014
+# Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015-2016
 # Paolo Valier, 2016
+# Paolo Valier, 2016
+# Rudolf Schnapka <rs@techno-flex.de>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-17 07:29+0000\n"
-"PO-Revision-Date: 2016-03-19 10:14+0000\n"
+"POT-Creation-Date: 2016-04-28 07:09+0000\n"
+"PO-Revision-Date: 2016-04-28 06:45+0000\n"
 "Last-Translator: Paolo Valier\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-web-8-0/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +35,7 @@ msgstr "Aziende"
 #. module: web_easy_switch_company
 #: field:res.company,logo_topbar:0
 msgid "Logo displayed in the switch company menu"
-msgstr ""
+msgstr "Logo visualizzato nel menu di cambio azienda"
 
 #. module: web_easy_switch_company
 #: model:ir.model,name:web_easy_switch_company.model_res_users

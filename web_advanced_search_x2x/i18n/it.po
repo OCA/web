@@ -3,13 +3,24 @@
 # * web_advanced_search_x2x
 # 
 # Translators:
+# Ahmet Altınışık <aaltinisik@altinkaya.com.tr>, 2016
+# Carles Antoli <carlesantoli@hotmail.com>, 2016
+# Christophe CHAUVET <christophe.chauvet@gmail.com>, 2015
+# Bole <bole@dajmi5.com>, 2015
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012
+# Gustavo Lepri <gustavolepri@gmail.com>, 2015
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
 # Paolo Valier, 2016
+# Paolo Valier, 2016
+# Pedro M. Baeza <pedro.baeza@gmail.com>, 2015
+# Rudolf Schnapka <rs@techno-flex.de>, 2016
+# Thomas A. Jaeger, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-17 07:29+0000\n"
-"PO-Revision-Date: 2016-03-19 10:09+0000\n"
+"POT-Creation-Date: 2016-04-28 07:09+0000\n"
+"PO-Revision-Date: 2016-04-30 19:54+0000\n"
 "Last-Translator: Paolo Valier\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-web-8-0/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -37,7 +48,7 @@ msgstr ""
 #: code:addons/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js:172
 #, python-format
 msgid "invalid search domain"
-msgstr ""
+msgstr "dominio di ricerca non valido"
 
 #. module: web_advanced_search_x2x
 #. openerp-web
