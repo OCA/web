@@ -3,14 +3,24 @@
 # * web_shortcuts
 # 
 # Translators:
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2012
+# Antonio Trueba, 2016
+# Artūras Griškonis <ArtX38@gmail.com>, 2012,2015-2016
+# Artūras Griškonis <xbmc.lt@gmail.com>, 2012
+# danimaribeiro <danimaribeiro@gmail.com>, 2016
+# Dorin Hongu <dhongu@gmail.com>, 2015
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012-2014
+# Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016
 # Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
+# Pedro M. Baeza <pedro.baeza@gmail.com>, 2015
+# Rudolf Schnapka <rs@techno-flex.de>, 2016
+# SaFi J. <safi2266@gmail.com>, 2015
+# Zapata11 <raimondas.duzinskas@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-23 13:46+0000\n"
-"PO-Revision-Date: 2015-11-08 05:46+0000\n"
+"POT-Creation-Date: 2016-04-28 07:09+0000\n"
+"PO-Revision-Date: 2016-04-30 05:24+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-web-8-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -37,9 +47,19 @@ msgid "Created on"
 msgstr "Ustvarjeno"
 
 #. module: web_shortcuts
+#: field:web.shortcut,display_name:0
+msgid "Display Name"
+msgstr "Prikazni naziv"
+
+#. module: web_shortcuts
 #: field:web.shortcut,id:0
 msgid "ID"
 msgstr "ID"
+
+#. module: web_shortcuts
+#: field:web.shortcut,__last_update:0
+msgid "Last Modified on"
+msgstr "Zadnjič spremenjeno"
 
 #. module: web_shortcuts
 #: field:web.shortcut,write_uid:0

@@ -3,13 +3,24 @@
 # * web_dashboard_tile
 # 
 # Translators:
-# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
+# Ahmet Altınışık <aaltinisik@altinkaya.com.tr>, 2016
+# Carles Antoli <carlesantoli@hotmail.com>, 2015-2016
+# Christophe CHAUVET <christophe.chauvet@gmail.com>, 2015
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012,2014
+# Giacomo <giacomo.spettoli@gmail.com>, 2015
+# Guewen Baconnier <guewen.baconnier@camptocamp.com>, 2015
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015-2016
+# Maxime Chambreuil <maxime.chambreuil@gmail.com>, 2015
+# Paolo Valier, 2016
+# Pedro M. Baeza <pedro.baeza@gmail.com>, 2015
+# Rudolf Schnapka <rs@techno-flex.de>, 2015-2016
+# SaFi J. <safi2266@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-23 13:46+0000\n"
-"PO-Revision-Date: 2015-11-08 05:44+0000\n"
+"POT-Creation-Date: 2016-04-28 07:09+0000\n"
+"PO-Revision-Date: 2016-04-30 05:24+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-web-8-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -22,6 +33,11 @@ msgstr ""
 #: field:tile.tile,action_id:0
 msgid "Action"
 msgstr "Dejanje"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,active:0
+msgid "Active"
+msgstr "Aktivno"
 
 #. module: web_dashboard_tile
 #: selection:tile.tile,field_function:0
@@ -38,6 +54,16 @@ msgstr "Povprečna vrednost '%s'"
 #: field:tile.tile,background_color:0
 msgid "Background color"
 msgstr "Barva ozadja"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,computed_value:0
+msgid "Computed value"
+msgstr "Obračunana vrednost"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,count:0
+msgid "Count"
+msgstr "Števec"
 
 #. module: web_dashboard_tile
 #. openerp-web
@@ -78,6 +104,11 @@ msgstr "Okvirji nadzorne plošče"
 #: view:tile.tile:web_dashboard_tile.dashboard_tile_tile_form_view
 msgid "Display"
 msgstr "Prikaz"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,display_name:0
+msgid "Display Name"
+msgstr "Prikazni naziv"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,domain:0
@@ -124,9 +155,19 @@ msgid "Function"
 msgstr "Funkcija"
 
 #. module: web_dashboard_tile
+#: field:tile.tile,helper:0
+msgid "Helper"
+msgstr "Pomočnik"
+
+#. module: web_dashboard_tile
 #: field:tile.tile,id:0
 msgid "ID"
 msgstr "ID"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,__last_update:0
+msgid "Last Modified on"
+msgstr "Zadnjič spremenjeno"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,write_uid:0
