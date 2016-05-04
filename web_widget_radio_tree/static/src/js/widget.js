@@ -35,7 +35,7 @@ openerp.web_widget_radio_tree = function (instance) {
             };
             this.on('change:effective_readonly', this, check_readonly);
             check_readonly.call(this);
-            this._super.apply(this, arguments);
+            return this._super.apply(this, arguments);
         },
         click_disabled_boolean: function(){
             var $disabled = this.$el.find('input[type=radio]:disabled');
