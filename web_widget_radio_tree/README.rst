@@ -8,7 +8,7 @@ Web widget radio tree
 
 This module allows to use input radio in a tree view inside a form, in order to ensure the user marks only one record.
 
-Example: You have a partner company from with many contacts. The contacts are shown in a tree and you want to specify only one as preferred.
+Example: You have a partner company form with many contacts. The contacts are shown in a tree and you want to specify only one as preferred.
 
 Usage
 =====
@@ -47,11 +47,6 @@ web_qweb_diff%0Aversion:%20
 
 Credits
 =======
-
-Images
-------
-
-* Odoo Community Association: `Icon <https://github.com/OCA/maintainer-tools/blob/master/template/module/static/description/icon.svg>`_.
 
 Contributors
 ------------
