@@ -4,10 +4,12 @@
 {
     'name': "Web Widget Radio Tree",
     'summary': "Add radio buttons for records in tree.",
-    'author': "bloopark systems GmbH & Co. KG",
+    'author': "bloopark systems GmbH & Co. KG, "
+              "Odoo Community Association (OCA)",
     'website': "http://www.bloopark.de",
     'category': 'web',
-    'version': '1.0',
+    'version': '8.0.1.0.0',
+    "license": "AGPL-3",
     'depends': [
         'web',
     ],
