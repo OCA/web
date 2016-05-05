@@ -20,7 +20,7 @@ openerp.web_widget_radio_tree = function (instance) {
     instance.web.form.RadioTree = instance.web.form.FieldBoolean.extend({
         template: 'RadioTree',
         start: function() {
-            this._super.apply(this, arguments);
+            var _super = this._super.apply(this, arguments);
             this.$checkbox = $('input', this.$el);
             var radio_name = this.getParent().model + '_' + this.$checkbox[0].name;
             this.$checkbox.attr('name', radio_name);
@@ -30,6 +30,7 @@ openerp.web_widget_radio_tree = function (instance) {
                 self.clean_radio_in_records();
                 this.internal_set_value(true);
             }, this));
+            return _super;
         },
         click_disabled_boolean: function(){
             var $disabled = this.$el.find('input[type=radio]:disabled');
