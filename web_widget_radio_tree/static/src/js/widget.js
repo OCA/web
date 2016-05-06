@@ -6,11 +6,10 @@ openerp.web_widget_radio_tree = function (instance) {
 
     instance.web.list.RadioTreeColumn = instance.web.list.Column.extend({
         _format: function (row_data, options) {
-            return _.template(
-                '<input type="radio" name="<%-name%>" <%-checked%> readonly="readonly"></input>', {
-                    name: options.model + '_' + this.id,
-                    checked: row_data[this.id].value ? 'checked' : '',
-                });
+            return QWeb.render('RadioTreeColumn', {
+                name: options.model + '_' + this.id,
+                checked: row_data[this.id].value ? {checked: ''} : {},
+            });
         }
     });
 
