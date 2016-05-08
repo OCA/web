@@ -4,6 +4,8 @@
 # 
 # Translators:
 # Carles Antoli <carlesantoli@hotmail.com>, 2015
+# Carles Antoli <carlesantoli@hotmail.com>, 2015
+# Christophe CHAUVET <christophe.chauvet@gmail.com>, 2015-2016
 # Christophe CHAUVET <christophe.chauvet@gmail.com>, 2015
 # danimaribeiro <danimaribeiro@gmail.com>, 2016
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2010,2012-2014
@@ -19,9 +21,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-22 15:47+0000\n"
-"PO-Revision-Date: 2015-11-07 11:19+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"POT-Creation-Date: 2016-05-06 15:49+0000\n"
+"PO-Revision-Date: 2016-05-06 08:19+0000\n"
+"Last-Translator: Christophe CHAUVET <christophe.chauvet@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/oca/OCA-web-8-0/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -66,6 +68,12 @@ msgstr "Créé par"
 #: field:import.help.wizard,create_date:0
 msgid "Created on"
 msgstr "Créé le"
+
+#. module: help_online
+#: field:export.help.wizard,display_name:0 field:help.online,display_name:0
+#: field:import.help.wizard,display_name:0
+msgid "Display Name"
+msgstr "Nom affiché"
 
 #. module: help_online
 #: view:export.help.wizard:help_online.export_help_wizard_view
@@ -142,6 +150,12 @@ msgstr "Import des pages d'aide"
 #: model:ir.ui.menu,name:help_online.menu_help_import
 msgid "Import Help Online"
 msgstr "Import des pages d'aide"
+
+#. module: help_online
+#: field:export.help.wizard,__last_update:0 field:help.online,__last_update:0
+#: field:import.help.wizard,__last_update:0
+msgid "Last Modified on"
+msgstr "Dernière modification le"
 
 #. module: help_online
 #: field:export.help.wizard,write_uid:0 field:help.online,write_uid:0
@@ -233,4 +247,4 @@ msgstr "XML"
 #: view:export.help.wizard:help_online.export_help_wizard_view
 #: view:import.help.wizard:help_online.import_help_wizard_view
 msgid "or"
-msgstr ""
+msgstr "ou"
