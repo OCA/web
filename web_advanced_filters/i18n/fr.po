@@ -3,13 +3,15 @@
 # * web_advanced_filters
 # 
 # Translators:
+# Christophe CHAUVET <christophe.chauvet@gmail.com>, 2016
+# Hotellook, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: web (7.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-07 17:50+0000\n"
-"PO-Revision-Date: 2015-10-07 17:50+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2016-04-03 13:54+0000\n"
+"PO-Revision-Date: 2016-05-06 08:19+0000\n"
+"Last-Translator: Christophe CHAUVET <christophe.chauvet@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/oca/OCA-web-7-0/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,22 +22,22 @@ msgstr ""
 #. module: web_advanced_filters
 #: view:ir.filters:0
 msgid "Save filter"
-msgstr ""
+msgstr "Sauvegarder le filtre"
 
 #. module: web_advanced_filters
 #: selection:ir.filters.combine.with.existing,action:0
 msgid "Union"
-msgstr ""
+msgstr "Union"
 
 #. module: web_advanced_filters
 #: field:ir.filters,evaluate_always:0
 msgid "Always evaluate this filter before using it"
-msgstr ""
+msgstr "Toujours évaluer ce filtre avant de l'utiliser"
 
 #. module: web_advanced_filters
 #: view:ir.filters:0
 msgid "Add the result of following filters"
-msgstr ""
+msgstr "Ajouter les résultats aux filtres suivants"
 
 #. module: web_advanced_filters
 #: help:ir.filters,evaluate_before_negate:0
@@ -46,7 +48,7 @@ msgstr ""
 #. module: web_advanced_filters
 #: view:ir.filters:0 view:ir.filters.combine.with.existing:0
 msgid "Save"
-msgstr ""
+msgstr "Sauvegarder"
 
 #. module: web_advanced_filters
 #: view:ir.filters:0
@@ -64,29 +66,29 @@ msgstr ""
 #: code:addons/web_advanced_filters/model/ir_filters.py:218
 #, python-format
 msgid "Testing %s"
-msgstr ""
+msgstr "Tester %s"
 
 #. module: web_advanced_filters
 #: view:ir.filters:0 view:ir.filters.combine.with.existing:0
 msgid "or"
-msgstr ""
+msgstr "ou"
 
 #. module: web_advanced_filters
 #: field:ir.filters,complement_filter_ids:0
 msgid "Remove result of filters"
-msgstr ""
+msgstr "Supprimer le résultat des filtres"
 
 #. module: web_advanced_filters
 #: view:ir.filters:0
 msgid ""
 "{'readonly': ['|', ('union_filter_ids', '!=', [[6, False, []]]), "
 "('complement_filter_ids', '!=', [[6, False, []]])]}"
-msgstr ""
+msgstr "{'readonly': ['|', ('union_filter_ids', '!=', [[6, False, []]]), ('complement_filter_ids', '!=', [[6, False, []]])]}"
 
 #. module: web_advanced_filters
 #: view:ir.filters.combine.with.existing:0
 msgid "Combine with existing filter"
-msgstr ""
+msgstr "Combiner avec un filtre existant"
 
 #. module: web_advanced_filters
 #: field:ir.filters,evaluate_before_negate:0
@@ -105,7 +107,7 @@ msgstr ""
 #: code:addons/web_advanced_filters/static/src/js/web_advanced_filters.js:32
 #, python-format
 msgid "Advanced filters"
-msgstr ""
+msgstr "Filtres avancés"
 
 #. module: web_advanced_filters
 #: field:ir.filters,active:0
@@ -117,12 +119,12 @@ msgstr "Actif"
 #: code:addons/web_advanced_filters/static/src/js/web_advanced_filters.js:86
 #, python-format
 msgid "Marked records"
-msgstr ""
+msgstr "Marquer les enregistrements"
 
 #. module: web_advanced_filters
 #: field:ir.filters,save_as_public:0
 msgid "Share with all users"
-msgstr ""
+msgstr "Partager avec tous les utilisateurs"
 
 #. module: web_advanced_filters
 #: field:ir.filters,is_frozen:0
@@ -132,19 +134,19 @@ msgstr ""
 #. module: web_advanced_filters
 #: field:ir.filters.combine.with.existing,filter_id:0
 msgid "Filter"
-msgstr ""
+msgstr "Filtre"
 
 #. module: web_advanced_filters
 #: view:ir.filters:0
 msgid "Test filter"
-msgstr ""
+msgstr "Tester le filtre"
 
 #. module: web_advanced_filters
 #. openerp-web
 #: code:addons/web_advanced_filters/static/src/js/web_advanced_filters.js:58
 #, python-format
 msgid "Whole selection (criteria)"
-msgstr ""
+msgstr "Toute la sélection (critère)"
 
 #. module: web_advanced_filters
 #: field:ir.filters,domain_this:0
@@ -154,12 +156,12 @@ msgstr ""
 #. module: web_advanced_filters
 #: view:ir.filters:0
 msgid "Remove the result of following filters"
-msgstr ""
+msgstr "Supprimer le résultat des filtres suivants"
 
 #. module: web_advanced_filters
 #: field:ir.filters.combine.with.existing,context:0
 msgid "Context"
-msgstr ""
+msgstr "Contexte"
 
 #. module: web_advanced_filters
 #: field:ir.filters.combine.with.existing,action:0
@@ -177,7 +179,7 @@ msgstr "Modèle"
 #: code:addons/web_advanced_filters/static/src/js/web_advanced_filters.js:90
 #, python-format
 msgid "To new filter"
-msgstr ""
+msgstr "À un nouveau filtre"
 
 #. module: web_advanced_filters
 #. openerp-web
@@ -185,7 +187,7 @@ msgstr ""
 #: code:addons/web_advanced_filters/static/src/js/web_advanced_filters.js:106
 #, python-format
 msgid "Remove from existing filter"
-msgstr ""
+msgstr "Supprimer du filtre existant"
 
 #. module: web_advanced_filters
 #: field:ir.filters.combine.with.existing,domain:0
@@ -195,7 +197,7 @@ msgstr "Domaine"
 #. module: web_advanced_filters
 #: field:ir.filters,union_filter_ids:0
 msgid "Add result of filters"
-msgstr ""
+msgstr "Ajouter les résultats aux filtres"
 
 #. module: web_advanced_filters
 #. openerp-web
@@ -203,29 +205,29 @@ msgstr ""
 #: code:addons/web_advanced_filters/static/src/js/web_advanced_filters.js:98
 #, python-format
 msgid "To existing filter"
-msgstr ""
+msgstr "À un filtre existant"
 
 #. module: web_advanced_filters
 #: model:ir.model,name:web_advanced_filters.model_ir_filters_combine_with_existing
 msgid "Combine a selection with an existing filter"
-msgstr ""
+msgstr "Combiner la sélection avec un filtre existant "
 
 #. module: web_advanced_filters
 #: view:ir.filters:0
 msgid "Are you sure? You can't undo this operation!"
-msgstr ""
+msgstr "Êtes vous sur de vouloir annuler cette opération?"
 
 #. module: web_advanced_filters
 #: model:ir.model,name:web_advanced_filters.model_ir_filters
 msgid "Filters"
-msgstr ""
+msgstr "Filtres"
 
 #. module: web_advanced_filters
 #: view:ir.filters:0 view:ir.filters.combine.with.existing:0
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #. module: web_advanced_filters
 #: selection:ir.filters.combine.with.existing,action:0
 msgid "Complement"
-msgstr ""
+msgstr "Complément"
