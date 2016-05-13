@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_company_form" model="ir.ui.view">
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form" />
+            <field name="arch" type="xml">
+                <page name="configuration" position="inside">
+                    <group string="Favicon" name="favicon">
+                        <field name="favicon_backend" widget="image" />
+                        <field name="favicon_backend_mimetype" attrs="{'required': [('favicon_backend', '!=', False)]}" />
+                    </group>
+                </page>
+            </field>
+        </record>
+    </data>
+</openerp>
