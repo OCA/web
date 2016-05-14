@@ -24,7 +24,7 @@
 ##############################################################################
 {
     'name': 'Show images in tree views',
-    'version': '8.0.1.1.0',
+    'version': '9.0.0.1.0',
     'author': 'Therp BV, MONK Software, Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/Web',
     'license': 'AGPL-3',
@@ -38,5 +38,5 @@
     'data': [
         'view/assets.xml',
     ],
-    'installable': False,
+    'installable': True,
 }
