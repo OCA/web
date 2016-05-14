@@ -17,19 +17,22 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-openerp.web_tree_image = function (instance) {
-    instance.web.list.Image = instance.web.list.Column.extend({
-        format: function (row_data, options) {
-            /* Return a valid img tag. For image fields, test if the
-             field's value contains just the binary size and retrieve
-            the image from the dedicated controller in that case.
-            Otherwise, assume a character field containing either a
-            stock Odoo icon name without path or extension or a fully
-            fledged location or data url */
+odoo.define('web_tree_image.ImageColumn', function (require) {
+    "use strict";
+
+    var core = require('web.core');
+	var session = require('web.session');
+	var QWeb = core.qweb;
+	var ListView = require('web.ListView');
+	
+    var ImageColumn = ListView.Column.extend({
+		format: function (row_data, options) {
             if (!row_data[this.id] || !row_data[this.id].value) {
                 return '';
             }
+			
             var value = row_data[this.id].value, src;
+		
             if (this.type === 'binary') {
                 if (value && value.substr(0, 10).indexOf(' ') === -1) {
                     // The media subtype (png) seems to be arbitrary
@@ -43,7 +46,7 @@ openerp.web_tree_image = function (instance) {
                     if (this.resize) {
                         imageArgs.resize = this.resize;
                     }
-                    src = instance.session.url('/web/binary/image', imageArgs);
+                    src = session.url('/web/binary/image', imageArgs);
                 }
             } else {
                 if (!/\//.test(row_data[this.id].value)) {
@@ -52,8 +55,11 @@ openerp.web_tree_image = function (instance) {
                     src = row_data[this.id].value;
                 }
             }
-            return instance.web.qweb.render('ListView.row.image', {widget: this, src: src});
+
+            return QWeb.render('ListView.row.image', {widget: this, src: src});
         }
+		
     });
-    instance.web.list.columns.add('field.image', 'instance.web.list.Image');
-};
+	
+    core.list_widget_registry.add('field.image', ImageColumn);
+});
