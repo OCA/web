@@ -47,4 +47,3 @@ Contributors
 ------------
 
 * Michael Fried
-
