@@ -33,7 +33,8 @@ openerp.web_search_autocomplete_prefetch = function(instance)
         return self.autocomplete_mutex.exec(function()
         {
             return self.view.dataset._model.call(
-                'search_count', [domain.eval()])
+                'search_count', [domain.eval()],
+                {context: self.view.dataset.get_context()})
                 .then(function(count)
                 {
                     if(count)
