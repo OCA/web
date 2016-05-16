@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="edit_menu_access" model="ir.ui.view">
+            <field name="model">ir.ui.menu</field>
+            <field name="inherit_id" ref="base.edit_menu_access" />
+            <field name="arch" type="xml">
+                <field name="sequence" position="after">
+                    <field name="needaction_enabled" invisible="1" />
+                    <field name="needaction" />
+                    <field name="needaction_domain" attrs="{'invisible': ['|', ('needaction_enabled', '=', False), ('needaction', '=', False)]}" />
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

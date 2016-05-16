@@ -15,6 +15,8 @@ To configure the update frequency, set the configuration parameter `web_menu_nav
 
 To disable updates, set the parameter to 0.
 
+For more fine-grained control over the menus, you can turn off needaction for a menu by setting its field `needaction` to `False`, or in case you need a different needaction domain, set `needaction_domain` on the menuitem to the domain you need.
+
 Usage
 =====
 
