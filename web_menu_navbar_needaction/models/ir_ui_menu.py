@@ -38,6 +38,7 @@ class IrUiMenu(models.Model):
         result = {}
         for this in self:
             count_per_model = {}
+            action_menu = self.env['ir.ui.menu'].browse([])
             if not this.needaction:
                 continue
             for menu_id, needaction in self.search(
@@ -50,7 +51,17 @@ class IrUiMenu(models.Model):
                         count_per_model.get(model),
                         needaction['needaction_counter']
                     )
-            result[this.id] = sum(count_per_model.itervalues())
+                    if needaction['needaction_counter'] and not action_menu\
+                       and menu.action.type == 'ir.actions.act_window':
+                        action_menu = menu
+            result[this.id] = {
+                'count': sum(count_per_model.itervalues()),
+            }
+            if action_menu:
+                result[this.id].update({
+                    'action_id': action_menu.action.id,
+                    'action_domain': action_menu._eval_needaction_domain(),
+                })
         return result
 
     @api.multi
@@ -72,13 +83,16 @@ class IrUiMenu(models.Model):
     @api.multi
     def _eval_needaction_domain(self):
         self.ensure_one()
-        if not self.needaction_domain:
-            return []
-        return safe_eval(
-            self.needaction_domain, locals_dict={
-                'uid': self.env.user.id,
-                'user': self.env.user,
-            })
+        eval_context = {
+            'uid': self.env.user.id,
+            'user': self.env.user,
+        }
+        if self.needaction_domain:
+            return safe_eval(self.needaction_domain, locals_dict=eval_context)
+        return expression.AND([
+            safe_eval(self.action.domain or '[]', locals_dict=eval_context),
+            self.env[self.action.res_model]._needaction_domain_get(),
+        ])
 
     @api.constrains('needaction_domain')
     @api.multi

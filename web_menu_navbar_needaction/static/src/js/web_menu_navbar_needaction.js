@@ -56,21 +56,47 @@ openerp.web_menu_navbar_needaction = function(instance)
         process_navbar_needaction: function(data)
         {
             var self = this;
-            _.each(data, function (needaction_count, menu_id)
+            _.each(data, function (needaction_data, menu_id)
             {
                 var $item = self.$el.parents('body').find(
                     _.str.sprintf('#oe_main_menu_navbar a[data-menu="%s"]',
                                   menu_id));
-                if(!$item.length)
+                if(!$item.length || _.isEmpty(needaction_data))
                 {
                     return;
                 }
                 $item.find('.badge').remove();
-                if(needaction_count)
+                if(needaction_data.count)
                 {
-                    $item.append(
-                        instance.web.qweb.render("Menu.needaction_counter",
-                        {widget : {needaction_counter: needaction_count}}));
+                    var $counter = jQuery(
+                            instance.web.qweb.render("Menu.needaction_counter",
+                            {
+                                widget: {
+                                    needaction_counter: needaction_data.count,
+                                }
+                            }))
+                        .appendTo($item);
+                    if(needaction_data.action_id)
+                    {
+                        $counter.click(function(ev)
+                        {
+                            var parent = self.getParent();
+                            ev.stopPropagation();
+                            ev.preventDefault();
+                            return parent.menu_dm.add(
+                                self.rpc('/web/action/load', {
+                                action_id: needaction_data.action_id,
+                            }))
+                            .then(function(action)
+                            {
+                                return parent.action_mutex.exec(function()
+                                {
+                                    action.domain = needaction_data.action_domain;
+                                    return parent.action_manager.do_action(action);
+                                });
+                            });
+                        });
+                    }
                 }
             });
             instance.web.bus.trigger('resize');
