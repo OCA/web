@@ -71,7 +71,7 @@ openerp.web_tree_many2one_clickable = function(instance, local)
             }
         },
 
-    });
+	});
 
     /* many2one_clickable widget */
 
@@ -91,6 +91,7 @@ openerp.web_tree_many2one_clickable = function(instance, local)
                 self = this;
             this.$current.delegate('a[data-many2one-clickable-model]',
                 'click', function()
+                {
                     var context = jQuery(this).data('many2one-clickable-context')
                     self.view.do_action({
                         type: 'ir.actions.act_window',
