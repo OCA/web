@@ -16,13 +16,13 @@
     ],
     'css': [
         'static/src/lib/jquery.timerpicker/jquery.timepicker.css',
-		'static/src/css/web_widget_timepicker.css'
+        'static/src/css/web_widget_timepicker.css'
     ],
     'js': [
         'static/src/lib/jquery.timerpicker/jquery.timepicker.js',
         'static/src/js/web_widget_timepicker.js',
     ],
-    'qweb' : [ 
+    'qweb': [
         'static/src/xml/web_widget_timepicker.xml'
     ],
 
@@ -31,6 +31,6 @@
         'views/web_widget_timepicker_assets.xml'
     ],
 
-    #Installation options
+    # Installation options
     "installable": True,
 }
