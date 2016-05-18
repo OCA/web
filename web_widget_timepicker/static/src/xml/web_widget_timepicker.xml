@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <templates id="template" xml:space="preserve">
 	<t t-name="TimePickerField">
 	    <span t-att-class="'oe_form_field '+widget.widget_class" t-att-style="widget.node.attrs.style">

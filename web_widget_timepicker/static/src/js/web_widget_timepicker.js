@@ -1,21 +1,22 @@
-odoo.define('timepicker.form_widgets', function (require) {
-
+odoo.define('web_widget_timepicker.form_widgets', function (require) {
     "use strict";
 
     var core = require('web.core');
     var formats = require('web.formats');
     var common = require('web.form_common');    
 
-    var _t = core._t;
-    
     var TimePicker = common.AbstractField.extend(common.ReinitializeFieldMixin, {
+        is_field_number: true,        
         template: "TimePickerField",
+        internal_format: 'float_time',
         widget_class: 'oe_form_field_time',
         events: {
             'change input': 'store_dom_value',
         },
         init: function (field_manager, node) {
             this._super(field_manager, node);
+            
+            this.internal_set_value(0);
 
             this.options = _.defaults( {}, {
                 disableTextInput: true,
@@ -29,14 +30,45 @@ odoo.define('timepicker.form_widgets', function (require) {
         initialize_content: function() {
             if(!this.get("effective_readonly")) {
                 this.$input = this.$el.find('input');
-                this.$input.timepicker(this.options); 
+
+                var effective_options = this.options;
+
+                if(typeof this.node.attrs.options !== 'undefined' && this.node.attrs.options.length > 0 ) {
+
+                    var custom_options = eval('('+ this.node.attrs.options +')')
+
+                    // for(var key in custom_options) {
+                    //     console.log('attr key : ' + key);
+                    //     console.log('attr value : ' + custom_options[key] );
+                    // }
+
+                    // if(typeof effective_options === 'object') {
+                    //     for(var key in effective_options) {
+                    //         console.log('def key : ' + key);
+                    //         console.log('def value : ' + effective_options[key] );
+                    //     }
+                    // }
+                    
+                    if(typeof custom_options === 'object') {
+                        effective_options = $.extend({}, this.options, custom_options ); 
+                    }
+
+                    // if(typeof effective_options === 'object') {
+                    //     for(var key in effective_options) {
+                    //         console.log('merge key : ' + key);
+                    //         console.log('merge value : ' + effective_options[key] );
+                    //     }
+                    // }
+                }
+
+                this.$input.timepicker(effective_options); 
                 this.setupFocus(this.$('input'));                   
             }   
         },
         is_syntax_valid: function() {
             if (!this.get("effective_readonly") && this.$("input").size() > 0) {
                 try {
-                    this.parse_value(this.$('input').val(), '');
+                    this.parse_value(this.$('input').val(),'');
                     return true;
                 } catch(e) {
                     return false;
@@ -62,17 +94,17 @@ odoo.define('timepicker.form_widgets', function (require) {
             if (!this.get('effective_readonly')) {
                 this.internal_set_value(
                     this.parse_value(
-                        this.$('input').val()));
+                        this.$('input').val(),''));
             }
         },
         parse_value: function(val, def) {
-            return formats.parse_value(val, this, def);  
+            return formats.parse_value(val, {"widget": this.internal_format}, def);  
         },
         format_value: function(val, def) {
-            return formats.format_value(val, this, def);
+            return formats.format_value(val, {"widget": this.internal_format}, def);
         },
         render_value: function() {
-            var show_value = this.format_value(this.get('value'), '');             
+            var show_value = this.format_value(this.get('value'),'');             
 
             if (!this.get("effective_readonly")) {
                 this.$input = this.$el.find('input');

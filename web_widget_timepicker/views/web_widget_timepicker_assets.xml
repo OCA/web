@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data>
+        <template id="web_widget_timepicker_assets_backend" name="web_widget_timepicker assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/web_widget_timepicker/static/src/lib/jquery.timepicker/jquery.timepicker.js"></script>
+                <script type="text/javascript" src="/web_widget_timepicker/static/src/js/web_widget_timepicker.js"></script>
+                <link rel="stylesheet" href="/web_widget_timepicker/static/src/lib/jquery.timepicker/jquery.timepicker.css"/>
+                <link rel="stylesheet" href="/web_widget_timepicker/static/src/css/web_widget_timepicker.css"/>
+            </xpath>
+        </template>
+    </data>
+</openerp>
