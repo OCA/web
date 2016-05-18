@@ -30,7 +30,7 @@ Set the attribute ``widget=timepicker`` in a ``field`` tag in a form view.
 You can pass all options through the "timepicker" field in the options::
 
     ...
-    <field name="mytimefieldname" `widget=timepicker`` options="{'step': '15', 'disableTextInput': false}"/>
+    <field name="mytimefieldname" `widget=timepicker`` data-options="{'step': '30', 'disableTextInput': false}"/>
     ...
 
 See the available options at https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
