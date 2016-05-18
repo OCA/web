@@ -5,6 +5,15 @@ odoo.define('web_widget_timepicker.form_widgets', function (require) {
     var formats = require('web.formats');
     var common = require('web.form_common');    
 
+    // Snippet from http://stackoverflow.com/questions/9036429/convert-object-string-to-json
+    function cleanup_str2json(str) {
+      return (str.length > 0 && str !== undefined) ? str
+        // wrap keys without quote with valid double quote
+        .replace(/([\$\w]+)\s*:/g, function(_, $1){return '"'+$1+'":'})    
+        // replacing single quote wrapped ones to double quote 
+        .replace(/'([^']+)'/g, function(_, $1){return '"'+$1+'"'}) : undefined;         
+    };
+
     var TimePicker = common.AbstractField.extend(common.ReinitializeFieldMixin, {
         is_field_number: true,        
         template: "TimePickerField",
@@ -29,39 +38,24 @@ odoo.define('web_widget_timepicker.form_widgets', function (require) {
         },
         initialize_content: function() {
             if(!this.get("effective_readonly")) {
-                this.$input = this.$el.find('input');
+                var custom_options;
 
-                var effective_options = this.options;
+                if( this.node.attrs['data-options'] !== undefined && this.node.attrs['data-options'].length > 0) {
+                    // First try to use jquery data function to create object
+                    custom_options = $(this.node).data('options');
 
-                if(typeof this.node.attrs.options !== 'undefined' && this.node.attrs.options.length > 0 ) {
-
-                    var custom_options = eval('('+ this.node.attrs.options +')');
-
-                    // for(var key in custom_options) {
-                    //     console.log('attr key : ' + key);
-                    //     console.log('attr value : ' + custom_options[key] );
-                    // }
-
-                    // if(typeof effective_options === 'object') {
-                    //     for(var key in effective_options) {
-                    //         console.log('def key : ' + key);
-                    //         console.log('def value : ' + effective_options[key] );
-                    //     }
-                    // }
-                    
-                    if(typeof custom_options === 'object') {
-                        effective_options = $.extend({}, this.options, custom_options ); 
+                    if(typeof custom_options !== 'object') {
+                        // No garantee that the input data-options string is valid JSON format so try to cleanup
+                        custom_options = JSON.parse(cleanup_str2json(this.node.attrs['data-options']));    
                     }
-
-                    // if(typeof effective_options === 'object') {
-                    //     for(var key in effective_options) {
-                    //         console.log('merge key : ' + key);
-                    //         console.log('merge value : ' + effective_options[key] );
-                    //     }
-                    // }
                 }
 
-                this.$input.timepicker(effective_options); 
+                if(typeof custom_options === 'object') {
+                    this.$el.find('input').timepicker($.extend({}, this.options, custom_options )); 
+                } else {
+                    this.$el.find('input').timepicker(this.options);                    
+                }
+
                 this.setupFocus(this.$('input'));                   
             }   
         },
