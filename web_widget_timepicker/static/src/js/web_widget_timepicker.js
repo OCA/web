@@ -35,7 +35,7 @@ odoo.define('web_widget_timepicker.form_widgets', function (require) {
 
                 if(typeof this.node.attrs.options !== 'undefined' && this.node.attrs.options.length > 0 ) {
 
-                    var custom_options = eval('('+ this.node.attrs.options +')')
+                    var custom_options = eval('('+ this.node.attrs.options +')');
 
                     // for(var key in custom_options) {
                     //     console.log('attr key : ' + key);
