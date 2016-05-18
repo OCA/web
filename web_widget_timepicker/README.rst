@@ -12,10 +12,9 @@ definition. It can be use as a replacement for the standard float_time widget.
 If you use the widget with a field record, the input field has the following default
 timepicker options:
 
-* By default direct user input is disabled
-* By default the possible selection is based on 15 minute interval
-* By default 24 hour mode with H:i format
-* Scroll selection defaults to current server time
+* By default the possible selection is based on 15 minute interval (step: 15)
+* By default 24 hour mode with H:i format (timeFormat: 'H:i')
+* By default scroll selection starts at current time (scrollDefault: 'now')
 
 The widget uses the jquery.timepicker plugin by Jon Thornton
 
@@ -24,22 +23,21 @@ Usage
 =====
 
 This module defines a new widget type for form views input fileds.
-
 Set the attribute ``widget=timepicker`` in a ``field`` tag in a form view.
 
-You can pass all options through the "timepicker" field in the options::
+You can pass custom options through the "timepicker" field in the options attribute:
 
     ...
-    <field name="mytimefieldname" `widget=timepicker`` data-options="{'step': '30', 'disableTextInput': false}"/>
+    <field name="mytimefieldname" `widget=timepicker`` options="{'step': '30', 'disableTextInput': false}"/>
     ...
 
-See the available options at https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
+See the available options at https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery.
 
 
-ToDo
-====
+Known issues / Roadmap
+======================
 
-Sanity check on options available in field defintion as override options for timepicker widget.
+* Absolutely no sanity check or validation on options.
 
 
 Credits
