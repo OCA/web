@@ -1,20 +1,11 @@
-odoo.define('web_widget_timepicker.form_widgets', function (require) {
+odoo.define('web_widget_timepicker', function (require) {
     "use strict";
 
     var core = require('web.core');
     var formats = require('web.formats');
     var common = require('web.form_common');    
 
-    // Snippet from http://stackoverflow.com/questions/9036429/convert-object-string-to-json
-    function cleanup_str2json(str) {
-      return (str.length > 0 && str !== undefined) ? str
-        // wrap keys without quote with valid double quote
-        .replace(/([\$\w]+)\s*:/g, function(_, $1){return '"'+$1+'":'})    
-        // replacing single quote wrapped ones to double quote 
-        .replace(/'([^']+)'/g, function(_, $1){return '"'+$1+'"'}) : undefined;         
-    };
-
-    var TimePicker = common.AbstractField.extend(common.ReinitializeFieldMixin, {
+    var TimePickerField = common.AbstractField.extend(common.ReinitializeFieldMixin, {
         is_field_number: true,        
         template: "TimePickerField",
         internal_format: 'float_time',
@@ -27,9 +18,7 @@ odoo.define('web_widget_timepicker.form_widgets', function (require) {
             
             this.internal_set_value(0);
 
-            this.options = _.defaults( {}, {
-                disableTextInput: true,
-                forceRoundTime: true,
+            this.options = _.defaults( this.options, {
                 step: 15,
                 selectOnBlur: true,
                 timeFormat: 'H:i',
@@ -38,24 +27,7 @@ odoo.define('web_widget_timepicker.form_widgets', function (require) {
         },
         initialize_content: function() {
             if(!this.get("effective_readonly")) {
-                var custom_options;
-
-                if( this.node.attrs['data-options'] !== undefined && this.node.attrs['data-options'].length > 0) {
-                    // First try to use jquery data function to create object
-                    custom_options = $(this.node).data('options');
-
-                    if(typeof custom_options !== 'object') {
-                        // No garantee that the input data-options string is valid JSON format so try to cleanup
-                        custom_options = JSON.parse(cleanup_str2json(this.node.attrs['data-options']));    
-                    }
-                }
-
-                if(typeof custom_options === 'object') {
-                    this.$el.find('input').timepicker($.extend({}, this.options, custom_options )); 
-                } else {
-                    this.$el.find('input').timepicker(this.options);                    
-                }
-
+                this.$el.find('input').timepicker(this.options);                    
                 this.setupFocus(this.$('input'));                   
             }   
         },
@@ -109,7 +81,9 @@ odoo.define('web_widget_timepicker.form_widgets', function (require) {
         },
     });
 
-    core.form_widget_registry.add('timepicker', TimePicker);
+    core.form_widget_registry.add('timepicker', TimePickerField);
 
-    return TimePicker;
+    return {
+        TimePickerField: TimePickerField,    
+    };
 });

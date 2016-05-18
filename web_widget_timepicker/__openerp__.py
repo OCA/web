@@ -10,7 +10,6 @@
     'category': 'Web',
     'website': 'https://github.com/OCA/Web',
 
-    # any module necessary for this one to work correctly
     'depends': [
         'web'
     ],
@@ -25,12 +24,9 @@
     'qweb': [
         'static/src/xml/web_widget_timepicker.xml'
     ],
-
-    # always loaded
     'data': [
         'views/web_widget_timepicker_assets.xml'
     ],
 
-    # Installation options
     "installable": True,
 }
