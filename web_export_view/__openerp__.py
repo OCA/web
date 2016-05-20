@@ -21,7 +21,7 @@
 
 {
     'name': 'Export Current View',
-    'version': '8.0.1.2.0',
+    'version': '9.0.1.2.0',
     'category': 'Web',
     'author': "Agile Business Group,Odoo Community Association (OCA)",
     'website': 'http://www.agilebg.com',
@@ -35,6 +35,6 @@
     'qweb': [
         'static/src/xml/web_export_view_template.xml',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
 }
