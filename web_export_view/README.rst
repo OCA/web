@@ -45,6 +45,7 @@ Contributors
  * Lorenzo Battistini <lorenzo.battistini@agilebg.com>
  * Stefan Rijnhart <stefan@therp.nl>
  * Leonardo Pistone <leonardo.pistone@camptocamp.com>
+ * Mohamed Cherkaoui <m.cherkaoui@magnetomedia.de>
 
 Maintainer
 ----------
