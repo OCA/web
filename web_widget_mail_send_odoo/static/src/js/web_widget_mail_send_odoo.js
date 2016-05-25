@@ -34,7 +34,6 @@ openerp.web_widget_mail_send_odoo = function(instance) {
             if (!self.get("effective_readonly") && 0 < self.$("input").size() && self.$("input").val()) {
                 try {
                     var parsed_email = instance.mail.ChatterUtils.parse_email(self.$("input").val());
-                    console.log(parsed_email)
                     if(!parsed_email[1])
                         return false;
                     return true;
@@ -104,4 +103,67 @@ openerp.web_widget_mail_send_odoo = function(instance) {
 
     instance.web.form.widgets.add('email_mailto', 'instance.web.form.FieldEmail')
     instance.web.form.widgets.add('email', 'instance.web.form.FieldEmailIntern')
+
+    instance.web_kanban.FieldEmailInternKanban = instance.web_kanban.AbstractField.extend({
+        init: function(parent, field, $node) {
+            this.parent = parent;
+            this._super.apply(this, arguments);
+            this.format_descriptor = _.extend({}, this.field, {'widget': this.$node.attr('widget')});
+        },
+        is_syntax_valid: function(){
+            var self = this;
+            var value = self.get('value');
+            if (value) {
+                try {
+                    var parsed_email = instance.mail.ChatterUtils.parse_email(value);
+                    if(!parsed_email[1])
+                        return false;
+                    return true;
+                } catch(e) {
+                    return false;
+                }
+            }
+            return true;
+        },
+        on_clicked: function() {
+            console.log("Kanban Email Widget ---- Click");
+            var self = this;
+            if (!self.is_syntax_valid()) {
+                self.do_warn(_t("E-mail Error"), _t("Can't send email to invalid e-mail address"));
+            } else {
+                // find partner id for email
+                var res_partner = new openerp.Model('res.partner');
+                var parsed_email = instance.mail.ChatterUtils.parse_email(self.get('value'));
+                res_partner.query(['id'])
+                    .filter([['email', '=', parsed_email[1]]])
+                    .first().then(function(partner){
+                        if(partner){
+                            self.do_action(
+                                'mail.action_email_compose_message_wizard', {
+                                    additional_context: {
+                                        default_partner_ids: [partner.id],
+                                        default_composition_mode: 'comment',
+                                        // write to active model:
+                                        default_model: self.parent.view.dataset.model,
+                                        default_res_id: self.parent.id,
+                                    },
+                                }
+                            );
+                        } else {
+                            self.do_warn(_t("E-mail Error"),
+                            _t("Can't send email:  No partner configured for email address."));
+                        }
+                    })
+            }
+        },
+        renderElement: function() {
+            var self = this;
+            self.$el.append("<a/>");
+            var anchor = self.$el.find('a');
+            anchor.text(instance.web.format_value(this.field.raw_value, this.format_descriptor));
+            anchor.click(self.on_clicked.bind(self));
+        },
+    });
+
+    instance.web_kanban.fields_registry.add("email", "instance.web_kanban.FieldEmailInternKanban");
 }
