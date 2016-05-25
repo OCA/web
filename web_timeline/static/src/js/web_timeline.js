@@ -247,7 +247,6 @@ openerp.web_timeline = function(instance) {
             var self = this;
             self.last_domains = domains;
             self.last_contexts = contexts;
-            // self.reload_gantt();
             // select the group by
             var n_group_bys = [];
             if (this.fields_view.arch.attrs.default_group_by) {
@@ -263,14 +262,7 @@ openerp.web_timeline = function(instance) {
             }));
 
             fields = _.uniq(fields.concat(_.pluck(this.colors, "field").concat(n_group_bys)));
-            var group_by = self.fields[_.first(n_group_bys)]
-            var read_groups = new instance.web.DataSet(this, group_by.relation, group_by.context)
-                .name_search('', group_by.domain)
-                .then(function(groups){
-                    self.groups = groups;
-                });
-
-            return $.when(this.has_been_loaded, read_groups).then(function() {
+            return $.when(this.has_been_loaded).then(function() {
                 return self.dataset.read_slice(fields, {
                     domain: domains,
                     context: contexts
@@ -304,7 +296,6 @@ openerp.web_timeline = function(instance) {
             var self = this;
             var data = [];
             var groups = [];
-            groups.push({id:-1, content: _t('Undefined')})
             _.each(tasks, function(event) {
                 if (event[self.date_start]){
                     data.push(self.event_data_transform(event));
@@ -315,12 +306,15 @@ openerp.web_timeline = function(instance) {
                 if (group_bys.length === 0)
                     return tasks;
                 var groups = [];
+                groups.push({id:-1, content: _t('-')})
                 _.each(tasks, function(task) {
                     var group_name = task[_.first(group_bys)];
-                    var group = _.find(groups, function(group) { return _.isEqual(group.id, group_name[0]); });
-                    if (group === undefined) {
-                        group = {id: group_name[0], content: group_name[1]};
-                        groups.push(group);
+                    if (group_name) {
+                        var group = _.find(groups, function(group) { return _.isEqual(group.id, group_name[0]); });
+                        if (group === undefined) {
+                            group = {id: group_name[0], content: group_name[1]};
+                            groups.push(group);
+                        }
                     }
                 });
                 return groups;
