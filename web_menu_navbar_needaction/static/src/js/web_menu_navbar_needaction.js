@@ -50,7 +50,8 @@ openerp.web_menu_navbar_needaction = function(instance)
                 .map(function() { return parseInt(jQuery(this).attr('data-menu')); })
                 .get();
             return new instance.web.Model('ir.ui.menu')
-                .call('get_navbar_needaction_data', [this.navbar_menu_ids])
+                .call('get_navbar_needaction_data', [this.navbar_menu_ids],
+                      {}, {shadow: true})
                 .then(this.proxy(this.process_navbar_needaction));
         },
         process_navbar_needaction: function(data)
