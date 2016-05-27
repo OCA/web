@@ -2,8 +2,7 @@ Expand Dialog
 =============
 
 A module that lets the user expand/restore the dialog box size through a button
-in the upper right corner (mimicking most windows managers). By default,
-all dialog boxes are expanded.
+in the upper right corner (mimicking most windows managers).
 
 Configuration
 =============
