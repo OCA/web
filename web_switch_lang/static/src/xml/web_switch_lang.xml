@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- vim:fdl=1:
+-->
+<templates xml:space="preserve">
+<t t-name="web_switch_lang.SwitchButton">
+    <li t-att-title='_t("Switch language")'>
+        <a href="#">
+            <i id="oe_topbar_web_switch_lang_icon" class="fa fa-language">
+                <span style="color: white" class="selected-lang"/>
+                /
+                <span class="unselected-lang"/>
+            </i>
+        </a>
+    </li>
+</t>
+</templates>
