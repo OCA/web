@@ -43,8 +43,8 @@ addon | version | summary
 [web_last_viewed_records](web_last_viewed_records/) | 8.0.1.0.0 | Last viewed records
 [web_listview_custom_element_number](web_listview_custom_element_number/) | 8.0.1.0.0 | Allow users to set manually a quantity of items to display in a tree view
 [web_listview_show_advanced_search](web_listview_show_advanced_search/) | 1.0 | Web Show Advanced Search by default on list view
-[web_m2x_options](web_m2x_options/) | 8.0.0.2 | web_m2x_options
-[web_menu_autohide](web_menu_autohide/) | 1.0 | Hide top and left menu bar
+[web_m2x_options](web_m2x_options/) | 8.0.0.2.0 | web_m2x_options
+[web_menu_autohide](web_menu_autohide/) | 8.0.1.0.0 | Hide top and left menu bar
 [web_menu_navbar_needaction](web_menu_navbar_needaction/) | 8.0.1.0.0 | Show the sum of submenus' needaction counters in main menu
 [web_one2many_list_action](web_one2many_list_action/) | 8.0.1.0.0 | Enable tree_but_open action for One2ManyListView rows.
 [web_option_auto_color](web_option_auto_color/) | 8.0.0.1.0 | Web Option Auto Color
