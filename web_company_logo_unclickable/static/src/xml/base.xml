@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<templates id="template" xml:space="preserve">
+    <t t-extend="WebClient">
+        <t t-jquery="a[class=oe_logo]" t-operation="replace">
+            <a class="oe_logo">
+            <span class="oe_logo_edit">Edit Company data</span>
+            <img t-att-src='widget.session.url("/web/binary/company_logo")'/>
+            </a>
+        </t>
+    </t>
+</templates>
