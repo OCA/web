@@ -323,8 +323,6 @@ openerp.web_timeline = function(instance) {
             this.timeline.setGroups(groups);
             this.timeline.setItems(data);
             this.timeline.setWindow(this.current_window);
-            //this.timeline.moveTo(new Date(), true);
-            //this.timeline.zoom(0.5, new Date());
         },
 
         do_show: function() {
@@ -403,7 +401,6 @@ openerp.web_timeline = function(instance) {
                     null,
                     {readonly: true, title: title}
                 );
-                //pop.on('closed', self, self.reload);
                 var form_controller = pop.view_form;
                 form_controller.on("load_record", self, function() {
                      var footer = pop.$el.closest(".modal").find(".modal-footer");
