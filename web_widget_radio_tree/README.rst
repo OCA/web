@@ -13,7 +13,7 @@ Example: You have a partner company form with many contacts. The contacts are sh
 Usage
 =====
 
-In the view declaration, put widget='radio_tree' attribute in the field tag::
+In the view declaration, put widget='radio_tree' attribute in the field tag. The field type should be boolean::
 
     ...
     <field name="arch" type="xml">
