@@ -24,7 +24,7 @@ openerp.web_widget_radio_tree = function (instance) {
             this.$checkbox.attr('name', radio_name);
 
             var self = this;
-            this.$el.click(_.bind(function() {
+            this.$el.click(this.proxy(function() {
                 self.clean_radio_in_records();
                 this.internal_set_value(true);
             }, this));
