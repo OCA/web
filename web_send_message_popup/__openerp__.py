@@ -20,7 +20,7 @@
 ##############################################################################
 
 {'name': 'Web Send Message as Popup',
- 'version': '1.0',
+ 'version': '2.0',
  'author': "Camptocamp,Odoo Community Association (OCA)",
  'maintainer': 'Camptocamp',
  'license': 'AGPL-3',
@@ -44,6 +44,6 @@ if the popup is always wanted.
  'website': 'http://www.camptocamp.com',
  'qweb': ['static/src/xml/mail.xml',
           ],
- 'installable': False,
+ 'installable': True,
  'auto_install': False,
 }
