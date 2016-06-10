@@ -2,6 +2,8 @@
     OpenERP, Open Source Management Solution
     This module copyright (C) 2014 Therp BV (<http://therp.nl>)
                           (C) 2013 Marcel van der Boom <marcel@hsdev.com>
+    Copyright (C) 2016 Serpent Consulting Services Pvt. Ltd.
+                            (<http://www.serpentcs.com>)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
@@ -17,8 +19,14 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-openerp.web_tree_image = function (instance) {
-    instance.web.list.Image = instance.web.list.Column.extend({
+odoo.define('web.tree_image', function (require) {
+    "use strict";
+    var core = require('web.core');
+    var session = require('web.session');
+    var QWeb = core.qweb;
+    var list_widget_registry = core.list_widget_registry;
+
+    var WebTreeImage = list_widget_registry.get('field.binary').extend({
         format: function (row_data, options) {
             /* Return a valid img tag. For image fields, test if the
              field's value contains just the binary size and retrieve
@@ -43,7 +51,7 @@ openerp.web_tree_image = function (instance) {
                     if (this.resize) {
                         imageArgs.resize = this.resize;
                     }
-                    src = instance.session.url('/web/binary/image', imageArgs);
+                    src = session.url('/web/binary/image', imageArgs);
                 }
             } else {
                 if (!/\//.test(row_data[this.id].value)) {
@@ -52,8 +60,10 @@ openerp.web_tree_image = function (instance) {
                     src = row_data[this.id].value;
                 }
             }
-            return instance.web.qweb.render('ListView.row.image', {widget: this, src: src});
+            return QWeb.render('ListView.row.image', {widget: this, src: src});
         }
     });
-    instance.web.list.columns.add('field.image', 'instance.web.list.Image');
-};
+
+    list_widget_registry
+    .add('field.image', WebTreeImage)
+});
