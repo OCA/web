@@ -23,6 +23,7 @@ addon | version | summary
 [web_favicon](web_favicon/) | 9.0.1.0.0 | Allows to set a custom shortcut icon (aka favicon)
 [web_readonly_bypass](web_readonly_bypass/) | 9.0.1.0.0 | Allow to save onchange modifications to readonly fields
 [web_searchbar_full_width](web_searchbar_full_width/) | 9.0.1.0.0 | Show search bar in full screen width
+[web_send_message_popup](web_send_message_popup/) | 9.0.1.0.0 | Web Send Message as Popup
 [web_sheet_full_width](web_sheet_full_width/) | 9.0.1.0.0 | Use the whole available screen width when displaying sheets
 [web_widget_many2many_tags_multi_selection](web_widget_many2many_tags_multi_selection/) | 9.0.1.1.0 | Tags multiple selection
 
@@ -58,7 +59,6 @@ addon | version | summary
 [web_polymorphic_many2one](web_polymorphic_many2one/) | 0.2 (unported) | Web Polymorphic Many2One
 [web_recipients_uncheck](web_recipients_uncheck/) | 8.0.0.3.0 (unported) | Uncheck recipients on res.partner
 [web_search_alphabetic](web_search_alphabetic/) | 1.0 (unported) | Web Alphabetical Search
-[web_send_message_popup](web_send_message_popup/) | 1.0 (unported) | Web Send Message as Popup
 [web_sheet_full_width_selective](web_sheet_full_width_selective/) | 8.0.0.1.0 (unported) | Show selected sheets with full width
 [web_shortcuts](web_shortcuts/) | 8.0.1.0.0 (unported) | Web Shortcuts
 [web_switch_company_warning](web_switch_company_warning/) | 8.0.0.1.0 (unported) | Show a warning if current company has been switched in another tab or window.
