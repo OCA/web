@@ -1,7 +1,12 @@
+# -*- coding: utf-8 -*-
+# Copyright 2016 Serpent Consulting Services Pvt. Ltd.
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
 {
     "name": "Group Expand Buttons",
     "category": "Web",
-    "version": "8.0.1.0.0",
+    "version": "9.0.1.0.0",
+    "license": "AGPL-3",
     "author": "OpenERP SA, "
               "AvanzOSC, "
               "Serv. Tecnol. Avanzados - Pedro M. Baeza, "
@@ -15,5 +20,5 @@
     "data": [
         "views/templates.xml",
     ],
-    'installable': False,
+    'installable': True,
 }
