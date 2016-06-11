@@ -8,6 +8,9 @@
 #    Snippet from https://github.com/hsd/listview_images
 #    Copyright (C) 2013 Marcel van der Boom <marcel@hsdev.com>
 #
+#    Copyright (C) 2016 Serpent Consulting Services Pvt. Ltd.
+#                            (<http://www.serpentcs.com>)
+#
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
 #    published by the Free Software Foundation, either version 3 of the
@@ -24,8 +27,11 @@
 ##############################################################################
 {
     'name': 'Show images in tree views',
-    'version': '8.0.1.1.0',
-    'author': 'Therp BV, MONK Software, Odoo Community Association (OCA)',
+    'version': '9.0.1.1.0',
+    'author': "Therp BV, "
+              "MONK Software, "
+              "Odoo Community Association (OCA), "
+              "Serpent Consulting Services Pvt. Ltd.",
     'website': 'https://github.com/OCA/Web',
     'license': 'AGPL-3',
     'category': 'Web',
@@ -38,5 +44,5 @@
     'data': [
         'view/assets.xml',
     ],
-    'installable': False,
+    'installable': True,
 }
