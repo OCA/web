@@ -21,6 +21,7 @@ Contributors
 * Stéphane Bidoul <stephane.bidoul@acsone.eu>
 * Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>
 * Holger Brunn <hbrunn@therp.nl>
+* Siddharth Bhalgami <siddharth.bhalgami@gmail.com>
 
 Maintainer
 ----------
