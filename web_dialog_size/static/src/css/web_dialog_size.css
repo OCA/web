@@ -1,9 +1,9 @@
 .modal .modal-header button.dialog_button_extend {
-  padding-right: 3px;
+    padding-right: 5px;
 }
 
 .modal .modal-header button.dialog_button_restore {
-  padding-right: 3px;
+    padding-right: 5px;
 }
 
 .dialog_full_screen {
@@ -11,5 +11,5 @@
 }
 
 .modal .modal-header button.close {
-    font-size: 14px;
+    font-size: 18px;
 }
