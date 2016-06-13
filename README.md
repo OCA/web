@@ -46,6 +46,7 @@ addon | version | summary
 [web_m2x_options](web_m2x_options/) | 8.0.0.2.0 | web_m2x_options
 [web_menu_autohide](web_menu_autohide/) | 8.0.1.0.0 | Hide top and left menu bar
 [web_menu_navbar_needaction](web_menu_navbar_needaction/) | 8.0.1.0.0 | Show the sum of submenus' needaction counters in main menu
+[web_offline_warning](web_offline_warning/) | 8.0.1.0.0 | User-friendly Offline Warning
 [web_one2many_list_action](web_one2many_list_action/) | 8.0.1.0.0 | Enable tree_but_open action for One2ManyListView rows.
 [web_option_auto_color](web_option_auto_color/) | 8.0.0.1.0 | Web Option Auto Color
 [web_readonly_bypass](web_readonly_bypass/) | 8.0.1.0.1 | Allow to save onchange modifications to readonly fields
