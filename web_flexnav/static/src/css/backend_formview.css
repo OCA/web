@@ -1,0 +1,109 @@
+.openerp .oe_button_nav {
+  width: calc(100% + 32px);
+  text-align: right;
+  background-color: #f1f1f1;
+  margin: -17px -16px 24px;
+}
+
+/*=======================*/
+/* Length of smart button according to viewport */
+
+.openerp .oe_button_nav .oe_stat_button {
+  height: 48px;
+  text-align: left;
+  background-color: transparent;
+  white-space: nowrap !important;
+  width: calc(100% / 4 + 1px) !important;
+}
+
+@media (min-width: 992px)  {
+  .openerp .oe_button_nav .oe_stat_button {
+    width: calc(100% / 5 + 1px) !important;
+  }
+}
+@media (min-width: 1200px) {
+  .openerp .oe_button_nav .oe_stat_button {
+    width: calc(100% / 6 + 1px) !important;
+  }
+}
+.openerp .oe_button_nav .oe_stat_button:hover {
+  background-color: darken(#f1f1f1, 8%);
+  color: inherit;
+}
+  
+.openerp .oe_button_nav .oe_stat_button.oe_more_button {
+  text-align: center;
+  font-size: 12px;
+}
+
+.openerp .oe_button_nav .oe_stat_button.oe_more_button a {
+  color: inherit;
+}
+
+.openerp .oe_button_nav .oe_stat_button.oe_more_button a:after {
+  margin-left: 5px;
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 0;
+  vertical-align: middle;
+  border-bottom: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid;
+}
+
+.openerp .oe_button_nav .oe_stat_button.oe_more_button a.active {
+  background-color: #ddd;
+  color: inherit;
+}
+
+.oe_stat_button:hover .fa {
+  color: #7C7BAD;
+}
+
+/* More button Dropdown*/
+.openerp .oe_button_box .oe_stat_button .flexMenu-popup {
+  display: block;
+  margin-top: 14px;
+  margin-left: -1px;
+  z-index: 999;
+}
+
+.openerp .oe_button_box .oe_stat_button .flexMenu-popup .oe_stat_button {
+  display: block;
+  width: 100% !important;
+  background-color: white;
+  z-index: 999;
+}
+
+.openerp .oe_button_box .oe_stat_button .flexMenu-popup .oe_stat_button:last-of-type {
+  margin-bottom: 0px;
+}
+
+.openerp .oe_button_box .oe_stat_button .flexMenu-popup .oe_stat_button:hover .fa {
+  color: #7C7BAD;
+}
+
+.oe_stat_button .stat_button_icon {
+  font-size: 20px;
+  margin-left: 12px;
+  display: inline-block;
+  vertical-align: middle;
+  width: 30%;
+}
+
+.oe_stat_button > div {
+  display: inline-block;
+  vertical-align: middle;
+  padding-right: 12px;
+  line-height: 1.2;
+}
+
+.oe_stat_button > div:last-of-type {
+  font-size: 12px;
+  max-width: 70%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+    <template id="assets_backend" inherit_id="web.assets_backend" name="Assets Backend" priority="900">
+      <xpath expr="." position="inside">
+      	<link href="/web_flexnav/static/src/css/backend_formview.css" type="style/css" rel="stylesheet" />
+        <script type="text/javascript" src="/web_flexnav/static/src/js/backend_smart_button.js"></script>
+      </xpath>
+    </template>
+
+  </data>
+</openerp>

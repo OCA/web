@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+    <!-- Inherit partner form -->
+    <record id="view_partner_form" model="ir.ui.view">
+      <field name="name">res.partner.form</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+
+        <div name="button_box" position="replace">
+          <div class="oe_button_box oe_button_nav flex menu" name="button_box"></div>
+        </div>
+      </field>
+    </record>
+  </data>
+</openerp>
