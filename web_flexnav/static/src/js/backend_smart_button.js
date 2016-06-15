@@ -65,56 +65,62 @@ openerp.web_flexnav = function (instance) {
                     }
 
                     if (needsMenu($lastItem) && numItems > s.threshold && !s.undo && $this.is(':visible')) {
+
                         var $popup = $('<div class="flexMenu-popup" style="display:none;' + ((s.popupAbsolute) ? ' position: absolute;' : '') + '"></div>'),
-                        // Move all list items after the first to this new popup ul
                             firstItemOffset = $firstItem.offset().top;
-                            $popup.width($('.openerp .oe_button_nav .oe_stat_button').outerWidth());
-                        // Add class if popupClass option is set
+                        $popup.width($('.openerp .oe_button_nav .oe_stat_button').outerWidth());
                         $popup.addClass(s.popupClass);
+
+                        // Move all list items after the first to this new popup ul
                         for (i = numItems; i > 1; i--) {
-                                $lastChild = $($this.find('> button')[$this.find('> button').length - 1]);
-                                keepLooking = (needsMenu($lastChild));
-                                $lastChild.removeClass('oe_inline');
-                                $lastChild.appendTo($popup);
-                                if (!keepLooking) {
-                                    break;
-                                }
+                            $lastChild = $($this.find('> button')[$this.find('> button').length - 1]);
+                            keepLooking = (needsMenu($lastChild));
+                            $lastChild.removeClass('oe_inline');
+                            $lastChild.appendTo($popup);
+                            if (!keepLooking) {
+                                break;
                             }
-                            $this.append('<button class="oe_stat_button btn btn-default oe_more_button flexMenu-viewMore"><a href="#" title="' + s.linkTitle + '">' + s.linkText + '</a></button>');
-                            $moreItem = $this.find('> button.flexMenu-viewMore');
-                            /// Check to see whether the more link has been pushed down. This might happen if the link immediately before it is especially wide.
-                            for (var n = 0; n < numItems; n++) {
-                                if (needsMenu($moreItem)) {
-                                    $($this.find('> button')[$this.find('> button').length - 2]).removeClass('oe_inline').appendTo($popup);
-                                }
-                                else {
-                                    break;
-                                }
-                            }
-                            // Our popup menu is currently in reverse order. Let's fix that.
-                            $popup.children().each(function (i, btn) {
-                                $popup.prepend(btn);
-                            });
-                            $moreItem.append($popup);
-                            $moreItem.click(function (e) {
-                                e.preventDefault();
-                                collapseAllExcept($(this));
-                                $popup.toggle();
-                                $(this).toggleClass('active');
+                        }
+                        $this.append('<button class="oe_stat_button btn btn-default oe_more_button flexMenu-viewMore"><a href="#" title="' + s.linkTitle + '">' + s.linkText + '</a></button>');
+                        $moreItem = $this.find('> button.flexMenu-viewMore');
 
-                            });
-
-                            var handler = function(event) {
-                                // if the target is a descendent of menu do nothing
-                                var target = $(event.target);
-                                if (target.parents('div.menu.flex').length) {
-                                    return;
-                                }
-                                // hide popup
-                                $popup.hide();
-                                $moreItem.removeClass('active');
+                        // Check to see whether the more link has been pushed down. This might happen if the link immediately before it is especially wide.
+                        for (var n = 0; n < numItems; n++) {
+                            if (needsMenu($moreItem)) {
+                                $($this.find('> button')[$this.find('> button').length - 2]).removeClass('oe_inline').appendTo($popup);
                             }
-                            $(document).on("click", handler);
+                            else {
+                                break;
+                            }
+                        }
+
+                        // The popup menu is currently in reverse order. Let's fix that.
+                        $popup.children().each(function (i, btn) {
+                            $popup.prepend(btn);
+                        });
+
+                        // Add event click to More button
+                        $moreItem.append($popup);
+                        $moreItem.click(function (e) {
+                            e.preventDefault();
+                            collapseAllExcept($(this));
+                            $popup.toggle();
+                            $(this).toggleClass('active');
+
+                        });
+
+                        // Add event to hide menu below More button
+                        var handler = function(event) {
+                            // if the target is a descendant of menu do nothing
+                            var target = $(event.target);
+                            if (target.parents('div.menu.flex').length) {
+                                return;
+                            }
+                            // hide popup
+                            $popup.hide();
+                            $moreItem.removeClass('active');
+                        }
+                        $(document).on("click", handler);
 
                     } else if (s.undo && $this.find('div.flexMenu-popup')) {
                         $menu = $this.find('div.flexMenu-popup');
