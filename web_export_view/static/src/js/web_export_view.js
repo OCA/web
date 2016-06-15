@@ -1,6 +1,6 @@
 //# -*- coding: utf-8 -*-
 //# © 2012 Agile Business Group
-//# © 2012 Therp BV 
+//# © 2012 Therp BV
 //# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 odoo.define('web_export_view.Sidebar', function (require) {
@@ -62,45 +62,42 @@ Sidebar.include({
                 export_columns_names.push(this.string);
             }
         });
-        var rows = view.$el.find('.oe_list_content > tbody > tr');
+        var rows = view.$el.find('.o_list_view > tbody > tr[data-id]');
         var export_rows = [];
         $.each(rows, function () {
             var $row = $(this);
-            // find only rows with data
-            if ($row.attr('data-id')) {
-                var export_row = [];
-                var checked = $row.find('th input[type=checkbox]').is(':checked');
-                if (children && checked === true) {
-                    $.each(export_columns_keys, function () {
-                        var cell = $row.find('td[data-field="' + this + '"]').get(0);
-                        var text = cell.text || cell.textContent || cell.innerHTML || "";
-                        if (cell.classList.contains("oe_list_field_float")) {
-                            export_row.push(instance.web.parse_value(text, {'type': "float"}));
-                        }
-                        else if (cell.classList.contains("oe_list_field_boolean")) {
-                            var data_id = $('<div>' + cell.innerHTML + '</div>');
-                            if (data_id.find('input').get(0).checked) {
-                                export_row.push(_t("True"));
-                            }
-                            else {
-                                export_row.push(_t("False"));
-                            }
-                        }
-                        else if (cell.classList.contains("oe_list_field_integer")) {
-                            var tmp2 = text;
-                            do {
-                                tmp = tmp2;
-                                tmp2 = tmp.replace(instance.web._t.database.parameters.thousands_sep, "");
-                            } while (tmp !== tmp2);
-
-                            export_row.push(parseInt(tmp2));
+            var export_row = [];
+            var checked = $row.find('.o_list_record_selector input[type=checkbox]').is(':checked');
+            if (children && checked === true) {
+                $.each(export_columns_keys, function () {
+                    var cell = $row.find('td[data-field="' + this + '"]').get(0);
+                    var text = cell.text || cell.textContent || cell.innerHTML || "";
+                    if (cell.classList.contains("oe_list_field_float")) {
+                        export_row.push(instance.web.parse_value(text, {'type': "float"}));
+                    }
+                    else if (cell.classList.contains("oe_list_field_boolean")) {
+                        var data_id = $('<div>' + cell.innerHTML + '</div>');
+                        if (data_id.find('input').get(0).checked) {
+                            export_row.push(_t("True"));
                         }
                         else {
-                            export_row.push(text.trim());
+                            export_row.push(_t("False"));
                         }
-                    });
-                    export_rows.push(export_row);
-                }
+                    }
+                    else if (cell.classList.contains("oe_list_field_integer")) {
+                        var tmp2 = text;
+                        do {
+                            tmp = tmp2;
+                            tmp2 = tmp.replace(instance.web._t.database.parameters.thousands_sep, "");
+                        } while (tmp !== tmp2);
+
+                        export_row.push(parseInt(tmp2));
+                    }
+                    else {
+                        export_row.push(text.trim());
+                    }
+                });
+                export_rows.push(export_row);
             }
         });
         $.blockUI();
@@ -114,7 +111,7 @@ Sidebar.include({
             complete: $.unblockUI
         });
     },
-    
+
 });
 });
 
