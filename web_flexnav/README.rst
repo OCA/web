@@ -6,7 +6,7 @@
 Web Flex Nav
 ============
 
-This module adds a navigation that contains the smart buttons in the backend views. The need came from having
+This module adds a dynamic navigation that contains the smart buttons in the backend views. The need came from having
 a better use of the space.
 
 The javascript implementation is strongly based on https://github.com/352Media/flexMenu
@@ -14,8 +14,10 @@ The javascript implementation is strongly based on https://github.com/352Media/f
 Usage
 =====
 
-You should move the smart buttons to one line on top of the view, instead of floating on the right since the
-more buttons you have, the more it pushes the rest of the content down.
+You should move the smart buttons to one line on top of the view, instead of floating on the right since when 
+the number of buttons increases, the content taht follows in the same view is pushed further down.
+You replace the existing smart buttons with the code snippet that have the JavaScript classes (done 
+in res_partner.xml). 
 
 This is an example extending the Partner form view:
 
