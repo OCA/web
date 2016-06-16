@@ -104,6 +104,7 @@ openerp.web_timeline = function(instance) {
             this.name = fv.name || attrs.string;
             this.view_id = fv.view_id;
 
+            this.start = py.eval(attrs.start || 'None', instance.web.pyeval.context());
             this.mode = attrs.mode;                 // one of month, week or day
             this.date_start = attrs.date_start;     // Field name of starting
                                                     // date field
@@ -173,9 +174,15 @@ openerp.web_timeline = function(instance) {
                 onUpdate: self.on_update,
                 onRemove: self.on_remove,
                 orientation: 'both',
+                start: self.start,
             };
-            self.timeline = new vis.Timeline(self.$timeline.get(0));
+            self.timeline = new vis.Timeline(self.$timeline.empty().get(0));
             self.timeline.setOptions(options);
+            if(self.mode && self['on_scale_' + self.mode + '_clicked'])
+            {
+                self['on_scale_' + self.mode + '_clicked']();
+            }
+            self.timeline.on('click', self.on_click);
             return $.when();
         },
 
@@ -356,17 +363,14 @@ openerp.web_timeline = function(instance) {
         },
 
         on_add: function(item, callback) {
-            var self = this;
-            var pop = new instance.web.form.SelectCreatePopup(this);
+            var self = this,
+                pop = new instance.web.form.SelectCreatePopup(this),
+                context = this.get_popup_context(item);
             pop.on("elements_selected", self, function(element_ids) {
                 self.reload().then(function() {
                     self.timeline.focus(element_ids);
                 });
             });
-            context = {};
-            context['default_'.concat(self.date_start)] = item.start;
-            context['default_'.concat(self.last_group_bys[0])] = item.group;
-            context['default_'.concat(self.date_stop)] = item.start.clone().addHours(this.date_delay || 1);
             pop.select_element(
                 self.dataset.model,
                 {
@@ -376,6 +380,18 @@ openerp.web_timeline = function(instance) {
                 null,
                context
             );
+        },
+
+        get_popup_context: function(item) {
+            var context = {};
+            context['default_'.concat(this.date_start)] = item.start;
+            context['default_'.concat(this.date_stop)] = item.start.clone()
+                .addHours(this.date_delay || 1);
+            if(item.group != -1)
+            {
+                context['default_'.concat(this.last_group_bys[0])] = item.group;
+            }
+            return context;
         },
 
         on_update: function(item, callback) {
@@ -470,6 +486,28 @@ openerp.web_timeline = function(instance) {
                 }
             } else
                 return do_it();
+        },
+
+        on_click: function(e) {
+            // handle a click on a group header
+            if(e.what == 'group-label')
+            {
+                return this.on_group_click(e);
+            }
+        },
+
+        on_group_click: function(e) {
+            if(e.group == -1)
+            {
+                return;
+            }
+            return this.do_action({
+                type: 'ir.actions.act_window',
+                res_model: this.fields[this.last_group_bys[0]].relation,
+                res_id: e.group,
+                target: 'new',
+                views: [[false, 'form']],
+            });
         },
 
         on_today_clicked: function(){
