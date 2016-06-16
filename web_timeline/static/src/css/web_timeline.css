@@ -36,3 +36,7 @@
 .oe_chatter_toggle {
   padding: 15px;
 }
+
+.oe_timeline_view .vlabel .inner:hover{
+    cursor: pointer;
+}
