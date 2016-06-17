@@ -1,4 +1,8 @@
 .oe_secondary_menu_section {
     height: 26px;
     cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

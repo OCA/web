@@ -10,7 +10,7 @@ openerp.web_menu_collapsible = function(instance) {
             return this._super.apply(this, arguments);
         },
         section_clicked: function() {
-            $(this).next().toggle(100);
+            $(this).next().toggle();
         }
     });
 };
