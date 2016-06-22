@@ -1,13 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
 <templates>
-    <t t-name='HelpOnline.Buttons'>
-        <div  class='oe_help_online_buttons'>
-            <ul class='oe_view_manager_switch oe_button_group oe_right'>
-                <li class='oe_i'>
-                    <a class='oe_list_button_help_online'
-                       t-att-title='url_info.title'
-                       t-att-href='url_info.url' target='_blank'></a>
-                </li>
-            </ul>
+    <t t-name='HelpOnline.Button'>
+        <t t-if='url_info'>
+            <a t-att-class="'fa fa-question-circle btn btn-icon o_help_online_button ' + (url_info.exists? '': 'o_help_online_not_found')"
+               t-att-title='url_info.title' t-att-href='url_info.url'
+               target='_blank'></a>
+        </t>
+    </t>
+
+    <t t-name='HelpOnline.ButtonsContainer'>
+        <div class='hidden-xs btn-group btn-group-sm o_help_online_buttons'>
         </div>
-   </t>
+    </t>
+
+    <t t-extend="ControlPanel">
+        <t t-jquery="div.o_cp_switch_buttons" t-operation="after">
+            <t t-call='HelpOnline.ButtonsContainer' />
+        </t>
+        <t t-jquery="div.oe-cp-switch-buttons" t-operation="after">
+            <t t-call='HelpOnline.ButtonsContainer' />
+        </t>
+    </t>
+
+    <t t-extend="X2ManyControlPanel">
+        <t t-jquery="div.o_cp_pager" t-operation="after">
+            <t t-call='HelpOnline.ButtonsContainer' />
+        </t>
+        <t t-jquery="div.oe-cp-pager" t-operation="after">
+            <div class="pull-right">
+                <t t-call='HelpOnline.ButtonsContainer' />
+            </div>
+        </t>
+    </t>
+
 </templates>
