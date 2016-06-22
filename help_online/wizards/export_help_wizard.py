@@ -1,31 +1,18 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Authors: Cédric Pigeon
-#    Copyright (c) 2014 Acsone SA/NV (http://www.acsone.eu)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published
-#    by the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# Copyright 2014 ACSONE SA/NV (<http://acsone.eu>)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 import logging
 import base64
 import time
 import copy
-
+import urlparse
+from werkzeug.routing import Map, Rule
 from lxml import etree as ET
 from openerp import models, fields, api, exceptions
 from openerp.tools.translate import _
+from openerp.addons.web.controllers.main import Binary
+from openerp.addons.website.controllers.main import WebsiteBinary
 
 _logger = logging.getLogger(__name__)
 
@@ -43,94 +30,114 @@ class ExportHelpWizard(models.TransientModel):
     data = fields.Binary('XML', readonly=True)
     export_filename = fields.Char('Export XML Filename', size=128)
 
-    def _manage_images_on_page(self, page_node, data_node, images_reference):
+    binary = Binary()
+    websiteBinary = WebsiteBinary()
+
+    img_url_map = Map([
+        Rule('/web/image'),
+        Rule('/web/image/<string:xmlid>'),
+        Rule('/web/image/<string:xmlid>/<string:filename>'),
+        Rule('/web/image/<string:xmlid>/<int:width>x<int:height>'),
+        Rule('/web/image/<string:xmlid>/<int:width>x<int:height>/'
+             '<string:filename>'),
+        Rule('/web/image/<string:model>/<int:id>/<string:field>'),
+        Rule('/web/image/<string:model>/<int:id>/<string:field>/'
+             '<string:filename>'),
+        Rule('/web/image/<string:model>/<int:id>/<string:field>/'
+             '<int:width>x<int:height>'),
+        Rule('/web/image/<string:model>/<int:id>/<string:field>/'
+             '<int:width>x<int:height>/<string:filename>'),
+        Rule('/web/image/<int:id>'),
+        Rule('/web/image/<int:id>/<string:filename>'),
+        Rule('/web/image/<int:id>/<int:width>x<int:height>'),
+        Rule('/web/image/<int:id>/<int:width>x<int:height>/<string:filename>'),
+        Rule('/web/image/<int:id>-<string:unique>'),
+        Rule('/web/image/<int:id>-<string:unique>/<string:filename>'),
+        Rule('/web/image/<int:id>-<string:unique>/<int:width>x<int:height>'),
+        Rule('/web/image/<int:id>-<string:unique>/<int:width>x<int:height>'
+             '/<string:filename>'),
+        Rule('/website/image'),
+        Rule('/website/image/<xmlid>'),
+        Rule('/website/image/<xmlid>/<int:width>x<int:height>'),
+        Rule('/website/image/<xmlid>/<field>'),
+        Rule('/website/image/<xmlid>/<field>/<int:width>x<int:height>'),
+        Rule('/website/image/<model>/<id>/<field>'),
+        Rule('/website/image/<model>/<id>/<field>/<int:width>x<int:height>')
+    ])
+
+    def _manage_images_on_page(self, page_node, data_node, exported_resources):
         """
-            - Extract images from page and generate a xml node
+            - Extract images from page and generate an xml node
             - Replace db id in url with xml id
         """
-
-        def get_attach_id(images_reference,
-                          img_model, img_src, generated_xml_id=False):
-            attach_id = False
-            if 'id=' in img_src:
-                id_pos = img_src.index('id=') + 3
-                attach_id = img_src[id_pos:]
-            else:
-                fragments = img_src.split('ir.attachment/')
-                attach_id, _ = fragments[1].split('_', 1)
-
-            if attach_id in images_reference:
-                xml_id = images_reference[attach_id]
-            else:
-                ir_data = self.env['ir.model.data'].search(
-                    [('model', '=', img_model),
-                     ('res_id', '=', attach_id)])
-                xml_id = generated_xml_id
-                if ir_data:
-                    xml_id = ir_data[0].name
-                images_reference[attach_id] = xml_id
-
-            return attach_id, xml_id
-
-        def substitute_id_by_xml_id(img_src, attach_id, xml_id):
-            new_src = False
-            if 'id=' in img_src:
-                new_src = img_src.replace(attach_id, xml_id)
-            else:
-                fragments = img_src.split('ir.attachment/')
-                _, trail = fragments[1].split('_', 1)
-                new_src = "/website/image/ir.attachment/%s|%s" % \
-                    (xml_id, trail)
-            return new_src
-
-        i_img = 0
         img_model = 'ir.attachment'
+        urls = self.img_url_map.bind("dummy.org", "/")
         for img_elem in page_node.iter('img'):
             img_src = img_elem.get('src')
-            if img_model in img_src:
-                i_img += 1
-                generated_xml_id = "%s_img_%s" % \
-                    (page_node.attrib['name'], str(i_img).rjust(2, '0'))
-                attach_id, xml_id = get_attach_id(images_reference,
-                                                  img_model,
-                                                  img_src,
-                                                  generated_xml_id)
-
-                new_src = substitute_id_by_xml_id(img_src, attach_id, xml_id)
-
-                if not attach_id:
-                    continue
-
-                image = self.env[img_model].browse(int(attach_id))
-                if not image:
-                    continue
-
+            parse_result = urlparse.urlparse(img_src)
+            path = parse_result.path
+            query_args = parse_result.query
+            if urls.test(parse_result.path, "GET"):
+                endpoint, kwargs = urls.match(path, "GET",
+                                              query_args=query_args)
+                kwargs.update(dict(urlparse.parse_qsl(query_args)))
+                image = None
+                # get the binary object
+                xml_id = kwargs.get('xmlid')
+                if xml_id:
+                    image = self.env.ref(xml_id, False)
+                else:
+                    _id = kwargs.get('id')
+                    model = kwargs.get('model', 'ir.attachment')
+                    if _id and model:
+                        _id, _, unique = str(_id).partition('_')
+                        image = self.env[model].browse(int(_id))
+                if (not image or
+                    not image.exists() or
+                        image._name != img_model):
+                    raise exceptions.UserError(
+                        _('Only images from ir.attachment are supported when '
+                          'exporting help pages'))
+                exported_data = image.export_data(
+                    ['id',
+                     'datas',
+                     'datas_fname',
+                     'name',
+                     'res_model',
+                     'mimetype'],
+                    raw_data=False)['datas'][0]
+                xml_id = exported_data[0]
+                new_src = '/web/image/%s' % xml_id
                 img_elem.attrib['src'] = new_src
-                img_node = ET.SubElement(data_node,
-                                         'record',
-                                         attrib={'id': xml_id,
-                                                 'model': img_model})
+                if xml_id in exported_resources:
+                    continue
+                img_node = ET.SubElement(
+                    data_node,
+                    'record',
+                    attrib={'id': xml_id,
+                            'model': image._name})
                 field_node = ET.SubElement(img_node,
                                            'field',
                                            attrib={'name': 'datas'})
-                field_node.text = str(image.datas)
+                field_node.text = str(exported_data[1])
                 field_node = ET.SubElement(img_node,
                                            'field',
                                            attrib={'name': 'datas_fname'})
-                field_node.text = image.datas_fname
+                field_node.text = exported_data[2]
                 field_node = ET.SubElement(img_node,
                                            'field',
                                            attrib={'name': 'name'})
-                field_node.text = image.name
+                field_node.text = exported_data[3]
                 field_node = ET.SubElement(img_node,
                                            'field',
                                            attrib={'name': 'res_model'})
-                field_node.text = image.res_model
+                field_node.text = exported_data[4]
                 field_node = ET.SubElement(img_node,
                                            'field',
                                            attrib={'name': 'mimetype'})
-                field_node.text = image.mimetype
+                field_node.text = exported_data[5]
                 data_node.append(img_node)
+                exported_resources.add(xml_id)
 
     def _clean_href_urls(self, page_node, page_prefix, template_prefix):
         """
@@ -216,38 +223,66 @@ class ExportHelpWizard(models.TransientModel):
                   ('name', 'like', '%s%%' % page_prefix),
                   ('name', 'like', '%s%%' % template_prefix)]
 
-        view_data_list = self.env['ir.ui.view'].search_read(domain,
-                                                            ['arch', 'name'],
-                                                            order='name')
+        ir_ui_views = self.env['ir.ui.view'].search(domain, order='name')
         xml_to_export = ET.Element('openerp')
         data_node = ET.SubElement(xml_to_export, 'data')
-        images_reference = {}
-        for view_data in view_data_list:
+        exported_resources = set()
+        for ir_ui_view in ir_ui_views:
             parser = ET.XMLParser(remove_blank_text=True)
-            root = ET.XML(view_data['arch'], parser=parser)
-
+            root = ET.XML(ir_ui_view.arch, parser=parser)
             root.tag = 'template'
-            template_id = root.attrib.pop('t-name')
-            root.attrib['name'] = view_data['name'].replace('website.', '')
-            root.attrib['id'] = template_id
+            xml_id = self._get_ir_ui_view_xml_id(
+                ir_ui_view, root.attrib.pop('t-name'))
+            root.attrib['name'] = ir_ui_view.name.replace('website.', '')
+            root.attrib['id'] = xml_id
             root.attrib['page'] = 'True'
 
-            self._manage_images_on_page(root, data_node, images_reference)
+            self._manage_images_on_page(root, data_node, exported_resources)
             self._clean_href_urls(root, page_prefix, template_prefix)
             data_node.append(root)
 
             if root.attrib['name'].startswith(template_prefix):
                 snippet = self._generate_snippet_from_template(root,
-                                                               template_id,
+                                                               xml_id,
                                                                template_prefix)
                 data_node.append(snippet)
 
-        if len(view_data_list) > 0:
+        if len(ir_ui_views) > 0:
             return ET.tostring(xml_to_export, encoding='utf-8',
                                xml_declaration=True,
                                pretty_print=True)
         else:
             return False
+
+    @api.model
+    def _get_ir_ui_view_xml_id(self, ir_ui_view, template_name):
+        """This method check if an xml_id exists for the given ir.ui.view
+        If no xml_id exists, a new one is created with template name as
+        value to ensure that the import of the generated file will update
+        the existing view in place of creating new copies.
+        """
+        ir_model_data = self.sudo().env['ir.model.data']
+        data = ir_model_data.search([('model', '=', ir_ui_view._name),
+                                     ('res_id', '=', ir_ui_view.id)])
+        if data:
+            if data[0].module:
+                return '%s.%s' % (data[0].module, data[0].name)
+            else:
+                return data[0].name
+        else:
+            module, name = template_name.split('.')
+            postfix = ir_model_data.search_count(
+                [('module', '=', module),
+                 ('name', 'like', name)])
+            if postfix:
+                name = '%s_%s' % (name, postfix)
+            ir_model_data.create({
+                'model': ir_ui_view._name,
+                'res_id': ir_ui_view.id,
+                'module': module,
+                'name': name,
+            })
+            return module + '.' + name
 
     @api.multi
     def export_help(self):
