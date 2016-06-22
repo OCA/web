@@ -1,0 +1,22 @@
+.openerp .oe_form_sheet_width
+{
+  min-width: 650px;
+  max-width: none !important;
+}
+
+.openerp .oe_form_sheetbg
+{
+    padding: 16px;
+}
+
+.openerp .oe_form div.oe_chatter {
+    max-width: 100%;
+}
+
+.openerp .oe_followers {
+    width: 250px;
+}
+
+.openerp .oe_record_thread {
+    margin-right: 293px;
+}

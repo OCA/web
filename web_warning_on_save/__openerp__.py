@@ -28,9 +28,13 @@
     'description': """
     This module was written to extend the functionality of
     saving a record in the web interface.
-    /!\/!\/!\ In no way this module stops the save of the record.
-    You must consider this as a warning displayed
-    to the user AFTER save completed. /!\/!\/!\
+
+    .. warning::
+
+        In no way this module stops the save of the record.
+        You must consider this as a warning displayed
+        to the user AFTER save completed.
+
     If you don't want OpenERP to save the record, you should use constraints.
 
     Usage
