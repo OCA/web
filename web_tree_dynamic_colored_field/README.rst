@@ -63,6 +63,7 @@ Contributors
 ------------
 
 * Damien Crier <damien.crier@camptocamp.com>
+* Victor Safronovich <vsafronovich@gmail.com>
 
 Maintainer
 ----------
