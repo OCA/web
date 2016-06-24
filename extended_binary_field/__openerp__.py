@@ -65,5 +65,5 @@ Sébastien BEAU <sebastian.beau@akretion.com> for inspiring us.
     ],
     'active': False,
     'installable': True,
-    'auto_install': True,
+    'auto_install': False,
 }
