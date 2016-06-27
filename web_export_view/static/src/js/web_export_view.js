@@ -62,12 +62,14 @@ Sidebar.include({
                 export_columns_names.push(this.string);
             }
         });
-        var rows = view.$el.find('.o_list_view > tbody > tr[data-id]');
+        var rows = view.$el.find('tbody tr[data-id]');
         var export_rows = [];
         $.each(rows, function () {
             var $row = $(this);
             var export_row = [];
-            var checked = $row.find('.o_list_record_selector input[type=checkbox]').is(':checked');
+            var row_selector = '.o_list_record_selector input[type=checkbox],\
+            .oe_list_record_selector input[type=checkbox]';
+            var checked = $row.find(row_selector).is(':checked');
             if (children && checked === true) {
                 $.each(export_columns_keys, function () {
                     var cell = $row.find('td[data-field="' + this + '"]').get(0);
