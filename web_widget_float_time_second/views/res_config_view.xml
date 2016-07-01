@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_general_configuration" model="ir.ui.view">
+            <field name="name">General Settings</field>
+            <field name="model">base.config.settings</field>
+            <field name="inherit_id" ref="base_setup.view_general_configuration"/>
+            <field name="arch" type="xml">
+                <div name="multi_company" position="after">
+                    <div name="float_time_second">
+                        <field name="float_time_with_seconds" class="oe_inline"/>
+                        <label for="float_time_with_seconds"/>
+                    </div>
+                </div>
+            </field>
+        </record>
+    </data>
+</openerp>
