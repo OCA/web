@@ -3,75 +3,58 @@
 # * help_online
 # 
 # Translators:
-# Ahmet Altınışık <aaltinisik@altinkaya.com.tr>, 2016
-# Antonio Trueba, 2016
-# Antonio Trueba, 2016
-# Armando Vulcano Junior <vulcano@uol.com.br>, 2015
-# Carles Antoli <carlesantoli@hotmail.com>, 2015
-# Carles Antoli <carlesantoli@hotmail.com>, 2015
-# danimaribeiro <danimaribeiro@gmail.com>, 2016
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2012,2014
-# Kostas Goutoudis <goutoudis@gmail.com>, 2015
-# Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2015
-# Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2015
-# Kostas Goutoudis <goutoudis@gmail.com>, 2015
-# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
-# Paolo Valier, 2016
-# Pedro Castro Silva <pedrocs@sossia.pt>, 2015
-# Pedro M. Baeza <pedro.baeza@gmail.com>, 2015
-# Rudolf Schnapka <rs@techno-flex.de>, 2016
-# SaFi J. <safi2266@gmail.com>, 2015
+# Bole <bole@dajmi5.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-24 00:46+0000\n"
-"PO-Revision-Date: 2016-06-23 10:59+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Spanish (http://www.transifex.com/oca/OCA-web-8-0/language/es/)\n"
+"PO-Revision-Date: 2016-06-14 11:47+0000\n"
+"Last-Translator: Bole <bole@dajmi5.com>\n"
+"Language-Team: Croatian (http://www.transifex.com/oca/OCA-web-8-0/language/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: hr\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #. module: help_online
 #. openerp-web
 #: code:addons/help_online/static/src/js/help_online.js:83
 #, python-format
 msgid "Cancel"
-msgstr "Cancelar"
+msgstr "Otkaži"
 
 #. module: help_online
 #: view:export.help.wizard:help_online.export_help_wizard_view
 #: view:import.help.wizard:help_online.import_help_wizard_view
 msgid "Close"
-msgstr "Cerrar"
+msgstr "Zatvori"
 
 #. module: help_online
 #. openerp-web
 #: code:addons/help_online/static/src/js/help_online.js:81
 #, python-format
 msgid "Confirm"
-msgstr "Confirmar"
+msgstr "Potvrdi"
 
 #. module: help_online
 #: code:addons/help_online/models/help_online.py:57
 #, python-format
 msgid "Create Help page for %s"
-msgstr "Crear página de ayuda para %s"
+msgstr "Kreiraj stranice pomoći za %s"
 
 #. module: help_online
 #: field:export.help.wizard,create_uid:0 field:help.online,create_uid:0
 #: field:import.help.wizard,create_uid:0
 msgid "Created by"
-msgstr "Creado por"
+msgstr ""
 
 #. module: help_online
 #: field:export.help.wizard,create_date:0 field:help.online,create_date:0
 #: field:import.help.wizard,create_date:0
 msgid "Created on"
-msgstr "Creado en"
+msgstr ""
 
 #. module: help_online
 #: field:export.help.wizard,display_name:0 field:help.online,display_name:0
@@ -82,19 +65,19 @@ msgstr ""
 #. module: help_online
 #: view:export.help.wizard:help_online.export_help_wizard_view
 msgid "Export"
-msgstr "Exportar"
+msgstr "Izvoz"
 
 #. module: help_online
 #: code:addons/help_online/models/export_help_wizard.py:267
 #: model:ir.actions.act_window,name:help_online.action_export_help_wizard
 #, python-format
 msgid "Export Help"
-msgstr "Exportar ayuda"
+msgstr ""
 
 #. module: help_online
 #: view:export.help.wizard:help_online.export_help_wizard_view
 msgid "Export Help Data"
-msgstr "Exportar información de ayuda"
+msgstr ""
 
 #. module: help_online
 #: model:ir.model,name:help_online.model_export_help_wizard
@@ -105,7 +88,7 @@ msgstr ""
 #. module: help_online
 #: field:export.help.wizard,export_filename:0
 msgid "Export XML Filename"
-msgstr "Exportar fichero XML"
+msgstr ""
 
 #. module: help_online
 #: model:ir.ui.menu,name:help_online.menu_help
@@ -117,17 +100,17 @@ msgstr ""
 #: code:addons/help_online/models/help_online.py:52
 #, python-format
 msgid "Help on %s"
-msgstr "Ayuda sobre %s"
+msgstr ""
 
 #. module: help_online
 #: model:res.groups,name:help_online.help_online_group_reader
 msgid "Help reader"
-msgstr "Lector de ayuda"
+msgstr ""
 
 #. module: help_online
 #: model:res.groups,name:help_online.help_online_group_writer
 msgid "Help writer"
-msgstr "Editor de ayuda"
+msgstr ""
 
 #. module: help_online
 #: field:export.help.wizard,id:0 field:help.online,id:0
@@ -138,17 +121,17 @@ msgstr "ID"
 #. module: help_online
 #: view:import.help.wizard:help_online.import_help_wizard_view
 msgid "Import"
-msgstr "Importar"
+msgstr "Uvoz"
 
 #. module: help_online
 #: model:ir.actions.act_window,name:help_online.action_import_help_wizard
 msgid "Import Help"
-msgstr "Importar ayuda"
+msgstr ""
 
 #. module: help_online
 #: view:import.help.wizard:help_online.import_help_wizard_view
 msgid "Import Help Data"
-msgstr "Importar información de ayuda"
+msgstr ""
 
 #. module: help_online
 #: model:ir.ui.menu,name:help_online.menu_help_import
@@ -159,25 +142,25 @@ msgstr ""
 #: field:export.help.wizard,__last_update:0 field:help.online,__last_update:0
 #: field:import.help.wizard,__last_update:0
 msgid "Last Modified on"
-msgstr "Última actualización en"
+msgstr ""
 
 #. module: help_online
 #: field:export.help.wizard,write_uid:0 field:help.online,write_uid:0
 #: field:import.help.wizard,write_uid:0
 msgid "Last Updated by"
-msgstr "Última actualización por"
+msgstr ""
 
 #. module: help_online
 #: field:export.help.wizard,write_date:0 field:help.online,write_date:0
 #: field:import.help.wizard,write_date:0
 msgid "Last Updated on"
-msgstr "Última actualización en"
+msgstr ""
 
 #. module: help_online
 #: code:addons/help_online/models/export_help_wizard.py:260
 #, python-format
 msgid "No data to export !"
-msgstr "No hay información a exportar."
+msgstr "Nema podataka za izvoz!"
 
 #. module: help_online
 #: code:addons/help_online/models/help_online.py:33
@@ -190,19 +173,19 @@ msgstr ""
 #: code:addons/help_online/static/src/js/help_online.js:88
 #, python-format
 msgid "Ok"
-msgstr "Ok"
+msgstr "U redu"
 
 #. module: help_online
 #. openerp-web
 #: code:addons/help_online/static/src/js/help_online.js:107
 #, python-format
 msgid "Page does not exist. Do you want to create?"
-msgstr "La página no existe. ¿Quiere crearla?"
+msgstr "Stranica ne postoji. Želite ju napraviti?"
 
 #. module: help_online
 #: field:import.help.wizard,source_file:0
 msgid "Source File"
-msgstr "Archivo origen"
+msgstr ""
 
 #. module: help_online
 #: view:export.help.wizard:help_online.export_help_wizard_view
@@ -210,7 +193,7 @@ msgid ""
 "This wizard allow you to export all QWeb views\n"
 "                        related to help online. The result will be an Odoo\n"
 "                        data xml file."
-msgstr "Este asistente le permite exportar todas las vistas QWeb relacionadas con la ayuda en línea. El resultado será un archivo XML en formato de Odoo."
+msgstr ""
 
 #. module: help_online
 #: view:import.help.wizard:help_online.import_help_wizard_view
@@ -218,13 +201,13 @@ msgid ""
 "This wizard allow you to import QWeb views\n"
 "                        related to help online. The required file format is an Odoo\n"
 "                        data xml file."
-msgstr "Este asistente le permite importar vistas QWeb relacionadas con la ayuda en linea. Debe ser un archivo XML en formato de Odoo."
+msgstr ""
 
 #. module: help_online
 #: code:addons/help_online/models/export_help_wizard.py:297
 #, python-format
 msgid "Unable to write autobackup file in given directory: %s"
-msgstr "No se ha podido escribir la copia de seguridad automática en el directorio especificado: %s"
+msgstr ""
 
 #. module: help_online
 #: view:ir.ui.view:help_online.view_view_search
@@ -251,4 +234,4 @@ msgstr "XML"
 #: view:export.help.wizard:help_online.export_help_wizard_view
 #: view:import.help.wizard:help_online.import_help_wizard_view
 msgid "or"
-msgstr "o"
+msgstr "ili"
