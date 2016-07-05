@@ -29,7 +29,7 @@
                     </span>
                     <b class="caret"></b>
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu switch_company_menu">
                     <t t-foreach="widget.companies" t-as="company">
                         <li>
                             <a class="easy_switch_company_company_item"
@@ -47,4 +47,3 @@
     </t>
 
 </template>
-
