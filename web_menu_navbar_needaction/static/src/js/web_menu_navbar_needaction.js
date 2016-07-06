@@ -93,7 +93,22 @@ openerp.web_menu_navbar_needaction = function(instance)
                                 return parent.action_mutex.exec(function()
                                 {
                                     action.domain = needaction_data.action_domain;
-                                    return parent.action_manager.do_action(action);
+                                    action.context = new instance.web.CompoundContext(
+                                        action.context || {}
+                                    );
+                                    action.context = instance.web.pyeval.eval(
+                                        'context', action.context
+                                    );
+                                    _.each(_.keys(action.context), function(key)
+                                    {
+                                        if(key.startsWith('search_default'))
+                                        {
+                                            delete action.context[key];
+                                        }
+                                    });
+                                    return parent.action_manager.do_action(
+                                        action, {disable_custom_filters: true}
+                                    );
                                 });
                             });
                         });

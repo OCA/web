@@ -89,6 +89,13 @@ class IrUiMenu(models.Model):
         }
         if self.needaction_domain:
             return safe_eval(self.needaction_domain, locals_dict=eval_context)
+        if not self.action or 'domain' not in self.action._fields or\
+           'res_model' not in self.action._fields or\
+           self.action.res_model not in self.env.registry or\
+           'ir.needaction_mixin' not in self.env[
+               self.action.res_model
+           ]._inherits:
+            return []
         return expression.AND([
             safe_eval(self.action.domain or '[]', locals_dict=eval_context),
             self.env[self.action.res_model]._needaction_domain_get(),
@@ -105,6 +112,5 @@ class IrUiMenu(models.Model):
                 ])
             except Exception as ex:
                 raise UserError(
-                    _('Cannot evaluate %s to a search domain:\n %s') %
-                    self.needaction_domain,
-                    ex)
+                    _('Cannot evaluate %s to a search domain:\n%s') %
+                    (self.needaction_domain, ex))
