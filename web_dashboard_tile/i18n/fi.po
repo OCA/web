@@ -3,13 +3,22 @@
 # * web_dashboard_tile
 # 
 # Translators:
+# Ahmet Altınışık <aaltinisik@altinkaya.com.tr>, 2015-2016
+# Carles Antoli <carlesantoli@hotmail.com>, 2015
+# Christophe CHAUVET <christophe.chauvet@gmail.com>, 2015
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2011-2014
+# Florian Hatat, 2015
+# Hotellook, 2014
 # Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016
+# Paolo Valier, 2016
+# Rudolf Schnapka <rs@techno-flex.de>, 2015-2016
+# Thomas A. Jaeger, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-11 02:17+0000\n"
-"PO-Revision-Date: 2016-03-07 08:32+0000\n"
+"POT-Creation-Date: 2016-07-08 16:35+0000\n"
+"PO-Revision-Date: 2016-07-08 10:49+0000\n"
 "Last-Translator: Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>\n"
 "Language-Team: Finnish (http://www.transifex.com/oca/OCA-web-8-0/language/fi/)\n"
 "MIME-Version: 1.0\n"
@@ -22,6 +31,11 @@ msgstr ""
 #: field:tile.tile,action_id:0
 msgid "Action"
 msgstr "Toiminto"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,active:0
+msgid "Active"
+msgstr "Aktiivinen"
 
 #. module: web_dashboard_tile
 #: selection:tile.tile,field_function:0
@@ -38,6 +52,16 @@ msgstr "Keskiarvo kentälle '%s'"
 #: field:tile.tile,background_color:0
 msgid "Background color"
 msgstr "Taustaväri"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,computed_value:0
+msgid "Computed value"
+msgstr "Laskettu arvo"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,count:0
+msgid "Count"
+msgstr "Määrä"
 
 #. module: web_dashboard_tile
 #. openerp-web
@@ -78,6 +102,11 @@ msgstr "Työpöydän palat"
 #: view:tile.tile:web_dashboard_tile.dashboard_tile_tile_form_view
 msgid "Display"
 msgstr "Näytä"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,display_name:0
+msgid "Display Name"
+msgstr "Nimi"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,domain:0
@@ -124,9 +153,19 @@ msgid "Function"
 msgstr "Toiminto"
 
 #. module: web_dashboard_tile
+#: field:tile.tile,helper:0
+msgid "Helper"
+msgstr "Avustin"
+
+#. module: web_dashboard_tile
 #: field:tile.tile,id:0
 msgid "ID"
 msgstr "ID"
+
+#. module: web_dashboard_tile
+#: field:tile.tile,__last_update:0
+msgid "Last Modified on"
+msgstr "Viimeksi muokattu"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,write_uid:0

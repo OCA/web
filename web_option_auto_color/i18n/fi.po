@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * web_offline_warning
+# * web_option_auto_color
 # 
 # Translators:
 # Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016
@@ -18,23 +18,11 @@ msgstr ""
 "Language: fi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. module: web_offline_warning
+#. module: web_option_auto_color
 #. openerp-web
-#: code:addons/web_offline_warning/static/src/js/web_offline_warning.js:20
+#: code:addons/web_option_auto_color/static/src/xml/templates.xml:5
 #, python-format
-msgid "Ok"
-msgstr "Ok"
-
-#. module: web_offline_warning
-#. openerp-web
-#: code:addons/web_offline_warning/static/src/js/web_offline_warning.js:23
-#, python-format
-msgid "The server cannot be reached. You are probably offline."
-msgstr "Palvelimeen ei saatu yhteyttä. Verkkoyhteyttä ei ehkä ole."
-
-#. module: web_offline_warning
-#. openerp-web
-#: code:addons/web_offline_warning/static/src/js/web_offline_warning.js:18
-#, python-format
-msgid "Warning"
-msgstr "Varoitus"
+msgid ""
+"column.autocolor == '1' and view.auto_color_cell_style(render_cell(record, "
+"column), column)"
+msgstr "column.autocolor == '1' and view.auto_color_cell_style(render_cell(record, column), column)"
