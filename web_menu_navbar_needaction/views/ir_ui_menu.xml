@@ -7,8 +7,8 @@
             <field name="arch" type="xml">
                 <field name="sequence" position="after">
                     <field name="needaction_enabled" invisible="1" />
-                    <field name="needaction" attrs="{'invisible': [('needaction_enabled', '=', False)]}" />
-                    <field name="needaction_domain" attrs="{'invisible': ['|', ('needaction_enabled', '=', False), ('needaction', '=', False)]}" />
+                    <field name="needaction" />
+                    <field name="needaction_domain" attrs="{'invisible': [('needaction', '=', False)]}" placeholder="Fill in a domain for a custom needaction" />
                 </field>
             </field>
         </record>

@@ -29,7 +29,7 @@ class IrUiMenu(models.Model):
     needaction = fields.Boolean(
         help='Set to False to disable needaction for specific menu items',
         default=True)
-    needaction_domain = fields.Char(
+    needaction_domain = fields.Text(
         help='If your menu item needs a different domain, set it here. It '
         'will override the model\'s needaction domain completely.')
 
@@ -69,12 +69,14 @@ class IrUiMenu(models.Model):
         result = super(IrUiMenu, self).get_needaction_data()
         for this in self:
             data = result[this.id]
-            if data['needaction_enabled']:
+            if data['needaction_enabled'] or this.needaction and\
+               this.needaction_domain:
                 if not this.needaction:
                     data['needaction_enabled'] = False
                     data['needaction_counter'] = 0
                     continue
                 if this.needaction_domain:
+                    data['needaction_enabled'] = True
                     data['needaction_counter'] = self\
                         .env[this.action.res_model].search_count(
                             this._eval_needaction_domain())
