@@ -4,7 +4,7 @@
         <record id="view_background_company_form" model="ir.ui.view">
             <field name="name">res.background.company.form</field>
             <field name="model">res.company</field>
-            <field name="inherit_id" ref="web_custom_login.view_company_form"/>
+            <field name="inherit_id" ref="base.view_company_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//page[@string='Configuration']" position="after">
                     <page string="Login Configuration">
