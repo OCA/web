@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_background_company_form" model="ir.ui.view">
+            <field name="name">res.background.company.form</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="web_custom_login.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@string='Configuration']" position="after">
+                    <page string="Login Configuration">
+                        <label for="login_background_img"/>
+                        <field name="login_background_img"/>
+                        <br/>
+                        <label for="display_login_logo"/>
+                        <field name="display_login_logo"/>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
