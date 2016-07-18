@@ -46,7 +46,7 @@ class IrUiMenu(models.Model):
                     .get_needaction_data().iteritems():
                 if needaction['needaction_enabled']:
                     menu = self.env['ir.ui.menu'].browse(menu_id)
-                    model = menu.action.res_model
+                    model = menu._get_needaction_model()._name
                     count_per_model[model] = max(
                         count_per_model.get(model),
                         needaction['needaction_counter']
@@ -75,11 +75,11 @@ class IrUiMenu(models.Model):
                     data['needaction_enabled'] = False
                     data['needaction_counter'] = 0
                     continue
-                if this.needaction_domain:
+                if this.needaction_domain and\
+                   this._get_needaction_model() is not None:
                     data['needaction_enabled'] = True
-                    data['needaction_counter'] = self\
-                        .env[this.action.res_model].search_count(
-                            this._eval_needaction_domain())
+                    data['needaction_counter'] = this._get_needaction_model()\
+                        .search_count(this._eval_needaction_domain())
         return result
 
     @api.multi
@@ -91,17 +91,28 @@ class IrUiMenu(models.Model):
         }
         if self.needaction_domain:
             return safe_eval(self.needaction_domain, locals_dict=eval_context)
-        if not self.action or 'domain' not in self.action._fields or\
-           'res_model' not in self.action._fields or\
-           self.action.res_model not in self.env.registry or\
-           'ir.needaction_mixin' not in self.env[
-               self.action.res_model
-           ]._inherits:
+        model = self._get_needaction_model()
+        if not model or 'ir.needaction_mixin' not in model._inherits:
             return []
         return expression.AND([
-            safe_eval(self.action.domain or '[]', locals_dict=eval_context),
-            self.env[self.action.res_model]._needaction_domain_get(),
+            safe_eval(
+                'domain' in self.action._fields and self.action.domain or '[]',
+                locals_dict=eval_context),
+            model._needaction_domain_get(),
         ])
+
+    @api.multi
+    def _get_needaction_model(self):
+        if not self.action:
+            return None
+        model = None
+        if 'res_model' in self.action._fields:
+            model = self.action.res_model
+        elif 'model_id' in self.action._fields:
+            model = self.action.model_id.model
+        if model in self.env.registry:
+            return self.env[model]
+        return None
 
     @api.constrains('needaction_domain')
     @api.multi
