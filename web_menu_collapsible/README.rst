@@ -30,7 +30,7 @@ No configuration is needed.
 Known issues / Roadmap
 ======================
 
-* There's no visual hint about the collapsed/uncollapsed state of a menu on second level menus
+* The visual hint is initially in state 'collapsed' when is actually 'expanded' (this is Odoo's menu standard mechanism)
 
 
 Bug Tracker
