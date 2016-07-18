@@ -30,7 +30,7 @@ No configuration is needed.
 Known issues / Roadmap
 ======================
 
-* The visual hint is initially in state 'collapsed' when is actually 'expanded' (this is Odoo's menu standard mechanism)
+* The visual hint is initially in state 'collapsed' when is actually 'expanded' (this is Odoo's menu standard mechanism).
 
 
 Bug Tracker
