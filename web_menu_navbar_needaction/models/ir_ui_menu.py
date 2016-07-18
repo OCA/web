@@ -51,8 +51,7 @@ class IrUiMenu(models.Model):
                         count_per_model.get(model),
                         needaction['needaction_counter']
                     )
-                    if needaction['needaction_counter'] and not action_menu\
-                       and menu.action.type == 'ir.actions.act_window':
+                    if needaction['needaction_counter'] and not action_menu:
                         action_menu = menu
             result[this.id] = {
                 'count': sum(count_per_model.itervalues()),
@@ -92,7 +91,7 @@ class IrUiMenu(models.Model):
         if self.needaction_domain:
             return safe_eval(self.needaction_domain, locals_dict=eval_context)
         model = self._get_needaction_model()
-        if not model or 'ir.needaction_mixin' not in model._inherits:
+        if model is None or not hasattr(model, '_needaction_domain_get'):
             return []
         return expression.AND([
             safe_eval(
