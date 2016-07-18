@@ -5,7 +5,6 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    
 }
 
 .oe_secondary_menu_section.oe_menu_toggler {
@@ -41,4 +40,3 @@
     border-right: 4px solid transparent;
     border-top: 4px solid #4c4c4c;
 }
-
