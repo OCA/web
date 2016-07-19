@@ -30,6 +30,10 @@ openerp.web_ir_actions_act_window_page = function(instance)
                 this.inner_widget.views[this.inner_widget.active_view]
                     .controller.execute_pager_action('previous');
             }
+            if(options && options.on_close)
+            {
+                options.on_close();
+            }
         },
         ir_actions_act_window_page_next: function(action, options)
         {
@@ -38,6 +42,10 @@ openerp.web_ir_actions_act_window_page = function(instance)
             {
                 this.inner_widget.views[this.inner_widget.active_view]
                     .controller.execute_pager_action('next');
+            }
+            if(options && options.on_close)
+            {
+                options.on_close();
             }
         },
     });
