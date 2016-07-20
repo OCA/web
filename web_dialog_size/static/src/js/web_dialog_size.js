@@ -1,37 +1,41 @@
-openerp.web_dialog_size= function (instance) {
+odoo.define('web_dialog_size.web_dialog_size', function (require) {
+'use strict';
 
-    instance.web.Dialog =  instance.web.Dialog.extend({
+var Model = require('web.DataModel');
+var Dialog = require('web.Dialog');
 
-        init_dialog: function () {
-            var self = this;
-            this._super();
-            self.$dialog_box.find('.dialog_button_restore').addClass('dialog_button_hide');
-            if (this.dialog_options.size !== 'large'){
-                self.$dialog_box.find('.dialog_button_extend').addClass('dialog_button_hide');
+Dialog.include({
+
+    init: function (parent, options) {
+        var self = this;
+        this._super.apply(this, arguments);
+        self.$modal.find('.dialog_button_extend').on('click', self.proxy('_extending'));
+        self.$modal.find('.dialog_button_restore').on('click', self.proxy('_restore'));
+
+        new Model('ir.config_parameter').query(['key', 'value']).
+        filter([['key', '=', 'web_dialog_size.default_maximize']]).all().then(function(default_maximize) {
+            if (default_maximize.length && default_maximize[0]['value'] == 1) {
+                self._extending();
+            } else {
+                self._restore();
             }
-            else{
-                self.$dialog_box.find('.dialog_button_extend').on('click', self._extending);
-                self.$dialog_box.find('.dialog_button_restore').on('click', self._restore);
-            }
-        },
+        });
+    },
 
-        _extending: function() {
-            var self = this;
-            $(this).parents('.modal-dialog').addClass('dialog_full_screen');
-            $(this).addClass('dialog_button_hide');
+    _extending: function() {
+        var dialog = this.$el.parents('.modal-dialog');
+        dialog.addClass('dialog_full_screen');
+        dialog.find('.dialog_button_extend').hide();
+        dialog.find('.dialog_button_restore').show();
+    },
 
-            $(this).parents('.modal-dialog').find('.dialog_button_restore').removeClass('dialog_button_hide')
-        },
+    _restore: function() {
+        var dialog = this.$el.parents('.modal-dialog');
+        dialog.removeClass('dialog_full_screen');
+        dialog.find('.dialog_button_restore').hide();
+        dialog.find('.dialog_button_extend').show();
+    },
 
-        _restore: function() {
-            var self = this;
-            $(this).parents('.modal-dialog').removeClass('dialog_full_screen');
-            $(this).addClass('dialog_button_hide');
+});
 
-            $(this).parents('.modal-dialog').find('.dialog_button_extend').removeClass('dialog_button_hide')
-        },
-
-    });
-
-};
-
+});
