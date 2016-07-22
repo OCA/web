@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template name="Web Highlight Assets" id="web_highlight_assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script src="/web_widget_float_highlight/static/src/js/web_highlight.js"/>
+        </xpath>
+    </template>
+</odoo>
