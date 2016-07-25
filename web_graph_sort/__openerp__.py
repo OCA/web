@@ -12,7 +12,7 @@
         "Odoo Community Association (OCA)"
     ),
     'license': 'AGPL-3',
-    'category': 'Technical',
+    'category': 'Web',
     'depends': ['web_graph'],
     'data': [
         'views/web_graph_sort.xml',
