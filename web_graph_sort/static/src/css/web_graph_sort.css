@@ -1,0 +1,29 @@
+.openerp .graph_main_content th.oe_sortable {
+    cursor: pointer;
+}
+
+.openerp .graph_main_content th.oe_sortable div::after {
+    border-color: #000 transparent;
+    border-style: solid;
+    border-width: 0 4px 4px;
+    content: "";
+    margin-right: 6px;
+    margin-top: 7px;
+    visibility: hidden;
+}
+
+.openerp .graph_main_content th.sortup div::after {
+    float: right;
+    opacity: 0.6;
+    visibility: visible;
+}
+
+.openerp .graph_main_content th.sortdown div::after {
+    border-color: #000 transparent;
+    border-style: solid solid none;
+    border-width: 4px 4px medium;
+    box-shadow: none;
+    float: right;
+    opacity: 0.6;
+    visibility: visible;
+}
