@@ -69,7 +69,7 @@ openerp.web_graph_sort = function(instance) {
             var self = this;
             var result = this.model.query(_.without(fields, '__count'));
             if(this.sort !== null) {
-                result=result.order_by(this.sort);
+                result = result.order_by(this.sort);
             }
             return result.filter(domain)
                 .context(this.context)

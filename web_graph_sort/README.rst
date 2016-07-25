@@ -13,11 +13,18 @@ Usage
 
 To use this module, you need to:
 
-#. Go to ...
+#. Go to any pivot table. Click on a column header. The table will be sorted by that column.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/web/8.0
+   :target: https://runbot.odoo-community.org/runbot/162/8.0
+
+Known issues / Roadmap
+======================
+
+* The columns are sorted according to the sum over the row. If you have multiple 
+accounting periods for example, if you click on the column header of the first semester,
+the rows will still be sorted by the total for the year.
 
 Bug Tracker
 ===========
