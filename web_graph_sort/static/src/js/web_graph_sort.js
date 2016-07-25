@@ -20,36 +20,48 @@ openerp.web_graph_sort = function(instance) {
         draw_measure_row: function (measure_row) {
             var $row = $('<tr>').append('<th>');
             var self = this;
+
+            var measures = _.unique(_.map(measure_row, function(cell){return cell.text;}));
+            var measure_index = _.indexBy(self.measure_list, 'string');
+
+            var first_total_index = measure_row.length - measures.length;
+            var column_index = 0;
+
             _.each(measure_row, function (cell) {
-                _.each(self.measure_list,function(item){
-                    if(item.string === cell.text) {
-                        var data_id;
-                        if (
-                            self.pivot.sort !== null &&
-                            self.pivot.sort[0].indexOf(item.field) >= 0 &&
-                            self.pivot.sort[0].indexOf('-') === -1
-                        ){
-                            data_id = "-" + item.field;
-                        }
-                        else {
-                            data_id = item.field;
-                        }
-
-                        var $cell = $('<th>')
-                            .addClass('measure_row')
-                            .addClass('oe_sortable')
-                            .attr('data-id', data_id)
-                            .append("<div>" + cell.text + "</div>");
-
-                        if (cell.is_bold) {
-                            $cell.css('font-weight', 'bold');
-                        }
-                        if (self.pivot.sort !== null && self.pivot.sort[0].indexOf(item.field) >= 0) {
-                            $cell.addClass((self.pivot.sort[0].indexOf('-') === -1) ? "sortdown":"sortup");
-                        }
-                        $row.append($cell);
+                var item = measure_index[cell.text];
+                if(item){
+                    var data_id;
+                    if (
+                        self.pivot.sort !== null &&
+                        self.pivot.sort[0].indexOf(item.field) >= 0 &&
+                        self.pivot.sort[0].indexOf('-') === -1
+                    ){
+                        data_id = "-" + item.field;
                     }
-                });
+                    else {
+                        data_id = item.field;
+                    }
+
+                    var $cell = $('<th>')
+                        .addClass('measure_row')
+                        .addClass('oe_sortable')
+                        .attr('data-id', data_id)
+                        .append("<div>" + cell.text + "</div>");
+
+                    if (cell.is_bold) {
+                        $cell.css('font-weight', 'bold');
+                    }
+
+                    if (
+                        column_index >= first_total_index &&
+                        self.pivot.sort !== null &&
+                        self.pivot.sort[0].indexOf(item.field) >= 0
+                    ) {
+                        $cell.addClass((self.pivot.sort[0].indexOf('-') === -1) ? "sortdown": "sortup");
+                    }
+                    column_index += 1;
+                }
+                $row.append($cell);
             });
             this.$thead.append($row);
         },
