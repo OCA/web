@@ -5,10 +5,9 @@
 <template>
     <t t-extend="FieldBinaryImage">
         <t t-jquery=".oe_form_binary_file_edit" t-operation="after">
-            <a class="fa fa-download fa-1g col-md-4 oe_form_binary_file_download" title="Download" download="image.png"></a>
-        </t>
-        <t t-jquery=".oe_form_binary_file_clear" t-operation="replace">
-            <i class="fa fa-trash-o fa-1g oe_form_binary_file_clear" title="Clear"/>
+            <t t-if="widget.has_custom_image()">
+                <a class="fa fa-download fa-1g col-md-4 oe_form_binary_file_download" title="Download"></a>
+            </t>
         </t>
     </t>
 </template>
