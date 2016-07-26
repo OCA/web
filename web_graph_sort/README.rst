@@ -13,7 +13,11 @@ Usage
 
 To use this module, you need to:
 
-#. Go to any pivot table. Click on a column header. The table will be sorted by that column.
+#. Go to any pivot table.
+
+    For example, if you have the invoicing module installed, go to Reporting -> Accounting -> Invoice Analysis
+
+#. Click on a column header. The table will be sorted by that column.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
