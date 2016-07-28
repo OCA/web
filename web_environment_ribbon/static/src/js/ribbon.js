@@ -1,35 +1,61 @@
-/******************************************************************************
-    Copyright (C) 2015 Akretion (http://www.akretion.com)
-    @author Sylvain Calador <sylvain.calador@akretion.com>
+/* Copyright 2015 Sylvain Calador <sylvain.calador@akretion.com>
+   Copyright 2015 Javi Melendez <javi.melendez@algios.com>
+   Copyright 2016 Antonio Espinosa <antonio.espinosa@tecnativa.com>
+ * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
+odoo.define('web_environment_ribbon.ribbon', function(require) {
+"use strict";
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
+var $ = require('$');
+var Model = require('web.Model');
+var core = require('web.core');
 
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-******************************************************************************/
+var model = new Model('ir.config_parameter');
 
-openerp.web_environment_ribbon = function(instance) {
-
-    var ribbon = $(document).find('.test-ribbon');
-    ribbon.hide();
-
-    var model = new instance.web.Model('ir.config_parameter');
-    var key = 'ribbon.name';
-
-    var res = model.call('get_param', [key]).then(
-        function (name) {
-            if (name && name != 'False') {
-                ribbon.html(name);
-                ribbon.show();
-            }
-        }
-    );
+// Code from: http://jsfiddle.net/WK_of_Angmar/xgA5C/
+function validStrColour(strToTest) {
+    if (strToTest === "") { return false; }
+    if (strToTest === "inherit") { return true; }
+    if (strToTest === "transparent") { return true; }
+    var image = document.createElement("img");
+    image.style.color = "rgb(0, 0, 0)";
+    image.style.color = strToTest;
+    if (image.style.color !== "rgb(0, 0, 0)") { return true; }
+    image.style.color = "rgb(255, 255, 255)";
+    image.style.color = strToTest;
+    return image.style.color !== "rgb(255, 255, 255)";
 }
+
+core.bus.on('web_client_ready', null, function () {
+    var ribbon = $('.test-ribbon');
+    // If ribbon is found in DOM
+    if (ribbon.length) {
+        ribbon.hide();
+        model.call('get_param', ['ribbon.name']).then(
+            function (name) {
+                if (name && name != 'False') {
+                    ribbon.html(name);
+                    ribbon.show();
+                }
+            }
+        );
+        // Get ribbon color from system parameters
+        model.call('get_param', ['ribbon.color']).then(
+            function (strColor) {
+                if (strColor && validStrColour(strColor)) {
+                    ribbon.css('color', strColor);
+                }
+            }
+        );
+        // Get ribbon background color from system parameters
+        model.call('get_param', ['ribbon.background.color']).then(
+            function (strBackgroundColor) {
+                if (strBackgroundColor && validStrColour(strBackgroundColor)) {
+                    ribbon.css('background-color', strBackgroundColor);
+                }
+            }
+        );
+    }
+});
+
+}); // odoo.define
