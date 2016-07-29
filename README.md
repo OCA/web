@@ -21,6 +21,7 @@ addon | version | summary
 [web_dialog_size](web_dialog_size/) | 9.0.1.0.0 | A module that lets the user expand a dialog box to the full screen width.
 [web_duplicate_visibility](web_duplicate_visibility/) | 9.0.1.0.0 | Manage the duplicate button visibiliy
 [web_easy_switch_company](web_easy_switch_company/) | 9.0.1.0.0 | Multicompany - Easy Switch Company
+[web_environment_ribbon](web_environment_ribbon/) | 9.0.1.0.0 | Web Environment Ribbon
 [web_favicon](web_favicon/) | 9.0.1.0.0 | Allows to set a custom shortcut icon (aka favicon)
 [web_readonly_bypass](web_readonly_bypass/) | 9.0.1.0.0 | Allow to save onchange modifications to readonly fields
 [web_searchbar_full_width](web_searchbar_full_width/) | 9.0.1.0.0 | Show search bar in full screen width
@@ -45,7 +46,6 @@ addon | version | summary
 [web_dashboard_open_action](web_dashboard_open_action/) | 8.0.1.0.0 (unported) | Adds a button to open a dashboard in full mode
 [web_dashboard_tile](web_dashboard_tile/) | 8.0.1.0.0 (unported) | Add Tiles to Dashboard
 [web_dom_model_classes](web_dom_model_classes/) | 8.0.1.0.0 (unported) | Allows small UI changes with simple CSS
-[web_environment_ribbon](web_environment_ribbon/) | 8.0.0.1.0 (unported) | Web Environment Ribbon
 [web_export_view](web_export_view/) | 8.0.1.2.0 (unported) | Export Current View
 [web_graph_improved](web_graph_improved/) | 8.0.0.1.0 (unported) | Improves graph views.
 [web_group_expand](web_group_expand/) | 8.0.1.0.0 (unported) | Group Expand Buttons
