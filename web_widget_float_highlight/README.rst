@@ -15,11 +15,6 @@ any numeric field when its value belongs to a given interval.
 Usage
 =====
 
-To use the functionality implemented by this module on a numeric field in a
-form view, you need to enable it by setting the option 'highlight' to True.
-
-    <field name="my_numeric_field" options="{'highlight':True}"/>
-
 For working, this module defines 3 distinct numeric intervals separated by two
 values which are called thresholds. If we call T1 and T2 the two thresholds,
 assuming that T1 <= T2, the three intervals are so defined:
@@ -41,6 +36,11 @@ Therefore, by default, a numeric field with this option has a red background
 text) if it's a positive number and keep the basic odoo style if it's equal to
 0. By default, the highlight works only when the form view is not in edit mode.
 
+To use the default settings, you have to enable them setting the option
+'load_defaults' to True on a numeric field.
+
+    <field name="my_numeric_field" options="{'load_defaults':True}"/>
+
 Anyway it's possible to customize this behavior through several options you
 can provide to the field. Such options are:
 
@@ -49,10 +49,15 @@ can provide to the field. Such options are:
 - lower_bg_color (red by default): Background-color for lower-interval;
 - middle_bg_color (white by default): Background-color for middle-interval;
 - upper_bg_color (green by default): Background-color for upper-interval;
-- lower_txt_color (white by default): Text-color for lower-interval;
-- middle_txt_color (grey - by default): Text-color for middle-interval;
-- upper_txt_color (white by default): Text-color for upper-interval;
+- lower_font_color (white by default): Text-color for lower-interval;
+- middle_font_color (grey - by default): Text-color for middle-interval;
+- upper_font_color (white by default): Text-color for upper-interval;
 - always_work (False by default): If True the highlight works also in edit mode;
+
+Be also aware that if you don't set the 'load_defaults' flag to True, the
+default colors won't be loaded (therefore the field would be shown with the Odoo
+standar style) but you can still provide any other option to customize its
+behavior according to your wishes.
 
 .. figure:: static/description/widget_highlight_screenshot-2.png
    :alt: Example of highlight for positive and negative numbers.
