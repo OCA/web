@@ -16,7 +16,7 @@ openerp.web_widget_image_download = function (instance) {
             $.ajax({
                 type: 'HEAD',
                 url: this.imgSrc,
-                complete(xhr) {
+                complete: function (xhr) {
                     // retrieve image type from server ("Content-Type" header)
                     $widget.attr('download', xhr.getResponseHeader("Content-Type").replace('/', '.'));
                 }
