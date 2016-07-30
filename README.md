@@ -68,7 +68,7 @@ addon | version | summary
 [web_widget_digitized_signature](web_widget_digitized_signature/) | 8.0.1.0.0 | Web Widget Digitized Signature
 [web_widget_digitized_signature_user](web_widget_digitized_signature_user/) | 8.0.1.0.0 | Web Digitized Signature for users
 [web_widget_float_formula](web_widget_float_formula/) | 8.0.1.0.0 | Web Widget - Formulas in Float fields
-[web_widget_image_download](web_widget_image_download/) | 8.0.1.0.0 | Allows to download the avatar for the contact
+[web_widget_image_download](web_widget_image_download/) | 8.0.1.0.0 | Allows to download any image from its widget
 [web_widget_mail_send_odoo](web_widget_mail_send_odoo/) | 8.0.1.0.0 | Send mail using internal composition wizard.
 [web_widget_many2many_tags_multi_selection](web_widget_many2many_tags_multi_selection/) | 8.0.0.1.0 | Tags multiple selection
 [web_widget_one2many_tags](web_widget_one2many_tags/) | 8.0.1.0.0 | Provides a widget similar to many2many_tags for one2many fields
