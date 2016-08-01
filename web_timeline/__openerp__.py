@@ -4,16 +4,15 @@
 
 {
     'name': "Web timeline",
-    'summary': """
-        Interactive visualization chart to visualize events in time
-    """,
-    "version": "8.0.1.0.0",
+    'summary': "Interactive visualization chart to show events in time",
+    "version": "9.0.1.0.0",
     'author': 'ACSONE SA/NV,'
+              'Tecnativa,'
               'Odoo Community Association (OCA)',
-    "category": "Tools",
+    "category": "web",
     "website": "http://acsone.eu",
     'depends': [
-        'web'
+        'web',
     ],
     'qweb': [
         'static/src/xml/web_timeline.xml',
