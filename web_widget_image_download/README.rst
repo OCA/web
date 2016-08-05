@@ -26,7 +26,6 @@ Known Issues / Roadmap
 ======================
 
 * In order to work correctly, this widget has to detect image type, the server should include this information in the `Content-Type` header. Right now, odoo is not doing so, but a fix has been `proposed <https://github.com/odoo/odoo/pull/12918>`_.
-* For some unknown reason, the widget does not work in the `Preferences` view, because odoo is not rendering the **QWeb** template.
 
 Bug Tracker
 ===========
