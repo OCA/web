@@ -4,7 +4,7 @@
 {
     "name": "Web Widget - Image Download",
     "summary": "Allows to download any image from its widget",
-    "version": "8.0.1.0.0",
+    "version": "8.0.1.0.1",
     "category": "web",
     "website": "https://www.tecnativa.com",
     "author": "Tecnativa, Odoo Community Association (OCA)",
