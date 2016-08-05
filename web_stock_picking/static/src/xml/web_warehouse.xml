@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2016 LasLabs Inc.
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<templates id="template" xml:space="preserve">
+
+	<t t-name="web_stock_picking.picking_validate_backorder">
+		<div class="modal-content" id="pickingBackorderValidate">
+			<div class="modal-header">
+				<h4 class="modal-title" id="pickingModalLabel">
+					Create Backorder?
+					<button type="button" class="close pull-right" data-dismiss="modal" aria-label="X">
+						<span aria-hidden="true">&amp;times;</span>
+					</button>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-6">
+						You have processed less products than the initial demand.
+					</div>
+					<div class="col-md-6">
+						Create a backorder if you expect to process the remaining products later.
+						Do not create a backorder if you will not supply the remaining products.
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="col-sm-4 text-left">
+					<button type="button"
+							class="btn btn-primary js_picking_btn_additional"
+							name="process"
+							>
+						Create Backorder
+					</button>
+				</div>
+				<div class="col-sm-4 text-center">
+					<button type="button"
+							class="btn btn-primary js_picking_btn_additional"
+							name="process_cancel_backorder"
+							>
+						No Backorder
+					</button>
+				</div>
+				<div class="col-sm-4 text-right">
+					<button type="button"
+							class="btn btn-default"
+							data-dismiss="modal"
+							>
+						Cancel
+					</button>
+				</div>
+			</div>
+		</div>
+	</t>
+
+	<t t-name="web_stock_picking.picking_immediate_transfer">
+		<div class="modal-content" id="pickingImmediateTransfer">
+			<div class="modal-header">
+				<h4 class="modal-title" id="pickingModalLabel">
+					Immediate Transfer?
+					<button type="button" class="close pull-right" data-dismiss="modal" aria-label="X">
+						<span aria-hidden="true">&amp;times;</span>
+					</button>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12">
+						You haven't set processed quantities.
+						If you click apply, Odoo will process all quantities to do.
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="col-sm-4 text-left">
+					<button type="button"
+							class="btn btn-primary js_picking_btn_additional"
+							name="immediate_transfer"
+							>
+						Apply
+					</button>
+				</div>
+				<div class="col-sm-4 text-right">
+					<button type="button"
+							class="btn btn-default"
+							data-dismiss="modal"
+							>
+						Cancel
+					</button>
+				</div>
+			</div>
+		</div>
+	</t>
+	
+	<t t-name="web_stock_picking.picking_overpick">
+		<div class="modal-content" id="pickingImmediateTransfer">
+			<div class="modal-header">
+				<h4 class="modal-title" id="pickingModalLabel">
+					Overpick?
+					<button type="button" class="close pull-right" data-dismiss="modal" aria-label="X">
+						<span aria-hidden="true">&amp;times;</span>
+					</button>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12">
+						You are about to pick more units than to do units.
+						Proceeding with this operation will increase the number of to do units before picking.
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="col-sm-4 text-left">
+					<button type="button"
+							class="btn btn-primary js_picking_btn_additional"
+							>
+						Proceed
+					</button>
+				</div>
+				<div class="col-sm-4 text-right">
+					<button type="button"
+							class="btn btn-default"
+							data-dismiss="modal"
+							>
+						Cancel
+					</button>
+				</div>
+			</div>
+		</div>
+	</t>
+	
+</templates>
