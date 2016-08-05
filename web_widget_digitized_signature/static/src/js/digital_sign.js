@@ -7,6 +7,35 @@ openerp.web_widget_digitized_signature = function(instance) {
     instance.web.form.widgets.add('signature', 'instance.web.form.FieldSignature');
         instance.web.form.FieldSignature = instance.web.form.FieldBinaryImage.extend({
         template: 'FieldSignature',
+        placeholder: "/web/static/src/img/placeholder.png",
+        initialize_content: function() {
+            this._super();
+            this.$el.find("#signature").empty().jSignature({'decor-color' : '#D1D0CE', 'color': '#000', 'background-color': '#fff'});
+            this.$el.find("#signature").attr({"tabindex": "0",'height':"100"});
+            this.empty_sign = this.$el.find("#signature").jSignature("getData",'image');
+            this.$el.find('#sign_clean').click(this.on_clear_sign);
+            this.$el.find('.save_sign').click(this.on_save_sign);
+        },
+        on_clear_sign: function() {
+            if (this.get('value') !== false) {
+                this.binary_value = false;
+                this.internal_set_value(false);
+            }
+            $(this.$el[0]).find(".signature > canvas").remove()
+            $(this.$el[0]).find(".signature").attr("tabindex", "0");
+            $(this.$el[0]).find(".signature").jSignature();
+            $(this.$el[0]).find(".signature").focus()
+            return false;
+        },
+        on_save_sign: function(value_) {
+            var self = this;
+            var val;
+            var signature = self.$el.find("#signature").jSignature("getData",'image');
+            var is_empty = signature ? self.empty_sign[1] == signature[1] : false;
+            if(! is_empty && signature[1]){
+                self.set('value',signature[1])
+            }
+        },
         render_value: function() {
             var self = this;
             var url;
@@ -14,16 +43,6 @@ openerp.web_widget_digitized_signature = function(instance) {
                 url = 'data:image/png;base64,' + this.get('value');
             }else if (this.get('value')) {
                 var id = JSON.stringify(this.view.datarecord.id || null);
-                self.digita_dataset = new instance.web.DataSetSearch(self, self.view.model, {}, []);
-                self.digita_dataset.read_slice(['id', self.name], {'domain': [['id', '=', id]]}).then(function(records){
-                    _.each(records,function(record){
-                        if(record[self.name]){
-                            images[self.name] = record[self.name]
-                        }else{
-                            images[self.name] = ""
-                        }
-                    })
-                })
                 var field = this.name;
                 if (this.options.preview_image)
                     field = this.options.preview_image;
@@ -33,93 +52,60 @@ openerp.web_widget_digitized_signature = function(instance) {
                           field: field,
                           t: (new Date().getTime()),
                 });
+            }else if(! this.get('value')){
+                $(this.$el[0]).find(".signature > canvas").remove();
+                var sign_options = {'decor-color' : '#D1D0CE', 'color': '#000', 'background-color': '#fff'};
+
+                if ('width' in self.node.attrs){
+                    sign_options.width = self.node.attrs.width;
+                }
+                if ('height' in self.node.attrs){
+                    sign_options.height = self.node.attrs.height;
+                }
+                this.$el.find("#signature").empty().jSignature(sign_options);
+                this.$el.find("#signature").attr({"tabindex": "0",'height':"100"});
             }else {
-                images[self.name] = ""
                 url = this.placeholder;
-                self.set('value',images[self.name])
             }
-            var $img = $(QWeb.render("FieldBinaryImage-img", { widget: this, url: url }));
-            this.$el.find('img').remove();
-            var sign_options = {};
-            if ('width' in self.node.attrs){
-                sign_options.width = self.node.attrs.width;
-            }
-            if ('height' in self.node.attrs){
-                sign_options.height = self.node.attrs.height;
-            }
-            var actual_mode = this.view.get("actual_mode");
-            if(actual_mode !== 'edit' && actual_mode !== 'create'){
-                this.$el.prepend($img);
-            }else if(actual_mode == 'edit' || actual_mode == 'create'){
-                if( actual_mode == 'create'){
-                    images = {};
-                }
+            if(this.view.get("actual_mode") == 'view'){
+                var $img = $(QWeb.render("FieldBinaryImage-img", { widget: this, url: url }));
                 this.$el.find('> img').remove();
-                this.$el.find('> canvas').remove();
-                if(! this.get('value')){
-                    this.$el.find('> img').remove();
-                    this.$el.find(".signature").signature(sign_options);
-                }else if(this.get('value')){
-                    this.$el.prepend($img);
-                }
-            }
-            this.$el.find('.clear_sign').click(function(){
-                self.$el.find('> img').remove();
-                images[self.name] = ""
-                self.$el.find(".signature").show();
-                self.$el.find(".signature").signature('clear');
-            });
-            $('.save_sign').click(function(){
-                var val
-                if(self.$el.find(".signature").hasClass( "kbw-signature" ) && ! self.$el.find(".signature").signature('isEmpty')){
-                    self.$el.find(".signature").hide();
-                    val = self.$el.find(".signature > canvas")[0].toDataURL();
-                    images[self.name] = val.split(',')[1]
-                    var $img = $(QWeb.render("FieldBinaryImage-signature", { widget: self, url: val }));
-                    self.$el.find('> img').remove();
-                    self.$el.prepend($img);
-                    self.set('value',val.split(',')[1])
-                    var id = JSON.stringify(self.view.datarecord.id || null);
-                    var field = self.name;
-                    url = self.session.url('/web/binary/image', {
-                        model: self.view.dataset.model,
-                        id: id,
-                        field: field,
-                        t: (new Date().getTime()),
+                this.$el.find("#signature").hide();
+                this.$el.prepend($img);
+                $img.load(function() {
+                    if (! self.options.size)
+                        return;
+                    $img.css("max-width", "" + self.options.size[0] + "px");
+                    $img.css("max-height", "" + self.options.size[1] + "px");
+                    $img.css("margin-left", "" + (self.options.size[0] - $img.width()) / 2 + "px");
+                    $img.css("margin-top", "" + (self.options.size[1] - $img.height()) / 2 + "px");
+                });
+                $img.on('error', function() {
+                    $img.attr('src', self.placeholder);
+                    instance.webclient.notification.warn(_t("Image"), _t("Could not display the selected image."));
+                });
+            }else if(this.view.get("actual_mode") == 'edit' || this.view.get("actual_mode") == 'create'){
+                this.$el.find('> img').remove();
+                if(this.get('value')){
+                    var id = JSON.stringify(this.view.datarecord.id || null);
+                    var field = this.name;
+                    if (this.options.preview_image)
+                        field = this.options.preview_image;
+                    new instance.web.Model(this.view.dataset.model).call("read", [this.view.datarecord.id, [field]]).done(function(data) {
+                        if(data){
+                            var field_desc = _.values(_.pick(data, field));
+                            $(self.$el[0]).find(".signature").jSignature('reset');
+                            $(self.$el[0]).find(".signature").jSignature("setData", 'data:image/png;base64,'+field_desc[0]);
+                        }
                     });
-                }else{
-                        var id = JSON.stringify(self.view.datarecord.id || null);
-                        var field = self.name;
-                        if (self.options.preview_image)
-                            field = self.options.preview_image;
-                        url = self.session.url('/web/binary/image', {
-                                model: self.view.dataset.model,
-                                id: id,
-                                field: field,
-                                t: (new Date().getTime()),
-                        });
-                       var $img = $(QWeb.render("FieldBinaryImage-signature", { widget: self, url: url }));
-                       self.$el.find('> img').remove();
                 }
-            });
-            $img.load(function() {
-                if (! self.options.size)
-                    return;
-                $img.css("max-width", "" + self.options.size[0] + "px");
-                $img.css("max-height", "" + self.options.size[1] + "px");
-                $img.css("margin-left", "" + (self.options.size[0] - $img.width()) / 2 + "px");
-                $img.css("margin-top", "" + (self.options.size[1] - $img.height()) / 2 + "px");
-            });
-            $img.on('error', function() {
-                $img.attr('src', self.placeholder);
-                instance.webclient.notification.warn(_t("Image"), _t("Could not display the selected image."));
-            });
+          }
         },
     });
-    instance.web.FormView.include({
-        save: function() {
-            $('.save_sign').click();
-            return this._super.apply(this, arguments);
-        },
-    })
+        instance.web.FormView.include({
+            save: function() {
+                this.$el.find('.save_sign').click();
+                return this._super.apply(this, arguments);
+            },
+        })
 }

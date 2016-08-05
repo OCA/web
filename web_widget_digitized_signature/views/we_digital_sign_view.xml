@@ -3,9 +3,7 @@
         <template id="signature_backend" name="signature assets" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
                 <link rel="stylesheet" href="/web_widget_digitized_signature/static/src/css/digital.css"/>
-                <link rel="stylesheet" href="/web_widget_digitized_signature/static/src/css/jquery.signature.css"/>
-                <script type="text/javascript" src="/web_widget_digitized_signature/static/lib/excanvas.js"></script>
-                <script type="text/javascript" src="/web_widget_digitized_signature/static/lib/jquery.signature.js"></script>
+                <script type="text/javascript" src="/web_widget_digitized_signature/static/lib/jSignature/jSignatureCustom.js"></script>
                 <script type="text/javascript" src="/web_widget_digitized_signature/static/src/js/digital_sign.js"></script>
             </xpath>
         </template>
