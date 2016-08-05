@@ -1,6 +1,8 @@
 /* Copyright 2016 Flavio Corpa <flavio.corpa@tecnativa.com>
+ * Copyright 2016 Jairo Llopis <jairo.llopis@tecnativa.com>
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
-.openerp .oe_application a.oe_form_binary_file_download {
-  color: #eee;
+.openerp .oe_form .oe_form_field_image .oe_form_field_image_controls
+.oe_form_binary_file_download {
+    color: inherit;
 }
