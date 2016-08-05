@@ -43,6 +43,7 @@ Contributors
 ------------
 
 * Flavio Corpa <flavio.corpa@tecnativa.com>
+* Jairo Llopis <jairo.llopis@tecnativa.com>
 
 Maintainer
 ----------
