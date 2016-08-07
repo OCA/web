@@ -19,7 +19,6 @@
     "data": [
         'wizards/web_stock_picking_wizard_template.xml',
         'views/web_warehouse.xml',
-        'views/stock_warehouse.xml',
         'views/stock_picking_type.xml',
         'views/warehouse_menu.xml',
     ],

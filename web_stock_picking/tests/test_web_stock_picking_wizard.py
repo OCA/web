@@ -30,7 +30,7 @@ class TestWebsiteStockPickingWizard(TransactionCase):
             ('company_id', '=', self.env.user.company_id.id),
             ('name', '=', expect),
             ('picking_type_id.code', '=', 'incoming'),
-            ('state', '=', 'confirmed'),
+            ('state', '=', u'confirmed'),
         ]
         self.assertEqual(
             expect, res,
