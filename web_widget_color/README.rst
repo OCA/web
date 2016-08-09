@@ -27,12 +27,6 @@ Features
   |listview|
 
 
-Requirements
-============
-
-This module has been ported to 8.0
-
-
 Usage
 =====
 
