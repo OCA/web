@@ -20,7 +20,7 @@
 ##############################################################################
 {
     "name": "Client side message boxes",
-    "version": "8.0.1.0.0",
+    "version": "9.0.1.0.0",
     "author": "Therp BV, "
               "Odoo Community Association (OCA)",
     "license": "AGPL-3",
@@ -36,7 +36,7 @@
         'static/src/xml/web_ir_actions_act_window_message.xml',
     ],
     "auto_install": False,
-    'installable': False,
+    'installable': True,
     "application": False,
     "external_dependencies": {
         'python': [],
