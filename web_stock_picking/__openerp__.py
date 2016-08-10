@@ -22,7 +22,4 @@
         'views/stock_picking_type.xml',
         'views/warehouse_menu.xml',
     ],
-    'qweb': [
-        'static/src/xml/*.xml',
-    ],
 }

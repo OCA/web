@@ -6,7 +6,7 @@
 odoo.define('web_stock.picking', function(require) {
     'use strict';
 
-    var Widget = require('web.Widget');
+    var Dialog = require('web.Dialog');
     var snippet_animation = require('web_editor.snippets.animation');
     var ParentedMixin = require('web.mixins').ParentedMixin;
     var BarcodeHandlerMixin = require('barcodes.BarcodeHandlerMixin');
@@ -16,6 +16,7 @@ odoo.define('web_stock.picking', function(require) {
     var _ = require('_');
     
     var core = require('web.core');
+    var _t = core._t;
     
     /* It should provide a more basic version of website_form js
      * This allows for removal of website dependencies
@@ -54,26 +55,121 @@ odoo.define('web_stock.picking', function(require) {
     /* It should provide click events for common additional action buttons
      * in modals
      **/
-    var buttonAdditionalMixer = {
-        events: {
-            'click .js_picking_btn_additional': function(event) {
-                $('.js_picking_additional_action').val(event.target.name || '');
-                $('#pickingModal').modal('hide');
-                $('.js_picking_validate').trigger('click');
-            }
-        }
+    var pickingDialogMixer = {
+        init: function(parent) {
+            this._super(parent, this.options);
+        },
     };
     
-    var ModalBackorder = Widget.extend(buttonAdditionalMixer, {
-        template: 'web_stock_picking.picking_validate_backorder',
+    var ModalBackorder = Dialog.extend(pickingDialogMixer, {
+        
+        options: {
+            title: _t('Create Backorder?'),
+            $content: $('<div>').append(
+                            $('<p>').html(
+                                _t('You have processed less products than the initial demand.')
+                            )
+                        ).append(
+                            $('<p>').html(
+                                _t('Create a backorder if you expect to process ' +
+                                   'the remaining products later. ')
+                            )
+                        ).append(
+                            $('<p>').html(
+                                _t('Do not create a backorder if you will not supply the ' +
+                                   'remaining products.')
+                            )
+                        ),
+            buttons: [
+                {
+                    text: _t('Create Backorder'),
+                    classes: 'btn btn-primary js_picking_btn_additional',
+                    close: true,
+                    click: function() {
+                        $('.js_picking_additional_action').val('process');
+                        $('.js_picking_validate').trigger('click');
+                    }
+                },
+                {
+                    text: _t('No Backorder'),
+                    classes: 'btn btn-primary js_picking_btn_additional',
+                    close: true,
+                    click: function() {
+                        $('.js_picking_additional_action').val('process_cancel_backorder');
+                        $('.js_picking_validate').trigger('click');
+                    }
+                },
+                {
+                    text: _t('Cancel'),
+                    classes: 'btn btn-default',
+                    close: true,
+                },
+            ]
+        },
+        
     });
     
-    var ModalImmediate = Widget.extend(buttonAdditionalMixer, {
-        template: 'web_stock_picking.picking_immediate_transfer',
+    var ModalImmediate = Dialog.extend(pickingDialogMixer, {
+        
+        options: {
+            title: _t('Immediate Transfer?'),
+            $content: $('<div>').append(
+                            $('<p>').html(
+                                _t('You have not set any processed quantities.')
+                            )
+                        ).append(
+                            $('<p>').html(
+                                _t('If you click `Apply`, Odoo will process all quantities to do.')
+                            )
+                        ),
+            buttons: [
+                {
+                    text: _t('Apply'),
+                    classes: 'btn btn-primary js_picking_btn_additional',
+                    close: true,
+                    click: function() {
+                        $('.js_picking_additional_action').val('immediate_transfer');
+                        $('.js_picking_validate').trigger('click');
+                    }
+                },
+                {
+                    text: _t('Cancel'),
+                    classes: 'btn btn-default',
+                    close: true,
+                },
+            ]
+        },
+        
     });
     
-    var ModalOverpick = Widget.extend(buttonAdditionalMixer, {
-        template: 'web_stock_picking.picking_overpick',
+    var ModalOverpick = Dialog.extend(pickingDialogMixer, {
+        
+        options: {
+            title: _t('Overpick?'),
+            $content: $('<div>').append(
+                            $('<p>').html(
+                                _t('You are about to pick more units than to do units.')
+                            )
+                        ).append(
+                            $('<p>').html(
+                                _t('Proceeding with this operation will increase the ' +
+                                   'number of to do units before picking.')
+                            )
+                        ),
+            buttons: [
+                {
+                    text: _t('Proceed'),
+                    classes: 'btn btn-primary js_picking_btn_additional',
+                    close: true,
+                },
+                {
+                    text: _t('Cancel'),
+                    classes: 'btn btn-default',
+                    close: true,
+                },
+            ],
+        },
+        
     });
     
     /* It provides Stock Picking details form and event handlers
@@ -84,14 +180,11 @@ odoo.define('web_stock.picking', function(require) {
         
         start: function() {
             var self = this;
-            var $validateBtn = $(self.$target.find('.js_picking_validate'));
-            var $modal = $('#pickingModal');
-            $modal.on('show.bs.modal', function(event) {
-                var $modalDoc = $modal.find('.modal-dialog');
+            this.$target.find('.js_picking_form_send').click(function(event) {
+                event.preventDefault();
                 var complete = true;
                 var overpick = false;
                 var totalVal = 0.0;
-                $modalDoc.html("");
                 _.each(self.$target.find('.js_picking_picked_qty'), function(val) {
                     var $val = $(val);
                     if ($val.val()) {
@@ -107,23 +200,23 @@ odoo.define('web_stock.picking', function(require) {
                     }
                 });
                 if (overpick) {
-                    return new ModalOverpick(self).appendTo($modalDoc);
+                    return new ModalOverpick(self.target).open();
                 }
                 if (totalVal === 0) {
                     if (self.$target.find('.js_picking_pack_op_done').length === 0) {
-                        return new ModalImmediate(self).appendTo($modalDoc);
+                        return new ModalImmediate(self.target).open();
                     }
                 } else if (complete) {
-                    event.preventDefault();
-                    $validateBtn.trigger('click');
+                    self.handleSubmit(event);
                     return;
                 }
-                return new ModalBackorder(self).appendTo($modalDoc);
+                return new ModalBackorder(self.target).open();
             });
             this.$target.find('.js_picking_form_send').click(function(event) {
                 self.$target.find('.js_picking_submit_action').val(event.target.value);
             });
             this.$target.submit(function(event) {
+                event.preventDefault();
                 self.handleSubmit(event);
             });
         },
@@ -155,7 +248,7 @@ odoo.define('web_stock.picking', function(require) {
         // Let subclasses add custom behavior before onchange. Must return a deferred.
         // Resolve the deferred with true proceed with the onchange, false to prevent it.
         preOnchangeHook: function() {
-            return $.Deferred().resolve(true);
+            return $.Deferred().resolve(this.loaded);
         },
     
         start: function() {
@@ -168,8 +261,12 @@ odoo.define('web_stock.picking', function(require) {
                 'lot': this.handleLotScan,
             };
             if(!this.barcodeParser) {
+                var nomenclatureId = $('#barcodeNomenclatureId').val();
+                if (!nomenclatureId) {
+                    return;
+                }
                 this.barcodeParser = new BarcodeParser({
-                    'nomenclature_id': [$('#barcodeNomenclatureId').val()],
+                    'nomenclature_id': [nomenclatureId],
                 });
                 this.barcodeParser.load().then(function(){
                     self.loaded = true;
@@ -210,7 +307,8 @@ odoo.define('web_stock.picking', function(require) {
             var productCode = this._stripBarcodePrefix(parsedBarcode);
             var $productEls = $('.js_picking_picked_qty[data-barcode="' + productCode.code + '"]');
             if ($productEls.length === 0) {
-                alert('No product on page matching barcode "' + parsedBarcode.code + '"');
+                alert(_t('No product on page matching barcode ') +
+                      ' "' + parsedBarcode.code + '"');
                 return;
             }
             this._handleBarcodeQty(barcodeQty, $productEls);
@@ -234,7 +332,8 @@ odoo.define('web_stock.picking', function(require) {
                 .then(function(lot){
                     var $productEls = $('.js_picking_picked_qty[data-product-id="' + lot.product_id[0] + '"]');
                     if ($productEls.length === 0) {
-                        alert('No product on page matching barcode "' + lotCode.code + '"');
+                        alert(_t('No product on page matching barcode') +
+                              ' "' + lotCode.code + '"');
                         return;
                     }
                     self._handleBarcodeQty(barcodeQty, $productEls);
@@ -308,15 +407,15 @@ odoo.define('web_stock.picking', function(require) {
         
     });
     
-    return {
-        buttonAdditionalMixer: buttonAdditionalMixer,
-        formMixin: formMixin,
-        pickingForm: snippet_animation.registry.js_picking_form,
-        pickingSearch: snippet_animation.registry.js_picking_search,
-        pickingFormBarcode: snippet_animation.registry.js_picking_form_barcode,
-        ModalBackorder: ModalBackorder,
-        ModalImmediate: ModalImmediate,
-        ModalOverpick: ModalOverpick,
-    };
+    //return {
+    //    buttonAdditionalMixer: buttonAdditionalMixer,
+    //    formMixin: formMixin,
+    //    pickingForm: snippet_animation.registry.js_picking_form,
+    //    pickingSearch: snippet_animation.registry.js_picking_search,
+    //    pickingFormBarcode: snippet_animation.registry.js_picking_form_barcode,
+    //    ModalBackorder: ModalBackorder,
+    //    ModalImmediate: ModalImmediate,
+    //    ModalOverpick: ModalOverpick,
+    //};
     
 });

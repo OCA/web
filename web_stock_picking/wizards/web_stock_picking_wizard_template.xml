@@ -164,19 +164,16 @@
 										</button>
 									</t>
 									<t t-if="picking.state in ['draft', 'partially_available', 'assigned']">
-										<button type="button"
-												class="btn btn-primary mt8 mb8"
+										<button type="submit"
+												class="btn btn-primary mt8 mb8 js_picking_form_send"
 												name="submit"
-												data-toggle="modal"
-												data-target="#pickingModal"
 												value="action_new_transfer"
 												>
 											Validate
 										</button>
 										<button type="submit"
-												class="btn btn-primary mt8 mb8 js_picking_validate hidden js_picking_form_send"
+												class="js_picking_validate hidden"
 												name="submit"
-												value="action_new_transfer"
 												/>
 									</t>
 									<!--
