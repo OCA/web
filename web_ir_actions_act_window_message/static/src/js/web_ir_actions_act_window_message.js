@@ -42,6 +42,9 @@ openerp.web_ir_actions_act_window_message = function(instance)
                 {
                     size: 'medium',
                     title: action.title,
+                    $content: $('<div>', {
+                      html: action.message,
+                    }),                    
                     buttons: buttons.concat(
                         this.ir_actions_act_window_message_get_buttons(
                             action, function() { dialog.close() })
