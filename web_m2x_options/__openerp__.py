@@ -11,7 +11,10 @@
         'static/src/xml/base.xml',
     ],
     'license': 'AGPL-3',
-    'data': ['views/view.xml'],
+    'data': [
+        'views/view.xml',
+        'views/model_view.xml',
+    ],
     "author": "0k.io,Odoo Community Association (OCA)",
     "installable": True,
 }
