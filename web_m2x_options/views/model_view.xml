@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_model_form" model="ir.ui.view">
+            <field name="model">ir.model</field>
+            <field name="inherit_id" ref="base.view_model_form"></field>
+            <field name="arch" type="xml">
+                <field name="osv_memory" position="after">
+                    <field name="disable_quick_create"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>
