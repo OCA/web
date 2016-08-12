@@ -17,20 +17,21 @@ Usage
 =====
 
 * Dashboad sample, displaying Sale Orders to invoice:
+
 .. image:: ./static/src/img/screenshot_dashboard.png
+
 * Tree view displayed when user click on the tile:
+
 .. image:: ./static/src/img/screenshot_action_click.png
 
 Kown issues/limits
 ==================
 * can not edit tile from dashboard (color, sequence, function, ...);
 * context are ignored;
-* date filter can not be relative;
 * combine domain of menue and filter so can not restore origin filter;
 
 possible future improvments
 ===========================
-* support context_today;
 * add icons;
 * support client side action (like inbox);
 
