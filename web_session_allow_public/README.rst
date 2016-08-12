@@ -6,7 +6,8 @@
 Public DataModel PoC 
 ====================
 
-
+This module should break the backend sandbox, providing a JS model usable by a
+public user
 
 Usage
 =====

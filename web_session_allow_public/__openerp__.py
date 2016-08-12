@@ -3,8 +3,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
-    "name": "Provides amazing overrides for public JsonRPC sessions",
-    "summary": "That's the plan anyways. It could just blow up.",
+    "name": "Web Session Public DataModel",
+    "summary": "Allow for a public session to utilize the JsonRpc",
     "version": "9.0.1.0.0",
     "category": "Website",
     "website": "https://laslabs.com/",
@@ -14,5 +14,9 @@
     "installable": True,
     "depends": [
         "web",
+        "website",  # Required to test sandbox break
     ],
+    "demo": [
+        "demo/web_session_allow_public_demo.xml",
+    ]
 }
