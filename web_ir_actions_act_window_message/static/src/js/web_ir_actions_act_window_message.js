@@ -19,7 +19,7 @@
 //
 //############################################################################
 
-odoo.define('web_ir_actions_act_window_message.open_dialog_box', function (require) {
+odoo.define('web_ir_actions_act_window_message.open_dialog_box', function(require) {
     "user strict";
 
     var ActionManager = require('web.ActionManager');
@@ -27,23 +27,24 @@ odoo.define('web_ir_actions_act_window_message.open_dialog_box', function (requi
     var core = require('web.core');
     var _t = core._t
 
-     ActionManager.include({
+    ActionManager.include({
         ir_actions_act_window_message: function(action, options) {
             var self = this,
-            buttons = [];
+                buttons = [];
 
-            if (action.close_button_title !== false)
-            {
+            if (action.close_button_title !== false) {
                 buttons.push({
                     text: action.close_button_title ||
-                    _t('Close'),
+                        _t('Close'),
                     close: true,
                     oe_link_class: 'oe_highlight',
                 })
             } else {
                 buttons.concat(
                     this.ir_actions_act_window_message_get_buttons(
-                        action, {close: true})
+                        action, {
+                            close: true
+                        })
                 )
             }
 
@@ -56,53 +57,43 @@ odoo.define('web_ir_actions_act_window_message.open_dialog_box', function (requi
                 }),
             }).open();
 
-          },
-            ir_actions_act_window_message_get_buttons: function(action, close_func)
-            {
-              // return an array of button definitions from action
-              var self = this;
-              return _.map(action.buttons || [], function(button_definition)
-              {
+        },
+        ir_actions_act_window_message_get_buttons: function(action, close_func) {
+            // return an array of button definitions from action
+            var self = this;
+            return _.map(action.buttons || [], function(button_definition) {
                 return {
-                  text: button_definition.name || 'No name set',
-                  oe_link_class: button_definition.oe_link_class ||
-                  'oe_highlight',
-                  click: function() {
-                    if(button_definition.type == 'method')
-                    {
-                      (new instance.web.Model(button_definition.model))
-                      .call(
-                        button_definition.method,
-                        button_definition.args,
-                        button_definition.kwargs
-                      ).then(function(result)
-                      {
-                        if(_.isObject(result))
-                        {
-                          self.do_action(result);
+                    text: button_definition.name || 'No name set',
+                    oe_link_class: button_definition.oe_link_class ||
+                        'oe_highlight',
+                    click: function() {
+                        if (button_definition.type == 'method') {
+                            (new instance.web.Model(button_definition.model))
+                            .call(
+                                button_definition.method,
+                                button_definition.args,
+                                button_definition.kwargs
+                            ).then(function(result) {
+                                if (_.isObject(result)) {
+                                    self.do_action(result);
+                                } else {
+                                    if (
+                                        self.inner_widget &&
+                                        self.inner_widget.views
+                                    ) {
+                                        self.inner_widget
+                                            .views[self.inner_widget.active_view]
+                                            .controller.recursive_reload();
+                                    }
+                                }
+                            });
+                        } else {
+                            self.do_action(button_definition);
                         }
-                        else
-                        {
-                          if(
-                            self.inner_widget &&
-                            self.inner_widget.views
-                          )
-                          {
-                            self.inner_widget
-                            .views[self.inner_widget.active_view]
-                            .controller.recursive_reload();
-                          }
-                        }
-                      });
-                    }
-                    else
-                    {
-                      self.do_action(button_definition);
-                    }
-                    close_func();
-                  },
+                        close_func();
+                    },
                 }
-              });
-            },
-        });
+            });
+        },
+    });
 });
