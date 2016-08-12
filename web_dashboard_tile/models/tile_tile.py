@@ -138,7 +138,7 @@ class TileTile(models.Model):
         }
         if self.action_id:
             res.update(self.action_id.read(
-                ['view_type', 'view_mode', 'view_id', 'type'])[0])
+                ['view_type', 'view_mode', 'type'])[0])
             # FIXME: restore original Domain + Filter would be better
         return res
 
