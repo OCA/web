@@ -26,13 +26,13 @@ openerp.web_invalid_tab = function(instance) {
             if (!this.disable_utility_classes) {
                 if (this.field_manager.get('display_invalid_fields')) {
                     this.$el.toggleClass('oe_form_invalid', !this.is_valid());
-                    this._check_invalid_tab();
+                    this._update_tab_invalid_class();
                 }
             }
         },
-        _check_invalid_tab: function() {
+        _update_tab_invalid_class: function() {
             var tab = this.$el.closest(tab_selector);
-            if (tab && tab.attr('id')) {
+            if (tab.attr('id')) {
                 if (this.is_valid()) {
                     if (tab.find('.oe_form_invalid').length == 0) {
                         tab_link(tab).removeClass('oe_form_tab_invalid');

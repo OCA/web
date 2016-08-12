@@ -6,7 +6,7 @@
 Web invalid tab
 ===============
 
-This module highlights a tab when fields inside are invalid. Is useful when you have a form with many tabs.
+This module highlights a tab when fields inside are invalid. It's useful when you have a form with many tabs.
 
 Bug Tracker
 ===========
