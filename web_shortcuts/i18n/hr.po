@@ -3,13 +3,33 @@
 # * web_shortcuts
 # 
 # Translators:
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2012
+# Ahmet Altınışık <aaltinisik@altinkaya.com.tr>, 2015
+# bossnm11 <bossnm11@gmail.com>, 2014
+# Chanseok <kcsgoodboy@gmail.com>, 2014
+# danimaribeiro <danimaribeiro@gmail.com>, 2016
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012,2014
+# Hotellook, 2014
+# Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016
+# jeon <bluerespect@nate.com>, 2014
+# Jong-Dae Park <jdpark7@gmail.com>, 2013,2015
+# Kevin Min <gr326887@graded.br>, 2015
+# Kunwoo Kim <crazyabtmath@naver.com>, 2015
+# LEE SI HYEONG <super2451894@gmail.com>, 2014
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015-2016
+# Paolo Valier, 2016
+# Pedro M. Baeza <pedro.baeza@gmail.com>, 2015
+# Rudolf Schnapka <rs@techno-flex.de>, 2016
+# Sam Ryoo <samryoo@gmail.com>, 2014
+# Seo. Junmin <sof.midnight@live.co.kr>, 2015
+# seungil <luck8778@gmail.com>, 2014
+# SEUNGWON <baeksw0620@gmail.com>, 2014
+# Thomas A. Jaeger, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-23 13:46+0000\n"
-"PO-Revision-Date: 2015-11-07 11:21+0000\n"
+"POT-Creation-Date: 2016-06-24 00:46+0000\n"
+"PO-Revision-Date: 2016-06-14 11:34+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Croatian (http://www.transifex.com/oca/OCA-web-8-0/language/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -36,8 +56,18 @@ msgid "Created on"
 msgstr ""
 
 #. module: web_shortcuts
+#: field:web.shortcut,display_name:0
+msgid "Display Name"
+msgstr ""
+
+#. module: web_shortcuts
 #: field:web.shortcut,id:0
 msgid "ID"
+msgstr "ID"
+
+#. module: web_shortcuts
+#: field:web.shortcut,__last_update:0
+msgid "Last Modified on"
 msgstr ""
 
 #. module: web_shortcuts

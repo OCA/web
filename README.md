@@ -43,9 +43,10 @@ addon | version | summary
 [web_last_viewed_records](web_last_viewed_records/) | 8.0.1.0.0 | Last viewed records
 [web_listview_custom_element_number](web_listview_custom_element_number/) | 8.0.1.0.0 | Allow users to set manually a quantity of items to display in a tree view
 [web_listview_show_advanced_search](web_listview_show_advanced_search/) | 1.0 | Web Show Advanced Search by default on list view
-[web_m2x_options](web_m2x_options/) | 8.0.0.2 | web_m2x_options
-[web_menu_autohide](web_menu_autohide/) | 1.0 | Hide top and left menu bar
+[web_m2x_options](web_m2x_options/) | 8.0.0.2.0 | web_m2x_options
+[web_menu_autohide](web_menu_autohide/) | 8.0.1.0.0 | Hide top and left menu bar
 [web_menu_navbar_needaction](web_menu_navbar_needaction/) | 8.0.1.0.0 | Show the sum of submenus' needaction counters in main menu
+[web_offline_warning](web_offline_warning/) | 8.0.1.0.0 | User-friendly Offline Warning
 [web_one2many_list_action](web_one2many_list_action/) | 8.0.1.0.0 | Enable tree_but_open action for One2ManyListView rows.
 [web_option_auto_color](web_option_auto_color/) | 8.0.0.1.0 | Web Option Auto Color
 [web_readonly_bypass](web_readonly_bypass/) | 8.0.1.0.1 | Allow to save onchange modifications to readonly fields
@@ -59,7 +60,7 @@ addon | version | summary
 [web_shortcuts](web_shortcuts/) | 8.0.1.0.0 | Web Shortcuts
 [web_switch_company_warning](web_switch_company_warning/) | 8.0.0.1.0 | Show a warning if current company has been switched in another tab or window.
 [web_translate_dialog](web_translate_dialog/) | 8.0.1.0.0 | Easy-to-use pop-up to translate fields in several languages
-[web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 8.0.1.0.0 | web tree dynamic colored field
+[web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 8.0.2.0.0 | Allows you to dynamically color fields on tree views
 [web_tree_image](web_tree_image/) | 8.0.1.1.0 | Show images in tree views
 [web_tree_many2one_clickable](web_tree_many2one_clickable/) | 8.0.1.0.0 | Clickable many2one fields for tree views
 [web_widget_color](web_widget_color/) | 8.0.1.0.0 | Web Widget Color
@@ -67,9 +68,11 @@ addon | version | summary
 [web_widget_digitized_signature](web_widget_digitized_signature/) | 8.0.1.0.0 | Web Widget Digitized Signature
 [web_widget_digitized_signature_user](web_widget_digitized_signature_user/) | 8.0.1.0.0 | Web Digitized Signature for users
 [web_widget_float_formula](web_widget_float_formula/) | 8.0.1.0.0 | Web Widget - Formulas in Float fields
+[web_widget_image_download](web_widget_image_download/) | 8.0.1.0.0 | Allows to download any image from its widget
 [web_widget_mail_send_odoo](web_widget_mail_send_odoo/) | 8.0.1.0.0 | Send mail using internal composition wizard.
 [web_widget_many2many_tags_multi_selection](web_widget_many2many_tags_multi_selection/) | 8.0.0.1.0 | Tags multiple selection
 [web_widget_one2many_tags](web_widget_one2many_tags/) | 8.0.1.0.0 | Provides a widget similar to many2many_tags for one2many fields
+[web_widget_radio_tree](web_widget_radio_tree/) | 8.0.1.0.0 | Add radio buttons for records in tree.
 [web_widget_text_markdown](web_widget_text_markdown/) | 8.0.1.0.0 | web_widget_text_markdown
 [web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 8.0.1.0.0 | Show list fields as a matrix
 

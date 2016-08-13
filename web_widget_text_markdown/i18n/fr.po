@@ -1,0 +1,26 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_widget_text_markdown
+# 
+# Translators:
+# Christophe CHAUVET <christophe.chauvet@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: web (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-05-06 15:50+0000\n"
+"PO-Revision-Date: 2016-05-06 08:22+0000\n"
+"Last-Translator: Christophe CHAUVET <christophe.chauvet@gmail.com>\n"
+"Language-Team: French (http://www.transifex.com/oca/OCA-web-8-0/language/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: web_widget_text_markdown
+#. openerp-web
+#: code:addons/web_widget_text_markdown/static/src/js/web_widget_text_markdown.js:12
+#, python-format
+msgid "MarkDown"
+msgstr "MarkDown"
