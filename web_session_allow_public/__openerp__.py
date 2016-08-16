@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright 2016 LasLabs Inc.
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 {
     "name": "Web Session Public DataModel",
@@ -9,14 +9,17 @@
     "category": "Website",
     "website": "https://laslabs.com/",
     "author": "LasLabs, Odoo Community Association (OCA)",
-    "license": "AGPL-3",
+    "license": "LGPL-3",
     "application": False,
     "installable": True,
     "depends": [
         "web",
         "website",  # Required to test sandbox break
     ],
+    "data": [
+        "views/assets.xml",
+    ],
     "demo": [
         "demo/web_session_allow_public_demo.xml",
-    ]
+    ],
 }
