@@ -6,15 +6,29 @@ odoo.define('web_session_allow_public.demo', function(require){
   "use strict";
 
   var Model = require('web.Model');
-  var base = require('web_editor.base');
+  var Tour = require("web.Tour");
+  var Core = require('web.core');
   
-  base.ready().done(function() {
-    new Model('website.menu')
-      .call('search_read', [])
-      .then(function(result) {
-        console.log('Model call was a success!');
-        console.log(result);
-      });
+  var _t = Core._t;
+  
+  Tour.register({
+    id: "test_web_session_allow_public",
+    name: _t("Demonstrate availability of session"),
+    path: '/page/contactus',
+    mode: 'test',
+    steps: [
+      {
+        wait: 5000,
+        onload: function() {
+          new Model('website.menu')
+            .call('search_read', [])
+            .then(function(result) {
+              console.log('Model call was a success!');
+              console.log(result);
+            });
+        }
+      }
+    ],
   });
 
 });
