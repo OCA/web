@@ -16,5 +16,4 @@ class IrHttp(models.Model):
         try:
             return super(IrHttp, self)._auth_method_user()
         except SessionExpiredException:
-            pdb.set_trace()
-
+            return self._auth_method_public()
