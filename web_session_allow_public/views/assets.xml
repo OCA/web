@@ -8,7 +8,7 @@
 <odoo>
     <template id="assets_frontend" name="Import DataModel" inherit_id="website.assets_frontend">
         <xpath expr="." position="inside">
-            <script src="/web/static/src/js/framework/data_model.js" />
+            <!-- Include backend assets here, but requires Web Client. Leave out for POC -->
         </xpath>
     </template>
 </odoo>

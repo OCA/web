@@ -2,18 +2,19 @@
 # Copyright 2016 LasLabs Inc.
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-from openerp import models, api
+from openerp import models
+from openerp.http import request, SessionExpiredException
+
+import pdb
 
 
-class ResUsers(models.Model):
+class IrHttp(models.Model):
 
-    _inherit = 'res.users'
+    _inherit = 'ir.http'
 
-    @api.model
-    def check(self, passwd):
-        """ Catch AccessDenied error and allow public session to proceed """
-        if not passwd:
-            is_public = self._has_group('base.group_public')
-            if is_public:
-                return
-        return super(ResUsers, self).check(passwd)
+    def _auth_method_user(self):
+        try:
+            return super(IrHttp, self)._auth_method_user()
+        except SessionExpiredException:
+            pdb.set_trace()
+
