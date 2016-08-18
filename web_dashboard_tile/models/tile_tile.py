@@ -35,7 +35,7 @@ class TileTile(models.Model):
             'datetime': datetime,
             'relativedelta': relativedelta,
             'context_today': _context_today,
-            'current_date': time.strftime('%Y-%m-%d'),
+            'current_date': fields.Date.today(),
         })
         return context
 
@@ -111,13 +111,13 @@ class TileTile(models.Model):
     def _check_model_id_field_id(self):
         if self.field_id and self.field_id.model_id.id != self.model_id.id:
             raise ValidationError(
-                _("Please select a field of the selected model."))
+                _("Please select a field from the selected model."))
 
     @api.one
     @api.constrains('field_id', 'field_function')
     def _check_field_id_field_function(self):
-        if self.field_id and not self.field_function or\
-                self.field_function and not self.field_id:
+        validations = self.field_id, self.field_function
+        if any(validations) and not all(validations):
             raise ValidationError(
                 _("Please set both: 'Field' and 'Function'."))
 
@@ -139,7 +139,6 @@ class TileTile(models.Model):
         if self.action_id:
             res.update(self.action_id.read(
                 ['view_type', 'view_mode', 'type'])[0])
-            # FIXME: restore original Domain + Filter would be better
         return res
 
     @api.model
