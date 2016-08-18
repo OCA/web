@@ -34,6 +34,7 @@ possible future improvments
 ===========================
 * add icons;
 * support client side action (like inbox);
+* restore original Domain + Filter when an action is set.
 
 Bug Tracker
 ===========
@@ -52,6 +53,7 @@ Contributors
 
 * Markus Schneider <markus.schneider at initos.com>
 * Sylvain Le Gal (https://twitter.com/legalsylvain)
+* Iván Todorovich <ivan.todorovich@gmail.com>
 
 Maintainer
 ----------
