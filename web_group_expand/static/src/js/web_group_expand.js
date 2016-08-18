@@ -31,6 +31,7 @@ openerp.web_group_expand = function(openerp) {
         },
         load_expand_buttons:function() {
             var self = this;
+            this.$el.find("ul#oe_group_by").remove();
             this.$ExpandButtons = $(QWeb.render("GroupExpand.Buttons", {'widget':self}));
             this.$el.find("ul.oe_view_manager_switch.oe_button_group.oe_right").before(this.$ExpandButtons);
         },
