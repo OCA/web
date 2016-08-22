@@ -11,7 +11,7 @@ from dateutil.relativedelta import relativedelta
 from openerp import api, fields, models
 from openerp.tools.safe_eval import safe_eval as eval
 from openerp.tools.translate import _
-from openerp.exceptions import ValidationError
+from openerp.exceptions import ValidationError, except_orm
 
 
 class TileTile(models.Model):
@@ -67,28 +67,34 @@ class TileTile(models.Model):
         " ('ttype', 'in', ['float', 'int'])]")
     helper = fields.Char(compute='_compute_function_helper')
 
+    active = fields.Boolean(
+        compute='_compute_active',
+        search='_search_active',
+        readonly=True)
+
     @api.one
     def _compute_data(self):
         self.count = 0
         self.computed_value = 0
-        # Compute count item
-        model = self.env[self.model_id.model]
-        eval_context = self._get_eval_context()
-        self.count = model.search_count(eval(self.domain, eval_context))
-        # Compute datas for field_id depending of field_function
-        if self.field_function and self.field_id and self.count != 0:
-            records = model.search(eval(self.domain, eval_context))
-            vals = [x[self.field_id.name] for x in records]
-            if self.field_function == 'min':
-                self.computed_value = min(vals)
-            elif self.field_function == 'max':
-                self.computed_value = max(vals)
-            elif self.field_function == 'sum':
-                self.computed_value = sum(vals)
-            elif self.field_function == 'avg':
-                self.computed_value = sum(vals) / len(vals)
-            elif self.field_function == 'median':
-                self.computed_value = self.median(vals)
+        if self.active:
+            # Compute count item
+            model = self.env[self.model_id.model]
+            eval_context = self._get_eval_context()
+            self.count = model.search_count(eval(self.domain, eval_context))
+            # Compute datas for field_id depending of field_function
+            if self.field_function and self.field_id and self.count != 0:
+                records = model.search(eval(self.domain, eval_context))
+                vals = [x[self.field_id.name] for x in records]
+                if self.field_function == 'min':
+                    self.computed_value = min(vals)
+                elif self.field_function == 'max':
+                    self.computed_value = max(vals)
+                elif self.field_function == 'sum':
+                    self.computed_value = sum(vals)
+                elif self.field_function == 'avg':
+                    self.computed_value = sum(vals) / len(vals)
+                elif self.field_function == 'median':
+                    self.computed_value = self.median(vals)
 
     @api.one
     @api.onchange('field_function', 'field_id')
@@ -104,6 +110,28 @@ class TileTile(models.Model):
                 'median': "Median value of '%s'",
             }
             self.helper = _(helpers.get(self.field_function, '')) % desc
+
+    @api.one
+    def _compute_active(self):
+        ima = self.env['ir.model.access']
+        self.active = ima.check(self.model_id.model, 'read', False)
+
+    def _search_active(self, operator, value):
+        cr = self.env.cr
+        if operator != '=':
+            raise except_orm(
+                _('Unimplemented Feature. Search on Active field disabled.'))
+        ima = self.env['ir.model.access']
+        ids = []
+        cr.execute("""
+            SELECT tt.id, im.model
+            FROM tile_tile tt
+            INNER JOIN ir_model im
+                ON tt.model_id = im.id""")
+        for result in cr.fetchall():
+            if (ima.check(result[1], 'read', False) == value):
+                ids.append(result[0])
+        return [('id', 'in', ids)]
 
     # Constraints and onchanges
     @api.one
