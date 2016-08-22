@@ -22,11 +22,11 @@ openerp.web_warning_sound = function(instance) {
                 return;
             }
             var re = /{{\s*sound\s*:\s*(\S*)+\s*}}/;
-            var matches = error.data.fault_code.match(re);
+            var matches = error.data.message.match(re);
             if (matches && matches.length == 2) {
                 var audio = new Audio(matches[1]);
                 audio.play();
-                error.data.fault_code = error.data.fault_code.replace(re, '');
+                error.data.message = error.data.message.replace(re, '');
             }
             return this._super.apply(this, arguments);
         },

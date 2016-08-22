@@ -41,7 +41,7 @@ On orm_except put the url path of the file inside '{{}}' as in this example::
     'depends': [
     ],
     'data': [
-        'view/web_warning_sound.xml',
+        'views/web_warning_sound.xml',
     ],
     'installable': True,
     'application': True,
