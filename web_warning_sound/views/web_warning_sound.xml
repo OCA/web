@@ -1,0 +1,14 @@
+<openerp>
+    <data>
+        <template id="warning_sound_assets_backend"
+                  name="web_warning_sound assets"
+                  inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script src="/web_warning_sound/static/src/js/sound_extend.js"
+                        type="text/javascript"></script>
+            </xpath>
+        </template>
+
+    </data>
+</openerp>
+
