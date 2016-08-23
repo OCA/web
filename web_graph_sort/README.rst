@@ -15,7 +15,7 @@ To use this module, you need to:
 
 #. Go to any pivot table.
 
-    For example, if you have the invoicing module installed, go to Reporting -> Accounting -> Invoice Analysis
+   For example, if you have the invoicing module installed, go to Reporting -> Accounting -> Invoice Analysis
 
 #. Click on a column header. The table will be sorted by that column.
 
@@ -27,8 +27,8 @@ Known issues / Roadmap
 ======================
 
 * The columns are sorted according to the sum over the row. If you have multiple 
-accounting periods for example, if you click on the column header of the first semester,
-the rows will still be sorted by the total for the year.
+  accounting periods for example, if you click on the column header of the first semester,
+  the rows will still be sorted by the total for the year.
 
 Bug Tracker
 ===========
