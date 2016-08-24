@@ -36,4 +36,4 @@ openerp.web_widget_image_download = function (instance) {
             return this.imgSrc != this.placeholder;
         },
     });
-});
+};
