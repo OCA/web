@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<templates xml:space="preserve">
-    <t t-name="ViewManagerAction" t-extend="ViewManager">
-        <t t-jquery=".oe_view_manager_header" t-operation="append">
-            <tr class="oe_header_row oe_custom_filter_tabs">
-                <th colspan="4">
-                    <div class="oe_searchview_custom_tabs_div">
+<templates id="template" xml:space="preserve">
+<t t-name="ViewManagerAction" t-extend="ViewManager">
+    <t t-jquery=".oe_view_manager_header" t-operation="append">
+        <tr class="oe_header_row oe_custom_filter_tabs">
+            <td colspan="4">
+                <div class="oe_searchview_custom_tabs_div">
+                    <div>
                         <ul class="oe_searchview_custom_tabs"/>
                     </div>
-                </th>
-            </tr>
-        </t>
+                </div>
+            </td>
+        </tr>
     </t>
+</t>
+
+<t t-name="SaveFilter">
+    <form class="oe_form_filter">
+        <p class="oe_form_required"><input id="oe_searchview_custom_input" placeholder="Filter name"/></p>
+        <p>
+            <input id="oe_searchview_tab_custom_public" type="checkbox"/>
+            <label for="oe_searchview_tab_custom_public">Share with all users</label>
+            <input id="oe_searchview_tab_custom_default" type="checkbox"/>
+            <label for="oe_searchview_tab_custom_default">Use by default</label>
+            <input id="oe_searchview_tab_custom_action" type="checkbox"/>
+            <label for="oe_searchview_tab_custom_action">Use only for this action</label>
+        </p>
+        <button>Save</button>
+    </form>
+</t>
+
 </templates>

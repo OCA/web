@@ -1,58 +1,118 @@
-.openerp .oe_header_row.oe_custom_filter_tabs > th {
-    line-height: 18px !important;
-    padding-bottom: 0px !important;
-    font-weight:normal;
-}
-.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_tabs_div {
-    //background-color: #EEEEEE;
-    margin: 0px;
-    padding: 0px;
-    display: block;
-}
-.openerp .oe_searchview_custom_tabs_div .oe_searchview_custom_tabs {
-    display: block;
-    margin: 0px;
-    padding: 0px;
-}
-.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_tabs_div > ul > li {
-    //float: left;
+.openerp .oe_view_manager table.oe_view_manager_header .oe_custom_filter_tabs .oe_searchview_custom_public,
+.openerp .oe_view_manager table.oe_view_manager_header .oe_custom_filter_tabs .oe_searchview_custom_private, 
+.openerp .oe_view_manager table.oe_view_manager_header .oe_custom_filter_tabs .oe_searchview_add_custom_tab {
     display: inline-block;
-    padding: 10px;
-    cursor: pointer;
-    //background-color: #dddddd;
-    background-color: #EFEFF8;
-    border-top: 3px solid #dfdfdf;
-    border-left: 1px solid #cccccc;
-    border-right: 0px solid #dfdfdf;
-    border-collapse: collapse;
-    -webkit-transition: all 0.2s linear;
-    -moz-transition: all 0.2s linear;
-    -o-transition: all 0.2s linear;
-    transition: all 0.2s linear;
-    //box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 1px rgba(0, 0, 0, 0.1) inset;
-    min-width: 150px;
+    padding-right: 10px;
+    background-color: #ededed !important;
+    border: thin solid #cacaca;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    overflow: visible;
+    font-weight: bold;
 }
-.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_tabs_div > ul > .oe_extra_tab {
+.oe_searchview_custom_public > span, .oe_searchview_custom_private > span, .oe_searchview_add_custom_tab > span {
+    padding: 8px;
+}
+.oe_searchview_add_custom_tab > span {
+    background: url("/web/static/src/css/../img/icons/gtk-add.png") no-repeat scroll center center rgba(0, 0, 0, 0);
+    margin-left: 5px; 
+}
+.openerp .oe_view_manager table.oe_view_manager_header .oe_custom_filter_tabs .oe_filter_tab_delete {
+    background: url("/web/static/src/css/../img/search_reset.gif") no-repeat scroll center center rgba(0, 0, 0, 0);
+    padding: 6px;
+}
+.openerp .oe_view_manager table.oe_view_manager_header .oe_header_row > td {
+    line-height: 30px !important;
+}
+.oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_tabs_div {
+    border-bottom: thin solid #cacaca;
+    margin-top: 4px;
+    display: block;
+}
+.oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_tabs_div > div {
     display: inline;
 }
-.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_tabs_div > ul > li:hover {
-    border-top: 3px solid #9B9AC1;
-    //background-color: #F5F5F5;
-    padding: 10px;
+.openerp .oe_view_manager table.oe_view_manager_header .oe_custom_filter_tabs .oe_searchview_add_custom_tab {
+    margin-top: 4px;
 }
-.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_tabs_div > ul > li.oe_selected {
-    border-top: 3px solid #7C7BAD;
-    border-bottom: #EDEDED;
-    background-color: #FFFFFF;
-    padding: 10px;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 1px rgba(0, 0, 0, 0.1) inset;
+.openerp .oe_view_manager table.oe_view_manager_header .oe_custom_filter_tabs .oe_searchview_custom_public.oe_active_tab,
+.openerp .oe_view_manager table.oe_view_manager_header .oe_custom_filter_tabs .oe_searchview_custom_private.oe_active_tab,
+.openerp .oe_view_manager table.oe_view_manager_header .oe_custom_filter_tabs .oe_searchview_custom_private.oe_active_tab > a,
+.openerp .oe_view_manager table.oe_view_manager_header .oe_custom_filter_tabs .oe_searchview_custom_public.oe_active_tab > a {
+    background: #7C7BAD !important;
+    color: #FFFFFF !important;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    //border: thin solid #333333;
 }
-.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_tabs_div > ul > li > .oe_searchview_custom_delete {
-    float: right;
-    margin-left: 8px;
+.openerp .oe_view_manager table.oe_view_manager_header .oe_searchview_custom_tabs {
+    display: inline;
+    padding: 0px 0px;
+    right: 5px;
 }
-/*
-.openerp .oe_view_nocontent {
-display: inline-block;
+.openerp .oe_form_filter .oe_form_required input:not([disabled]):not([readonly]), .openerp .oe_form_filter .oe_form_required select:not([disabled]):not([readonly]), .openerp .oe_form_filter .oe_form_required textarea:not([disabled]):not([readonly]) {
+  background-color: #d2d2ff !important;
 }
-*/
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_public,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_private {
+    cursor: pointer;
+}
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_public.oe_color0:hover,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_private.oe_color0:hover,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_public.oe_color0.oe_active_tab,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_private.oe_color0.oe_active_tab {
+    border-top: thick solid #4986E7;
+}
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_public.oe_color1:hover,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_private.oe_color1:hover,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_public.oe_color1.oe_active_tab,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_private.oe_color1.oe_active_tab {
+    border-top: thick solid #16A765;
+}
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_public.oe_color2:hover,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_private.oe_color2:hover,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_public.oe_color2.oe_active_tab,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_private.oe_color2.oe_active_tab {
+    border-top: thick solid #F24646;
+}
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_public.oe_color3:hover,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_private.oe_color3:hover,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_public.oe_color3.oe_active_tab,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_private.oe_color3.oe_active_tab {
+    border-top: thick solid #F0D278;
+}
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_public.oe_color4:hover,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_private.oe_color4:hover,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_public.oe_color4.oe_active_tab,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_private.oe_color4.oe_active_tab {
+    border-top: thick solid #A2F252;
+}
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_public.oe_color5:hover,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_private.oe_color5:hover,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_public.oe_color5.oe_active_tab,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_private.oe_color5.oe_active_tab {
+    border-top: thick solid #83F29F;
+}
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_public.oe_color6:hover,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_private.oe_color6:hover,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_public.oe_color6.oe_active_tab,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_private.oe_color6.oe_active_tab {
+    border-top: thick solid #7FF0F0;
+}
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_public.oe_color7:hover,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_private.oe_color7:hover,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_public.oe_color7.oe_active_tab,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_private.oe_color7.oe_active_tab {
+    border-top: thick solid #B0C1F5;
+}
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_public.oe_color8:hover,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_private.oe_color8:hover,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_public.oe_color8.oe_active_tab,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_private.oe_color8.oe_active_tab {
+    border-top: thick solid #D2ADF7;
+}
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_public.oe_color9:hover,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_private.oe_color9:hover,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_public.oe_color9.oe_active_tab,
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_private.oe_color9.oe_active_tab {
+    border-top: thick solid #F7B0E5;
+}

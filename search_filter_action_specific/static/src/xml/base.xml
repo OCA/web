@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-extend="SearchView.CustomFilters">
+        <t t-jquery="form p:nth-child(2)" t-operation="replace">
+            <ul>
+                <li>
+                    <input id="oe_searchview_custom_public" type="checkbox"/>
+                    <label for="oe_searchview_custom_public">Share with all users</label>
+                </li>
+                <li>
+                    <input id="oe_searchview_custom_default" type="checkbox"/>
+                    <label for="oe_searchview_custom_default">Use by default</label>
+                </li>
+                <li>
+                    <input id="oe_searchview_custom_action" type="checkbox"/>
+                    <label for="oe_searchview_custom_action">Use only for this action</label>
+                </li>
+            </ul>
+        </t>
+    </t>
+</templates>

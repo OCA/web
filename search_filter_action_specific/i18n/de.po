@@ -1,0 +1,73 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* search_filter_action_specific
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-12-06 13:25+0000\n"
+"PO-Revision-Date: 2013-12-06 13:25+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#: code:addons/search_filter_action_specific/static/src/js/search.js:46
+#. module: search_filter_action_specific
+#. openerp-web
+#, python-format
+msgid "Filter name is required."
+msgstr ""
+
+#: code:addons/search_filter_action_specific/static/src/xml/base.xml:16
+#. module: search_filter_action_specific
+#. openerp-web
+#, python-format
+msgid "Use only for this action"
+msgstr "Nur für diese Action"
+
+#: code:addons/search_filter_action_specific/static/src/xml/base.xml:8
+#. module: search_filter_action_specific
+#. openerp-web
+#, python-format
+msgid "Share with all users"
+msgstr ""
+
+#: sql_constraint:ir.filters:0
+#. module: search_filter_action_specific
+msgid "Filter names must be unique"
+msgstr ""
+
+#: code:addons/search_filter_action_specific/ir_filters.py:81
+#. module: search_filter_action_specific
+#, python-format
+msgid "There is already a shared filter set as default for %(model)s, delete or change it before setting a new default"
+msgstr ""
+
+#: model:ir.model,name:search_filter_action_specific.model_ir_filters
+#. module: search_filter_action_specific
+msgid "Filters"
+msgstr ""
+
+#: code:addons/search_filter_action_specific/static/src/js/search.js:46
+#. module: search_filter_action_specific
+#. openerp-web
+#, python-format
+msgid "Error"
+msgstr ""
+
+#: field:ir.filters,action_id:0
+#. module: search_filter_action_specific
+msgid "Action"
+msgstr ""
+
+#: code:addons/search_filter_action_specific/static/src/xml/base.xml:12
+#. module: search_filter_action_specific
+#. openerp-web
+#, python-format
+msgid "Use by default"
+msgstr ""
+
