@@ -1,0 +1,58 @@
+.openerp .oe_header_row.oe_custom_filter_tabs > th {
+    line-height: 18px !important;
+    padding-bottom: 0px !important;
+    font-weight:normal;
+}
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_tabs_div {
+    //background-color: #EEEEEE;
+    margin: 0px;
+    padding: 0px;
+    display: block;
+}
+.openerp .oe_searchview_custom_tabs_div .oe_searchview_custom_tabs {
+    display: block;
+    margin: 0px;
+    padding: 0px;
+}
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_tabs_div > ul > li {
+    //float: left;
+    display: inline-block;
+    padding: 10px;
+    cursor: pointer;
+    //background-color: #dddddd;
+    background-color: #EFEFF8;
+    border-top: 3px solid #dfdfdf;
+    border-left: 1px solid #cccccc;
+    border-right: 0px solid #dfdfdf;
+    border-collapse: collapse;
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+    //box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 1px rgba(0, 0, 0, 0.1) inset;
+    min-width: 150px;
+}
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_tabs_div > ul > .oe_extra_tab {
+    display: inline;
+}
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_tabs_div > ul > li:hover {
+    border-top: 3px solid #9B9AC1;
+    //background-color: #F5F5F5;
+    padding: 10px;
+}
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_tabs_div > ul > li.oe_selected {
+    border-top: 3px solid #7C7BAD;
+    border-bottom: #EDEDED;
+    background-color: #FFFFFF;
+    padding: 10px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 1px rgba(0, 0, 0, 0.1) inset;
+}
+.openerp .oe_header_row.oe_custom_filter_tabs .oe_searchview_custom_tabs_div > ul > li > .oe_searchview_custom_delete {
+    float: right;
+    margin-left: 8px;
+}
+/*
+.openerp .oe_view_nocontent {
+display: inline-block;
+}
+*/
