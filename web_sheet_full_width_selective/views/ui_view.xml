@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+<data>
+
+    <record id="view_view_form" model="ir.ui.view">
+        <field name="model">ir.ui.view</field>
+        <field name="inherit_id" ref="base.view_view_form"/>
+        <field name="arch" type="xml">
+            <field name="priority" position="after">
+                <field name="form_width" 
+                       attrs="{'invisible': [('type', '!=', 'form')]}"/>
+            </field>
+        </field>
+    </record>
+
+</data>
+</openerp>
