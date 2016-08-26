@@ -3,6 +3,7 @@
     <template name="Web Highlight Assets" id="web_highlight_assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
             <script src="/web_widget_float_highlight/static/src/js/web_highlight.js"/>
+            <script src="/web_widget_float_highlight/static/src/js/web_pivot_highlight.js"/>
         </xpath>
     </template>
 </odoo>

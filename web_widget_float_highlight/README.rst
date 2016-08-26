@@ -7,7 +7,7 @@ Highlight Float Field
 =====================
 
 This module extends the functionality of web backend to allow user to highlight
-any numeric field when its value belongs to a given interval.
+any numeric field when its value belongs to a given interval, both in form and pivot views.
 
 .. figure:: static/description/widget_highlight_screenshot-1.png
    :alt: Example of highlight for positive and negative numbers.
@@ -64,6 +64,19 @@ behavior according to your wishes.
 
 To avoid errors, don't use garbage values for the options above. In particular,
 be aware that the function won't work if T1 > T2.
+
+-------------------------------------------------------------------------------
+
+It's also possible to highlight numeric cells in a pivot view, following
+similar rules. To do so, provide the options above in the definition of the
+pivot itself. This rule will be then loaded for the whole view.
+
+   <pivot string="My Pivot View" options='{"load_defaults":"true"}'>
+
+To choose on which column to enable this functionality, then, set on the wished
+'measure' numeric field, the attribute 'highlight'.
+
+   <field name="my_numeric_field" type="measure" highlight="true"/>
 
 Known issues / Roadmap
 ======================

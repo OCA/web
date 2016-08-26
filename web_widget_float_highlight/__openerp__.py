@@ -14,7 +14,4 @@
     'data': [
         'views/web_highlight.xml',
     ],
-    'qweb': [
-        'static/src/xml/web_highlight.xml',
-    ],
 }
