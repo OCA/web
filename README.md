@@ -29,6 +29,7 @@ addon | version | summary
 [web_sheet_full_width](web_sheet_full_width/) | 9.0.1.0.0 | Use the whole available screen width when displaying sheets
 [web_translate_dialog](web_translate_dialog/) | 9.0.1.0.0 | Easy-to-use pop-up to translate fields in several languages
 [web_tree_image](web_tree_image/) | 9.0.1.1.0 | Show images in tree views
+[web_widget_image_download](web_widget_image_download/) | 9.0.1.0.0 | Allows to download any image from its widget
 [web_widget_many2many_tags_multi_selection](web_widget_many2many_tags_multi_selection/) | 9.0.1.1.0 | Tags multiple selection
 [web_widget_timepicker](web_widget_timepicker/) | 9.0.1.0.0 | Web Timepicker Widget
 
