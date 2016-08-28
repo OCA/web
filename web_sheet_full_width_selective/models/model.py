@@ -24,6 +24,16 @@ class IrUiView(models.Model):
 class ModelExtended(models.Model):
     _inherit = 'ir.model'
 
+    def _css_class_to_apply(self, node, css_class):
+        ''' Complete class if exist '''
+        existing_class = [
+            x[1] for x in node.items()
+            if x[0] == 'class']
+        if existing_class:
+            css_class = '%s %s' % (
+                css_class, existing_class[0])
+        return css_class
+
     def _register_hook(self, cr, ids=None):
 
         def make_fields_view_get():
@@ -42,8 +52,11 @@ class ModelExtended(models.Model):
                         doc = etree.XML(res['arch'])
                         node = doc.xpath('//sheet')
                         if node:
+                            css_class = view.form_width
                             for current_node in node:
-                                current_node.set('class', str(view.form_width))
+                                new_css = self._css_class_to_apply(
+                                    current_node, css_class)
+                                current_node.set('class', new_css)
                                 orm.setup_modifiers(current_node)
                         res['arch'] = etree.tostring(doc, pretty_print=True)
                 return res

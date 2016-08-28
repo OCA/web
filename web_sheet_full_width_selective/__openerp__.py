@@ -7,7 +7,7 @@
     'version': '8.0.2.0.0',
     'license': 'AGPL-3',
     'author': 'Noviat, Akretion, Odoo Community Association (OCA)',
-    'category': 'Web',
+    'category': 'web',
     'depends': [
         'web',
     ],
