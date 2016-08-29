@@ -2,7 +2,7 @@
 <templates id="template" xml:space="preserve">
     <t t-extend="SearchView.addtodashboard">
         <t t-jquery="form" t-operation="after">
-            <div class="oe_dashboard_tile_form">
+            <div>
                 <label for="dashboard_tile_new_name">Tile:</label>
                 <input id="dashboard_tile_new_name" />
                 <button id="add_dashboard_tile">Create</button>
