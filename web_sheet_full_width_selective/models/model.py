@@ -25,7 +25,7 @@ class ModelExtended(models.Model):
     _inherit = 'ir.model'
 
     def _css_class_to_apply(self, node, css_class):
-        ''' Complete class if exist '''
+        """ Complete class if exist """
         existing_class = [
             x[1] for x in node.items()
             if x[0] == 'class']
@@ -49,12 +49,13 @@ class ModelExtended(models.Model):
                 if view_type == 'form' and res.get('view_id'):
                     view = self.env['ir.ui.view'].browse(res.get('view_id'))
                     if view.form_width:
+                        model_m = self.env['ir.model']
                         doc = etree.XML(res['arch'])
                         node = doc.xpath('//sheet')
                         if node:
                             css_class = view.form_width
                             for current_node in node:
-                                new_css = self._css_class_to_apply(
+                                new_css = model_m._css_class_to_apply(
                                     current_node, css_class)
                                 current_node.set('class', new_css)
                                 orm.setup_modifiers(current_node)
