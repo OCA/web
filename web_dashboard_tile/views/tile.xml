@@ -61,7 +61,7 @@
                     <field name="helper" />
                     <templates>
                         <t t-name="kanban-box">
-                            <div t-attf-class="oe_dashbaord_tile oe_kanban_global_click" t-attf-style="background-color:#{record.background_color.raw_value}" >
+                            <div t-attf-class="oe_dashboard_tile oe_kanban_global_click" t-attf-style="background-color:#{record.background_color.raw_value}" >
                                 <div class="oe_kanban_content">
                                     <a type="object" name="open_link" args="[]" t-attf-style="color:#{record.font_color.raw_value};">
                                         <div class="tile_label">
