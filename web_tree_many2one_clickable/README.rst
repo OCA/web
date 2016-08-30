@@ -1,8 +1,8 @@
 Clickable many2one fields for tree views
 ========================================
 
-This addon provides a separate widget to allow many2one fields in a tree view
-open the linked resource when clicking on their name.
+This addon provides a separate widget to allow many2one or reference fields in
+a tree view open the linked resource when clicking on their name.
 
 You can also define a system parameter to have this behaviour for all the
 existing many2one fields in tree views.
@@ -15,9 +15,9 @@ Install it the regular way.
 Configuration
 =============
 
-If you want to have all many2one fields clickable by default, you have to
-define in *Configuration > Technical > Parameters > System parameters*, a new
-parameter with name `web_tree_many2one_clickable.default` and with value
+If you want to have all many2one and reference fields clickable by default, you
+have to define in *Configuration > Technical > Parameters > System parameters*,
+a new parameter with name `web_tree_many2one_clickable.default` and with value
 `true`.
 
 Usage
