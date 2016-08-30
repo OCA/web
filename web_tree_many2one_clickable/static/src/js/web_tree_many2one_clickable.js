@@ -59,11 +59,22 @@ openerp.web_tree_many2one_clickable = function(instance, local)
 
         _format: function (row_data, options)
         {
-            if (this.use_many2one_clickable) {
-                return _.str.sprintf('<a class="oe_form_uri" data-many2one-clickable-model="%s" data-many2one-clickable-id="%s">%s</a>',
-                    this.relation,
-                    row_data[this.id].value[0],
-                    _.escape(row_data[this.id].value[1] || options.value_if_empty));
+            if (this.use_many2one_clickable && !!row_data[this.id]) {
+                var values = {
+                    model: this.relation,
+                    id: row_data[this.id].value[0],
+                    name: _.escape(row_data[this.id].value[1] || options.value_if_empty),
+                }
+                if(this.type == 'reference' && !!row_data[this.id + '__display'])
+                {
+                    values.model = row_data[this.id].value.split(',', 1)[0];
+                    values.id = row_data[this.id].value.split(',', 2)[1];
+                    values.name = _.escape(row_data[this.id + '__display'].value || options.value_if_empty);
+                }
+                return _.str.sprintf(
+                    '<a class="oe_form_uri" data-many2one-clickable-model="%(model)s" data-many2one-clickable-id="%(id)s">%(name)s</a>',
+                    values
+                );
             }
             else {
                 return this._super(row_data, options);
