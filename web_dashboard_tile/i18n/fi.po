@@ -3,8 +3,10 @@
 # * web_dashboard_tile
 # 
 # Translators:
-# Ahmet Altınışık <aaltinisik@altinkaya.com.tr>, 2015-2016
+# Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2015-2016
 # Carles Antoli <carlesantoli@hotmail.com>, 2015
+# Carles Antoli <carlesantoli@hotmail.com>, 2015
+# Christophe CHAUVET <christophe.chauvet@gmail.com>, 2015
 # Christophe CHAUVET <christophe.chauvet@gmail.com>, 2015
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2011-2014
 # Florian Hatat, 2015
@@ -17,9 +19,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-08 16:35+0000\n"
-"PO-Revision-Date: 2016-07-08 10:49+0000\n"
-"Last-Translator: Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>\n"
+"POT-Creation-Date: 2016-09-02 14:10+0000\n"
+"PO-Revision-Date: 2016-08-30 01:11+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Finnish (http://www.transifex.com/oca/OCA-web-8-0/language/fi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -41,12 +43,6 @@ msgstr "Aktiivinen"
 #: selection:tile.tile,field_function:0
 msgid "Average"
 msgstr "Keskiarvo"
-
-#. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/models/tile_tile.py:74
-#, python-format
-msgid "Average value of '%s'"
-msgstr "Keskiarvo kentälle '%s'"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,background_color:0
@@ -121,16 +117,6 @@ msgid "Error"
 msgstr "Virhe"
 
 #. module: web_dashboard_tile
-#: constraint:tile.tile:0
-msgid "Error ! Please select a field of the selected model."
-msgstr "Virhe! Ole hyvä ja valitse valitun mallin kenttä."
-
-#. module: web_dashboard_tile
-#: constraint:tile.tile:0
-msgid "Error ! Please set both fields: 'Field' and 'Function'."
-msgstr "Virhe! Ole hyvä ja valitse molemmat kentät: 'Kenttä' ja 'Toiminto'."
-
-#. module: web_dashboard_tile
 #: field:tile.tile,field_id:0
 msgid "Field"
 msgstr "Kenttä"
@@ -183,32 +169,14 @@ msgid "Maximum"
 msgstr "Maksimi"
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/models/tile_tile.py:68
-#, python-format
-msgid "Maximum value of '%s'"
-msgstr "'%s':n maksimiarvo"
-
-#. module: web_dashboard_tile
 #: selection:tile.tile,field_function:0
 msgid "Median"
 msgstr "Mediaani"
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/models/tile_tile.py:77
-#, python-format
-msgid "Median value of '%s'"
-msgstr "'%s':n mediaaniarvo"
-
-#. module: web_dashboard_tile
 #: selection:tile.tile,field_function:0
 msgid "Minimum"
 msgstr "Minimi"
-
-#. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/models/tile_tile.py:65
-#, python-format
-msgid "Minimum value of '%s'"
-msgstr "'%s':n minimiarvo"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,model_id:0
@@ -224,6 +192,18 @@ msgstr "Nimi"
 #: view:tile.tile:web_dashboard_tile.dashboard_tile_tile_form_view
 msgid "Optional Field Informations"
 msgstr "Valinnaiset kentän tiedot"
+
+#. module: web_dashboard_tile
+#: code:addons/web_dashboard_tile/models/tile_tile.py:142
+#, python-format
+msgid "Please select a field from the selected model."
+msgstr ""
+
+#. module: web_dashboard_tile
+#: code:addons/web_dashboard_tile/models/tile_tile.py:150
+#, python-format
+msgid "Please set both: 'Field' and 'Function'."
+msgstr ""
 
 #. module: web_dashboard_tile
 #: field:tile.tile,sequence:0
@@ -262,10 +242,10 @@ msgid "Tile:"
 msgstr "Pala:"
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/models/tile_tile.py:71
+#: code:addons/web_dashboard_tile/models/tile_tile.py:123
 #, python-format
-msgid "Total value of '%s'"
-msgstr "'%s':n kokonaisarvo"
+msgid "Unimplemented Feature. Search on Active field disabled."
+msgstr ""
 
 #. module: web_dashboard_tile
 #: field:tile.tile,user_id:0
