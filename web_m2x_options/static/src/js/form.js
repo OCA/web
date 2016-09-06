@@ -67,11 +67,11 @@ openerp.web_m2x_options = function (instance) {
             var self = this;
             // add options limit used to change number of selections record
             // returned.
-	    if (_.isUndefined(this.view))
-                return this._super.apply(this, arguments);
-            if (!_.isUndefined(this.view.ir_options['web_m2x_options.limit'])) {
-		    this.limit = parseInt(this.view.ir_options['web_m2x_options.limit']);
-	    }
+            if (_.isUndefined(this.view))
+                    return this._super.apply(this, arguments);
+                if (!_.isUndefined(this.view.ir_options['web_m2x_options.limit'])) {
+                this.limit = parseInt(this.view.ir_options['web_m2x_options.limit']);
+            }
 
             if (typeof this.options.limit === 'number') {
                 this.limit = this.options.limit;
@@ -99,8 +99,7 @@ openerp.web_m2x_options = function (instance) {
                 self.build_context()));
 
             var create_rights;
-            if (typeof this.options.create === "undefined" ||
-                typeof this.options.create_edit === "undefined") {
+            if (!(self.options && (self.options.no_create || self.options.no_create_edit))) {
                 create_rights = new instance.web.Model(this.field.relation).call(
                     "check_access_rights", ["create", false]);
             }
@@ -119,7 +118,7 @@ openerp.web_m2x_options = function (instance) {
                         id: x[0],
                     };
                 });
-                
+
                 // Search result value colors
 
                 if (self.colors && self.field_color) {
@@ -127,7 +126,6 @@ openerp.web_m2x_options = function (instance) {
                     for (var index in values) {
                         value_ids.push(values[index].id);
                     }
-                    
                     // RPC request to get field_color from Objects
                     Objects.query([self.field_color])
                                 .filter([['id', 'in', value_ids]])
@@ -137,7 +135,6 @@ openerp.web_m2x_options = function (instance) {
                                             if (values[index_value].id == objects[index].id) {
                                                 // Find value in values by comparing ids
                                                 var value = values[index_value];
-                                                
                                                 // Find color with field value as key
                                                 var color = self.colors[objects[index][self.field_color]] || 'black';
                                                 value.label = '<span style="color:'+color+'">'+value.label+'</span>';
@@ -156,9 +153,12 @@ openerp.web_m2x_options = function (instance) {
                     values.push({
                         label: _t("Search More..."),
                         action: function () {
+                            // limit = 80 for improving performance, similar
+                            // to Odoo implementation here:
+                            // https://github.com/odoo/odoo/commit/8c3cdce539d87775b59b3f2d5ceb433f995821bf
                             dataset.name_search(
                                 search_val, self.build_domain(),
-                                'ilike', false).done(function (data) {
+                                'ilike', 80).done(function (data) {
                                     self._search_create_popup("search", data);
                                 });
                         },
@@ -171,10 +171,15 @@ openerp.web_m2x_options = function (instance) {
                 var raw_result = _(data.result).map(function (x) {
                     return x[1];
                 });
+                var no_quick_create = (
+                    self.options && (self.options.no_create ||
+                                     self.options.no_quick_create)
+                )
+                var m2x_create_undef = _.isUndefined(self.view.ir_options['web_m2x_options.create'])
+                var m2x_create = self.view.ir_options['web_m2x_options.create'] == "True"
 
-                if ((_.isUndefined(self.options.create) && _.isUndefined(self.view.ir_options['web_m2x_options.create']) && can_create) || 
-		    (_.isUndefined(self.options.create) && self.view.ir_options['web_m2x_options.create'] == "True") ||
-                    self.options.create) {
+                if (!no_quick_create && ((m2x_create_undef && can_create) ||
+                                         m2x_create)) {
 
                     if (search_val.length > 0 &&
                         !_.include(raw_result, search_val)) {
@@ -192,10 +197,15 @@ openerp.web_m2x_options = function (instance) {
                 }
 
                 // create...
+                var no_create_edit = (
+                    self.options && (self.options.no_create ||
+                                     self.options.no_create_edit)
+                )
+                var m2x_create_edit_undef = _.isUndefined(self.view.ir_options['web_m2x_options.create_edit'])
+                var m2x_create_edit = self.view.ir_options['web_m2x_options.create_edit'] == "True"
 
-                if ((_.isUndefined(self.options.create_edit) && _.isUndefined(self.view.ir_options['web_m2x_options.create_edit']) && can_create) ||
-		    (_.isUndefined(self.options.create) && self.view.ir_options['web_m2x_options.create_edit'] == "True") ||
-                    self.options.create_edit) {
+                if (!no_create_edit && ((m2x_create_edit_undef && can_create) ||
+                                        m2x_create_edit)) {
 
                     values.push({
                         label: _t("Create and Edit..."),
@@ -207,7 +217,6 @@ openerp.web_m2x_options = function (instance) {
                         classname: 'oe_m2o_dropdown_option'
                     });
                 }
-                
                 // Check if colors specified to wait for RPC
                 if (!(self.field_color && self.colors)){
                     def.resolve(values);
@@ -226,28 +235,28 @@ openerp.web_m2x_options = function (instance) {
                 new instance.web.form.M2ODialog(this).open();
             }
         },
-	
-	start: function() {
-	    this._super.apply(this, arguments);
-	    return this.get_options();
-	},
 
-	get_options: function() {
-	    var self = this;
-	    if (_.isUndefined(this.view.ir_options_loaded)) {
-		    this.view.ir_options_loaded = $.Deferred();
-		    this.view.ir_options = {};
-		    (new instance.web.Model("ir.config_parameter"))
-	                .query(["key", "value"]).filter([['key', 'in', OPTIONS]])
-	                .all().then(function(records) {
-		            _(records).each(function(record) {
-			    self.view.ir_options[record.key] = record.value;
-			    });
-		    self.view.ir_options_loaded.resolve();
-		});
-	    }
-	    return this.view.ir_options_loaded;
-	},
+        start: function() {
+            this._super.apply(this, arguments);
+            return this.get_options();
+        },
+
+        get_options: function() {
+            var self = this;
+            if (_.isUndefined(this.view.ir_options_loaded)) {
+                this.view.ir_options_loaded = $.Deferred();
+                this.view.ir_options = {};
+                (new instance.web.Model("ir.config_parameter"))
+                        .query(["key", "value"]).filter([['key', 'in', OPTIONS]])
+                        .all().then(function(records) {
+                        _(records).each(function(record) {
+                    self.view.ir_options[record.key] = record.value;
+                    });
+                self.view.ir_options_loaded.resolve();
+            });
+            }
+            return this.view.ir_options_loaded;
+        },
 
         /**
         * Call this method to search using a string.
@@ -258,10 +267,10 @@ openerp.web_m2x_options = function (instance) {
 
             // add options limit used to change number of selections record
             // returned.
-	
-	    if (!_.isUndefined(this.view.ir_options['web_m2x_options.limit'])) {
-	        this.limit = parseInt(this.view.ir_options['web_m2x_options.limit']);
-	    }
+
+            if (!_.isUndefined(this.view.ir_options['web_m2x_options.limit'])) {
+                this.limit = parseInt(this.view.ir_options['web_m2x_options.limit']);
+            }
 
             if (typeof this.options.limit === 'number') {
                 this.limit = this.options.limit;
@@ -292,7 +301,11 @@ openerp.web_m2x_options = function (instance) {
                     values.push({
                         label: _t("Search More..."),
                         action: function() {
-                            dataset.name_search(search_val, self.build_domain(), 'ilike', false).done(function(data) {
+
+                            // limit = 80 for improving performance, similar
+                            // to Odoo implementation here:
+                            // https://github.com/odoo/odoo/commit/8c3cdce539d87775b59b3f2d5ceb433f995821bf
+                            dataset.name_search(search_val, self.build_domain(), 'ilike', 80).done(function(data) {
                                 self._search_create_popup("search", data);
                             });
                         },
@@ -300,10 +313,14 @@ openerp.web_m2x_options = function (instance) {
                     });
                 }
                 // quick create
+                var no_quick_create = (
+                    self.options && (self.options.no_create ||
+                                     self.options.no_quick_create)
+                )
+                var m2x_create_undef = _.isUndefined(self.view.ir_options['web_m2x_options.create'])
+                var m2x_create = self.view.ir_options['web_m2x_options.create'] == "True"
 
-                if ((_.isUndefined(self.options.create) && _.isUndefined(self.view.ir_options['web_m2x_options.create'])) ||
-		    (_.isUndefined(self.options.create) && self.view.ir_options['web_m2x_options.create'] == 'True') ||
-                    self.options.create) {
+                if (!no_quick_create && (m2x_create_undef || m2x_create)) {
 
                     var raw_result = _(data.result).map(function(x) {return x[1];});
                     if (search_val.length > 0 && !_.include(raw_result, search_val)) {
@@ -319,10 +336,14 @@ openerp.web_m2x_options = function (instance) {
                 }
 
                 // create...
+                var no_create_edit = (
+                    self.options && (self.options.no_create ||
+                                     self.options.no_create_edit)
+                )
+                var m2x_create_edit_undef = _.isUndefined(self.view.ir_options['web_m2x_options.create_edit'])
+                var m2x_create_edit = self.view.ir_options['web_m2x_options.create_edit'] == "True"
 
-                if ((_.isUndefined(self.options.create_edit === 'undefined') && _.isUndefined(self.view.ir_options['web_m2x_options.create_edit'])) ||
-	            (_.isUndefined(self.options.create) && self.view.ir_options['web_m2x_options.create_edit'] == 'True') ||
-                    self.options.create_edit) {
+                if (!no_create_edit && (m2x_create_edit_undef || m2x_create_edit)) {
 
                     values.push({
                         label: _t("Create and Edit..."),
@@ -335,6 +356,30 @@ openerp.web_m2x_options = function (instance) {
 
                 return values;
             })
+        },
+
+        render_value: function()
+        {
+            var self = this;
+            return jQuery.when(this._super.apply(this, arguments))
+            .then(function()
+            {
+                if(self.options.open)
+                {
+                    self.$el.find('.oe_tag')
+                    .css('cursor', 'pointer')
+                    .click(function(e)
+                    {
+                        var id = parseInt(jQuery(this).attr('data-id'));
+                        self.do_action({
+                            type: 'ir.actions.act_window',
+                            res_model: self.field.relation,
+                            views: [[false, 'form']],
+                            res_id: id,
+                        });
+                    });
+                }
+            });
         },
     });
 };
