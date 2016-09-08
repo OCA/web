@@ -27,7 +27,7 @@ Installation
 
 To install this module, you need to:
 
-#. Add the module to your addons path a got install it from Application Menu.
+#. Add the module to your addons path and install it from Application Menu.
 
 Configuration
 =============
