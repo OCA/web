@@ -1,4 +1,5 @@
-/*global openerp, _, $ */
+/* Copyright 2016 0k.io,ACSONE SA/NV
+ *  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
 odoo.define('web_m2x_options.web_m2x_options', function (require) {
     "use strict";
