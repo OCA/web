@@ -5,25 +5,21 @@
 Help Popup
 ===========
 
-This module adds an html help popup on each model action.
-Two help fields are added to actions: enduser_help (html widget)
-and advanced_help.
-
-
-Installation
-============
-
-It was tested on Odoo 8.0 branch.
+This module adds an html help popup on each model action. 
+It brings to end users inline documentation.
+Some parts of the documentation can be modified by anyone (with proper rights).
 
 
 Configuration
 =============
 
-Go to the action of your choice to add some help content
-or put data in some modules.
+* Go to any view and click on the `?` near the title view.
+* Edit the html field to add content
 
-To display the button which open the popup, enduser_help or advanced_help field
-should be set to any value.
+
+* You can provide documentation with this module by appending data 
+  in the field advanced_help (relative to action) or advanced_help_model
+  if your help must be associated to model instead of action
 
 
 Usage

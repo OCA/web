@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+<data noupdate="1">
+
+<template id="all_help">
+
+<t t-call="report.html_container">
+<t t-call="report.internal_layout">
+
+
+<t t-foreach="docs" t-as="o">
+
+    <div class="page">
+        <t t-set="actions" t-value="o.get_help_actions()"/>
+        <h2 class="text-center" t-if="o._rpt_menu" t-raw="o._rpt_menu.name"/>
+        <ul>
+            <t t-foreach="actions" t-as="act">
+              <li>
+                <a t-attf-href="#-{{ o._anchorize(act.name) }}" t-raw='act.name'/>
+              </li>
+            </t>
+        </ul>
+        <t t-foreach="actions" t-as="act">
+            <h2 t-attf-id="-{{ o._anchorize(act.name) }}" t-raw='act.name'/>
+            <div class="bg-warning" t-if="act.enduser_help" t-raw="act.enduser_help"/>
+            <div class="bg-warning" t-if="act.enduser_help_model" t-raw="act.enduser_help_model"/>
+            <hr width="70%"/>
+            <div t-if="act.advanced_help" t-raw="act.advanced_help"/>
+            <div t-if="act.advanced_help_model" t-raw="act.advanced_help_model"/>
+        </t>
+    <hr width="70%"/>
+
+    </div>
+
+<!--end foreach-->
+</t>
+
+</t>
+</t>
+
+</template>
+
+
+</data>
+</openerp>

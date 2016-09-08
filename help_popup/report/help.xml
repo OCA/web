@@ -13,18 +13,34 @@
 
 <div class="page">
 
-<div t-raw="o.enduser_help"/>
+    <div class="pull-right bg-sucess">
+        <t t-set="action_id" t-value="o.env.ref('help_popup.action_help_popup_form').id" />
+        <a t-attf-href="/report/html/help_popup.all_help/{{ o.id }}" class="btn btn-success btn-xs" title="Click to see documentation for the whole menu">
+            <span t-raw="o.get_main_menu().name"/> help</a>
+        <a t-attf-href="/web#id={{ o.id }}&amp;view_type=form&amp;model=ir.actions.act_window&amp;action={{ action_id }}" class="btn btn-danger btn-xs" title="Edit this documentation">Edit</a>
+        <br/>
+    </div>
+    <br/>
+    <div  class="bg-warning" t-if="o.enduser_help_model or o.enduser_help">
+        <div class="oe_text_center label label-info">Internal</div>
+        <div t-if="o.enduser_help_model" t-raw="o.enduser_help_model"/>
+        <div t-if="o.enduser_help" t-raw="o.enduser_help"/>
+        <hr width="70%"/>
+    </div>
 
-<hr width="70%"/>
+    <div t-if="o.advanced_help_model or o.advanced_help">
+        <div class="oe_text_center label label-info" title="Odoo Community Association (OCA) maintains several modules with high quality level">Odoo Community</div>
+        <div t-if="o.advanced_help_model" t-raw="o.advanced_help_model"/>
+        <div t-if="o.advanced_help" t-raw="o.advanced_help"/>
+        <hr width="70%"/>
+    </div>
 
-<h3 t-if="o.advanced_help">Help from developer</h3>
-<div t-raw="o.advanced_help"/>
-
-<hr width="70%"/>
-
-<h3 t-if="o.help">Help from Odoo</h3>
-<div t-raw="o.help"/>
-
+    <div t-if="o.help">
+        <div class="oe_text_center label label-info" title="Help from Odoo editor">Odoo</div>
+        <div t-if="o.help" t-raw="o.help"/>
+        <hr width="70%"/>
+    </div>
+    <div>Use Ctrl + P to print this document</div>
 </div>
 
 <!--end foreach-->

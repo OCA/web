@@ -3,11 +3,18 @@
 <openerp>
 <data>
 
-<report id="report_help_popup"
-    model="ir.actions.act_window"
-    string="Contextual Help"
-    name="help_popup.tpl_help"
-    report_type="qweb-html"/>
+    <report id="report_help_popup"
+        model="ir.actions.act_window"
+        string="Contextual Help"
+        name="help_popup.tpl_help"
+        report_type="qweb-html"/>
+
+
+    <report id="report_all_help"
+        model="ir.actions.act_window"
+        string="All Contextual Help"
+        name="help_popup.all_help"
+        report_type="qweb-html"/>
 
 </data>
 </openerp>

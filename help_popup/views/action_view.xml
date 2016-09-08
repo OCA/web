@@ -1,18 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
+<data>
 
-<record id="view_window_action_form" model="ir.ui.view">
-    <field name="model">ir.actions.act_window</field>
-    <field name="inherit_id"
-           ref="base.view_window_action_form"/>
-    <field name="arch" type="xml">
-        <field name="help" position="after">
-            <field name="enduser_help"/>
-            <field name="advanced_help"/>
+    <record id="view_window_action_form" model="ir.ui.view">
+        <field name="model">ir.actions.act_window</field>
+        <field name="inherit_id"
+               ref="base.view_window_action_form"/>
+        <field name="arch" type="xml">
+            <field name="help" position="after">
+                <field name="enduser_help"/>
+                <field name="advanced_help"/>
+            </field>
         </field>
-    </field>
-</record>
+    </record>
 
-    </data>
+    <record id="view_window_action_help_form" model="ir.ui.view">
+        <field name="model">ir.actions.act_window</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group name="main" col="4">
+                        <field name="name" attrs="{'readonly': True}"/>
+                        <field name="res_model" attrs="{'readonly': True}"/>
+                        <field name="action_help"/>
+                        <button name="open_help_popup" type="object" string="Help"
+                                class="oe_highlight"/><span/>
+                        <!-- <field name="help_has_content"/> -->
+                        <separator string="End users help" colspan="4"/>
+                        <field name="enduser_help_model" colspan="4" nolabel="1"/>
+                        <div attrs="{'invisible': [('action_help', '=', False)]}"
+                             class="alert alert-warning"
+                             colspan="4">Help field below is only used by action (i.e. action for 'customer' is different than action for 'supplier' but share the same model)</div>
+                        <field name="enduser_help" colspan="4" nolabel="1"
+                               attrs="{'invisible': [('action_help', '=', False)]}"/>
+                        <separator string="Odoo community help" colspan="4"/>
+                        <field name="advanced_help_model" attrs="{'readonly': True}"
+                               colspan="4" nolabel="1"/>
+                        <field name="advanced_help" attrs="{'readonly': True}"
+                               colspan="4" nolabel="1"/>
+                        <span colspan="4"></span>
+                        <separator string="Standard Odoo help" colspan="4"/>
+                        <field name="help" nolabel="1" attrs="{'readonly': True}" colspan="4"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_window_action_help_tree" model="ir.ui.view">
+        <field name="model">ir.actions.act_window</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="res_model"/>
+                <field name="enduser_help"/>
+                <field name="advanced_help"/>
+                <field name="help"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_help_popup_form" model="ir.actions.act_window">
+        <field name="name">Help on Action</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+        <!-- <field name="context">{'search_default_customer':1, 'restrict_kind': ['individu', 'incorpo'], 'default_kind':'incorpo'}</field> -->
+    </record>
+
+    <record model="ir.actions.act_window.view" id="act_help_popup_formr_view_form">
+        <field name="act_window_id" ref="action_help_popup_form"/>
+        <field name="view_mode">form</field>
+        <field name="sequence" eval="10"/>
+        <field name="view_id" ref="view_window_action_help_form"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="act_help_popup_formr_view_tree">
+        <field name="act_window_id" ref="action_help_popup_form"/>
+        <field name="view_mode">tree</field>
+        <field name="sequence" eval="5"/>
+        <field name="view_id" ref="view_window_action_help_tree"/>
+    </record>
+
+    <menuitem id="action_with_help" sequence="100"
+              action="action_help_popup_form" name="Help"
+              parent="base.menu_config"/>
+
+</data>
 </openerp>

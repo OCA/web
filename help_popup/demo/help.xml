@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <openerp>
-    <data noupdate="1">
+    <data>
 
         <record id="base.action_partner_form" model="ir.actions.act_window">
             <field name="enduser_help"><![CDATA[
@@ -20,14 +20,17 @@ I'm displayed in a Qweb html report
 Don't hesitate to customized me with your own words and syntax
 </p>
 
+<p>You can write any html tag. Here is an image with img tag</p>
+
+<img src="http://www.akretion.com/sites/50443990c3c67e1bf3000004/theme/images/logo.png"/>
+
+
           ]]></field>
         </record>
-    </data>
 
-    <data noupdate="0">
         <record id="base.action_partner_form" model="ir.actions.act_window">
             <field name="advanced_help"><![CDATA[
-<b>Hi developers,</b>
+<b>Hi Odoo community,</b>
 
 <br/>
 <br/>
@@ -35,18 +38,42 @@ Don't hesitate to customized me with your own words and syntax
 I'm the field 'advanced_help' in the customer action also displayed in Qweb report.
 </p>
 <p>
-<b>Akretion</b> wrote these words to explain my main purpose:
+I wrote these words to explain the main purpose:
     <blockquote>
-Allows to developers to write documentation on their work.
+Odoo community companies can insert their documenation here with data in their modules. <br><br>
+Then, any end users can see this documentation in one click.
+<br>
+End users can also display and print documentation about an entire menu.
     </blockquote>
 </p>
 <p>
 
 </p>
 
-<p>You can write any html tag. Here is an image with img tag</p>
 
-<img src="http://www.akretion.com/sites/50443990c3c67e1bf3000004/theme/images/logo.png"/>
+          ]]></field>
+        </record>
+
+        <record id="base.action_partner_category_form" 
+                model="ir.actions.act_window">
+            <field name="enduser_help"><![CDATA[
+Hi all,<br><br>
+
+A supplier can have several specialities.
+<br><br>
+Use these multicategories to classify your partners
+
+          ]]></field>
+        </record>
+
+        <record id="base.action_res_bank_form" 
+                model="ir.actions.act_window">
+            <field name="enduser_help"><![CDATA[
+Hi all,<br>
+<br><br>
+Who does not want to rob a bank?
+<br><br>
+;-)
 
           ]]></field>
         </record>
