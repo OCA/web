@@ -2,7 +2,7 @@
 
 {
     "name": 'web_m2x_options',
-    "version": "8.0.0.2.0",
+    "version": "9.0.1.0.0",
     "depends": [
         'base',
         'web',
@@ -12,6 +12,6 @@
     ],
     'license': 'AGPL-3',
     'data': ['views/view.xml'],
-    "author": "0k.io,Odoo Community Association (OCA)",
-    'installable': False,
+    "author": "ACSONE SA/NV, 0k.io,Odoo Community Association (OCA)",
+    'installable': True,
 }
