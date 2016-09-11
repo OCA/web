@@ -145,6 +145,7 @@ Contributors
 * Holger Brunn <hbrunn@therp.nl>
 * Nicolas JEUDY <nicolas@sudokeys.com>
 * Yannick Vaucher <yannick.vaucher@camptocamp.com>
+* Zakaria Makrelouf <z.makrelouf@gmail.com>
 
 Maintainer
 ----------

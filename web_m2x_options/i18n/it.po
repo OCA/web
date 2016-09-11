@@ -32,24 +32,24 @@ msgstr ""
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:191
-#: code:addons/web_m2x_options/static/src/js/form.js:330
+#: code:addons/web_m2x_options/static/src/js/form.js:219
+#: code:addons/web_m2x_options/static/src/js/form.js:373
 #, python-format
 msgid "Create \"<strong>%s</strong>\""
 msgstr "Crea \"<strong>%s</strong>\""
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:213
-#: code:addons/web_m2x_options/static/src/js/form.js:351
+#: code:addons/web_m2x_options/static/src/js/form.js:237
+#: code:addons/web_m2x_options/static/src/js/form.js:392
 #, python-format
 msgid "Create and Edit..."
 msgstr "Crea e Modifica..."
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:156
-#: code:addons/web_m2x_options/static/src/js/form.js:305
+#: code:addons/web_m2x_options/static/src/js/form.js:188
+#: code:addons/web_m2x_options/static/src/js/form.js:349
 #, python-format
 msgid "Search More..."
 msgstr "Cerca altro..."
