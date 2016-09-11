@@ -6,7 +6,7 @@
     </t>
 </t>
 <t t-extend="FieldMany2ManyTag">
-    <t t-jquery="span.oe_tag">
+    <t t-jquery="span.badge">
         jQuery(this).attr('t-att-data-id', 'el[0]');
     </t>
 </t>
