@@ -1,19 +1,22 @@
-# -*- encoding: utf-8 -*-
-###############################################################################
-#    See Copyright and Licence Informations undermentioned.
-###############################################################################
+# -*- coding: utf-8 -*-
+# Copyright GRAP
+# Copyright 2016 LasLabs Inc.
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 {
-    'name': 'Web Widget - Formulas in Float fields',
-    'version': '8.0.1.0.0',
-    'category': 'web',
-    'author': 'GRAP,Odoo Community Association (OCA)',
+    'name': 'Web Widget - Formulas in Float Fields',
+    'summary': 'Allow use of simple formulas in float fields',
+    'version': '9.0.1.0.0',
+    'category': 'Web',
+    'author': 'GRAP, LasLabs, Odoo Community Association (OCA)',
     'website': 'http://www.grap.coop',
     'license': 'AGPL-3',
     'depends': [
         'web',
     ],
     'data': [
-        'views/qweb.xml',
+        'views/web_widget_float_formula.xml',
     ],
-    'installable': False,
+    'installable': True,
+    'application': False,
 }
