@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- vim:fdl=1:
--->
+<!-- Copyright 2016 ThinkOpen Solutions
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <templates xml:space="preserve">
 <t t-name="web_switch_lang.SwitchButton">
     <li t-att-title='_t("Switch language")'>

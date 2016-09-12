@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- vim:fdn=3:
--->
+<!-- Copyright 2016 ThinkOpen Solutions
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <openerp>
     <data>
         <template id="assets_backend" name="web_switch_lang assets" inherit_id="web.assets_backend">
