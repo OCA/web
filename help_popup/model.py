@@ -2,7 +2,11 @@
 # © 2015 David BEAL @ Akretion <david.beal@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from BeautifulSoup import BeautifulSoup as BSHTML
+import inspect
+
 from openerp import _, api, models, fields
+from openerp.exceptions import Warning as UserError
 
 
 class ErpHelp(models.AbstractModel):
@@ -16,6 +20,13 @@ class ErpHelp(models.AbstractModel):
         string="Advanced Help", groups='base.group_no_one',
         help="Use this field to add custom content for documentation purpose\n"
              "mainly by developers or consultants")
+
+    # @api.multi
+    # def write(self, vals):
+    #     if not self._context.get('install_mode') and 'advanced_help' in vals:
+    #         raise UserError(_("Advanced help field must only be updated "
+    #                           "by install mode (not with the user interface"))
+    #     return super(ErpHelp, self).write(vals)
 
 
 class IrModel(models.Model):
@@ -63,6 +74,45 @@ class IrActionsActwindow(models.Model):
             model = rec.env['ir.model'].search([('model', '=', rec.res_model)])
             model.enduser_help = rec.enduser_help_model
             model.advanced_help = rec.advanced_help_model
+
+    @api.multi
+    def write(self, vals):
+        if self._context.get('install_mode'):
+            module_name = self.module_being_update_or_insert()
+            for field in ['advanced_help']:
+                if field in vals:
+                    self._update_help_field(vals, field, module_name)
+        return super(IrActionsActwindow, self).write(vals)
+
+    @api.multi
+    def _update_help_field(self, vals, field, module_name):
+        new_val_field = u'<help_%s>%s</help_%s>' % (
+                        module_name, vals[field] or '', module_name)
+        original_val_field = vals[field]
+        vals[field] = new_val_field
+        if self[field]:
+            # we search this string in field:
+            # <help_mymodule> ... any content ... </help_mymodule>
+            tag = getattr(
+                BSHTML(self[field]), 'help_%s' % module_name)
+            if tag:
+                old_content = ''.join(
+                    [unicode(x) for x in tag.contents if x]) or u''
+                vals[field] = self[field].replace(
+                    old_content, original_val_field)
+            else:
+                vals[field] = u'\n%s%s' % (
+                    self[field], new_val_field)
+
+    @api.model
+    def module_being_update_or_insert(self):
+        for elm in inspect.stack():
+            arg_values = inspect.getargvalues(elm[0])
+            if 'locals' in arg_values.__dict__:
+                if arg_values.__dict__['locals'].get('module'):
+                    module = arg_values.__dict__['locals'].get('module')
+                    if module not in self.env.registry:
+                        return arg_values.__dict__['locals'].get('module')
 
     @api.multi
     def open_help_popup(self):

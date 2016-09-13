@@ -40,7 +40,7 @@
         <div t-if="o.help" t-raw="o.help"/>
         <hr width="70%"/>
     </div>
-    <div>Use Ctrl + P to print this document</div>
+    <div>Use <kbd>Ctrl + P</kbd> to print this document</div>
 </div>
 
 <!--end foreach-->
