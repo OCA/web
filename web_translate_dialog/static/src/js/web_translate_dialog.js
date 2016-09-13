@@ -95,6 +95,7 @@ var translateDialog = Dialog.extend({
                         ['para', ['ul', 'ol', 'paragraph']],
                         ['table', ['table']],
                         ['insert', ['link', 'picture']],
+                        ['misc', ['codeview']],
                         ['history', ['undo', 'redo']]
                     ],
                     'prettifyHtml': false,
