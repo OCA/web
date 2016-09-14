@@ -1,0 +1,47 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_advanced_search_x2x
+# 
+# Translators:
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: web (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-12-16 07:41+0000\n"
+"PO-Revision-Date: 2015-11-08 05:44+0000\n"
+"Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
+"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-web-8-0/language/sl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: sl\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+
+#. module: web_advanced_search_x2x
+#. openerp-web
+#: code:addons/web_advanced_search_x2x/static/src/xml/web_advanced_search_x2x.xml:8
+#, python-format
+msgid "Search"
+msgstr "Iskanje"
+
+#. module: web_advanced_search_x2x
+#. openerp-web
+#: code:addons/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js:235
+#, python-format
+msgid "Use criteria"
+msgstr "Uporabi kriterij"
+
+#. module: web_advanced_search_x2x
+#. openerp-web
+#: code:addons/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js:172
+#, python-format
+msgid "invalid search domain"
+msgstr "neveljavna iskalna domena"
+
+#. module: web_advanced_search_x2x
+#. openerp-web
+#: code:addons/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js:47
+#, python-format
+msgid "is in selection"
+msgstr "je izbor"
