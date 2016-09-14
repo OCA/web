@@ -1,23 +1,6 @@
-//-*- coding: utf-8 -*-
-//############################################################################
-//
-//   OpenERP, Open Source Management Solution
-//   This module copyright (C) 2015 Therp BV <http://therp.nl>.
-//
-//   This program is free software: you can redistribute it and/or modify
-//   it under the terms of the GNU Affero General Public License as
-//   published by the Free Software Foundation, either version 3 of the
-//   License, or (at your option) any later version.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU Affero General Public License for more details.
-//
-//   You should have received a copy of the GNU Affero General Public License
-//   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//
-//############################################################################
+// -*- coding: utf-8 -*-
+// © 2016 Therp BV <http://therp.nl>.
+// License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 openerp.web_advanced_search_x2x = function(instance)
 {
@@ -60,7 +43,7 @@ openerp.web_advanced_search_x2x = function(instance)
             return this.field;
         },
         create_searchfield_node: function()
-        { 
+        {
             return {
                 attrs: {
                     name: this.field.name,
@@ -190,7 +173,8 @@ openerp.web_advanced_search_x2x = function(instance)
             });
             popup.select_element(
                 this.field.relation, {}, this.field.domain,
-                this.field.context);
+                new instance.web.CompoundContext(
+                    instance.session.user_context, this.field.context));
         },
     });
 
@@ -325,45 +309,5 @@ openerp.web_advanced_search_x2x = function(instance)
             return result;
         },
     })
+}
 
-
-    instance.web.SearchView.include({
-        start: function()
-              {   var self = this;
-                  var p = this._super();
-                  instance.web.bus.on('click', this, function(ev) {
-                  //check if there is a class, avoid crashes
-                  if (( ev.target.attributes.class) &&  (ev.target.attributes)) 
-                      {
-                       curr_class = ev.target.attributes.class.value;
-                       //if the class is one of the search popups defined in this module, please don't close the search view when using them.
-                       if ((curr_class == "oe_button oe_selectcreatepopup-search-select oe_highlight") || 
-                           (curr_class == "oe_highlight oe_selectcreatepopup-search-select-domain")    ||
-                           (curr_class == "oe_button oe_selectcreatepopup-search-close oe_bold oe_form_button_cancel") ||
-                           (curr_class == "ui-dialog-titlebar-close ui-corner-all"))
-                           {
-                            if (this.$el)
-                                {
-                                 this.$el.addClass('oe_searchview_open_drawer');
-                                }
-                           }
-                      }
-                  //again, check if there are two parentelements, attributes and  a class , avoid crashes
-                  if (ev.target &&  
-                      ev.target.parentElement &&  
-                      ev.target.parentElement.parentElement &&  
-                      ev.target.parentElement.parentElement.attributes 
-                      && ev.target.parentElement.parentElement.attributes.class 
-                      && this.el.className)
-                           { //if the target element of the event is a search or a create or anything from the the autocomplete AND the element is part of a search view, also please don't close the searchview.
-                            if ((ev.target.parentElement.parentElement.attributes.class.value == "ui-autocomplete ui-menu ui-widget ui-widget-content ui-corner-all openerp") && (this.el.className.indexOf("oe_searchview")!= -1 ))
-                               {
-                                this.$el.addClass('oe_searchview_open_drawer');
-                               }
-                            }
-                      
-                  })
-                  return $.when(p);
-              },
-         });
-  }
