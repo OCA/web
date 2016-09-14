@@ -1,23 +1,6 @@
-//-*- coding: utf-8 -*-
-//############################################################################
-//
-//   OpenERP, Open Source Management Solution
-//   This module copyright (C) 2015 Therp BV <http://therp.nl>.
-//
-//   This program is free software: you can redistribute it and/or modify
-//   it under the terms of the GNU Affero General Public License as
-//   published by the Free Software Foundation, either version 3 of the
-//   License, or (at your option) any later version.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU Affero General Public License for more details.
-//
-//   You should have received a copy of the GNU Affero General Public License
-//   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//
-//############################################################################
+/* Copyright 2015 Holger Brunn <hbrunn@therp.nl>
+ * Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+ * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
 openerp.web_widget_x2many_2d_matrix = function(instance)
 {
@@ -44,6 +27,8 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
         show_column_totals: true,
         // this will be filled with the model's fields_get
         fields: {},
+        // Store fields used to fill HTML attributes
+        fields_att: {},
 
         // read parameters
         init: function(field_manager, node)
@@ -53,6 +38,12 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
             this.field_label_x_axis = node.attrs.field_label_x_axis || this.field_x_axis;
             this.field_label_y_axis = node.attrs.field_label_y_axis || this.field_y_axis;
             this.field_value = node.attrs.field_value || this.field_value;
+            for (var property in node.attrs) {
+                if (property.startsWith("field_att_")) {
+                    this.fields_att[property.substring(10)] = node.attrs[property];
+                }
+            }
+            this.field_editability = node.attrs.field_editability || this.field_editability;
             this.show_row_totals = node.attrs.show_row_totals || this.show_row_totals;
             this.show_column_totals = node.attrs.show_column_totals || this.show_column_totals;
             return this._super.apply(this, arguments);
@@ -259,6 +250,20 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
         get_xy_id: function(x, y)
         {
             return this.by_x_axis[x][y]['id'];
+        },
+
+        get_xy_att: function(x, y)
+        {
+            var vals = {};
+            for (var att in this.fields_att) {
+                var val = this.get_field_value(
+                    this.by_x_axis[x][y], this.fields_att[att]);
+                // Discard empty values
+                if (val) {
+                    vals[att] = val;
+                }
+            }
+            return vals;
         },
 
         // return the value of a coordinate
