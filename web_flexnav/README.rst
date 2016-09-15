@@ -16,6 +16,7 @@ Usage
 
 To avoid having all content pushed down, we replace the smart buttons to have one full width line on top of the view, 
 instead of having them floating on the right.
+More on `https://goo.gl/ZKsb5I`.
 We replace the existing odoo smart buttons with the code snippet that contains the JavaScript classes (done 
 as example with the res_partner.xml view).
 
