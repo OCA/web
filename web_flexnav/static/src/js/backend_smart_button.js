@@ -1,3 +1,10 @@
+/*
+
+flexMenu is licensesed under the MIT License, and is free for commercial or personal use.
+Copyright © 2012-2014 352 Inc. & Contributors
+
+*/
+
 openerp.web_flexnav = function (instance) {
 
     function collapseAllExcept($menuToAvoid) {
