@@ -100,8 +100,19 @@ openerp.web_m2x_options = function (instance) {
 
             var create_rights;
             if (!(self.options && (self.options.no_create || self.options.no_create_edit))) {
-                create_rights = new instance.web.Model(this.field.relation).call(
-                    "check_access_rights", ["create", false]);
+                // check quick create options
+                var target_model = this.field.relation
+                create_rights = new instance.web.Model('ir.model').
+                    query(['disable_quick_create']).
+                    filter([['model', '=', target_model]]).
+                    first().
+                    then(function(result){
+                        if(result.disable_quick_create)
+                            return $.when(false);
+                        else
+                            return new instance.web.Model(target_model).call(
+                                "check_access_rights", ["create", false]);
+                    });
             }
 
             $.when(search_result, create_rights).then(function (data, can_create) {
