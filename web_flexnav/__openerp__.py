@@ -3,8 +3,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     'name': 'Flexnav for Backend Smart buttons',
-    'summary': 'Smart buttons in Partner Views',
-    'author': "bloopark systems GmbH & Co. KG"
+    'summary': 'Smart buttons navigation for Backend Views',
+    'author': "bloopark systems GmbH & Co. KG",
               "Odoo Community Association (OCA)",
     'website': "http://www.bloopark.de",
     'category': 'web',
