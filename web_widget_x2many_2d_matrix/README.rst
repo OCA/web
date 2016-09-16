@@ -110,6 +110,15 @@ Known issues / Roadmap
 ======================
 
 * it would be worth trying to instantiate the proper field widget and let it render the input
+* If you pass values with an onchange, you need to overwrite the model's method
+  `onchange` for making the widget work::
+
+ @api.multi
+ def onchange(self, values, field_name, field_onchange):
+     if "one2many_field" in field_onchange:
+         for sub in [<field_list>]:
+             field_onchange.setdefault("one2many_field." + sub, u"")
+     return super(model, self).onchange(values, field_name, field_onchange)
 
 Bug Tracker
 ===========
