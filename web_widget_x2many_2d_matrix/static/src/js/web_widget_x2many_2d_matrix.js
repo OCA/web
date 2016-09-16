@@ -2,12 +2,16 @@
  * Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
-openerp.web_widget_x2many_2d_matrix = function(instance)
-{
-    instance.web.form.widgets.add(
-        'x2many_2d_matrix',
-        'instance.web_widget_x2many_2d_matrix.FieldX2Many2dMatrix');
-    instance.web_widget_x2many_2d_matrix.FieldX2Many2dMatrix = instance.web.form.FieldOne2Many.extend({
+odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
+    "use strict";
+
+    var core = require('web.core');
+    var formats = require('web.formats');
+    var FieldOne2Many = core.form_widget_registry.get('one2many');
+    var Model = require('web.Model');
+    var data = require('web.data');
+
+    var WidgetX2Many2dMatrix = FieldOne2Many.extend({
         template: 'FieldX2Many2dMatrix',
         widget_class: 'oe_form_field_x2many_2d_matrix',
 
@@ -46,7 +50,7 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
             this.field_editability = node.attrs.field_editability || this.field_editability;
             this.show_row_totals = node.attrs.show_row_totals || this.show_row_totals;
             this.show_column_totals = node.attrs.show_column_totals || this.show_column_totals;
-            return this._super.apply(this, arguments);
+            return this._super(field_manager, node);
         },
 
         // return a field's value, id in case it's a one2many field
@@ -67,10 +71,10 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
         },
 
         // setup our datastructure for simple access in the template
-        set_value: function()
+        set_value: function(value_)
         {
             var self = this,
-                result = this._super.apply(this, arguments);
+                result = this._super(value_);
 
             self.by_x_axis = {};
             self.by_y_axis = {};
@@ -150,7 +154,7 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
                             {
                                 return;
                             }
-                            var model = new instance.web.Model(self.fields[field].relation);
+                            var model = new Model(self.fields[field].relation);
                             deferrends.push(model.call(
                                 'name_get',
                                 [_.map(_.keys(rows), function(key) {return parseInt(key)})])
@@ -171,7 +175,7 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
                             self.compute_totals();
                             self.setup_many2one_axes();
                             self.$el.find('.edit').on(
-                                    'change', self.proxy(self.xy_value_change));
+                                'change', self.proxy(self.xy_value_change));
                             self.effective_readonly_change();
                         }
                         return jQuery.when.apply(jQuery, deferrends);
@@ -290,14 +294,14 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
         // parse a value from user input
         parse_xy_value: function(val)
         {
-            return instance.web.parse_value(
+            return formats.parse_value(
                 val, {'type': this.fields[this.field_value].type});
         },
 
         // format a value from the database for display
         format_xy_value: function(val)
         {
-            return instance.web.format_value(
+            return formats.format_value(
                 val, {'type': this.fields[this.field_value].type});
         },
 
@@ -381,7 +385,7 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
             this.on("change:effective_readonly",
                     this, this.proxy(this.effective_readonly_change));
             this.effective_readonly_change();
-            return this._super.apply(this, arguments);
+            return this._super();
         },
 
         xy_value_change: function(e)
@@ -423,9 +427,20 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
             return this.$el.find('.oe_form_invalid').length == 0;
         },
 
-        // deactivate view related functions
-        load_views: function() {},
-        reload_current_view: function() {},
-        get_active_view: function() {},
+        load_views: function() {
+            // Needed for removing the initial empty tree view when the widget
+            // is loaded
+            var self = this,
+                result = this._super();
+
+            return $.when(result).then(function()
+            {
+                self.set_value(false);
+            });
+        },
     });
-}
+
+    core.form_widget_registry.add('x2many_2d_matrix', WidgetX2Many2dMatrix);
+
+    return WidgetX2Many2dMatrix;
+});
