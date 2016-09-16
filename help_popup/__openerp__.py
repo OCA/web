@@ -16,10 +16,15 @@
         'report/report.xml',
         'report/help.xml',
         'report/all.xml',
+        'security/group.xml',
+        'security/ir.model.access.csv',
     ],
     'demo': [
         'demo/help.xml',
     ],
+    'external_dependencies': {
+        'python': ['bs4'],
+    },
     'qweb': [
         'static/src/xml/popup_help.xml',
     ],

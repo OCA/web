@@ -21,7 +21,7 @@
         <br/>
     </div>
     <br/>
-    <div  class="bg-warning" t-if="o.enduser_help_model or o.enduser_help">
+    <div class="bg-warning" style="padding:5px;" t-if="o.enduser_help_model or o.enduser_help">
         <div class="oe_text_center label label-info">Internal</div>
         <div t-if="o.enduser_help_model" t-raw="o.enduser_help_model"/>
         <div t-if="o.enduser_help" t-raw="o.enduser_help"/>

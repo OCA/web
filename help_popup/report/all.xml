@@ -23,8 +23,8 @@
         </ul>
         <t t-foreach="actions" t-as="act">
             <h2 t-attf-id="-{{ o._anchorize(act.name) }}" t-raw='act.name'/>
-            <div class="bg-warning" t-if="act.enduser_help" t-raw="act.enduser_help"/>
-            <div class="bg-warning" t-if="act.enduser_help_model" t-raw="act.enduser_help_model"/>
+            <div class="bg-warning" style="padding:5px;" t-if="act.enduser_help" t-raw="act.enduser_help"/>
+            <div class="bg-warning" style="padding:5px;" t-if="act.enduser_help_model" t-raw="act.enduser_help_model"/>
             <hr width="70%"/>
             <div t-if="act.advanced_help" t-raw="act.advanced_help"/>
             <div t-if="act.advanced_help_model" t-raw="act.advanced_help_model"/>

@@ -10,36 +10,31 @@ It brings to end users inline documentation.
 Some parts of the documentation can be modified by anyone (with proper rights).
 
 
-Configuration
-=============
-
-* Go to any view and click on the `?` near the title view.
-* Edit the html field to add content
-
-
-* You can provide documentation with this module by appending data 
-  in the field advanced_help (relative to action) or advanced_help_model
-  if your help must be associated to model instead of action
-
-
 Usage
 =====
 
-Click on ? button
+Read the documentation below
 
 
 .. image:: help_popup/static/description/popup.png
-    :alt: License: Help Popup
+    :alt: Help Popup
+
+Here is the documentation for the whole sales menu with a summary
+
+.. image:: help_popup/static/description/sales_doc.png
+    :alt: Documentaion for main menu
 
 
 Alternative
 -----------
 If you have website module installed, it could be an option
-to install help_online instead of this module.
+to install help_online instead of this module. Just compare them.
 
-Help Online is more advanced (allow the end user to add help)
-but depends on an other module.
-Help popup is more like an embedded help that use power users for end users.
+
+Roadmap / issue
+===============
+* For v9 move to knowledge repository
+* Allow to plug an online translator to reduce the translation effort to the popup.
 
 
 Bug Tracker

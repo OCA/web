@@ -1,6 +1,7 @@
 openerp.help_popup = function(instance, local) {
 
     var _t = instance.web._t;
+
     instance.web.ViewManager.include({
 
         do_create_view: function(view_type) {
@@ -14,7 +15,7 @@ openerp.help_popup = function(instance, local) {
                     return true;
                 }
                 $elem.data('click-init', true);
-                console.log('me  ' + self)
+                console.log('blabla  ')
                 if (self.action.id == undefined || self.action.help_has_content == true) {
                     self.$el.find('span.update_help').hide()
                 }

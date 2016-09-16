@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+<data>
+
+    <record model="res.groups" id="group_help">
+        <field name="name">Inline Help</field>
+    </record>
+
+
+</data>
+</openerp>

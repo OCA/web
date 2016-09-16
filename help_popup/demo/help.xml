@@ -7,22 +7,9 @@
             <field name="enduser_help"><![CDATA[
 <b>Hi Odooer,</b>
 
-<br/>
-<br/>
-<p>
-I'm the field 'enduser_help' in the Customer action model
-</p>
-<p>
-I'm displayed in a Qweb html report
-</p>
-
-<p>
-Don't hesitate to customized me with your own words and syntax
-</p>
-
-<p>You can write any html tag. Here is an image with img tag</p>
-
-<img src="http://www.akretion.com/sites/50443990c3c67e1bf3000004/theme/images/logo.png"/>
+<p/>
+Here is a documentation tool. You can customize these lines.
+Check lines below to learn more about this feature.
 
 
           ]]></field>
@@ -32,24 +19,48 @@ Don't hesitate to customized me with your own words and syntax
             <field name="advanced_help"><![CDATA[
 <b>Hi Odoo community,</b>
 
-<br/>
-<br/>
-<p>
-I'm the field 'advanced_help' in the customer action also displayed in Qweb report.
-</p>
-<p>
-I wrote these words to explain the main purpose:
-    <blockquote>
-Odoo community companies can insert their documenation here with data in their modules. <br><br>
-Then, any end users can see this documentation in one click.
-<br>
-End users can also display and print documentation about an entire menu.
-    </blockquote>
-</p>
-<p>
+<h4>Main functionalities:</h4>
+  <ul>
+    <li>Documentation is contextual by model or action: the right help to the good place.</li>
+    <li>Modules contributors can embeds their documentation in their modules: documentation access in 1 click by model or action.</li>
+    <li>End users can also produce some html documentation to complete missing parts.</li>
+    <li>Documentation can also been edited for a complete base menu: Sales, Purchase, etc.</li>
+    <li>Documentation can be printed with <kbd>Ctrl + P</kbd> shortcut.</li>
+  </ul>
+<p/>
 
-</p>
+<h4>How to use it:</h4>
+  <ul>
+    <li>When you see on any user interface part <img src="/help_popup/static/description/nodoc.png"/> click on '?'.</li>
+    <li>Click on edit and fill 'End Users help' field.</li>
+    <li>When you see <img src="/help_popup/static/description/doc.png"/> click on '?' button to access directly to the documentation.</li>
+    <li>With the 2 buttons on the right, can either edit help or call the documentation of the whole main menus <img src="/help_popup/static/description/sales.png"/></li>
+  </ul>
 
+<p>
+<h4>How to embedds documentation in your module:</h4>
+  <ul>
+    <li>You can insert html with standard Odoo xml data.</li>
+    <li>Data are inserted with 'ir.actions.act_window' model</li>
+    <li>If your data concerns a model, then fill the field 'advanced_help_model' of your action.</li>
+    <li>If your data is specific to 1 action window (i.e. only customers, not suppliers) then fill the field 'avanced_help' with your data.</li>
+    <li>Example of inserted data
+        <br/><code>
+        &lt;record id="base.action_partner_form" model="ir.actions.act_window"&gt;
+        <br/> &nbsp; &nbsp; 
+            &lt;field name="advanced_help"&gt;&lt;![CDATA[
+          <p>put your html data here</p>
+        <br/> &nbsp; &nbsp; 
+          ]]&gt;&lt;/field&gt;
+        <br/>
+          &lt;/record&gt;</code>
+    </li>
+    <li>You can do of the same way with 'advanced_help_model' field.</li>
+    <li><b>Several modules can modify a fraction of the same field: remove of data at uninstall is taken account.</b></li>
+  </ul>
+<p/>
+<img src="/help_popup/static/description/contributor.png"/>
+<p/>
 
           ]]></field>
         </record>
@@ -68,7 +79,7 @@ Use these multicategories to classify your partners
 
         <record id="base.action_res_bank_form" 
                 model="ir.actions.act_window">
-            <field name="enduser_help"><![CDATA[
+            <field name="enduser_help_model"><![CDATA[
 Hi all,<br>
 <br><br>
 Who does not want to rob a bank?

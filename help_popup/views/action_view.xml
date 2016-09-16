@@ -10,6 +10,7 @@
             <field name="help" position="after">
                 <field name="enduser_help"/>
                 <field name="advanced_help"/>
+                <field name="help_has_content"/>
             </field>
         </field>
     </record>
@@ -22,14 +23,14 @@
                     <group name="main" col="4">
                         <field name="name" attrs="{'readonly': True}"/>
                         <field name="res_model" attrs="{'readonly': True}"/>
+                        <field name="help_has_content"/>
                         <field name="action_help"/>
-                        <button name="open_help_popup" type="object" string="Help"
-                                class="oe_highlight"/><span/>
-                        <!-- <field name="help_has_content"/> -->
+                        <button name="button_open_help_popup" type="object" 
+                                string="Help" class="oe_highlight"/><span/>
                         <separator string="End users help" colspan="4"/>
                         <field name="enduser_help_model" colspan="4" nolabel="1"/>
                         <div attrs="{'invisible': [('action_help', '=', False)]}"
-                             class="alert alert-warning"
+                             class="alert alert-warning oe_edit_only"
                              colspan="4">Help field below is only used by action (i.e. action for 'customer' is different than action for 'supplier' but share the same model)</div>
                         <field name="enduser_help" colspan="4" nolabel="1"
                                attrs="{'invisible': [('action_help', '=', False)]}"/>
@@ -66,7 +67,7 @@
         <field name="res_model">ir.actions.act_window</field>
         <field name="view_mode">form</field>
         <field name="target">current</field>
-        <!-- <field name="context">{'search_default_customer':1, 'restrict_kind': ['individu', 'incorpo'], 'default_kind':'incorpo'}</field> -->
+        <field name="context">{'search_help_has_content':1}</field>
     </record>
 
     <record model="ir.actions.act_window.view" id="act_help_popup_formr_view_form">
