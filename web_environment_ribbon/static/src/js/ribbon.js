@@ -27,35 +27,33 @@ function validStrColour(strToTest) {
 }
 
 core.bus.on('web_client_ready', null, function () {
-    var ribbon = $('.test-ribbon');
-    // If ribbon is found in DOM
-    if (ribbon.length) {
-        ribbon.hide();
-        model.call('get_param', ['ribbon.name']).then(
-            function (name) {
-                if (name && name != 'False') {
-                    ribbon.html(name);
-                    ribbon.show();
-                }
+    var ribbon = $('<div class="test-ribbon"/>');
+    $('body').append(ribbon);
+    ribbon.hide();
+    model.call('get_param', ['ribbon.name']).then(
+        function (name) {
+            if (name && name != 'False') {
+                ribbon.html(name);
+                ribbon.show();
             }
-        );
-        // Get ribbon color from system parameters
-        model.call('get_param', ['ribbon.color']).then(
-            function (strColor) {
-                if (strColor && validStrColour(strColor)) {
-                    ribbon.css('color', strColor);
-                }
+        }
+    );
+    // Get ribbon color from system parameters
+    model.call('get_param', ['ribbon.color']).then(
+        function (strColor) {
+            if (strColor && validStrColour(strColor)) {
+                ribbon.css('color', strColor);
             }
-        );
-        // Get ribbon background color from system parameters
-        model.call('get_param', ['ribbon.background.color']).then(
-            function (strBackgroundColor) {
-                if (strBackgroundColor && validStrColour(strBackgroundColor)) {
-                    ribbon.css('background-color', strBackgroundColor);
-                }
+        }
+    );
+    // Get ribbon background color from system parameters
+    model.call('get_param', ['ribbon.background.color']).then(
+        function (strBackgroundColor) {
+            if (strBackgroundColor && validStrColour(strBackgroundColor)) {
+                ribbon.css('background-color', strBackgroundColor);
             }
-        );
-    }
+        }
+    );
 });
 
 }); // odoo.define
