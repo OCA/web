@@ -76,7 +76,7 @@ addon | version | summary
 [web_widget_one2many_tags](web_widget_one2many_tags/) | 8.0.1.0.0 | Provides a widget similar to many2many_tags for one2many fields
 [web_widget_radio_tree](web_widget_radio_tree/) | 8.0.1.0.0 | Add radio buttons for records in tree.
 [web_widget_text_markdown](web_widget_text_markdown/) | 8.0.1.0.0 | web_widget_text_markdown
-[web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 8.0.1.0.0 | Show list fields as a matrix
+[web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 8.0.1.1.0 | Show list fields as a matrix
 
 Unported addons
 ---------------
