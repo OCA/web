@@ -10,6 +10,8 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
     var FieldOne2Many = core.form_widget_registry.get('one2many');
     var Model = require('web.Model');
     var data = require('web.data');
+    var _ = require('_');
+    var $ = require('$');
 
     var WidgetX2Many2dMatrix = FieldOne2Many.extend({
         template: 'FieldX2Many2dMatrix',
@@ -80,7 +82,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
             self.by_y_axis = {};
             self.by_id = {};
 
-            return jQuery.when(result).then(function()
+            return $.when(result).then(function()
             {
                 return self.dataset._model.call('fields_get').then(function(fields)
                 {
@@ -101,7 +103,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                     {
                         return;
                     }
-                    return (new instance.web.Query(self.dataset._model))
+                    return (new data.Query(self.dataset._model))
                     .filter([['id', 'in', ids_written]])
                     .all()
                     .then(function(rows)
@@ -178,7 +180,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                                 'change', self.proxy(self.xy_value_change));
                             self.effective_readonly_change();
                         }
-                        return jQuery.when.apply(jQuery, deferrends);
+                        return $.when.apply($, deferrends);
                     });
                 });
             });
@@ -313,7 +315,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                 totals_x = {},
                 totals_y = {},
                 rows = this.by_id,
-                deferred = jQuery.Deferred();
+                deferred = $.Deferred();
             _.each(rows, function(row)
             {
                 var key_x = self.get_field_value(row, self.field_x_axis),
@@ -369,7 +371,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                 type: 'ir.actions.act_window',
                 name: this.fields[field].string,
                 res_model: this.fields[field].relation,
-                res_id: jQuery(e.currentTarget).data(id_attribute),
+                res_id: $(e.currentTarget).data(id_attribute),
                 views: [[false, 'form']],
                 target: 'current',
             })
@@ -390,7 +392,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
 
         xy_value_change: function(e)
         {
-            var $this = jQuery(e.currentTarget),
+            var $this = $(e.currentTarget),
                 val = $this.val();
             if(this.validate_xy_value(val))
             {
