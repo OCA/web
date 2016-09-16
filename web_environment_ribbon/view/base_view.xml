@@ -15,12 +15,4 @@
     </xpath>
 </template>
 
-<!-- Add ribbon to page -->
-<template id="body_with_ribbon_test" name="ribbon_test web.webclient_bootstrap"
-          inherit_id="web.webclient_bootstrap">
-    <xpath expr="//div[@class='openerp openerp_webclient_container oe_webclient']" position="before">
-        <div class="test-ribbon"/>
-    </xpath>
-</template>
-
 </odoo>
