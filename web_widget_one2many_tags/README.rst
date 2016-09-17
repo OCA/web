@@ -5,7 +5,7 @@
 Tags widget for one2many fields
 ===============================
 
-This module add a widget ``one2many_tags`` that looks and behaves like ``many2many_tags``, but works for one2many fields.
+This module adds a widget ``one2many_tags`` that looks and behaves like ``many2many_tags``, but works for one2many fields.
 
 Usage
 =====
