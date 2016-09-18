@@ -3,7 +3,7 @@
 # * help_online
 # 
 # Translators:
-# Ahmet Altınışık <aaltinisik@altinkaya.com.tr>, 2016
+# Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2016
 # Antonio Trueba, 2016
 # Antonio Trueba, 2016
 # Armando Vulcano Junior <vulcano@uol.com.br>, 2015
@@ -12,6 +12,7 @@
 # danimaribeiro <danimaribeiro@gmail.com>, 2016
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2012,2014
 # Kostas Goutoudis <goutoudis@gmail.com>, 2015
+# Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2015
 # Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2015
 # Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2015
 # Kostas Goutoudis <goutoudis@gmail.com>, 2015
@@ -25,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-24 00:46+0000\n"
-"PO-Revision-Date: 2016-06-23 10:59+0000\n"
+"POT-Creation-Date: 2016-09-17 12:06+0000\n"
+"PO-Revision-Date: 2016-09-16 21:45+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Spanish (http://www.transifex.com/oca/OCA-web-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -37,7 +38,7 @@ msgstr ""
 
 #. module: help_online
 #. openerp-web
-#: code:addons/help_online/static/src/js/help_online.js:83
+#: code:addons/help_online/static/src/js/help_online.js:93
 #, python-format
 msgid "Cancel"
 msgstr "Cancelar"
@@ -50,7 +51,7 @@ msgstr "Cerrar"
 
 #. module: help_online
 #. openerp-web
-#: code:addons/help_online/static/src/js/help_online.js:81
+#: code:addons/help_online/static/src/js/help_online.js:91
 #, python-format
 msgid "Confirm"
 msgstr "Confirmar"
@@ -77,7 +78,7 @@ msgstr "Creado en"
 #: field:export.help.wizard,display_name:0 field:help.online,display_name:0
 #: field:import.help.wizard,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre mostrado"
 
 #. module: help_online
 #: view:export.help.wizard:help_online.export_help_wizard_view
@@ -187,14 +188,14 @@ msgstr ""
 
 #. module: help_online
 #. openerp-web
-#: code:addons/help_online/static/src/js/help_online.js:88
+#: code:addons/help_online/static/src/js/help_online.js:98
 #, python-format
 msgid "Ok"
 msgstr "Ok"
 
 #. module: help_online
 #. openerp-web
-#: code:addons/help_online/static/src/js/help_online.js:107
+#: code:addons/help_online/static/src/js/help_online.js:117
 #, python-format
 msgid "Page does not exist. Do you want to create?"
 msgstr "La página no existe. ¿Quiere crearla?"
