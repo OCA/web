@@ -3,7 +3,7 @@
 # * web_shortcuts
 # 
 # Translators:
-# Ahmet Altınışık <aaltinisik@altinkaya.com.tr>, 2016
+# Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2016
 # Antonio Trueba, 2016
 # Armando Vulcano Junior <vulcano@uol.com.br>, 2015
 # bossnm11 <bossnm11@gmail.com>, 2014
@@ -14,7 +14,7 @@
 # Eduardo Rodríguez Crespo <erocre@gmail.com>, 2016
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2012-2013
 # Gil <gedwarp@gmail.com>, 2014
-# Hongseob Lee <shevious@gmail.com>, 2015
+# kmooc <shevious@gmail.com>, 2015
 # Hongseob Lee <shevreg@yahoo.com>, 2015
 # jeon <bluerespect@nate.com>, 2014
 # JiyeonLee <leejiyeon00@gmail.com>, 2014
@@ -35,12 +35,13 @@
 # Sujin Lee <sujinlee.me@gmail.com>, 2014
 # Sunah Lim <whitetree70@snu.ac.kr>, 2013
 # Young C. Kim, 2015
+# Young C. Kim, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-24 00:46+0000\n"
-"PO-Revision-Date: 2016-06-23 10:58+0000\n"
+"POT-Creation-Date: 2016-09-17 12:06+0000\n"
+"PO-Revision-Date: 2016-09-16 21:45+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Spanish (http://www.transifex.com/oca/OCA-web-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -69,7 +70,7 @@ msgstr "Creado en"
 #. module: web_shortcuts
 #: field:web.shortcut,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre mostrado"
 
 #. module: web_shortcuts
 #: field:web.shortcut,id:0

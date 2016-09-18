@@ -3,13 +3,27 @@
 # * web_shortcuts
 # 
 # Translators:
+# Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2015
+# Alejandro Santana <alejandrosantana@anubia.es>, 2015
+# Alexsandro Haag <alex@hgsoft.com.br>, 2015
+# Antonio Trueba, 2016
+# Armando Vulcano Junior <vulcano@uol.com.br>, 2015
+# Carles Antoli <carlesantoli@hotmail.com>, 2015
+# danimaribeiro <danimaribeiro@gmail.com>, 2016
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2014
+# Hans Henrik Gabelgaard <hhg@gabelgaard.org>, 2015
+# llum.birque@gmail.com <llum.birque@gmail.com>, 2015
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
+# Rudolf Schnapka <rs@techno-flex.de>, 2015-2016
+# Stéphane Bidoul <sbi@skynet.be>, 2015
+# Wagner Pereira <wagner@wagner.pereira.nom.br>, 2015
+# yterrettaz, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-23 13:46+0000\n"
-"PO-Revision-Date: 2015-11-07 11:21+0000\n"
+"POT-Creation-Date: 2016-09-17 12:06+0000\n"
+"PO-Revision-Date: 2016-09-09 12:25+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Galician (http://www.transifex.com/oca/OCA-web-8-0/language/gl/)\n"
 "MIME-Version: 1.0\n"
@@ -28,27 +42,37 @@ msgstr "Engadir / Eliminar atallo..."
 #. module: web_shortcuts
 #: field:web.shortcut,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: web_shortcuts
 #: field:web.shortcut,create_date:0
 msgid "Created on"
+msgstr "Creado en"
+
+#. module: web_shortcuts
+#: field:web.shortcut,display_name:0
+msgid "Display Name"
 msgstr ""
 
 #. module: web_shortcuts
 #: field:web.shortcut,id:0
 msgid "ID"
+msgstr "ID"
+
+#. module: web_shortcuts
+#: field:web.shortcut,__last_update:0
+msgid "Last Modified on"
 msgstr ""
 
 #. module: web_shortcuts
 #: field:web.shortcut,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "ültima actualización por"
 
 #. module: web_shortcuts
 #: field:web.shortcut,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última actualización en"
 
 #. module: web_shortcuts
 #: field:web.shortcut,menu_id:0

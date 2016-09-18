@@ -3,13 +3,25 @@
 # * web_m2x_options
 # 
 # Translators:
+# Artūras Griškonis <ArtX38@gmail.com>, 2012,2015-2016
+# Artūras Griškonis <xbmc.lt@gmail.com>, 2012
+# Carles Antoli <carlesantoli@hotmail.com>, 2015
 # danimaribeiro <danimaribeiro@gmail.com>, 2016
+# danimaribeiro <danimaribeiro@gmail.com>, 2016
+# Dorin Hongu <dhongu@gmail.com>, 2015
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012
+# Guewen Baconnier <guewen.baconnier@camptocamp.com>, 2015
+# Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015-2016
+# Pedro M. Baeza <pedro.baeza@gmail.com>, 2015
+# Rudolf Schnapka <rs@techno-flex.de>, 2016
+# Zapata11 <raimondas.duzinskas@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-11 02:17+0000\n"
-"PO-Revision-Date: 2016-03-05 16:20+0000\n"
+"POT-Creation-Date: 2016-09-17 12:06+0000\n"
+"PO-Revision-Date: 2016-09-15 23:07+0000\n"
 "Last-Translator: danimaribeiro <danimaribeiro@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-web-8-0/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -20,24 +32,34 @@ msgstr ""
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:191
-#: code:addons/web_m2x_options/static/src/js/form.js:330
+#: code:addons/web_m2x_options/static/src/js/form.js:202
+#: code:addons/web_m2x_options/static/src/js/form.js:341
 #, python-format
 msgid "Create \"<strong>%s</strong>\""
 msgstr "Criar \"<strong>%s</strong>\""
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:213
-#: code:addons/web_m2x_options/static/src/js/form.js:351
+#: code:addons/web_m2x_options/static/src/js/form.js:224
+#: code:addons/web_m2x_options/static/src/js/form.js:362
 #, python-format
 msgid "Create and Edit..."
 msgstr "Criar e editar.."
 
 #. module: web_m2x_options
+#: field:ir.model,disable_quick_create:0
+msgid "Disable quick create"
+msgstr ""
+
+#. module: web_m2x_options
+#: model:ir.model,name:web_m2x_options.model_ir_model
+msgid "Models"
+msgstr "Modelos"
+
+#. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:156
-#: code:addons/web_m2x_options/static/src/js/form.js:305
+#: code:addons/web_m2x_options/static/src/js/form.js:167
+#: code:addons/web_m2x_options/static/src/js/form.js:316
 #, python-format
 msgid "Search More..."
 msgstr "Buscar mais..."

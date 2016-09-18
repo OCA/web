@@ -3,7 +3,7 @@
 # * help_online
 # 
 # Translators:
-# Ahmet Altınışık <aaltinisik@altinkaya.com.tr>, 2015
+# Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2015
 # Antonio Trueba, 2016
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2012,2014
 # Hotellook, 2014
@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-08 16:35+0000\n"
-"PO-Revision-Date: 2016-07-08 10:49+0000\n"
+"POT-Creation-Date: 2016-09-17 12:06+0000\n"
+"PO-Revision-Date: 2016-09-15 12:45+0000\n"
 "Last-Translator: Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>\n"
 "Language-Team: Finnish (http://www.transifex.com/oca/OCA-web-8-0/language/fi/)\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgstr ""
 
 #. module: help_online
 #. openerp-web
-#: code:addons/help_online/static/src/js/help_online.js:83
+#: code:addons/help_online/static/src/js/help_online.js:93
 #, python-format
 msgid "Cancel"
 msgstr "Peru"
@@ -41,7 +41,7 @@ msgstr "Sulje"
 
 #. module: help_online
 #. openerp-web
-#: code:addons/help_online/static/src/js/help_online.js:81
+#: code:addons/help_online/static/src/js/help_online.js:91
 #, python-format
 msgid "Confirm"
 msgstr "Vahvista"
@@ -178,14 +178,14 @@ msgstr "Sivun etuliitettä ei ole määritetty!"
 
 #. module: help_online
 #. openerp-web
-#: code:addons/help_online/static/src/js/help_online.js:88
+#: code:addons/help_online/static/src/js/help_online.js:98
 #, python-format
 msgid "Ok"
 msgstr "Ok"
 
 #. module: help_online
 #. openerp-web
-#: code:addons/help_online/static/src/js/help_online.js:107
+#: code:addons/help_online/static/src/js/help_online.js:117
 #, python-format
 msgid "Page does not exist. Do you want to create?"
 msgstr "Sivua ei ole olemassa. Haluatko luoda sivun?"
