@@ -17,6 +17,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import operator
 from openerp import _, models, api, fields
 from openerp.tools.safe_eval import safe_eval
 from openerp.exceptions import Warning as UserError
@@ -46,7 +47,7 @@ class IrUiMenu(models.Model):
                     .get_needaction_data().iteritems():
                 if needaction['needaction_enabled']:
                     menu = self.env['ir.ui.menu'].browse(menu_id)
-                    model = menu._get_needaction_model()._name
+                    model = menu._get_needaction_model()
                     count_per_model[model] = max(
                         count_per_model.get(model),
                         needaction['needaction_counter']
@@ -58,7 +59,8 @@ class IrUiMenu(models.Model):
             }
             if action_menu:
                 result[this.id].update({
-                    'action_id': action_menu.action.id,
+                    'action_id': action_menu.action and
+                    action_menu.action.id or None,
                     'action_domain': action_menu._eval_needaction_domain(),
                 })
         return result
@@ -66,7 +68,7 @@ class IrUiMenu(models.Model):
     @api.multi
     def get_needaction_data(self):
         result = super(IrUiMenu, self).get_needaction_data()
-        for this in self:
+        for this in self.sorted(operator.itemgetter('parent_left'), True):
             data = result[this.id]
             if data['needaction_enabled'] or this.needaction and\
                this.needaction_domain:
@@ -79,6 +81,15 @@ class IrUiMenu(models.Model):
                     data['needaction_enabled'] = True
                     data['needaction_counter'] = this._get_needaction_model()\
                         .search_count(this._eval_needaction_domain())
+            if not data['needaction_enabled'] and this.needaction and\
+               this.child_id and this.parent_id and this.parent_id.parent_id:
+                # if the user didn't turn it off, show counters for submenus
+                # but only from the 3rd level (the first that is closed by
+                # default)
+                for child in this.child_id:
+                    data['needaction_counter'] += result.get(child.id, {}).get(
+                        'needaction_counter', 0)
+                data['needaction_enabled'] = bool(data['needaction_counter'])
         return result
 
     @api.multi
