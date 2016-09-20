@@ -29,6 +29,7 @@
         'mail',
     ],
     "data": [
+        "views/ir_ui_menu.xml",
         "data/ir_config_parameter.xml",
         'views/templates.xml',
     ],
