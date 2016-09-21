@@ -52,12 +52,20 @@ field_label_x_axis
     Use another field to display in the table header
 field_label_y_axis
     Use another field to display in the table header
+x_axis_clickable
+    It indicates if the X axis allows to be clicked for navigating to the field
+    (if it's a many2one field). True by default
+y_axis_clickable
+    It indicates if the Y axis allows to be clicked for navigating to the field
+    (if it's a many2one field). True by default
 field_value
     Show this field as value
 show_row_totals
-    If field_value is a numeric field, calculate row totals
+    If field_value is a numeric field, it indicates if you want to calculate
+    row totals. True by default
 show_column_totals
-    If field_value is a numeric field, calculate column totals
+    If field_value is a numeric field, it indicates if you want to calculate
+    column totals. True by default
 field_att_<name>
     Declare as many options prefixed with this string as you need for binding
     a field value with an HTML node attribute (disabled, class, style...)
