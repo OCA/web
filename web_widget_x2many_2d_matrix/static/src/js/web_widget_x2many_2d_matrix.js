@@ -449,7 +449,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
 
             return $.when(result).then(function()
             {
-                self.set_value(false);
+                self.set_value(self.get_value());
             });
         },
     });
