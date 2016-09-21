@@ -18,9 +18,9 @@ class ResUsers(models.Model):
             record.notify_warning_channel_name = 'notify_warning_%s' % res_id
 
     notify_info_channel_name = fields.Char(
-        compute='_compute_channel_names', store=True, required=True)
+        compute='_compute_channel_names', store=True)
     notify_warning_channel_name = fields.Char(
-        compute='_compute_channel_names', store=True, requried=True)
+        compute='_compute_channel_names', store=True)
 
     @api.multi
     def notify_info(self, message, title=None, sticky=False):
