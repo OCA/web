@@ -134,55 +134,11 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                 {
                     return self.dataset.read_ids(self.dataset.ids).then(function(rows)
                     {
-                        var read_many2one = {},
-                            many2one_fields = [
-                                self.field_x_axis, self.field_y_axis,
-                                self.field_label_x_axis, self.field_label_y_axis
-                            ];
-                        // prepare to read many2one names if necessary (we can get (id, name) or just id as value)
-                        _.each(many2one_fields, function(field)
-                        {
-                            if(self.fields[field].type == 'many2one')
-                            {
-                                read_many2one[field] = {};
-                            }
-                        });
                         // setup data structure
                         _.each(rows, function(row)
                         {
                             self.add_xy_row(row);
-                            _.each(read_many2one, function(rows, field)
-                            {
-                                if(!_.isArray(row[field]))
-                                {
-                                    rows[row[field]] = rows[row[field]] || []
-                                    rows[row[field]].push(row);
-                                }
-                            });
                         });
-                        // read many2one fields if necessary
-                        var deferrends = [];
-                        _.each(read_many2one, function(rows, field)
-                        {
-                            if(_.isEmpty(rows))
-                            {
-                                return;
-                            }
-                            var model = new Model(self.fields[field].relation);
-                            deferrends.push(model.call(
-                                'name_get',
-                                [_.map(_.keys(rows), function(key) {return parseInt(key)})])
-                                .then(function(names)
-                                {
-                                    _.each(names, function(name)
-                                    {
-                                        _.each(rows[name[0]], function(row)
-                                        {
-                                            row[field] = name;
-                                        });
-                                    });
-                                }));
-                        })
                         if(self.is_started && !self.no_rerender)
                         {
                             self.renderElement();
@@ -192,7 +148,6 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                                 'change', self.proxy(self.xy_value_change));
                             self.effective_readonly_change();
                         }
-                        return $.when.apply($, deferrends);
                     });
                 });
             });
