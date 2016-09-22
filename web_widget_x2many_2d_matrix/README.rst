@@ -117,7 +117,9 @@ field.
 Known issues / Roadmap
 ======================
 
-* it would be worth trying to instantiate the proper field widget and let it render the input
+* It would be worth trying to instantiate the proper field widget and let it render the input
+* Let the widget deal with the missing values of the full Cartesian product,
+  instead of being forced to pre-fill all the possible values.
 * If you pass values with an onchange, you need to overwrite the model's method
   `onchange` for making the widget work::
 
