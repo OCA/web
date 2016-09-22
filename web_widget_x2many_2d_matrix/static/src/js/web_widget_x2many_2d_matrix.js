@@ -53,8 +53,8 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
             this.field_y_axis = node.attrs.field_y_axis || this.field_y_axis;
             this.field_label_x_axis = node.attrs.field_label_x_axis || this.field_x_axis;
             this.field_label_y_axis = node.attrs.field_label_y_axis || this.field_y_axis;
-            this.x_axis_clickable = node.attrs.x_axis_clickable != undefined ? this.parse_boolean(node.attrs.x_axis_clickable) : this.x_axis_clickable;
-            this.y_axis_clickable = node.attrs.y_axis_clickable != undefined ? this.parse_boolean(node.attrs.y_axis_clickable) : this.y_axis_clickable;
+            this.x_axis_clickable = this.parse_boolean(node.attrs.x_axis_clickable || '1');
+            this.y_axis_clickable = this.parse_boolean(node.attrs.y_axis_clickable || '1');
             this.field_value = node.attrs.field_value || this.field_value;
             for (var property in node.attrs) {
                 if (property.startsWith("field_att_")) {
@@ -62,8 +62,8 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                 }
             }
             this.field_editability = node.attrs.field_editability || this.field_editability;
-            this.show_row_totals = node.attrs.show_row_totals != undefined ? this.parse_boolean(node.attrs.show_row_totals) : this.show_row_totals;
-            this.show_column_totals = node.attrs.show_column_totals != undefined ? this.parse_boolean(node.attrs.show_column_totals) : this.show_column_totals;
+            this.show_row_totals = this.parse_boolean(node.attrs.show_row_totals || '1');
+            this.show_column_totals = this.parse_boolean(node.attrs.show_column_totals || '1');
             return this._super(field_manager, node);
         },
 
