@@ -26,6 +26,9 @@ or
   
    self.env.user.notify_warning('My marning message') 
 
+.. figure:: static/description/notifications_screenshot.png
+   :scale: 80 %
+   :alt: Sample notifications
 
 Installation
 ============
