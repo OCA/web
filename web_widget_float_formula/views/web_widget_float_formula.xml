@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright GRAP
+    Copyright 2016 LasLabs Inc.
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<odoo>
+   <template id="assets_backend" name="web_widget_float_formula Assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/web_widget_float_formula/static/src/js/web_widget_float_formula.js"/>
+        </xpath>
+    </template>
+
+    <template id="qunit_suite" name="web_widget_float_formula Test Assets" inherit_id="web.qunit_suite">
+        <xpath expr="//html/head" position="inside">
+            <script type="text/javascript" src="/web_widget_float_formula/static/tests/js/test_web_widget_float_formula.js"/>
+        </xpath>
+    </template>
+</odoo>
