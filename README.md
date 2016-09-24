@@ -30,6 +30,7 @@ addon | version | summary
 [web_sheet_full_width](web_sheet_full_width/) | 9.0.1.0.0 | Use the whole available screen width when displaying sheets
 [web_translate_dialog](web_translate_dialog/) | 9.0.1.0.0 | Easy-to-use pop-up to translate fields in several languages
 [web_tree_image](web_tree_image/) | 9.0.1.1.0 | Show images in tree views
+[web_widget_float_formula](web_widget_float_formula/) | 9.0.1.0.0 | Allow use of simple formulas in float fields
 [web_widget_image_download](web_widget_image_download/) | 9.0.1.0.0 | Allows to download any image from its widget
 [web_widget_many2many_tags_multi_selection](web_widget_many2many_tags_multi_selection/) | 9.0.1.1.0 | Tags multiple selection
 [web_widget_timepicker](web_widget_timepicker/) | 9.0.1.0.0 | Web Timepicker Widget
@@ -70,7 +71,6 @@ addon | version | summary
 [web_tree_many2one_clickable](web_tree_many2one_clickable/) | 8.0.1.0.0 (unported) | Clickable many2one fields for tree views
 [web_widget_color](web_widget_color/) | 8.0.1.0.0 (unported) | Web Widget Color
 [web_widget_datepicker_options](web_widget_datepicker_options/) | 8.0.1.0.0 (unported) | web_widget_datepicker_options
-[web_widget_float_formula](web_widget_float_formula/) | 8.0.1.0.0 (unported) | Web Widget - Formulas in Float fields
 [web_widget_text_markdown](web_widget_text_markdown/) | 8.0.1.0.0 (unported) | web_widget_text_markdown
 [web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 8.0.1.0.0 (unported) | Show list fields as a matrix
 
