@@ -24,6 +24,7 @@ addon | version | summary
 [web_environment_ribbon](web_environment_ribbon/) | 9.0.1.0.0 | Web Environment Ribbon
 [web_favicon](web_favicon/) | 9.0.1.0.0 | Allows to set a custom shortcut icon (aka favicon)
 [web_hide_db_manager_link](web_hide_db_manager_link/) | 9.0.1.0.0 | Hide link to database manager in login screen
+[web_notify](web_notify/) | 9.0.1.0.0 | Send notification messages to user
 [web_readonly_bypass](web_readonly_bypass/) | 9.0.1.0.0 | Allow to save onchange modifications to readonly fields
 [web_searchbar_full_width](web_searchbar_full_width/) | 9.0.1.0.0 | Show search bar in full screen width
 [web_send_message_popup](web_send_message_popup/) | 9.0.1.0.0 | Web Send Message as Popup
