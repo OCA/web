@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 # Odoo, Open Source Web Widget Color
 # Copyright (C) 2012 Savoir-faire Linux (<http://www.savoirfairelinux.com>).
 # Copyright (C) 2014 Anybox <http://anybox.fr>
