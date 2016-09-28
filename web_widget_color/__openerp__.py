@@ -21,6 +21,7 @@
     'qweb': [
         'static/src/xml/widget.xml',
     ],
+    'license': 'AGPL-3',
     'auto_install': False,
     'installable': True,
     'web_preload': True,
