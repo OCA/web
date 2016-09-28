@@ -57,11 +57,11 @@ odoo.define('web.web_widget_color', function(require) {
             if (!this.get("effective_readonly")) {
                 var $input = this.$el.find('input');
                 $input.val(show_value);
-                $input.css("background-color", show_value)
+                $input.css("background-color", show_value);
                 jscolor.init(this.$el[0]);
             } else {
                 this.$(".oe_form_char_content").text(show_value);
-                this.$('div').css("background-color", show_value)
+                this.$('div').css("background-color", show_value);
             }
         }
     });
