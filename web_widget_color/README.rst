@@ -27,12 +27,6 @@ Features
   |listview|
 
 
-Requirements
-============
-
-This module has been ported to 8.0
-
-
 Usage
 =====
 
@@ -87,6 +81,7 @@ Contributors
 ------------
 
 * Adil Houmadi <adil.houmadi@gmail.com>
+* Nicolas JEUDY (Sudokeys) <https://www.github.com/njeudy>
 
 Maintainer
 ----------
