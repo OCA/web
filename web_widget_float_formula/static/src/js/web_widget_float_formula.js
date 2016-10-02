@@ -52,10 +52,15 @@ odoo.define('web_widget_float_formula', function(require) {
             },
 
             _process_formula: function(formula) {
-                var clean_formula = formula.toString().replace(/^\s+|\s+$/g, '');
+                try{
+                    formula = formula.toString();
+                } catch (ex) {
+                    return false;
+                }
+                var clean_formula = formula.replace(/^\s+|\s+$/g, '');
                 if (clean_formula[0] == '=') {
                     clean_formula = clean_formula.substring(1);
-                    var myreg = RegExp('[0-9]|\\s|\\.|,|\\(|\\)|\\+|\\-|\\*|\\/','g');
+                    var myreg = new RegExp('[0-9]|\\s|\\.|,|\\(|\\)|\\+|\\-|\\*|\\/', 'g');
                     if (clean_formula.replace(myreg, '') === '') {
                         return clean_formula;
                     }
