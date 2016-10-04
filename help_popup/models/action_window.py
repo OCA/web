@@ -166,8 +166,9 @@ class IrActionsActwindow(models.Model):
     def remove_obsolete_help(self, module_name):
         """ We need to remove some partial content of the file """
         for field in ['advanced_help', 'advanced_help_model']:
-            tag = getattr(
-                BSHTML(self[field]), 'help_%s' % module_name)
+            if not self[field]:
+                continue
+            tag = getattr(BSHTML(self[field]), 'help_%s' % module_name)
             if tag:
                 old_content = ''.join(
                     [unicode(x) for x in tag.contents if x])

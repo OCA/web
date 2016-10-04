@@ -16,7 +16,7 @@ Check lines below to learn more about this feature.
         </record>
 
         <record id="base.action_partner_form" model="ir.actions.act_window">
-            <field name="advanced_help"><![CDATA[
+            <field name="advanced_help_model"><![CDATA[
 <b>Hi Odoo community,</b>
 
 <h4>Main functionalities:</h4>
