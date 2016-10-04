@@ -3,20 +3,20 @@
 
 odoo.define('web_app_drawer', function(require) {
     'use strict';
-    
+
     var $ = require('$');
     var Menu = require('web.Menu');
     var Class = require('web.Class');
     var SearchView = require('web.SearchView');
     var core = require('web.core');
-    
+
     Menu.include({
-        
+
         // Force all_outside to prevent app icons from going into more menu
         reflow: function() {
             this._super('all_outside');
         },
-        
+
         /* Overload to collapse unwanted visible submenus
          * @param allow_open bool Switch to allow submenus to be opened
          */
@@ -26,25 +26,25 @@ odoo.define('web_app_drawer', function(require) {
             var $clicked_menu = this.$secondary_menus.find('a[data-menu=' + id + ']');
             $clicked_menu.parents('.oe_secondary_submenu').css('display', '');
         },
-        
+
     });
-    
+
     SearchView.include({
-        
+
         // Prevent focus of search field on mobile devices
         toggle_visibility: function (is_visible) {
-             $('div.oe_searchview_input').last()
+            $('div.oe_searchview_input').last()
                 .one('focus', $.proxy(this.preventMobileFocus, this));
             return this._super(is_visible);
         },
-        
+
         // It prevents focusing of search el on mobile
         preventMobileFocus: function(event) {
             if (this.isMobile()) {
                 event.preventDefault();
             }
         },
-        
+
         // For lack of Modernizr, TouchEvent will do
         isMobile: function () {
             try{
@@ -54,23 +54,23 @@ odoo.define('web_app_drawer', function(require) {
                 return false;
             }
         },
-        
+
     });
-    
+
     var AppDrawer = Class.extend({
-        
+
         LEFT: 'left',
         RIGHT: 'right',
         UP: 'up',
         DOWN: 'down',
-        
+
         isOpen: false,
         keyBuffer: '',
         keyBufferTime: 500,
         keyBufferTimeoutEvent: false,
         dropdownHeightFactor: 0.90,
         initialized: false,
-        
+
         init: function() {
             this.directionCodes = {
                 'left': this.LEFT,
@@ -91,7 +91,7 @@ odoo.define('web_app_drawer', function(require) {
             core.bus.on('resize', this, this.handleWindowResize);
             core.bus.on('keydown', this, this.handleNavKeys);
         },
-        
+
         // It provides initialization handlers for Drawer
         initDrawer: function() {
             this.$el = $('.drawer');
@@ -109,7 +109,7 @@ odoo.define('web_app_drawer', function(require) {
             });
             this.initialized = true;
         },
-        
+
         // It provides handlers to hide drawer when "unfocused"
         handleClickZones: function() {
             this.$el.drawer('close');
@@ -117,14 +117,14 @@ odoo.define('web_app_drawer', function(require) {
                 .parent()
                 .collapse('hide');
         },
-        
+
         // It resizes bootstrap dropdowns for screen
         handleWindowResize: function() {
             $('.dropdown-scrollable').css(
                 'max-height', $(window).height() * this.dropdownHeightFactor
             );
         },
-        
+
         // It provides keyboard shortcuts for app drawer nav
         handleNavKeys: function(e) {
             if (!this.isOpen){
@@ -144,7 +144,7 @@ odoo.define('web_app_drawer', function(require) {
                 this.selectAppLink(this.searchAppLinks(buffer));
             }
         },
-        
+
         /* It adds to keybuffer, sets expire timer, and returns buffer
          * @returns str of current buffer
          */
@@ -159,11 +159,11 @@ odoo.define('web_app_drawer', function(require) {
             );
             return this.keyBuffer;
         },
-        
+
         clearKeyBuffer: function() {
             this.keyBuffer = '';
         },
-        
+
         /* It performs close actions
          * @fires ``drawer.closed`` to the ``core.bus``
          * @listens ``drawer.opened`` and sends to onDrawerOpen
@@ -172,8 +172,10 @@ odoo.define('web_app_drawer', function(require) {
             core.bus.trigger('drawer.closed');
             this.$el.one('drawer.opened', $.proxy(this.onDrawerOpen, this));
             this.isOpen = false;
+            // Remove inline style inserted by drawer.js
+            this.$el.css("overflow", "");
         },
-        
+
         /* It finds app links and register event handlers
          * @fires ``drawer.opened`` to the ``core.bus``
          * @listens ``drawer.closed`` and sends to :meth:``onDrawerClose``
@@ -185,14 +187,14 @@ odoo.define('web_app_drawer', function(require) {
             core.bus.trigger('drawer.opened');
             this.isOpen = true;
         },
-        
-        // It selects an app link visibly    
+
+        // It selects an app link visibly
         selectAppLink: function($appLink) {
             if ($appLink) {
                 $appLink.focus();
             }
         },
-        
+
         /* It returns first App Link by its name according to query
          * @param query str to search
          * @return jQuery obj
@@ -202,7 +204,7 @@ odoo.define('web_app_drawer', function(require) {
                 return $(this).data('menuName').toUpperCase().startsWith(query);
             }).first();
         },
-        
+
         /* It returns the link adjacent to $appLink in provided direction.
          * It also handles edge cases in the following ways:
          *   * Moves to last link if LEFT on first
@@ -216,10 +218,10 @@ odoo.define('web_app_drawer', function(require) {
          * @return jQuery obj for adjacent applink
          */
         findAdjacentAppLink: function($appLink, direction) {
-            
+
             var obj = [],
                 $objs = this.$appLinks;
-            
+
             switch(direction){
                 case this.LEFT:
                     obj = $objs[$objs.index($appLink) - 1];
@@ -248,15 +250,15 @@ odoo.define('web_app_drawer', function(require) {
                     }
                     break;
             }
-            
+
             if (obj.length) {
                 event.preventDefault();
             }
-            
+
             return $(obj);
-            
+
         },
-        
+
         /* It returns els in the same row
          * @param @obj jQuery object to get row for
          * @param $grid jQuery objects representing grid
@@ -275,18 +277,18 @@ odoo.define('web_app_drawer', function(require) {
                 right = left + $obj.outerWidth();
             return $grid.filter(filterWithin(left, right));
         },
-        
+
     });
-    
+
     // It inits a new AppDrawer when the web client is ready
     core.bus.on('web_client_ready', null, function () {
         new AppDrawer();
     });
-    
+
     return {
         'AppDrawer': AppDrawer,
         'SearchView': SearchView,
         'Menu': Menu,
     };
-    
+
 });

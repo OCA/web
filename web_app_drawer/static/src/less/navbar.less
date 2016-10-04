@@ -27,12 +27,7 @@ a.navbar-collapse.collapse {
     overflow-x: hidden;
 }
 
-.badge {
-    position: absolute;
-    right: @app-drawer-padding-horizontal;
-}
-
-@media (max-width: @screen-sm - 1px) {
+@media (max-width: @screen-xs-max) {
     #odooMenuBarNav[aria-expanded="false"] {
         /* Hack to hide the visibly expanded mobile menu on load. */
         position: absolute;
