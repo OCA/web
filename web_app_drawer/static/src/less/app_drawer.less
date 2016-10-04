@@ -13,29 +13,30 @@
     background-clip: padding-box;
 
     .navbar-left {
-        
         width: 100%;
-        
+
         li {
             padding: 0;
         }
-        
     }
-    
+
     .app-drawer-title {
         float: none;
     }
-    
+
     .app-drawer-panel-title {
         margin-top: 4px;
     }
-    
+
     .app-drawer-icon-app {
-        height: @app-drawer-icon-size;
-        width: @app-drawer-icon-size;
-        margin: @app-drawer-icon-margin;
+        height: 100%;
+        width: 100%;
+        max-width: @app-drawer-icon-size;
+        max-height: @app-drawer-icon-size;
+        object-fit: contain;
+        object-position: center;
     }
-    
+
     .panel-body {
         padding-top: @app-drawer-title-height;
     }
@@ -46,7 +47,7 @@
         width: 100%;
         z-index: 9999;
     }
-    
+
 }
 
 .drawer-nav {
