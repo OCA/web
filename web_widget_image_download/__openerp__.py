@@ -10,7 +10,7 @@
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "LGPL-3",
     "application": False,
-    "installable": True,
+    'installable': False,
     "data": [
         "views/assets.xml",
     ],
