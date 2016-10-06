@@ -5,7 +5,7 @@
 
 {
     'name': "Web Environment Ribbon",
-    'version': '9.0.1.0.0',
+    'version': '10.0.1.0.0',
     'category': 'Web',
     'author': 'Francesco OpenCode Apruzzese, '
               'Tecnativa, '
@@ -22,5 +22,5 @@
     "update_xml": [],
     "demo_xml": [],
     "auto_install": False,
-    "installable": True
+    'installable': True
 }
