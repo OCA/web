@@ -21,5 +21,5 @@
     "qweb": [
         'static/src/xml/web_widget_x2many_2d_matrix.xml',
     ],
-    "installable": True,
+    'installable': False,
 }
