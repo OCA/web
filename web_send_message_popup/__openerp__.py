@@ -12,6 +12,6 @@
  'website': 'http://www.camptocamp.com',
  'data': ['views/web_send_message_popup.xml'
           ],
- 'installable': True,
+ 'installable': False,
  'auto_install': False,
  }
