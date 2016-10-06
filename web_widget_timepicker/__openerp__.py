@@ -8,7 +8,7 @@
     "license": "AGPL-3",
     "category": "Web",
     "website": "http://www.vividlab.de",
-    "installable": True,
+    'installable': False,
     "depends": [
         "web",
     ],
