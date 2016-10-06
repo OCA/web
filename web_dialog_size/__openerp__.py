@@ -48,5 +48,5 @@
     'data': [
         'view/qweb.xml',
     ],
-    'installable': True,
+    'installable': False,
 }

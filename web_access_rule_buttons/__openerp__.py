@@ -13,5 +13,5 @@
  'website': 'http://www.camptocamp.com',
  'data': ['views/web_access_rule_buttons.xml',
           ],
- 'installable': True,
+ 'installable': False,
  }
