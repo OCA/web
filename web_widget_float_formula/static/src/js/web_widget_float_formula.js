@@ -15,7 +15,7 @@ odoo.define('web_widget_float_formula', function(require) {
             for (var f in this.fields) {
                 if (!this.fields.hasOwnProperty(f)) { continue; }
                 f = this.fields[f];
-                if (f.hasOwnProperty('_formula_text')) {
+                if (f.hasOwnProperty('_formula_text') && f.$el.find('input').length > 0) {
                     f._compute_result();
                     f._clean_formula_text();
                 }
@@ -52,12 +52,7 @@ odoo.define('web_widget_float_formula', function(require) {
             },
 
             _process_formula: function(formula) {
-                try{
-                    formula = formula.toString();
-                } catch (ex) {
-                    return false;
-                }
-                var clean_formula = formula.replace(/^\s+|\s+$/g, '');
+                var clean_formula = formula.toString().replace(/^\s+|\s+$/g, '');
                 if (clean_formula[0] == '=') {
                     clean_formula = clean_formula.substring(1);
                     var myreg = new RegExp('[0-9]|\\s|\\.|,|\\(|\\)|\\+|\\-|\\*|\\/', 'g');
