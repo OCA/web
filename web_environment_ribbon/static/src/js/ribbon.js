@@ -6,7 +6,7 @@
 odoo.define('web_environment_ribbon.ribbon', function(require) {
 "use strict";
 
-var $ = require('$');
+var $ = require('jquery');
 var Model = require('web.Model');
 var core = require('web.core');
 
