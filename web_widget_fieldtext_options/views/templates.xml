@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data>
+        <template id="assets_backend" name="web_widget_fieldtext_options assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/web_widget_fieldtext_options/static/src/js/text_limited.js"></script>
+                <link rel="stylesheet" href="/web_widget_fieldtext_options/static/src/css/text_limited.css"/>
+            </xpath>
+        </template>
+    </data>
+</openerp>
