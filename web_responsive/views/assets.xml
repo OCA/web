@@ -11,35 +11,35 @@
         <xpath expr=".">
             <link rel="stylesheet"
                   type="text/css"
-                  href="/web_app_drawer/static/lib/css/drawer.3.2.0.css"
+                  href="/web_responsive/static/lib/css/drawer.3.2.0.css"
                   />
             <link rel="stylesheet"
-                  href="/web_app_drawer/static/src/less/main.less"
+                  href="/web_responsive/static/src/less/main.less"
                   />
             <link rel="stylesheet"
-                  href="/web_app_drawer/static/src/less/navbar.less"
+                  href="/web_responsive/static/src/less/navbar.less"
                   />
             <link rel="stylesheet"
-                  href="/web_app_drawer/static/src/less/app_drawer.less"
+                  href="/web_responsive/static/src/less/app_drawer.less"
                   />
             <link rel="stylesheet"
-                  href="/web_app_drawer/static/src/less/variables.less"
+                  href="/web_responsive/static/src/less/variables.less"
                   />
             <script type="application/javascript"
-                    src="/web_app_drawer/static/lib/js/iscroll-probe.5.2.0.js"
+                    src="/web_responsive/static/lib/js/iscroll-probe.5.2.0.js"
                     />
             <script type="application/javascript"
-                    src="/web_app_drawer/static/lib/js/drawer.3.2.0.js"
+                    src="/web_responsive/static/lib/js/drawer.3.2.0.js"
                     />
             <script type="application/javascript"
-                    src="/web_app_drawer/static/src/js/web_app_drawer.js"
+                    src="/web_responsive/static/src/js/web_responsive.js"
                     />
         </xpath>
     </template>
     <template id="qunit_suite" inherit_id="web.qunit_suite">
         <xpath expr="//html/head" position="inside">
             <script type="application/javascript"
-                    src="/web_app_drawer/static/tests/js/web_app_drawer.js"
+                    src="/web_responsive/static/tests/js/web_responsive.js"
                     />
         </xpath>
     </template>
