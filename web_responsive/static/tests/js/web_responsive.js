@@ -1,7 +1,7 @@
 /* Copyright 2016 LasLabs Inc.
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
-odoo.define_section('web_app_drawer', ['web_app_drawer'], function(test) {
+odoo.define_section('web_responsive', ['web_responsive'], function(test) {
     "use strict";
     
     // It provides a base drawer compatible interface for testing
@@ -272,19 +272,6 @@ odoo.define_section('web_app_drawer', ['web_app_drawer'], function(test) {
                     $appLink, self.drawer.DOWN
                 );
             assert.equal($res[0].id, $expect[0].id);
-         }
-    );
-    
-    test('It should move the panel header to negative iScroll.y',
-         function(assert, AppDrawer) {
-            self.initInterface(AppDrawer);
-            self.drawer.$el.iScroll.y = -200;
-            self.drawer.onIScroll();
-            var $header = $('#appDrawerAppPanelHead');
-            assert.equal(
-                $header.css('transform'),
-                'matrix(1, 0, 0, 1, 0, 200)'
-            );
          }
     );
     
