@@ -3,11 +3,15 @@
    :alt: License: LGPL-3
 
 ==============
-Web App Drawer
+Web Responsive
 ==============
 
-This module moves the side navigation panel to a top menu bar. It also provides
-an app drawer that is mobile-compliant.
+This module provides a mobile compliant interface for Odoo Community web.
+
+Features:
+
+ * New navigation with an App drawer
+ * Keyboard shortcuts for easier navigation
 
 
 Installation
@@ -36,11 +40,12 @@ The following keyboard shortcuts are implemented:
 Known issues / Roadmap
 ======================
 
-* Provide keyboard navigation to secondary (top) menu
+* Provide full menu search feature instead of just App search
 * Drag drawer from left to open in mobile
 * Figure out how to test focus on hidden elements for keyboard nav tests
 * If you resize the window, body gets a wrong ``overflow: auto`` css property
   and you need to refresh your view or open/close the app drawer to fix that.
+* Override LESS styling to allow for responsive widget layouts
 
 Bug Tracker
 ===========
