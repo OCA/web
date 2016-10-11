@@ -1,20 +1,28 @@
-openerp.web_widget_digitized_signature = function(instance) {
-    "use strict";
-    var _t = instance.web._t;
-    var QWeb = instance.web.qweb;
-    var images = {}
+odoo.define('web_widget_digitized_signature', function (require) {
+"use strict";
 
-    instance.web.form.widgets.add('signature', 'instance.web.form.FieldSignature');
-        instance.web.form.FieldSignature = instance.web.form.FieldBinaryImage.extend({
+var core = require('web.core');
+var Widget = require('web.Widget');
+var FormView = require('web.FormView');
+var form_widgets = require('web.form_widgets');
+var data = require('web.data');
+var utils = require('web.utils');
+
+
+var _t = core._t;
+var QWeb = core.qweb;
+
+var FieldSignature = core.form_widget_registry.map.image.extend({
         template: 'FieldSignature',
         render_value: function() {
             var self = this;
+            var images={};
             var url;
-            if (this.get('value') && !instance.web.form.is_bin_size(this.get('value'))) {
+            if (this.get('value') && !utils.is_bin_size(this.get('value'))) {
                 url = 'data:image/png;base64,' + this.get('value');
             }else if (this.get('value')) {
                 var id = JSON.stringify(this.view.datarecord.id || null);
-                self.digita_dataset = new instance.web.DataSetSearch(self, self.view.model, {}, []);
+                self.digita_dataset = new data.DataSetSearch(self, self.view.model, {}, []);
                 self.digita_dataset.read_slice(['id', self.name], {'domain': [['id', '=', id]]}).then(function(records){
                     _.each(records,function(record){
                         if(record[self.name]){
@@ -64,11 +72,13 @@ openerp.web_widget_digitized_signature = function(instance) {
                 }
             }
             this.$el.find('.clear_sign').click(function(){
-                self.$el.find('> img').remove();
-                images[self.name] = ""
-                self.$el.find(".signature").show();
-                self.$el.find(".signature").signature('clear');
+                if(self.$el.find('> img').length == 0){
+                    images[self.name] = ""
+                    self.$el.find(".signature").show();
+                    self.$el.find(".signature").signature('clear');
+                }
             });
+
             $('.save_sign').click(function(){
                 var val
                 if(self.$el.find(".signature").hasClass( "kbw-signature" ) && ! self.$el.find(".signature").signature('isEmpty')){
@@ -112,14 +122,20 @@ openerp.web_widget_digitized_signature = function(instance) {
             });
             $img.on('error', function() {
                 $img.attr('src', self.placeholder);
-                instance.webclient.notification.warn(_t("Image"), _t("Could not display the selected image."));
+                self.do_warn(_t("Image"), _t("Could not display the selected image."));
             });
         },
     });
-    instance.web.FormView.include({
-        save: function() {
+
+    core.view_registry.get("form").include({
+        save: function(prepend_on_create) {
             $('.save_sign').click();
-            return this._super.apply(this, arguments);
+            return this._super(prepend_on_create);
         },
-    })
-}
+    });
+    core.form_widget_registry.add('signature',FieldSignature);
+    return {
+        FieldSignature: FieldSignature,
+    };
+
+});
