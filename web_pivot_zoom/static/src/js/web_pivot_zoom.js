@@ -101,4 +101,4 @@ openerp.web_pivot_zoom = function(instance)
             return this._super.apply(this, arguments);
         },
     });
-}
+};

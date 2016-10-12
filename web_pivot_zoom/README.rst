@@ -22,8 +22,8 @@ To use this module, you need to:
 
 #. depend on this module
 #. in your measure elements in your pivot view, declare an options dictionary
-   as in::
-    <field name="field" type="measure" options="{'web_pivot_zoom': {}}" />
+   as in
+   ``<field name="field" type="measure" options="{'web_pivot_zoom': {}}" />``
 
    The options dictionary must have a key ``model`` to inform the module which
    model should be shown, and a key ``domain`` for the domain to be used.
