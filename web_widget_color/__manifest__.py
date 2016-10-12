@@ -8,7 +8,7 @@
 {
     'name': "Web Widget Color",
     'category': "web",
-    'version': "9.0.1.0.0",
+    'version': "10.0.1.0.0",
     "author": "Savoir-faire Linux, "
               "Anybox, "
               "Taktik SA, "
@@ -23,6 +23,6 @@
     ],
     'license': 'AGPL-3',
     'auto_install': False,
-    'installable': False,
+    'installable': True,
     'web_preload': True,
 }
