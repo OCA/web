@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="res_users_graph" model="ir.ui.view">
+            <field name="model">res.users</field>
+            <field name="arch" type="xml">
+                <graph type="pivot">
+                    <field name="color" type="measure" options="{'web_pivot_zoom': {'model': 'res.partner', 'domain': &quot;[('company_id', '=?', company_id)]&quot;}}" />
+                    <field name="company_id" type="row" />
+                </graph>
+            </field>
+        </record>
+        <record id="base.action_res_users" model="ir.actions.act_window">
+            <field name="view_mode">tree,form,graph</field>
+        </record>
+    </data>
+</openerp>

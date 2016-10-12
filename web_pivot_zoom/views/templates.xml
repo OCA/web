@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="web_pivot_zoom assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/web_pivot_zoom/static/src/js/web_pivot_zoom.js"></script>
+                <link rel="stylesheet" href="/web_pivot_zoom/static/src/css/web_pivot_zoom.css"/>
+            </xpath>
+        </template>
+    </data>
+</openerp>

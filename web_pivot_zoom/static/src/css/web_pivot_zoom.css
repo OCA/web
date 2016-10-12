@@ -1,0 +1,9 @@
+.graph_pivot_mode td.web_pivot_zoom
+{
+    cursor: pointer;
+}
+.graph_pivot_mode th.web_pivot_zoom:after
+{
+    font-family: FontAwesome;
+    content: ' \f0c1';
+}
