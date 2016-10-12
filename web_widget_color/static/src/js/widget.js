@@ -61,7 +61,7 @@ odoo.define('web.web_widget_color', function(require) {
                 jscolor.init(this.$el[0]);
             } else {
                 this.$(".oe_form_char_content").text(show_value);
-                this.$('div').css("background-color", show_value);
+                this.$('span').css("background-color", show_value);
             }
         }
     });
@@ -72,7 +72,11 @@ odoo.define('web.web_widget_color', function(require) {
      * Init jscolor for each editable mode on view form
      */
     FormView.include({
-        to_edit_mode: function () {
+        on_button_edit: function () {
+            this._super();
+            jscolor.init(this.$el[0]);
+        },
+        on_button_create: function () {
             this._super();
             jscolor.init(this.$el[0]);
         }
