@@ -16,7 +16,7 @@
     "category": 'Web',
     'depends': ['web'],
     'data': [
-        'views/we_digital_sign_view.xml',
+        'views/web_digital_sign_view.xml',
     ],
     'website': 'http://www.serpentcs.com',
     'qweb': ['static/src/xml/digital_sign.xml'],
