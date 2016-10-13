@@ -48,7 +48,6 @@ addon | version | summary
 [web_action_conditionable](web_action_conditionable/) | 8.0.0.1.0 (unported) | web_action_conditionable
 [web_advanced_search_x2x](web_advanced_search_x2x/) | 8.0.1.0.0 (unported) | Use a search widget in advanced search for x2x fields
 [web_ckeditor4](web_ckeditor4/) | 8.0.1.0.0 (unported) | Provides a widget for editing HTML fields using CKEditor 4.x
-[web_color](web_color/) | 1.0 (unported) | Web Color
 [web_confirm_window_close](web_confirm_window_close/) | 7.0.1 (unported) | Check for unsaved data when closing browser window
 [web_context_in_colors](web_context_in_colors/) | 8.0.1.1.0 (unported) | Use the context in a tree view's colors and fonts attribute
 [web_dashboard_open_action](web_dashboard_open_action/) | 8.0.1.0.0 (unported) | Adds a button to open a dashboard in full mode
