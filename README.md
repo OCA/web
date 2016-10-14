@@ -26,6 +26,7 @@ addon | version | summary
 [web_hide_db_manager_link](web_hide_db_manager_link/) | 9.0.1.0.0 | Hide link to database manager in login screen
 [web_notify](web_notify/) | 9.0.1.0.0 | Send notification messages to user
 [web_readonly_bypass](web_readonly_bypass/) | 9.0.1.0.0 | Allow to save onchange modifications to readonly fields
+[web_responsive](web_responsive/) | 9.0.1.0.0 | It provides a mobile compliant interface for Odoo Community web
 [web_searchbar_full_width](web_searchbar_full_width/) | 9.0.1.0.0 | Show search bar in full screen width
 [web_send_message_popup](web_send_message_popup/) | 9.0.1.0.0 | Web Send Message as Popup
 [web_sheet_full_width](web_sheet_full_width/) | 9.0.1.0.0 | Use the whole available screen width when displaying sheets
