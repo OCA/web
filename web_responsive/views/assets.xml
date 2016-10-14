@@ -37,7 +37,7 @@
         </xpath>
     </template>
     <template id="qunit_suite" inherit_id="web.qunit_suite">
-        <xpath expr="//html/head" position="inside">
+        <xpath expr="//t[@t-set='head']" position="inside">
             <script type="application/javascript"
                     src="/web_responsive/static/tests/js/web_responsive.js"
                     />
