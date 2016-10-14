@@ -11,10 +11,15 @@
     border-radius: @border-radius-base;
     .box-shadow(0 6px 12px rgba(0, 0, 0, .175));
     background-clip: padding-box;
+    z-index: 2000;
+    
+    .o_tooltip {
+        z-index: 2051;
+    }
     
     .oe_logo {
         img {
-            margin-top: -@app-drawer-navbar-padding-vertical;
+            margin-top: -@app-drawer-navbar-padding-vertical * 2;
             height: @app-drawer-title-height;
         }
         .oe_logo_edit {
@@ -65,14 +70,12 @@
         position: absolute;
         height: @app-drawer-title-height;
         width: 100%;
-        z-index: 9999;
     }
 
 }
 
 .drawer-nav {
     width: @app-drawer-width;
-    z-index: 9999;
 }
 
 .drawer--left .drawer-nav {

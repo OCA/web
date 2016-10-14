@@ -12,7 +12,7 @@
               name="App Drawer - Web Client"
               >
 
-        <xpath expr="//div[@class='oe_leftbar']" position="replace" />
+        <xpath expr="//div[@class='o_sub_menu']" position="replace" />
 
         <xpath expr="//t[@t-set='head']" position="inside">
             <meta charset="utf-8" />
@@ -25,7 +25,7 @@
 
         <xpath expr="//nav[@id='oe_main_menu_navbar']" position="replace">
 
-            <t t-set="body_classname" t-value="'drawer drawer--left'" />
+            <t t-set="body_classname" t-value="'drawer drawer--left o_web_client'" />
 
             <header role="banner">
                 <nav id="odooAppDrawer" class="app-drawer-nav drawer-nav" role="navigation">
@@ -40,8 +40,7 @@
 
                         <div class="navbar-header">
 
-                            <a href="#"
-                               class="drawer-toggle navbar-collapse collapse btn btn-default app-drawer-toggle"
+                            <a class="drawer-toggle navbar-collapse collapse btn btn-default app-drawer-toggle"
                                accesskey="A"
                                >
                                 <span class="sr-only">Toggle App Drawer</span>
@@ -78,7 +77,7 @@
                              data-parent="#odooMenuBarToggle"
                              aria-expanded="false"
                              >
-                            <div class="oe_leftbar"
+                            <div class="o_sub_menu"
                                  groups="base.group_user,base.group_portal"
                                  >
                                 <t t-call="web.menu_secondary" />
@@ -106,9 +105,7 @@
               name="App Drawer - Secondary Menu"
               >
 
-        <xpath expr="//a[@class='oe_logo']" position="replace" />
-
-        <xpath expr="//div[@class='oe_secondary_menus_container']/t" position="replace">
+        <xpath expr="//div[@class='o_sub_menu_content']/t" position="replace">
 
             <t t-foreach="menu_data['children']" t-as="menu">
                 <ul class="oe_secondary_menu nav navbar-nav"
@@ -140,8 +137,7 @@
                             </t>
                         </t>
                         <t t-if="not submenu">
-                            <a href="#"
-                               class="dropdown-toggle"
+                            <a class="dropdown-toggle"
                                data-toggle="dropdown"
                                role="button"
                                aria-haspopup="true"
@@ -215,7 +211,7 @@
                 <div class="panel-heading" id="appDrawerAppPanelHead">
                     <div class="col-xs-6">
                         <h4 class="app-drawer-panel-title pull-left">
-                            <a href="#" class="app-drawer-icon-close drawer-toggle">
+                            <a class="app-drawer-icon-close drawer-toggle">
                                 <i class="fa fa-lg fa-chevron-left"
                                    t-translation="off"
                                    aria-hidden="true"
@@ -244,7 +240,7 @@
                             </t>
                         </li>
                         <li id="menu_more_container" class="dropdown" style="display: none;">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
+                            <a class="dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
                             <ul id="menu_more" class="dropdown-menu"></ul>
                         </li>
                     </ul>
