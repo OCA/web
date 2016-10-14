@@ -8,7 +8,7 @@ body {
     // Do not fix the search part, it's too big for small screens
     @media (max-width: @screen-sm-max) {
         overflow: inherit;
-        .openerp {
+        .odoo {
             .oe-view-manager {
                 overflow: inherit;
             }
@@ -20,4 +20,27 @@ main {
     width: 100%;
     height: 100%;
     overflow: hidden;
+}
+
+header {
+    z-index: 10;
+}
+
+.o_cp_switch_buttons {
+    .active {
+        z-index: 10;
+    }
+}
+
+.o_sub_menu {
+    .o_sub_menu_logo {
+        display: none;
+    }
+    .o_sub_menu_footer {
+        display: none;
+    }
+}
+
+.o_tooltip.active {
+    z-index: 2051;
 }
