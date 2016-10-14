@@ -2,12 +2,22 @@
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
 .main-nav {
+
     margin-bottom: 0;
     min-height: @app-drawer-navbar-height;
-}
-
-.main-nav ul.nav > li > a {
-    padding: @app-drawer-navbar-padding-vertical @app-drawer-padding-horizontal;
+    z-index: 1;
+    border: none;
+    
+    .badge {
+        position: absolute;
+        top: 3px;
+        right: @navbar-padding-horizontal / 2;
+    }
+    
+    ul.nav > li > a {
+        padding: @app-drawer-navbar-padding-vertical @app-drawer-padding-horizontal;
+    }
+    
 }
 
 .oe_topbar_avatar {
