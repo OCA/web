@@ -5,14 +5,15 @@
     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 -->
 
-<odoo>
+<openerp>
+<data>
 
     <template id="webclient_bootstrap"
               inherit_id="web.webclient_bootstrap"
               name="App Drawer - Web Client"
               >
 
-        <xpath expr="//div[@class='oe_leftbar']" position="replace" />
+        <xpath expr="//td[@class='oe_leftbar']" position="replace" />
 
         <xpath expr="//t[@t-set='head']" position="inside">
             <meta charset="utf-8" />
@@ -23,7 +24,7 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
         </xpath>
 
-        <xpath expr="//nav[@id='oe_main_menu_navbar']" position="replace">
+        <xpath expr="//nav" position="replace">
 
             <t t-set="body_classname" t-value="'drawer drawer--left'" />
 
@@ -232,4 +233,5 @@
         </xpath>
     </template>
 
-</odoo>
+</data>
+</openerp>

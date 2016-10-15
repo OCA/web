@@ -1,14 +1,13 @@
 /* Copyright 2016 LasLabs Inc.
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
-odoo.define('web_responsive', function(require) {
+openerp.web_responsive = function (instance) {
+
     'use strict';
 
-    var $ = require('$');
-    var Menu = require('web.Menu');
-    var Class = require('web.Class');
-    var SearchView = require('web.SearchView');
-    var core = require('web.core');
+    var Menu = instance.web.Menu;
+    var Class = instance.web.Class;
+    var SearchView = instance.web.SearchView;
 
     Menu.include({
 
@@ -280,15 +279,10 @@ odoo.define('web_responsive', function(require) {
 
     });
 
-    // It inits a new AppDrawer when the web client is ready
-    core.bus.on('web_client_ready', null, function () {
-        new AppDrawer();
-    });
+};
 
-    return {
-        'AppDrawer': AppDrawer,
-        'SearchView': SearchView,
-        'Menu': Menu,
-    };
 
-});
+(function () {
+    "use strict";
+    new AppDrawer();
+})(jQuery);

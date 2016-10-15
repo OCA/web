@@ -1,0 +1,70 @@
+/* Copyright 2016 LasLabs Inc.
+ * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
+
+.app-drawer-nav {
+  border-color: rgba(0, 0, 0, 0.15);
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  background-clip: padding-box;
+}
+.app-drawer-nav .navbar-left {
+  width: 100%;
+}
+.app-drawer-nav .navbar-left li {
+  padding: 0;
+}
+.app-drawer-nav .app-drawer-title {
+  float: none;
+}
+.app-drawer-nav .app-drawer-panel-title {
+  margin-top: 4px;
+}
+.app-drawer-nav .app-drawer-icon-app {
+  height: 100%;
+  width: 100%;
+  max-width: 6em;
+  max-height: 6em;
+  object-fit: contain;
+  object-position: center;
+}
+.app-drawer-nav .panel-body {
+  padding-top: 50px;
+}
+.app-drawer-nav #appDrawerAppPanelHead {
+  position: absolute;
+  height: 50px;
+  width: 100%;
+  z-index: 9999;
+}
+.drawer-nav {
+  width: 80%;
+  z-index: 9999;
+}
+.drawer--left .drawer-nav {
+  left: -80%;
+}
+.drawer--left.drawer-open .drawer-hamburger {
+  left: 80%;
+}
+.drawer--right .drawer-nav {
+  right: -80%;
+}
+.drawer-open .oe-right-toolbar {
+  display: none;
+}
+.drawer-closed .oe-right-toolbar {
+  display: block;
+}
+/* App Drawer Toggle */
+.app-drawer-toggle {
+  background-color: transparent;
+}
+.app-drawer-toggle.navbar-toggle {
+  margin-left: 1em;
+}
