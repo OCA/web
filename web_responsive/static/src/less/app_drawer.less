@@ -11,7 +11,27 @@
     border-radius: @border-radius-base;
     .box-shadow(0 6px 12px rgba(0, 0, 0, .175));
     background-clip: padding-box;
-
+    
+    .oe_logo {
+        img {
+            margin-top: -@app-drawer-navbar-padding-vertical;
+            height: @app-drawer-title-height;
+        }
+        .oe_logo_edit {
+            position: absolute;
+            top: 1px;
+            width: 100%;
+            padding: 4px;
+            margin: 14px 0;
+            display: none;
+            color: #eee;
+            background: rgba(37,37,37,0.9);
+        }
+        &:hover .oe_logo_edit_admin {
+            display: block;
+        }
+    }
+    
     .navbar-left {
         width: 100%;
 
@@ -25,7 +45,7 @@
     }
 
     .app-drawer-panel-title {
-        margin-top: 4px;
+        margin-top: 5px;
     }
 
     .app-drawer-icon-app {

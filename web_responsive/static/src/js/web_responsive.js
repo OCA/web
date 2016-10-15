@@ -84,7 +84,9 @@ openerp.web_responsive = function (instance) {
             this.initDrawer();
             var $clickZones = $('.openerp_webclient_container, ' +
                                 'a.oe_menu_leaf, ' +
-                                'a.oe_menu_toggler'
+                                'a.oe_menu_toggler, ' +
+                                'a.oe_logo, ' +
+                                'i.oe_logo_edit'
                                 );
             $clickZones.click($.proxy(this.handleClickZones, this));
             core.bus.on('resize', this, this.handleWindowResize);
