@@ -1,27 +1,9 @@
 .o_form_view .o_form_sheet_bg .o_form_sheet
 {
-    width: auto !important;
     margin: 15px;
-}
-
-.openerp .oe_form_sheet_width
-{
     max-width: none;
 }
 
-.openerp .oe_form_sheetbg
-{
-    padding: 16px;
-}
-
-.openerp .oe_form div.oe_chatter {
-    max-width: 100%;
-}
-
-.openerp .oe_followers {
-    width: 250px;
-}
-
-.openerp .oe_record_thread {
-    margin-right: 293px;
+.o_form_view .oe_chatter{
+    max-width: none;
 }
