@@ -7,7 +7,7 @@
 
 {
     'name': "Web Export Current View",
-    'version': '10.0.0.1',
+    'version': '10.0.1.0.0',
     'category': 'Web',
     'author': 'Henry Zhou (MAXodoo), '
               'Rodney, '
