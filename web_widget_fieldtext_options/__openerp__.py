@@ -26,6 +26,7 @@ Example of usage:
     'data': [
         'views/templates.xml',
     ],
+    'qweb': ['static/src/xml/text_limited.xml', ],
     'installable': True,
     'auto_install': True,
 }
