@@ -36,6 +36,6 @@
     'data': [
         'views/readonly_bypass.xml',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
 }
