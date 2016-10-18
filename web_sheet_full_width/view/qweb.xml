@@ -3,7 +3,7 @@
     <data>
         <template id="assets_backend" name="web_sheet_full_width" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
-                <link rel="stylesheet" href="/web_sheet_full_width/static/src/css/web_sheet_full_width.css"/>
+                <link rel="stylesheet" href="/web_sheet_full_width/static/src/css/web_sheet_full_width.less"/>
             </xpath>
         </template>
     </data>
