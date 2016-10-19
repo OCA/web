@@ -35,6 +35,7 @@ addon | version | summary
 [web_widget_color](web_widget_color/) | 9.0.1.0.0 | Web Widget Color
 [web_widget_float_formula](web_widget_float_formula/) | 9.0.1.0.0 | Allow use of simple formulas in float fields
 [web_widget_image_download](web_widget_image_download/) | 9.0.1.0.0 | Allows to download any image from its widget
+[web_widget_image_webcam](web_widget_image_webcam/) | 9.0.1.0.0 | Allows to take image with WebCam
 [web_widget_many2many_tags_multi_selection](web_widget_many2many_tags_multi_selection/) | 9.0.1.1.0 | Tags multiple selection
 [web_widget_timepicker](web_widget_timepicker/) | 9.0.1.0.0 | Web Timepicker Widget
 [web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 9.0.1.0.0 | Show list fields as a matrix
