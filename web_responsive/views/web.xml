@@ -45,7 +45,10 @@
                                accesskey="A"
                                >
                                 <span class="sr-only">Toggle App Drawer</span>
-                                <i class="fa fa-th fa-lg app-drawer-icon-open" />
+                                <i class="fa fa-th fa-lg app-drawer-icon-open"
+                                   t-translation="off"
+                                   aria-hidden="true"
+                                   />
                             </a>
 
                             <button type="button"
@@ -62,7 +65,10 @@
                                     data-target="#odooMenuBarNav"
                                     >
                                 <span class="sr-only">Toggle Navigation</span>
-                                <i class="fa fa-bars fa-lg" />
+                                <i class="fa fa-bars fa-lg"
+                                   t-translation="off"
+                                   aria-hidden="true"
+                                   />
                             </button>
 
                         </div>
@@ -102,12 +108,13 @@
 
         <xpath expr="//a[@class='oe_logo']" position="replace" />
 
-        <xpath expr="//div[@class='oe_footer']" position="replace" />
-
         <xpath expr="//div[@class='oe_secondary_menus_container']/t" position="replace">
 
             <t t-foreach="menu_data['children']" t-as="menu">
-                <ul style="display: none" class="oe_secondary_menu nav navbar-nav" t-att-data-menu-parent="menu['id']">
+                <ul class="oe_secondary_menu nav navbar-nav"
+                    t-att-data-menu-parent="menu['id']"
+                    style="display: none;"
+                    >
                     <t t-call="web.menu_secondary_submenu" />
                 </ul>
             </t>
@@ -206,12 +213,26 @@
 
             <div class="panel-default app-drawer-app-panel" id="appDrawerAppMenu">
                 <div class="panel-heading" id="appDrawerAppPanelHead">
-                    <h4 class="app-drawer-panel-title">
-                        <a href="#" class="app-drawer-icon-close drawer-toggle">
-                            <i class="fa fa-lg fa-chevron-left" />
-                            Apps
+                    <div class="col-xs-6">
+                        <h4 class="app-drawer-panel-title pull-left">
+                            <a href="#" class="app-drawer-icon-close drawer-toggle">
+                                <i class="fa fa-lg fa-chevron-left"
+                                   t-translation="off"
+                                   aria-hidden="true"
+                                   />
+                                Apps
+                            </a>
+                        </h4>
+                    </div>
+                    <div class="col-xs-6">
+                        <a class="oe_logo pull-right" t-attf-href="/web?{{ keep_query() }}">
+                            <i class="fa fa-pencil-square-o oe_logo_edit"
+                               aria-hidden="true"
+                               t-translation="off"
+                               />
+                            <img src='/web/binary/company_logo'/>
                         </a>
-                    </h4>
+                    </div>
                 </div>
                 <div class="panel-body" id="appDrawerAppPanelBody">
                     <ul class="row list-unstyled oe_application_menu_placeholder"
