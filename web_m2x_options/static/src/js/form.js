@@ -19,6 +19,11 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                    'web_m2x_options.search_more',
                    'web_m2x_options.m2o_dialog',];
 
+    // In odoo 9.c FielMany2One is not exposed by form_relational
+    // To bypass this limitation we use the widget registry to get the
+    // reference to the FielMany2One widget.
+    var FieldMany2One = core.form_widget_registry.get('many2one');
+
     var M2ODialog = Dialog.extend({
         template: "M2ODialog",
         init: function(parent) {
@@ -52,7 +57,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
         },
     });
 
-    form_relational.FieldMany2One.include({
+    FieldMany2One.include({
 
         start: function() {
             this._super.apply(this, arguments);
@@ -188,12 +193,12 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                     values.push({
                         label: _t("Search More..."),
                         action: function () {
-                            // limit = 80 for improving performance, similar
+                            // limit = 160 for improving performance, similar
                             // to Odoo implementation here:
-                            // https://github.com/odoo/odoo/commit/8c3cdce539d87775b59b3f2d5ceb433f995821bf
+                            // https://github.com/odoo/odoo/blob/feeac2a4f1cd777770dd2b42534904ac71f23e46/addons/web/static/src/js/views/form_common.js#L213
                             dataset.name_search(
                                 search_val, self.build_domain(),
-                                'ilike', 80).done(function (data) {
+                                'ilike', 160).done(function (data) {
                                     self._search_create_popup("search", data);
                                 });
                         },
