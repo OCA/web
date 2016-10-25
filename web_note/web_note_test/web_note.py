@@ -4,7 +4,7 @@
 from openerp.osv import orm, fields
 
 
-class web_notes(orm.Model):
+class WebNote(orm.Model):
     _inherit = 'web.note'
     _columns = {
         'partner_id':
