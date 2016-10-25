@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id="res_partner_view_buttons" model="ir.ui.view">
+            <field name="name">res.partner.view.buttons</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="after">
+                    <field name="notes"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

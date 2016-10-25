@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="web_note_view_form" model="ir.ui.view">
+            <field name="name">web.note.form</field>
+            <field name="model">web.note</field>
+            <field name="arch" type="xml">
+                <form string="Note" version="7.0">
+                    <group>
+                        <field name="type"/>
+                        <field name="container_id" on_change="onchange_container_id(container_id, message)"/>
+                        <field name="sequence" invisible="1"/>
+                    </group>
+                    <label for="message" string="Note"/>
+                    <field name="message"/>
+                </form>
+            </field>
+        </record>
+        <record id="web_note_view_tree" model="ir.ui.view">
+            <field name="name">web.note.tree</field>
+            <field name="model">web.note</field>
+            <field name="arch" type="xml">
+                <tree string="Notes" version="7.0">
+                    <field name="sequence" widget="handle"/>
+                    <field name="type"/>
+                    <field name="container_id"/>
+                    <field name="display_name"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</openerp>
