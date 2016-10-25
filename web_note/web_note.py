@@ -1,24 +1,6 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    OpenERP, Open Source Management Solution
-#    Copyright (C) 2010-2014 OpenERP s.a. (<http://openerp.com>).
-#    Copyright (C) 2014 initOS GmbH(<http://www.initos.com>).
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © initOS GmbH 2014
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from openerp.osv import orm, fields
 import re
 
@@ -38,7 +20,7 @@ def _type_selection(self, *args, **kwargs):
     return self.pool.get('web.note').type_selection(*args, **kwargs)
 
 
-class web_note(orm.Model):
+class WebNote(orm.Model):
     _name = 'web.note'
 
     def name_get(self, cr, uid, ids, context=None):
@@ -96,7 +78,7 @@ class web_note(orm.Model):
     }
 
 
-class web_note_container(orm.Model):
+class WebNoteContainer(orm.Model):
     _name = 'web.note.container'
     _description = 'Note Container'
 
