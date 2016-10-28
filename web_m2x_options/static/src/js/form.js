@@ -45,23 +45,23 @@ openerp.web_m2x_options = function (instance) {
                 widget.view.ir_options[option] = widget.options[key];
             }
             // ... but don't overwrite from global parameters above
-        })
+        });
         return $.when();
-    }
+    };
 
     var is_option_set = function(option) {
         if (_.isUndefined(option)) {
-            return false
+            return false;
         }
-        var is_string = typeof option === 'string'
-        var is_bool = typeof option === 'boolean'
+        var is_string = typeof option === 'string';
+        var is_bool = typeof option === 'boolean';
         if (is_string) {
-            return option === 'true' || option === 'True'
+            return option === 'true' || option === 'True';
         } else if (is_bool) {
-            return option
+            return option;
         }
-        return false
-    }
+        return false;
+    };
 
     instance.web.form.FieldMany2One = instance.web.form.FieldMany2One.extend({
 
@@ -99,14 +99,14 @@ openerp.web_m2x_options = function (instance) {
             }
 
             // add options search_more to force enable or disable search_more button
-            this.search_more = false
+            this.search_more = false;
             if (!_.isUndefined(this.view.ir_options['web_m2x_options.search_more'])) {
                 this.search_more = is_option_set(this.view.ir_options['web_m2x_options.search_more']);
             }
 
             // add options field_color and colors to color item(s) depending on field_color value
-            this.field_color = this.options.field_color
-            this.colors = this.options.colors
+            this.field_color = this.options.field_color;
+            this.colors = this.options.colors;
 
             var dataset = new instance.web.DataSet(this, this.field.relation,
                                                    self.build_context());
@@ -357,7 +357,7 @@ openerp.web_m2x_options = function (instance) {
                 }
 
                 return values;
-            })
+            });
         },
     });
 };

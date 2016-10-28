@@ -16,7 +16,7 @@ add some new display control options.
 The options provided include the possibility to remove "Create..." and/or
 "Create and Edit..." entries from many2one and many2many drop down lists. You
 can also change the default number of entries appearing in the drop-down, or
- prevent the dialog box poping in case of validation error occurring.
+prevent the dialog box popping in case of validation error occurring.
 
 If not specified, the module will avoid proposing any of the create options
 if the current user have no permission rights to create the related object.
@@ -132,7 +132,7 @@ Example
 Your XML form view definition could contain::
 
     ...
-    <field name="partner_id" options="{'limit': 10, 'create': false, 'create_edit': false, 'search_more':true 'field_color':'state', 'colors':{'active':'green'}}"/>
+    <field name="partner_id" options="{'limit': 10, 'create': false, 'create_edit': false, 'search_more': true, 'field_color': 'state', 'colors': {'active':'green'}}"/>
     ...
 
 Note
