@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<!-- Copyright 2015 Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
 
-        <template id="assets_backend" name="Many2one clickable assets" inherit_id="web.assets_backend">
-            <xpath expr="." position="inside">
-                <script type="text/javascript" src="/web_tree_many2one_clickable/static/src/js/web_tree_many2one_clickable.js"></script>
-            </xpath>
-        </template>
+<template id="assets_backend" name="Many2one clickable assets" inherit_id="web.assets_backend">
+    <xpath expr="." position="inside">
+        <script type="text/javascript"
+                src="/web_tree_many2one_clickable/static/src/js/web_tree_many2one_clickable.js"/>
+    </xpath>
+</template>
 
-    </data>
-</openerp>
+</odoo>
