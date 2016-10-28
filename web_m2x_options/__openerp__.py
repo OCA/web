@@ -2,7 +2,7 @@
 
 {
     "name": 'web_m2x_options',
-    "version": "0.1",
+    "version": "7.0.1.0.0",
     "description": """
 =====================================================
 Add new options for many2one and many2manytags field:
@@ -44,6 +44,7 @@ Thanks to:
         'static/src/js/form.js',
     ],
     "author": "Tuxservices,initOS GmbH,Odoo Community Association (OCA)",
+    "license": "AGPL-3",
     "installable": True,
     "active": False,
 }
