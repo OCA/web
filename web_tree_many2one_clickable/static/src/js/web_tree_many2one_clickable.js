@@ -1,115 +1,101 @@
-//-*- coding: utf-8 -*-
-//############################################################################
-//
-//   OpenERP, Open Source Management Solution
-//   This module copyright
-//     (C) 2013 Therp BV (<http://therp.nl>).
-//     (c) 2015 Serv. Tecnol. Avanzados (http://www.serviciosbaeza.com)
-//              Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>
-//
-//   This program is free software: you can redistribute it and/or modify
-//   it under the terms of the GNU Affero General Public License as
-//   published by the Free Software Foundation, either version 3 of the
-//   License, or (at your option) any later version.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU Affero General Public License for more details.
-//
-//   You should have received a copy of the GNU Affero General Public License
-//   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//
-//############################################################################
+/* Copyright 2013 Therp BV (<http://therp.nl>).
+ * Copyright 2015 Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>
+ * Copyright 2016 Antonio Espinosa <antonio.espinosa@tecnativa.com>
+ * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
-openerp.web_tree_many2one_clickable = function(instance, local)
-{
-    instance.web.list.Column.include({
-        /*
-        Load config parameter at init and store it in an accessible variable.
-        */
-        init: function(id, tag, attrs) {
-            this._super(id, tag, attrs);
-            if (this.widget == 'many2one_clickable') {
-                this.use_many2one_clickable = true;
-            } else if (this.type == 'many2one') {
-                this.get_options();
-            }
-        },
+odoo.define('web_tree_many2one_clickable.many2one_clickable', function(require) {
+"use strict";
 
-        get_options: function() {
-            if (_.isUndefined(this.ir_option_clickable_loaded)) {
-                var self = this; // Needed for binding the instance
-                this.ir_option_clickable_loaded = $.Deferred();
-                this.use_many2one_clickable = false;
-                (new instance.web.Model("ir.config_parameter"))
-                    .query(["value"])
-                    .filter([['key', '=', 'web_tree_many2one_clickable.default']])
-                    .first()
-                    .then(function(param) {
-                        if (param) {
-                            self.use_many2one_clickable = (param.value.toLowerCase() == 'true');
-                        }
-                        self.ir_option_clickable_loaded.resolve();
-                    });
-                return this.ir_option_clickable_loaded;
-            }
-            return $.when();
-        },
+var _ = require('_');
+var $ = require('$');
 
-        _format: function (row_data, options)
-        {
-            if (this.use_many2one_clickable && !!row_data[this.id]) {
+var core = require('web.core');
+var ListView = require('web.ListView');
+var Model = require('web.DataModel');
+
+var _t = core._t;
+var QWeb = core.qweb;
+var list_widget_registry = core.list_widget_registry;
+
+var promise;
+function clickable_get(callback){
+    if (_.isUndefined(promise)) {
+        promise = $.Deferred();
+        new Model("ir.config_parameter")
+            .call("get_param", ["web_tree_many2one_clickable.default", false])
+            .done(function(value){
+                promise.resolve(String(value).toLowerCase() === "true");
+            })
+            .fail(function(){
+                promise.reject();
+            });
+    }
+    return promise;
+}
+
+ListView.Column.include({
+    init: function(id, tag, attrs) {
+        this._super(id, tag, attrs);
+        if (this.widget == 'many2one_clickable') {
+            this.use_many2one_clickable = true;
+        } else if (this.type == 'many2one') {
+            this.use_many2one_clickable = false;
+            clickable_get().done($.proxy(function(value){
+                this.use_many2one_clickable = value;
+            }, this));
+        }
+    },
+    _format: function (row_data, options) {
+        if (this.type == 'many2one' &&
+            (this.widget == 'many2one_unclickable' || this.use_many2one_clickable) &&
+            !!row_data[this.id]) {
+            var value = row_data[this.id].value;
+            var name = value[1] ? value[1].split("\n")[0] : value[1];
+            name = _.escape(name || options.value_if_empty);
+            if (this.widget == 'many2one_unclickable') {
+                return name;
+            } else if (this.use_many2one_clickable) {
                 var values = {
                     model: this.relation,
                     id: row_data[this.id].value[0],
-                    name: _.escape(row_data[this.id].value[1] || options.value_if_empty),
-                }
-                if(this.type == 'reference' && !!row_data[this.id + '__display'])
-                {
+                    name: name,
+                };
+                if(this.type == 'reference' && !!row_data[this.id + '__display']) {
                     values.model = row_data[this.id].value.split(',', 1)[0];
                     values.id = row_data[this.id].value.split(',', 2)[1];
-                    values.name = _.escape(row_data[this.id + '__display'].value || options.value_if_empty);
+                    values.name = _.escape(row_data[this.id + '__display'].value ||
+                                           options.value_if_empty);
                 }
                 return _.str.sprintf(
                     '<a class="oe_form_uri" data-many2one-clickable-model="%(model)s" data-many2one-clickable-id="%(id)s">%(name)s</a>',
                     values
                 );
             }
-            else {
-                return this._super(row_data, options);
-            }
-        },
+        } else {
+            return this._super(row_data, options);
+        }
+    },
+});
 
-	});
-
-    /* many2one_clickable widget */
-
-    instance.web.list.columns.add(
-            'field.many2one_clickable',
-            'instance.web_tree_many2one_clickable.Many2OneClickable');
-
-    instance.web_tree_many2one_clickable.Many2OneClickable = openerp.web.list.Column.extend({
-    });
-
-    /* click action */
-
-    instance.web.ListView.List.include({
-        render: function()
-        {
-            var result = this._super(this, arguments),
-                self = this;
-            this.$current.delegate('a[data-many2one-clickable-model]',
-                'click', function()
-                {
-                    self.view.do_action({
-                        type: 'ir.actions.act_window',
-                        res_model: jQuery(this).data('many2one-clickable-model'),
-                        res_id: jQuery(this).data('many2one-clickable-id'),
-                        views: [[false, 'form']],
-                    });
+ListView.List.include({
+    render: function() {
+        var result = this._super(this, arguments),
+            self = this;
+        this.$current.delegate('a[data-many2one-clickable-model]',
+            'click', function() {
+                self.view.do_action({
+                    type: 'ir.actions.act_window',
+                    res_model: $(this).data('many2one-clickable-model'),
+                    res_id: $(this).data('many2one-clickable-id'),
+                    views: [[false, 'form']],
                 });
-            return result;
-        },
-    });
-}
+            });
+        return result;
+    },
+
+});
+
+list_widget_registry.add('field.many2one_clickable', ListView.Column);
+list_widget_registry.add('field.many2one_unclickable', ListView.Column);
+
+}); // odoo.define
