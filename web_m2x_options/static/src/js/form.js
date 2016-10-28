@@ -16,18 +16,36 @@ openerp.web_m2x_options = function (instance) {
 
     var get_options = function(widget) {
         if (!_.isUndefined(widget.view) && _.isUndefined(widget.view.ir_options_loaded)) {
-        widget.view.ir_options_loaded = $.Deferred();
-        widget.view.ir_options = {};
-        (new instance.web.Model("ir.config_parameter"))
+            widget.view.ir_options_loaded = $.Deferred();
+            widget.view.ir_options = {};
+            (new instance.web.Model("ir.config_parameter"))
             .query(["key", "value"]).filter([['key', 'in', OPTIONS]])
             .all().then(function(records) {
-            _(records).each(function(record) {
-                widget.view.ir_options[record.key] = record.value;
-            });
-            widget.view.ir_options_loaded.resolve();
+                _(records).each(function(record) {
+                    // don't overwrite from global parameters if already set from context or widget
+                    if (_.isUndefined(widget.view.ir_options[record.key])) {
+                        widget.view.ir_options[record.key] = record.value;
+                    }
+                });
+                widget.view.ir_options_loaded.resolve();
             });
             return widget.view.ir_options_loaded;
         }
+        // options from widget are only available here
+        _(OPTIONS).each(function(option) {
+            var p = option.indexOf('.');
+            if (p < 0) return;
+            var key = option.substring(p + 1); // w/o 'web_m2x_options' prefix
+            // ... hence set from context ...
+            if (!_.isUndefined(widget.view.dataset.context[key])) {
+                widget.view.ir_options[option] = widget.view.dataset.context[key];
+            }
+            // ... and (overwrite) from widget here ...
+            if (!_.isUndefined(widget.options[key])) {
+                widget.view.ir_options[option] = widget.options[key];
+            }
+            // ... but don't overwrite from global parameters above
+        })
         return $.when();
     }
 
@@ -57,12 +75,6 @@ openerp.web_m2x_options = function (instance) {
             if (!_.isUndefined(this.view.ir_options['web_m2x_options.m2o_dialog'])) {
                 allow_dialog = is_option_set(this.view.ir_options['web_m2x_options.m2o_dialog']);
             }
-            if (!_.isUndefined(this.view.dataset.context.m2o_dialog)) {
-                allow_dialog = is_option_set(this.view.dataset.context.m2o_dialog);
-            }
-            if (!_.isUndefined(this.options.m2o_dialog)) {
-                allow_dialog = is_option_set(this.options.m2o_dialog);
-            }
 
             if (allow_dialog) {
                 new instance.web.form.M2ODialog(this).open();
@@ -73,34 +85,23 @@ openerp.web_m2x_options = function (instance) {
             var Objects = new instance.web.Model(this.field.relation);
             var def = $.Deferred();
             var self = this;
+
+            if (_.isUndefined(this.view))
+                    return this._super.apply(this, arguments);
+
             var ctx = self.view.dataset.context;
 
             // add options limit used to change number of selections record
             // returned.
 
-            if (_.isUndefined(this.view))
-                    return this._super.apply(this, arguments);
-
             if (!_.isUndefined(this.view.ir_options['web_m2x_options.limit'])) {
                 this.limit = parseInt(this.view.ir_options['web_m2x_options.limit']);
-            }
-            if (typeof ctx.limit === 'number') {
-                this.limit = ctx.limit;
-            }
-            if (typeof this.options.limit === 'number') {
-                this.limit = this.options.limit;
             }
 
             // add options search_more to force enable or disable search_more button
             this.search_more = false
             if (!_.isUndefined(this.view.ir_options['web_m2x_options.search_more'])) {
                 this.search_more = is_option_set(this.view.ir_options['web_m2x_options.search_more']);
-            }
-            if (!_.isUndefined(this.view.dataset.context.search_more)) {
-                this.search_more = is_option_set(this.view.dataset.context.search_more);
-            }
-            if (!_.isUndefined(this.options.search_more)) {
-                this.search_more = is_option_set(this.options.search_more);
             }
 
             // add options field_color and colors to color item(s) depending on field_color value
@@ -202,12 +203,6 @@ openerp.web_m2x_options = function (instance) {
                 if (!_.isUndefined(self.view.ir_options['web_m2x_options.create'])) {
                     allow_create = is_option_set(self.view.ir_options['web_m2x_options.create']);
                 }
-                if (!_.isUndefined(ctx.create)) {
-                    allow_create = is_option_set(ctx.create);
-                }
-                if (!_.isUndefined(self.options.create)) {
-                    allow_create = is_option_set(self.options.create);
-                }
 
                 if (allow_create) {
 
@@ -232,12 +227,6 @@ openerp.web_m2x_options = function (instance) {
                 var allow_create_edit = can_create;
                 if (!_.isUndefined(self.view.ir_options['web_m2x_options.create_edit'])) {
                     allow_create_edit = is_option_set(self.view.ir_options['web_m2x_options.create_edit']);
-                }
-                if (!_.isUndefined(ctx.create_edit)) {
-                    allow_create_edit = is_option_set(ctx.create_edit);
-                }
-                if (!_.isUndefined(self.options.create_edit)) {
-                    allow_create_edit = is_option_set(self.options.create_edit);
                 }
 
                 if (allow_create_edit) {
@@ -275,12 +264,6 @@ openerp.web_m2x_options = function (instance) {
             if (!_.isUndefined(this.view.ir_options['web_m2x_options.m2o_dialog'])) {
                 allow_dialog = is_option_set(this.view.ir_options['web_m2x_options.m2o_dialog']);
             }
-            if (!_.isUndefined(this.view.dataset.context.m2o_dialog)) {
-                allow_dialog = is_option_set(this.view.dataset.context.m2o_dialog);
-            }
-            if (!_.isUndefined(this.options.m2o_dialog)) {
-                allow_dialog = is_option_set(this.options.m2o_dialog);
-            }
 
             if (allow_dialog) {
                 new instance.web.form.M2ODialog(this).open();
@@ -300,12 +283,6 @@ openerp.web_m2x_options = function (instance) {
 
             if (!_.isUndefined(this.view.ir_options['web_m2x_options.limit'])) {
                 this.limit = parseInt(this.view.ir_options['web_m2x_options.limit']);
-            }
-            if (typeof ctx.limit === 'number') {
-                this.limit = ctx.limit;
-            }
-            if (typeof this.options.limit === 'number') {
-                this.limit = this.options.limit;
             }
 
             var dataset = new instance.web.DataSet(this, this.field.relation, self.build_context());
@@ -346,12 +323,6 @@ openerp.web_m2x_options = function (instance) {
                 if (!_.isUndefined(self.view.ir_options['web_m2x_options.create'])) {
                     allow_create = is_option_set(self.view.ir_options['web_m2x_options.create']);
                 }
-                if (!_.isUndefined(ctx.create)) {
-                    allow_create = is_option_set(ctx.create);
-                }
-                if (!_.isUndefined(self.options.create)) {
-                    allow_create = is_option_set(self.options.create);
-                }
 
                 if (allow_create) {
 
@@ -372,12 +343,6 @@ openerp.web_m2x_options = function (instance) {
                 var allow_create_edit = true;
                 if (!_.isUndefined(self.view.ir_options['web_m2x_options.create_edit'])) {
                     allow_create_edit = is_option_set(self.view.ir_options['web_m2x_options.create_edit']);
-                }
-                if (!_.isUndefined(ctx.create_edit)) {
-                    allow_create_edit = is_option_set(ctx.create_edit);
-                }
-                if (!_.isUndefined(self.options.create_edit)) {
-                    allow_create_edit = is_option_set(self.options.create_edit);
                 }
 
                 if (allow_create_edit) {
