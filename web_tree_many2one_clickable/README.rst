@@ -1,3 +1,8 @@
+.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
+   :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   :alt: License: AGPL-3
+
+========================================
 Clickable many2one fields for tree views
 ========================================
 
@@ -15,10 +20,9 @@ Install it the regular way.
 Configuration
 =============
 
-If you want to have all many2one and reference fields clickable by default, you
-have to define in *Configuration > Technical > Parameters > System parameters*,
-a new parameter with name `web_tree_many2one_clickable.default` and with value
-`true`.
+After installation, all many2one and reference fields will be clickable
+by default. You can change this in *Configuration > Technical > Parameters > System parameters*,
+parameter with name `web_tree_many2one_clickable.default` setting it to `false`.
 
 Usage
 =====
@@ -32,22 +36,21 @@ For example:
 
 will open the linked partner in a form view.
 
-Known issues / Roadmap
-======================
+If system parameter `web_tree_many2one_clickable.default` is `true` and you
+need to disable one field, then use `widget="many2one_unclickable"`
 
-* You cannot deactivate clickable behaviour for an specific many2one field if
-  you configure the system parameter.
-* The value of the system parameter is retrieved for each many2one field
-  present in the view instead of only once.
+.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
+   :alt: Try me on Runbot
+   :target: https://runbot.odoo-community.org/runbot/162/9.0
 
 
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
-In case of trouble, please check there if your issue has already been reported.
-If you spotted it first, help us smashing it by providing a detailed and welcomed feedback
-`here <https://github.com/OCA/web/issues/new?body=module:%20web_tree_many2one_clickable%0Aversion:%208.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+Bugs are tracked on `GitHub Issues
+<https://github.com/OCA/web/issues>`_. In case of trouble, please
+check there if your issue has already been reported. If you spotted it first,
+help us smashing it by providing a detailed and welcomed feedback.
 
 
 Credits
@@ -58,13 +61,14 @@ Contributors
 
 * Therp BV
 * Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>
+* Antonio Espinosa <antonio.espinosa@tecnativa.com>
 
 Maintainer
 ----------
 
-.. image:: http://odoo-community.org/logo.png
+.. image:: https://odoo-community.org/logo.png
    :alt: Odoo Community Association
-   :target: http://odoo-community.org
+   :target: https://odoo-community.org
 
 This module is maintained by the OCA.
 
@@ -72,4 +76,4 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-To contribute to this module, please visit http://odoo-community.org.
+To contribute to this module, please visit https://odoo-community.org.
