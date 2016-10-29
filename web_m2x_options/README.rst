@@ -16,7 +16,7 @@ add some new display control options.
 The options provided include the possibility to remove "Create..." and/or
 "Create and Edit..." entries from many2one and many2many drop down lists. You
 can also change the default number of entries appearing in the drop-down, or
- prevent the dialog box poping in case of validation error occurring.
+prevent the dialog box popping in case of validation error occurring.
 
 If not specified, the module will avoid proposing any of the create options
 if the current user have no permission rights to create the related object.
@@ -99,13 +99,40 @@ To add these parameters go to Configuration -> Technical -> Parameters -> System
 - web_m2x_options.search_more: True
 
 
+ir.actions.act_window context options
+-------------------------------------
+
+The following options can be specified in the ``context`` field of an
+``ir.actions.act_window`` to provide the same functionality at the form level:
+
+``create`` *boolean* (Default: depends if user have create rights)
+
+  Whether to display the "Create..." entry in dropdown panels.
+
+``create_edit`` *boolean* (Default: depends if user have create rights)
+
+  Whether to display the "Create and Edit..." entry in dropdown panels.
+
+``m2o_dialog`` *boolean* (Default: depends if user have create rights)
+
+  Whether to display the many2one dialog in case of validation error.
+
+``limit`` *int* (Default: openerp default value is ``7``)
+
+  Number of displayed records in drop-down panels.
+
+``search_more`` *boolean*
+
+  Whether to always display the "Search More..." entry in dropdown panels.
+
+
 Example
 -------
 
 Your XML form view definition could contain::
 
     ...
-    <field name="partner_id" options="{'limit': 10, 'create': false, 'create_edit': false, 'search_more':true 'field_color':'state', 'colors':{'active':'green'}}"/>
+    <field name="partner_id" options="{'limit': 10, 'create': false, 'create_edit': false, 'search_more': true, 'field_color': 'state', 'colors': {'active':'green'}}"/>
     ...
 
 Note
