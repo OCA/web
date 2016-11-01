@@ -9,10 +9,11 @@ openerp.web_widget_pattern = function(instance)
         {
             if(this.options.pattern)
             {
-                var regex = new RegExp(
+                var val = this.$('input').val(),
+                    regex = new RegExp(
                     this.options.pattern, this.options.pattern_modifiers || ''
                 );
-                if(!regex.test(this.$('input').val()))
+                if(!!val && !regex.test(this.$('input').val()))
                 {
                     return false;
                 }
