@@ -6,7 +6,7 @@
 Input patterns
 ==============
 
-This module was written to allow you to define a regex on character fields a user's input is tested against.
+This module was written to allow you to define a `regex <https://en.wikipedia.org/wiki/Regular_expression>`_ on character fields a user's input is tested against.
 
 Usage
 =====
@@ -17,7 +17,7 @@ To use this module, you need to:
 #. define a key ``pattern`` in the field's options dictionary::
 
        <field name="email" options="{'pattern': '[\S]+@[\S]+'}" />
-#. if you need pattern modifiers, use the key ``pattern_modifiers``
+#. if you need `pattern modifiers <http://www.w3schools.com/jsref/jsref_obj_regexp.asp>`_, use the key ``pattern_modifiers``
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
     :alt: Try me on Runbot
