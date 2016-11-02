@@ -1,5 +1,5 @@
-"use strict";
 (function(){
+    "use strict";
     var instance = openerp;
     var QWeb = instance.web.qweb, _t = instance.web._t;
 
