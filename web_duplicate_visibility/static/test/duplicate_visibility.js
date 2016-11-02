@@ -1,9 +1,11 @@
-"use strict";
+/* Copyright 2016 Jairo Llopis <jairo.llopis@tecnativa.com>
+ * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 odoo.define_section('web_duplicate_visibility',
                     ['web.data', 'web.FormView'],
                     function(test, mock){
+    "use strict";
 
-    function assertDuplicate(data, FormView, form_tag, visible){
+    function assertDuplicate(assert, data, FormView, form_tag, visible) {
         mock.add('test.model:read', function () {
             return [{ id: 1, a: 'foo', b: 'bar', c: 'baz' }];
         });
@@ -45,38 +47,32 @@ odoo.define_section('web_duplicate_visibility',
                 return obj.text.trim() == "Duplicate";
             }
         );
-        strictEqual(
+        assert.strictEqual(
             actions.length, visible, "duplicate state is not as expected"
         );
     };
 
+    function compare(form_tag, visible) {
+        return function (assert, data, FormView) {
+            return assertDuplicate(assert, data, FormView, form_tag, visible);
+        }
+    }
+
     test('Duplicate button visible when nothing set',
-         function(assert, data, FormView){
-        assertDuplicate(data, FormView, '<form>', 1);
-    });
+         compare('<form>', 1));
 
     test('Duplicate button visible when create="1"',
-         function(assert, data, FormView){
-        assertDuplicate(data, FormView, '<form create="1">', 1);
-    });
+         compare('<form create="1">', 1));
 
     test('Duplicate button visible when duplicate="1"',
-         function(assert, data, FormView){
-        assertDuplicate(data, FormView, '<form duplicate="1">', 1);
-    });
+         compare('<form duplicate="1">', 1));
 
     test('Duplicate button not displayed when create="0"',
-         function(assert, data, FormView){
-        assertDuplicate(data, FormView, '<form create="0">', 0);
-    });
+         compare('<form create="0">', 0));
 
     test('Duplicate button not displayed when create="1" duplicate="0"',
-         function(assert, data, FormView){
-        assertDuplicate(data, FormView, '<form create="1" duplicate="0">', 0);
-    });
+         compare('<form create="1" duplicate="0">', 0));
 
     test('Duplicate button not displayed when duplicate="0"',
-         function(assert, data, FormView){
-        assertDuplicate(data, FormView, '<form duplicate="0">', 0);
-    });
+         compare('<form duplicate="0">', 0));
 });
