@@ -5011,7 +5011,7 @@ module.exports = function image(state, silent) {
     );
 
     token          = state.push('image', 'img', 0);
-    token.attrs    = attrs = [ [ 'src', href ], [ 'alt', '' ] ];
+    token.attrs    = attrs = [ [ 'src', href ], [ 'alt', '' ], ['class', 'o_markdown_img'] ];
     token.children = tokens;
     if (title) {
       attrs.push([ 'title', title ]);

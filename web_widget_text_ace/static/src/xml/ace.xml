@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
+
 <t t-name="FieldTextAceEditor">
+    <t t-if="!widget.get('effective_readonly')">
+        <div style="width: 100%" class="oe_form_field oe_ace_view_editor">
+            <div class="ace_view_editor"/>
+        </div>
+    </t>
+    <t t-if="widget.get('effective_readonly')">
+        <div class="oe_form_field oe_form_field_text" t-att-style="widget.node.attrs.style">
+            <span style="display: block; unicode-bidi: embed; font-family: monospace; white-space: pre;" class="oe_form_text_content"></span>
+        </div>
+     </t>
+ </t>
+
+
+
+
+<!-- <t t-name="FieldTextAceEditor">
     <div class="oe_form_field oe_form_field_text" t-att-style="widget.node.attrs.style">
         <t t-if="!widget.get('effective_readonly')">
             <textarea rows="6"
@@ -20,5 +37,5 @@
             <span style="display: block; unicode-bidi: embed; font-family: monospace; white-space: pre;" class="oe_form_text_content"></span>
         </t>
     </div>
-</t>
+</t> -->
 </templates>

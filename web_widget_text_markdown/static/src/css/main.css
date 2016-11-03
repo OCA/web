@@ -105,25 +105,25 @@
   font-size: inherit;
 }
 .markdown-body h1 {
-  font-size: 2.5em;
-  border-bottom: 1px solid #ddd;
+  font-size: 1.3em;
+  color: #893b74;
 }
 .markdown-body h2 {
-  font-size: 2em;
+  font-size: 1.3em;
   border-bottom: 1px solid #eee;
 }
 .markdown-body h3 {
-  font-size: 1.5em;
+  font-size: 1em;
 }
 .markdown-body h4 {
-  font-size: 1.2em;
+  font-size: 0.7em;
 }
 .markdown-body h5 {
-  font-size: 1em;
+  font-size: 0.7em;
 }
 .markdown-body h6 {
   color: #777;
-  font-size: 1em;
+  font-size: 0.7em;
 }
 .markdown-body p,
 .markdown-body blockquote,
@@ -193,7 +193,6 @@
 .markdown-body table {
   width: 100%;
   overflow: auto;
-  display: block;
   border-spacing: 0;
   border-collapse: collapse;
 }

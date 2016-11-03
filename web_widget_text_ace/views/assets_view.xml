@@ -5,8 +5,6 @@
     <data>
         <template id="assets_backend" name="web_widget_text_ace assets" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
-                <script type="text/javascript" src="/web_widget_text_ace/static/lib/ace/ace.js"></script>
-                <script type="text/javascript" src="/web_widget_text_ace/static/lib/ace/ext-language_tools.js"></script>
                 <script type="text/javascript" src="/web_widget_text_ace/static/src/js/ace.js"></script>
                 <script type="text/javascript" src="/web_widget_text_ace/static/lib/raphael/raphael.js"></script>
             </xpath>
