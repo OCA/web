@@ -34,6 +34,12 @@ In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed feedback
 `here <https://github.com/OCA/web/issues/new?body=module:%20web_export_view%0Aversion:%208.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
+Known Issues
+============
+
+Enterprise version limitation: exported values are interpreted always as strings
+so if you want to create formulas or calculations on top of them
+you need to convert them manually.
 
 Credits
 =======
@@ -41,7 +47,7 @@ Credits
 Contributors
 ------------
 
- * Simone Orsi <simahawk@gmail.com>
+ * Simone Orsi <simone.orsi@camptocamp.com>
  * Lorenzo Battistini <lorenzo.battistini@agilebg.com>
  * Stefan Rijnhart <stefan@therp.nl>
  * Leonardo Pistone <leonardo.pistone@camptocamp.com>
