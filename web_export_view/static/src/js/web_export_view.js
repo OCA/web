@@ -1,4 +1,4 @@
-odoo.define('web_export_view.web_export_view', function (require) {
+odoo.define('web_export_view', function (require) {
 "use strict";
 
     var core = require('web.core');

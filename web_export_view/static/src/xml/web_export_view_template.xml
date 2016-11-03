@@ -3,7 +3,9 @@
 <templates id="template" xml:space="preserve">
 <t t-name="AddExportViewMain">
     <div class="o_cp_sidebar btn-group btn-group-sm">
-        <button class="btn btn-default export_treeview_xls" type="button"><i class="fa fa-file-excel-o"></i></button>
+        <button class="btn btn-default export_treeview_xls" type="button">
+            <i t-translation="off" class="fa fa-file-excel-o"></i>
+        </button>
     </div>
 </t>
 </templates>

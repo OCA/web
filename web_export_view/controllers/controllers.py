@@ -5,11 +5,7 @@
 # Copyright 2012 Therp BV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-try:
-    import json
-except ImportError:
-    import simplejson as json
-
+import json
 import odoo.http as http
 from odoo.http import request
 from odoo.addons.web.controllers.main import ExcelExport
