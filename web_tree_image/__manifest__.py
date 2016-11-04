@@ -27,7 +27,7 @@
 ##############################################################################
 {
     'name': 'Show images in tree views',
-    'version': '9.0.1.1.0',
+    'version': '10.0.1.1.0',
     'author': "Therp BV, "
               "MONK Software, "
               "Odoo Community Association (OCA), "
@@ -44,5 +44,5 @@
     'data': [
         'view/assets.xml',
     ],
-    'installable': False,
+    'installable': True,
 }
