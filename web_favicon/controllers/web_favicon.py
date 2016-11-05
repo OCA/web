@@ -4,8 +4,8 @@
 
 import StringIO
 import base64
-from openerp import http
-from openerp.tools.misc import file_open
+from odoo import http
+from odoo.tools.misc import file_open
 
 
 class WebFavicon(http.Controller):
