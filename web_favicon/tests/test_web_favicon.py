@@ -3,9 +3,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import base64
-from openerp.tests.common import TransactionCase
-from openerp.tools.misc import file_open
-from openerp import http
+from odoo.tests.common import TransactionCase
+from odoo.tools.misc import file_open
+from odoo import http
 
 
 class FakeRequest(object):
@@ -26,7 +26,7 @@ class TestWebFavicon(TransactionCase):
     def test_web_favicon(self):
         original_request = http.request
         http.request = FakeRequest(self.env)
-        from openerp.addons.web_favicon.controllers.web_favicon import\
+        from odoo.addons.web_favicon.controllers.web_favicon import\
             WebFavicon
         company = self.env['res.company'].search([], limit=1)
         # default icon
