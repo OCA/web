@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
+#    Odoo, Open Source Management Solution
 #    This module copyright (C) 2012-2015 Therp BV (<http://therp.nl>).
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
     "name": "Support branding",
     "summary": "Adds your branding to an Odoo instance",
     "category": "Dependecy/Hidden",
-    "version": "8.0.2.0.0",
+    "version": "10.0.1.0.0",
     "license": "AGPL-3",
     "author": "Therp BV,Odoo Community Association (OCA)",
     "website": 'http://therp.nl',
@@ -36,5 +36,5 @@
         "data/ir_config_parameter.xml",
         'views/qweb.xml',
     ],
-    'installable': False,
+    'installable': True,
 }
