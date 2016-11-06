@@ -22,25 +22,25 @@ msgstr ""
 
 #. module: support_branding
 #: view:website:web.menu_secondary
-msgid ", supported by"
+msgid "Supported by"
 msgstr ""
 
 #. module: support_branding
-#. openerp-web
+#. odoo-web
 #: code:addons/support_branding/static/src/js/support_branding.js:39
 #, python-format
 msgid "Email to %s"
 msgstr ""
 
 #. module: support_branding
-#. openerp-web
+#. odoo-web
 #: code:addons/support_branding/static/src/xml/base.xml:9
 #, python-format
-msgid "Email to Company"
+msgid "Email to support company"
 msgstr ""
 
 #. module: support_branding
-#. openerp-web
+#. odoo-web
 #: code:addons/support_branding/static/src/xml/base.xml:9
 #, python-format
 msgid "Please fill in how you produced this error..."

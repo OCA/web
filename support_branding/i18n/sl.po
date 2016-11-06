@@ -24,25 +24,25 @@ msgstr "Verzija"
 
 #. module: support_branding
 #: view:website:web.menu_secondary
-msgid ", supported by"
-msgstr ", podpora"
+msgid "Supported by"
+msgstr "Podpora"
 
 #. module: support_branding
-#. openerp-web
+#. odoo-web
 #: code:addons/support_branding/static/src/js/support_branding.js:39
 #, python-format
 msgid "Email to %s"
 msgstr "E-pošta za %s"
 
 #. module: support_branding
-#. openerp-web
+#. odoo-web
 #: code:addons/support_branding/static/src/xml/base.xml:9
 #, python-format
-msgid "Email to Company"
+msgid "Email to support company"
 msgstr "E-pošta za družbo"
 
 #. module: support_branding
-#. openerp-web
+#. odoo-web
 #: code:addons/support_branding/static/src/xml/base.xml:9
 #, python-format
 msgid "Please fill in how you produced this error..."
