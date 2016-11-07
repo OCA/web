@@ -7,7 +7,7 @@ odoo.define('web.support_branding', function(require) {
     var core = require('web.core');
     var Model = require('web.Model')
     var _t = core._t;
-    CrashManager.extend({
+    CrashManager.include({
         init: function() {
             var self = this,
                 ir_config_parameter = new Model('ir.config_parameter');
