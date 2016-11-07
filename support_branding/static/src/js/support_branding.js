@@ -3,7 +3,7 @@
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
 odoo.define('web.support_branding', function(require) {
-    var CrashManager = require('web.CrashManager');
+    var CrashManager = require('web.crash_manager');
     var core = require('web.core');
     var Model = require('web.Model')
     var _t = core._t;
