@@ -59,9 +59,9 @@ Usage
 
 To use this module, you need to:
 
-#. On developer mode go to Settings > Technical > Paremeters > System Parameters
+#. In developer mode go to Settings > Technical > Paremeters > System Parameters
 #. Configure parameters related with support branding
-#. Support branding is showed on left menu and when raises an exception
+#. Support branding is shown in the lower part of the left menu and when an exception is raised, the user is asked to provide some details in order to send a mail to the configured support email address.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
