@@ -1,10 +1,16 @@
-openerp.web_tree_dynamic_colored_field = function(instance){
+odoo.define('web_tree_dynamic_colored_field', function(require)
+{
+    'use strict';
+    var ListView = require('web.ListView'),
+        pyeval = require('web.pyeval'),
+        py = window.py;
+
     var pair_colors = function(pair_color){
-        if (pair_color != ""){
+        if (pair_color !== ""){
             var pair_list = pair_color.split(':'),
                 color = pair_list[0],
                 expression = pair_list[1];
-            return [color, py.parse(py.tokenize(expression)), expression]
+            return [color, py.parse(py.tokenize(expression)), expression];
         }
     };
 
@@ -12,7 +18,7 @@ openerp.web_tree_dynamic_colored_field = function(instance){
         return _.extend(
             {},
             record.attributes,
-            instance.web.pyeval.context()
+            pyeval.context()
         );
     };
 
@@ -22,21 +28,21 @@ openerp.web_tree_dynamic_colored_field = function(instance){
             var colors = _(column[field_attribute].split(';'))
             .chain()
             .map(pair_colors)
-            .value();
-            var colors = colors.filter(function CheckUndefined(value, index, ar) {
-                return value != undefined;
-            })
+            .value()
+            .filter(function CheckUndefined(value, index, ar) {
+                return value !== undefined;
+            });
             var ctx = get_eval_context(record);
-            for(i=0, len=colors.length; i<len; ++i) {
-                pair = colors[i];
-                var color = pair[0];
-                var expression = pair[1];
+            for(var i=0, len=colors.length; i<len; ++i) {
+                var pair = colors[i],
+                    color = pair[0],
+                    expression = pair[1];
                 if (py.evaluate(expression, ctx).toJSON()) {
                     result = css_attribute + ': ' + color + ';';
                 }
             }
         }
-        return result
+        return result;
     };
 
     var colorize = function(record, column){
@@ -46,14 +52,28 @@ openerp.web_tree_dynamic_colored_field = function(instance){
         return res;
     };
 
-    instance.web.ListView.List.include({
+    ListView.List.include({
         init: function(group, opts){
             this._super(group, opts);
             this.columns.fct_colorize = colorize;
         },
     });
 
-    instance.web.ListView.include({
+    ListView.include({
+        load_view: function()
+        {
+            var self = this;
+            return this._super.apply(this, arguments)
+            .then(function()
+            {
+                // the style_for helper is only called if one of colors or
+                // fonts is not null
+                if(self.fields_view.arch.attrs.color_field)
+                {
+                    self.colors = [];
+                }
+            });
+        },
         style_for: function (record)
         {
             var result = this._super.apply(this, arguments);
@@ -72,4 +92,4 @@ openerp.web_tree_dynamic_colored_field = function(instance){
             return result;
         },
     });
-}
+});
