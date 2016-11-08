@@ -5,9 +5,9 @@
 odoo.define('web.support_branding', function(require) {
     var CrashManager = require('web.CrashManager');
     var core = require('web.core');
-    var Model = require('web.Model')
+    var Model = require('web.Model');
     var _t = core._t;
-    CrashManager.extend({
+    CrashManager.include({
         init: function() {
             var self = this,
                 ir_config_parameter = new Model('ir.config_parameter');
@@ -64,7 +64,7 @@ odoo.define('web.support_branding', function(require) {
                                 // if the call failed, fire the mailto link
                                 // hoping there is a properly configured email
                                 // client
-                                $body.val($description.val() + '\n' + $body.val())
+                                $body.val($description.val() + '\n' + $body.val());
                                 $button.unbind('click');
                                 $button.click();
                             })
@@ -88,4 +88,6 @@ odoo.define('web.support_branding', function(require) {
             });
         }
     });
+    // this is already instantiated, so we need to call init manually
+    require('web.crash_manager').init();
 });
