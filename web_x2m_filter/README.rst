@@ -8,6 +8,9 @@ Filters for x2many fields
 
 This module was written to allow developers to add filter buttons to an x2many field.
 
+.. image:: /web_x2m_filter/static/description/screenshot.png
+    :alt: Screenshot
+
 Usage
 =====
 
