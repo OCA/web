@@ -39,6 +39,11 @@
                             <field name="field_id"/>
                             <field name="helper" colspan="4"/>
                         </group>
+                        <notebook>
+                            <page string="Groups">
+                                <field name="group_ids"/>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
