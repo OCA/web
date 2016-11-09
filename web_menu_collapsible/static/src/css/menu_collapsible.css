@@ -11,7 +11,8 @@
     margin-left: 18px;
 }
 
-.openerp .nav-pills li > a {
+.oe_secondary_submenu > li > a.oe_menu_leaf,
+.oe_secondary_submenu > li > a.oe_menu_toggler {
     padding-left: 27px;
 }
 
