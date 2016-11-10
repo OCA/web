@@ -4,7 +4,7 @@ odoo.define('web_x2many_delete_all', function (require) {
     var _t = core._t;
 
 
-    var DeleteAllMixin = {
+    var X2ManyListDeleteAllMixin = {
         events: {
             'click th.o_list_record_delete': 'btn_delete_all_clicked'
         },
@@ -24,6 +24,6 @@ odoo.define('web_x2many_delete_all', function (require) {
     var many2many = core.form_widget_registry.get('many2many');
     var one2many = core.form_widget_registry.get('one2many');
 
-    many2many.include(DeleteAllMixin);
-    one2many.include(DeleteAllMixin);
+    many2many.include(X2ManyListDeleteAllMixin);
+    one2many.include(X2ManyListDeleteAllMixin);
 });
