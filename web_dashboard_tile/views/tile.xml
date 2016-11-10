@@ -46,10 +46,14 @@
                                             'invisible':[('primary_function','in',[False,'count'])],
                                             'required':[('primary_function','not in',[False,'count'])],
                                         }"/>
-                                        <field name="primary_helper"/>
                                     </group>
                                     <group>
                                         <field name="primary_format"/>
+                                    </group>
+                                    <group>
+                                        <field name="primary_helper"/>
+                                        <field name="primary_value" attrs="{'invisible':[('primary_value','=',False)]}"/>
+                                        <field name="error" attrs="{'invisible':[('error','=',False)]}"/>
                                     </group>
                                 </group>
                             </page>
@@ -61,10 +65,13 @@
                                             'invisible':[('secondary_function','in',[False,'count'])],
                                             'required':[('secondary_function','not in',[False,'count'])],
                                         }"/>
-                                        <field name="secondary_helper"/>
                                     </group>
                                     <group>
                                         <field name="secondary_format"/>
+                                    </group>
+                                    <group>
+                                        <field name="secondary_helper"/>
+                                        <field name="secondary_value" attrs="{'invisible':[('secondary_value','=',False)]}"/>
                                     </group>
                                 </group>
                             </page>

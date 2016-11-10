@@ -12,8 +12,6 @@ from openerp import api, fields, models
 from openerp.tools.safe_eval import safe_eval as eval
 from openerp.tools.translate import _
 from openerp.exceptions import ValidationError, except_orm
-import logging
-_logger = logging.getLogger(__name__)
 
 
 def median(vals):
@@ -141,6 +139,10 @@ class TileTile(models.Model):
         string='Secondary Helper',
         compute='_compute_helper')
 
+    error = fields.Char(
+        string='Error Details',
+        compute='_compute_data')
+
     @api.one
     def _compute_data(self):
         if not self.active:
@@ -171,8 +173,8 @@ class TileTile(models.Model):
                 else:
                     self[f+'value'] = False
         except Exception as e:
-            _logger.warning('Unexpected Error: %s' % str(e))
             self.primary_value = self.secondary_value = 'ERR!'
+            self.error = str(e)
 
     @api.one
     @api.onchange('primary_function', 'primary_field_id',
