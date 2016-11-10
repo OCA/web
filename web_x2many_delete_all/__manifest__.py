@@ -12,6 +12,9 @@
     'data': [
         'templates/assets.xml'
     ],
+    'qweb': [
+        'static/src/xml/web_x2many_delete_all.xml'
+    ],
     'installable': True,
     'application': False,
 }

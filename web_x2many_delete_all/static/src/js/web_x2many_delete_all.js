@@ -1,15 +1,26 @@
 odoo.define('web_x2many_delete_all', function (require) {
 "use strict";
-    var core = require('web.core');
-    var _t = core._t;
-
+    var core = require('web.core'),
+        _t = core._t;
 
     var X2ManyListDeleteAllMixin = {
         events: {
             'click th.o_list_record_delete': 'btn_delete_all_clicked'
         },
-        start: function() {
-            return this._super.apply(this, arguments);
+        reload_current_view: function() {
+            var res = this._super.apply(this, arguments);
+            var self = this;
+            res.then(function() {
+                self.toggle_btn_delete_all();
+            });
+            return res
+        },
+        toggle_btn_delete_all: function() {
+            if(this.get('effective_readonly')) {
+                this.$('th.o_list_record_delete > .fa-trash-o').addClass('hidden');
+            } else {
+                this.$('th.o_list_record_delete > .fa-trash-o').removeClass('hidden');
+            }
         },
         btn_delete_all_clicked: function() {
             if(!this.get('effective_readonly')) {
@@ -21,9 +32,6 @@ odoo.define('web_x2many_delete_all', function (require) {
         }
     }
 
-    var many2many = core.form_widget_registry.get('many2many');
-    var one2many = core.form_widget_registry.get('one2many');
-
-    many2many.include(X2ManyListDeleteAllMixin);
-    one2many.include(X2ManyListDeleteAllMixin);
+    core.form_widget_registry.get('many2many').include(X2ManyListDeleteAllMixin);
+    core.form_widget_registry.get('one2many').include(X2ManyListDeleteAllMixin);
 });
