@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr=".">
+            <script type="text/javascript"
+                    src="/web_x2many_delete_all/static/src/js/web_x2many_delete_all.js"/>
+        </xpath>
+    </template>
+</odoo>
