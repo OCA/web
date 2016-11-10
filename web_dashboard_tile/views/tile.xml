@@ -103,7 +103,9 @@
                                                 <field name="name"/>
                                             </div>
                                             <div class="tile_primary_value" t-att-title="record.primary_helper.raw_value">
-                                                <span><field name="primary_value"/></span>
+                                                <t t-set="l" t-value="record.primary_value.raw_value.length" />
+                                                <t t-set="s" t-value="l>=12 and 35 or l>=10 and 45 or l>=8 and 55 or l>=6 and 75 or l>4 and 85 or 100"/>
+                                                <span t-attf-style="font-size: #{s}%;"><field name="primary_value"/></span>
                                             </div>
                                             <div class="tile_secondary_value" t-att-title="record.secondary_helper.raw_value">
                                                 <span><field name="secondary_value"/></span>
