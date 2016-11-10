@@ -12,19 +12,59 @@ from openerp import api, fields, models
 from openerp.tools.safe_eval import safe_eval as eval
 from openerp.tools.translate import _
 from openerp.exceptions import ValidationError, except_orm
+import logging
+_logger = logging.getLogger(__name__)
+
+
+def median(vals):
+    # https://docs.python.org/3/library/statistics.html#statistics.median
+    # TODO : refactor, using statistics.median when Odoo will be available
+    #  in Python 3.4
+    even = (0 if len(vals) % 2 else 1) + 1
+    half = (len(vals) - 1) / 2
+    return sum(sorted(vals)[half:half + even]) / float(even)
+
+FIELD_FUNCTIONS = {
+    'count': {
+        'name': 'Count',
+        'func': False,  # its hardcoded in _compute_data
+        'help': 'Number of records',
+    },
+    'min': {
+        'name': 'Minimum',
+        'func': min,
+        'help': "Minimum value of '%s'",
+    },
+    'max': {
+        'name': 'Maximum',
+        'func': max,
+        'help': "Maximum value of '%s'",
+    },
+    'sum': {
+        'name': 'Sum',
+        'func': sum,
+        'help': "Total value of '%s'",
+    },
+    'avg': {
+        'name': 'Average',
+        'func': lambda vals: sum(vals)/len(vals),
+        'help': "Minimum value of '%s'",
+    },
+    'median': {
+        'name': 'Median',
+        'func': median,
+        'help': "Median value of '%s'",
+    },
+}
+
+FIELD_FUNCTION_SELECTION = [
+    (k, FIELD_FUNCTIONS[k].get('name')) for k in FIELD_FUNCTIONS.keys()]
 
 
 class TileTile(models.Model):
     _name = 'tile.tile'
+    _description = 'Dashboard Tile'
     _order = 'sequence, name'
-
-    def median(self, aList):
-        # https://docs.python.org/3/library/statistics.html#statistics.median
-        # TODO : refactor, using statistics.median when Odoo will be available
-        #  in Python 3.4
-        even = (0 if len(aList) % 2 else 1) + 1
-        half = (len(aList) - 1) / 2
-        return sum(sorted(aList)[half:half + even]) / float(even)
 
     def _get_eval_context(self):
         def _context_today():
@@ -57,66 +97,97 @@ class TileTile(models.Model):
     domain = fields.Text(default='[]')
     action_id = fields.Many2one('ir.actions.act_window', 'Action')
 
-    count = fields.Integer(compute='_compute_data')
-    computed_value = fields.Float(compute='_compute_data')
-
-    field_function = fields.Selection([
-        ('min', 'Minimum'),
-        ('max', 'Maximum'),
-        ('sum', 'Sum'),
-        ('avg', 'Average'),
-        ('median', 'Median'),
-        ], string='Function')
-    field_id = fields.Many2one(
-        'ir.model.fields',
-        string='Field',
-        domain="[('model_id', '=', model_id),"
-        " ('ttype', 'in', ['float', 'int'])]")
-    helper = fields.Char(compute='_compute_function_helper')
-
     active = fields.Boolean(
         compute='_compute_active',
         search='_search_active',
         readonly=True)
 
-    @api.one
-    def _compute_data(self):
-        self.count = 0
-        self.computed_value = 0
-        if self.active:
-            # Compute count item
-            model = self.env[self.model_id.model]
-            eval_context = self._get_eval_context()
-            self.count = model.search_count(eval(self.domain, eval_context))
-            # Compute datas for field_id depending of field_function
-            if self.field_function and self.field_id and self.count != 0:
-                records = model.search(eval(self.domain, eval_context))
-                vals = [x[self.field_id.name] for x in records]
-                if self.field_function == 'min':
-                    self.computed_value = min(vals)
-                elif self.field_function == 'max':
-                    self.computed_value = max(vals)
-                elif self.field_function == 'sum':
-                    self.computed_value = sum(vals)
-                elif self.field_function == 'avg':
-                    self.computed_value = sum(vals) / len(vals)
-                elif self.field_function == 'median':
-                    self.computed_value = self.median(vals)
+    # Primary Value
+    primary_function = fields.Selection(
+        FIELD_FUNCTION_SELECTION,
+        string='Function',
+        default='count')
+    primary_field_id = fields.Many2one(
+        'ir.model.fields',
+        string='Field',
+        domain="[('model_id', '=', model_id),"
+               " ('ttype', 'in', ['float', 'int'])]")
+    primary_format = fields.Char(
+        string='Format',
+        help='Python Format String valid with str.format()')
+    primary_value = fields.Char(
+        string='Value',
+        compute='_compute_data')
+    primary_helper = fields.Char(
+        string='Helper',
+        compute='_compute_helper')
+
+    # Secondary Value
+    secondary_function = fields.Selection(
+        FIELD_FUNCTION_SELECTION,
+        string='Secondary Function')
+    secondary_field_id = fields.Many2one(
+        'ir.model.fields',
+        string='Secondary Field',
+        domain="[('model_id', '=', model_id),"
+               " ('ttype', 'in', ['float', 'int'])]")
+    secondary_format = fields.Char(
+        string='Secondary Format',
+        help='Python Format String valid with str.format()')
+    secondary_value = fields.Char(
+        string='Secondary Value',
+        compute='_compute_data')
+    secondary_helper = fields.Char(
+        string='Secondary Helper',
+        compute='_compute_helper')
 
     @api.one
-    @api.onchange('field_function', 'field_id')
-    def _compute_function_helper(self):
-        self.helper = ''
-        if self.field_function and self.field_id:
-            desc = self.field_id.field_description
-            helpers = {
-                'min': "Minimum value of '%s'",
-                'max': "Maximum value of '%s'",
-                'sum': "Total value of '%s'",
-                'avg': "Average value of '%s'",
-                'median': "Median value of '%s'",
-            }
-            self.helper = _(helpers.get(self.field_function, '')) % desc
+    def _compute_data(self):
+        if not self.active:
+            return
+        try:
+            model = self.env[self.model_id.model]
+            eval_context = self._get_eval_context()
+            count = model.search_count(eval(self.domain, eval_context))
+            if any([
+                self.primary_function and
+                self.primary_function != 'count',
+                self.secondary_function and
+                self.secondary_function != 'count'
+                    ]):
+                    records = model.search(eval(self.domain, eval_context))
+            for f in ['primary_', 'secondary_']:
+                value = 0
+                if self[f+'function'] == 'count':
+                    value = count
+                elif self[f+'function']:
+                    func = FIELD_FUNCTIONS[self[f+'function']]['func']
+                    if func and self[f+'field_id'] and count:
+                        vals = [x[self[f+'field_id'].name] for x in records]
+                        value = func(vals)
+                if self[f+'function']:
+                    self[f+'value'] = \
+                        (self[f+'format'] or '{:,}').format(value)
+                else:
+                    self[f+'value'] = False
+        except Exception as e:
+            _logger.warning('Unexpected Error: %s' % str(e))
+            self.primary_value = self.secondary_value = 'ERR!'
+
+    @api.one
+    @api.onchange('primary_function', 'primary_field_id',
+                  'secondary_function', 'secondary_field_id')
+    def _compute_helper(self):
+        for f in ['primary_', 'secondary_']:
+            self[f+'helper'] = ''
+            field_func = FIELD_FUNCTIONS.get(self[f+'function'], {})
+            help = field_func.get('help', False)
+            if help:
+                if self[f+'function'] != 'count' and self[f+'field_id']:
+                    desc = self[f+'field_id'].field_description
+                    self[f+'helper'] = _(help) % desc
+                else:
+                    self[f+'helper'] = _(help)
 
     @api.one
     def _compute_active(self):
@@ -142,19 +213,28 @@ class TileTile(models.Model):
 
     # Constraints and onchanges
     @api.one
-    @api.constrains('model_id', 'field_id')
+    @api.constrains('model_id', 'primary_field_id', 'secondary_field_id')
     def _check_model_id_field_id(self):
-        if self.field_id and self.field_id.model_id.id != self.model_id.id:
-            raise ValidationError(
-                _("Please select a field from the selected model."))
+        if any([
+            self.primary_field_id and
+            self.primary_field_id.model_id.id != self.model_id.id,
+            self.secondary_field_id and
+            self.secondary_field_id.model_id.id != self.model_id.id
+                ]):
+                raise ValidationError(
+                    _("Please select a field from the selected model."))
 
-    @api.one
-    @api.constrains('field_id', 'field_function')
-    def _check_field_id_field_function(self):
-        validations = self.field_id, self.field_function
-        if any(validations) and not all(validations):
-            raise ValidationError(
-                _("Please set both: 'Field' and 'Function'."))
+    @api.onchange('model_id')
+    def _onchange_model_id(self):
+        self.primary_field_id = False
+        self.secondary_field_id = False
+
+    @api.onchange('primary_function', 'secondary_function')
+    def _onchange_function(self):
+        if self.primary_function in [False, 'count']:
+            self.primary_field_id = False
+        if self.secondary_function in [False, 'count']:
+            self.secondary_field_id = False
 
     # Action methods
     @api.multi
