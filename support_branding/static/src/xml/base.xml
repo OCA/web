@@ -9,7 +9,7 @@
                     <div class="oe_form_field_text oe_form_required">
                         <textarea name="description" placeholder="Please fill in how you produced this error..." class="" />
                     </div>
-                    <button class="oe_highlight">Email to support company</button>
+                    <button class="btn btn-sm oe_button btn-primary">Email to support company</button>
                 </form>
             </div>
         </t>

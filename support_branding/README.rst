@@ -1,6 +1,8 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
-    :alt: License: AGPL-3
+   :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   :alt: License: AGPL-3
 
+================
 Support branding
 ================
 
@@ -52,6 +54,20 @@ add the following XML::
 Note that the email button is only visible if you configure an email address,
 the default is empty!
 
+Usage
+=====
+
+To use this module, you need to:
+
+#. In developer mode go to Settings > Technical > Paremeters > System Parameters
+#. Configure parameters related with support branding
+#. Support branding is shown in the lower part of the left menu and when an exception is raised, the user is asked to provide some details in order to send a mail to the configured support email address.
+
+.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
+   :alt: Try me on Runbot
+   :target: https://runbot.odoo-community.org/runbot/162/9.0
+
+
 Bug Tracker
 ===========
 
@@ -69,6 +85,7 @@ Contributors
 
 * Holger Brunn <hbrunn@therp.nl>
 * Stefan Rijnhart <srijnhart@therp.nl>
+* Angel Moya <odoo@tecnativa.com>
 
 Icon
 ----
