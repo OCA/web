@@ -8,11 +8,11 @@
         <field name="groups" eval="[(4, ref('base.group_user'))]"/>
         <field name="domain_force">
         [
-            '|'
+            '|',
             ('user_id','=',user.id),
             ('user_id','=',False),
             '|',
-            ('group_ids','=',False)
+            ('group_ids','=',False),
             ('group_ids','in',[g.id for g in user.groups_id]),
         ]
         </field>
