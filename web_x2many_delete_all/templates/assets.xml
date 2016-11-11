@@ -1,9 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"
+<!-- Copyright 2016 Onestein
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
 <odoo>
     <template id="assets_backend" inherit_id="web.assets_backend">
         <xpath expr=".">
             <script type="text/javascript"
                     src="/web_x2many_delete_all/static/src/js/web_x2many_delete_all.js"/>
+            <link rel="stylesheet"
+                  href="/web_x2many_delete_all/static/src/css/web_x2many_delete_all.css"/>
         </xpath>
     </template>
 </odoo>

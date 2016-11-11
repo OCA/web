@@ -1,3 +1,6 @@
+/* Copyright 2016 Onestein
+ * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
+
 odoo.define('web_x2many_delete_all', function (require) {
 "use strict";
     var core = require('web.core'),
@@ -8,8 +11,8 @@ odoo.define('web_x2many_delete_all', function (require) {
             'click th.o_list_record_delete': 'btn_delete_all_clicked'
         },
         reload_current_view: function() {
-            var res = this._super.apply(this, arguments);
             var self = this;
+            var res = this._super.apply(this, arguments);
             res.then(function() {
                 self.toggle_btn_delete_all();
             });
@@ -23,9 +26,8 @@ odoo.define('web_x2many_delete_all', function (require) {
             }
         },
         btn_delete_all_clicked: function() {
-            if(!this.get('effective_readonly')) {
-                this.delete_all();
-            }
+            if(this.get('effective_readonly')) return;
+            this.delete_all();
         },
         delete_all: function() {
             this.viewmanager.views.list.controller.do_delete(this.dataset.ids);

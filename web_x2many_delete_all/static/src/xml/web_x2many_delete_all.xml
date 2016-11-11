@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2016 Onestein
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
 <templates>
     <t t-extend="ListView">
         <t t-jquery=".o_list_record_delete" t-operation="inner">
