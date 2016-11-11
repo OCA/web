@@ -9,9 +9,8 @@ openerp.web_field_form_color = function (instance) {
 
     var QWeb = instance.web.qweb;
     var _t  = instance.web._t;
-    var _lt = instance.web._lt;
 
-    instance.web.form.FieldFloat = instance.web.form.FieldFloat.extend({
+    instance.web.form.FieldFloat.include({
         render_value: function() {
             this._super();
             this.set_color();
@@ -74,7 +73,7 @@ openerp.web_field_form_color = function (instance) {
         },
         set_value: function(value_) {
             this.set_color();
-            return this._super(value_);            
+            return this._super(value_);
         },
         format_value: function(val, def) {
             return instance.web.format_value(val, this, def);
