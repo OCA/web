@@ -150,14 +150,15 @@ class TileTile(models.Model):
         try:
             model = self.env[self.model_id.model]
             eval_context = self._get_eval_context()
-            count = model.search_count(eval(self.domain, eval_context))
+            domain = self.domain or '[]'
+            count = model.search_count(eval(domain, eval_context))
             if any([
                 self.primary_function and
                 self.primary_function != 'count',
                 self.secondary_function and
                 self.secondary_function != 'count'
                     ]):
-                    records = model.search(eval(self.domain, eval_context))
+                    records = model.search(eval(domain, eval_context))
             for f in ['primary_', 'secondary_']:
                 value = 0
                 if self[f+'function'] == 'count':
