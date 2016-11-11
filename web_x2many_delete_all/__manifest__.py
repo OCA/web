@@ -4,7 +4,9 @@
 
 {
     'name': 'X2many Delete All Button',
-    'summary': 'Adds a button to x2many fields that removes all linked records',
+    'summary': """
+        Adds a button to x2many fields that removes all linked records
+    """,
     'version': '10.0.1.0.0',
     'category': 'Web',
     'author': 'Onestein,Odoo Community Association (OCA)',
