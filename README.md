@@ -19,6 +19,7 @@ addon | version | summary
 --- | --- | ---
 [web_environment_ribbon](web_environment_ribbon/) | 10.0.1.0.0 | Web Environment Ribbon
 [web_favicon](web_favicon/) | 10.0.1.0.0 | Allows to set a custom shortcut icon (aka favicon)
+[web_responsive](web_responsive/) | 10.0.1.0.0 | It provides a mobile compliant interface for Odoo Community web
 [web_sheet_full_width](web_sheet_full_width/) | 10.0.1.0.0 | Use the whole available screen width when displaying sheets
 [web_widget_color](web_widget_color/) | 10.0.1.0.0 | Web Widget Color
 
