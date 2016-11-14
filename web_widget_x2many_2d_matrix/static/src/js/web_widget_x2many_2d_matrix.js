@@ -29,12 +29,16 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
         fields: {},
         // Store fields used to fill HTML attributes
         fields_att: {},
+        x_axis_clickable: true,
+        y_axis_clickable: true,
 
         // read parameters
         init: function(field_manager, node)
         {
             this.field_x_axis = node.attrs.field_x_axis || this.field_x_axis;
             this.field_y_axis = node.attrs.field_y_axis || this.field_y_axis;
+            this.x_axis_clickable = node.attrs.x_axis_clickable || this.x_axis_clickable;
+            this.y_axis_clickable = node.attrs.y_axis_clickable || this.y_axis_clickable;
             this.field_label_x_axis = node.attrs.field_label_x_axis || this.field_x_axis;
             this.field_label_y_axis = node.attrs.field_label_y_axis || this.field_y_axis;
             this.field_value = node.attrs.field_value || this.field_value;
@@ -84,6 +88,8 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
                     self.is_numeric = fields[self.field_value].type == 'float';
                     self.show_row_totals &= self.is_numeric;
                     self.show_column_totals &= self.is_numeric;
+                    self.x_axis_clickable &= self.is_numeric;
+                    self.y_axis_clickable &= self.is_numeric;
                 })
                 // if there are cached writes on the parent dataset, read below
                 // only returns the written data, which is not enough to properly
@@ -343,14 +349,14 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
 
         setup_many2one_axes: function()
         {
-            if(this.fields[this.field_x_axis].type == 'many2one')
+            if(this.fields[this.field_x_axis].type == 'many2one' && this.x_axis_clickable)
             {
                 this.$el.find('th[data-x]').addClass('oe_link')
                 .click(_.partial(
                     this.proxy(this.many2one_axis_click),
                     this.field_x_axis, 'x'));
             }
-            if(this.fields[this.field_y_axis].type == 'many2one')
+            if(this.fields[this.field_y_axis].type == 'many2one' && this.y_axis_clickable)
             {
                 this.$el.find('tr[data-y] th').addClass('oe_link')
                 .click(_.partial(
