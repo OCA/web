@@ -5,7 +5,7 @@
 <templates>
     <t t-extend="ListView">
         <t t-jquery=".o_list_record_delete" t-operation="inner">
-            <span class="fa fa-trash-o hidden"/>
+            <span class="fa fa-trash-o hidden" title="Delete all"/>
         </t>
     </t>
 </templates>
