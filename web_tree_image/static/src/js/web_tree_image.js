@@ -19,7 +19,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-odoo.define('web.tree_image', function (require) {
+odoo.define('web.WebTreeImage', function (require) {
     "use strict";
     var core = require('web.core');
     var session = require('web.session');
