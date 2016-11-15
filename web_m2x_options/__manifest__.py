@@ -16,6 +16,7 @@
         'data/config_data.xml',
         'views/view.xml',
     ],
-    "author": "Henry Zhou, ACSONE SA/NV, 0k.io,Odoo Community Association (OCA)",
+    "author": "Henry Zhou, ACSONE SA/NV, 0k.io,\
+                Odoo Community Association (OCA)",
     'installable': True,
 }
