@@ -94,16 +94,16 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
 
         is_option_set: function(option) {
             if (_.isUndefined(option)) {
-                return false
+                return false;
             }
-            var is_string = typeof option === 'string'
-            var is_bool = typeof option === 'boolean'
+            var is_string = typeof option === 'string';
+            var is_bool = typeof option === 'boolean';
             if (is_string) {
-                return option === 'true' || option === 'True'
+                return option === 'true' || option === 'True';
             } else if (is_bool) {
-                return option
+                return option;
             }
-            return false
+            return false;
         },
 
         show_error_displayer: function () {
@@ -131,8 +131,8 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
             }
 
             // add options field_color and colors to color item(s) depending on field_color value
-            this.field_color = this.options.field_color
-            this.colors = this.options.colors
+            this.field_color = this.options.field_color;
+            this.colors = this.options.colors;
 
             var dataset = new data.DataSet(this, this.field.relation,
                                                    self.build_context());
@@ -309,16 +309,16 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
 
         is_option_set: function(option) {
             if (_.isUndefined(option)) {
-                return false
+                return false;
             }
-            var is_string = typeof option === 'string'
-            var is_bool = typeof option === 'boolean'
+            var is_string = typeof option === 'string';
+            var is_bool = typeof option === 'boolean';
             if (is_string) {
-                return option === 'true' || option === 'True'
+                return option === 'true' || option === 'True';
             } else if (is_bool) {
-                return option
+                return option;
             }
-            return false
+            return false;
         },
 
         /**
@@ -414,7 +414,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                 }
 
                 return values;
-            })
+            });
         },
 
         open_badge: function(ev){
