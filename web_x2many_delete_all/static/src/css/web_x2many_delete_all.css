@@ -1,0 +1,7 @@
+/* Copyright 2016 Onestein
+ * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
+
+div.o_list_view th.oe_list_record_delete,
+div.o_list_view th.oe_list_record_delete span {
+    cursor: pointer;
+}
