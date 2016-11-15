@@ -31,7 +31,7 @@ openerp.web_x2m_filter = function(instance)
     var apply_domain = function(o2m, domain)
     {
         var compound_domain = new instance.web.CompoundDomain(
-                domain,
+                JSON.parse(domain),
                 o2m.field.domain,
                 [
                     [
