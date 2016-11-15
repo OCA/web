@@ -5,7 +5,7 @@
 {
     'name': 'Web text limited widget',
     'version': '8.0.1.0.0',
-    'author': 'initOS GmbH, OCA',
+    'author': 'initOS GmbH, Odoo Community Association (OCA)',
     'category': 'web',
     'description': """
 
