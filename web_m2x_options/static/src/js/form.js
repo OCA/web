@@ -1,25 +1,23 @@
-/* Copyright 2016 0k.io,ACSONE SA/NV
+/* Copyright 2016 0k.io,ACSONE SA/NV, Henry Zhou (MAX0doo.com)
  *  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
 odoo.define('web_m2x_options.web_m2x_options', function (require) {
     "use strict";
 
-    var $ = require("$");
     var core = require('web.core'),
         data = require('web.data'),
         Dialog = require('web.Dialog'),
         Model = require('web.Model'),
         form_relational = require('web.form_relational'),
-        _ = require('_'),
         _t  = core._t;
 
     var OPTIONS = ['web_m2x_options.create',
                    'web_m2x_options.create_edit',
                    'web_m2x_options.limit',
                    'web_m2x_options.search_more',
-                   'web_m2x_options.m2o_dialog',];
+                   'web_m2x_options.m2o_dialog'];
 
-    // In odoo 9.c FielMany2One is not exposed by form_relational
+    // In odoo 9.c and 10c FielMany2One is not exposed by form_relational
     // To bypass this limitation we use the widget registry to get the
     // reference to the FielMany2One widget.
     var FieldMany2One = core.form_widget_registry.get('many2one');
@@ -59,6 +57,18 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
 
     FieldMany2One.include({
 
+        willStart: function() {
+            if (_.isUndefined(this.options.no_open)) {
+                this.options.no_open = 'True';
+            }
+            else {
+                if (this.options.no_open == 'False' || this.options.no_open == 'false') {
+                    this.options.no_open = false;
+                }
+            }
+            return this._super.apply(this, arguments);
+        },
+
         start: function() {
             this._super.apply(this, arguments);
             return this.get_options();
@@ -67,33 +77,33 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
         get_options: function() {
             var self = this;
             if (!_.isUndefined(this.view) && _.isUndefined(this.view.ir_options_loaded)) {
-            this.view.ir_options_loaded = $.Deferred();
-            this.view.ir_options = {};
-            (new Model("ir.config_parameter"))
-                .query(["key", "value"]).filter([['key', 'in', OPTIONS]])
-                .all().then(function(records) {
-                _(records).each(function(record) {
-                    self.view.ir_options[record.key] = record.value;
-                });
-                self.view.ir_options_loaded.resolve();
-                });
-                return this.view.ir_options_loaded;
+                this.view.ir_options_loaded = $.Deferred();
+                this.view.ir_options = {};
+                (new Model("ir.config_parameter"))
+                    .query(["key", "value"]).filter([['key', 'in', OPTIONS]])
+                    .all().then(function(records) {
+                    _(records).each(function(record) {
+                        self.view.ir_options[record.key] = record.value;
+                    });
+                    self.view.ir_options_loaded.resolve();
+                    });
+                    return this.view.ir_options_loaded;
             }
             return $.when();
         },
 
         is_option_set: function(option) {
             if (_.isUndefined(option)) {
-                return false
+                return false;
             }
-            var is_string = typeof option === 'string'
-            var is_bool = typeof option === 'boolean'
+            var is_string = typeof option === 'string';
+            var is_bool = typeof option === 'boolean';
             if (is_string) {
-                return option === 'true' || option === 'True'
+                return option === 'true' || option === 'True';
             } else if (is_bool) {
-                return option
+                return option;
             }
-            return false
+            return false;
         },
 
         show_error_displayer: function () {
@@ -121,11 +131,10 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
             }
 
             // add options field_color and colors to color item(s) depending on field_color value
-            this.field_color = this.options.field_color
-            this.colors = this.options.colors
+            this.field_color = this.options.field_color;
+            this.colors = this.options.colors;
 
-            var dataset = new data.DataSet(this, this.field.relation,
-                                                   self.build_context());
+            var dataset = new data.DataSet(this, this.field.relation, self.build_context());
             var blacklist = this.get_search_blacklist();
             this.last_query = search_val;
 
@@ -202,7 +211,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                                     self._search_create_popup("search", data);
                                 });
                         },
-                        classname: 'oe_m2o_dropdown_option o_m2o_dropdown_option' 
+                        classname: 'oe_m2o_dropdown_option o_m2o_dropdown_option'
                     });
                 }
 
@@ -227,7 +236,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                             action: function () {
                                 self._quick_create(search_val);
                             },
-                            classname: 'oe_m2o_dropdown_option o_m2o_dropdown_option' 
+                            classname: 'oe_m2o_dropdown_option o_m2o_dropdown_option'
                         });
                     }
                 }
@@ -246,7 +255,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                                 "form", undefined,
                                 self._create_context(search_val));
                         },
-                        classname: 'oe_m2o_dropdown_option o_m2o_dropdown_option' 
+                        classname: 'oe_m2o_dropdown_option o_m2o_dropdown_option'
                     });
                 }
                 // Check if colors specified to wait for RPC
@@ -299,16 +308,16 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
 
         is_option_set: function(option) {
             if (_.isUndefined(option)) {
-                return false
+                return false;
             }
-            var is_string = typeof option === 'string'
-            var is_bool = typeof option === 'boolean'
+            var is_string = typeof option === 'string';
+            var is_bool = typeof option === 'boolean';
             if (is_string) {
-                return option === 'true' || option === 'True'
+                return option === 'true' || option === 'True';
             } else if (is_bool) {
-                return option
+                return option;
             }
-            return false
+            return false;
         },
 
         /**
@@ -362,7 +371,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                                 self._search_create_popup("search", data);
                             });
                         },
-                        classname: 'oe_m2o_dropdown_option o_m2o_dropdown_option' 
+                        classname: 'oe_m2o_dropdown_option o_m2o_dropdown_option'
                     });
                 }
                 // quick create
@@ -381,7 +390,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                             action: function() {
                                 self._quick_create(search_val);
                             },
-                            classname: 'oe_m2o_dropdown_option o_m2o_dropdown_option' 
+                            classname: 'oe_m2o_dropdown_option o_m2o_dropdown_option'
                         });
                     }
                 }
@@ -399,7 +408,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                         action: function() {
                             self._search_create_popup("form", undefined, self._create_context(search_val));
                         },
-                        classname: 'oe_m2o_dropdown_option o_m2o_dropdown_option' 
+                        classname: 'oe_m2o_dropdown_option o_m2o_dropdown_option'
                     });
                 }
 

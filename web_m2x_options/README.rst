@@ -14,8 +14,8 @@ Edit..." entries from many2one drop down. You can also change default number of
 proposition appearing in the drop-down. Or prevent the dialog box poping in
 case of validation error.
 
-If not specified, the module will avoid proposing any of the create options
-if the current user has no permission rights to create the related object.
+By default this module will disable 'open link button' next to the drop down, if you want enable
+it in a field, add options={'no_open': false} in the field definition of view.
 
 Usage
 =====
@@ -119,6 +119,12 @@ Known issues
 Double check that you have no inherited view that remove ``options`` you set on a field ! 
 If nothing works, add a debugger in the first line of ``get_search_result method`` and enable debug mode in Odoo. When you write something in a many2one field, javascript debugger should pause. If not verify your installation.
 
+TODO: To show a vertical scrollbar in drop down list when needed.
+
+Below feature does not work in odoo 10 community, since widget.can_create always returns True even current user has no permission rights to create the related object.
+If not specified, the module will avoid proposing any of the create options if the current user has no permission rights to create the related object.
+
+
 Roadmap
 =======
 
@@ -146,6 +152,7 @@ Contributors
 * Nicolas JEUDY <nicolas@sudokeys.com>
 * Yannick Vaucher <yannick.vaucher@camptocamp.com>
 * Zakaria Makrelouf <z.makrelouf@gmail.com>
+* Henry Zhou <zhouhenry@live.com>
 
 Maintainer
 ----------

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
 <t t-extend="FieldMany2One">
-    <t t-jquery="a.oe_m2o_cm_button">
+    <t t-jquery=".o_external_button">
         jQuery(this).attr('t-if', '!(widget.options.no_open || widget.options.no_open_edit)');
     </t>
 </t>

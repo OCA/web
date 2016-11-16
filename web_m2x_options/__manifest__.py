@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
 {
-    "name": 'web_m2x_options',
-    "version": "9.0.1.0.0",
-    "depends": [
+    'name': 'web_m2x_options',
+    'version': '10.0.1.0.0',
+    'category': 'Web',
+    'depends': [
         'base',
         'web',
     ],
@@ -11,7 +12,11 @@
         'static/src/xml/base.xml',
     ],
     'license': 'AGPL-3',
-    'data': ['views/view.xml'],
-    "author": "ACSONE SA/NV, 0k.io,Odoo Community Association (OCA)",
+    'data': [
+        'data/config_data.xml',
+        'views/view.xml',
+    ],
+    'author': 'Henry Zhou, ACSONE SA/NV, 0k.io,\
+                Odoo Community Association (OCA)',
     'installable': True,
 }
