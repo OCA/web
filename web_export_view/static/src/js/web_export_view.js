@@ -13,7 +13,7 @@ odoo.define('web_export_view', function (require) {
             var self = this;
             this._super.apply(this, arguments);
             if (self.getParent().ViewManager.active_view.type == 'list') {
-                self.$el.find('.o_dropdown').last().append(QWeb.render('AddExportViewMain', {widget: self}));
+                self.$el.find('.o_dropdown').last().append(QWeb.render('WebExportTreeViewXls', {widget: self}));
                 self.$el.find('.export_treeview_xls').on('click', self.on_sidebar_export_treeview_xls);
             }
         },

@@ -19,8 +19,8 @@ msgstr ""
 #. openerp-web
 #: code:addons/web_export_view/static/src/xml/web_export_view_template.xml:6
 #, python-format
-msgid "Export selected data"
-msgstr "导出选中的数据"
+msgid "Download xls"
+msgstr "下载 xls"
 
 #. module: web_export_view
 #. openerp-web
