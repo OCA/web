@@ -44,6 +44,7 @@ Contributors
 ------------
 
 * Holger Brunn <hbrunn@therp.nl>
+* Adhoc <jjs@adhoc.com.ar>
 
 Maintainer
 ----------
