@@ -272,6 +272,15 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
             return vals;
         },
 
+        row_xy_exists: function(x, y)
+        {
+            if( x in this.by_x_axis && y in this.by_x_axis[x] ) {
+                return  true;
+            }
+
+            return false;
+        },
+
         // return the value of a coordinate
         get_xy_value: function(x, y)
         {
