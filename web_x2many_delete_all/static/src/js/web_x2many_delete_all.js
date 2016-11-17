@@ -3,7 +3,6 @@
 
 openerp.web_x2many_delete_all = function(instance) {
 "use strict";
-    var _t = instance.web._t;
 
     instance.web.form.FieldMany2Many.include({
         events: {
