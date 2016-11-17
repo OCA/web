@@ -3,8 +3,7 @@
 
 odoo.define('web_x2many_delete_all', function (require) {
 "use strict";
-    var core = require('web.core'),
-        _t = core._t;
+    var core = require('web.core');
 
     var X2ManyListDeleteAllMixin = {
         events: {
