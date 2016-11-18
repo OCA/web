@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="auto refresh" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">                
+                <script type="text/javascript" src="/auto_refresh/static/src/js/auto_refresh.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>
