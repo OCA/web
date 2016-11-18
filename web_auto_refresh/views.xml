@@ -3,7 +3,7 @@
     <data>
         <template id="assets_backend" name="auto refresh" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">                
-                <script type="text/javascript" src="/auto_refresh/static/src/js/auto_refresh.js"></script>
+                <script type="text/javascript" src="/auto_refresh/static/src/js/web_auto_refresh.js"></script>
             </xpath>
         </template>
     </data>
