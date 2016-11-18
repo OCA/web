@@ -19,7 +19,8 @@ Configuration
 To configure this module, you need to:
 
 1. go to setting->technical->actions->window actions, find the desired action, activate the auto search Check box
-2. add one server action for the target model with following one line python code for creation/change and delete
+2. add one automated action for the target model , in the linked server action add the following python code, this automated action can be applied(when to run) to creation, update or delete per your requirement
+    model.env['bus.bus'].sendone('auto_refresh', model._name)
 
 
 Usage
@@ -39,10 +40,8 @@ Known issues / Roadmap
 ======================
 
 * From Techical point of view, the high level implementation detail is as following
-    1. on backend(Python), generate one record into model bus.bus(notification) when relevant model data updated(create/write/unlink) by calling the bus.sendone('channel','message') in overwritten method create/write/unlink
-    2. on frontend(javascript), declare the event listener to handle the notification message, check to see whether the notification(message)  is relevant for the current view/ user, if so auto refresh the view, either call reload(),do_reload(), or do_search_view_search()
-    
-* This module is designed as a generic solution, if only limited models need this kind of auto refresh function, in     order to reduce the extra overhead(every call to create/write/unlink need to check whether notificaiton to be generated) introduced by this module, it is suggested to enhance the individual module accordingly.
+    1. on backend(Python code triggered by automated server action), generate one record into model bus.bus(notification) when relevant model data updated(create/write/unlink) by calling the bus.sendone('channel','message')
+    2. on frontend(javascript), declare the event listener to handle the notification message, check to see whether the notification(message)  is relevant for the current view/ user, if so auto refresh the view, either call reload(),do_reload(), or do_search_view_search()    
 
 Bug Tracker
 ===========
