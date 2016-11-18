@@ -1,22 +1,20 @@
-
-Select multi many2one Ids in one2many list
+Select multi many2one Ids into one2many list
 ===================
 
-Standard Odoo only support adding one line a time in the one2many list view embedded in form view, for example, when creating a sales order or a purchase
-order, user can only select one product a time, this module allows user to select multi product in one go.
+Standard Odoo only supports adding one line a time in the embedded one2many list view in form view, for example, when creating a sales order or a purchase order, user can only select one product a time, this module allows user to select multi product in one go.
 
 Usage
 =====
-1. in the form view with one2many field tree view, add the attribute multi_select = "1" to the target many2one field, e.g for customer invoice form, the product_id
-field is the target many2one field,  <field name="product_id" multi_select = "1"/>
-2. in the many2one dropdown list, select search more... button, multi selection is possible, select multi items by tick the check box, then click the select button
-all the selected items will be populated to the one2many list , also the onchange and default has been properly handled.
+1. For form view with embedded one2many field (tree view), add attribute multi_select = "1" to the target many2one field, e.g for customer invoice form, the product_id field is the target many2one field,  <field name="product_id" multi_select = "1"/>
+2. In the many2one dropdown list, click "search more..." button, multi selection is activated, select multi items by tick the check box, then click the select button to close the popup window, all selected items will be populated to the one2many list, the onchange and default has been properly handled, enter the other missing mandatory fields as needed, then SAVE.
 
-There are no any settings to configure. Just install module and continue to use odoo in a usual way. You will see links to last visited pages.
+Configuration
+=====
+No any settings to configure. Just install module and continue to use odoo as usual. 
 
 For further information, please visit:
 
- * https://www.github.com/szufisher
+ * https://www.github.com/szufisher or you can reach me via mail Yuxinyong@163.com
 
 Known issues / Roadmap
 ======================
