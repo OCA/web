@@ -2,8 +2,8 @@
 # Copyright 2016 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.tests import common
-from openerp.addons.bus.models.bus import json_dump
+from odoo.tests import common
+from odoo.addons.bus.models.bus import json_dump
 import mock
 
 
@@ -42,7 +42,7 @@ class TestResUsers(common.TransactionCase):
     def test_notify_many(self):
         # check that the notification of a list of users is done with
         # a single call to the bus
-        with mock.patch('openerp.addons.bus.models.bus.ImBus.sendmany'
+        with mock.patch('odoo.addons.bus.models.bus.ImBus.sendmany'
                         ) as mockedSendMany:
             users = self.env.user.search([(1, "=", 1)])
             self.assertTrue(len(users) > 1)
