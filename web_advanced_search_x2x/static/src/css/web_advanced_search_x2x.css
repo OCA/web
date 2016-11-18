@@ -1,23 +1,25 @@
-.openerp .searchview_extended_prop_value .oe_form_field_with_button
+.o_searchview_extended_prop_value .oe_form_field_with_button
 {
     position: relative;
 }
-.openerp .oe_searchview_drawer .web_advanced_search_x2x_domain
+.o_filter_condition .o_searchview_extended_prop_value .web_advanced_search_x2x_domain
 {
     max-width: 20em;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: inline-block;
+    /*display: inline-block; */
+    display: block;
 }
 /* copy search view's button style */
-.openerp .oe_searchview_drawer .web_advanced_search_x2x_search:before
+.o_filter_condition .o_searchview_extended_prop_value .web_advanced_search_x2x_search:before
 {
     font: 21px "mnmliconsRegular";
-    content: "r";
+    content: "Search";
     color: #a3a3a3;
     margin-left: 5px;
+    position: relative;
 }
-.openerp .oe_searchview_drawer .web_advanced_search_x2x_search
+.o_filter_condition .o_searchview_extended_prop_value .web_advanced_search_x2x_search
 {
     font-size: 1px;
     letter-spacing: -1px;
