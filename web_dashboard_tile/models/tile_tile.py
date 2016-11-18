@@ -46,6 +46,13 @@ class TileTile(models.Model):
     background_color = fields.Char(default='#0E6C7E', oldname='color')
     font_color = fields.Char(default='#FFFFFF')
 
+    group_ids = fields.Many2many(
+        'res.groups',
+        string='Groups',
+        help='If this field is set, only users of this group can view this '
+             'tile. Please note that it will only work for global tiles '
+             '(that is, when User field is left empty)')
+
     model_id = fields.Many2one('ir.model', 'Model', required=True)
     domain = fields.Text(default='[]')
     action_id = fields.Many2one('ir.actions.act_window', 'Action')
