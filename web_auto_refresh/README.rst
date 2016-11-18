@@ -4,41 +4,33 @@
 Web Auto Refresh
 ===========
 
-Standard odoo does not support auto refresh the inbox message, kanban and list view when underlying model data updated by others, even though there is auto refresh option in ir.actions.act_window, this only works for old GUI client(version < 7.0). for inbound message, orders, tickets etc auto refresh function will be very useful.
-and allow you to ...
+Standard odoo 10.0 only support auto refreshing the inbox message, for kanban and list view when underlying model data updated by others, even though the auto search option in ir.actions.act_window activated, system will not auto refresh the kanban and list view as expected, this small moddue just fills this gap, this module is useful for keep monitoring orders, tickets etc without manual refresh the browser.
+
 
 Installation
 ============
 
 To install this module, you need to:
 
-* get the dependency module bus_enhanced from either the original author's repository https://bitbucket.org/anybox/bus_enhanced/ or the cloned version in OCA\web
 
 Configuration
 =============
 
 To configure this module, you need to:
 
-* for inbox message auto refresh, no configuration needed
-* for kanban and list view auto refresh, 
-go to setting->technical->actions->window actions, find the desired action, set auto refresh parameter(>0 is enough) 
+1. go to setting->technical->actions->window actions, find the desired action, activate the auto search Check box
+2. add one server action for the target model with following one line python code for creation/change and delete
+
 
 Usage
 =====
 
 To use this module, you need to:
 
-* For kanban and list view
     1. goes to the list or kanban view of the selected model, in display mode
     2. in another session(login via another browser and other computer), create, change or delete records of the model, then save
     3. the original list or kanban view in display mode will be auto refreshed
-    
-* For inbox message/ mail wall auto refresh
-    1. login to system and stay at the initial inbox screen, in display mode( do not invoke the compose message)
-    2. from another session, create internal message on documents which you are the follower
-    3. the inbox message will be auto refreshed
-    
-    
+           
 For further information, please visit:
 
 * https://www.odoo.com/forum/help-1
