@@ -14,7 +14,7 @@ odoo.define('web_session_allow_public.demo', function(require){
   Tour.register({
     id: "test_web_session_allow_public",
     name: _t("Demonstrate availability of session"),
-    path: '/page/contactus',
+    path: '/',
     mode: 'test',
     steps: [
       {
