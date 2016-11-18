@@ -6,9 +6,11 @@
     'name': 'Web Notify',
     'summary': """
         Send notification messages to user""",
-    'version': '9.0.1.0.0',
+    'version': '10.0.1.0.0',
+    'description': 'Web Notify',
     'license': 'AGPL-3',
-    'author': 'ACSONE SA/NV,Odoo Community Association (OCA)',
+    'author': """Serpent Consulting Services Pvt. Ltd.,
+                ACSONE SA/NV, Odoo Community Association (OCA)""",
     'website': 'https://acsone.eu/',
     'depends': [
         'web',
@@ -19,5 +21,5 @@
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
 }
