@@ -109,7 +109,8 @@ class TileTile(models.Model):
                " ('ttype', 'in', ['float', 'integer'])]")
     primary_format = fields.Char(
         string='Format',
-        help='Python Format String valid with str.format()')
+        help='Python Format String valid with str.format()\n'
+             'ie: \'{:,} Kgs\' will output \'1,000 Kgs\' if value is 1000.')
     primary_value = fields.Char(
         string='Value',
         compute='_compute_data')
@@ -128,7 +129,8 @@ class TileTile(models.Model):
                " ('ttype', 'in', ['float', 'integer'])]")
     secondary_format = fields.Char(
         string='Secondary Format',
-        help='Python Format String valid with str.format()')
+        help='Python Format String valid with str.format()\n'
+             'ie: \'{:,} Kgs\' will output \'1,000 Kgs\' if value is 1000.')
     secondary_value = fields.Char(
         string='Secondary Value',
         compute='_compute_data')
