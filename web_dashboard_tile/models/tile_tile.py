@@ -160,19 +160,23 @@ class TileTile(models.Model):
                     ]):
                     records = model.search(eval(domain, eval_context))
             for f in ['primary_', 'secondary_']:
+                f_function = f+'function'
+                f_field_id = f+'field_id'
+                f_format = f+'format'
+                f_value = f+'value'
                 value = 0
-                if self[f+'function'] == 'count':
+                if self[f_function] == 'count':
                     value = count
-                elif self[f+'function']:
-                    func = FIELD_FUNCTIONS[self[f+'function']]['func']
-                    if func and self[f+'field_id'] and count:
-                        vals = [x[self[f+'field_id'].name] for x in records]
+                elif self[f_function]:
+                    func = FIELD_FUNCTIONS[self[f_function]]['func']
+                    if func and self[f_field_id] and count:
+                        vals = [x[self[f_field_id].name] for x in records]
                         value = func(vals)
-                if self[f+'function']:
-                    self[f+'value'] = \
-                        (self[f+'format'] or '{:,}').format(value)
+                if self[f_function]:
+                    self[f_value] = \
+                        (self[f_format] or '{:,}').format(value)
                 else:
-                    self[f+'value'] = False
+                    self[f_value] = False
         except Exception as e:
             self.primary_value = self.secondary_value = 'ERR!'
             self.error = str(e)
@@ -182,15 +186,18 @@ class TileTile(models.Model):
                   'secondary_function', 'secondary_field_id')
     def _compute_helper(self):
         for f in ['primary_', 'secondary_']:
-            self[f+'helper'] = ''
-            field_func = FIELD_FUNCTIONS.get(self[f+'function'], {})
+            f_function = f+'function'
+            f_field_id = f+'field_id'
+            f_helper = f+'helper'
+            self[f_helper] = ''
+            field_func = FIELD_FUNCTIONS.get(self[f_function], {})
             help = field_func.get('help', False)
             if help:
-                if self[f+'function'] != 'count' and self[f+'field_id']:
-                    desc = self[f+'field_id'].field_description
-                    self[f+'helper'] = help % desc
+                if self[f_function] != 'count' and self[f_field_id]:
+                    desc = self[f_field_id].field_description
+                    self[f_helper] = help % desc
                 else:
-                    self[f+'helper'] = help
+                    self[f_helper] = help
 
     @api.one
     def _compute_active(self):
