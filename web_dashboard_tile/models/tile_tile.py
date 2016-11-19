@@ -142,70 +142,68 @@ class TileTile(models.Model):
         string='Error Details',
         compute='_compute_data')
 
-    @api.multi
+    @api.one
     def _compute_data(self):
+        if not self.active:
+            return
+        model = self.env[self.model_id.model]
         eval_context = self._get_eval_context()
-        for rec in self:
-            if not rec.active:
-                return
-            domain = rec.domain or '[]'
-            model = rec.env[rec.model_id.model]
-            try:
-                count = model.search_count(eval(domain, eval_context))
-            except Exception as e:
-                rec.primary_value = rec.secondary_value = 'ERR!'
-                rec.error = str(e)
-                return
-            if any([
-                rec.primary_function and
-                rec.primary_function != 'count',
-                rec.secondary_function and
-                rec.secondary_function != 'count'
-            ]):
-                records = model.search(eval(domain, eval_context))
-            for f in ['primary_', 'secondary_']:
-                f_function = f + 'function'
-                f_field_id = f + 'field_id'
-                f_format = f + 'format'
-                f_value = f + 'value'
-                value = 0
-                if rec[f_function] == 'count':
-                    value = count
-                elif rec[f_function]:
-                    func = FIELD_FUNCTIONS[rec[f_function]]['func']
-                    if func and rec[f_field_id] and count:
-                        vals = [x[rec[f_field_id].name] for x in records]
-                        value = func(vals)
-                if rec[f_function]:
-                    try:
-                        rec[f_value] = (rec[f_format] or '{:,}').format(value)
-                    except ValueError as e:
-                        rec[f_value] = 'F_ERR!'
-                        rec.error = str(e)
-                        return
-                else:
-                    rec[f_value] = False
+        domain = self.domain or '[]'
+        try:
+            count = model.search_count(eval(domain, eval_context))
+        except Exception as e:
+            self.primary_value = self.secondary_value = 'ERR!'
+            self.error = str(e)
+            return
+        if any([
+            self.primary_function and
+            self.primary_function != 'count',
+            self.secondary_function and
+            self.secondary_function != 'count'
+        ]):
+            records = model.search(eval(domain, eval_context))
+        for f in ['primary_', 'secondary_']:
+            f_function = f + 'function'
+            f_field_id = f + 'field_id'
+            f_format = f + 'format'
+            f_value = f + 'value'
+            value = 0
+            if self[f_function] == 'count':
+                value = count
+            elif self[f_function]:
+                func = FIELD_FUNCTIONS[self[f_function]]['func']
+                if func and self[f_field_id] and count:
+                    vals = [x[self[f_field_id].name] for x in records]
+                    value = func(vals)
+            if self[f_function]:
+                try:
+                    self[f_value] = (self[f_format] or '{:,}').format(value)
+                except ValueError as e:
+                    self[f_value] = 'F_ERR!'
+                    self.error = str(e)
+                    return
+            else:
+                self[f_value] = False
 
-    @api.multi
+    @api.one
     @api.onchange('primary_function', 'primary_field_id',
                   'secondary_function', 'secondary_field_id')
     def _compute_helper(self):
-        for rec in self:
-            for f in ['primary_', 'secondary_']:
-                f_function = f + 'function'
-                f_field_id = f + 'field_id'
-                f_helper = f + 'helper'
-                rec[f_helper] = ''
-                field_func = FIELD_FUNCTIONS.get(rec[f_function], {})
-                help = field_func.get('help', False)
-                if help:
-                    if rec[f_function] != 'count' and rec[f_field_id]:
-                        desc = rec[f_field_id].field_description
-                        rec[f_helper] = help % desc
-                    else:
-                        rec[f_helper] = help
+        for f in ['primary_', 'secondary_']:
+            f_function = f + 'function'
+            f_field_id = f + 'field_id'
+            f_helper = f + 'helper'
+            self[f_helper] = ''
+            field_func = FIELD_FUNCTIONS.get(self[f_function], {})
+            help = field_func.get('help', False)
+            if help:
+                if self[f_function] != 'count' and self[f_field_id]:
+                    desc = self[f_field_id].field_description
+                    self[f_helper] = help % desc
+                else:
+                    self[f_helper] = help
 
-    @api.multi
+    @api.one
     def _compute_active(self):
         ima = self.env['ir.model.access']
         for rec in self:
