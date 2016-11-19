@@ -174,8 +174,12 @@ class TileTile(models.Model):
                     vals = [x[self[f_field_id].name] for x in records]
                     value = func(vals)
             if self[f_function]:
-                self[f_value] = \
-                    (self[f_format] or '{:,}').format(value)
+                try:
+                    self[f_value] = (self[f_format] or '{:,}').format(value)
+                except ValueError as e:
+                    self[f_value] = 'F_ERR!'
+                    self.error = str(e)
+                    return
             else:
                 self[f_value] = False
 
