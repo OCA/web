@@ -9,8 +9,10 @@
                     <field name="name"/>
                     <field name="domain"/>
                     <field name="model_id"/>
-                    <field name="field_function"/>
-                    <field name="field_id"/>
+                    <field name="primary_function"/>
+                    <field name="primary_field_id"/>
+                    <field name="secondary_function"/>
+                    <field name="secondary_field_id"/>
                     <field name="user_id"/>
                     <field name="background_color" widget="color"/>
                 </tree>
@@ -34,11 +36,50 @@
                             <field name="model_id"/>
                             <field name="action_id"/>
                             <field name="domain" colspan="4"/>
-                            <separator string="Optional Field Informations" colspan="4"/>
-                            <field name="field_function"/>
-                            <field name="field_id"/>
-                            <field name="helper" colspan="4"/>
+                            <separator colspan="4"/>
+                            <field name="error" attrs="{'invisible':[('error','=',False)]}"/>
                         </group>
+                        <notebook>
+                            <page string="Main Value">
+                                <group>
+                                    <group>
+                                        <field name="primary_function"/>
+                                        <field name="primary_field_id" attrs="{
+                                            'invisible':[('primary_function','in',[False,'count'])],
+                                            'required':[('primary_function','not in',[False,'count'])],
+                                        }"/>
+                                    </group>
+                                    <group>
+                                        <field name="primary_format"/>
+                                    </group>
+                                    <group>
+                                        <field name="primary_helper"/>
+                                        <field name="primary_value" attrs="{'invisible':[('primary_value','=',False)]}"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Secondary Value">
+                                <group>
+                                    <group>
+                                        <field name="secondary_function"/>
+                                        <field name="secondary_field_id" attrs="{
+                                            'invisible':[('secondary_function','in',[False,'count'])],
+                                            'required':[('secondary_function','not in',[False,'count'])],
+                                        }"/>
+                                    </group>
+                                    <group>
+                                        <field name="secondary_format"/>
+                                    </group>
+                                    <group>
+                                        <field name="secondary_helper"/>
+                                        <field name="secondary_value" attrs="{'invisible':[('secondary_value','=',False)]}"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Groups">
+                                <field name="group_ids"/>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
@@ -53,37 +94,31 @@
                     <field name="domain"/>
                     <field name="model_id"/>
                     <field name="action_id"/>
-                    <field name="count"/>
                     <field name="background_color"/>
                     <field name="font_color"/>
-                    <field name="field_id" />
-                    <field name="field_function" />
-                    <field name="helper" />
+                    <field name="primary_function"/>
+                    <field name="primary_helper"/>
+                    <field name="secondary_function"/>
+                    <field name="secondary_helper"/>
+
                     <templates>
                         <t t-name="kanban-box">
                             <div t-attf-class="oe_dashbaord_tile oe_kanban_global_click" t-attf-style="background-color:#{record.background_color.raw_value}" >
                                 <div class="oe_kanban_content">
                                     <a type="object" name="open_link" args="[]" t-attf-style="color:#{record.font_color.raw_value};">
-                                        <div class="tile_label">
-                                            <b><field name="name"/></b>
+                                        <div style="height:100%;" t-att-class="record.secondary_function.raw_value and 'with_secondary' or 'simple'">
+                                            <div class="tile_label">
+                                                <field name="name"/>
+                                            </div>
+                                            <div class="tile_primary_value" t-att-title="record.primary_helper.raw_value">
+                                                <t t-set="l" t-value="record.primary_value.raw_value.length" />
+                                                <t t-set="s" t-value="l>=12 and 35 or l>=10 and 45 or l>=8 and 55 or l>=6 and 75 or l>4 and 85 or 100"/>
+                                                <span t-attf-style="font-size: #{s}%;"><field name="primary_value"/></span>
+                                            </div>
+                                            <div class="tile_secondary_value" t-att-title="record.secondary_helper.raw_value">
+                                                <span><field name="secondary_value"/></span>
+                                            </div>
                                         </div>
-                                        <div style="padding-left: 0.5em; height: 115px;">
-                                            
-                                        </div>
-                                        <t t-if="record.field_id.raw_value != '' and record.field_function.raw_value != '' and record.count.raw_value !=0">
-                                            <div class="tile_count_with_computed_value">
-                                                <span><field name="count"/></span>
-                                            </div>
-                                            <div class="tile_computed_value" t-att-title="record.helper.raw_value">
-                                                <img t-att-src="_s + '/web_dashboard_tile/static/src/img/' + record.field_function.raw_value + '.png'"/>
-                                                <span><field name="computed_value"/></span>
-                                            </div>
-                                        </t>
-                                        <t t-if="!(record.field_id.raw_value != '' and record.field_function.raw_value != '' and record.count.raw_value !=0)">
-                                            <div class="tile_count_without_computed_value">
-                                                <span><field name="count"/></span>
-                                            </div>
-                                        </t>
                                     </a>
                                 </div>
                                 <div class="oe_clear"></div>
