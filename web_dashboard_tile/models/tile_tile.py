@@ -23,6 +23,7 @@ def median(vals):
     half = (len(vals) - 1) / 2
     return sum(sorted(vals)[half:half + even]) / float(even)
 
+
 FIELD_FUNCTIONS = OrderedDict([
     ('count', {
         'name': 'Count',
@@ -49,6 +50,7 @@ FIELD_FUNCTIONS = OrderedDict([
         'func': median,
         'help': _("Median value of '%s'")}),
 ])
+
 
 FIELD_FUNCTION_SELECTION = [
     (k, FIELD_FUNCTIONS[k].get('name')) for k in FIELD_FUNCTIONS]
