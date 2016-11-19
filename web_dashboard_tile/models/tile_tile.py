@@ -26,32 +26,32 @@ FIELD_FUNCTIONS = {
     'count': {
         'name': 'Count',
         'func': False,  # its hardcoded in _compute_data
-        'help': 'Number of records',
+        'help': _('Number of records'),
     },
     'min': {
         'name': 'Minimum',
         'func': min,
-        'help': "Minimum value of '%s'",
+        'help': _("Minimum value of '%s'"),
     },
     'max': {
         'name': 'Maximum',
         'func': max,
-        'help': "Maximum value of '%s'",
+        'help': _("Maximum value of '%s'"),
     },
     'sum': {
         'name': 'Sum',
         'func': sum,
-        'help': "Total value of '%s'",
+        'help': _("Total value of '%s'"),
     },
     'avg': {
         'name': 'Average',
         'func': lambda vals: sum(vals)/len(vals),
-        'help': "Minimum value of '%s'",
+        'help': _("Minimum value of '%s'"),
     },
     'median': {
         'name': 'Median',
         'func': median,
-        'help': "Median value of '%s'",
+        'help': _("Median value of '%s'"),
     },
 }
 
@@ -188,9 +188,9 @@ class TileTile(models.Model):
             if help:
                 if self[f+'function'] != 'count' and self[f+'field_id']:
                     desc = self[f+'field_id'].field_description
-                    self[f+'helper'] = _(help) % desc
+                    self[f+'helper'] = help % desc
                 else:
-                    self[f+'helper'] = _(help)
+                    self[f+'helper'] = help
 
     @api.one
     def _compute_active(self):
