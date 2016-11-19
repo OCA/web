@@ -3,8 +3,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 {
-    "name": "Web Session Public DataModel",
-    "summary": "Allow for a public session to utilize the JsonRpc",
+    "name": "Allow Public Web Sessions",
     "version": "9.0.1.0.0",
     "category": "Website",
     "website": "https://laslabs.com/",
@@ -14,12 +13,8 @@
     "installable": True,
     "depends": [
         "web",
-        "website",  # Required to test sandbox break
     ],
     "data": [
-        "views/assets.xml",
-    ],
-    "demo": [
-        "demo/web_session_allow_public_demo.xml",
-    ],
+        "templates/assets.xml",
+    ]
 }

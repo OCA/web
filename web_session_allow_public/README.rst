@@ -2,12 +2,11 @@
    :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
    :alt: License: LGPL-3
 
-====================
-Public DataModel PoC 
-====================
+=========================
+Allow Public Web Sessions
+=========================
 
-This module should break the backend sandbox, providing a JS model usable by a
-public user
+This module allows for RPC calls from a public user.
 
 Usage
 =====
@@ -16,11 +15,6 @@ Usage
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
    :target: https://runbot.odoo-community.org/runbot/186/9.0
-
-
-Known Issues / Road Map
-=======================
-
 
 
 Bug Tracker
