@@ -74,9 +74,9 @@ odoo.define('web_export_view', function (require) {
                                     var tmp2 = text;
                                     do {
                                         var tmp = tmp2;
-                                        tmp2 = tmp.replace(core._t.database.parameters.thousands_sep, "");
+                                        tmp2 = tmp.replace(_t.database.parameters.thousands_sep, "");
                                     } while (tmp !== tmp2);
-
+                                    tmp2 = tmp.replace(_t.database.parameters.decimal_point, ".");
                                     export_row.push(parseFloat(tmp2));
                                 }
                                 else {
