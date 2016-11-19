@@ -142,39 +142,40 @@ class TileTile(models.Model):
     def _compute_data(self):
         if not self.active:
             return
+        model = self.env[self.model_id.model]
+        eval_context = self._get_eval_context()
+        domain = self.domain or '[]'
         try:
-            model = self.env[self.model_id.model]
-            eval_context = self._get_eval_context()
-            domain = self.domain or '[]'
             count = model.search_count(eval(domain, eval_context))
-            if any([
-                self.primary_function and
-                self.primary_function != 'count',
-                self.secondary_function and
-                self.secondary_function != 'count'
-                    ]):
-                    records = model.search(eval(domain, eval_context))
-            for f in ['primary_', 'secondary_']:
-                f_function = f+'function'
-                f_field_id = f+'field_id'
-                f_format = f+'format'
-                f_value = f+'value'
-                value = 0
-                if self[f_function] == 'count':
-                    value = count
-                elif self[f_function]:
-                    func = FIELD_FUNCTIONS[self[f_function]]['func']
-                    if func and self[f_field_id] and count:
-                        vals = [x[self[f_field_id].name] for x in records]
-                        value = func(vals)
-                if self[f_function]:
-                    self[f_value] = \
-                        (self[f_format] or '{:,}').format(value)
-                else:
-                    self[f_value] = False
         except Exception as e:
             self.primary_value = self.secondary_value = 'ERR!'
             self.error = str(e)
+            return
+        if any([
+            self.primary_function and
+            self.primary_function != 'count',
+            self.secondary_function and
+            self.secondary_function != 'count'
+                ]):
+                records = model.search(eval(domain, eval_context))
+        for f in ['primary_', 'secondary_']:
+            f_function = f+'function'
+            f_field_id = f+'field_id'
+            f_format = f+'format'
+            f_value = f+'value'
+            value = 0
+            if self[f_function] == 'count':
+                value = count
+            elif self[f_function]:
+                func = FIELD_FUNCTIONS[self[f_function]]['func']
+                if func and self[f_field_id] and count:
+                    vals = [x[self[f_field_id].name] for x in records]
+                    value = func(vals)
+            if self[f_function]:
+                self[f_value] = \
+                    (self[f_format] or '{:,}').format(value)
+            else:
+                self[f_value] = False
 
     @api.one
     @api.onchange('primary_function', 'primary_field_id',
