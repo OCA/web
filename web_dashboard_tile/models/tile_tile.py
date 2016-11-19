@@ -7,6 +7,7 @@
 import datetime
 import time
 from dateutil.relativedelta import relativedelta
+from collections import OrderedDict
 
 from openerp import api, fields, models
 from openerp.tools.safe_eval import safe_eval as eval
@@ -22,41 +23,35 @@ def median(vals):
     half = (len(vals) - 1) / 2
     return sum(sorted(vals)[half:half + even]) / float(even)
 
-FIELD_FUNCTIONS = {
-    'count': {
+FIELD_FUNCTIONS = OrderedDict([
+    ('count', {
         'name': 'Count',
         'func': False,  # its hardcoded in _compute_data
-        'help': _('Number of records'),
-    },
-    'min': {
+        'help': _('Number of records')}),
+    ('min', {
         'name': 'Minimum',
         'func': min,
-        'help': _("Minimum value of '%s'"),
-    },
-    'max': {
+        'help': _("Minimum value of '%s'")}),
+    ('max', {
         'name': 'Maximum',
         'func': max,
-        'help': _("Maximum value of '%s'"),
-    },
-    'sum': {
+        'help': _("Maximum value of '%s'")}),
+    ('sum', {
         'name': 'Sum',
         'func': sum,
-        'help': _("Total value of '%s'"),
-    },
-    'avg': {
+        'help': _("Total value of '%s'")}),
+    ('avg', {
         'name': 'Average',
         'func': lambda vals: sum(vals)/len(vals),
-        'help': _("Minimum value of '%s'"),
-    },
-    'median': {
+        'help': _("Minimum value of '%s'")}),
+    ('median', {
         'name': 'Median',
         'func': median,
-        'help': _("Median value of '%s'"),
-    },
-}
+        'help': _("Median value of '%s'")}),
+])
 
 FIELD_FUNCTION_SELECTION = [
-    (k, FIELD_FUNCTIONS[k].get('name')) for k in FIELD_FUNCTIONS.keys()]
+    (k, FIELD_FUNCTIONS[k].get('name')) for k in FIELD_FUNCTIONS]
 
 
 class TileTile(models.Model):
