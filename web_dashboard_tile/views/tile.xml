@@ -36,6 +36,8 @@
                             <field name="model_id"/>
                             <field name="action_id"/>
                             <field name="domain" colspan="4"/>
+                            <separator colspan="4"/>
+                            <field name="error" attrs="{'invisible':[('error','=',False)]}"/>
                         </group>
                         <notebook>
                             <page string="Main Value">
@@ -53,7 +55,6 @@
                                     <group>
                                         <field name="primary_helper"/>
                                         <field name="primary_value" attrs="{'invisible':[('primary_value','=',False)]}"/>
-                                        <field name="error" attrs="{'invisible':[('error','=',False)]}"/>
                                     </group>
                                 </group>
                             </page>
