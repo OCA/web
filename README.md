@@ -27,7 +27,7 @@ addon | version | summary
 [web_clean_navbar](web_clean_navbar/) | 8.0.1.0.0 | Better visibility for the backend's main menu
 [web_context_in_colors](web_context_in_colors/) | 8.0.1.1.0 | Use the context in a tree view's colors and fonts attribute
 [web_dashboard_open_action](web_dashboard_open_action/) | 8.0.1.0.0 | Adds a button to open a dashboard in full mode
-[web_dashboard_tile](web_dashboard_tile/) | 8.0.1.1.0 | Add Tiles to Dashboard
+[web_dashboard_tile](web_dashboard_tile/) | 8.0.3.0.0 | Add Tiles to Dashboard
 [web_dialog_size](web_dialog_size/) | 8.0.0.1.0 | A module that lets the user expand a dialog box to the full screen width.
 [web_dom_model_classes](web_dom_model_classes/) | 8.0.1.0.0 | Allows small UI changes with simple CSS
 [web_easy_switch_company](web_easy_switch_company/) | 8.0.1.0.0 | Multicompany - Easy Switch Company
