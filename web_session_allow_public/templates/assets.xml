@@ -9,7 +9,7 @@
     <template id="qunit_suite" inherit_id="web.qunit_suite">
         <xpath expr="//html/head" position="inside">
             <script type="application/javascript"
-                    src="/web_session_allow_public/static/test/js/web_session_allow_public.js"/>
+                    src="/web_session_allow_public/static/tests/js/web_session_allow_public.js"/>
         </xpath>
     </template>
 </odoo>
