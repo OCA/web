@@ -7,12 +7,27 @@ odoo.define_section('web_session_allow_public',
                     function(test) {
     "use strict";
 
-    test('It should allow a model call', function(assert, Model) {
+    test('It should allow a model call',
+         {asserts: 1},
+         function(assert, Model)
+    {
+            
+        var searched = false;
+        var d = $.Deferred();
+        
+        setTimeout(function() {
+            if (searched) {
+                assert.ok(searched);
+                d.resolve();
+            }
+        }, 100);
+        
         new Model('res.partner')
             .call('search_read', [])
             .then(function() {
-                assert.ok(true);
+                searched = true;
             });
+            
     });
 
 });
