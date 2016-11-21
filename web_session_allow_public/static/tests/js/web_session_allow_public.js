@@ -11,23 +11,18 @@ odoo.define_section('web_session_allow_public',
          {asserts: 1},
          function(assert, Model)
     {
-            
-        var searched = false;
-        var d = $.Deferred();
         
-        setTimeout(function() {
-            if (searched) {
-                assert.ok(searched);
-                d.resolve();
-            }
-        }, 100);
+        var d = $.Deferred();
         
         new Model('res.partner')
             .call('search_read', [])
             .then(function() {
-                searched = true;
+                assert.ok(true);
+                d.resolve();
             });
-            
+        
+        return d;
+        
     });
 
 });
