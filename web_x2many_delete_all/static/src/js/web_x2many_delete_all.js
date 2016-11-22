@@ -1,7 +1,7 @@
 /* Copyright 2016 Onestein
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
-odoo.define('web_x2many_delete_all', function (require) {
+odoo.define('web_x2many_delete_all.Mixin', function (require) {
     "use strict";
     var core = require('web.core');
 
@@ -25,7 +25,7 @@ odoo.define('web_x2many_delete_all', function (require) {
             }
         },
         btn_delete_all_clicked: function() {
-            if(this.get('effective_readonly')) return;
+            if (this.get('effective_readonly')) return;
             this.delete_all();
         },
         delete_all: function() {
@@ -35,4 +35,6 @@ odoo.define('web_x2many_delete_all', function (require) {
 
     core.form_widget_registry.get('many2many').include(X2ManyListDeleteAllMixin);
     core.form_widget_registry.get('one2many').include(X2ManyListDeleteAllMixin);
+
+    return X2ManyListDeleteAllMixin;
 });
