@@ -11,5 +11,4 @@ class TestPublicSession(HttpCase):
         """ It should allow a Model query using public user """
         self.phantom_js("/web/tests?module=web_session_allow_public",
                         "",
-                        login="public",
                         )

@@ -8,20 +8,18 @@ odoo.define_section('web_session_allow_public',
     "use strict";
 
     test('It should allow a model call',
-         {asserts: 1},
+         {asserts: 1, rpc: 'rpc'},
          function(assert, Model)
     {
         
-        var d = $.Deferred();
+        var res = new Model('res.partner').call('search_read', []);
         
-        new Model('res.partner')
-            .call('search_read', [])
-            .then(function() {
-                assert.ok(true);
-                d.resolve();
-            });
+        res.then(function() {
+            assert.ok(true);
+            self.resolve();
+        });
         
-        return d;
+        return res;
         
     });
 
