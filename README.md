@@ -18,6 +18,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [web_environment_ribbon](web_environment_ribbon/) | 10.0.1.0.0 | Web Environment Ribbon
+[web_export_view](web_export_view/) | 10.0.1.0.0 | Web Export Current View
 [web_favicon](web_favicon/) | 10.0.1.0.0 | Allows to set a custom shortcut icon (aka favicon)
 [web_responsive](web_responsive/) | 10.0.1.0.0 | It provides a mobile compliant interface for Odoo Community web
 [web_sheet_full_width](web_sheet_full_width/) | 10.0.1.0.0 | Use the whole available screen width when displaying sheets
@@ -43,7 +44,6 @@ addon | version | summary
 [web_dialog_size](web_dialog_size/) | 9.0.1.0.0 (unported) | A module that lets the user expand a dialog box to the full screen width.
 [web_dom_model_classes](web_dom_model_classes/) | 8.0.1.0.0 (unported) | Allows small UI changes with simple CSS
 [web_duplicate_visibility](web_duplicate_visibility/) | 9.0.1.0.0 (unported) | Manage the duplicate button visibiliy
-[web_export_view](web_export_view/) | 8.0.1.2.0 (unported) | Export Current View
 [web_graph_improved](web_graph_improved/) | 8.0.0.1.0 (unported) | Improves graph views.
 [web_group_expand](web_group_expand/) | 8.0.1.0.0 (unported) | Group Expand Buttons
 [web_hide_db_manager_link](web_hide_db_manager_link/) | 9.0.1.0.0 (unported) | Hide link to database manager in login screen
