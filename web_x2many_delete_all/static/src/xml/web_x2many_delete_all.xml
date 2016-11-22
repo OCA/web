@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2016 Onestein
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<templates>
+    <t t-extend="ListView">
+        <t t-jquery=".oe_list_record_delete" t-operation="inner">
+            <span class="fa fa-trash-o hidden" title="Delete all"/>
+        </t>
+    </t>
+    <t t-extend="One2Many.listview">
+        <t t-jquery=".oe_list_record_delete" t-operation="inner">
+            <span class="fa fa-trash-o hidden" title="Delete all"/>
+        </t>
+    </t>
+</templates>
