@@ -3,7 +3,7 @@
    :alt: License: LGPL-3
 
 =========================
-Allow Public Web Sessions
+Allow Public RPC Sessions
 =========================
 
 This module allows for RPC calls from a public user.

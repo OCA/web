@@ -3,7 +3,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 {
-    "name": "Allow Public Web Sessions",
+    "name": "Allow Public RPC Sessions",
     "version": "9.0.1.0.0",
     "category": "Website",
     "website": "https://laslabs.com/",
@@ -12,9 +12,6 @@
     "application": False,
     "installable": True,
     "depends": [
-        "web",
+        "base",
     ],
-    "data": [
-        "templates/assets.xml",
-    ]
 }
