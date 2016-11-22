@@ -2,7 +2,7 @@
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
 odoo.define('web_x2many_delete_all', function (require) {
-"use strict";
+    "use strict";
     var core = require('web.core');
 
     var X2ManyListDeleteAllMixin = {
