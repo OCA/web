@@ -10,8 +10,9 @@ WebClient.include({
         this._super(parent, client_options);
     },
     show_application: function() {
-        this._super();
+        var res = this._super();
         this.start_polling();
+        return res
     },
     on_logout: function() {
         var self = this;
