@@ -23,7 +23,7 @@
 {
     "name": "Dashboard Tile",
     "summary": "Add Tiles to Dashboard",
-    "version": "8.0.1.0.0",
+    "version": "9.0.1.0.0",
     "depends": [
         'web',
         'board',
@@ -46,5 +46,5 @@
     'qweb': [
         'static/src/xml/custom_xml.xml',
     ],
-    'installable': False,
+    'installable': True,
 }
