@@ -28,6 +28,7 @@ result could look like this:
 The beauty of this is that you have an arbitrary amount of columns with this
 widget, trying to get this in standard x2many lists involves some quite ugly
 hacks.
+Note: The order of axis values depends on their order in the matrix you provide.
 
 Usage
 =====
