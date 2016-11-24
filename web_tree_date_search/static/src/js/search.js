@@ -137,8 +137,26 @@ openerp.web_tree_date_search = function(instance) {
                             oe_date_filter_to.attr("placeholder", _t("To"));
 
                             // on_change
-                            oe_date_filter_from.change(this.date_filter_from_change(self));
-                            oe_date_filter_to.change(this.date_filter_to_change(self));
+                            oe_date_filter_from.change(function () {
+                                var elem = this.parentElement.parentElement.parentElement.className;
+                                var res = elem.split("oe_date_filter_from_");
+                                self.current_date_from[res[1]] = this.value === '' ? null : this.value;
+                                if (self.current_date_from[res[1]]){
+                                    self.current_date_from[res[1]] = instance.web.parse_value(
+                                        self.current_date_from[res[1]], {"widget": date_type});
+                                }
+                                self.do_search(self.previous_domain, self.previous_context, self.previous_group_by);
+                            });
+                            oe_date_filter_to.change(function () {
+                                var elem = this.parentElement.parentElement.parentElement.className;
+                                var res = elem.split("oe_date_filter_to_");
+                                self.current_date_to[res[1]] = this.value === '' ? null : this.value;
+                                if (self.current_date_to[res[1]]){
+                                    self.current_date_to[res[1]] = instance.web.parse_value(
+                                        self.current_date_to[res[1]], {"widget": date_type});
+                                }
+                                self.do_search(self.previous_domain, self.previous_context, self.previous_group_by);
+                            });
                             this.on('edit:after', this, function () {
                                 oe_date_filter_from.attr('disabled', 'disabled');
                                 oe_date_filter_to.attr('disabled', 'disabled');
@@ -161,26 +179,6 @@ openerp.web_tree_date_search = function(instance) {
                 this.tree_date_search_loaded = true;
             }
             return tmp;
-        },
-        date_filter_from_change: function() {
-            var elem = this.parentElement.parentElement.parentElement.className;
-            var res = elem.split("oe_date_filter_from_");
-            self.current_date_from[res[1]] = this.value === '' ? null : this.value;
-            if (self.current_date_from[res[1]]){
-                self.current_date_from[res[1]] = instance.web.parse_value(
-                    self.current_date_from[res[1]], {"widget": date_type});
-            }
-            self.do_search(self.previous_domain, self.previous_context, self.previous_group_by);
-        },
-        date_filter_to_change: function() {
-            var elem = this.parentElement.parentElement.parentElement.className;
-            var res = elem.split("oe_date_filter_to_");
-            self.current_date_to[res[1]] = this.value === '' ? null : this.value;
-            if (self.current_date_to[res[1]]){
-                self.current_date_to[res[1]] = instance.web.parse_value(
-                    self.current_date_to[res[1]], {"widget": date_type});
-            }
-            self.do_search(self.previous_domain, self.previous_context, self.previous_group_by);
         },
         do_search: function(domain, context, group_by) {
             this.previous_domain = domain;
