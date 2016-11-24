@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-extend="CrashManager.error">
+        <t t-jquery="div" t-operation="after">
+            <div>
+                <form class="support-branding-submit-form oe_form" action="mailto:" enctype="text/plain" method="get">
+                    <input type="hidden" name="subject" t-attf-value="#{session.username}@#{session.db} [#{session.server}]: #{error.message}" />
+                    <input type="hidden" name="body" t-attf-value="#{error.data.debug}" />
+                    <div class="oe_form_field_text oe_form_required">
+                        <textarea name="description" placeholder="Please fill in how you produced this error..." class="" />
+                    </div>
+                    <button class="oe_highlight">Email to support company</button>
+                </form>
+            </div>
+        </t>
+    </t>
+    <t t-extend="WebClient">
+        <t t-jquery="div.oe_footer" t-operation="append">
+            <span>, supported by <a target="_new" class="support_branding_link" /></span>
+            <div class="support_branding_release"></div>
+        </t>
+    </t>
+</templates>

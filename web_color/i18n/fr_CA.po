@@ -1,0 +1,11 @@
+# French (Canada) translation for openerp-web
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the openerp-web package.
+# Etienne Beaudry Auger <etienne.b.auger@savoirfairelinux.com>, 2012.
+#
+#. module: web_color
+#. openerp-web
+#: code:addons/web_color/static/src/xml/lib.xml:15
+#, fuzzy, python-format
+msgid "Select color value"
+msgstr "Choix de couleur"

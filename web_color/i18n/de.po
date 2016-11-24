@@ -1,0 +1,28 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Openerp Version 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-19 18:04+0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
+"Language-Team:  <rs@techno-flex.de>\n"
+"Language: DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-Basepath: ~/git\n"
+"X-Poedit-SearchPath-0: ~/git\n"
+"X-Poedit-SearchPath-1: ~/git-oca-rs\n"
+
+# French (Canada) translation for openerp-web
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the openerp-web package.
+# Etienne Beaudry Auger <etienne.b.auger@savoirfairelinux.com>, 2012.
+#
+#. module: web_color
+#. openerp-web
+#: code:addons/web_color/static/src/xml/lib.xml:15
+#, fuzzy, python-format
+msgid "Select color value"
+msgstr "Farbe auswählen"
