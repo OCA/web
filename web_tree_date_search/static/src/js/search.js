@@ -40,7 +40,7 @@ openerp.web_tree_date_search = function(instance) {
                 ui_toolbar_loc.show();
             }
             else{
-                if (ui_toolbar_loc.children().length == 0)
+                if (ui_toolbar_loc.children().length === 0)
                     ui_toolbar_loc.hide();
             }
             return this._super.apply(this, arguments);
@@ -48,22 +48,23 @@ openerp.web_tree_date_search = function(instance) {
         load_list: function(data) {
             var self = this;
             var tmp = this._super.apply(this, arguments);
+            var date_field = false;
             if (!this.tree_date_search_loaded){
                 this.date_field_data = {};
-                for (i in this.dates_filter){
-                    var date_field = this.dates_filter[i];
-                    for (col in this.columns){
+                for (var i in this.dates_filter){
+                    date_field = this.dates_filter[i];
+                    for (var col in this.columns){
                         if (typeof date_field !== "string"){
                             if (date_field[1] != 1)
                                 console.error("Error on the dates_filter context.");
                             if (this.columns[col].name == date_field[0]){
-                                this.date_field_data[date_field[0]] = []
+                                this.date_field_data[date_field[0]] = [];
                                 this.date_field_data[date_field[0]][0] = this.columns[col].string;
                                 this.date_field_data[date_field[0]][1] = 'date';
                                 break;
                             }
                         }else if (this.columns[col].name == date_field){
-                            this.date_field_data[date_field] = []
+                            this.date_field_data[date_field] = [];
                             this.date_field_data[date_field][0] = this.columns[col].string;
                             this.date_field_data[date_field][1] = this.columns[col].type;
                             break;
@@ -71,29 +72,29 @@ openerp.web_tree_date_search = function(instance) {
                     }
                     // Remove array on dates_filter:
                     var dates_filter_tmp = [];
-                    for (i in this.dates_filter){
+                    for (var i in this.dates_filter){
                         if (typeof this.dates_filter[i] !== "string")
-                            dates_filter_tmp.push(this.dates_filter[i][0])
+                            dates_filter_tmp.push(this.dates_filter[i][0]);
                         else
-                            dates_filter_tmp.push(this.dates_filter[i])
+                            dates_filter_tmp.push(this.dates_filter[i]);
                     }
                     this.dates_filter = dates_filter_tmp;
                 }
-                if (Object.keys(this.date_field_data).length == 0 && this.dates_filter && this.dates_filter.length > 0){
+                if (Object.keys(this.date_field_data).length === 0 && this.dates_filter && this.dates_filter.length > 0){
                     console.error('No field found on view: ' + this.dates_filter.toString()); 
                 }
                 if (Object.keys(this.date_field_data).length > 0 && this.dates_filter && this.dates_filter.length > 0){
                     this.$el.parent().prepend(QWeb.render('TreeDateSearch', {widget: this}));
                     var ui_toolbar_loc = $('.ui-toolbar:last');
                     ui_toolbar_loc.show();
-                    for (i in this.dates_filter){
-                        var date_field = this.dates_filter[i];
+                    for (var i in this.dates_filter){
+                        date_field = this.dates_filter[i];
                         if (!(date_field in this.date_field_data)){
                             console.error('No field found on view: ' + date_field);
                         }
                         else{
-                            var date_string = this.date_field_data[date_field][0]
-                            var date_type = this.date_field_data[date_field][1]
+                            var date_string = this.date_field_data[date_field][0];
+                            var date_type = this.date_field_data[date_field][1];
 
                             var date_div =  QWeb.render('TreeDateSearchField', {'field_name': date_string});
                             var toolbar_height = ui_toolbar_loc.height();
@@ -115,7 +116,7 @@ openerp.web_tree_date_search = function(instance) {
                                     "name":"oe_date_filter_to_" + date_field, 
                                     "type": date_type,
                                     "string":date_string});
-                            var value_loc = $('.oe_date_filter_to_' + date_field + ':last').show().empty();
+                            value_loc = $('.oe_date_filter_to_' + date_field + ':last').show().empty();
                             this.value.appendTo(value_loc);
 
                             var oe_date_filter_from = $('.oe_date_filter_from_' + date_field + ':last .oe_datepicker_master');
@@ -136,26 +137,8 @@ openerp.web_tree_date_search = function(instance) {
                             oe_date_filter_to.attr("placeholder", _t("To"));
 
                             // on_change
-                            oe_date_filter_from.change(function() {
-                                var elem = this.parentElement.parentElement.parentElement.className;
-                                var res = elem.split("oe_date_filter_from_");
-                                self.current_date_from[res[1]] = this.value === '' ? null : this.value;
-                                if (self.current_date_from[res[1]]){
-                                    self.current_date_from[res[1]] = instance.web.parse_value(
-                                        self.current_date_from[res[1]], {"widget": date_type});
-                                }
-                                self.do_search(self.previous_domain, self.previous_context, self.previous_group_by);
-                            });
-                            oe_date_filter_to.change(function() {
-                                var elem = this.parentElement.parentElement.parentElement.className;
-                                var res = elem.split("oe_date_filter_to_");
-                                self.current_date_to[res[1]] = this.value === '' ? null : this.value;
-                                if (self.current_date_to[res[1]]){
-                                    self.current_date_to[res[1]] = instance.web.parse_value(
-                                        self.current_date_to[res[1]], {"widget": date_type});
-                                }
-                                self.do_search(self.previous_domain, self.previous_context, self.previous_group_by);
-                            });
+                            oe_date_filter_from.change(this.date_filter_from_change(self));
+                            oe_date_filter_to.change(this.date_filter_to_change(self));
                             this.on('edit:after', this, function () {
                                 oe_date_filter_from.attr('disabled', 'disabled');
                                 oe_date_filter_to.attr('disabled', 'disabled');
@@ -171,13 +154,33 @@ openerp.web_tree_date_search = function(instance) {
                     // Only hide current if it's empty
                     // Work from tree view to tree view with or withouth date_filters
                     // Work from tree view to wizard with or withouth date_filters
-                    var ui_toolbar_loc = $('.ui-toolbar:last');
-                    if (ui_toolbar_loc.children().length == 0)
+                    ui_toolbar_loc = $('.ui-toolbar:last');
+                    if (ui_toolbar_loc.children().length === 0)
                         ui_toolbar_loc.hide();
                 }
                 this.tree_date_search_loaded = true;
             }
             return tmp;
+        },
+        date_filter_from_change: function() {
+            var elem = this.parentElement.parentElement.parentElement.className;
+            var res = elem.split("oe_date_filter_from_");
+            self.current_date_from[res[1]] = this.value === '' ? null : this.value;
+            if (self.current_date_from[res[1]]){
+                self.current_date_from[res[1]] = instance.web.parse_value(
+                    self.current_date_from[res[1]], {"widget": date_type});
+            }
+            self.do_search(self.previous_domain, self.previous_context, self.previous_group_by);
+        },
+        date_filter_to_change: function() {
+            var elem = this.parentElement.parentElement.parentElement.className;
+            var res = elem.split("oe_date_filter_to_");
+            self.current_date_to[res[1]] = this.value === '' ? null : this.value;
+            if (self.current_date_to[res[1]]){
+                self.current_date_to[res[1]] = instance.web.parse_value(
+                    self.current_date_to[res[1]], {"widget": date_type});
+            }
+            self.do_search(self.previous_domain, self.previous_context, self.previous_group_by);
         },
         do_search: function(domain, context, group_by) {
             this.previous_domain = domain;
@@ -188,11 +191,11 @@ openerp.web_tree_date_search = function(instance) {
         },
         get_dates_filter_domain: function(previous_domain) {
             var domain = [];
-            for (from in this.current_date_from){
+            for (var from in this.current_date_from){
                 if (this.current_date_from[from])
                     domain.push([from, '>=', this.current_date_from[from]]);
             }
-            for (to in this.current_date_to){
+            for (var to in this.current_date_to){
                 if (this.current_date_to[to])
                     domain.push([to, '<=', this.current_date_to[to]]);
             }
