@@ -3,7 +3,6 @@ odoo.define('web_notify.WebClient', function (require) {
 
 var WebClient = require('web.WebClient');
 var base_bus = require('bus.bus');
-//var _ = require('_');
 
 WebClient.include({
     init: function(parent, client_options){
