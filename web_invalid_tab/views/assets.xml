@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="web_invalid_tab_assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/web_invalid_tab/static/src/css/view_form.css"/>
+                <script type="text/javascript" src="/web_invalid_tab/static/src/js/view_form.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>
