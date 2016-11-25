@@ -28,7 +28,7 @@ openerp.web_tree_date_search = function(instance) {
         init: function(parent, dataset, view_id, options) {
             this._super.apply(this, arguments);
             if ("dates_filter" in dataset.context){
-                this.dates_filter = dataset.context["dates_filter"];
+                this.dates_filter = dataset.context.dates_filter;
                 this.current_date_from  = [];
                 this.current_date_to  = [];
             }
@@ -72,23 +72,24 @@ openerp.web_tree_date_search = function(instance) {
                     }
                     // Remove array on dates_filter:
                     var dates_filter_tmp = [];
-                    for (var i in this.dates_filter){
-                        if (typeof this.dates_filter[i] !== "string")
-                            dates_filter_tmp.push(this.dates_filter[i][0]);
+                    for (var j in this.dates_filter){
+                        if (typeof this.dates_filter[j] !== "string")
+                            dates_filter_tmp.push(this.dates_filter[j][0]);
                         else
-                            dates_filter_tmp.push(this.dates_filter[i]);
+                            dates_filter_tmp.push(this.dates_filter[j]);
                     }
                     this.dates_filter = dates_filter_tmp;
                 }
                 if (Object.keys(this.date_field_data).length === 0 && this.dates_filter && this.dates_filter.length > 0){
                     console.error('No field found on view: ' + this.dates_filter.toString()); 
                 }
+                var ui_toolbar_loc = false;
                 if (Object.keys(this.date_field_data).length > 0 && this.dates_filter && this.dates_filter.length > 0){
                     this.$el.parent().prepend(QWeb.render('TreeDateSearch', {widget: this}));
-                    var ui_toolbar_loc = $('.ui-toolbar:last');
+                    ui_toolbar_loc = $('.ui-toolbar:last');
                     ui_toolbar_loc.show();
-                    for (var i in this.dates_filter){
-                        date_field = this.dates_filter[i];
+                    for (var k in this.dates_filter){
+                        date_field = this.dates_filter[k];
                         if (!(date_field in this.date_field_data)){
                             console.error('No field found on view: ' + date_field);
                         }
