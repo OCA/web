@@ -8,7 +8,7 @@
               "Odoo Community Association (OCA)",
     'website': "http://www.bloopark.de",
     'category': 'web',
-    'version': '8.0.1.0.0',
+    'version': '9.0.1.0.0',
     "license": "AGPL-3",
     'depends': [
         'web',
