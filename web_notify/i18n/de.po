@@ -1,0 +1,46 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_notify
+# 
+# Translators:
+# Niki Waibel <niki.waibel@gmail.com>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-02-03 01:37+0000\n"
+"PO-Revision-Date: 2017-02-03 01:37+0000\n"
+"Last-Translator: Niki Waibel <niki.waibel@gmail.com>, 2017\n"
+"Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: web_notify
+#: code:addons/web_notify/models/res_users.py:27
+#, python-format
+msgid "Information"
+msgstr "Information"
+
+#. module: web_notify
+#: model:ir.model.fields,field_description:web_notify.field_res_users_notify_info_channel_name
+msgid "Notify info channel name"
+msgstr "Name des Informationen-Kanals"
+
+#. module: web_notify
+#: model:ir.model.fields,field_description:web_notify.field_res_users_notify_warning_channel_name
+msgid "Notify warning channel name"
+msgstr "Name des Warnungen-Kanals"
+
+#. module: web_notify
+#: model:ir.model,name:web_notify.model_res_users
+msgid "Users"
+msgstr "Benutzer"
+
+#. module: web_notify
+#: code:addons/web_notify/models/res_users.py:33
+#, python-format
+msgid "Warning"
+msgstr "Warnung"
