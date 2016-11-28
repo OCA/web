@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates>
-    <t t-name="FieldOne2ManyTags" t-extend="FieldMany2ManyTags" />
-    <t t-name="FieldOne2ManyTag" t-extend="FieldMany2ManyTag" />
+     <t t-name="FieldOne2ManyTag" t-extend="FieldMany2ManyTag" />
 </templates>
