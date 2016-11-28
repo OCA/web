@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="view_bi_view_editor_view_tree" model="ir.ui.view">
+            <field name="name">bve.view.tree</field>
+            <field name="model">bve.view</field>
+            <field name="arch" type="xml">
+                <tree string="Custom BI View">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_bi_view_editor_view_form" model="ir.ui.view">
+            <field name="name">bve.view.form</field>
+            <field name="model">bve.view</field>
+            <field name="arch" type="xml">
+                <form string="Custom Object">
+                    <header>
+                      <button name="action_reset" type="object" states="created" string="Reset to Draft"/>
+                      <button name="action_create" type="object" states="draft" string="Generate BI View" class="oe_highlight" context="{'bve':True}"/>
+                      <button name="open_view" type="object" states="created" string="Open BI View" class="oe_highlight"/>
+                      <field name="state" widget="statusbar" statusbar_visible="draft,created" statusbar_colors='{"draft":"blue","created":"blue"}'/>
+                    </header>
+                    <sheet>
+                      <h1>
+                        <field name="name" attrs="{'readonly': [('state','=','created')]}" colspan="4"/>
+                      </h1>
+                      <notebook>
+                        <page string="Query">
+                          <field name="data" widget="BVEEditor" nolabel="1" attrs="{'readonly': [('state','=','created')]}"/>
+                        </page>
+                        <page string="Security">
+                          <field nolabel="1" name="group_ids" />
+                        </page>
+                        <page string="Notes">
+                          <field name="note" nolabel="1" colspan="4"/>
+                        </page>
+                      </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_bi_view_editor_view_form" model="ir.actions.act_window">
+            <field name="name">Custom BI Views</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bve.view</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Custom Query Object.
+              </p><p>
+
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_bi_view_editor_custom_reports"
+                  name="Custom Reports"
+                  parent="base.menu_board_root"
+                  sequence="0"/>
+        <menuitem id="menu_bi_view_editor_view"
+                  parent="menu_bi_view_editor_custom_reports"
+                  action="action_bi_view_editor_view_form"/>
+
+    </data>
+</openerp>
