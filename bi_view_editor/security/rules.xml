@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+
+        <record model="ir.rule" id="bve_view_rule">
+            <field name="name">bve_view read access</field>
+            <field name="model_id" search="[('model','=','bve.view')]" model="ir.model"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force"> ['|',('user_ids','=',False),('user_ids','in',user.id)]</field>
+        </record>
+
+    </data>
+</openerp>
