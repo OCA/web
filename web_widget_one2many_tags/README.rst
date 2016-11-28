@@ -47,6 +47,7 @@ Contributors
 * Holger Brunn <hbrunn@therp.nl>
 * Iv??n Todorovich <ivan.todorovich@gmail.com>
 * Peter Hahn <peter.hahn@initos.com>
+* Adhoc <jjs@adhoc.com.ar>
 
 Maintainer
 ----------
