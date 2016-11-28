@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="JoinNodePopup">
+        <div class="oe_form_nosheet">
+            <p>Please choose the join node</p>
+            <div id="join-nodes">
+            </div>
+        </div>
+    </t>
+
+
+    <t t-name="BVEEditor">
+        <div class="oe_form_field_bi_editor">
+
+            <div class="body">
+                
+                <div class="left">
+                    <div class="search-bar">
+                        <span class="fa fa-search"></span>
+                        <input type="text" class="search-bar" />
+                    </div>
+                    <div class="class-list">
+                    </div>
+                </div>
+                <div class="right">
+                    <table class="field-list">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Model</th>
+                                <th>Options</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="footer">
+                <div class="left"></div>
+                <div class="right"><button id="clear"><span class="fa fa-eraser"></span> Clear</button></div>
+            </div>
+            <ul class="context-menu">
+
+                 <li><input type="checkbox" id="column-checkbox"/> Column</li>
+                 <li><input type="checkbox" id="row-checkbox"/> Row</li>
+                 <li><input type="checkbox" id="measure-checkbox"/> Measure</li>
+
+            </ul>
+        </div>
+    </t>
+</templates>
