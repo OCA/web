@@ -2,16 +2,17 @@
 //?? 2016 Therp BV <http://therp.nl>
 //License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-openerp.web_widget_one2many_tags = function(instance)
-{
-    instance.web_widget_one2many_tags.FieldOne2ManyTags =
-    instance.web.form.FieldOne2Many.extend(instance.web.form.ReinitializeFieldMixin, {
+odoo.define('web_widget_one2many_tags.form_widgets', function (require) {
+'use strict';
+var widget_one2many_tag = require('web.Model');
+var One2manyTag = widget_one2many_tag.FieldOne2ManyTags.extend({
         template: "FieldOne2ManyTags",
         tag_template: "FieldOne2ManyTag",
         disable_utility_classes: false,
         initialize_texttext: function()
         {
             var self = this;
+
             return {
                 plugins: 'tags arrow filter',
                 ext: {
@@ -23,7 +24,7 @@ openerp.web_widget_one2many_tags = function(instance)
                     arrow: {
                         onArrowClick: function(e)
                         {
-                            var list_view = new instance.web.form.One2ManyListView(
+                            var list_view = new widget_one2many_tag.web.form.One2ManyListView(
                                 self, self.dataset);
                             list_view.o2m = self;
                             list_view.editable = function() { return false };
@@ -81,7 +82,7 @@ openerp.web_widget_one2many_tags = function(instance)
                     self.$text.textext(self.initialize_texttext());
                     self.$text.bind('tagClick', function(e, tag, value, callback)
                     {
-                        var list_view = new instance.web.form.One2ManyViewManager(
+                        var list_view = new widget_one2many_tag.web.form.One2ManyViewManager(
                             self, self.dataset);
                         list_view.o2m = self;
                         self.dataset.select_id(value.id);
@@ -103,7 +104,7 @@ openerp.web_widget_one2many_tags = function(instance)
             {
                 if(self.get("effective_readonly"))
                 {
-                    self.$el.html(instance.web.qweb.render(
+                    self.$el.html(widget_one2many_tag.web.qweb.render(
                         self.tag_template,
                         {
                             elements: _(names).map(function(name)
@@ -118,7 +119,7 @@ openerp.web_widget_one2many_tags = function(instance)
                     self.tags.addTags(_(names).map(function(name)
                     {
                         return {
-                            name: name.display_name || instance.web._t('New record'),
+                            name: name.display_name || widget_one2many_tag.web._t('New record'),
                             id: name.id,
                         }
                     }));
@@ -127,7 +128,7 @@ openerp.web_widget_one2many_tags = function(instance)
         },
         reinitialize: function()
         {
-            var result = instance.web.form.ReinitializeFieldMixin.reinitialize.call(this);
+            var result = widget_one2many_tag.web.form.ReinitializeFieldMixin.reinitialize.call(this);
             this.reload_current_view();
             return result;
         },
@@ -142,12 +143,12 @@ openerp.web_widget_one2many_tags = function(instance)
         },
     });
 
-    instance.web.form.widgets.add(
+    widget_one2many_tag.web.form.widgets.add(
         'one2many_tags',
-        'instance.web_widget_one2many_tags.FieldOne2ManyTags'
+        'widget_one2many_tag.web_widget_one2many_tags.FieldOne2ManyTags'
     );
 
-    instance.web.list.One2ManyTags = instance.web.list.Column.extend({
+    widget_one2many_tag.web.list.One2ManyTags = widget_one2many_tag.web.list.Column.extend({
         _format: function (row_data, options)
         {
             if(!_.isEmpty(row_data[this.id].value) && row_data[this.id + '__display'])
@@ -158,17 +159,17 @@ openerp.web_widget_one2many_tags = function(instance)
         },
     });
 
-    instance.web.list.columns.add(
+    widget_one2many_tag.web.list.columns.add(
         'field.one2many_tags',
-        'instance.web.list.One2ManyTags'
+        'widget_one2many_tag.web.list.One2ManyTags'
     );
 
-    instance.web.ListView.List.include({
+    widget_one2many_tag.web.ListView.List.include({
         render_cell: function (record, column)
         {
             if(column.widget == 'one2many_tags')
             {
-                var dataset = new instance.web.form.One2ManyDataSet(
+                var dataset = new widget_one2many_tag.web.form.One2ManyDataSet(
                         this, column.relation),
                     fake_widget = {
                         dataset: dataset,
@@ -178,14 +179,14 @@ openerp.web_widget_one2many_tags = function(instance)
                         set: function() {},
                         build_context: function()
                         {
-                            return new instance.web.CompoundContext(
+                            return new widget_one2many_tag.web.CompoundContext(
                                 column.context
                             );
                         },
                     },
                     value = record.get(column.id);
                 dataset.o2m = fake_widget;
-                openerp.web_widget_one2many_tags.FieldOne2ManyTags
+                odoo.web_widget_one2many_tags.FieldOne2ManyTags
                     .prototype.set_value.apply(fake_widget, [value])
                 dataset.read_ids(dataset.ids, ['display_name'])
                 .then(function(names) {
@@ -199,7 +200,7 @@ openerp.web_widget_one2many_tags = function(instance)
                             .map(function(name)
                             {
                                 return name.display_name ||
-                                    instance.web._t('New record');
+                                    widget_one2many_tag.web._t('New record');
                             })
                             .join(', ')
                     );
@@ -209,4 +210,4 @@ openerp.web_widget_one2many_tags = function(instance)
             return this._super(record, column);
         },
     });
-}
+});
