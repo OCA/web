@@ -1,0 +1,94 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+# * web_note
+# 
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-31 10:16+0000\n"
+"PO-Revision-Date: 2016-10-31 10:16+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"Language-Team: Korean (https://www.transifex.com/oca/teams/23907/ko/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. module: web_note
+#: field:web.note,sequence:0 field:web.note.container,sequence:0
+msgid "Order in report"
+msgstr ""
+
+#. module: web_note
+#: field:web.note.container,pattern:0
+msgid "Template"
+msgstr ""
+
+#. module: web_note
+#: field:web.note.container,name:0
+msgid "Name"
+msgstr "이름"
+
+#. module: web_note
+#: model:ir.model,name:web_note.model_web_note_container
+msgid "Note Container"
+msgstr ""
+
+#. module: web_note
+#: view:web.note:0
+msgid "Notes"
+msgstr ""
+
+#. module: web_note
+#: view:web.note:0 field:web.note,display_name:0
+msgid "Note"
+msgstr ""
+
+#. module: web_note
+#: help:web.note.container,pattern:0
+msgid "If you select the container the template is added to the note."
+msgstr ""
+
+#. module: web_note
+#: model:res.groups,name:web_note.group_web_note_user
+msgid "Web Note / User"
+msgstr ""
+
+#. module: web_note
+#: field:web.note,container_id:0
+msgid "Note-Container"
+msgstr ""
+
+#. module: web_note
+#: field:web.note,create_uid:0
+msgid "User"
+msgstr ""
+
+#. module: web_note
+#: help:web.note,container_id:0
+msgid "Containers include templates for order and heading."
+msgstr ""
+
+#. module: web_note
+#: field:web.note.container,type:0
+msgid "Report"
+msgstr ""
+
+#. module: web_note
+#: model:ir.model,name:web_note.model_web_note
+msgid "web.note"
+msgstr ""
+
+#. module: web_note
+#: field:web.note,message:0
+msgid "Message"
+msgstr ""
+
+#. module: web_note
+#: field:web.note,type:0
+msgid "Note type"
+msgstr ""

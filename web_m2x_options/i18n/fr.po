@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (7.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-03 13:54+0000\n"
+"POT-Creation-Date: 2016-10-31 10:16+0000\n"
 "PO-Revision-Date: 2016-05-05 06:03+0000\n"
 "Last-Translator: Christophe CHAUVET <christophe.chauvet@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/oca/OCA-web-7-0/language/fr/)\n"
@@ -20,24 +20,24 @@ msgstr ""
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:188
-#: code:addons/web_m2x_options/static/src/js/form.js:316
+#: code:addons/web_m2x_options/static/src/js/form.js:214
+#: code:addons/web_m2x_options/static/src/js/form.js:332
 #, python-format
 msgid "Create \"<strong>%s</strong>\""
 msgstr "Créer \"<strong>%s</strong>\""
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:161
-#: code:addons/web_m2x_options/static/src/js/form.js:298
+#: code:addons/web_m2x_options/static/src/js/form.js:184
+#: code:addons/web_m2x_options/static/src/js/form.js:311
 #, python-format
 msgid "Search More..."
 msgstr "Rechercher plus..."
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:206
-#: code:addons/web_m2x_options/static/src/js/form.js:332
+#: code:addons/web_m2x_options/static/src/js/form.js:235
+#: code:addons/web_m2x_options/static/src/js/form.js:351
 #, python-format
 msgid "Create and Edit..."
 msgstr "Créer et éditer..."

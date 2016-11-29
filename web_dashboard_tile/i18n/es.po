@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (7.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-07 17:50+0000\n"
+"POT-Creation-Date: 2016-10-31 10:16+0000\n"
 "PO-Revision-Date: 2015-10-07 17:50+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Spanish (http://www.transifex.com/oca/OCA-web-7-0/language/es/)\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: code:addons/web_dashboard_tile/static/src/xml/custom_xml.xml:8
 #, python-format
 msgid "Create"
-msgstr ""
+msgstr "Crear"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,field_id:0
@@ -34,7 +34,7 @@ msgstr "Campo"
 #: code:addons/web_dashboard_tile/static/src/js/custom_js.js:100
 #, python-format
 msgid "Tile is created"
-msgstr ""
+msgstr "Se creó la pieza"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,name:0
@@ -44,7 +44,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: model:ir.ui.menu,name:web_dashboard_tile.menue_dashboard_tile
 msgid "Dashboard Tile"
-msgstr ""
+msgstr "Pieza del tablero"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,field_function:0
@@ -64,12 +64,12 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,user_id:0
 msgid "User"
-msgstr ""
+msgstr "Usuario"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,active:0
 msgid "Active"
-msgstr ""
+msgstr "Activo"
 
 #. module: web_dashboard_tile
 #: selection:tile.tile,field_function:0
@@ -79,7 +79,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,count:0
 msgid "Count"
-msgstr ""
+msgstr "Cuenta"
 
 #. module: web_dashboard_tile
 #. openerp-web
@@ -133,7 +133,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: view:tile.tile:0
 msgid "Dashboard tiles"
-msgstr ""
+msgstr "Piezas del tablero"
 
 #. module: web_dashboard_tile
 #: model:ir.actions.act_window,name:web_dashboard_tile.action_kanban_dashboard_tile
@@ -147,15 +147,15 @@ msgstr ""
 #: code:addons/web_dashboard_tile/static/src/js/custom_js.js:61
 #, python-format
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,action_id:0
 msgid "Action"
-msgstr ""
+msgstr "Acción"
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/tile.py:73
+#: code:addons/web_dashboard_tile/tile.py:74
 #, python-format
 msgid "Minimum value of '%s'"
 msgstr ""
@@ -163,7 +163,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,model_id:0
 msgid "Model"
-msgstr ""
+msgstr "Modelo"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,domain:0
@@ -185,10 +185,10 @@ msgstr ""
 #: code:addons/web_dashboard_tile/static/src/xml/custom_xml.xml:6
 #, python-format
 msgid "Tile:"
-msgstr ""
+msgstr "Pieza:"
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/tile.py:79
+#: code:addons/web_dashboard_tile/tile.py:80
 #, python-format
 msgid "Total value of '%s'"
 msgstr ""
@@ -199,19 +199,19 @@ msgid "Minimum"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/tile.py:82
+#: code:addons/web_dashboard_tile/tile.py:83
 #, python-format
 msgid "Average value of '%s'"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/tile.py:85
+#: code:addons/web_dashboard_tile/tile.py:86
 #, python-format
 msgid "Median value of '%s'"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/tile.py:76
+#: code:addons/web_dashboard_tile/tile.py:77
 #, python-format
 msgid "Maximum value of '%s'"
 msgstr ""

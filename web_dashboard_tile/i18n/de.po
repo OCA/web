@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (7.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-07 17:50+0000\n"
+"POT-Creation-Date: 2016-10-31 10:16+0000\n"
 "PO-Revision-Date: 2015-10-07 17:50+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-web-7-0/language/de/)\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: code:addons/web_dashboard_tile/static/src/xml/custom_xml.xml:8
 #, python-format
 msgid "Create"
-msgstr ""
+msgstr "Erstellen"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,field_id:0
@@ -64,7 +64,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,user_id:0
 msgid "User"
-msgstr ""
+msgstr "Benutzer"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,active:0
@@ -155,7 +155,7 @@ msgid "Action"
 msgstr "Aktion"
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/tile.py:73
+#: code:addons/web_dashboard_tile/tile.py:74
 #, python-format
 msgid "Minimum value of '%s'"
 msgstr ""
@@ -188,7 +188,7 @@ msgid "Tile:"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/tile.py:79
+#: code:addons/web_dashboard_tile/tile.py:80
 #, python-format
 msgid "Total value of '%s'"
 msgstr ""
@@ -199,19 +199,19 @@ msgid "Minimum"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/tile.py:82
+#: code:addons/web_dashboard_tile/tile.py:83
 #, python-format
 msgid "Average value of '%s'"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/tile.py:85
+#: code:addons/web_dashboard_tile/tile.py:86
 #, python-format
 msgid "Median value of '%s'"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/tile.py:76
+#: code:addons/web_dashboard_tile/tile.py:77
 #, python-format
 msgid "Maximum value of '%s'"
 msgstr ""

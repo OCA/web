@@ -3,11 +3,13 @@
 # * web_dashboard_tile
 # 
 # Translators:
+# Hotellook, 2014
+# Rudolf Schnapka <schnapkar@golive-saar.de>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: web (7.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-07 17:50+0000\n"
+"POT-Creation-Date: 2016-10-31 10:16+0000\n"
 "PO-Revision-Date: 2015-10-07 17:50+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Turkish (http://www.transifex.com/oca/OCA-web-7-0/language/tr/)\n"
@@ -64,7 +66,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,user_id:0
 msgid "User"
-msgstr ""
+msgstr "Kullanıcı"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,active:0
@@ -152,10 +154,10 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,action_id:0
 msgid "Action"
-msgstr ""
+msgstr "Eylem"
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/tile.py:73
+#: code:addons/web_dashboard_tile/tile.py:74
 #, python-format
 msgid "Minimum value of '%s'"
 msgstr ""
@@ -163,7 +165,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,model_id:0
 msgid "Model"
-msgstr ""
+msgstr "Alan"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,domain:0
@@ -188,7 +190,7 @@ msgid "Tile:"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/tile.py:79
+#: code:addons/web_dashboard_tile/tile.py:80
 #, python-format
 msgid "Total value of '%s'"
 msgstr ""
@@ -199,19 +201,19 @@ msgid "Minimum"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/tile.py:82
+#: code:addons/web_dashboard_tile/tile.py:83
 #, python-format
 msgid "Average value of '%s'"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/tile.py:85
+#: code:addons/web_dashboard_tile/tile.py:86
 #, python-format
 msgid "Median value of '%s'"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/tile.py:76
+#: code:addons/web_dashboard_tile/tile.py:77
 #, python-format
 msgid "Maximum value of '%s'"
 msgstr ""
