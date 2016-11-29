@@ -1,0 +1,40 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_widget_mail_send_odoo
+# 
+# Translators:
+# Pedro M. Baeza <pedro.baeza@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: web (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-26 02:00+0000\n"
+"PO-Revision-Date: 2016-10-13 18:48+0000\n"
+"Last-Translator: Pedro M. Baeza <pedro.baeza@gmail.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/oca/OCA-web-8-0/language/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: web_widget_mail_send_odoo
+#. openerp-web
+#: code:addons/web_widget_mail_send_odoo/static/src/js/web_widget_mail_send_odoo.js:50
+#, python-format
+msgid "Can't send email to invalid e-mail address"
+msgstr "No se puede enviar un correo electrónico a una dirección no válida"
+
+#. module: web_widget_mail_send_odoo
+#. openerp-web
+#: code:addons/web_widget_mail_send_odoo/static/src/js/web_widget_mail_send_odoo.js:50
+#, python-format
+msgid "E-mail Error"
+msgstr "Error de correo electrónico"
+
+#. module: web_widget_mail_send_odoo
+#. openerp-web
+#: code:addons/web_widget_mail_send_odoo/static/src/js/web_widget_mail_send_odoo.js:93
+#, python-format
+msgid "Please complete partner's information."
+msgstr "Complete por favor la información de la empresa."

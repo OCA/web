@@ -9,7 +9,7 @@
 # bossnm11 <bossnm11@gmail.com>, 2014
 # Carles Antoli <carlesantoli@hotmail.com>, 2015
 # Carles Antoli <carlesantoli@hotmail.com>, 2015
-# Chanseok <kcsgoodboy@gmail.com>, 2014
+# Chanseok <kcsgoodboy@naver.com>, 2014
 # Christophe CHAUVET <christophe.chauvet@gmail.com>, 2015
 # Christophe CHAUVET <christophe.chauvet@gmail.com>, 2015
 # danimaribeiro <danimaribeiro@gmail.com>, 2015-2016
@@ -33,8 +33,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-17 12:06+0000\n"
-"PO-Revision-Date: 2016-09-08 13:37+0000\n"
+"POT-Creation-Date: 2016-11-26 01:59+0000\n"
+"PO-Revision-Date: 2016-11-25 14:55+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-web-8-0/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -85,7 +85,7 @@ msgstr "Criado em "
 #: field:export.help.wizard,display_name:0 field:help.online,display_name:0
 #: field:import.help.wizard,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nome para Mostrar"
 
 #. module: help_online
 #: view:export.help.wizard:help_online.export_help_wizard_view
@@ -167,7 +167,7 @@ msgstr "Importar ajuda online"
 #: field:export.help.wizard,__last_update:0 field:help.online,__last_update:0
 #: field:import.help.wizard,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última atualização em"
 
 #. module: help_online
 #: field:export.help.wizard,write_uid:0 field:help.online,write_uid:0
