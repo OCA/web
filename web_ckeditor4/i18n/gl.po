@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-17 12:06+0000\n"
+"POT-Creation-Date: 2016-11-26 01:59+0000\n"
 "PO-Revision-Date: 2015-11-07 11:19+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Galician (http://www.transifex.com/oca/OCA-web-8-0/language/gl/)\n"
@@ -30,7 +30,7 @@ msgstr "ID"
 #. module: web_ckeditor4
 #: field:ckeditor.monkeypatch,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última modificación"
 
 #. module: web_ckeditor4
 #: model:ir.model,name:web_ckeditor4.model_ckeditor_monkeypatch
