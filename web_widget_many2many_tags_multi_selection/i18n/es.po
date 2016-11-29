@@ -1,16 +1,16 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * web_export_view
+# * web_widget_many2many_tags_multi_selection
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2016
+# Pedro M. Baeza <pedro.baeza@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-11-23 03:40+0000\n"
 "PO-Revision-Date: 2016-11-23 03:40+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"Last-Translator: Pedro M. Baeza <pedro.baeza@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,23 +18,16 @@ msgstr ""
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. module: web_export_view
+#. module: web_widget_many2many_tags_multi_selection
 #. openerp-web
-#: code:addons/web_export_view/static/src/js/web_export_view.js:20
+#: code:addons/web_widget_many2many_tags_multi_selection/static/src/js/view_form.js:15
 #, python-format
-msgid "Export Current View"
-msgstr "Exportar vista actual"
+msgid "Create: "
+msgstr "Crear:"
 
-#. module: web_export_view
+#. module: web_widget_many2many_tags_multi_selection
 #. openerp-web
-#: code:addons/web_export_view/static/src/js/web_export_view.js:86
+#: code:addons/web_widget_many2many_tags_multi_selection/static/src/js/view_form.js:15
 #, python-format
-msgid "False"
-msgstr "Falso"
-
-#. module: web_export_view
-#. openerp-web
-#: code:addons/web_export_view/static/src/js/web_export_view.js:83
-#, python-format
-msgid "True"
-msgstr "Verdadero"
+msgid "Search: "
+msgstr "Buscar:"

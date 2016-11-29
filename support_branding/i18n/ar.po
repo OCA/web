@@ -3,15 +3,15 @@
 # * support_branding
 # 
 # Translators:
-# SaFi J. <safi2266@gmail.com>, 2015
+# OCA Transbot <transbot@odoo-community.org>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: web (8.0)\n"
+"Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-16 07:41+0000\n"
-"PO-Revision-Date: 2015-12-16 16:26+0000\n"
-"Last-Translator: SaFi J. <safi2266@gmail.com>\n"
-"Language-Team: Arabic (http://www.transifex.com/oca/OCA-web-8-0/language/ar/)\n"
+"POT-Creation-Date: 2016-11-23 03:39+0000\n"
+"PO-Revision-Date: 2016-11-23 03:39+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"Language-Team: Arabic (https://www.transifex.com/oca/teams/23907/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -19,13 +19,13 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #. module: support_branding
-#: view:website:web.menu_secondary
+#: model:ir.ui.view,arch_db:support_branding.menu_secondary
 msgid ", supported by"
 msgstr "مدعوم بواسطة"
 
 #. module: support_branding
 #. openerp-web
-#: code:addons/support_branding/static/src/js/support_branding.js:106
+#: code:addons/support_branding/static/src/js/support_branding.js:83
 #, python-format
 msgid "Email to %s"
 msgstr "إرسال بريد الكتروني إلى %s"
@@ -45,6 +45,6 @@ msgid "Please fill in how you produced this error..."
 msgstr "الرجاء الملأ كيف نتج هذا الخطأ ..."
 
 #. module: support_branding
-#: view:website:web.menu_secondary
+#: model:ir.ui.view,arch_db:support_branding.menu_secondary
 msgid "Version"
 msgstr "الإصدار"

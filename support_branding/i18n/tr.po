@@ -3,15 +3,15 @@
 # * support_branding
 # 
 # Translators:
-# Ahmet Altınışık <aaltinisik@altinkaya.com.tr>, 2015
+# OCA Transbot <transbot@odoo-community.org>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: web (8.0)\n"
+"Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-08 21:34+0000\n"
-"PO-Revision-Date: 2015-12-30 21:58+0000\n"
-"Last-Translator: Ahmet Altınışık <aaltinisik@altinkaya.com.tr>\n"
-"Language-Team: Turkish (http://www.transifex.com/oca/OCA-web-8-0/language/tr/)\n"
+"POT-Creation-Date: 2016-11-23 03:39+0000\n"
+"PO-Revision-Date: 2016-11-23 03:39+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"Language-Team: Turkish (https://www.transifex.com/oca/teams/23907/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -19,13 +19,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: support_branding
-#: view:website:web.menu_secondary
+#: model:ir.ui.view,arch_db:support_branding.menu_secondary
 msgid ", supported by"
 msgstr ", destekleyen"
 
 #. module: support_branding
 #. openerp-web
-#: code:addons/support_branding/static/src/js/support_branding.js:106
+#: code:addons/support_branding/static/src/js/support_branding.js:83
 #, python-format
 msgid "Email to %s"
 msgstr "%s ye eposta"
@@ -45,6 +45,6 @@ msgid "Please fill in how you produced this error..."
 msgstr "Bu hatanın nasıl oluştuğunu yazın..."
 
 #. module: support_branding
-#: view:website:web.menu_secondary
+#: model:ir.ui.view,arch_db:support_branding.menu_secondary
 msgid "Version"
 msgstr "Versiyon"
