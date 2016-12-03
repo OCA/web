@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * web_ckeditor4
+# * web_easy_switch_company
 # 
 # Translators:
 msgid ""
@@ -17,22 +17,17 @@ msgstr ""
 "Language: fr_CH\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#. module: web_ckeditor4
-#: field:ckeditor.monkeypatch,display_name:0
-msgid "Display Name"
-msgstr "Nom affiché"
-
-#. module: web_ckeditor4
-#: field:ckeditor.monkeypatch,id:0
-msgid "ID"
-msgstr "ID"
-
-#. module: web_ckeditor4
-#: field:ckeditor.monkeypatch,__last_update:0
-msgid "Last Modified on"
-msgstr "Dernière modification le"
-
-#. module: web_ckeditor4
-#: model:ir.model,name:web_ckeditor4.model_ckeditor_monkeypatch
-msgid "Monkeypatches for CKEditor"
+#. module: web_easy_switch_company
+#: model:ir.model,name:web_easy_switch_company.model_res_company
+msgid "Companies"
 msgstr ""
+
+#. module: web_easy_switch_company
+#: field:res.company,logo_topbar:0
+msgid "Logo displayed in the switch company menu"
+msgstr ""
+
+#. module: web_easy_switch_company
+#: model:ir.model,name:web_easy_switch_company.model_res_users
+msgid "Users"
+msgstr "Utilisateurs"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-26 01:59+0000\n"
+"POT-Creation-Date: 2016-11-29 19:39+0000\n"
 "PO-Revision-Date: 2015-11-07 11:20+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: French (Switzerland) (http://www.transifex.com/oca/OCA-web-8-0/language/fr_CH/)\n"
@@ -37,7 +37,7 @@ msgstr "Créé le"
 #. module: web_shortcuts
 #: field:web.shortcut,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nom affiché"
 
 #. module: web_shortcuts
 #: field:web.shortcut,id:0
@@ -47,7 +47,7 @@ msgstr "ID"
 #. module: web_shortcuts
 #: field:web.shortcut,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Dernière modification le"
 
 #. module: web_shortcuts
 #: field:web.shortcut,write_uid:0

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-26 01:59+0000\n"
-"PO-Revision-Date: 2016-11-25 14:57+0000\n"
+"POT-Creation-Date: 2016-11-29 19:38+0000\n"
+"PO-Revision-Date: 2016-12-01 10:10+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: French (Switzerland) (http://www.transifex.com/oca/OCA-web-8-0/language/fr_CH/)\n"
 "MIME-Version: 1.0\n"
@@ -59,7 +59,7 @@ msgstr "Créé le"
 #: field:export.help.wizard,display_name:0 field:help.online,display_name:0
 #: field:import.help.wizard,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nom affiché"
 
 #. module: help_online
 #: view:export.help.wizard:help_online.export_help_wizard_view
@@ -141,7 +141,7 @@ msgstr ""
 #: field:export.help.wizard,__last_update:0 field:help.online,__last_update:0
 #: field:import.help.wizard,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Dernière modification le"
 
 #. module: help_online
 #: field:export.help.wizard,write_uid:0 field:help.online,write_uid:0
