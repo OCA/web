@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (7.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-31 10:16+0000\n"
+"POT-Creation-Date: 2016-11-29 19:21+0000\n"
 "PO-Revision-Date: 2015-10-07 17:50+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-web-7-0/language/pt_BR/)\n"
@@ -123,7 +123,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: selection:tile.tile,field_function:0
 msgid "Maximum"
-msgstr ""
+msgstr "Máximo"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,computed_value:0
@@ -196,7 +196,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: selection:tile.tile,field_function:0
 msgid "Minimum"
-msgstr ""
+msgstr "Mínimo"
 
 #. module: web_dashboard_tile
 #: code:addons/web_dashboard_tile/tile.py:83
