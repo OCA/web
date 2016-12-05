@@ -50,7 +50,6 @@ Roadmap
 =======
 
 * it might be convenient to be able to pass a window action's id
-* adding the rest of the values available on a grouped row to the evaluation context would be nice
 
 Bug Tracker
 ===========

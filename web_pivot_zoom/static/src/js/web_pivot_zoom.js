@@ -47,19 +47,41 @@ openerp.web_pivot_zoom = function(instance)
             {
                 return;
             }
-            var $current_row = jQuery(e.currentTarget).parent('tr'),
+            var $current_row = jQuery(e.currentTarget).closest('tr'),
+                $col_row = jQuery(e.currentTarget).closest('table')
+                .find('thead tr:nth-last-child(2)'),
+                col_id = $col_row.find('[data-id]').eq(
+                    Math.floor(
+                        e.currentTarget.cellIndex - 1 /
+                        this.pivot.measures.length
+                    )
+                ).attr('data-id'),
                 row_id = $current_row.find('[data-id]').attr('data-id'),
-                current_field = this.pivot
-                .measures[e.currentTarget.cellIndex - 1],
-                header = this.pivot.get_header(row_id),
+                current_field = this.pivot.measures[
+                    (e.currentTarget.cellIndex - 1) %
+                    this.pivot.measures.length
+                ],
+                row_header = this.pivot.get_header(row_id),
+                col_header = this.pivot.get_header(col_id),
+                measure_values = this.pivot.get_values(
+                    Math.min(col_id, row_id), Math.max(col_id, row_id)
+                ),
                 group_values = {};
             _.each(this.groupby_fields, function(field)
             {
                 group_values[field.field] = null;
             });
-            _.each(header.domain, function(leaf)
+            _.each(row_header.domain, function(leaf)
             {
                 group_values[leaf[0]] = leaf[2];
+            });
+            _.each(col_header.domain, function(leaf)
+            {
+                group_values[leaf[0]] = leaf[2];
+            });
+            _.each(this.pivot_options.measures, function(measure, i)
+            {
+                group_values[measure.field] = measure_values[i];
             });
             var model = this.graph_view._web_pivot_zoom[current_field.field]
                 .model,
@@ -74,16 +96,21 @@ openerp.web_pivot_zoom = function(instance)
                 return;
             }
             return this._web_pivot_zoom_action(
-                model, domain, current_field, header);
+                model, domain, current_field, row_header, col_header
+            );
         },
-        _web_pivot_zoom_action: function(model, domain, current_field, header)
+        _web_pivot_zoom_action: function(
+            model, domain, current_field, row_header, col_header
+        )
         {
+            // we don't need to search again when clicking back
+            this.graph_view.ViewManager.action.flags.auto_search = false;
             return this.do_action({
                 'type': 'ir.actions.act_window',
-            'res_model': model,
+                'res_model': model,
                 'domain': domain,
                 'views': [[false, 'list'], [false, 'form']],
-                'name': header.title + ': ' + current_field.string,
+                'name': row_header.title + ': ' + current_field.string,
             });
         },
     });
