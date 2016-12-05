@@ -47,7 +47,8 @@ openerp.web_pivot_zoom = function(instance)
             {
                 return;
             }
-            var $current_row = jQuery(e.currentTarget).closest('tr'),
+            var self = this,
+                $current_row = jQuery(e.currentTarget).closest('tr'),
                 $col_row = jQuery(e.currentTarget).closest('table')
                 .find('thead tr:nth-last-child(2)'),
                 col_id = $col_row.find('[data-id]').eq(
@@ -83,6 +84,12 @@ openerp.web_pivot_zoom = function(instance)
             {
                 group_values[measure.field] = measure_values[i];
             });
+            _.each(this.pivot_options.invisible_measures, function(measure, i)
+            {
+                group_values[measure] = measure_values[
+                    i + self.pivot_options.measures.length
+                ];
+            });
             var model = this.graph_view._web_pivot_zoom[current_field.field]
                 .model,
                 domain = instance.web.pyeval.eval(
@@ -117,15 +124,68 @@ openerp.web_pivot_zoom = function(instance)
     instance.web_graph.GraphView.include({
         view_loading: function(fields_view_get)
         {
-            var self = this;
+            var self = this,
+                invisible_measures = [],
+                result;
             this._web_pivot_zoom = {};
-            _.each(fields_view_get.arch.children, function(field)
+            _.each(fields_view_get.arch.children, function(field, i)
             {
+                if(instance.web.py_eval(field.attrs.invisible || '0'))
+                {
+                    invisible_measures.push(field.attrs.name);
+                    fields_view_get.arch.children.splice(i, 1);
+                }
                 self._web_pivot_zoom[field.attrs.name] = instance.web.py_eval(
                     field.attrs.options || '{}'
                 ).web_pivot_zoom || {};
             });
+            result = this._super.apply(this, arguments);
+            this.widget_config.invisible_measures = invisible_measures;
+            return result;
+        },
+    });
+    instance.web_graph.PivotTable.include({
+        init: function(model, domain, fields, options)
+        {
+            this.invisible_measures = options.invisible_measures;
             return this._super.apply(this, arguments);
+        },
+        get_groups: function(groupbys, fields, domain)
+        {
+            return this._super(
+                groupbys, this.invisible_measures.concat(fields), domain
+            );
+        },
+        make_headers_and_cell: function(
+            data_pts, row_headers, col_headers, index, prefix, expand
+        )
+        {
+            var self = this;
+            this._super.apply(this, arguments);
+            if(!this.invisible_measures.length)
+            {
+                return;
+            }
+            data_pts.forEach(function(group)
+            {
+                var row_value = (prefix || []).concat(
+                        group.attributes.value.slice(0, index)
+                    ),
+                    col_value = group.attributes.value.slice(index),
+                    row = self.find_or_create_header(
+                        row_headers, row_value, group
+                    ),
+                    col = self.find_or_create_header(
+                        col_headers, col_value, group
+                    ),
+                    values = self.get_values(
+                        Math.min(col.id, row.id), Math.max(col.id, row.id)
+                    );
+                _.each(self.invisible_measures, function(measure)
+                {
+                    values.push(group.attributes.aggregates[measure]);
+                });
+            });
         },
     });
 };
