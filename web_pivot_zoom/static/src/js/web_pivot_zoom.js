@@ -128,17 +128,18 @@ openerp.web_pivot_zoom = function(instance)
                 invisible_measures = [],
                 result;
             this._web_pivot_zoom = {};
-            _.each(fields_view_get.arch.children, function(field, i)
+            for(var i=0; i < fields_view_get.arch.children.length; i++)
             {
+                var field = fields_view_get.arch.children[i];
                 if(instance.web.py_eval(field.attrs.invisible || '0'))
                 {
                     invisible_measures.push(field.attrs.name);
-                    fields_view_get.arch.children.splice(i, 1);
+                    fields_view_get.arch.children.splice(i--, 1);
                 }
                 self._web_pivot_zoom[field.attrs.name] = instance.web.py_eval(
                     field.attrs.options || '{}'
                 ).web_pivot_zoom || {};
-            });
+            }
             result = this._super.apply(this, arguments);
             this.widget_config.invisible_measures = invisible_measures;
             return result;
