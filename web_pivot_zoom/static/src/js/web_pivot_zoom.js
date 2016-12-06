@@ -53,7 +53,7 @@ openerp.web_pivot_zoom = function(instance)
                 .find('thead tr:nth-last-child(2)'),
                 col_id = $col_row.find('[data-id]').eq(
                     Math.floor(
-                        e.currentTarget.cellIndex - 1 /
+                        (e.currentTarget.cellIndex - 1) /
                         this.pivot.measures.length
                     )
                 ).attr('data-id'),
