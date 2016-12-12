@@ -41,6 +41,19 @@ openerp.web_pivot_zoom = function(instance)
                 }
             });
         },
+        get_measures: function()
+        {
+            var self = this;
+            return _.filter(
+                this._super.apply(this, arguments),
+                function(field)
+                {
+                    return self.pivot_options.invisible_measures.indexOf(
+                        field.field
+                    ) == -1;
+                }
+            );
+        },
         _web_pivot_zoom_on_click_cell: function(e)
         {
             if(!e.currentTarget.cellIndex)
