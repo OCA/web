@@ -18,11 +18,13 @@ if the popup is always wanted.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/162/9.0
+   :target: https://runbot.odoo-community.org/runbot/162/10.0
 
 
 Bug Tracker
 ===========
+
+This module was tested on Odoo 10.0 community and enterprise.
 
 Bugs are tracked on `GitHub Issues
 <https://github.com/OCA/web/issues>`_. In case of trouble, please
@@ -42,6 +44,7 @@ Contributors
 
 * Guewen Baconnier <guewen.baconnier@camptocamp.com>
 * Yannick Vaucher <yannick.vaucher@camptocamp.com>
+* Nicolas JEUDY <https://github.com/njeudy>
 
 Maintainer
 ----------
