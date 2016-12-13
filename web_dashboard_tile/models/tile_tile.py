@@ -142,71 +142,74 @@ class TileTile(models.Model):
         string='Error Details',
         compute='_compute_data')
 
-    @api.one
+    @api.multi
     def _compute_data(self):
-        if not self.active:
-            return
-        model = self.env[self.model_id.model]
-        eval_context = self._get_eval_context()
-        domain = self.domain or '[]'
-        try:
-            count = model.search_count(eval(domain, eval_context))
-        except Exception as e:
-            self.primary_value = self.secondary_value = 'ERR!'
-            self.error = str(e)
-            return
-        if any([
-            self.primary_function and
-            self.primary_function != 'count',
-            self.secondary_function and
-            self.secondary_function != 'count'
-        ]):
-            records = model.search(eval(domain, eval_context))
-        for f in ['primary_', 'secondary_']:
-            f_function = f + 'function'
-            f_field_id = f + 'field_id'
-            f_format = f + 'format'
-            f_value = f + 'value'
-            value = 0
-            if self[f_function] == 'count':
-                value = count
-            elif self[f_function]:
-                func = FIELD_FUNCTIONS[self[f_function]]['func']
-                if func and self[f_field_id] and count:
-                    vals = [x[self[f_field_id].name] for x in records]
-                    value = func(vals)
-            if self[f_function]:
-                try:
-                    self[f_value] = (self[f_format] or '{:,}').format(value)
-                except ValueError as e:
-                    self[f_value] = 'F_ERR!'
-                    self.error = str(e)
-                    return
-            else:
-                self[f_value] = False
+        for rec in self:
+            if not rec.active:
+                return
+            model = self.env[rec.model_id.model]
+            eval_context = self._get_eval_context()
+            domain = rec.domain or '[]'
+            try:
+                count = model.search_count(eval(domain, eval_context))
+            except Exception as e:
+                rec.primary_value = rec.secondary_value = 'ERR!'
+                rec.error = str(e)
+                return
+            if any([
+                rec.primary_function and
+                rec.primary_function != 'count',
+                rec.secondary_function and
+                rec.secondary_function != 'count'
+            ]):
+                records = model.search(eval(domain, eval_context))
+            for f in ['primary_', 'secondary_']:
+                f_function = f + 'function'
+                f_field_id = f + 'field_id'
+                f_format = f + 'format'
+                f_value = f + 'value'
+                value = 0
+                if rec[f_function] == 'count':
+                    value = count
+                elif rec[f_function]:
+                    func = FIELD_FUNCTIONS[rec[f_function]]['func']
+                    if func and rec[f_field_id] and count:
+                        vals = [x[rec[f_field_id].name] for x in records]
+                        value = func(vals)
+                if rec[f_function]:
+                    try:
+                        rec[f_value] = (rec[f_format] or '{:,}').format(value)
+                    except ValueError as e:
+                        rec[f_value] = 'F_ERR!'
+                        rec.error = str(e)
+                        return
+                else:
+                    rec[f_value] = False
 
-    @api.one
+    @api.multi
     @api.onchange('primary_function', 'primary_field_id',
                   'secondary_function', 'secondary_field_id')
     def _compute_helper(self):
-        for f in ['primary_', 'secondary_']:
-            f_function = f + 'function'
-            f_field_id = f + 'field_id'
-            f_helper = f + 'helper'
-            self[f_helper] = ''
-            field_func = FIELD_FUNCTIONS.get(self[f_function], {})
-            help = field_func.get('help', False)
-            if help:
-                if self[f_function] != 'count' and self[f_field_id]:
-                    desc = self[f_field_id].field_description
-                    self[f_helper] = help % desc
-                else:
-                    self[f_helper] = help
+        for rec in self:
+            for f in ['primary_', 'secondary_']:
+                f_function = f + 'function'
+                f_field_id = f + 'field_id'
+                f_helper = f + 'helper'
+                rec[f_helper] = ''
+                field_func = FIELD_FUNCTIONS.get(rec[f_function], {})
+                help = field_func.get('help', False)
+                if help:
+                    if rec[f_function] != 'count' and rec[f_field_id]:
+                        desc = rec[f_field_id].field_description
+                        rec[f_helper] = help % desc
+                    else:
+                        rec[f_helper] = help
 
-    @api.one
+    @api.multi
     def _compute_active(self):
         ima = self.env['ir.model.access']
-        self.active = ima.check(self.model_id.model, 'read', False)
+        for rec in self:
+            rec.active = ima.check(rec.model_id.model, 'read', False)
 
     def _search_active(self, operator, value):
         cr = self.env.cr
@@ -226,17 +229,18 @@ class TileTile(models.Model):
         return [('id', 'in', ids)]
 
     # Constraints and onchanges
-    @api.one
+    @api.multi
     @api.constrains('model_id', 'primary_field_id', 'secondary_field_id')
     def _check_model_id_field_id(self):
-        if any([
-            self.primary_field_id and
-            self.primary_field_id.model_id.id != self.model_id.id,
-            self.secondary_field_id and
-            self.secondary_field_id.model_id.id != self.model_id.id
-        ]):
-            raise ValidationError(
-                _("Please select a field from the selected model."))
+        for rec in self:
+            if any([
+                rec.primary_field_id and
+                rec.primary_field_id.model_id.id != rec.model_id.id,
+                rec.secondary_field_id and
+                rec.secondary_field_id.model_id.id != rec.model_id.id
+            ]):
+                raise ValidationError(
+                    _("Please select a field from the selected model."))
 
     @api.onchange('model_id')
     def _onchange_model_id(self):
