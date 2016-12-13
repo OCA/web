@@ -1,17 +1,10 @@
-.openerp .oe_kanban_view .oe_dashbaord_tile{
+.openerp .oe_kanban_view .oe_dashboard_tile {
     width: 150px;
     height: 150px;
     border: 0;
     border-radius: 0;
 }
 
-<<<<<<< HEAD
-.openerp .oe_kanban_view .oe_dashbaord_tile .tile_label,
-.openerp .oe_kanban_view .oe_dashbaord_tile .tile_count_without_computed_value,
-.openerp .oe_kanban_view .oe_dashbaord_tile .tile_count_with_computed_value,
-.openerp .oe_kanban_view .oe_dashbaord_tile .tile_computed_value {
-    width: 140px;
-=======
 /* Disable default kanban style */
 .openerp .oe_kanban_view .oe_dashboard_tile .oe_kanban_content div:first-child {
     margin-right: inherit!important;
@@ -20,44 +13,27 @@
 .openerp .oe_kanban_view .oe_dashboard_tile .tile_label,
 .openerp .oe_kanban_view .oe_dashboard_tile .tile_primary_value,
 .openerp .oe_kanban_view .oe_dashboard_tile .tile_secondary_value {
->>>>>>> 3ab676d... [IMP][8.0][web_dashboard_tile] Refactor (see changes in description) (#476)
     text-align: center;
     font-weight: bold;
 }
 
-<<<<<<< HEAD
-.openerp .oe_kanban_view .oe_dashbaord_tile .tile_label{
-=======
 .openerp .oe_kanban_view .oe_dashboard_tile .tile_label {
->>>>>>> 3ab676d... [IMP][8.0][web_dashboard_tile] Refactor (see changes in description) (#476)
     padding: 5px;
     font-size: 15px;
 }
 
-<<<<<<< HEAD
-.openerp .oe_kanban_view .oe_dashbaord_tile .tile_count_without_computed_value{
-    font-size: 52px;
-    font-weight: bold;
-=======
 .openerp .oe_kanban_view .oe_dashboard_tile .tile_primary_value{
     font-size: 54px;
->>>>>>> 3ab676d... [IMP][8.0][web_dashboard_tile] Refactor (see changes in description) (#476)
     position: absolute;
     left: 5px;
     right: 5px;
     bottom: 5px;
 }
 
-<<<<<<< HEAD
-.openerp .oe_kanban_view .oe_dashbaord_tile .tile_count_with_computed_value{
-    font-size: 38px;
-    font-weight: bold;
-=======
 .openerp .oe_kanban_view .oe_dashboard_tile .tile_secondary_value{
     display: none;
     font-size: 18px;
     font-style: italic;
->>>>>>> 3ab676d... [IMP][8.0][web_dashboard_tile] Refactor (see changes in description) (#476)
     position: absolute;
     left: 5px;
     right: 5px;
@@ -69,16 +45,6 @@
     bottom: 30px;
 }
 
-<<<<<<< HEAD
-.openerp .oe_kanban_view .oe_dashbaord_tile .tile_computed_value{
-    font-size: 18px;
-    font-weight: bold;
-    position: absolute;
-    right: 10px;
-    bottom: 5px;
-    font-style: italic;
-}
-=======
 .openerp .oe_kanban_view .oe_dashboard_tile .with_secondary .tile_secondary_value{
     display: block;
 }
@@ -91,4 +57,3 @@
 .openerp .oe_searchview_drawer .oe_opened .oe_dashboard_tile_form {
     display: block;
 }
->>>>>>> 3ab676d... [IMP][8.0][web_dashboard_tile] Refactor (see changes in description) (#476)
