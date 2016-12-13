@@ -144,12 +144,12 @@ class TileTile(models.Model):
 
     @api.multi
     def _compute_data(self):
+        eval_context = self._get_eval_context()
         for rec in self:
             if not rec.active:
                 return
-            model = self.env[rec.model_id.model]
-            eval_context = self._get_eval_context()
             domain = rec.domain or '[]'
+            model = rec.env[rec.model_id.model]
             try:
                 count = model.search_count(eval(domain, eval_context))
             except Exception as e:
