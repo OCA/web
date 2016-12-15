@@ -37,11 +37,11 @@ openerp.web_m2x_options = function (instance) {
             if (p < 0) return;
             var key = option.substring(p + 1); // w/o 'web_m2x_options' prefix
             // ... hence set from context ...
-            if (!_.isUndefined(widget.view.dataset.context[key])) {
+            if (!_.isUndefined(widget.view) && !_.isUndefined(widget.view.dataset.context[key])) {
                 widget.view.ir_options[option] = widget.view.dataset.context[key];
             }
             // ... and (overwrite) from widget here ...
-            if (!_.isUndefined(widget.options[key])) {
+            if (!_.isUndefined(widget.view) && !_.isUndefined(widget.options[key])) {
                 widget.view.ir_options[option] = widget.options[key];
             }
             // ... but don't overwrite from global parameters above
