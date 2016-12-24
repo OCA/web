@@ -10,11 +10,11 @@ msgstr ""
 "POT-Creation-Date: 2016-12-15 12:52+0000\n"
 "PO-Revision-Date: 2015-10-07 17:50+0000\n"
 "Last-Translator: <>\n"
-"Language-Team: German (http://www.transifex.com/oca/OCA-web-7-0/language/de/)\n"
+"Language-Team: Spanish (Paraguay) (http://www.transifex.com/oca/OCA-web-7-0/language/es_PY/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: de\n"
+"Language: es_PY\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: web_dashboard_tile
@@ -22,12 +22,12 @@ msgstr ""
 #: code:addons/web_dashboard_tile/static/src/xml/custom_xml.xml:8
 #, python-format
 msgid "Create"
-msgstr "Erstellen"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: field:tile.tile,field_id:0
 msgid "Field"
-msgstr "Feld"
+msgstr ""
 
 #. module: web_dashboard_tile
 #. openerp-web
@@ -64,12 +64,12 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,user_id:0
 msgid "User"
-msgstr "Benutzer"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: field:tile.tile,active:0
 msgid "Active"
-msgstr "Aktiv"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: selection:tile.tile,field_function:0
@@ -152,7 +152,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,action_id:0
 msgid "Action"
-msgstr "Aktion"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: code:addons/web_dashboard_tile/tile.py:74
@@ -163,12 +163,12 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,model_id:0
 msgid "Model"
-msgstr "Modell"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: field:tile.tile,domain:0
 msgid "Domain"
-msgstr "Domäne"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: field:tile.tile,helper:0
@@ -178,7 +178,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,sequence:0
 msgid "Sequence"
-msgstr "Reihenfolge"
+msgstr "Secuencia"
 
 #. module: web_dashboard_tile
 #. openerp-web
