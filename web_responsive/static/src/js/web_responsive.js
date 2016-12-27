@@ -88,12 +88,6 @@ odoo.define('web_responsive', function(require) {
                                 'a.oe_logo, ' +
                                 'i.oe_logo_edit'
                                 );
-            $('.o_content').scroll(function() {
-                $('.o_control_panel').css(
-                    'margin-top',
-                    -$(this).scrollTop() + 'px'
-                );
-            });
             $clickZones.click($.proxy(this.handleClickZones, this));
             core.bus.on('resize', this, this.handleWindowResize);
             core.bus.on('keydown', this, this.handleNavKeys);
