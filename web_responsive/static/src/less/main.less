@@ -25,3 +25,15 @@ main {
 div.oe_footer {
     display: none;
 }
+
+.o_web_client {
+    >.o_main {
+        overflow: auto;
+        > .o_main_content {
+            overflow: initial;
+            > .o_content {
+                overflow: initial;
+            }
+        }
+    }
+}
