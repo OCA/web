@@ -19,11 +19,12 @@
 //
 //#############################################################################
 
-odoo.web_dashboard_tile = function (instance)
+odoo.web_dashboard_tile = function (require)
 {
-var QWeb = instance.web.qweb,
-    _t =  instance.web._t,
-   _lt = instance.web._lt;
+var QWeb = require('web.qweb')
+var _t =  require('web._t')
+var _lt = require('web._lt')
+
 _.mixin({
   sum: function (obj) { return _.reduce(obj, function (a, b) { return a + b; }, 0); }
 });
