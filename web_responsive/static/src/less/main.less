@@ -44,3 +44,15 @@ main {
 .o_tooltip.active {
     z-index: 1051;
 }
+
+.o_web_client {
+    >.o_main {
+        overflow: auto;
+        > .o_main_content {
+            overflow: initial;
+            > .o_content {
+                overflow: initial;
+            }
+        }
+    }
+}
