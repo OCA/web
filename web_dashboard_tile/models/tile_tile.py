@@ -106,7 +106,7 @@ class TileTile(models.Model):
         'ir.model.fields',
         string='Field',
         domain="[('model_id', '=', model_id),"
-               " ('ttype', 'in', ['float', 'integer'])]")
+               " ('ttype', 'in', ['float', 'integer', 'monetary'])]")
     primary_format = fields.Char(
         string='Format',
         help='Python Format String valid with str.format()\n'
@@ -126,7 +126,7 @@ class TileTile(models.Model):
         'ir.model.fields',
         string='Secondary Field',
         domain="[('model_id', '=', model_id),"
-               " ('ttype', 'in', ['float', 'integer'])]")
+               " ('ttype', 'in', ['float', 'integer', 'monetary'])]")
     secondary_format = fields.Char(
         string='Secondary Format',
         help='Python Format String valid with str.format()\n'
