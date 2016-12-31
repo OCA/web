@@ -3,7 +3,7 @@
 # * web_m2x_options
 # 
 # Translators:
-# Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2015
+# Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2015-2016
 # Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2015-2016
 # Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2015
 # Antonio Trueba, 2016
@@ -44,8 +44,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-26 01:59+0000\n"
-"PO-Revision-Date: 2016-09-15 23:07+0000\n"
+"POT-Creation-Date: 2016-12-29 03:45+0000\n"
+"PO-Revision-Date: 2016-12-30 20:59+0000\n"
 "Last-Translator: Ahmet Altinisik <aaltinisik@altinkaya.com.tr>\n"
 "Language-Team: Turkish (http://www.transifex.com/oca/OCA-web-8-0/language/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -73,7 +73,7 @@ msgstr "Oluştur ve düzenle..."
 #. module: web_m2x_options
 #: field:ir.model,disable_quick_create:0
 msgid "Disable quick create"
-msgstr ""
+msgstr "Hızlı oluşturmayı kapat"
 
 #. module: web_m2x_options
 #: model:ir.model,name:web_m2x_options.model_ir_model

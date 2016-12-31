@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-10 07:06+0000\n"
-"PO-Revision-Date: 2016-12-10 07:09+0000\n"
+"POT-Creation-Date: 2016-12-29 03:45+0000\n"
+"PO-Revision-Date: 2016-12-27 08:22+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Russian (http://www.transifex.com/oca/OCA-web-8-0/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -54,12 +54,12 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Создано"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Создан"
 
 #. module: web_dashboard_tile
 #: model:ir.actions.act_window,name:web_dashboard_tile.action_kanban_dashboard_tile
@@ -148,7 +148,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: web_dashboard_tile
 #: help:tile.tile,group_ids:0
@@ -166,12 +166,12 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Последний раз обновлено"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Последний раз обновлено"
 
 #. module: web_dashboard_tile
 #: view:tile.tile:web_dashboard_tile.dashboard_tile_tile_form_view

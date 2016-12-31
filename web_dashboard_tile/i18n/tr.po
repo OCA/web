@@ -3,7 +3,7 @@
 # * web_dashboard_tile
 # 
 # Translators:
-# Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2015
+# Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2015-2016
 # Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2015-2016
 # Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2015
 # Antonio Trueba, 2016
@@ -16,9 +16,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-10 07:06+0000\n"
-"PO-Revision-Date: 2016-12-10 07:09+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"POT-Creation-Date: 2016-12-29 03:45+0000\n"
+"PO-Revision-Date: 2016-12-30 21:18+0000\n"
+"Last-Translator: Ahmet Altinisik <aaltinisik@altinkaya.com.tr>\n"
 "Language-Team: Turkish (http://www.transifex.com/oca/OCA-web-8-0/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,7 +34,7 @@ msgstr "Eylem"
 #. module: web_dashboard_tile
 #: field:tile.tile,active:0
 msgid "Active"
-msgstr ""
+msgstr "Aktif"
 
 #. module: web_dashboard_tile
 #: selection:tile.tile,primary_function:0
@@ -51,7 +51,7 @@ msgstr "Arkaplan rengi"
 #: selection:tile.tile,primary_function:0
 #: selection:tile.tile,secondary_function:0
 msgid "Count"
-msgstr ""
+msgstr "Say"
 
 #. module: web_dashboard_tile
 #. openerp-web
@@ -97,7 +97,7 @@ msgstr "Görünüm"
 #. module: web_dashboard_tile
 #: field:tile.tile,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Görünen İsim"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,domain:0
@@ -114,7 +114,7 @@ msgstr "Hata"
 #. module: web_dashboard_tile
 #: field:tile.tile,error:0
 msgid "Error Details"
-msgstr ""
+msgstr "Hata Detayları"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,primary_field_id:0
@@ -136,7 +136,7 @@ msgstr "Font rengi"
 #. module: web_dashboard_tile
 #: field:tile.tile,primary_format:0
 msgid "Format"
-msgstr ""
+msgstr "Biçim"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,primary_function:0
@@ -152,7 +152,7 @@ msgstr "Gruplar"
 #. module: web_dashboard_tile
 #: field:tile.tile,primary_helper:0
 msgid "Helper"
-msgstr ""
+msgstr "Yardımcı"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,id:0
@@ -165,12 +165,12 @@ msgid ""
 "If this field is set, only users of this group can view this tile. Please "
 "note that it will only work for global tiles (that is, when User field is "
 "left empty)"
-msgstr ""
+msgstr "Eğer bu alan işaretlenirse, sadece bu grubun kullanıcıları bu paneli görür. Sadece global panellerde çalışır. (yani kullanıcı alanı boş olan paneller)"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Son değişiklik"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,write_uid:0
@@ -185,7 +185,7 @@ msgstr "Son güncellendi"
 #. module: web_dashboard_tile
 #: view:tile.tile:web_dashboard_tile.dashboard_tile_tile_form_view
 msgid "Main Value"
-msgstr ""
+msgstr "Ana Değer"
 
 #. module: web_dashboard_tile
 #: selection:tile.tile,primary_function:0
@@ -238,46 +238,46 @@ msgstr "Adı"
 #: code:addons/web_dashboard_tile/models/tile_tile.py:31
 #, python-format
 msgid "Number of records"
-msgstr ""
+msgstr "Kayıtların Adedi"
 
 #. module: web_dashboard_tile
 #: code:addons/web_dashboard_tile/models/tile_tile.py:239
 #, python-format
 msgid "Please select a field from the selected model."
-msgstr ""
+msgstr "Seçilmiş modelden bir alan seçin."
 
 #. module: web_dashboard_tile
 #: help:tile.tile,primary_format:0 help:tile.tile,secondary_format:0
 msgid ""
 "Python Format String valid with str.format()\n"
 "ie: '{:,} Kgs' will output '1,000 Kgs' if value is 1000."
-msgstr ""
+msgstr "Python biçim stringi str.format() fonsiyonu ile\nör:eğer değer 1000 ise. '{:,} Kg' çıktı olarak '1,000 Kg' verir"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,secondary_field_id:0
 msgid "Secondary Field"
-msgstr ""
+msgstr "İkincil Alan"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,secondary_format:0
 msgid "Secondary Format"
-msgstr ""
+msgstr "Akincil Biçim"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,secondary_function:0
 msgid "Secondary Function"
-msgstr ""
+msgstr "İkincil Fonksiyon"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,secondary_helper:0
 msgid "Secondary Helper"
-msgstr ""
+msgstr "İkincil Yardımcı"
 
 #. module: web_dashboard_tile
 #: view:tile.tile:web_dashboard_tile.dashboard_tile_tile_form_view
 #: field:tile.tile,secondary_value:0
 msgid "Secondary Value"
-msgstr ""
+msgstr "İkincil Değer"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,sequence:0
@@ -326,7 +326,7 @@ msgstr "'%s' nin toplam değeri"
 #: code:addons/web_dashboard_tile/models/tile_tile.py:215
 #, python-format
 msgid "Unimplemented Feature. Search on Active field disabled."
-msgstr ""
+msgstr "Uygulanmamış Özellik. Etkin alanı kapalı iken arayın."
 
 #. module: web_dashboard_tile
 #: field:tile.tile,user_id:0

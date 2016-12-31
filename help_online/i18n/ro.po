@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-26 01:59+0000\n"
-"PO-Revision-Date: 2016-11-25 14:55+0000\n"
+"POT-Creation-Date: 2016-12-29 03:45+0000\n"
+"PO-Revision-Date: 2016-12-27 08:24+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Romanian (http://www.transifex.com/oca/OCA-web-8-0/language/ro/)\n"
 "MIME-Version: 1.0\n"
@@ -47,19 +47,19 @@ msgstr ""
 #: field:export.help.wizard,create_uid:0 field:help.online,create_uid:0
 #: field:import.help.wizard,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Creat de"
 
 #. module: help_online
 #: field:export.help.wizard,create_date:0 field:help.online,create_date:0
 #: field:import.help.wizard,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Creat la"
 
 #. module: help_online
 #: field:export.help.wizard,display_name:0 field:help.online,display_name:0
 #: field:import.help.wizard,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nume Afişat"
 
 #. module: help_online
 #: view:export.help.wizard:help_online.export_help_wizard_view
@@ -115,7 +115,7 @@ msgstr ""
 #: field:export.help.wizard,id:0 field:help.online,id:0
 #: field:import.help.wizard,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: help_online
 #: view:import.help.wizard:help_online.import_help_wizard_view
@@ -141,19 +141,19 @@ msgstr ""
 #: field:export.help.wizard,__last_update:0 field:help.online,__last_update:0
 #: field:import.help.wizard,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima actualizare în"
 
 #. module: help_online
 #: field:export.help.wizard,write_uid:0 field:help.online,write_uid:0
 #: field:import.help.wizard,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultima actualizare făcută de"
 
 #. module: help_online
 #: field:export.help.wizard,write_date:0 field:help.online,write_date:0
 #: field:import.help.wizard,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultima actualizare la"
 
 #. module: help_online
 #: code:addons/help_online/models/export_help_wizard.py:260

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-26 01:59+0000\n"
+"POT-Creation-Date: 2016-12-29 03:45+0000\n"
 "PO-Revision-Date: 2015-11-07 11:20+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Spanish (Costa Rica) (http://www.transifex.com/oca/OCA-web-8-0/language/es_CR/)\n"
@@ -27,7 +27,7 @@ msgstr ""
 #. module: web_shortcuts
 #: field:web.shortcut,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: web_shortcuts
 #: field:web.shortcut,create_date:0
@@ -52,12 +52,12 @@ msgstr ""
 #. module: web_shortcuts
 #: field:web.shortcut,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultima actualización por"
 
 #. module: web_shortcuts
 #: field:web.shortcut,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultima actualización en"
 
 #. module: web_shortcuts
 #: field:web.shortcut,menu_id:0

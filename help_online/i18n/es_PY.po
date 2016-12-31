@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-26 01:59+0000\n"
-"PO-Revision-Date: 2016-10-11 09:47+0000\n"
+"POT-Creation-Date: 2016-12-29 03:45+0000\n"
+"PO-Revision-Date: 2016-12-27 08:21+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Spanish (Paraguay) (http://www.transifex.com/oca/OCA-web-8-0/language/es_PY/)\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: code:addons/help_online/static/src/js/help_online.js:93
 #, python-format
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: help_online
 #: view:export.help.wizard:help_online.export_help_wizard_view
