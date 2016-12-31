@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (7.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-31 10:16+0000\n"
+"POT-Creation-Date: 2016-12-30 17:47+0000\n"
 "PO-Revision-Date: 2015-10-07 17:50+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: French (Canada) (http://www.transifex.com/oca/OCA-web-7-0/language/fr_CA/)\n"
@@ -223,7 +223,7 @@ msgstr ""
 #. module: web_advanced_filters
 #: view:ir.filters:0 view:ir.filters.combine.with.existing:0
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #. module: web_advanced_filters
 #: selection:ir.filters.combine.with.existing,action:0
