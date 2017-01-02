@@ -18,12 +18,159 @@
         padding: @app-drawer-navbar-padding-vertical @app-drawer-padding-horizontal;
     }
     
+    // App name before oe_submenu
+    .app-name {
+        > .oe_menu_text {
+            font-size: 20px;
+            position: relative;
+            padding: 0 8px;
+            top: 1px;
+        }
+    }
+
+    // Fitt's law: Stick menu to the top of the screen
+    @media (min-width: @screen-sm) {
+        .navbar-nav {
+            margin-top: -2px;
+        }
+    }
+
+    .navbar-header {
+        // Navbar header mobile styling
+        margin-left: -11px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        margin-right: -11px;
+        .navbar-toggle {
+             margin: 0;
+        }
+
+        // Fitt's law: Stick app-drawer button to the top-left of the screen
+        @media (min-width: @screen-sm) {
+            margin-left: -16px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-top: 0px;
+            padding: 0px;
+            padding-right: 0px;
+        }
+    }
+
+    @media (max-width: @screen-xs-max) {
+        ul.nav.navbar-nav.navbar-right.navbar-systray-item.oe_systray {
+            margin-top: 1.5px;
+        }
+    }
+
+    @media (min-width: @screen-sm) {
+        .oe_secondary_menu {
+            > li {
+                > a {
+                    margin-top: 2.5px;
+                    height: 25px;
+                }
+            }
+        }
+    }
+
+    .o_sub_menu > .o_sub_menu_content > .oe_secondary_menu > li.open > .dropdown-menu {
+
+        // Drop-down menu should be scrollable on small screens
+        overflow: auto;
+
+        // Headers at dropdown-menu shoud look different
+        > li.dropdown-header {
+            color: white;
+            text-decoration: none;
+            background-color: #8E8E8E;
+            font-weight: bold;
+        }
+
+    }
+
+   // Systray on the top menu bar
+   .navbar-systray {
+       position: absolute;
+       top: 0;
+       right: 32px;
+       white-space: nowrap;
+
+       @media (max-width: @screen-xs-max) {
+           top: 3px;
+           right: 76px;
+           .fa {
+               margin-top: 3px;
+               font-size: 18px;
+           }
+       }
+   }
+
+    // Align username position with menus
+   .oe_topbar_name {
+       position: relative;
+       top: 1.5px;
+
+       // Hide username on mobile
+       @media (max-width: @screen-xs-max) {
+           display: none;
+       }
+   }
+
+    // Force mobile mode dropdown-menu style
+   .navbar-right {
+        float: right;
+        margin: 0px;
+        margin-right: -16px;
+
+        @media (min-width: @screen-sm) {
+            margin-top: -1px;
+        }
+
+        > li {
+            float: left;
+        }
+
+        .navbar-nav .open .dropdown-menu {
+            left: auto;
+            right: 0;
+
+            @media (max-width: @screen-xs-max) {
+                position: fixed;
+                top: 46px;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                overflow: auto;
+                float: left;
+                margin-top: 2px;
+                background-color: #ffffff;
+                border: 1px solid rgba(0, 0, 0, 0.15);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+            }
+        }
+
+        ~ .navbar-right {
+            margin-right: 0;
+        }
+    }
+
 }
 
-.oe_topbar_avatar {
-    margin-top: -@app-drawer-padding-horizontal;
-    height: @app-drawer-navbar-height;
+// Increase size of avatar to maximum possible
+.navbar-systray > .oe_user_menu_placeholder > li > a > .oe_topbar_avatar {
     border-radius: 50%;
+    margin-top: -2px;
+    margin-bottom: -2px;
+    max-height: 22px;
+    height: 22px;
+    width: 22px;
+
+    @media (max-width: @screen-xs-max) {
+       margin-top: -3px;
+       max-height: 36px;
+       height: 36px;
+       width: 36px;
+    }
 }
 
 a.navbar-collapse.collapse {
@@ -35,12 +182,4 @@ a.navbar-collapse.collapse {
 
 .dropdown-scrollable {
     overflow-x: hidden;
-}
-
-@media (max-width: @screen-xs-max) {
-    #odooMenuBarNav[aria-expanded="false"] {
-        /* Hack to hide the visibly expanded mobile menu on load. */
-        position: absolute;
-        z-index: -9999;
-    }
 }
