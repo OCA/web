@@ -56,3 +56,10 @@ main {
         }
     }
 }
+
+// Remove z-index from CP buttons so it doesn't overlap the menu
+.o_control_panel {
+     .btn-group > .btn.active {
+        z-index: initial;
+    }
+}
