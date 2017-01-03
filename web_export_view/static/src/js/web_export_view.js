@@ -7,6 +7,7 @@ odoo.define('web_export_view.Sidebar', function (require) {
 "use strict";
 
 var core = require('web.core');
+var formats = require('web.formats');
 var Sidebar = require('web.Sidebar');
 
 var _t = core._t;
@@ -75,7 +76,9 @@ Sidebar.include({
                     var cell = $row.find('td[data-field="' + this + '"]').get(0);
                     var text = cell.text || cell.textContent || cell.innerHTML || "";
                     if (cell.classList.contains("oe_list_field_float")) {
-                        export_row.push(instance.web.parse_value(text, {'type': "float"}));
+                        export_row.push(
+                            formats.parse_value(text, {'type': "float"})
+                        );
                     }
                     else if (cell.classList.contains("oe_list_field_boolean")) {
                         var data_id = $('<div>' + cell.innerHTML + '</div>');
@@ -90,7 +93,10 @@ Sidebar.include({
                         var tmp2 = text;
                         do {
                             tmp = tmp2;
-                            tmp2 = tmp.replace(instance.web._t.database.parameters.thousands_sep, "");
+                            tmp2 = tmp.replace(
+                                _t.database.parameters.thousands_sep,
+                                ""
+                            );
                         } while (tmp !== tmp2);
 
                         export_row.push(parseInt(tmp2));
@@ -116,4 +122,3 @@ Sidebar.include({
 
 });
 });
-
