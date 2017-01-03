@@ -29,7 +29,7 @@
     }
 
     // Fitt's law: Stick menu to the top of the screen
-    @media (min-width: @screen-sm) {
+    @media (min-width: @screen-sm-min) {
         .navbar-nav {
             margin-top: -2px;
         }
@@ -46,7 +46,7 @@
         }
 
         // Fitt's law: Stick app-drawer button to the top-left of the screen
-        @media (min-width: @screen-sm) {
+        @media (min-width: @screen-sm-min) {
             margin-left: -16px;
             margin-right: 0px;
             margin-bottom: 0px;
@@ -62,7 +62,7 @@
         }
     }
 
-    @media (min-width: @screen-sm) {
+    @media (min-width: @screen-sm-min) {
         .oe_secondary_menu {
             > li {
                 > a {
@@ -82,7 +82,7 @@
         > li.dropdown-header {
             color: white;
             text-decoration: none;
-            background-color: #8E8E8E;
+            background-color: @odoo-main-color-muted;
             font-weight: bold;
         }
 
@@ -122,8 +122,11 @@
         margin: 0px;
         margin-right: -16px;
 
-        @media (min-width: @screen-sm) {
+        @media (min-width: @screen-sm-min) {
             margin-top: -1px;
+            .oe_systray {
+                margin-top: 0;
+            }
         }
 
         > li {
@@ -143,9 +146,9 @@
                 overflow: auto;
                 float: left;
                 margin-top: 2px;
-                background-color: #ffffff;
-                border: 1px solid rgba(0, 0, 0, 0.15);
-                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+                background-color: @odoo-view-background-color;
+                border: 1px solid rgba(0, 0, 0, .15);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
             }
         }
 
@@ -174,7 +177,7 @@
 }
 
 a.navbar-collapse.collapse {
-    @media (min-width: @screen-sm) {
+    @media (min-width: @screen-sm-min) {
         padding-bottom: @app-drawer-navbar-padding-vertical;
         padding-top: @app-drawer-navbar-padding-vertical;
     }
