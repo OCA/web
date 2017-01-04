@@ -1,178 +1,173 @@
 /* Copyright 2016 LasLabs Inc.
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
-.main-nav {
+header {
+    margin: 0;
+    padding: 0;
 
-    margin-bottom: 0;
-    min-height: @app-drawer-navbar-height;
-    z-index: 1;
-    border: none;
-    
-    .badge {
-        position: absolute;
-        top: 3px;
-        right: @navbar-padding-horizontal / 2;
-    }
-    
-    ul.nav > li > a {
-        padding: @app-drawer-navbar-padding-vertical @app-drawer-padding-horizontal;
-    }
-    
-    // App name before oe_submenu
-    .app-name {
-        > .oe_menu_text {
-            font-size: 20px;
-            position: relative;
-            padding: 0 8px;
-            top: 1px;
-        }
-    }
+    > .main-nav {
+        display: block;
+        white-space: nowrap;
 
-    // Fitt's law: Stick menu to the top of the screen
-    @media (min-width: @screen-sm-min) {
-        .navbar-nav {
-            margin-top: -2px;
-        }
-    }
-
-    .navbar-header {
-        // Navbar header mobile styling
-        margin-left: -11px;
-        margin-top: 5px;
-        margin-bottom: 5px;
-        margin-right: -11px;
-        .navbar-toggle {
-             margin: 0;
-        }
-
-        // Fitt's law: Stick app-drawer button to the top-left of the screen
-        @media (min-width: @screen-sm-min) {
-            margin-left: -16px;
-            margin-right: 0px;
-            margin-bottom: 0px;
-            margin-top: 0px;
-            padding: 0px;
-            padding-right: 0px;
-        }
-    }
-
-    @media (max-width: @screen-xs-max) {
-        ul.nav.navbar-nav.navbar-right.navbar-systray-item.oe_systray {
-            margin-top: 1.5px;
-        }
-    }
-
-    @media (min-width: @screen-sm-min) {
-        .oe_secondary_menu {
-            > li {
-                > a {
-                    margin-top: 2.5px;
-                    height: 25px;
+        .navbar-systray {
+            white-space: nowrap;
+            @media (max-width: @screen-xs-max) {
+                position: absolute;
+                top: 0;
+                right: 56px;
+            }
+            > .oe_user_menu_placeholder > li > a {
+                > .oe_topbar_avatar {
+                    border-radius: 50%;
+                    margin-top: -8px;
+                    max-height: 36px;
+                    height: 36px;
+                    width: 36px;
+                }
+                .oe_topbar_name {
+                    position: relative;
+                    top: -3px;
+                    @media (max-width: @screen-xs-max) {
+                        display: none;
+                    }
+                }
+                .caret {
+                    position: relative;
+                    top: -3.5px;
+                }
+            }
+            > .oe_systray > li > a {
+                .fa {
+                    position: relative;
+                    top: 3px;
+                    font-size: 16px;
+                }
+                .caret {
+                    position: relative;
+                    top: 0.5px;
                 }
             }
         }
-    }
 
-    .o_sub_menu > .o_sub_menu_content > .oe_secondary_menu > li.open > .dropdown-menu {
-
-        // Drop-down menu should be scrollable on small screens
-        overflow: auto;
-
-        // Headers at dropdown-menu shoud look different
-        > li.dropdown-header {
-            color: white;
-            text-decoration: none;
-            background-color: @odoo-main-color-muted;
-            font-weight: bold;
-        }
-
-    }
-
-   // Systray on the top menu bar
-   .navbar-systray {
-       position: absolute;
-       top: 0;
-       right: 32px;
-       white-space: nowrap;
-
-       @media (max-width: @screen-xs-max) {
-           top: 3px;
-           right: 76px;
-           .fa {
-               margin-top: 3px;
-               font-size: 18px;
-           }
-       }
-   }
-
-    // Align username position with menus
-   .oe_topbar_name {
-       position: relative;
-       top: 1.5px;
-
-       // Hide username on mobile
-       @media (max-width: @screen-xs-max) {
-           display: none;
-       }
-   }
-
-    // Force mobile mode dropdown-menu style
-   .navbar-right {
-        float: right;
-        margin: 0px;
-        margin-right: -16px;
-
-        @media (min-width: @screen-sm-min) {
-            margin-top: -1px;
-            .oe_systray {
-                margin-top: 0;
+        .navbar-right {
+            float: right;
+            > li {
+                float: left;
+            }
+            @media (max-width: @screen-xs-max) {
+                .navbar-nav .open .dropdown-menu {
+                    position: fixed;
+                    top: 46px;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    overflow: auto;
+                    float: left;
+                    background-color: @odoo-view-background-color;
+                    border: 1px solid rgba(0, 0, 0, 0.15);
+                    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+                }
             }
         }
 
-        > li {
-            float: left;
+        .container-fluid:before, .container-fluid:after, .navbar-collapse:before, .navbar-collapse:after {
+            display: inline;
         }
 
-        .navbar-nav .open .dropdown-menu {
-            left: auto;
-            right: 0;
+        > .container-fluid {
+            margin: 0;
+            padding: 0;
 
             @media (max-width: @screen-xs-max) {
-                position: fixed;
-                top: 46px;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                overflow: auto;
-                float: left;
-                margin-top: 2px;
-                background-color: @odoo-view-background-color;
-                border: 1px solid rgba(0, 0, 0, .15);
-                box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+                > .navbar-collapse {
+                    margin: 0;
+                    padding: 0;
+                    overflow: auto;
+                    &.collapsing {
+                        overflow: hidden;
+                    }
+                }
+            }
+            > .navbar-header {
+                margin: 0;
+                padding: 0;
+                > .drawer-toggle, .navbar-toggle {
+                    margin: 0;
+                    padding: 0;
+                    border: 1px solid @nav-tabs-active-link-hover-border-color;
+                    > i.fa, div.fa {
+                        padding: 16px 14px 15px;
+                    }
+                }
+            }
+
+            .o_sub_menu > .o_sub_menu_content > .oe_secondary_menu {
+                ul.dropdown-menu > li.dropdown-header {
+                    color: @odoo-view-background-color;
+                    text-decoration: none;
+                    background-color: @odoo-main-color-muted;
+                    font-weight: bold;
+                }
+                @media (min-width: @screen-sm-min) {
+                    height: @navbar-height;
+                }
+                margin: 0;
+                padding: 0;
+                > li {
+                    @media (min-width: @screen-sm-min) {
+                        height: @navbar-height;
+                    }
+                    margin: 0;
+                    padding: 0;
+                    &.app-name {
+                        display: block;
+                        padding: 7px 8px;
+                        > .oe_menu_text {
+                            font-size: 20px;
+                        }
+                        @media (min-width: @screen-sm-min) {
+                            padding: 7px 12px;
+                        }
+                    }
+                    > a {
+                        margin: 0;
+                        @media (min-width: @screen-sm-min) {
+                            height: @navbar-height;
+                            padding: 14px 8px;
+                        }
+                    }
+                }
             }
         }
 
-        ~ .navbar-right {
-            margin-right: 0;
+        > .navbar-right.o_menu_systray {
+            display: inline;
+            margin: 0;
+            padding: 0;
+            > ul {
+                margin: 0;
+                padding: 0;
+                > li > a {
+                    margin: 0;
+                    padding: 13px 8px;
+                    height: @navbar-height;
+                }
+            }
         }
-    }
 
-}
+        .badge {
+            position: absolute;
+            top: 3px;
+            right: @navbar-padding-horizontal / 2;
+        }
 
-// Increase size of avatar to maximum possible
-.navbar-systray > .oe_user_menu_placeholder > li > a > .oe_topbar_avatar {
-    border-radius: 50%;
-    margin-top: -2px;
-    margin-bottom: -2px;
-    max-height: 22px;
-    height: 22px;
-    width: 22px;
+        ul.nav > li > a {
+            padding: @app-drawer-navbar-padding-vertical @app-drawer-padding-horizontal;
+        }
 
-    @media (max-width: @screen-xs-max) {
-       margin-top: -3px;
-       max-height: 36px;
-       height: 36px;
-       width: 36px;
+        .o_planner_systray > .progress {
+            margin-top: 15px;
+        }
     }
 }
 
