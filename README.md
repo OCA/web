@@ -23,7 +23,7 @@ addon | version | summary
 [web_duplicate_visibility](web_duplicate_visibility/) | 9.0.1.0.1 | Manage the duplicate button visibiliy
 [web_easy_switch_company](web_easy_switch_company/) | 9.0.1.0.0 | Multicompany - Easy Switch Company
 [web_environment_ribbon](web_environment_ribbon/) | 9.0.1.0.0 | Web Environment Ribbon
-[web_export_view](web_export_view/) | 9.0.1.0.0 | Export Current View
+[web_export_view](web_export_view/) | 9.0.1.0.1 | Export Current View
 [web_favicon](web_favicon/) | 9.0.1.0.0 | Allows to set a custom shortcut icon (aka favicon)
 [web_hide_db_manager_link](web_hide_db_manager_link/) | 9.0.1.0.0 | Hide link to database manager in login screen
 [web_m2x_options](web_m2x_options/) | 9.0.1.0.0 | web_m2x_options
