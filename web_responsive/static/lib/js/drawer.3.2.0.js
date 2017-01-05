@@ -136,7 +136,11 @@
       return $this
         .removeClass(__.settings.class.open)
         .addClass(__.settings.class.close)
-        .css({ 'overflow': 'auto' })
+        // TODO: remove this local patch once PR below is approved:
+        // https://github.com/blivesta/drawer/pull/36
+        //.css("overflow", "auto")
+        .css("overflow", "")
+        // end local patch
         .drawerCallback(function triggerClosedListeners() {
           __.settings.state = false;
           $this.trigger(__.settings.events.closed);
