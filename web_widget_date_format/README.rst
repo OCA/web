@@ -17,12 +17,16 @@ No configuration necessary.
 Usage
 =====
 
-To use this module, set ``widget="date_format" date_format="<momentjs tokens>"`` attributes
-on a date field, example::
+To use this module, first of all add it in the dependencies of your module, then:
+
+* In list view columns, set ``widget="date_format" date_format="<momentjs tokens>"``
+  attributes on a date field, example::
 
   <field name="start_date" widget="date_format" date_format="DD - dddd"/>
 
-You also have to make sure your module has this one in its dependencies.
+* In form fields, use the ``widget`` and ``options`` attributes::
+
+  <field name="start_date" widget="date_format" options="{'date_format': 'DD - dddd'}"/>
 
 You can find here the `list of valid MomentJS tokens <http://momentjs.com/docs/#/displaying/format/>`_.
 
@@ -37,7 +41,6 @@ Known issues / Roadmap
 ======================
 
 * Add support for datetime columns in tree views
-* Add support for form fields
 
 Bug Tracker
 ===========
