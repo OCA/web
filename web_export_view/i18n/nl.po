@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-23 03:40+0000\n"
-"PO-Revision-Date: 2016-11-23 03:40+0000\n"
+"POT-Creation-Date: 2017-01-05 01:38+0000\n"
+"PO-Revision-Date: 2017-01-05 01:38+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Dutch (https://www.transifex.com/oca/teams/23907/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -20,21 +20,21 @@ msgstr ""
 
 #. module: web_export_view
 #. openerp-web
-#: code:addons/web_export_view/static/src/js/web_export_view.js:20
+#: code:addons/web_export_view/static/src/js/web_export_view.js:21
 #, python-format
 msgid "Export Current View"
 msgstr "Huidige lijst exporteren"
 
 #. module: web_export_view
 #. openerp-web
-#: code:addons/web_export_view/static/src/js/web_export_view.js:86
+#: code:addons/web_export_view/static/src/js/web_export_view.js:89
 #, python-format
 msgid "False"
 msgstr ""
 
 #. module: web_export_view
 #. openerp-web
-#: code:addons/web_export_view/static/src/js/web_export_view.js:83
+#: code:addons/web_export_view/static/src/js/web_export_view.js:86
 #, python-format
 msgid "True"
 msgstr ""
