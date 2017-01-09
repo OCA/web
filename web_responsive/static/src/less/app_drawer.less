@@ -11,7 +11,7 @@
     border-radius: @border-radius-base;
     .box-shadow(0 6px 12px rgba(0, 0, 0, .175));
     background-clip: padding-box;
-    z-index: 1000;
+    z-index: 10000;
     
     .o_tooltip {
         z-index: 1051;
@@ -29,7 +29,7 @@
             padding: 4px;
             margin: 14px 0;
             display: none;
-            color: #eee;
+            color: @odoo-list-footer-bg-color;
             background: rgba(37,37,37,0.9);
         }
         &:hover .oe_logo_edit_admin {
@@ -47,6 +47,7 @@
 
     .app-drawer-title {
         float: none;
+        font-weight: bold; // Bold titles for apps in the app-drawer
     }
 
     .app-drawer-panel-title {
