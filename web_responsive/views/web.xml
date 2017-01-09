@@ -72,7 +72,7 @@
 
                         </div>
 
-                        <div class="collapse navbar-collapse text-center"
+                        <div class="collapse navbar-collapse"
                              id="odooMenuBarNav"
                              data-parent="#odooMenuBarToggle"
                              aria-expanded="false"
@@ -82,15 +82,11 @@
                                  >
                                 <t t-call="web.menu_secondary" />
                             </div>
-                            <div class="nav navbar-nav navbar-right">
-                                <ul class="nav navbar-nav navbar-right oe_user_menu_placeholder"
-                                    style="display: none;"
-                                    />
-                                <ul class="nav navbar-nav navbar-right oe_systray"
-                                    style="display: none;"
-                                    />
-                            </div>
                         </div>
+                    </div>
+                    <div class="nav navbar-nav navbar-right navbar-systray o_menu_systray">
+                        <ul class="nav navbar-nav navbar-right navbar-systray-item oe_user_menu_placeholder"/>
+                        <ul class="nav navbar-nav navbar-right navbar-systray-item oe_systray"/>
                     </div>
                 </nav>
 
@@ -108,11 +104,17 @@
         <xpath expr="//div[@class='o_sub_menu_content']/t" position="replace">
 
             <t t-foreach="menu_data['children']" t-as="menu">
-                <ul class="oe_secondary_menu nav navbar-nav"
-                    t-att-data-menu-parent="menu['id']"
-                    style="display: none;"
-                    >
-                    <t t-call="web.menu_secondary_submenu" />
+                <ul style="display: none"
+                    class="oe_secondary_menu nav navbar-nav"
+                    t-att-data-menu-parent="menu['id']">
+                    <li class="app-name">
+                        <span class="oe_menu_text">
+                            <t t-esc="menu['name']"/>
+                        </span>
+                    </li>
+                    <li>
+                        <t t-call="web.menu_secondary_submenu" />
+                    </li>
                 </ul>
             </t>
 
