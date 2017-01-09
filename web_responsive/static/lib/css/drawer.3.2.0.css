@@ -66,6 +66,15 @@
 .drawer-open .drawer-overlay {
   display: block;
 }
+
+/* XXX: local patch waiting for:
+   https://github.com/blivesta/drawer/pull/36
+*/
+.drawer-open {
+  overflow: hidden;
+}
+/* end local patch */
+
 /*!------------------------------------*\
     Top
 \*!------------------------------------*/
