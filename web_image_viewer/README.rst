@@ -24,13 +24,6 @@ help us smashing it by providing a detailed and welcomed feedback.
 Credits
 =======
 
-Images
-------
-
-* Odoo Community Association: `Icon <https://github.com/OCA/maintainer-tools/blob/master/template/module/static/description/icon.svg>`_.
-
-* Icon courtesy of http://www.picol.org/ (size_width.svg)
-
 Contributors
 ------------
 
