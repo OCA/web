@@ -6,8 +6,8 @@
 Date widget with custom format
 ==============================
 
-This module adds a new widget for date fields that allows to set a custom
-render format using MomentJS tokens
+This module adds the possibility to specify a rendering format
+for date and datetime fields, using MomentJS tokens.
 
 Configuration
 =============
@@ -19,14 +19,14 @@ Usage
 
 To use this module, first of all add it in the dependencies of your module, then:
 
-* In list view columns, set ``widget="date_format" date_format="<momentjs tokens>"``
-  attributes on a date field, example::
+* In list view columns, use the ``date_format="<momentjs tokens>"`` attribute
+  on a date or datetime field, example::
 
-  <field name="start_date" widget="date_format" date_format="DD - dddd"/>
+  <field name="start_date" date_format="DD - dddd"/>
 
-* In form fields, use the ``widget`` and ``options`` attributes::
+* In form fields, use the ``options`` attributes::
 
-  <field name="start_date" widget="date_format" options="{'date_format': 'DD - dddd'}"/>
+  <field name="start_date" options="{'date_format': 'DD - dddd'}"/>
 
 You can find here the `list of valid MomentJS tokens <http://momentjs.com/docs/#/displaying/format/>`_.
 
