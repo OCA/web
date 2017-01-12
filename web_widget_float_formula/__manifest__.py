@@ -6,7 +6,7 @@
 {
     'name': 'Web Widget - Formulas in Float Fields',
     'summary': 'Allow use of simple formulas in float fields',
-    'version': '9.0.1.0.0',
+    'version': '10.0.1.0.0',
     'category': 'Web',
     'author': 'GRAP, LasLabs, Odoo Community Association (OCA)',
     'website': 'http://www.grap.coop',
@@ -17,6 +17,6 @@
     'data': [
         'views/web_widget_float_formula.xml',
     ],
-    'installable': False,
+    'installable': True,
     'application': False,
 }
