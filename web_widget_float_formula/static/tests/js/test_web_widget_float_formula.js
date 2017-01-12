@@ -11,8 +11,8 @@ odoo.define_section('web_widget_float_formula', ['web.form_common', 'web.form_wi
         var field_manager = new form_common.DefaultFieldManager(null, {});
         var filler = {'attrs': {}}; // Needed to instantiate FieldFloat 
         self.field = new form_widgets.FieldFloat(field_manager, filler);
-        self.$element = $('<input>');
-        self.field.$el.append(self.$element);
+        self.field.$input = $('<input>');
+        self.field.$label = $('<label>');
     };
 
     test('Float fields should have a _formula_text property that defaults to an empty string',
@@ -98,28 +98,28 @@ odoo.define_section('web_widget_float_formula', ['web.form_common', 'web.form_wi
     test('._compute_result() should not change the value of the associated input when it is not a valid formula',
         function(assert, form_common, form_widgets, core) {
             window.test_setup(this, form_common, form_widgets, core);
-            this.$element.val('=2*3a');
+            this.field.$input.val('=2*3a');
             this.field._compute_result();
 
-            assert.strictEqual(this.$element.val(), '=2*3a');
+            assert.strictEqual(this.field.$input.val(), '=2*3a');
     });
 
     test('._compute_result() should not change the value of the associated input when it cannot be evaled',
         function(assert, form_common, form_widgets, core) {
             window.test_setup(this, form_common, form_widgets, core);
-            this.$element.val('=*/');
+            this.field.$input.val('=*/');
             this.field._compute_result();
 
-            assert.strictEqual(this.$element.val(), '=*/');
+            assert.strictEqual(this.field.$input.val(), '=*/');
     });
 
     test('._compute_result() should behave properly when the current value of the input element is a valid formula',
         function(assert, form_common, form_widgets, core) {
             window.test_setup(this, form_common, form_widgets, core);
-            this.$element.val('=2*3');
+            this.field.$input.val('=2*3');
             this.field._compute_result();
 
-            assert.equal(this.$element.val(), '6');
+            assert.equal(this.field.$input.val(), '6');
             assert.strictEqual(this.field._formula_text, '=2*3');
     });
 
@@ -129,7 +129,7 @@ odoo.define_section('web_widget_float_formula', ['web.form_common', 'web.form_wi
             this.field._formula_text = "test";
             this.field._display_formula();
 
-            assert.equal(this.$element.val(), 'test');
+            assert.equal(this.field.$input.val(), 'test');
     });
 
     test('.start() on float fields should add a handler that calls ._compute_result() when the field is blurred',
