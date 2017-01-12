@@ -20,12 +20,9 @@ odoo.define('web_timeline.TimelineView', function (require) {
     var time = require('web.time');
     var View = require('web.View');
     var widgets = require('web_calendar.widgets');
-    var _ = require('_');
-    var $ = require('$');
 
     var _t = core._t;
     var _lt = core._lt;
-    var QWeb = core.qweb;
 
     function isNullOrUndef(value) {
         return _.isUndefined(value) || _.isNull(value);
@@ -38,45 +35,31 @@ odoo.define('web_timeline.TimelineView', function (require) {
         quick_create_instance: widgets.QuickCreate,
 
         init: function (parent, dataset, view_id, options) {
-            this._super(parent);
-            this.ready = $.Deferred();
             this.permissions = {};
-            this.set_default_options(options);
-            this.dataset = dataset;
-            this.model = dataset.model;
-            this.fields_view = {};
-            this.view_id = view_id;
-            this.view_type = 'timeline';
-            this.color_map = {};
-            this.range_start = null;
-            this.range_stop = null;
-            this.selected_filters = [];
-            this.current_window = null;
+            return this._super.apply(this, arguments);
         },
 
         get_perm: function(name){
             var self = this;
             var promise = self.permissions[name];
-            if(!promise) {
-                var defer = $.Deferred();
-                new Model(this.dataset.model)
-                .call("check_access_rights", [name, false])
-                .then(function (value) {
-                    self.permissions[name] = value;
-                    defer.resolve();
-                });
-                return defer;
+            if (self.permissions[name]) {
+                return $.when(self.permissions[name]);
             } else {
-              return promise;
+                return new Model(this.dataset.model)
+                    .call("check_access_rights", [name, false])
+                    .then(function (value) {
+                        self.permissions[name] = value;
+                        return value;
+                    });
             }
         },
 
-        set_default_options: function(options) {
-            this._super(options);
-            _.defaults(this.options, {
-                confirm_on_delete: true
-            });
-        },
+        // set_default_options: function(options) {
+        //     this._super(options);
+        //     _.defaults(this.options, {
+        //         confirm_on_delete: true
+        //     });
+        // },
 
         parse_colors: function(){
             if(this.fields_view.arch.attrs.colors) {
@@ -88,34 +71,35 @@ odoo.define('web_timeline.TimelineView', function (require) {
             }
         },
 
-        view_loading: function (fv) {
-            /* xml view timeline options */
-            var attrs = fv.arch.attrs;
+        start: function () {
             var self = this;
-            this.fields_view = fv;
+            var attrs = this.fields_view.arch.attrs;
+            var fv = this.fields_view;
             this.parse_colors();
             this.$timeline = this.$el.find(".oe_timeline_widget");
-            this.$el.find(".oe_timeline_button_today").click($.proxy(this.on_today_clicked, this));
-            this.$el.find(".oe_timeline_button_scale_day").click($.proxy(this.on_scale_day_clicked, this));
-            this.$el.find(".oe_timeline_button_scale_week").click($.proxy(this.on_scale_week_clicked, this));
-            this.$el.find(".oe_timeline_button_scale_month").click($.proxy(this.on_scale_month_clicked, this));
-            this.$el.find(".oe_timeline_button_scale_year").click($.proxy(this.on_scale_year_clicked, this));
+            this.$(".oe_timeline_button_today").click(
+                this.proxy(this.on_today_clicked));
+            this.$(".oe_timeline_button_scale_day").click(
+                this.proxy(this.on_scale_day_clicked));
+            this.$(".oe_timeline_button_scale_week").click(
+                this.proxy(this.on_scale_week_clicked));
+            this.$(".oe_timeline_button_scale_month").click(
+                this.proxy(this.on_scale_month_clicked));
+            this.$(".oe_timeline_button_scale_year").click(
+                this.proxy(this.on_scale_year_clicked));
             this.current_window = {
-                  start: new moment(),
-                  end : new moment().add(24, 'hours'),
-            }
+                start: new moment(),
+                end : new moment().add(24, 'hours')
+            };
+
+            this.$el.addClass(attrs['class']);
+
             this.info_fields = [];
+            this.mode = attrs.mode;
 
             if (!attrs.date_start) {
                 throw new Error(_t("Timeline view has not defined 'date_start' attribute."));
             }
-
-            this.$el.addClass(attrs['class']);
-
-            this.name = fv.name || attrs.string;
-            this.view_id = fv.view_id;
-
-            this.mode = attrs.mode;
             this.date_start = attrs.date_start;
             this.date_stop = attrs.date_stop;
 
@@ -138,30 +122,21 @@ odoo.define('web_timeline.TimelineView', function (require) {
             }
 
             var fields_get = new Model(this.dataset.model)
-            .call('fields_get')
-            .then(function (fields) {
-                self.fields = fields;
-            });
-            var unlink_check = new Model(this.dataset.model)
-            .call("check_access_rights", ["unlink", false])
-            .then(function (unlink_right) {
-                self.unlink_right = unlink_right;
-            });
-            var edit_check = new Model(this.dataset.model)
-                .call("check_access_rights", ["write", false])
-                .then(function (write_right) {
-                    self.write_right = write_right;
-
-                });
-            var init = function () {
-                    self.init_timeline().then(function() {
-                        $(window).trigger('resize');
-                        self.trigger('timeline_view_loaded', fv);
-                        self.ready.resolve();
+                    .call('fields_get')
+                    .then(function (fields) {
+                        self.fields = fields;
                     });
-                };
-
-            return $.when(self.fields_get, self.get_perm('unlink'), self.get_perm('write'), self.get_perm('create')).then(init);
+            this._super.apply(this, self);
+            return $.when(
+                self.fields_get,
+                self.get_perm('unlink'),
+                self.get_perm('write'),
+                self.get_perm('create')
+            ).then(function() {
+                self.init_timeline();
+                $(window).trigger('resize');
+                self.trigger('timeline_view_loaded', fv);
+            });
         },
 
         init_timeline: function() {
@@ -176,7 +151,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
                     // drag items from one group to another
                     updateGroup: self.permissions['write'],
                     // delete an item by tapping the delete button top right
-                    remove: self.permissions['unlink'],
+                    remove: self.permissions['unlink']
                 },
                 orientation: 'both',
                 selectable: true,
@@ -185,16 +160,13 @@ odoo.define('web_timeline.TimelineView', function (require) {
                 onMove: self.on_move,
                 onUpdate: self.on_update,
                 onRemove: self.on_remove,
-                orientation: 'both',
             };
             self.timeline = new vis.Timeline(self.$timeline.empty().get(0));
             self.timeline.setOptions(options);
-            if(self.mode && self['on_scale_' + self.mode + '_clicked'])
-            {
+            if (self.mode && self['on_scale_' + self.mode + '_clicked']) {
                 self['on_scale_' + self.mode + '_clicked']();
             }
             self.timeline.on('click', self.on_click);
-            return $.when();
         },
 
         group_order: function(grp1, grp2) {
@@ -253,8 +225,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
                 'id': evt.id,
                 'group': group,
                 'evt': evt,
-                'style': 'background-color: ' + self.color + ';',
-
+                'style': 'background-color: ' + self.color + ';'
             };
             self.color = undefined;
             return r;
@@ -369,7 +340,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
             var self = this;
             var context = this.dataset.get_context();
             // Initialize default values for creation
-            var default_context = {}
+            var default_context = {};
             default_context['default_'.concat(this.date_start)] = item.start;
             default_context['default_'.concat(this.date_stop)] = moment(item.start).add(1, 'hours').toDate();
             if (item.group > 0) {
@@ -381,7 +352,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
                 res_model: this.dataset.model,
                 res_id: null,
                 context: context,
-                view_id: +this.open_popup_action,
+                view_id: +this.open_popup_action
             }).open();
             dialog.on('create_completed', this, this.create_completed);
             return false;
@@ -413,7 +384,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
                     res_id: parseInt(id).toString() == id ? parseInt(id) : id,
                     context: this.dataset.get_context(),
                     title: title,
-                    view_id: +this.open_popup_action,
+                    view_id: +this.open_popup_action
                 }).open();
                 dialog.on('write_completed', this, this.write_completed);
             }
@@ -455,15 +426,13 @@ odoo.define('web_timeline.TimelineView', function (require) {
 
         on_click: function(e) {
             // handle a click on a group header
-            if(e.what == 'group-label')
-            {
+            if (e.what == 'group-label') {
                 return this.on_group_click(e);
             }
         },
 
         on_group_click: function(e) {
-            if (e.group == -1)
-            {
+            if (e.group == -1) {
                 return;
             }
             return this.do_action({
@@ -471,7 +440,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
                 res_model: this.fields[this.last_group_bys[0]].relation,
                 res_id: e.group,
                 target: 'new',
-                views: [[false, 'form']],
+                views: [[false, 'form']]
             });
         },
 
@@ -486,29 +455,29 @@ odoo.define('web_timeline.TimelineView', function (require) {
         on_today_clicked: function(){
             this.current_window = {
                 start: new moment(),
-                end : new moment().add(24, 'hours'),
-            }
+                end : new moment().add(24, 'hours')
+            };
 
             if (this.timeline) {
                 this.timeline.setWindow(this.current_window);
             }
         },
 
-        on_scale_day_clicked: function(){
+        on_scale_day_clicked: function() {
             this.scale_current_window(24);
         },
 
-        on_scale_week_clicked: function(){
+        on_scale_week_clicked: function() {
             this.scale_current_window(24 * 7);
         },
 
-        on_scale_month_clicked: function(){
+        on_scale_month_clicked: function() {
             this.scale_current_window(24 * 30);
         },
 
-        on_scale_year_clicked: function(){
+        on_scale_year_clicked: function() {
             this.scale_current_window(24 * 365);
-        },
+        }
     });
 
     core.view_registry.add('timeline', TimelineView);
