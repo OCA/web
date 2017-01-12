@@ -3,18 +3,18 @@
     content: "N";
 }
 
-/* gray background in weekends, white text color */
+/* very light gray background in weekends */
 .vis.timeline .timeaxis .grid.saturday,
 .vis.timeline .timeaxis .grid.sunday {
-  background: gray;
+    background: #DCDCDC;
 }
 
 .vis.timeline .item.range .content {
-      overflow: visible;
+    overflow: visible;
 }
 
 .oe_chatter_toggle {
-  padding: 15px;
+    padding: 15px;
 }
 
 .oe_timeline_view .vlabel .inner:hover{
