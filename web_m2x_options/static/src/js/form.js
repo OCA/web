@@ -143,7 +143,6 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
             }
 
             $.when(search_result, create_rights).then(function (data, can_create) {
-
                 self.can_create = can_create;  // for ``.show_error_displayer()``
                 self.last_search = data;
                 // possible selections for the m2o
@@ -202,7 +201,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                                     self._search_create_popup("search", data);
                                 });
                         },
-                        classname: 'oe_m2o_dropdown_option o_m2o_dropdown_option' 
+                        classname: 'oe_m2o_dropdown_option o_m2o_dropdown_option'
                     });
                 }
 
@@ -211,11 +210,17 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                 var raw_result = _(data.result).map(function (x) {
                     return x[1];
                 });
+
                 var quick_create = self.is_option_set(self.options.create) || self.is_option_set(self.options.quick_create),
                     quick_create_undef = _.isUndefined(self.options.create) && _.isUndefined(self.options.quick_create),
                     m2x_create_undef = _.isUndefined(self.view.ir_options['web_m2x_options.create']),
                     m2x_create = self.is_option_set(self.view.ir_options['web_m2x_options.create']);
-                var show_create = (!self.options && (m2x_create_undef || m2x_create)) || (self.options && (quick_create || (quick_create_undef && (m2x_create_undef || m2x_create))));
+
+                var show_create = quick_create_undef && m2x_create_undef
+                    ? can_create
+                    : (!self.options && (m2x_create_undef || m2x_create)) ||
+                        (self.options && (quick_create || (quick_create_undef && (m2x_create_undef || m2x_create))));
+
                 if (show_create){
                     if (search_val.length > 0 &&
                         !_.include(raw_result, search_val)) {
@@ -227,7 +232,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                             action: function () {
                                 self._quick_create(search_val);
                             },
-                            classname: 'oe_m2o_dropdown_option o_m2o_dropdown_option' 
+                            classname: 'oe_m2o_dropdown_option o_m2o_dropdown_option'
                         });
                     }
                 }
@@ -237,7 +242,12 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                     create_edit_undef = _.isUndefined(self.options.create) && _.isUndefined(self.options.create_edit),
                     m2x_create_edit_undef = _.isUndefined(self.view.ir_options['web_m2x_options.create_edit']),
                     m2x_create_edit = self.is_option_set(self.view.ir_options['web_m2x_options.create_edit']);
-                var show_create_edit = (!self.options && (m2x_create_edit_undef || m2x_create_edit)) || (self.options && (create_edit || (create_edit_undef && (m2x_create_edit_undef || m2x_create_edit))));
+
+                var show_create_edit = create_edit_undef && m2x_create_edit_undef
+                    ? can_create
+                    : (!self.options && (m2x_create_edit_undef || m2x_create_edit)) ||
+                        (self.options &&  (create_edit || (create_edit_undef && (m2x_create_edit_undef || m2x_create_edit))));
+
                 if (show_create_edit){
                     values.push({
                         label: _t("Create and Edit..."),
@@ -246,7 +256,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                                 "form", undefined,
                                 self._create_context(search_val));
                         },
-                        classname: 'oe_m2o_dropdown_option o_m2o_dropdown_option' 
+                        classname: 'oe_m2o_dropdown_option o_m2o_dropdown_option'
                     });
                 }
                 // Check if colors specified to wait for RPC
@@ -312,100 +322,12 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
         },
 
         /**
-        * Call this method to search using a string.
-        */
-
-        get_search_result: function(search_val) {
-            var self = this;
-
-            // add options limit used to change number of selections record
-            // returned.
-
-            if (!_.isUndefined(this.view.ir_options['web_m2x_options.limit'])) {
-                this.limit = parseInt(this.view.ir_options['web_m2x_options.limit']);
-            }
-
-            if (typeof this.options.limit === 'number') {
-                this.limit = this.options.limit;
-            }
-
-            var dataset = new data.DataSet(this, this.field.relation, self.build_context());
-            var blacklist = this.get_search_blacklist();
-            this.last_query = search_val;
-
-            return this.orderer.add(dataset.name_search(
-                    search_val, new data.CompoundDomain(self.build_domain(), [["id", "not in", blacklist]]),
-                    'ilike', this.limit + 1, self.build_context())).then(function(data) {
-                self.last_search = data;
-                // possible selections for the m2o
-                var values = _.map(data, function(x) {
-                    x[1] = x[1].split("\n")[0];
-                    return {
-                        label: _.str.escapeHTML(x[1]),
-                        value: x[1],
-                        name: x[1],
-                        id: x[0],
-                    };
-                });
-
-                // search more... if more results that max
-                if (values.length > self.limit) {
-                    values = values.slice(0, self.limit);
-                    values.push({
-                        label: _t("Search More..."),
-                        action: function() {
-
-                            // limit = 80 for improving performance, similar
-                            // to Odoo implementation here:
-                            // https://github.com/odoo/odoo/commit/8c3cdce539d87775b59b3f2d5ceb433f995821bf
-                            dataset.name_search(search_val, self.build_domain(), 'ilike', 80).done(function(data) {
-                                self._search_create_popup("search", data);
-                            });
-                        },
-                        classname: 'oe_m2o_dropdown_option o_m2o_dropdown_option' 
-                    });
-                }
-                // quick create
-                var quick_create = self.is_option_set(self.options.create) || self.is_option_set(self.options.quick_create),
-                    quick_create_undef = _.isUndefined(self.options.create) && _.isUndefined(self.options.quick_create),
-                    m2x_create_undef = _.isUndefined(self.view.ir_options['web_m2x_options.create']),
-                    m2x_create = self.is_option_set(self.view.ir_options['web_m2x_options.create']);
-                var show_create = (!self.options && (m2x_create_undef || m2x_create)) || (self.options && (quick_create || (quick_create_undef && (m2x_create_undef || m2x_create))));
-                if (show_create){
-
-                    var raw_result = _(data.result).map(function(x) {return x[1];});
-                    if (search_val.length > 0 && !_.include(raw_result, search_val)) {
-                        values.push({
-                            label: _.str.sprintf(_t('Create "<strong>%s</strong>"'),
-                                $('<span />').text(search_val).html()),
-                            action: function() {
-                                self._quick_create(search_val);
-                            },
-                            classname: 'oe_m2o_dropdown_option o_m2o_dropdown_option' 
-                        });
-                    }
-                }
-
-                // create...
-                var create_edit = self.is_option_set(self.options.create) || self.is_option_set(self.options.create_edit),
-                    create_edit_undef = _.isUndefined(self.options.create) && _.isUndefined(self.options.create_edit),
-                    m2x_create_edit_undef = _.isUndefined(self.view.ir_options['web_m2x_options.create_edit']),
-                    m2x_create_edit = self.is_option_set(self.view.ir_options['web_m2x_options.create_edit']);
-                var show_create_edit = (!self.options && (m2x_create_edit_undef || m2x_create_edit)) || (self.options && (create_edit || (create_edit_undef && (m2x_create_edit_undef || m2x_create_edit))));
-                if (show_create_edit){
-
-                    values.push({
-                        label: _t("Create and Edit..."),
-                        action: function() {
-                            self._search_create_popup("form", undefined, self._create_context(search_val));
-                        },
-                        classname: 'oe_m2o_dropdown_option o_m2o_dropdown_option' 
-                    });
-                }
-
-                return values;
-            })
-        },
+         * get_search_result: function(search_val) {
+         *
+         * There is no need to inherit get_search_result method. Indeed, many2manytags widget uses
+         * many2one widget to get results. Moreover, get_search_result method is never called
+         * for many2manytags widget.
+         */
 
         open_badge: function(ev){
             var self = this;
