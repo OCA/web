@@ -182,12 +182,17 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                                 });
                 }
 
-                // search more... if more results that max
+                // search more... if search_more is forced on field, or forced by global parameter and if
+                // number of retrieved values is greater than one.
                 var can_search_more = (self.options && self.is_option_set(self.options.search_more)),
                     search_more_undef = _.isUndefined(self.options.search_more) && _.isUndefined(self.view.ir_options['web_m2x_options.search_more']),
                     search_more = self.is_option_set(self.view.ir_options['web_m2x_options.search_more']);
 
-                if (values.length > self.limit && (can_search_more || search_more_undef || search_more)) {
+                var show_search_more = !_.isUndefined(self.options.search_more)
+                    ? self.is_option_set(self.options.search_more)
+                    : search_more || (values.length > self.limit && search_more_undef);
+
+                if (show_search_more && values.length > 1) {
                     values = values.slice(0, self.limit);
                     values.push({
                         label: _t("Search More..."),
