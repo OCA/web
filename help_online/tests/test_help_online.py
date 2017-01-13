@@ -4,7 +4,7 @@
 
 import mock
 
-import openerp.tests.common as common
+import odoo.tests.common as common
 from .common import TestWizardCommon
 
 
@@ -17,8 +17,9 @@ class TestHelpOnline(TestWizardCommon, common.TransactionCase):
         group_writer = self.env.ref('help_online.help_online_group_writer')
         group_reader = self.env.ref('help_online.help_online_group_reader')
         self.assertTrue(user.has_group('help_online.help_online_group_writer'))
-        with mock.patch('openerp.addons.website.models.website'
-                        '.website.search_pages') as search_pages:
+        website = self.env['website']
+        with mock.patch.object(website.__class__,
+                               'search_pages') as search_pages:
             # The expected page dosn't exist
             search_pages.return_value = []
             info = help_online.get_page_url(model, 'form')

@@ -4,14 +4,13 @@
 
 {
     'name': 'Help Online',
-    'version': '9.0.1.0.0',
+    'version': '10.0.1.0.0',
     'author': "ACSONE SA/NV,Odoo Community Association (OCA)",
     'maintainer': 'ACSONE SA/NV',
     'website': 'http://www.acsone.eu',
     'license': 'AGPL-3',
     'category': 'Documentation',
     'depends': [
-        'base',
         'website',
     ],
     'data': [

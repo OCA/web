@@ -5,7 +5,7 @@
 import base64
 from lxml import etree as ET
 
-import openerp.tests.common as common
+import odoo.tests.common as common
 from .common import TestWizardCommon
 
 
