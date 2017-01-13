@@ -4,7 +4,7 @@
 
 import base64
 
-import openerp.tests.common as common
+import odoo.tests.common as common
 from .common import TestWizardCommon
 
 

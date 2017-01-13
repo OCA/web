@@ -26,7 +26,7 @@ Usage
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/162/9.0
+   :target: https://runbot.odoo-community.org/runbot/162/10.0
 
 
 Known issues / Roadmap
@@ -34,7 +34,7 @@ Known issues / Roadmap
 
 Even if the generated  urls to the documentation contains an anchor (website/hel-xx#view_type),
 it's no more possible to insert/edit anchors elements into the website since this functionnality is not supported
-by the new html editor in Odoo 9.0 (summernote).
+by the new html editor in Odoo 10.0 (summernote).
 
 
 Bug Tracker

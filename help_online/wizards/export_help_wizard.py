@@ -9,10 +9,10 @@ import copy
 import urlparse
 from werkzeug.routing import Map, Rule
 from lxml import etree as ET
-from openerp import models, fields, api, exceptions
-from openerp.tools.translate import _
-from openerp.addons.web.controllers.main import Binary
-from openerp.addons.website.controllers.main import WebsiteBinary
+from odoo import models, fields, api, exceptions
+from odoo.tools.translate import _
+from odoo.addons.web.controllers.main import Binary
+from odoo.addons.website.controllers.main import WebsiteBinary
 
 _logger = logging.getLogger(__name__)
 
@@ -224,7 +224,7 @@ class ExportHelpWizard(models.TransientModel):
                   ('name', 'like', '%s%%' % template_prefix)]
 
         ir_ui_views = self.env['ir.ui.view'].search(domain, order='name')
-        xml_to_export = ET.Element('openerp')
+        xml_to_export = ET.Element('odoo')
         data_node = ET.SubElement(xml_to_export, 'data')
         exported_resources = set()
         for ir_ui_view in ir_ui_views:

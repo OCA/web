@@ -2,8 +2,8 @@
 # Copyright 2014 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import models, exceptions
-from openerp.tools.translate import _
+from odoo import models, exceptions
+from odoo.tools.translate import _
 
 
 class HelpOnline(models.TransientModel):

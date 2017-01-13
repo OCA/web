@@ -6,7 +6,7 @@ import os
 import sys
 from lxml import etree as ET
 
-from openerp.tools.convert import convert_xml_import
+from odoo.tools.convert import convert_xml_import
 
 
 class TestWizardCommon(object):

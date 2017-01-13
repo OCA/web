@@ -8,9 +8,9 @@ from lxml import etree
 import logging
 import os
 
-from openerp import api, fields, models
-from openerp.tools import convert, misc
-from openerp.tools.config import config
+from odoo import api, fields, models
+from odoo.tools import convert, misc
+from odoo.tools.config import config
 
 _logger = logging.getLogger(__name__)
 
