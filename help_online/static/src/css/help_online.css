@@ -1,12 +1,3 @@
-li.oe_help_online_not_found {
+a.o_help_online_not_found {
   background-color: #df3f3f;
-}
-
-.openerp .oe_view_manager .oe_view_manager_switch .oe_list_button_help_online:after {
-  font-size: 28px;
-  content: "?";
-  text-align: center;
-  margin: 3px auto 4px;
-  position: relative;
-  display: inline-block;
 }
