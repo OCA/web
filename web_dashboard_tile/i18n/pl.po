@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-26 01:59+0000\n"
-"PO-Revision-Date: 2016-11-19 17:14+0000\n"
+"POT-Creation-Date: 2017-01-07 08:33+0000\n"
+"PO-Revision-Date: 2017-01-13 09:33+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Polish (http://www.transifex.com/oca/OCA-web-8-0/language/pl/)\n"
 "MIME-Version: 1.0\n"
@@ -322,7 +322,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,user_id:0
 msgid "User"
-msgstr ""
+msgstr "Użytkownik"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,primary_value:0
