@@ -18,5 +18,6 @@
     "data": [
         'views/assets.xml',
         'views/web.xml',
+        'views/web_layout.xml',
     ],
 }
