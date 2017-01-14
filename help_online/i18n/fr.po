@@ -1,72 +1,71 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* help_online
-#
+# * help_online
+# 
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
+# leemannd <denis.leemann@camptocamp.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-14 09:06+0000\n"
-"PO-Revision-Date: 2014-10-14 09:06+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2017-01-14 02:26+0000\n"
+"PO-Revision-Date: 2017-01-14 02:26+0000\n"
+"Last-Translator: leemannd <denis.leemann@camptocamp.com>, 2017\n"
+"Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: help_online
-#. openerp-web
-#: code:addons/help_online/static/src/js/help_online.js:83
-#, python-format
-msgid "Cancel"
-msgstr "Annuler"
-
-#. module: help_online
-#: view:export.help.wizard:help_online.export_help_wizard_view
-#: view:import.help.wizard:help_online.import_help_wizard_view
+#: model:ir.ui.view,arch_db:help_online.export_help_wizard_view
+#: model:ir.ui.view,arch_db:help_online.import_help_wizard_view
 msgid "Close"
 msgstr "Fermer"
 
 #. module: help_online
-#. openerp-web
-#: code:addons/help_online/static/src/js/help_online.js:81
-#, python-format
-msgid "Confirm"
-msgstr "Confirmer"
-
-#. module: help_online
-#: code:addons/help_online/models/help_online.py:60
+#: code:addons/help_online/models/help_online.py:45
 #, python-format
 msgid "Create Help page for %s"
 msgstr "Créer la page d'aide pour %s"
 
 #. module: help_online
-#: field:export.help.wizard,create_uid:0
-#: field:help.online,create_uid:0
-#: field:import.help.wizard,create_uid:0
+#: model:ir.model.fields,field_description:help_online.field_export_help_wizard_create_uid
+#: model:ir.model.fields,field_description:help_online.field_help_online_create_uid
+#: model:ir.model.fields,field_description:help_online.field_import_help_wizard_create_uid
 msgid "Created by"
 msgstr "Créé par"
 
 #. module: help_online
-#: field:export.help.wizard,create_date:0
-#: field:help.online,create_date:0
-#: field:import.help.wizard,create_date:0
+#: model:ir.model.fields,field_description:help_online.field_export_help_wizard_create_date
+#: model:ir.model.fields,field_description:help_online.field_help_online_create_date
+#: model:ir.model.fields,field_description:help_online.field_import_help_wizard_create_date
 msgid "Created on"
 msgstr "Créé le"
 
 #. module: help_online
-#: view:export.help.wizard:help_online.export_help_wizard_view
+#: model:ir.model.fields,field_description:help_online.field_export_help_wizard_display_name
+#: model:ir.model.fields,field_description:help_online.field_help_online_display_name
+#: model:ir.model.fields,field_description:help_online.field_import_help_wizard_display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: help_online
+#: model:ir.ui.view,arch_db:help_online.export_help_wizard_view
 msgid "Export"
 msgstr "Export"
 
 #. module: help_online
+#: code:addons/help_online/wizards/export_help_wizard.py:302
 #: model:ir.actions.act_window,name:help_online.action_export_help_wizard
+#, python-format
 msgid "Export Help"
 msgstr "Export des pages d'aide"
 
 #. module: help_online
-#: view:export.help.wizard:help_online.export_help_wizard_view
+#: model:ir.ui.view,arch_db:help_online.export_help_wizard_view
 msgid "Export Help Data"
 msgstr "Export des pages d'aide"
 
@@ -77,7 +76,7 @@ msgid "Export Help Online"
 msgstr "Export des pages d'aide"
 
 #. module: help_online
-#: field:export.help.wizard,export_filename:0
+#: model:ir.model.fields,field_description:help_online.field_export_help_wizard_export_filename
 msgid "Export XML Filename"
 msgstr "Fichier XML"
 
@@ -88,7 +87,7 @@ msgid "Help Online"
 msgstr "Aide en ligne"
 
 #. module: help_online
-#: code:addons/help_online/models/help_online.py:55
+#: code:addons/help_online/models/help_online.py:40
 #, python-format
 msgid "Help on %s"
 msgstr "Aide sur %s"
@@ -104,14 +103,14 @@ msgid "Help writer"
 msgstr "Aide: rédacteur"
 
 #. module: help_online
-#: field:export.help.wizard,id:0
-#: field:help.online,id:0
-#: field:import.help.wizard,id:0
+#: model:ir.model.fields,field_description:help_online.field_export_help_wizard_id
+#: model:ir.model.fields,field_description:help_online.field_help_online_id
+#: model:ir.model.fields,field_description:help_online.field_import_help_wizard_id
 msgid "ID"
 msgstr "ID"
 
 #. module: help_online
-#: view:import.help.wizard:help_online.import_help_wizard_view
+#: model:ir.ui.view,arch_db:help_online.import_help_wizard_view
 msgid "Import"
 msgstr "Import"
 
@@ -121,7 +120,7 @@ msgid "Import Help"
 msgstr "Import des pages d'aide"
 
 #. module: help_online
-#: view:import.help.wizard:help_online.import_help_wizard_view
+#: model:ir.ui.view,arch_db:help_online.import_help_wizard_view
 msgid "Import Help Data"
 msgstr "Import des pages d'aide"
 
@@ -131,81 +130,93 @@ msgid "Import Help Online"
 msgstr "Import des pages d'aide"
 
 #. module: help_online
-#: field:export.help.wizard,write_uid:0
-#: field:help.online,write_uid:0
-#: field:import.help.wizard,write_uid:0
+#: model:ir.model.fields,field_description:help_online.field_export_help_wizard___last_update
+#: model:ir.model.fields,field_description:help_online.field_help_online___last_update
+#: model:ir.model.fields,field_description:help_online.field_import_help_wizard___last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: help_online
+#: model:ir.model.fields,field_description:help_online.field_export_help_wizard_write_uid
+#: model:ir.model.fields,field_description:help_online.field_help_online_write_uid
+#: model:ir.model.fields,field_description:help_online.field_import_help_wizard_write_uid
 msgid "Last Updated by"
 msgstr "Mis à jour par"
 
 #. module: help_online
-#: field:export.help.wizard,write_date:0
-#: field:help.online,write_date:0
-#: field:import.help.wizard,write_date:0
+#: model:ir.model.fields,field_description:help_online.field_export_help_wizard_write_date
+#: model:ir.model.fields,field_description:help_online.field_help_online_write_date
+#: model:ir.model.fields,field_description:help_online.field_import_help_wizard_write_date
 msgid "Last Updated on"
 msgstr "Mis à jour le"
 
 #. module: help_online
-#: code:addons/help_online/models/export_help_wizard.py:238
+#: code:addons/help_online/wizards/export_help_wizard.py:295
 #, python-format
 msgid "No data to export !"
 msgstr "Aucune page à exporter !"
 
 #. module: help_online
-#: code:addons/help_online/models/help_online.py:33
+#: code:addons/help_online/models/help_online.py:17
 #, python-format
 msgid "No page prefix parameter specified !"
 msgstr "Le paramètre spécifiant le préfixe des pages n'est pas configuré !"
 
 #. module: help_online
-#. openerp-web
-#: code:addons/help_online/static/src/js/help_online.js:88
+#: code:addons/help_online/wizards/export_help_wizard.py:99
 #, python-format
-msgid "Ok"
-msgstr "Ok"
+msgid "Only images from ir.attachment are supported when exporting help pages"
+msgstr ""
+"Seules les images provenant de ir.attachement sont supportées lors de "
+"l'export de pages d'aide"
 
 #. module: help_online
 #. openerp-web
-#: code:addons/help_online/static/src/js/help_online.js:107
+#: code:addons/help_online/static/src/js/help_online.js:37
 #, python-format
 msgid "Page does not exist. Do you want to create?"
 msgstr "La page n'existe pas. Voulez-vous la créer?"
 
 #. module: help_online
-#: field:import.help.wizard,source_file:0
+#: model:ir.model.fields,field_description:help_online.field_import_help_wizard_source_file
 msgid "Source File"
 msgstr "Fichier de données"
 
 #. module: help_online
-#: view:export.help.wizard:help_online.export_help_wizard_view
-msgid "This wizard allow you to export all QWeb views\n"
-"                        related to help online. The result will be an Odoo\n"
-"                        data xml file."
-msgstr "Cet assistant vous permet d'exporter toutes les vues QWeb \n"
-"                        concernant l'aide. Le résultat sera un\n"
-"                        fichier de données Odoo."
+#: model:ir.ui.view,arch_db:help_online.export_help_wizard_view
+msgid ""
+"This wizard allow you to export all QWeb views\n"
+"                    related to help online. The result will be an Odoo\n"
+"                    data xml file."
+msgstr ""
+"Cette fenêtre de l'assistant permet l'export de toutes les vues QWeb\n"
+"liées à l'aide en ligne. Le résultat sera sous la forme d'un fichier de données xml."
 
 #. module: help_online
-#: view:import.help.wizard:help_online.import_help_wizard_view
-msgid "This wizard allow you to import QWeb views\n"
-"                        related to help online. The required file format is an Odoo\n"
-"                        data xml file."
-msgstr "Cet assistant vous permet d'importer toutes les vues QWeb\n"
-"                        concernant l'aide. Le format de fichier requis est un\n"
-"                        fichier de données Odoo."
+#: model:ir.ui.view,arch_db:help_online.import_help_wizard_view
+msgid ""
+"This wizard allow you to import QWeb views\n"
+"                    related to help online. The required file format is an Odoo\n"
+"                    data xml file."
+msgstr ""
+"Cette fenêtre de l'assistant permet l'import de toutes les vues QWeb\n"
+"liées à l'aide en ligne. Le fichier doit être un fichier \n"
+"de donnés au format xml"
 
 #. module: help_online
-#: code:addons/help_online/models/export_help_wizard.py:275
+#: code:addons/help_online/wizards/export_help_wizard.py:332
 #, python-format
 msgid "Unable to write autobackup file in given directory: %s"
-msgstr "Impossible d'écrire le fichier de sauvegarde dans le répertoire spécifié: %s"
+msgstr ""
+"Impossible d'écrire le fichier de sauvegarde dans le répertoire spécifié: %s"
 
 #. module: help_online
-#: view:ir.ui.view:help_online.view_view_search
+#: model:ir.ui.view,arch_db:help_online.view_view_search
 msgid "Website Page"
 msgstr "Page du site"
 
 #. module: help_online
-#: view:ir.ui.view:help_online.view_view_form
+#: model:ir.ui.view,arch_db:help_online.view_view_form
 msgid "Website Page?"
 msgstr "Page du site?"
 
@@ -216,7 +227,27 @@ msgid "Website Pages"
 msgstr "Pages du site"
 
 #. module: help_online
-#: field:export.help.wizard,data:0
+#: model:ir.model.fields,field_description:help_online.field_export_help_wizard_data
 msgid "XML"
 msgstr "XML"
 
+#. module: help_online
+#: model:ir.model,name:help_online.model_help_online
+msgid "help.online"
+msgstr ""
+
+#. module: help_online
+#: model:ir.model,name:help_online.model_import_help_wizard
+msgid "import.help.wizard"
+msgstr ""
+
+#. module: help_online
+#: model:ir.model,name:help_online.model_ir_model_data
+msgid "ir.model.data"
+msgstr ""
+
+#. module: help_online
+#: model:ir.ui.view,arch_db:help_online.export_help_wizard_view
+#: model:ir.ui.view,arch_db:help_online.import_help_wizard_view
+msgid "or"
+msgstr "ou"
