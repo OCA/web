@@ -1,13 +1,11 @@
 /* Copyright 2013 Therp BV (<http://therp.nl>).
  * Copyright 2015 Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>
  * Copyright 2016 Antonio Espinosa <antonio.espinosa@tecnativa.com>
+ # Copyright 2017 Sodexis <dev@sodexis.com>
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
 odoo.define('web_tree_many2one_clickable.many2one_clickable', function(require) {
 "use strict";
-
-var _ = require('_');
-var $ = require('$');
 
 var core = require('web.core');
 var ListView = require('web.ListView');
