@@ -2,11 +2,11 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-=========================
-List List Multi Selection
-=========================
+====================
+List Multi Selection
+====================
 
-Enables selecting multiple records using the shift key.
+Enables selecting a range of records using the shift key.
 
 Configuration
 =============

@@ -5,7 +5,7 @@
 {
     'name': 'List Multi Selection',
     'summary': """
-        Enables selecting multiple records using the shift key
+        Enables selecting a range of records using the shift key
     """,
     'version': '10.0.1.0.0',
     'category': 'Web',
