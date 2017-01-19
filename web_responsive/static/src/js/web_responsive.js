@@ -120,7 +120,7 @@ odoo.define('web_responsive', function(require) {
         // It provides handlers to hide drawer when "unfocused"
         handleClickZones: function() {
             this.$el.drawer('close');
-            $('.o_sub_menu_content')
+            $('.oe_secondary_menus_container')
                 .parent()
                 .collapse('hide');
         },

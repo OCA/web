@@ -12,7 +12,7 @@
               name="App Drawer - Web Client"
               >
 
-        <xpath expr="//div[@class='o_sub_menu']" position="replace" />
+        <xpath expr="//div[@class='oe_leftbar']" position="replace" />
 
         <xpath expr="//t[@t-set='head']" position="inside">
             <meta charset="utf-8" />
@@ -77,7 +77,7 @@
                              data-parent="#odooMenuBarToggle"
                              aria-expanded="false"
                              >
-                            <div class="o_sub_menu"
+                            <div class="oe_leftbar"
                                  groups="base.group_user,base.group_portal"
                                  >
                                 <t t-call="web.menu_secondary" />
@@ -101,7 +101,7 @@
               name="App Drawer - Secondary Menu"
               >
 
-        <xpath expr="//div[@class='o_sub_menu_content']/t" position="replace">
+        <xpath expr="//div[@class='oe_secondary_menus_container']/t" position="replace">
 
             <t t-foreach="menu_data['children']" t-as="menu">
                 <ul style="display: none"

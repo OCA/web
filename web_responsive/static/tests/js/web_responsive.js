@@ -23,7 +23,7 @@ odoo.define_section('web_responsive', ['web_responsive'], function(test) {
         
         self.$clickZone = $('<a class="oe_menu_leaf">');
         
-        self.$secondaryMenu = $('<div><div class="o_sub_menu_content">');
+        self.$secondaryMenu = $('<div><div class="oe_secondary_menus_container">');
         
         self.$dropdown = $('<div class="dropdown-scrollable">');
     
