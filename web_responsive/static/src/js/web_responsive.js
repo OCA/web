@@ -4,7 +4,6 @@
 odoo.define('web_responsive', function(require) {
     'use strict';
 
-    var $ = require('$');
     var Menu = require('web.Menu');
     var Class = require('web.Class');
     var SearchView = require('web.SearchView');
@@ -83,12 +82,18 @@ odoo.define('web_responsive', function(require) {
                 '-': this.LEFT,
             };
             this.initDrawer();
-            var $clickZones = $('.openerp_webclient_container, ' +
+            var $clickZones = $('.odoo_webclient_container, ' +
                                 'a.oe_menu_leaf, ' +
                                 'a.oe_menu_toggler, ' +
                                 'a.oe_logo, ' +
                                 'i.oe_logo_edit'
                                 );
+            $('.o_content').scroll(function() {
+                $('.o_control_panel').css(
+                    'margin-top',
+                    -$(this).scrollTop() + 'px'
+                );
+            });
             $clickZones.click($.proxy(this.handleClickZones, this));
             core.bus.on('resize', this, this.handleWindowResize);
             core.bus.on('keydown', this, this.handleNavKeys);

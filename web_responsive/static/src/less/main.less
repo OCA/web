@@ -22,6 +22,48 @@ main {
     overflow: hidden;
 }
 
-div.oe_footer {
-    display: none;
+.navbar {
+    z-index: 10;
+}
+
+.o_cp_switch_buttons {
+    .active {
+        z-index: 10;
+    }
+}
+
+.oe_leftbar {
+    .oe_logo {
+        display: none;
+    }
+    .oe_footer {
+        display: none;
+    }
+}
+
+.o_tooltip.active {
+    z-index: 1051;
+}
+
+.o_web_client {
+    >.o_main {
+        overflow: auto;
+        > .o_main_content {
+            overflow: initial;
+            > .o_content {
+                overflow: initial;
+            }
+        }
+    }
+}
+
+// Remove z-index from CP buttons so it doesn't overlap the menu
+.o_control_panel {
+     .btn-group > .btn.active {
+        z-index: initial;
+    }
+}
+
+.o_chat_window {
+    z-index: 1000;
 }
