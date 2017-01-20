@@ -2,11 +2,29 @@
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
 .o_form_view {
-    > .o_form_sheet_bg > .o_form_sheet {
-         @media (max-width: @screen-xs-max) {
-             min-width: 0px; // allow thinner form_sheet width for smaller screens
-         }
+    // Form must fill 100% width in any size
+    .o_form_sheet_bg {
+        padding: @sheet-padding;
+
+        .o_form_sheet {
+            min-width: auto;
+            max-width: 100%;
+        }
+
+        @media (max-width: @screen-sm-max) {
+            padding: 0;
+
+            .o_form_sheet {
+                border: none;
+            }
+        }
     }
+
+    // No overflowing buttons or titles
+    .oe_button_box, .oe_title {
+        max-width: 100%;
+    }
+
     @media (max-width: @screen-xs) {
         .o_form_field > .o_form_input_dropdown {
             width: 80%;
