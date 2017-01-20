@@ -10,6 +10,19 @@
             min-width: auto;
             max-width: 100%;
         }
+
+        @media (max-width: @screen-sm-max) {
+            padding: 0;
+
+            .oe_form_sheet_width {
+                border: none;
+            }
+        }
+    }
+
+    // No overflowing buttons or titles
+    .oe_button_box, .oe_title {
+        max-width: 100%;
     }
 
     @media (max-width: @screen-sm-max) {
