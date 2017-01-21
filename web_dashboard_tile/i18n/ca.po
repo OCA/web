@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-07 08:33+0000\n"
-"PO-Revision-Date: 2017-01-13 09:22+0000\n"
+"POT-Creation-Date: 2017-01-14 09:35+0000\n"
+"PO-Revision-Date: 2017-01-17 19:17+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Catalan (http://www.transifex.com/oca/OCA-web-8-0/language/ca/)\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,active:0
 msgid "Active"
-msgstr ""
+msgstr "Actiu"
 
 #. module: web_dashboard_tile
 #: selection:tile.tile,primary_function:0
@@ -110,7 +110,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,primary_field_id:0
 msgid "Field"
-msgstr ""
+msgstr "Camp"
 
 #. module: web_dashboard_tile
 #. openerp-web
@@ -223,7 +223,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,name:0
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #. module: web_dashboard_tile
 #: code:addons/web_dashboard_tile/models/tile_tile.py:31
