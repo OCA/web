@@ -69,7 +69,7 @@ msgstr "Käyttäjä"
 #. module: web_dashboard_tile
 #: field:tile.tile,active:0
 msgid "Active"
-msgstr ""
+msgstr "Aktiivinen"
 
 #. module: web_dashboard_tile
 #: selection:tile.tile,field_function:0
@@ -147,7 +147,7 @@ msgstr ""
 #: code:addons/web_dashboard_tile/static/src/js/custom_js.js:61
 #, python-format
 msgid "Error"
-msgstr ""
+msgstr "Virhe"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,action_id:0

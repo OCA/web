@@ -110,7 +110,7 @@ msgstr ""
 #. module: web_advanced_filters
 #: field:ir.filters,active:0
 msgid "Active"
-msgstr ""
+msgstr "Aktiivinen"
 
 #. module: web_advanced_filters
 #. openerp-web

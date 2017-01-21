@@ -27,7 +27,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,field_id:0
 msgid "Field"
-msgstr ""
+msgstr "Camp"
 
 #. module: web_dashboard_tile
 #. openerp-web
@@ -69,7 +69,7 @@ msgstr "Usuari"
 #. module: web_dashboard_tile
 #: field:tile.tile,active:0
 msgid "Active"
-msgstr ""
+msgstr "Actiu"
 
 #. module: web_dashboard_tile
 #: selection:tile.tile,field_function:0
