@@ -19,7 +19,8 @@ Usage
 To use this module, you need to:
 
 #. click a record;
-#. hold shift and click another record.
+#. hold shift and click another record;
+#. you can repeat this operation as many times as you want.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
