@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-<data>
+<!-- Copyright 2015 Francesco OpenCode Apruzzese <cescoap@gmail.com>
+     Copyright 2016 Antonio Espinosa <antonio.espinosa@tecnativa.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
 
-    <!-- Load css for ribbons -->
-    <template id="assets_backend" name="ribbon_test assets" inherit_id="web.assets_backend">
-        <xpath expr="." position="inside">
-            <link rel="stylesheet" href="/web_environment_ribbon/static/src/css/ribbon.css"/>
-            <script type="text/javascript" src="/web_environment_ribbon/static/src/js/ribbon.js"/>
-        </xpath>
-    </template>
+<!-- Load css for ribbons -->
+<template id="assets_backend" name="ribbon_test assets"
+          inherit_id="web.assets_backend">
+    <xpath expr="." position="inside">
+        <link rel="stylesheet"
+              href="/web_environment_ribbon/static/src/css/ribbon.css"/>
+        <script type="text/javascript"
+                src="/web_environment_ribbon/static/src/js/ribbon.js"/>
+    </xpath>
+</template>
 
-    <!-- Add ribbon to page -->
-    <template id="body_with_ribbon_test" name="ribbon_test web.webclient_bootstrap" inherit_id="web.webclient_bootstrap">
-        <xpath expr="//div[@class='openerp openerp_webclient_container']" position="before">
-            <div class="test-ribbon"/>
-        </xpath>
-    </template>
-
-</data>
-</openerp>
+</odoo>

@@ -19,6 +19,6 @@
         </span>
     </t>
     <tr t-extend="ListView.row">
-        <t t-jquery="t td t" t-operation="replace"><t t-if="column.widget =='color' || column.type == 'color'"><div t-att-style="'background-color:' + render_cell(record, column)"/></t><t t-raw="render_cell(record, column)"/></t>
+        <t t-jquery="t td t" t-operation="replace"><t t-if="column.widget =='color' || column.type == 'color'"><div class="color_box" t-att-style="'background-color:' + render_cell(record, column)"/></t><t t-raw="render_cell(record, column)"/></t>
     </tr>
 </templates>

@@ -1,9 +1,0 @@
-div.colorviewer {
-	display: inline;
-	float: left;
-  	height: 16px;
-  	width: 16px;
-  	padding: 0 !important;
-  	border: 1px solid #ccc;
-  	line-height: 16px;
-}
