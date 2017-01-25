@@ -308,26 +308,11 @@ odoo.define('web_responsive', function(require) {
         },
     });
 
-    // if we are in small screen change One2many field view to kanban if exists
-    FieldOne2Many.include({
-        load_views: function() {
-            var view_types = this.node.attrs.mode;
-            if (config.device.size_class <= config.device.SIZES.XS){
-                view_types = !!view_types ? view_types.split(",") : [this.default_view];
-                if ($.inArray('kanban', view_types) != -1){
-                    this.node.attrs.mode = "kanban";
-                };
-            };
-            return this._super();
-        },
-    });
-
     return {
         'AppDrawer': AppDrawer,
         'SearchView': SearchView,
         'Menu': Menu,
         'ViewManager': ViewManager,
-        'FieldOne2Many': FieldOne2Many,
     };
 
 });
