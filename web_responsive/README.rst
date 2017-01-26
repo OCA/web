@@ -12,6 +12,7 @@ Features:
 
  * New navigation with an App drawer
  * Keyboard shortcuts for easier navigation
+ * Display kanban views for small screens if an action or field One2x
 
 
 Installation
@@ -53,6 +54,7 @@ this module.
   great styles, but also `JavaScript that causes issues on mobile
   <https://github.com/OCA/web/pull/446#issuecomment-254827880>`_
 
+
 Bug Tracker
 ===========
 
@@ -76,6 +78,7 @@ Contributors
 * Dave Lasley <dave@laslabs.com>
 * Jairo Llopis <jairo.llopis@tecnativa.com>
 * Dennis Sluijk <d.sluijk@onestein.nl>
+* Sergio Teruel <sergio.teruel@tecnativa.com>
 
 Maintainer
 ----------
