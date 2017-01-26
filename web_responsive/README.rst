@@ -13,7 +13,7 @@ Features:
  * New navigation with an App drawer
  * Keyboard shortcuts for easier navigation
  * Display kanban views for small screens format if an action or field One2x
-   have a kanban view
+   has a kanban view
 
 
 Installation
@@ -54,7 +54,7 @@ this module.
 * Adding ``oe_main_menu_navbar`` ID to the top navigation bar triggers some
   great styles, but also `JavaScript that causes issues on mobile
   <https://github.com/OCA/web/pull/446#issuecomment-254827880>`_
-* The kanban view not is shown if an action window not has kanban mode view
+* The kanban view not is shown if an action window has no kanban mode view
 
 
 Bug Tracker
