@@ -17,7 +17,7 @@ Usage
 You must pass all options through the "datepicker" field in the options::
 
     ...
-    <field name="date" options="{'datepicker':{'yearRange': 'c-100:c+0'}}"/>
+    <field name="date" options='{"datepicker":{"yearRange": "c-100:c+0"}}'/>
     ...
 
 Known issues / Roadmap

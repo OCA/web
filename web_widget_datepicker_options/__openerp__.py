@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -22,16 +22,17 @@
 
 {
     "name": 'web_widget_datepicker_options',
-    "version": "8.0.1.0.0",
+    "version": "9.0.1.0.0",
     "depends": [
         'base',
         'web',
     ],
     "data": [
         'view/qweb.xml',
+        'demo/web_widget_datepicker_options_demo.xml'
     ],
     "author": "Vincent Vinet, "
               "Odoo Community Association (OCA)",
-    'installable': False,
-    "active": False,
+    "license": "AGPL-3",
+    'installable': True,
 }
