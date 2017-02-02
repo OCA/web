@@ -11,6 +11,8 @@ for form view
 
 Note: Due to licence incompatibility you have not legal right to install this module on enterprise version.
 
+This module works in community edition and in enterprise edition.
+
 Usage
 =====
 
