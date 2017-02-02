@@ -412,7 +412,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
             var open = (self.options && self.is_option_set(self.options.open));
             if(open){
                 self.mutex.exec(function(){
-                    var id = parseInt($(ev.handleObj.selector).attr('data-id'));
+                    var id = parseInt($(ev.currentTarget).data('id'));
                     self.do_action({
                         type: 'ir.actions.act_window',
                         res_model: self.field.relation,
