@@ -1,8 +1,12 @@
 /*global openerp, _, $ */
+odoo.define('web_action_conditionable', function(require){
+  "use strict";
 
-openerp.web_action_conditionable = function (instance) {
-  instance.web.View.include({
-    is_action_enabled: function(action) {
+  var View = require('web.view');
+
+  View.include({
+
+    is_action_enabled: function(action){
       var attrs = this.fields_view.arch.attrs;
       if (action in attrs) {
 	try {
@@ -17,6 +21,9 @@ openerp.web_action_conditionable = function (instance) {
       } else {
 	return true;
       }
-    }    
+    }
+
   });
-}
+
+
+});
