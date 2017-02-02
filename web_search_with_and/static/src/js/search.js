@@ -1,43 +1,55 @@
-openerp.web_search_with_and = function (instance) {
+odoo.define('web_search_with_and', function (require) {
+    "use strict";
 
-    instance.web.SearchView =  instance.web.SearchView.extend({
+    var SearchView = require('web.SearchView');
+    var Backbone = window.Backbone;
+
+    SearchView.include({
+        // Override the base method to detect a 'shift' event
         select_completion: function (e, ui) {
-            var self = this;
-            if (e.shiftKey) {
+            if (e.shiftKey
+                && ui.item.facet.values
+                && ui.item.facet.values.length
+                && String(ui.item.facet.values[0].value).trim() !== "") {
+                // In case of an 'AND' search a new facet is added regarding of the previous facets
                 e.preventDefault();
 
-                var input_index = _(this.input_subviews).indexOf(
-                    this.subviewForRoot(
-                        this.$('div.oe_searchview_input:focus')[0]));
-                this.query.add(ui.item.facet, {at: input_index / 2, shiftKey: true});
+                this.query.add(ui.item.facet, {shiftKey: true});
             } else {
-                this._super(e, ui);
+
+                return this._super.apply(this, arguments);
             }
-        },
+        }
     });
 
-    instance.web.search.SearchQuery = instance.web.search.SearchQuery.extend({
+    SearchView.SearchQuery.prototype = SearchView.SearchQuery.extend({
+        // Override the odoo method to (conditionally) add a search facet even if a existing
+        // facet for the same field/category already exists.
+        // The prototype is used to override the 'add' function in order to execute the
+        // following code before the Odoo native override (trick)
         add: function (values, options) {
-
             options = options || {};
-
-            if (!values) {
-                values = [];
-            } else if (!(values instanceof Array)) {
-                values = [values];
-            }
-
             if (options.shiftKey) {
+
+                if (!values) {
+                    values = [];
+                }
+                else if (!(values instanceof Array)) {
+                    values = [values];
+                }
+
                 delete options.shiftKey;
                 _(values).each(function (value) {
                     var model = this._prepareModel(value, options);
                     Backbone.Collection.prototype.add.call(this, model, options);
                 }, this);
+
                 return this;
             }
             else {
-                return this.constructor.__super__.add.apply(this, arguments);
+                return this.constructor.__super__.add.call(this, values, options);
             }
-        },
-    });
-};
+        }
+    }).prototype;
+
+});
