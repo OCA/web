@@ -13,7 +13,8 @@
     'website': 'http://www.onestein.eu',
     'license': 'AGPL-3',
     'depends': [
-        'web',
+        'base',
+        'web'
     ],
     'data': [
         'templates/assets.xml'
