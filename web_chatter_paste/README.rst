@@ -18,13 +18,13 @@ Usage
 
 To paste an image:
 
-#. Copy image (e.g. a screenshot);
+#. Copy an image (e.g. a screenshot);
 #. paste the image into the chatter's composer.
 
 To drop a file:
 
-#. Drag any file;
-#. drop into the chatter's composer.
+#. Drag any file (multiple) from your file system;
+#. drop them into the chatter's composer.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
