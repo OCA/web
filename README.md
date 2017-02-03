@@ -25,7 +25,7 @@ addon | version | summary
 [web_notify](web_notify/) | 10.0.1.0.0 | Send notification messages to user
 [web_responsive](web_responsive/) | 10.0.1.0.0 | It provides a mobile compliant interface for Odoo Community web
 [web_send_message_popup](web_send_message_popup/) | 10.0.1.0.0 | Web Send Message as Popup
-[web_sheet_full_width](web_sheet_full_width/) | 10.0.1.0.0 | Use the whole available screen width when displaying sheets
+[web_sheet_full_width](web_sheet_full_width/) | 10.0.1.0.1 | Use the whole available screen width when displaying sheets
 [web_tree_image](web_tree_image/) | 10.0.1.1.0 | Show images in tree views
 [web_tree_many2one_clickable](web_tree_many2one_clickable/) | 10.0.1.0.0 | Open the linked resource when clicking on their name
 [web_widget_color](web_widget_color/) | 10.0.1.0.0 | Web Widget Color
