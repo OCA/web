@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Antonio Espinosa <antonio.espinosa@tecnativa.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo noupdate="1">
+
+<record id="default" model="ir.config_parameter">
+    <field name="key">web_tree_many2one_clickable.default</field>
+    <field name="value">true</field>
+</record>
+
+</odoo>

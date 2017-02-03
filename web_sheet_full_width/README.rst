@@ -9,6 +9,8 @@ Form view sheet at full width
 This module was written to extend the functionality of the web client
 to get full width in the form view sheet.
 
+This module works in community edition and in enterprise edition.
+
 Usage
 =====
 
