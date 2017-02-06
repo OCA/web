@@ -34,7 +34,7 @@ odoo.define('web_chatter_paste', function (require) {
                 upload();
             });
             this.$('.o_composer_text_field').bind('paste', function(e) {
-                if (!e.originalEvent.clipboardData) return;
+                if (!e.originalEvent.clipboardData.items) return;
                 var items = e.originalEvent.clipboardData.items;
                 for (var i = 0; i < items.length; i++) {
                     var item = items[i];

@@ -34,7 +34,6 @@ Known issues / Roadmap
 ======================
 
 * Dropping files only works in Chrome.
-* Pasting images only works in Chrome and Microsoft Edge.
 
 Bug Tracker
 ===========
