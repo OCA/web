@@ -1,0 +1,43 @@
+.oe_secondary_menu_section {
+    height: 26px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.oe_secondary_menu_section.oe_menu_toggler {
+    margin-left: 18px;
+}
+
+.oe_secondary_submenu > li > a.oe_menu_leaf,
+.oe_secondary_submenu > li > a.oe_menu_toggler {
+    padding-left: 27px;
+}
+
+.oe_secondary_menu_section.oe_menu_toggler::before {
+    width: 0;
+    height: 0;
+    display: inline-block;
+    content: "&darr";
+    text-indent: -99999px;
+    vertical-align: top;
+    margin-left: -12px;
+    margin-top: 4px;
+    margin-right: 4px;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 4px solid #4c4c4c;
+    filter: alpha(opacity=50);
+    opacity: 0.5;
+}
+
+.oe_secondary_menu_section.oe_menu_toggler.oe_menu_opened::before {
+    margin-top: 6px;
+    margin-left: -16px;
+    margin-right: 4px;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid #4c4c4c;
+}
