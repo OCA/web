@@ -37,8 +37,8 @@ class WebShortcut(models.Model):
     ]
 
     @api.model
-    def get_user_shortcuts(self, user_id):
-        shortcuts = self.search([('user_id', '=', user_id)])
+    def get_user_shortcuts(self):
+        shortcuts = self.search([('user_id', '=', self.env.user.id)])
         res = []
         for shortcut in shortcuts.filtered('menu_id'):
             _name = shortcut.menu_id.name_get()

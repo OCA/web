@@ -18,10 +18,20 @@
             </a>
         </li>
     </t>
+    <!--
     <t t-extend="ViewManagerAction">
         <t t-jquery="h2.oe_view_title" t-operation="prepend">
             <a t-if="widget.flags.display_title !== false" class="oe_shortcut_toggle" title="Add / Remove Shortcut..."
                 href="javascript: void(0)"> </a>
         </t>
     </t>
+    -->
+    <t t-extend="ControlPanel">
+        <t t-jquery="ol.oe-view-title" t-operation="prepend">
+            <a t-if="widget.flags.display_title !== false" class="oe_shortcut_toggle" title="Add / Remove Shortcut..."
+                href="javascript: void(0)"> </a>
+        </t>
+    </t>
+
+
 </templates>
