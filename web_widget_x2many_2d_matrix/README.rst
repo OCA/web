@@ -28,6 +28,7 @@ result could look like this:
 The beauty of this is that you have an arbitrary amount of columns with this
 widget, trying to get this in standard x2many lists involves some quite ugly
 hacks.
+Note: The order of axis values depends on their order in the matrix you provide.
 
 Usage
 =====
@@ -48,6 +49,12 @@ field_x_axis
     The field that indicates the x value of a point
 field_y_axis
     The field that indicates the y value of a point
+x_axis_clickable
+    It indicates if the X axis allows to be clicked for navigating to the field
+    (if it's a many2one field). True by default
+y_axis_clickable
+   It indicates if the Y axis allows to be clicked for navigating to the field
+   (if it's a many2one field). True by default
 field_label_x_axis
     Use another field to display in the table header
 field_label_y_axis

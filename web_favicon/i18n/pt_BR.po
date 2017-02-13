@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-14 08:27+0000\n"
+"POT-Creation-Date: 2016-11-26 01:59+0000\n"
 "PO-Revision-Date: 2016-04-07 13:51+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-web-8-0/language/pt_BR/)\n"
@@ -25,7 +25,7 @@ msgstr "Empresas"
 #. module: web_favicon
 #: view:res.company:web_favicon.view_company_form
 msgid "Configuration"
-msgstr ""
+msgstr "Configuração"
 
 #. module: web_favicon
 #: view:res.company:web_favicon.view_company_form

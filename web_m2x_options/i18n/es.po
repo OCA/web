@@ -17,7 +17,7 @@
 # LEE SI HYEONG <super2451894@gmail.com>, 2014
 # Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
 # Paolo Valier, 2016
-# Pedro M. Baeza <pedro.baeza@gmail.com>, 2015
+# Pedro M. Baeza <pedro.baeza@gmail.com>, 2015-2016
 # Rudolf Schnapka <rs@techno-flex.de>, 2016
 # SaFi J. <safi2266@gmail.com>, 2015
 # Sam Ryoo <samryoo@gmail.com>, 2014
@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-17 12:06+0000\n"
-"PO-Revision-Date: 2016-09-15 23:07+0000\n"
+"POT-Creation-Date: 2016-11-26 01:59+0000\n"
+"PO-Revision-Date: 2016-10-15 01:57+0000\n"
 "Last-Translator: Pedro M. Baeza <pedro.baeza@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/oca/OCA-web-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -40,16 +40,16 @@ msgstr ""
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:202
-#: code:addons/web_m2x_options/static/src/js/form.js:341
+#: code:addons/web_m2x_options/static/src/js/form.js:206
+#: code:addons/web_m2x_options/static/src/js/form.js:354
 #, python-format
 msgid "Create \"<strong>%s</strong>\""
 msgstr "Crear \"<strong>%s</strong>\""
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:224
-#: code:addons/web_m2x_options/static/src/js/form.js:362
+#: code:addons/web_m2x_options/static/src/js/form.js:232
+#: code:addons/web_m2x_options/static/src/js/form.js:380
 #, python-format
 msgid "Create and Edit..."
 msgstr "Crear y editar..."
@@ -57,7 +57,7 @@ msgstr "Crear y editar..."
 #. module: web_m2x_options
 #: field:ir.model,disable_quick_create:0
 msgid "Disable quick create"
-msgstr ""
+msgstr "Deshabilitar creado rápido"
 
 #. module: web_m2x_options
 #: model:ir.model,name:web_m2x_options.model_ir_model
@@ -67,7 +67,7 @@ msgstr "Modelos"
 #. module: web_m2x_options
 #. openerp-web
 #: code:addons/web_m2x_options/static/src/js/form.js:167
-#: code:addons/web_m2x_options/static/src/js/form.js:316
+#: code:addons/web_m2x_options/static/src/js/form.js:324
 #, python-format
 msgid "Search More..."
 msgstr "Buscar más..."
