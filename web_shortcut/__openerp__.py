@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2010 OpenERP s.a. (<http://openerp.com>).
+#    Copyright (C) 2010-2011 OpenERP s.a. (<http://openerp.com>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -17,5 +18,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+{
+    'name': 'Shortcut Menu',
+    'version': '9.0.1.0.0',
+    'category': 'Web',
+    'author': "OpenERP SA,Odoo Community Association (OCA)",
+    'website': 'http://openerp.com',
+    'depends': [
+        'base',
+        'web'
+    ],
+    'data': [
+        'security/ir.model.access.csv',
+        'templates/assets.xml',
+    ],
+    'qweb': [
+        'static/src/xml/web_shortcut.xml'
+    ],
+    'installable': True,
+    'auto_install': False,
+}
 
-from . import model
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
