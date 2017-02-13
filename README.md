@@ -17,6 +17,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
+[web_dialog_size](web_dialog_size/) | 10.0.1.0.0 | A module that lets the user expand a dialog box to the full screen width.
 [web_environment_ribbon](web_environment_ribbon/) | 10.0.1.0.0 | Web Environment Ribbon
 [web_export_view](web_export_view/) | 10.0.1.0.0 | Web Export Current View
 [web_favicon](web_favicon/) | 10.0.1.0.0 | Allows to set a custom shortcut icon (aka favicon)
@@ -24,6 +25,7 @@ addon | version | summary
 [web_no_bubble](web_no_bubble/) | 10.0.1.0.0 | Remove the bubbles from the web interface
 [web_notify](web_notify/) | 10.0.1.0.0 | Send notification messages to user
 [web_responsive](web_responsive/) | 10.0.1.0.0 | It provides a mobile compliant interface for Odoo Community web
+[web_searchbar_full_width](web_searchbar_full_width/) | 10.0.1.0.0 | Show search bar in full screen width
 [web_send_message_popup](web_send_message_popup/) | 10.0.1.0.0 | Web Send Message as Popup
 [web_sheet_full_width](web_sheet_full_width/) | 10.0.1.0.1 | Use the whole available screen width when displaying sheets
 [web_tree_image](web_tree_image/) | 10.0.1.1.0 | Show images in tree views
@@ -46,7 +48,6 @@ addon | version | summary
 [web_context_in_colors](web_context_in_colors/) | 8.0.1.1.0 (unported) | Use the context in a tree view's colors and fonts attribute
 [web_dashboard_open_action](web_dashboard_open_action/) | 8.0.1.0.0 (unported) | Adds a button to open a dashboard in full mode
 [web_dashboard_tile](web_dashboard_tile/) | 8.0.1.0.0 (unported) | Add Tiles to Dashboard
-[web_dialog_size](web_dialog_size/) | 9.0.1.0.0 (unported) | A module that lets the user expand a dialog box to the full screen width.
 [web_dom_model_classes](web_dom_model_classes/) | 8.0.1.0.0 (unported) | Allows small UI changes with simple CSS
 [web_duplicate_visibility](web_duplicate_visibility/) | 9.0.1.0.0 (unported) | Manage the duplicate button visibiliy
 [web_graph_improved](web_graph_improved/) | 8.0.0.1.0 (unported) | Improves graph views.
@@ -63,7 +64,6 @@ addon | version | summary
 [web_readonly_bypass](web_readonly_bypass/) | 9.0.1.0.0 (unported) | Allow to save onchange modifications to readonly fields
 [web_recipients_uncheck](web_recipients_uncheck/) | 8.0.0.3.0 (unported) | Uncheck recipients on res.partner
 [web_search_alphabetic](web_search_alphabetic/) | 1.0 (unported) | Web Alphabetical Search
-[web_searchbar_full_width](web_searchbar_full_width/) | 9.0.1.0.0 (unported) | Show search bar in full screen width
 [web_sheet_full_width_selective](web_sheet_full_width_selective/) | 8.0.0.1.0 (unported) | Show selected sheets with full width
 [web_shortcuts](web_shortcuts/) | 8.0.1.0.0 (unported) | Web Shortcuts
 [web_switch_company_warning](web_switch_company_warning/) | 8.0.0.1.0 (unported) | Show a warning if current company has been switched in another tab or window.
