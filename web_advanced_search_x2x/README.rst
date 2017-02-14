@@ -1,3 +1,8 @@
+.. image:: https://img.shields.io/badge/license-LGPL--3-blue.svg
+   :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
+   :alt: License: LGPL-3
+
+=========================================
 Search for x2x records in advanced search
 =========================================
 
@@ -27,9 +32,10 @@ In both cases, don't forget to click `Apply` to actually execute the search.
 
 Note that you can stack searching for properties: Simply add another advanced search in the selection search window. You can do this indefinetely, so it is possible to search for moves belonging to a journal which has a user who is member of a certain group etc.
 
-For further information, please visit:
+.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
+   :alt: Try me on Runbot
+   :target: https://runbot.odoo-community.org/runbot/154/9.0
 
-* https://www.odoo.com/forum/help-1
 
 Credits
 =======
@@ -38,16 +44,19 @@ Contributors
 ------------
 
 * Holger Brunn <hbrunn@therp.nl>
+* Vicent Cubells <vicent.cubells@tecnativa.com>
 
 Maintainer
 ----------
 
-.. image:: http://odoo-community.org/logo.png
-    :alt: Odoo Community Association
-    :target: http://odoo-community.org
+.. image:: https://odoo-community.org/logo.png
+   :alt: Odoo Community Association
+   :target: https://odoo-community.org
 
 This module is maintained by the OCA.
 
-OCA, or the Odoo Community Association, is a nonprofit organization whose mission is to support the collaborative development of Odoo features and promote its widespread use.
+OCA, or the Odoo Community Association, is a nonprofit organization whose
+mission is to support the collaborative development of Odoo features and
+promote its widespread use.
 
-To contribute to this module, please visit http://odoo-community.org.
+To contribute to this module, please visit https://odoo-community.org.
