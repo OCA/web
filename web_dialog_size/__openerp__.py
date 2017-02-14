@@ -29,7 +29,7 @@
         dialog box to the full screen width.""",
 
     'author': "ACSONE SA/NV, "
-              "Serv. Tecnol. Avanzados - Pedro M. Baeza, "
+              "Tecnativa, "
               "Therp BV, "
               "Odoo Community Association (OCA), "
               "Siddharth Bhalgami",

@@ -1,0 +1,94 @@
+/* Copyright 2016 Ponto Suprimentos Ltda.
+ * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
+
+.openerp .oe_formview .oe_form {
+    // Form must fill 100% width in any size
+    .oe_form_sheetbg {
+        padding: 16px;
+
+        .oe_form_sheet_width {
+            min-width: auto;
+            max-width: 100%;
+        }
+
+        @media (max-width: @screen-sm-max) {
+            padding: 0;
+
+            .oe_form_sheet_width {
+                border: none;
+            }
+        }
+    }
+
+    // No overflowing buttons or titles
+    .oe_button_box, .oe_title {
+        max-width: 100%;
+    }
+
+    @media (max-width: @screen-sm-max) {
+        .oe_form_field > .ui-autocomplete-input {
+            width: 80%;
+        }
+
+        .oe_form_group_row .oe_form_group_row {
+            margin: 0;
+        }
+
+        .oe_form_group, .oe_form_group_row, .oe_form_group_cell {
+            &, & tbody {
+                display: block;
+                margin-top: 8px;
+                width: 100%;
+            }
+
+            &.oe_group_right {
+                padding: 0;
+            }
+
+            .oe_form_group_row {
+                display: table;
+            }
+
+            .oe_form_group_cell {
+                margin: 0;
+                width: 100%;
+            }
+
+            .oe_form_group_cell_label {
+                @media (min-width: @screen-sm-min) {
+                    display: table-cell;
+                    min-width: 30%;
+                    width: 30%;
+                }
+
+                @media (max-width: @screen-xs-max) {
+                    border: none;
+                }
+
+                + .oe_form_group_cell {
+                    @media (min-width: @screen-sm-min) {
+                        display: table-cell;
+                        max-width: 70%;
+                        width: 70%;
+                    }
+                }
+            }
+        }
+    }
+
+    // Make image editing controls always available, instead of depending on
+    // resolution or hover
+    .oe_form_field_image > .oe_form_field_image_controls {
+        display: block;
+        opacity: 0.7;
+
+        .oe_hidden_input_file {
+            display: none;
+        }
+    }
+
+    // Adapt chatter widget to small viewports
+    .oe_chatter {
+        min-width: inherit;
+    }
+}

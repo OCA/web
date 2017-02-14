@@ -23,6 +23,9 @@
                   href="/web_responsive/static/src/less/app_drawer.less"
                   />
             <link rel="stylesheet"
+                  href="/web_responsive/static/src/less/form_view.less"
+                  />
+            <link rel="stylesheet"
                   href="/web_responsive/static/src/less/variables.less"
                   />
             <script type="application/javascript"
@@ -37,7 +40,7 @@
         </xpath>
     </template>
     <template id="qunit_suite" inherit_id="web.qunit_suite">
-        <xpath expr="//html/head" position="inside">
+        <xpath expr="//head" position="inside">
             <script type="application/javascript"
                     src="/web_responsive/static/tests/js/web_responsive.js"
                     />

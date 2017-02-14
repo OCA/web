@@ -17,19 +17,21 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
+[help_online](help_online/) | 9.0.1.0.0 | Help Online
 [support_branding](support_branding/) | 9.0.2.0.0 | Adds your branding to an Odoo instance
 [web_access_rule_buttons](web_access_rule_buttons/) | 9.0.1.0.0 | Disable Edit button if access rules prevent this action
 [web_dialog_size](web_dialog_size/) | 9.0.1.0.0 | A module that lets the user expand a dialog box to the full screen width.
 [web_duplicate_visibility](web_duplicate_visibility/) | 9.0.1.0.1 | Manage the duplicate button visibiliy
 [web_easy_switch_company](web_easy_switch_company/) | 9.0.1.0.0 | Multicompany - Easy Switch Company
 [web_environment_ribbon](web_environment_ribbon/) | 9.0.1.0.0 | Web Environment Ribbon
-[web_export_view](web_export_view/) | 9.0.1.0.0 | Export Current View
+[web_export_view](web_export_view/) | 9.0.1.0.1 | Export Current View
 [web_favicon](web_favicon/) | 9.0.1.0.0 | Allows to set a custom shortcut icon (aka favicon)
 [web_hide_db_manager_link](web_hide_db_manager_link/) | 9.0.1.0.0 | Hide link to database manager in login screen
 [web_m2x_options](web_m2x_options/) | 9.0.1.0.0 | web_m2x_options
+[web_menu_collapsible](web_menu_collapsible/) | 9.0.1.0.0 | Foldable second level Odoo menu
 [web_notify](web_notify/) | 9.0.1.0.0 | Send notification messages to user
 [web_readonly_bypass](web_readonly_bypass/) | 9.0.1.0.1 | Allow to save onchange modifications to readonly fields
-[web_responsive](web_responsive/) | 9.0.1.0.0 | It provides a mobile compliant interface for Odoo Community web
+[web_responsive](web_responsive/) | 9.0.2.0.0 | It provides a mobile compliant interface for Odoo Community web
 [web_searchbar_full_width](web_searchbar_full_width/) | 9.0.1.0.0 | Show search bar in full screen width
 [web_send_message_popup](web_send_message_popup/) | 9.0.1.0.0 | Web Send Message as Popup
 [web_sheet_full_width](web_sheet_full_width/) | 9.0.1.0.0 | Use the whole available screen width when displaying sheets
@@ -50,7 +52,6 @@ Unported addons
 ---------------
 addon | version | summary
 --- | --- | ---
-[help_online](help_online/) | 8.0.1.0.0 (unported) | Help Online
 [help_popup](help_popup/) | 8.0.0.5.0 (unported) | Help Popup
 [web_action_conditionable](web_action_conditionable/) | 8.0.0.1.0 (unported) | web_action_conditionable
 [web_advanced_search_x2x](web_advanced_search_x2x/) | 8.0.1.0.0 (unported) | Use a search widget in advanced search for x2x fields

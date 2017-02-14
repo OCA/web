@@ -16,6 +16,9 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
     var WidgetX2Many2dMatrix = FieldOne2Many.extend({
         template: 'FieldX2Many2dMatrix',
         widget_class: 'oe_form_field_x2many_2d_matrix',
+        events: {
+            "change .edit": "xy_value_change",
+        },
 
         // those will be filled with rows from the dataset
         by_x_axis: {},
@@ -144,8 +147,6 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                             self.renderElement();
                             self.compute_totals();
                             self.setup_many2one_axes();
-                            self.$el.find('.edit').on(
-                                'change', self.proxy(self.xy_value_change));
                             self.effective_readonly_change();
                         }
                     });
@@ -347,8 +348,6 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
         start: function()
         {
             var self = this;
-            this.$el.find('.edit').on(
-                'change', self.proxy(this.xy_value_change));
             this.compute_totals();
             this.setup_many2one_axes();
             this.on("change:effective_readonly",
