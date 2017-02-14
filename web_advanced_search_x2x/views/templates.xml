@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-    <data>
-        <template id="assets_backend" name="web_advanced_search_x2x assets" inherit_id="web.assets_backend">
-            <xpath expr="." position="inside">
-                <script type="text/javascript" src="/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js"></script>
-                <link rel="stylesheet" href="/web_advanced_search_x2x/static/src/css/web_advanced_search_x2x.css"/>
-            </xpath>
-        </template>
-    </data>
-</openerp>
+<odoo>
+
+    <template id="assets_backend" name="web_advanced_search_x2x assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js"></script>
+            <link rel="stylesheet" href="/web_advanced_search_x2x/static/src/css/web_advanced_search_x2x.css"/>
+        </xpath>
+    </template>
+
+</odoo>
