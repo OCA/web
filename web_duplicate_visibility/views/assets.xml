@@ -1,23 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <template id="assets_backend"
-              name="web_duplicate_visibility backend assets"
-              inherit_id="web.assets_backend">
-        <xpath expr="."
-               position="inside">
-            <script type="text/javascript"
-                    src="/web_duplicate_visibility/static/src/js/duplicate_visibility.js">
-            </script>
+    <template id="assets_backend" name="web_duplicate_visibility backend assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/web_duplicate_visibility/static/src/js/duplicate_visibility.js"/>
         </xpath>
     </template>
 
-    <template id="qunit_suite"
-              name="web_duplicate_visibility qunit assets"
-              inherit_id="web.qunit_suite">
+    <template id="qunit_suite" name="web_duplicate_visibility qunit assets" inherit_id="web.qunit_suite">
         <xpath expr="//t[@t-call-assets='web.assets_backend'][@t-css='false']" position="after">
-            <script type="text/javascript"
-                    src="/web_duplicate_visibility/static/test/duplicate_visibility.js">
-            </script>
+            <script type="text/javascript" src="/web_duplicate_visibility/static/test/duplicate_visibility.js"/>
         </xpath>
     </template>
 </odoo>

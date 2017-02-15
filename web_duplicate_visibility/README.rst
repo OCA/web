@@ -64,6 +64,7 @@ Contributors
 * Christophe Combelles <ccomb@anybox.fr>
 * Simon André <sandre@anybox.fr>
 * Jairo Llopis <jairo.llopis@tecnativa.com>
+* Laurent Mignon <laurent.mignon@acsone.eu>
 
 Maintainer
 ----------
