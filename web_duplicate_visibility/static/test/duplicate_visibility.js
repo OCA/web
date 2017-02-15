@@ -1,11 +1,11 @@
 /* Copyright 2016 Jairo Llopis <jairo.llopis@tecnativa.com>
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 odoo.define_section('web_duplicate_visibility',
-                    ['web.data', 'web.FormView'],
+                    ['web.data', 'web.FormView', 'web.data_manager'],
                     function(test, mock){
     "use strict";
 
-    function assertDuplicate(assert, data, FormView, form_tag, visible) {
+    function assertDuplicate(assert, data, FormView, data_manager, form_tag, visible) {
         mock.add('test.model:read', function () {
             return [{ id: 1, a: 'foo', b: 'bar', c: 'baz' }];
         });
@@ -27,34 +27,36 @@ odoo.define_section('web_duplicate_visibility',
         });
 
         var ds = new data.DataSetStatic(null, 'test.model', null, [1]);
-        ds.index = 0;
-        var $fix = $( "#qunit-fixture");
-        var form = new FormView(
-            {},
-            ds,
-            false,
-            {
-                sidebar: true,
-            }
-        );
-        form.appendTo($fix);
-        form.do_show();
-        form.render_sidebar();
-
-        var $fix = $( "#qunit-fixture");
-        var actions = $fix.find('.oe_sidebar a[data-section="other"]').filter(
-            function(i, obj){
-                return obj.text.trim() == "Duplicate";
-            }
-        );
-        assert.strictEqual(
-            actions.length, visible, "duplicate state is not as expected"
-        );
+        var fields_view_def = data_manager.load_fields_view(ds, false, 'form', false);
+        fields_view_def.then(function (fields_view) {
+            ds.index = 0;
+            var $fix = $( "#qunit-fixture");
+            var form = new FormView(
+                {},
+                ds,
+                fields_view,
+                {
+                    sidebar: true,
+                }
+            );
+            form.appendTo($fix);
+            form.do_show();
+            form.render_sidebar($fix);
+            var actions = $fix.find('.dropdown-menu a[data-section="other"]')
+            .filter(
+                function(i, obj){
+                    return obj.text.trim() == "Duplicate";
+                }
+            );
+            assert.strictEqual(
+                actions.length, visible, "duplicate state is not as expected"
+            );
+            });
     };
 
     function compare(form_tag, visible) {
-        return function (assert, data, FormView) {
-            return assertDuplicate(assert, data, FormView, form_tag, visible);
+        return function (assert, data, FormView, data_manager) {
+            return assertDuplicate(assert, data, FormView, data_manager, form_tag, visible);
         }
     }
 
