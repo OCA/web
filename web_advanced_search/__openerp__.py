@@ -7,6 +7,7 @@
     "name": "Search x2x fields",
     "version": "9.0.1.0.0",
     "author": "Therp BV, "
+              "Tecnativa, "
               "Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "category": "Usability",
