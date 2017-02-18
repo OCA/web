@@ -20,7 +20,7 @@ msgstr ""
 
 #. module: web_listview_custom_element_number
 #. openerp-web
-#: code:addons/web_listview_custom_element_number/static/src/js/web_listview_custom_element_number.js:54
+#: code:addons/web_listview_custom_element_number/static/src/js/web_listview_custom_element_number.js:42
 #, python-format
-msgid "0 (Unlimited)"
-msgstr "0 (unbegrenzt)"
+msgid "Unlimited"
+msgstr "Unbegrenzt"
