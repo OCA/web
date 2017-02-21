@@ -119,13 +119,8 @@ odoo.define('web_advanced_search_x2x.search_filters', function (require) {
         x2x_autocomplete_open: function()
         {
             var widget = this._x2x_field.$input.autocomplete("widget");
-            widget.on('click', 'li', function(e)
-            {
-                widget.trigger(
-                    'menuselect',
-                    {item: jQuery(e.currentTarget)}
-                );
-                e.stopPropagation();
+            widget.on('click', 'li', function(event) {
+                event.stopPropagation();
             });
         },
         get_domain: function () {
