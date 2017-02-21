@@ -116,7 +116,7 @@ Your XML form view definition could contain::
 Known issues
 ============
 
-Double check that you have no inherited view that remove ``options`` you set on a field ! 
+Double check that you have no inherited view that remove ``options`` you set on a field !
 If nothing works, add a debugger in the first line of ``get_search_result method`` and enable debug mode in Odoo. When you write something in a many2one field, javascript debugger should pause. If not verify your installation.
 
 Roadmap
@@ -146,6 +146,7 @@ Contributors
 * Nicolas JEUDY <nicolas@sudokeys.com>
 * Yannick Vaucher <yannick.vaucher@camptocamp.com>
 * Zakaria Makrelouf <z.makrelouf@gmail.com>
+* Jairo Llopis <jairo.llopis@tecnativa.com>
 
 Maintainer
 ----------

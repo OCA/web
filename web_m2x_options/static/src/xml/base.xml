@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 Jairo Llopis <jairo.llopis@tecnativa.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
 <templates xml:space="preserve">
-<t t-extend="FieldMany2One">
-    <t t-jquery="a.oe_m2o_cm_button">
-        jQuery(this).attr('t-if', '!(widget.options.no_open || widget.options.no_open_edit)');
+    <t t-extend="FieldMany2One">
+        <t t-jquery=".oe_m2o_cm_button" t-operation="attributes">
+            <attribute name="t-if">!(widget.options.no_open || widget.options.no_open_edit)</attribute>
+        </t>
     </t>
-</t>
-<t t-extend="FieldMany2ManyTag">
-    <t t-jquery="span.badge">
-        jQuery(this).attr('t-att-data-id', 'el[0]');
+    <t t-extend="FieldMany2ManyTag">
+        <t t-jquery="span[t-attf-class^='badge ']" t-operation="attributes">
+            <attribute name="t-att-data-id">el[0]</attribute>
+        </t>
     </t>
-</t>
 </templates>
