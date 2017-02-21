@@ -5,6 +5,7 @@
 
     <template id="assets_backend" name="web_advanced_search_x2x assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/web_advanced_search_x2x/static/src/css/web_advanced_search_x2x.less"/>
             <script type="text/javascript" src="/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js"/>
         </xpath>
     </template>
