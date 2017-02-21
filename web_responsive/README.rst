@@ -10,11 +10,10 @@ This module provides a mobile compliant interface for Odoo Community web.
 
 Features:
 
- * New navigation with an App drawer
- * Keyboard shortcuts for easier navigation
- * Display kanban views for small screens format if an action or field One2x
-   has a kanban view
-
+* New navigation with an App drawer
+* Keyboard shortcuts for easier navigation
+* Display kanban views for small screens format if an action or field One2x
+  has a kanban view
 
 Installation
 ============

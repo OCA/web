@@ -4,6 +4,8 @@
 body {
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
 
     // Do not fix the search part, it's too big for small screens
     @media (max-width: @screen-sm-max) {
@@ -13,6 +15,11 @@ body {
                 overflow: inherit;
             }
         }
+    }
+
+    > header {
+        flex-grow: 0;
+        flex-shrink: 0;
     }
 }
 
@@ -45,16 +52,11 @@ main {
     z-index: 1051;
 }
 
-.o_web_client {
-    >.o_main {
-        overflow: auto;
-        > .o_main_content {
-            overflow: initial;
-            > .o_content {
-                overflow: initial;
-            }
-        }
-    }
+.oe_web_client {
+    flex-shrink: 0;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 // Remove z-index from CP buttons so it doesn't overlap the menu
