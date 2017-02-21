@@ -37,10 +37,9 @@ Note that you can stack searching for properties: Simply add another advanced se
 Known issues / Roadmap
 ======================
 
-* When you use *is [not] equal to* search system and click on an option with
-  the mouse, the search dropdown gets hidden and you have to reopen it and
-  reapply the filter. As a workaround, use the keyboard to select the option
-  you want.
+* When you use *is in selection* search system and choose a domain, it gets
+  immediately applied, so to add a new condition, you will have to use again
+  the *Filters* menu.
 
 Credits
 =======
