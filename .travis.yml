@@ -5,7 +5,8 @@ python:
   
 sudo: false
 
-cache: pip
+cache:
+  pip: true
   directories:
      - travis_phantomjs
 
