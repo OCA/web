@@ -26,8 +26,9 @@ env:
   matrix:
   - LINT_CHECK="1"
   - TRANSIFEX="1"
-  - TESTS="1" ODOO_REPO="odoo/odoo"
-  - TESTS="1" ODOO_REPO="OCA/OCB"
+  - INCLUDE="web_duplicate_visibility" TESTS="1" ODOO_REPO="odoo/odoo"  # Works
+  - EXCLUDE="web_export_view" TESTS="1" ODOO_REPO="odoo/odoo"  # Works
+  - INCLUDE="web_duplicate_visibility,web_export_view" TESTS="1" ODOO_REPO="odoo/odoo"  # Fails
 
 virtualenv:
   system_site_packages: true
