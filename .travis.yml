@@ -7,6 +7,7 @@ sudo: false
 cache: pip
 
 addons:
+  postgresql: "9.4"
   apt:
     packages:
       - expect-dev  # provides unbuffer utility
