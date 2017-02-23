@@ -23,7 +23,9 @@ odoo.define('web.shortcut', function(require) {
         menu = require('web.UserMenu'),
         client = require('web.WebClient'),
         view_manager = require('web.ViewManager'),
-        qweb = require('web.core').qweb,
+        action_manager = require('web.ActionManager'),
+        core = require('web.core'),
+        qweb = core.qweb,
         model = require('web.DataModel');
 
 
@@ -124,11 +126,6 @@ odoo.define('web.shortcut', function(require) {
 
 
     view_manager.include({
-        start: function() {
-            var res = this._super.apply(this, arguments);
-            console.log(this);
-            return res;
-        },
         switch_mode: function (view_type, no_store) {
             var self = this;
             return this._super.apply(this, arguments).done(function() {
@@ -136,25 +133,26 @@ odoo.define('web.shortcut', function(require) {
             });
         },
         shortcut_check: function(view) {
-            console.log('shortcut_check');
             var self = this;
-            // display shortcuts if on the first view for the action
+
+            // Child view managers
             if (!this.action_manager) {
-                console.log(this);
                 return;
             }
+
+            // display shortcuts if on the first view for the action
             var $shortcut_toggle = this.action_manager.$el.find('.oe_shortcut_toggle');
             if (!this.action.name ||
                     !(view.view_type === this.view_stack[0].view_type
                         && view.view_id === this.view_stack[0].view_id)) {
-                $shortcut_toggle.hide();
+                $shortcut_toggle.addClass('hidden');
                 return;
             }
+            $shortcut_toggle.removeClass('hidden');
+
             // Anonymous users don't have user_menu
             var shortcuts_menu = this.action_manager.webclient.user_menu.shortcuts;
-            console.log(self.session);
             if (shortcuts_menu) {
-                console.log(self.session.active_id);
                 $shortcut_toggle.toggleClass('oe_shortcut_remove', shortcuts_menu.has(self.session.active_id));
                 $shortcut_toggle.unbind("click").click(function() {
                     if ($shortcut_toggle.hasClass("oe_shortcut_remove")) {
@@ -169,7 +167,14 @@ odoo.define('web.shortcut', function(require) {
                     $shortcut_toggle.toggleClass("oe_shortcut_remove");
                 });
             }
-            console.log('done_shortcut_check');
+        }
+    });
+
+
+    action_manager.include({
+        do_action: function() {
+            this.$el.find('.oe_shortcut_toggle').addClass('hidden');
+            return this._super.apply(this, arguments);
         }
     });
 

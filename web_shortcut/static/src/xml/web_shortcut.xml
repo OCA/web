@@ -4,9 +4,7 @@
 <templates>
     <t t-name="Systray.ShortcutMenu">
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                 <img src="/web_shortcut/static/src/img/add-shortcut.png"/>
-            </a>
+            <a href="#" class="dropdown-toggle o_priority_star fa fa-star" data-toggle="dropdown"/>
             <ul class="oe_systray_shortcut_menu dropdown-menu">
             </ul>
         </li>
@@ -20,10 +18,7 @@
     </t>
     <t t-extend="ControlPanel">
         <t t-jquery="ol.oe-view-title" t-operation="before">
-            <t t-js="ctx">
-                console.log(ctx);
-            </t>
-            <a class="oe_shortcut_toggle" title="Add / Remove Shortcut..."
+            <a class="oe_shortcut_toggle hidden o_priority_star fa fa-star" title="Add / Remove Shortcut..."
                 href="javascript: void(0)"> </a>
         </t>
     </t>
