@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- vim:fdl=1:
--->
 <templates>
+
     <t t-name="Systray.ShortcutMenu">
         <li class="dropdown">
             <a href="#" class="dropdown-toggle o_priority_star fa fa-star" data-toggle="dropdown"/>

@@ -26,7 +26,8 @@ odoo.define('web.shortcut', function(require) {
         action_manager = require('web.ActionManager'),
         core = require('web.core'),
         qweb = core.qweb,
-        model = require('web.DataModel');
+        model = require('web.DataModel'),
+        session = require('web.session');
 
 
     var ShortcutMenu = widget.extend({
@@ -143,8 +144,9 @@ odoo.define('web.shortcut', function(require) {
             // display shortcuts if on the first view for the action
             var $shortcut_toggle = this.action_manager.$el.find('.oe_shortcut_toggle');
             if (!this.action.name ||
-                    !(view.view_type === this.view_stack[0].view_type
-                        && view.view_id === this.view_stack[0].view_id)) {
+                !(view.view_type === this.view_stack[0].view_type &&
+                view.view_id === this.view_stack[0].view_id)
+                ) {
                 $shortcut_toggle.addClass('hidden');
                 return;
             }
@@ -159,9 +161,9 @@ odoo.define('web.shortcut', function(require) {
                         shortcuts_menu.trigger('remove', self.session.active_id);
                     } else {
                         shortcuts_menu.trigger('add', {
-                            'user_id': self.session.uid,
-                            'menu_id': self.session.active_id,
-                            'name': self.action.name
+                            'user_id': session.uid,
+                            'menu_id': session.active_id,
+                            'name': session.name
                         });
                     }
                     $shortcut_toggle.toggleClass("oe_shortcut_remove");
