@@ -196,6 +196,8 @@ odoo.define('web_advanced_search_x2x.search_filters', function (require) {
          * @return {jQuery.Deferred}
          */
         value_rerender: function () {
+            this.value._x2x_field && this.value._x2x_field.destroy();
+            delete this.value._x2x_field;
             return this.value.appendTo(
                 this.$(".searchview_extended_prop_value").show().empty()
             );
