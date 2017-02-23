@@ -23,6 +23,7 @@ odoo.define('web.shortcut', function(require) {
         menu = require('web.UserMenu'),
         client = require('web.WebClient'),
         view_manager = require('web.ViewManager'),
+        qweb = require('web.core').qweb,
         model = require('web.DataModel');
 
 
@@ -63,7 +64,7 @@ odoo.define('web.shortcut', function(require) {
         display: function(sc) {
             var self = this;
             this.$el.find('.oe_systray_shortcut_menu').append();
-            var $sc = $(QWeb.render('Systray.ShortcutMenu.Item', {'shortcut': sc}));
+            var $sc = $(qweb.render('Systray.ShortcutMenu.Item', {'shortcut': sc}));
             $sc.appendTo(self.$el.find('.oe_systray_shortcut_menu'));
         },
         remove: function (menu_id) {
@@ -77,7 +78,7 @@ odoo.define('web.shortcut', function(require) {
             var self = this,
                 action_id = $link.data('id');
 
-            new model('ir.ui.menu').query(['action']).filter([['id', '=', id]]).context(null).all().then(function(menu) {
+            new model('ir.ui.menu').query(['action']).filter([['id', '=', action_id]]).context(null).all().then(function(menu) {
                 var action_str = menu[0].action;
                 var action_str_parts = action_str.split(',');
                 action_id = parseInt(action_str_parts[1]);
@@ -91,16 +92,17 @@ odoo.define('web.shortcut', function(require) {
 
 
     menu.include({
+        start: function() {
+            var res = this._super.apply(this, arguments);
+            this.shortcuts = new ShortcutMenu(self);
+            this.shortcuts.prependTo(this.$el.parent());
+            return res;
+        },
         do_update: function() {
             var self = this;
             this._super.apply(this, arguments);
             this.update_promise.done(function() {
-                if (self.shortcuts) {
-                    self.shortcuts.trigger('load');
-                } else {
-                    self.shortcuts = new ShortcutMenu(self);
-                    self.shortcuts.prependTo(self.$el.parent());
-                }
+                self.shortcuts.trigger('load');
             });
         },
     });
@@ -109,27 +111,39 @@ odoo.define('web.shortcut', function(require) {
     client.include({
         show_application: function() {
             var self = this;
-            this._super.apply(this, arguments);
-            this.user_menu.on('click', this, function(action_id) {
-                self.do_action(action_id);
+            var res = this._super.apply(this, arguments);
+            this.user_menu.shortcuts.on('click', this, function(action_id) {
+                self.do_action(action_id, {
+                    clear_breadcrumbs: true,
+                    replace_breadcrumb: true
+                });
             });
+            return res;
         }
     });
 
 
     view_manager.include({
+        start: function() {
+            var res = this._super.apply(this, arguments);
+            console.log(this);
+            return res;
+        },
         switch_mode: function (view_type, no_store) {
             var self = this;
-            this._super.apply(this, arguments).done(function() {
+            return this._super.apply(this, arguments).done(function() {
                 self.shortcut_check(self.views[view_type]);
             });
         },
         shortcut_check: function(view) {
+            console.log('shortcut_check');
             var self = this;
-            console.log(this);
-            var shortcuts_menu = this.action_manager.webclient.user_menu.shortcuts;
             // display shortcuts if on the first view for the action
-            var $shortcut_toggle = this.$el.find('.oe_shortcut_toggle');
+            if (!this.action_manager) {
+                console.log(this);
+                return;
+            }
+            var $shortcut_toggle = this.action_manager.$el.find('.oe_shortcut_toggle');
             if (!this.action.name ||
                     !(view.view_type === this.view_stack[0].view_type
                         && view.view_id === this.view_stack[0].view_id)) {
@@ -137,7 +151,10 @@ odoo.define('web.shortcut', function(require) {
                 return;
             }
             // Anonymous users don't have user_menu
+            var shortcuts_menu = this.action_manager.webclient.user_menu.shortcuts;
+            console.log(self.session);
             if (shortcuts_menu) {
+                console.log(self.session.active_id);
                 $shortcut_toggle.toggleClass('oe_shortcut_remove', shortcuts_menu.has(self.session.active_id));
                 $shortcut_toggle.unbind("click").click(function() {
                     if ($shortcut_toggle.hasClass("oe_shortcut_remove")) {
@@ -152,6 +169,7 @@ odoo.define('web.shortcut', function(require) {
                     $shortcut_toggle.toggleClass("oe_shortcut_remove");
                 });
             }
+            console.log('done_shortcut_check');
         }
     });
 
