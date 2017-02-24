@@ -1,4 +1,5 @@
-from openerp.tests.common import HttpCase, TransactionCase
+# -*- coding: utf-8 -*-
+from openerp.tests.common import TransactionCase
 
 
 class TestWebShortcut(TransactionCase):

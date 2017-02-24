@@ -52,4 +52,3 @@ class WebShortcut(models.Model):
                 }
             )
         return res
-
