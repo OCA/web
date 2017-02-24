@@ -81,7 +81,7 @@ odoo.define('web.shortcut', function(require) {
             var self = this,
                 action_id = $link.data('id');
 
-            new model('ir.ui.menu').query(['action']).filter([['id', '=', action_id]]).context(null).all().then(function(menu) {
+            new DataModel('ir.ui.menu').query(['action']).filter([['id', '=', action_id]]).context(null).all().then(function(menu) {
                 var action_str = menu[0].action;
                 var action_str_parts = action_str.split(',');
                 action_id = parseInt(action_str_parts[1]);
