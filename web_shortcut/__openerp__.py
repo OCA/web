@@ -22,7 +22,7 @@
     'name': 'Shortcut Menu',
     'version': '9.0.1.0.0',
     'category': 'Web',
-    'author': "OpenERP SA,Odoo Community Association (OCA)",
+    'author': 'OpenERP SA,Odoo Community Association (OCA)',
     'website': 'http://openerp.com',
     'depends': [
         'base',
@@ -37,6 +37,7 @@
     ],
     'installable': True,
     'auto_install': False,
+    'license': 'AGPL-3',
 }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
