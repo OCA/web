@@ -9,6 +9,5 @@ class IrUiView(models.Model):
     def unlink(self):
         res = super(IrUiView, self).unlink()
         shortcuts = self.env['web.shortcut'].search([('menu_id', '=', False)])
-        for shortcut in shortcuts:
-            shortcut.unlink()
+        shortcuts.unlink()
         return res

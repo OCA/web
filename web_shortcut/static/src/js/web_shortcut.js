@@ -19,18 +19,18 @@
 ############################################################################*/
 
 odoo.define('web.shortcut', function(require) {
-    var widget = require('web.Widget'),
-        menu = require('web.UserMenu'),
-        client = require('web.WebClient'),
-        view_manager = require('web.ViewManager'),
-        action_manager = require('web.ActionManager'),
+    var Widget = require('web.Widget'),
+        UserMenu = require('web.UserMenu'),
+        WebClient = require('web.WebClient'),
+        ViewManager = require('web.ViewManager'),
+        ActionManager = require('web.ActionManager'),
         core = require('web.core'),
         qweb = core.qweb,
-        model = require('web.DataModel'),
+        DataModel = require('web.DataModel'),
         session = require('web.session');
 
 
-    var ShortcutMenu = widget.extend({
+    var ShortcutMenu = Widget.extend({
         template: 'Systray.ShortcutMenu',
         init: function() {
             this._super();
@@ -38,7 +38,7 @@ odoo.define('web.shortcut', function(require) {
             this.on('add', this, this.add);
             this.on('display', this, this.display);
             this.on('remove', this, this.remove);
-            this.model = new model('web.shortcut');
+            this.model = new DataModel('web.shortcut');
         },
         start: function() {
             var self = this;
@@ -94,7 +94,7 @@ odoo.define('web.shortcut', function(require) {
     });
 
 
-    menu.include({
+    UserMenu.include({
         start: function() {
             var res = this._super.apply(this, arguments);
             this.shortcuts = new ShortcutMenu(self);
@@ -111,7 +111,7 @@ odoo.define('web.shortcut', function(require) {
     });
 
 
-    client.include({
+    WebClient.include({
         show_application: function() {
             var self = this;
             var res = this._super.apply(this, arguments);
@@ -126,7 +126,7 @@ odoo.define('web.shortcut', function(require) {
     });
 
 
-    view_manager.include({
+    ViewManager.include({
         switch_mode: function (view_type, no_store) {
             var self = this;
             return this._super.apply(this, arguments).done(function() {
@@ -173,7 +173,7 @@ odoo.define('web.shortcut', function(require) {
     });
 
 
-    action_manager.include({
+    ActionManager.include({
         do_action: function() {
             this.$el.find('.oe_shortcut_toggle').addClass('hidden');
             return this._super.apply(this, arguments);
