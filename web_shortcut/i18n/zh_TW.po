@@ -17,9 +17,9 @@ msgstr ""
 "X-Launchpad-Export-Date: 2013-12-30 05:07+0000\n"
 "X-Generator: Launchpad (build 16877)\n"
 
-#. module: web_shortcuts
+#. module: web_shortcut
 #. openerp-web
-#: code:addons/web_shortcuts/static/src/xml/web_shortcuts.xml:21
+#: code:addons/web_shortcut/static/src/xml/web_shortcut.xml:20
 #, python-format
 msgid "Add / Remove Shortcut..."
 msgstr "新增/移除捷徑..."

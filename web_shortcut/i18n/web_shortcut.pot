@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* web_shortcuts
+#	* web_shortcut
 #
 msgid ""
 msgstr ""
@@ -15,9 +15,9 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: web_shortcuts
+#. module: web_shortcut
 #. openerp-web
-#: code:addons/web_shortcuts/static/src/xml/web_shortcuts.xml:21
+#: code:addons/web_shortcut/static/src/xml/web_shortcut.xml:20
 #, python-format
 msgid "Add / Remove Shortcut..."
 msgstr ""
