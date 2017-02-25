@@ -3,13 +3,14 @@
 # * web_dashboard_tile
 # 
 # Translators:
+# Esther Martín Menéndez <esthermartin001@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-26 01:59+0000\n"
-"PO-Revision-Date: 2016-11-19 17:14+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"POT-Creation-Date: 2017-02-18 09:00+0000\n"
+"PO-Revision-Date: 2017-02-23 15:58+0000\n"
+"Last-Translator: Esther Martín Menéndez <esthermartin001@gmail.com>\n"
 "Language-Team: Basque (http://www.transifex.com/oca/OCA-web-8-0/language/eu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -100,7 +101,7 @@ msgstr ""
 #: code:addons/web_dashboard_tile/static/src/js/custom_js.js:56
 #, python-format
 msgid "Error"
-msgstr ""
+msgstr "Errorea"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,error:0
@@ -218,7 +219,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,model_id:0
 msgid "Model"
-msgstr ""
+msgstr "Model"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,name:0
@@ -286,7 +287,7 @@ msgstr ""
 #: selection:tile.tile,primary_function:0
 #: selection:tile.tile,secondary_function:0
 msgid "Sum"
-msgstr ""
+msgstr "Sum"
 
 #. module: web_dashboard_tile
 #: view:tile.tile:web_dashboard_tile.dashboard_tile_tile_form_view
@@ -327,4 +328,4 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,primary_value:0
 msgid "Value"
-msgstr ""
+msgstr "Balioa"

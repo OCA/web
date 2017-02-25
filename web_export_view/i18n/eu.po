@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * web_translate_dialog
+# * web_export_view
 # 
 # Translators:
 # Esther Martín Menéndez <esthermartin001@gmail.com>, 2017
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-04 08:29+0000\n"
+"POT-Creation-Date: 2017-02-18 09:00+0000\n"
 "PO-Revision-Date: 2017-02-23 07:59+0000\n"
 "Last-Translator: Esther Martín Menéndez <esthermartin001@gmail.com>\n"
 "Language-Team: Basque (http://www.transifex.com/oca/OCA-web-8-0/language/eu/)\n"
@@ -18,37 +18,30 @@ msgstr ""
 "Language: eu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. module: web_translate_dialog
+#. module: web_export_view
 #. openerp-web
-#: code:addons/web_translate_dialog/static/src/xml/base.xml:30
+#: code:addons/web_export_view/static/src/xml/web_export_view_template.xml:8
 #, python-format
-msgid "Cancel"
-msgstr "Ezeztatu"
+msgid "Excel"
+msgstr "Excel"
 
-#. module: web_translate_dialog
+#. module: web_export_view
 #. openerp-web
-#: code:addons/web_translate_dialog/static/src/xml/base.xml:7
+#: code:addons/web_export_view/static/src/xml/web_export_view_template.xml:6
 #, python-format
-msgid "Field"
+msgid "Export Current View"
 msgstr ""
 
-#. module: web_translate_dialog
+#. module: web_export_view
 #. openerp-web
-#: code:addons/web_translate_dialog/static/src/xml/base.xml:29
+#: code:addons/web_export_view/static/src/js/web_export_view.js:84
 #, python-format
-msgid "Save"
-msgstr "Gorde"
+msgid "False"
+msgstr "False"
 
-#. module: web_translate_dialog
+#. module: web_export_view
 #. openerp-web
-#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:15
+#: code:addons/web_export_view/static/src/js/web_export_view.js:81
 #, python-format
-msgid "Translate"
-msgstr ""
-
-#. module: web_translate_dialog
-#. openerp-web
-#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:37
-#, python-format
-msgid "Translations"
-msgstr ""
+msgid "True"
+msgstr "True"
