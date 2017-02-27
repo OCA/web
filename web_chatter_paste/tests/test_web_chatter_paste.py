@@ -9,13 +9,10 @@ from odoo.addons.web_chatter_paste.controllers.main \
 
 
 class TestWebChatterPaste(TransactionCase):
-    def setUp(self, *args, **kwargs):
-        super(TestWebChatterPaste, self).setUp(*args, **kwargs)
-        self.attachment_obj = self.env['ir.attachment'].with_env(request.env)
-
     def test_controller(self):
         partner_id = self.ref('base.main_partner')
-        attachment_count = self.attachment_obj.search_count([
+        attachment_obj = self.env['ir.attachment'].with_env(request.env)
+        attachment_count = attachment_obj.search_count([
             ('res_model', '=', 'res.partner'),
             ('res_id', '=', partner_id)
         ])
@@ -31,7 +28,7 @@ class TestWebChatterPaste(TransactionCase):
             'vZnR3YXJlAHBhaW50Lm5ldCA0LjAuOWwzfk4AAAAMSURBVBhXY/j//z8ABf4C/q'
             'c1gYQAAAAASUVORK5CYII='
         )
-        new_attachment_count = self.attachment_obj.search_count([
+        new_attachment_count = attachment_obj.search_count([
             ('res_model', '=', 'res.partner'),
             ('res_id', '=', partner_id)
         ])
