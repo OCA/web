@@ -82,6 +82,7 @@ addon | version | summary
 [web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 8.0.1.1.0 | Show list fields as a matrix
 [web_x2m_defaults_from_previous](web_x2m_defaults_from_previous/) | 8.0.1.0.0 | Use previous input as default for next line
 [web_x2m_filter](web_x2m_filter/) | 8.0.1.0.0 | Allows to define filters in x2many list fields
+[web_x2many_delete_all](web_x2many_delete_all/) | 8.0.1.0.0 | Adds a button to x2many fields that removes all linked records
 
 Unported addons
 ---------------
