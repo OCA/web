@@ -11,7 +11,7 @@ from odoo.addons.web_chatter_paste.controllers.main \
 class TestWebChatterPaste(TransactionCase):
     def test_controller(self):
         partner_id = self.ref('base.main_partner')
-        attachment_obj = self.env['ir.attachment'].with_env(request.env)
+        attachment_obj = self.env['ir.attachment']
         attachment_count = attachment_obj.search_count([
             ('res_model', '=', 'res.partner'),
             ('res_id', '=', partner_id)
