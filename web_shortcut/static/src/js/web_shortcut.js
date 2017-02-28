@@ -1,4 +1,4 @@
-/* Copyright (C) 2004-today OpenERP SA (<http://www.openerp.com>)
+/* Copyright 2004-today OpenERP SA (<http://www.openerp.com>)
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
 odoo.define('web.shortcut', function(require) {
@@ -79,17 +79,15 @@ odoo.define('web.shortcut', function(require) {
 
     UserMenu.include({
         start: function() {
-            var res = this._super.apply(this, arguments);
             this.shortcuts = new ShortcutMenu(self);
             this.shortcuts.prependTo(this.$el.parent());
-            return res;
+            return this._super.apply(this, arguments);
         },
         do_update: function() {
             var self = this;
-            this._super.apply(this, arguments);
-            this.update_promise.done(function() {
-                self.shortcuts.trigger('load');
-            });
+            var res = this._super.apply(this, arguments);
+            this.shortcuts.trigger('load');
+            return res;
         },
     });
 
@@ -125,7 +123,8 @@ odoo.define('web.shortcut', function(require) {
             }
 
             // display shortcuts if on the first view for the action
-            var $shortcut_toggle = this.action_manager.$el.find('.oe_shortcut_toggle');
+            var $shortcut_toggle = this.action_manager.main_control_panel.$el.find('.oe_shortcut_toggle');
+            console.log(this);
             if (!this.action.name ||
                 !(view.view_type === this.view_stack[0].view_type &&
                 view.view_id === this.view_stack[0].view_id)
@@ -158,7 +157,7 @@ odoo.define('web.shortcut', function(require) {
 
     ActionManager.include({
         do_action: function() {
-            this.$el.find('.oe_shortcut_toggle').addClass('hidden');
+            this.main_control_panel.$el.find('.oe_shortcut_toggle').addClass('hidden');
             return this._super.apply(this, arguments);
         }
     });

@@ -1,6 +1,6 @@
 .oe_shortcut_toggle {
     height: 20px;
-    margin-top: 9px;
+    margin-top: 2px;
     width: 24px;
     cursor: pointer;
     display: block;
@@ -23,4 +23,12 @@
 
 .oe_shortcut_remove:focus {
     color: #ffd700;
+}
+
+.o_control_panel .breadcrumb {
+    width: calc(50% - 24px);
+}
+
+.o_control_panel.o_breadcrumb_full .breadcrumb {
+    width: calc(100% - 24px);
 }
