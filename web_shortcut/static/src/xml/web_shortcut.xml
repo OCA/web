@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+
+    <t t-name="Systray.ShortcutMenu">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle o_priority_star fa fa-star" data-toggle="dropdown"/>
+            <ul class="oe_systray_shortcut_menu dropdown-menu">
+            </ul>
+        </li>
+    </t>
+    <t t-name="Systray.ShortcutMenu.Item">
+        <li>
+            <a href="#" t-att-data-id="shortcut.menu_id[0]" t-att-data-shortcut-id="shortcut.id">
+                <t t-esc="shortcut.name"/>
+            </a>
+        </li>
+    </t>
+    <t t-extend="ControlPanel">
+        <t t-jquery="ol.breadcrumb" t-operation="before">
+            <a class="oe_shortcut_toggle hidden o_priority_star fa fa-star" title="Add / Remove Shortcut..."
+                href="javascript: void(0)"> </a>
+        </t>
+    </t>
+
+</templates>
