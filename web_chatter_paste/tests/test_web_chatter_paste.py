@@ -2,7 +2,6 @@
 # Copyright 2017 Onestein (<http://www.onestein.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.http import request
 from odoo.tests.common import TransactionCase
 from odoo.addons.web_chatter_paste.controllers.main \
     import ChatterPasteController
