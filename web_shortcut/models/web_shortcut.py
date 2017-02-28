@@ -11,7 +11,7 @@ class WebShortcut(models.Model):
     name = fields.Char('Shortcut Name', size=64)
     menu_id = fields.Many2one('ir.ui.menu', ondelete='cascade')
     user_id = fields.Many2one('res.users', 'User Ref.', required=True,
-                              ondelete='cascade', select=True,
+                              ondelete='cascade', index=True,
                               default=lambda obj, cr, uid, context: uid)
 
     _sql_constraints = [
