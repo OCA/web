@@ -124,7 +124,6 @@ odoo.define('web.shortcut', function(require) {
 
             // display shortcuts if on the first view for the action
             var $shortcut_toggle = this.action_manager.main_control_panel.$el.find('.oe_shortcut_toggle');
-            console.log(this);
             if (!this.action.name ||
                 !(view.view_type === this.view_stack[0].view_type &&
                 view.view_id === this.view_stack[0].view_id)
