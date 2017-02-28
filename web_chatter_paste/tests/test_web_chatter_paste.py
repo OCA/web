@@ -2,6 +2,7 @@
 # Copyright 2017 Onestein (<http://www.onestein.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from odoo.http import request
 from odoo.tests.common import TransactionCase
 from odoo.addons.web_chatter_paste.controllers.main \
     import ChatterPasteController
@@ -10,7 +11,7 @@ from odoo.addons.web_chatter_paste.controllers.main \
 class TestWebChatterPaste(TransactionCase):
     def test_controller(self):
         partner_id = self.ref('base.main_partner')
-        attachment_obj = self.env['ir.attachment']
+        attachment_obj = self.env['ir.attachment'].with_env(request.env)
         attachment_count = attachment_obj.search_count([
             ('res_model', '=', 'res.partner'),
             ('res_id', '=', partner_id)
