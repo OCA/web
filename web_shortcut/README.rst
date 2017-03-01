@@ -44,6 +44,7 @@ Contributors
 
 * Adrien Peiffer
 * Dennis Sluijk <d.sluijk@onestein.nl>
+* Odoo SA
 
 Maintainer
 ----------
@@ -59,3 +60,5 @@ mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
 To contribute to this module, please visit https://odoo-community.org.
+
+**This module is a port from Odoo SA and as such, it is not included in the OCA CLA. That means we do not have a copy of the copyright on it like all other OCA modules.**
