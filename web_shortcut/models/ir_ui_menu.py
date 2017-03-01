@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+# Copyright 2004-today Odoo SA (<http://www.odoo.com>)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import models, api
 
