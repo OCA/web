@@ -8,9 +8,4 @@
             <attribute name="t-if">!(widget.options.no_open || widget.options.no_open_edit)</attribute>
         </t>
     </t>
-    <t t-extend="FieldMany2ManyTag">
-        <t t-jquery="span[t-attf-class^='badge ']" t-operation="attributes">
-            <attribute name="t-att-data-id">el[0]</attribute>
-        </t>
-    </t>
 </templates>
