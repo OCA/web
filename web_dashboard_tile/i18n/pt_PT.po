@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-07 08:33+0000\n"
-"PO-Revision-Date: 2017-01-13 09:26+0000\n"
+"POT-Creation-Date: 2017-02-27 03:47+0000\n"
+"PO-Revision-Date: 2017-03-02 09:14+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Portuguese (Portugal) (http://www.transifex.com/oca/OCA-web-8-0/language/pt_PT/)\n"
 "MIME-Version: 1.0\n"
@@ -100,7 +100,7 @@ msgstr ""
 #: code:addons/web_dashboard_tile/static/src/js/custom_js.js:56
 #, python-format
 msgid "Error"
-msgstr ""
+msgstr "Erro"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,error:0
@@ -280,7 +280,7 @@ msgstr ""
 #: code:addons/web_dashboard_tile/static/src/js/custom_js.js:95
 #, python-format
 msgid "Success"
-msgstr ""
+msgstr "Sucesso"
 
 #. module: web_dashboard_tile
 #: selection:tile.tile,primary_function:0
