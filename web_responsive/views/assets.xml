@@ -23,6 +23,9 @@
                   href="/web_responsive/static/src/less/app_drawer.less"
                   />
             <link rel="stylesheet"
+                  href="/web_responsive/static/src/less/form_view.less"
+                  />
+            <link rel="stylesheet"
                   href="/web_responsive/static/src/less/variables.less"
                   />
             <script type="application/javascript"
