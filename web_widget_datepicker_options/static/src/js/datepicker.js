@@ -18,36 +18,43 @@
 */
 /*global openerp, _, $ */
 
-openerp.web_widget_datepicker_options = function (instance) {
+odoo.define('web_widget_datepicker_options', function (require) {
 
     "use strict";
 
-    instance.web.form.FieldDatetime.include({
-        initialize_content: function() {
-            this._super();
+    var core = require('web.core');
+
+    var DateTimeWidget = require('web.datepicker').DateTimeWidget;
+    var DateWidget = require('web.datepicker').DateWidget;
+
+    DateTimeWidget.include({
+        start: function(parent, options) {
+            this._super.apply(this, arguments);
             var self = this;
-            if (this.datewidget) {
-                if (typeof this.options.datepicker === 'object') {
-                    $.map(this.options.datepicker, function(value, key) {
-                        self.datewidget.picker('option', key, value);
-                    });
-                }
+            if (this.__parentedParent.options.datepicker) {
+                var options = this.__parentedParent.options.datepicker;
+                $.each(options, function(value, key) {
+                    self.options[value] = key;
+                    self.picker[value] = key;
+                    self.picker.options[value] = key;
+                });
             }
-        }
+        },
     });
 
-    instance.web.form.FieldDate.include({
-        initialize_content: function() {
-            this._super();
+    DateWidget.include({
+        start: function(parent, options) {
+            this._super.apply(this, arguments);
             var self = this;
-            if (this.datewidget) {
-                if (typeof this.options.datepicker === 'object') {
-                    $.map(this.options.datepicker, function(value, key) {
-                        self.datewidget.picker('option', key, value);
-                    });
-                }
+            if (this.__parentedParent.options.datepicker) {
+                var options = this.__parentedParent.options.datepicker;
+                $.each(options, function(value, key) {
+                    self.options[value] = key;
+                    self.picker[value] = key;
+                    self.picker.options[value] = key;
+                });
             }
-        }
+        },
     });
-};
 
+});
