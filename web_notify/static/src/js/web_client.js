@@ -3,15 +3,15 @@ odoo.define('web_notify.WebClient', function (require) {
 
 var WebClient = require('web.WebClient');
 var base_bus = require('bus.bus');
-//var _ = require('_');
 
 WebClient.include({
     init: function(parent, client_options){
         this._super(parent, client_options);
     },
     show_application: function() {
-        this._super();
+        var res = this._super();
         this.start_polling();
+        return res
     },
     on_logout: function() {
         var self = this;

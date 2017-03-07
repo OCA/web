@@ -9,8 +9,7 @@
     'version': '10.0.1.0.0',
     'description': 'Web Notify',
     'license': 'AGPL-3',
-    'author': """Serpent Consulting Services Pvt. Ltd.,
-                ACSONE SA/NV, Odoo Community Association (OCA)""",
+    'author': 'ACSONE SA/NV,Odoo Community Association (OCA)',
     'website': 'https://acsone.eu/',
     'depends': [
         'web',
