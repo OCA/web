@@ -5,7 +5,7 @@
 
 {
     'name': 'Hide link to database manager in login screen',
-    'version': "9.0.1.0.0",
+    'version': "10.0.1.0.0",
     'category': 'Web',
     'license': 'AGPL-3',
     'author': 'Alejandro Santana, Odoo Community Association (OCA)',
@@ -13,5 +13,5 @@
     'summary': 'Hide link to database manager in login screen',
     'depends': ['web'],
     'data': ['views/webclient_templates.xml'],
-    'installable': False,
+    'installable': True,
 }
