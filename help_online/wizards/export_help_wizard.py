@@ -271,6 +271,10 @@ class ExportHelpWizard(models.TransientModel):
                 return data[0].name
         else:
             module, name = template_name.split('.')
+            # always use __export__  as module by convention to
+            # avoid the removal by odoo of the exported pages on system
+            # update (-u )
+            module = "__export__"
             postfix = ir_model_data.search_count(
                 [('module', '=', module),
                  ('name', 'like', name)])
