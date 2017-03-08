@@ -260,13 +260,9 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
     });
 
     form_relational.FieldMany2ManyTags.include({
-        events: {
-            'click .o_delete': function(e) {
-                this.remove_id($(e.target).parent().data('id'));
-            },
-            'click .badge': 'open_badge',
-            'mousedown .o_colorpicker span': 'update_color',
-            'focusout .o_colorpicker': 'close_color_picker',
+        init: function () {
+            this.events["click .badge"] = "open_badge";
+            return this._super.apply(this, arguments);
         },
         show_error_displayer: function () {
             if ((typeof this.options.m2o_dialog === 'undefined' && this.can_create) ||
