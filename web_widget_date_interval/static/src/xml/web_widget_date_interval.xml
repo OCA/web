@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <div t-name="FieldDateInterval">
+        <t t-set="date" t-value="widget._get_date()" />
+        <div t-if="widget.options.type == 'weeknumber_iso'" class="weeknumber_iso">
+            <div t-if="!widget.get('effective_readonly')" class="years">
+                <button
+                    t-foreach="widget.weeknumber_iso_get_years()"
+                    t-as="year"
+                    t-att-data-year="year"
+                    t-attf-class="oe_button oe_form_button"
+                    t-att-disabled="date.getFullYear() == year ? 'disable' : null"
+                >
+                    <t
+                        t-esc="year"
+                    />
+                </button>
+            </div>
+            <span t-if="!widget.get('effective_readonly')" class="oe_form_field oe_form_field_selection oe_form_required">
+                <select class="weeks">
+                    <option
+                        t-foreach="widget.weeknumber_iso_get_weeks()"
+                        t-as="week"
+                        t-att-value="week"
+                        t-att-selected="widget.weeknumber_iso_weeknumber(date) == week ? 'selected' : undefined"
+                    >
+                        <t
+                            t-esc="week"
+                        />
+                    </option>
+                </select>
+            </span>
+            <t t-if="widget.get('effective_readonly')">
+                <t t-esc="date.getFullYear()" />,
+                week <t t-esc="widget.weeknumber_iso_weeknumber(date)" />
+            </t>
+        </div>
+    </div>
+</templates>

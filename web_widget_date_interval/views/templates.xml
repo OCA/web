@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="web_widget_date_interval assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/web_widget_date_interval/static/src/js/web_widget_date_interval.js"></script>
+                <link rel="stylesheet" href="/web_widget_date_interval/static/src/css/web_widget_date_interval.css"/>
+            </xpath>
+        </template>
+    </data>
+</openerp>
