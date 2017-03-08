@@ -27,7 +27,7 @@ class TestExportHelpWizard(TestWizardCommon):
         parser = ET.XMLParser(remove_blank_text=True)
         rootXml = ET.XML(xmlData, parser=parser)
 
-        xPath = ".//template[@id='website.%s']" % self.pageName
+        xPath = ".//template[@id='__export__.%s']" % self.pageName
         templateNodeList = rootXml.findall(xPath)
         self.assertEqual(len(templateNodeList), 1)
         self.assertNotIn("website.", templateNodeList[0].attrib['name'])
@@ -47,7 +47,7 @@ class TestExportHelpWizard(TestWizardCommon):
                     self.assertIn("/web/image/%s" % self.imgXmlId, imgSrc)
 
         if self.pageTemplate:
-            xPath = ".//template[@id='website.%s_snippet']" % self.pageName
+            xPath = ".//template[@id='__export__.%s_snippet']" % self.pageName
             templateNodeList = rootXml.findall(xPath)
             self.assertEqual(len(templateNodeList), 1)
             self.assertNotIn("website.", templateNodeList[0].attrib['name'])
