@@ -41,6 +41,7 @@ addon | version | summary
 [web_tree_image](web_tree_image/) | 9.0.1.1.0 | Show images in tree views
 [web_tree_many2one_clickable](web_tree_many2one_clickable/) | 9.0.1.0.0 | Open the linked resource when clicking on their name
 [web_widget_color](web_widget_color/) | 9.0.1.0.0 | Web Widget Color
+[web_widget_datepicker_options](web_widget_datepicker_options/) | 9.0.1.0.0 | web_widget_datepicker_options
 [web_widget_float_formula](web_widget_float_formula/) | 9.0.1.0.0 | Allow use of simple formulas in float fields
 [web_widget_image_download](web_widget_image_download/) | 9.0.1.0.0 | Allows to download any image from its widget
 [web_widget_image_webcam](web_widget_image_webcam/) | 9.0.1.0.0 | Allows to take image with WebCam
@@ -75,7 +76,6 @@ addon | version | summary
 [web_sheet_full_width_selective](web_sheet_full_width_selective/) | 8.0.0.1.0 (unported) | Show selected sheets with full width
 [web_shortcuts](web_shortcuts/) | 8.0.1.0.0 (unported) | Web Shortcuts
 [web_switch_company_warning](web_switch_company_warning/) | 8.0.0.1.0 (unported) | Show a warning if current company has been switched in another tab or window.
-[web_widget_datepicker_options](web_widget_datepicker_options/) | 8.0.1.0.0 (unported) | web_widget_datepicker_options
 [web_widget_text_markdown](web_widget_text_markdown/) | 8.0.1.0.0 (unported) | web_widget_text_markdown
 
 [//]: # (end addons)
