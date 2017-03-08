@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <odoo>
+
     <record id="datepicker_options" model="ir.ui.view">
         <field name="name">datepicker_options</field>
         <field name="model">res.users</field>
@@ -15,4 +16,5 @@
             </xpath>
         </field>
     </record>
+
 </odoo>

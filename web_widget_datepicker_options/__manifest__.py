@@ -4,13 +4,13 @@
 
 {
     "name": 'web_widget_datepicker_options',
-    "version": "9.0.1.0.0",
+    "version": "10.0.1.0.0",
     "depends": [
         'base',
         'web',
     ],
     "data": [
-        'view/qweb.xml',
+        'view/web_widget_datepicker_options_view.xml',
         'demo/web_widget_datepicker_options_demo.xml'
     ],
     "author": "Vincent Vinet, "
