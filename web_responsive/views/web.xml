@@ -27,14 +27,13 @@
 
             <t t-set="body_classname" t-value="'drawer drawer--left o_web_client'" />
 
-            <header role="banner">
+            <header role="banner" groups="base.group_user,base.group_portal">
                 <nav id="odooAppDrawer" class="app-drawer-nav drawer-nav" role="navigation">
                     <t t-call="web.menu" />
                 </nav>
 
                 <nav class="navbar navbar-default main-nav"
                      role="navigation"
-                     groups="base.group_user,base.group_portal"
                      >
                     <div class="container-fluid">
 
