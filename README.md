@@ -17,6 +17,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
+[help_online](help_online/) | 10.0.1.0.0 | Help Online
 [web_dialog_size](web_dialog_size/) | 10.0.1.0.0 | A module that lets the user expand a dialog box to the full screen width.
 [web_environment_ribbon](web_environment_ribbon/) | 10.0.1.0.0 | Web Environment Ribbon
 [web_export_view](web_export_view/) | 10.0.1.0.0 | Web Export Current View
@@ -37,7 +38,6 @@ Unported addons
 ---------------
 addon | version | summary
 --- | --- | ---
-[help_online](help_online/) | 8.0.1.0.0 (unported) | Help Online
 [help_popup](help_popup/) | 8.0.0.5.0 (unported) | Help Popup
 [support_branding](support_branding/) | 8.0.2.0.0 (unported) | Adds your branding to an Odoo instance
 [web_access_rule_buttons](web_access_rule_buttons/) | 9.0.1.0.0 (unported) | Disable Edit button if access rules prevent this action
