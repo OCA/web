@@ -1,8 +1,8 @@
-openerp.web_add_button_top = function(instance, local) {
-    var _t = instance.web._t,
-       _lt = instance.web._lt;
-    var QWeb = instance.web.qweb;
-    
+openerp.web_add_button_position = function(instance) {
+
+
+
+    /*
     instance.web.form.AddAnItemList.include({
         prepend_add_row: function(columns) {
             var self = this;
@@ -58,4 +58,5 @@ openerp.web_add_button_top = function(instance, local) {
 
         }
     });
+    */
 }

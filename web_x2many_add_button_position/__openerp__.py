@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
-    'name': 'Add Button Position',
+    'name': 'X2many Add Button Position',
     'summary': """
         Configurable position for the 'Add an Item' button
     """,
@@ -15,7 +15,7 @@
         'web'
     ],
     'data': [
-        'templates/views.xml',
+        'templates/assets.xml',
     ],
     'installable': True,
     'application': False,
