@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (7.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-15 12:52+0000\n"
+"POT-Creation-Date: 2017-03-04 08:53+0000\n"
 "PO-Revision-Date: 2015-10-07 17:50+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-web-7-0/language/de/)\n"
@@ -147,7 +147,7 @@ msgstr ""
 #: code:addons/web_dashboard_tile/static/src/js/custom_js.js:61
 #, python-format
 msgid "Error"
-msgstr ""
+msgstr "Fehler"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,action_id:0
