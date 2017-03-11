@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-10 07:06+0000\n"
-"PO-Revision-Date: 2016-12-10 07:09+0000\n"
+"POT-Creation-Date: 2017-03-04 08:56+0000\n"
+"PO-Revision-Date: 2017-03-10 13:16+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-web-8-0/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -150,12 +150,12 @@ msgstr "Funktion"
 #: view:tile.tile:web_dashboard_tile.dashboard_tile_tile_form_view
 #: field:tile.tile,group_ids:0
 msgid "Groups"
-msgstr ""
+msgstr "Gruppen"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,primary_helper:0
 msgid "Helper"
-msgstr ""
+msgstr "Helfer"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,id:0
