@@ -1,3 +1,6 @@
+/* Copyright 2017 Onestein
+ * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
+
 openerp.web_x2many_add_button_position = function(instance) {
     instance.web.form.AddAnItemList.include({
         pad_table_to: function() {

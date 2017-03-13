@@ -6,16 +6,14 @@
 X2many Add Button Position
 ==========================
 
-This module enables a developer to move the 'Add an item' to the top or bottom of the listview (depending on 'editable' attribute).
+This module moves the 'Add an item' of x2many fields to the top or bottom of the list (depending on the 'editable' attribute).
 
 Configuration
 =============
 
 To configure this module, you need to:
 
-editable attribute
-
-#. Go to ...
+#. Change or add the 'editable' attribute to the tree element.
 
 Usage
 =====
