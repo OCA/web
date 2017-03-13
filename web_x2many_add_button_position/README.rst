@@ -13,7 +13,7 @@ Configuration
 
 To configure this module, you need to:
 
-#. Modify or add the ``editable`` attribute to the tree element.
+#. Modify or add the ``editable`` attribute of / to the tree element.
 
 Example::
 
