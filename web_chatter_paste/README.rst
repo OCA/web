@@ -8,6 +8,7 @@ Chatter Paste
 
 Paste images and drop files (while composing a message) into the chatter and upload them directly as attachment.
 
+
 Configuration
 =============
 
