@@ -6,19 +6,26 @@
 X2many Add Button Position
 ==========================
 
-This module moves the 'Add an item' of x2many fields to the top or bottom of the list (depending on the 'editable' attribute).
+This module moves the ``Add an item`` button of x2many fields to the top or bottom of the list (depending on the ``editable`` attribute).
 
 Configuration
 =============
 
 To configure this module, you need to:
 
-#. Change or add the 'editable' attribute to the tree element.
+#. Modify or add the ``editable`` attribute to the tree element.
+
+Example::
+
+    <field name="tax_line">
+         <tree editable="top" string="Taxes">
+         </tree>
+    </field>
 
 Usage
 =====
 
-This module has no visible aspect.
+This module has no new visible aspect.
 
 Bug Tracker
 ===========
