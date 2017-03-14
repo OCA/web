@@ -7,6 +7,7 @@ openerp.web_group_expand = function(openerp) {
                 this.$el.find("ul#oe_group_by").remove();
             }
             if(view_type == 'tree'){
+                this.$el.find("ul#oe_group_by").remove();
                 this.load_expand_buttons();
                 this.$ExpandButtons.find("a#oe_group_by_reset").click(function(){
                     $('.oe_open .treeview-tr.oe-treeview-first').filter(function(){return ($(this).parents('tr').attr('data-level') == 1)}).click()
@@ -31,7 +32,6 @@ openerp.web_group_expand = function(openerp) {
         },
         load_expand_buttons:function() {
             var self = this;
-            this.$el.find("ul#oe_group_by").remove();
             this.$ExpandButtons = $(QWeb.render("GroupExpand.Buttons", {'widget':self}));
             this.$el.find("ul.oe_view_manager_switch.oe_button_group.oe_right").before(this.$ExpandButtons);
         },
