@@ -50,7 +50,7 @@ odoo.define('web.shortcut', function(require) {
         display: function(sc) {
             var self = this;
             this.$el.find('.oe_systray_shortcut_menu').append();
-            var $sc = $(qweb.render('Systray.ShortcutMenu.Item', {'shortcut': sc}));
+            var $sc = $(qweb.render('Systray.ShortcutMenu.Item', {shortcut: sc}));
             $sc.appendTo(self.$el.find('.oe_systray_shortcut_menu'));
         },
         remove: function (menu_id) {
