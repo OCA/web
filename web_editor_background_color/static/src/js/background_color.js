@@ -30,6 +30,7 @@ odoo.define("web_editor_background_color.colorpicker", function (require) {
                 "changeColor",
                 $.proxy(this.set_inline_background_color, this)
             );
+            this.$custom.on("click", $.proxy(this.custom_click, this));
             this.$custom.on(
                 "click",
                 "input",
@@ -41,9 +42,11 @@ odoo.define("web_editor_background_color.colorpicker", function (require) {
                 style["border-color"] &&
                 style["background-color"] == style["border-color"];
         },
-        input_select: function (event) {
-            // HACK Avoid dropdown disappearing when clicking on input
+        custom_click: function (event) {
+            // HACK Avoid dropdown disappearing when picking colors
             event.stopPropagation();
+        },
+        input_select: function (event) {
             $(event.target).focus().select();
             this.$custom.colorpicker("show");
         },
