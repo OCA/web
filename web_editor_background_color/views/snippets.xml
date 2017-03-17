@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Jairo Llopis <jairo.llopis@tecnativa.com>
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html). -->
+
+<odoo>
+
+    <template id="snippet_options"
+              inherit_id="web_editor.snippet_options">
+
+        <xpath expr=".">
+            <!-- The same option that already exists in website editor, but
+                 enabled for mass mailing editor -->
+            <div data-js='colorpicker'
+                 data-selector=".bg-color, #editable_area > div, a.o_default_snippet_text">
+                <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Color</a>
+                    <ul class="dropdown-menu">
+                        <li></li>
+                    </ul>
+                </li>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

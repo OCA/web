@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Jairo Llopis <jairo.llopis@tecnativa.com>
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html). -->
+
+<odoo>
+
+    <template id="editor" inherit_id="web_editor.editor">
+        <xpath expr=".">
+            <!-- External library bootstrap-colorpicker -->
+            <link rel="stylesheet" href="/web_editor_background_color/static/src/lib/bootstrap-colorpicker/colorpicker.less"/>
+            <script type="text/javascript" src="/web_editor_background_color/static/src/lib/bootstrap-colorpicker/bootstrap-colorpicker.js"/>
+            <!-- Internal assets -->
+            <link rel="stylesheet" href="/web_editor_background_color/static/src/css/background_color.less"/>
+            <script type="text/javascript" src="/web_editor_background_color/static/src/js/background_color.js"/>
+        </xpath>
+    </template>
+
+</odoo>
