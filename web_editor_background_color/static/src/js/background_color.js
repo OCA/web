@@ -40,7 +40,7 @@ odoo.define("web_editor_background_color.colorpicker", function (require) {
             var style = this.$target.prop("style");
             this.change_border =
                 style["border-color"] &&
-                style["background-color"] == style["border-color"];
+                style["background-color"] === style["border-color"];
         },
         custom_click: function (event) {
             // HACK Avoid dropdown disappearing when picking colors
