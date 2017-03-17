@@ -28,7 +28,7 @@
                         <button name="export_help"
                             string="Export"
                             type="object"
-                            icon="gtk-execute"
+                            icon="fa-magic"
                             class="oe_highlight" />
                         or
                     </span>
