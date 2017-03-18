@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="assets_backend" name="web_search assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/web_search_alphabetic/static/src/css/web_search.css"/>
+                <script type="text/javascript" src="/web_search_alphabetic/static/src/js/web_search.js"></script>
+            </xpath>
+        </template>
+    </data>
+</odoo>

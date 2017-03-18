@@ -42,3 +42,6 @@
     white-space: nowrap;
     margin: 0;
 }
+.highlight{
+    box-shadow:0px 1px 1px 1px #ef2929;
+}
