@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="assets_backend" name="Horanet backend sources" inherit_id="web.assets_backend">
+            <!-- Backend javascript sources for altering the search method-->
+            <xpath expr="//script[last()]" position="after">
+                <script src="/horanet_web_search_with_and/static/src/js/inherit_search_view.js"
+                        type="text/javascript"></script>
+            </xpath>
+        </template>
+    </data>
+</odoo>
