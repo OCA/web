@@ -3,7 +3,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import http
-from odoo.http import request
 from json import dumps
 
 
@@ -13,6 +12,7 @@ class ChatterPasteController(http.Controller):
                 auth="user")
     def upload_attachment(self, callback, model, id, filename, mimetype,
                           content):
+        request = http.request
         model_obj = request.env['ir.attachment']
         out = """<script language="javascript" type="text/javascript">
                     var win = window.top.window;
