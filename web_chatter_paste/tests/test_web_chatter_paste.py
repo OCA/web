@@ -3,12 +3,12 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.http import request
-from odoo.tests.common import TransactionCase
+from odoo.tests.common import HttpCase
 from odoo.addons.web_chatter_paste.controllers.main \
     import ChatterPasteController
 
 
-class TestWebChatterPaste(TransactionCase):
+class TestWebChatterPaste(HttpCase):
     def test_controller(self):
         partner_id = self.ref('base.main_partner')
         attachment_obj = self.env['ir.attachment'].with_env(request.env)
@@ -16,6 +16,7 @@ class TestWebChatterPaste(TransactionCase):
             ('res_model', '=', 'res.partner'),
             ('res_id', '=', partner_id)
         ])
+
         controller = ChatterPasteController()
         controller.upload_attachment(
             '_',
@@ -28,6 +29,7 @@ class TestWebChatterPaste(TransactionCase):
             'vZnR3YXJlAHBhaW50Lm5ldCA0LjAuOWwzfk4AAAAMSURBVBhXY/j//z8ABf4C/q'
             'c1gYQAAAAASUVORK5CYII='
         )
+
         new_attachment_count = attachment_obj.search_count([
             ('res_model', '=', 'res.partner'),
             ('res_id', '=', partner_id)
