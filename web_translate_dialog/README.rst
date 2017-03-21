@@ -31,7 +31,7 @@ pop-up with this field only.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/162/9.0
+   :target: https://runbot.odoo-community.org/runbot/162/10.0
 
 
 Bug Tracker
@@ -55,6 +55,7 @@ Contributors
 
 * Guewen Baconnier (Camptocamp)
 * Antonio Espinosa <antonio.espinosa@tecnativa.com>
+* Serpent Consulting Services Pvt. Ltd. <jay.vora@serpentcs.com>
 
 Maintainer
 ----------
