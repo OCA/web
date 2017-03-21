@@ -5,19 +5,14 @@
 odoo.define('web_translate_dialog.translate_dialog', function(require){
 "use strict";
 
-var _ = require('_');
-var $ = require('$');
-
 var core = require('web.core');
-var data = require('web.data');
 var common = require('web.form_common');
-
-var FormView = require('web.FormView');
-var View = require('web.View');
+var data = require('web.data');
 var Dialog = require('web.Dialog');
-
-var _t = core._t;
+var FormView = require('web.FormView');
 var QWeb = core.qweb;
+var _t = core._t;
+var View = require('web.View');
 
 var translateDialog = Dialog.extend({
     template: "TranslateDialog",
