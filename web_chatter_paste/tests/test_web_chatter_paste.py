@@ -2,9 +2,11 @@
 # Copyright 2017 Onestein (<http://www.onestein.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from mock import MagicMock
+from mock import patch
 from odoo import http
 from odoo.tests.common import HttpCase
+from odoo.addons.web_chatter_paste.controllers.main \
+    import ChatterPasteController
 
 
 class TestWebChatterPaste(HttpCase):
@@ -22,20 +24,17 @@ class TestWebChatterPaste(HttpCase):
             'vZnR3YXJlAHBhaW50Lm5ldCA0LjAuOWwzfk4AAAAMSURBVBhXY/j//z8ABf4C/q' \
             'c1gYQAAAAASUVORK5CYII='
 
-        request = http.request
-        http.request = MagicMock(env=self.env)
-        from odoo.addons.web_chatter_paste.controllers.main \
-            import ChatterPasteController
-        controller = ChatterPasteController()
-        controller.upload_attachment(
-            '_',
-            'res.partner',
-            partner_id,
-            'test.png',
-            'image/png',
-            f
-        )
-        http.request = request
+        with patch.object(http, 'request') as request:
+            request.env = self.env
+            controller = ChatterPasteController()
+            controller.upload_attachment(
+                '_',
+                'res.partner',
+                partner_id,
+                'test.png',
+                'image/png',
+                f
+            )
 
         new_attachment_count = attachment_obj.search_count([
             ('res_model', '=', 'res.partner'),
