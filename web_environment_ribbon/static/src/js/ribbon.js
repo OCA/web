@@ -9,7 +9,8 @@ odoo.define('web_environment_ribbon.ribbon', function(require) {
 var $ = require('jquery');
 var Model = require('web.Model');
 var core = require('web.core');
-
+var session = require('web.session');
+   
 var model = new Model('ir.config_parameter');
 
 // Code from: http://jsfiddle.net/WK_of_Angmar/xgA5C/
@@ -33,6 +34,7 @@ core.bus.on('web_client_ready', null, function () {
     model.call('get_param', ['ribbon.name']).then(
         function (name) {
             if (name && name != 'False') {
+                name = _.str.sprintf("%s<br>(%s)", name, session.db);
                 ribbon.html(name);
                 ribbon.show();
             }
