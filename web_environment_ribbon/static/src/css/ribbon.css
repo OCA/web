@@ -2,11 +2,12 @@
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
 .test-ribbon{
-    width: 200px;
+    width: 300px;
     top: 25px;
-    left: -50px;
+    left: -100px;
     text-align: center;
-    line-height: 50px;
+    padding: 10px;
+    line-height: 20px;
     letter-spacing: 1px;
     color: #f0f0f0;
     -webkit-transform: rotate(-45deg);
