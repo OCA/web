@@ -18,6 +18,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [help_online](help_online/) | 10.0.1.0.0 | Help Online
+[web_chatter_paste](web_chatter_paste/) | 10.0.1.0.0 | Paste images and drop files into the chatter and upload them directly
 [web_dialog_size](web_dialog_size/) | 10.0.1.0.0 | A module that lets the user expand a dialog box to the full screen width.
 [web_environment_ribbon](web_environment_ribbon/) | 10.0.1.0.0 | Web Environment Ribbon
 [web_export_view](web_export_view/) | 10.0.1.0.0 | Web Export Current View
@@ -27,6 +28,7 @@ addon | version | summary
 [web_no_bubble](web_no_bubble/) | 10.0.1.0.0 | Remove the bubbles from the web interface
 [web_notify](web_notify/) | 10.0.1.0.0 | Send notification messages to user
 [web_responsive](web_responsive/) | 10.0.1.0.0 | It provides a mobile compliant interface for Odoo Community web
+[web_search_with_and](web_search_with_and/) | 10.0.1.0.0 | Use AND conditions on omnibar search
 [web_searchbar_full_width](web_searchbar_full_width/) | 10.0.1.0.0 | Show search bar in full screen width
 [web_send_message_popup](web_send_message_popup/) | 10.0.1.0.0 | Web Send Message as Popup
 [web_sheet_full_width](web_sheet_full_width/) | 10.0.1.0.1 | Use the whole available screen width when displaying sheets
