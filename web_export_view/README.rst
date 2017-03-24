@@ -47,11 +47,12 @@ Credits
 Contributors
 ------------
 
- * Simone Orsi <simone.orsi@camptocamp.com>
- * Lorenzo Battistini <lorenzo.battistini@agilebg.com>
- * Stefan Rijnhart <stefan@therp.nl>
- * Leonardo Pistone <leonardo.pistone@camptocamp.com>
- * Rodney Vargas <rodney.vargas@clearcorp.cr>
+* Simone Orsi <simone.orsi@camptocamp.com>
+* Lorenzo Battistini <lorenzo.battistini@agilebg.com>
+* Stefan Rijnhart <stefan@therp.nl>
+* Leonardo Pistone <leonardo.pistone@camptocamp.com>
+* Rodney Vargas <rodney.vargas@clearcorp.cr>
+* Jairo Llopis <jairo.llopis@tecnativa.com>
 
 Maintainer
 ----------

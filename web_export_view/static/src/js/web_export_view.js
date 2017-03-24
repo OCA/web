@@ -1,7 +1,7 @@
-//# -*- coding: utf-8 -*-
-//# © 2012 Agile Business Group
-//# © 2012 Therp BV
-//# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+// -*- coding: utf-8 -*-
+// © 2012 Agile Business Group
+// © 2012 Therp BV
+// License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 odoo.define('web_export_view.Sidebar', function (require) {
 "use strict";
@@ -90,7 +90,7 @@ Sidebar.include({
                         }
                     }
                     else if (cell.classList.contains("oe_list_field_integer")) {
-                        var tmp2 = text;
+                        var tmp, tmp2 = text;
                         do {
                             tmp = tmp2;
                             tmp2 = tmp.replace(
