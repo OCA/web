@@ -13,6 +13,7 @@ This project aims to deal with modules related to the webclient of Odoo. You'll 
 - Generally add clientside functionality
 
 [//]: # (addons)
+
 Available addons
 ----------------
 addon | version | summary
