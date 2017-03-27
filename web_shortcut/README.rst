@@ -45,6 +45,7 @@ Contributors
 * Adrien Peiffer
 * Dennis Sluijk <d.sluijk@onestein.nl>
 * Odoo SA
+* Thomas Binsfeld <thomas.binsfeld@acsone.eu>
 
 Maintainer
 ----------
