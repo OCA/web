@@ -86,6 +86,7 @@ addon | version | summary
 [web_x2many_add_button_position](web_x2many_add_button_position/) | 8.0.1.0.0 | Configurable position for the 'Add an Item' button
 [web_x2many_delete_all](web_x2many_delete_all/) | 8.0.1.0.0 | Adds a button to x2many fields that removes all linked records
 
+
 Unported addons
 ---------------
 addon | version | summary
