@@ -7,7 +7,7 @@ from odoo import models
 
 # brouillon OCA/server-tools/blob/10.0/auto_backup/models/db_backup.py
 class DbName(models.Model):
-    folder = fields.Char(
+    ribbon.name = fields.Char(
         default=lambda self: self._default_name(),
         help='Text printed on the Ribbon',
         required=True
