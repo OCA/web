@@ -38,6 +38,7 @@ addon | version | summary
 [web_widget_color](web_widget_color/) | 10.0.1.0.0 | Web Widget Color
 [web_x2many_delete_all](web_x2many_delete_all/) | 10.0.1.0.0 | Adds a button to x2many fields that removes all linked records
 
+
 Unported addons
 ---------------
 addon | version | summary
