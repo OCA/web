@@ -74,7 +74,7 @@ odoo.define('web_export_view', function (require) {
                                     // Always use a `.` as decimal separator
                                     .replace(_t.database.parameters.decimal_point, ".")
                                     // Remove non-numeric characters
-                                    .replace(/[^\d\.-]/g, "");
+                                    .replace(/[^\d\.-]/g, "")
                                 ));
                             }
                             else {
