@@ -76,8 +76,8 @@ Sidebar.include({
                     var $cell = $row.find('td[data-field="' + this + '"]');
                     var text = $cell.text();
                     if ($cell.hasClass("oe_list_field_monetary")) {
-                        // Remove all but digits, dots and commas
-                        text = text.replace(/[^\d\.,]/g, "");
+                        // Remove all but digits, minus, dots and commas
+                        text = text.replace(/[^\d\.,-]/g, "");
                         export_row.push(
                             formats.parse_value(text, {"type": "monetary"})
                         );
