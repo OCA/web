@@ -6,7 +6,7 @@
     'name': 'Web DarkroomJS Image Editing',
     'summary': 'Provides web widget for image editing and adds it to standard'
                ' image widget as modal',
-    'version': '9.0.1.0.1',
+    'version': '10.0.1.0.1',
     'category': 'Web',
     'website': 'https://laslabs.com/',
     'author': 'LasLabs, Odoo Community Association (OCA)',
