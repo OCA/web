@@ -3,9 +3,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/gpl.html).
 
 import os
-from odoo import models
+from odoo import models, fields
 
-# brouillon OCA/server-tools/blob/10.0/auto_backup/models/db_backup.py
 class DbName(models.Model):
     
     ribbon.name = fields.Char(
