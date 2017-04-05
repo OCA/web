@@ -126,13 +126,16 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
 
             var dataset = new data.DataSet(this, this.field.relation,
                                                    self.build_context());
-            var blacklist = this.get_search_blacklist();
+            var exclusion_domain = [], blacklist = this.get_search_blacklist();
+            if (!_(blacklist).isEmpty()) {
+                exclusion_domain.push(['id', 'not in', blacklist]);
+            }
             this.last_query = search_val;
 
             var search_result = this.orderer.add(dataset.name_search(
                 search_val,
                 new data.CompoundDomain(
-                    self.build_domain(), [["id", "not in", blacklist]]),
+                    self.build_domain(), exclusion_domain),
                 'ilike', this.limit + 1,
                 self.build_context()));
 
