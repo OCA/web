@@ -37,5 +37,5 @@
         'views/readonly_bypass.xml',
     ],
     'installable': False,
-    'auto_install': False,
+    'installable': True,
 }
