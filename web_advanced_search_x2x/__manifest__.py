@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright 2015 Therp BV <http://therp.nl>
 # Copyright 2017 Tecnativa - Vicent Cubells
-# Copyright 2017 initOS GmbH - Rami Alwafaie
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
@@ -9,7 +8,6 @@
     "version": "10.0.1.0.0",
     "author": "Therp BV, "
               "Tecnativa, "
-              "initOS GmbH, "
               "Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "category": "Usability",
