@@ -32,7 +32,7 @@ Note that you can stack searching for properties: Simply add another advanced se
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/154/9.0
+   :target: https://runbot.odoo-community.org/runbot/162/10.0
 
 Known issues / Roadmap
 ======================
@@ -50,6 +50,7 @@ Contributors
 * Holger Brunn <hbrunn@therp.nl>
 * Vicent Cubells <vicent.cubells@tecnativa.com>
 * Jairo Llopis <jairo.llopis@tecnativa.com>
+* Rami Alwafaie <rami.alwafaie@initos.com>
 
 Maintainer
 ----------
