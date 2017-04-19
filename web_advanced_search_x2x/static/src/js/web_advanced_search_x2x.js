@@ -1,6 +1,5 @@
 /* Copyright 2015 Therp BV <http://therp.nl>
  * Copyright 2017 Jairo Llopis <jairo.llopis@tecnativa.com>
- * Copyright 2017 Rami Alwafaie <rami.alwafaie@initos.com>
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
 odoo.define('web_advanced_search_x2x.search_filters', function (require) {
