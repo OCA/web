@@ -143,7 +143,7 @@ odoo.define('web_advanced_search_x2x.search_filters', function (require) {
         },
         get_operator: function () {
             return !this.isDestroyed() &&
-                this.getParent().$('.searchview_extended_prop_op').val();
+                this.getParent().$('.o_searchview_extended_prop_op').val();
         },
         get_value: function () {
             try {
@@ -199,7 +199,7 @@ odoo.define('web_advanced_search_x2x.search_filters', function (require) {
             this.value._x2x_field && this.value._x2x_field.destroy();
             delete this.value._x2x_field;
             return this.value.appendTo(
-                this.$(".searchview_extended_prop_value").show().empty()
+                this.$(".o_searchview_extended_prop_value").show().empty()
             );
         },
     });
