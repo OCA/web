@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <template id="assets_backend" name="web_button_dynamic_confirm_msg assets" inherit_id="web.assets_backend">
+        <xpath expr="script[last()]" position="after">
+            <script type="text/javascript" src="/web_button_dynamic_confirm_msg/static/src/js/form_widgets.js" />
+        </xpath>
+    </template>
+
+</odoo>
