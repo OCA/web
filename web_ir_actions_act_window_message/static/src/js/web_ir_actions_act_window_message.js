@@ -29,6 +29,9 @@ openerp.web_ir_actions_act_window_message = function(instance)
                 {
                     size: 'medium',
                     title: action.title,
+                    $content: $('<div>', {
+                      html: action.message,
+                    }),
                     buttons: [
                         {
                             text: instance.web._t('Close'),
