@@ -36,13 +36,13 @@ openerp.web_ir_actions_act_window_message = function(instance)
                             oe_link_class: 'oe_highlight',
                         },
                     ],
-                },
-                jQuery(instance.web.qweb.render(
-                    'web_ir_actions_act_window_message',
-                    {
-                        'this': this,
-                        'action': action,
-                    }))
+                    $content: jQuery(instance.web.qweb.render(
+                        'web_ir_actions_act_window_message',
+                        {
+                            'this': this,
+                            'action': action,
+                        }))
+                }
             )
             return dialog.open();
         },
