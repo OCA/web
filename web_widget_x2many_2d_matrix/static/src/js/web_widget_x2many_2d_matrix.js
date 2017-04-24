@@ -10,8 +10,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
     var FieldOne2Many = core.form_widget_registry.get('one2many');
     var Model = require('web.Model');
     var data = require('web.data');
-    var _ = require('_');
-    var $ = require('$');
+    var $ = require('jquery');
 
     var WidgetX2Many2dMatrix = FieldOne2Many.extend({
         template: 'FieldX2Many2dMatrix',
@@ -383,10 +382,10 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
         effective_readonly_change: function()
         {
             this.$el
-            .find('tbody td.oe_list_field_cell span.oe_form_field .edit')
+            .find('tbody .read')
             .toggle(!this.get('effective_readonly'));
             this.$el
-            .find('tbody td.oe_list_field_cell span.oe_form_field .read')
+            .find('tbody .read')
             .toggle(this.get('effective_readonly'));
             this.$el.find('.edit').first().focus();
         },
