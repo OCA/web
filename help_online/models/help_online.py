@@ -1,25 +1,9 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Authors: Laurent Mignon
-#    Copyright (c) 2014 Acsone SA/NV (http://www.acsone.eu)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published
-#    by the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
-from openerp import models, exceptions
-from openerp.tools.translate import _
+# Copyright 2014 ACSONE SA/NV (<http://acsone.eu>)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
+from odoo import models, exceptions
+from odoo.tools.translate import _
 
 
 class HelpOnline(models.TransientModel):
@@ -34,9 +18,9 @@ class HelpOnline(models.TransientModel):
         name = '%s-%s' % (page_prefix, model.replace('.', '-'))
         return name
 
-    def page_exists(self, name):
-        website_model = self.env['website']
-        return website_model.page_exists(name)
+    def get_existing_pages(self, name, limit=None):
+        website = self.env['website']
+        return website.search_pages(needle=name, limit=limit)
 
     def get_page_url(self, model, view_type, domain=None, context=None):
         user_model = self.env['res.users']
@@ -48,8 +32,9 @@ class HelpOnline(models.TransientModel):
         if res:
             description = res[0][1]
         name = self._get_view_name(model, view_type, domain, context)
-        if self.page_exists(name):
-            url = '/page/%s' % name
+        pages = self.get_existing_pages(name, limit=1)
+        if pages:
+            url = pages[0]['loc']
             if view_type:
                 url = url + '#' + view_type
             title = _('Help on %s') % description

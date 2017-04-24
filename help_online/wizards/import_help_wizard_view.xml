@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="import_help_wizard_view">
+        <field name="name">import.help.wizard.view</field>
+        <field name="model">import.help.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Import Help Data">
+                <group>
+                    <p>
+                    This wizard allow you to import QWeb views
+                    related to help online. The required file format is an Odoo
+                    data xml file.
+                    </p>
+                </group>
+                <group>
+                    <field name="source_file"/>
+                </group>
+                <footer>
+                    <span name="go-wizard" attrs="{'invisible': [('source_file', '=', False)]}">
+                        <button name="import_help"
+                            string="Import"
+                            type="object"
+                            icon="gtk-execute"
+                            class="oe_highlight" />
+                        or
+                    </span>
+                    <button string="Close" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_import_help_wizard">
+        <field name="name">Import Help</field>
+        <field name="res_model">import.help.wizard</field>
+        <field name="view_id" ref="import_help_wizard_view"/>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="type">ir.actions.act_window</field>
+    </record>
+</odoo>

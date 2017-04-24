@@ -13,31 +13,37 @@ This project aims to deal with modules related to the webclient of Odoo. You'll 
 - Generally add clientside functionality
 
 [//]: # (addons)
+
 Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
+[help_online](help_online/) | 10.0.1.0.0 | Help Online
+[web_chatter_paste](web_chatter_paste/) | 10.0.1.0.0 | Paste images and drop files into the chatter and upload them directly
 [web_dialog_size](web_dialog_size/) | 10.0.1.0.0 | A module that lets the user expand a dialog box to the full screen width.
 [web_environment_ribbon](web_environment_ribbon/) | 10.0.1.0.0 | Web Environment Ribbon
 [web_export_view](web_export_view/) | 10.0.1.0.0 | Web Export Current View
 [web_favicon](web_favicon/) | 10.0.1.0.0 | Allows to set a custom shortcut icon (aka favicon)
+[web_hide_db_manager_link](web_hide_db_manager_link/) | 10.0.1.0.0 | Hide link to database manager in login screen
 [web_listview_range_select](web_listview_range_select/) | 10.0.1.0.0 | Enables selecting a range of records using the shift key
 [web_no_bubble](web_no_bubble/) | 10.0.1.0.0 | Remove the bubbles from the web interface
 [web_notify](web_notify/) | 10.0.1.0.0 | Send notification messages to user
 [web_responsive](web_responsive/) | 10.0.1.0.0 | It provides a mobile compliant interface for Odoo Community web
+[web_search_with_and](web_search_with_and/) | 10.0.1.0.0 | Use AND conditions on omnibar search
 [web_searchbar_full_width](web_searchbar_full_width/) | 10.0.1.0.0 | Show search bar in full screen width
 [web_send_message_popup](web_send_message_popup/) | 10.0.1.0.0 | Web Send Message as Popup
 [web_sheet_full_width](web_sheet_full_width/) | 10.0.1.0.1 | Use the whole available screen width when displaying sheets
+[web_translate_dialog](web_translate_dialog/) | 10.0.1.0.0 | Easy-to-use pop-up to translate fields in several languages
 [web_tree_image](web_tree_image/) | 10.0.1.1.0 | Show images in tree views
 [web_tree_many2one_clickable](web_tree_many2one_clickable/) | 10.0.1.0.0 | Open the linked resource when clicking on their name
 [web_widget_color](web_widget_color/) | 10.0.1.0.0 | Web Widget Color
 [web_x2many_delete_all](web_x2many_delete_all/) | 10.0.1.0.0 | Adds a button to x2many fields that removes all linked records
 
+
 Unported addons
 ---------------
 addon | version | summary
 --- | --- | ---
-[help_online](help_online/) | 8.0.1.0.0 (unported) | Help Online
 [help_popup](help_popup/) | 8.0.0.5.0 (unported) | Help Popup
 [support_branding](support_branding/) | 8.0.2.0.0 (unported) | Adds your branding to an Odoo instance
 [web_access_rule_buttons](web_access_rule_buttons/) | 9.0.1.0.0 (unported) | Disable Edit button if access rules prevent this action
@@ -52,7 +58,6 @@ addon | version | summary
 [web_duplicate_visibility](web_duplicate_visibility/) | 9.0.1.0.0 (unported) | Manage the duplicate button visibiliy
 [web_graph_improved](web_graph_improved/) | 8.0.0.1.0 (unported) | Improves graph views.
 [web_group_expand](web_group_expand/) | 8.0.1.0.0 (unported) | Group Expand Buttons
-[web_hide_db_manager_link](web_hide_db_manager_link/) | 9.0.1.0.0 (unported) | Hide link to database manager in login screen
 [web_ir_actions_act_window_message](web_ir_actions_act_window_message/) | 8.0.1.0.0 (unported) | Show a message box to users
 [web_ir_actions_act_window_page](web_ir_actions_act_window_page/) | 8.0.1.0.0 (unported) | Allows a developer to trigger a pager to show the previous or next next record in the form view
 [web_last_viewed_records](web_last_viewed_records/) | 8.0.1.0.0 (unported) | Last viewed records
@@ -67,7 +72,6 @@ addon | version | summary
 [web_sheet_full_width_selective](web_sheet_full_width_selective/) | 8.0.0.1.0 (unported) | Show selected sheets with full width
 [web_shortcuts](web_shortcuts/) | 8.0.1.0.0 (unported) | Web Shortcuts
 [web_switch_company_warning](web_switch_company_warning/) | 8.0.0.1.0 (unported) | Show a warning if current company has been switched in another tab or window.
-[web_translate_dialog](web_translate_dialog/) | 9.0.1.0.0 (unported) | Easy-to-use pop-up to translate fields in several languages
 [web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 8.0.1.0.0 (unported) | web tree dynamic colored field
 [web_widget_datepicker_options](web_widget_datepicker_options/) | 8.0.1.0.0 (unported) | web_widget_datepicker_options
 [web_widget_float_formula](web_widget_float_formula/) | 9.0.1.0.0 (unported) | Allow use of simple formulas in float fields
