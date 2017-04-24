@@ -3,5 +3,6 @@
     <record id="group_edit_favicon" model="res.groups">
         <field name="name">Edit Favicon</field>
         <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
     </record>
 </odoo>
