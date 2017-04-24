@@ -16,8 +16,9 @@
         'web',
     ],
     "data": [
-        "views/res_company.xml",
+        'views/res_company.xml',
         'views/templates.xml',
+        'security/web_favicon_security.xml'
     ],
     'installable': True,
 }
