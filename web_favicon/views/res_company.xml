@@ -5,7 +5,7 @@
         <field name="inherit_id" ref="base.view_company_form" />
         <field name="arch" type="xml">
             <notebook position="inside">
-                <page string="Web Favicon" name="favicon">
+                <page string="Web Favicon" name="favicon" groups="base.group_system">
                     <group string="Favicon" name="favicon">
                         <field name="favicon_backend" widget="image" />
                         <field name="favicon_backend_mimetype" attrs="{'required': [('favicon_backend', '!=', False)]}" />
