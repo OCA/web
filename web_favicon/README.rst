@@ -30,6 +30,8 @@ You have a sample SVG that can be used as template for generating your icon
 in /static/src/img/master_original_favicon.svg. You can also search for some
 favicon generators across the web.
 
+To allow a user to edit the favicon it has to be member of group "Administration / Settings".
+
 Usage
 =====
 
@@ -65,6 +67,7 @@ Contributors
 
 * Holger Brunn <hbrunn@therp.nl>
 * Pedro M. Baeza <pedro.baeza@gmail.com>
+* Dennis Sluijk <d.sluijk@onestein.nl>
 
 Maintainer
 ----------
