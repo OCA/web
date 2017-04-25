@@ -117,6 +117,7 @@ odoo.define('web.shortcut', function (require) {
         switch_mode: function (view_type, no_store) {
             var self = this;
             return this._super.apply(this, arguments).done(function () {
+                if (!self.action_manager) return;
                 self.$shortcut_toggle = self.action_manager.main_control_panel.$el.find('.oe_shortcut_toggle');
                 self.shortcut_toggle_bind();
                 var visible = self.shortcut_toggle_visibility(self.views[view_type]);
