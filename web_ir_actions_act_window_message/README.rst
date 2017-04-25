@@ -70,6 +70,7 @@ Contributors
 ------------
 
 * Holger Brunn <hbrunn@therp.nl>
+* Zakaria Makrelouf (ACSONE SA/NV) <z.makrelouf@gmail.com>
 
 Maintainer
 ----------
