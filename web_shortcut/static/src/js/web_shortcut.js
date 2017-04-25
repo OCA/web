@@ -125,7 +125,8 @@ odoo.define('web.shortcut', function (require) {
             $shortcut_toggle.removeClass('hidden');
 
             // Anonymous users don't have user_menu
-            var shortcuts_menu = this.action_manager.webclient.shortcut_menu;
+            // Check whether it's the 'main' action_manager
+            var shortcuts_menu = this.action_manager.webclient && this.action_manager.webclient.shortcut_menu;
             if (shortcuts_menu) {
                 $shortcut_toggle.toggleClass('oe_shortcut_remove', shortcuts_menu.has(self.session.active_id));
                 $shortcut_toggle.unbind("click").click(function () {
