@@ -21,17 +21,17 @@ class WebShortcut(models.Model):
 
     @api.model
     def get_user_shortcuts(self):
-        shortcuts = self.search([('user_id', '=', self.env.user.id)])
+        shortcuts = self.with_context(
+            {'lang': self.env.user.lang}
+        ).search([('user_id', '=', self.env.user.id)])
         res = []
         for shortcut in shortcuts.filtered('menu_id'):
-            _name = shortcut.menu_id.name_get()
-            _name = _name[0][1] if len(_name) else ''
             _id = shortcut.menu_id.id
             res.append(
                 {
                     'id': shortcut.id,
-                    'name': _name,
-                    'menu_id': (_id, _name)
+                    'name': shortcut.menu_id.complete_name,
+                    'menu_id': (_id, shortcut.menu_id.complete_name)
                 }
             )
         return res
