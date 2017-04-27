@@ -37,6 +37,7 @@ addon | version | summary
 [web_tree_image](web_tree_image/) | 10.0.1.1.0 | Show images in tree views
 [web_tree_many2one_clickable](web_tree_many2one_clickable/) | 10.0.1.0.0 | Open the linked resource when clicking on their name
 [web_widget_color](web_widget_color/) | 10.0.1.0.0 | Web Widget Color
+[web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 10.0.1.0.0 | Show list fields as a matrix
 [web_x2many_delete_all](web_x2many_delete_all/) | 10.0.1.0.0 | Adds a button to x2many fields that removes all linked records
 
 
@@ -79,6 +80,5 @@ addon | version | summary
 [web_widget_many2many_tags_multi_selection](web_widget_many2many_tags_multi_selection/) | 9.0.1.1.0 (unported) | Tags multiple selection
 [web_widget_text_markdown](web_widget_text_markdown/) | 8.0.1.0.0 (unported) | web_widget_text_markdown
 [web_widget_timepicker](web_widget_timepicker/) | 9.0.1.0.0 (unported) | Web Timepicker Widget
-[web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 9.0.1.0.0 (unported) | Show list fields as a matrix
 
 [//]: # (end addons)
