@@ -6,7 +6,6 @@ odoo.define('web.shortcut', function (require) {
         WebClient = require('web.WebClient'),
         ViewManager = require('web.ViewManager'),
         ActionManager = require('web.ActionManager'),
-        Menu = require('web.Menu'),
         core = require('web.core'),
         qweb = core.qweb,
         DataModel = require('web.DataModel'),
@@ -129,33 +128,30 @@ odoo.define('web.shortcut', function (require) {
             // Check whether it's the 'main' action_manager
             var shortcuts_menu = this.action_manager.webclient && this.action_manager.webclient.shortcut_menu;
             if (shortcuts_menu) {
-                // Toggle on / off
-                $.when(this.action_manager.webclient.menu.initial_menu_open).then(function() {
-                    $shortcut_toggle.toggleClass('oe_shortcut_remove', shortcuts_menu.has(self.session.active_id));
-                    $shortcut_toggle.unbind("click").click(function () {
-                        var menu_id = session.active_id;
-                        // In the case we come from a parent menu, no action is linked to the menu
-                        // We must take the first child menu
-                        if (self.action_manager.webclient.menu_data) {
-                            for (var i = 0; i < self.action_manager.webclient.menu_data.children.length; i++) {
-                                if (self.action_manager.webclient.menu_data.children[i].id === session.active_id) {
-                                    menu_id = self.action_manager.webclient.menu_data.children[i].children[0].id;
-                                    break;
-                                }
+                $shortcut_toggle.toggleClass('oe_shortcut_remove', shortcuts_menu.has(self.session.active_id));
+                $shortcut_toggle.unbind("click").click(function () {
+                    var menu_id = session.active_id;
+                    // In the case we come from a parent menu, no action is linked to the menu
+                    // We must take the first child menu
+                    if (self.action_manager.webclient.menu_data) {
+                        for (var i = 0; i < self.action_manager.webclient.menu_data.children.length; i++) {
+                            if (self.action_manager.webclient.menu_data.children[i].id === session.active_id) {
+                                menu_id = self.action_manager.webclient.menu_data.children[i].children[0].id;
+                                break;
                             }
                         }
-                        if ($shortcut_toggle.hasClass("oe_shortcut_remove")) {
-                            shortcuts_menu.trigger('remove', menu_id);
-                        }
-                        else {
-                            shortcuts_menu.trigger('add', {
-                                'user_id': session.uid,
-                                'menu_id': menu_id,
-                                'name': session.name
-                            });
-                        }
-                        $shortcut_toggle.toggleClass("oe_shortcut_remove");
-                    });
+                    }
+                    if ($shortcut_toggle.hasClass("oe_shortcut_remove")) {
+                        shortcuts_menu.trigger('remove', menu_id);
+                    }
+                    else {
+                        shortcuts_menu.trigger('add', {
+                            'user_id': session.uid,
+                            'menu_id': menu_id,
+                            'name': session.name
+                        });
+                    }
+                    $shortcut_toggle.toggleClass("oe_shortcut_remove");
                 });
             }
         }
@@ -166,22 +162,6 @@ odoo.define('web.shortcut', function (require) {
         do_action: function () {
             this.main_control_panel.$el.find('.oe_shortcut_toggle').addClass('hidden');
             return this._super.apply(this, arguments);
-        }
-    });
-
-
-    Menu.include({
-        init: function() {
-            var res = this._super.apply(this, arguments);
-            this.initial_menu_open = $.Deferred();
-            return res;
-        },
-        open_menu: function() {
-            var initial = !session.active_id;
-            var res = this._super.apply(this, arguments);
-            if (initial)
-                this.initial_menu_open.resolve();
-            return res;
         }
     });
 
