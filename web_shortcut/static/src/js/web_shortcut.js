@@ -187,7 +187,6 @@ odoo.define('web.shortcut', function (require) {
                     toggle.addClass('hidden');
                     return;
                 }
-                if (!options) return;
                 if (!options.shortcut)
                     self.inner_widget.shortcut_toggle_state();
                 else
