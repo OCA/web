@@ -84,6 +84,8 @@ task per project per user. In this case, we can use ``project.task`` as our
 data model and point to it from our wizard. The crucial part is that we fill
 the field in the default function::
 
+ from odoo import fields, models
+ 
  class MyWizard(models.TransientModel):
     _name = 'my.wizard'
 
@@ -94,7 +96,13 @@ the field in the default function::
         # same with users
         users = self.env['res.users'].browse([1, 2, 3])
         return [
-            (0, 0, {'project_id': p.id, 'user_id': u.id, 'planned_hours': 0})
+            (0, 0, {
+                'project_id': p.id, 
+                'user_id': u.id, 
+                'planned_hours': 0,
+                'message_needaction': False,
+                'date_deadline': fields.Date.today(),
+            })
             # if the project doesn't have a task for the user, create a new one
             if not p.task_ids.filtered(lambda x: x.user_id == u) else
             # otherwise, return the task
