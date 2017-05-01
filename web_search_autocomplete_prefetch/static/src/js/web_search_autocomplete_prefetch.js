@@ -84,6 +84,7 @@ openerp.web_search_autocomplete_prefetch = function(instance)
     });
 
     instance.web.search.AutoComplete.include({
+        keypress_timeout: 200,
         select_item: function()
         {
             if(!this.current_result)
@@ -91,6 +92,19 @@ openerp.web_search_autocomplete_prefetch = function(instance)
                 return;
             }
             return this._super.apply(this, arguments);
+        },
+        initiate_search: function(query)
+        {
+            var self = this,
+                _super = this._super,
+                last_timeout = null;
+            this.last_timeout = last_timeout = window.setTimeout(function()
+            {
+                if(self.last_timeout == last_timeout)
+                {
+                    _super.apply(self, [query]);
+                }
+            }, this.keypress_timeout)
         },
     });
 }
