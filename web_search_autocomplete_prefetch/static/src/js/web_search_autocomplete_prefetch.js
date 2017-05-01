@@ -84,7 +84,7 @@ openerp.web_search_autocomplete_prefetch = function(instance)
     });
 
     instance.web.search.AutoComplete.include({
-        keypress_timeout: 200,
+        keypress_timeout: 350,
         select_item: function()
         {
             if(!this.current_result)
