@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-14 09:35+0000\n"
-"PO-Revision-Date: 2017-01-17 19:17+0000\n"
+"POT-Creation-Date: 2017-03-28 10:21+0000\n"
+"PO-Revision-Date: 2017-03-30 17:07+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Catalan (http://www.transifex.com/oca/OCA-web-8-0/language/ca/)\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,action_id:0
 msgid "Action"
-msgstr ""
+msgstr "Acció"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,active:0
@@ -127,7 +127,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,primary_format:0
 msgid "Format"
-msgstr ""
+msgstr "Format"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,primary_function:0
@@ -138,7 +138,7 @@ msgstr ""
 #: view:tile.tile:web_dashboard_tile.dashboard_tile_tile_form_view
 #: field:tile.tile,group_ids:0
 msgid "Groups"
-msgstr ""
+msgstr "Grups"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,primary_helper:0

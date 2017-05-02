@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-07 08:32+0000\n"
-"PO-Revision-Date: 2017-01-13 09:22+0000\n"
+"POT-Creation-Date: 2017-03-28 10:21+0000\n"
+"PO-Revision-Date: 2017-04-21 09:34+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Catalan (http://www.transifex.com/oca/OCA-web-8-0/language/ca/)\n"
 "MIME-Version: 1.0\n"
@@ -64,7 +64,7 @@ msgstr "Veure el nom"
 #. module: help_online
 #: view:export.help.wizard:help_online.export_help_wizard_view
 msgid "Export"
-msgstr ""
+msgstr "Exportar "
 
 #. module: help_online
 #: code:addons/help_online/models/export_help_wizard.py:267
