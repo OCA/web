@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * web_export_view
+# * web_notify
 # 
 # Translators:
 # Bole <bole@dajmi5.com>, 2017
@@ -18,23 +18,29 @@ msgstr ""
 "Language: hr\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-#. module: web_export_view
-#. openerp-web
-#: code:addons/web_export_view/static/src/xml/web_export_view_template.xml:6
+#. module: web_notify
+#: code:addons/web_notify/models/res_users.py:27
 #, python-format
-msgid "Export xls"
-msgstr "Izvoz u XLS"
+msgid "Information"
+msgstr "Informacija"
 
-#. module: web_export_view
-#. openerp-web
-#: code:addons/web_export_view/static/src/js/web_export_view.js:63
-#, python-format
-msgid "False"
-msgstr "NE"
+#. module: web_notify
+#: model:ir.model.fields,field_description:web_notify.field_res_users_notify_info_channel_name
+msgid "Notify info channel name"
+msgstr "Naziv kanala informacija"
 
-#. module: web_export_view
-#. openerp-web
-#: code:addons/web_export_view/static/src/js/web_export_view.js:63
+#. module: web_notify
+#: model:ir.model.fields,field_description:web_notify.field_res_users_notify_warning_channel_name
+msgid "Notify warning channel name"
+msgstr "Naziv kanala upozorenja"
+
+#. module: web_notify
+#: model:ir.model,name:web_notify.model_res_users
+msgid "Users"
+msgstr "Korisnici"
+
+#. module: web_notify
+#: code:addons/web_notify/models/res_users.py:33
 #, python-format
-msgid "True"
-msgstr "DA"
+msgid "Warning"
+msgstr "Upozorenje"
