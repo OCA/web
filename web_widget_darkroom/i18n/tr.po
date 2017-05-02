@@ -1,0 +1,115 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_widget_darkroom
+# 
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-30 08:28+0000\n"
+"PO-Revision-Date: 2017-03-30 08:28+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"Language-Team: Turkish (https://www.transifex.com/oca/teams/23907/tr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: tr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: web_widget_darkroom
+#: model:ir.ui.view,arch_db:web_widget_darkroom.darkroom_modal_view_form
+msgid "Cancel"
+msgstr "İptal"
+
+#. module: web_widget_darkroom
+#. openerp-web
+#: code:addons/web_widget_darkroom/static/src/xml/field_templates.xml:27
+#, python-format
+msgid "Clear"
+msgstr ""
+
+#. module: web_widget_darkroom
+#: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: web_widget_darkroom
+#: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: web_widget_darkroom
+#. openerp-web
+#: code:addons/web_widget_darkroom/static/src/xml/field_templates.xml:20
+#, python-format
+msgid "Darkroom"
+msgstr ""
+
+#. module: web_widget_darkroom
+#: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_image
+msgid "Darkroom Image"
+msgstr ""
+
+#. module: web_widget_darkroom
+#: model:ir.ui.view,arch_db:web_widget_darkroom.darkroom_modal_view_form
+msgid "Darkroom Modal"
+msgstr ""
+
+#. module: web_widget_darkroom
+#: model:ir.model,name:web_widget_darkroom.model_darkroom_modal
+msgid "Darkroom Modal - Wizard Model"
+msgstr ""
+
+#. module: web_widget_darkroom
+#: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_widget_darkroom
+#. openerp-web
+#: code:addons/web_widget_darkroom/static/src/xml/field_templates.xml:24
+#, python-format
+msgid "Edit"
+msgstr ""
+
+#. module: web_widget_darkroom
+#: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_id
+msgid "ID"
+msgstr ""
+
+#. module: web_widget_darkroom
+#: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: web_widget_darkroom
+#: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: web_widget_darkroom
+#: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: web_widget_darkroom
+#: model:ir.ui.view,arch_db:web_widget_darkroom.darkroom_modal_view_form
+msgid "Save"
+msgstr "Kaydet"
+
+#. module: web_widget_darkroom
+#: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_res_field_id
+msgid "Source Field"
+msgstr ""
+
+#. module: web_widget_darkroom
+#: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_res_model_id
+msgid "Source Model"
+msgstr ""
+
+#. module: web_widget_darkroom
+#: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_res_record_id
+msgid "Source Record ID"
+msgstr ""

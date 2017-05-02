@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-05 01:38+0000\n"
-"PO-Revision-Date: 2017-01-05 01:38+0000\n"
+"POT-Creation-Date: 2017-03-30 08:28+0000\n"
+"PO-Revision-Date: 2017-03-30 08:28+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -27,14 +27,14 @@ msgstr "Izvoz trenutnega pogleda"
 
 #. module: web_export_view
 #. openerp-web
-#: code:addons/web_export_view/static/src/js/web_export_view.js:89
+#: code:addons/web_export_view/static/src/js/web_export_view.js:91
 #, python-format
 msgid "False"
 msgstr "Nepravilno"
 
 #. module: web_export_view
 #. openerp-web
-#: code:addons/web_export_view/static/src/js/web_export_view.js:86
+#: code:addons/web_export_view/static/src/js/web_export_view.js:91
 #, python-format
 msgid "True"
 msgstr "Pravilno"
