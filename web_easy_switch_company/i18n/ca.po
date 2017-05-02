@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (7.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-31 10:07+0000\n"
+"POT-Creation-Date: 2017-03-18 09:21+0000\n"
 "PO-Revision-Date: 2015-10-07 17:50+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Catalan (http://www.transifex.com/oca/OCA-web-7-0/language/ca/)\n"
@@ -25,7 +25,7 @@ msgstr ""
 #. module: web_easy_switch_company
 #: model:ir.model,name:web_easy_switch_company.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Empreses"
 
 #. module: web_easy_switch_company
 #: model:ir.model,name:web_easy_switch_company.model_res_users
