@@ -85,7 +85,7 @@ odoo.define('web.shortcut', function (require) {
         show_application: function () {
             var self = this;
             return this._super.apply(this, arguments).then(function () {
-                self.shortcut_menu = _.find(self.systray_menu.widgets, function (item) {
+                self.shortcut_menu = _.find(self.menu.systray_menu.widgets, function (item) {
                     return item instanceof ShortcutMenu;
                 });
                 self.shortcut_menu.on('click', self, function (action_id) {
@@ -136,7 +136,11 @@ odoo.define('web.shortcut', function (require) {
                     if (self.action_manager.webclient.menu_data) {
                         for (var i = 0; i < self.action_manager.webclient.menu_data.children.length; i++) {
                             if (self.action_manager.webclient.menu_data.children[i].id === session.active_id) {
-                                menu_id = self.action_manager.webclient.menu_data.children[i].children[0].id;
+                                menu_temp = self.action_manager.webclient.menu_data.children[i].children[0];
+                                menu_id = menu_temp.id;
+                                if (menu_temp.children[0]){
+                                    menu_id = menu_temp.children[0].id
+                                }
                                 break;
                             }
                         }
