@@ -8,7 +8,7 @@
     "version": "10.0.1.0.0",
     'author': 'ACSONE SA/NV, '
               'Tecnativa, '
-              'Monk Software, ',
+              'Monk Software, '
               'Odoo Community Association (OCA)',
     "category": "web",
     "website": "http://acsone.eu",
