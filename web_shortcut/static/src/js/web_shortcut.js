@@ -78,16 +78,30 @@ odoo.define('web.shortcut', function (require) {
 
     WebClient.include({
         current_action_updated: function (action) {
-            this.shortcut_menu = _.find(this.systray_menu.widgets, function (item) {
-                return item instanceof ShortcutMenu;
-            });
+            if (this.menu.systray_menu) {
+                this.shortcut_menu = _.find(this.menu.systray_menu.widgets, function (item) {
+                    return item instanceof ShortcutMenu;
+                });
+            }
+            else {
+                this.shortcut_menu = _.find(this.systray_menu.widgets, function (item) {
+                    return item instanceof ShortcutMenu;
+                });
+            }
         },
         show_application: function () {
             var self = this;
             return this._super.apply(this, arguments).then(function () {
-                self.shortcut_menu = _.find(self.menu.systray_menu.widgets, function (item) {
-                    return item instanceof ShortcutMenu;
-                });
+                if (self.menu.systray_menu) {
+                    self.shortcut_menu = _.find(self.menu.systray_menu.widgets, function (item) {
+                        return item instanceof ShortcutMenu;
+                    });
+                }
+                else {
+                    self.shortcut_menu = _.find(self.systray_menu.widgets, function (item) {
+                        return item instanceof ShortcutMenu;
+                    });
+                }
                 self.shortcut_menu.on('click', self, function (action_id) {
                     self.do_action(action_id, {
                         clear_breadcrumbs: true,
