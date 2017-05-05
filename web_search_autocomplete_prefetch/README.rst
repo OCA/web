@@ -12,7 +12,6 @@ term in the background and only offers an option if this search has a result.
 Usage
 =====
 
-* go to ...
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
     :alt: Try me on Runbot
     :target: https://runbot.odoo-community.org/runbot/162/8.0
@@ -26,11 +25,17 @@ Known issues / Roadmap
 
 * some searches (especially via function fields) can be very heavy on the
   server.
-
   To disable prefetching on a per field basis, set the option
   `web_search_autocomplete_prefetch.disable`::
+
     options="{'web_search_autocomplete_prefetch.disable': true}"
+
   on your field in the search view.
+* by default, the addon triggers a search 350 milliseconds after the last key
+  pess. If you want a different timeout, set the parameter
+  ``web_search_autocomplete_prefetch.keypress_timeout`` to the amount of
+  milliseconds you need as timeout.
+
 
 Bug Tracker
 ===========
