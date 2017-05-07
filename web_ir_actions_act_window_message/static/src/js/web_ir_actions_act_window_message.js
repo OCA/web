@@ -71,18 +71,10 @@ odoo.define('web.web_ir_actions_act_window_message', function (require) {
                                 {
                                     self.do_action(result);
                                 }
-                                else
-                                {
-                                    if(
-                                        self.inner_widget &&
-                                        self.inner_widget.views
-                                    )
-                                    {
-                                        self.inner_widget
-                                        .views[self.inner_widget.active_view]
-                                        .controller.recursive_reload();
-                                    }
-                                }
+                                // always refresh the view after the action
+                                // ex: action updates a status
+                                self.inner_widget.active_view
+                                .controller.recursive_reload();
                             });
                         }
                         else{
