@@ -102,11 +102,21 @@ openerp.web_tree_many2one_clickable = function(instance, local)
             this.$current.delegate('a[data-many2one-clickable-model]',
                 'click', function()
                 {
-                    self.view.do_action({
-                        type: 'ir.actions.act_window',
-                        res_model: jQuery(this).data('many2one-clickable-model'),
-                        res_id: jQuery(this).data('many2one-clickable-id'),
-                        views: [[false, 'form']],
+                    var model_name = jQuery(this).data('many2one-clickable-model');
+                    var record_id = jQuery(this).data('many2one-clickable-id');
+                    var model_obj = new instance.web.Model(model_name);
+                    model_obj.call('get_formview_id', [record_id]).then(function (view_id) {
+                        if (view_id) {
+                            view_id = view_id[0];
+                        } else {
+                            view_id = false;
+                        }
+                        self.view.do_action({
+                            type: 'ir.actions.act_window',
+                            res_model: model_name,
+                            res_id: record_id,
+                            views: [[view_id, 'form']],
+                        });
                     });
                 });
             return result;
