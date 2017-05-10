@@ -24,6 +24,8 @@ limitations as:
 
  * The syntax to include in your domain a criteria involving values from a
    x2many field is complex.
+ * The right side of domain in case of x2many can involve huge amount of ids
+   (performance problem).
  * Domains computed by an onchange on an other field are not recomputed when
    you modify the form and don't modify the field triggering the onchange.
  * It's not possible to extend an existing domain. You must completely redefine
@@ -63,7 +65,7 @@ Usage
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/162/9.0
+   :target: https://runbot.odoo-community.org/runbot/162/10.0
 
 
 
@@ -87,6 +89,7 @@ Contributors
 ------------
 
 * Laurent Mignon <laurent.mignon@acsone.eu>
+* Denis Roussel <denis.roussel@acsone.eu>
 
 Maintainer
 ----------
