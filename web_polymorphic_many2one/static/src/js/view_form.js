@@ -18,47 +18,35 @@
 *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *
 ******************************************************************************/
-openerp.web_polymorphic = function (instance) {
-    instance.web.form.FieldPolymorphic = instance.web.form.FieldMany2One.extend( {
-        template: "FieldMany2One",
-        events: {
-            'focus input': function(e) {
-                this.field.relation = this.field_manager.get_field_value(this.polymorphic);
-            },
-            'click input': function(e) {
-                this.field.relation = this.field_manager.get_field_value(this.polymorphic);
-            }
-        },
-        init: function(field_manager, node) {
-            this._super(field_manager, node);
-            this.polymorphic = this.node.attrs.polymorphic;
-        },
-        render_editable: function() {
-            var self = this;
-            this.$drop_down = this.$el.find(".oe_m2o_drop_down_button");
-            this.$drop_down.click(function() {
-                self.polymorphic = self.node.attrs.polymorphic;
-                self.field.relation = self.field_manager.get_field_value(self.polymorphic);              
-            });
-            this._super();
-            this.set_polymorphic_event();
-            this.set({
-                readonly: true
-            });
+odoo.define('web.widgets.polymorphic_widget', function (require) {
+"use strict";
 
-        },
-        set_polymorphic_event: function() {
-            self = this;
-            this.field_manager.fields[this.polymorphic].$el.on(
-                'change', function(){
-                    field_value = self.field_manager.get_field_value(self.polymorphic);
-                    if(field_value !== false)
-                        self.set("effective_readonly", false);
-                    else
-                        self.set("effective_readonly", true);
-                }
-            );
-        }
-    });
-    instance.web.form.widgets.add('polymorphic', 'instance.web.form.FieldPolymorphic')
-};
+var core = require('web.core');
+
+var field_many2one = core.form_widget_registry.get('many2one')
+
+var FieldPolymorphic = field_many2one.extend( {
+    template: "FieldMany2One",
+
+    init: function(field_manager, node) {
+        this._super(field_manager, node);
+        this.can_create = false;
+        this.can_write = false;
+        this.options.no_open = true;
+        this.polymorphic = this.node.attrs.polymorphic;
+    },
+    get_search_result: function(search_val) {
+        this.field.relation = this.field_manager.get_field_value(this.polymorphic);
+        return this._super(search_val);
+    },
+
+    render_value: function(no_recurse) {
+        this.field.relation = this.field_manager.get_field_value(this.polymorphic);
+        return this._super(no_recurse);
+    },
+});
+
+core.form_widget_registry
+    .add('polymorphic', FieldPolymorphic);
+
+});

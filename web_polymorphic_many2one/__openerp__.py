@@ -34,16 +34,16 @@ OpenERP instead of the usual fixed one in the view definition
 
 Python fields declaration:
 
-    'model': fields.many2one('ir.model', string='Model'),
-    'object_id': fields.integer("Resource")
+    model = fields.Char(string='Model')      # ex. 'res.partner'
+    object_id = fields.Integer("Resource")   # ex. 42
 
 XML fields declaration:
 
     <field name="model" invisible="1" />
     <field name="object_id" widget="polymorphic" polymorphic="model" />
 """,
- 'js': [
-     'static/src/js/view_form.js'
+ 'data': [
+     'assets.xml',
  ],
- 'installable': False,
+ 'installable': True,
  'application': False}
