@@ -20,28 +20,12 @@
 #
 ##############################################################################
 {'name': 'Web Polymorphic Many2One',
- 'version': '0.2',
+ 'version': '9.0.0.0.1',
  'category': 'Web',
  'depends': ['web'],
  'author': "Elico Corp,Odoo Community Association (OCA)",
  'license': 'AGPL-3',
  'website': 'https://www.elico-corp.com',
- 'description': """
-Add a new widget named "polymorphic"
-The polymorphic field allow to dynamically store an id linked to any model in
-OpenERP instead of the usual fixed one in the view definition
-
-
-Python fields declaration:
-
-    model = fields.Char(string='Model')      # ex. 'res.partner'
-    object_id = fields.Integer("Resource")   # ex. 42
-
-XML fields declaration:
-
-    <field name="model" invisible="1" />
-    <field name="object_id" widget="polymorphic" polymorphic="model" />
-""",
  'data': [
      'assets.xml',
  ],

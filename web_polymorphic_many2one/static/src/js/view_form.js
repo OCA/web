@@ -23,7 +23,7 @@ odoo.define('web.widgets.polymorphic_widget', function (require) {
 
 var core = require('web.core');
 
-var field_many2one = core.form_widget_registry.get('many2one')
+var field_many2one = core.form_widget_registry.get('many2one');
 
 var FieldPolymorphic = field_many2one.extend( {
     template: "FieldMany2One",
@@ -36,17 +36,18 @@ var FieldPolymorphic = field_many2one.extend( {
         this.polymorphic = this.node.attrs.polymorphic;
     },
     get_search_result: function(search_val) {
-        this.field.relation = this.field_manager.get_field_value(this.polymorphic);
+        this.field.relation = this.field_manager.get_field_value(
+            this.polymorphic);
         return this._super(search_val);
     },
 
     render_value: function(no_recurse) {
-        this.field.relation = this.field_manager.get_field_value(this.polymorphic);
+        this.field.relation = this.field_manager.get_field_value(
+            this.polymorphic);
         return this._super(no_recurse);
     },
 });
 
-core.form_widget_registry
-    .add('polymorphic', FieldPolymorphic);
+core.form_widget_registry.add('polymorphic', FieldPolymorphic);
 
 });
