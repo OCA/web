@@ -20,12 +20,12 @@ Configuration
 Usage
 =====
 
-Python fields declaration:
+Python fields declaration::
 
     model = fields.Char(string='Model')      # ex. 'res.partner'
     object_id = fields.Integer("Resource")   # ex. 42
 
-XML fields declaration:
+XML fields declaration::
 
     <field name="model" invisible="1" />
     <field name="object_id" widget="polymorphic" polymorphic="model" />
