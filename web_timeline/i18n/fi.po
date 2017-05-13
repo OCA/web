@@ -59,7 +59,7 @@ msgstr "Viestejä"
 #: code:addons/web_timeline/static/src/xml/web_timeline.xml:10
 #, python-format
 msgid "Month"
-msgstr ""
+msgstr "Kuukausi"
 
 #. module: web_timeline
 #. openerp-web

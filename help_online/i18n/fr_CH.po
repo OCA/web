@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-29 19:38+0000\n"
-"PO-Revision-Date: 2016-12-01 10:10+0000\n"
+"POT-Creation-Date: 2017-05-02 01:43+0000\n"
+"PO-Revision-Date: 2017-05-11 14:15+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: French (Switzerland) (http://www.transifex.com/oca/OCA-web-8-0/language/fr_CH/)\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgstr "Annuler"
 #: view:export.help.wizard:help_online.export_help_wizard_view
 #: view:import.help.wizard:help_online.import_help_wizard_view
 msgid "Close"
-msgstr ""
+msgstr "Fermer"
 
 #. module: help_online
 #. openerp-web
