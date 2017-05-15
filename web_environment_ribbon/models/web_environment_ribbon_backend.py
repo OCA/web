@@ -17,8 +17,12 @@ class WebEnvironmentRibbonBackend(models.Model):
         :return: dictionary
         """
         ir_config_model = self.env['ir.config_parameter']
+        # Add the database name to the ribbon name
+        db_name = self.env.cr.dbname
+        name = u"{name}<br/>({db_name})".format(
+            name=ir_config_model.get_param('ribbon.name'), db_name=db_name)
         return {
-            'name': ir_config_model.get_param('ribbon.name'),
+            'name': name,
             'color': ir_config_model.get_param('ribbon.color'),
             'background_color': ir_config_model.get_param(
                 'ribbon.background.color'),
