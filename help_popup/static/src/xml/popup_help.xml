@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates>
-    <t t-name="ViewManagerAction" t-extend="ViewManagerAction">
-        <t t-jquery="h2.oe_view_title" t-operation="before">
-            <span> &amp;nbsp; </span><span class="oe_button oe_highlight view_help">?</span>
-        </t>
-    </t>
+	<t t-extend="ControlPanel">
+		<t t-jquery="ol.breadcrumb" t-operation="replace">
+			<ol class="breadcrumb" style="width: 44%;" />
+		</t>
+
+		<t t-jquery="ol.breadcrumb" t-operation="before">
+			<button class="btn btn-primary btn-sm o_list_button_add view_help" style="margin-right: 1%; width: 5%">?</button>
+		</t>
+	</t>
 </templates>

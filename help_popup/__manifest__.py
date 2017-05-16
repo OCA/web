@@ -21,7 +21,7 @@
 
 {
     'name': 'Help Popup',
-    'version': '8.0.0.5.0',
+    'version': '10.0.1.0.0',
     'author': 'Akretion, Odoo Community Association (OCA)',
     'depends': [
         'web',
@@ -39,5 +39,5 @@
     'qweb': [
         'static/src/xml/popup_help.xml',
     ],
-    'installable': False,
+    'installable': True,
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<openerp>
+<odoo>
     <data noupdate="1">
 
         <record id="base.action_partner_form" model="ir.actions.act_window">
@@ -52,4 +52,4 @@ Allows to developers to write documentation on their work.
         </record>
 
 </data>
-</openerp>
+</odoo>
