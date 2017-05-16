@@ -4,13 +4,11 @@
 odoo.define('web_m2x_options.web_m2x_options', function (require) {
     "use strict";
 
-    var $ = require("$");
     var core = require('web.core'),
         data = require('web.data'),
         Dialog = require('web.Dialog'),
         Model = require('web.Model'),
         form_relational = require('web.form_relational'),
-        _ = require('_'),
         _t  = core._t;
 
     var OPTIONS = ['web_m2x_options.create',
