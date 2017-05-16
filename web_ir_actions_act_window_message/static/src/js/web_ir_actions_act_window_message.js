@@ -1,7 +1,8 @@
 /* Copyright 2017 Therp BV, ACSONE SA/NV
  *  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
-odoo.define('web.web_ir_actions_act_window_message', function (require) {
+odoo.define('web.web_ir_actions_act_window_message', function(require)
+{
     "use strict";
 
     var ActionManager = require('web.ActionManager'),
@@ -13,8 +14,8 @@ odoo.define('web.web_ir_actions_act_window_message', function (require) {
     var _t = core._t;
 
     ActionManager.include({
-        ir_actions_act_window_message: function(action, options){
-
+        ir_actions_act_window_message: function(action, options)
+        {
             var self = this,
                 buttons = [];
 
@@ -34,18 +35,22 @@ odoo.define('web.web_ir_actions_act_window_message', function (require) {
 
             var dialog = new Dialog(
                 this,
-                _.extend({
-                    size: 'medium',
-                    title: action.title,
-                    $content: $('<div>', {
-                        text: action.message,
-                    }),
-                    buttons: buttons.concat(
-                        this.ir_actions_act_window_message_get_buttons(
-                            action, function() { dialog.close() })
-                    ),
-                }, options)
-            );
+                _.extend(
+                    {
+                        size: 'medium',
+                        title: action.title,
+                        $content: $('<div>',
+                            {
+                                text: action.message,
+                            }
+                        ),
+                        buttons: buttons.concat(
+                            this.ir_actions_act_window_message_get_buttons(
+                                action, function() { dialog.close() })
+                        ),
+                    },
+                    options)
+            )
             return dialog.open();
         },
         ir_actions_act_window_message_get_buttons: function(action, close_func)
@@ -59,7 +64,8 @@ odoo.define('web.web_ir_actions_act_window_message', function (require) {
                     oe_link_class: button_definition.oe_link_class ||
                                    'oe_highlight',
                     click: function() {
-                        if(button_definition.type == 'method'){
+                        if(button_definition.type == 'method')
+                        {
                             (new Model(button_definition.model))
                             .call(
                                 button_definition.method,
@@ -77,13 +83,14 @@ odoo.define('web.web_ir_actions_act_window_message', function (require) {
                                 .controller.recursive_reload();
                             });
                         }
-                        else{
+                        else
+                        {
                             self.do_action(button_definition);
                         }
                         close_func();
-                    }
+                    },
                 }
             });
-        }
+        },
     });
 });
