@@ -41,6 +41,8 @@ Depend on this module and return
                 'args': [self.ids],
                 # dictionary of keyword arguments
                 'kwargs': {'force': True},
+                # button style
+                'classes': 'btn-primary',
             }
         ]
     }
