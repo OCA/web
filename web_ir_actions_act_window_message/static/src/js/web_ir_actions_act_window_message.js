@@ -29,7 +29,7 @@ odoo.define('web.web_ir_actions_act_window_message', function(require)
                             .controller.recursive_reload();
                         dialog.close()
                     },
-                    oe_link_class: 'oe_highlight',
+                    classes: 'btn-default',
                 })
             }
 
@@ -61,8 +61,7 @@ odoo.define('web.web_ir_actions_act_window_message', function(require)
             {
                 return {
                     text: button_definition.name || 'No name set',
-                    oe_link_class: button_definition.oe_link_class ||
-                                   'oe_highlight',
+                    classes: button_definition.classes || 'btn-default',
                     click: function() {
                         if(button_definition.type == 'method')
                         {
