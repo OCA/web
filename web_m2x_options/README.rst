@@ -6,6 +6,9 @@
 Add new options for many2one field
 ==================================
 
+Description
+-----------
+
 This modules modifies "many2one" and "many2manytags" form widgets so as to add some new display
 control options.
 
@@ -147,6 +150,7 @@ Contributors
 * Yannick Vaucher <yannick.vaucher@camptocamp.com>
 * Zakaria Makrelouf <z.makrelouf@gmail.com>
 * Jairo Llopis <jairo.llopis@tecnativa.com>
+* David Vidal <david.vidal@tecnativa.com>
 
 Maintainer
 ----------
