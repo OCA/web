@@ -21,7 +21,7 @@
 
 {
     'name': 'Tags multiple selection',
-    'version': '10.0.1.1.0',
+    'version': '10.0.1.0.0',
     'author': 'Akretion, Odoo Community Association (OCA), Jamin Shah',
     'depends': [
         'web',
