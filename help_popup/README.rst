@@ -13,7 +13,7 @@ and advanced_help.
 Installation
 ============
 
-It was tested on Odoo 8.0 branch.
+It was tested on Odoo 10.0 branch.
 
 
 Configuration

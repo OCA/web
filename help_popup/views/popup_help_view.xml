@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
         <template id="assets_backend" name="custom assets" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
                 <script type="text/javascript"
                         src="/help_popup/static/src/js/popup_help.js"/>
             </xpath>
         </template>
-    </data>
-</openerp>
+</odoo>
