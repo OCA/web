@@ -4,8 +4,10 @@
 
 <templates xml:space="preserve">
     <t t-extend="FieldMany2One">
-        <t t-jquery=".oe_m2o_cm_button" t-operation="attributes">
-            <attribute name="t-if">!(widget.options.no_open || widget.options.no_open_edit)</attribute>
+        <t t-jquery=".o_external_button" t-operation="attributes">
+            <attribute name="t-if">
+                !(widget.options.no_open || widget.options.no_open_edit)
+            </attribute>
         </t>
     </t>
 </templates>
