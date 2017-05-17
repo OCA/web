@@ -11,16 +11,20 @@ class WebEnvironmentRibbonBackend(models.Model):
     _description = 'Web Environment Ribbon Backend'
 
     @api.model
+    def _prepare_ribbon_name(self):
+        db_name = self.env.cr.dbname
+        name = self.env['ir.config_parameter'].get_param('ribbon.name')
+        name = name.format(db_name=db_name)
+        return name
+
+    @api.model
     def get_environment_ribbon(self):
         """
         This method returns the ribbon data from ir config parameters
         :return: dictionary
         """
         ir_config_model = self.env['ir.config_parameter']
-        # Add the database name to the ribbon name
-        db_name = self.env.cr.dbname
-        name = u"{name}<br/>({db_name})".format(
-            name=ir_config_model.get_param('ribbon.name'), db_name=db_name)
+        name = self._prepare_ribbon_name()
         return {
             'name': name,
             'color': ir_config_model.get_param('ribbon.color'),
