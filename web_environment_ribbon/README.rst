@@ -25,6 +25,8 @@ Configuration
 * You can customize the ribbon color and background color through system
   parameters: "ribbon.color", "ribbon.background.color". Fill with valid CSS
   colors or just set to "False" to use default values.
+* You can add the database name in the ribbon by adding "{db_name}" in the
+  system parameter "ribbon.name".
 
 Usage
 =====
