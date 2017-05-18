@@ -8,7 +8,7 @@ Onchange actions
 
 This module allows you to return an action (``ir.actions.*``) from an onchange handler.
 
-Whit way, you can have much more elaborate message boxes or simply show a whole wizard or do whatever else is possible with actions on the client side.
+This way, you can have much more elaborate message boxes or simply show a whole wizard or do whatever else is possible with actions on the client side.
 
 Usage
 =====
