@@ -3,14 +3,14 @@
 # * web_translate_dialog
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2016
+# OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 9.0c\n"
+"Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-23 03:40+0000\n"
-"PO-Revision-Date: 2016-11-23 03:40+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"POT-Creation-Date: 2017-04-28 18:03+0000\n"
+"PO-Revision-Date: 2017-04-28 18:03+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -41,14 +41,14 @@ msgstr "Speichern"
 
 #. module: web_translate_dialog
 #. openerp-web
-#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:198
+#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:192
 #, python-format
 msgid "Translate"
 msgstr "Übersetze"
 
 #. module: web_translate_dialog
 #. openerp-web
-#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:26
+#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:23
 #, python-format
 msgid "Translations"
 msgstr "Übersetzungen"
