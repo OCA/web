@@ -1,0 +1,3 @@
+.openerp .oe_form_readonly .oe_edit_only, .openerp .oe_form_readonly .oe_form_field:empty {
+  display: none !important;
+}
