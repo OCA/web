@@ -6,25 +6,30 @@
 Web product Variante Selector
 ==============
 
-This module extends the functionality of ... to support ...
-and to allow you to ...
+This module extends the functionality of search widget to support product with lot of variantes.
 
 Installation
 ============
 
 To install this module, you need to:
 
-#. Just instal, no configuration needed
+#. Just install, no configuration needed
 
 Configuration
 =============
 
 To configure this module, you need to:
 
-#. no configuration needed
+#. No configuration needed
 
 Usage
 =====
+
+.. image:: /web_product_variante_selector/static/description/img_1.png
+    :alt: Screenshot
+
+.. image:: /web_product_variante_selector/static/description/img_2.png
+    :alt: Screenshot
 
 In each field Many2one with 'product.product' as comodel, under "Search More" and "Create and Edit", you can see "Product Variante Selector".
 You can add 'no_select_variante': True in options attribute in xml view to desactivate this function localy.
@@ -33,14 +38,13 @@ Limitation at 10 attributes per product.
 Known issues / Roadmap
 ======================
 
-* ...
-Inscrease the limitation.
+* Inscrease the limitation.
 
 Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues
-<https://github.com/OCA/{project_repo}/issues>`_. In case of trouble, please
+<https://github.com/OCA/web/issues>`_. In case of trouble, please
 check there if your issue has already been reported. If you spotted it first,
 help us smash it by providing detailed and welcomed feedback.
 
@@ -55,7 +59,7 @@ Images
 Contributors
 ------------
 
-* Flroent de Labarre
+* Florent de Labarre
 
 Maintainer
 ----------
