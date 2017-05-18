@@ -8,6 +8,16 @@ Web product Variante Selector
 
 This module extends the functionality of search widget to support product with lot of variantes.
 
+.. image:: /web_product_variante_selector/static/description/img_1.png
+    :alt: Screenshot
+
+.. image:: /web_product_variante_selector/static/description/img_2.png
+    :alt: Screenshot
+
+In each field Many2one with 'product.product' as comodel, under "Search More" and "Create and Edit", you can see "Product Variante Selector".
+You can add 'no_select_variante': True in options attribute in xml view to desactivate this function localy.
+Limitation at 10 attributes per product.
+
 Installation
 ============
 
@@ -25,15 +35,9 @@ To configure this module, you need to:
 Usage
 =====
 
-.. image:: /web_product_variante_selector/static/description/img_1.png
-    :alt: Screenshot
-
-.. image:: /web_product_variante_selector/static/description/img_2.png
-    :alt: Screenshot
-
-In each field Many2one with 'product.product' as comodel, under "Search More" and "Create and Edit", you can see "Product Variante Selector".
-You can add 'no_select_variante': True in options attribute in xml view to desactivate this function localy.
-Limitation at 10 attributes per product.
+.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
+   :alt: Try me on Runbot
+   :target: https://runbot.odoo-community.org/runbot/162/10.0
 
 Known issues / Roadmap
 ======================
