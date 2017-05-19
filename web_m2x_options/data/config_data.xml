@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="web_m2x_options_limit" model="ir.config_parameter">
+            <field name="key">web_m2x_options.limit</field>
+            <field name="value">10</field>
+        </record>
+        <record id="web_m2x_options_create_edit" model="ir.config_parameter">
+            <field name="key">web_m2x_options.create_edit</field>
+            <field name="value">True</field>
+        </record>
+        <record id="web_m2x_options_create" model="ir.config_parameter">
+            <field name="key">web_m2x_options.create</field>
+            <field name="value">True</field>
+        </record>
+        <record id="web_m2x_options_search_more" model="ir.config_parameter">
+            <field name="key">web_m2x_options.search_more</field>
+            <field name="value">True</field>
+        </record>
+        <record id="web_m2x_options_m2o_dialog" model="ir.config_parameter">
+            <field name="key">web_m2x_options.m2o_dialog</field>
+            <field name="value">True</field>
+        </record>
+    </data>
+</odoo>

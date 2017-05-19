@@ -351,12 +351,14 @@ control options.</p>
 Edit...&quot; entries from many2one drop down. You can also change default number of
 proposition appearing in the drop-down. Or prevent the dialog box poping in
 case of validation error.</p>
-<p>If not specified, the module will avoid proposing any of the create options
-if the current user have no permission rights to create the related object.</p>
+<p>By default this module will disable 'open link button' next to the drop down, if you want enable
+it in a field, add options={'no_open': false} in the field definition of view.</p>
+<p>Not working in odoo 10.0 yet.(If not specified, the module will avoid proposing any of the create options
+if the current user have no permission rights to create the related object.)</p>
 </div>
 <div class="section" id="requirements">
 <h1>Requirements</h1>
-<p>Was tested on openerp 8.0, trunk, saas-5 branch. New way to import js file. (thanks to tfossoul)</p>
+<p>Was tested on odoo 10.0 community</p>
 </div>
 <div class="section" id="new-options">
 <h1>New options</h1>
@@ -369,7 +371,7 @@ Whether to display &quot;Create and Edit...&quot; entry in dropdown panel</block
 <p><tt class="docutils literal">m2o_dialog</tt> <em>boolean</em> (Default: depends if user have create rights)</p>
 <blockquote>
 Whether to display the many2one dialog in case of validation error.</blockquote>
-<p><tt class="docutils literal">limit</tt> <em>int</em> (Default: openerp default value is <tt class="docutils literal">7</tt>)</p>
+<p><tt class="docutils literal">limit</tt> <em>int</em> (Default: odoo default value is <tt class="docutils literal">7</tt>)</p>
 <blockquote>
 Number of displayed record in drop-down panel</blockquote>
 </div>
@@ -383,7 +385,7 @@ Whether to display the &quot;Create...&quot; entry in dropdown panel for all fie
 <p><tt class="docutils literal">web_m2x_options.create_edit</tt> <em>boolean</em> (Default: depends if user have create rights)</p>
 <blockquote>
 Whether to display &quot;Create and Edit...&quot; entry in dropdown panel for all fields in the odoo instance.</blockquote>
-<p><tt class="docutils literal">web_m2x_options.limit</tt> <em>int</em> (Default: openerp default value is <tt class="docutils literal">7</tt>)</p>
+<p><tt class="docutils literal">web_m2x_options.limit</tt> <em>int</em> (Default: odoo default value is <tt class="docutils literal">7</tt>)</p>
 <blockquote>
 Number of displayed record in drop-down panel for all fields in the odoo instance</blockquote>
 <p>To add these parameters go to Configuration -&gt; Technical -&gt; Parameters -&gt; System Parameters and add new parameters like:</p>
@@ -391,6 +393,8 @@ Number of displayed record in drop-down panel for all fields in the odoo instanc
 <li>web_m2x_options.create: False</li>
 <li>web_m2x_options.create_edit: False</li>
 <li>web_m2x_options.limit: 10</li>
+<li>web_m2x_options.search_more: True</li>
+<li>web_m2x_options.m2o_dialog: False</li>
 </ul>
 </div>
 <div class="section" id="example">
@@ -405,7 +409,7 @@ Number of displayed record in drop-down panel for all fields in the odoo instanc
 <div class="section" id="note">
 <h1>Note</h1>
 <p>Double check that you have no inherited view that remote <tt class="docutils literal">options</tt> you set on a field !
-If nothing work, add a debugger in the first ligne of <tt class="docutils literal">get_search_result method</tt> and enable debug mode in OpenERP. When you write something in a many2one field, javascript debugger should pause. If not verify your installation.</p>
+If nothing work, add a debugger in the first ligne of <tt class="docutils literal">get_search_result method</tt> and enable debug mode with assets in odoo. When you write something in a many2one field, javascript debugger should pause. If not verify your installation.</p>
 </div>
 </div>
 </body>
