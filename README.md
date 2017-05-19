@@ -33,10 +33,12 @@ addon | version | summary
 [web_searchbar_full_width](web_searchbar_full_width/) | 10.0.1.0.0 | Show search bar in full screen width
 [web_send_message_popup](web_send_message_popup/) | 10.0.1.0.0 | Web Send Message as Popup
 [web_sheet_full_width](web_sheet_full_width/) | 10.0.1.0.1 | Use the whole available screen width when displaying sheets
+[web_shortcut](web_shortcut/) | 10.0.1.0.0 | Shortcut Menu
 [web_translate_dialog](web_translate_dialog/) | 10.0.1.0.0 | Easy-to-use pop-up to translate fields in several languages
 [web_tree_image](web_tree_image/) | 10.0.1.1.0 | Show images in tree views
 [web_tree_many2one_clickable](web_tree_many2one_clickable/) | 10.0.1.0.0 | Open the linked resource when clicking on their name
 [web_widget_color](web_widget_color/) | 10.0.1.0.0 | Web Widget Color
+[web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 10.0.1.0.0 | Show list fields as a matrix
 [web_x2many_delete_all](web_x2many_delete_all/) | 10.0.1.0.0 | Adds a button to x2many fields that removes all linked records
 
 
@@ -70,7 +72,6 @@ addon | version | summary
 [web_recipients_uncheck](web_recipients_uncheck/) | 8.0.0.3.0 (unported) | Uncheck recipients on res.partner
 [web_search_alphabetic](web_search_alphabetic/) | 1.0 (unported) | Web Alphabetical Search
 [web_sheet_full_width_selective](web_sheet_full_width_selective/) | 8.0.0.1.0 (unported) | Show selected sheets with full width
-[web_shortcuts](web_shortcuts/) | 8.0.1.0.0 (unported) | Web Shortcuts
 [web_switch_company_warning](web_switch_company_warning/) | 8.0.0.1.0 (unported) | Show a warning if current company has been switched in another tab or window.
 [web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 8.0.1.0.0 (unported) | web tree dynamic colored field
 [web_widget_datepicker_options](web_widget_datepicker_options/) | 8.0.1.0.0 (unported) | web_widget_datepicker_options
@@ -79,6 +80,5 @@ addon | version | summary
 [web_widget_many2many_tags_multi_selection](web_widget_many2many_tags_multi_selection/) | 9.0.1.1.0 (unported) | Tags multiple selection
 [web_widget_text_markdown](web_widget_text_markdown/) | 8.0.1.0.0 (unported) | web_widget_text_markdown
 [web_widget_timepicker](web_widget_timepicker/) | 9.0.1.0.0 (unported) | Web Timepicker Widget
-[web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 9.0.1.0.0 (unported) | Show list fields as a matrix
 
 [//]: # (end addons)
