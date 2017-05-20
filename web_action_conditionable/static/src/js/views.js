@@ -1,6 +1,6 @@
 odoo.define("web_action_conditionable.view", function(require) {
     "use strict";
-    var view = require("web.View")
+    var view = require("web.View");
     view.include({
 	is_action_enabled : function(action) {
 	    var attrs = this.fields_view.arch.attrs;
@@ -17,5 +17,5 @@ odoo.define("web_action_conditionable.view", function(require) {
 		return true;
 	    }
 	}
-    })
+    });
 });
