@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-27 07:19+0000\n"
 "PO-Revision-Date: 2015-05-27 07:19+0000\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: web_advanced_search_x2x
-#. openerp-web
+#. odoo-web
 #: code:addons/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js:295
 #: code:addons/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js:322
 #, python-format
@@ -24,28 +24,28 @@ msgid "Advanced"
 msgstr ""
 
 #. module: web_advanced_search_x2x
-#. openerp-web
+#. odoo-web
 #: code:addons/web_advanced_search_x2x/static/src/xml/web_advanced_search_x2x.xml:8
 #, python-format
 msgid "Search"
 msgstr ""
 
 #. module: web_advanced_search_x2x
-#. openerp-web
+#. odoo-web
 #: code:addons/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js:221
 #, python-format
 msgid "Use criteria"
 msgstr ""
 
 #. module: web_advanced_search_x2x
-#. openerp-web
+#. odoo-web
 #: code:addons/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js:159
 #, python-format
 msgid "invalid search domain"
 msgstr ""
 
 #. module: web_advanced_search_x2x
-#. openerp-web
+#. odoo-web
 #: code:addons/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js:47
 #, python-format
 msgid "is in selection"
