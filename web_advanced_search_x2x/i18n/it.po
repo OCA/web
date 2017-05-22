@@ -1,0 +1,58 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_advanced_search_x2x
+# 
+# Translators:
+# Ahmet Altınışık <aaltinisik@altinkaya.com.tr>, 2016
+# Carles Antoli <carlesantoli@hotmail.com>, 2016
+# Christophe CHAUVET <christophe.chauvet@gmail.com>, 2015
+# Bole <bole@dajmi5.com>, 2015
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012
+# Gustavo Lepri <gustavolepri@gmail.com>, 2015
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
+# Paolo Valier, 2016
+# Paolo Valier, 2016
+# Pedro M. Baeza <pedro.baeza@gmail.com>, 2015
+# Rudolf Schnapka <rs@techno-flex.de>, 2016
+# Thomas A. Jaeger, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: web (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-28 07:09+0000\n"
+"PO-Revision-Date: 2016-04-30 19:54+0000\n"
+"Last-Translator: Paolo Valier\n"
+"Language-Team: Italian (http://www.transifex.com/oca/OCA-web-8-0/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: web_advanced_search_x2x
+#. openerp-web
+#: code:addons/web_advanced_search_x2x/static/src/xml/web_advanced_search_x2x.xml:8
+#, python-format
+msgid "Search"
+msgstr "Cerca"
+
+#. module: web_advanced_search_x2x
+#. openerp-web
+#: code:addons/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js:235
+#, python-format
+msgid "Use criteria"
+msgstr ""
+
+#. module: web_advanced_search_x2x
+#. openerp-web
+#: code:addons/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js:172
+#, python-format
+msgid "invalid search domain"
+msgstr "dominio di ricerca non valido"
+
+#. module: web_advanced_search_x2x
+#. openerp-web
+#: code:addons/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js:47
+#, python-format
+msgid "is in selection"
+msgstr ""
