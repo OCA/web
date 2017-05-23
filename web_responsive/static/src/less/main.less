@@ -50,8 +50,10 @@ main {
         overflow: auto;
         > .o_main_content {
             overflow: initial;
-            > .o_content {
-                overflow: initial;
+            @media (max-width: @screen-xs-max) {
+                > .o_content {
+                    overflow: initial;
+                }
             }
         }
     }
