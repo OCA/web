@@ -39,6 +39,7 @@ addon | version | summary
 [web_searchbar_full_width](web_searchbar_full_width/) | 9.0.1.0.0 | Show search bar in full screen width
 [web_send_message_popup](web_send_message_popup/) | 9.0.1.0.0 | Web Send Message as Popup
 [web_sheet_full_width](web_sheet_full_width/) | 9.0.1.0.0 | Use the whole available screen width when displaying sheets
+[web_timeline](web_timeline/) | 9.0.1.0.0 | Interactive visualization chart to show events in time
 [web_translate_dialog](web_translate_dialog/) | 9.0.1.0.0 | Easy-to-use pop-up to translate fields in several languages
 [web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 9.0.2.0.0 | Allows you to dynamically color fields on tree views
 [web_tree_image](web_tree_image/) | 9.0.1.1.0 | Show images in tree views
