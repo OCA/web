@@ -20,13 +20,25 @@
 #
 ############################################################################*/
 
-openerp.web_ckeditor4 = function(instance)
-{
+odoo.define('web_ckeditor4.web_ckeditor4', function(require) {
+"use strict";
+
+    var common = require('web.form_common'),
+        core = require('web.core'),
+        formats = require('web.formats'),
+        dom_utils = require('web.dom_utils'),
+        session = require('web.session'),
+        form_widgets = require('web.form_widgets');
+        
+    var widget = common.AbstractField.extend(common.ReinitializeFieldMixin);
+   
     var ckeditor_addFunction_org = CKEDITOR.tools.addFunction;
+    
     //this is a quite complicated way to kind of monkey patch the private
     //method onDomReady of ckeditor's plugin wysiwigarea, which causes problems
     //when the editor is about to be destroyed but because of OpenERP's
     //architecture updated one last time with its current value
+    
     CKEDITOR.tools.addFunction = function(fn, scope)
     {
         if(scope && scope._ && scope._.attrChanges && scope._.detach)
@@ -47,7 +59,7 @@ openerp.web_ckeditor4 = function(instance)
         }
         return ckeditor_addFunction_org(fn, scope);
     };
-
+    
     CKEDITOR.on('dialogDefinition', function(e)
         {
             _.each(e.data.definition.contents, function(element)
@@ -86,16 +98,7 @@ openerp.web_ckeditor4 = function(instance)
                 });
             });
         });
-
-    instance.web.form.widgets.add('text_ckeditor4',
-            'instance.web_ckeditor4.FieldCKEditor4');
-    instance.web.form.widgets.add('text_ckeditor4_raw',
-            'instance.web_ckeditor4.FieldCKEditor4Raw');
-    instance.web.form.widgets.add('text_html',
-            'instance.web_ckeditor4.FieldCKEditor4');
-    instance.web.form.widgets.add('html',
-            'instance.web_ckeditor4.FieldCKEditor4');
-
+    
     function filter_html(value, ckeditor_filter, ckeditor_writer)
     {
         var fragment = CKEDITOR.htmlParser.fragment.fromHtml(value);
@@ -104,8 +107,8 @@ openerp.web_ckeditor4 = function(instance)
         fragment.writeHtml(ckeditor_writer);
         return ckeditor_writer.getHtml();
     };
-
-    default_ckeditor_filter = new CKEDITOR.filter(
+    
+    var default_ckeditor_filter = new CKEDITOR.filter(
             {
                 '*':
                 {
@@ -115,36 +118,70 @@ openerp.web_ckeditor4 = function(instance)
                 },
                 'html head title meta style body p div span a h1 h2 h3 h4 h5 img br hr table tr th td ul ol li dd dt strong pre b i': true,
             });
-    default_ckeditor_writer = new CKEDITOR.htmlParser.basicWriter();
-
-    instance.web_ckeditor4.FieldCKEditor4 = instance.web.form.FieldText.extend({
+    var default_ckeditor_writer = new CKEDITOR.htmlParser.basicWriter();
+   
+    var FieldTextCKEditor = widget.extend({
+        template: 'FieldText',
         ckeditor_config: {
             removePlugins: 'iframe,flash,forms,smiley,pagebreak,stylescombo',
             filebrowserImageUploadUrl: 'dummy',
-            extraPlugins: 'filebrowser',
+            extraPlugins: 'filebrowser,wysiwygarea',
             // this is '#39' per default which screws up single quoted text in ${}
             entities_additional: '',
         },
         ckeditor_filter: default_ckeditor_filter,
         ckeditor_writer: default_ckeditor_writer,
-        start: function()
-        {
-            this._super.apply(this, arguments);
-    
-            CKEDITOR.lang.load(instance.session.user_context.lang.split('_')[0], 'en', function() {});
+        
+        events: {
+            'keyup': function (e) {
+                if (e.which === $.ui.keyCode.ENTER) {
+                    e.stopPropagation();
+                }
+            },
+            'keypress': function (e) {
+                if (e.which === $.ui.keyCode.ENTER) {
+                    e.stopPropagation();
+                }
+            },
+            'change': 'store_dom_value',
         },
-        initialize_content: function()
-        {
-            var self = this;
+        init: function() {
             this._super.apply(this, arguments);
-            if(!this.$textarea)
-            {
+            self=this;
+            //Clean Editor when detated form
+            this.view.on("detached",this, function(){ 
+                self._cleanup_editor();
+            });
+            this.view.on("attached",this, function(){ 
+              var am = this.view.get('actual_mode');
+              if (am === 'create' && !this.editor)
+                this.start()
+            });
+  
+        },
+        
+        start: function()
+            { 
+                var self = this;
+                CKEDITOR.lang.load(session.user_context.lang.split('_')[0], 'en', function() {});
+                this._super.apply(this, arguments);
+            },
+        
+        initialize_content: function() {
+            /* From Original */
+            if (!this.get("effective_readonly")) {
+                this.auto_sized = false;
+                this.setupFocus(this.$el);
+                }
+            //////////////////////
+            
+            if (!this.$el.is('textarea'))
                 return;
-            }
-            this.editor = CKEDITOR.replace(this.$textarea.get(0),
+            var self = this;
+            this.editor = CKEDITOR.replace(this.$el.get(0),
                 _.extend(
                     {
-                        language: instance.session.user_context.lang.split('_')[0],
+                        language: session.user_context.lang.split('_')[0],
                         on:
                         {
                             'change': function()
@@ -154,17 +191,26 @@ openerp.web_ckeditor4 = function(instance)
                         },
                     }, 
                     this.ckeditor_config));
+                    
         },
-        store_dom_value: function()
-        {
-            this.internal_set_value(this.editor ? this.editor.getData() : instance.web.parse_value(this.get('value'), this));
+        
+        commit_value: function () {
+            if (!this.get("effective_readonly")) {
+                this.store_dom_value();
+            }
+            return this._super();
         },
+        
+        store_dom_value: function () {
+            this.internal_set_value(this.editor ? this.editor.getData() : formats.parse_value(this.get('value'), this));
+        },
+        
         filter_html: function(value)
         {
             return filter_html(value, this.ckeditor_filter, this.ckeditor_writer);
         },
-        render_value: function()
-        {
+        
+        render_value: function() {
             if(this.get("effective_readonly"))
             {
                 this.$el.html(this.filter_html(this.get('value')));
@@ -190,35 +236,67 @@ openerp.web_ckeditor4 = function(instance)
                 }
             }
         },
-        undelegateEvents: function()
+        
+    undelegateEvents: function()
         {
-            this._cleanup_editor();
+            // this._cleanup_editor();
             return this._super.apply(this, arguments);
         },
-        _cleanup_editor: function()
+        
+       _cleanup_editor: function()
         {
             if(this.editor)
             {
-                this.editor.removeAllListeners();
                 this.editor.destroy();
+                this.editor.removeAllListeners();
                 this.editor = null;
             }
         },
-        destroy: function()
-        {
-            this.destroy_content();
-            this._super();
-        },
+        
         destroy_content: function()
         {
-            this._cleanup_editor();
-        }
+            return $.when(this._cleanup_editor()).done(this._super());
+            
+        },
+        
+        is_syntax_valid: function() {
+            if (!this.get("effective_readonly")) {
+                try {
+                    formats.parse_value(this.$el.val(), this, '');
+                } catch(e) {
+                    return false;
+                }
+            }
+            return true;
+        },
+        is_false: function() {
+            return this.get('value') === '' || this._super();
+        },
+        focus: function($el) {
+            if(!this.get("effective_readonly")) {
+                return this.$el.focus();
+            }
+            return false;
+        },
+        set_dimensions: function(height, width) {
+            this.$el.css({
+                width: width,
+                minHeight: height,
+            });
+        },
     });
-    instance.web_ckeditor4.FieldCKEditor4Raw = instance.web_ckeditor4.FieldCKEditor4.extend({
-        filter_html: function(value)
+    
+    var FieldCKEditor4Raw = FieldTextCKEditor.extend({
+       filter_html: function(value)
         {
             return value;
-        }
+        } 
     });
-}
-
+    
+    core.form_widget_registry.add('text_ckeditor4', FieldTextCKEditor);
+    core.form_widget_registry.add('text_html', FieldTextCKEditor);
+    core.form_widget_registry.add('html_ckeditor4', FieldTextCKEditor);
+    core.form_widget_registry.add('text_ckeditor4_raw',FieldCKEditor4Raw);
+    
+    return {FieldCKEditor4: FieldTextCKEditor}
+});
