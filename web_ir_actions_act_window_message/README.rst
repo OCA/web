@@ -19,6 +19,8 @@ Depend on this module and return
         # you can create your own close button with an action of type
         # ir.actions.act_window_close
         'close_button_title': 'Make this window go away',
+        # Use HTML instead of text
+        'is_html_message': True,
         # this is an optional list of buttons to show
         'buttons': [
             # a button can be any action (also ir.actions.report.xml et al)
@@ -73,6 +75,7 @@ Contributors
 
 * Holger Brunn <hbrunn@therp.nl>
 * Zakaria Makrelouf (ACSONE SA/NV) <z.makrelouf@gmail.com>
+* Benjamin Willig (ACSONE SA/NV) <benjamin.willig@acsone.eu>
 
 Maintainer
 ----------
