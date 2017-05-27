@@ -1,10 +1,8 @@
-/*   TODO what do these css style ?? search on v8, proceed with the js porting. */
-
-.openerp .searchview_extended_prop_value .oe_form_field_with_button
+.odoo .searchview_extended_prop_value .o_form_field_with_button
 {
     position: relative;
 }
-.openerp .oe_searchview_drawer .web_advanced_search_x2x_domain
+.odoo .o_searchview_drawer .web_advanced_search_x2x_domain
 {
     max-width: 20em;
     overflow: hidden;
@@ -12,14 +10,14 @@
     display: inline-block;
 }
 /* copy search view's button style */
-.openerp .oe_searchview_drawer .web_advanced_search_x2x_search:before
+.odoo .o_searchview_drawer .web_advanced_search_x2x_search:before
 {
     font: 21px "mnmliconsRegular";
     content: "r";
     color: #a3a3a3;
     margin-left: 5px;
 }
-.openerp .oe_searchview_drawer .web_advanced_search_x2x_search
+.odoo .o_searchview_drawer .web_advanced_search_x2x_search
 {
     font-size: 1px;
     letter-spacing: -1px;

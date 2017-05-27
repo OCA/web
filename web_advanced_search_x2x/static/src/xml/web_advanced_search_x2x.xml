@@ -2,7 +2,7 @@
 <templates>
     <t t-name="web_advanced_search_x2x.extended_search.proposition.many2one">
         <t t-if="!widget.show_searchfield()">
-            <t t-call="SearchView.extended_search.proposition.char" />
+            <t t-call="SearchView.extended_search.proposition" />
         </t>
         <t t-if="widget.show_domain_selection()">
             <span class="web_advanced_search_x2x_domain" /><button class="web_advanced_search_x2x_search" type="button">Search</button>
