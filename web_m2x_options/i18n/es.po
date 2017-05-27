@@ -3,15 +3,14 @@
 # * web_m2x_options
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2016
-# Pedro M. Baeza <pedro.baeza@gmail.com>, 2017
+# OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 9.0c\n"
+"Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-09 17:53+0000\n"
-"PO-Revision-Date: 2017-03-09 17:53+0000\n"
-"Last-Translator: Pedro M. Baeza <pedro.baeza@gmail.com>, 2017\n"
+"POT-Creation-Date: 2017-05-24 02:43+0000\n"
+"PO-Revision-Date: 2017-05-24 02:43+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,59 +27,59 @@ msgstr ""
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:49
+#: code:addons/web_m2x_options/static/src/js/form.js:47
 #, python-format
 msgid "Cancel"
 msgstr "Cancelar"
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:35
+#: code:addons/web_m2x_options/static/src/js/form.js:33
 #, python-format
 msgid "Create"
 msgstr "Crear"
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:225
-#: code:addons/web_m2x_options/static/src/js/form.js:375
+#: code:addons/web_m2x_options/static/src/js/form.js:223
+#: code:addons/web_m2x_options/static/src/js/form.js:373
 #, python-format
 msgid "Create \"<strong>%s</strong>\""
 msgstr "Crear \"<strong>%s</strong>\""
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:32
+#: code:addons/web_m2x_options/static/src/js/form.js:30
 #, python-format
 msgid "Create a %s"
 msgstr "Crear un %s"
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:243
-#: code:addons/web_m2x_options/static/src/js/form.js:394
+#: code:addons/web_m2x_options/static/src/js/form.js:241
+#: code:addons/web_m2x_options/static/src/js/form.js:392
 #, python-format
 msgid "Create and Edit..."
 msgstr "Crear y editar..."
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:45
+#: code:addons/web_m2x_options/static/src/js/form.js:43
 #, python-format
 msgid "Create and edit"
 msgstr "Crear y editar"
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:194
-#: code:addons/web_m2x_options/static/src/js/form.js:351
+#: code:addons/web_m2x_options/static/src/js/form.js:192
+#: code:addons/web_m2x_options/static/src/js/form.js:349
 #, python-format
 msgid "Search More..."
 msgstr "Buscar más..."
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:54
+#: code:addons/web_m2x_options/static/src/js/form.js:52
 #, python-format
 msgid "You are creating a new %s, are you sure it does not exist yet?"
 msgstr "Está creando un nuevo %s, ¿está seguro de no existe ya?"
