@@ -1,0 +1,54 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_widget_image_webcam
+# 
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-05-24 00:43+0000\n"
+"PO-Revision-Date: 2017-05-24 00:43+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"Language-Team: Dutch (https://www.transifex.com/oca/teams/23907/nl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: web_widget_image_webcam
+#. openerp-web
+#: code:addons/web_widget_image_webcam/static/src/js/webcam_widget.js:98
+#, python-format
+msgid "Close"
+msgstr "Sluiten"
+
+#. module: web_widget_image_webcam
+#. openerp-web
+#: code:addons/web_widget_image_webcam/static/src/js/webcam_widget.js:74
+#, python-format
+msgid "Save & Close"
+msgstr ""
+
+#. module: web_widget_image_webcam
+#. openerp-web
+#: code:addons/web_widget_image_webcam/static/src/js/webcam_widget.js:62
+#, python-format
+msgid "Take Snapshot"
+msgstr ""
+
+#. module: web_widget_image_webcam
+#. openerp-web
+#: code:addons/web_widget_image_webcam/static/src/xml/web_widget_image_webcam.xml:8
+#, python-format
+msgid "WebCam"
+msgstr ""
+
+#. module: web_widget_image_webcam
+#. openerp-web
+#: code:addons/web_widget_image_webcam/static/src/js/webcam_widget.js:58
+#, python-format
+msgid "WebCam Booth"
+msgstr ""
