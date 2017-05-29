@@ -40,17 +40,12 @@ openerp.web_m2x_options = function (instance) {
         },
 
         is_option_set: function(option) {
-            if (_.isUndefined(option)) {
-                return false
-            }
-            var is_string = typeof option === 'string'
-            var is_bool = typeof option === 'boolean'
-            if (is_string) {
-                return option === 'true' || option === 'True'
-            } else if (is_bool) {
-                return option
-            }
-            return false
+            //return option in ('True', 'true', true)
+            return {
+                'true': true,
+                'True': true,
+                true: true,
+            }[option] || false;
         },
 
         show_error_displayer: function () {
@@ -70,7 +65,7 @@ openerp.web_m2x_options = function (instance) {
             if (_.isUndefined(this.view))
                     return this._super.apply(this, arguments);
                 if (!_.isUndefined(this.view.ir_options['web_m2x_options.limit'])) {
-                this.limit = parseInt(this.view.ir_options['web_m2x_options.limit']);
+                this.limit = parseInt(this.view.ir_options['web_m2x_options.limit'],10);
             }
 
             if (typeof this.options.limit === 'number') {
@@ -98,24 +93,25 @@ openerp.web_m2x_options = function (instance) {
                 'ilike', this.limit + 1,
                 self.build_context()));
 
-            var create_rights;
-            if (!(self.options && (self.options.no_create || self.options.no_create_edit))) {
-                // check quick create options
-                var target_model = this.field.relation
-                create_rights = new instance.web.Model('ir.model').
+            this.create_rights = this.create_rights || (function () {
+                //call check_access_rights once
+                var target_model = self.field.relation
+                if (self.options.no_create || self.options.no_create_edit)
+                    return $.when(false);
+                
+                return new instance.web.Model('ir.model').
                     query(['disable_quick_create']).
                     filter([['model', '=', target_model]]).
                     first().
                     then(function(result){
                         if(result.disable_quick_create)
                             return $.when(false);
-                        else
-                            return new instance.web.Model(target_model).call(
-                                "check_access_rights", ["create", false]);
+                        return new instance.web.Model(target_model).call(
+                            "check_access_rights", ["create", false]);
                     });
-            }
+            })();
 
-            $.when(search_result, create_rights).then(function (data, can_create) {
+            $.when(search_result, this.create_rights).then(function (data, can_create) {
 
                 self.can_create = can_create;  // for ``.show_error_displayer()``
                 self.last_search = data;
@@ -291,7 +287,7 @@ openerp.web_m2x_options = function (instance) {
             // returned.
 
             if (!_.isUndefined(this.view.ir_options['web_m2x_options.limit'])) {
-                this.limit = parseInt(this.view.ir_options['web_m2x_options.limit']);
+                this.limit = parseInt(this.view.ir_options['web_m2x_options.limit'], 10);
             }
 
             if (typeof this.options.limit === 'number') {
@@ -401,7 +397,7 @@ openerp.web_m2x_options = function (instance) {
                     .css('cursor', 'pointer')
                     .click(function(e)
                     {
-                        var id = parseInt(jQuery(this).attr('data-id'));
+                        var id = parseInt(jQuery(this).attr('data-id'), 10);
                         self.do_action({
                             type: 'ir.actions.act_window',
                             res_model: self.field.relation,
