@@ -215,7 +215,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                     m2x_create_undef = _.isUndefined(self.view.ir_options['web_m2x_options.create']),
                     m2x_create = self.is_option_set(self.view.ir_options['web_m2x_options.create']);
                 var show_create = (!self.options && (m2x_create_undef || m2x_create)) || (self.options && (quick_create || (quick_create_undef && (m2x_create_undef || m2x_create))));
-                if (show_create){
+                if (self.can_create && show_create){
                     if (search_val.length > 0 &&
                         !_.include(raw_result, search_val)) {
 
@@ -237,7 +237,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                     m2x_create_edit_undef = _.isUndefined(self.view.ir_options['web_m2x_options.create_edit']),
                     m2x_create_edit = self.is_option_set(self.view.ir_options['web_m2x_options.create_edit']);
                 var show_create_edit = (!self.options && (m2x_create_edit_undef || m2x_create_edit)) || (self.options && (create_edit || (create_edit_undef && (m2x_create_edit_undef || m2x_create_edit))));
-                if (show_create_edit){
+                if (self.can_create && show_create_edit){
                     values.push({
                         label: _t("Create and Edit..."),
                         action: function () {
