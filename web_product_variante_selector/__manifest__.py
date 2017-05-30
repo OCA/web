@@ -8,11 +8,10 @@
     'website': 'https://github.com/fmdl',
     'summary': 'Web product variante selector',
     'category': 'Product',
-    'depends': ['product','web'],
+    'depends': ['product', 'web', ],
     'data': [
-             'views/web_product_variante_selector.xml',
-             'wizard/wizard_product_variante_selector.xml',
-             ],
+        'views/web_product_variante_selector.xml',
+        'wizard/wizard_product_variante_selector.xml',
+    ],
     'installable': True,
-
 }
