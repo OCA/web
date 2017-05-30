@@ -40,12 +40,17 @@ openerp.web_m2x_options = function (instance) {
         },
 
         is_option_set: function(option) {
-            //return option in ('True', 'true', true)
-            return {
-                'true': true,
-                'True': true,
-                true: true,
-            }[option] || false;
+            if (_.isUndefined(option)) {
+                return false
+            }
+            var is_string = typeof option === 'string'
+            var is_bool = typeof option === 'boolean'
+            if (is_string) {
+                return option === 'true' || option === 'True'
+            } else if (is_bool) {
+                return option
+            }
+            return false
         },
 
         show_error_displayer: function () {
