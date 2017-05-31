@@ -1,6 +1,7 @@
 /* Copyright 2015 Sylvain Calador <sylvain.calador@akretion.com>
    Copyright 2015 Javi Melendez <javi.melendez@algios.com>
    Copyright 2016 Antonio Espinosa <antonio.espinosa@tecnativa.com>
+   Copyright 2017 Thomas Binsfeld <thomas.binsfeld@acsone.eu>
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
 odoo.define('web_environment_ribbon.ribbon', function(require) {
@@ -10,7 +11,7 @@ var $ = require('jquery');
 var Model = require('web.Model');
 var core = require('web.core');
 
-var model = new Model('ir.config_parameter');
+var backend_model = new Model('web.environment.ribbon.backend');
 
 // Code from: http://jsfiddle.net/WK_of_Angmar/xgA5C/
 function validStrColour(strToTest) {
@@ -30,27 +31,21 @@ core.bus.on('web_client_ready', null, function () {
     var ribbon = $('<div class="test-ribbon"/>');
     $('body').append(ribbon);
     ribbon.hide();
-    model.call('get_param', ['ribbon.name']).then(
-        function (name) {
-            if (name && name != 'False') {
-                ribbon.html(name);
+    // Get ribbon data from backend
+    backend_model.call('get_environment_ribbon').then(
+        function (ribbon_data) {
+            // Ribbon name
+            if (ribbon_data.name && ribbon_data.name != 'False') {
+                ribbon.html(ribbon_data.name);
                 ribbon.show();
             }
-        }
-    );
-    // Get ribbon color from system parameters
-    model.call('get_param', ['ribbon.color']).then(
-        function (strColor) {
-            if (strColor && validStrColour(strColor)) {
-                ribbon.css('color', strColor);
+            // Ribbon color
+            if (ribbon_data.color && validStrColour(ribbon_data.color)) {
+                ribbon.css('color', ribbon_data.color);
             }
-        }
-    );
-    // Get ribbon background color from system parameters
-    model.call('get_param', ['ribbon.background.color']).then(
-        function (strBackgroundColor) {
-            if (strBackgroundColor && validStrColour(strBackgroundColor)) {
-                ribbon.css('background-color', strBackgroundColor);
+            // Ribbon background color
+            if (ribbon_data.background_color && validStrColour(ribbon_data.background_color)) {
+                ribbon.css('background-color', ribbon_data.background_color);
             }
         }
     );
