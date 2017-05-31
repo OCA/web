@@ -19,12 +19,15 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [help_online](help_online/) | 10.0.1.0.0 | Help Online
+[web_advanced_search_x2x](web_advanced_search_x2x/) | 10.0.1.0.0 | Use a search widget in advanced search for x2x fields
 [web_chatter_paste](web_chatter_paste/) | 10.0.1.0.0 | Paste images and drop files into the chatter and upload them directly
+[web_confirm_window_close](web_confirm_window_close/) | 10.0.1.0.0 | Check for unsaved data when closing browser window
 [web_dialog_size](web_dialog_size/) | 10.0.1.0.0 | A module that lets the user expand a dialog box to the full screen width.
 [web_environment_ribbon](web_environment_ribbon/) | 10.0.1.0.0 | Web Environment Ribbon
 [web_export_view](web_export_view/) | 10.0.1.0.0 | Web Export Current View
 [web_favicon](web_favicon/) | 10.0.1.0.0 | Allows to set a custom shortcut icon (aka favicon)
 [web_hide_db_manager_link](web_hide_db_manager_link/) | 10.0.1.0.0 | Hide link to database manager in login screen
+[web_ir_actions_act_window_message](web_ir_actions_act_window_message/) | 10.0.1.0.0 | Show a message box to users
 [web_listview_range_select](web_listview_range_select/) | 10.0.1.0.0 | Enables selecting a range of records using the shift key
 [web_m2x_options](web_m2x_options/) | 10.0.1.0.0 | web_m2x_options
 [web_no_bubble](web_no_bubble/) | 10.0.1.0.0 | Remove the bubbles from the web interface
@@ -39,6 +42,7 @@ addon | version | summary
 [web_tree_image](web_tree_image/) | 10.0.1.1.0 | Show images in tree views
 [web_tree_many2one_clickable](web_tree_many2one_clickable/) | 10.0.1.0.0 | Open the linked resource when clicking on their name
 [web_widget_color](web_widget_color/) | 10.0.1.0.0 | Web Widget Color
+[web_widget_many2many_tags_multi_selection](web_widget_many2many_tags_multi_selection/) | 10.0.1.0.0 | Tags multiple selection
 [web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 10.0.1.0.0 | Show list fields as a matrix
 [web_x2many_delete_all](web_x2many_delete_all/) | 10.0.1.0.0 | Adds a button to x2many fields that removes all linked records
 
@@ -51,9 +55,7 @@ addon | version | summary
 [support_branding](support_branding/) | 8.0.2.0.0 (unported) | Adds your branding to an Odoo instance
 [web_access_rule_buttons](web_access_rule_buttons/) | 9.0.1.0.0 (unported) | Disable Edit button if access rules prevent this action
 [web_action_conditionable](web_action_conditionable/) | 8.0.0.1.0 (unported) | web_action_conditionable
-[web_advanced_search_x2x](web_advanced_search_x2x/) | 8.0.1.0.0 (unported) | Use a search widget in advanced search for x2x fields
 [web_ckeditor4](web_ckeditor4/) | 8.0.1.0.0 (unported) | Provides a widget for editing HTML fields using CKEditor 4.x
-[web_confirm_window_close](web_confirm_window_close/) | 7.0.1 (unported) | Check for unsaved data when closing browser window
 [web_context_in_colors](web_context_in_colors/) | 8.0.1.1.0 (unported) | Use the context in a tree view's colors and fonts attribute
 [web_dashboard_open_action](web_dashboard_open_action/) | 8.0.1.0.0 (unported) | Adds a button to open a dashboard in full mode
 [web_dashboard_tile](web_dashboard_tile/) | 8.0.1.0.0 (unported) | Add Tiles to Dashboard
@@ -61,7 +63,6 @@ addon | version | summary
 [web_duplicate_visibility](web_duplicate_visibility/) | 9.0.1.0.0 (unported) | Manage the duplicate button visibiliy
 [web_graph_improved](web_graph_improved/) | 8.0.0.1.0 (unported) | Improves graph views.
 [web_group_expand](web_group_expand/) | 8.0.1.0.0 (unported) | Group Expand Buttons
-[web_ir_actions_act_window_message](web_ir_actions_act_window_message/) | 8.0.1.0.0 (unported) | Show a message box to users
 [web_ir_actions_act_window_page](web_ir_actions_act_window_page/) | 8.0.1.0.0 (unported) | Allows a developer to trigger a pager to show the previous or next next record in the form view
 [web_last_viewed_records](web_last_viewed_records/) | 8.0.1.0.0 (unported) | Last viewed records
 [web_listview_custom_element_number](web_listview_custom_element_number/) | 8.0.1.0.0 (unported) | Allow users to set manually a quantity of items to display in a tree view
@@ -77,7 +78,6 @@ addon | version | summary
 [web_widget_datepicker_options](web_widget_datepicker_options/) | 8.0.1.0.0 (unported) | web_widget_datepicker_options
 [web_widget_float_formula](web_widget_float_formula/) | 9.0.1.0.0 (unported) | Allow use of simple formulas in float fields
 [web_widget_image_download](web_widget_image_download/) | 9.0.1.0.0 (unported) | Allows to download any image from its widget
-[web_widget_many2many_tags_multi_selection](web_widget_many2many_tags_multi_selection/) | 9.0.1.1.0 (unported) | Tags multiple selection
 [web_widget_text_markdown](web_widget_text_markdown/) | 8.0.1.0.0 (unported) | web_widget_text_markdown
 [web_widget_timepicker](web_widget_timepicker/) | 9.0.1.0.0 (unported) | Web Timepicker Widget
 
