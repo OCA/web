@@ -6,7 +6,7 @@
 <!-- Add ribbon name default configuration parameter -->
 <record id="default_ribbon_name" model="ir.config_parameter">
     <field name="key">ribbon.name</field>
-    <field name="value">TEST</field>
+    <field name="value"><![CDATA[TEST<br/>({db_name})]]></field>
 </record>
 
 <!-- Add ribbon color configuration parameter -->
