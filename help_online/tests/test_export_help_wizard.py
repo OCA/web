@@ -31,8 +31,6 @@ class TestExportHelpWizard(TestWizardCommon):
         templateNodeList = rootXml.findall(xPath)
         self.assertEqual(len(templateNodeList), 1)
         self.assertNotIn("website.", templateNodeList[0].attrib['name'])
-        self.assertEqual(
-            "website." + self.pageName, templateNodeList[0].attrib['key'])
 
         if self.imgXmlId:
             xPath = ".//record[@id='%s']" % self.imgXmlId

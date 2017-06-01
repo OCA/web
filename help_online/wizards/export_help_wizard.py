@@ -236,7 +236,6 @@ class ExportHelpWizard(models.TransientModel):
             root.attrib['name'] = ir_ui_view.name.replace('website.', '')
             root.attrib['id'] = xml_id
             root.attrib['page'] = 'True'
-            root.attrib['key'] = ir_ui_view.key
 
             self._manage_images_on_page(root, data_node, exported_resources)
             self._clean_href_urls(root, page_prefix, template_prefix)
