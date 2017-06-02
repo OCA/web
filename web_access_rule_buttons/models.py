@@ -34,4 +34,11 @@ def check_access_rule_all(self, operations=None):
     return result
 
 
-models.BaseModel.check_access_rule_all = check_access_rule_all
+# Could be any model, we just use a core model to have a 'register_hook'
+class IrModel(models.Model):
+    _inherit = 'ir.model'
+
+    def _register_hook(self, cr):
+        # Add method check_access_rule_all for all models
+        models.BaseModel.check_access_rule_all = check_access_rule_all
+        return super(IrModel, self)._register_hook(cr)
