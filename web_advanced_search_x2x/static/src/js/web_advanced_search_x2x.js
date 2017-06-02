@@ -18,7 +18,6 @@
 //   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 //############################################################################
-// TODO: full testing. CSS, xml
 odoo.define('web_advanced_search_x2x.advanced_search', function(require) {
 	var core = require('web.core');
 	var data = require('web.data');
@@ -65,7 +64,7 @@ odoo.define('web_advanced_search_x2x.advanced_search', function(require) {
 					name : this.field.name,
 					options : '{"no_create": true}',
 				},
-			}
+			};
 		},
 		create_searchfield : function() {
 			if (this.searchfield) {
@@ -78,12 +77,11 @@ odoo.define('web_advanced_search_x2x.advanced_search', function(require) {
 			if (this.searchfield) {
 				this.searchfield.destroy();
 			}
-			if (this.show_searchfield()) {
-				this.create_searchfield().appendTo(this.$el.empty());
-			}
+			this.create_searchfield().appendTo(this.$el.empty());
 			if (this.show_domain_selection()) {
-				this.$el.filter('input').remove();
-				this.$el.filter('button.web_advanced_search_x2x_search').click(this.proxy(this.popup_domain_selection));
+				$(e.target).after("<span class='web_advanced_search_x2x_domain' /><span class='o_searchview_more fa fa-search mirror'/>")
+				this.searchfield.destroy();
+				$('span.mirror').click(this.proxy(this.popup_domain_selection));
 				this.popup_domain_selection();
 			}
 		},
@@ -94,7 +92,7 @@ odoo.define('web_advanced_search_x2x.advanced_search', function(require) {
 			return this.getParent().$('.o_searchview_extended_prop_op').val();
 		},
 		show_searchfield : function() {
-			var operator = this.get_operator()
+			var operator = this.get_operator();
 			return operator == '=' || operator == '!=';
 		},
 		show_domain_selection : function() {
@@ -132,7 +130,7 @@ odoo.define('web_advanced_search_x2x.advanced_search', function(require) {
 				return _.extend(new data.CompoundDomain(), {
 					__domains : [ _.map(this.domain, function(leaf) {
 						if (_.isArray(leaf) && leaf.length == 3) {
-							return [ self.field.name + '.' + leaf[0], leaf[1], leaf[2] ]
+							return [ self.field.name + '.' + leaf[0], leaf[1], leaf[2] ];
 						}
 						return leaf;
 					}), ],
@@ -147,7 +145,7 @@ odoo.define('web_advanced_search_x2x.advanced_search', function(require) {
 				context : new data.CompoundContext(session.user_context, this.field.context),
 			});
 			popup.on('domain_selected', this, function(domain, domain_representation) {
-				self.$el.filter('.web_advanced_search_x2x_domain').text(domain_representation);
+				$('.web_advanced_search_x2x_domain').text(domain_representation);
 				self.domain = domain;
 				self.domain_representation = domain_representation;
 			});
@@ -167,10 +165,9 @@ odoo.define('web_advanced_search_x2x.advanced_search', function(require) {
 					function(fragment) {
 						self.view_list.on("list_view_loaded", self, function() {
 							if (self.$footer.find('.o_selectcreatepopup-search-select-domain').length == 0) {
-								self.$footer.prepend(jQuery('<button/>').addClass('oe_highlight').addClass('o_selectcreatepopup-search-select-domain').text(_t('Use criteria')).click(
+								self.$footer.prepend(jQuery('<button/>').addClass('btn btn-sm btn-primary o_selectcreatepopup-search-select-domain').text(_t('Use criteria')).click(
 										self.proxy(self.select_domain)));
 								self.$footer.find('.o_selectcreatepopup_search_select').next().remove();
-
 							}
 							self.$footer.find('.o_selectcreatepopup-search-select-domain').prop('disabled', self.searchview.build_search_data().domains.length == 0);
 							self.$footer.find(".o_selectcreatepopup_search_select").unbind('click').click(function(e) {
@@ -202,7 +199,7 @@ odoo.define('web_advanced_search_x2x.advanced_search', function(require) {
 					}, ''));
 				}, '');
 				self.trigger('domain_selected', search.domain, representation);
-				self.view_list.do_search(search.domain, search.context, search.group_by);
+				self.destroy();
 			})
 
 		},
@@ -243,7 +240,7 @@ odoo.define('web_advanced_search_x2x.advanced_search', function(require) {
 						combined.add(domain.eval());
 					})
 					_.each(leaves, function(leaf) {
-						combined.add([ leaf ])
+						combined.add([ leaf ]);
 					});
 					result.domains[index] = combined;
 				}

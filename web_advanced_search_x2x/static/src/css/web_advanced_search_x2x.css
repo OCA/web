@@ -1,8 +1,8 @@
-.odoo .searchview_extended_prop_value .o_form_field_with_button
+.odoo .searchview_extended_prop_value
 {
     position: relative;
 }
-.odoo .o_searchview_drawer .web_advanced_search_x2x_domain
+.odoo .web_advanced_search_x2x_domain
 {
     max-width: 20em;
     overflow: hidden;
@@ -10,14 +10,14 @@
     display: inline-block;
 }
 /* copy search view's button style */
-.odoo .o_searchview_drawer .web_advanced_search_x2x_search:before
+.odoo .web_advanced_search_x2x_search:before
 {
     font: 21px "mnmliconsRegular";
     content: "r";
     color: #a3a3a3;
     margin-left: 5px;
 }
-.odoo .o_searchview_drawer .web_advanced_search_x2x_search
+.odoo .web_advanced_search_x2x_search
 {
     font-size: 1px;
     letter-spacing: -1px;
