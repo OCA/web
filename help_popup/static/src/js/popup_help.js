@@ -11,8 +11,6 @@ odoo.define('help_popup.help_button', function(require) {
 		var $elem = $(this);
 		var advanced_help = self.action.advanced_help
 		var enduser_help = self.action.enduser_help
-		console.log(advanced_help.length)
-		console.log($(enduser_help).text().length)
 		if (self.action.id == undefined || ((advanced_help.length === 0 || advanced_help.length == undefined) && $(enduser_help).text().length === 0)) {
 		    $('button.view_help').hide()
 		    $('ol.breadcrumb').css('width', '')
