@@ -12,7 +12,7 @@
 # Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016
 # jeon <bluerespect@nate.com>, 2014
 # Jong-Dae Park <jdpark7@gmail.com>, 2013,2015
-# Kevin Min <gr326887@graded.br>, 2015
+# Gu Hong Min <placidmoon1@gmail.com>, 2015
 # Kunwoo Kim <crazyabtmath@naver.com>, 2015
 # LEE SI HYEONG <super2451894@gmail.com>, 2014
 # Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-26 01:59+0000\n"
-"PO-Revision-Date: 2016-10-15 01:57+0000\n"
+"POT-Creation-Date: 2017-05-30 18:00+0000\n"
+"PO-Revision-Date: 2017-03-13 12:49+0000\n"
 "Last-Translator: Pedro M. Baeza <pedro.baeza@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/oca/OCA-web-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -40,16 +40,16 @@ msgstr ""
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:206
-#: code:addons/web_m2x_options/static/src/js/form.js:354
+#: code:addons/web_m2x_options/static/src/js/form.js:207
+#: code:addons/web_m2x_options/static/src/js/form.js:355
 #, python-format
 msgid "Create \"<strong>%s</strong>\""
 msgstr "Crear \"<strong>%s</strong>\""
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:232
-#: code:addons/web_m2x_options/static/src/js/form.js:380
+#: code:addons/web_m2x_options/static/src/js/form.js:233
+#: code:addons/web_m2x_options/static/src/js/form.js:381
 #, python-format
 msgid "Create and Edit..."
 msgstr "Crear y editar..."
@@ -66,8 +66,8 @@ msgstr "Modelos"
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:167
-#: code:addons/web_m2x_options/static/src/js/form.js:324
+#: code:addons/web_m2x_options/static/src/js/form.js:168
+#: code:addons/web_m2x_options/static/src/js/form.js:325
 #, python-format
 msgid "Search More..."
 msgstr "Buscar más..."
