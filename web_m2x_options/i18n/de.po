@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-24 02:43+0000\n"
-"PO-Revision-Date: 2017-05-24 02:43+0000\n"
+"POT-Creation-Date: 2017-06-02 09:52+0000\n"
+"PO-Revision-Date: 2017-06-02 09:52+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "MIME-Version: 1.0\n"
@@ -41,8 +41,8 @@ msgstr ""
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:223
-#: code:addons/web_m2x_options/static/src/js/form.js:373
+#: code:addons/web_m2x_options/static/src/js/form.js:224
+#: code:addons/web_m2x_options/static/src/js/form.js:374
 #, python-format
 msgid "Create \"<strong>%s</strong>\""
 msgstr "Anlegen \"<strong>%s</strong>"
@@ -56,8 +56,8 @@ msgstr ""
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:241
-#: code:addons/web_m2x_options/static/src/js/form.js:392
+#: code:addons/web_m2x_options/static/src/js/form.js:242
+#: code:addons/web_m2x_options/static/src/js/form.js:393
 #, python-format
 msgid "Create and Edit..."
 msgstr "Anlegen und Bearbeiten"
@@ -71,8 +71,8 @@ msgstr ""
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:192
-#: code:addons/web_m2x_options/static/src/js/form.js:349
+#: code:addons/web_m2x_options/static/src/js/form.js:193
+#: code:addons/web_m2x_options/static/src/js/form.js:350
 #, python-format
 msgid "Search More..."
 msgstr "Suche weitere..."

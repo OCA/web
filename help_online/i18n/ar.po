@@ -3,182 +3,181 @@
 # * help_online
 # 
 # Translators:
-# Bole <bole@dajmi5.com>, 2017
+# OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-02 09:52+0000\n"
 "PO-Revision-Date: 2017-06-02 09:52+0000\n"
-"Last-Translator: Bole <bole@dajmi5.com>, 2017\n"
-"Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"Language-Team: Arabic (https://www.transifex.com/oca/teams/23907/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: hr\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #. module: help_online
 #: model:ir.ui.view,arch_db:help_online.export_help_wizard_view
 #: model:ir.ui.view,arch_db:help_online.import_help_wizard_view
 msgid "Close"
-msgstr "Zatvori"
+msgstr "إغلاق"
 
 #. module: help_online
 #: code:addons/help_online/models/help_online.py:45
 #, python-format
 msgid "Create Help page for %s"
-msgstr "Kreiraj stranicu pomoći za %s"
+msgstr ""
 
 #. module: help_online
 #: model:ir.model.fields,field_description:help_online.field_export_help_wizard_create_uid
 #: model:ir.model.fields,field_description:help_online.field_help_online_create_uid
 #: model:ir.model.fields,field_description:help_online.field_import_help_wizard_create_uid
 msgid "Created by"
-msgstr "Kreirao"
+msgstr ""
 
 #. module: help_online
 #: model:ir.model.fields,field_description:help_online.field_export_help_wizard_create_date
 #: model:ir.model.fields,field_description:help_online.field_help_online_create_date
 #: model:ir.model.fields,field_description:help_online.field_import_help_wizard_create_date
 msgid "Created on"
-msgstr "Kreirano"
+msgstr ""
 
 #. module: help_online
 #: model:ir.model.fields,field_description:help_online.field_export_help_wizard_display_name
 #: model:ir.model.fields,field_description:help_online.field_help_online_display_name
 #: model:ir.model.fields,field_description:help_online.field_import_help_wizard_display_name
 msgid "Display Name"
-msgstr "Naziv za prikaz"
+msgstr ""
 
 #. module: help_online
 #: model:ir.ui.view,arch_db:help_online.export_help_wizard_view
 msgid "Export"
-msgstr "Izvoz"
+msgstr ""
 
 #. module: help_online
 #: code:addons/help_online/wizards/export_help_wizard.py:307
 #: model:ir.actions.act_window,name:help_online.action_export_help_wizard
 #, python-format
 msgid "Export Help"
-msgstr "Izvezi pomoć"
+msgstr ""
 
 #. module: help_online
 #: model:ir.ui.view,arch_db:help_online.export_help_wizard_view
 msgid "Export Help Data"
-msgstr "Izvezi podatke za pomoć"
+msgstr ""
 
 #. module: help_online
 #: model:ir.model,name:help_online.model_export_help_wizard
 #: model:ir.ui.menu,name:help_online.menu_help_export
 msgid "Export Help Online"
-msgstr "Izvezi pomoć "
+msgstr ""
 
 #. module: help_online
 #: model:ir.model.fields,field_description:help_online.field_export_help_wizard_export_filename
 msgid "Export XML Filename"
-msgstr "Naziv izvezene XML datoteke"
+msgstr ""
 
 #. module: help_online
 #: model:ir.ui.menu,name:help_online.menu_help
 #: model:ir.ui.menu,name:help_online.menu_help_main
 msgid "Help Online"
-msgstr "Online pomoć"
+msgstr ""
 
 #. module: help_online
 #: code:addons/help_online/models/help_online.py:40
 #, python-format
 msgid "Help on %s"
-msgstr "Pomoć za %s"
+msgstr ""
 
 #. module: help_online
 #: model:res.groups,name:help_online.help_online_group_reader
 msgid "Help reader"
-msgstr "Čitatelj pomoći"
+msgstr ""
 
 #. module: help_online
 #: model:res.groups,name:help_online.help_online_group_writer
 msgid "Help writer"
-msgstr "Autor pomoći"
+msgstr ""
 
 #. module: help_online
 #: model:ir.model.fields,field_description:help_online.field_export_help_wizard_id
 #: model:ir.model.fields,field_description:help_online.field_help_online_id
 #: model:ir.model.fields,field_description:help_online.field_import_help_wizard_id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: help_online
 #: model:ir.ui.view,arch_db:help_online.import_help_wizard_view
 msgid "Import"
-msgstr "Uvoz"
+msgstr ""
 
 #. module: help_online
 #: model:ir.actions.act_window,name:help_online.action_import_help_wizard
 msgid "Import Help"
-msgstr "Uvezi pomoć"
+msgstr ""
 
 #. module: help_online
 #: model:ir.ui.view,arch_db:help_online.import_help_wizard_view
 msgid "Import Help Data"
-msgstr "Uvezi podatke pomoći"
+msgstr ""
 
 #. module: help_online
 #: model:ir.ui.menu,name:help_online.menu_help_import
 msgid "Import Help Online"
-msgstr "Uvezi online pomoć"
+msgstr ""
 
 #. module: help_online
 #: model:ir.model.fields,field_description:help_online.field_export_help_wizard___last_update
 #: model:ir.model.fields,field_description:help_online.field_help_online___last_update
 #: model:ir.model.fields,field_description:help_online.field_import_help_wizard___last_update
 msgid "Last Modified on"
-msgstr "Zadnje modificirano"
+msgstr ""
 
 #. module: help_online
 #: model:ir.model.fields,field_description:help_online.field_export_help_wizard_write_uid
 #: model:ir.model.fields,field_description:help_online.field_help_online_write_uid
 #: model:ir.model.fields,field_description:help_online.field_import_help_wizard_write_uid
 msgid "Last Updated by"
-msgstr "Zadnje ažurirao"
+msgstr ""
 
 #. module: help_online
 #: model:ir.model.fields,field_description:help_online.field_export_help_wizard_write_date
 #: model:ir.model.fields,field_description:help_online.field_help_online_write_date
 #: model:ir.model.fields,field_description:help_online.field_import_help_wizard_write_date
 msgid "Last Updated on"
-msgstr "Zadnje ažurirano"
+msgstr ""
 
 #. module: help_online
 #: code:addons/help_online/wizards/export_help_wizard.py:300
 #, python-format
 msgid "No data to export !"
-msgstr "Nema podataka za izvoz!"
+msgstr ""
 
 #. module: help_online
 #: code:addons/help_online/models/help_online.py:17
 #, python-format
 msgid "No page prefix parameter specified !"
-msgstr "Nije specificiran parametar prefiksa!"
+msgstr ""
 
 #. module: help_online
 #: code:addons/help_online/wizards/export_help_wizard.py:99
 #, python-format
 msgid "Only images from ir.attachment are supported when exporting help pages"
 msgstr ""
-"Samo slike iz ir.attachment modela su podržane pri izvozu stranica pomoći"
 
 #. module: help_online
 #. openerp-web
 #: code:addons/help_online/static/src/js/help_online.js:37
 #, python-format
 msgid "Page does not exist. Do you want to create?"
-msgstr "Stranica ne postoji. Želite li ju kreirati?"
+msgstr ""
 
 #. module: help_online
 #: model:ir.model.fields,field_description:help_online.field_import_help_wizard_source_file
 msgid "Source File"
-msgstr "Izvorišna datoteka"
+msgstr ""
 
 #. module: help_online
 #: model:ir.ui.view,arch_db:help_online.export_help_wizard_view
@@ -187,9 +186,6 @@ msgid ""
 "                    related to help online. The result will be an Odoo\n"
 "                    data xml file."
 msgstr ""
-"Ovaj čarobnjak vam omogućuje izvoz svih Qweb pogleda\n"
-"povezanih sa online pomoći. Rezultat će biti Odoo\n"
-"podatkovna xml datoteka."
 
 #. module: help_online
 #: model:ir.ui.view,arch_db:help_online.import_help_wizard_view
@@ -198,54 +194,51 @@ msgid ""
 "                    related to help online. The required file format is an Odoo\n"
 "                    data xml file."
 msgstr ""
-"Ovaj čarobnjak vam omogućuje uvoz svih Qweb pogleda\n"
-"povezanih sa online pomoći. Obavezni format je Odoo\n"
-"podatkovna xml datoteka."
 
 #. module: help_online
 #: code:addons/help_online/wizards/export_help_wizard.py:337
 #, python-format
 msgid "Unable to write autobackup file in given directory: %s"
-msgstr "Nije moguće zapisati autobackup datoteku u zadani direktorij: %s"
+msgstr ""
 
 #. module: help_online
 #: model:ir.ui.view,arch_db:help_online.view_view_search
 msgid "Website Page"
-msgstr "Webstranica"
+msgstr ""
 
 #. module: help_online
 #: model:ir.ui.view,arch_db:help_online.view_view_form
 msgid "Website Page?"
-msgstr "Webstranica?"
+msgstr ""
 
 #. module: help_online
 #: model:ir.actions.act_window,name:help_online.action_website_pages
 #: model:ir.ui.menu,name:help_online.menu_help_pages
 msgid "Website Pages"
-msgstr "Webstranice"
+msgstr ""
 
 #. module: help_online
 #: model:ir.model.fields,field_description:help_online.field_export_help_wizard_data
 msgid "XML"
-msgstr "XML"
+msgstr ""
 
 #. module: help_online
 #: model:ir.model,name:help_online.model_help_online
 msgid "help.online"
-msgstr "help.online"
+msgstr ""
 
 #. module: help_online
 #: model:ir.model,name:help_online.model_import_help_wizard
 msgid "import.help.wizard"
-msgstr "import.help.wizard"
+msgstr ""
 
 #. module: help_online
 #: model:ir.model,name:help_online.model_ir_model_data
 msgid "ir.model.data"
-msgstr "ir.model.data"
+msgstr ""
 
 #. module: help_online
 #: model:ir.ui.view,arch_db:help_online.export_help_wizard_view
 #: model:ir.ui.view,arch_db:help_online.import_help_wizard_view
 msgid "or"
-msgstr "ili"
+msgstr ""
