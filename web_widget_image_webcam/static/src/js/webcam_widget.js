@@ -35,7 +35,7 @@ odoo.define('web_widget_image_webcam.webcam_widget', function(require) {
                 swfURL: '/web_widget_image_webcam/static/src/js/webcam.swf',
             });
 
-            self.$el.find('.oe_form_binary_file_clear').removeClass('col-md-offset-5');
+            self.$el.find('.o_form_binary_file_web_cam').removeClass('col-md-offset-5');
 
             new Model('ir.config_parameter').call('get_param', ['web_widget_image_webcam.flash_fallback_mode', false]).
             then(function(default_flash_fallback_mode) {
@@ -50,7 +50,7 @@ odoo.define('web_widget_image_webcam.webcam_widget', function(require) {
                 }
             });
 
-            self.$el.find('.oe_form_binary_file_web_cam').off().on('click', function(){
+            self.$el.find('.o_form_binary_file_web_cam').off().on('click', function(){
                 // Init Webcam
                 new Dialog(self, {
                     size: 'large',
