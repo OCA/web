@@ -25,17 +25,6 @@ Set the configuration parameter ``web_widget_image_webcam.flash_fallback_mode`` 
 
 Its done! Now this module also work with websites without SSL / HTTPS.
 
-Usage
-=====
-
-To use this module, you need to:
-
-#. Go to ...
-
-.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
-   :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/162/9.0
-
 Bug Tracker
 ===========
 
@@ -51,6 +40,7 @@ Contributors
 ------------
 
 * Siddharth Bhalgami <siddharth.bhalgami@techreceptives.com>
+* Kaushal Prajapati <kbprajapati@live.com>
 
 Maintainer
 ----------
