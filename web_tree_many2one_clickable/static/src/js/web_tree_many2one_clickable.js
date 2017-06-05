@@ -64,7 +64,8 @@ openerp.web_tree_many2one_clickable = function(instance, local)
                     model: this.relation,
                     id: row_data[this.id].value[0],
                     name: _.escape(row_data[this.id].value[1] || options.value_if_empty),
-                }
+                    context: _.escape(this.context),
+                };
                 if(this.type == 'reference' && !!row_data[this.id + '__display'])
                 {
                     values.model = row_data[this.id].value.split(',', 1)[0];
@@ -72,7 +73,7 @@ openerp.web_tree_many2one_clickable = function(instance, local)
                     values.name = _.escape(row_data[this.id + '__display'].value || options.value_if_empty);
                 }
                 return _.str.sprintf(
-                    '<a class="oe_form_uri" data-many2one-clickable-model="%(model)s" data-many2one-clickable-id="%(id)s">%(name)s</a>',
+                    '<a class="oe_form_uri" data-many2one-clickable-model="%(model)s" data-many2one-clickable-id="%(id)s" data-many2one-clickable-context="%(context)s">%(name)s</a>',
                     values
                 );
             }
@@ -102,24 +103,36 @@ openerp.web_tree_many2one_clickable = function(instance, local)
             this.$current.delegate('a[data-many2one-clickable-model]',
                 'click', function()
                 {
+                    var parent_id = jQuery(this).parents('tr:first').data('id');
                     var model_name = jQuery(this).data('many2one-clickable-model');
                     var record_id = jQuery(this).data('many2one-clickable-id');
-                    var model_obj = new instance.web.Model(model_name);
-                    model_obj.call('get_formview_id', [record_id]).then(function (view_id) {
-                        if (view_id) {
-                            view_id = view_id[0];
-                        } else {
-                            view_id = false;
-                        }
+                    var local_context = jQuery(this).data('many2one-clickable-context');
+
+                    // var model_obj = new instance.web.Model(model_name);
+                    // model_obj.call('get_formview_id', [record_id]).then(function (view_id) {
+                    //     if (view_id) {
+                    //         view_id = view_id[0];
+                    //     } else {
+                    //         view_id = false;
+                    //     }
                         self.view.do_action({
                             type: 'ir.actions.act_window',
                             res_model: model_name,
                             res_id: record_id,
-                            views: [[view_id, 'form']],
+                            views: [[false /* view_id */, 'form']],
+                            context: new instance.web.CompoundContext(
+                                self.dataset.get_context(), local_context).eval(),
+
+                            // FIXME: Pasamos el context entero o el local + datos estándar? Ej:
+                            // context: new instance.web.CompoundContext(local_context, {
+                            //     'active_model': model_name,
+                            //     'active_id': record_id,
+                            //     'active_ids': [record_id],
+                            // }).set_eval_context(self.dataset.get_context()).eval(),
                         });
-                    });
+                    // });
                 });
             return result;
         },
     });
-}
+};
