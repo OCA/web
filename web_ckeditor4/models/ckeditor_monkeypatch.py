@@ -20,14 +20,15 @@
 ##############################################################################
 import re
 from lxml.html import clean
-from openerp import models
 
+from odoo import api, models
 
 class CkeditorMonkeypatch(models.AbstractModel):
     _name = 'ckeditor.monkeypatch'
     _description = 'Monkeypatches for CKEditor'
 
-    def _register_hook(self, cr):
+    @api.model_cr
+    def _register_hook(self):
         marker = self._name.replace('.', '_')
         if not hasattr(clean, marker):
             # monkey patch lxml's html cleaner to allow image data urls
@@ -41,4 +42,4 @@ class CkeditorMonkeypatch(models.AbstractModel):
             # TODO: do something else for 2.3.1 <= version <= 3.2, before data
             # urls were not cleaned at all
             setattr(clean, marker, True)
-        return super(CkeditorMonkeypatch, self)._register_hook(cr)
+        return super(CkeditorMonkeypatch, self)._register_hook()
