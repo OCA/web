@@ -1,18 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <templates id="template" xml:space="preserve">
-    <t t-name="FieldSignature"  >
-        <div class = "cc">
-            <div class="signature oe_edit_only"/><br/>
-            <button class="oe_form_binary_file_clear oe_edit_only clear_sign"><span>Clear</span></button>
-            <span class="oe_edit_only save_sign"></span>
+   <t t-name="FieldSignature">
+        <div class="panel panel-default mt16 mb0 " id="drawsign">
+            <div class="panel-heading oe_edit_only">
+                <div class="pull-right">
+                    <a id="sign_clean" class="btn btn-xs oe_edit_only">Clear</a>
+                    <a class="oe_edit_only save_sign"></a>
+                </div>
+                <strong>Draw your signature</strong>
+            </div>
+            <div class="signature panel-body"></div>
         </div>
     </t>
     <t t-name="FieldBinaryImage-extend">
-    <img t-att-src='url'
-        t-att-border="widget.readonly ? 0 : 1"
-        t-att-name="widget.name"
-        t-att-width="widget.node.attrs.img_width || widget.node.attrs.width"
-        t-att-height="widget.node.attrs.img_height || widget.node.attrs.height"
-    />
+        <img t-att-src='url'
+            t-att-border="widget.readonly ? 0 : 1"
+            t-att-name="widget.name"
+            t-att-width="widget.node.attrs.img_width || widget.node.attrs.width"
+            t-att-height="widget.node.attrs.img_height || widget.node.attrs.height"
+            t-att-tabindex="widget.node.attrs.img_tabindex || widget.node.attrs.tabindex"
+        />
     </t>
 </templates>

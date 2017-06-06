@@ -9,4 +9,3 @@ class Users(models.Model):
 
     signature= fields.Binary(string='Signature')
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
