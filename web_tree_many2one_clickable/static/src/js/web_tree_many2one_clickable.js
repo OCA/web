@@ -103,34 +103,29 @@ openerp.web_tree_many2one_clickable = function(instance, local)
             this.$current.delegate('a[data-many2one-clickable-model]',
                 'click', function()
                 {
-                    var parent_id = jQuery(this).parents('tr:first').data('id');
                     var model_name = jQuery(this).data('many2one-clickable-model');
                     var record_id = jQuery(this).data('many2one-clickable-id');
                     var local_context = jQuery(this).data('many2one-clickable-context');
+                    var context = new instance.web.CompoundContext(self.dataset.get_context(), {
+                        'active_model': model_name,
+                        'active_id': record_id,
+                        'active_ids': [record_id],
+                    }, local_context).eval();
+                    var model_obj = new instance.web.Model(model_name);
 
-                    // var model_obj = new instance.web.Model(model_name);
-                    // model_obj.call('get_formview_id', [record_id]).then(function (view_id) {
-                    //     if (view_id) {
-                    //         view_id = view_id[0];
-                    //     } else {
-                    //         view_id = false;
-                    //     }
+                    model_obj.call('get_formview_id', [record_id, context]).then(function (view_id) {
+                        if ( _.isArray(view_id) ) {
+                            view_id = view_id[0];
+                        }
+
                         self.view.do_action({
                             type: 'ir.actions.act_window',
                             res_model: model_name,
                             res_id: record_id,
-                            views: [[false /* view_id */, 'form']],
-                            context: new instance.web.CompoundContext(
-                                self.dataset.get_context(), local_context).eval(),
-
-                            // FIXME: Pasamos el context entero o el local + datos estándar? Ej:
-                            // context: new instance.web.CompoundContext(local_context, {
-                            //     'active_model': model_name,
-                            //     'active_id': record_id,
-                            //     'active_ids': [record_id],
-                            // }).set_eval_context(self.dataset.get_context()).eval(),
+                            views: [[view_id, 'form']],
+                            context: context,
                         });
-                    // });
+                    });
                 });
             return result;
         },
