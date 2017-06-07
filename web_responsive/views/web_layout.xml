@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2017 LasLabs Inc.
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+
+<odoo>
+
+    <template id="layout"
+              inherit_id="web.layout"
+              name="App Drawer - Layout"
+              >
+
+        <xpath expr="//html" position="attributes">
+            <attribute name="style">height: 99%</attribute>
+        </xpath>
+
+    </template>
+
+</odoo>
