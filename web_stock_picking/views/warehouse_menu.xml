@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2016 LasLabs Inc.
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<odoo>
+
+	<record id="stock_web_action" model="ir.actions.act_url">
+		<field name="name">Stock Web</field>
+		<field name="target">self</field>
+		<field name="url">/web/stock/pickings</field>
+	</record>
+
+	<menuitem id="stock_picking_web"
+			  name="Mobile/Barcode"
+			  parent="stock.menu_stock_root"
+			  sequence="1"
+			  action="web_stock_picking.stock_web_action"
+			  />
+
+</odoo>

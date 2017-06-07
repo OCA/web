@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2016 LasLabs Inc.
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<odoo>
+
+	<template id="picking_search_header" name="Picking Search Header">
+		<div class="row">
+			<form method="GET"
+				  enctype="multipart/form-data"
+				  class="js_picking_search mt32 mb32"
+				  >
+				<div class="col-sm-12 col-md-3">
+					<h1>Pickings</h1>
+				</div>
+				<div class="form-group col-sm-12 col-md-4">
+					<label for="search_query">
+						Name / Origin
+					</label>
+					<input type="text"
+						   class="form-control"
+						   name="search_query"
+						   id="search_query"
+						   t-att-value="wizard and wizard.search_query or ''"
+						   onClick="this.setSelectionRange(0, this.value.length)"
+						   onLoad="this.focus(); this.setSelectionRange(0, this.value.length)"
+						   />
+				</div>
+				<div class="form-group col-sm-7 col-md-3">
+					<label for="picking_type_id">
+						Type
+					</label>
+					<select name="picking_type_id" class="form-control js_picking_submit_immediate">
+						<option value="">All</option>
+						<t t-foreach="picking_types" t-as="picking_type">
+							<option t-att-value="picking_type.id"
+									t-att-selected="wizard and wizard.picking_type_id and picking_type.id == wizard.picking_type_id.id">
+								<t t-esc="picking_type.display_name" />
+							</option>
+						</t>
+					</select>
+				</div>
+				<div class="form-group col-sm-5 col-md-2">
+					<label for="picking_state">
+						State
+					</label>
+					<select name="picking_state" class="form-control js_picking_submit_immediate">
+						<option value="">All</option>
+						<t t-foreach="[('assigned', 'Available'), ('partially_available', 'Partially Available'), ('confirmed', 'Waiting Availability')]"
+						   t-as="picking_state">
+							<option t-att-value="picking_state[0]"
+									t-att-selected="wizard and picking_state[0] == wizard.picking_state">
+								<t t-esc="picking_state[1]" />
+							</option>
+						</t>
+					</select>
+				</div>
+			</form>
+		</div>
+	</template>
+
+	<template id="picking_search" name="Picking Search">
+		<t t-call="web_stock_picking.layout">
+			<div id="wrap">
+				<div class="container">
+					<t t-call="web_stock_picking.picking_search_header" />
+					<div class="row" t-if="pickings">
+						<t t-foreach="pickings" t-as="picking">
+							<a t-attf-href="/web/stock/pickings/{{ picking.id }}">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 panel panel-default">
+									<div class="panel-heading" t-esc="picking.name" />
+									<div class="panel-body">
+										<strong t-esc="picking.partner_id.name" /> <br />
+										<span t-esc="picking.min_date" /> <br />
+										<span t-esc="picking.state" />
+									</div>
+								</div>
+							</a>
+						</t>
+					</div>
+				</div>
+			</div>
+		</t>
+	</template>
+
+	<template id="picking_detail" name="Picking Detail">
+		<t t-call="web_stock_picking.layout">
+			<div id="wrap">
+				<div class="container js_picking_form_barcode">
+					<form method="PATCH"
+						  t-attf-action="/web/stock/pickings/{{ picking.id }}"
+						  class="js_picking_form container-fluid mt32 mb32"
+						  enctype="multipart/form-data"
+						  >
+						<div id="js_picking_form_result" />
+						<div class="row">
+							<div class="col-md-12 col-lg-5">
+								<h1>
+									[<t t-esc="picking.state" />]
+									<t t-esc="picking.name" />
+								</h1>
+							</div>
+							<div class="col-md-12 col-lg-7 text-right">
+								<div class="row js_picking_form_buttons">
+									<a class="btn btn-default" href="/web/stock/pickings">
+										<i class="fa fa-arrow-left" aria-hidden="true"></i>
+										Back
+									</a>
+									<t t-if="picking.state in ['assigned', 'confirmed', 'partially_available', 'draft', 'waiting']">
+										<button type="submit"
+												class="btn btn-default mt8 mb8 js_picking_form_send"
+												name="submit"
+												value="action_cancel"
+												>
+											Cancel
+										</button>
+									</t>
+									<t t-if="picking.quant_reserved_exist">
+										<button type="submit"
+												class="btn btn-default mt8 mb8 js_picking_form_send"
+												name="submit"
+												value="action_unreserve"
+												>
+											Unreserve
+										</button>
+									</t>
+									<t t-if="picking.state in ['confirmed', 'waiting']">
+										<button type="submit"
+												class="btn btn-primary mt8 mb8 js_picking_form_send"
+												name="submit"
+												value="action_assign"
+												>
+											Reserve
+										</button>
+									</t>
+									<t t-if="picking.state in ['draft']">
+										<button type="submit"
+												class="btn btn-primary mt8 mb8 js_picking_form_send"
+												name="submit"
+												value="action_confirm"
+												>
+											Mark as To Do
+										</button>
+									</t>
+									<t t-if="picking.state in ['confirmed', 'waiting', 'partially_available']">
+										<button type="submit"
+												class="btn btn-default mt8 mb8 js_picking_form_send"
+												name="submit"
+												value="action_force_assign"
+												>
+											Force Availability
+										</button>
+									</t>
+									<t t-if="picking.state not in ['done', 'cancel', 'draft'] and picking.picking_type_id.code != 'incoming'">
+										<button type="submit"
+												class="btn btn-primary mt8 mb8 js_picking_form_send"
+												name="submit"
+												value="action_put_in_pack"
+												>
+											Put in Pack
+										</button>
+									</t>
+									<t t-if="picking.state in ['draft', 'partially_available', 'assigned']">
+										<button type="submit"
+												class="btn btn-primary mt8 mb8 js_picking_form_send"
+												name="submit"
+												value="action_new_transfer"
+												>
+											Validate
+										</button>
+										<button type="submit"
+												class="js_picking_validate hidden"
+												name="submit"
+												/>
+									</t>
+									<!--
+									<t t-if="picking.state not in ['assigned', 'partially_available']">
+										<div class="col-sm-2">
+												<button type="submit"
+													class="btn btn-default js_picking_form_send"
+													name="submit"
+													value="action_print_picking"
+													>
+												Print
+											</button>
+										</div>
+									</t>
+									-->
+									<!--
+									<t t-if="picking.state in ['done']">
+										<div class="col-sm-2">
+											<button type="submit"
+													class="btn btn-default js_picking_form_send"
+													name="submit"
+													value="action_reverse"
+													>
+												Reverse
+											</button>
+										</div>
+									</t>
+									-->
+									<!--
+									<t t-if="any([picking.launch_pack_operations,
+												  picking.state not in ['assigned', 'partially_available'],
+												  len(picking.pack_operation_ids),
+												 ])">
+										<div class="col-sm-2">
+											<button type="submit"
+													class="btn btn-primary js_picking_form_send"
+													name="submit"
+													value="action_prepare_partial"
+													>
+												Reset Operations
+											</button>
+										</div>
+									</t>
+									-->
+								</div>
+								<div class="row">
+									<!--<input type="text" class="js_picking_form_barcode" barcode_events="true" placeholder="Barcode" />-->
+									<input class="hidden" id="barcodeNomenclatureId" t-att-value="picking.picking_type_id.barcode_nomenclature_id.id" />
+								</div>
+							</div>
+						</div>
+						<input type="hidden"
+							   name="csrf_token"
+							   t-att-value="request.csrf_token()"
+							   />
+						<input type="hidden"
+							   name="additional_action"
+							   class="js_picking_additional_action"
+							   />
+						<input type="hidden"
+							   name="submit_action"
+							   class="js_picking_submit_action"
+							   />
+						<t t-if="picking.pack_operation_ids">
+							<h2>Operations</h2>
+							<table class="table table-striped table-hover table-responsive">
+								<thead>
+									<tr>
+										<th>Product</th>
+										<th>From => To</th>
+										<th>To Do / Done</th>
+									</tr>
+								</thead>
+								<tbody>
+									<t t-foreach="picking.pack_operation_product_ids" t-as="pack_op">
+										<tr>
+											<td>
+												<span t-field="pack_op.product_id" />
+											</td>
+											<td>
+												<span t-field="pack_op.from_loc" />
+												=>
+												<span t-field="pack_op.to_loc" />
+											</td>
+											<td>
+												<span t-field="pack_op.product_qty" />
+												/
+												<t t-if="pack_op.qty_done == pack_op.product_qty">
+													<span t-field="pack_op.qty_done"
+														  class="js_picking_pack_op_done"
+														  />
+												</t>
+												<t t-if="pack_op.qty_done != pack_op.product_qty">
+													<input type="number"
+														   class="js_picking_picked_qty js_picking_form_input"
+														   t-att-data-product-qty="pack_op.product_qty"
+														   t-att-data-product-id="pack_op.product_id.id"
+														   t-att-data-barcode="pack_op.product_id.barcode"
+														   t-att-name="'%s.qty_done' % pack_op.id"
+														   t-att-value="pack_op.qty_done"
+														   style="width: 80px;"
+														   />
+												</t>
+											</td>
+										</tr>
+									</t>
+								</tbody>
+							</table>
+							<hr class="mt16 mb16"/>
+						</t>
+						<h2>Initial Demand</h2>
+						<table class="table table-striped table-hover table-responsive">
+							<thead>
+								<tr>
+									<th>Product</th>
+									<th>Qty</th>
+									<th>Status</th>
+								</tr>
+							</thead>
+							<tbody>
+								<t t-foreach="picking.move_lines_related" t-as="stock_move">
+									<tr>
+										<td>
+											<span t-field="stock_move.product_id" />
+										</td>
+										<td>
+											<span t-field="stock_move.product_qty" />
+										</td>
+										<td>
+											<span t-field="stock_move.state" />
+										</td>
+									</tr>
+								</t>
+							</tbody>
+						</table>
+					</form>
+				</div>
+			</div>
+			<div id="pickingModal"
+				 class="modal fade"
+				 tabindex="-1"
+				 role="dialog"
+				 aria-labelledby="pickingModalLabel"
+				 >
+			   <div class="modal-dialog" role="document" />
+		   </div>
+		</t>
+	</template>
+
+</odoo>

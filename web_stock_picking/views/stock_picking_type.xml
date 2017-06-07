@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2016 LasLabs Inc.
+    @author Dave Lasley <dave@laslabs.com>
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<odoo>
+    <template id="stock_picking_type_kanban"
+              inherit_id="stock.stock_picking_type_kanban"
+              name="Add Barcode Interface">
+        <xpath expr="//button[@name='get_action_picking_tree_ready']" position="after">
+            <a t-attf-href="/web/stock/pickings?picking_type_id={{ record.id.raw_value }}"
+                class="btn btn-primary"
+                >
+                @TODO: Figure out why this button doesn't show up.
+             </a>
+        </xpath>
+    </template>
+</odoo>
