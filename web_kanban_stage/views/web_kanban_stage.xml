@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2016 LasLabs Inc.
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+
+<odoo>  
+    <record id="web_kanban_stage_view_form" model="ir.ui.view">
+        <field name="name">Kanban Stage - Form View</field>
+        <field name="model">web.kanban.stage</field>
+        <field name="arch" type="xml">
+            <form string="Kanban Stage">
+                <header/>
+                <sheet>
+                    <group string="Core Info" name="core_info">
+                        <field name="name"/>
+                        <field name="res_model"/>
+                        <field name="sequence"/>
+                        <field name="fold"/>
+                        <field name="description"/>
+                    </group>
+                    <group string="Priority and Statuses" name="explanations">
+                        <field name="legend_priority"/>
+                        <field name="legend_blocked"/>
+                        <field name="legend_done"/>
+                        <field name="legend_normal"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <record id="web_kanban_stage_view_tree" model="ir.ui.view">
+        <field name="name">Kanban Stages - Tree View</field>
+        <field name="model">web.kanban.stage</field>
+        <field name="arch" type="xml">
+            <tree string="Kanban Stages">
+                <field name="name"/>
+                <field name="res_model"/>
+                <field name="sequence"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="web_kanban_stage_view_search" model="ir.ui.view">
+        <field name="name">Kanban Stages - Search View</field>
+        <field name="model">web.kanban.stage</field>
+        <field name="arch" type="xml">
+            <search string="Kanban Stages">
+                <field name="name"/>
+                <field name="res_model"/>
+                <field name="sequence"/>
+            </search>
+        </field>
+    </record>
+    
+    <record model="ir.actions.act_window" id="web_kanban_stage_action">
+        <field name="name">Kanban Stages</field>
+        <field name="res_model">web.kanban.stage</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="web_kanban_stage_root_menu" name="Kanban" 
+        parent="base.menu_custom" sequence="50"/>
+
+    <menuitem id="web_kanban_stage_menu" name="Stages" 
+        parent="web_kanban_stage_root_menu" action="web_kanban_stage_action"/>
+</odoo>
