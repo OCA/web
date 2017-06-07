@@ -60,11 +60,12 @@ openerp.web_tree_many2one_clickable = function(instance, local)
         _format: function (row_data, options)
         {
             if (this.use_many2one_clickable && !!row_data[this.id]) {
+                var ctx = this.context;
                 var values = {
                     model: this.relation,
                     id: row_data[this.id].value[0],
                     name: _.escape(row_data[this.id].value[1] || options.value_if_empty),
-                    context: _.escape(this.context),
+                    context: _.escape(_.isObject(ctx) ? JSON.stringify(ctx) : ctx),
                 };
                 if(this.type == 'reference' && !!row_data[this.id + '__display'])
                 {
@@ -81,8 +82,7 @@ openerp.web_tree_many2one_clickable = function(instance, local)
                 return this._super(row_data, options);
             }
         },
-
-	});
+    });
 
     /* many2one_clickable widget */
 
