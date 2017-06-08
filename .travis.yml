@@ -4,9 +4,14 @@ python:
   - "2.7"
   
 sudo: false
-cache: pip
+
+cache:
+  pip: true
+  directories:
+     - travis_phantomjs
 
 addons:
+  postgresql: "9.4"
   apt:
     packages:
       - expect-dev  # provides unbuffer utility
@@ -21,12 +26,21 @@ env:
   matrix:
   - LINT_CHECK="1"
   - TRANSIFEX="1"
-  - TESTS="1" ODOO_REPO="odoo/odoo"
-  - TESTS="1" ODOO_REPO="OCA/OCB"
+  - INCLUDE="web_duplicate_visibility" TESTS="1" ODOO_REPO="odoo/odoo"  # Works
+  - EXCLUDE="web_export_view" TESTS="1" ODOO_REPO="odoo/odoo"  # Works
+  - INCLUDE="web_duplicate_visibility,web_export_view" TESTS="1" ODOO_REPO="odoo/odoo"  # Fails
 
 virtualenv:
   system_site_packages: true
-
+ 
+before_install:
+  - "export PATH=$PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH"
+  - if [ $(phantomjs --version) != '2.1.1' ]; then 
+      rm -rf $PWD/travis_phantomjs; mkdir -p $PWD/travis_phantomjs;
+      wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 -O $PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2;
+      tar -xvf $PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C $PWD/travis_phantomjs; 
+    fi
+ 
 install:
   - pip install anybox.testing.openerp
   - git clone --depth=1 https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools

@@ -2,7 +2,6 @@ odoo.define('web.DuplicateVisibility',function (require) {
     "use strict";
 
     var core = require('web.core');
-    var Sidebar = require('web.Sidebar');
     var FormView = require('web.FormView');
 
     var _t = core._t;
