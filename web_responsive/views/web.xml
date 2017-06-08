@@ -139,7 +139,7 @@
                             </t>
                         </t>
                         <t t-if="not submenu">
-                            <a class="dropdown-toggle"
+                            <a class="dropdown-toggle oe_menu_toggler"
                                data-toggle="dropdown"
                                role="button"
                                aria-haspopup="true"
