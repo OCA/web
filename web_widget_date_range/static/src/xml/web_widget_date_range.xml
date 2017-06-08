@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+
+    <t t-name="field_date_selection">
+        <t t-if="widget.fields_selection">
+            <select class="field_date_selection">
+                <t t-foreach="widget.fields_selection" t-as="record">
+                    <option t-att-data-type="record.type"
+                            t-att-value="record.value">
+                        <t t-esc="record.string"/>
+                    </option>
+                </t>
+            </select>
+        </t>
+    </t>
+
+    <t t-name="web_widget_date_range">
+        <div class="oe_web_widget_date_range ui-toolbar">
+            <div class="oe_form_dropdown_section oe_web_widget_field_date_selection">
+                <span>Date Field:</span>
+            </div>
+            <div class="oe_form_dropdown_section oe_web_widget_date_range_date_start">
+                <span>Date Start:</span>
+            </div>
+            <div class="oe_form_dropdown_section oe_web_widget_date_range_date_end">
+                <span>Date end:</span>
+            </div>
+            <div class="oe_form_dropdown_section oe_web_widget_date_range_apply">
+                <button class="oe_button_apply_selection oe_highlight">Apply</button>
+                <button class="oe_button_reset_selection oe_highlight">Reset</button>
+            </div>
+        </div>
+    </t>
+
+</templates>
