@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+  <data>
+    <template id="assets_backend" name="mobilis custom" inherit_id="web.assets_backend">
+      <xpath expr="." position="inside">
+        <link rel="stylesheet" href="/web_sticky_header/static/src/css/custom_list.css"/>
+        <script src="/web_sticky_header/static/src/js/custom_list.js" type="text/javascript"></script>
+      </xpath>
+    </template>
+  </data>
+</openerp>
