@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view"
+                id="view_planned_hours_user_project_form">
+            <field name="name">planned.hours.user.project.form</field>
+            <field name="model">planned.hours.user.project</field>
+            <field name="arch" type="xml">
+                <form string="Wizard">
+                    <group>
+                        <field name="task_ids" widget="x2many_2d_matrix" field_x_axis="project_id" field_y_axis="user_id" field_value="planned_hours" />
+                        <field name="task_ids" widget="many2many_tags"/>
+                    </group>
+                </form>
+          </field>
+        </record>
+
+
+        <act_window name="Enter Planned Hours"
+            res_model="planned.hours.user.project"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"
+            id="action_planned_hours_user_project"/>
+
+        <menuitem
+            id="menu_action_planned_hours_user_project"
+            parent="project.menu_project_management"
+            action="action_planned_hours_user_project"/>
+
+    </data>
+</openerp>
