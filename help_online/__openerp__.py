@@ -64,4 +64,9 @@ Note: When updating the page prefix parameters, the record rules must be
     ],
     'installable': True,
     'auto_install': False,
+    'external_dependencies': {
+        'python': [
+            'anybox.testing.openerp',
+        ],
+    },
 }
