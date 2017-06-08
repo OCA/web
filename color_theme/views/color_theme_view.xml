@@ -1,0 +1,156 @@
+<openerp>		
+	<data>
+		<!-- Color Theme Search View -->
+		
+		<record model="ir.ui.view" id="view_color_theme_search">
+			<field name="name">color.theme.search</field>
+			<field name="model">color.theme</field>
+			<field name="arch" type="xml">
+				<search string="color theme name">
+					<field name="theme_name" string="color theme name"/>
+				</search>
+			</field>
+		</record>
+
+        <!-- color theme tree view -->
+		 
+		<record model="ir.ui.view" id="view_color_theme_tree">
+			<field name="name">color.theme.tree</field>
+			<field name="model">color.theme</field>
+			<field name="arch" type="xml">
+				<tree string="Outside Work Types">
+					<field name="theme_name"/>
+					<field name="user"/>
+				</tree>
+			</field>
+		</record>
+		
+		
+		<!-- color theme form view -->
+		
+		<record model="ir.ui.view" id="view_color_theme_form">
+	        <field name="name">color.theme.form</field>
+	        <field name="model">color.theme</field>
+	        <field name="arch" type="xml">
+	            <form string="Color Theme" version="7.0">
+	                <header>
+	                	<button string="activate color picker" accesskey="B" name="activate"/>	
+	                </header>
+	                <div name="color_theme_info">
+	                    
+						<group name="theme_name" string="Color Theme Name">	
+							<field name="theme_name" class="oe_inline theme_name"/>
+	                    </group>
+	                    
+	                    <group name="top_bar_gradient" string="Top Bar Gradient Colors">
+	                    	<field name="top_bar_gradient_1" class="oe_inline tob_bar_gradient_1"/>
+	                        <field name="top_bar_gradient_2" class="oe_inline tob_bar_gradient_2"/>
+	                    </group>
+	                    
+	                    <group name="button_color_gradient" string="Buttons Gradient Colors">
+	                    	<field name="button_gradient_1" class="oe_inline button_gradient_1"/>
+	                    	<field name="button_gradient_2" class="oe_inline button_gradient_2"/>
+	                    </group>
+	                    
+	                    <group name="left_bar_color" string="Left Bar Color">
+	                    	<field name="left_bar" class="oe_inline left_bar"/>
+	                    </group>
+	                
+	                	<group name="fonts_colors" string="Fonts Colors">
+	                		<field name="body_font" class="oe_inline body_font"/>
+	                		<field name="main_menu_font" class="oe_inline main_menu_font"/>
+	                		<field name="sub_menu_font" class="oe_inline sub_menu_font"/>
+	                		<field name="top_bar_menu_font" class="oe_inline top_bar_menu_font"/>
+	                		<field name="tab_string" class="oe_inline tab_string"/>
+	                		<field name="many2one_font" class="oe_inline many2one_font"/>
+	                	</group>
+	                		
+	                </div>
+	            </form>
+	        </field>
+    	</record>
+		 
+        <!-- color theme action -->
+		<record id="action_color_theme_search_view" model="ir.actions.act_window">
+	        <field name="name">Color Theme</field>
+	        <field name="res_model">color.theme</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree,form</field>
+	        <field name="view_id" ref="view_color_theme_search"/>
+	    	<field name="help" type="html">
+	    		<p class="oe_view_nocontent_create">
+	    			Click Here To Add New Color Theme...
+	    		</p>
+	    	</field>
+	    </record>
+        
+        <menuitem id="color_theme_top_menue" name="Themes"/>
+        
+        <menuitem id="color_theme_root" name="Color Theme" parent="color_theme_top_menue"/>
+        
+        <menuitem id="color_theme_config" name="Color Theme Configuration" sequence="100" parent="color_theme_root" action="action_color_theme_search_view"/>
+    
+    
+    <!-- ============================================================================================  -->
+    
+    	<!-- user theme search view  -->
+    
+    	<record model="ir.ui.view" id="view_user_theme_search">
+    		<field name="name">user.theme.search</field>
+    		<field name="model">user.theme</field>
+    		<field name="arch" type="xml">
+    			<search string="user theme">
+					<field name="user" string="user theme"/>
+				</search>
+    		</field>	
+    	</record>
+    	
+    	
+    	<!-- user theme tree view -->
+		 
+		<record model="ir.ui.view" id="view_user_theme_tree">
+			<field name="name">user.theme.tree</field>
+			<field name="model">user.theme</field>
+			<field name="arch" type="xml">
+				<tree string="Outside Work Types">
+					<field name="user"/>
+					<field name="color_theme"/>
+				</tree>
+			</field>
+		</record>
+		
+		<!-- user theme form view -->
+		
+		<record model="ir.ui.view" id="view_user_theme_form">
+	        <field name="name">user.theme.form</field>
+	        <field name="model">user.theme</field>
+	        <field name="arch" type="xml">
+	            <form string="Color Theme" version="7.0">
+	                <div name="user_theme_selection">
+	                	<separator string="User Theme Selection"/>
+	                	<group name="user_theme_selection">
+	                		<field name="color_theme" widget="selection" class="oe_inline"/>
+	                	</group>
+	                </div>
+	            </form>
+	        </field>
+    	</record>
+    	
+    	<!-- user theme action -->
+		<record id="action_user_theme_search_view" model="ir.actions.act_window">
+	        <field name="name">User Theme</field>
+	        <field name="res_model">user.theme</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree,form</field>
+	        <field name="view_id" ref="view_user_theme_search"/>
+	    	<field name="help" type="html">
+	    		<p class="oe_view_nocontent_create">
+	    			Click Here To Add New User Theme...
+	    		</p>
+	    	</field>
+	    </record>
+	    
+	    <menuitem id="user_theme_view" name="User Theme" sequence="100" parent="color_theme_root" action="action_user_theme_search_view"/>
+		
+	</data>
+</openerp>
