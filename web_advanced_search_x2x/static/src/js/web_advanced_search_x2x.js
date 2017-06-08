@@ -54,6 +54,7 @@ openerp.web_advanced_search_x2x = function(instance)
             .on('change', this.proxy('operator_changed'));
             return this._super.apply(this, arguments).then(
                 this.proxy(this.operator_changed));
+            this.$el.addClass('oe_searchview_open_drawer');
         },
         get_field_desc: function()
         {
