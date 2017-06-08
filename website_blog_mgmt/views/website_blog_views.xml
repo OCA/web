@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <!-- page list view  -->
+        <record model="ir.ui.view" id="view_blog_post_list">
+            <field name="name">blog.post.list (website_blog_mgmt)</field>
+            <field name="model">blog.post</field>
+            <field name="inherit_id" ref='website_blog.view_blog_post_list'/>
+            <field name="arch" type="xml">
+                <field name="write_date" position="after">
+                    <field name="website_publication_date"/>
+                </field>
+            </field>
+        </record>
+        
+        <!-- page form view  -->
+        <record model="ir.ui.view" id="view_blog_post_form">
+            <field name="name">blog.post.form (website_blog_mgmt)</field>
+            <field name="model">blog.post</field>
+            <field name="inherit_id" ref='website_blog.view_blog_post_form'/>
+            <field name="arch" type="xml">
+                <field name="subtitle" position="after">
+                    <field name="website_publication_date"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>
