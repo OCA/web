@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" 
+                  name="bus_enhanced assets" 
+                  inherit_id="web.assets_backend">
+            <xpath expr="." position="inside"> 
+                <script type="text/javascript" 
+                        src="/bus_enhanced/static/src/js/bus.js"/>
+            </xpath>
+        </template>
+    </data>
+</openerp>
