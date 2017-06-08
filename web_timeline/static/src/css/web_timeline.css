@@ -1,0 +1,42 @@
+/* Button style */
+.openerp .oe_view_manager .oe_view_manager_switch .oe_vm_switch_timeline:after {
+    content: "N";
+}
+.timeline-navigation-zoom-in .ui-icon{
+  background: none !important;
+}
+
+.timeline-navigation-zoom-out .ui-icon{
+  background: none !important;
+}
+.timeline-navigation-move-left .ui-icon{
+  background: none !important;
+}
+.timeline-navigation-move-right .ui-icon{
+  background: none !important;
+}
+/*.vis.timeline .timeaxis .grid.odd {
+  background: #f5f5f5;
+} */
+
+/* gray background in weekends, white text color */
+.vis.timeline .timeaxis .grid.saturday,
+.vis.timeline .timeaxis .grid.sunday {
+  background: gray;
+}
+/* .vis.timeline .timeaxis .text.saturday,
+.vis.timeline .timeaxis .text.sunday {
+  color: white;
+} */
+
+.vis.timeline .item.range .content {
+      overflow: visible;
+}
+
+.oe_chatter_toggle {
+  padding: 15px;
+}
+
+.oe_timeline_view .vlabel .inner:hover{
+    cursor: pointer;
+}
