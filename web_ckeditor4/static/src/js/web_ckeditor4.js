@@ -135,13 +135,50 @@ openerp.web_ckeditor4 = function(instance)
             });
     default_ckeditor_writer = new CKEDITOR.htmlParser.basicWriter();
 
+    //CKEditor's version of this is not accessible unfortunately
+    var protected_source_marker = '{cke_protected}';
+    //we need to enforce line statements to be on its own line
+    //CKEditor doesn't care about whitespace, jinja does
+    function fix_protected_source_line_statement(element)
+    {
+        element.value = element.value.replace(
+            protected_source_marker, protected_source_marker + '\n') + '\n';
+    }
+    function fix_protected_source(e)
+    {
+        function traverse_tree(element)
+        {
+            if(element.value && element.value.indexOf(protected_source_marker) == 0)
+            {
+                if(new RegExp('^' + protected_source_marker + '(%20)*%25').test(element.value))
+                {
+                    fix_protected_source_line_statement(element);
+                }
+            }
+            if(element.children)
+            {
+                _.each(element.children, function(c)
+                {
+                    traverse_tree(c);
+                });
+            }
+        }
+        traverse_tree(e.data.dataValue);
+    };
+
     instance.web_ckeditor4.FieldCKEditor4 = instance.web.form.FieldText.extend({
         ckeditor_config: {
             removePlugins: 'iframe,flash,forms,smiley,pagebreak,stylescombo',
             filebrowserImageUploadUrl: 'dummy',
             extraPlugins: 'filebrowser',
-            // this is '#39' per default which screws up single quoted text in ${}
-            entities_additional: '',
+            protectedSource: [
+                // variable expressions
+                /\${[\s\S]*?}/g,
+                // blocks
+                /<%[\s\S]*?%>/g,
+                // line expressions
+                /^\s*%.*$/gm,
+            ],
         },
         ckeditor_filter: default_ckeditor_filter,
         ckeditor_writer: default_ckeditor_writer,
@@ -169,6 +206,7 @@ openerp.web_ckeditor4 = function(instance)
                             {
                                 self.store_dom_value();
                             },
+                            'toDataFormat': fix_protected_source,
                         },
                     },
                     this.ckeditor_config));
