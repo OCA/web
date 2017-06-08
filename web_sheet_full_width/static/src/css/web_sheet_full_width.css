@@ -18,10 +18,10 @@
     max-width: 100%;
 }
 
-.openerp .oe_followers {
-    width: 250px;
+.modal .modal-lg {
+    width: 100%;
 }
 
-.openerp .oe_record_thread {
-    margin-right: 293px;
+.modal .modal-dialog {
+    padding: 30px;
 }
