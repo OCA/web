@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="UserMenu.about">
+        <t t-jquery=".oe_activate_debug_mode" t-operation="replace">
+            <a class="oe_activate_debug_mode oe_right label label-primary hidden" href="?debug" groups="base.group_no_one">Activate the developer mode</a>
+        </t>
+    </t>
+
+</templates>
