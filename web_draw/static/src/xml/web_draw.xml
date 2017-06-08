@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+    <t t-name="FieldDraw" id="FieldDraw">
+        <div class="o_web_draw_field_draw">
+            <canvas/>
+            <br />
+            <button>Clear</button>
+        </div>
+    </t>
+</templates>

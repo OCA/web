@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template name="Web Draw Assets" id="web_draw_assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script src="/web_draw/static/src/js/web_draw.js">
+            </script>
+            
+            <link href="/web_draw/static/src/css/web_draw.css" rel="stylesheet" />
+        </xpath>
+    </template>
+</odoo>
