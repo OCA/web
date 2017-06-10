@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (7.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-18 09:21+0000\n"
+"POT-Creation-Date: 2017-05-13 09:57+0000\n"
 "PO-Revision-Date: 2015-10-07 17:50+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Catalan (http://www.transifex.com/oca/OCA-web-7-0/language/ca/)\n"
@@ -46,7 +46,7 @@ msgstr ""
 #. module: web_advanced_filters
 #: view:ir.filters:0 view:ir.filters.combine.with.existing:0
 msgid "Save"
-msgstr ""
+msgstr "Desar"
 
 #. module: web_advanced_filters
 #: view:ir.filters:0
