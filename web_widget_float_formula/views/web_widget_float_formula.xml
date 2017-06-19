@@ -14,7 +14,7 @@
     </template>
 
     <template id="qunit_suite" name="web_widget_float_formula Test Assets" inherit_id="web.qunit_suite">
-        <xpath expr="//html/head" position="inside">
+        <xpath expr="//script[1]" position="before">
             <script type="text/javascript" src="/web_widget_float_formula/static/tests/js/test_web_widget_float_formula.js"/>
         </xpath>
     </template>
