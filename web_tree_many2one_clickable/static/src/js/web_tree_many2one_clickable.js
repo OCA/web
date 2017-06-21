@@ -114,7 +114,7 @@ openerp.web_tree_many2one_clickable = function(instance, local)
 
                 // Parent data
                 var parent_vals = self.dataset.parent_view &&
-                    self.dataset.parent_view.get_fields_values();
+                    self.dataset.parent_view.get_fields_values() || {};
 
                 var eval_context = _.extend({}, row_vals, {'parent': parent_vals});
                 var context = new instance.web.CompoundContext(self.dataset.get_context(), {
