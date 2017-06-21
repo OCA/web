@@ -118,12 +118,10 @@ openerp.web_tree_many2one_clickable = function(instance, local)
 
                 var eval_context = _.extend({}, row_vals, {'parent': parent_vals});
 
-                // me está llegando un campo calculado no almacenable en el contexto y me llega
-                // undefined, no se porque va para alla solo se utiliza para un dominio
-                // FIX: Eliminar las claves que llegan undefined
+                // FIX: Delete undefined context values
                 for ( var key in eval_context ) {
                     if ( eval_context.hasOwnProperty(key) ) {
-                        if ( eval_context[key] === undefined ) {
+                        if ( typeof eval_context[key] == 'undefined' ) {
                             delete eval_context[key];
                         }
                     }
