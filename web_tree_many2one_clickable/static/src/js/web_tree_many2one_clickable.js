@@ -96,24 +96,45 @@ openerp.web_tree_many2one_clickable = function(instance, local)
     /* click action */
 
     instance.web.ListView.List.include({
-        render: function()
-        {
+        render: function () {
             var result = this._super(this, arguments),
                 self = this;
-            this.$current.delegate('a[data-many2one-clickable-model]',
-                'click', function()
-                {
-                    var model_name = jQuery(this).data('many2one-clickable-model');
-                    var record_id = jQuery(this).data('many2one-clickable-id');
-                    var local_context = jQuery(this).data('many2one-clickable-context');
-                    var context = new instance.web.CompoundContext(self.dataset.get_context(), {
-                        'active_model': model_name,
-                        'active_id': record_id,
-                        'active_ids': [record_id],
-                    }, local_context).eval();
-                    var model_obj = new instance.web.Model(model_name);
 
-                    model_obj.call('get_formview_id', [record_id, context]).then(function (view_id) {
+            this.$current.delegate('a[data-many2one-clickable-model]', 'click', function () {
+                var $this = $(this);
+
+                // Field data
+                var model_name = $this.data('many2one-clickable-model');
+                var record_id = $this.data('many2one-clickable-id');
+                var local_context = $this.data('many2one-clickable-context');
+
+                // Row data
+                var row_id = $this.parents('tr:first').data('id');
+                var row_vals = self.records.get(row_id).toContext();
+
+                // Parent data
+                var parent_vals = self.dataset.parent_view &&
+                    self.dataset.parent_view.get_fields_values();
+
+                var eval_context = _.extend({}, row_vals, {'parent': parent_vals});
+                var context = new instance.web.CompoundContext(self.dataset.get_context(), {
+                    'active_model': model_name,
+                    'active_id': record_id,
+                    'active_ids': [record_id],
+                }, local_context).set_eval_context(eval_context).eval();
+
+                // FIX: Avoid view_ref propagation
+                for ( var key in context ) {
+                    if ( context.hasOwnProperty(key) ) {
+                        if ( _.string.endsWith(key, '_view_ref' ) ) {
+                            delete context[key];
+                        }
+                    }
+                }
+
+                new instance.web.Model(model_name)
+                    .call('get_formview_id', [record_id, context])
+                    .then(function (view_id) {
                         if ( _.isArray(view_id) ) {
                             view_id = view_id[0];
                         }
@@ -126,7 +147,8 @@ openerp.web_tree_many2one_clickable = function(instance, local)
                             context: context,
                         });
                     });
-                });
+            });
+
             return result;
         },
     });
