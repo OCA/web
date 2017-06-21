@@ -121,7 +121,7 @@ openerp.web_tree_many2one_clickable = function(instance, local)
                 // FIX: Delete undefined context values
                 for ( var key in eval_context ) {
                     if ( eval_context.hasOwnProperty(key) ) {
-                        if ( typeof eval_context[key] == 'undefined' ) {
+                        if ( typeof eval_context[key] === 'undefined' ) {
                             delete eval_context[key];
                         }
                     }
