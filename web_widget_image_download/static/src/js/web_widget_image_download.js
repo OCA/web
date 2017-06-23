@@ -5,12 +5,11 @@ odoo.define('web_widget_image_download.widget', function (require) {
     'use strict';
 
     var core = require('web.core');
-    var $ = require('$');
 
     core.form_widget_registry.get("image").include({
         render_value: function () {
             this._super();
-            var $widget = this.$el.find('.oe_form_binary_file_download');
+            var $widget = this.$el.find('.o_form_binary_file_download');
             this.imgSrc = this.$el.find('img[name="' + this.name + '"]')
                 .attr('src');
 
@@ -28,7 +27,7 @@ odoo.define('web_widget_image_download.widget', function (require) {
 
             // Replace with jQuery to keep inheritance intact
             if (this.has_custom_image()) {
-                this.$el.find('.oe_form_binary_file_clear')
+                this.$el.find('.o_clear_file_button')
                     .removeClass('col-md-offset-5');
             }
 
