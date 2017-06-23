@@ -4,13 +4,13 @@
 {
     "name": "Web Widget - Image Download",
     "summary": "Allows to download any image from its widget",
-    "version": "9.0.1.0.0",
+    "version": "10.0.1.0.0",
     "category": "web",
     "website": "https://www.tecnativa.com",
-    "author": "Tecnativa, Odoo Community Association (OCA)",
+    "author": "Tecnativa, Odoo Community Association (OCA), Kaushal Prajapati",
     "license": "LGPL-3",
     "application": False,
-    'installable': False,
+    'installable': True,
     "data": [
         "views/assets.xml",
     ],
