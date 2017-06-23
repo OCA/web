@@ -4,9 +4,10 @@
 
 <template>
     <t t-extend="FieldBinaryImage">
-        <t t-jquery=".oe_form_binary_file_edit" t-operation="after">
+        <t t-jquery=".o_select_file_button" t-operation="after">
             <t t-if="widget.has_custom_image()">
-                <a class="fa fa-download fa-1g col-md-4 oe_form_binary_file_download" title="Download"></a>
+                <a class="fa fa-download o_form_binary_file_download"
+                   title="Download"/>
             </t>
         </t>
     </t>
