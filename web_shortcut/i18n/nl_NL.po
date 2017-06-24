@@ -3,90 +3,89 @@
 # * web_shortcut
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2017
-# Rodrigo de Almeida Sottomaior Macedo <rmsolucoeseminformatic4@gmail.com>, 2017
+# Peter Hageman <hageman.p@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-22 08:27+0000\n"
 "PO-Revision-Date: 2017-06-22 08:27+0000\n"
-"Last-Translator: Rodrigo de Almeida Sottomaior Macedo <rmsolucoeseminformatic4@gmail.com>, 2017\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/23907/pt_BR/)\n"
+"Last-Translator: Peter Hageman <hageman.p@gmail.com>, 2017\n"
+"Language-Team: Dutch (Netherlands) (https://www.transifex.com/oca/teams/23907/nl_NL/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: nl_NL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: web_shortcut
 #. openerp-web
 #: code:addons/web_shortcut/static/src/xml/web_shortcut.xml:21
 #, python-format
 msgid "Add / Remove Shortcut..."
-msgstr "Adicionar / Remover atalho ..."
+msgstr ""
 
 #. module: web_shortcut
 #: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_create_uid
 msgid "Created by"
-msgstr "Criado por"
+msgstr "Aangemaakt door"
 
 #. module: web_shortcut
 #: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_create_date
 msgid "Created on"
-msgstr "Criado em"
+msgstr "Aangemaakt op"
 
 #. module: web_shortcut
 #: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_display_name
 msgid "Display Name"
-msgstr "Exibir Nome"
+msgstr "Weergavenaam"
 
 #. module: web_shortcut
 #: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_id
 msgid "ID"
-msgstr "Identificação"
+msgstr "ID"
 
 #. module: web_shortcut
 #: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut___last_update
 msgid "Last Modified on"
-msgstr "Última Modificação em"
+msgstr ""
 
 #. module: web_shortcut
 #: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_write_uid
 msgid "Last Updated by"
-msgstr "Última Atualização por"
+msgstr "Laatst bijgewerkt door"
 
 #. module: web_shortcut
 #: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_write_date
 msgid "Last Updated on"
-msgstr "Última Atualização em"
+msgstr "Laatst bijgewerkt op"
 
 #. module: web_shortcut
 #: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_menu_id
 msgid "Menu id"
-msgstr "Menu de identificação"
+msgstr ""
 
 #. module: web_shortcut
 #: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_name
 msgid "Shortcut Name"
-msgstr "Nome do atalho"
+msgstr ""
 
 #. module: web_shortcut
 #: sql_constraint:web.shortcut:0
 msgid "Shortcut for this menu already exists!"
-msgstr "Atalho para este menu já existe!"
+msgstr ""
 
 #. module: web_shortcut
 #: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_user_id
 msgid "User Ref."
-msgstr "Ref. do Usuário"
+msgstr ""
 
 #. module: web_shortcut
 #: model:ir.model,name:web_shortcut.model_ir_ui_menu
 msgid "ir.ui.menu"
-msgstr "ir.ui.menu"
+msgstr ""
 
 #. module: web_shortcut
 #: model:ir.model,name:web_shortcut.model_web_shortcut
 msgid "web.shortcut"
-msgstr "web.atalho"
+msgstr ""
