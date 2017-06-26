@@ -3,12 +3,14 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Web Timepicker Widget",
-    "version": "9.0.1.0.0",
-    "author": "VividLab, Odoo Community Association (OCA)",
+    "version": "10.0.1.0.0",
+    "author": "VividLab, "
+              "Odoo Community Association (OCA), "
+              "Kaushal Prajapati",
     "license": "AGPL-3",
     "category": "Web",
     "website": "http://www.vividlab.de",
-    'installable': False,
+    'installable': True,
     "depends": [
         "web",
     ],
