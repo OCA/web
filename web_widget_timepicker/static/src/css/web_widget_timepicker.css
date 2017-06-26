@@ -1,3 +1,6 @@
-.oe_form_editable .oe_form .oe_form_field_time input {
+.o_form_editable .o_form_field_time input {
     width: 6em;
+}
+.o_form_field_time{
+    display: -webkit-inline-box !important;
 }
