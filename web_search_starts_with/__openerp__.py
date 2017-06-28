@@ -1,13 +1,11 @@
 # coding: utf-8
-# © 2015 Akretion Mourad EL HADJ MIMOUNE, David BEAL, Raphaël REVERDY
+# Copyright (c) 2017 Akretion
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-
 {
-    'name': 'web search starts with',
-    'summary': 'Recherche avancée commence par ',
-    'version': '0.3',
-    'author': 'Akretion',
-    'maintainer': 'Akretion',
+    'name': 'Starts with search operator',
+    'version': '8.0.1.0.0',
+    'category': 'Web',
+    'author': 'Akretion,Odoo Community Association (OCA)',
     'depends': [
         'web',
     ],
