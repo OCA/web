@@ -20,7 +20,7 @@ To use this module, you need to:
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/162/8.0
+   :target: https://runbot.odoo-community.org/runbot/162/10.0
 
 Known Issues / Roadmap
 ======================
@@ -43,6 +43,7 @@ Contributors
 
 * Flavio Corpa <flavio.corpa@tecnativa.com>
 * Jairo Llopis <jairo.llopis@tecnativa.com>
+* Kaushal Prajapati <kbprajapati@live.com>
 
 Maintainer
 ----------
