@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+        <template
+            id="assets_backend"
+            name="web_search_nospace.assets_backend"
+            inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript"
+                src="/web_search_nospace/static/src/js/search.js"></script>
+            </xpath>
+        </template>
+
+    </data>
+</openerp>
