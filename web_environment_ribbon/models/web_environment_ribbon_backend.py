@@ -5,7 +5,7 @@
 from openerp import api, models
 
 
-class WebEnvironmentRibbonBackend(models.Model):
+class WebEnvironmentRibbonBackend(models.AbstractModel):
 
     _name = 'web.environment.ribbon.backend'
     _description = 'Web Environment Ribbon Backend'
