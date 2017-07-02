@@ -40,7 +40,14 @@ This assumes that my_field refers to a model with the fields `x`, `y` and
 `value`. If your fields are named differently, pass the correct names as
 attributes::
 
-<field name="my_field" widget="x2many_2d_matrix" field_x_axis="my_field1" field_y_axis="my_field2" field_value="my_field3" />
+ <field name="my_field" widget="x2many_2d_matrix" field_x_axis="my_field1" field_y_axis="my_field2" field_value="my_field3">
+     <tree>
+         <field name="my_field"/>
+         <field name="my_field1"/>
+         <field name="my_field2"/>
+         <field name="my_field3"/>
+     </tree>
+ </field>
 
 You can pass the following parameters:
 
@@ -84,6 +91,8 @@ task per project per user. In this case, we can use ``project.task`` as our
 data model and point to it from our wizard. The crucial part is that we fill
 the field in the default function::
 
+ from odoo import fields, models
+ 
  class MyWizard(models.TransientModel):
     _name = 'my.wizard'
 
@@ -94,7 +103,13 @@ the field in the default function::
         # same with users
         users = self.env['res.users'].browse([1, 2, 3])
         return [
-            (0, 0, {'project_id': p.id, 'user_id': u.id, 'planned_hours': 0})
+            (0, 0, {
+                'project_id': p.id, 
+                'user_id': u.id, 
+                'planned_hours': 0,
+                'message_needaction': False,
+                'date_deadline': fields.Date.today(),
+            })
             # if the project doesn't have a task for the user, create a new one
             if not p.task_ids.filtered(lambda x: x.user_id == u) else
             # otherwise, return the task
@@ -107,7 +122,14 @@ the field in the default function::
 
 Now in our wizard, we can use::
 
-<field name="task_ids" widget="x2many_2d_matrix" field_x_axis="project_id" field_y_axis="user_id" field_value="planned_hours" />
+ <field name="task_ids" widget="x2many_2d_matrix" field_x_axis="project_id" field_y_axis="user_id" field_value="planned_hours">
+     <tree>
+         <field name="task_ids"/>
+         <field name="project_id"/>
+         <field name="user_id"/>
+         <field name="planned_hours"/>
+     </tree>
+ </field>
 
 Note that all values in the matrix must exist, so you need to create them
 previously if not present, but you can control visually the editability of

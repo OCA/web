@@ -3,13 +3,14 @@
 # * web_favicon
 # 
 # Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
 # Bole <bole@dajmi5.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-09 01:43+0000\n"
-"PO-Revision-Date: 2017-03-09 01:43+0000\n"
+"POT-Creation-Date: 2017-04-28 18:03+0000\n"
+"PO-Revision-Date: 2017-04-28 18:03+0000\n"
 "Last-Translator: Bole <bole@dajmi5.com>, 2017\n"
 "Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -51,14 +52,14 @@ msgstr ""
 #. module: web_favicon
 #: selection:res.company,favicon_backend_mimetype:0
 msgid "image/gif"
-msgstr ""
+msgstr "image/gif"
 
 #. module: web_favicon
 #: selection:res.company,favicon_backend_mimetype:0
 msgid "image/png"
-msgstr ""
+msgstr "image/png"
 
 #. module: web_favicon
 #: selection:res.company,favicon_backend_mimetype:0
 msgid "image/x-icon"
-msgstr ""
+msgstr "image/x-icon"

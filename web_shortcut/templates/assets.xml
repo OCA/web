@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/web_shortcut/static/src/css/web_shortcut.css"/>
+            <script type="text/javascript" src="/web_shortcut/static/src/js/web_shortcut.js"></script>
+        </xpath>
+    </template>
+
+</odoo>

@@ -8,7 +8,7 @@ This module adds a checkbox to this list so multiple entries can be selected at 
 Installation
 ============
 
-It was tested on Odoo 8.0 branch.
+It was tested on Odoo 10.0 branch.
 
 
 Bug Tracker
@@ -43,4 +43,3 @@ This module is maintained by the OCA.
 OCA, or the Odoo Community Association, is a nonprofit organization whose mission is to support the collaborative development of Odoo features and promote its widespread use.
 
 To contribute to this module, please visit http://odoo-community.org.
-
