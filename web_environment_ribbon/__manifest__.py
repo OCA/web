@@ -17,7 +17,6 @@
         'web',
         ],
     "data": [
-        'security/web_environment_ribbon_backend.xml',
         'view/base_view.xml',
         'data/ribbon_data.xml',
         ],
