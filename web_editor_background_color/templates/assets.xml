@@ -4,7 +4,7 @@
 
 <odoo>
 
-    <template id="editor" inherit_id="web_editor.editor">
+    <template id="assets_editor" inherit_id="web_editor.assets_editor">
         <xpath expr=".">
             <!-- External library bootstrap-colorpicker -->
             <link rel="stylesheet" href="/web_editor_background_color/static/src/lib/bootstrap-colorpicker/colorpicker.less"/>
