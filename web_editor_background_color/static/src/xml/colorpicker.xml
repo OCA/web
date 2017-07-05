@@ -5,14 +5,13 @@
 <templates>
 
     <t t-extend="web_editor.colorpicker">
-        <t t-jquery=".colorpicker" t-operation="append">
-            <tr>
-                <td colspan="6">
-                    <div class="bg-custom">
-                        <input type="text" />
-                    </div>
-                </td>
-            </tr>
+        <t t-jquery="colorpicker" t-operation="append">
+            <div
+                class="o_colorpicker_section"
+                data-name="custom_color"
+                data-icon-class="fa fa-code">
+                <input type="text" class="form-control" />
+            </div>
         </t>
     </t>
 

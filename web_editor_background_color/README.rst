@@ -21,27 +21,14 @@ To use this module, you need to:
    ``mass_mailing`` or ``website``.
 #. Use that module's facilities to edit some web content.
 #. Drag & drop any snippet into the web editor body.
-#. Click on *Customize > Color*.
-#. Choose:
-
-   * A color from the theme preset.
-   * A custom color by clicking on the text input and then either:
-
-     * Writing the HTML color code.
-     * Selecting a color from the color picker.
-     * Writing "transparent" to remove it.
+#. Click on *Customize > Text-Image > Background Color > </> icon*.
+#. Choose a custom color by either:
+   * Writing any valid HTML color code in the text input.
+   * Selecting a color from the color picker.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/162/9.0
-
-Known issues / Roadmap
-======================
-
-* When migrating to v10, adapt this option again to its brand new built-in
-  colorpicker.
-* While you write to the text input, you may notice it disappears for a moment,
-  but don't worry, you are still writing.
+   :target: https://runbot.odoo-community.org/runbot/162/10.0
 
 Bug Tracker
 ===========
