@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    <template id="report_saleorder_document" inherit_id="sale.report_saleorder_document" priority="9999">
+        <xpath expr="//p[@id='fiscal_position_remark']" position="after">
+            <p>
+                <strong>Signature:</strong>
+                <span t-if="doc.state not in ['draft','sent'] and doc.signature_image">
+                    <img class="image" t-att-src="'data:image/png;base64,%s' % doc.signature_image" style="border:auto;"/>
+                </span>
+            </p>
+        </xpath>
+    </template>
+
+</odoo>
