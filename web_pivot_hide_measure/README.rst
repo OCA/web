@@ -24,17 +24,17 @@ Add this method in the res model of the pivot view, where the list named 'fields
 id a comma separated list of the measures to hide
 
 ```python
-    @api.model
-    def fields_get(self, fields=None, attributes=None):
-        fields_to_hide = [
-            'field1', 'field2', 'field3'
-        ]
-        res = super(ModelName, self).fields_get(
-            fields, attributes)
-        for field in fields_to_hide:
-            res[field]['selectable'] = False
-        return res
 
+@api.model
+def fields_get(self, fields=None, attributes=None):
+  fields_to_hide = [
+    'field1', 'field2', 'field3'
+  ]
+  res = super(ModelName, self).fields_get(
+    fields, attributes)
+  for field in fields_to_hide:
+    res[field]['selectable'] = False
+  return res
 ```
 
 Known issues
