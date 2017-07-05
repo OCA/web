@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='do_prepare_partial']" position="after">
+                <button name="action_picking_send" type="object" string="Send by Email" states="done" groups="base.group_user"/>
+            </xpath>
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="user_id"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
