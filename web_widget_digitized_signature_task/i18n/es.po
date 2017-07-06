@@ -1,0 +1,72 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* web_widget_digitized_signature_task
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-07-05 14:53+0000\n"
+"PO-Revision-Date: 2017-07-05 14:53+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_widget_digitized_signature_task
+#: model:ir.ui.view,arch_db:web_widget_digitized_signature_task.report_taskorder_document
+msgid "<strong>Assigned to: </strong>"
+msgstr "<strong>Assignada a: </strong>"
+
+#. module: web_widget_digitized_signature_task
+#: model:ir.ui.view,arch_db:web_widget_digitized_signature_task.report_taskorder_document
+msgid "<strong>Assigning Date: </strong>"
+msgstr "<strong>Fecha de asignación: </strong>"
+
+#. module: web_widget_digitized_signature_task
+#: model:ir.ui.view,arch_db:web_widget_digitized_signature_task.report_taskorder_document
+msgid "<strong>Deadline: </strong>"
+msgstr "<strong>Fecha límite: </strong>"
+
+#. module: web_widget_digitized_signature_task
+#: model:ir.ui.view,arch_db:web_widget_digitized_signature_task.report_taskorder_document
+msgid "<strong>Information</strong>"
+msgstr "<strong>Información</strong>"
+
+#. module: web_widget_digitized_signature_task
+#: model:ir.ui.view,arch_db:web_widget_digitized_signature_task.report_taskorder_document
+msgid "<strong>Partner:</strong>"
+msgstr "<strong>Empresa:</strong>"
+
+#. module: web_widget_digitized_signature_task
+#: model:ir.ui.view,arch_db:web_widget_digitized_signature_task.report_taskorder_document
+msgid "<strong>Signature:</strong>"
+msgstr "<strong>Firma:</strong>"
+
+#. module: web_widget_digitized_signature_task
+#: model:ir.ui.view,arch_db:web_widget_digitized_signature_task.report_taskorder_document
+msgid "<strong>Task Description:</strong>"
+msgstr "<strong>Descripción de la tarea:</strong>"
+
+#. module: web_widget_digitized_signature_task
+#: model:ir.ui.view,arch_db:web_widget_digitized_signature_task.report_taskorder_document
+msgid "<strong>Task Name: </strong>"
+msgstr "<strong>Nombre de la tarea: </strong>"
+
+#. module: web_widget_digitized_signature_task
+#: model:ir.model.fields,field_description:web_widget_digitized_signature_task.field_project_task_signature_image
+msgid "Signature"
+msgstr "Firma"
+
+#. module: web_widget_digitized_signature_task
+#: model:ir.actions.report.xml,name:web_widget_digitized_signature_task.report_taskorder
+msgid "Task Order"
+msgstr "Tarea"
+
+#. module: web_widget_digitized_signature_task
+#: model:ir.model,name:web_widget_digitized_signature_task.model_project_task
+msgid "Task"
+msgstr "Tarea"
+

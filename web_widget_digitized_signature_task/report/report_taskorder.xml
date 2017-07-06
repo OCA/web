@@ -1,0 +1,52 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    <template id="report_taskorder_document">
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <div class="row">
+                            <div class="col-xs-6 panel panel-default" id="header">
+                                <p id="task_name"><strong>Task Name: </strong></p>
+                                <p><strong>Name: </strong><span t-field="o.name"/></p>
+                                <p><strong>Assigned to: </strong><span t-if="o.user_id" t-field="o.user_id.name"/></p>
+                                <p><strong>Create Date: </strong><span t-field="o.create_date"/></p>
+                                <p><strong>Deadline: </strong><span t-field="o.date_deadline"/></p>
+                            </div>
+                            <div class="col-xs-6 panel panel-default" id="information">
+                                <p id="partner_info"><strong>Partner Information</strong></p>
+                                <div>
+                                    <strong>Partner:</strong>
+                                    <div t-field="o.partner_id" t-field-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": true, "phone_icons": true}'/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="description">
+                            <div class="col-xs-12 panel panel-default">
+                                <p id="task_info"><strong>Task Information</strong></p>
+                                <div>
+                                    <strong>Task Description:</strong>
+                                    <p t-field="o.description"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div id="signature">
+                                <p>
+                                    <strong>Signature:</strong>
+                                    <span t-if="o.signature_image">
+                                        <img class="image" t-att-src="'data:image/png;base64,%s' % o.signature_image" style="border:auto;"/>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>
