@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    <record id="account_analytic_account_recurring_form_form" model="ir.ui.view">
+        <field name="name">account.analytic.account.invoice.recurring.form.inherit</field>
+        <field name="model">account.analytic.account</field>
+        <field name="inherit_id" ref="contract.account_analytic_account_recurring_form_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']/.." position="before">
+                <header>
+                    <button name="action_contract_send" type="object" string="Send by Email" groups="base.group_user"/>
+                </header>
+            </xpath>
+            <field name="partner_id" position="after">
+                <field name="user_id"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

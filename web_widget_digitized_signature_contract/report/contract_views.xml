@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <report
+        id="report_contract"
+        model="account.analytic.account"
+        string="Contract"
+        report_type="qweb-pdf"
+        name="web_widget_digitized_signature_contract.report_contract_document"/>
+
+</odoo>
