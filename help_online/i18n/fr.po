@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-06 15:49+0000\n"
-"PO-Revision-Date: 2016-05-06 08:19+0000\n"
+"POT-Creation-Date: 2016-09-17 12:06+0000\n"
+"PO-Revision-Date: 2016-09-16 21:46+0000\n"
 "Last-Translator: Christophe CHAUVET <christophe.chauvet@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/oca/OCA-web-8-0/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -33,7 +33,7 @@ msgstr ""
 
 #. module: help_online
 #. openerp-web
-#: code:addons/help_online/static/src/js/help_online.js:83
+#: code:addons/help_online/static/src/js/help_online.js:93
 #, python-format
 msgid "Cancel"
 msgstr "Annuler"
@@ -46,7 +46,7 @@ msgstr "Fermer"
 
 #. module: help_online
 #. openerp-web
-#: code:addons/help_online/static/src/js/help_online.js:81
+#: code:addons/help_online/static/src/js/help_online.js:91
 #, python-format
 msgid "Confirm"
 msgstr "Confirmer"
@@ -183,14 +183,14 @@ msgstr "Le paramètre spécifiant le préfixe des pages n'est pas configuré !"
 
 #. module: help_online
 #. openerp-web
-#: code:addons/help_online/static/src/js/help_online.js:88
+#: code:addons/help_online/static/src/js/help_online.js:98
 #, python-format
 msgid "Ok"
 msgstr "Ok"
 
 #. module: help_online
 #. openerp-web
-#: code:addons/help_online/static/src/js/help_online.js:107
+#: code:addons/help_online/static/src/js/help_online.js:117
 #, python-format
 msgid "Page does not exist. Do you want to create?"
 msgstr "La page n'existe pas. Voulez-vous la créer?"

@@ -5,14 +5,13 @@
 Tags widget for one2many fields
 ===============================
 
-This module add a widget ``one2many_tags`` that looks and behaves like ``many2many_tags``, but works for one2many fields.
+This module adds a widget ``one2many_tags`` that looks and behaves like ``many2many_tags``, but works for one2many fields.
 
 Usage
 =====
 
 To use this module, use ``widget="one2many_tags"`` on your field element.
 
-* go to ...
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
     :alt: Try me on Runbot
     :target: https://runbot.odoo-community.org/runbot/162/8.0

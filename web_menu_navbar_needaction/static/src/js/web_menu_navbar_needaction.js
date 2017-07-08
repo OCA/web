@@ -36,7 +36,7 @@ openerp.web_menu_navbar_needaction = function(instance)
         },
         refresh_navbar_needaction: function(timeout)
         {
-            if(timeout)
+            if(parseInt(timeout, 10))
             {
                 setTimeout(this.proxy(this.refresh_navbar_needaction), timeout, timeout);
             }
@@ -50,29 +50,72 @@ openerp.web_menu_navbar_needaction = function(instance)
                 .map(function() { return parseInt(jQuery(this).attr('data-menu')); })
                 .get();
             return new instance.web.Model('ir.ui.menu')
-                .call('get_navbar_needaction_data', [this.navbar_menu_ids])
+                .call('get_navbar_needaction_data', [this.navbar_menu_ids],
+                      {}, {shadow: true})
                 .then(this.proxy(this.process_navbar_needaction));
         },
         process_navbar_needaction: function(data)
         {
             var self = this;
-            _.each(data, function (needaction_count, menu_id)
+            _.each(data, function (needaction_data, menu_id)
             {
                 var $item = self.$el.parents('body').find(
                     _.str.sprintf('#oe_main_menu_navbar a[data-menu="%s"]',
                                   menu_id));
-                if(!$item.length)
+                if(!$item.length || _.isEmpty(needaction_data))
                 {
                     return;
                 }
                 $item.find('.badge').remove();
-                if(needaction_count)
+                if(needaction_data.count)
                 {
-                    $item.append(
-                        instance.web.qweb.render("Menu.needaction_counter",
-                        {widget : {needaction_counter: needaction_count}}));
+                    var $counter = jQuery(
+                            instance.web.qweb.render("Menu.needaction_counter",
+                            {
+                                widget: {
+                                    needaction_counter: needaction_data.count,
+                                }
+                            }))
+                        .appendTo($item);
+                    if(needaction_data.action_id)
+                    {
+                        $counter.click(function(ev)
+                        {
+                            var parent = self.getParent();
+                            ev.stopPropagation();
+                            ev.preventDefault();
+                            return parent.menu_dm.add(
+                                self.rpc('/web/action/load', {
+                                action_id: needaction_data.action_id,
+                            }))
+                            .then(function(action)
+                            {
+                                return parent.action_mutex.exec(function()
+                                {
+                                    action.domain = needaction_data.action_domain;
+                                    action.context = new instance.web.CompoundContext(
+                                        action.context || {}
+                                    );
+                                    action.context = instance.web.pyeval.eval(
+                                        'context', action.context
+                                    );
+                                    _.each(_.keys(action.context), function(key)
+                                    {
+                                        if(key.startsWith('search_default'))
+                                        {
+                                            delete action.context[key];
+                                        }
+                                    });
+                                    return parent.action_manager.do_action(
+                                        action, {disable_custom_filters: true}
+                                    );
+                                });
+                            });
+                        });
+                    }
                 }
             });
+            instance.web.bus.trigger('resize');
         },
     })
 

@@ -21,7 +21,7 @@
 
 {
     'name': 'Web Show Advanced Search by default on list view',
-    'version': '1.0',
+    'version': '8.0.1.0.0',
     'author': "BCIM,Odoo Community Association (OCA)",
     'license': 'AGPL-3',
     'category': 'Web',

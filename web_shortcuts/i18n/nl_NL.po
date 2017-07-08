@@ -1,0 +1,80 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_shortcuts
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: web (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-06-10 11:38+0000\n"
+"PO-Revision-Date: 2015-11-07 11:20+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: Dutch (Netherlands) (http://www.transifex.com/oca/OCA-web-8-0/language/nl_NL/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: nl_NL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: web_shortcuts
+#. openerp-web
+#: code:addons/web_shortcuts/static/src/xml/web_shortcuts.xml:24
+#, python-format
+msgid "Add / Remove Shortcut..."
+msgstr ""
+
+#. module: web_shortcuts
+#: field:web.shortcut,create_uid:0
+msgid "Created by"
+msgstr ""
+
+#. module: web_shortcuts
+#: field:web.shortcut,create_date:0
+msgid "Created on"
+msgstr ""
+
+#. module: web_shortcuts
+#: field:web.shortcut,display_name:0
+msgid "Display Name"
+msgstr "Weergavenaam"
+
+#. module: web_shortcuts
+#: field:web.shortcut,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: web_shortcuts
+#: field:web.shortcut,__last_update:0
+msgid "Last Modified on"
+msgstr "Laatst gewijzigd op"
+
+#. module: web_shortcuts
+#: field:web.shortcut,write_uid:0
+msgid "Last Updated by"
+msgstr ""
+
+#. module: web_shortcuts
+#: field:web.shortcut,write_date:0
+msgid "Last Updated on"
+msgstr ""
+
+#. module: web_shortcuts
+#: field:web.shortcut,menu_id:0
+msgid "Menu id"
+msgstr ""
+
+#. module: web_shortcuts
+#: field:web.shortcut,name:0
+msgid "Shortcut Name"
+msgstr ""
+
+#. module: web_shortcuts
+#: sql_constraint:web.shortcut:0
+msgid "Shortcut for this menu already exists!"
+msgstr ""
+
+#. module: web_shortcuts
+#: field:web.shortcut,user_id:0
+msgid "User Ref."
+msgstr ""
