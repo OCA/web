@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    <record id="inherited_res_users_form" model="ir.ui.view">
+        <field name="name">inherited.res.users.form</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='signature']" position="after">
+                <label for="signature_image" class="oe_edit_only"/>
+                <h2><field name="signature_image" widget="signature"/></h2>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_users_form_simple_modif" model="ir.ui.view">
+        <field name="name">res.users.preferences.form</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='signature']" position="after">
+                <label for="signature_image" class="oe_edit_only"/>
+                <h2><field name="signature_image" widget="signature"/></h2>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
