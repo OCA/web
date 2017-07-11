@@ -1,4 +1,4 @@
-odoo.define('web_digital_sign.web_digital_sign', function(require) {
+odoo.define('web_widget_digitized_signature.web_digital_sign', function(require) {
     "use strict";
 
     var core = require('web.core');

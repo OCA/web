@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<templates id="template" xml:space="preserve">
+<template id="template" xml:space="preserve">
    <t t-name="FieldSignature">
         <div class="panel panel-default mt16 mb0 " id="drawsign">
             <div class="panel-heading oe_edit_only">
@@ -21,4 +21,4 @@
             t-att-tabindex="widget.node.attrs.img_tabindex || widget.node.attrs.tabindex"
         />
     </t>
-</templates>
+</template>
