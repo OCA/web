@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Jairo Llopis <jairo.llopis@tecnativa.com>
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
+
+<odoo>
+
+    <record id="ir_filters_view_form" model="ir.ui.view">
+        <field name="name">Use domain widget</field>
+        <field name="model">ir.filters</field>
+        <field name="inherit_id" ref="base.ir_filters_view_form"/>
+        <field name="arch" type="xml">
+            <field name="domain" position="attributes">
+                <attribute name="widget">char_domain</attribute>
+                <attribute name="options">{'model_field': 'model_id'}</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>

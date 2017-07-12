@@ -28,6 +28,7 @@ var ModelFieldSelector = Widget.extend({
             this.goToNextPage(this._getLastPageField($(e.currentTarget).data("name")));
         },
         "click li.o_field_selector_select_button": function (e) {
+            e.stopPropagation();
             this.selectField(this._getLastPageField($(e.currentTarget).data("name")));
         },
 

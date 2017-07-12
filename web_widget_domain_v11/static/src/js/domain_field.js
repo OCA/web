@@ -49,9 +49,6 @@ var FieldDomain = common.AbstractField.extend(common.ReinitializeFieldMixin).ext
             model: undefined, // this option is mandatory !
             fs_filters: {}, // Field selector filters (to only show a subset of available fields @see FieldSelector)
         });
-        if (this.options.model_field && !this.options.model) {
-            this.options.model = this.options.model_field;
-        }
     },
     start: function() {
         this.model = _get_model.call(this); // TODO get the model another way ?
@@ -66,10 +63,12 @@ var FieldDomain = common.AbstractField.extend(common.ReinitializeFieldMixin).ext
         return this._super.apply(this, arguments);
 
         function _get_model() {
-            if (this.field_manager.fields[this.options.model]) {
-                return this.field_manager.get_field_value(this.options.model);
+            if (this.options.model) {
+                return this.options.model;
             }
-            return this.options.model;
+            if (this.field_manager.fields[this.options.model_field]) {
+                return this.field_manager.get_field_value(this.options.model_field);
+            }
         }
     },
     initialize_content: function () {

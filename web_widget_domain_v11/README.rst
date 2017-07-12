@@ -14,9 +14,14 @@ Usage
 
 To use this module, you need to:
 
-#. Install any addon that makes use of the domain widget (i.e.
-   ``mass_mailing``).
-#. You will be able to use the updated version.
+#. Enable the developer mode.
+#· Go to *Settings > Technical > User interface > User-defined Filters* and
+   choose or create one.
+#. Choose a model if there is none.
+#. You will be able to choose the domain using the updated domain widget.
+
+Install any addon that makes use of the domain widget (i.e. ``mass_mailing``)
+and you will be also able to use the new widget there.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
@@ -26,7 +31,7 @@ Known issues / Roadmap
 ======================
 
 * This addon replaces the built-in ``char_domain`` widget, so it can break
-  compatibility with other addons that use it.
+  compatibility with other addons that use or extend it.
 
 Bug Tracker
 ===========

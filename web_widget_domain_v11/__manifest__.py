@@ -16,6 +16,7 @@
     ],
     "data": [
         "templates/assets.xml",
+        "views/ir_filters.xml",
     ],
     "qweb": [
         "static/src/copied-xml/templates.xml",
