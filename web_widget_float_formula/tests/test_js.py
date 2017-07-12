@@ -9,7 +9,7 @@ class TestJS(HttpCase):
 
     def test_js(self):
         self.phantom_js(
-            "/web/tests?module=web_widget_float_formula",
+            "/web/tests?debug=assets&module=web_widget_float_formula",
             "",
             login="admin",
         )

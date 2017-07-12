@@ -21,8 +21,9 @@ env:
   matrix:
   - LINT_CHECK="1"
   - TRANSIFEX="1"
-  - TESTS="1" ODOO_REPO="odoo/odoo"
-  - TESTS="1" ODOO_REPO="OCA/OCB"
+  - TESTS="1" ODOO_REPO="odoo/odoo" EXCLUDE="web_widget_float_formula"
+  - TESTS="1" ODOO_REPO="OCA/OCB" EXCLUDE="web_widget_float_formula"
+  - TESTS="1" ODOO_REPO="odoo/odoo" INCLUDE="web_widget_float_formula"
 
 virtualenv:
   system_site_packages: true
