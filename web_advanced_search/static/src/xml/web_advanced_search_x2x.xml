@@ -3,12 +3,11 @@
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <templates>
     <t t-name="web_advanced_search_x2x.proposition">
-        <t t-if="widget.relational">
-            <!-- This wrapper fixes CSS styiling -->
-            <div class="oe_form"/>
+        <t t-if="widget.x2x_widget_name()">
+            <div class="x2x_container"/>
         </t>
-        <t t-if="!widget.relational">
-            <t t-call="SearchView.extended_search.proposition" />
+        <t t-if="!widget.x2x_widget_name()">
+            <input type="text"/>
         </t>
     </t>
 </templates>
