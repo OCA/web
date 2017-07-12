@@ -1,7 +1,9 @@
-.openerp {
-    .oe-search-options {
-        .searchview_extended_prop_value {
-            .oe_form {
+.o_search_options {
+    .o_filters_menu {
+        .o_filter_condition {
+            max-width: inherit;
+
+            .o_searchview_extended_prop_value {
                 .ui-autocomplete-input {
                     .form-control();
                 }
@@ -9,6 +11,10 @@
                 .oe_m2o_drop_down_button {
                     top: 6px;
                     right: 2px;
+                }
+
+                .o_form_field_domain {
+                    min-width: 400px;
                 }
             }
         }
