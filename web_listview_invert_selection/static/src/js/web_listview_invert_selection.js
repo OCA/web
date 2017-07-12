@@ -1,9 +1,9 @@
 /* Copyright 2017 Onestein
 * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
-odoo.define('web_listview_invert_selection', function (require) {
+odoo.define("web_listview_invert_selection", function (require) {
     "use strict";
-    var ListView = require('web.ListView');
+    var ListView = require("web.ListView");
 
     ListView.include(/** @lends instance.web.ListView# */{
 
@@ -11,20 +11,20 @@ odoo.define('web_listview_invert_selection', function (require) {
             var self = this;
             var result = this._super.apply(this, arguments);
 
-            this.$('span.o_invert_selection').click(function () {
-                var checked = self.$('tbody .o_list_record_selector input:checked');
-                var unchecked = self.$('tbody .o_list_record_selector input:not(:checked)');
-                checked.prop('checked', false);
-                unchecked.prop('checked', true);
+            this.$("span.o_invert_selection").click(function () {
+                var checked = self.$("tbody .o_list_record_selector input:checked");
+                var unchecked = self.$("tbody .o_list_record_selector input:not(:checked)");
+                checked.prop("checked", false);
+                unchecked.prop("checked", true);
 
                 var selected = [];
                 checked.each(function () {
-                    selected.push($(this).attr('name'));
+                    selected.push($(this).attr("name"));
                 });
                 if (selected.length === 0) {
-                    self.$('thead .o_list_record_selector input').prop('checked', true);
+                    self.$("thead .o_list_record_selector input").prop("checked", true);
                 } else {
-                    self.$('thead .o_list_record_selector input').prop('checked', false);
+                    self.$("thead .o_list_record_selector input").prop("checked", false);
                 }
             });
 
