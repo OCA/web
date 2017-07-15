@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
+# Bole <bole@dajmi5.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-24 02:43+0000\n"
-"PO-Revision-Date: 2017-05-24 02:43+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"POT-Creation-Date: 2017-07-13 16:07+0000\n"
+"PO-Revision-Date: 2017-07-13 16:07+0000\n"
+"Last-Translator: Bole <bole@dajmi5.com>, 2017\n"
 "Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,7 +24,7 @@ msgstr ""
 #: code:addons/web_m2x_options/static/src/xml/base.xml:8
 #, python-format
 msgid "!(widget.options.no_open || widget.options.no_open_edit)"
-msgstr ""
+msgstr "!(opcije isključuju otvaranje ili uređivanje)"
 
 #. module: web_m2x_options
 #. openerp-web
@@ -37,49 +38,49 @@ msgstr "Otkaži"
 #: code:addons/web_m2x_options/static/src/js/form.js:33
 #, python-format
 msgid "Create"
-msgstr ""
+msgstr "Kreiraj"
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:223
-#: code:addons/web_m2x_options/static/src/js/form.js:373
+#: code:addons/web_m2x_options/static/src/js/form.js:224
+#: code:addons/web_m2x_options/static/src/js/form.js:374
 #, python-format
 msgid "Create \"<strong>%s</strong>\""
-msgstr ""
+msgstr "Kreiraj \" <strong>%s</strong>\""
 
 #. module: web_m2x_options
 #. openerp-web
 #: code:addons/web_m2x_options/static/src/js/form.js:30
 #, python-format
 msgid "Create a %s"
-msgstr ""
+msgstr "Kreiraj %s"
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:241
-#: code:addons/web_m2x_options/static/src/js/form.js:392
+#: code:addons/web_m2x_options/static/src/js/form.js:242
+#: code:addons/web_m2x_options/static/src/js/form.js:393
 #, python-format
 msgid "Create and Edit..."
-msgstr ""
+msgstr "Kreiraj i uredi..."
 
 #. module: web_m2x_options
 #. openerp-web
 #: code:addons/web_m2x_options/static/src/js/form.js:43
 #, python-format
 msgid "Create and edit"
-msgstr ""
+msgstr "Kreiraj i uredi"
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:192
-#: code:addons/web_m2x_options/static/src/js/form.js:349
+#: code:addons/web_m2x_options/static/src/js/form.js:193
+#: code:addons/web_m2x_options/static/src/js/form.js:350
 #, python-format
 msgid "Search More..."
-msgstr ""
+msgstr "Traži dalje..."
 
 #. module: web_m2x_options
 #. openerp-web
 #: code:addons/web_m2x_options/static/src/js/form.js:52
 #, python-format
 msgid "You are creating a new %s, are you sure it does not exist yet?"
-msgstr ""
+msgstr "Želite kreirati novi %s, jeste li sigurni da već ne postoji?"
