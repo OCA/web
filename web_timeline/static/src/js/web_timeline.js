@@ -284,7 +284,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
             var self = this;
             var data = [];
             var groups = [];
-            this.grouped_by = group_bys
+            this.grouped_by = group_bys;
             _.each(events, function(event) {
                 if (event[self.date_start]){
                     data.push(self.event_data_transform(event));
@@ -406,8 +406,8 @@ odoo.define('web_timeline.TimelineView', function (require) {
                 time.auto_date_to_str(start, self.fields[self.fields_view.arch.attrs.date_start].type);
             data[self.fields_view.arch.attrs.date_stop] =
                  time.auto_date_to_str(end, self.fields[self.fields_view.arch.attrs.date_stop].type);
-            if(self.grouped_by){
-                data[self.grouped_by[0]] = group
+            if (self.grouped_by){
+                data[self.grouped_by[0]] = group;
             }
             var id = item.evt.id;
             this.dataset.write(id, data);
