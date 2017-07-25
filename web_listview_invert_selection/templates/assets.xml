@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 Onestein
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+    <template id="assets_backend" name="web_listview_invert_selection backend assets" inherit_id="web.assets_backend">
+        <xpath expr=".">
+            <script type="text/javascript" src="/web_listview_invert_selection/static/src/js/web_listview_invert_selection.js"/>
+            <link rel="stylesheet" type="text/less" href="/web_listview_invert_selection/static/src/less/web_listview_invert_selection.less"/>
+        </xpath>
+    </template>
+</odoo>
