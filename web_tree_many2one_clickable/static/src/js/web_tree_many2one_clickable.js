@@ -44,7 +44,7 @@ ListView.Column.include({
         }
     },
     _format: function (row_data, options) {
-        if (this.type == 'many2one' &&
+        if ((this.type == 'many2one' || this.type == 'reference') &&
             (this.widget == 'many2one_unclickable' || this.use_many2one_clickable) &&
             !!row_data[this.id]) {
             var value = row_data[this.id].value;
