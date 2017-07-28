@@ -1,0 +1,26 @@
+.oe_shortcut_toggle {
+    height: 20px;
+    margin-top: 9px;
+    width: 24px;
+    cursor: pointer;
+    display: block;
+    font-size: 20px;
+    float: left;
+    color: #a8a8a8;
+}
+
+.oe_shortcut_toggle:focus {
+    color: #a8a8a8;
+}
+
+.oe_shortcut_toggle:hover {
+    color: #ffd700;
+}
+
+.oe_shortcut_remove {
+    color: #ffd700;
+}
+
+.oe_shortcut_remove:focus {
+    color: #ffd700;
+}
