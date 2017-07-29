@@ -44,8 +44,8 @@ class TestResUsers(common.TransactionCase):
         # a single call to the bus
         with mock.patch('openerp.addons.bus.models.bus.ImBus.sendmany'
                         ) as mockedSendMany:
-            users = self.env.user.search([(1, "=", 1)])
+            users = self.env.user.search([])
             self.assertTrue(len(users) > 1)
             users.notify_warning('message')
             self.assertEqual(1, mockedSendMany.call_count)
-            self.assertEqual(len(users), len(mockedSendMany.call_args))
+            self.assertEqual(len(users), len(mockedSendMany.call_args[0][0]))
