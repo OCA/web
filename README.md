@@ -49,6 +49,7 @@ addon | version | summary
 [web_widget_color](web_widget_color/) | 9.0.1.0.0 | Web Widget Color
 [web_widget_darkroom](web_widget_darkroom/) | 9.0.1.0.1 | Provides web widget for image editing and adds it to standard image widget as modal
 [web_widget_datepicker_options](web_widget_datepicker_options/) | 9.0.1.0.0 | web_widget_datepicker_options
+[web_widget_digitized_signature](web_widget_digitized_signature/) | 9.0.1.0.0 | Web Widget Digitized Signature
 [web_widget_float_formula](web_widget_float_formula/) | 9.0.1.0.0 | Allow use of simple formulas in float fields
 [web_widget_image_download](web_widget_image_download/) | 9.0.1.0.0 | Allows to download any image from its widget
 [web_widget_image_webcam](web_widget_image_webcam/) | 9.0.1.0.0 | Allows to take image with WebCam
