@@ -30,11 +30,13 @@ odoo.define('web_widget_datepicker_options', function (require) {
         init: function(parent, options) {
             this._super.apply(this, arguments);
             var self = this;
-            if (this.__parentedParent.options.datepicker) {
-                var options = this.__parentedParent.options.datepicker;
-                $.each(options, function(value, key) {
-                    self.options[value] = key;
-                });
+            if (self.__parentedParent.options instanceof Object) {
+                if (self.__parentedParent.options.datepicker instanceof Object) {
+                    var options = this.__parentedParent.options.datepicker;
+                    $.each(options, function(value, key) {
+                        self.options[value] = key;
+                    });
+                }
             }
         },
     });
