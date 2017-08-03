@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="web_compute_domain_x2many assets"
+                  inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script
+                	type="text/javascript"
+                    src="/web_compute_domain_x2many/static/src/js/web_compute_domain_x2many.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>
