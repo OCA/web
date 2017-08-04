@@ -47,5 +47,15 @@ class TestResUsers(common.TransactionCase):
             users = self.env.user.search([(1, "=", 1)])
             self.assertTrue(len(users) > 1)
             users.notify_warning('message')
+
             self.assertEqual(1, mockedSendMany.call_count)
-            self.assertEqual(len(users), len(mockedSendMany.call_args))
+
+            # call_args is a tuple with args (tuple) & kwargs (dict). We check
+            # positional arguments (args), hence the [0].
+            pos_call_args = mockedSendMany.call_args[0]
+
+            # Ensure the first positional argument is a list with as many
+            # elements as we had users.
+            first_pos_call_args = pos_call_args[0]
+            self.assertIsInstance(first_pos_call_args, list)
+            self.assertEqual(len(users), len(first_pos_call_args))
