@@ -5,7 +5,7 @@
 <template>
     <t t-extend="SwitchCompanyMenu">
         <t t-jquery=".oe_topbar_name" t-operation="before">
-            <i class="fa fa-building"/>
+            <i class="fa fa-building visible-xs-inline-block"/>
         </t>
     </t>
 </template>
