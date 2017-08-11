@@ -21,14 +21,14 @@ class TestSignatureTracking(common.SavepointCase):
         direct chatter"""
         prev_attachment_num = self.attachment_obj.search_count([])
         prev_messages = self.message_obj.search([])
-        self.user.signature = self.image
+        self.user.signature_image = self.image
         current_attachment_num = self.attachment_obj.search_count([])
         self.assertEqual(current_attachment_num - prev_attachment_num, 1)
         current_messages = self.message_obj.search([])
         message = current_messages - prev_messages
         self.assertIn('Signature has been created.', message.body)
         prev_messages = current_messages
-        self.user.signature = False
+        self.user.signature_image = False
         current_messages = self.message_obj.search([])
         message = current_messages - prev_messages
         self.assertIn('Signature has been deleted.', message.body)
