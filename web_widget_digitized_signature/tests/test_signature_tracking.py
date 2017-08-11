@@ -9,7 +9,11 @@ class TestSignatureTracking(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super(TestSignatureTracking, cls).setUpClass()
-        cls.user = cls.env.user
+        cls.user = cls.env['res.users'].create({
+            'name': 'Test User',
+            'login': 'Test User',
+            'email': 'test@example.com',
+        })
         cls.user.lang = 'en_US'
         # Simple 1x1 transparent base64 encoded GIF
         cls.image = 'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
@@ -21,14 +25,14 @@ class TestSignatureTracking(common.SavepointCase):
         direct chatter"""
         prev_attachment_num = self.attachment_obj.search_count([])
         prev_messages = self.message_obj.search([])
-        self.user.signature = self.image
+        self.user.signature_image = self.image
         current_attachment_num = self.attachment_obj.search_count([])
         self.assertEqual(current_attachment_num - prev_attachment_num, 1)
         current_messages = self.message_obj.search([])
         message = current_messages - prev_messages
         self.assertIn('Signature has been created.', message.body)
         prev_messages = current_messages
-        self.user.signature = False
+        self.user.signature_image = False
         current_messages = self.message_obj.search([])
         message = current_messages - prev_messages
         self.assertIn('Signature has been deleted.', message.body)
