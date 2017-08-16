@@ -64,7 +64,7 @@ openerp.web_menu_autohide = function(instance)
                             left: '0px',
                             right: '0px',
                             top: '0px',
-                            'z-index': 1110
+                            'z-index': 1210
                         });
                 }
                 if(self.hide_delay_leftbar)
