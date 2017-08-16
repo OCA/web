@@ -42,6 +42,7 @@ Credits
 Contributors
 ------------
 
+* Henry Zhou (MAXodoo) <zhouhenry@live.com>
 * Adrien Peiffer
 * Dennis Sluijk <d.sluijk@onestein.nl>
 * Odoo SA
