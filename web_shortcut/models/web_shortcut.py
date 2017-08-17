@@ -25,13 +25,18 @@ class WebShortcut(models.Model):
         res = []
         trans = self.env['ir.translation']
         for shortcut in shortcuts.filtered('menu_id'):
-            name_translated = trans._get_source('ir.ui.menu,name', 'model', self.env.user.lang, shortcut.menu_id.name,
+            name_translated = trans._get_source('ir.ui.menu,name', 'model',
+                                                self.env.user.lang,
+                                                shortcut.menu_id.name,
                                                 shortcut.menu_id.id)
             current = shortcut.menu_id
             while current.parent_id:
                 current = current.parent_id
-                name_translated = ' / '.join((trans._get_source('ir.ui.menu,name', 'model', self.env.user.lang,
-                                                                current.name, current.id), name_translated))
+                name_translated = ' / '.join((
+                    trans._get_source('ir.ui.menu,name', 'model',
+                                      self.env.user.lang,
+                                      current.name, current.id),
+                    name_translated))
             _name = shortcut.menu_id.name_get()
             _name = _name[0][1] if len(_name) else ''
             _id = shortcut.menu_id.id
