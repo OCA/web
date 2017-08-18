@@ -3,13 +3,25 @@
 # * web_shortcuts
 # 
 # Translators:
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2013
+# Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2016
+# Alexis de Lattre <alexis@via.ecp.fr>, 2016
+# Antonio Trueba, 2016
+# Christophe CHAUVET <christophe.chauvet@gmail.com>, 2015
+# danimaribeiro <danimaribeiro@gmail.com>, 2015-2016
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010,2012-2013
+# Giedrius Slavinskas <giedrius@inovera.lt>, 2012
+# Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
+# Paolo Valier, 2016
+# Pedro Castro Silva <pedrocs@sossia.pt>, 2015
+# Rudolf Schnapka <rs@techno-flex.de>, 2015-2016
+# Sofce Dimitrijeva <sofce@eskon.com.mk>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-23 13:46+0000\n"
-"PO-Revision-Date: 2015-11-07 11:21+0000\n"
+"POT-Creation-Date: 2016-11-26 01:59+0000\n"
+"PO-Revision-Date: 2016-10-11 09:52+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/oca/OCA-web-8-0/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
@@ -28,27 +40,37 @@ msgstr "新增/移除捷徑..."
 #. module: web_shortcuts
 #: field:web.shortcut,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "建立者"
 
 #. module: web_shortcuts
 #: field:web.shortcut,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "建立於"
+
+#. module: web_shortcuts
+#: field:web.shortcut,display_name:0
+msgid "Display Name"
+msgstr "顯示名稱"
 
 #. module: web_shortcuts
 #: field:web.shortcut,id:0
 msgid "ID"
-msgstr ""
+msgstr "編號"
+
+#. module: web_shortcuts
+#: field:web.shortcut,__last_update:0
+msgid "Last Modified on"
+msgstr "最後修改:"
 
 #. module: web_shortcuts
 #: field:web.shortcut,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "最後更新："
 
 #. module: web_shortcuts
 #: field:web.shortcut,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "最後更新於"
 
 #. module: web_shortcuts
 #: field:web.shortcut,menu_id:0

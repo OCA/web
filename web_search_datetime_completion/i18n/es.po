@@ -1,0 +1,26 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_search_datetime_completion
+# 
+# Translators:
+# Pedro M. Baeza <pedro.baeza@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: web (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-26 01:59+0000\n"
+"PO-Revision-Date: 2016-10-13 18:46+0000\n"
+"Last-Translator: Pedro M. Baeza <pedro.baeza@gmail.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/oca/OCA-web-8-0/language/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: web_search_datetime_completion
+#. openerp-web
+#: code:addons/web_search_datetime_completion/static/src/js/web_search_datetime_completion.js:60
+#, python-format
+msgid "Search %(field)s at: %(value)s"
+msgstr "Buscar %(field)s en: %(value)s"

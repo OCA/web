@@ -3,9 +3,9 @@
 # * web_shortcuts
 # 
 # Translators:
-# Ahmet Altınışık <aaltinisik@altinkaya.com.tr>, 2015
+# Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2015
 # bossnm11 <bossnm11@gmail.com>, 2014
-# Chanseok <kcsgoodboy@gmail.com>, 2014
+# Chanseok <kcsgoodboy@naver.com>, 2014
 # danimaribeiro <danimaribeiro@gmail.com>, 2016
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2012,2014
 # Hotellook, 2014
@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-24 00:46+0000\n"
-"PO-Revision-Date: 2016-06-14 11:34+0000\n"
+"POT-Creation-Date: 2016-11-26 01:59+0000\n"
+"PO-Revision-Date: 2016-11-25 14:56+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Croatian (http://www.transifex.com/oca/OCA-web-8-0/language/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -48,17 +48,17 @@ msgstr "Dodaj / ukloni prečac..."
 #. module: web_shortcuts
 #: field:web.shortcut,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Kreirao"
 
 #. module: web_shortcuts
 #: field:web.shortcut,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Kreirano"
 
 #. module: web_shortcuts
 #: field:web.shortcut,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Naziv "
 
 #. module: web_shortcuts
 #: field:web.shortcut,id:0
@@ -68,17 +68,17 @@ msgstr "ID"
 #. module: web_shortcuts
 #: field:web.shortcut,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Zadnje modificirano"
 
 #. module: web_shortcuts
 #: field:web.shortcut,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zadnji ažurirao"
 
 #. module: web_shortcuts
 #: field:web.shortcut,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zadnje ažuriranje"
 
 #. module: web_shortcuts
 #: field:web.shortcut,menu_id:0

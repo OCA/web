@@ -8,6 +8,8 @@
 # Antonio Trueba, 2016
 # Armando Vulcano Junior <vulcano@uol.com.br>, 2015
 # Carles Antoli <carlesantoli@hotmail.com>, 2015
+# Carles Antoli <carlesantoli@hotmail.com>, 2015
+# Christophe CHAUVET <christophe.chauvet@gmail.com>, 2015
 # Christophe CHAUVET <christophe.chauvet@gmail.com>, 2015
 # danimaribeiro <danimaribeiro@gmail.com>, 2015
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2012,2014
@@ -22,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-17 12:06+0000\n"
-"PO-Revision-Date: 2016-09-17 18:43+0000\n"
+"POT-Creation-Date: 2016-11-26 01:59+0000\n"
+"PO-Revision-Date: 2016-11-22 12:24+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Dutch (http://www.transifex.com/oca/OCA-web-8-0/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -42,12 +44,12 @@ msgstr "Toevoegen/verwijderen snelkoppeling"
 #. module: web_shortcuts
 #: field:web.shortcut,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Aangemaakt door"
 
 #. module: web_shortcuts
 #: field:web.shortcut,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Aangemaakt op"
 
 #. module: web_shortcuts
 #: field:web.shortcut,display_name:0
@@ -57,7 +59,7 @@ msgstr "Te tonen naam"
 #. module: web_shortcuts
 #: field:web.shortcut,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: web_shortcuts
 #: field:web.shortcut,__last_update:0
@@ -67,12 +69,12 @@ msgstr "Laatst bijgewerkt op"
 #. module: web_shortcuts
 #: field:web.shortcut,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Laatst bijgewerkt door"
 
 #. module: web_shortcuts
 #: field:web.shortcut,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Laatst bijgewerkt op"
 
 #. module: web_shortcuts
 #: field:web.shortcut,menu_id:0

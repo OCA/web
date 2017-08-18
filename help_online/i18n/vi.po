@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-17 12:06+0000\n"
-"PO-Revision-Date: 2016-04-28 07:09+0000\n"
+"POT-Creation-Date: 2016-11-26 01:59+0000\n"
+"PO-Revision-Date: 2016-11-25 14:55+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Vietnamese (http://www.transifex.com/oca/OCA-web-8-0/language/vi/)\n"
 "MIME-Version: 1.0\n"
@@ -47,19 +47,19 @@ msgstr ""
 #: field:export.help.wizard,create_uid:0 field:help.online,create_uid:0
 #: field:import.help.wizard,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Được tạo bởi"
 
 #. module: help_online
 #: field:export.help.wizard,create_date:0 field:help.online,create_date:0
 #: field:import.help.wizard,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Được tạo vào"
 
 #. module: help_online
 #: field:export.help.wizard,display_name:0 field:help.online,display_name:0
 #: field:import.help.wizard,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Tên hiển thị"
 
 #. module: help_online
 #: view:export.help.wizard:help_online.export_help_wizard_view
@@ -115,7 +115,7 @@ msgstr ""
 #: field:export.help.wizard,id:0 field:help.online,id:0
 #: field:import.help.wizard,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: help_online
 #: view:import.help.wizard:help_online.import_help_wizard_view
@@ -141,19 +141,19 @@ msgstr ""
 #: field:export.help.wizard,__last_update:0 field:help.online,__last_update:0
 #: field:import.help.wizard,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Sửa lần cuối vào"
 
 #. module: help_online
 #: field:export.help.wizard,write_uid:0 field:help.online,write_uid:0
 #: field:import.help.wizard,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Last Updated by"
 
 #. module: help_online
 #: field:export.help.wizard,write_date:0 field:help.online,write_date:0
 #: field:import.help.wizard,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Cập nhật lần cuối vào"
 
 #. module: help_online
 #: code:addons/help_online/models/export_help_wizard.py:260
@@ -233,4 +233,4 @@ msgstr ""
 #: view:export.help.wizard:help_online.export_help_wizard_view
 #: view:import.help.wizard:help_online.import_help_wizard_view
 msgid "or"
-msgstr ""
+msgstr "hoặc"
