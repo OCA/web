@@ -36,6 +36,10 @@ odoo.define('web_advanced_search_x2x.search_filters', function (require) {
             this.operators.push({
                 'value': 'domain', 'text': core._lt('is in selection'),
             });
+            // Avoid hiding filter when using special widgets
+            this.events["click"] = function (event) {
+                event.stopPropagation();
+            }
             return this._super.apply(this, arguments);
         },
 
