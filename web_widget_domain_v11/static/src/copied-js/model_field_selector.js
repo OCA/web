@@ -310,10 +310,13 @@ var fieldsCache = {
         }).bind(this));
     },
     updateCache: function (model) {
-        this.cacheDefs[model] = new Model(model).call("fields_get", [
-            false,
-            ["store", "searchable", "type", "string", "relation", "selection", "related"],
-        ]).then((function (fields) {
+        var _model = new Model(model);
+        this.cacheDefs[model] = _model.call(
+            "fields_get",
+            [false, ["store", "searchable", "type", "string", "relation",
+                     "selection", "related"]],
+            {context: _model.context()}
+        ).then((function (fields) {
             this.cache[model] = sortFields(fields);
         }).bind(this));
         return this.cacheDefs[model];
