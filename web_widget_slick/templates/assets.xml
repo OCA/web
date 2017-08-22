@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016-2017 LasLabs Inc.
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
+
+<odoo>
+    <template id="assets_slick" inherit_id="web.assets_backend">
+        <xpath expr="//script[last()]" position="after">
+            <link rel="stylesheet"
+                  type="text/less"
+                  href="/web_widget_slick/static/lib/slick/slick.less"
+                  />
+            <link rel="stylesheet"
+                  type="text/less"
+                  href="/web_widget_slick/static/lib/slick/slick-theme.less"
+                  />
+            <link rel="stylesheet"
+                  type="text/less"
+                  href="/web_widget_slick/static/src/less/slick.less"
+                  />
+            <script type="application/javascript"
+                    src="/web_widget_slick/static/lib/slick/slick.js"
+                    />
+            <script type="application/javascript"
+                    src="/web_widget_slick/static/src/js/web_widget_slick.js"
+                    />
+        </xpath>
+    </template>
+
+    <template id="qunit_suite" inherit_id="web.qunit_suite">
+        <xpath expr="//t[@t-set='head']" position="inside">
+            <script type="application/javascript"
+                    src="/web_widget_slick/static/tests/js/web_widget_slick.js"
+                    />
+        </xpath>
+    </template>
+</odoo>
