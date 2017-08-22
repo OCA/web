@@ -6,31 +6,31 @@
 DarkroomJS Image Editing for Web
 ================================
 
-This module provides a `DarkroomJS`_ (v2.0.1) web widget for use with image 
-fields. It also adds a Darkroom button to the normal image widget, which can 
+This module provides a `DarkroomJS`_ (v2.0.1) web widget for use with image
+fields. It also adds a Darkroom button to the normal image widget, which can
 be used to edit the image via Darkroom in a modal.
 
-.. _DarkroomJS: https://github.com/MattKetmo/darkroomjs 
+.. _DarkroomJS: https://github.com/MattKetmo/darkroomjs
 
-The widget currently supports the following operations and can be extended to 
+The widget currently supports the following operations and can be extended to
 allow others:
 
 * Zoom and pan
 * Rotate
 * Crop
 * Step back in history client-side (before save)
- 
+
 Usage
 =====
 
 After installing the module, you can use it in the following ways:
 
-* Specify the ``darkroom`` widget when adding an image field to a view. 
+* Specify the ``darkroom`` widget when adding an image field to a view.
   Configuration values can be provided using the ``options`` attribute::
 
   <field name="image" widget="darkroom" options="{'minWidth': 100}"/>
 
-  The widget passes options directly through to DarkroomJS, which supports the 
+  The widget passes options directly through to DarkroomJS, which supports the
   following:
 
   * minWidth
@@ -40,9 +40,9 @@ After installing the module, you can use it in the following ways:
   * ratio (aspect ratio)
   * backgroundColor
 
-* Open a form view that contains an image in edit mode and hover over the 
-  image widget. You should see a Darkoom button that can be clicked to open 
-  the image in a Darkroom modal, where it can be edited and the changes can be 
+* Open a form view that contains an image in edit mode and hover over the
+  image widget. You should see a Darkroom button that can be clicked to open
+  the image in a Darkroom modal, where it can be edited and the changes can be
   saved.
 
   .. image:: /web_widget_darkroom/static/description/modal_screenshot_1.png
@@ -59,13 +59,15 @@ Known Issues / Roadmap
 ======================
 
 * Darkroom modals are currently not supported during record creation
+* Fabric.js >= 1.70 is not currently supported by DarkroomJS
+  (`MattKetmo/darkroomjs#112 <https://github.com/MattKetmo/darkroomjs/issues/112>`_)
 
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_. In 
-case of trouble, please check there if your issue has already been reported. 
-If you spotted it first, help us smash it by providing detailed and welcome 
+Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_. In
+case of trouble, please check there if your issue has already been reported.
+If you spotted it first, help us smash it by providing detailed and welcome
 feedback.
 
 Credits
@@ -74,7 +76,7 @@ Credits
 Images
 ------
 
-* Odoo Community Association: 
+* Odoo Community Association:
   `Icon <https://github.com/OCA/maintainer-tools/blob/master/template/module/static/description/icon.svg>`_.
 
 Contributors
@@ -82,6 +84,7 @@ Contributors
 
 * Dave Lasley <dave@laslabs.com>
 * Oleg Bulkin <obulkin@laslabs.com>
+* Brent Hughes <brent.hughes@laslabs.com>
 
 Maintainer
 ----------

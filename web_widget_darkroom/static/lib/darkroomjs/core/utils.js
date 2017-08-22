@@ -1,6 +1,7 @@
 /**
 *    Copyright 2013 Matthieu Moquet
 *    Copyright 2016-2017 LasLabs Inc.
+*    Version 2.0.1
 *    License MIT (https://opensource.org/licenses/MIT)
 **/
 

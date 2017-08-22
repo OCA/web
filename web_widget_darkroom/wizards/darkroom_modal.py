@@ -2,8 +2,8 @@
 # Copyright 2017 LasLabs Inc.
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-from openerp import api, fields, models
-from openerp.exceptions import MissingError
+from odoo import api, fields, models
+from odoo.exceptions import MissingError
 
 
 class DarkroomModal(models.TransientModel):

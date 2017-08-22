@@ -55,7 +55,7 @@ odoo.define('web_widget_darkroom.darkroom_modal_button', function(require) {
                 imageWidget.do_action(modalAction, options);
             };
 
-            var $button = this.$('.oe_form_binary_image_darkroom_modal');
+            var $button = this.$('.o_form_binary_image_darkroom_modal');
             if ($button.length > 0) {
                 $button.click(openModal);
             }

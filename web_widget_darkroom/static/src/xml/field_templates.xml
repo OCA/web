@@ -7,7 +7,7 @@
 
 <templates id="field_templates" xml:space="preserve">
     <t t-name="FieldDarkroomImage">
-        <span class="oe_form_field o_form_field_darkroom" t-att-style="widget.node.attrs.style">
+        <span class="o_form_field o_form_field_darkroom" t-att-style="widget.node.attrs.style">
             <t t-if="!widget.get('effective_readonly')">
                 <div class="darkroom-toolbar"/>
             </t>
@@ -15,16 +15,16 @@
     </t>
 
     <t t-extend="FieldBinaryImage">
-        <t t-jquery=".oe_form_binary_file_edit" t-operation="after">
+        <t t-jquery=".o_select_file_button" t-operation="after">
             <t t-if="widget.darkroom_supported()">
-                <i class="fa fa-picture-o fa-lg oe_form_binary_image_darkroom_modal" title="Darkroom"></i>
+                <i class="fa fa-picture-o fa-lg o_form_binary_image_darkroom_modal" title="Darkroom"></i>
             </t>
         </t>
-        <t t-jquery=".oe_form_binary_file_edit" t-operation="replace">
-            <i class="fa fa-pencil fa-lg oe_form_binary_file_edit" title="Edit"></i>
+        <t t-jquery=".o_select_file_button" t-operation="replace">
+            <i class="fa fa-pencil fa-lg o_select_file_button" title="Edit"></i>
         </t>
-        <t t-jquery=".oe_form_binary_file_clear" t-operation="replace">
-            <i class="fa fa-trash-o fa-lg oe_form_binary_file_clear" title="Clear"></i>
+        <t t-jquery=".o_clear_file_button" t-operation="replace">
+            <i class="fa fa-trash-o fa-lg o_clear_file_button" title="Clear"></i>
         </t>
     </t>
 </templates>
