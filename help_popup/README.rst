@@ -10,12 +10,6 @@ Two help fields are added to actions: enduser_help (html widget)
 and advanced_help.
 
 
-Installation
-============
-
-It was tested on Odoo 10.0 branch.
-
-
 Configuration
 =============
 
