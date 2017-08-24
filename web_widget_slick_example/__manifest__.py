@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
-# © 2016-TODAY LasLabs Inc.
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# Copyright 2016-2017 LasLabs Inc.
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 {
-    "name": "Slick Widget Example",
+    "name": "Slick Carousel Widget Example",
     "summary": "Example usage of the web_widget_slick module",
-    "version": "9.0.1.0.0",
+    "version": "10.0.1.0.0",
     "category": "Hidden",
     "website": "https://laslabs.com/",
-    "author": "LasLabs",
-    "license": "AGPL-3",
+    "author": "LasLabs, Odoo Community Association (OCA)",
+    "license": "LGPL-3",
     "application": False,
     "installable": True,
     "depends": [
@@ -21,5 +21,5 @@
     ],
     "demo": [
         'demo/slick_example_data.xml',
-    ]
+    ],
 }
