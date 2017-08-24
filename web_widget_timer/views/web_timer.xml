@@ -3,7 +3,6 @@
     <template name="Web Timer Assets" id="web_timer_assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
             <script src="/web_widget_timer/static/src/js/web_timer.js"/>
-            <link href="/web_widget_timer/static/src/css/web_timer.css" rel="stylesheet" />
         </xpath>
     </template>
 </odoo>

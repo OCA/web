@@ -34,6 +34,19 @@ The example below will render a down-counting timer which only shows days and ho
 
 The widget dinamically adapts to changes on the referred date and it's automatically hidden if the referred date is not set.
 
+.. figure:: static/description/code_down.png
+   :alt: Code for Down-Counting Timer
+
+.. figure:: static/description/result_down.png
+   :alt: Down-Counting Timer Rendering
+
+.. figure:: static/description/code_up.png
+   :alt: Code for Up-Counting Timer
+
+.. figure:: static/description/result_up.png
+   :alt: Up-Counting Timer Rendering
+
+
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
    :target: https://runbot.odoo-community.org/runbot/162/10.0
