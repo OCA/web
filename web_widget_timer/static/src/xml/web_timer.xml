@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+    <t t-name="TimerWidget" id="TimerWidget">
+        <div class="o_web_timer_field_draw">
+            <p t-att-class="'o_web_timer_field_draw '+ widget.get('reference_date_name')"></p>
+        </div>
+    </t>
+</templates>
