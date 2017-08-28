@@ -1,28 +1,34 @@
-(function() {
+/* License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
-    var instance = openerp;
+odoo.define("web_decimal_numpad_dot.FieldFloat", function (require) {
+    "use strict";
 
-    instance.web.form.FieldFloat = instance.web.form.FieldFloat.extend({
-        render_value: function() {
-            var self = this;
-            this._super();
-            if (!this.get('readonly')){
-                this.$el.find('input').on('keypress', this.floatKeypress.bind(this));
-            }
-        },
-        floatKeypress: function(e){
-            if (e.keyCode == '46' || e.charCode == '46') {
-                // Cancel the keypress
-                e.preventDefault();
-                // Add the comma to the value of the input field
-                this.$("input").val(this.$("input").val() + instance.web._t.database.parameters.decimal_point);
-             }
-            else if (e.keyCode == '44' || e.charCode == '44') {
-                // Cancel the keypress
-                e.preventDefault();
-                // Add the comma to the value of the input field
-                this.$("input").val(this.$("input").val() + instance.web._t.database.parameters.thousands_sep);
-            }
-        },
+    var form_widgets = require("web.form_widgets");
+    var translation = require("web.translation");
+
+    form_widgets.FieldFloat.include({
+        init: function () {
+            this.events.keypress = function (event) {
+                if (event.which === 46 || event.which === 44) {
+                    event.preventDefault();
+                    var input = this.$input || this.$("input");
+                    var l10n = translation._t.database.parameters;
+                    if (!_.str.contains(input.val(), l10n.decimal_point)) {
+                        try {
+                            var caret_pos = input[0].selectionStart;
+                            var selection_end = input[0].selectionEnd;
+                            var cur_val = input.val();
+                            var newval = cur_val.substring(0, caret_pos) + l10n.decimal_point + cur_val.substring(selection_end);
+                            input.val(newval);
+                            input[0].selectionStart = input[0].selectionEnd = caret_pos + 1;
+                        } catch (error) {
+                            //fallback to appending if no caret position can be determined
+                            input.val(input.val() + l10n.decimal_point);
+                        }
+                    }
+                }
+            };
+            return this._super.apply(this, arguments);
+        }
     });
-})();
+});
