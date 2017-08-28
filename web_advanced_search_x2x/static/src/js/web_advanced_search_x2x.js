@@ -123,18 +123,33 @@ odoo.define('web_advanced_search_x2x.search_filters', function (require) {
                 event.stopPropagation();
             });
         },
+        is_logical_operator: function(element){
+            // test whether a element is a logical operator ('|' or '&', '!')
+            if (element === '|' || element === '&' || element === '!') {
+                return true;
+            }
+            else{
+                return false;
+            }
+        },
         get_domain: function () {
             // Special way to get domain if user chose "domain" filter
+            var self = this;
             if (this.get_operator() == "domain") {
                 var value = this._x2x_field.get_value();
                 var domain = new data.CompoundDomain(),
                     name = this.field.name;
                 $.map(value, function (el) {
-                    domain.add([[
-                        _.str.sprintf("%s.%s", name, el[0]),
-                        el[1],
-                        el[2],
-                    ]]);
+                    if (self.is_logical_operator(el)){
+                        domain.add([el]);
+                    }
+                    else {
+                        domain.add([[
+                            _.str.sprintf("%s.%s", name, el[0]),
+                            el[1],
+                            el[2],
+                        ]]);
+                    }
                 });
                 return domain;
             } else {
