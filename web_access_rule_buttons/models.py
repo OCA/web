@@ -25,6 +25,17 @@ def check_access_rule_all(self, operations=None):
             # operations
             result[operation] = True
             continue
+        # If we're writing on a new o2m, m2m or m2o record related to a new
+        # record (for example an invoice line created altogether with the
+        # invoice to which it belongs), ids contains a string. Calling
+        # check_access_rule() in this condition will crash, so we just
+        # blindly allow the operations.
+        try:
+            for id in self.ids:
+                int(id)
+        except Exception:
+            result[operation] = True
+            continue
         try:
             self.check_access_rule(operation)
         except exceptions.AccessError:
