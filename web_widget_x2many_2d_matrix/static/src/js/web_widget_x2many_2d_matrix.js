@@ -404,6 +404,8 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
             return $.when(result).then(function()
             {
                 self.renderElement();
+                self.$el.find('.edit').on(
+                        'change', self.proxy(self.xy_value_change));
             });
         },
     });
