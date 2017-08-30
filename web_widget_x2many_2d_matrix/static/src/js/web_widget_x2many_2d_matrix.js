@@ -131,7 +131,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                 })
                 .then(function()
                 {
-                    return self.dataset.read_ids(self.dataset.ids).then(function(rows)
+                    return self.dataset.read_ids(self.dataset.ids, self.fields).then(function(rows)
                     {
                         // setup data structure
                         _.each(rows, function(row)
@@ -369,6 +369,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                 $this.val(this.format_xy_value(value));
 
                 this.dataset.write($this.data('id'), data);
+                this.by_id[$this.data('id')][this.field_value] = value;
                 $this.parent().removeClass('oe_form_invalid');
                 this.compute_totals();
             }
@@ -382,7 +383,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
         effective_readonly_change: function()
         {
             this.$el
-            .find('tbody .read')
+            .find('tbody .edit')
             .toggle(!this.get('effective_readonly'));
             this.$el
             .find('tbody .read')
@@ -404,6 +405,9 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
             return $.when(result).then(function()
             {
                 self.renderElement();
+                self.compute_totals();
+                self.$el.find('.edit').on(
+                        'change', self.proxy(self.xy_value_change));
             });
         },
     });
