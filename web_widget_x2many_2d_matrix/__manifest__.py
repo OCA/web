@@ -5,7 +5,7 @@
 
 {
     "name": "2D matrix for x2many fields",
-    "version": "10.0.1.0.0",
+    "version": "10.0.1.0.1",
     "author": "Therp BV, "
               "Tecnativa,"
               "Odoo Community Association (OCA)",
