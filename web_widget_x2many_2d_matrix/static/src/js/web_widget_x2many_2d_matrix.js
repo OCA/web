@@ -382,7 +382,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
         effective_readonly_change: function()
         {
             this.$el
-            .find('tbody .read')
+            .find('tbody .edit')
             .toggle(!this.get('effective_readonly'));
             this.$el
             .find('tbody .read')
