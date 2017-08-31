@@ -57,7 +57,7 @@ Contributors
 
 * Sylvain Calador <sylvain.calador@akretion.com>
 * David Beal <david.beal@akretion.com>
-
+* George Daramouskas <gdaramouskas@therp.nl>
 
 Icons
 ------
