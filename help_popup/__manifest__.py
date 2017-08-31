@@ -27,6 +27,7 @@
         'web',
     ],
     'website': 'https://www.akretion.com',
+    'license': 'AGPL-3',
     'data': [
         'views/popup_help_view.xml',
         'views/action_view.xml',

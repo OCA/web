@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<odoo noupdate="1">
-
+<odoo>
+    <data noupdate="1">
         <record id="base.action_partner_form" model="ir.actions.act_window">
             <field name="enduser_help"><![CDATA[
 <b>Hi Odooer,</b>
@@ -49,5 +49,5 @@ Allows to developers to write documentation on their work.
 
           ]]></field>
         </record>
-
+    </data>
 </odoo>

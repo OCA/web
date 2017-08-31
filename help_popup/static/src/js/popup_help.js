@@ -9,14 +9,14 @@ odoo.define('help_popup.help_button', function(require) {
         var res = self._super();
         $('button.view_help').each(function() {
         var $elem = $(this);
-        var advanced_help = self.action.advanced_help
-        var enduser_help = self.action.enduser_help
-        if (self.action.id == undefined || ((advanced_help.length === 0 || advanced_help.length == undefined) && $(enduser_help).text().length === 0)) {
-            $('button.view_help').hide()
-            $('ol.breadcrumb').css('width', '')
+        var advanced_help = self.action.advanced_help;
+        var enduser_help = self.action.enduser_help;
+        if (typeof self.action.id === "undefined" || (advanced_help.length === 0 || typeof advanced_help.length === "undefined" && $(enduser_help).text().length === 0)) {
+            $('button.view_help').hide();
+            $('ol.breadcrumb').css('width', '');
         } else {
             $('button.view_help').show()
-            $('ol.breadcrumb').css('width', '44%')
+            $('ol.breadcrumb').css('width', '44%');
         }
         $elem.on('click', function(e) {
             var params = 'height=650, width=800, location=no, ';
@@ -26,9 +26,8 @@ odoo.define('help_popup.help_button', function(require) {
             // allows to back to the window if opened previoulsy
             setTimeout(my_window.focus(), 1);
         });
-
         });
-        return res
-    },
+        return res;
+    }
     });
 });
