@@ -23,6 +23,7 @@ addon | version | summary
 [web_advanced_search_x2x](web_advanced_search_x2x/) | 10.0.2.0.0 | Use a search widget in advanced search for x2x fields
 [web_chatter_paste](web_chatter_paste/) | 10.0.1.0.0 | Paste images and drop files into the chatter and upload them directly
 [web_confirm_window_close](web_confirm_window_close/) | 10.0.1.0.0 | Check for unsaved data when closing browser window
+[web_decimal_numpad_dot](web_decimal_numpad_dot/) | 10.0.1.0.0 | Allows using numpad dot to enter period decimal separator
 [web_dialog_size](web_dialog_size/) | 10.0.1.0.0 | A module that lets the user expand a dialog box to the full screen width.
 [web_editor_background_color](web_editor_background_color/) | 10.0.1.0.0 | Set any background color for web editor snippets
 [web_environment_ribbon](web_environment_ribbon/) | 10.0.1.0.0 | Web Environment Ribbon
