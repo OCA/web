@@ -172,6 +172,9 @@ odoo.define('web_advanced_search_x2x.search_filters', function (require) {
 
         get_value: function () {
             try {
+                if (!this.x2x_widget_name()) {
+                    throw "No x2x widget, fallback to default";
+                }
                 return this._x2x_field.get_value();
             } catch (error) {
                 return this._super.apply(this, arguments);
