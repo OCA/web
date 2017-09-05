@@ -72,6 +72,10 @@ in the field's options dict
 
   Makes many2many_tags buttons that open the linked resource
 
+``no_color_picker`` *boolean* (Default: ``False``)
+
+  Deactivates the color picker on many2many_tags buttons to do nothing (ignored if open is set)
+
 ir.config_parameter options
 ---------------------------
 
