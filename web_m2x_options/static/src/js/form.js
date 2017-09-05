@@ -405,6 +405,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
         open_badge: function(ev){
             var self = this;
             var open = (self.options && self.is_option_set(self.options.open));
+            var no_color_picker = (self.options && self.is_option_set(self.options.no_color_picker));
             if(open){
                 self.mutex.exec(function(){
                     var id = parseInt($(ev.currentTarget).data('id'), 10);
@@ -415,6 +416,10 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                         res_id: id,
                         target: "new"
                     });
+                }.bind(this));
+            }else if(no_color_picker){
+                self.mutex.exec(function(){
+                    return
                 }.bind(this));
             }else{
                 self.open_color_picker(ev);
