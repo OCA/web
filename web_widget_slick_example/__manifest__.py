@@ -4,7 +4,8 @@
 
 {
     "name": "Slick Carousel Widget Example",
-    "summary": "Example usage of the web_widget_slick module",
+    "summary": "Example usage of the web_widget_slick and "
+               "web_widget_slickroom modules",
     "version": "10.0.1.0.0",
     "category": "Hidden",
     "website": "https://laslabs.com/",
@@ -13,7 +14,7 @@
     "application": False,
     "installable": True,
     "depends": [
-        "web_widget_slick",
+        "web_widget_slickroom",
     ],
     "data": [
         'views/slick_example_view.xml',

@@ -9,8 +9,13 @@ class SlickExample(models.Model):
     _name = 'slick.example'
     _description = 'Slick Example Model'
 
-    image_ids = fields.One2many(
-        name='Images',
+    slick_image_ids = fields.One2many(
+        name='Slick Images',
+        comodel_name='ir.attachment',
+        inverse_name='res_id',
+    )
+    slickroom_image_ids = fields.One2many(
+        name='Slickroom Images',
         comodel_name='ir.attachment',
         inverse_name='res_id',
     )

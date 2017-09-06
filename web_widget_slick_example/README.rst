@@ -6,7 +6,8 @@
 Slick Carousel Widget Example
 =============================
 
-This module provides an example of how to implement the web_widget_slick module.
+This module provides example implementations of the web_widget_slick and
+web_widget_slickroom modules.
 
 Bug Tracker
 ===========
