@@ -20,7 +20,7 @@ addon | version | summary
 --- | --- | ---
 [help_online](help_online/) | 10.0.1.0.0 | Help Online
 [web_access_rule_buttons](web_access_rule_buttons/) | 10.0.1.0.0 | Disable Edit button if access rules prevent this action
-[web_advanced_search_x2x](web_advanced_search_x2x/) | 10.0.2.0.0 | Use a search widget in advanced search for x2x fields
+[web_advanced_search_x2x](web_advanced_search_x2x/) | 10.0.2.0.1 | Use a search widget in advanced search for x2x fields
 [web_chatter_paste](web_chatter_paste/) | 10.0.1.0.0 | Paste images and drop files into the chatter and upload them directly
 [web_confirm_window_close](web_confirm_window_close/) | 10.0.1.0.0 | Check for unsaved data when closing browser window
 [web_decimal_numpad_dot](web_decimal_numpad_dot/) | 10.0.1.0.0 | Allows using numpad dot to enter period decimal separator
@@ -33,7 +33,7 @@ addon | version | summary
 [web_ir_actions_act_window_message](web_ir_actions_act_window_message/) | 10.0.1.0.0 | Show a message box to users
 [web_listview_invert_selection](web_listview_invert_selection/) | 10.0.1.0.0 | Invert current selection of list of records
 [web_listview_range_select](web_listview_range_select/) | 10.0.1.0.0 | Enables selecting a range of records using the shift key
-[web_m2x_options](web_m2x_options/) | 10.0.1.0.0 | web_m2x_options
+[web_m2x_options](web_m2x_options/) | 10.0.1.1.0 | web_m2x_options
 [web_no_bubble](web_no_bubble/) | 10.0.1.0.0 | Remove the bubbles from the web interface
 [web_notify](web_notify/) | 10.0.1.0.0 | Send notification messages to user
 [web_responsive](web_responsive/) | 10.0.1.1.0 | It provides a mobile compliant interface for Odoo Community web
