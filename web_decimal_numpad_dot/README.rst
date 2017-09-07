@@ -40,6 +40,7 @@ Contributors
 * Oliver Dony <@odony>
 * Wim Audenaert <Wim.Audenaert@ucamco.com>
 * David Vidal <david.vidal@tecnativa.com>
+* Jairo Llopis <jairo.llopis@tecnativa.com>
 
 Maintainer
 ----------
