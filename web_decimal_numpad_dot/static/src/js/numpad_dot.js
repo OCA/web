@@ -8,27 +8,36 @@ odoo.define("web_decimal_numpad_dot.FieldFloat", function (require) {
 
     form_widgets.FieldFloat.include({
         init: function () {
-            this.events.keypress = function (event) {
-                if (event.which === 46 || event.which === 44) {
-                    event.preventDefault();
-                    var input = this.$input || this.$("input");
-                    var l10n = translation._t.database.parameters;
-                    if (!_.str.contains(input.val(), l10n.decimal_point)) {
-                        try {
-                            var caret_pos = input[0].selectionStart;
-                            var selection_end = input[0].selectionEnd;
-                            var cur_val = input.val();
-                            var newval = cur_val.substring(0, caret_pos) + l10n.decimal_point + cur_val.substring(selection_end);
-                            input.val(newval);
-                            input[0].selectionStart = input[0].selectionEnd = caret_pos + 1;
-                        } catch (error) {
-                            //fallback to appending if no caret position can be determined
-                            input.val(input.val() + l10n.decimal_point);
-                        }
-                    }
-                }
-            };
+            this.events = $.extend({}, this.events, {
+                "keydown": "numpad_dot_replace",
+            });
             return this._super.apply(this, arguments);
-        }
+        },
+
+        l10n_decimal_point: function () {
+            return this.widget == "float_time"
+                ? ":" : translation._t.database.parameters.decimal_point;
+        },
+
+        numpad_dot_replace: function (event) {
+            // Only act on numpad dot key
+            if (event.keyCode != 110) {
+                return;
+            }
+            event.preventDefault();
+            var from = this.$input.prop("selectionStart"),
+                to = this.$input.prop("selectionEnd"),
+                cur_val = this.$input.val(),
+                point = this.l10n_decimal_point();
+            // Replace selected text by proper character
+            this.$input.val(
+                cur_val.substring(0, from) +
+                point +
+                cur_val.substring(to)
+            );
+            // Put user caret in place
+            to = from + point.length
+            this.$input.prop("selectionStart", to).prop("selectionEnd", to);
+        },
     });
 });
