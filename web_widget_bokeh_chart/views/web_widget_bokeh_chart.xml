@@ -4,10 +4,10 @@
     <template id="assets_backend" name="web_widget_bokeh_chart assets"
               inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
-            <link rel="stylesheet" href="/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-0.12.7.min.css"/>
-            <link rel="stylesheet" href="/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-widgets-0.12.7.min.css"/>
-            <script type="text/javascript" src="/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-0.12.7.min.js"/>
-            <script type="text/javascript" src="/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-widgets-0.12.7.min.js"/>
+            <link rel="stylesheet" href="/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-0.12.7.css"/>
+            <link rel="stylesheet" href="/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-widgets-0.12.7.css"/>
+            <script type="text/javascript" src="/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-0.12.7.js"/>
+            <script type="text/javascript" src="/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-widgets-0.12.7.js"/>
             <script type="text/javascript" src="/web_widget_bokeh_chart/static/src/js/web_widget_bokeh_chart.js"/>
         </xpath>
     </template>
