@@ -6,23 +6,25 @@ odoo.define('web_switch_company_warning.widget', function (require) {
     //Show a big banner in the top of the page if the company has been
     //changed in another tab or window (in the same browser)
 
-    if (!window.SharedWorker)
-        return; //not supported
-
+    if (!window.SharedWorker) {
+        //not supported
+        return;
+    }
     var SwitchCompanyWarningWidget = Widget.extend({
         template:'WarningWidget',
         init: function() {
             this._super();
             var self = this;
-            var w =  new SharedWorker('/web_switch_company_warning/static/src/js/switch_company_warning_worker.js');
+            var w = new SharedWorker('/web_switch_company_warning/static/src/js/switch_company_warning_worker.js');
 
             w.port.addEventListener('message', function (msg) {
-                if (msg.data.type !== 'newCtx')
+                if (msg.data.type !== 'newCtx') {
                     return;
-                if(msg.data.newCtx != self.session.company_id) {
-                    self.$el.show();
-                } else {
+                }
+                if(msg.data.newCtx === self.session.company_id) {
                     self.$el.hide();
+                } else {
+                    self.$el.show();
                 }
             });
             w.port.start();
