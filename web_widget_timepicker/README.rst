@@ -2,7 +2,6 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-
 ===============================
 Timepicker widget in form views
 ===============================
@@ -52,16 +51,10 @@ See the available options at `jquery-timepicker <https://github.com//jonthornton
 .. |formview| image:: ./images/form_view.png
 
 
-Known issues / Roadmap
-======================
-
-* No validation on options.
-
-
 Credits
 =======
 
-* The module uses the `jquery-timepicker <https://cdnjs.com//libraries//jquery-timepicker>`_ plugin by Jon Thornton. This software is made available under the open source MIT License. © 2014 Jon Thornton and contributors
+* The module uses the `jquery-timepicker <https://github.com//jonthornton//jquery-timepicker#timepicker-plugin-for-jquery>`_. plugin by Jon Thornton. This software is made available under the open source MIT License. © 2014 Jon Thornton and contributors
 
 * Odoo Community Association (OCA)
 
@@ -70,3 +63,20 @@ Contributors
 ------------
 
 * Michael Fried <Michael.Fried@vividlab.de>
+* Kaushal Prajapati <kbprajapati@live.com>
+
+
+Maintainer
+----------
+
+.. image:: https://odoo-community.org/logo.png
+   :alt: Odoo Community Association
+   :target: https://odoo-community.org
+
+This module is maintained by the OCA.
+
+OCA, or the Odoo Community Association, is a nonprofit organization whose
+mission is to support the collaborative development of Odoo features and
+promote its widespread use.
+
+To contribute to this module, please visit https://odoo-community.org.
