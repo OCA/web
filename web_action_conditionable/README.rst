@@ -26,11 +26,6 @@ Installation
 To install this module, just follow basic steps to install an odoo module.
 
 
-Configuration
-=============
-
-Not needed.
-
 Usage
 =====
 
@@ -39,19 +34,12 @@ Usage
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/web/10.0
+   :target: https://runbot.odoo-community.org/runbot/162/10.0
 
-.. repo_id is available in https://github.com/OCA/maintainer-tools/blob/master/tools/repos_with_ids.txt
-.. branch is "8.0" for example
 
 For further information, please visit:
 
 * https://www.odoo.com/forum/help-1
-
-Known issues / Roadmap
-======================
-
-* ...
 
 Bug Tracker
 ===========
@@ -68,6 +56,7 @@ Contributors
 ------------
 
 * Cristian Salamea <cristian.salamea@gmail.com>
+* George Daramouskas <gdaramouskas@therp.nl>
 
 Maintainer
 ----------
