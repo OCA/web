@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <template id="assets_backend" name="web_confirm_window_close assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/web_confirm_window_close/static/src/js/web_confirm_window_close.js"></script>
+        </xpath>
+    </template>
+</odoo>

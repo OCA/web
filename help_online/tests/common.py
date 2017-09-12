@@ -81,6 +81,7 @@ class TestWizardCommon(object):
             'type': 'qweb',
             'arch': arch,
             'page': True,
+            'key': 'website.%s' % pageName
         }
         view_id = self.env['ir.ui.view'].create(vals)
         return view_id.id

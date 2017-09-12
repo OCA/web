@@ -1,0 +1,91 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_shortcut
+# 
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-05-19 02:40+0000\n"
+"PO-Revision-Date: 2017-05-19 02:40+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"Language-Team: Arabic (https://www.transifex.com/oca/teams/23907/ar/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#. module: web_shortcut
+#. openerp-web
+#: code:addons/web_shortcut/static/src/xml/web_shortcut.xml:21
+#, python-format
+msgid "Add / Remove Shortcut..."
+msgstr "إضافة / إزالة مختَصَر"
+
+#. module: web_shortcut
+#: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: web_shortcut
+#: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: web_shortcut
+#: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_shortcut
+#: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_id
+msgid "ID"
+msgstr ""
+
+#. module: web_shortcut
+#: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: web_shortcut
+#: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: web_shortcut
+#: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: web_shortcut
+#: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_menu_id
+msgid "Menu id"
+msgstr ""
+
+#. module: web_shortcut
+#: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_name
+msgid "Shortcut Name"
+msgstr ""
+
+#. module: web_shortcut
+#: sql_constraint:web.shortcut:0
+msgid "Shortcut for this menu already exists!"
+msgstr ""
+
+#. module: web_shortcut
+#: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_user_id
+msgid "User Ref."
+msgstr ""
+
+#. module: web_shortcut
+#: model:ir.model,name:web_shortcut.model_ir_ui_menu
+msgid "ir.ui.menu"
+msgstr ""
+
+#. module: web_shortcut
+#: model:ir.model,name:web_shortcut.model_web_shortcut
+msgid "web.shortcut"
+msgstr ""
