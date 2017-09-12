@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="FieldBinaryImage">
+        <t t-jquery=".o_clear_file_button" t-operation="after">
+            <span class="fa fa-clipboard o_paste_image" title="Click here and Paste"/>
+        </t>
+    </t>
+
+</templates>
