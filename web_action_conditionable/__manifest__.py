@@ -9,5 +9,6 @@
     ],
     'data': ['views/view.xml'],
     "author": "Cristian Salamea,Odoo Community Association (OCA)",
+    "license": "AGPL-3",
     'installable': True,
 }

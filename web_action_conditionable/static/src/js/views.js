@@ -1,6 +1,7 @@
 odoo.define("web_action_conditionable.view", function(require) {
     "use strict";
     var view = require("web.View");
+    var py = window.py; // to silence linters
     view.include({
         is_action_enabled : function(action) {
             var attrs = this.fields_view.arch.attrs;
