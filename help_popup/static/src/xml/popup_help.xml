@@ -2,12 +2,12 @@
 <templates>
     <t t-extend="ControlPanel">
         <t t-jquery="ol.breadcrumb" t-operation="replace">
-            <ol class="breadcrumb" style="width: 44%;" />
+            <ol class="breadcrumb breadcrumb_show" />
         </t>
 
         <t t-jquery="ol.breadcrumb" t-operation="before">
-            <button class="btn btn-primary btn-sm o_list_button_add view_help"
-                style="margin-right: 1%; width: 5%">?</button>
+            <button
+                class="btn btn-primary btn-sm o_list_button_add view_help button_view_help">?</button>
         </t>
     </t>
 </templates>
