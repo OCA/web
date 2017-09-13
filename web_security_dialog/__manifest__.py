@@ -5,9 +5,9 @@
     'version': '10.0.1.0.0',
     'category': 'Web',
     'summary': 'Web Security Dialog',
-    'author': 'Serpent Consulting Services Pvt. Ltd.',
-    'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
-    'license': 'AGPL-3',
+    'author': 'Serpent Consulting Services Pvt. Ltd., '
+              'Odoo Community Association (OCA)',
+    'license': 'LGPL-3',
     'website': 'http://www.serpentcs.com',
     'depends': [
         'web',
@@ -19,7 +19,6 @@
     'qweb': [
         'static/src/xml/web_security_dialog.xml',
     ],
-#    'images': ['static/description/web_banner.png'],
     'installable': True,
     'application': True
 }
