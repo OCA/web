@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="DialogSecurity">
+         <div class="container">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="pincode"
+                           style="margin-left:-13px;">Password:</label>
+                    <input type="password" class="form-control" id="pincode"
+                           autofocus="autofocus"/>
+                </div>
+            </div>
+         </div>
+    </t>
+
+</templates>

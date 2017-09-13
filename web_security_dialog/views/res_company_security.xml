@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_company_security_dialog" model="ir.ui.view">
+        <field name="name">res.company.form.inherit</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <field name="website" position="after">
+                <field name="security_key" password="True"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="res_users_form_view_inherit" model="ir.ui.view">
+        <field name="name">res.users.form.extend</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <button name="%(base.change_password_wizard_action)d" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </button>
+            <button name="%(base.change_password_wizard_action)d" position="after">
+                <button string="Change Password" type="action"
+                        confirm="Do you want to Change your password?"
+                        name="%(base.change_password_wizard_action)d"
+                        help="Change the user password."
+                        options='{"security": "security_key"}'/>
+            </button>
+        </field>
+   </record>
+
+</odoo>
