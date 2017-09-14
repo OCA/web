@@ -14,6 +14,9 @@
     'data': [
         'views/assets.xml',
     ],
+    'demo': [
+        'demo/demo_action.xml',
+    ],
     'installable': True,
     'license': 'AGPL-3',
     'url': 'https://github.com/oca/web',
