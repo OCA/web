@@ -22,6 +22,8 @@ A use case could be the case of a validation flow. As a developer, you set up a 
 Usage
 =====
 
+See the 'Previous Partner' and 'Next Partner' buttons that this module's demo data adds to the partner form view.
+
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
    :target: https://runbot.odoo-community.org/runbot/162/10.0
