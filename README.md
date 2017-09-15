@@ -41,13 +41,14 @@ addon | version | summary
 [web_searchbar_full_width](web_searchbar_full_width/) | 10.0.1.0.0 | Show search bar in full screen width
 [web_send_message_popup](web_send_message_popup/) | 10.0.1.0.0 | Web Send Message as Popup
 [web_sheet_full_width](web_sheet_full_width/) | 10.0.1.0.1 | Use the whole available screen width when displaying sheets
-[web_shortcut](web_shortcut/) | 10.0.1.0.0 | Shortcut Menu
+[web_shortcut](web_shortcut/) | 10.0.1.0.1 | Shortcut Menu
 [web_timeline](web_timeline/) | 10.0.1.0.0 | Interactive visualization chart to show events in time
 [web_translate_dialog](web_translate_dialog/) | 10.0.1.0.0 | Easy-to-use pop-up to translate fields in several languages
 [web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 10.0.1.0.0 | Allows you to dynamically color fields on tree views
 [web_tree_image](web_tree_image/) | 10.0.1.1.0 | Show images in tree views
 [web_tree_many2one_clickable](web_tree_many2one_clickable/) | 10.0.1.0.0 | Open the linked resource when clicking on their name
 [web_widget_color](web_widget_color/) | 10.0.1.0.0 | Web Widget Color
+[web_widget_digitized_signature](web_widget_digitized_signature/) | 10.0.0.1.0 | Web Widget Digitized Signature
 [web_widget_domain_v11](web_widget_domain_v11/) | 10.0.1.0.0 | Updated domain widget
 [web_widget_float_formula](web_widget_float_formula/) | 10.0.1.0.0 | Allow use of simple formulas in float fields
 [web_widget_image_download](web_widget_image_download/) | 10.0.1.0.0 | Allows to download any image from its widget
