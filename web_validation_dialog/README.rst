@@ -2,14 +2,14 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 
-===================
-Web Security Dialog
-===================
+=====================
+Web Validation Dialog
+=====================
 
-This module provides the functionality to generalize security on any type of button.
+This module provides the functionality to generalize validation on any type of button.
 
-* Offers company level security & restricted access.
-* Enhances webpage security at the interface level.
+* Offers company level validation & restricted access.
+* Enhances webpage validation at the interface level.
 
 Configuration
 =============
@@ -23,20 +23,20 @@ Usage
 
 * Configure security code to buttons from company configuration menu.
 
-.. image:: /web_security_dialog/static/description/img/res_company.png
+.. image:: /web_validation_dialog/static/description/img/res_company.png
    :width: 70%
 
 * Pass the options and confirm attributes inside the button as below:
 * **<button name="method_name" type="object" string="Create Invoice" options='{"security": "security_field"}'/>**
 * As shown in the image, here options attribute is passed to "Create Invoice" button.
 
-.. image:: /web_security_dialog/static/description/img/click_invoice.png
+.. image:: /web_validation_dialog/static/description/img/click_invoice.png
    :width: 70%
 
 * So on clicking **"Create Invoice"** button a dialog box will open that will ask for Security Code.
 * On entering correct Security Code, user will be redirected to next step.
 
-.. image:: /web_security_dialog/static/description/img/dialog.png
+.. image:: /web_validation_dialog/static/description/img/dialog.png
    :width: 70%
 
 Bug Tracker

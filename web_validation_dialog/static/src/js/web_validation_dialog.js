@@ -6,25 +6,18 @@ odoo.define("web_validation_dialog.ValidationDialog", function(require) {
     var Dialog = require('web.Dialog');
     var Model = require('web.DataModel');
     var framework = require('web.framework');
+    var pyeval = require('web.pyeval');
 
     var QWeb = core.qweb;
     var _t = core._t;
 
     FromWidget.WidgetButton.include({
-        init : function(field_manager, node) {
+        init: function(field_manager, node) {
             this._super(field_manager, node);
-            if(this.node.attrs.options) {
-                this.options = JSON.parse(this.node.attrs.options)
-                    ? JSON.parse(this.node.attrs.options)
-                            : false;
-                if(this.options) {
-                    this.is_dialog_security = this.options.security
-                    ? this.options.security
-                            : false;
-                } else {
-                    this.is_dialog_security = false;
-                }
-            }
+            this.options = pyeval.py_eval(this.node.attrs.options || '{}');
+            this.is_dialog_security = this.options.security
+            ? this.options.security
+                    : false;
         },
         execute_action: function() {
             var self = this;
