@@ -1,4 +1,4 @@
-odoo.define("web_security_dialog.SecurityDialog", function(require) {
+odoo.define("web_validation_dialog.ValidationDialog", function(require) {
     "use strict";
 
     var core = require('web.core');
@@ -65,9 +65,9 @@ odoo.define("web_security_dialog.SecurityDialog", function(require) {
         open_pincode_dialog : function() {
             var self = this;
             new Dialog(self, {
-                title: _t('Security'),
+                title: _t('Validation'),
                 size : "small",
-                $content: QWeb.render('DialogSecurity'),
+                $content: QWeb.render('DialogValidation'),
                 buttons: [
                             {
                                 text: _t("Ok"),
@@ -112,9 +112,8 @@ odoo.define("web_security_dialog.SecurityDialog", function(require) {
                 "password": value,
                 "companyId": self.session.company_id
             };
-            return new Model("res.company").call("check_security", [[], data_vals]);
+            return new Model("res.company").call("check_security", [data_vals]);
         }
     });
 
 });
-
