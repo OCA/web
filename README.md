@@ -31,6 +31,7 @@ addon | version | summary
 [web_favicon](web_favicon/) | 10.0.1.0.0 | Allows to set a custom shortcut icon (aka favicon)
 [web_hide_db_manager_link](web_hide_db_manager_link/) | 10.0.1.0.0 | Hide link to database manager in login screen
 [web_ir_actions_act_window_message](web_ir_actions_act_window_message/) | 10.0.1.0.0 | Show a message box to users
+[web_ir_actions_act_window_page](web_ir_actions_act_window_page/) | 10.0.1.0.0 | Allows a developer to trigger a pager to show the previous or next next record in the form view
 [web_listview_invert_selection](web_listview_invert_selection/) | 10.0.1.0.0 | Invert current selection of list of records
 [web_listview_range_select](web_listview_range_select/) | 10.0.1.0.0 | Enables selecting a range of records using the shift key
 [web_m2x_options](web_m2x_options/) | 10.0.1.1.0 | web_m2x_options
@@ -76,7 +77,6 @@ addon | version | summary
 [web_duplicate_visibility](web_duplicate_visibility/) | 9.0.1.0.0 (unported) | Manage the duplicate button visibiliy
 [web_graph_improved](web_graph_improved/) | 8.0.0.1.0 (unported) | Improves graph views.
 [web_group_expand](web_group_expand/) | 8.0.1.0.0 (unported) | Group Expand Buttons
-[web_ir_actions_act_window_page](web_ir_actions_act_window_page/) | 8.0.1.0.0 (unported) | Allows a developer to trigger a pager to show the previous or next next record in the form view
 [web_last_viewed_records](web_last_viewed_records/) | 8.0.1.0.0 (unported) | Last viewed records
 [web_listview_custom_element_number](web_listview_custom_element_number/) | 8.0.1.0.0 (unported) | Allow users to set manually a quantity of items to display in a tree view
 [web_menu_navbar_needaction](web_menu_navbar_needaction/) | 8.0.1.0.0 (unported) | Show the sum of submenus' needaction counters in main menu
