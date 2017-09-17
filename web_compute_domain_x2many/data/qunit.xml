@@ -1,0 +1,11 @@
+<odoo>
+
+	<template id="qunit_suite" inherit_id="web.qunit_suite">
+		<xpath expr="//div[@id='qunit']" position="before">
+			<script
+				type="text/javascript"
+				src="/web_compute_domain_x2many/static/test/web_compute_domain_x2many.js"/>
+		</xpath>
+	</template>
+	
+</odoo>
