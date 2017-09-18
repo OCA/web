@@ -3,6 +3,7 @@ Expand Dialog
 
 A module that lets the user expand/restore the dialog box size through a button
 in the upper right corner (mimicking most windows managers).
+It does also add draggable support to the dialogs.
 
 Configuration
 =============
@@ -22,6 +23,7 @@ Contributors
 * Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>
 * Holger Brunn <hbrunn@therp.nl>
 * Siddharth Bhalgami <siddharth.bhalgami@gmail.com>
+* Wolfgang Pichler <wpichler@callino.at>
 
 Maintainer
 ----------

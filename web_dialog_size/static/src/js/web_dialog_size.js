@@ -22,6 +22,22 @@ Dialog.include({
         });
     },
 
+    open: function() {
+        var res = this._super.apply(this, arguments);
+        this.$modal.draggable({
+            handle: "div.modal-header",
+        });
+        return res;
+    },
+
+    close: function() {
+        var draggable = this.$modal.draggable( "instance" );
+        if (draggable)
+            this.$modal.draggable("destroy");
+        var res = this._super.apply(this, arguments);
+        return res;
+    },
+
     _extending: function() {
         var dialog = this.$modal.find('.modal-dialog');
         dialog.addClass('dialog_full_screen');
