@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="help.online.assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/web_gesture/static/src/lib/hammer.min.js"></script>
+            <script type="text/javascript" src="/web_gesture/static/src/js/gestures.js"></script>
+        </xpath>
+    </template>
+</odoo>
