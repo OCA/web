@@ -29,6 +29,9 @@ To install this module, just follow basic steps to install an odoo module.
 Usage
 =====
 
+Enter debug mode, go to any tree view, edit the view and add a condition on an
+existing action or create an action (create, delete etc.).
+The condition must be in the format described above.
 
 * go to ...
 
