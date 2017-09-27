@@ -3,10 +3,10 @@
 
     <template id="assets_backend" name="web_timeline assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
-            <link rel="stylesheet" href="/web_timeline/static/lib/vis/vis.css"/>
+            <link rel="stylesheet" href="/web_timeline/static/lib/vis/vis-timeline-graph2d.min.css"/>
             <link rel="stylesheet" href="/web_timeline/static/src/css/web_timeline.css"/>
 
-            <script type="text/javascript" src="/web_timeline/static/lib/vis/vis.js"/>
+            <script type="text/javascript" src="/web_timeline/static/lib/vis/vis-timeline-graph2d.min.js"/>
             <script type="text/javascript" src="/web_timeline/static/src/js/web_timeline.js"/>
         </xpath>
     </template>
