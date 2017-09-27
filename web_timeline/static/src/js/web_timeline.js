@@ -103,6 +103,8 @@ odoo.define('web_timeline.TimelineView', function (require) {
             }
             this.date_start = attrs.date_start;
             this.date_stop = attrs.date_stop;
+            this.no_period = this.date_start == this.date_stop;
+            this.zoomKey = attrs.zoomKey || '';
 
             if (!isNullOrUndef(attrs.quick_create_instance)) {
                 self.quick_create_instance = 'instance.' + attrs.quick_create_instance;
@@ -161,6 +163,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
                 onMove: self.on_move,
                 onUpdate: self.on_update,
                 onRemove: self.on_remove,
+                zoomKey: this.zoomKey
             };
             self.timeline = new vis.Timeline(self.$timeline.empty().get(0));
             self.timeline.setOptions(options);
@@ -206,7 +209,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
             if (!date_start){
                 date_start = new moment();
             }
-            if(!date_stop) {
+            if (!date_stop && !this.no_period) {
                 date_stop = moment(date_start).add(date_delay, 'hours').toDate();
             }
             var group = evt[self.last_group_bys[0]];
@@ -221,13 +224,16 @@ odoo.define('web_timeline.TimelineView', function (require) {
             });
             var r = {
                 'start': date_start,
-                'end': date_stop,
                 'content': evt.__name != undefined ? evt.__name : evt.display_name,
                 'id': evt.id,
                 'group': group,
                 'evt': evt,
                 'style': 'background-color: ' + self.color + ';'
             };
+            // Check if the event is instantaneous, if so, display it with a point on the timeline (no 'end')
+            if (!this.no_period && !moment(date_start).isSame(date_stop)) {
+                r.end = date_stop;
+            }
             self.color = undefined;
             return r;
         },
