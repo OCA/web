@@ -111,6 +111,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
             this.date_delay = attrs.date_delay;
             this.no_period = this.date_start == this.date_stop;
             this.zoomKey = attrs.zoomKey || '';
+            this.default_window = attrs.default_window || 'fit';
 
             if (!isNullOrUndef(attrs.quick_create_instance)) {
                 self.quick_create_instance = 'instance.' + attrs.quick_create_instance;
@@ -171,6 +172,27 @@ odoo.define('web_timeline.TimelineView', function (require) {
                 onRemove: self.on_remove,
                 zoomKey: this.zoomKey
             };
+            if (this.default_window) {
+                var start = new moment();
+                var end;
+                switch (this.default_window) {
+                    case 'day':
+                        end = new moment().add(1, 'days');
+                        break;
+                    case 'week':
+                        end = new moment().add(1, 'weeks');
+                        break;
+                    case 'month':
+                        end = new moment().add(1, 'months');
+                        break;
+                }
+                if (end) {
+                    options['start'] = start;
+                    options['end'] = end;
+                }else{
+                   this.default_window = 'fit';
+                }
+            }
             self.timeline = new vis.Timeline(self.$timeline.empty().get(0));
             self.timeline.setOptions(options);
             if (self.mode && self['on_scale_' + self.mode + '_clicked']) {
@@ -333,7 +355,9 @@ odoo.define('web_timeline.TimelineView', function (require) {
             var groups = split_groups(events, group_bys);
             this.timeline.setGroups(groups);
             this.timeline.setItems(data);
-            this.timeline.fit();
+            if (!this.default_window || this.default_window == 'fit'){
+                this.timeline.fit();
+            }
         },
 
         do_show: function () {
