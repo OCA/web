@@ -9,13 +9,13 @@ class TestWebValidationDialog(common.TransactionCase):
     def setUp(self):
         super(TestWebValidationDialog, self).setUp()
         self.company = self.env.ref('base.main_company')
-        self.company.security_key = 'pwd'
+        self.company.security_code = 'pwd'
 
     def test_check_security(self):
         res = self.company.check_security({
             'companyId': self.company.id,
             'password': 'pwd',
-            'field': 'security_key',
+            'field': 'security_code',
         })
         self.assertTrue(res,
                         'Invalid or Wrong Password! Contact your '

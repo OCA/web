@@ -14,7 +14,7 @@
                         confirm="Do you want to Change your password?"
                         name="%(base.change_password_wizard_action)d"
                         help="Change the user password."
-                        options='{"security": "security_key"}'/>
+                        options='{"security": "security_code"}'/>
             </button>
         </field>
    </record>

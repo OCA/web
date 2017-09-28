@@ -7,7 +7,7 @@ from odoo import api, fields, models
 class ResCompany(models.Model):
     _inherit = 'res.company'
 
-    security_key = fields.Char('Security Code')
+    security_code = fields.Char('Security Code')
 
     @api.model
     def check_security(self, vals):

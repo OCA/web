@@ -19,24 +19,24 @@ odoo.define("web_validation_dialog.ValidationDialog", function(require) {
             ? this.options.security
                     : false;
         },
-        execute_action: function() {
+        exec_action: function() {
             var self = this;
-            var exec_action = function() {
             if (self.node.attrs.confirm && self.is_dialog_security) {
                 Dialog.confirm(self, self.node.attrs.confirm, {
                     buttons: [
-                              {
-                                  text: _t("Ok"),
-                                  classes: 'btn-primary',
-                                  click: function(){
-                                      this.close();
-                                      self.open_pincode_dialog();
-                                  }
-                              },
-                              {
-                                  text: _t('Cancel'),
-                                  close: true
-                              }]
+                        {
+                            text: _t("Ok"),
+                            classes: 'btn-primary',
+                            click: function() {
+                                this.close();
+                                self.open_pincode_dialog();
+                            },
+                        },
+                        {
+                            text: _t('Cancel'),
+                            close: true
+                        },
+                    ]
                 });
             } else if (self.node.attrs.confirm) {
                     var def = $.Deferred();
@@ -48,11 +48,13 @@ odoo.define("web_validation_dialog.ValidationDialog", function(require) {
                 } else {
                     return self.on_confirmed();
                 }
-            };
+        },
+        execute_action: function() {
+            var self = this;
             if (!this.node.attrs.special) {
-                return this.view.recursive_save().then(exec_action);
+                return this.view.recursive_save().then(self.exec_action());
             } else {
-                return exec_action();
+                return self.exec_action();
             }
         },
         open_pincode_dialog : function() {

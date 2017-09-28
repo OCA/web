@@ -22,5 +22,4 @@
         'static/src/xml/web_validation_dialog.xml',
     ],
     'installable': True,
-    'application': True
 }
