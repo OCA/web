@@ -108,6 +108,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
             }
             this.date_start = attrs.date_start;
             this.date_stop = attrs.date_stop;
+            this.date_delay = attrs.date_delay;
             this.no_period = this.date_start == this.date_stop;
             this.zoomKey = attrs.zoomKey || '';
 
@@ -194,9 +195,9 @@ odoo.define('web_timeline.TimelineView', function (require) {
         event_data_transform: function (evt) {
             var self = this;
             var date_start = new moment();
-            var date_stop = new moment();
+            var date_stop;
 
-            var date_delay = evt[this.date_delay] || 1.0,
+            var date_delay = evt[this.date_delay] || false,
                 all_day = this.all_day ? evt[this.all_day] : false,
                 res_computed_text = '',
                 the_title = '',
@@ -208,15 +209,19 @@ odoo.define('web_timeline.TimelineView', function (require) {
             }
             else {
                 date_start = time.auto_str_to_date(evt[this.date_start].split(' ')[0], 'start');
-                date_stop = this.date_stop ? time.auto_str_to_date(evt[this.date_stop].split(' ')[0], 'stop') : null;
+                if (this.no_period) {
+                    date_stop = date_start
+                } else {
+                    date_stop = this.date_stop ? time.auto_str_to_date(evt[this.date_stop].split(' ')[0], 'stop') : null;
+                }
             }
-
             if (!date_start) {
                 date_start = new moment();
             }
-            if (!date_stop && !this.no_period) {
+            if (!date_stop && date_delay) {
                 date_stop = moment(date_start).add(date_delay, 'hours').toDate();
             }
+
             var group = evt[self.last_group_bys[0]];
             if (group) {
                 group = _.first(group);
@@ -236,7 +241,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
                 'style': 'background-color: ' + self.color + ';'
             };
             // Check if the event is instantaneous, if so, display it with a point on the timeline (no 'end')
-            if (!this.no_period && !moment(date_start).isSame(date_stop)) {
+            if (date_stop && !moment(date_start).isSame(date_stop)) {
                 r.end = date_stop;
             }
             self.color = undefined;
@@ -361,7 +366,12 @@ odoo.define('web_timeline.TimelineView', function (require) {
             // Initialize default values for creation
             var default_context = {};
             default_context['default_'.concat(this.date_start)] = item.start;
-            default_context['default_'.concat(this.date_stop)] = moment(item.start).add(1, 'hours').toDate();
+            if (this.date_delay) {
+                default_context['default_'.concat(this.date_delay)] = 1;
+            }
+            if (this.date_stop) {
+                default_context['default_'.concat(this.date_stop)] = moment(item.start).add(1, 'hours').toDate();
+            }
             if (item.group > 0) {
                 default_context['default_'.concat(this.last_group_bys[0])] = item.group;
             }
@@ -412,17 +422,27 @@ odoo.define('web_timeline.TimelineView', function (require) {
 
         on_move: function (item, callback) {
             var self = this;
-            var start = item.start;
-            var end = item.end;
+            var event_start = item.start;
+            var event_end = item.end;
             var group = false;
             if (item.group != -1) {
                 group = item.group;
             }
             var data = {};
-            data[self.fields_view.arch.attrs.date_start] =
-                time.auto_date_to_str(start, self.fields[self.fields_view.arch.attrs.date_start].type);
-            data[self.fields_view.arch.attrs.date_stop] =
-                time.auto_date_to_str(end, self.fields[self.fields_view.arch.attrs.date_stop].type);
+            // In case of a move event, the date_delay stay the same, only date_start and stop must be updated
+            data[this.date_start] = time.auto_date_to_str(event_start, self.fields[this.date_start].type);
+            if (this.date_stop) {
+                // In case of instantaneous event, item.end is not defined
+                if (event_end) {
+                    data[this.date_stop] = time.auto_date_to_str(event_end, self.fields[this.date_stop].type);
+                } else {
+                    data[this.date_stop] = data[this.date_start]
+                }
+            }
+            if (this.date_delay && event_end) {
+                var diff_seconds = Math.round((event_end.getTime() - event_start.getTime()) / 1000);
+                data[this.date_delay] = diff_seconds / 3600;
+            }
             if (self.grouped_by) {
                 data[self.grouped_by[0]] = group;
             }
