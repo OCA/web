@@ -22,9 +22,8 @@ the possible attributes for the tag:
 * date_end (optional): it defines the name of the field of type date that
   contains the end of the event. The date_end can be equal to the attribute
   date_start to display events has 'point' on the Timeline (instantaneous event)
-* date_delay (optional): it defines the name of the field of type integer
+* date_delay (optional): it defines the name of the field of type float/integer
   that contain the duration in hours of the event, default = 1
-  contains the end of the event.
 * default_group_by (required): it defines the name of the field that will be
   taken as default group by when accessing the view or when no other group by
   is selected.
