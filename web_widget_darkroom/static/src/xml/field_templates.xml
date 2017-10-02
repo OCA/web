@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2016-2017 LasLabs Inc.
+    License LGPL-3 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+
+<templates id="field_templates" xml:space="preserve">
+    <t t-name="FieldDarkroomImage">
+        <span class="o_form_field o_form_field_darkroom" t-att-style="widget.node.attrs.style">
+            <t t-if="!widget.get('effective_readonly')">
+                <div class="darkroom-toolbar"/>
+            </t>
+        </span>
+    </t>
+
+    <t t-extend="FieldBinaryImage">
+        <t t-jquery=".o_select_file_button" t-operation="after">
+            <t t-if="widget.darkroom_supported()">
+                <i class="fa fa-picture-o fa-lg o_form_binary_image_darkroom_modal" title="Darkroom"></i>
+            </t>
+        </t>
+        <t t-jquery=".o_select_file_button" t-operation="replace">
+            <i class="fa fa-pencil fa-lg o_select_file_button" title="Edit"></i>
+        </t>
+        <t t-jquery=".o_clear_file_button" t-operation="replace">
+            <i class="fa fa-trash-o fa-lg o_clear_file_button" title="Clear"></i>
+        </t>
+    </t>
+</templates>
