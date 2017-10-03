@@ -77,6 +77,8 @@ openerp.web_pivot_zoom = function(instance)
                 ],
                 row_header = this.pivot.get_header(row_id),
                 col_header = this.pivot.get_header(col_id),
+                // see https://github.com/OCA/OCB/blob/8.0/addons/web_graph/
+                // static/src/js/pivot_table.js#L88
                 measure_values = this.pivot.get_values(
                     Math.min(col_id, row_id), Math.max(col_id, row_id)
                 ),
