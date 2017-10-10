@@ -24,19 +24,21 @@ odoo.define('web_responsive', function(require) {
          */
         open_menu: function(id, allowOpen) {
             this._super(id);
-            if (allowOpen) return;
+            if (allowOpen) {
+                return;
+            };
             var $clicked_menu = this.$secondary_menus.find('a[data-menu=' + id + ']');
             $clicked_menu.parents('.oe_secondary_submenu').css('display', '');
-        },
+        }
 
     });
 
     SearchView.include({
 
         // Prevent focus of search field on mobile devices
-        toggle_visibility: function (is_visible) {
-            $('div.oe_searchview_input').last()
-                .one('focus', $.proxy(this.preventMobileFocus, this));
+        toggle_visibility: function(is_visible) {
+            $('div.oe_searchview_input').last().one(
+              'focus', $.proxy(this.preventMobileFocus, this));
             return this._super(is_visible);
         },
 
@@ -48,15 +50,14 @@ odoo.define('web_responsive', function(require) {
         },
 
         // For lack of Modernizr, TouchEvent will do
-        isMobile: function () {
-            try{
+        isMobile: function() {
+            try {
                 document.createEvent('TouchEvent');
                 return true;
             } catch (ex) {
                 return false;
             }
-        },
-
+        }
     });
 
     var AppDrawer = Class.extend({
@@ -82,15 +83,15 @@ odoo.define('web_responsive', function(require) {
                 'down': this.DOWN,
                 'pagedown': this.DOWN,
                 '+': this.RIGHT,
-                '-': this.LEFT,
+                '-': this.LEFT
             };
             this.initDrawer();
             var $clickZones = $('.odoo_webclient_container, ' +
-                                'a.oe_menu_leaf, ' +
-                                'a.oe_menu_toggler, ' +
-                                'a.oe_logo, ' +
-                                'i.oe_logo_edit'
-                                );
+                'a.oe_menu_leaf, ' +
+                'a.oe_menu_toggler, ' +
+                'a.oe_logo, ' +
+                'i.oe_logo_edit'
+            );
             $clickZones.click($.proxy(this.handleClickZones, this));
             core.bus.on('resize', this, this.handleWindowResize);
             core.bus.on('keydown', this, this.handleNavKeys);
@@ -101,9 +102,9 @@ odoo.define('web_responsive', function(require) {
             this.$el = $('.drawer');
             this.$el.drawer();
             this.$el.one('drawer.opened', $.proxy(this.onDrawerOpen, this));
-            this.$el.on('drawer.opened', function setIScrollProbes(){
+            this.$el.on('drawer.opened', function setIScrollProbes() {
                 var onIScroll = function() {
-                    var transform = (this.iScroll.y) ? this.iScroll.y * -1 : 0;
+                    var transform = this.iScroll.y ? this.iScroll.y * -1 : 0;
                     $(this).find('#appDrawerAppPanelHead').css(
                         'transform', 'matrix(1, 0, 0, 1, 0, ' + transform + ')'
                     );
@@ -131,7 +132,7 @@ odoo.define('web_responsive', function(require) {
 
         // It provides keyboard shortcuts for app drawer nav
         handleNavKeys: function(e) {
-            if (!this.isOpen){
+            if (!this.isOpen) {
                 return;
             }
             var directionCode = $.hotkeys.specialKeys[e.keyCode.toString()];
@@ -141,7 +142,7 @@ odoo.define('web_responsive', function(require) {
                     this.directionCodes[directionCode]
                 );
                 this.selectAppLink($link);
-            } else if ($.hotkeys.specialKeys[e.keyCode.toString()] == 'esc') {
+            } else if ($.hotkeys.specialKeys[e.keyCode.toString()] === 'esc') {
                 this.handleClickZones();
             } else {
                 var buffer = this.handleKeyBuffer(e.keyCode);
@@ -226,7 +227,7 @@ odoo.define('web_responsive', function(require) {
             var obj = [],
                 $objs = this.$appLinks;
 
-            switch(direction){
+            switch (direction) {
                 case this.LEFT:
                     obj = $objs[$objs.index($appLink) - 1];
                     if (!obj) {
@@ -273,19 +274,19 @@ odoo.define('web_responsive', function(require) {
             function filterWithin(left, right) {
                 return function() {
                     var $this = $(this),
-                        thisMiddle = $this.offset().left + ($this.width() / 2);
+                        thisMiddle = $this.offset().left + $this.width() / 2;
                     return thisMiddle >= left && thisMiddle <= right;
                 };
             }
             var left = $obj.offset().left,
                 right = left + $obj.outerWidth();
             return $grid.filter(filterWithin(left, right));
-        },
+        }
 
     });
 
     // It inits a new AppDrawer when the web client is ready
-    core.bus.on('web_client_ready', null, function () {
+    core.bus.on('web_client_ready', null, function() {
         new AppDrawer();
     });
 
@@ -294,11 +295,10 @@ odoo.define('web_responsive', function(require) {
         get_default_view: function() {
             var default_view = this._super()
             if (config.device.size_class <= config.device.SIZES.XS &&
-                default_view.type != 'kanban' &&
-                this.views['kanban'])
-                {
-                    default_view.type = 'kanban';
-                };
+                default_view.type !== 'kanban' &&
+                this.views.kanban) {
+                default_view.type = 'kanban';
+            };
             return default_view;
         },
     });
