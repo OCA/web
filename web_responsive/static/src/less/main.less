@@ -50,19 +50,50 @@ main {
         overflow: auto;
         > .o_main_content {
             overflow: initial;
-            @media (max-width: @screen-xs-max) {
-                > .o_content {
+            > .o_content {
+                @media (max-width: @screen-xs-max) {
                     overflow: initial;
+                }
+
+                @media (min-width: @screen-sm-min) {
+                    // .o_content is the one to display horizontal scrolling in
+                    // case of wide tables
+                    .table-responsive {
+                        overflow-x: visible;
+                    }
                 }
             }
         }
     }
 }
 
-// Remove z-index from CP buttons so it doesn't overlap the menu
-.o_control_panel {
-     .btn-group > .btn.active {
-        z-index: initial;
+@media (max-width: @screen-sm-max) {
+    .o_control_panel {
+        // Remove z-index from CP buttons so it doesn't overlap the menu
+        .btn-group > .btn.active {
+            z-index: initial;
+        }
+
+        // Better horizontal space usage for buttons
+        justify-content: space-between;
+        .o_cp_left, .o_cp_right {
+            width: inherit;
+        }
+
+        .o_search_options > .o_dropdown {
+            &.hidden-xs {
+                // No other way to display "Group By" button :(
+                display: inline-block !important;
+            }
+
+            // Hack to hide text and display larger icons
+            > .btn {
+                font-size: 0;
+                > .fa {
+                    font-size: @odoo-font-size-base * 1.4;
+                }
+            }
+        }
     }
 }
 
