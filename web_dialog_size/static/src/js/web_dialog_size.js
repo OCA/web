@@ -25,7 +25,8 @@ Dialog.include({
     open: function() {
         var res = this._super.apply(this, arguments);
         this.$modal.draggable({
-            handle: "div.modal-header",
+            handle: '.modal-header',
+            helper: false
         });
         return res;
     },
