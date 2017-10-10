@@ -1,0 +1,102 @@
+/* Copyright 2016 LasLabs Inc.
+ * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
+
+body {
+    width: 100%;
+    height: 100%;
+
+    // Do not fix the search part, it's too big for small screens
+    @media (max-width: @screen-sm-max) {
+        overflow: inherit;
+        .odoo {
+            .oe-view-manager {
+                overflow: inherit;
+            }
+        }
+    }
+}
+
+main {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.navbar {
+    z-index: 10;
+}
+
+.o_cp_switch_buttons {
+    .active {
+        z-index: 10;
+    }
+}
+
+.o_sub_menu {
+    .o_sub_menu_logo {
+        display: none;
+    }
+    .o_sub_menu_footer {
+        display: none;
+    }
+}
+
+.o_tooltip.active {
+    z-index: 1051;
+}
+
+.o_web_client {
+    >.o_main {
+        overflow: auto;
+        > .o_main_content {
+            overflow: initial;
+            > .o_content {
+                @media (max-width: @screen-xs-max) {
+                    overflow: initial;
+                }
+
+                @media (min-width: @screen-sm-min) {
+                    // .o_content is the one to display horizontal scrolling in
+                    // case of wide tables
+                    .table-responsive {
+                        overflow-x: visible;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: @screen-sm-max) {
+    .o_control_panel {
+        // Remove z-index from CP buttons so it doesn't overlap the menu
+        .btn-group > .btn.active {
+            z-index: initial;
+        }
+
+        // Better horizontal space usage for buttons
+        justify-content: space-between;
+        .o_cp_left, .o_cp_right {
+            width: inherit;
+        }
+
+        .o_search_options > .o_dropdown {
+            &.hidden-xs {
+                // No other way to display "Group By" button :(
+                display: inline-block !important;
+            }
+
+            // Hack to hide text and display larger icons
+            > .btn {
+                font-size: 0;
+                > .fa {
+                    font-size: @odoo-font-size-base * 1.4;
+                }
+            }
+        }
+    }
+}
+
+.o_chat_window {
+    z-index: 1000;
+}
