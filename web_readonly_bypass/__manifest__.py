@@ -5,7 +5,7 @@
 {
     'name': 'Read Only ByPass',
     'version': '10.0.1.0.0',
-    "author": "ACSONE SA/NV,Kalpana Hemnani,Odoo Community Association (OCA)",
+    "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "http://www.acsone.eu",
     "license": "LGPL-3",
     'category': 'Technical Settings',
