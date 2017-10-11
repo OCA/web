@@ -12,7 +12,7 @@
               name="App Drawer - Web Client"
               >
 
-        <xpath expr="//div[@class='o_sub_menu']" position="replace" />
+        <xpath expr="//div[hasclass('o_sub_menu')]" position="replace" />
 
         <xpath expr="//t[@t-set='head']" position="inside">
             <meta charset="utf-8" />
@@ -101,7 +101,7 @@
               name="App Drawer - Secondary Menu"
               >
 
-        <xpath expr="//div[@class='o_sub_menu_content']/t" position="replace">
+        <xpath expr="//div[hasclass('o_sub_menu_content')]/t" position="replace">
 
             <t t-foreach="menu_data['children']" t-as="menu">
                 <ul style="display: none"
@@ -178,7 +178,7 @@
             <attribute name="t-att-data-menu-name">menu['name']</attribute>
         </xpath>
 
-        <xpath expr="//span[@class='oe_menu_text']" position="replace">
+        <xpath expr="//span[hasclass('oe_menu_text')]" position="replace">
             <t t-if="display_images">
                 <img t-attf-src="/web/image/ir.ui.menu/{{ menu['id'] }}/web_icon_data"
                      class="app-drawer-icon-app img-rounded"
@@ -203,11 +203,11 @@
               name="App Drawer - Menu"
               >
 
-        <xpath expr="//ul[contains(@class, 'oe_systray')]" position="replace" />
+        <xpath expr="//ul[hasclass('oe_systray')]" position="replace" />
 
-        <xpath expr="//ul[contains(@class, 'oe_user_menu_placeholder')]" position="replace" />
+        <xpath expr="//ul[hasclass('oe_user_menu_placeholder')]" position="replace" />
 
-        <xpath expr="//ul[contains(@class, 'oe_application_menu_placeholder')]" position="replace">
+        <xpath expr="//ul[hasclass('oe_application_menu_placeholder')]" position="replace">
 
             <div class="panel-default app-drawer-app-panel" id="appDrawerAppMenu">
                 <div class="panel-heading" id="appDrawerAppPanelHead">
