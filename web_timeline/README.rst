@@ -31,8 +31,8 @@ the possible attributes for the tag:
   additional key is down. Available values are '' (does not apply), 'altKey',
   'ctrlKey', or 'metaKey'. Set this option if you want to be able to use the
   scroll to navigate vertically on views with a lot of events.
-* default_window (optional): Specifies the initial visible window. Aviable values are:
-  'day' to display the next 24 hours, 'week', 'month' and 'fit'.
+* mode (optional): Specifies the initial visible window. Available values are:
+  'day' to display the current day, 'week', 'month' and 'fit'.
   Default value is 'fit' to adjust the visible window such that it fits all items
 * event_open_popup (optional): when set to true, it allows to edit the events
   in a popup. If not (default value), the record is edited changing to form
