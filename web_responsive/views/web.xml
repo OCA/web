@@ -178,7 +178,7 @@
             <attribute name="t-att-data-menu-name">menu['name']</attribute>
         </xpath>
 
-        <xpath expr="//span[hasclass('oe_menu_text')" position="replace">
+        <xpath expr="//span[hasclass('oe_menu_text')]" position="replace">
             <t t-if="display_images">
                 <img t-attf-src="/web/image/ir.ui.menu/{{ menu['id'] }}/web_icon_data"
                      class="app-drawer-icon-app img-rounded"
