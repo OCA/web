@@ -55,13 +55,6 @@ odoo.define('web_timeline.TimelineView', function (require) {
             }
         },
 
-        // set_default_options: function(options) {
-        //     this._super(options);
-        //     _.defaults(this.options, {
-        //         confirm_on_delete: true
-        //     });
-        // },
-
         parse_colors: function () {
             if (this.fields_view.arch.attrs.colors) {
                 this.colors = _(this.fields_view.arch.attrs.colors.split(';')).chain().compact().map(function (color_pair) {
@@ -101,7 +94,6 @@ odoo.define('web_timeline.TimelineView', function (require) {
             this.$el.addClass(attrs['class']);
 
             this.info_fields = [];
-            this.mode = attrs.mode;
 
             if (!attrs.date_start) {
                 throw new Error(_t("Timeline view has not defined 'date_start' attribute."));
@@ -111,7 +103,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
             this.date_delay = attrs.date_delay;
             this.no_period = this.date_start == this.date_stop;
             this.zoomKey = attrs.zoomKey || '';
-            this.default_window = attrs.default_window || 'fit';
+            this.mode = attrs.mode || attrs.default_window || 'fit';
 
             if (!isNullOrUndef(attrs.quick_create_instance)) {
                 self.quick_create_instance = 'instance.' + attrs.quick_create_instance;
@@ -172,25 +164,27 @@ odoo.define('web_timeline.TimelineView', function (require) {
                 onRemove: self.on_remove,
                 zoomKey: this.zoomKey
             };
-            if (this.default_window) {
-                var start = new moment();
-                var end;
-                switch (this.default_window) {
+            if (this.mode) {
+                var start = false, end = false;
+                switch (this.mode) {
                     case 'day':
-                        end = new moment().add(1, 'days');
+                        start = new moment().startOf('day');
+                        end = new moment().endOf('day');
                         break;
                     case 'week':
-                        end = new moment().add(1, 'weeks');
+                        start = new moment().startOf('week');
+                        end = new moment().endOf('week');
                         break;
                     case 'month':
-                        end = new moment().add(1, 'months');
+                        start = new moment().startOf('month');
+                        end = new moment().endOf('month');
                         break;
                 }
-                if (end) {
+                if (end && start) {
                     options['start'] = start;
                     options['end'] = end;
                 }else{
-                   this.default_window = 'fit';
+                   this.mode = 'fit';
                 }
             }
             self.timeline = new vis.Timeline(self.$timeline.empty().get(0));
@@ -355,7 +349,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
             var groups = split_groups(events, group_bys);
             this.timeline.setGroups(groups);
             this.timeline.setItems(data);
-            if (!this.default_window || this.default_window == 'fit'){
+            if (!this.mode || this.mode == 'fit'){
                 this.timeline.fit();
             }
         },
