@@ -12,7 +12,7 @@
               name="App Drawer - Web Client"
               >
 
-        <xpath expr="//div[@contains('class', 'o_sub_menu')]" position="replace" />
+        <xpath expr="//div[@class='o_sub_menu']" position="replace" />
 
         <xpath expr="//t[@t-set='head']" position="inside">
             <meta charset="utf-8" />
