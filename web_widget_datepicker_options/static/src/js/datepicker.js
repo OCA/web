@@ -18,36 +18,34 @@
 */
 /*global openerp, _, $ */
 
-openerp.web_widget_datepicker_options = function (instance) {
-
+odoo.define('web_widget_datepicker_options.web_widget_datepicker_options', function (require) {
     "use strict";
 
-    instance.web.form.FieldDatetime.include({
-        initialize_content: function() {
-            this._super();
-            var self = this;
-            if (this.datewidget) {
-                if (typeof this.options.datepicker === 'object') {
-                    $.map(this.options.datepicker, function(value, key) {
-                        self.datewidget.picker('option', key, value);
-                    });
-                }
+    var core = require('web.core');
+    var datepicker = require('web.datepicker');
+
+    var FieldDate = core.form_widget_registry.get('date');
+    var FieldDatetime = core.form_widget_registry.get('datetime');
+
+    FieldDatetime.include({
+        build_widget: function() {
+            var options = {}
+            if (this.options && this.options.datepicker){
+                options = this.options.datepicker
             }
-        }
+            return new datepicker.DateTimeWidget(this, options);
+        },
     });
 
-    instance.web.form.FieldDate.include({
-        initialize_content: function() {
-            this._super();
-            var self = this;
-            if (this.datewidget) {
-                if (typeof this.options.datepicker === 'object') {
-                    $.map(this.options.datepicker, function(value, key) {
-                        self.datewidget.picker('option', key, value);
-                    });
-                }
+    FieldDate.include({
+        build_widget: function() {
+            var options = {}
+            if (this.options && this.options.datepicker){
+                options = this.options.datepicker
             }
-        }
+            return new datepicker.DateWidget(this, options);
+        },
     });
-};
 
+
+});

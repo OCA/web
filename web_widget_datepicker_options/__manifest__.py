@@ -32,6 +32,4 @@
     ],
     "author": "Vincent Vinet, "
               "Odoo Community Association (OCA)",
-    'installable': False,
-    "active": False,
 }
