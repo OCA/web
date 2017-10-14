@@ -3,159 +3,100 @@
 *    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 **/
 
-odoo.define_section('web_widget_float_formula', ['web.form_common', 'web.form_widgets', 'web.core'], function(test) {
-    'use strict';
+odoo.define('web_widget_float_formula', function(require) {
+    "use strict";
 
-    window.test_setup = function(self, form_common, form_widgets, core) {
-        core.bus.trigger('web_client_ready');
-        var field_manager = new form_common.DefaultFieldManager(null, {});
-        var filler = {'attrs': {}}; // Needed to instantiate FieldFloat 
-        self.field = new form_widgets.FieldFloat(field_manager, filler);
-        self.field.$input = $('<input>');
-        self.field.$label = $('<label>');
-    };
+    var core = require('web.core');
+    var testUtils = require('web.test_utils');
+    var FormView = require('web.FormView');
 
-    test('Float fields should have a _formula_text property that defaults to an empty string',
-        function(assert, form_common, form_widgets, core) {
-            window.test_setup(this, form_common, form_widgets, core);
+    var createView = testUtils.createView;
+    var triggerKeypressEvent = testUtils.triggerKeypressEvent;
 
-            assert.strictEqual(this.field._formula_text, '');
-    });
+    var assertClose = function(assert, actual, expected, message) {
+        var pass = Math.abs(actual - expected) < 0.00001;
 
-    test('.initialize_content() on float fields should clear the _formula_text property',
-        function(assert, form_common, form_widgets, core) {
-            window.test_setup(this, form_common, form_widgets, core);
-            this.field._formula_text = 'test';
-            this.field.initialize_content();
+        assert.pushResult({
+            result: pass,
+            actual: actual,
+            expected: expected,
+            message: message
+        });
+    }
 
-            assert.strictEqual(this.field._formula_text, '');
-    });
-
-    test('._clean_formula_text() on float fields should clear the _formula_text property',
-        function(assert, form_common, form_widgets, core) {
-            window.test_setup(this, form_common, form_widgets, core);
-            this.field._formula_text = 'test';
-            this.field._clean_formula_text();
-
-            assert.strictEqual(this.field._formula_text, '');
-    });
-
-    test('._process_formula() on float fields should return false when given invalid formulas',
-        function(assert, form_common, form_widgets, core) {
-            window.test_setup(this, form_common, form_widgets, core);
-
-            assert.strictEqual(this.field._process_formula('2*3'), false);
-            assert.strictEqual(this.field._process_formula('=2*3a'), false);
-    });
-
-    test('._process_formula() on float fields should properly process a valid formula',
-        function(assert, form_common, form_widgets, core) {
-            window.test_setup(this, form_common, form_widgets, core);
-
-            assert.strictEqual(this.field._process_formula(' =2*3\n'), '2*3');
-    });
-
-    test('._eval_formula() on float fields should properly evaluate a valid formula',
-        function(assert, form_common, form_widgets, core) {
-            window.test_setup(this, form_common, form_widgets, core);
-
-            assert.equal(this.field._eval_formula('2*3'), 6);
-    });
-
-    test('._eval_formula() on float fields should properly handle alternative decimal points and thousands seps',
-        function(assert, form_common, form_widgets, core) {
-            var translation_params = core._t.database.parameters;
-            translation_params.decimal_point = ',';
-            translation_params.thousands_sep = '.';
-            window.test_setup(this, form_common, form_widgets, core);
-
-            assert.equal(this.field._eval_formula('2.000*3,5'), 7000);
-    });
-
-    test('._eval_formula() on float fields should return false when given an input that evals to undefined',
-        function(assert, form_common, form_widgets, core) {
-            window.test_setup(this, form_common, form_widgets, core);
-
-            assert.equal(this.field._eval_formula(''), false);
-    });
-
-    test('._eval_formula() on float fields should return false when given an input that cannot be evaluated',
-        function(assert, form_common, form_widgets, core) {
-            window.test_setup(this, form_common, form_widgets, core);
-
-            assert.equal(this.field._eval_formula('*/'), false);
-    });
-
-    test('._compute_result() on float fields should always clean up _formula_text',
-        function(assert, form_common, form_widgets, core) {
-            window.test_setup(this, form_common, form_widgets, core);
-            this.field._formula_text = 'test';
-            this.field._compute_result();
-
-            assert.strictEqual(this.field._formula_text, '');
-    });
-
-    test('._compute_result() should not change the value of the associated input when it is not a valid formula',
-        function(assert, form_common, form_widgets, core) {
-            window.test_setup(this, form_common, form_widgets, core);
-            this.field.$input.val('=2*3a');
-            this.field._compute_result();
-
-            assert.strictEqual(this.field.$input.val(), '=2*3a');
-    });
-
-    test('._compute_result() should not change the value of the associated input when it cannot be evaled',
-        function(assert, form_common, form_widgets, core) {
-            window.test_setup(this, form_common, form_widgets, core);
-            this.field.$input.val('=*/');
-            this.field._compute_result();
-
-            assert.strictEqual(this.field.$input.val(), '=*/');
-    });
-
-    test('._compute_result() should behave properly when the current value of the input element is a valid formula',
-        function(assert, form_common, form_widgets, core) {
-            window.test_setup(this, form_common, form_widgets, core);
-            this.field.$input.val('=2*3');
-            this.field._compute_result();
-
-            assert.equal(this.field.$input.val(), '6');
-            assert.strictEqual(this.field._formula_text, '=2*3');
-    });
-
-    test('._display_formula() should update the value of the input element when there is a stored formula',
-        function(assert, form_common, form_widgets, core) {
-            window.test_setup(this, form_common, form_widgets, core);
-            this.field._formula_text = "test";
-            this.field._display_formula();
-
-            assert.equal(this.field.$input.val(), 'test');
-    });
-
-    test('.start() on float fields should add a handler that calls ._compute_result() when the field is blurred',
-        function(assert, form_common, form_widgets, core) {
-            window.test_setup(this, form_common, form_widgets, core);
-            this.field.called = false;
-            this.field._compute_result = function() {
-                this.called = true;
+    QUnit.module('web_widget_float_formula', {
+        beforeEach: function() {
+            this.data = {
+                foo: {
+                    fields: {
+                        bar: { string: "Bar", type: "float" }
+                    },
+                    records: [
+                        { id: 1, bar: 1.2 }
+                    ]
+                }
             };
-            this.field.start();
-            this.field.trigger('blurred');
-
-            assert.strictEqual(this.field.called, true);
+        }
     });
 
-    test('.start() on float fields should add a handler that calls ._display_formula() when the field is focused',
-        function(assert, form_common, form_widgets, core) {
-            window.test_setup(this, form_common, form_widgets, core);
-            this.field.called = false;
-            this.field._display_formula = function() {
-                this.called = true;
-            };
-            this.field.start();
-            this.field.trigger('focused');
+    QUnit.test('Float fields in form view', function(assert) {
+        assert.expect(8);
 
-            assert.strictEqual(this.field.called, true);
-    }); 
- 
+        var form = createView({
+            View: FormView,
+            model: 'foo',
+            data: this.data,
+            res_id: 1,
+            arch: '<form><field name="bar"/></form>',
+            viewOptions: {
+                mode: 'edit',
+            },
+            mockRPC: function (route, args) {
+                if (args.method === 'write') {
+                    assert.step('save');
+                }
+                return this._super.apply(this, arguments);
+            },
+        });
+
+        assertClose(assert, form.$('input').val(), 1.2);
+
+        form.$('input').val('=(1 + 2) / 3').blur();
+        assertClose(assert, form.$('input').val(), 1,
+            'blur event should trigger compute event');
+
+        form.$('input').focus();
+        assert.strictEqual(form.$('input').val(), '=(1 + 2) / 3',
+            'focus event should display the forumla');
+
+        form.$('input').val('=(1 * 2x) /').blur();
+        assert.strictEqual(form.$('input').val(), '=(1 * 2x) /',
+            'invalid formula should not be calculated');
+
+        _.extend(core._t.database.parameters, {
+            grouping: [3, 0],
+            decimal_point: ',',
+            thousands_sep: '.'
+        });
+
+        form.$('input').val('=2.000*3,5').blur();
+        assert.strictEqual(form.$('input').val(), "7.000,00",
+            'eval should handle decimal point and thousands separator properly');
+
+        _.extend(core._t.database.parameters, {
+            grouping: [3, 0],
+            decimal_point: '.',
+            thousands_sep: ','
+        });
+
+        form.$('input').val('=3-2');
+
+        form.$buttons.find('.o_form_button_save').click();
+        assert.verifySteps(['save'], 'should have saved');
+        assertClose(assert, form.$('.o_field_widget').text(), 1,
+            'save should also trigger compute result')
+
+        form.destroy();
+    });
+
 });
