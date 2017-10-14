@@ -5,12 +5,12 @@
 import odoo.tests
 
 
-class TestJS(odoo.tests.HttpCase):
+class FloatFormulaSuite(odoo.tests.HttpCase):
 
     def test_js(self):
         self.phantom_js(
             "/web/tests?module=web_widget_float_formula",
-            "console.log('ok')",
+            "",
             "",
             login="admin"
         )
