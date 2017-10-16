@@ -53,6 +53,7 @@ this module.
 * Adding ``oe_main_menu_navbar`` ID to the top navigation bar triggers some
   great styles, but also `JavaScript that causes issues on mobile
   <https://github.com/OCA/web/pull/446#issuecomment-254827880>`_
+* Remove Chrome slow scrolling patch when iScroll is updated
 
 
 Bug Tracker
