@@ -11,7 +11,7 @@
         'web',
     ],
     "data": [
-        "view/qweb.xml",
+        "templates/assets.xml",
     ],
     "installable": True,
 }
