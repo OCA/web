@@ -2,14 +2,12 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-====================
-web_sheet_full_width
-====================
+=============================
+Form view sheet at full width
+=============================
 
-This module was written to extend the functionality of web to support full width
-for form view
-
-Note: Due to licence incompatibility you have not legal right to install this module on enterprise version.
+This module was written to extend the functionality of the web client
+to get full width in the form view sheet.
 
 This module works in community edition and in enterprise edition.
 
@@ -18,12 +16,7 @@ Usage
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/162/10.0
-
-Known issues / Roadmap
-======================
-
-* N/A
+   :target: https://runbot.odoo-community.org/runbot/162/11.0
 
 Bug Tracker
 ===========
@@ -49,7 +42,8 @@ Contributors
 * Holger Brunn <hbrunn@therp.nl>
 * Nicolas JEUDY - Sudokeys (https://github.com/njeudy)
 * Stephane (SOLIBRE) <stephane@omerp.net>
-* Sylvain LE GAL (https://twitter.com/legalsylvain)
+* Sylvain LE GAL (https://twitter.com/legalsylvain
+* Jérôme Thériault <jtheriault@metalsartigan.com>
 
 Maintainer
 ----------
