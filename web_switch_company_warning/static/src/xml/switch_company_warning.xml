@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template>
-    <t t-name="WarningWidget">
+    <t t-name="web_switch_company_warning.warningWidget">
         <div class="container-fluid bg-warning" style="text-align: center; display:none;">
             <h3>You switched to a different company with another tab or window</h3>
             <p><button onclick="location.reload(true);" class="btn">Reload</button> to refresh your session</p>

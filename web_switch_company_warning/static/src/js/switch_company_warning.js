@@ -11,7 +11,7 @@ odoo.define('web_switch_company_warning.widget', function (require) {
         return;
     }
     var SwitchCompanyWarningWidget = Widget.extend({
-        template:'WarningWidget',
+        template:'web_switch_company_warning.warningWidget',
         init: function() {
             this._super();
             var self = this;
