@@ -26,16 +26,11 @@
     </div>
 </t>
 <t t-name="DomainTree.OperatorSelector">
-    <div t-if="!widget.readonly" class="btn-group o_domain_tree_operator_selector">
-        <button class="btn btn-xs btn-primary o_domain_tree_operator_caret" data-toggle="dropdown">
-            <t t-if="widget.operator === '&amp;'">All</t>
-            <t t-if="widget.operator === '|'">Any</t>
-            <t t-if="widget.operator === '!'">None</t>
-        </button>
-        <ul class="dropdown-menu">
-            <li><a href="#" data-operator="&amp;">All</a></li>
-            <li><a href="#" data-operator="|">Any</a></li>
-        </ul>
+    <div t-if="!widget.readonly" class="btn-group">
+        <select class="o_domain_tree_operator_selector">
+            <option value="&amp;" t-att-selected="widget.operator === '&amp;' ? 'selected' : null">All</option>
+            <option value="|" t-att-selected="widget.operator === '|' ? 'selected' : null">Any</option>
+        </select>
     </div>
     <strong t-else="">
         <t t-if="widget.operator === '&amp;'">ALL</t>
