@@ -5,7 +5,7 @@
 
 {
     "name": "Search x2x fields",
-    "version": "10.0.2.0.1",
+    "version": "10.0.2.0.2",
     "author": "Therp BV, "
               "Tecnativa, "
               "Odoo Community Association (OCA)",
