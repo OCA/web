@@ -4,13 +4,10 @@
 
 {
     'name': 'Web No Bubble',
-    'version': '10.0.1.0.0',
-    'author': 'Savoir-faire Linux',
-    'maintainer': (
-        'Savoir-faire Linux,'
-        'Odoo Community Association (OCA)'
-    ),
-    'website': 'https://www.savoirfairelinux.com',
+    'version': '11.0.1.0.0',
+    'author': 'Savoir-faire Linux, '
+              'Odoo Community Association (OCA)',
+    'website': 'https://github.com/OCA/web',
     'license': 'AGPL-3',
     'category': 'Web',
     'summary': 'Remove the bubbles from the web interface',
