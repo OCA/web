@@ -84,10 +84,10 @@ var DomainNode = Widget.extend({
 var DomainTree = DomainNode.extend({
     template: "DomainTree",
     events: _.extend({}, DomainNode.prototype.events, {
-        "click .o_domain_tree_operator_selector > ul > li > a": function (e) {
+        "change .o_domain_tree_operator_selector": function (e) {
             e.preventDefault();
             e.stopPropagation();
-            this.changeOperator($(e.target).data("operator"));
+            this.changeOperator($(e.target).val());
         },
     }),
     custom_events: {
