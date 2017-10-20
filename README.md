@@ -20,7 +20,7 @@ addon | version | summary
 --- | --- | ---
 [help_online](help_online/) | 10.0.1.0.0 | Help Online
 [web_access_rule_buttons](web_access_rule_buttons/) | 10.0.1.0.0 | Disable Edit button if access rules prevent this action
-[web_advanced_search_x2x](web_advanced_search_x2x/) | 10.0.2.0.1 | Use a search widget in advanced search for x2x fields
+[web_advanced_search_x2x](web_advanced_search_x2x/) | 10.0.2.0.2 | Use a search widget in advanced search for x2x fields
 [web_chatter_paste](web_chatter_paste/) | 10.0.1.0.0 | Paste images and drop files into the chatter and upload them directly
 [web_confirm_window_close](web_confirm_window_close/) | 10.0.1.0.0 | Check for unsaved data when closing browser window
 [web_decimal_numpad_dot](web_decimal_numpad_dot/) | 10.0.1.1.0 | Allows using numpad dot to enter period decimal separator
@@ -52,7 +52,7 @@ addon | version | summary
 [web_widget_color](web_widget_color/) | 10.0.1.0.0 | Web Widget Color
 [web_widget_darkroom](web_widget_darkroom/) | 10.0.1.0.0 | Provides web widget for image editing and adds it to standard image widget as modal
 [web_widget_digitized_signature](web_widget_digitized_signature/) | 10.0.0.1.0 | Web Widget Digitized Signature
-[web_widget_domain_v11](web_widget_domain_v11/) | 10.0.1.0.0 | Updated domain widget
+[web_widget_domain_v11](web_widget_domain_v11/) | 10.0.1.0.1 | Updated domain widget
 [web_widget_float_formula](web_widget_float_formula/) | 10.0.1.0.0 | Allow use of simple formulas in float fields
 [web_widget_image_download](web_widget_image_download/) | 10.0.1.0.0 | Allows to download any image from its widget
 [web_widget_image_webcam](web_widget_image_webcam/) | 10.0.1.0.0 | Allows to take image with WebCam
