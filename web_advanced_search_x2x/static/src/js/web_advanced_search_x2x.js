@@ -12,6 +12,7 @@ odoo.define('web_advanced_search_x2x.search_filters', function (require) {
     var SearchView = require('web.SearchView');
     var data = require('web.data');
     var core = require('web.core');
+    var pyeval = require('web.pyeval');
 
     var X2XAdvancedSearchPropositionMixin = {
         template: "web_advanced_search_x2x.proposition",
@@ -83,6 +84,16 @@ odoo.define('web_advanced_search_x2x.search_filters', function (require) {
             }
             var widget = this.x2x_widget();
             if (!widget) return;
+
+            var field_domain = this.field.domain;
+            if (typeof field_domain === 'string') {
+                try {
+                    pyeval.eval('domain', field_domain);
+                } catch(e) {
+                    this.field.domain = "[]";
+                }
+            }
+
             this._x2x_field = new widget(
                 this,
                 this.x2x_field_create_options()
