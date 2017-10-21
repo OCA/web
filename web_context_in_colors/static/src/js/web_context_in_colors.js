@@ -19,22 +19,25 @@
 //
 //############################################################################
 
-openerp.web_context_in_colors = function(instance)
-{
-    instance.web.ListView.include(
-    {
-        style_for: function (record)
-        {
+odoo.define('web_context_in_colors.list_view_extensions', function(require) {
+    "use strict";
+
+    var ListView = require('web.ListView');
+    var py = window.py;
+    var pyeval = require('web.pyeval');
+
+    ListView.include({
+        style_for: function (record){
             var record_with_context = {
                 attributes: _.extend({}, record.attributes || {}),
             };
             if(!record_with_context.attributes.context)
             {
-                record_with_context.attributes.context = py.dict.fromJSON(
-                    instance.web.pyeval.eval(
+                record_with_context.attributes.context = py.str.fromJSON(
+                    pyeval.eval(
                         'context', this.dataset.get_context()));
             }
             return this._super.apply(this, [record_with_context]);
         },
     });
-}
+});
