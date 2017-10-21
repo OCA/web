@@ -19,17 +19,22 @@
 //
 //############################################################################
 
-openerp.web_dashboard_open_action = function(instance)
-{
-    instance.web.form.DashBoard.include({
+odoo.define('pos_all_orders_reprint.chrome_extensions', function(require) {
+    "use strict";
+
+    var core = require('web.core');
+    var pyeval = require('web.pyeval');
+    var DashBoard = core.form_tag_registry.map['board'];
+
+    DashBoard.include({
         on_load_action: function(result, index, action_attrs)
         {
             var self = this, action = _.extend({flags: {}}, result);
             action.context_string = action_attrs.context;
             action.domain_string = action_attrs.domain;
-            action.context = instance.web.pyeval.eval(
+            action.context = pyeval.eval(
                 'contexts', [action.context || {}, action_attrs.context || {}]);
-            action.domain = instance.web.pyeval.eval(
+            action.domain = pyeval.eval(
                 'domains', [action_attrs.domain || [], action.domain || []],
                 action.context);
             jQuery('#' + this.view.element_id + '_action_' + index)
@@ -42,4 +47,5 @@ openerp.web_dashboard_open_action = function(instance)
             return this._super.apply(this, arguments);
         },
     });
-}
+});
+
