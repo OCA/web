@@ -24,9 +24,12 @@ Dialog.include({
 
     open: function() {
         var res = this._super.apply(this, arguments);
-        this.$modal.draggable({
-            handle: "div.modal-header",
-        });
+        /* Export Window breaks if made draggable */
+        if(this.$el.getAttributes()['class'].indexOf('o_export') == -1) {
+            this.$modal.draggable({
+                handle: "div.modal-header",
+            });
+        };
         return res;
     },
 

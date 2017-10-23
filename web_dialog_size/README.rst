@@ -8,9 +8,8 @@ It does also add draggable support to the dialogs.
 Configuration
 =============
 
-By default, the module respects the caller's `dialog_size` option. If you want
-to override this and have all dialogs maximized by default, set the configuration
-parameter `web_dialog_size.default_maximize` to `1`.
+The only current option is to have every window maximized by default with
+the configuration parameter `web_dialog_size.default_maximize` to `1`.
 
 Credits
 =======
