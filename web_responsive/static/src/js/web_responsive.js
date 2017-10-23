@@ -86,6 +86,7 @@ odoo.define('web_responsive', function(require) {
                 '-': this.LEFT
             };
             this.initDrawer();
+            this.handleWindowResize();
             var $clickZones = $('.odoo_webclient_container, ' +
                 'a.oe_menu_leaf, ' +
                 'a.oe_menu_toggler, ' +
