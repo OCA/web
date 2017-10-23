@@ -30,16 +30,7 @@ Features
 Usage
 =====
 
-You need to declare a char field of at least size 7::
-
-    _columns = {
-        'color': fields.char(
-            u"Couleur",
-            help=u"Toutes couleur valid css, exemple blue ou #f57900"
-        ),
-    }
-
-    OR
+You need to declare a char field::
 
     color = fields.Char(
         string="Color",
@@ -53,10 +44,17 @@ In the view declaration, put widget='color' attribute in the field tag::
     <field name="arch" type="xml">
         <tree string="View name">
             ...
-            <field name="name"/>
             <field name="color" widget="color"/>
             ...
         </tree>
+    </field>
+    ...
+    <field name="arch" type="xml">
+        <form string="View name">
+            ...
+            <field name="color" widget="color"/>
+            ...
+        </form>
     </field>
     ...
 
@@ -66,7 +64,7 @@ In the view declaration, put widget='color' attribute in the field tag::
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/162/10.0
+   :target: https://runbot.odoo-community.org/runbot/162/11.0
 
 Bug Tracker
 ===========
@@ -83,6 +81,7 @@ Contributors
 ------------
 
 * Adil Houmadi <adil.houmadi@gmail.com>
+* Enric Tobella <etobella@creublanca.es>
 * Nicolas JEUDY (Sudokeys) <https://www.github.com/njeudy>
 
 Maintainer

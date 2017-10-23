@@ -1,88 +1,53 @@
 odoo.define('web.web_widget_color', function(require) {
     "use strict";
 
-    var core = require('web.core');
-    var widget = require('web.form_widgets');
-    var FormView = require('web.FormView');
-
-    var QWeb = core.qweb;
-    var _lt = core._lt;
+    var basic_fields = require('web.basic_fields');
+    var field_registry = require('web.field_registry');
+    var FormController = require('web.FormController');
+    var field_utils = require('web.field_utils');
 
     var _super_getDir = jscolor.getDir.prototype;
     jscolor.getDir = function () {
         var dir = _super_getDir.constructor();
         if (dir.indexOf('web_widget_color') === -1) {
-            jscolor.dir = 'web_widget_color/static/lib/jscolor/';
+            jscolor.dir = '/web_widget_color/static/lib/jscolor/';
         }
         return jscolor.dir;
     };
 
-    var FieldColor = widget.FieldChar.extend({
+    var FieldColor = basic_fields.FieldChar.extend({
         template: 'FieldColor',
         widget_class: 'oe_form_field_color',
-        is_syntax_valid: function () {
-            var $input = this.$('input');
-            if (!this.get("effective_readonly") && $input.size() > 0) {
-                var val = $input.val();
-                var isOk = /^#[0-9A-F]{6}$/i.test(val);
-                if (!isOk) {
-                    return false;
-                }
-                try {
-                    this.parse_value(this.$('input').val(), '');
-                    return true;
-                } catch (e) {
-                    return false;
-                }
-            }
-            return true;
+        _getValue: function() {
+            return field_utils.format.char(this.$('input').val());
         },
-        store_dom_value: function() {
-            if (!this.silent) {
-                if (!this.get('effective_readonly') &&
-                    this.$('input').val() !== '' &&
-                    this.is_syntax_valid()) {
-                    // We use internal_set_value because we were called by
-                    // ``.commit_value()`` which is called by a ``.set_value()``
-                    // itself called because of a ``onchange`` event
-                    this.internal_set_value(
-                        this.parse_value(
-                            this.$('input').val())
-                        );
-                }
-            }
-            },
-        render_value: function () {
-            var show_value = this.format_value(this.get('value'), '');
-            if (!this.get("effective_readonly")) {
+        _render: function () {
+            var show_value = field_utils.format.char(this.value);
+            jscolor.init(this.$el[0]);
+            if (this.mode !== 'readonly') {
                 var $input = this.$el.find('input');
                 $input.val(show_value);
                 $input.css("background-color", show_value);
-                jscolor.init(this.$el[0]);
+                this.$input = $input;
+                this.$(".oe_form_char_content").text(show_value);
+                this.$('span').css("background-color", show_value);
             } else {
                 this.$(".oe_form_char_content").text(show_value);
                 this.$('span').css("background-color", show_value);
+
             }
         }
     });
-
-    core.form_widget_registry.add('color', FieldColor);
+    field_registry.add('color', FieldColor);
 
     /*
      * Init jscolor for each editable mode on view form
      */
-    FormView.include({
-        on_button_edit: function () {
-            this._super();
-            jscolor.init(this.$el[0]);
-        },
-        on_button_create: function () {
-            this._super();
+    FormController.include({
+        _updateEnv : function (parentID) {
+            this._super(parentID);
             jscolor.init(this.$el[0]);
         }
     });
-
-    return {
-        FieldColor: FieldColor
-    };
+    return FieldColor
 });

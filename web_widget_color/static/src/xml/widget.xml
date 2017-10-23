@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates>
     <t t-name="FieldColor">
-        <span t-att-class="'oe_form_field '+widget.widget_class" t-att-style="widget.node.attrs.style">
-            <t t-if="!widget.get('effective_readonly')">
+        <span t-att-class="'oe_form_field '+widget.widget_class" t-att-style="widget.attrs.style">
                 <input type="text"
                        t-att-id="widget.id_for_label"
-                       t-att-tabindex="widget.node.attrs.tabindex"
-                       t-att-autofocus="widget.node.attrs.autofocus"
-                       t-att-placeholder="widget.node.attrs.placeholder"
+                       t-att-tabindex="widget.attrs.tabindex"
+                       t-att-autofocus="widget.attrs.autofocus"
+                       t-att-placeholder="widget.attrs.placeholder"
                        t-att-maxlength="widget.field.size"
-                       class="color {hash:true}"
-                        />
-            </t>
-            <t t-if="widget.get('effective_readonly')">
+                       class="color {hash:true} o_input"
+                        t-if="widget.mode !== 'readonly'"/>
+            <t t-else="">
                 <div/>
                 <span class="oe_form_char_content"></span>
             </t>
