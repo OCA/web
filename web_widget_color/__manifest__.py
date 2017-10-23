@@ -8,7 +8,7 @@
 {
     'name': "Web Widget Color",
     'category': "web",
-    'version': "10.0.1.0.0",
+    'version': "11.0.1.0.0",
     "author": "Savoir-faire Linux, "
               "Anybox, "
               "Taktik SA, "
