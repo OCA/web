@@ -32,8 +32,11 @@ Dialog.include({
 
     close: function() {
         var draggable = this.$modal.draggable( "instance" );
-        if (draggable)
-            this.$modal.draggable("destroy");
+        // Export Window breaks if made draggable
+        if(this.$el.getAttributes()['class'].indexOf('o_export') == -1) {
+            if (draggable)
+                this.$modal.draggable("destroy");
+        }
         var res = this._super.apply(this, arguments);
         return res;
     },
