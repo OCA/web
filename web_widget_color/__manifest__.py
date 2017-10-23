@@ -4,11 +4,11 @@
 # Copyright (C) 2014 Anybox <http://anybox.fr>
 # Copyright (C) 2015 Taktik SA <http://taktik.be>
 #
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).#
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).#
 {
     'name': "Web Widget Color",
     'category': "web",
-    'version': "10.0.1.0.0",
+    'version': "11.0.1.0.0",
     "author": "Savoir-faire Linux, "
               "Anybox, "
               "Taktik SA, "
