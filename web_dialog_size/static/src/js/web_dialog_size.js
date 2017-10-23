@@ -24,19 +24,19 @@ Dialog.include({
 
     open: function() {
         var res = this._super.apply(this, arguments);
-        this.$modal.draggable({
-            handle: "div.modal-header",
-        });
+        /* Export Window breaks if made draggable */
+        if(this.$el.getAttributes()['class'].indexOf('o_export') == -1) {
+            this.$modal.draggable({
+                handle: "div.modal-header",
+            });
+        };
         return res;
     },
 
     close: function() {
         var draggable = this.$modal.draggable( "instance" );
-        // Export Window breaks if made draggable
-        if(this.$el.getAttributes()['class'].indexOf('o_export') == -1) {
-            if (draggable)
-                this.$modal.draggable("destroy");
-        }
+        if (draggable)
+            this.$modal.draggable("destroy");
         var res = this._super.apply(this, arguments);
         return res;
     },
