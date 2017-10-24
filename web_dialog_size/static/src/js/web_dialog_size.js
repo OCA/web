@@ -14,7 +14,7 @@ Dialog.include({
 
         new Model('ir.config_parameter').query(['key', 'value']).
         filter([['key', '=', 'web_dialog_size.default_maximize']]).all().then(function(default_maximize) {
-            if (default_maximize.length && default_maximize[0]['value'] == 1) {
+            if (default_maximize.length && default_maximize[0].value === 1) {
                 self._extending();
             } else {
                 self._restore();
@@ -33,8 +33,9 @@ Dialog.include({
 
     close: function() {
         var draggable = this.$modal.draggable( "instance" );
-        if (draggable)
+        if (draggable) {
             this.$modal.draggable("destroy");
+        }
         var res = this._super.apply(this, arguments);
         return res;
     },
