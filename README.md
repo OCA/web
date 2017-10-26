@@ -35,6 +35,7 @@ addon | version | summary
 [web_environment_ribbon](web_environment_ribbon/) | 8.0.1.0.0 | Web Environment Ribbon
 [web_export_view](web_export_view/) | 8.0.1.2.0 | Export Current View
 [web_favicon](web_favicon/) | 8.0.1.0.0 | Allows to set a custom shortcut icon (aka favicon)
+[web_form_sticky_header](web_form_sticky_header/) | 8.0.1.0.0 | Web Fixed Header
 [web_graph_improved](web_graph_improved/) | 8.0.0.1.0 | Improves graph views.
 [web_graph_sort](web_graph_sort/) | 8.0.1.0.0 | Web Graph Sort
 [web_group_expand](web_group_expand/) | 8.0.1.0.0 | Group Expand Buttons
