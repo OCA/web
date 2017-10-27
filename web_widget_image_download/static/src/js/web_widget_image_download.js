@@ -5,9 +5,10 @@ odoo.define('web_widget_image_download.widget', function (require) {
     'use strict';
 
     var core = require('web.core');
+    var registry = require('web.field_registry');
 
-    core.form_widget_registry.get("image").include({
-        render_value: function () {
+    registry.get("image").include({
+        _render: function () {
             this._super();
             var $widget = this.$el.find('.o_form_binary_file_download');
             this.imgSrc = this.$el.find('img[name="' + this.name + '"]')

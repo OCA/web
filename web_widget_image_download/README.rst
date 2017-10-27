@@ -20,12 +20,7 @@ To use this module, you need to:
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/162/10.0
-
-Known Issues / Roadmap
-======================
-
-* In order to work correctly, this widget has to detect image type, the server should include this information in the `Content-Type` header. Right now, odoo is not doing so, but a fix has been `proposed <https://github.com/odoo/odoo/pull/12918>`_.
+   :target: https://runbot.odoo-community.org/runbot/162/11.0
 
 Bug Tracker
 ===========
