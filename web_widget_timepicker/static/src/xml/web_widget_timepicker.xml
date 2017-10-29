@@ -2,7 +2,7 @@
 
 <templates id="template" xml:space="preserve">
     <t t-name="TimePickerField">
-        <span t-att-class="'oe_form_field '+widget.widget_class" t-att-style="widget.node.attrs.style">
+        <span t-att-class="'o_form_field '+widget.widget_class" t-att-style="widget.node.attrs.style">
             <t t-if="!widget.get('effective_readonly')">
                 <input t-att-type="'text'"
                     class="o_timepicker_input"
@@ -14,7 +14,7 @@
                 <span class="fa fa-clock-o o_timepicker_button"/>
             </t>
             <t t-if="widget.get('effective_readonly')">
-                <span class="oe_form_time_content"></span>
+                <span class="o_form_time_content"/>
             </t>
         </span>
     </t>

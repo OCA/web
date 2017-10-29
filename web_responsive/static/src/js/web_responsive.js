@@ -8,6 +8,9 @@ odoo.define('web_responsive', function(require) {
     var Class = require('web.Class');
     var SearchView = require('web.SearchView');
     var core = require('web.core');
+    var config = require('web.config');
+    var FieldOne2Many = core.form_widget_registry.get('one2many');
+    var ViewManager = require('web.ViewManager');
 
     Menu.include({
 
@@ -105,7 +108,10 @@ odoo.define('web_responsive', function(require) {
                         'transform', 'matrix(1, 0, 0, 1, 0, ' + transform + ')'
                     );
                 };
+                // Scroll probe aggressiveness level
+                // 2 == always executes the scroll event except during momentum and bounce.
                 this.iScroll.options.probeType = 2;
+                // Set options because
                 this.iScroll.on('scroll', $.proxy(onIScroll, this));
             });
             this.initialized = true;
@@ -286,10 +292,25 @@ odoo.define('web_responsive', function(require) {
         new AppDrawer();
     });
 
+    // if we are in small screen change default view to kanban if exists
+    ViewManager.include({
+        get_default_view: function() {
+            var default_view = this._super()
+            if (config.device.size_class <= config.device.SIZES.XS &&
+                default_view.type != 'kanban' &&
+                this.views['kanban'])
+                {
+                    default_view.type = 'kanban';
+                };
+            return default_view;
+        },
+    });
+
     return {
         'AppDrawer': AppDrawer,
         'SearchView': SearchView,
         'Menu': Menu,
+        'ViewManager': ViewManager,
     };
 
 });

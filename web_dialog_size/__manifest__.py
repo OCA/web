@@ -4,22 +4,18 @@
 
 {
     'name': "Web Dialog Size",
-
     'summary': """
         A module that lets the user expand a
         dialog box to the full screen width.""",
-
     'author': "ACSONE SA/NV, "
-              "Serv. Tecnol. Avanzados - Pedro M. Baeza, "
               "Therp BV, "
-              "Odoo Community Association (OCA), "
-              "Siddharth Bhalgami",
-
+              "Siddharth Bhalgami,"
+              "Tecnativa, "
+              "Odoo Community Association (OCA)",
     'website': "http://acsone.eu",
     'category': 'web',
-    'version': '10.0.1.0.0',
+    'version': '10.0.1.0.1',
     'license': 'AGPL-3',
-
     'depends': [
         'web',
     ],

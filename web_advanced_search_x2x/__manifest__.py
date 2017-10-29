@@ -5,7 +5,7 @@
 
 {
     "name": "Search x2x fields",
-    "version": "10.0.1.0.0",
+    "version": "10.0.2.0.3",
     "author": "Therp BV, "
               "Tecnativa, "
               "Odoo Community Association (OCA)",
@@ -13,7 +13,7 @@
     "category": "Usability",
     "summary": "Use a search widget in advanced search for x2x fields",
     "depends": [
-        'web',
+        'web_widget_domain_v11',
     ],
     "data": [
         'views/templates.xml',

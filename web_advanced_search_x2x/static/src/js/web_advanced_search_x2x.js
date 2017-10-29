@@ -12,11 +12,12 @@ odoo.define('web_advanced_search_x2x.search_filters', function (require) {
     var SearchView = require('web.SearchView');
     var data = require('web.data');
     var core = require('web.core');
+    var pyeval = require('web.pyeval');
 
     var X2XAdvancedSearchPropositionMixin = {
         template: "web_advanced_search_x2x.proposition",
-        init: function()
-        {
+
+        init: function () {
             // Make equal and not equal appear 1st and 2nd
             this.operators = _.sortBy(
                 this.operators,
@@ -36,30 +37,41 @@ odoo.define('web_advanced_search_x2x.search_filters', function (require) {
             this.operators.push({
                 'value': 'domain', 'text': core._lt('is in selection'),
             });
+            // Avoid hiding filter when using special widgets
+            this.events["click"] = function (event) {
+                event.stopPropagation();
+            }
             return this._super.apply(this, arguments);
         },
+
         get_field_desc: function()
         {
             return this.field;
         },
+
         /**
-         * Add the right relational field to the template.
+         * Add x2x widget after rendering.
          */
-        renderElement: function () {
-            try {
-                this._x2x_field.destroy();
-            } catch (error) {}
-            this.relational = this.x2x_widget_name();
-            this._super.apply(this, arguments);
-            if (this.relational) {
+        renderElement: function() {
+            var result = this._super.apply(this, arguments);
+            if (this.x2x_widget_name()) {
                 this.x2x_field().appendTo(this.$el);
                 this._x2x_field.$el.on(
                     "autocompleteopen",
                     this.proxy('x2x_autocomplete_open')
                 );
             }
-            delete this.relational;
+            return result;
         },
+
+        /**
+         * Re-render widget when operator changes.
+         */
+        show_inputs: function () {
+            this.renderElement();
+            return this._super.apply(this, arguments);
+        },
+
         /**
          * Create a relational field for the user.
          *
@@ -72,17 +84,28 @@ odoo.define('web_advanced_search_x2x.search_filters', function (require) {
             }
             var widget = this.x2x_widget();
             if (!widget) return;
+
+            var field_domain = this.field.domain;
+            if (typeof field_domain === 'string') {
+                try {
+                    pyeval.eval('domain', field_domain);
+                } catch(e) {
+                    this.field.domain = "[]";
+                }
+            }
+
             this._x2x_field = new widget(
                 this,
                 this.x2x_field_create_options()
             );
             this._x2x_field.on(
-                "change:value",
+                "domain_selected",
                 this,
                 this.proxy("x2x_value_changed")
             );
             return this._x2x_field;
         },
+
         x2x_field_create_options: function () {
             return {
                 attrs: {
@@ -95,6 +118,7 @@ odoo.define('web_advanced_search_x2x.search_filters', function (require) {
                 },
             };
         },
+
         x2x_value_changed: function () {
             switch (this.x2x_widget_name()) {
                 case "char_domain":
@@ -103,10 +127,18 @@ odoo.define('web_advanced_search_x2x.search_filters', function (require) {
                     break;
             }
         },
+
         x2x_widget: function () {
             var name = this.x2x_widget_name();
             return name && core.form_widget_registry.get(name);
         },
+
+        /**
+         * Return the widget that should be used to render this proposition.
+         *
+         * If it returns `undefined`, it means you should use a simple
+         * `<input type="text"/>`.
+         */
         x2x_widget_name: function () {
             switch (this.get_operator()) {
                 case "=":
@@ -116,6 +148,7 @@ odoo.define('web_advanced_search_x2x.search_filters', function (require) {
                     return "char_domain";
             }
         },
+
         x2x_autocomplete_open: function()
         {
             var widget = this._x2x_field.$input.autocomplete("widget");
@@ -123,6 +156,7 @@ odoo.define('web_advanced_search_x2x.search_filters', function (require) {
                 event.stopPropagation();
             });
         },
+
         get_domain: function () {
             // Special way to get domain if user chose "domain" filter
             if (this.get_operator() == "domain") {
@@ -130,28 +164,38 @@ odoo.define('web_advanced_search_x2x.search_filters', function (require) {
                 var domain = new data.CompoundDomain(),
                     name = this.field.name;
                 $.map(value, function (el) {
-                    domain.add([[
-                        _.str.sprintf("%s.%s", name, el[0]),
-                        el[1],
-                        el[2],
-                    ]]);
+                    var leaf = el;
+                    if (typeof el !== "string") {
+                        leaf = [
+                            _.str.sprintf("%s.%s", name, el[0]),
+                            el[1],
+                            el[2],
+                        ];
+                    }
+                    domain.add([leaf]);
                 });
                 return domain;
             } else {
                 return this._super.apply(this, arguments);
             }
         },
+
         get_operator: function () {
             return !this.isDestroyed() &&
                 this.getParent().$('.o_searchview_extended_prop_op').val();
         },
+
         get_value: function () {
             try {
+                if (!this.x2x_widget_name()) {
+                    throw "No x2x widget, fallback to default";
+                }
                 return this._x2x_field.get_value();
             } catch (error) {
                 return this._super.apply(this, arguments);
             }
         },
+
         format_label: function (format, field, operator) {
             if (this.x2x_widget()) {
                 var value = String(this._x2x_field.get_value());
@@ -179,30 +223,6 @@ odoo.define('web_advanced_search_x2x.search_filters', function (require) {
             form_common.FieldManagerMixin,
             X2XAdvancedSearchPropositionMixin
         );
-
-    ExtendedSearchProposition.include({
-        /**
-         * Force re-rendering the value widget if needed.
-         */
-        operator_changed: function (event) {
-            if (this.value instanceof X2XAdvancedSearchProposition) {
-                this.value_rerender();
-            }
-            return this._super.apply(this, arguments);
-        },
-        /**
-         * Re-render proposition's value widget.
-         *
-         * @return {jQuery.Deferred}
-         */
-        value_rerender: function () {
-            this.value._x2x_field && this.value._x2x_field.destroy();
-            delete this.value._x2x_field;
-            return this.value.appendTo(
-                this.$(".o_searchview_extended_prop_value").show().empty()
-            );
-        },
-    });
 
     // Register this search proposition for relational fields
     $.each(affected_types, function (index, value) {
