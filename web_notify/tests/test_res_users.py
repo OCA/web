@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.tests import common
 from odoo.addons.bus.models.bus import json_dump
+import json
 import mock
 
 
@@ -16,13 +16,11 @@ class TestResUsers(common.TransactionCase):
              json_dump(self.env.user.notify_info_channel_name))
         ]
         existing = bus_bus.search(domain)
-        self.env.user.notify_info(
-            message='message', title='title', sticky=True)
+        test_msg = {'message': 'message', 'title': 'title', 'sticky': True}
+        self.env.user.notify_info(**test_msg)
         news = bus_bus.search(domain) - existing
         self.assertEqual(1, len(news))
-        self.assertEqual(
-            '{"message":"message","sticky":true,"title":"title"}',
-            news.message)
+        self.assertEqual(test_msg, json.loads(news.message))
 
     def test_notify_warning(self):
         bus_bus = self.env['bus.bus']
@@ -31,13 +29,11 @@ class TestResUsers(common.TransactionCase):
              json_dump(self.env.user.notify_warning_channel_name))
         ]
         existing = bus_bus.search(domain)
-        self.env.user.notify_warning(
-            message='message', title='title', sticky=True)
+        test_msg = {'message': 'message', 'title': 'title', 'sticky': True}
+        self.env.user.notify_warning(**test_msg)
         news = bus_bus.search(domain) - existing
         self.assertEqual(1, len(news))
-        self.assertEqual(
-            '{"message":"message","sticky":true,"title":"title"}',
-            news.message)
+        self.assertEqual(test_msg, json.loads(news.message))
 
     def test_notify_many(self):
         # check that the notification of a list of users is done with
