@@ -1,3 +1,5 @@
 .o_tooltip.o_animated {
     display: none;
+    align-left:0px;
+    margin-top:0px;
 }
