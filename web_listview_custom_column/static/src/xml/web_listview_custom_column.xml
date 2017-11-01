@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-extend="ViewManagerAction">
+        <t t-jquery="ul.oe_view_manager_switch" t-operation="after">
+            <div class="oe_view_manager_custom_column oe_right" t-attf-style="display: #{widget.active_view == 'list' and 'inline-block' or 'none'}" />
+        </t>
+    </t>
+    <t t-extend="ListView">
+        <t t-jquery=".oe_list_header_columns th[t-att-data-id] div" t-operation="prepend">
+            <t t-if="options.custom_column_active">
+                <a type="button" class="oe_custom_column_remove" title="Remove column">
+                    <i class="fa fa-times" />
+                </a>
+            </t>
+        </t>
+        <t t-jquery=".oe_list_header_columns th[t-att-data-id] div" t-operation="append">
+            <t t-if="options.custom_column_active">
+                <a type="button" class="oe_custom_column_left" title="Move column left" t-if="!column_first">
+                    <i class="fa fa-arrow-left" />
+                </a>
+                <a type="button" class="oe_custom_column_right" title="Move column right" t-if="!column_last">
+                    <i class="fa fa-arrow-right" />
+                </a>
+            </t>
+        </t>
+    </t>
+    <t t-name="ListView.CustomColumn">
+        <a type="button" class="oe_custom_column_activate" title="Customize columns">
+            <i class="fa fa-columns"></i>
+        </a>
+        <t t-if="widget.options.custom_column_active">
+            <select name="oe_custom_column_field">
+                <option value="" disabled="disabled" selected="selected">
+                    Add column
+                </option>
+                <t t-foreach="widget.options.custom_column_fields" t-as="field">
+                    <option t-att-value="field"><t t-esc="widget.options.custom_column_fields[field].string" /></option>
+                </t>
+            </select>
+            <a type="button" t-attf-class="oe_custom_column_user {{widget.options.custom_column_type == 'user' and 'active' or ''}}" title="Customize the list for yourself">
+                <i class="fa fa-user"></i>
+            </a>
+            <a type="button" t-attf-class="oe_custom_column_all {{widget.options.custom_column_type == 'all' and 'active' or ''}}" title="Customize the list for everyone">
+                <i class="fa fa-users"></i>
+            </a>
+            <a type="button" class="oe_custom_column_reset" title="Reset customization">
+                <i class="fa fa-times"></i>
+            </a>
+        </t>
+    </t>
+</templates>
