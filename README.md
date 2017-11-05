@@ -39,7 +39,7 @@ addon | version | summary
 [web_no_bubble](web_no_bubble/) | 10.0.1.0.0 | Remove the bubbles from the web interface
 [web_notify](web_notify/) | 10.0.1.0.0 | Send notification messages to user
 [web_readonly_bypass](web_readonly_bypass/) | 10.0.1.0.1 | Allow to save onchange modifications to readonly fields
-[web_responsive](web_responsive/) | 10.0.1.2.0 | It provides a mobile compliant interface for Odoo Community web
+[web_responsive](web_responsive/) | 10.0.1.2.1 | It provides a mobile compliant interface for Odoo Community web
 [web_search_with_and](web_search_with_and/) | 10.0.1.0.0 | Use AND conditions on omnibar search
 [web_searchbar_full_width](web_searchbar_full_width/) | 10.0.1.0.0 | Show search bar in full screen width
 [web_send_message_popup](web_send_message_popup/) | 10.0.1.0.0 | Web Send Message as Popup
