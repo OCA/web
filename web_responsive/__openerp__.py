@@ -6,7 +6,7 @@
     "name": "Web Responsive",
     "summary": "It provides a mobile compliant interface for Odoo Community "
                "web",
-    "version": "9.0.2.0.0",
+    "version": "9.0.2.0.1",
     "category": "Website",
     "website": "https://laslabs.com/",
     "author": "LasLabs, Tecnativa, Odoo Community Association (OCA)",
