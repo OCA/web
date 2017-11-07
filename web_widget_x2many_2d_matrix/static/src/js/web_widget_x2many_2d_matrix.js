@@ -17,8 +17,8 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
         widget_class: 'oe_form_field_x2many_2d_matrix',
 
         // those will be filled with rows from the dataset
-        by_x_axis: {},
-        by_y_axis: {},
+        by_x_axis: new Map(),
+        by_y_axis: new Map(),
         by_id: {},
         // configuration values
         field_x_axis: 'x',
@@ -89,8 +89,8 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
             var self = this,
                 result = this._super(value_);
 
-            self.by_x_axis = {};
-            self.by_y_axis = {};
+            self.by_x_axis = new Map();
+            self.by_y_axis = new Map();
             self.by_id = {};
 
             return $.when(result).then(function()
@@ -172,30 +172,36 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                 }
                 return true;
             });
-            this.by_x_axis[x] = this.by_x_axis[x] || {};
-            this.by_y_axis[y] = this.by_y_axis[y] || {};
-            this.by_x_axis[x][y] = row;
-            this.by_y_axis[y][x] = row;
+            if(!this.by_x_axis.has(x))
+            {
+                this.by_x_axis.set(x, new Map());
+            }
+            if(!this.by_y_axis.has(y))
+            {
+                this.by_y_axis.set(y, new Map());
+            }
+            this.by_x_axis.get(x).set(y, row);
+            this.by_y_axis.get(y).set(x, row);
             this.by_id[row.id] = row;
         },
 
         // get x axis values in the correct order
         get_x_axis_values: function()
         {
-            return _.keys(this.by_x_axis);
+            return Array.from(this.by_x_axis.keys());
         },
 
         // get y axis values in the correct order
         get_y_axis_values: function()
         {
-            return _.keys(this.by_y_axis);
+            return Array.from(this.by_y_axis.keys());
         },
 
         // get the label for a value on the x axis
         get_x_axis_label: function(x)
         {
             return this.get_field_value(
-                _.first(_.values(this.by_x_axis[x])),
+                _.first(Array.from(this.by_x_axis.get(x).values())),
                 this.field_label_x_axis, true);
         },
 
@@ -203,7 +209,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
         get_y_axis_label: function(y)
         {
             return this.get_field_value(
-                _.first(_.values(this.by_y_axis[y])),
+                _.first(Array.from(this.by_y_axis.get(y).values())),
                 this.field_label_y_axis, true);
         },
 
@@ -221,7 +227,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
         // return row id of a coordinate
         get_xy_id: function(x, y)
         {
-            return this.by_x_axis[x][y]['id'];
+            return this.by_x_axis.get(x).get(y)['id'];
         },
 
         get_xy_att: function(x, y)
@@ -229,7 +235,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
             var vals = {};
             for (var att in this.fields_att) {
                 var val = this.get_field_value(
-                    this.by_x_axis[x][y], this.fields_att[att]);
+                    this.by_x_axis.get(x).get(y), this.fields_att[att]);
                 // Discard empty values
                 if (val) {
                     vals[att] = val;
@@ -242,7 +248,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
         get_xy_value: function(x, y)
         {
             return this.get_field_value(
-                this.by_x_axis[x][y], this.field_value);
+                this.by_x_axis.get(x).get(y), this.field_value);
         },
 
         // validate a value
