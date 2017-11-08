@@ -32,12 +32,13 @@ openerp.web_export_view = function (instance) {
             }
         },
 
-        on_sidebar_export_view_xls: function () {
+        on_sidebar_export_view_xls: function (e, active_domain) {
             // Select the first list of the current (form) view
             // or assume the main view is a list view and use that
             var self = this,
                 view = this.getParent(),
-                children = view.getChildren();
+                children = view.getChildren(),
+                deferred = new jQuery.Deferred();
             if (children) {
                 children.every(function (child) {
                     if (child.field && child.field.type == 'one2many') {
@@ -60,56 +61,47 @@ openerp.web_export_view = function (instance) {
                     export_columns_names.push(this.string);
                 }
             });
-            rows = view.$el.find('.oe_list_content > tbody > tr');
-            export_rows = [];
-            $.each(rows, function () {
-                $row = $(this);
-                // find only rows with data
-                if ($row.attr('data-id')) {
-                    export_row = [];
-                    checked = $row.find('th input[type=checkbox]').attr("checked");
-                    if (children && checked === "checked") {
-                        $.each(export_columns_keys, function () {
-                            cell = $row.find('td[data-field="' + this + '"]').get(0);
-                            text = cell.text || cell.textContent || cell.innerHTML || "";
-                            if (cell.classList.contains("oe_list_field_float")) {
-                                export_row.push(instance.web.parse_value(text, {'type': "float"}));
-                            }
-                            else if (cell.classList.contains("oe_list_field_boolean")) {
-                                var data_id = $('<div>' + cell.innerHTML + '</div>');
-                                if (data_id.find('input').get(0).checked) {
-                                    export_row.push(_t("True"));
-                                }
-                                else {
-                                    export_row.push(_t("False"));
-                                }
-                            }
-                            else if (cell.classList.contains("oe_list_field_integer")) {
-                                var tmp2 = text;
-                                do {
-                                    tmp = tmp2;
-                                    tmp2 = tmp.replace(instance.web._t.database.parameters.thousands_sep, "");
-                                } while (tmp !== tmp2);
-
-                                export_row.push(parseInt(tmp2));
-                            }
-                            else {
-                                export_row.push(text.trim());
-                            }
-                        });
-                        export_rows.push(export_row);
-                    }
-                }
-            });
-            $.blockUI();
-            view.session.get_file({
-                url: '/web/export/xls_view',
-                data: {data: JSON.stringify({
-                    model: view.model,
-                    headers: export_columns_names,
-                    rows: export_rows
-                })},
-                complete: $.unblockUI
+            if(view.$(
+                'tr.oe_list_header_columns > th > ' +
+                'input.oe_list_record_selector:checked'
+            ).length == 0) {
+                row_ids = view.$(
+                    '.oe_list_content > tbody > tr[data-id]' +
+                    ':has(th.oe_list_record_selector > input:checked)'
+                ).map(function() {
+                    return parseInt(jQuery(this).data('id'));
+                }).toArray();
+                deferred = view.dataset.read_ids(row_ids, export_columns_keys);
+            }
+            else {
+                deferred = view.dataset.read_slice(export_columns_keys);
+                export_columns_names.push(
+                    String(view.dataset.domain || _('All records'))
+                );
+            }
+            return deferred.then(function(records) {
+                var export_rows = [];
+                $.each(records, function(index, record) {
+                    var export_row = [],
+                        record = new instance.web.list.Record(record).toForm();
+                    $.each(view.visible_columns, function() {
+                        export_row.push(
+                            this.type != 'integer' && this.type != 'float' ?
+                            this.format(
+                                record.data, {process_modifiers: false}
+                            ) : record.data[this.id].value
+                        );
+                    })
+                    export_rows.push(export_row);
+                });
+                view.session.get_file({
+                    url: '/web/export/xls_view',
+                    data: {data: JSON.stringify({
+                        model: view.model,
+                        headers: export_columns_names,
+                        rows: export_rows,
+                    })},
+                });
             });
         }
     });
