@@ -33,7 +33,7 @@ addon | version | summary
 [web_dom_model_classes](web_dom_model_classes/) | 8.0.1.0.0 | Allows small UI changes with simple CSS
 [web_easy_switch_company](web_easy_switch_company/) | 8.0.1.0.0 | Multicompany - Easy Switch Company
 [web_environment_ribbon](web_environment_ribbon/) | 8.0.1.0.0 | Web Environment Ribbon
-[web_export_view](web_export_view/) | 8.0.1.2.0 | Export Current View
+[web_export_view](web_export_view/) | 8.0.1.3.0 | Export Current View
 [web_favicon](web_favicon/) | 8.0.1.0.0 | Allows to set a custom shortcut icon (aka favicon)
 [web_form_sticky_header](web_form_sticky_header/) | 8.0.1.0.0 | Web Fixed Header
 [web_graph_improved](web_graph_improved/) | 8.0.0.1.0 | Improves graph views.
