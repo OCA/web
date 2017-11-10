@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="FieldColor">
+        <span t-att-class="'oe_form_field '+widget.widget_class" t-att-style="widget.attrs.style">
+                <input type="text"
+                       t-att-id="widget.id_for_label"
+                       t-att-tabindex="widget.attrs.tabindex"
+                       t-att-autofocus="widget.attrs.autofocus"
+                       t-att-placeholder="widget.attrs.placeholder"
+                       t-att-maxlength="widget.field.size"
+                       class="color {hash:true} o_input"
+                        t-if="widget.mode !== 'readonly'"/>
+            <t t-else="">
+                <div/>
+                <span class="oe_form_char_content"></span>
+            </t>
+        </span>
+    </t>
+    <tr t-extend="ListView.row">
+        <t t-jquery="t td t" t-operation="replace"><t t-if="column.widget =='color' || column.type == 'color'"><div class="color_box" t-att-style="'background-color:' + render_cell(record, column)"/></t><t t-raw="render_cell(record, column)"/></t>
+    </tr>
+</templates>
