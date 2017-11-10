@@ -11,7 +11,7 @@ odoo.define('web_paste_image.FieldBinaryImage', function(require) {
 
             function handlePaste(event) {
                 var items = (event.clipboardData || event.originalEvent.clipboardData).items;
-                if items {
+                if (items) {
                     var blob = null;
                     for (var i = 0; i < items.length; i++) {
                         if (items[i].type.indexOf("image") === 0) {
@@ -29,7 +29,7 @@ odoo.define('web_paste_image.FieldBinaryImage', function(require) {
                         };
                     };
                 };
-            }
+            };
             this.$('.o_paste_image').on("paste", handlePaste);
         }
     });
