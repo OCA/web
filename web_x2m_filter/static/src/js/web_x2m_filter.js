@@ -49,9 +49,12 @@ openerp.web_x2m_filter = function(instance)
         ).all()
         .then(function(records)
         {
+            var original = o2m._inhibit_on_change_flag;
+            o2m._inhibit_on_change_flag = true;
             o2m.dataset.alter_ids(_.map(records, function(x) {
                 return x.id;
             }));
+            o2m._inhibit_on_change_flag = original;
         });
     };
     instance.web.form.FieldOne2Many.include({

@@ -47,3 +47,4 @@ class ImportHelpWizard(models.TransientModel):
                                    mode='init',
                                    noupdate=False,
                                    report=None)
+        return True

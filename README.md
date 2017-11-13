@@ -13,6 +13,7 @@ This project aims to deal with modules related to the webclient of Odoo. You'll 
 - Generally add clientside functionality
 
 [//]: # (addons)
+
 Available addons
 ----------------
 addon | version | summary
@@ -27,13 +28,14 @@ addon | version | summary
 [web_clean_navbar](web_clean_navbar/) | 8.0.1.0.0 | Better visibility for the backend's main menu
 [web_context_in_colors](web_context_in_colors/) | 8.0.1.1.0 | Use the context in a tree view's colors and fonts attribute
 [web_dashboard_open_action](web_dashboard_open_action/) | 8.0.1.0.0 | Adds a button to open a dashboard in full mode
-[web_dashboard_tile](web_dashboard_tile/) | 8.0.1.1.0 | Add Tiles to Dashboard
+[web_dashboard_tile](web_dashboard_tile/) | 8.0.4.0.0 | Add Tiles to Dashboard
 [web_dialog_size](web_dialog_size/) | 8.0.0.1.0 | A module that lets the user expand a dialog box to the full screen width.
 [web_dom_model_classes](web_dom_model_classes/) | 8.0.1.0.0 | Allows small UI changes with simple CSS
 [web_easy_switch_company](web_easy_switch_company/) | 8.0.1.0.0 | Multicompany - Easy Switch Company
 [web_environment_ribbon](web_environment_ribbon/) | 8.0.1.0.0 | Web Environment Ribbon
-[web_export_view](web_export_view/) | 8.0.1.2.0 | Export Current View
+[web_export_view](web_export_view/) | 8.0.1.3.0 | Export Current View
 [web_favicon](web_favicon/) | 8.0.1.0.0 | Allows to set a custom shortcut icon (aka favicon)
+[web_form_sticky_header](web_form_sticky_header/) | 8.0.1.0.0 | Web Fixed Header
 [web_graph_improved](web_graph_improved/) | 8.0.0.1.0 | Improves graph views.
 [web_graph_sort](web_graph_sort/) | 8.0.1.0.0 | Web Graph Sort
 [web_group_expand](web_group_expand/) | 8.0.1.0.0 | Group Expand Buttons
@@ -80,7 +82,11 @@ addon | version | summary
 [web_widget_radio_tree](web_widget_radio_tree/) | 8.0.1.0.0 | Add radio buttons for records in tree.
 [web_widget_text_markdown](web_widget_text_markdown/) | 8.0.1.0.0 | web_widget_text_markdown
 [web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 8.0.1.1.0 | Show list fields as a matrix
+[web_x2m_defaults_from_previous](web_x2m_defaults_from_previous/) | 8.0.1.0.0 | Use previous input as default for next line
 [web_x2m_filter](web_x2m_filter/) | 8.0.1.0.0 | Allows to define filters in x2many list fields
+[web_x2many_add_button_position](web_x2many_add_button_position/) | 8.0.1.0.0 | Configurable position for the 'Add an Item' button
+[web_x2many_delete_all](web_x2many_delete_all/) | 8.0.1.0.0 | Adds a button to x2many fields that removes all linked records
+
 
 Unported addons
 ---------------
