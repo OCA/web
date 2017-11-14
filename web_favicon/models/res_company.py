@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# © 2015 Therp BV <http://therp.nl>
-# © 2016 Pedro M. Baeza
+# Copyright 2015 Therp BV <http://therp.nl>
+# Copyright 2016 Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import models, fields
