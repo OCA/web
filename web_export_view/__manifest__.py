@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016 Henry Zhou (http://www.maxodoo.com)
 # Copyright 2016 Rodney (http://clearcorp.cr/)
 # Copyright 2012 Agile Business Group
@@ -8,11 +7,11 @@
 
 {
     'name': 'Web Export Current View',
-    'version': '10.0.1.0.0',
+    'version': '11.0.1.0.0',
     'category': 'Web',
     'author': 'Henry Zhou, Agile Business Group, \
             Odoo Community Association (OCA)',
-    'website': 'http://www.agilebg.com',
+    'website': 'https://github.com/OCA/web',
     'license': 'AGPL-3',
     'depends': [
         'web',
