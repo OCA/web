@@ -36,7 +36,7 @@ openerp.web_menu_navbar_needaction = function(instance)
         },
         refresh_navbar_needaction: function(timeout)
         {
-            if(timeout)
+            if(parseInt(timeout, 10))
             {
                 setTimeout(this.proxy(this.refresh_navbar_needaction), timeout, timeout);
             }

@@ -6,13 +6,16 @@
 # Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2015-2016
 # Antonio Trueba, 2016
 # Christophe CHAUVET <christophe.chauvet@gmail.com>, 2015
+# Christophe CHAUVET <christophe.chauvet@gmail.com>, 2015
 # danimaribeiro <danimaribeiro@gmail.com>, 2016
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2012,2014
 # Hotellook, 2014
 # Isabelle RICHARD <isabellerichard89@gmail.com>, 2015
 # Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016
 # Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2015
-# Lixon Jean-Yves <ls.development.nc@gmail.com>, 2016
+# Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2015
+# Lixon Jean-Yves <jy.lixon@ls-development.net>, 2016
+# Lixon Jean-Yves <jy.lixon@ls-development.net>, 2016
 # Matjaž Mozetič <m.mozetic@matmoz.si>, 2015-2016
 # Paolo Valier, 2016
 # Pedro Castro Silva <pedrocs@sossia.pt>, 2015
@@ -21,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-17 12:06+0000\n"
-"PO-Revision-Date: 2016-09-16 12:33+0000\n"
+"POT-Creation-Date: 2017-05-30 18:00+0000\n"
+"PO-Revision-Date: 2017-03-13 12:52+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-web-8-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -33,16 +36,16 @@ msgstr ""
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:202
-#: code:addons/web_m2x_options/static/src/js/form.js:341
+#: code:addons/web_m2x_options/static/src/js/form.js:207
+#: code:addons/web_m2x_options/static/src/js/form.js:355
 #, python-format
 msgid "Create \"<strong>%s</strong>\""
 msgstr "Ustvari \"<strong>%s</strong>\""
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:224
-#: code:addons/web_m2x_options/static/src/js/form.js:362
+#: code:addons/web_m2x_options/static/src/js/form.js:233
+#: code:addons/web_m2x_options/static/src/js/form.js:381
 #, python-format
 msgid "Create and Edit..."
 msgstr "Ustvari in urejaj..."
@@ -59,8 +62,8 @@ msgstr "Modeli"
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:167
-#: code:addons/web_m2x_options/static/src/js/form.js:316
+#: code:addons/web_m2x_options/static/src/js/form.js:168
+#: code:addons/web_m2x_options/static/src/js/form.js:325
 #, python-format
 msgid "Search More..."
 msgstr "Poišči več..."

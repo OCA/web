@@ -14,6 +14,8 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
         // those will be filled with rows from the dataset
         by_x_axis: {},
         by_y_axis: {},
+        by_x_axis_sorted: [],
+        by_y_axis_sorted: [],
         by_id: {},
         // configuration values
         field_x_axis: 'x',
@@ -76,6 +78,8 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
             var self = this,
                 result = this._super.apply(this, arguments);
 
+            self.by_x_axis_sorted = []
+            self.by_y_axis_sorted = []
             self.by_x_axis = {};
             self.by_y_axis = {};
             self.by_id = {};
@@ -206,6 +210,10 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
                 }
                 return true;
             });
+            if(this.by_x_axis_sorted.indexOf(x) == -1)
+                this.by_x_axis_sorted.push(x)
+            if(this.by_y_axis_sorted.indexOf(y) == -1)
+                this.by_y_axis_sorted.push(y)
             this.by_x_axis[x] = this.by_x_axis[x] || {};
             this.by_y_axis[y] = this.by_y_axis[y] || {};
             this.by_x_axis[x][y] = row;
@@ -216,13 +224,13 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
         // get x axis values in the correct order
         get_x_axis_values: function()
         {
-            return _.keys(this.by_x_axis);
+            return this.by_x_axis_sorted
         },
 
         // get y axis values in the correct order
         get_y_axis_values: function()
         {
-            return _.keys(this.by_y_axis);
+            return this.by_y_axis_sorted
         },
 
         // get the label for a value on the x axis
