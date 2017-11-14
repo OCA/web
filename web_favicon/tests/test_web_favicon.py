@@ -39,7 +39,7 @@ class TestWebFavicon(TransactionCase):
         # our own icon
         company.write({
             'favicon_backend': base64.b64encode(file_open(
-                'web_favicon/static/description/icon.png').read()),
+                'web_favicon/static/description/icon.png', 'rb').read()),
             'favicon_backend_mimetype': 'image/png',
         })
         data = WebFavicon().icon()
