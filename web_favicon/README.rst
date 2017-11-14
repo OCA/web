@@ -68,6 +68,7 @@ Contributors
 * Holger Brunn <hbrunn@therp.nl>
 * Pedro M. Baeza <pedro.baeza@gmail.com>
 * Dennis Sluijk <d.sluijk@onestein.nl>
+* Marçal Isern <marsal.isern@qubiq.es>
 
 Maintainer
 ----------
