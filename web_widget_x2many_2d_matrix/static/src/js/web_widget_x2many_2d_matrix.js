@@ -131,7 +131,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                 })
                 .then(function()
                 {
-                    return self.dataset.read_ids(self.dataset.ids).then(function(rows)
+                    return self.dataset.read_ids(self.dataset.ids,_.keys(self.fields)).then(function(rows)
                     {
                         // setup data structure
                         _.each(rows, function(row)
