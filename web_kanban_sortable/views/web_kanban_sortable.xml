@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets_backend" inherit_id="web.assets_backend" name="web_kanban_sortable">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/web_kanban_sortable/static/src/js/web.kanban.sortable.js" />
+        </xpath>
+    </template>
+
+</odoo>
