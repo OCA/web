@@ -413,6 +413,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
         open_badge: function(ev){
             var self = this;
             var open = (self.options && self.is_option_set(self.options.open));
+            var open_target = (self.options && self.options.open_target !== undefined && self.options.open_target || "new");
             var no_color_picker = (self.options && self.is_option_set(self.options.no_color_picker));
             if(open){
                 self.mutex.exec(function(){
@@ -422,7 +423,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                         res_model: self.field.relation,
                         views: [[false, 'form']],
                         res_id: id,
-                        target: "new"
+                        target: open_target
                     });
                 }.bind(this));
             }else if(no_color_picker){
