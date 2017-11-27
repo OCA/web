@@ -40,7 +40,19 @@ class ExcelExportView(ExcelExport):
         data = json.loads(data)
         model = data.get('model', [])
         columns_headers = data.get('headers', [])
-        rows = data.get('rows', [])
+        rows = []
+        for row in data.get('rows', []):
+            row = [
+                ', '.join(
+                    map(
+                        lambda c: c.name_get()[0][1],
+                        request.env[cell['relation']].browse(cell['ids'])
+                    )
+                )
+                if isinstance(cell, dict) else cell
+                for cell in row
+            ]
+            rows.append(row)
 
         return request.make_response(
             self.from_data(columns_headers, rows),
