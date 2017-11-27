@@ -85,12 +85,20 @@ openerp.web_export_view = function (instance) {
                     var export_row = [],
                         record = new instance.web.list.Record(record).toForm();
                     $.each(view.visible_columns, function() {
-                        export_row.push(
-                            this.type != 'integer' && this.type != 'float' ?
-                            this.format(
-                                record.data, {process_modifiers: false}
-                            ) : record.data[this.id].value
-                        );
+                        if(this.type != 'many2many'){
+                            export_row.push(
+                                this.type != 'integer' && this.type != 'float' ?
+                                this.format(
+                                    record.data, {process_modifiers: false}
+                                ) : record.data[this.id].value
+                            );
+                        }
+                        else{
+                            export_row.push({
+                                ids: record.data[this.id].value,
+                                relation: this.relation
+                            })
+                        }
                     })
                     export_rows.push(export_row);
                 });
