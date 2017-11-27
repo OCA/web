@@ -43,7 +43,12 @@ class ExcelExportView(ExcelExport):
         rows = []
         for row in data.get('rows', []):
             row = [
-                ', '.join(map(lambda c: c.name_get()[0][1], request.env[cell['relation']].browse(cell['ids'])))
+                ', '.join(
+                    map(
+                        lambda c: c.name_get()[0][1],
+                        request.env[cell['relation']].browse(cell['ids'])
+                    )
+                )
                 if isinstance(cell, dict) else cell
                 for cell in row
             ]
