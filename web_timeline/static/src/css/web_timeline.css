@@ -4,12 +4,12 @@
 }
 
 /* very light gray background in weekends */
-.vis.timeline .timeaxis .grid.saturday,
-.vis.timeline .timeaxis .grid.sunday {
+.vis-timeline .vis-grid.vis-saturday,
+.vis-timeline .vis-grid.vis-sunday {
     background: #DCDCDC;
 }
 
-.vis.timeline .item.range .content {
+.vis-item .vis-item-overflow {
     overflow: visible;
 }
 
