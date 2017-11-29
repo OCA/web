@@ -87,9 +87,9 @@ openerp.web_export_view = function (instance) {
                     $.each(view.visible_columns, function() {
                         export_row.push(
                             this.type != 'integer' && this.type != 'float' ?
-                            this.format(
+                            jQuery('<div/>').html(this.format(
                                 record.data, {process_modifiers: false}
-                            ) : record.data[this.id].value
+                            )).text() : record.data[this.id].value
                         );
                     })
                     export_rows.push(export_row);
