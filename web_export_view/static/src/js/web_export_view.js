@@ -77,7 +77,12 @@ openerp.web_export_view = function (instance) {
             else {
                 deferred = view.dataset.read_slice(export_columns_keys);
                 export_columns_names.push(
-                    String(view.dataset.domain || _('All records'))
+                    _t('Selected records:') + ' ' +
+                    String(
+                        _(view.ViewManager.searchview.query.pluck('values'))
+                        .chain().flatten(true).pluck('label').value()
+                        .join('; ') || _('All records')
+                    )
                 );
             }
             var x2many = _(export_columns_keys).filter(function(field) {
