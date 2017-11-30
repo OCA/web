@@ -1,8 +1,4 @@
-.oe_form_field_x2many_2d_matrix th.oe_link
+.o_form_field_x2many_2d_matrix th.oe_link
 {
     cursor: pointer;
-}
-.oe_form_field_x2many_2d_matrix .oe_list_content > tbody > tr > td.oe_list_field_cell
-{
-    white-space: normal;
 }

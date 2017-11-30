@@ -14,7 +14,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
 
     var WidgetX2Many2dMatrix = FieldOne2Many.extend({
         template: 'FieldX2Many2dMatrix',
-        widget_class: 'oe_form_field_x2many_2d_matrix',
+        widget_class: 'o_form_field_x2many_2d_matrix',
 
         // those will be filled with rows from the dataset
         by_x_axis: {},
@@ -145,7 +145,6 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                             self.setup_many2one_axes();
                             self.$el.find('.edit').on(
                                 'change', self.proxy(self.xy_value_change));
-                            self.effective_readonly_change();
                         }
                     });
                 });
@@ -207,13 +206,27 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                 this.field_label_y_axis, true);
         },
 
-        // return the class(es) the inputs should have
+        // return the class(es) inputs should have
         get_xy_value_class: function()
         {
-            var classes = 'oe_form_field oe_form_required';
-            if(this.is_numeric)
-            {
-                classes += ' oe_form_field_float';
+            var classes = 'edit o_form_input o_form_required oe_edit_only';
+            if (this.is_numeric) {
+                classes += ' o_form_field_number';
+            }
+            return classes;
+        },
+
+        // return the class(es) read-only inputs should have
+        get_xy_value_read_only_class: function()
+        {
+            var classes = 'read o_form_input';
+            if (this.is_numeric) {
+                classes += ' o_form_field_number';
+            }
+            if (!this.get('effective_readonly')) {
+                // When the whole matrix is read-only but shown inside of an editable form, don't
+                // add "oe_read_only" so our read-only <span>s always show up.
+                classes += ' oe_read_only';
             }
             return classes;
         },
@@ -350,9 +363,6 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                 'change', self.proxy(this.xy_value_change));
             this.compute_totals();
             this.setup_many2one_axes();
-            this.on("change:effective_readonly",
-                    this, this.proxy(this.effective_readonly_change));
-            this.effective_readonly_change();
             return this._super();
         },
 
@@ -378,17 +388,6 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                 $this.parent().addClass('oe_form_invalid');
             }
 
-        },
-
-        effective_readonly_change: function()
-        {
-            this.$el
-            .find('tbody .edit')
-            .toggle(!this.get('effective_readonly'));
-            this.$el
-            .find('tbody .read')
-            .toggle(this.get('effective_readonly'));
-            this.$el.find('.edit').first().focus();
         },
 
         is_syntax_valid: function()
