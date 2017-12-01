@@ -2,3 +2,9 @@
 {
     cursor: pointer;
 }
+
+/* Reset the background color of disabled input fields in the matrix. */
+.o_form_field_x2many_2d_matrix input.o_form_input:disabled
+{
+    background-color: lightgrey;
+}
