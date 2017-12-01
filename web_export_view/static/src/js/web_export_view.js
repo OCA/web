@@ -85,7 +85,7 @@ openerp.web_export_view = function (instance) {
                     var export_row = [],
                         record = new instance.web.list.Record(record).toForm();
                     $.each(view.visible_columns, function() {
-                        if(this.type != null){
+                        if(this.tag == 'field'){
                             export_row.push(
                                 this.type != 'integer' && this.type != 'float' ?
                                 this.format(
