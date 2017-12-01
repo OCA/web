@@ -15,7 +15,7 @@
                     <tr t-foreach="widget.get_y_axis_values()" t-as="y" t-att-data-y="y">
                         <th><t t-esc="widget.get_y_axis_label(y)" /></th>
                         <td t-foreach="widget.get_x_axis_values()" t-as="x" t-att-data-x="x" t-att-class="'' + (widget.is_numeric ? ' o_list_number' : '')">
-                            <input t-att-class="widget.get_xy_value_class()"
+                            <input type="text" t-att-class="widget.get_xy_value_class()"
                                 t-att-data-id="widget.get_xy_id(x, y)"
                                 t-att-value="widget.format_xy_value(widget.get_xy_value(x, y))"
                                 t-att="widget.get_xy_att(x, y)"
