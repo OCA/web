@@ -1,4 +1,4 @@
-.openerp .oe_form_sheet_full_screen {
+.o_form_view .o_form_sheet_bg .o_form_sheet.o_form_sheet_full_screen {
   max-width: none;
   margin: 0 auto;
 }

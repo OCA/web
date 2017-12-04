@@ -8,7 +8,7 @@ inherited view with the following content:
 ::
 
     <xpath expr="//sheet" position="attributes">
-        <attribute name="class">oe_form_sheet_full_screen</attribute>
+        <attribute name="class">o_form_sheet_full_screen</attribute>
     </xpath>
 
 Install the 'web_sheet_full_width' module if you want to have a full screen
