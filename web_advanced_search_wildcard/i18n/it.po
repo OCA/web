@@ -1,0 +1,25 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_advanced_search_wildcard
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-12 08:19+0000\n"
+"PO-Revision-Date: 2017-12-12 09:25+0100\n"
+"Last-Translator: Alex Comba <alex.comba@agilebg.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: it\n"
+"X-Generator: Poedit 2.0.4\n"
+
+#. module: web_advanced_search_wildcard
+#. openerp-web
+#: code:addons/web_advanced_search_wildcard/static/src/js/search.js:10
+#, python-format
+msgid "matches"
+msgstr "corrisponde a"
