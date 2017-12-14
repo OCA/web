@@ -21,12 +21,45 @@ var signatureOverrides = {
 
 	/* Initialise a new signature area. */
 	_create: function() {
-	
 		  
 		this.element.addClass(this.widgetFullName || this.widgetBaseClass);
 		try {
 			this.canvas = $('<canvas width="' + this.options.width + '" height="' +
 				this.options.height + '">' + '' + '</canvas>')[0];
+			// to reference "this" in one of the event listeners we have to store "this" into a different variable,
+			// because the "this" inside the anonymous function wouldn't be the same.
+			var myself = this;
+			this.canvas.addEventListener("touchstart", function (event) {
+				// somehow the first attempt to create a mouse event and dispatch it didn't end up in _mouse(Start|Drag|Stop),
+				// so this code here is the same as in these functions but uses the touch coordinates
+				var touch = event.touches[0];
+				myself.offset = myself.element.offset();
+				myself.offset.left -= document.documentElement.scrollLeft || document.body.scrollLeft;
+				myself.offset.top -= document.documentElement.scrollTop || document.body.scrollTop;
+				myself.lastPoint = [myself._round(touch.clientX - myself.offset.left),
+					myself._round(touch.clientY - myself.offset.top)];
+				myself.curLine = [myself.lastPoint];
+				myself.lines.push(myself.curLine);
+			}, false);
+
+			this.canvas.addEventListener("touchend", function(event) {
+				myself.lastPoint = null;
+				myself.curLine = null;
+				myself._changed(event);
+			}, false);
+
+			this.canvas.addEventListener("touchmove", function(event) {
+				var touch = event.touches[0];
+				var point = [myself._round(touch.clientX - myself.offset.left),
+					myself._round(touch.clientY - myself.offset.top)];
+				myself.curLine.push(point);
+				myself.ctx.beginPath();
+				myself.ctx.moveTo(myself.lastPoint[0], myself.lastPoint[1]);
+				myself.ctx.lineTo(point[0], point[1]);
+				myself.ctx.stroke();
+				myself.lastPoint = point;
+			}, false);
+
 		 	this.element.prepend(this.canvas);
 		 	this.element.find('img').remove();
 			this.ctx = this.canvas.getContext('2d');
