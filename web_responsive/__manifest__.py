@@ -20,6 +20,7 @@
         'views/web.xml',
     ],
     'qweb': [
+        'static/src/xml/app_drawer_menu_search.xml',
         'static/src/xml/form_view.xml',
         'static/src/xml/navbar.xml',
     ],
