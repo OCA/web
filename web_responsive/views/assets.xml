@@ -11,7 +11,7 @@
         <xpath expr=".">
             <link rel="stylesheet"
                   type="text/css"
-                  href="/web_responsive/static/lib/css/drawer.3.2.0.css"
+                  href="/web_responsive/static/lib/css/drawer.3.2.2.css"
                   />
             <link rel="stylesheet"
                   href="/web_responsive/static/src/less/main.less"
@@ -29,10 +29,16 @@
                   href="/web_responsive/static/src/less/variables.less"
                   />
             <script type="application/javascript"
+                    src="/web_responsive/static/lib/js/bililiteRange.2.6.js"
+                    />
+            <script type="application/javascript"
+                    src="/web_responsive/static/lib/js/jquery.sendkeys.4.js"
+                    />
+            <script type="application/javascript"
                     src="/web_responsive/static/lib/js/iscroll-probe.5.2.0.js"
                     />
             <script type="application/javascript"
-                    src="/web_responsive/static/lib/js/drawer.3.2.0.js"
+                    src="/web_responsive/static/lib/js/drawer.3.2.2.js"
                     />
             <script type="application/javascript"
                     src="/web_responsive/static/src/js/web_responsive.js"
