@@ -212,12 +212,27 @@
                 <div class="panel-heading" id="appDrawerAppPanelHead">
                     <div class="col-xs-6">
                         <h4 class="app-drawer-panel-title pull-left">
-                            <a class="app-drawer-icon-close drawer-toggle">
+                            <a class="app-drawer-icon-close drawer-toggle hidden-xs">
                                 <i class="fa fa-lg fa-chevron-left"
                                    t-translation="off"
                                    aria-hidden="true"
                                    />
                                 Apps
+                            </a>
+                            <span class="hidden-xs">
+                                &amp;nbsp;|&amp;nbsp;
+                            </span>
+                            <a class="app-drawer-icon-search drawer-search-open">
+                                <i class="fa fa-lg fa-search"
+                                   t-translation="off"
+                                   aria-hidden="true"
+                                   />
+                            </a>
+                            <a class="app-drawer-icon-search drawer-search-close">
+                                <i class="fa fa-lg fa-close"
+                                   t-translation="off"
+                                   aria-hidden="true"
+                                   />
                             </a>
                         </h4>
                     </div>
@@ -232,21 +247,57 @@
                     </div>
                 </div>
                 <div class="panel-body" id="appDrawerAppPanelBody">
-                    <ul class="row list-unstyled oe_application_menu_placeholder"
+                    <div id="appDrawerApps"
+                        class="row oe_application_menu_placeholder"
                         style="display: none;">
-                        <li t-foreach="menu_data['children']" t-as="menu"
-                            class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center mt16">
-                            <t t-call="web.menu_link">
-                                <t t-set="display_images" t-value="1" />
+                        <t t-foreach="menu_data['children']" t-as="menu">
+                            <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center mt16">
+                                <t t-call="web.menu_link">
+                                    <t t-set="display_images" t-value="1" />
+                                </t>
+                            </div>
+                            <!-- Provide breakpoints on necessary viewports for proper row heights -->
+                            <t t-if="(menu_index + 1) % 6 == 0">
+                                <div class="clearfix visible-lg-block" />
                             </t>
-                        </li>
-                        <li id="menu_more_container" class="dropdown" style="display: none;">
+                            <t t-if="(menu_index + 1) % 4 == 0">
+                                <div class="clearfix visible-md-block" />
+                            </t>
+                            <t t-if="(menu_index + 1) % 3 == 0">
+                                <div class="clearfix visible-sm-block" />
+                            </t>
+                            <t t-if="(menu_index + 1) % 2 == 0">
+                                <div class="clearfix visible-xs-block" />
+                            </t>
+                        </t>
+                        <div id="menu_more_container" class="dropdown" style="display: none;">
                             <a class="dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
                             <ul id="menu_more" class="dropdown-menu"></ul>
-                        </li>
+                        </div>
+                    </div>
+                    <ul id="appDrawerMenuSearch"
+                        class="row list-unstyled"
+                        style="display: none;">
+                        <div class="panel panel-info app-drawer-search-panel">
+                            <div class="panel-heading">
+                                <h2>
+                                    <i>Searching:</i>
+                                    <input id="appDrawerSearchInput" class="menu-search-query"/>
+                                </h2>
+                            </div>
+                            <div class="panel-body">
+                                <ul id="appDrawerSearchResults"
+                                    class="row list-unstyled oe_application_menu_placeholder">
+                                    No Search Supplied.
+                                </ul>
+                            </div>
+                        </div>
                     </ul>
                 </div>
             </div>
+
+            <div class="app-drawer-search-action" />
+
         </xpath>
     </template>
 
