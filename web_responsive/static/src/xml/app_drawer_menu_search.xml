@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 LasLabs Inc.
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
+
+<templates xml:space="preserve">
+    <t t-name="AppDrawerMenuSearchResults">
+        <li class="menu-search-element" t-foreach="menus" t-as="menu">
+            <a t-att-id="menu.id"
+               t-attf-href="#action={{ menu.action and menu.action.split(',')[1] or ''}}&amp;menu_id={{ menu.id }}">
+                <h2 class="text-center">
+                    <t t-esc="menu.display_name" />
+                </h2>
+            </a>
+        </li>
+    </t>
+</templates>
