@@ -17,7 +17,7 @@ proper decimal separator for the active localization.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/web/162
+   :target: https://runbot.odoo-community.org/runbot/web/162/11.0
 
 Bug Tracker
 ===========
