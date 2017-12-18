@@ -3,10 +3,10 @@
 odoo.define("web_decimal_numpad_dot.FieldFloat", function (require) {
     "use strict";
 
-    var form_widgets = require("web.form_widgets");
+    var basic_fields = require("web.basic_fields");
     var translation = require("web.translation");
 
-    form_widgets.FieldFloat.include({
+    basic_fields.FieldFloat.include({
         init: function () {
             this.events = $.extend({}, this.events, {
                 "keydown": "numpad_dot_replace",
