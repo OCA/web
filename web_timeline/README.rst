@@ -38,7 +38,8 @@ the possible attributes for the tag:
   in a popup. If not (default value), the record is edited changing to form
   view.
 * colors (optional): it allows to set certain specific colors if the expressed
-  condition (JS syntax) is met.
+  condition (Python syntax) is met. Fields used in calculation must be declared
+  in the node.
 
 You also need to declare the view in an action window of the involved model.
 
@@ -59,6 +60,8 @@ Example:
                           event_open_popup="true"
                           zoomKey="ctrlKey"
                           colors="#ec7063:user_id == false;#2ecb71:kanban_state=='done';">
+                    <field name="user_id"/>
+                    <field name="kanban_state"/>
                 </timeline>
             </field>
         </record>

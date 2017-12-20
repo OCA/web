@@ -20,6 +20,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
     var time = require('web.time');
     var View = require('web.View');
     var widgets = require('web_calendar.widgets');
+    var session = require('web.session');
 
     var _t = core._t;
     var _lt = core._lt;
@@ -57,16 +58,14 @@ odoo.define('web_timeline.TimelineView', function (require) {
 
         parse_colors: function () {
             if (this.fields_view.arch.attrs.colors) {
-                this.colors = _(this.fields_view.arch.attrs.colors.split(';')).chain().compact().map(function (color_pair) {
-                    var pair = color_pair.split(':'), color = pair[0], expr = pair[1];
-                    var temp = py.parse(py.tokenize(expr));
-                    return {
-                        'color': color,
-                        'field': temp.expressions[0].value,
-                        'opt': temp.operators[0],
-                        'value': temp.expressions[1].value
-                    };
-                }).value();
+                this.colors = _(this.fields_view.arch.attrs.colors.split(';')).chain()
+                    .compact()
+                    .map(function (color_pair) {
+                        var pair = color_pair.split(':'),
+                            color = pair[0],
+                            expr = pair[1];
+                        return [color, py.parse(py.tokenize(expr)), expr];
+                    }).value();
             }
         },
 
@@ -244,10 +243,18 @@ odoo.define('web_timeline.TimelineView', function (require) {
             } else {
                 group = -1;
             }
-            _.each(self.colors, function (color) {
-                if (eval("'" + evt[color.field] + "' " + color.opt + " '" + color.value + "'"))
-                    self.color = color.color;
-            });
+            for (var i = 0, len = this.colors.length; i < len; ++i) {
+                var context = _.extend({}, evt, {
+                    uid: session.uid,
+                    current_date: moment().format('YYYY-MM-DD')
+                });
+                var pair = this.colors[i],
+                    color = pair[0],
+                    expression = pair[1];
+                if (py.PY_isTrue(py.evaluate(expression, context))) {
+                    self.color = color;
+                }
+            }
             var r = {
                 'start': date_start,
                 'content': evt.__name != undefined ? evt.__name : evt.display_name,
@@ -278,11 +285,20 @@ odoo.define('web_timeline.TimelineView', function (require) {
             }
             self.last_group_bys = n_group_bys;
             // gather the fields to get
-            var fields = _.compact(_.map(["date_start", "date_delay", "date_stop", "progress"], function (key) {
+            var fields = _.map(["date_start", "date_delay", "date_stop", "progress"], function (key) {
                 return self.fields_view.arch.attrs[key] || '';
-            }));
+            });
 
-            fields = _.uniq(fields.concat(_.pluck(this.colors, "field").concat(n_group_bys)));
+            fields = _.compact(_.uniq(fields
+                .concat(_.map(this.fields_view.fields, function (field) {
+                    return field.__attrs.name;
+                }))
+                .concat(_.map(this.colors, function (color) {
+                    if (color[1].expressions !== undefined) {
+                        return color[1].expressions[0].value
+                    }
+                }))
+                .concat(n_group_bys)));
             return $.when(this.has_been_loaded).then(function () {
                 return self.dataset.read_slice(fields, {
                     domain: domains,
