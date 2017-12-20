@@ -59,7 +59,7 @@ Example:
                           default_group_by="user_id"
                           event_open_popup="true"
                           zoomKey="ctrlKey"
-                          colors="#ec7063:user_id == false;#2ecb71:kanban_state=='done';">
+                          colors="#ec7063:user_id == False;#2ecb71:kanban_state=='done';">
                     <field name="user_id"/>
                     <field name="kanban_state"/>
                 </timeline>
