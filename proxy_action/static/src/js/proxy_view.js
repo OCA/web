@@ -1,5 +1,8 @@
-openerp.proxy_action = function (instance) {
-    instance.web.ActionManager.include({
+'use strict';
+odoo.define('proxy_action.proxy_view', function (require) {
+    var ActionManager = require('web.ActionManager');
+
+    ActionManager.include({
         ir_actions_act_proxy: function (action, options) {
             var self = this;
 
@@ -21,5 +24,5 @@ openerp.proxy_action = function (instance) {
             })
             this.do_action({"type":"ir.actions.act_window_close"});
         }
-    })
-};
+    });
+});
