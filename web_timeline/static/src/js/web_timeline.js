@@ -98,12 +98,15 @@ odoo.define('web_timeline.TimelineView', function (require) {
             if (!attrs.date_start) {
                 throw new Error(_t("Timeline view has not defined 'date_start' attribute."));
             }
+
             this.date_start = attrs.date_start;
             this.date_stop = attrs.date_stop;
             this.date_delay = attrs.date_delay;
             this.no_period = this.date_start == this.date_stop;
             this.zoomKey = attrs.zoomKey || '';
             this.mode = attrs.mode || attrs.default_window || 'fit';
+
+            this.tooltip = attrs.tooltip;
 
             if (!isNullOrUndef(attrs.quick_create_instance)) {
                 self.quick_create_instance = 'instance.' + attrs.quick_create_instance;
@@ -187,6 +190,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
                    this.mode = 'fit';
                 }
             }
+
             self.timeline = new vis.Timeline(self.$timeline.empty().get(0));
             self.timeline.setOptions(options);
             if (self.mode && self['on_scale_' + self.mode + '_clicked']) {
@@ -248,9 +252,11 @@ odoo.define('web_timeline.TimelineView', function (require) {
                 if (eval("'" + evt[color.field] + "' " + color.opt + " '" + color.value + "'"))
                     self.color = color.color;
             });
+
             var r = {
                 'start': date_start,
                 'content': evt.__name != undefined ? evt.__name : evt.display_name,
+                'title':evt[self.tooltip],//support for tooltip
                 'id': evt.id,
                 'group': group,
                 'evt': evt,
@@ -278,7 +284,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
             }
             self.last_group_bys = n_group_bys;
             // gather the fields to get
-            var fields = _.compact(_.map(["date_start", "date_delay", "date_stop", "progress"], function (key) {
+            var fields = _.compact(_.map(["date_start", "date_delay", "date_stop", "progress", "tooltip"], function (key) {
                 return self.fields_view.arch.attrs[key] || '';
             }));
 
