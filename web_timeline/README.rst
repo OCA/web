@@ -39,7 +39,6 @@ the possible attributes for the tag:
   view.
 * colors (optional): it allows to set certain specific colors if the expressed
   condition (JS syntax) is met.
-
 * tooltip (optional): it defines the name of the field of type string for the tooltip content.
 
 You also need to declare the view in an action window of the involved model.
