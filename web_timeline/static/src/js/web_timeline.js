@@ -99,14 +99,13 @@ odoo.define('web_timeline.TimelineView', function (require) {
                 throw new Error(_t("Timeline view has not defined 'date_start' attribute."));
             }
 
+            this.tooltip = attrs.tooltip;
             this.date_start = attrs.date_start;
             this.date_stop = attrs.date_stop;
             this.date_delay = attrs.date_delay;
             this.no_period = this.date_start == this.date_stop;
             this.zoomKey = attrs.zoomKey || '';
             this.mode = attrs.mode || attrs.default_window || 'fit';
-
-            this.tooltip = attrs.tooltip;
 
             if (!isNullOrUndef(attrs.quick_create_instance)) {
                 self.quick_create_instance = 'instance.' + attrs.quick_create_instance;
@@ -256,7 +255,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
             var r = {
                 'start': date_start,
                 'content': evt.__name != undefined ? evt.__name : evt.display_name,
-                'title':evt[self.tooltip],//support for tooltip
+                'title': evt[self.tooltip],//support for tooltip
                 'id': evt.id,
                 'group': group,
                 'evt': evt,
@@ -283,8 +282,14 @@ odoo.define('web_timeline.TimelineView', function (require) {
                 n_group_bys = group_bys;
             }
             self.last_group_bys = n_group_bys;
+
             // gather the fields to get
-            var fields = _.compact(_.map(["date_start", "date_delay", "date_stop", "progress", "tooltip"], function (key) {
+            var fieldsarray = ["date_start", "date_delay", "date_stop", "progress"];
+            if(self.tooltip){
+                fieldsarray.push("tooltip");
+            }
+
+            var fields = _.compact(_.map(fieldsarray, function (key) {
                 return self.fields_view.arch.attrs[key] || '';
             }));
 
