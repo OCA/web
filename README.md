@@ -47,6 +47,7 @@ addon | version | summary
 [web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 9.0.2.0.0 | Allows you to dynamically color fields on tree views
 [web_tree_image](web_tree_image/) | 9.0.1.1.0 | Show images in tree views
 [web_tree_many2one_clickable](web_tree_many2one_clickable/) | 9.0.1.0.0 | Open the linked resource when clicking on their name
+[web_widget_bokeh_chart](web_widget_bokeh_chart/) | 9.0.1.0.0 | This widget allows to display charts using Bokeh library.
 [web_widget_color](web_widget_color/) | 9.0.1.0.0 | Web Widget Color
 [web_widget_darkroom](web_widget_darkroom/) | 9.0.1.0.1 | Provides web widget for image editing and adds it to standard image widget as modal
 [web_widget_datepicker_options](web_widget_datepicker_options/) | 9.0.1.0.0 | web_widget_datepicker_options
