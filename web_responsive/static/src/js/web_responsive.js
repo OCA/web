@@ -6,11 +6,10 @@ odoo.define('web_responsive', function(require) {
 
     var Menu = require('web.Menu');
     var Class = require('web.Class');
-    var DataModel = require('web.DataModel');
+    var rpc = require('web.rpc');
     var SearchView = require('web.SearchView');
     var core = require('web.core');
     var config = require('web.config');
-    var FieldOne2Many = core.form_widget_registry.get('one2many');
     var ViewManager = require('web.ViewManager');
 
     Menu.include({
@@ -319,13 +318,19 @@ odoo.define('web_responsive', function(require) {
          */
         searchMenus: function() {
             this.$searchInput = $('#appDrawerSearchInput').focus();
-            var Menus = new DataModel('ir.ui.menu');
-            Menus.query(['action', 'display_name', 'id'])
-                .filter([['name', 'ilike', this.$searchInput.val()],
-                         ['action', '!=', false]
-                         ])
-                .all()
-                .then($.proxy(this.showFoundMenus, this));
+            var domain = [['name', 'ilike', this.$searchInput.val()],
+                          ['action', '!=', false]];
+            rpc.query({
+                model: 'ir.ui.menu',
+                method: 'search_read',
+                args: [{
+                    fields: ['action', 'display_name', 'id'],
+                    domain: domain
+
+                }]
+            }).then(
+                $.proxy(this.showFoundMenus, this)
+            );
         },
 
         /* Display the menus that are provided as input.
