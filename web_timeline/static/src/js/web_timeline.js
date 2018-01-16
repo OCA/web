@@ -243,16 +243,18 @@ odoo.define('web_timeline.TimelineView', function (require) {
             } else {
                 group = -1;
             }
-            for (var i = 0, len = this.colors.length; i < len; ++i) {
-                var context = _.extend({}, evt, {
-                    uid: session.uid,
-                    current_date: moment().format('YYYY-MM-DD')
-                });
-                var pair = this.colors[i],
-                    color = pair[0],
-                    expression = pair[1];
-                if (py.PY_isTrue(py.evaluate(expression, context))) {
-                    self.color = color;
+            if (this.colors !== undefined) {
+                for (var i = 0, len = this.colors.length; i < len; ++i) {
+                    var context = _.extend({}, evt, {
+                        uid: session.uid,
+                        current_date: moment().format('YYYY-MM-DD')
+                    });
+                    var pair = this.colors[i],
+                        color = pair[0],
+                        expression = pair[1];
+                    if (py.PY_isTrue(py.evaluate(expression, context))) {
+                        self.color = color;
+                    }
                 }
             }
             var r = {
