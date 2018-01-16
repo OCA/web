@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="web_onchange_action assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/web_onchange_action/static/src/js/web_onchange_action.js"></script>
+                <link rel="stylesheet" href="/web_onchange_action/static/src/css/web_onchange_action.css"/>
+            </xpath>
+        </template>
+    </data>
+</openerp>
