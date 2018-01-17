@@ -1,0 +1,59 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_environment_ribbon
+# 
+# Translators:
+# Armando Vulcano Junior <vulcano@uol.com.br>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-28 03:58+0000\n"
+"PO-Revision-Date: 2017-12-28 03:58+0000\n"
+"Last-Translator: Armando Vulcano Junior <vulcano@uol.com.br>, 2017\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/23907/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: web_environment_ribbon
+#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend_create_uid
+msgid "Created by"
+msgstr "Criado por"
+
+#. module: web_environment_ribbon
+#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend_create_date
+msgid "Created on"
+msgstr "Criado em"
+
+#. module: web_environment_ribbon
+#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend_display_name
+msgid "Display Name"
+msgstr "Mostrar Nome"
+
+#. module: web_environment_ribbon
+#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend_id
+msgid "ID"
+msgstr "ID"
+
+#. module: web_environment_ribbon
+#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend___last_update
+msgid "Last Modified on"
+msgstr "Última Modificação em"
+
+#. module: web_environment_ribbon
+#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend_write_uid
+msgid "Last Updated by"
+msgstr "Última Atualização por"
+
+#. module: web_environment_ribbon
+#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend_write_date
+msgid "Last Updated on"
+msgstr "Última Atualização em"
+
+#. module: web_environment_ribbon
+#: model:ir.model,name:web_environment_ribbon.model_web_environment_ribbon_backend
+msgid "Web Environment Ribbon Backend"
+msgstr ""

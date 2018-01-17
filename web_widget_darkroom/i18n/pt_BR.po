@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
+# Armando Vulcano Junior <vulcano@uol.com.br>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-30 08:28+0000\n"
-"PO-Revision-Date: 2017-03-30 08:28+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"POT-Creation-Date: 2017-12-28 03:59+0000\n"
+"PO-Revision-Date: 2017-12-28 03:59+0000\n"
+"Last-Translator: Armando Vulcano Junior <vulcano@uol.com.br>, 2017\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/23907/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,71 +29,71 @@ msgstr "Cancelar"
 #: code:addons/web_widget_darkroom/static/src/xml/field_templates.xml:27
 #, python-format
 msgid "Clear"
-msgstr ""
+msgstr "Limpar"
 
 #. module: web_widget_darkroom
 #: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Criado por"
 
 #. module: web_widget_darkroom
 #: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_create_date
 msgid "Created on"
-msgstr ""
+msgstr "Criado em"
 
 #. module: web_widget_darkroom
 #. openerp-web
 #: code:addons/web_widget_darkroom/static/src/xml/field_templates.xml:20
 #, python-format
 msgid "Darkroom"
-msgstr ""
+msgstr "Darkroom"
 
 #. module: web_widget_darkroom
 #: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_image
 msgid "Darkroom Image"
-msgstr ""
+msgstr "Imagem Darkroom"
 
 #. module: web_widget_darkroom
 #: model:ir.ui.view,arch_db:web_widget_darkroom.darkroom_modal_view_form
 msgid "Darkroom Modal"
-msgstr ""
+msgstr "Modal Darkroom"
 
 #. module: web_widget_darkroom
 #: model:ir.model,name:web_widget_darkroom.model_darkroom_modal
 msgid "Darkroom Modal - Wizard Model"
-msgstr ""
+msgstr "Modal Darkroom - Assistente Modelo"
 
 #. module: web_widget_darkroom
 #: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Mostrar Nome"
 
 #. module: web_widget_darkroom
 #. openerp-web
 #: code:addons/web_widget_darkroom/static/src/xml/field_templates.xml:24
 #, python-format
 msgid "Edit"
-msgstr ""
+msgstr "Editar"
 
 #. module: web_widget_darkroom
 #: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: web_widget_darkroom
 #: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última Modificação em"
 
 #. module: web_widget_darkroom
 #: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última Atualização por"
 
 #. module: web_widget_darkroom
 #: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última Atualização em"
 
 #. module: web_widget_darkroom
 #: model:ir.ui.view,arch_db:web_widget_darkroom.darkroom_modal_view_form
@@ -102,14 +103,14 @@ msgstr "Salvar"
 #. module: web_widget_darkroom
 #: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_res_field_id
 msgid "Source Field"
-msgstr ""
+msgstr "Campo Fonte"
 
 #. module: web_widget_darkroom
 #: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_res_model_id
 msgid "Source Model"
-msgstr ""
+msgstr "Modelo Fonte"
 
 #. module: web_widget_darkroom
 #: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_res_record_id
 msgid "Source Record ID"
-msgstr ""
+msgstr "ID Registro Fonte"

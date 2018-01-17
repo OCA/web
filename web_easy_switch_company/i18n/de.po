@@ -1,9 +1,8 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * web_export_view
+# * web_easy_switch_company
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2016
 # Rudolf Schnapka <rs@techno-flex.de>, 2018
 msgid ""
 msgstr ""
@@ -19,23 +18,17 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. module: web_export_view
-#. openerp-web
-#: code:addons/web_export_view/static/src/js/web_export_view.js:21
-#, python-format
-msgid "Export Current View"
-msgstr "Aktuelle Liste exportieren"
+#. module: web_easy_switch_company
+#: model:ir.model,name:web_easy_switch_company.model_res_company
+msgid "Companies"
+msgstr "Unternehmen"
 
-#. module: web_export_view
-#. openerp-web
-#: code:addons/web_export_view/static/src/js/web_export_view.js:91
-#, python-format
-msgid "False"
-msgstr "Falsch"
+#. module: web_easy_switch_company
+#: model:ir.model.fields,field_description:web_easy_switch_company.field_res_company_logo_topbar
+msgid "Logo displayed in the switch company menu"
+msgstr "Anzuzeigendes Logo im Unternehmenswechsel-Menü"
 
-#. module: web_export_view
-#. openerp-web
-#: code:addons/web_export_view/static/src/js/web_export_view.js:91
-#, python-format
-msgid "True"
-msgstr "Wahr"
+#. module: web_easy_switch_company
+#: model:ir.model,name:web_easy_switch_company.model_res_users
+msgid "Users"
+msgstr "Anwender"

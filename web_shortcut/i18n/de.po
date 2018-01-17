@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
+# Rudolf Schnapka <rs@techno-flex.de>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-29 11:35+0000\n"
-"PO-Revision-Date: 2017-07-29 11:35+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"POT-Creation-Date: 2017-12-28 03:58+0000\n"
+"PO-Revision-Date: 2017-12-28 03:58+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2018\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,37 +29,37 @@ msgstr "Hinzufügen/Entfernen Lesezeichen ..."
 #. module: web_shortcut
 #: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Angelegt durch"
 
 #. module: web_shortcut
 #: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_create_date
 msgid "Created on"
-msgstr ""
+msgstr "Angelegt am"
 
 #. module: web_shortcut
 #: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigebezeichnung"
 
 #. module: web_shortcut
 #: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: web_shortcut
 #: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Zuletzt geändert am"
 
 #. module: web_shortcut
 #: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zuletzt geändert durch"
 
 #. module: web_shortcut
 #: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zuletzt aktualisiert am"
 
 #. module: web_shortcut
 #: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_menu_id

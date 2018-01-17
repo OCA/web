@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
+# Rudolf Schnapka <rs@techno-flex.de>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-30 08:28+0000\n"
-"PO-Revision-Date: 2017-03-30 08:28+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"POT-Creation-Date: 2017-12-28 03:59+0000\n"
+"PO-Revision-Date: 2017-12-28 03:59+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2018\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,24 +29,24 @@ msgstr "Abbrechen"
 #: code:addons/web_widget_darkroom/static/src/xml/field_templates.xml:27
 #, python-format
 msgid "Clear"
-msgstr ""
+msgstr "Bereinigen"
 
 #. module: web_widget_darkroom
 #: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Angelegt durch"
 
 #. module: web_widget_darkroom
 #: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_create_date
 msgid "Created on"
-msgstr ""
+msgstr "Angelegt am"
 
 #. module: web_widget_darkroom
 #. openerp-web
 #: code:addons/web_widget_darkroom/static/src/xml/field_templates.xml:20
 #, python-format
 msgid "Darkroom"
-msgstr ""
+msgstr "Dunkelkammer"
 
 #. module: web_widget_darkroom
 #: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_image
@@ -65,7 +66,7 @@ msgstr ""
 #. module: web_widget_darkroom
 #: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigebezeichnung"
 
 #. module: web_widget_darkroom
 #. openerp-web
@@ -77,22 +78,22 @@ msgstr ""
 #. module: web_widget_darkroom
 #: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: web_widget_darkroom
 #: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Zuletzt geändert am"
 
 #. module: web_widget_darkroom
 #: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zuletzt geändert durch"
 
 #. module: web_widget_darkroom
 #: model:ir.model.fields,field_description:web_widget_darkroom.field_darkroom_modal_write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zuletzt aktualisiert am"
 
 #. module: web_widget_darkroom
 #: model:ir.ui.view,arch_db:web_widget_darkroom.darkroom_modal_view_form
