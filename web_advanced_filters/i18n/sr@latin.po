@@ -7,10 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (7.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-31 10:16+0000\n"
+"POT-Creation-Date: 2017-06-10 11:28+0000\n"
 "PO-Revision-Date: 2015-10-07 17:50+0000\n"
 "Last-Translator: <>\n"
-"Language-Team: Serbian (Latin) (http://www.transifex.com/oca/OCA-web-7-0/language/sr@latin/)\n"
+"Language-Team: Serbian (Latin) (http://www.transifex.com/oca/OCA-web-7-0/language/sr%40latin/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -110,7 +110,7 @@ msgstr ""
 #. module: web_advanced_filters
 #: field:ir.filters,active:0
 msgid "Active"
-msgstr ""
+msgstr "Aktivno"
 
 #. module: web_advanced_filters
 #. openerp-web

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (7.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-31 10:16+0000\n"
+"POT-Creation-Date: 2017-06-10 11:28+0000\n"
 "PO-Revision-Date: 2015-10-07 17:50+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Estonian (http://www.transifex.com/oca/OCA-web-7-0/language/et/)\n"
@@ -110,7 +110,7 @@ msgstr ""
 #. module: web_advanced_filters
 #: field:ir.filters,active:0
 msgid "Active"
-msgstr ""
+msgstr "Aktiivne"
 
 #. module: web_advanced_filters
 #. openerp-web

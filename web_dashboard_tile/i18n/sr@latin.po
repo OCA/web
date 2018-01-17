@@ -7,10 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (7.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-31 10:07+0000\n"
+"POT-Creation-Date: 2017-06-10 11:29+0000\n"
 "PO-Revision-Date: 2015-10-07 17:50+0000\n"
 "Last-Translator: <>\n"
-"Language-Team: Serbian (Latin) (http://www.transifex.com/oca/OCA-web-7-0/language/sr@latin/)\n"
+"Language-Team: Serbian (Latin) (http://www.transifex.com/oca/OCA-web-7-0/language/sr%40latin/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -69,7 +69,7 @@ msgstr "Korisnik"
 #. module: web_dashboard_tile
 #: field:tile.tile,active:0
 msgid "Active"
-msgstr ""
+msgstr "Aktivno"
 
 #. module: web_dashboard_tile
 #: selection:tile.tile,field_function:0

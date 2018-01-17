@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (7.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-31 10:07+0000\n"
+"POT-Creation-Date: 2017-06-10 11:29+0000\n"
 "PO-Revision-Date: 2015-10-07 17:50+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Vietnamese (http://www.transifex.com/oca/OCA-web-7-0/language/vi/)\n"
@@ -69,7 +69,7 @@ msgstr "Người sử dụng"
 #. module: web_dashboard_tile
 #: field:tile.tile,active:0
 msgid "Active"
-msgstr ""
+msgstr "Hoạt động"
 
 #. module: web_dashboard_tile
 #: selection:tile.tile,field_function:0
