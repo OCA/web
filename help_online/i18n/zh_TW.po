@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-26 01:59+0000\n"
-"PO-Revision-Date: 2016-11-22 16:23+0000\n"
+"POT-Creation-Date: 2018-01-16 08:57+0000\n"
+"PO-Revision-Date: 2017-11-23 23:28+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/oca/OCA-web-8-0/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgstr "刪除"
 #: view:export.help.wizard:help_online.export_help_wizard_view
 #: view:import.help.wizard:help_online.import_help_wizard_view
 msgid "Close"
-msgstr ""
+msgstr "關閉"
 
 #. module: help_online
 #. openerp-web

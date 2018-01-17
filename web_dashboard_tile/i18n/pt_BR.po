@@ -13,10 +13,10 @@
 # Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016
 # Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2015
 # Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2015
-# llum.birque@gmail.com <llum.birque@gmail.com>, 2015
+# llum.birque@gmail.com <inactive+Quim@transifex.com>, 2015
 # Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
 # Paolo Valier, 2016
-# Pedro Castro Silva <pedrocs@sossia.pt>, 2015
+# Pedro Castro Silva <inactive+pcs.sossia@transifex.com>, 2015
 # Rudolf Schnapka <rs@techno-flex.de>, 2015-2016
 # Stéphane Bidoul <sbi@skynet.be>, 2015
 # yterrettaz, 2015
@@ -25,8 +25,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-10 07:06+0000\n"
-"PO-Revision-Date: 2016-12-10 07:09+0000\n"
+"POT-Creation-Date: 2018-01-16 08:57+0000\n"
+"PO-Revision-Date: 2017-11-23 23:28+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-web-8-0/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -145,7 +145,7 @@ msgstr "Cor da fonte"
 #. module: web_dashboard_tile
 #: field:tile.tile,primary_format:0
 msgid "Format"
-msgstr ""
+msgstr "Formato"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,primary_function:0
