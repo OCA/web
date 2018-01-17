@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * web_widget_digitized_signature
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 # Quentin THEURET <odoo@kerpeo.com>, 2017
@@ -13,10 +13,10 @@ msgstr ""
 "PO-Revision-Date: 2017-07-30 02:50+0000\n"
 "Last-Translator: Quentin THEURET <odoo@kerpeo.com>, 2017\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: web_widget_digitized_signature
@@ -32,16 +32,6 @@ msgstr "Effacer"
 #, python-format
 msgid "Could not display the selected image."
 msgstr "Impossible d'afficher l'image sélectionnée."
-
-#. module: web_widget_digitized_signature
-#: model:ir.model.fields,field_description:web_widget_digitized_signature.field_mail_thread_create_uid
-msgid "Created by"
-msgstr "Créé par"
-
-#. module: web_widget_digitized_signature
-#: model:ir.model.fields,field_description:web_widget_digitized_signature.field_mail_thread_create_date
-msgid "Created on"
-msgstr "Créé le"
 
 #. module: web_widget_digitized_signature
 #: code:addons/web_widget_digitized_signature/models/mail_thread.py:33
@@ -67,16 +57,6 @@ msgstr "Fil du courriel"
 #, python-format
 msgid "Image"
 msgstr "Image"
-
-#. module: web_widget_digitized_signature
-#: model:ir.model.fields,field_description:web_widget_digitized_signature.field_mail_thread_write_uid
-msgid "Last Updated by"
-msgstr "Mis à jour par"
-
-#. module: web_widget_digitized_signature
-#: model:ir.model.fields,field_description:web_widget_digitized_signature.field_mail_thread_write_date
-msgid "Last Updated on"
-msgstr "Mis à jour le"
 
 #. module: web_widget_digitized_signature
 #: model:ir.model.fields,field_description:web_widget_digitized_signature.field_res_users_signature_image
@@ -105,3 +85,15 @@ msgstr "La signature a été supprimée."
 #: model:ir.model,name:web_widget_digitized_signature.model_res_users
 msgid "Users"
 msgstr "Utilisateurs"
+
+#~ msgid "Created by"
+#~ msgstr "Créé par"
+
+#~ msgid "Created on"
+#~ msgstr "Créé le"
+
+#~ msgid "Last Updated by"
+#~ msgstr "Mis à jour par"
+
+#~ msgid "Last Updated on"
+#~ msgstr "Mis à jour le"

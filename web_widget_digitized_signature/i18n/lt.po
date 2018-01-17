@@ -3,20 +3,21 @@
 # * web_widget_digitized_signature
 #
 # Translators:
-# Marc Tormo i Bochaca <mtbochaca@gmail.com>, 2017
+# Viktoras Norkus <viktoras@bmx.lt>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 9.0c\n"
+"Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-30 02:50+0000\n"
-"PO-Revision-Date: 2017-07-30 02:50+0000\n"
-"Last-Translator: Marc Tormo i Bochaca <mtbochaca@gmail.com>, 2017\n"
-"Language-Team: Catalan (https://www.transifex.com/oca/teams/23907/ca/)\n"
-"Language: ca\n"
+"POT-Creation-Date: 2018-01-25 01:58+0000\n"
+"PO-Revision-Date: 2018-01-25 01:58+0000\n"
+"Last-Translator: Viktoras Norkus <viktoras@bmx.lt>, 2018\n"
+"Language-Team: Lithuanian (https://www.transifex.com/oca/teams/23907/lt/)\n"
+"Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
+"%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. module: web_widget_digitized_signature
 #. openerp-web
@@ -83,16 +84,4 @@ msgstr ""
 #. module: web_widget_digitized_signature
 #: model:ir.model,name:web_widget_digitized_signature.model_res_users
 msgid "Users"
-msgstr "Usuaris"
-
-#~ msgid "Created by"
-#~ msgstr "Creat per"
-
-#~ msgid "Created on"
-#~ msgstr "Creat a "
-
-#~ msgid "Last Updated by"
-#~ msgstr "Última actualització per"
-
-#~ msgid "Last Updated on"
-#~ msgstr "Última actualització a "
+msgstr "Vartotojai"
