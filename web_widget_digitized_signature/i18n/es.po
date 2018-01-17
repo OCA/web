@@ -3,14 +3,14 @@
 # * web_widget_digitized_signature
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2017
+# Pedro M. Baeza <pedro.baeza@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 9.0c\n"
+"Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-30 02:50+0000\n"
-"PO-Revision-Date: 2017-07-30 02:50+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"POT-Creation-Date: 2018-01-03 03:50+0000\n"
+"PO-Revision-Date: 2018-01-03 03:50+0000\n"
+"Last-Translator: Pedro M. Baeza <pedro.baeza@gmail.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,37 +23,27 @@ msgstr ""
 #: code:addons/web_widget_digitized_signature/static/src/xml/digital_sign.xml:7
 #, python-format
 msgid "Clear"
-msgstr "Limpiar"
+msgstr ""
 
 #. module: web_widget_digitized_signature
 #. openerp-web
 #: code:addons/web_widget_digitized_signature/static/src/js/digital_sign.js:81
 #, python-format
 msgid "Could not display the selected image."
-msgstr "No se puede mostrar la imagen seleccionada."
-
-#. module: web_widget_digitized_signature
-#: model:ir.model.fields,field_description:web_widget_digitized_signature.field_mail_thread_create_uid
-msgid "Created by"
-msgstr ""
-
-#. module: web_widget_digitized_signature
-#: model:ir.model.fields,field_description:web_widget_digitized_signature.field_mail_thread_create_date
-msgid "Created on"
 msgstr ""
 
 #. module: web_widget_digitized_signature
 #: code:addons/web_widget_digitized_signature/models/mail_thread.py:33
 #, python-format
 msgid "Deletion date: %s"
-msgstr "Fecha de eliminación: %s"
+msgstr ""
 
 #. module: web_widget_digitized_signature
 #. openerp-web
 #: code:addons/web_widget_digitized_signature/static/src/xml/digital_sign.xml:10
 #, python-format
 msgid "Draw your signature"
-msgstr "Dibuje su firma"
+msgstr ""
 
 #. module: web_widget_digitized_signature
 #: model:ir.model,name:web_widget_digitized_signature.model_mail_thread
@@ -65,40 +55,30 @@ msgstr ""
 #: code:addons/web_widget_digitized_signature/static/src/js/digital_sign.js:81
 #, python-format
 msgid "Image"
-msgstr "Imagen"
-
-#. module: web_widget_digitized_signature
-#: model:ir.model.fields,field_description:web_widget_digitized_signature.field_mail_thread_write_uid
-msgid "Last Updated by"
-msgstr ""
-
-#. module: web_widget_digitized_signature
-#: model:ir.model.fields,field_description:web_widget_digitized_signature.field_mail_thread_write_date
-msgid "Last Updated on"
 msgstr ""
 
 #. module: web_widget_digitized_signature
 #: model:ir.model.fields,field_description:web_widget_digitized_signature.field_res_users_signature_image
 msgid "Signature"
-msgstr "Firma"
+msgstr ""
 
 #. module: web_widget_digitized_signature
 #: code:addons/web_widget_digitized_signature/models/mail_thread.py:30
 #, python-format
 msgid "Signature date: %s"
-msgstr "Fecha de la firma: %s"
+msgstr ""
 
 #. module: web_widget_digitized_signature
 #: code:addons/web_widget_digitized_signature/models/mail_thread.py:28
 #, python-format
 msgid "Signature has been created."
-msgstr "La firma se ha creado."
+msgstr ""
 
 #. module: web_widget_digitized_signature
 #: code:addons/web_widget_digitized_signature/models/mail_thread.py:32
 #, python-format
 msgid "Signature has been deleted."
-msgstr "La firma se ha eliminado."
+msgstr ""
 
 #. module: web_widget_digitized_signature
 #: model:ir.model,name:web_widget_digitized_signature.model_res_users
