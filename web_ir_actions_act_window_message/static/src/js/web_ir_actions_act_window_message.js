@@ -78,6 +78,29 @@ openerp.web_ir_actions_act_window_message = function(instance)
                             {
                                 if(_.isObject(result))
                                 {
+                                    if (! ('views' in result) && 'view_mode' in result){
+                                        types = result.view_mode.split(",");
+                                        if (types.length > 1){
+                                            if (types.includes('tree') && types.includes('form')){
+                                                if (types[0] === "tree"){
+                                                    views = [[false, "list"], [false, types[1]]];
+                                                    result.view_mode = "list" + ',' + types[1];
+                                                }
+                                                else {
+                                                    views = [[false, types[0]], [false, "list"]];
+                                                    result.view_mode = types[0] + ',' + "list";
+                                                }
+                                            }
+                                        }
+                                        else if (result.view_mode === 'form'){
+                                            views = [[false, "form"]];
+                                        }
+                                        else if (result.view_mode === 'tree'){
+                                            views = [[false, "list"]];
+                                            result.view_mode = 'list';
+                                        }
+                                        result.views = views;
+                                    }
                                     self.do_action(result);
                                 }
                                 else
