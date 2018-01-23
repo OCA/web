@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-08-02 10:23+0200\n"
 "PO-Revision-Date: 2015-08-02 10:24+0200\n"
@@ -24,25 +24,25 @@ msgstr "Verzija"
 
 #. module: support_branding
 #: view:website:web.menu_secondary
-msgid ", supported by"
-msgstr ", podpora"
+msgid "Supported by"
+msgstr "Podpora"
 
 #. module: support_branding
-#. openerp-web
+#. odoo-web
 #: code:addons/support_branding/static/src/js/support_branding.js:39
 #, python-format
 msgid "Email to %s"
 msgstr "E-pošta za %s"
 
 #. module: support_branding
-#. openerp-web
+#. odoo-web
 #: code:addons/support_branding/static/src/xml/base.xml:9
 #, python-format
-msgid "Email to Company"
+msgid "Email to support company"
 msgstr "E-pošta za družbo"
 
 #. module: support_branding
-#. openerp-web
+#. odoo-web
 #: code:addons/support_branding/static/src/xml/base.xml:9
 #, python-format
 msgid "Please fill in how you produced this error..."

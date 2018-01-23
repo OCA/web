@@ -4,16 +4,16 @@
    License: GNU AFFERO GENERAL PUBLIC LICENSE
             Version 3 or any later version
 
-   Usage: if you run an OpenERP support company and you support
-   customers without an OPW, you can brand the OpenERP instance
+   Usage: if you run an Odoo support company and you support
+   customers without an OPW, you can brand the Odoo instance
    accordingly using this module. Please enter the two variables
    in the code below, 'support_name' and 'support_link'. They will
-   replace the unfriendly message about the OpenERP instance not
+   replace the unfriendly message about the Odoo instance not
    being supported.
            
  */
    
-openerp.support_branding = function(instance) {
+odoo.support_branding = function(instance) {
     var QWeb = instance.web.qweb,
     _t = instance.web._t;
     
@@ -21,7 +21,7 @@ openerp.support_branding = function(instance) {
         init: function()
         {
             var self = this,
-                ir_config_parameter = new openerp.web.Model('ir.config_parameter');
+                ir_config_parameter = new odoo.web.Model('ir.config_parameter');
             ir_config_parameter.call(
                 'get_param', ['support_branding.support_email']).then(
                 function(email)
@@ -103,7 +103,7 @@ openerp.support_branding = function(instance) {
                 {
                     $button.text(
                         _.str.sprintf(
-                            openerp.web._t('Email to %s'),
+                            odoo.web._t('Email to %s'),
                             self.support_branding_company_name));
                 }
                 $form.prependTo(
