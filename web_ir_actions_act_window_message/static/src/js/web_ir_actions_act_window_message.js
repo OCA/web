@@ -78,30 +78,57 @@ openerp.web_ir_actions_act_window_message = function(instance)
                             {
                                 if(_.isObject(result))
                                 {
-                                    if (! ('views' in result) && 'view_mode' in result){
-                                        types = result.view_mode.split(",");
-                                        if (types.length > 1){
-                                            if (types.includes('tree') && types.includes('form')){
-                                                if (types[0] === "tree"){
-                                                    views = [[false, "list"], [false, types[1]]];
-                                                    result.view_mode = "list" + ',' + types[1];
-                                                }
-                                                else {
-                                                    views = [[false, types[0]], [false, "list"]];
-                                                    result.view_mode = types[0] + ',' + "list";
-                                                }
+                                    // clean the action as it is done in the method ``fix_view_modes``
+                                    // in the main controller of the web module
+                                    action = result;
+                                    if ( ! ('views' in action) ){
+                                        view_id = action.view_id || false;
+                                        if ( view_id instanceof Array ){
+                                            view_id = view_id[0];
+                                        }
+                                        view_modes = action.view_mode.split(",");
+                                        if ( view_modes.length > 1 ){
+                                            if (view_id){
+                                                throw new Error(
+                                                _.str.sprintf(_t("Non-db action dictionaries should provide " +
+                                                                "either multiple view modes or a single view " +
+                                                                "mode and an optional view id.")));
                                             }
+                                            action.views = [];
+                                            for ( i=0; i<view_modes.length; i++ )
+                                                action.views.push([false, view_modes[i]]);
                                         }
-                                        else if (result.view_mode === 'form'){
-                                            views = [[false, "form"]];
-                                        }
-                                        else if (result.view_mode === 'tree'){
-                                            views = [[false, "list"]];
-                                            result.view_mode = 'list';
-                                        }
-                                        result.views = views;
+                                        else
+                                            action.views = [[view_id, view_modes[0]]];
                                     }
-                                    self.do_action(result);
+
+                                    view_type = action.view_type || 'form';
+                                    if ( view_type != 'form' ){
+                                        self.do_action(action);
+                                    }
+                                    else if ( 'view_mode' in action ){
+                                        view_modes = action.view_mode.split(",");
+                                        new_view_mode = [];
+                                        for ( i=0; i<view_modes.length; i++ ){
+                                            if ( view_modes[i] === "tree" )
+                                                new_view_mode.push("list");
+                                            else
+                                                new_view_mode.push(view_modes[i]);
+                                        }
+                                        action.view_mode = new_view_mode.join(",");
+                                    }
+
+                                    views = action.views;
+                                    new_views = [];
+                                    for ( i=0; i<views.length; i++ ){
+                                        if ( views[i][1] === "tree" )
+                                            new_views.push([views[i][0], "list"]);
+                                        else
+                                            new_views.push(views[i]);
+                                    }
+                                    action.views = new_views;
+
+                                    self.do_action(action);
                                 }
                                 else
                                 {
