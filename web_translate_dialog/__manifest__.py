@@ -6,7 +6,7 @@
 {
     "name": "Web Translate Dialog",
     "summary": "Easy-to-use pop-up to translate fields in several languages",
-    "version": "10.0.1.0.0",
+    "version": "10.0.1.0.1",
     "category": "Web",
     "website": "https://odoo-community.org/",
     "author": "Camptocamp, "
