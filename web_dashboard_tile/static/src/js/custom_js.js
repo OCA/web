@@ -19,11 +19,12 @@
 //
 //#############################################################################
 
-openerp.web_dashboard_tile = function (instance)
+odoo.web_dashboard_tile = function (require)
 {
-var QWeb = instance.web.qweb,
-    _t =  instance.web._t,
-   _lt = instance.web._lt;
+var QWeb = require('web.qweb')
+var _t =  require('web._t')
+var _lt = require('web._lt')
+
 _.mixin({
   sum: function (obj) { return _.reduce(obj, function (a, b) { return a + b; }, 0); }
 });
@@ -35,13 +36,13 @@ _.mixin({
             var self = this;
             this.$('#add_dashboard_tile').on('click', this, function (){
               self.save_tile();
-            })
+            });
         },
         render_data: function(dashboard_choices){
             var selection = instance.web.qweb.render(
                 "SearchView.addtodashboard.selection", {
                     selections: dashboard_choices});
-            this.$("form input").before(selection)
+            this.$("form input").before(selection);
         },
         save_tile: function () {
             var self = this;
@@ -97,4 +98,4 @@ _.mixin({
 
         }
     });
-}
+};
