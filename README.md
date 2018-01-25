@@ -20,6 +20,7 @@ addon | version | summary
 --- | --- | ---
 [help_online](help_online/) | 10.0.1.0.0 | Help Online
 [web_access_rule_buttons](web_access_rule_buttons/) | 10.0.1.0.0 | Disable Edit button if access rules prevent this action
+[web_action_conditionable](web_action_conditionable/) | 10.0.1.0.0 | web_action_conditionable
 [web_advanced_search_wildcard](web_advanced_search_wildcard/) | 10.0.1.0.0 | Webmodule to add wildcard operators in advanced search field
 [web_advanced_search_x2x](web_advanced_search_x2x/) | 10.0.2.0.3 | Use a search widget in advanced search for x2x fields
 [web_chatter_paste](web_chatter_paste/) | 10.0.1.0.0 | Paste images and drop files into the chatter and upload them directly
@@ -74,7 +75,6 @@ addon | version | summary
 --- | --- | ---
 [help_popup](help_popup/) | 8.0.0.5.0 (unported) | Help Popup
 [support_branding](support_branding/) | 8.0.2.0.0 (unported) | Adds your branding to an Odoo instance
-[web_action_conditionable](web_action_conditionable/) | 8.0.0.1.0 (unported) | web_action_conditionable
 [web_ckeditor4](web_ckeditor4/) | 8.0.1.0.0 (unported) | Provides a widget for editing HTML fields using CKEditor 4.x
 [web_context_in_colors](web_context_in_colors/) | 8.0.1.1.0 (unported) | Use the context in a tree view's colors and fonts attribute
 [web_dashboard_open_action](web_dashboard_open_action/) | 8.0.1.0.0 (unported) | Adds a button to open a dashboard in full mode
