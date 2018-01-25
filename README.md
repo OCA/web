@@ -22,6 +22,7 @@ addon | version | summary
 [support_branding](support_branding/) | 9.0.2.0.0 | Adds your branding to an Odoo instance
 [web_access_rule_buttons](web_access_rule_buttons/) | 9.0.1.0.0 | Disable Edit button if access rules prevent this action
 [web_advanced_search_x2x](web_advanced_search_x2x/) | 9.0.1.0.1 | Use a search widget in advanced search for x2x fields
+[web_dashboard_tile](web_dashboard_tile/) | 9.0.1.0.0 | Add Tiles to Dashboard
 [web_decimal_numpad_dot](web_decimal_numpad_dot/) | 9.0.1.0.0 | Allows using numpad dot to enter period decimal separator
 [web_dialog_size](web_dialog_size/) | 9.0.1.0.0 | A module that lets the user expand a dialog box to the full screen width.
 [web_duplicate_visibility](web_duplicate_visibility/) | 9.0.1.0.1 | Manage the duplicate button visibiliy
@@ -71,7 +72,6 @@ addon | version | summary
 [web_confirm_window_close](web_confirm_window_close/) | 7.0.1 (unported) | Check for unsaved data when closing browser window
 [web_context_in_colors](web_context_in_colors/) | 8.0.1.1.0 (unported) | Use the context in a tree view's colors and fonts attribute
 [web_dashboard_open_action](web_dashboard_open_action/) | 8.0.1.0.0 (unported) | Adds a button to open a dashboard in full mode
-[web_dashboard_tile](web_dashboard_tile/) | 8.0.1.0.0 (unported) | Add Tiles to Dashboard
 [web_dom_model_classes](web_dom_model_classes/) | 8.0.1.0.0 (unported) | Allows small UI changes with simple CSS
 [web_graph_improved](web_graph_improved/) | 8.0.0.1.0 (unported) | Improves graph views.
 [web_group_expand](web_group_expand/) | 8.0.1.0.0 (unported) | Group Expand Buttons
