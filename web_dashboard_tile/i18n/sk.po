@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-10 07:06+0000\n"
-"PO-Revision-Date: 2016-12-22 20:40+0000\n"
+"POT-Creation-Date: 2018-01-16 08:57+0000\n"
+"PO-Revision-Date: 2017-11-23 23:29+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Slovak (http://www.transifex.com/oca/OCA-web-8-0/language/sk/)\n"
 "MIME-Version: 1.0\n"
@@ -49,7 +49,7 @@ msgstr ""
 #: code:addons/web_dashboard_tile/static/src/xml/custom_xml.xml:8
 #, python-format
 msgid "Create"
-msgstr ""
+msgstr "Vytvoriť"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,create_uid:0

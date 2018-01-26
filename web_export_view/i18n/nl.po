@@ -9,16 +9,17 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2012,2014
 # Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016
 # Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2015
+# Jesús Alan Ramos Rodríguez <alan.ramos@jarsa.com.mx>, 2015
 # Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
 # Paolo Valier, 2016
-# Pedro Castro Silva <pedrocs@sossia.pt>, 2015
+# Pedro Castro Silva <inactive+pcs.sossia@transifex.com>, 2015
 # Rudolf Schnapka <rs@techno-flex.de>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-28 10:21+0000\n"
-"PO-Revision-Date: 2017-04-18 11:02+0000\n"
+"POT-Creation-Date: 2018-01-16 08:57+0000\n"
+"PO-Revision-Date: 2017-11-08 09:19+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Dutch (http://www.transifex.com/oca/OCA-web-8-0/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -40,17 +41,3 @@ msgstr "Excel"
 #, python-format
 msgid "Export Current View"
 msgstr "Huidige lijst exporteren"
-
-#. module: web_export_view
-#. openerp-web
-#: code:addons/web_export_view/static/src/js/web_export_view.js:84
-#, python-format
-msgid "False"
-msgstr ""
-
-#. module: web_export_view
-#. openerp-web
-#: code:addons/web_export_view/static/src/js/web_export_view.js:81
-#, python-format
-msgid "True"
-msgstr "Waar"

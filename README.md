@@ -53,6 +53,7 @@ addon | version | summary
 [web_menu_collapsible](web_menu_collapsible/) | 8.0.1.0.0 | Foldable second level Odoo menu
 [web_menu_navbar_needaction](web_menu_navbar_needaction/) | 8.0.1.0.0 | Show the sum of submenus' needaction counters in main menu
 [web_offline_warning](web_offline_warning/) | 8.0.1.0.0 | User-friendly Offline Warning
+[web_onchange_action](web_onchange_action/) | 8.0.1.0.0 | Run actions from onchange handlers
 [web_one2many_list_action](web_one2many_list_action/) | 8.0.1.0.0 | Enable tree_but_open action for One2ManyListView rows.
 [web_option_auto_color](web_option_auto_color/) | 8.0.0.1.0 | Web Option Auto Color
 [web_readonly_bypass](web_readonly_bypass/) | 8.0.1.0.1 | Allow to save onchange modifications to readonly fields

@@ -37,6 +37,7 @@ openerp.web_export_view = function (instance) {
             // or assume the main view is a list view and use that
             var self = this,
                 view = this.getParent(),
+                fields_view = view.fields_view,
                 children = view.getChildren(),
                 deferred = new jQuery.Deferred();
             if (children) {
@@ -76,8 +77,62 @@ openerp.web_export_view = function (instance) {
             else {
                 deferred = view.dataset.read_slice(export_columns_keys);
                 export_columns_names.push(
-                    String(view.dataset.domain || _('All records'))
+                    _t('Selected records:') + ' ' +
+                    String(
+                        _(view.ViewManager.searchview.query.pluck('values'))
+                        .chain().flatten(true).pluck('label').value()
+                        .join('; ') || _('All records')
+                    )
                 );
+            }
+            var x2many = _(export_columns_keys).filter(function(field) {
+                return ['one2many', 'many2many']
+                    .indexOf(fields_view.fields[field].type) > -1;
+            });
+            if(x2many.length) {
+                deferred = deferred.then(function(records) {
+                    var name_gets = [], names = {};
+                    _(records).chain().map(function(record) {
+                        return _(record).chain().pairs().filter(function(pair)
+                        {
+                            return x2many.indexOf(pair[0]) > -1;
+                        })
+                        .value()
+                    })
+                    .flatten(true)
+                    .groupBy(0)
+                    .each(function(pairs, field) {
+                        name_gets.push(
+                            new instance.web.Model(
+                                fields_view.fields[field].relation
+                            )
+                            .call('name_get', [
+                                _(pairs).chain().pluck(1).flatten(true)
+                                .value(),
+                                view.dataset.get_context()
+                            ])
+                            .then(function(name_gets) {
+                                names[field] = _.object(name_gets);
+                            })
+                        );
+                    })
+                    return jQuery.when.apply(jQuery, name_gets)
+                    .then(function() {
+                        _(records).each(function(record) {
+                            _(x2many).each(function(field) {
+                                record[field] = _(record[field])
+                                .map(function(id) {
+                                    return names[field][id];
+                                })
+                                .join(', ');
+                                record[
+                                    _.str.sprintf('%s__display', field)
+                                ] = record[field];
+                            });
+                        });
+                        return records;
+                    });
+                });
             }
             return deferred.then(function(records) {
                 var export_rows = [];
@@ -88,9 +143,9 @@ openerp.web_export_view = function (instance) {
                         if(this.tag == 'field'){
                             export_row.push(
                                 this.type != 'integer' && this.type != 'float' ?
-                                this.format(
+                                jQuery('<div/>').html(this.format(
                                     record.data, {process_modifiers: false}
-                                ) : record.data[this.id].value
+                                )).text() : record.data[this.id].value
                             );
                         };
                     })
