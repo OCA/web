@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-02 10:23+0000\n"
-"PO-Revision-Date: 2017-06-02 10:23+0000\n"
+"POT-Creation-Date: 2018-01-25 03:54+0000\n"
+"PO-Revision-Date: 2018-01-25 03:54+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -37,7 +37,7 @@ msgstr ""
 #: code:addons/web_m2x_options/static/src/js/form.js:35
 #, python-format
 msgid "Create"
-msgstr ""
+msgstr "Ustvari"
 
 #. module: web_m2x_options
 #. openerp-web
