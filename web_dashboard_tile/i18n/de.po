@@ -3,6 +3,7 @@
 # * web_dashboard_tile
 # 
 # Translators:
+# Rudolf Schnapka <rs@techno-flex.de>, 2018
 # OCA Transbot <transbot@odoo-community.org>, 2018
 msgid ""
 msgstr ""
@@ -11,75 +12,75 @@ msgstr ""
 "POT-Creation-Date: 2018-01-25 03:54+0000\n"
 "PO-Revision-Date: 2018-01-25 03:54+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2018\n"
-"Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
+"Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: sl\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: web_dashboard_tile
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile_action_id
 msgid "Action"
-msgstr "Dejanje"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile_active
 msgid "Active"
-msgstr "Aktivno"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: selection:tile.tile,primary_function:0
 #: selection:tile.tile,secondary_function:0
 msgid "Average"
-msgstr "Povprečje"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile_background_color
 msgid "Background color"
-msgstr "Barva ozadja"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: selection:tile.tile,primary_function:0
 #: selection:tile.tile,secondary_function:0
 msgid "Count"
-msgstr "Štetje"
+msgstr ""
 
 #. module: web_dashboard_tile
 #. openerp-web
 #: code:addons/web_dashboard_tile/static/src/xml/custom_xml.xml:8
 #, python-format
 msgid "Create"
-msgstr "Ustvari"
+msgstr "Anlegen"
 
 #. module: web_dashboard_tile
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile_create_uid
 msgid "Created by"
-msgstr "Ustvaril"
+msgstr "Angelegt durch"
 
 #. module: web_dashboard_tile
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile_create_date
 msgid "Created on"
-msgstr "Ustvarjeno"
+msgstr "Angelegt am"
 
 #. module: web_dashboard_tile
 #: model:ir.actions.act_window,name:web_dashboard_tile.action_kanban_dashboard_tile
 #: model:ir.actions.act_window,name:web_dashboard_tile.action_tree_dashboard_tile
 #: model:ir.ui.menu,name:web_dashboard_tile.mail_dashboard
 msgid "Dashboard"
-msgstr "Nadzorna plošča"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: model:ir.model,name:web_dashboard_tile.model_tile_tile
 #: model:ir.ui.menu,name:web_dashboard_tile.menue_dashboard_tile
 msgid "Dashboard Tile"
-msgstr "Okvir nadzorne plošče"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: model:ir.ui.view,arch_db:web_dashboard_tile.dashboard_tile_tile_form_view
 #: model:ir.ui.view,arch_db:web_dashboard_tile.dashboard_tile_tile_tree_view
 msgid "Dashboard tiles"
-msgstr "Okvirji nadzorne plošče"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: model:ir.ui.view,arch_db:web_dashboard_tile.dashboard_tile_tile_form_view
@@ -89,19 +90,19 @@ msgstr ""
 #. module: web_dashboard_tile
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigebezeichnung"
 
 #. module: web_dashboard_tile
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile_domain
 msgid "Domain"
-msgstr "Domena"
+msgstr ""
 
 #. module: web_dashboard_tile
 #. openerp-web
 #: code:addons/web_dashboard_tile/static/src/js/custom_js.js:57
 #, python-format
 msgid "Error"
-msgstr "Napaka"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile_error
@@ -111,14 +112,14 @@ msgstr ""
 #. module: web_dashboard_tile
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile_primary_field_id
 msgid "Field"
-msgstr "Polje"
+msgstr "Feld"
 
 #. module: web_dashboard_tile
 #. openerp-web
 #: code:addons/web_dashboard_tile/static/src/js/custom_js.js:57
 #, python-format
 msgid "Filter name is required."
-msgstr "Zahtevan je naziv filtra."
+msgstr ""
 
 #. module: web_dashboard_tile
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile_font_color
@@ -133,7 +134,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile_primary_function
 msgid "Function"
-msgstr "Funkcija"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile_group_ids
@@ -162,17 +163,17 @@ msgstr ""
 #. module: web_dashboard_tile
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Zuletzt geändert am"
 
 #. module: web_dashboard_tile
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile_write_uid
 msgid "Last Updated by"
-msgstr "Zadnjič posodobil"
+msgstr "Zuletzt geändert durch"
 
 #. module: web_dashboard_tile
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile_write_date
 msgid "Last Updated on"
-msgstr "Zadnjič posodobljeno"
+msgstr "Zuletzt aktualisiert am"
 
 #. module: web_dashboard_tile
 #: model:ir.ui.view,arch_db:web_dashboard_tile.dashboard_tile_tile_form_view
@@ -183,43 +184,43 @@ msgstr ""
 #: selection:tile.tile,primary_function:0
 #: selection:tile.tile,secondary_function:0
 msgid "Maximum"
-msgstr "Maksimum"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: code:addons/web_dashboard_tile/models/tile_tile.py:39
 #, python-format
 msgid "Maximum value of '%s'"
-msgstr "Maksimalna vrednost '%s'"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: selection:tile.tile,primary_function:0
 #: selection:tile.tile,secondary_function:0
 msgid "Median"
-msgstr "Sredina"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: code:addons/web_dashboard_tile/models/tile_tile.py:51
 #, python-format
 msgid "Median value of '%s'"
-msgstr "Srednja vrednost '%s'"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: selection:tile.tile,primary_function:0
 #: selection:tile.tile,secondary_function:0
 msgid "Minimum"
-msgstr "Minimum"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: code:addons/web_dashboard_tile/models/tile_tile.py:35
 #: code:addons/web_dashboard_tile/models/tile_tile.py:47
 #, python-format
 msgid "Minimum value of '%s'"
-msgstr "Minimalna vrednost '%s'"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile_model_id
 msgid "Model"
-msgstr "Model"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile_name
@@ -275,20 +276,20 @@ msgstr ""
 #. module: web_dashboard_tile
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile_sequence
 msgid "Sequence"
-msgstr "Zaporedje"
+msgstr ""
 
 #. module: web_dashboard_tile
 #. openerp-web
 #: code:addons/web_dashboard_tile/static/src/js/custom_js.js:96
 #, python-format
 msgid "Success"
-msgstr "Uspeh"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: selection:tile.tile,primary_function:0
 #: selection:tile.tile,secondary_function:0
 msgid "Sum"
-msgstr "Vsota"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: model:ir.ui.view,arch_db:web_dashboard_tile.dashboard_tile_tile_form_view
@@ -300,20 +301,20 @@ msgstr ""
 #: code:addons/web_dashboard_tile/static/src/js/custom_js.js:96
 #, python-format
 msgid "Tile is created"
-msgstr "Okvir je ustvarjen"
+msgstr ""
 
 #. module: web_dashboard_tile
 #. openerp-web
 #: code:addons/web_dashboard_tile/static/src/xml/custom_xml.xml:6
 #, python-format
 msgid "Tile:"
-msgstr "Okvir:"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: code:addons/web_dashboard_tile/models/tile_tile.py:43
 #, python-format
 msgid "Total value of '%s'"
-msgstr "Skupna vrednost '%s'"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: code:addons/web_dashboard_tile/models/tile_tile.py:216
@@ -324,7 +325,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile_user_id
 msgid "User"
-msgstr "Uporabnik"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile_primary_value
