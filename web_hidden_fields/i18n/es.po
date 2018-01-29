@@ -1,0 +1,178 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_hidden_fields
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-28 13:08+0000\n"
+"PO-Revision-Date: 2018-01-28 14:12+0100\n"
+"Last-Translator: Ignacio Ibeas - Acysos S.L. <ignacio@acysos.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es\n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#. module: web_hidden_fields
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template_active
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template_field_active
+msgid "Active"
+msgstr "Activo"
+
+#. module: web_hidden_fields
+#: model:ir.actions.act_window,help:web_hidden_fields.action_hidden_fields_form
+msgid "Click to add a template with the model and hidden fields."
+msgstr "Haga clic para definir una nueva plantilla con el modelo y los campos ocultos."
+
+#. module: web_hidden_fields
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template_company_id
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template_field_company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: web_hidden_fields
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template_create_uid
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template_field_create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: web_hidden_fields
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template_create_date
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template_field_create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: web_hidden_fields
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template_display_name
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template_field_display_name
+msgid "Display Name"
+msgstr "Nombre a mostrar"
+
+#. module: web_hidden_fields
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template_field_name
+msgid "Field"
+msgstr "Campo"
+
+#. module: web_hidden_fields
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template_field_groups
+msgid "Groups"
+msgstr "Grupos"
+
+#. module: web_hidden_fields
+#: model:ir.actions.act_window,name:web_hidden_fields.action_hidden_fields_form
+#: model:ir.ui.menu,name:web_hidden_fields.menu_hidden_fields_view
+#: model:ir.ui.view,arch_db:web_hidden_fields.view_hidden_template_form
+msgid "Hidden Fields"
+msgstr "Campos ocultos"
+
+#. module: web_hidden_fields
+#: model:ir.ui.view,arch_db:web_hidden_fields.view_hidden_template_form
+#: model:ir.ui.view,arch_db:web_hidden_fields.view_hidden_template_tree
+msgid "Hidden Template"
+msgstr "Plantilla de ocultación"
+
+#. module: web_hidden_fields
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template_hidden_fields
+#: model:ir.ui.menu,name:web_hidden_fields.menu_hidden_fields
+msgid "Hidden fields"
+msgstr "Campos ocultos"
+
+#. module: web_hidden_fields
+#: model:ir.model,name:web_hidden_fields.model_hidden_template
+msgid "Hidden template"
+msgstr "Plantilla de archivos ocultos"
+
+#. module: web_hidden_fields
+#: model:ir.model,name:web_hidden_fields.model_hidden_template_field
+msgid "Hidden template field"
+msgstr "Campo oculto"
+
+#. module: web_hidden_fields
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template_field_id
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template_id
+msgid "ID"
+msgstr "ID"
+
+#. module: web_hidden_fields
+#: model:ir.model.fields,help:web_hidden_fields.field_hidden_template_field_users
+msgid "If you don't select any user, the field is hidden to all users"
+msgstr "Si no selecciona ningún usuario, el campo se ocultará a todo los usuarios."
+
+#. module: web_hidden_fields
+#: model:ir.model.fields,help:web_hidden_fields.field_hidden_template_field_groups
+msgid "Is you don't select any group, the fieldis hidden to all groups"
+msgstr "Si no seleccionar ningún grupo, el campo se ocultará a todos los grupos."
+
+#. module: web_hidden_fields
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template___last_update
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template_field___last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: web_hidden_fields
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template_field_write_uid
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template_write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: web_hidden_fields
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template_field_write_date
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template_write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: web_hidden_fields
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template_field_model
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template_name
+msgid "Model"
+msgstr "Modelo"
+
+#. module: web_hidden_fields
+#: model:ir.ui.view,arch_db:web_hidden_fields.view_hidden_template_form
+msgid ""
+"Select a model and the fields that you want to hide.\n"
+"\t                    If you select a field that isn't required, it will be removed\n"
+"\t                    from the view, but if you select a required field, it will be\n"
+"\t                    invisible.<br/>\n"
+"\t                    You can hide the field to all user or all groups if you\n"
+"\t                    don't select any user o groups. If you want to hide to a\n"
+"\t                    specific users or specifics groups, select any user or group.\n"
+"\t                    The user is always more restrictive that groups."
+msgstr ""
+"Seleccione el modelo y los campos que necesita ocultar.\n"
+"\t                    Si seleccionar un campo que no es obligatorio, será eliminado\n"
+"\t                    de la vista, pero si seleccionar un campo obligatorio, será\n"
+"\t                    invisible.<br/>\n"
+"\t                    Puede ocultar un campo a todos los usuarios y grupos si\n"
+"\t                    no indica ningún usuario o grupo. Si necesita ocultar a \n"
+"\t                    usuarios o grupos específicos, indice a que usuarios o grupos.\n"
+"\t                    El usuario siempre es más restrictivo que los grupos."
+
+#. module: web_hidden_fields
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template_field_template_id
+msgid "Template id"
+msgstr "Plantilla"
+
+#. module: web_hidden_fields
+#: model:ir.model.fields,field_description:web_hidden_fields.field_hidden_template_field_users
+msgid "Users"
+msgstr "Usuarios"
+
+#. module: web_hidden_fields
+#: model:ir.model,name:web_hidden_fields.model_hide_template
+msgid "hide.template"
+msgstr "hide.template"
+
+#. module: web_hidden_fields
+#: model:ir.model,name:web_hidden_fields.model_hide_template_field
+msgid "hide.template.field"
+msgstr "hide.template.field"
+
+#. module: web_hidden_fields
+#: model:ir.model,name:web_hidden_fields.model_ir_ui_view
+msgid "ir.ui.view"
+msgstr "ir.ui.view"
