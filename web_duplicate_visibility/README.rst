@@ -66,6 +66,7 @@ Contributors
 * Pierre Verkest <pverkest@anybox.fr>
 * Christophe Combelles <ccomb@anybox.fr>
 * Simon André <sandre@anybox.fr>
+* Yousef Soliman <yousef.soliman02@gmail.com>
 
 Maintainer
 ----------
