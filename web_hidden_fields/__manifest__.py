@@ -10,8 +10,8 @@
     'website': 'https://github.com/OCA/web',
     'license': 'AGPL-3',
     'depends': [
-         'base',
-        ],
+        'base',
+    ],
     'data': [
         'security/ir.model.access.csv',
         'views/hidden_template_view.xml'

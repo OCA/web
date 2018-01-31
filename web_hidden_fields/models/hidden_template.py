@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright 2017 Ignacio Ibeas <ignacio@acysos.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo import models, fields, api, _
+from odoo import models, fields
 
 
 class HiddenTemplateField(models.Model):
@@ -40,5 +40,5 @@ class HiddenTemplate(models.Model):
     hidden_fields = fields.One2many(
         comodel_name='hidden.template.field', inverse_name='template_id')
     company_id = fields.Many2one(
-        comodel_name='res.company', string='Company', index=True, required=True,
-        default=_default_company)
+        comodel_name='res.company', string='Company', index=True,
+        required=True, default=_default_company)
