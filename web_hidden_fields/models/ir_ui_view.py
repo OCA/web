@@ -28,15 +28,24 @@ class IrUiView(models.Model):
                     return True
         return False
 
+    @api.multi
+    def _check_safe_mode(self, node):
+        modifiers = json.loads(node.get('modifiers'))
+        if 'required' in modifiers and modifiers['required']:
+            return True
+        check_xml = 'record.' + node.get('name') + '.raw_value'
+        if self.search([('arch_db', 'ilike', check_xml)]):
+            return True
+        return False
+
     @api.model
     def postprocess(self, model, node, view_id, in_tree_view, model_fields):
         fields = super(IrUiView, self).postprocess(
             model, node, view_id, in_tree_view, model_fields)
         if node.tag == 'field':
-            remove = self._check_hidden_field(model, node.get('name'))
-            if remove:
+            if self._check_hidden_field(model, node.get('name')):
                 modifiers = json.loads(node.get('modifiers'))
-                if 'required' in modifiers and modifiers['required']:
+                if self._check_safe_mode(node):
                     modifiers['invisible'] = True
                     orm.transfer_modifiers_to_node(modifiers, node)
                 else:
