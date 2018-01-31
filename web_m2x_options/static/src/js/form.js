@@ -239,12 +239,23 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                     }
                 }
 
+                // TODO: Remove create_edit,create,no_create_edit and no_create options when migrating to 11.0 -> Odoo's core already support them by default
                 // create...
                 var create_edit = self.is_option_set(self.options.create) || self.is_option_set(self.options.create_edit),
-                    create_edit_undef = _.isUndefined(self.options.create) && _.isUndefined(self.options.create_edit),
+                    create_edit_undef = _.isUndefined(self.options.create) && _.isUndefined(self.options.create_edit) && _.isUndefined(self.options.no_create) && _.isUndefined(self.options.no_create_edit),
                     m2x_create_edit_undef = _.isUndefined(self.view.ir_options['web_m2x_options.create_edit']),
-                    m2x_create_edit = self.is_option_set(self.view.ir_options['web_m2x_options.create_edit']);
-                var show_create_edit = (!self.options && (m2x_create_edit_undef || m2x_create_edit)) || (self.options && (create_edit || (create_edit_undef && (m2x_create_edit_undef || m2x_create_edit))));
+                    m2x_create_edit = self.is_option_set(self.view.ir_options['web_m2x_options.create_edit']),
+                    no_create_edit = self.is_option_set(self.options.no_create) || self.is_option_set(self.options.no_create_edit),
+                    no_create_edit_undef = _.isUndefined(self.options.no_create) && _.isUndefined(self.options.no_create_edit);
+
+                var show_create_edit = (!self.options && (m2x_create_edit_undef || m2x_create_edit));
+                if (!show_create_edit) {
+                    if (no_create_edit_undef) {
+                        show_create_edit = (self.options && (create_edit || (create_edit_undef && (m2x_create_edit_undef || m2x_create_edit))));
+                    } else {
+                        show_create_edit = (self.options && !no_create_edit);
+                    }
+                }
                 if (self.can_create && show_create_edit){
                     values.push({
                         label: _t("Create and Edit..."),
@@ -389,12 +400,22 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                     }
                 }
 
+                // TODO: Remove create_edit,create,no_create_edit and no_create options when migrating to 11.0 -> Odoo's core already support them by default
                 // create...
                 var create_edit = self.is_option_set(self.options.create) || self.is_option_set(self.options.create_edit),
                     create_edit_undef = _.isUndefined(self.options.create) && _.isUndefined(self.options.create_edit),
                     m2x_create_edit_undef = _.isUndefined(self.view.ir_options['web_m2x_options.create_edit']),
-                    m2x_create_edit = self.is_option_set(self.view.ir_options['web_m2x_options.create_edit']);
-                var show_create_edit = (!self.options && (m2x_create_edit_undef || m2x_create_edit)) || (self.options && (create_edit || (create_edit_undef && (m2x_create_edit_undef || m2x_create_edit))));
+                    m2x_create_edit = self.is_option_set(self.view.ir_options['web_m2x_options.create_edit']),
+                    no_create_edit = self.is_option_set(self.options.no_create) || self.is_option_set(self.options.no_create_edit),
+                    no_create_edit_undef = _.isUndefined(self.options.no_create) && _.isUndefined(self.options.no_create_edit);
+                var show_create_edit = (!self.options && (m2x_create_edit_undef || m2x_create_edit))
+                if (!show_create_edit) {
+                    if (no_create_edit_undef) {
+                        show_create_edit = (self.options && (create_edit || (create_edit_undef && (m2x_create_edit_undef || m2x_create_edit))));
+                    } else {
+                        show_create_edit = (self.options && !no_create_edit);
+                    }
+                }
                 if (show_create_edit){
 
                     values.push({
