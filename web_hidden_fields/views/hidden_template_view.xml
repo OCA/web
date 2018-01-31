@@ -61,10 +61,7 @@
         </field>
     </record>
 
-    <menuitem id="menu_hidden_fields" name="Hidden fields"
-        parent="base.menu_administration" sequence="6"/>
-
     <menuitem id="menu_hidden_fields_view" action="action_hidden_fields_form"
-        parent="menu_hidden_fields"/>
+        parent="base.next_id_9"/>
 
 </odoo>
