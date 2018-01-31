@@ -174,7 +174,10 @@ class TileTile(models.Model):
             elif self[f_function]:
                 func = FIELD_FUNCTIONS[self[f_function]]['func']
                 if func and self[f_field_id] and count:
-                    vals = [x[self[f_field_id].name] for x in records]
+                    field_name = self[f_field_id].name
+                    read_vals = records.search_read(
+                        [('id', 'in', records.ids)], [field_name])
+                    vals = [x[field_name] for x in read_vals]
                     value = func(vals)
             if self[f_function]:
                 try:
