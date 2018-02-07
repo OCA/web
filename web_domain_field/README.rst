@@ -30,7 +30,7 @@ limitations as:
    you modify the form and don't modify the field triggering the onchange.
  * It's not possible to extend an existing domain. You must completely redefine
    the domain in your specialized addon
- * ...
+ * etc...
 
 In order to mitigate these limitations this new addon allows you to use the
 value of a field as domain of an other field in the xml definition of your
