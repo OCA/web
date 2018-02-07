@@ -15,7 +15,7 @@ Usage
 To use this module, you need to:
 
 #. Enable the developer mode.
-#· Go to *Settings > Technical > User interface > User-defined Filters* and
+#. Go to *Settings > Technical > User interface > User-defined Filters* and
    choose or create one.
 #. Choose a model if there is none.
 #. You will be able to choose the domain using the updated domain widget.
