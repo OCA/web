@@ -27,6 +27,7 @@ addon | version | summary
 [web_ckeditor4](web_ckeditor4/) | 8.0.1.0.0 | Provides a widget for editing HTML fields using CKEditor 4.x
 [web_clean_navbar](web_clean_navbar/) | 8.0.1.0.0 | Better visibility for the backend's main menu
 [web_context_in_colors](web_context_in_colors/) | 8.0.1.1.0 | Use the context in a tree view's colors and fonts attribute
+[web_copy_confirm](web_copy_confirm/) | 8.0.1.0.0 | Show confirmation dialogue before copying records
 [web_dashboard_open_action](web_dashboard_open_action/) | 8.0.1.0.0 | Adds a button to open a dashboard in full mode
 [web_dashboard_tile](web_dashboard_tile/) | 8.0.4.0.0 | Add Tiles to Dashboard
 [web_dialog_size](web_dialog_size/) | 8.0.0.1.0 | A module that lets the user expand a dialog box to the full screen width.
