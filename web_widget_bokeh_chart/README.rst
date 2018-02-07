@@ -11,7 +11,7 @@ This module add the posibility to insert Bokeh charts into Odoo standard views.
    :alt: Bokeh Chart inserted into an Odoo view
    :width: 600 px
 
-`Bokeh <https://bokeh.pydata.org>`_ is a Python interactive visualization
+`Bokeh <https://bokeh.pydata.org>`__ is a Python interactive visualization
 library that targets modern web browsers for presentation. Its goal is to
 provide elegant, concise construction of basic exploratory and advanced
 custom graphics in the style of D3.js, but also deliver this capability with
@@ -70,7 +70,7 @@ welcomed feedback.
 Credits
 =======
 
-* This module uses the library `Bokeh <https://github.com/bokeh/bokeh>`_
+* This module uses the library `Bokeh <https://github.com/bokeh/bokeh>`__
   which is under the open-source BSD 3-clause "New" or "Revised" License.
   Copyright (c) 2012, Anaconda, Inc.
 * Odoo Community Association (OCA)
