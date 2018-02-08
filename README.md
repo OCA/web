@@ -85,7 +85,6 @@ addon | version | summary
 [web_graph_improved](web_graph_improved/) | 8.0.0.1.0 (unported) | Improves graph views.
 [web_group_expand](web_group_expand/) | 8.0.1.0.0 (unported) | Group Expand Buttons
 [web_last_viewed_records](web_last_viewed_records/) | 8.0.1.0.0 (unported) | Last viewed records
-[web_listview_custom_element_number](web_listview_custom_element_number/) | 8.0.1.0.0 (unported) | Allow users to set manually a quantity of items to display in a tree view
 [web_menu_navbar_needaction](web_menu_navbar_needaction/) | 8.0.1.0.0 (unported) | Show the sum of submenus' needaction counters in main menu
 [web_option_auto_color](web_option_auto_color/) | 8.0.0.1.0 (unported) | Web Option Auto Color
 [web_polymorphic_many2one](web_polymorphic_many2one/) | 0.2 (unported) | Web Polymorphic Many2One
