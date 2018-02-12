@@ -22,7 +22,7 @@
 }
 
 .o_kanban_view .oe_dashboard_tile .tile_label {
-    padding: 5px;
+    padding: 5px 0px;
     font-size: 15px;
 }
 
