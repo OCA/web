@@ -89,7 +89,7 @@
        <record model="ir.ui.view" id="dashboard_tile_tile_kanban_view">
             <field name="model">tile.tile</field>
             <field name="arch" type="xml">
-                <kanban edit="false" create="false">
+                <kanban edit="false" create="false" class="o_kanban_small_column">
                     <field name="name"/>
                     <field name="domain"/>
                     <field name="model_id"/>
