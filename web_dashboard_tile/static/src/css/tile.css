@@ -5,8 +5,8 @@
 }
 
 .o_kanban_view.o_kanban_ungrouped .o_kanban_record.oe_dashboard_tile {
-	/* override max-width rules */
-	margin: 4px !important;
+    /* override max-width rules */
+    margin: 4px !important;
     /* flex width */
     -ms-flex: 1 1 150px;
     -moz-flex: 1 1 150px;
@@ -53,11 +53,8 @@
     display: block;
 }
 
-/* SearchView Drawer */
-.oe_searchview_drawer .oe_searchview_dashboard .oe_dashboard_tile_form {
-    display: none;
-}
-
-.oe_searchview_drawer .oe_opened .oe_dashboard_tile_form {
-    display: block;
+/* Favorites menu in control panel */
+.o_add_to_dashboard_tile {
+    /* hidden by default */
+    display: none; 
 }
