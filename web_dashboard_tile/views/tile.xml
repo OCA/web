@@ -27,11 +27,14 @@
                         <h1>
                             <field name="name"/>
                         </h1>
+                        <group>
+                            <field name="category_id"/>
+                            <field name="user_id"/>
+                        </group>
                         <group col="4">
                             <separator string="Display" colspan="4"/>
                             <field name="background_color" widget="color"/>
                             <field name="font_color" widget="color"/>
-                            <field name="user_id"/>
                             <separator string="Technical Informations" colspan="4"/>
                             <field name="model_id"/>
                             <field name="action_id"/>
@@ -85,12 +88,13 @@
             </field>
         </record>
 
-        <!-- CRM Lead Kanban View  -->
+        <!-- Kanban View  -->
        <record model="ir.ui.view" id="dashboard_tile_tile_kanban_view">
             <field name="model">tile.tile</field>
             <field name="arch" type="xml">
-                <kanban class="o_kanban_small_column">
+                <kanban default_group_by="category_id" create="false" class="o_kanban_small_column">
                     <field name="name"/>
+                    <field name="category_id"/>
                     <field name="domain"/>
                     <field name="model_id"/>
                     <field name="action_id"/>
@@ -139,6 +143,28 @@
                         </t>
                     </templates>
                 </kanban>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="dashboard_tile_category_form_view">
+            <field name="model">tile.category</field>
+            <field name="arch" type="xml">
+                <form string="Stage of Notes">
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="dashboard_tile_category_tree_view">
+            <field name="model">tile.category</field>
+            <field name="arch" type="xml">
+                <tree string="Tile Categories" editable="bottom">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="fold"/>
+                </tree>
             </field>
         </record>
 

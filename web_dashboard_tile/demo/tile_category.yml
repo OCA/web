@@ -20,24 +20,10 @@
 #
 ##############################################################################
 
-- !record {model: tile.tile, id: installed_modules}:
-    name: Installed Modules
-    category_id: modules
-    model_id: base.model_ir_module_module
-    domain: [['state', 'in', ['installed', 'to upgrade', 'to remove']]]
-    action_id: base.open_module_tree
+- !record {model: tile.category, id: modules}:
+    name: Modules
+    sequence: 0
 
-- !record {model: tile.tile, id: installed_OCA_modules}:
-    name: Installed OCA Modules
-    category_id: modules
-    model_id: base.model_ir_module_module
-    domain: [['state', 'in', ['installed', 'to upgrade', 'to remove']], ['author', 'ilike', 'Odoo Community Association (OCA)']]
-    action_id: base.open_module_tree
-
-- !record {model: tile.tile, id: all_currency_with_rate}:
-    name: Currencies (Max Rate)
-    category_id: finance
-    model_id: base.model_res_currency
-    domain: []
-    secondary_function: max
-    secondary_field_id: base.field_res_currency_rate
+- !record {model: tile.category, id: finance}:
+    name: Finance
+    sequence: 1
