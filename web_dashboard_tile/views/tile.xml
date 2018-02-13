@@ -89,7 +89,7 @@
        <record model="ir.ui.view" id="dashboard_tile_tile_kanban_view">
             <field name="model">tile.tile</field>
             <field name="arch" type="xml">
-                <kanban edit="false" create="false" class="o_kanban_small_column">
+                <kanban class="o_kanban_small_column">
                     <field name="name"/>
                     <field name="domain"/>
                     <field name="model_id"/>
@@ -104,6 +104,19 @@
                     <templates>
                         <t t-name="kanban-box">
                             <div t-attf-class="oe_dashboard_tile oe_kanban_global_click" t-attf-style="background-color:#{record.background_color.raw_value}" >
+
+                                <div class="o_dropdown_kanban dropdown" groups="base.group_no_one">
+                                    <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
+                                        <span class="fa fa-bars fa-lg"/>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <t t-if="widget.editable">
+                                            <li><a type="edit">Edit</a></li>
+                                            <li><a type="delete">Delete</a></li>
+                                        </t>
+                                    </ul>
+                                </div>
+
                                 <div class="oe_kanban_content">
                                     <a type="object" name="open_link" args="[]" t-attf-style="color:#{record.font_color.raw_value};">
                                         <div style="height:100%;" t-att-class="record.secondary_function.raw_value and 'with_secondary' or 'simple'">
@@ -145,7 +158,7 @@
             <field name="name">Dashboard</field>
             <field name="res_model">tile.tile</field>
             <field name="view_type">form</field>
-            <field name="view_mode">kanban</field>
+            <field name="view_mode">kanban,form</field>
             <field name="domain">['|',('user_id','=',False),('user_id','=',uid)]</field>
             <field name="view_id" ref="dashboard_tile_tile_tree_view"/>
         </record>
