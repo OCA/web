@@ -4,4 +4,4 @@
 # © 2015-Today GRAP
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
-from . import tile_tile
+from . import tile_tile, tile_category
