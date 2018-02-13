@@ -58,3 +58,10 @@
     /* hidden by default */
     display: none; 
 }
+
+/* Make dropdown menu button not affect text flow */
+.o_kanban_view .oe_dashboard_tile .o_dropdown_kanban {
+    float: none;
+    position: absolute;
+    right: 8px;
+}
