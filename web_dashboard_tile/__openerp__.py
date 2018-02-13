@@ -30,6 +30,7 @@
     ],
     'demo': [
         'demo/res_groups.yml',
+        'demo/tile_category.yml',
         'demo/tile_tile.yml',
     ],
     'qweb': [

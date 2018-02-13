@@ -77,6 +77,7 @@ class TileTile(models.Model):
     # Column Section
     name = fields.Char(required=True)
     sequence = fields.Integer(default=0, required=True)
+    category_id = fields.Many2one('tile.category', 'Category')
     user_id = fields.Many2one('res.users', 'User')
     background_color = fields.Char(default='#0E6C7E', oldname='color')
     font_color = fields.Char(default='#FFFFFF')
