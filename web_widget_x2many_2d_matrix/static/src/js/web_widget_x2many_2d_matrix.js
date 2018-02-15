@@ -6,13 +6,15 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
     "use strict";
 
     var core = require('web.core');
-    var formats = require('web.formats');
-    var FieldOne2Many = core.form_widget_registry.get('one2many');
-    var Model = require('web.Model');
+    var FieldManagerMixin = require('web.FieldManagerMixin');
+    var Widget = require('web.Widget');
+    var fieldRegistry = require('web.field_registry');
+    var widgetRegistry = require('web.widget_registry');
+    var widgetOne2many = widgetRegistry.get('one2many');
     var data = require('web.data');
     var $ = require('jquery');
 
-    var WidgetX2Many2dMatrix = FieldOne2Many.extend({
+    var WidgetX2Many2dMatrix = widgetOne2Many.extend(FieldManagerMixin, {
         template: 'FieldX2Many2dMatrix',
         widget_class: 'oe_form_field_x2many_2d_matrix',
 
@@ -46,28 +48,39 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
         },
 
         // read parameters
-        init: function(field_manager, node)
-        {
-            this.field_x_axis = node.attrs.field_x_axis || this.field_x_axis;
-            this.field_y_axis = node.attrs.field_y_axis || this.field_y_axis;
-            this.field_label_x_axis = node.attrs.field_label_x_axis || this.field_x_axis;
-            this.field_label_y_axis = node.attrs.field_label_y_axis || this.field_y_axis;
-            this.x_axis_clickable = this.parse_boolean(node.attrs.x_axis_clickable || '1');
-            this.y_axis_clickable = this.parse_boolean(node.attrs.y_axis_clickable || '1');
-            this.field_value = node.attrs.field_value || this.field_value;
-            for (var property in node.attrs) {
+        init: function (parent, fieldname, record, therest) {
+            var res = this._super(parent, fieldname, record, therest);
+            FieldManagerMixin.init.call(this);
+            var node = record.fieldsInfo[therest.viewType][fieldname];
+
+            this.field_x_axis = node.field_x_axis || this.field_x_axis;
+            this.field_y_axis = node.field_y_axis || this.field_y_axis;
+            this.field_label_x_axis = node.field_label_x_axis || this.field_x_axis;
+            this.field_label_y_axis = node.field_label_y_axis || this.field_y_axis;
+            this.x_axis_clickable = this.parse_boolean(node.x_axis_clickable || '1');
+            this.y_axis_clickable = this.parse_boolean(node.y_axis_clickable || '1');
+            this.field_value = node.field_value || this.field_value;
+            for (var property in node) {
                 if (property.startsWith("field_att_")) {
-                    this.fields_att[property.substring(10)] = node.attrs[property];
+                    this.fields_att[property.substring(10)] = node[property];
                 }
             }
-            this.field_editability = node.attrs.field_editability || this.field_editability;
-            this.show_row_totals = this.parse_boolean(node.attrs.show_row_totals || '1');
-            this.show_column_totals = this.parse_boolean(node.attrs.show_column_totals || '1');
-            return this._super(field_manager, node);
+            this.field_editability = node.field_editability || this.field_editability;
+            this.show_row_totals = this.parse_boolean(node.show_row_totals || '1');
+            this.show_column_totals = this.parse_boolean(node.show_column_totals || '1');
+            this.init_fields();
+            // this.set_value(undefined);
+
+            return res;
+        },
+
+        init_fields: function() {
+            return;
         },
 
         // return a field's value, id in case it's a one2many field
         get_field_value: function(row, field, many2one_as_name)
+        // FIXME looks silly
         {
             if(this.fields[field].type == 'many2one' && _.isArray(row[field]))
             {
@@ -262,15 +275,13 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
         // parse a value from user input
         parse_xy_value: function(val)
         {
-            return formats.parse_value(
-                val, {'type': this.fields[this.field_value].type});
+                return val;
         },
 
         // format a value from the database for display
         format_xy_value: function(val)
         {
-            return formats.format_value(
-                val, {'type': this.fields[this.field_value].type});
+                return val;
         },
 
         // compute totals
@@ -412,7 +423,11 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
         },
     });
 
-    core.form_widget_registry.add('x2many_2d_matrix', WidgetX2Many2dMatrix);
+    fieldRegistry.add(
+        'x2many_2d_matrix', WidgetX2Many2dMatrix
+    );
 
-    return WidgetX2Many2dMatrix;
+    return {
+        WidgetX2Many2dMatrix: WidgetX2Many2dMatrix
+    };
 });
