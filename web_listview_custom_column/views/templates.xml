@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="web_listview_custom_column assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/web_listview_custom_column/static/src/js/web_listview_custom_column.js"></script>
+                <link rel="stylesheet" href="/web_listview_custom_column/static/src/css/web_listview_custom_column.css"/>
+            </xpath>
+        </template>
+    </data>
+</openerp>

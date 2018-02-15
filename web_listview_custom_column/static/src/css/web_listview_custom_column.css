@@ -1,0 +1,38 @@
+.openerp .oe_view_manager_custom_column
+{
+    height: 24px;
+    line-height: 24px;
+    display: inline-block;
+    border: 1px solid #ababab;
+    cursor: pointer;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+.openerp .oe_view_manager_custom_column a
+{
+    padding: 1px 6px;
+    color: #4c4c4c;
+}
+.openerp .oe_view_manager_custom_column a.active i
+{
+    text-shadow: 0 0 3px #ababab;
+}
+.openerp .oe_view_manager_custom_column select
+{
+    margin: 1px;
+    background: transparent;
+}
+.openerp .oe_list th .oe_custom_column_remove,
+.openerp .oe_list th .oe_custom_column_left,
+.openerp .oe_list th .oe_custom_column_right
+{
+    color: #4c4c4c;
+    font-size: smaller;
+}
+.openerp .oe_list th .oe_custom_column_remove:hover,
+.openerp .oe_list th .oe_custom_column_left:hover,
+.openerp .oe_list th .oe_custom_column_right:hover
+{
+    text-shadow: 0px 0px 1px;
+}
