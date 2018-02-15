@@ -94,6 +94,7 @@
             <field name="arch" type="xml">
                 <kanban default_group_by="category_id" create="false" class="o_kanban_small_column">
                     <field name="name"/>
+                    <field name="sequence"/>
                     <field name="category_id"/>
                     <field name="domain"/>
                     <field name="model_id"/>
