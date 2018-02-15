@@ -32,7 +32,6 @@ Usage
 Known issues
 ============
 * Reordering the Kanban Tile will result in a rendering bug where the tile loses it's `style` attribute, where the `background-color` is set, rendering the tile background as white. Refreshing the view solves it.
-* Tile sequence is not saved after reordering the tiles from the Kanban view. Sequence is only saved when reordering from the tree view.
 * Can not edit color from dashboard
 * Can not edit sequence from dashboard
 * Original context is ignored.
