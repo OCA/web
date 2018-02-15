@@ -80,7 +80,7 @@ field_att_<name>
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/162/8.0
+   :target: https://runbot.odoo-community.org/runbot/162/11.0
 
 Example
 =======
@@ -104,6 +104,7 @@ the field in the default function::
         users = self.env['res.users'].browse([1, 2, 3])
         return [
             (0, 0, {
+                'name': 'Sample task name',
                 'project_id': p.id, 
                 'user_id': u.id, 
                 'planned_hours': 0,
@@ -158,7 +159,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues
 <https://github.com/OCA/web/issues>`_. In case of trouble, please
 check there if your issue has already been reported. If you spotted it first,
-help us smashing it by providing a detailed and welcomed feedback.
+help us smash it by providing a detailed and welcomed feedback.
 
 Credits
 =======
@@ -168,6 +169,7 @@ Contributors
 
 * Holger Brunn <hbrunn@therp.nl>
 * Pedro M. Baeza <pedro.baeza@tecnativa.com>
+* Artem Kostyuk <a.kostyuk@mobilunity.com>
 
 Maintainer
 ----------
