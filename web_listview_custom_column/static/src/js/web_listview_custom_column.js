@@ -18,7 +18,7 @@ odoo.define('web_listview_custom_column.ListView', function(require)
             this._super.apply(this, arguments)
             debugger;
             this.ViewManager.on('switch_mode', this, function(view_type)
-            {
+            { if (!this.ViewManager.currently_switching)
                 {
                   this.options.$pager.siblings('.oe_view_manager_custom_column').toggle(view_type == 'list');
                 }
@@ -29,8 +29,7 @@ odoo.define('web_listview_custom_column.ListView', function(require)
             debugger;
             var self = this;
             this._super.apply(this, arguments);
-
-            ));
+            this.$custom_column = $(QWeb.render('ListView_CustomColumn', {widget: this }));
             if(this.options.$pager)
             {
                 this.options.$pager.siblings('.oe_view_manager_custom_column')
