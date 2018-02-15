@@ -1,17 +1,15 @@
 /* custom kanban style */
 .o_kanban_view .oe_dashboard_tile {
-    width: 150px;
     height: 150px;
 }
 
-.o_kanban_view.o_kanban_ungrouped .o_kanban_record.oe_dashboard_tile {
-    /* override max-width rules */
-    margin: 4px !important;
-    /* flex width */
-    -ms-flex: 1 1 150px;
-    -moz-flex: 1 1 150px;
-    -webkit-flex: 1 1 150px;
-    flex: 1 1 150px;
+/* Fix bug where draggin a tile results in the element losing its style */
+.o_kanban_view .oe_dashboard_tile {
+	padding: 0px !important;
+}
+.o_kanban_view .oe_dashboard_tile .tile_background {
+	padding: 8px;
+	height: 100%;
 }
 
 .o_kanban_view .oe_dashboard_tile .tile_label,

@@ -31,9 +31,7 @@ Usage
 
 Known issues
 ============
-* Reordering the Kanban Tile will result in a rendering bug where the tile loses it's `style` attribute, where the `background-color` is set, rendering the tile background as white. Refreshing the view solves it.
 * Can not edit color from dashboard
-* Can not edit sequence from dashboard
 * Original context is ignored.
 * Original domain and filter are not restored.
 * To preserve a relative date domain, you have to manually edit the tile's domain from `Configuration > User Interface > Dashboard Tile`. You can use the same variables available in filters (`uid`, `context_today()`, `current_date`, `time`, `datetime`, `relativedelta`).
