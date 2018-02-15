@@ -2,9 +2,17 @@
 //Copyright 2017 Therp BV <http://therp.nl>
 //License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-openerp.web_listview_custom_column = function(instance)
+odoo.define('web_listview_custom_column.view_management', function(require)
 {
-    instance.web.ListView.include({
+    "use strict";
+    var ControlPanelMixin = require('web.ControlPanelMixin');
+    var core = require('web.core');
+    var ListView = require('web.ListView');
+    var Model = require('web.DataModel');
+    var session = require('web.session');
+    var Widget = require('web.Widget');
+
+    ListView.include({
         init: function(parent, dataset, view_id, options)
         {
             this._super.apply(this, arguments)

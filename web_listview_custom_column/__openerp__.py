@@ -20,5 +20,4 @@
     "qweb": [
         'static/src/xml/web_listview_custom_column.xml',
     ],
-    "installable": False,
 }
