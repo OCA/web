@@ -2,32 +2,34 @@
 //Copyright 2017 Therp BV <http://therp.nl>
 //License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-odoo.define('web_listview_custom_column.view_management', function(require)
+odoo.define('web_listview_custom_column.ListView', function(require)
 {
     "use strict";
-    var ControlPanelMixin = require('web.ControlPanelMixin');
     var core = require('web.core');
     var ListView = require('web.ListView');
     var Model = require('web.DataModel');
     var session = require('web.session');
     var Widget = require('web.Widget');
+    var QWeb = core.qweb;
 
     ListView.include({
         init: function(parent, dataset, view_id, options)
         {
             this._super.apply(this, arguments)
+            debugger;
             this.ViewManager.on('switch_mode', this, function(view_type)
             {
-                this.options.$pager.siblings('.oe_view_manager_custom_column')
-                    .toggle(view_type == 'list');
+                {
+                  this.options.$pager.siblings('.oe_view_manager_custom_column').toggle(view_type == 'list');
+                }
             });
         },
         load_list: function()
         {
+            debugger;
             var self = this;
             this._super.apply(this, arguments);
-            this.$custom_column = jQuery(instance.web.qweb.render(
-                'ListView.CustomColumn', {widget: this}
+
             ));
             if(this.options.$pager)
             {
@@ -128,4 +130,4 @@ odoo.define('web_listview_custom_column.view_management', function(require)
             .then(this.proxy(this.reload_content));
         },
     });
-};
+});
