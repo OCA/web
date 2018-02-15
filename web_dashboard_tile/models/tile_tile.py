@@ -158,7 +158,8 @@ class TileTile(models.Model):
             return
         fields = [f.name for f in [
             self.primary_field_id, self.secondary_field_id] if f]
-        read_vals = model.search_read(eval(domain, eval_context), fields)
+        read_vals = fields and\
+            model.search_read(eval(domain, eval_context), fields) or []
         for f in ['primary_', 'secondary_']:
             f_function = f + 'function'
             f_field_id = f + 'field_id'
