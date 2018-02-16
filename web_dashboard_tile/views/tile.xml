@@ -152,11 +152,15 @@
         <record model="ir.ui.view" id="dashboard_tile_category_form_view">
             <field name="model">tile.category</field>
             <field name="arch" type="xml">
-                <form string="Stage of Notes">
-                    <group>
+                <form string="Category">
+                    <group col="4" colspan="4">
                         <field name="name"/>
+	                    <field name="sequence"/>
+	                    <field name="fold"/>
                     </group>
                 </form>
+
+
             </field>
         </record>
 
