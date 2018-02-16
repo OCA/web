@@ -38,19 +38,19 @@ To insert a Bokeh chart in a view proceed as follows:
 
     bokeh_chart = fields.Text(
         string='Bokeh Chart',
-        compute=_compute_bokeh_chart)
+        compute='_compute_bokeh_chart',
+    )
 
 #. In its computed method do::
 
     def _compute_bokeh_chart(self):
         for rec in self:
             # Design your bokeh figure:
-            p = figure()
+            p = figure()  # import that as `from bokeh.plotting import figure`
             line = p.line([0, 2], [1, 8], line_width=5)
             # (...)
-            # Get the html components and convert them to string into the field.
-            script, div = components(p)
-            rec.bokeh_chart = '%s%s' % (div, script)
+            # `p.html.data` contains both markup and the script of a chart.
+            rec.bokeh_chart = p.html.data
 
 #. In the view, add something like this wherever you want to display your
    bokeh chart::
@@ -80,6 +80,7 @@ Contributors
 
 * Jordi Ballester Alomar <jordi.ballester@eficent.com>
 * Lois Rilo Antelo <lois.rilo@eficent.com>
+* Artem Kostyuk <a.kostyuk@mobilunity.com>
 
 Maintainer
 ----------
