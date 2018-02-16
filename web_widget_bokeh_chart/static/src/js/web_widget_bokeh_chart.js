@@ -1,20 +1,16 @@
 odoo.define('web_widget_bokeh_chart', function (require) {
 "use strict";
 
-    var core = require('web.core');
-    var form_common = require('web.form_common');
-    var formats = require('web.formats');
-    var Model = require('web.Model');
+    var fieldRegistry = require('web.field_registry');
+    var AbstractField = require('web.AbstractField');
 
-    var QWeb = core.qweb;
-
-    var BokehChartWidget = form_common.AbstractField.extend({
-        render_value: function() {
-            var val = this.get('value');
+    var BokehChartWidget = AbstractField.extend({
+        start: function() {
+            var val = this.value;
             this.$el.html(val);
         }
     });
-    core.form_widget_registry.add('bokeh_chart', BokehChartWidget);
+    fieldRegistry.add('bokeh_chart', BokehChartWidget);
     return {
         BokehChartWidget: BokehChartWidget
     };
