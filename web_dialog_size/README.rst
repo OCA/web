@@ -19,7 +19,7 @@ parameter `web_dialog_size.default_maximize` to `1`.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/162/10.0
+   :target: https://runbot.odoo-community.org/runbot/162/11.0
 
 Bug Tracker
 ===========
@@ -47,6 +47,7 @@ Contributors
 * Siddharth Bhalgami <siddharth.bhalgami@gmail.com>
 * Wolfgang Pichler <wpichler@callino.at>
 * David Vidal <david.vidal@tecnativa.com>
+* Quentin Theuret <quentin.theuret@amaris.com>
 
 Do not contact contributors directly about support or help with technical issues.
 
