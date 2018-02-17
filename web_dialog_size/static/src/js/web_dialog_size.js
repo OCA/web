@@ -1,34 +1,38 @@
 odoo.define('web_dialog_size.web_dialog_size', function (require) {
 'use strict';
 
-var Model = require('web.DataModel');
+var rpc = require('web.rpc');
 var Dialog = require('web.Dialog');
 
 Dialog.include({
 
-    init: function (parent, options) {
+    willStart: function () {
         var self = this;
-        this._super.apply(this, arguments);
-        self.$modal.find('.dialog_button_extend').on('click', self.proxy('_extending'));
-        self.$modal.find('.dialog_button_restore').on('click', self.proxy('_restore'));
-
-        new Model('ir.config_parameter').query(['key', 'value']).
-        filter([['key', '=', 'web_dialog_size.default_maximize']]).all().then(function(default_maximize) {
-            if (default_maximize.length && default_maximize[0].value == 1) {
-                self._extending();
-            } else {
-                self._restore();
-            }
+        return this._super.apply(this, arguments).then(function () {
+            self.$modal.find('.dialog_button_extend').on('click', self.proxy('_extending'));
+            self.$modal.find('.dialog_button_restore').on('click', self.proxy('_restore'));
+            return rpc.query({
+                model: 'ir.config_parameter',
+                method: 'get_param',
+                args: ['web_dialog_size.default_maximize',],
+            }).then(function(default_maximize) {
+                if (default_maximize === "True" || default_maximize === 1) {
+                    self._extending();
+                } else {
+                    self._restore();
+                }
+            });
         });
     },
 
     open: function() {
-        var res = this._super.apply(this, arguments);
-        this.$modal.draggable({
-            handle: '.modal-header',
-            helper: false
-        });
-        return res;
+        this._super.apply(this, arguments);
+        if (this.$modal) {
+            this.$modal.draggable({
+                handle: '.modal-header',
+                helper: false
+            });
+        }
     },
 
     close: function() {
@@ -36,8 +40,7 @@ Dialog.include({
         if (draggable) {
             this.$modal.draggable("destroy");
         }
-        var res = this._super.apply(this, arguments);
-        return res;
+        return this._super.apply(this, arguments);
     },
 
     _extending: function() {
