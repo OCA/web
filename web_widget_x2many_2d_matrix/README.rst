@@ -9,12 +9,13 @@
 This module allows to show an x2many field with 3-tuples
 ($x_value, $y_value, $value) in a table
 
-========= =========== ===========
-\          $x_value1   $x_value2
-========= =========== ===========
-$y_value1 $value(1/1) $value(2/1)
-$y_value2 $value(1/2) $value(2/2)
-========= =========== ===========
++-----------+-------------+-------------+
+|           | $x_value1   | $x_value2   |
++===========+=============+=============+
+| $y_value1 | $value(1/1) | $value(2/1) |
++-----------+-------------+-------------+
+| $y_value2 | $value(1/2) | $value(2/2) |
++-----------+-------------+-------------+
 
 where `value(n/n)` is editable.
 
@@ -59,12 +60,6 @@ field_label_x_axis
     Use another field to display in the table header
 field_label_y_axis
     Use another field to display in the table header
-x_axis_clickable
-    It indicates if the X axis allows to be clicked for navigating to the field
-    (if it's a many2one field). True by default
-y_axis_clickable
-    It indicates if the Y axis allows to be clicked for navigating to the field
-    (if it's a many2one field). True by default
 field_value
     Show this field as value
 show_row_totals
@@ -73,10 +68,6 @@ show_row_totals
 show_column_totals
     If field_value is a numeric field, it indicates if you want to calculate
     column totals. True by default
-field_att_<name>
-    Declare as many options prefixed with this string as you need for binding
-    a field value with an HTML node attribute (disabled, class, style...)
-    called as the `<name>` passed in the option.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
@@ -92,7 +83,7 @@ data model and point to it from our wizard. The crucial part is that we fill
 the field in the default function::
 
  from odoo import fields, models
- 
+
  class MyWizard(models.TransientModel):
     _name = 'my.wizard'
 
@@ -105,8 +96,8 @@ the field in the default function::
         return [
             (0, 0, {
                 'name': 'Sample task name',
-                'project_id': p.id, 
-                'user_id': u.id, 
+                'project_id': p.id,
+                'user_id': u.id,
                 'planned_hours': 0,
                 'message_needaction': False,
                 'date_deadline': fields.Date.today(),
@@ -132,26 +123,17 @@ Now in our wizard, we can use::
      </tree>
  </field>
 
-Note that all values in the matrix must exist, so you need to create them
-previously if not present, but you can control visually the editability of
-the fields in the matrix through `field_att_disabled` option with a control
-field.
 
 Known issues / Roadmap
 ======================
 
-* It would be worth trying to instantiate the proper field widget and let it render the input
-* Let the widget deal with the missing values of the full Cartesian product,
-  instead of being forced to pre-fill all the possible values.
-* If you pass values with an onchange, you need to overwrite the model's method
-  `onchange` for making the widget work::
+* Support extra attributes on each field cell via `field_extra_attrs` param.
+  We could set a cell as not editable, required or readonly for instance.
+  The `readonly` case will also give the ability
+  to click on m2o to open related records.
 
- @api.multi
- def onchange(self, values, field_name, field_onchange):
-     if "one2many_field" in field_onchange:
-         for sub in [<field_list>]:
-             field_onchange.setdefault("one2many_field." + sub, u"")
-     return super(model, self).onchange(values, field_name, field_onchange)
+* Support limit total records in the matrix. Ref: https://github.com/OCA/web/issues/901
+
 
 Bug Tracker
 ===========
@@ -170,6 +152,9 @@ Contributors
 * Holger Brunn <hbrunn@therp.nl>
 * Pedro M. Baeza <pedro.baeza@tecnativa.com>
 * Artem Kostyuk <a.kostyuk@mobilunity.com>
+* Simone Orsi <simone.orsi@camptocamp.com>
+* Timon Tschanz <timon.tschanz@camptocamp.com>
+
 
 Maintainer
 ----------
