@@ -1,0 +1,2 @@
+# web_widget_bokeh_chart
+bokeh==0.12.7
