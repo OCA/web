@@ -1,95 +1,129 @@
-odoo.define('web_tree_dynamic_colored_field', function(require)
-{
+odoo.define('web_tree_dynamic_colored_field', function (require) {
     'use strict';
-    var ListView = require('web.ListView'),
-        pyeval = require('web.pyeval'),
-        py = window.py;
 
-    var pair_colors = function(pair_color){
-        if (pair_color !== ""){
-            var pair_list = pair_color.split(':'),
-                color = pair_list[0],
-                expression = pair_list[1];
-            return [color, py.parse(py.tokenize(expression)), expression];
-        }
-    };
+    var ListRenderer = require('web.ListRenderer');
+    var pyeval = require('web.pyeval');
 
-    var get_eval_context = function(record){
-        return _.extend(
-            {},
-            record.attributes,
-            pyeval.context()
-        );
-    };
-
-    var colorize_helper = function(obj, record, column, field_attribute, css_attribute){
-        var result = '';
-        if (column[field_attribute]){
-            var colors = _(column[field_attribute].split(';'))
-            .chain()
-            .map(pair_colors)
-            .value()
-            .filter(function CheckUndefined(value, index, ar) {
-                return value !== undefined;
-            });
-            var ctx = get_eval_context(record);
-            for(var i=0, len=colors.length; i<len; ++i) {
-                var pair = colors[i],
-                    color = pair[0],
-                    expression = pair[1];
-                if (py.evaluate(expression, ctx).toJSON()) {
-                    result = css_attribute + ': ' + color + ';';
+    ListRenderer.include({
+        /**
+         * Look up for a `color_field` parameter in tree `colors` attribute
+         *
+         * @override
+         */
+        _renderBody: function () {
+            if (this.arch.attrs.colors) {
+                var colorField = this.arch.attrs.colors.split(';')
+                .filter(color => color.trim().startsWith('color_field'))[0]
+                .split(':')[1]
+                .trim();
+                // validate the presence of that field in tree view
+                var fieldNames = _(this.columns).map(
+                    (value) => { return value.attrs.name; }
+                );
+                if (fieldNames.indexOf(colorField) === -1) {
+                    console.warn(
+                        "No field named '" + colorField + "' present in view."
+                    );
+                } else {
+                    this.colorField = colorField;
                 }
             }
-        }
-        return result;
-    };
-
-    var colorize = function(record, column){
-        var res = '';
-        res += colorize_helper(this, record, column, 'bg_color', 'background-color');
-        res += colorize_helper(this, record, column, 'fg_color', 'color');
-        return res;
-    };
-
-    ListView.List.include({
-        init: function(group, opts){
-            this._super(group, opts);
-            this.columns.fct_colorize = colorize;
+            return this._super();
         },
-    });
-
-    ListView.include({
-        load_view: function()
-        {
-            var self = this;
-            return this._super.apply(this, arguments)
-            .then(function()
-            {
-                // the style_for helper is only called if one of colors or
-                // fonts is not null
-                if(self.fields_view.arch.attrs.color_field)
-                {
-                    self.colors = [];
-                }
-            });
+        /**
+         * Colorize a cell during it's render
+         *
+         * @override
+         */
+        _renderBodyCell: function (record, node, colIndex, options) {
+            var $td = this._super.apply(this, arguments);
+            var ctx = this.getEvalContext(record);
+            this.applyColorize($td, record, node, ctx);
+            return $td;
         },
-        style_for: function (record)
-        {
-            var result = this._super.apply(this, arguments);
-            if(this.fields_view.arch.attrs.color_field)
-            {
-                var color = py.evaluate(
-                    py.parse(py.tokenize(
-                        this.fields_view.arch.attrs.color_field
-                    )),
-                    get_eval_context(record)).toJSON();
-                if(color)
-                {
-                    result += 'color: ' + color;
+
+        /**
+         * Colorize the current cell depending on expressions provided.
+         *
+         * @param {Query Node} $td a <td> tag inside a table representing a list view
+         * @param {Object} node an XML node (must be a <field>)
+         */
+        applyColorize: function ($td, record, node, ctx) {
+            // safely resolve value of `color_field` given in <tree>
+            var treeColor = record.data[this.colorField];
+            if (treeColor) {
+                $td.css('color', treeColor);
+            }
+            // apply <field>'s own `options`
+            if (!node.attrs.options) { return; }
+            var nodeOptions = JSON.parse(node.attrs.options);
+            this.applyColorizeHelper($td, nodeOptions, node, 'fg_color', 'color', ctx);
+            this.applyColorizeHelper($td, nodeOptions, node, 'bg_color', 'background-color', ctx);
+        },
+        /**
+         * @param {Object} nodeOptions a mapping of nodeOptions parameters to the color itself
+         * @param {Object} node an XML node (must be a <field>)
+         * @param {string} nodeAttribute an attribute of a node to apply a style onto
+         * @param {string} cssAttribute a real CSS-compatible attribute
+         */
+        applyColorizeHelper: function ($td, nodeOptions, node, nodeAttribute, cssAttribute, ctx) {
+            if (nodeOptions[nodeAttribute]) {
+                var colors = _(nodeOptions[nodeAttribute].split(';'))
+                    .chain()
+                    .map(this.pairColors)
+                    .value()
+                    .filter(function CheckUndefined(value, index, ar) {
+                        return value !== undefined;
+                    });
+                for (var i=0, len=colors.length; i<len; ++i) {
+                    var pair = colors[i],
+                        color = pair[0],
+                        expression = pair[1];
+                    if (py.evaluate(expression, ctx).toJSON()) {
+                        $td.css(cssAttribute, color);
+                    }
                 }
             }
-            return result;
         },
+
+        /**
+         * Parse `<color>: <field> <operator> <value>` forms to
+         * evaluatable expressions
+         *
+         * @param {string} pairColor `color: expression` pair
+         */
+        pairColors: function (pairColor) {
+            if (pairColor !== "") {
+                var pairList = pairColor.split(':'),
+                    color = pairList[0],
+                    // if one passes a bare color instead of an expression,
+                    // then we consider that color is to be shown in any case
+                    expression = pairList[1]? pairList[1] : 'True';
+                return [color, py.parse(py.tokenize(expression)), expression];
+            }
+            return undefined;
+        },
+        /**
+         * Construct domain evaluation context, mostly by passing
+         * record's fields's values to local scope.
+         *
+         * @param {Object} record a record to build a context from
+         */
+        getEvalContext: function (record) {
+            var ctx = _.extend(
+                {},
+                record.data,
+                pyeval.context()
+            );
+            for (var key in ctx) {
+                var value = ctx[key];
+                if (ctx[key] instanceof moment) {
+                    // date/datetime fields are represented w/ Moment objects
+                    // docs: https://momentjs.com/
+                    ctx[key] = value.format('YYYY-MM-DD hh:mm:ss');
+                }
+            }
+            return ctx;
+        }
     });
 });
