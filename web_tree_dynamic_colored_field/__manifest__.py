@@ -1,13 +1,12 @@
-# -*- coding: utf-8 -*-
-# © 2015 Camptocamp SA, Damien Crier
+# Copyright 2015-2018 Camptocamp SA, Damien Crier
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     'name': 'Colorize field in tree views',
     'summary': 'Allows you to dynamically color fields on tree views',
     'category': 'Hidden/Dependency',
-    'version': '10.0.1.0.0',
+    'version': '11.0.1.0.0',
     'depends': ['web'],
-    'author': "Camptocamp,Therp BV,Odoo Community Association (OCA)",
+    'author': "Camptocamp, Therp BV, Odoo Community Association (OCA)",
     'license': 'AGPL-3',
     'website': 'https://github.com/OCA/web',
     'demo': [
@@ -16,7 +15,5 @@
     'data': [
         'views/web_tree_dynamic_colored_field.xml',
     ],
-    'qweb': [
-        'static/src/xml/*.xml',
-    ],
+    'installable': True,
 }
