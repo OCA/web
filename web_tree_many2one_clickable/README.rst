@@ -1,4 +1,4 @@
-.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
+.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
@@ -6,42 +6,21 @@
 Clickable many2one fields for tree views
 ========================================
 
-This addon provides a separate widget to allow many2one or reference fields in
-a tree view open the linked resource when clicking on their name.
-
-You can also define a system parameter to have this behaviour for all the
-existing many2one fields in tree views.
-
-Installation
-============
-
-Install it the regular way.
+This addon forces Odoo to use many2one widget on a many2one fields in
+tree views. This allows users to open linked resources from trees directly,
+without accessing the form.
 
 Configuration
 =============
 
-After installation, all many2one and reference fields will be clickable
-by default. You can change this in *Configuration > Technical > Parameters > System parameters*,
-parameter with name `web_tree_many2one_clickable.default` setting it to `false`.
+After installation, all many2one and reference fields will be clickable by default.
 
 Usage
 =====
 
-For the widget option, you need to add `widget="many2one_clickable"` attribute
-in the XML field definition in the tree view.
-
-For example:
-
-`<field name="partner_id" widget="many2one_clickable" />`
-
-will open the linked partner in a form view.
-
-If system parameter `web_tree_many2one_clickable.default` is `true` and you
-need to disable one field, then use `widget="many2one_unclickable"`
-
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/162/10.0
+   :target: https://runbot.odoo-community.org/runbot/162/11.0
 
 
 Bug Tracker
@@ -50,7 +29,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues
 <https://github.com/OCA/web/issues>`_. In case of trouble, please
 check there if your issue has already been reported. If you spotted it first,
-help us smashing it by providing a detailed and welcomed feedback.
+help us smash it by providing a detailed and welcomed feedback.
 
 
 Credits
@@ -63,6 +42,7 @@ Contributors
 * Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>
 * Antonio Espinosa <antonio.espinosa@tecnativa.com>
 * Sodexis <dev@sodexis.com>
+* Artem Kostyuk <a.kostyuk@mobilunity.com>
 
 Maintainer
 ----------
