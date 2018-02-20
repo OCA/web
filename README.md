@@ -22,7 +22,7 @@ addon | version | summary
 [support_branding](support_branding/) | 9.0.2.0.0 | Adds your branding to an Odoo instance
 [web_access_rule_buttons](web_access_rule_buttons/) | 9.0.1.0.0 | Disable Edit button if access rules prevent this action
 [web_advanced_search_x2x](web_advanced_search_x2x/) | 9.0.1.0.1 | Use a search widget in advanced search for x2x fields
-[web_dashboard_tile](web_dashboard_tile/) | 9.0.1.0.0 | Add Tiles to Dashboard
+[web_dashboard_tile](web_dashboard_tile/) | 9.0.1.1.0 | Add Tiles to Dashboard
 [web_decimal_numpad_dot](web_decimal_numpad_dot/) | 9.0.1.0.0 | Allows using numpad dot to enter period decimal separator
 [web_dialog_size](web_dialog_size/) | 9.0.1.0.0 | A module that lets the user expand a dialog box to the full screen width.
 [web_duplicate_visibility](web_duplicate_visibility/) | 9.0.1.0.1 | Manage the duplicate button visibiliy
