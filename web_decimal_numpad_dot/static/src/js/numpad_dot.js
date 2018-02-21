@@ -39,12 +39,12 @@ odoo.define("web_decimal_numpad_dot.FieldFloat", function (require) {
             to = from + point.length
             this.$input.prop("selectionStart", to).prop("selectionEnd", to);
         },
-    }
+    };
 
     basic_fields.FieldFloat.include(NumpadDotReplaceMixin);
     basic_fields.FieldMonetary.include(NumpadDotReplaceMixin);
 
     return {
         NumpadDotReplaceMixin: NumpadDotReplaceMixin,
-    }
+    };
 });
