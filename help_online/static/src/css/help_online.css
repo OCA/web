@@ -1,3 +1,7 @@
+a.o_help_online_button {
+  color: forestgreen;
+}
+
 a.o_help_online_not_found {
-  background-color: #df3f3f;
+  color: #df3f3f;
 }

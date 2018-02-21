@@ -66,7 +66,7 @@ odoo.define('oca.HelpOnline', function (require) {
                 control_elements.$help_online_buttons = $('<div/>'); 
             }
             var self = this;
-            this.rpc('/help_online/build_url', {model: this.dataset.model, view_type: this.active_view.type}).then(function(result) {
+            this._rpc({route: '/help_online/build_url', params: {model: this.dataset.model, view_type: this.active_view.type}}).then(function(result) {
                 if (result && ! _.isEmpty(result)) {
                     var $helpButton =  self.render_help_button(result);
                     control_elements.$help_online_buttons = $helpButton;

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
@@ -6,7 +5,7 @@ import logging
 import base64
 import time
 import copy
-import urlparse
+from urllib.parse import urlparse
 from werkzeug.routing import Map, Rule
 from lxml import etree as ET
 from odoo import models, fields, api, exceptions

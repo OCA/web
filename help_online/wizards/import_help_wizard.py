@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import base64
-from cStringIO import StringIO
+from io import StringIO
 from lxml import etree
 import logging
 import os
@@ -42,7 +41,7 @@ class ImportHelpWizard(models.TransientModel):
                 etree.parse(
                     os.path.join(config['root_path'], 'import_xml.rng')))
             try:
-                relaxng.assert_(doc)
+                relaxng.assertTrue(doc)
             except Exception:
                 _logger.info('The XML file does not fit the required schema !',
                              exc_info=True)

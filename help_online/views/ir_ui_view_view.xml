@@ -6,7 +6,7 @@
         <field name="model">ir.ui.view</field>
         <field name="arch" type="xml">
             <xpath expr="//filter[last()]" position="after">
-                <filter name="website" string="Website Page" domain="[('type', '=', 'qweb'),('page', '=', True)]"/>
+                <filter name="website" string="Website Page" domain="[('type', '=', 'qweb'),('page_ids', '!=', False)]"/>
             </xpath>
         </field>
     </record>
@@ -17,7 +17,7 @@
         <field name="model">ir.ui.view</field>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='type']" position="after">
-                <field name="page" string="Website Page?" readonly="1" attrs="{'invisible': [('type', '!=', 'qweb')]}"/>
+                <field name="page_ids" string="Website Page?" readonly="1" attrs="{'invisible': [('type', '!=', 'qweb')]}"/>
             </xpath>
         </field>
     </record>
