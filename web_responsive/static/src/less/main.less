@@ -46,6 +46,25 @@ main {
 }
 
 .o_web_client {
+    &.o_fullscreen {
+        #oe_main_menu_navbar {
+            display: none;
+        }
+        .o_main .o_sub_menu {
+            display: none;
+         }
+        .navbar {
+            display: none;
+        }
+        .navbar-default main-nav{
+            display: none
+        }
+        .main-nav{
+            display: none
+        }
+
+     }
+
     >.o_main {
         overflow: auto;
         > .o_main_content {
