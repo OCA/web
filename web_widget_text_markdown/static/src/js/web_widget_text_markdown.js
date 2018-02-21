@@ -1,89 +1,135 @@
-openerp.web_widget_text_markdown = function (oe) {
+odoo.define('web.web_widget_text_markdown', function(require) {
 
-    var _lt = oe.web._lt;
+    "use strict";
 
-    oe.web.form.widgets.add('bootstrap_markdown', 'openerp.web_widget_text_markdown.FieldTextMarkDown');
+    var ajax = require('web.ajax');
 
-    oe.web_widget_text_markdown.FieldTextMarkDown = oe.web.form.AbstractField.extend(
-        oe.web.form.ReinitializeFieldMixin,
-        {
+    var core = require('web.core');
+    var Model = require('web.Model');
+    var Widget = require('web.Widget');
+    var common = require('web.form_common');
+    var formats = require('web.formats');
+    var session = require('web.session');
+
+    var QWeb = core.qweb;
+    var _lt = core._lt;
+
+    var accented_letters_mapping = {
+        'a': '[àáâãäå]',
+        'ae': 'æ',
+        'c': 'ç',
+        'e': '[èéêë]',
+        'i': '[ìíîï]',
+        'n': 'ñ',
+        'o': '[òóôõö]',
+        'oe': 'œ',
+        'u': '[ùúûűü]',
+        'y': '[ýÿ]',
+        ' ': '[()\\[\\]]',
+    };
+
+    var FieldTextMarkDown = common.AbstractField.extend(
+        common.ReinitializeFieldMixin, {
 
             template: 'FieldMarkDown',
-            display_name: _lt('MarkDown'),
-            widget_class: 'oe_form_field_bootstrap_markdown',
-            events: {
-                'change input': 'store_dom_value'
-            },
 
-            init: function (field_manager, node) {
-                this._super(field_manager, node);
-                this.$txt = false;
-
-                this.old_value = null;
-            },
-
-            parse_value: function(val, def) {
-                return oe.web.parse_value(val, this, def);
-            },
-
-            initialize_content: function () {
-                // Gets called at each redraw of widget
-                //  - switching between read-only mode and edit mode
-                //  - BUT NOT when switching to next object.
-                this.$txt = this.$el.find('textarea[name="' + this.name + '"]');
-                if (!this.get('effective_readonly')) {
-                    this.$txt.markdown({autofocus: false, savable: false});
-                }
-                this.old_value = null; // will trigger a redraw
-            },
-
-            store_dom_value: function () {
-                if (!this.get('effective_readonly') &&
-                    this._get_raw_value() !== '' &&
-                    this.is_syntax_valid()) {
-                        // We use internal_set_value because we were called by
-                        // ``.commit_value()`` which is called by a ``.set_value()``
-                        // itself called because of a ``onchange`` event
-                        this.internal_set_value(
-                            this.parse_value(
-                                this._get_raw_value()));
-                            }
-                        },
-
-            commit_value: function () {
-                this.store_dom_value();
-                return this._super();
-            },
-
-            _get_raw_value: function() {
-                if (this.$txt === false)
-                    return '';
-                    return this.$txt.val();
-            },
-
-            render_value: function () {
-                // Gets called at each redraw/save of widget
-                //  - switching between read-only mode and edit mode
-                //  - when switching to next object.
-
-                var show_value = this.format_value(this.get('value'), '');
-                if (!this.get("effective_readonly")) {
-                    this.$txt.val(show_value);
-                    this.$el.trigger('resize');
-                } else {
-                    // avoids loading markitup...
-                    marked.setOptions({
-                        highlight: function (code) {
-                            return hljs.highlightAuto(code).value;
-                        }
-                    });
-                    this.$el.find('span[class="oe_form_text_content"]').html(marked(show_value));
-                }
-            },
-
-            format_value: function (val, def) {
-                return oe.web.format_value(val, this, def);
-            }
+            willStart: function() {
+              if (!window.ace && !window.markdown_loaded) {
+                var theme = '/web_widget_text_ace/static/lib/ace/theme-' + this.theme + '.js';
+                var mode = '/web_widget_text_ace/static/lib/ace/mode-' + this.mode + '.js';
+                window.markdown_loaded = ajax.loadJS('/web_widget_text_ace/static/lib/ace/ace.js').then(function () {
+                return $.when(ajax.loadJS('/web_widget_text_ace/static/lib/ace/theme-monokai.js'),
+                    ajax.loadJS('/web_widget_text_ace/static/lib/ace/mode-markdown.js'));
+            });
         }
-    );
-};
+              return $.when(this._super(), window.markdown_loaded);
+            },
+
+            makeId: function() {
+                var i, opt, str;
+                str = "";
+                opt = "abcdefghijklmnopqrstuvwxyz";
+                i = 1;
+                while (i < 16) {
+                    str += opt.charAt(Math.floor(Math.random() * opt.length));
+                    i++;
+                }
+                return 'ace-' + str;
+            },
+
+            init: function(field_manager, node) {
+                this._super(field_manager, node);
+                this.mode = node.attrs['data-editor-mode'] !== undefined ? node.attrs['data-editor-mode'] : "markdown";
+                this.theme = node.attrs['data-editor-theme'] !== undefined ? node.attrs['data-editor-theme'] : "monokai";
+                this.md = markdownit({
+                    html: true,
+                    linkify: true,
+                    typographer: true,
+                    highlight: function(str, lang) {
+                        if (lang && hljs.getLanguage(lang)) {
+                            try {
+                                return hljs.highlight(lang, str).value;
+                            } catch (__) {}
+                        }
+
+                        try {
+                            return hljs.highlightAuto(str).value;
+                        } catch (__) {}
+
+                        return ''; // use external default escaping
+                    }
+                });
+
+                this.md.use(markdownItAttrs);
+            },
+
+            initialize_content: function() {
+                if (! this.get("effective_readonly")) {
+
+                  var self = this;
+
+                  this.aceEditor = ace.edit(this.$('.ace_view_editor')[0]);
+                  this.aceEditor.setOptions({"maxLines": Infinity});
+                  this.aceEditor.setTheme("ace/theme/" + this.theme);
+                  this.aceEditor.$blockScrolling = true;
+
+                  this.aceSession = this.aceEditor.getSession();
+                  this.aceSession.setUseWorker(false);
+                  this.aceSession.setMode("ace/mode/"+(this.options.mode || 'markdown'));
+
+                  this.aceEditor.on("blur", function() {
+                    if (self.aceSession.getUndoManager().hasUndo()) {
+                        self.set_value(self.aceSession.getValue());
+                    }
+                  });
+
+                }
+            },
+            destroy_content: function() {
+              if (this.aceEditor) {
+                this.aceEditor.destroy();
+              }
+            },
+
+            render_value: function() {
+              if (! this.get("effective_readonly")) {
+            var value = formats.format_value(this.get('value'), this);
+            this.aceSession.setValue(value);
+
+        } else {
+          var txt = this.md.render(this.get("value") || '');
+          this.$(".oe_form_text_content").html(txt);
+        }
+            },
+            focus: function() {
+        return this.aceEditor.focus();
+    },
+  });
+
+
+    core.form_widget_registry.add('bootstrap_markdown', FieldTextMarkDown);
+
+    return {
+            FieldTextMarkDown: FieldTextMarkDown
+        };
+});

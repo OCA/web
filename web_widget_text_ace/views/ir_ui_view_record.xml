@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <record id="ir_ui_view_form_inherit_web_ace_editor" model="ir.ui.view">
+      <field name="name">ir.ui.view.form.inherit.web_ace_editor</field>
+      <field name="arch" type="xml">
+        <data>
+          <field name="arch_base" position="replace">
+            <field name="arch_base" widget="ace_editor"/>
+          </field>
+        </data>
+      </field>
+      <!-- one2many field 'inherit_children_ids' managed on the ir.ui.view side -->
+      <field name="inherit_id" ref="base.view_view_form"/>
+      <!-- one2many field 'inherited_option_ids' managed on the ir.ui.view side -->
+      <field name="model">ir.ui.view</field>
+      <!-- one2many field 'model_ids' managed on the ir.model.data side -->
+      <field name="page" eval="False"/>
+      <field name="priority">16</field>
+      <field name="type">form</field>
+    </record>
+  </data>
+</openerp>

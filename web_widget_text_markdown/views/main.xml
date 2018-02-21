@@ -9,7 +9,8 @@
                 <link rel="stylesheet" href="/web_widget_text_markdown/static/lib/highlight/styles/railscasts.css"/>
                 <link rel="stylesheet" href="/web_widget_text_markdown/static/src/css/main.css"/>
                 <script type="text/javascript" src="/web_widget_text_markdown/static/lib/highlight/highlight.min.js"></script>
-                <script type="text/javascript" src="/web_widget_text_markdown/static/lib/marked/marked.js"></script>
+                <script type="text/javascript" src="/web_widget_text_markdown/static/lib/markdown-it/markdown-it-attrs.js"></script>
+                <script type="text/javascript" src="/web_widget_text_markdown/static/lib/markdown-it/markdown-it.js"></script>
                 <script type="text/javascript" src="/web_widget_text_markdown/static/lib/bootstrap-markdown/bootstrap-markdown.js"></script>
                 <script type="text/javascript" src="/web_widget_text_markdown/static/src/js/web_widget_text_markdown.js"></script>
             </xpath>

@@ -3,15 +3,13 @@ Add new text field form widget
 
 This module adds a new widget for text field in form view on Odoo:
 
-- In readonly mode, it uses text contents to parse and render them to html markdown syntax.
-- In write mode, use [bootstrap-markdown][1]
-
-[1]: http://www.codingdrama.com/bootstrap-markdown/    "bootstrap-markdown"
+- In readonly mode, use `markdown-it parser <https://github.com/markdown-it/markdown-it>`_ to render html.
+- In write mode, `ace editor <https://ace.c9.io/>`_ is in action with markdown editor mode.
 
 Installation
 ============
 
-It was tested on openerp trunk, 8.0 branch.
+It was tested on Odoo 9.0c and 9.0e branch.
 
 Usage
 =====
@@ -30,6 +28,8 @@ Known issues / Roadmap
 * Add a working parsed field in tree view
 * Add ir.attachment support
 * Add images support (with drag'n'drop)
+* Improve ace integration with snippet and autocomplete.
+* Add preview and fullscreen mode.
 
 
 Bug Tracker
@@ -47,7 +47,7 @@ Credits
 Contributors
 ------------
 
-* Nicolas Jeudy <nicolas@sudokeys.com>
+* Nicolas Jeudy (Sudokeys) <https://www.github.com/njeudy>
 
 Maintainer
 ----------
@@ -61,4 +61,3 @@ This module is maintained by the OCA.
 OCA, or the Odoo Community Association, is a nonprofit organization whose mission is to support the collaborative development of Odoo features and promote its widespread use.
 
 To contribute to this module, please visit http://odoo-community.org.
-
