@@ -6,6 +6,7 @@ import base64
 import time
 import copy
 from urllib.parse import urlparse
+from urllib.parse import parse_qsl
 from werkzeug.routing import Map, Rule
 from lxml import etree as ET
 from odoo import models, fields, api, exceptions
@@ -73,13 +74,13 @@ class ExportHelpWizard(models.TransientModel):
         urls = self.img_url_map.bind("dummy.org", "/")
         for img_elem in page_node.iter('img'):
             img_src = img_elem.get('src')
-            parse_result = urlparse.urlparse(img_src)
+            parse_result = urlparse(img_src)
             path = parse_result.path
             query_args = parse_result.query
             if urls.test(parse_result.path, "GET"):
                 endpoint, kwargs = urls.match(path, "GET",
                                               query_args=query_args)
-                kwargs.update(dict(urlparse.parse_qsl(query_args)))
+                kwargs.update(dict(parse_qsl(query_args)))
                 image = None
                 # get the binary object
                 xml_id = kwargs.get('xmlid')
