@@ -6,7 +6,7 @@ odoo.define("web_decimal_numpad_dot.FieldFloat", function (require) {
     var basic_fields = require("web.basic_fields");
     var translation = require("web.translation");
 
-    basic_fields.FieldFloat.include({
+    var NumpadDotReplaceMixin = {
         init: function () {
             this.events = $.extend({}, this.events, {
                 "keydown": "numpad_dot_replace",
@@ -39,5 +39,12 @@ odoo.define("web_decimal_numpad_dot.FieldFloat", function (require) {
             to = from + point.length
             this.$input.prop("selectionStart", to).prop("selectionEnd", to);
         },
-    });
+    };
+
+    basic_fields.FieldFloat.include(NumpadDotReplaceMixin);
+    basic_fields.FieldMonetary.include(NumpadDotReplaceMixin);
+
+    return {
+        NumpadDotReplaceMixin: NumpadDotReplaceMixin,
+    };
 });
