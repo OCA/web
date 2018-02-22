@@ -92,6 +92,7 @@ Contributors
 * Jairo Llopis <jairo.llopis@tecnativa.com>
 * Dennis Sluijk <d.sluijk@onestein.nl>
 * Sergio Teruel <sergio.teruel@tecnativa.com>
+* Serpent Consulting Services Pvt. Ltd.<jay.vora@serpentcs.com>
 
 Maintainer
 ----------
