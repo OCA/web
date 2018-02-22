@@ -217,7 +217,7 @@ class ExportHelpWizard(models.TransientModel):
             return False
 
         domain = [('type', '=', 'qweb'),
-                  ('page', '=', True),
+                  ('page_ids', '!=', False),
                   '|',
                   ('name', 'like', '%s%%' % page_prefix),
                   ('name', 'like', '%s%%' % template_prefix)]
@@ -234,7 +234,7 @@ class ExportHelpWizard(models.TransientModel):
                 ir_ui_view, root.attrib.pop('t-name'))
             root.attrib['name'] = ir_ui_view.name.replace('website.', '')
             root.attrib['id'] = xml_id
-            root.attrib['page'] = 'True'
+            root.attrib['page_ids'] = 'True'
             root.attrib['key'] = ir_ui_view.key
 
             self._manage_images_on_page(root, data_node, exported_resources)
