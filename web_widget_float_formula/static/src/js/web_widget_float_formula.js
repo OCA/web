@@ -15,7 +15,7 @@ odoo.define('web_widget_float_formula', function(require) {
             for (var f in this.fields) {
                 if (!this.fields.hasOwnProperty(f)) { continue; }
                 f = this.fields[f];
-                if (f.hasOwnProperty('_formula_text')) {
+                if (f.hasOwnProperty('_formula_text') && f.$el.find('input').length > 0) {
                     f._compute_result();
                     f._clean_formula_text();
                 }
@@ -35,9 +35,10 @@ odoo.define('web_widget_float_formula', function(require) {
         var field_float = require('web.form_widgets').FieldFloat;
         field_float.include({
             start: function() {
+                this._super();
                 this.on('blurred', this, this._compute_result);
                 this.on('focused', this, this._display_formula);
-                return this._super();
+                return this;
             },
 
             initialize_content: function() {
@@ -57,7 +58,7 @@ odoo.define('web_widget_float_formula', function(require) {
                 } catch (ex) {
                     return false;
                 }
-                var clean_formula = formula.replace(/^\s+|\s+$/g, '');
+                var clean_formula = formula.toString().replace(/^\s+|\s+$/g, '');
                 if (clean_formula[0] == '=') {
                     clean_formula = clean_formula.substring(1);
                     var myreg = new RegExp('[0-9]|\\s|\\.|,|\\(|\\)|\\+|\\-|\\*|\\/', 'g');
@@ -85,7 +86,9 @@ odoo.define('web_widget_float_formula', function(require) {
             _compute_result: function() {
                 this._clean_formula_text();
 
-                var formula = this._process_formula(this.$el.find('input').val());
+                var input = this.$input.val();
+
+                var formula = this._process_formula(input);
                 if (formula !== false) {
                     var value = this._eval_formula(formula);
                     if (value !== false) {
@@ -100,7 +103,7 @@ odoo.define('web_widget_float_formula', function(require) {
             // Display the formula stored in the field to allow modification
             _display_formula: function() {
                 if (this._formula_text !== '') {
-                    this.$el.find('input').val(this._formula_text);
+                    this.$input.val(this._formula_text);
                 }
             },
         });

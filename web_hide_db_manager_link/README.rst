@@ -33,10 +33,9 @@ resulting loging screen.
 In order to access to the database management, the administrator should use a
 specific URL <myserver>/web/database/manager
 
-.. image:: https://odoo-community.org/website/image/ir
-.attachment/5784_f2813bd/datas
+.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/162/9.0
+   :target: https://runbot.odoo-community.org/runbot/162/10.0
 
 Known issues
 ============
@@ -61,6 +60,7 @@ Contributors
 ------------
 
 * Alejandro Santana <alejandrosantana@anubia.es>
+* Serpent Consulting Services Pvt. Ltd. <jay.vora@serpentcs.com>
 
 Maintainer
 ----------

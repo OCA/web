@@ -1,7 +1,7 @@
 <templates>
     <t t-name="FieldX2Many2dMatrix">
         <div t-att-class="widget.widget_class">
-            <table class="oe_list_content">
+            <table class="o_list_view table table-condensed table-striped">
                 <thead>
                     <tr class="oe_list_header_columns">
                         <th />
@@ -14,10 +14,10 @@
                 <tbody>
                     <tr t-foreach="widget.get_y_axis_values()" t-as="y" t-att-data-y="y">
                         <th><t t-esc="widget.get_y_axis_label(y)" /></th>
-                        <td t-foreach="widget.get_x_axis_values()" t-as="x" t-att-class="'oe_list_field_cell' + (widget.is_numeric ? ' oe_number' : '')" t-att-data-x="x">
+                        <td t-foreach="widget.get_x_axis_values()" t-as="x" t-att-class="'' + (widget.is_numeric ? ' oe_number' : '')" t-att-data-x="x">
                             <span t-att-class="widget.get_xy_value_class()">
-                                <input class="edit" t-att-data-id="widget.get_xy_id(x, y)" t-att-value="widget.format_xy_value(widget.get_xy_value(x, y))" t-att="widget.get_xy_att(x, y)"/>
-                                <span class="read"><t t-esc="widget.format_xy_value(widget.get_xy_value(x, y))" /></span>
+                                <input class="edit o_form_input oe_edit_only" t-att-data-id="widget.get_xy_id(x, y)" t-att-value="widget.format_xy_value(widget.get_xy_value(x, y))" t-att="widget.get_xy_att(x, y)"/>
+                                <span class="read oe_read_only"><t t-esc="widget.format_xy_value(widget.get_xy_value(x, y))" /></span>
                             </span>
                         </td>
                         <td t-if="widget.show_row_totals" class="row_total oe_number" t-att-data-y="y"/>

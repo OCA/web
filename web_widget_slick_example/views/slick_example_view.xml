@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016-2017 LasLabs Inc.
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html). -->
+
+<odoo>
+    <record id="slick_example_view_form" model="ir.ui.view">
+        <field name="name">slick.example.view.form</field>
+        <field name="model">slick.example</field>
+        <field name="arch" type="xml">
+            <form string="Slick / Slickroom Examples">
+                <header />
+                <sheet>
+                    <group col="2">
+                        <separator string="Slick Carousel" />
+                        <newline />
+                        <field name="slick_image_ids"
+                               nolabel="1"
+                               colspan="2"
+                               widget="one2many_slick_images"
+                               options="{'slidesToShow': 2}" />
+                        <separator string="Slickroom Carousel" />
+                        <newline />
+                        <field name="slickroom_image_ids"
+                               nolabel="1"
+                               colspan="2"
+                               widget="slickroom"
+                               options="{'slidesToShow': 2}" />
+                    </group>
+                </sheet>
+                <footer />
+            </form>
+        </field>
+    </record>
+
+    <record id="slick_example_view_tree" model="ir.ui.view">
+        <field name="name">slick.example.view.tree</field>
+        <field name="model">slick.example</field>
+        <field name="arch" type="xml">
+            <tree string="Slick Example">
+                <field name="id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="slick_example_action" model="ir.actions.act_window">
+         <field name="name">Slick Examples</field>
+         <field name="res_model">slick.example</field>
+         <field name="type">ir.actions.act_window</field>
+         <field name="view_type">form</field>
+         <field name="view_mode">tree,form</field>
+     </record>
+
+    <menuitem id="slick_example_menu"
+              name="Slick"
+              parent="base.menu_custom"
+              action="slick_example_action"
+              sequence="1" />
+</odoo>

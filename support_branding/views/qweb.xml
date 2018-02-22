@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
+<odoo>
     <data>
-        <template id="support_branding_assets" name="support_branding assets" inherit_id="web.assets_backend">
+        <template
+            id="support_branding_assets"
+            name="support_branding assets"
+            inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
                 <script type="text/javascript" src="/support_branding/static/src/js/support_branding.js"></script>
                 <link rel="stylesheet" href="/support_branding/static/src/css/support_branding.css" />
             </xpath>
         </template>
         <template id="menu_secondary" inherit_id="web.menu_secondary">
-            <xpath expr="//div[@class='oe_footer']" position="inside">
-                <span>, supported by <a target="_new" t-att-href="request.env['ir.config_parameter'].get_param('support_branding.company_url')" t-att-style="'color: ' + request.env['ir.config_parameter'].get_param('support_branding.company_color')"><t t-esc="request.env['ir.config_parameter'].get_param('support_branding.company_name')" /></a></span>
-                <div t-if="request.env['ir.config_parameter'].get_param('support_branding.release')">Version <t t-esc="request.env['ir.config_parameter'].get_param('support_branding.release')" /></div>
+            <xpath expr="//div[@class='o_sub_menu_footer']" position="inside">
+                <span>, supported by
+                    <a target="_new" t-att-href="request.env['ir.config_parameter'].get_param('support_branding.company_url')"
+                        t-att-style="'color: ' + request.env['ir.config_parameter'].get_param('support_branding.company_color')">
+                        <t t-esc="request.env['ir.config_parameter'].get_param('support_branding.company_name')" />
+                    </a>
+                </span>
+                <div t-if="request.env['ir.config_parameter'].get_param('support_branding.release')">
+                    Version <t t-esc="request.env['ir.config_parameter'].get_param('support_branding.release')" />
+                </div>
             </xpath>
         </template>
     </data>
-</openerp>
+</odoo>

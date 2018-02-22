@@ -4,6 +4,10 @@
 header {
     margin: 0;
     padding: 0;
+    
+    @media print {
+        display: none;
+    }
 
     > .main-nav {
         display: block;
@@ -34,6 +38,13 @@ header {
                 .caret {
                     position: relative;
                     top: -3.5px;
+                }
+            }
+            .o_switch_company_menu {
+                .oe_topbar_name {
+                    @media (max-width: @screen-xs-max) {
+                        display: none;
+                    }
                 }
             }
             > .oe_systray > li > a {
@@ -94,9 +105,10 @@ header {
                 > .drawer-toggle, .navbar-toggle {
                     margin: 0;
                     padding: 0;
-                    border: 1px solid @nav-tabs-active-link-hover-border-color;
+                    border: 0px;
+                    border-radius: 0px;
                     > i.fa, div.fa {
-                        padding: 16px 14px 15px;
+                        padding: 17px 14px 16px;
                     }
                 }
             }

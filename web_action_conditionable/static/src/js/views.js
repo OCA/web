@@ -24,6 +24,4 @@ odoo.define('web_action_conditionable', function(require){
     }
 
   });
-
-
 });

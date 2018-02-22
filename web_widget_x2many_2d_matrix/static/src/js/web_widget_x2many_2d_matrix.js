@@ -10,8 +10,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
     var FieldOne2Many = core.form_widget_registry.get('one2many');
     var Model = require('web.Model');
     var data = require('web.data');
-    var _ = require('_');
-    var $ = require('$');
+    var $ = require('jquery');
 
     var WidgetX2Many2dMatrix = FieldOne2Many.extend({
         template: 'FieldX2Many2dMatrix',
@@ -132,7 +131,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                 })
                 .then(function()
                 {
-                    return self.dataset.read_ids(self.dataset.ids).then(function(rows)
+                    return self.dataset.read_ids(self.dataset.ids, self.fields).then(function(rows)
                     {
                         // setup data structure
                         _.each(rows, function(row)
@@ -370,6 +369,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                 $this.val(this.format_xy_value(value));
 
                 this.dataset.write($this.data('id'), data);
+                this.by_id[$this.data('id')][this.field_value] = value;
                 $this.parent().removeClass('oe_form_invalid');
                 this.compute_totals();
             }
@@ -383,10 +383,10 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
         effective_readonly_change: function()
         {
             this.$el
-            .find('tbody td.oe_list_field_cell span.oe_form_field .edit')
+            .find('tbody .edit')
             .toggle(!this.get('effective_readonly'));
             this.$el
-            .find('tbody td.oe_list_field_cell span.oe_form_field .read')
+            .find('tbody .read')
             .toggle(this.get('effective_readonly'));
             this.$el.find('.edit').first().focus();
         },
@@ -405,6 +405,9 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
             return $.when(result).then(function()
             {
                 self.renderElement();
+                self.compute_totals();
+                self.$el.find('.edit').on(
+                        'change', self.proxy(self.xy_value_change));
             });
         },
     });

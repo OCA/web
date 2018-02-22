@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_users_tree" model="ir.ui.view">
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="." position="attributes">
+                <attribute name="color_field">lang</attribute>
+            </xpath>
+            <field name="login_date" position="attributes">
+                <attribute name="bg_color">red: login_date == False</attribute>
+                <attribute name="fg_color">white: login_date == False</attribute>
+            </field>
+            <field name="name" position="attributes">
+                <attribute name="bg_color">red: login == 'admin'</attribute>
+                <attribute name="fg_color">white: login == 'admin'</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

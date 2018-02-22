@@ -2,13 +2,17 @@
 
 {
     "name": 'web_m2x_options',
-    "version": "8.0.0.2",
+    "version": "10.0.1.1.1",
     "depends": [
         'base',
         'web',
     ],
+    'qweb': [
+        'static/src/xml/base.xml',
+    ],
+    'license': 'AGPL-3',
     'data': ['views/view.xml'],
-    "author": "0k.io,Odoo Community Association (OCA)",
-    'installable': False,
-    "active": False,
+    "author": "ACSONE SA/NV, 0k.io, Tecnativa, "
+              "Odoo Community Association (OCA)",
+    'installable': True,
 }

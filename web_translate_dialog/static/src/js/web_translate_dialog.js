@@ -5,16 +5,13 @@
 odoo.define('web_translate_dialog.translate_dialog', function(require){
 "use strict";
 
-var _ = require('_');
-var $ = require('$');
-
 var core = require('web.core');
-var data = require('web.data');
 var common = require('web.form_common');
+var data = require('web.data');
 
+var Dialog = require('web.Dialog');
 var FormView = require('web.FormView');
 var View = require('web.View');
-var Dialog = require('web.Dialog');
 
 var _t = core._t;
 var QWeb = core.qweb;
@@ -32,42 +29,41 @@ var translateDialog = Dialog.extend({
         this.view_type = parent.fields_view.type || '';
         this.$view_form = null;
         this.$sidebar_form = null;
-        if (!!field) {
+        if (field) {
             this.translatable_fields_keys = [field];
             this.translatable_fields = _.filter(
                 this.view.translatable_fields || [],
-                function(i) {return i.name == field;}
+                function(i) {
+                    return i.name === field;
+                }
             );
         } else {
             this.translatable_fields_keys = _.map(
                 this.view.translatable_fields || [],
-                function(i) {return i.name;}
+                function(i) {
+                    return i.name;
+                }
             );
             this.translatable_fields = this.view.translatable_fields.slice(0);
         }
         this.languages = null;
         this.languages_loaded = $.Deferred();
         (new data.DataSetSearch(this, 'res.lang', this.view.dataset.get_context(),
-                                [['translatable', '=', '1']]))
-            .read_slice(['code', 'name'], { sort: 'id' })
-            .then(this.on_languages_loaded);
+                                [['translatable', '=', '1']])).read_slice(['code', 'name'],
+                                { sort: 'id' }).then(this.on_languages_loaded);
     },
     on_languages_loaded: function(langs) {
         this.languages = langs;
         this.languages_loaded.resolve();
     },
     open: function() {
-        var self = this,
-            sup = this._super;
         // the template needs the languages
-        $.when(this.languages_loaded).then(function() {
-            return sup.call(self);
-        });
+        return $.when(this.languages_loaded).then($.proxy(this._super, this));
     },
     start: function() {
         var self = this;
         this.$el.find('.oe_translation_field').change(function() {
-            $(this).toggleClass('touched', ($(this).val() != $(this).attr('data-value')));
+            $(this).toggleClass('touched', $(this).val() !== $(this).attr('data-value'));
         });
         this.$footer.html(QWeb.render("TranslateDialog.buttons"));
         this.$footer.find(".oe_form_translate_dialog_save_button").click(function(){
@@ -103,7 +99,7 @@ var translateDialog = Dialog.extend({
                     'inlinemedia': ['p'],
                     'lang': "odoo",
                     'onChange': function (value) {
-                        $(this).toggleClass('touched', (value != $(this).attr('data-value')));
+                        $(this).toggleClass('touched', value !== $(this).attr('data-value'));
                     }
                 }).parent();
                 // Triggers a mouseup to refresh the editor toolbar
@@ -118,14 +114,14 @@ var translateDialog = Dialog.extend({
     set_fields_values: function(lang, values) {
         var self = this;
         _.each(this.translatable_fields_keys, function(f) {
-            self.$el.find('.oe_translation_field[name="' + lang.code + '-' + f + '"]')
-                .val(values[f] || '')
-                .attr('data-value', values[f] || '');
+            self.$el.find('.oe_translation_field[name="' + lang.code +
+                    '-' + f + '"]').val(values[f] || '').attr(
+                    'data-value', values[f] || '');
         });
         this.$el.find('textarea.oe_translation_field').css({
             minHeight:'100px',
         });
-        $(window).resize();  // triggers the autosize
+        $(window).resize();
         this.initialize_html_fields(lang);
     },
     do_load_fields_values: function() {
@@ -144,16 +140,14 @@ var translateDialog = Dialog.extend({
                 self.set_fields_values(lg, values);
                 deff.resolve();
             } else {
-                self.view.dataset.call(
-                    'read',
-                    [[self.view.datarecord.id],
-                    self.translatable_fields_keys,
+                self.view.dataset.call('read',[[self.view.datarecord.id],
+                    self.translatable_fields_keys, '_classic_read',
                     self.view.dataset.get_context({
-                        'lang': lg.code
-                    })]).done(function (rows) {
-                        self.set_fields_values(lg, rows[0]);
-                        deff.resolve();
-                    });
+                        'lang': lg.code })]).done(
+                        function (rows) {
+                            self.set_fields_values(lg, rows[0]);
+                            deff.resolve();
+                        });
             }
         });
         return deferred;
@@ -175,9 +169,9 @@ var translateDialog = Dialog.extend({
             }
             translation_mutex.exec(function() {
                 return new data.DataSet(self, self.view.dataset.model,
-                                        self.view.dataset.get_context())
-                    .write(self.view.datarecord.id, text,
-                           { context : { 'lang': code }});
+                                        self.view.dataset.get_context()).write(
+                                        self.view.datarecord.id, text,
+                                        { context : { 'lang': code }});
             });
         });
         this.close();
@@ -226,4 +220,5 @@ return {
     translateDialog: translateDialog,
 };
 
-}); // odoo.define
+});
+

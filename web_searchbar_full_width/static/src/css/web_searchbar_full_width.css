@@ -1,8 +1,16 @@
-.openerp .oe-control-panel .oe-cp-title {
+.o_control_panel .breadcrumb {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.o_control_panel .o_cp_searchview {
     width: 100%;
 }
-.openerp .oe-control-panel .oe-cp-search-view {
-    padding-top: 0px;
-    padding-bottom: 3px;
-    width: 100%;
+
+.o_control_panel .o_cp_left {
+    width: 45%;
+}
+
+.o_control_panel .o_cp_right {
+    width: 55%;
 }

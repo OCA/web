@@ -1,105 +1,17 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Authors: Cédric Pigeon
-#    Copyright (c) 2014 Acsone SA/NV (http://www.acsone.eu)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published
-#    by the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
-import logging
+# Copyright 2014 ACSONE SA/NV (<http://acsone.eu>)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 import base64
 from lxml import etree as ET
 
-from anybox.testing.openerp import SharedSetupTransactionCase
+import odoo.tests.common as common
+from .common import TestWizardCommon
 
-_logger = logging.getLogger(__name__)
 
-
-class test_export_help_wizard(object):
-    _data_files = ('data/help_test_data.xml',)
-
-    _module_ns = 'help_online'
-
-    def createPage(self, pageName, imgXmlId=False):
-        imgId = False
-        if imgXmlId:
-            imgId = self.ref('%s.%s' % (self._module_ns, imgXmlId))
-
-        rootNode = ET.Element('t')
-        rootNode.attrib['name'] = pageName
-        rootNode.attrib['t-name'] = "website.%s" % pageName
-        tNode = ET.SubElement(rootNode,
-                              't',
-                              attrib={'t-call': 'website.layout'})
-        structDivNode = ET.SubElement(tNode,
-                                      'div',
-                                      attrib={'class': 'oe_structure oe_empty',
-                                              'id': 'wrap'})
-        sectionNode = ET.SubElement(structDivNode,
-                                    'section',
-                                    attrib={'class': 'mt16 mb16'})
-        containerNode = ET.SubElement(sectionNode,
-                                      'div',
-                                      attrib={'class': 'container'})
-        rowNode = ET.SubElement(containerNode,
-                                'div',
-                                attrib={'class': 'row'})
-        bodyDivNode = ET.SubElement(rowNode,
-                                    'div',
-                                    attrib={'class': 'col-md-12 '
-                                                     'text-center mt16 mb32'})
-        style = "font-family: 'Helvetica Neue', Helvetica,"\
-                " Arial, sans-serif; color: rgb(51, 51, 51);"\
-                " text-align: left;"
-        h2Node = ET.SubElement(bodyDivNode,
-                               'h2',
-                               attrib={'style': style})
-        h2Node.text = "Test Sample Title"
-        if imgId:
-            imgDivNode = ET.SubElement(bodyDivNode,
-                                       'div',
-                                       attrib={'style': 'text-align: left;'})
-            src = "/website/image?field=datas&"\
-                  "model=ir.attachment&id=%s" % str(imgId)
-            ET.SubElement(imgDivNode,
-                          'img',
-                          attrib={'class': 'img-thumbnail',
-                                  'src': src})
-            imgDivNode = ET.SubElement(bodyDivNode,
-                                       'div',
-                                       attrib={'style': 'text-align: left;'})
-            src = "/website/image/ir.attachment/%s_ccc838d/datas" % str(imgId)
-            ET.SubElement(imgDivNode,
-                          'img',
-                          attrib={'class': 'img-thumbnail',
-                                  'src': src})
-        arch = ET.tostring(rootNode, encoding='utf-8', xml_declaration=False)
-        vals = {
-            'name': pageName,
-            'type': 'qweb',
-            'arch': arch,
-            'page': True,
-        }
-        view_id = self.env['ir.ui.view'].create(vals)
-        return view_id.id
-
-    def setUp(self):
-        super(test_export_help_wizard, self).setUp()
-        self.pageName = False
-        self.imgXmlId = False
-        self.pageTemplate = False
+class TestExportHelpWizard(TestWizardCommon):
+    pageName = None
+    imgXmlId = None
 
     def test_export_help(self):
         """
@@ -115,15 +27,18 @@ class test_export_help_wizard(object):
         parser = ET.XMLParser(remove_blank_text=True)
         rootXml = ET.XML(xmlData, parser=parser)
 
-        xPath = ".//template[@id='website.%s']" % self.pageName
+        xPath = ".//template[@id='__export__.%s']" % self.pageName
         templateNodeList = rootXml.findall(xPath)
         self.assertEqual(len(templateNodeList), 1)
         self.assertNotIn("website.", templateNodeList[0].attrib['name'])
+        self.assertEqual(
+            "website." + self.pageName, templateNodeList[0].attrib['key'])
 
         if self.imgXmlId:
             xPath = ".//record[@id='%s']" % self.imgXmlId
             imgNodeList = rootXml.findall(xPath)
-            self.assertEqual(len(imgNodeList), 2)
+            self.assertEqual(len(imgNodeList), 1,
+                             'The same image should be exported only once')
 
             for imgElem in templateNodeList[0].iter('img'):
                 imgSrc = imgElem.get('src')
@@ -131,29 +46,27 @@ class test_export_help_wizard(object):
                     self.assertIn("/ir.attachment/%s|"
                                   % self.imgXmlId, imgSrc)
                 else:
-                    self.assertIn("id=%s" % self.imgXmlId, imgSrc)
+                    self.assertIn("/web/image/%s" % self.imgXmlId, imgSrc)
 
         if self.pageTemplate:
-            xPath = ".//template[@id='website.%s_snippet']" % self.pageName
+            xPath = ".//template[@id='__export__.%s_snippet']" % self.pageName
             templateNodeList = rootXml.findall(xPath)
             self.assertEqual(len(templateNodeList), 1)
             self.assertNotIn("website.", templateNodeList[0].attrib['name'])
 
 
-class test_export_help_with_image(test_export_help_wizard,
-                                  SharedSetupTransactionCase):
+class TestExportHelpWithImage(TestExportHelpWizard, common.TransactionCase):
     def setUp(self):
-        super(test_export_help_with_image, self).setUp()
+        super(TestExportHelpWithImage, self).setUp()
         parameter_model = self.env['ir.config_parameter']
         page_prefix = parameter_model.get_param('help_online_page_prefix')
         self.pageName = '%stest-page' % page_prefix
-        self.imgXmlId = 'test_img_1'
+        self.imgXmlId = '%s.test_img_1' % self._module_ns
 
 
-class test_export_help_template(test_export_help_wizard,
-                                SharedSetupTransactionCase):
+class TestExportHelpTemplate(TestExportHelpWizard, common.TransactionCase):
     def setUp(self):
-        super(test_export_help_template, self).setUp()
+        super(TestExportHelpTemplate, self).setUp()
         parameter_model = self.env['ir.config_parameter']
         param = 'help_online_template_prefix'
         template_prefix = parameter_model.get_param(param)

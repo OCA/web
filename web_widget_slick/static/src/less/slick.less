@@ -1,0 +1,74 @@
+/* Copyright 2016-2017 LasLabs Inc.
+ * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html). */
+
+@slick-arrow-margin: 40px;
+@slick-arrow-offset: calc(-(@slick-arrow-margin - 5px));
+@slick-font-family: "FontAwesome";
+@slick-dot-character: "\f10c";
+@slick-dot-character-active: "\f111";
+@slick-dot-color: @odoo-brand-primary;
+@slick-dot-offset: 35px;
+@slick-dot-size: 12px;
+@slick-next-character: "\f054";
+@slick-prev-character: "\f053";
+@slick-opacity-default: 1;
+@slick-opacity-not-active: 0.5;
+
+/* Odoo field */
+
+.o_slick {
+    display: block !important;
+}
+
+/* Container */
+
+.slick-container {
+    &.slick-dotted {
+        margin-bottom: @slick-dot-offset;
+    }
+    &.slick-arrowed {
+        margin-left: @slick-arrow-margin;
+        margin-right: @slick-arrow-margin;
+        .slick-prev {
+            left: @slick-arrow-offset;
+        }
+        .slick-next {
+            right: @slick-arrow-offset;
+        }
+    }
+}
+
+/* Images */
+
+.slick-slide {
+    margin-left: 2px;
+    margin-right: 2px;
+    outline: none;
+    img {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* Arrows */
+
+.slick-arrow {
+    height: 35px;
+    width: 30px;
+    font-size: 0 !important;
+    padding: 0 !important;
+    .btn();
+    .btn-sm();
+    .btn-primary();
+}
+
+/* Dots */
+
+.slick-dots {
+    bottom: calc(-(@slick-dot-offset));
+    li {
+        &.slick-active button:before {
+            content: @slick-dot-character-active;
+        }
+    }
+}

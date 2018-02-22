@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="export_help_wizard_view">
+        <field name="name">export.help.wizard.view</field>
+        <field name="model">export.help.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Export Help Data">
+                <group colspan="2">
+                    <field name="export_filename"
+                           invisible="1"/>
+                </group>
+                <group>
+                    <p>
+                    This wizard allow you to export all QWeb views
+                    related to help online. The result will be an Odoo
+                    data xml file.
+                    </p>
+                </group>
+                <group>
+                    <field name="data"
+                           nolabel="1"
+                           readonly="1"
+                           filename="export_filename" />
+                </group>
+                <footer>
+                    <span name="go-wizard" attrs="{'invisible': [('export_filename', '!=', False)]}">
+                        <button name="export_help"
+                            string="Export"
+                            type="object"
+                            icon="fa-magic"
+                            class="oe_highlight" />
+                        or
+                    </span>
+                    <button string="Close" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_export_help_wizard">
+        <field name="name">Export Help</field>
+        <field name="res_model">export.help.wizard</field>
+        <field name="view_id" ref="export_help_wizard_view"/>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="type">ir.actions.act_window</field>
+    </record>
+</odoo>

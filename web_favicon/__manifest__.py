@@ -13,11 +13,11 @@
     "category": "Website",
     "summary": "Allows to set a custom shortcut icon (aka favicon)",
     "depends": [
-        'web',
+        "web",
     ],
     "data": [
         "views/res_company.xml",
-        'views/templates.xml',
+        "views/templates.xml",
     ],
-    'installable': True,
+    "installable": True,
 }

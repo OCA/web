@@ -1,9 +1,10 @@
-"use strict";
-(function(){
-    var instance = openerp;
-    var QWeb = instance.web.qweb, _t = instance.web._t;
+odoo.define('web_readonly_bypass', function(require) {
+    'use strict';
 
-    instance.web_readonly_bypass = {
+    var data = require('web.data'),
+        pyeval = require('web.pyeval');
+
+    var readonly_bypass = {
         /**
          * ignore readonly: place options['readonly_fields'] into the data
          * if nothing is specified into the context
@@ -26,7 +27,7 @@
                     }
                 });
             }
-            data = $.extend(data,readonly_by_pass_fields);
+            data = $.extend(data, readonly_by_pass_fields);
         },
 
         /**
@@ -59,15 +60,13 @@
         },
     };
 
-    var readonly_bypass = instance.web_readonly_bypass;
-
-    instance.web.BufferedDataSet.include({
+    data.BufferedDataSet.include({
 
         init : function() {
             this._super.apply(this, arguments);
         },
         /**
-         * Creates Overriding
+         * Create Overriding
          *
          * @param {Object} data field values to set on the new record
          * @param {Object} options Dictionary that can contain the following keys:
@@ -77,13 +76,12 @@
          */
         create : function(data, options) {
             var self = this;
-            var context = instance.web.pyeval.eval('contexts',
-                                                   self.context.__eval_context);
+            var context = pyeval.eval('contexts', self.context.get_eval_context());
             readonly_bypass.ignore_readonly(data, options, true, context);
             return self._super(data,options);
         },
         /**
-         * Creates Overriding
+         * Write Overriding
          *
          * @param {Object} data field values to set on the new record
          * @param {Object} options Dictionary that can contain the following keys:
@@ -93,15 +91,14 @@
          */
         write : function(id, data, options) {
             var self = this;
-            var context = instance.web.pyeval.eval('contexts',
-                                                   self.context.__eval_context);
+            var context = pyeval.eval('contexts', self.context.get_eval_context());
             readonly_bypass.ignore_readonly(data, options, false, context);
             return self._super(id,data,options);
         },
 
     });
 
-    instance.web.DataSet.include({
+    data.DataSet.include({
         /*
         BufferedDataSet: case of 'add an item' into a form view
         */
@@ -138,4 +135,46 @@
         },
 
     });
-})();
+
+    data.ProxyDataSet.include({
+        /*
+        ProxyDataSet: case of 'pop-up'
+        */
+        init : function() {
+            this._super.apply(this, arguments);
+        },
+        /**
+         * Create Overriding
+         *
+         * @param {Object} data field values to set on the new record
+         * @param {Object} options Dictionary that can contain the following keys:
+         *   - readonly_fields: Values from readonly fields that were updated by
+         *     on_changes. Only used by the BufferedDataSet to make the o2m work correctly.
+         * @returns super {$.Deferred}
+         */
+        create : function(data, options) {
+            var self = this;
+            var context = pyeval.eval('contexts', self.context.get_eval_context());
+            readonly_bypass.ignore_readonly(data, options, true, context);
+            return self._super(data,options);
+        },
+        /**
+         * Write Overriding
+         *
+         * @param {Object} data field values to set on the new record
+         * @param {Object} options Dictionary that can contain the following keys:
+         *   - readonly_fields: Values from readonly fields that were updated by
+         *     on_changes. Only used by the BufferedDataSet to make the o2m work correctly.
+         * @returns super {$.Deferred}
+         */
+        write : function(id, data, options) {
+            var self = this;
+            var context = pyeval.eval('contexts', self.context.get_eval_context());
+            readonly_bypass.ignore_readonly(data, options, false, context);
+            return self._super(id,data,options);
+        },
+
+    });
+
+    return readonly_bypass;
+});
