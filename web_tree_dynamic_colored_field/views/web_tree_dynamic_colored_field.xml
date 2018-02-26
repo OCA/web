@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="web_tree_dynamic_colored_field assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/web_tree_dynamic_colored_field/static/src/js/web_tree_dynamic_colored_field.js"></script>
+        </xpath>
+    </template>
+</odoo>
