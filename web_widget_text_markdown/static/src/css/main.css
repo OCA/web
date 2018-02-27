@@ -1,4 +1,4 @@
-.openerp .oe_form .oe_form_field_markdown .oe_form_text_content {
+.oe_form_field_markdown {
   text-overflow: ellipsis;
 /*  display: inline-block;
   white-space: pre-wrap;
@@ -6,7 +6,7 @@
   width: 100%;
   }
 
-.openerp .markdown-body thead th:first-child {
+.markdown-body thead th:first-child {
       border-left: 1px solid #ddd !important;
 }
 
