@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
-        <template id="assets_backend" name="web_groupby_expand assets" inherit_id="web.assets_backend">
-            <xpath expr="." position="inside">
-                <script type="text/javascript" src="/web_group_expand/static/src/js/web_group_expand.js"></script>
-                <link rel="stylesheet" href="/web_group_expand/static/src/css/expand_buttons.css"/>
-            </xpath>
-        </template>
-    </data>
-</openerp>
+<odoo>
+
+    <template id="assets_backend" name="web_groupby_expand assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/web_group_expand/static/src/js/web_group_expand.js"></script>
+        </xpath>
+    </template>
+
+</odoo>
