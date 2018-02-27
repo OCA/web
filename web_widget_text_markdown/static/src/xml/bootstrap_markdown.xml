@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- vim:fdl=1:
--->
+<!-- * Copyright 2014 Sudokeys <http://www.sudokeys.com>
+ * Copyright 2017 Komit - <http:///komit-consulting.com>
+ * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).-->
+
 <templates id="template" xml:space="preserve">
 
     <t t-name="FieldMarkDown">
@@ -15,7 +17,7 @@
                     t-att-autofocus="widget.node.attrs.autofocus"
                     t-att-placeholder="! widget.get('effective_readonly') ? widget.node.attrs.placeholder : ''"
                     t-att-maxlength="widget.field.size"
-                    ></textarea><img class="oe_field_translate oe_input_icon"
+                    /><img class="oe_field_translate oe_input_icon"
                     t-if="widget.field.translate and !widget.get('effective_readonly')"
                     t-att-src='_s + "/web/static/src/img/icons/terp-translate.png"'
                     width="16"
@@ -24,7 +26,7 @@
                     />
                 </t>
                 <t t-if="widget.get('effective_readonly')">
-                    <span class="oe_form_text_content"></span>
+                    <span class="oe_form_text_content"/>
                 </t>
             </div>
         </t>
