@@ -1,11 +1,20 @@
-openerp.web_widget_text_markdown = function (oe) {
+/* Copyright 2014 Sudokeys <http://www.sudokeys.com>
+ * Copyright 2017 Komit - <http:///komit-consulting.com>
+ * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
+odoo.define("web_widget_text_markdown.bootstrap_markdown",
+            function (require) {
+    "use strict";
 
-    var _lt = oe.web._lt;
+    var core = require('web.core');
+    var form_common = require('web.form_common');
+    var formats = require ("web.formats");
 
-    oe.web.form.widgets.add('bootstrap_markdown', 'openerp.web_widget_text_markdown.FieldTextMarkDown');
+    var _lt = core._lt;
+    var ListView = require('web.ListView');
+    var list_widget_registry = core.list_widget_registry;
 
-    oe.web_widget_text_markdown.FieldTextMarkDown = oe.web.form.AbstractField.extend(
-        oe.web.form.ReinitializeFieldMixin,
+    var FieldTextMarkDown = form_common.AbstractField.extend(
+        form_common.ReinitializeFieldMixin,
         {
 
             template: 'FieldMarkDown',
@@ -23,7 +32,7 @@ openerp.web_widget_text_markdown = function (oe) {
             },
 
             parse_value: function(val, def) {
-                return oe.web.parse_value(val, this, def);
+                return formats.parse_value(val, this, def);
             },
 
             initialize_content: function () {
@@ -32,7 +41,11 @@ openerp.web_widget_text_markdown = function (oe) {
                 //  - BUT NOT when switching to next object.
                 this.$txt = this.$el.find('textarea[name="' + this.name + '"]');
                 if (!this.get('effective_readonly')) {
-                    this.$txt.markdown({autofocus: false, savable: false});
+                    this.$txt.markdown({
+                        autofocus: false,
+                        savable: false,
+                        iconlibrary: "fa"
+                    });
                 }
                 this.old_value = null; // will trigger a redraw
             },
@@ -83,15 +96,18 @@ openerp.web_widget_text_markdown = function (oe) {
             },
 
             format_value: function (val, def) {
-                return oe.web.format_value(val, this, def);
+                return formats.format_value(val, this, def);
             }
         }
     );
 
-    /**
+    core.form_widget_registry.add('bootstrap_markdown',
+     FieldTextMarkDown);
+
+     /**
      * bootstrap_markdown support on list view
      **/
-    oe.web_widget_text_markdown.FieldTextMarkDownList = oe.web.list.Char.extend({
+    ListView.Column.include({
 
         init: function(){
             this._super.apply(this, arguments);
@@ -107,7 +123,7 @@ openerp.web_widget_text_markdown = function (oe) {
         _format: function(row_data, options){
             options = options || {};
             var markdown_text = marked(
-                oe.web.format_value(
+                formats.format_value(
                     row_data[this.id].value, this, options.value_if_empty
                 )
             );
@@ -115,7 +131,6 @@ openerp.web_widget_text_markdown = function (oe) {
         }
     });
 
-    oe.web.list.columns.add(
-        "field.bootstrap_markdown", "oe.web_widget_text_markdown.FieldTextMarkDownList"
-    );
-};
+    list_widget_registry.add('field.bootstrap_markdown', ListView.Column);
+
+});
