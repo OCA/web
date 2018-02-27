@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- vim:fdn=3:
--->
+<!-- * Copyright 2014 Sudokeys <http://www.sudokeys.com>
+ * Copyright 2017 Komit - <http:///komit-consulting.com>
+ * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).-->
 <openerp>
     <data>
         <template id="assets_backend" name="web_widget_text_markdown assets" inherit_id="web.assets_backend">
@@ -8,10 +9,10 @@
                 <link rel="stylesheet" href="/web_widget_text_markdown/static/src/css/bootstrap-markdown.min.css"/>
                 <link rel="stylesheet" href="/web_widget_text_markdown/static/lib/highlight/styles/railscasts.css"/>
                 <link rel="stylesheet" href="/web_widget_text_markdown/static/src/css/main.css"/>
-                <script type="text/javascript" src="/web_widget_text_markdown/static/lib/highlight/highlight.min.js"></script>
-                <script type="text/javascript" src="/web_widget_text_markdown/static/lib/marked/marked.js"></script>
-                <script type="text/javascript" src="/web_widget_text_markdown/static/lib/bootstrap-markdown/bootstrap-markdown.js"></script>
-                <script type="text/javascript" src="/web_widget_text_markdown/static/src/js/web_widget_text_markdown.js"></script>
+                <script type="text/javascript" src="/web_widget_text_markdown/static/lib/highlight/highlight.min.js"/>
+                <script type="text/javascript" src="/web_widget_text_markdown/static/lib/marked/marked.js"/>
+                <script type="text/javascript" src="/web_widget_text_markdown/static/lib/bootstrap-markdown/bootstrap-markdown.js"/>
+                <script type="text/javascript" src="/web_widget_text_markdown/static/src/js/web_widget_text_markdown.js"/>
             </xpath>
         </template>
     </data>

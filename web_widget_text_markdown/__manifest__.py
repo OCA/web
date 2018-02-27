@@ -2,6 +2,7 @@
 ##############################################################################
 #
 #    Copyright (C) 2014 Sudokeys (<http://www.sudokeys.com>)
+#    Copyright (C) 2017 Komit (<http://www.komit-consulting.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -20,18 +21,26 @@
 
 {
     'name': 'web_widget_text_markdown',
-    'version': '8.0.1.0.0',
-    'author': "Sudokeys,Odoo Community Association (OCA)",
-    'maintainer': 'Sudokeys',
-    'category': '',
+    'version': '10.0.1.0.0',
+    "author": "Komit, "
+              "Sudokeys, "
+              "Odoo Community Association (OCA)",
+    'category': 'Web',
     'license': 'AGPL-3',
-    'depends': ['base', 'web'],
-    'website': 'http://www.sudokey.com',
-    'data': ['views/main.xml', ],
-    "qweb": ["static/src/xml/bootstrap_markdown.xml",
-             ],
-    'demo': [],
-    'installable': False,
+    'website': 'https://github.com/OCA/web',
+    'depends': [
+        'base', 'web'
+    ],
+    'demo': [
+        "demo/bootstrap_markdown.xml",
+    ],
+    'data': [
+        'views/main.xml',
+    ],
+    "qweb": [
+        "static/src/xml/bootstrap_markdown.xml",
+    ],
+    'installable': True,
     'auto_install': False,
     'application': False
 }
