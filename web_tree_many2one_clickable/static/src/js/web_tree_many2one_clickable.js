@@ -10,7 +10,9 @@ odoo.define('web_tree_many2one_clickable.many2one_clickable', function (require)
 
     ListRenderer.include({
         _renderBodyCell: function (record, node, colIndex, options) {
-            if (!node.attrs.widget && this.state.fields[node.attrs.name].type === 'many2one') {
+            if (!node.attrs.widget && node.attrs.name &&
+                this.state.fields[node.attrs.name] &&
+                this.state.fields[node.attrs.name].type === 'many2one') {
                 // no explicit widget provided on a many2one field,
                 // force `many2one` widget
                 node.attrs.widget = 'many2one';
