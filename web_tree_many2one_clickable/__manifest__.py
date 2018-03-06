@@ -7,7 +7,7 @@
 {
     "name": "Clickable many2one fields for tree views",
     "summary": "Open the linked resource when clicking on their name",
-    "version": "11.0.1.0.0",
+    "version": "11.0.1.0.1",
     "category": "Hidden",
     "website": "https://github.com/OCA/web",
     "author": "Therp BV, "
