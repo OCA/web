@@ -42,6 +42,7 @@ Contributors
 * Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>
 * Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>
 * Jay Vora (SerpentCS) for their alternative implementation
+* Yasmine El Mrini <yasmine.elmrini@savoirfairelinux.com>
 
 Maintainer
 ----------
