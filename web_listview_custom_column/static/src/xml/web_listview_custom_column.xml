@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates>
-    <t t-extend="ViewManagerAction">
-        <t t-jquery="ul.oe_view_manager_switch" t-operation="after">
-            <div class="oe_view_manager_custom_column oe_right" t-attf-style="display: #{widget.active_view == 'list' and 'inline-block' or 'none'}" />
+	<t t-extend="ViewManager.switch-buttons">
+        <t t-jquery="button" t-operation="before">
+		<div class="oe_view_manager_custom_column oe_right"  t-attf-style="display: #{view.type == 'list' and 'inline-block' or 'none'}" />
         </t>
     </t>
     <t t-extend="ListView">

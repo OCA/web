@@ -12,6 +12,8 @@ class IrUiView(models.Model):
     def custom_column(self, diff):
         """Apply a change for a custom view. Create a new custom view or
         view override as necessary"""
+        import pudb
+        pudb.set_trace()
         self.ensure_one()
         tree = etree.fromstring(self.read_combined(self.id)['arch'])
         customized_view = self.env.ref(

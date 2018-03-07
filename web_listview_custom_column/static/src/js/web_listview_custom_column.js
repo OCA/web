@@ -17,22 +17,39 @@ odoo.define('web.web_listview_custom_column', function(require)
             this.ViewManager.on('switch_mode', this, function(view_type)
             { if (!this.ViewManager.currently_switching)
                 {
-                  this.$pager.siblings('.oe_view_manager_custom_column').toggle(view_type == 'list');
+                  this.$pager.siblings('.oe-cp-switch-buttons')
+			.children('.oe_view_manager_custom_column').toggle(view.type == 'list');
                 }
             });
         },
-        render_pager: function($node)
+        load_list: function()
         {
             var self = this;
-            this._super($node);
+	    this.render_pager()
+            this._super.apply(this, arguments)
 	    this.$custom_column = $(QWeb.render('ListView.CustomColumn', {widget: this }));
 	    // seems not to append custom column here
 		// I checked and "this" seems correct (also by tracing the render of the core pager
 		// in core ListView
 		// it appears that after the "append" nowhere in the pager is this to be found.
-	    this.$pager.siblings('.oe_view_manager_custom_column')
+	    debugger;
+	    if(this.options.$pager){
+	    this.options.$pager.siblings('.oe-cp-switch-buttons')
+		.children('.oe_view_manager_custom_column')
 		.empty()
 	    	.append(this.$custom_column);
+	    }
+	    else if (this.$pager){
+	        this.$pager.siblings('.oe-cp-switch-buttons')
+		    .children('.oe_view_manager_custom_column')
+		    .empty()
+		    .append(this.$custom_column);
+	    }
+	    else {
+		    this.$('.oe_view_manager_custom_column').empty()
+	    	    .append(this.$custom_column);
+	    	}
+
 	    this.$custom_column.filter('.oe_custom_column_activate')
 		.click(this.proxy(this._custom_column_activate));
 	    this.$custom_column.filter('.oe_custom_column_reset')
