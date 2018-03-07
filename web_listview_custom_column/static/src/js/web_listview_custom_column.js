@@ -2,74 +2,65 @@
 //Copyright 2017 Therp BV <http://therp.nl>
 //License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-odoo.define('web_listview_custom_column.web_listview_custom_column', function(require)
+odoo.define('web.web_listview_custom_column', function(require)
 {
     "use strict";
     var core = require('web.core');
     var ListView = require('web.ListView');
-    var Model = require('web.DataModel');
-    var session = require('web.session');
-    var Widget = require('web.Widget');
+    var ViewManager = require('web.ViewManager');
     var QWeb = core.qweb;
 
     ListView.include({
         init: function(parent, dataset, view_id, options)
         {
             this._super.apply(this, arguments)
-            debugger;
             this.ViewManager.on('switch_mode', this, function(view_type)
             { if (!this.ViewManager.currently_switching)
                 {
-                  this.options.$pager.siblings('.oe_view_manager_custom_column').toggle(view_type == 'list');
+                  this.$pager.siblings('.oe_view_manager_custom_column').toggle(view_type == 'list');
                 }
             });
         },
-        load_list: function()
+        render_pager: function($node)
         {
-            debugger;
             var self = this;
-            this._super.apply(this, arguments);
-            this.$custom_column = $(QWeb.render('ListView_CustomColumn', {widget: this }));
-            if(this.options.$pager)
-            {
-                this.options.$pager.siblings('.oe_view_manager_custom_column')
-                    .empty()
-                    .append(this.$custom_column);
-            }
-            else
-            {
-                this.$('.oe_view_manager_custom_column')
-                    .empty()
-                    .append(this.$custom_column);
-            }
-            this.$custom_column.filter('.oe_custom_column_activate')
-                .click(this.proxy(this._custom_column_activate));
-            this.$custom_column.filter('.oe_custom_column_reset')
-                .click('reset', this.proxy(this._custom_column_diff));
-            this.$custom_column.filter('.oe_custom_column_all')
-                .click('to_all', this.proxy(this._custom_column_diff));
-            this.$custom_column.filter('.oe_custom_column_user')
-                .click('to_user', this.proxy(this._custom_column_diff));
-            this.$custom_column.filter('[name="oe_custom_column_field"]')
-                .change(this.proxy(this._custom_column_add));
-            this.$('th a.oe_custom_column_left')
-                .click('left', this.proxy(this._custom_column_diff));
-            this.$('th a.oe_custom_column_right')
-                .click('right', this.proxy(this._custom_column_diff));
-            this.$('th a.oe_custom_column_remove')
-                .click('remove', this.proxy(this._custom_column_diff));
-            this.$custom_column.filter('[name="oe_custom_column_field"]')
-                .find('option')
-                .each(function(index, option)
-                {
-                    jQuery(option).prop(
-                        'disabled',
-                        _.any(self.columns, function(column)
-                        {
-                            return column.id == jQuery(option).val();
-                        })
-                    );
-                });
+            this._super($node);
+	    this.$custom_column = $(QWeb.render('ListView.CustomColumn', {widget: this }));
+	    // seems not to append custom column here
+		// I checked and "this" seems correct (also by tracing the render of the core pager
+		// in core ListView
+		// it appears that after the "append" nowhere in the pager is this to be found.
+	    this.$pager.siblings('.oe_view_manager_custom_column')
+		.empty()
+	    	.append(this.$custom_column);
+	    this.$custom_column.filter('.oe_custom_column_activate')
+		.click(this.proxy(this._custom_column_activate));
+	    this.$custom_column.filter('.oe_custom_column_reset')
+		.click('reset', this.proxy(this._custom_column_diff));
+	    this.$custom_column.filter('.oe_custom_column_all')
+		.click('to_all', this.proxy(this._custom_column_diff));
+	    this.$custom_column.filter('.oe_custom_column_user')
+		.click('to_user', this.proxy(this._custom_column_diff));
+	    this.$custom_column.filter('[name="oe_custom_column_field"]')
+		.change(this.proxy(this._custom_column_add));
+	    this.$('th a.oe_custom_column_left')
+		.click('left', this.proxy(this._custom_column_diff));
+	    this.$('th a.oe_custom_column_right')
+		.click('right', this.proxy(this._custom_column_diff));
+	    this.$('th a.oe_custom_column_remove')
+		.click('remove', this.proxy(this._custom_column_diff));
+	    this.$custom_column.filter('[name="oe_custom_column_field"]')
+		.find('option')
+		.each(function(index, option)
+		{
+		    jQuery(option).prop(
+			'disabled',
+			_.any(self.columns, function(column)
+			{
+			    return column.id == jQuery(option).val();
+			})
+		    );
+		});
         },
         _custom_column_activate: function()
         {

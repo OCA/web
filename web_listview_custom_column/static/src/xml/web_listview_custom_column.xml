@@ -24,7 +24,7 @@
             </t>
         </t>
     </t>
-    <t t-name="ListView_CustomColumn">
+    <t t-name="ListView.CustomColumn">
         <a type="button" class="oe_custom_column_activate" title="Customize columns">
             <i class="fa fa-columns"></i>
         </a>
