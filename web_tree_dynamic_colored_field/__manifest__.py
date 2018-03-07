@@ -4,7 +4,7 @@
     'name': 'Colorize field in tree views',
     'summary': 'Allows you to dynamically color fields on tree views',
     'category': 'Hidden/Dependency',
-    'version': '11.0.1.0.0',
+    'version': '11.0.1.0.1',
     'depends': ['web'],
     'author': "Camptocamp, Therp BV, Odoo Community Association (OCA)",
     'license': 'AGPL-3',

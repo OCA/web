@@ -25,13 +25,13 @@ Features
 Usage
 =====
 
-* In the tree view declaration, put ``options='"bg_color": "red: customer==True"`` attribute in the ``field`` tag::
+* In the tree view declaration, put ``options='{"bg_color": "red: customer==True"}`` attribute in the ``field`` tag::
 
     ...
     <field name="arch" type="xml">
         <tree string="View name">
             ...
-            <field name="name" options='"bg_color": "red: customer == True"'/>
+            <field name="name" options='{"bg_color": "red: customer == True"}'/>
             ...
         </tree>
     </field>
@@ -39,13 +39,13 @@ Usage
     
     With this example, column which renders 'name' field will have its background colored in red.
 
-* In the tree view declaration, put ``options='"fg_color": "white:customer == True"'`` attribute in the ``field`` tag::
+* In the tree view declaration, put ``options='{"fg_color": "white:customer == True"}'`` attribute in the ``field`` tag::
 
     ...
     <field name="arch" type="xml">
         <tree string="View name">
             ...
-            <field name="name" 'options="fg_color": "white:customer == True"'/>
+            <field name="name" options='{"fg_color": "white:customer == True"}'/>
             ...
         </tree>
     </field>
@@ -90,6 +90,7 @@ Contributors
 * Damien Crier <damien.crier@camptocamp.com>
 * Holger Brunn <hbrunn@therp.nl>
 * Artem Kostyuk <a.kostyuk@mobilunity.com>
+* Guewen Baconnier <guewen.baconnier@camptocamp.com>
 
 Maintainer
 ----------
