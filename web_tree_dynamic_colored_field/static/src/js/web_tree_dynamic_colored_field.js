@@ -12,20 +12,21 @@ odoo.define('web_tree_dynamic_colored_field', function (require) {
          */
         _renderBody: function () {
             if (this.arch.attrs.colors) {
-                var colorField = this.arch.attrs.colors.split(';')
-                .filter(color => color.trim().startsWith('color_field'))[0]
-                .split(':')[1]
-                .trim();
-                // validate the presence of that field in tree view
-                var fieldNames = _(this.columns).map(
-                    (value) => { return value.attrs.name; }
-                );
-                if (fieldNames.indexOf(colorField) === -1) {
-                    console.warn(
-                        "No field named '" + colorField + "' present in view."
+                var colorAttr = this.arch.attrs.colors.split(';')
+                    .filter(color => color.trim().startsWith('color_field'));
+                if (colorAttr.length > 0) {
+                    var colorField = colorAttr[0].split(':')[1].trim();
+                    // validate the presence of that field in tree view
+                    var fieldNames = _(this.columns).map(
+                        (value) => { return value.attrs.name; }
                     );
-                } else {
-                    this.colorField = colorField;
+                    if (fieldNames.indexOf(colorField) === -1) {
+                        console.warn(
+                            "No field named '" + colorField + "' present in view."
+                        );
+                    } else {
+                        this.colorField = colorField;
+                    }
                 }
             }
             return this._super();
