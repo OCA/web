@@ -2,7 +2,7 @@
 //Copyright 2017 Therp BV <http://therp.nl>
 //License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-odoo.define('web_listview_custom_column.ListView', function(require)
+odoo.define('web_listview_custom_column.web_listview_custom_column', function(require)
 {
     "use strict";
     var core = require('web.core');
