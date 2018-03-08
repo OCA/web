@@ -2,12 +2,14 @@
 /* Copyright 2012-2015 Therp
  * Copyright 2016 - Tecnativa - Angel Moya <odoo@tecnativa.com>
  * Copyright 2017 - redO2oo   - Robert Rottermann <robert@redO2oo.ch>
+ * Copyright 2018 - Therp BV
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
 odoo.define('web.support_branding', function(require) {
     var CrashManager = require('web.CrashManager');
     var core = require('web.core');
     var Model = require('web.Model');
+    var session = require('web.session');
     var _t = core._t;
     CrashManager.include({
         init: function() {
@@ -27,6 +29,7 @@ odoo.define('web.support_branding', function(require) {
         },
         show_error: function(error) {
             var self = this;
+            error._session = session;
             this._super.apply(this, arguments);
             jQuery('.support-branding-submit-form').each(function() {
                 var $form = jQuery(this),
