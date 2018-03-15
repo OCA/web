@@ -66,6 +66,7 @@ addon | version | summary
 [web_widget_slick](web_widget_slick/) | 10.0.1.0.0 | Adds SlickJS slider widget for use as a carousel on Many2one attachment fields in backend form views.
 [web_widget_slick_example](web_widget_slick_example/) | 10.0.1.0.0 | Example usage of the web_widget_slick and web_widget_slickroom modules
 [web_widget_slickroom](web_widget_slickroom/) | 10.0.1.0.0 | Provides Slick Carousel Widget with DarkroomJS image editing
+[web_widget_text_markdown](web_widget_text_markdown/) | 10.0.1.0.0 | web_widget_text_markdown
 [web_widget_timepicker](web_widget_timepicker/) | 10.0.1.0.0 | Web Timepicker Widget
 [web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 10.0.1.0.1 | Show list fields as a matrix
 [web_x2many_delete_all](web_x2many_delete_all/) | 10.0.1.0.0 | Adds a button to x2many fields that removes all linked records
@@ -92,6 +93,5 @@ addon | version | summary
 [web_search_alphabetic](web_search_alphabetic/) | 1.0 (unported) | Web Alphabetical Search
 [web_sheet_full_width_selective](web_sheet_full_width_selective/) | 8.0.0.1.0 (unported) | Show selected sheets with full width
 [web_widget_datepicker_options](web_widget_datepicker_options/) | 8.0.1.0.0 (unported) | web_widget_datepicker_options
-[web_widget_text_markdown](web_widget_text_markdown/) | 8.0.1.0.0 (unported) | web_widget_text_markdown
 
 [//]: # (end addons)
