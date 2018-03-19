@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="assets_boolean_switch" name="web_widget_boolean_switch Assets" inherit_id="web.assets_backend">
+        <xpath expr="//script[last()]" position="after">
+            <script src="/web_widget_boolean_switch/static/lib/bootstrap-switch/bootstrap-switch.js"/>
+            <link href="/web_widget_boolean_switch/static/lib/bootstrap-switch/bootstrap-switch.css" rel="stylesheet" type="text/css"/>
+
+            <script src="/web_widget_boolean_switch/static/src/js/web_widget_boolean_switch.js"/>
+        </xpath>
+    </template>
+</odoo>
