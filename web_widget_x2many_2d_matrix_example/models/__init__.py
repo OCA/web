@@ -1,1 +1,1 @@
-from . import x2m_demo
+from . import x2m_demo  # noqa: F401
