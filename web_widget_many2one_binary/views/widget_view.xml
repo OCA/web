@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+        <template id="assets_backend_widget" name="binary widget many2one" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/web_widget_many2one_binary/static/src/js/many2one_binary_widget.js"/>
+            </xpath>
+        </template>
+     </data>
+</odoo>
