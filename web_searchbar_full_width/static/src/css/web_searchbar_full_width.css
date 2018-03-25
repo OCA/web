@@ -1,0 +1,16 @@
+.o_control_panel .breadcrumb {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.o_control_panel .o_cp_searchview {
+    width: 100%;
+}
+
+.o_control_panel .o_cp_left {
+    width: 45%;
+}
+
+.o_control_panel .o_cp_right {
+    width: 55%;
+}
