@@ -98,7 +98,6 @@ odoo.define('web_timeline.TimelineView', function (require) {
             if (!attrs.date_start) {
                 throw new Error(_t("Timeline view has not defined 'date_start' attribute."));
             }
-
             this.tooltip = attrs.tooltip;
             this.date_start = attrs.date_start;
             this.date_stop = attrs.date_stop;
@@ -189,7 +188,6 @@ odoo.define('web_timeline.TimelineView', function (require) {
                    this.mode = 'fit';
                 }
             }
-
             self.timeline = new vis.Timeline(self.$timeline.empty().get(0));
             self.timeline.setOptions(options);
             if (self.mode && self['on_scale_' + self.mode + '_clicked']) {
@@ -251,11 +249,10 @@ odoo.define('web_timeline.TimelineView', function (require) {
                 if (eval("'" + evt[color.field] + "' " + color.opt + " '" + color.value + "'"))
                     self.color = color.color;
             });
-
             var r = {
                 'start': date_start,
                 'content': evt.__name != undefined ? evt.__name : evt.display_name,
-                'title': evt[self.tooltip],//support for tooltip
+                'title': evt[self.tooltip],
                 'id': evt.id,
                 'group': group,
                 'evt': evt,
