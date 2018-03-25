@@ -1,0 +1,15 @@
+.modal .modal-header button.dialog_button_extend {
+    padding-right: 5px;
+}
+
+.modal .modal-header button.dialog_button_restore {
+    padding-right: 5px;
+}
+
+.dialog_full_screen {
+    width: calc(100% - 50px);
+}
+
+.modal .modal-header button.close {
+    font-size: 18px;
+}
