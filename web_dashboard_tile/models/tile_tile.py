@@ -259,7 +259,7 @@ class TileTile(models.Model):
             'view_id': [False],
             'res_model': self.model_id.model,
             'type': 'ir.actions.act_window',
-            'context': self.env.context,
+            'context': dict(self.env.context, group_by=False),
             'nodestroy': True,
             'target': 'current',
             'domain': self.domain,
