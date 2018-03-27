@@ -193,6 +193,12 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
                 node.attrs.name = this.matrix_data.field_value;
                 return this._renderBodyCell(record, node, index, {mode:''});
             }.bind(this));
+            // add Y label cell first
+            var value = row.data[0].data[this.matrix_data.field_y_axis];
+            if (value.type == 'record') {
+                value = value.data.display_name;
+            }
+            $tr.append($('<th>').text(value));
             $tr = $tr.append($cells);
             if (row.aggregate) {
                 $tr.append(this._renderAggregateRowCell(row));
