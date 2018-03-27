@@ -67,7 +67,7 @@ Images
 Contributors
 ------------
 
-* André Paramés <github@andreparames.com> (https://www.acsone.eu/)
+* André Paramés (ACSONE) <github@andreparames.com>
 
 Do not contact contributors directly about support or help with technical issues.
 
