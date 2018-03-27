@@ -64,6 +64,17 @@ Usage
         </tree>
     </field>
     ...
+* If you want to use more than one color, you can split by ';' ``options='{"fg_color": "red:red_color == True; green:green_color == True"}'``
+
+    ...
+    <field name="arch" type="xml">
+        <tree string="View name">
+            ...
+            <field name="name" options='{"fg_color": "red:red_color == True; green:green_color == True"}'/>
+            ...
+        </tree>
+    </field>
+    ...
 
     With this example, the content of the field named `my_color` will be used to
     populate the `my_color` CSS value. Use a function field to return whichever
