@@ -50,4 +50,6 @@ WebClient.include({
     }
 });
 
+return WebClient;
+
 });
