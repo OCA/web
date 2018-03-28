@@ -185,6 +185,8 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                 matrix_data: this.matrix_data,
             });
             this.$el.addClass('o_field_x2many o_field_x2many_2d_matrix');
+            // remove old tables (render is called again when updating other fields in the screen)
+            this.$el.find('.table-responsive').remove();
             return this.renderer.appendTo(this.$el);
         },
 
