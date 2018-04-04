@@ -25,14 +25,13 @@ odoo.define('web.web_listview_custom_column', function(require)
         load_list: function()
         {
             var self = this;
-	    this.render_pager()
             this._super.apply(this, arguments)
 	    this.$custom_column = $(QWeb.render('ListView.CustomColumn', {widget: this }));
+	    debugger;
 	    // seems not to append custom column here
 		// I checked and "this" seems correct (also by tracing the render of the core pager
 		// in core ListView
 		// it appears that after the "append" nowhere in the pager is this to be found.
-	    debugger;
 	    if(this.options.$pager){
 	    this.options.$pager.siblings('.oe-cp-switch-buttons')
 		.children('.oe_view_manager_custom_column')
