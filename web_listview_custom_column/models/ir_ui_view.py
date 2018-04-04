@@ -2,7 +2,7 @@
 # © 2017 Therp BV <http://therp.nl>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from lxml import etree
-from openerp import _, api, models
+from openerp import _, api, models, tools
 
 
 class IrUiView(models.Model):
@@ -135,7 +135,7 @@ class IrUiView(models.Model):
             (arch, view_id_)
             for arch, view_id_ in
             super(IrUiView, self).get_inheriting_views_arch(view_id, model)
-            if not self.env.registry._init or
+            if (not self.env.registry._init or tools.config['test_enable']) or
             not self.sudo().browse(view_id_).xml_id or
             not self.sudo().browse(view_id_).xml_id.startswith(
                 'web_listview_custom_column.custom_view_'
