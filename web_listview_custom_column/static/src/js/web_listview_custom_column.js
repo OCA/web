@@ -8,7 +8,11 @@ odoo.define('web.web_listview_custom_column', function(require)
     var core = require('web.core');
     var ListView = require('web.ListView');
     var ViewManager = require('web.ViewManager');
+    var common = require('web.list_common');
+    var Sidebar = require('web.Sidebar');
+    var list_widget_registry = core.list_widget_registry;
     var QWeb = core.qweb;
+
 
     ListView.include({
         init: function(parent, dataset, view_id, options)
@@ -22,33 +26,13 @@ odoo.define('web.web_listview_custom_column', function(require)
                 }
             });
         },
-        load_list: function()
-        {
+        render_pager: function($node) {
             var self = this;
-            this._super.apply(this, arguments)
-	    this.$custom_column = $(QWeb.render('ListView.CustomColumn', {widget: this }));
 	    debugger;
-	    // seems not to append custom column here
-		// I checked and "this" seems correct (also by tracing the render of the core pager
-		// in core ListView
-		// it appears that after the "append" nowhere in the pager is this to be found.
-	    if(this.options.$pager){
-	    this.options.$pager.siblings('.oe-cp-switch-buttons')
-		.children('.oe_view_manager_custom_column')
-		.empty()
-	    	.append(this.$custom_column);
-	    }
-	    else if (this.$pager){
-	        this.$pager.siblings('.oe-cp-switch-buttons')
-		    .children('.oe_view_manager_custom_column')
-		    .empty()
-		    .append(this.$custom_column);
-	    }
-	    else {
-		    this.$('.oe_view_manager_custom_column').empty()
-	    	    .append(this.$custom_column);
-	    	}
-
+            this._super($node);
+	    // unfortunately supers in core have often no returns.
+	    this.$custom_column = $(QWeb.render('ListView.CustomColumn', {widget: this }));
+	    // add hooks to functions in column
 	    this.$custom_column.filter('.oe_custom_column_activate')
 		.click(this.proxy(this._custom_column_activate));
 	    this.$custom_column.filter('.oe_custom_column_reset')
@@ -77,6 +61,20 @@ odoo.define('web.web_listview_custom_column', function(require)
 			})
 		    );
 		});
+	    console.log('---------------------OLDPAGER----------------');
+	    console.log(this.$pager);
+	    this.$custom_column.appendTo(this.$pager);
+	    console.log('---------------------ADDITION----------------');
+	    console.log(this.$custom_column);
+	    console.log('---------------------NEW PAGER----------------');
+	    console.log(this.$pager);
+    	    this.$('.oe_list_pager').replaceWith(this.$pager);
+	},
+        load_list: function()
+        {
+            var self = this;
+            this._super.apply(this, arguments);
+	    debugger;
         },
         _custom_column_activate: function()
         {
