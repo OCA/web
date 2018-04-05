@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="view_x2m_demo_form" model="ir.ui.view">
+    <field name="name">x2m.demo.form</field>
+    <field name="model">x2m.demo</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group>
+            <field name="name" />
+            <field name="line_ids">
+              <tree>
+                <field name="name" />
+                <field name="value" />
+                <field name="user_id" />
+              </tree>
+            </field>
+          </group>
+          <footer>
+            <button name="open_x2m_matrix" type="object"
+                    string="Try x2m 2d matrix"
+                    class="oe_stat_button" icon="fa-edit" />
+          </footer>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record model="ir.ui.view" id="view_x2m_demo_tree">
+    <field name="name">Demo - Tree</field>
+    <field name="model">x2m.demo</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="name" />
+      </tree>
+    </field>
+  </record>
+
+  <record id="action_x2m_demo" model="ir.actions.act_window">
+    <field name="name">Demo</field>
+    <field name="res_model">x2m.demo</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="view_id" ref="view_x2m_demo_tree"/>
+  </record>
+
+  <menuitem
+    id="base_matrix_widget_menu"
+    name="Demo x2m matrix widget"
+    action="action_x2m_demo"
+    />
+
+</odoo>
