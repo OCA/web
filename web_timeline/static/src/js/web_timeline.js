@@ -111,10 +111,13 @@ odoo.define('web_timeline.TimelineView', function (require) {
             this.rendererParams.timeline = this.timeline;
             this.rendererParams.date_start = this.date_start;
             this.rendererParams.date_stop = this.date_stop;
-            this.rendererParams.date_delay = this.date_start;
+            this.rendererParams.date_delay = this.date_delay;
             this.loadParams.modelName = this.modelName;
             this.loadParams.fieldNames = fieldNames;
             this.controllerParams.open_popup_action = this.open_popup_action;
+            this.controllerParams.date_start = this.date_start;
+            this.controllerParams.date_stop = this.date_stop;
+            this.controllerParams.date_delay = this.date_delay;
             return this;
         },
 

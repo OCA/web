@@ -344,59 +344,24 @@ var CalendarRenderer = AbstractRenderer.extend({
     },
 
     on_update: function (item, callback) {
-        this.trigger_up('onUpdate', {
+        this._trigger(item, callback, 'onUpdate');
+    },
+
+    on_move: function (item, callback) {
+        this._trigger(item, callback, 'onMove');
+    },
+
+    on_remove: function (item, callback) {
+        this._trigger(item, callback, 'onRemove');
+    },
+
+    _trigger: function (item, callback, trigger) {
+        this.trigger_up(trigger, {
             'item': item,
             'callback': callback,
             'rights': self.modelClass.data.rights,
             'renderer': self,
         });
-    },
-
-    on_move: function (item, callback) {
-        var self = this;
-        var event_start = item.start;
-        var event_end = item.end;
-        var group = false;
-        if (item.group != -1) {
-            group = item.group;
-        }
-        var data = {};
-        // In case of a move event, the date_delay stay the same, only date_start and stop must be updated
-        data[this.date_start] = time.auto_date_to_str(event_start, self.fields[this.date_start].type);
-        if (this.date_stop) {
-            // In case of instantaneous event, item.end is not defined
-            if (event_end) {
-                data[this.date_stop] = time.auto_date_to_str(event_end, self.fields[this.date_stop].type);
-            } else {
-                data[this.date_stop] = data[this.date_start];
-            }
-        }
-        if (this.date_delay && event_end) {
-            var diff_seconds = Math.round((event_end.getTime() - event_start.getTime()) / 1000);
-            data[this.date_delay] = diff_seconds / 3600;
-        }
-        if (self.grouped_by) {
-            data[self.grouped_by[0]] = group;
-        }
-        var id = item.evt.id;
-        this.dataset.write(id, data);
-    },
-
-    on_remove: function (item, callback) {
-        var self = this;
-
-        function do_it() {
-            return $.when(self.dataset.unlink([item.evt.id])).then(function () {
-                callback(item);
-            });
-        }
-
-        if (this.options.confirm_on_delete) {
-            if (confirm(_t("Are you sure you want to delete this record ?"))) {
-                return do_it();
-            }
-        } else
-            return do_it();
     },
 
 });
