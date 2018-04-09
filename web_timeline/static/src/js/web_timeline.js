@@ -11,31 +11,31 @@ _.str.toBoolElse = function (str, elseValues, trueValues, falseValues) {
     return ret;
 };
 
-odoo.define('web_timeline.TimelineView', function (require) {
-    "use strict";
+var moment = vis.moment;
 
-    var core = require('web.core');
-    var form_common = require('web.form_common');
-    var Model = require('web.DataModel');
-    var time = require('web.time');
-    var View = require('web.View');
-    var widgets = require('web_calendar.widgets');
-    var _ = require('_');
-    var $ = require('$');
+openerp.web_timeline = function(instance) {
 
-    var _t = core._t;
-    var _lt = core._lt;
-    var QWeb = core.qweb;
+    var core = instance.web.core;
+    var form_common = instance.web.form_common;
+    var Model = instance.web.Model;
+    var str_to_datetime = instance.str_to_datetime;
+    var View = instance.web.View;
+    var widgets = instance.web_calendar;
+    var _t = instance.web._t,
+        _lt = instance.web._lt,
+        QWeb = instance.web.qweb;
 
     function isNullOrUndef(value) {
         return _.isUndefined(value) || _.isNull(value);
     }
 
-    var TimelineView = View.extend({
+    instance.web.views.add('timeline', 'instance.web_timeline.TimelineView');
+
+    instance.web_timeline.TimelineView = instance.web.View.extend({
         template: "TimelineView",
         display_name: _lt('Timeline'),
         icon: 'fa-clock-o',
-        quick_create_instance: widgets.QuickCreate,
+        quick_create_instance: instance.web_calendar.QuickCreate,
 
         init: function (parent, dataset, view_id, options) {
             this._super(parent);
@@ -222,12 +222,12 @@ odoo.define('web_timeline.TimelineView', function (require) {
                 attendees = [];
 
             if (!all_day) {
-                date_start = time.auto_str_to_date(evt[this.date_start]);
-                date_stop = this.date_stop ? time.auto_str_to_date(evt[this.date_stop]) : null;
+                date_start = str_to_datetime(evt[this.date_start]);
+                date_stop = this.date_stop ? str_to_datetime(evt[this.date_stop]) : null;
             }
             else {
-                date_start = time.auto_str_to_date(evt[this.date_start].split(' ')[0],'start');
-                date_stop = this.date_stop ? time.auto_str_to_date(evt[this.date_stop].split(' ')[0],'stop') : null;
+                date_start = str_to_datetime(evt[this.date_start].split(' ')[0],'start');
+                date_stop = this.date_stop ? str_to_datetime(evt[this.date_stop].split(' ')[0],'stop') : null;
             }
 
             if (!date_start){
@@ -430,9 +430,10 @@ odoo.define('web_timeline.TimelineView', function (require) {
             }
             var data = {};
             data[self.fields_view.arch.attrs.date_start] =
-                time.auto_date_to_str(start, self.fields[self.fields_view.arch.attrs.date_start].type);
+                str_to_datetime(new moment(start).format('YYYY-m-DD hh:mm:ss'), self.fields[self.fields_view.arch.attrs.date_start].type);
             data[self.fields_view.arch.attrs.date_stop] =
-                 time.auto_date_to_str(end, self.fields[self.fields_view.arch.attrs.date_stop].type);
+                 str_to_datetime(new moment(end).format('YYYY-m-DD hh:mm:ss'), self.fields[self.fields_view.arch.attrs.date_stop].type);
+
             data[self.fields_view.arch.attrs.default_group_by] = group;
             var id = item.evt.id;
             this.dataset.write(id, data);
@@ -510,7 +511,4 @@ odoo.define('web_timeline.TimelineView', function (require) {
             this.scale_current_window(24 * 365);
         },
     });
-
-    core.view_registry.add('timeline', TimelineView);
-    return TimelineView;
-});
+};
