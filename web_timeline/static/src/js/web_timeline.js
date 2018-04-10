@@ -189,44 +189,6 @@ odoo.define('web_timeline.TimelineView', function (require) {
             return this._super(action);
         },
 
-        create_completed: function (id) {
-            var self = this;
-            this.dataset.ids = this.dataset.ids.concat([id]);
-            this.dataset.trigger("dataset_changed", id);
-            this.dataset.read_ids([id], this.fields).done(function (records) {
-                var new_event = self.event_data_transform(records[0]);
-                var items = self.timeline.itemsData;
-                items.add(new_event);
-                self.timeline.setItems(items);
-            });
-        },
-
-        on_add: function (item, callback) {
-            var self = this;
-            var context = this.dataset.get_context();
-            // Initialize default values for creation
-            var default_context = {};
-            default_context['default_'.concat(this.date_start)] = item.start;
-            if (this.date_delay) {
-                default_context['default_'.concat(this.date_delay)] = 1;
-            }
-            if (this.date_stop) {
-                default_context['default_'.concat(this.date_stop)] = moment(item.start).add(1, 'hours').toDate();
-            }
-            if (item.group > 0) {
-                default_context['default_'.concat(this.last_group_bys[0])] = item.group;
-            }
-            context.add(default_context);
-            // Show popup
-            var dialog = new dialogs.FormViewDialog(this, {
-                res_model: this.dataset.model,
-                res_id: null,
-                context: context,
-                view_id: +this.open_popup_action
-            }).open();
-            dialog.on('create_completed', this, this.create_completed);
-            return false;
-        },
     });
 
     view_registry.add('timeline', TimelineView);

@@ -355,6 +355,10 @@ var CalendarRenderer = AbstractRenderer.extend({
         this._trigger(item, callback, 'onRemove');
     },
 
+    on_add: function (item, callback) {
+        this._trigger(item, callback, 'onAdd');
+    },
+
     _trigger: function (item, callback, trigger) {
         this.trigger_up(trigger, {
             'item': item,

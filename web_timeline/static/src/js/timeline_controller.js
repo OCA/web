@@ -16,6 +16,7 @@ var CalendarController = AbstractController.extend({
         onUpdate: '_onUpdate',
         onRemove: '_onRemove',
         onMove: '_onMove',
+        onAdd: '_onAdd',
     }),
     /**
      * @override
@@ -59,8 +60,10 @@ var CalendarController = AbstractController.extend({
                 context: this.getSession().user_context,
                 title: title,
                 view_id: +this.open_popup_action,
+                on_saved: function (record) {
+                    self.write_completed([record.res_id], self);
+                },
             }).open();
-            dialog.on('write_completed', this, this.write_completed);
         }
     },
 
@@ -119,6 +122,12 @@ var CalendarController = AbstractController.extend({
                 ],
                 context: self.getSession().user_context,
             }).then(function() {
+                var recordset = self.model.data.data.find(function(el) {
+                    if (el.id == 24)
+                        return el;
+                });
+                self.model.data.data.pop(recordset);
+
                 event.data.callback(event.data.item);
             });
         }
@@ -128,12 +137,61 @@ var CalendarController = AbstractController.extend({
         }
     },
 
+    _onAdd: function(event) {
+        var self = this;
+        var item = event.data.item;
+        this.dataset = this.getParent().dataset;
+        var context = this.dataset.context;
+        // Initialize default values for creation
+        var default_context = {};
+        default_context['default_'.concat(this.date_start)] = item.start;
+        if (this.date_delay) {
+            default_context['default_'.concat(this.date_delay)] = 1;
+        }
+        if (this.date_stop) {
+            default_context['default_'.concat(this.date_stop)] = moment(item.start).add(1, 'hours').toDate();
+        }
+        if (item.group > 0) {
+            default_context['default_'.concat(this.renderer.last_group_bys[0])] = item.group;
+        }
+        // Show popup
+        var dialog = new dialogs.FormViewDialog(this, {
+            res_model: this.model.modelName,
+            res_id: null,
+            context: _.extend(default_context, context),
+            view_id: +this.open_popup_action,
+            on_saved: function (record) {
+                self.create_completed([record.res_id], self);
+            },
+        }).open();
+        return false;
+    },
 
-    write_completed: function (id) {
+    create_completed: function (id, renderer) {
+        // self.dataset.ids = self.dataset.ids.concat([id]);
+        self = this;
+        return this._rpc({
+                model: this.model.modelName,
+                method: 'read',
+                args: [
+                    id,
+                    this.model.fieldNames,
+                ],
+                context: this.dataset.context,
+        })
+        .then(function (records) {
+            var new_event = self.renderer.event_data_transform(records[0]);
+            var items = self.renderer.timeline.itemsData;
+            items.add(new_event);
+            self.renderer.timeline.setItems(items);
+            self.reload();
+        });
+    },
+
+    write_completed: function (id, renderer) {
         this.reload();
     },
 });
 
 return CalendarController;
 });
-
