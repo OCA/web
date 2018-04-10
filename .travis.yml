@@ -1,8 +1,8 @@
 language: python
 
 python:
-  - "2.7"
-  
+  - "2.7.13"
+
 sudo: false
 cache: pip
 
@@ -23,9 +23,6 @@ env:
   - TRANSIFEX="1"
   - TESTS="1" ODOO_REPO="odoo/odoo"
   - TESTS="1" ODOO_REPO="OCA/OCB"
-
-virtualenv:
-  system_site_packages: true
 
 install:
   - pip install anybox.testing.openerp
