@@ -122,11 +122,14 @@ var CalendarController = AbstractController.extend({
                 ],
                 context: self.getSession().user_context,
             }).then(function() {
-                var recordset = self.model.data.data.find(function(el) {
-                    if (el.id == 24)
-                        return el;
-                });
-                self.model.data.data.pop(recordset);
+                var unlink_index = false;
+                for (var i=0; i<self.model.data.data.length; i++) {
+                    if (self.model.data.data[i].id == event.data.item.id)
+                        unlink_index = i;
+                }
+                if (!isNaN(unlink_index)) {
+                    self.model.data.data.splice(unlink_index, 1);
+                }
 
                 event.data.callback(event.data.item);
             });
