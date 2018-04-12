@@ -430,10 +430,10 @@ openerp.web_timeline = function(instance) {
             }
             var data = {};
             data[self.fields_view.arch.attrs.date_start] =
-                 str_to_datetime(new moment(start).format('YYYY-M-DD hh:mm:ss'),
+                 str_to_datetime(new moment(start).format('YYYY-MM-DD hh:mm:ss'),
                      self.fields[self.fields_view.arch.attrs.date_start].type);
             data[self.fields_view.arch.attrs.date_stop] =
-                 str_to_datetime(new moment(end).format('YYYY-M-DD hh:mm:ss'),
+                 str_to_datetime(new moment(end).format('YYYY-MM-DD hh:mm:ss'),
                      self.fields[self.fields_view.arch.attrs.date_stop].type);
 
             data[self.fields_view.arch.attrs.default_group_by] = group;
