@@ -72,10 +72,13 @@ odoo.define('web_timeline.TimelineView', function (require) {
                     fieldNames.push(fieldName);
                 }
             });
+            this.parse_colors();
+            for (var i=0; i<this.colors.length; i++) {
+                fieldNames.push(this.colors[i].field);
+            }
 
             this.permissions = {};
             this.grouped_by = false;
-            this.parse_colors();
             this.date_start = attrs.date_start;
             this.date_stop = attrs.date_stop;
             this.date_delay = attrs.date_delay;
@@ -112,6 +115,8 @@ odoo.define('web_timeline.TimelineView', function (require) {
             this.rendererParams.date_start = this.date_start;
             this.rendererParams.date_stop = this.date_stop;
             this.rendererParams.date_delay = this.date_delay;
+            this.rendererParams.colors = this.colors;
+            this.rendererParams.fieldNames = fieldNames;
             this.loadParams.modelName = this.modelName;
             this.loadParams.fieldNames = fieldNames;
             this.controllerParams.open_popup_action = this.open_popup_action;
@@ -146,47 +151,6 @@ odoo.define('web_timeline.TimelineView', function (require) {
                     };
                 }).value();
             }
-        },
-
-        do_search: function (domains, contexts, group_bys) {
-            var self = this;
-            self.last_domains = domains;
-            self.last_contexts = contexts;
-            // select the group by
-            var n_group_bys = [];
-            if (this.fields_view.arch.attrs.default_group_by) {
-                n_group_bys = this.fields_view.arch.attrs.default_group_by.split(',');
-            }
-            if (group_bys.length) {
-                n_group_bys = group_bys;
-            }
-            self.last_group_bys = n_group_bys;
-            // gather the fields to get
-            var fields = _.compact(_.map(["date_start", "date_delay", "date_stop", "progress"], function (key) {
-                return self.fields_view.arch.attrs[key] || '';
-            }));
-
-            fields = _.uniq(fields.concat(_.pluck(this.colors, "field").concat(n_group_bys)));
-            return $.when(this.has_been_loaded).then(function () {
-                return self.dataset.read_slice(fields, {
-                    domain: domains,
-                    context: contexts
-                }).then(function (data) {
-                    return self.on_data_loaded(data, n_group_bys);
-                });
-            });
-        },
-
-        do_show: function () {
-            this.do_push_state({});
-            return this._super();
-        },
-
-        is_action_enabled: function (action) {
-            if (action === 'create' && !this.options.creatable) {
-                return false;
-            }
-            return this._super(action);
         },
 
     });

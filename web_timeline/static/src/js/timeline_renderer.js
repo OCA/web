@@ -41,6 +41,8 @@ var CalendarRenderer = AbstractRenderer.extend({
         this.date_start = params.date_start;
         this.date_stop = params.date_stop;
         this.date_delay = params.date_delay;
+        this.colors = params.colors;
+        this.fieldNames = params.fieldNames;
     },
 
     start: function () {
