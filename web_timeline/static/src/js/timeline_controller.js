@@ -31,10 +31,14 @@ var CalendarController = AbstractController.extend({
         this.date_start = params.date_start;
         this.date_stop = params.date_stop;
         this.date_delay = params.date_delay;
+        this.context = params.actionContext;
     },
 
     update: function(params, options) {
         this._super.apply(this, arguments);
+        if (_.isEmpty(params)){
+            return;
+        }
         var self = this;
         var domains = params.domain;
         var contexts = params.context;
@@ -50,6 +54,7 @@ var CalendarController = AbstractController.extend({
             n_group_bys = group_bys;
         }
         this.renderer.last_group_bys = n_group_bys;
+        this.renderer.last_domains = domains;
 
         var fields = this.renderer.fieldNames;
         fields = _.uniq(fields.concat(n_group_bys));
@@ -103,9 +108,8 @@ var CalendarController = AbstractController.extend({
     _onMove: function(event) {
         var self = this;
         var item = event.data.item;
-        this.active_view = this.getParent().active_view;
-        this.env = this.getParent().env;
-        var fields = this.active_view.fields_view.fields;
+        var view = this.renderer.view;
+        var fields = view.fields;
         var event_start = item.start;
         var event_end = item.end;
         var group = false;
@@ -127,8 +131,8 @@ var CalendarController = AbstractController.extend({
             var diff_seconds = Math.round((event_end.getTime() - event_start.getTime()) / 1000);
             data[this.date_delay] = diff_seconds / 3600;
         }
-        if (this.env.groupBy) {
-            data[this.env.groupBy[0]] = group;
+        if (this.renderer.last_group_bys && this.renderer.last_group_bys instanceof Array) {
+            data[this.renderer.last_group_bys[0]] = group;
         }
         self._rpc({
             model: self.model.modelName,
@@ -176,8 +180,6 @@ var CalendarController = AbstractController.extend({
     _onAdd: function(event) {
         var self = this;
         var item = event.data.item;
-        this.dataset = this.getParent().dataset;
-        var context = this.dataset.context;
         // Initialize default values for creation
         var default_context = {};
         default_context['default_'.concat(this.date_start)] = item.start;
@@ -194,17 +196,16 @@ var CalendarController = AbstractController.extend({
         var dialog = new dialogs.FormViewDialog(this, {
             res_model: this.model.modelName,
             res_id: null,
-            context: _.extend(default_context, context),
+            context: _.extend(default_context, this.context),
             view_id: +this.open_popup_action,
             on_saved: function (record) {
-                self.create_completed([record.res_id], self);
+                self.create_completed([record.res_id]);
             },
         }).open();
         return false;
     },
 
     create_completed: function (id, renderer) {
-        // self.dataset.ids = self.dataset.ids.concat([id]);
         self = this;
         return this._rpc({
                 model: this.model.modelName,
@@ -213,7 +214,7 @@ var CalendarController = AbstractController.extend({
                     id,
                     this.model.fieldNames,
                 ],
-                context: this.dataset.context,
+                context: this.context,
         })
         .then(function (records) {
             var new_event = self.renderer.event_data_transform(records[0]);
@@ -224,8 +225,13 @@ var CalendarController = AbstractController.extend({
         });
     },
 
-    write_completed: function (id, renderer) {
-        this.reload();
+    write_completed: function (id) {
+        var params = {
+            domain: this.renderer.last_domains,
+            context: this.context,
+            groupBy: this.renderer.last_group_bys,
+        };
+        this.update(params, undefined);
     },
 });
 

@@ -12,21 +12,6 @@ var TimelineModel = AbstractModel.extend({
         var self = this;
         this.modelName = params.modelName;
         this.fieldNames = params.fieldNames;
-        // this.fieldsInfo = params.fieldsInfo;
-        // this.mapping = params.mapping;
-        // this.mode = params.mode;       // one of month, week or day
-        // this.scales = params.scales;   // one of month, week or day
-        //
-        // // Check whether the date field is editable (i.e. if the events can be
-        // // dragged and dropped)
-        // this.editable = params.editable;
-        // this.creatable = params.creatable;
-        //
-        // // display more button when there are too much event on one day
-        // this.eventLimit = params.eventLimit;
-        //
-        // // fields to display color, e.g.: user_id.partner_id
-        // this.fieldColor = params.fieldColor;
         if (!this.preload_def) {
             this.preload_def = $.Deferred();
             $.when(
@@ -44,8 +29,6 @@ var TimelineModel = AbstractModel.extend({
         this.data = {
             domain: params.domain,
             context: params.context,
-            // get in arch the filter to display in the sidebar and the field to read
-            // filters: params.filters,
         };
 
         return this.preload_def.then(this._loadTimeline.bind(this));

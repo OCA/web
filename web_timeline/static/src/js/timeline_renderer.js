@@ -2,15 +2,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
 "use strict";
 
 var AbstractRenderer = require('web.AbstractRenderer');
-var relational_fields = require('web.relational_fields');
-var FieldManagerMixin = require('web.FieldManagerMixin');
-var field_utils = require('web.field_utils');
-var Dialog = require('web.Dialog');
-var Widget = require('web.Widget');
-var utils = require('web.utils');
 var core = require('web.core');
-var QWeb = require('web.QWeb');
-var Model = require('web.BasicModel');
 var time = require('web.time');
 
 var _t = core._t;
@@ -33,7 +25,7 @@ var CalendarRenderer = AbstractRenderer.extend({
      */
     init: function (parent, state, params) {
         this._super.apply(this, arguments);
-        this.model = params.model;
+        this.modelName = params.model;
         this.mode = params.mode;
         this.options = params.options;
         this.permissions = params.permissions;
@@ -43,12 +35,13 @@ var CalendarRenderer = AbstractRenderer.extend({
         this.date_delay = params.date_delay;
         this.colors = params.colors;
         this.fieldNames = params.fieldNames;
+        this.view = params.view;
+        this.modelClass = this.view.model;
     },
 
     start: function () {
         var self = this;
         var attrs = this.arch.attrs;
-        this.view = this.getParent().getParent().views.timeline;
         this.current_window = {
             start: new moment(),
             end: new moment().add(24, 'hours')
@@ -60,27 +53,18 @@ var CalendarRenderer = AbstractRenderer.extend({
         if (!this.date_start) {
             throw new Error(_t("Timeline view has not defined 'date_start' attribute."));
         }
-        // this.info_fields = [];
-        //
-        //
-        // for (var fld = 0; fld < this.arch.children.length; fld++) {
-        //     this.info_fields.push(this.arch.children[fld].attrs.name);
-        // }
-
-        // var fields_get = new Model(this.dataset.model)
-        //     .call('fields_get')
-        //     .then(function (fields) {
-        //         self.fields = fields;
-        //     });
         this._super.apply(this, self);
     },
 
     _render: function () {
         this.add_events();
+        self = this;
         return $.when().then(function () {
-            self.init_timeline();
-            $(window).trigger('resize');
-            self.trigger('timeline_view_loaded', self);
+            // Prevent Double Rendering on Updates
+            if (!self.timeline) {
+                self.init_timeline();
+                $(window).trigger('resize');
+            }
         });
     },
 
@@ -153,9 +137,7 @@ var CalendarRenderer = AbstractRenderer.extend({
         });
     },
 
-
-    init_timeline: function () {
-        var self = this;
+    _computeMode: function() {
         if (this.mode) {
             var start = false, end = false;
             switch (this.mode) {
@@ -175,11 +157,16 @@ var CalendarRenderer = AbstractRenderer.extend({
             if (end && start) {
                 this.options.start = start;
                 this.options.end = end;
-            }else{
+            }
+            else {
                this.mode = 'fit';
             }
         }
-        this.modelClass = this.getParent().model;
+    },
+
+    init_timeline: function () {
+        var self = this;
+        this._computeMode();
         this.options.editable = {
             // add new items by double tapping
             add: this.modelClass.data.rights.create,
@@ -204,35 +191,15 @@ var CalendarRenderer = AbstractRenderer.extend({
         this.timeline.on('click', self._onClick);
         var group_bys = this.arch.attrs.default_group_by.split(',');
         this.last_group_bys = group_bys;
+        this.last_domains = this.modelClass.data.domain;
         this.on_data_loaded(this.modelClass.data.data, group_bys);
-    },
-
-    get_perm: function (name) {
-        var self = this;
-        var promise = self.permissions[name];
-        if (self.permissions[name]) {
-            return $.when(self.permissions[name]);
-        } else {
-            return this._rpc({
-                model: this.model,
-                method: 'check_access_rights',
-                args: [
-                    name,
-                    false,
-                ],
-                context: this.getSession().user_context,
-            }).then(function (value) {
-                    self.permissions[name] = value;
-                    return value;
-            });
-        }
     },
 
     on_data_loaded: function (events, group_bys) {
         var self = this;
         var ids = _.pluck(events, "id");
         return this._rpc({
-            model: this.model,
+            model: this.modelName,
             method: 'name_get',
             args: [
                 ids,
@@ -269,12 +236,14 @@ var CalendarRenderer = AbstractRenderer.extend({
             _.each(events, function (event) {
                 var group_name = event[_.first(group_bys)];
                 if (group_name) {
-                    var group = _.find(groups, function (group) {
-                        return _.isEqual(group.id, group_name[0]);
-                    });
-                    if (group === undefined) {
-                        group = {id: group_name[0], content: group_name[1]};
-                        groups.push(group);
+                    if (group_name instanceof Array) {
+                        var group = _.find(groups, function (group) {
+                            return _.isEqual(group.id, group_name[0]);
+                        });
+                        if (group === undefined) {
+                            group = {id: group_name[0], content: group_name[1]};
+                            groups.push(group);
+                        }
                     }
                 }
             });
@@ -320,9 +289,10 @@ var CalendarRenderer = AbstractRenderer.extend({
         }
 
         var group = evt[self.last_group_bys[0]];
-        if (group) {
+        if (group && group instanceof Array) {
             group = _.first(group);
-        } else {
+        }
+        else {
             group = -1;
         }
         _.each(self.colors, function (color) {

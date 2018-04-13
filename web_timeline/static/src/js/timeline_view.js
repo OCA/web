@@ -23,9 +23,6 @@ odoo.define('web_timeline.TimelineView', function (require) {
     "use strict";
 
     var core = require('web.core');
-    var dialogs = require('web.view_dialogs');
-    var Model = require('web.BasicModel');
-    var time = require('web.time');
     var QuickCreate = require('web.CalendarQuickCreate');
     var view_registry = require('web.view_registry');
     var AbstractView = require('web.AbstractView');
@@ -50,7 +47,6 @@ odoo.define('web_timeline.TimelineView', function (require) {
             Controller: TimelineController,
             Renderer: TimelineRenderer,
         },
-        quick_create_instance: QuickCreate,
 
         init: function (viewInfo, params) {
             this._super.apply(this, arguments);
@@ -60,6 +56,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
             var attrs = this.arch.attrs;
             this.fields = viewInfo.fields;
             this.modelName = this.controllerParams.modelName;
+            this.action = params.action;
 
             var fieldNames = this.fields.display_name ? ['display_name'] : [];
             var mapping = {};
@@ -117,12 +114,14 @@ odoo.define('web_timeline.TimelineView', function (require) {
             this.rendererParams.date_delay = this.date_delay;
             this.rendererParams.colors = this.colors;
             this.rendererParams.fieldNames = fieldNames;
+            this.rendererParams.view = this;
             this.loadParams.modelName = this.modelName;
             this.loadParams.fieldNames = fieldNames;
             this.controllerParams.open_popup_action = this.open_popup_action;
             this.controllerParams.date_start = this.date_start;
             this.controllerParams.date_stop = this.date_stop;
             this.controllerParams.date_delay = this.date_delay;
+            this.controllerParams.actionContext = this.action.context;
             return this;
         },
 
