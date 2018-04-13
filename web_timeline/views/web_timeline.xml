@@ -7,7 +7,10 @@
             <link rel="stylesheet" href="/web_timeline/static/src/css/web_timeline.css"/>
 
             <script type="text/javascript" src="/web_timeline/static/lib/vis/vis-timeline-graph2d.min.js"/>
-            <script type="text/javascript" src="/web_timeline/static/src/js/web_timeline.js"/>
+            <script type="text/javascript" src="/web_timeline/static/src/js/timeline_view.js"/>
+            <script type="text/javascript" src="/web_timeline/static/src/js/timeline_renderer.js"/>
+            <script type="text/javascript" src="/web_timeline/static/src/js/timeline_controller.js"/>
+            <script type="text/javascript" src="/web_timeline/static/src/js/timeline_model.js"/>
         </xpath>
     </template>
 
