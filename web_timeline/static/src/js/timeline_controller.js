@@ -10,6 +10,7 @@ var _t = core._t;
 
 var CalendarController = AbstractController.extend({
     custom_events: _.extend({}, AbstractController.prototype.custom_events, {
+        onGroupClick: '_onGroupClick',
         onUpdate: '_onUpdate',
         onRemove: '_onRemove',
         onMove: '_onMove',
@@ -59,6 +60,17 @@ var CalendarController = AbstractController.extend({
             context: self.getSession().user_context,
         }).then(function(data) {
             return self.renderer.on_data_loaded(data, n_group_bys);
+        });
+    },
+
+    _onGroupClick: function (event) {
+        var groupField = this.renderer.last_group_bys[0];
+        return this.do_action({
+            type: 'ir.actions.act_window',
+            res_model: this.renderer.view.fields[groupField].relation,
+            res_id: event.data.item.group,
+            target: 'new',
+            views: [[false, 'form']]
         });
     },
 
