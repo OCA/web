@@ -55,7 +55,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
         this.field_editability = node.field_editability || this.field_editability;
         this.show_row_totals = this.parse_boolean(node.show_row_totals || '1');
         this.show_column_totals = this.parse_boolean(node.show_column_totals || '1');
-        this.init_matrix();
+
     },
     /**
      * Initializes the Value matrix.
@@ -64,6 +64,9 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
     init_matrix: function(){
       var self = this,
           records = self.recordData[this.name].data;
+      // Wipe the content if something still exists
+      this.by_x_axis = {};
+      this.by_y_axis = {};
       _.each(records, function(record) {
         var x = record.data[self.field_x_axis],
             y = record.data[self.field_y_axis];
@@ -150,6 +153,8 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
       if (!this.view) {
         return this._super();
       }
+      // Ensure widget is re initiated when rendering
+      this.init_matrix();
       var arch = this.view.arch,
           viewType = 'list';
       this.renderer = new X2Many2dMatrixRenderer(this, this.value, {
@@ -159,7 +164,10 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
           matrix_data: this.matrix_data
       });
       this.$el.addClass('o_field_x2many o_field_x2many_2d_matrix');
+      // Remove previous rendered and add the newly created one
+      this.$el.find('div:not(.o_x2m_control_panel)').remove();
       return this.renderer.appendTo(this.$el);
+
     }
 
   });
