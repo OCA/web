@@ -106,26 +106,6 @@ var CalendarRenderer = AbstractRenderer.extend({
         }
     },
 
-    _onClick: function (e) {
-        // handle a click on a group header
-        if (e.what === 'group-label') {
-            return self._onGroupClick(e);
-        }
-    },
-
-    _onGroupClick: function (e) {
-        if (e.group === -1) {
-            return;
-        }
-        return this.do_action({
-            type: 'ir.actions.act_window',
-            res_model: this.view.fields_view.fields[this.last_group_bys[0]].relation,
-            res_id: e.group,
-            target: 'new',
-            views: [[false, 'form']]
-        });
-    },
-
     _computeMode: function() {
         if (this.mode) {
             var start = false, end = false;
@@ -176,7 +156,7 @@ var CalendarRenderer = AbstractRenderer.extend({
         if (self.mode && self['on_scale_' + self.mode + '_clicked']) {
             self['on_scale_' + self.mode + '_clicked']();
         }
-        this.timeline.on('click', self._onClick);
+        this.timeline.on('click', self.on_group_click);
         var group_bys = this.arch.attrs.default_group_by.split(',');
         this.last_group_bys = group_bys;
         this.last_domains = this.modelClass.data.domain;
@@ -298,6 +278,13 @@ var CalendarRenderer = AbstractRenderer.extend({
         }
         self.color = null;
         return r;
+    },
+
+    on_group_click: function (e) {
+        // handle a click on a group header
+        if (e.what === 'group-label' && e.group != -1) {
+            this._trigger(e, function(){}, 'onGroupClick');
+        }
     },
 
     on_update: function (item, callback) {
