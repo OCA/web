@@ -33,8 +33,8 @@
                 <option value="" disabled="disabled" selected="selected">
                     Add column
                 </option>
-                <t t-foreach="widget.options.custom_column_fields" t-as="field">
-                    <option t-att-value="field"><t t-esc="widget.options.custom_column_fields[field].string" /></option>
+                <t t-foreach="widget._custom_column_get_fields()" t-as="field">
+                    <option t-att-value="field"><t t-esc="widget.options.custom_column_fields[field].string or '/'" /> (<t t-esc="field" />)</option>
                 </t>
             </select>
             <a type="button" t-attf-class="oe_custom_column_user {{widget.options.custom_column_type == 'user' and 'active' or ''}}" title="Customize the list for yourself">

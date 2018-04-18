@@ -8,6 +8,7 @@
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
+    max-width: calc(100% - 200px);
 }
 .openerp .oe_view_manager_custom_column a
 {
@@ -22,6 +23,7 @@
 {
     margin: 1px;
     background: transparent;
+    max-width: calc(100% - 110px);
 }
 .openerp .oe_list th .oe_custom_column_remove,
 .openerp .oe_list th .oe_custom_column_left,

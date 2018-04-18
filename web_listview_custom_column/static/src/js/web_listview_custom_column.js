@@ -10,8 +10,7 @@ openerp.web_listview_custom_column = function(instance)
             this._super.apply(this, arguments)
             this.ViewManager.on('switch_mode', this, function(view_type)
             {
-                this.options.$pager.siblings('.oe_view_manager_custom_column')
-                    .toggle(view_type == 'list');
+                this._custom_column_get_element().toggle(view_type == 'list');
             });
         },
         load_list: function()
@@ -21,18 +20,9 @@ openerp.web_listview_custom_column = function(instance)
             this.$custom_column = jQuery(instance.web.qweb.render(
                 'ListView.CustomColumn', {widget: this}
             ));
-            if(this.options.$pager)
-            {
-                this.options.$pager.siblings('.oe_view_manager_custom_column')
-                    .empty()
-                    .append(this.$custom_column);
-            }
-            else
-            {
-                this.$('.oe_view_manager_custom_column')
-                    .empty()
-                    .append(this.$custom_column);
-            }
+            this._custom_column_get_element()
+                .empty()
+                .append(this.$custom_column);
             this.$custom_column.filter('.oe_custom_column_activate')
                 .click(this.proxy(this._custom_column_activate));
             this.$custom_column.filter('.oe_custom_column_reset')
@@ -62,6 +52,18 @@ openerp.web_listview_custom_column = function(instance)
                     );
                 });
         },
+        _custom_column_get_element: function()
+        {
+            if(this.options.$pager)
+            {
+                return this.options.$pager
+                    .siblings('.oe_view_manager_custom_column');
+            }
+            else
+            {
+                return this.$('.oe_view_manager_custom_column');
+            }
+        },
         _custom_column_activate: function()
         {
             if(this.options.custom_column_active)
@@ -83,12 +85,23 @@ openerp.web_listview_custom_column = function(instance)
         {
             var self = this;
             return new instance.web.Model('ir.ui.view')
-                .call('custom_column_desc', [this.fields_view.view_id])
+                .call(
+                    'custom_column_desc', [this.fields_view.view_id],
+                    {context: instance.session.user_context}
+                )
                 .then(function(desc)
                 {
                     self.options.custom_column_fields = desc.fields;
                     self.options.custom_column_type = desc.type;
                 });
+        },
+        _custom_column_get_fields: function()
+        {
+            var fields = this.options.custom_column_fields;
+            return _.chain(fields).keys().sortBy(function(field)
+            {
+                return fields[field].string;
+            }).value();
         },
         _custom_column_deactivate: function()
         {
