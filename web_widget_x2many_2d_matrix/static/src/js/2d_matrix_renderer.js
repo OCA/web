@@ -9,6 +9,8 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
   var config = require('web.config');
   var field_utils = require('web.field_utils');
   var utils = require('web.utils');
+  var core = require('web.core');
+  var _t = core._t
   var FIELD_CLASSES = {
     // copied from ListRenderer
     float: 'o_list_number',
@@ -37,9 +39,14 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
     _renderView: function () {
       var self = this;
 
-      this.$el
-        .removeClass('table-responsive')
-        .empty();
+      // Display a nice message if there's no data to display
+      this.$el.empty();
+      if (!self.rows.length){
+        var $alert = $('<div>', {'class': 'alert alert-info'});
+        $alert.text(_t('Sorry no matrix data to display.'));
+        this.$el.append($alert);
+        return this._super();
+      }
 
       var $table = $('<table>').addClass('o_list_view table table-condensed table-striped');
       this.$el
