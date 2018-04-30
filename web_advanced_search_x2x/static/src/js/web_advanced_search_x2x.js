@@ -4,7 +4,7 @@
 
 openerp.web_advanced_search_x2x = function(instance)
 {
-    instance.web_advanced_search_x2x.ExtendedSearchPropositionMany2One = 
+    instance.web_advanced_search_x2x.ExtendedSearchPropositionMany2One =
     instance.web.search.ExtendedSearchProposition.Char.extend(
     instance.web.form.FieldManagerMixin,
     {
@@ -47,7 +47,9 @@ openerp.web_advanced_search_x2x = function(instance)
             return {
                 attrs: {
                     name: this.field.name,
-                    options: '{"no_create": true}',
+                    options:
+                    '{"create": false, "create_edit": false, ' +
+                    '"no_open": true}',
                 },
             }
         },
@@ -59,6 +61,7 @@ openerp.web_advanced_search_x2x = function(instance)
             }
             this.searchfield = new instance.web.form.FieldMany2One(
                 this, this.create_searchfield_node());
+            this.searchfield.view = this;
             return this.searchfield;
         },
         operator_changed: function(e)
@@ -71,6 +74,9 @@ openerp.web_advanced_search_x2x = function(instance)
             if(this.show_searchfield())
             {
                 this.create_searchfield().appendTo(this.$el.empty());
+                this.searchfield.$input.autocomplete('widget').on(
+                    'click', this, function(e) { e.stopPropagation() }
+                );
             }
             if(this.show_domain_selection())
             {
@@ -209,8 +215,9 @@ openerp.web_advanced_search_x2x = function(instance)
                         .prop('disabled', self.searchview.build_search_data().domains.length == 0);
                     self.$buttonpane.find(".oe_selectcreatepopup-search-select")
                         .unbind('click')
-                        .click(function()
+                        .click(function(e)
                         {
+                            e.stopPropagation();
                             self.select_elements(self.selected_ids)
                             .then(function()
                             {
@@ -228,10 +235,11 @@ openerp.web_advanced_search_x2x = function(instance)
                 });
             });
         },
-        select_domain: function()
+        select_domain: function(e)
         {
             var self = this,
                 search = this.searchview.build_search_data();
+            e.stopPropagation();
             instance.web.pyeval.eval_domains_and_contexts({
                 domains: search.domains,
                 contexts: search.contexts,

@@ -27,6 +27,7 @@ domain popups.
     "summary": "Use a search widget in advanced search for x2x fields",
     "depends": [
         'web',
+        'web_m2x_options',
     ],
     "qweb": [
         'static/src/xml/web_advanced_search_x2x.xml',
