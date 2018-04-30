@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <template id="assets_backend" name="module_name assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/web_tree_dynamic_colored_line/static/src/js/list_view.js"></script>
+            </xpath>
+        </template>
+    </data>
+</odoo>
