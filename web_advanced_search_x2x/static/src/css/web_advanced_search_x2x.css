@@ -1,5 +1,6 @@
 .openerp .searchview_extended_prop_value .oe_form_field_with_button
 {
+    display: inline-block;
     position: relative;
 }
 .openerp .oe_searchview_drawer .web_advanced_search_x2x_domain
