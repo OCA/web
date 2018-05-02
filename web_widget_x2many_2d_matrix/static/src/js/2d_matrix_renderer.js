@@ -238,7 +238,7 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
       if (modifiers.invisible && !(options && options.renderInvisible)) {
           return $td;
       }
-      options.mode = 'edit';  // enforce edit mode
+      options.mode = this.getParent().mode;  // enforce mode of the parent
       var widget = this._renderFieldWidget(node, record, _.pick(options, 'mode'));
       this._handleAttributes(widget.$el, node);
       return $td.append(widget.$el);
