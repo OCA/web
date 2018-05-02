@@ -30,6 +30,7 @@ openerp.web_widget_date_interval = function(instance)
                 {
                     throw 'Pass an end field in the options dictionary';
                 }
+                this.on('change:value', this, this.reinitialize);
             },
             _get_date: function()
             {
