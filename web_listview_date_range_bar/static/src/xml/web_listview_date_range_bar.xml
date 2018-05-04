@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+
+    <t t-name="list_date_range_bar_selector">
+        <div class="oe_list_date_range_bar_sel ui-toolbar" style="margin-bottom:0px;">
+            <div class="oe_form_dropdown_section oe_list_date_range_bar_start">
+                <span style="font-weight:bold;">Date from:</span>
+            </div>
+            <div class="oe_form_dropdown_section oe_list_date_range_bar_end">
+                <span style="font-weight:bold;">Date end:</span>
+            </div>
+        </div>
+    </t>
+
+</templates>
