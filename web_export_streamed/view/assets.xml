@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="tree icon assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/web_export_streamed/static/src/js/data_export.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>
+
