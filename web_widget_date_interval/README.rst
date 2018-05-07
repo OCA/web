@@ -1,4 +1,4 @@
-.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
+.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 
@@ -13,7 +13,7 @@ Usage
 
 To use this module, use the widget ``date_interval`` on the field representing the begin of the interval. Make sure to also add the field representing the end of the interval, usually as hidden. Also add an ``options`` dictionary where you at least set the keys ``type`` and ``end_field``.
 
-Depending on the type, you can add more configuration in the options dictionary, see below for a list.
+Depending on the type, you can add more configuration in the widget options, see below for a list depending on the interval type.
 
 weeknumber_iso
 --------------
@@ -28,6 +28,8 @@ weeknumber_iso
 Example::
 
     <field name="date_start" widget="date_interval" options="{'type': 'weeknumber_iso', 'end_field': 'date_end'}" />
+
+The module's demo data adds this to the form of model constraints.
 
 Roadmap
 =======
@@ -48,14 +50,14 @@ Credits
 Images
 ------
 
-* Odoo Community Association: `Icon <https://github.com/OCA/maintainer-tools/blob/master/template/module/static/description/icon.svg>`_.
+* Odoo Community Association: `Icon <https://odoo-community.org/logo.png>`_.
 
 Contributors
 ------------
 
 * Holger Brunn <hbrunn@therp.nl>
 
-Do not contact contributors directly about help with questions or problems concerning this addon, but use the `community mailing list <mailto:community@mail.odoo.com>`_ or the `appropriate specialized mailinglist <https://odoo-community.org/groups>`_ for help, and the bug tracker linked in `Bug Tracker`_ above for technical issues.
+Do not contact contributors directly about support or help with technical issues.
 
 Maintainer
 ----------
