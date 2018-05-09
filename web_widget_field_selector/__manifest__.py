@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Jairo Llopis <jairo.llopis@tecnativa.com>
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 {
     "name": "Field Selector Widget",
     "summary": "Select fields",
-    "version": "10.0.1.0.1",
+    "version": "11.0.1.0.1",
     "category": "Extra Tools",
     "website": "https://www.tko-br.com/",
     "author": "TKO, Odoo S.A., Odoo Community Association (OCA)",
