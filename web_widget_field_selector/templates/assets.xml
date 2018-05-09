@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Jairo Llopis <jairo.llopis@tecnativa.com>
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
+
+<odoo>
+
+<template id="assets_backend" inherit_id="web.assets_backend">
+    <xpath expr=".">
+        <link rel="stylesheet"
+              href="/web_widget_field_selector/static/src/css/domain_selector.less"/>
+        <link rel="stylesheet"
+              href="/web_widget_field_selector/static/src/css/model_field_selector.less"/>
+
+        <script type="text/javascript"
+                src="/web_widget_field_selector/static/src/js/field_selector.js"/>
+    </xpath>
+</template>
+
+</odoo>
