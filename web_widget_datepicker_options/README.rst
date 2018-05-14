@@ -42,6 +42,7 @@ Contributors
 ------------
 
 * Vincent Vinet <vincent.vinet@savoirfairelinux.com>
+* Yanina Aular <yanina.aular@vauxoo.com>
 
 Maintainer
 ----------
