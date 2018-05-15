@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template xml:space="preserve">
+    <t t-extend="SearchView.FavoriteMenu">
+        <t t-jquery=".o_favorites_menu" t-operation="after">
+            <div class="toggle_buttons">
+                <button id="oe_group_by_expand" class="fa fa-expand btn btn-icon"/>
+                <button id="oe_group_by_reset" class="fa fa-compress btn btn-icon"/>
+            </div>
+        </t>
+    </t>
+</template>
