@@ -15,7 +15,7 @@
               "Odoo Community Association (OCA)",
     'website': "http://acsone.eu",
     'category': 'web',
-    'version': '11.0.1.0.1',
+    'version': '11.0.1.0.2',
     'license': 'AGPL-3',
     'depends': [
         'web',
