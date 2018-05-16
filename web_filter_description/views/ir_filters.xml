@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright 2018 Bejaoui Souheil <souheil_bejaoui@hotmail.fr>
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).-->
+<odoo>
+    <record id="ir_filters_view_form" model="ir.ui.view">
+        <field name="name">ir.filters.form</field>
+        <field name="model">ir.filters</field>
+        <field name="inherit_id" ref="base.ir_filters_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='sort']" position="after">
+                <field name="description"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

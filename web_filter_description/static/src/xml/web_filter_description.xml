@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright 2018 Bejaoui Souheil <souheil_bejaoui@hotmail.fr>
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).-->
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="SearchView.FavoriteMenu">
+        <t t-jquery="li.o_save_name:eq(0)" t-operation="after">
+            <li class="o_save_name">
+                <div>
+                    <label for="description">Description</label>
+                    <textarea name="description"></textarea>
+                </div>
+            </li>
+        </t>
+    </t>
+
+</templates>
