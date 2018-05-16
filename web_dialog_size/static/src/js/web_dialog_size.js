@@ -32,7 +32,8 @@ Dialog.include({
                 handle: '.modal-header',
                 helper: false
             });
-        }
+        };
+        return this;
     },
 
     close: function() {
