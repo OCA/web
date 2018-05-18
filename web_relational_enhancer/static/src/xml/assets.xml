@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+        <template id="assets_backend" name="Field Enhancer Assets" inherit_id="web.assets_backend">
+            <xpath expr=".">
+                <script type="text/javascript" src="/web_relational_enhancer/static/src/js/field_enhancer.js"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>
