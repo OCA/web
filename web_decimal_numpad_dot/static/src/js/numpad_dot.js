@@ -9,7 +9,7 @@ odoo.define("web_decimal_numpad_dot.FieldFloat", function (require) {
     var NumpadDotReplaceMixin = {
         init: function () {
             this.events = $.extend({}, this.events, {
-                "keydown": "numpad_dot_replace",
+                "keyup": "numpad_dot_replace",
             });
             return this._super.apply(this, arguments);
         },
@@ -20,7 +20,11 @@ odoo.define("web_decimal_numpad_dot.FieldFloat", function (require) {
         },
 
         numpad_dot_replace: function (event) {
+            String.prototype.replaceAt=function(index, replacement) {
+                return this.substr(0, index) + replacement + this.substr(index + replacement.length);
+            }
             // Only act on numpad dot key
+            event.stopPropagation()
             if (event.keyCode != 110) {
                 return;
             }
@@ -29,12 +33,8 @@ odoo.define("web_decimal_numpad_dot.FieldFloat", function (require) {
                 to = this.$input.prop("selectionEnd"),
                 cur_val = this.$input.val(),
                 point = this.l10n_decimal_point();
-            // Replace selected text by proper character
-            this.$input.val(
-                cur_val.substring(0, from) +
-                point +
-                cur_val.substring(to)
-            );
+            var new_val = cur_val.replaceAt(from-1, point)
+            this.$input.val(new_val);
             // Put user caret in place
             to = from + point.length
             this.$input.prop("selectionStart", to).prop("selectionEnd", to);
