@@ -17,6 +17,7 @@ setuptools.setup(
         'odoo11-addon-web_no_bubble',
         'odoo11-addon-web_notify',
         'odoo11-addon-web_responsive',
+        'odoo11-addon-web_search_with_and',
         'odoo11-addon-web_searchbar_full_width',
         'odoo11-addon-web_sheet_full_width',
         'odoo11-addon-web_timeline',
