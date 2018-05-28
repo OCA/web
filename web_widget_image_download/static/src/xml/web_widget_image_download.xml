@@ -5,7 +5,7 @@
 <template>
     <t t-extend="FieldBinaryImage">
         <t t-jquery=".o_select_file_button" t-operation="after">
-            <t t-if="widget.has_custom_image()">
+            <t t-if="widget.value">
                 <a class="fa fa-download o_form_binary_file_download"
                    title="Download"/>
             </t>
