@@ -4,10 +4,10 @@
 odoo.define('web_widget_image_download.widget', function (require) {
     'use strict';
 
-    var core = require('web.core');
+    var FieldBinaryImage = require('web.basic_fields').FieldBinaryImage;
 
-    core.form_widget_registry.get("image").include({
-        render_value: function () {
+    FieldBinaryImage.include({
+        _render: function () {
             this._super();
             var $widget = this.$el.find('.o_form_binary_file_download');
             this.imgSrc = this.$el.find('img[name="' + this.name + '"]')
@@ -25,17 +25,7 @@ odoo.define('web_widget_image_download.widget', function (require) {
                 }
             });
 
-            // Replace with jQuery to keep inheritance intact
-            if (this.has_custom_image()) {
-                this.$el.find('.o_clear_file_button')
-                    .removeClass('col-md-offset-5');
-            }
-
             $widget.attr('href', this.imgSrc);
-        },
-
-        has_custom_image: function () {
-            return this.imgSrc != this.placeholder;
-        },
+        }
     });
 });
