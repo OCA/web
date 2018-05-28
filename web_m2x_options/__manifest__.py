@@ -1,18 +1,23 @@
-# -*- coding: utf-8 -*-
 
 {
     "name": 'web_m2x_options',
-    "version": "10.0.1.1.0",
+    "version": "11.0.1.0.0",
+    'category': 'Web',
+    "author": "ACSONE SA/NV, "
+              "0k.io, "
+              "Tecnativa, "
+              "Odoo Community Association (OCA)",
+    'website': 'https://github.com/OCA/web',
+    'license': 'AGPL-3',
     "depends": [
         'base',
         'web',
     ],
+    'data': [
+        'views/view.xml'
+    ],
     'qweb': [
         'static/src/xml/base.xml',
     ],
-    'license': 'AGPL-3',
-    'data': ['views/view.xml'],
-    "author": "ACSONE SA/NV, 0k.io, Tecnativa, "
-              "Odoo Community Association (OCA)",
     'installable': True,
 }
