@@ -54,7 +54,7 @@ See the available options at `jquery-timepicker <https://github.com//jonthornton
 Credits
 =======
 
-* The module uses the `jquery-timepicker <https://github.com//jonthornton//jquery-timepicker#timepicker-plugin-for-jquery>`_. plugin by Jon Thornton. This software is made available under the open source MIT License. © 2014 Jon Thornton and contributors
+* The module uses the `jquery-timepicker plugin <https://github.com//jonthornton//jquery-timepicker#timepicker-plugin-for-jquery>`_ by Jon Thornton. This software is made available under the open source MIT License. © 2014 Jon Thornton and contributors
 
 * Odoo Community Association (OCA)
 
