@@ -13,6 +13,7 @@ setuptools.setup(
         'odoo11-addon-web_dialog_size',
         'odoo11-addon-web_environment_ribbon',
         'odoo11-addon-web_favicon',
+        'odoo11-addon-web_group_expand',
         'odoo11-addon-web_listview_range_select',
         'odoo11-addon-web_no_bubble',
         'odoo11-addon-web_notify',
