@@ -142,16 +142,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                 var search_result = searcher([["id", "not in", blacklist]]);
             }
 
-            if (!(self.options && (self.is_option_set(self.options.create) || self.is_option_set(self.options.create_edit)))) {
-                this.create_rights = this.create_rights || (function(){
-                return new Model(self.field.relation).call(
-                    "check_access_rights", ["create", false]);
-                })();
-            }
-
-            $.when(search_result, this.create_rights).then(function (data, can_create) {
-
-                self.can_create = can_create;  // for ``.show_error_displayer()``
+            $.when(search_result).then(function (data) {
                 self.last_search = data;
                 // possible selections for the m2o
                 var values = _.map(data, function (x) {
