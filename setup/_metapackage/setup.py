@@ -26,6 +26,7 @@ setuptools.setup(
         'odoo11-addon-web_tree_many2one_clickable',
         'odoo11-addon-web_widget_bokeh_chart',
         'odoo11-addon-web_widget_color',
+        'odoo11-addon-web_widget_datepicker_options',
         'odoo11-addon-web_widget_many2many_tags_multi_selection',
         'odoo11-addon-web_widget_x2many_2d_matrix',
         'odoo11-addon-web_widget_x2many_2d_matrix_example',
