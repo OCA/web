@@ -121,13 +121,15 @@ odoo.define("web_widget_text_markdown.bootstrap_markdown",
         },
 
         _format: function(row_data, options){
-            options = options || {};
-            var markdown_text = marked(
-                formats.format_value(
-                    row_data[this.id].value, this, options.value_if_empty
-                )
-            );
-            return markdown_text;
+            if (this.type == "text") {
+              options = options || {};
+              var markdown_text = marked(
+                  formats.format_value(
+                      row_data[this.id].value, this, options.value_if_empty
+                  )
+              );
+              return markdown_text;
+            }
         }
     });
 
