@@ -1,0 +1,102 @@
+.box
+{
+    background-color: #90b82e;
+    color: #fff;
+    position: absolute;
+    min-height: 450px;
+    display: none;
+    z-index: 1000;
+    width: 100%;
+    opacity: 0.8;
+}
+.box.has-advanced-upload
+{
+    padding-top: 24px;
+    padding-right: 16px;
+    padding-bottom: 24px;
+    padding-left: 16px;
+    display: block;
+    outline: 2px dashed #fff;
+    outline-offset: -10px;
+    -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
+    transition: outline-offset .15s ease-in-out, background-color .15s linear;
+}
+.box.is-dragover
+{
+    outline-offset: -20px;
+    outline-color: #92b82e;
+    background-color: #fff;
+    color: #92b82e;
+}
+.box__dragndrop,
+.box__icon
+{
+    display: none;
+}
+.box.has-advanced-upload .box__dragndrop
+{
+    display: inline;
+    font-size: 20px;
+}
+.box.has-advanced-upload .box__icon
+{
+    width: 100%;
+    height: 80px;
+    fill: #fff;
+    display: block;
+    margin-bottom: 40px;
+}
+.box.has-advanced-upload.is-dragover .box__icon
+{
+    fill: #92b82e;
+}
+.box__uploading,
+.box__success,
+.box__error
+{
+    display: none;
+}
+.box.is-uploading .box__uploading,
+.box.is-success .box__success,
+.box.is-error .box__error
+{
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    font-size: 20px;
+    -webkit-transform: translateY( -50% );
+    transform: translateY( -50% );
+}
+.box__uploading
+{
+    font-style: italic;
+}
+.box__success
+{
+    -webkit-animation: appear-from-inside .25s ease-in-out;
+    animation: appear-from-inside .25s ease-in-out;
+}
+    @-webkit-keyframes appear-from-inside
+    {
+        from    { -webkit-transform: translateY( -50% ) scale( 0 ); }
+        75%     { -webkit-transform: translateY( -50% ) scale( 1.1 ); }
+        to      { -webkit-transform: translateY( -50% ) scale( 1 ); }
+    }
+    @keyframes appear-from-inside
+    {
+        from    { transform: translateY( -50% ) scale( 0 ); }
+        75%     { transform: translateY( -50% ) scale( 1.1 ); }
+        to      { transform: translateY( -50% ) scale( 1 ); }
+    }
+
+.box__restart
+{
+    font-weight: 700;
+}
+.box__restart:focus,
+.box__restart:hover
+{
+    color: #39bfd3;
+}
