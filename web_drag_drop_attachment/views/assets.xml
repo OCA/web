@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="asset_web_drag_drop" name="Drag Drop Attachment" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/css" href="/web_drag_drop_attachment/static/src/css/web_drag_drop.css"/>
+            <script type="text/javascript" src="/web_drag_drop_attachment/static/src/js/jquery.dragbetter.js"/>
+            <script type="text/javascript" src="/web_drag_drop_attachment/static/src/js/web_drag_drop.js"/>
+        </xpath>
+    </template>
+
+</odoo>
