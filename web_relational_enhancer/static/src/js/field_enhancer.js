@@ -58,8 +58,9 @@ odoo.define('web_relational_enhancer.field_enhancer', function(require) {
             }).fail(err => console.log(`Error getting relational fields. Error: ${err}`))
 
             return def
-        } else
-            return data
+        }
+
+        return data
     }
 
     function enhanceMany2OneEntryLabel(result) {
@@ -104,7 +105,7 @@ odoo.define('web_relational_enhancer.field_enhancer', function(require) {
                     _super.bind(self)(res)
                 })
             } else
-                this._super(data)
+                _super(data)
         }
     })
 
