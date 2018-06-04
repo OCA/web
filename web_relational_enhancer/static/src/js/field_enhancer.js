@@ -105,7 +105,7 @@ odoo.define('web_relational_enhancer.field_enhancer', function(require) {
                     _super.bind(self)(res)
                 })
             } else
-                _super(data)
+                _super.bind(this)(data)
         }
     })
 
