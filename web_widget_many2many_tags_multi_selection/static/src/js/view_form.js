@@ -19,7 +19,7 @@ odoo.define('web_widget_many2many_tags_multi_selection.multiple_tags', function 
                 }
             }
 
-            new dialogs.SelectCreateDialog(self, _.extend({}, self.nodeOptions, {
+            return new dialogs.SelectCreateDialog(self, _.extend({}, self.nodeOptions, {
                 res_model: self.field.relation,
                 domain: domain,
                 context: _.extend({}, self.record.getContext(self.recordParams), context || {}),
