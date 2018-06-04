@@ -23,7 +23,7 @@ odoo.define('web_relational_enhancer.field_enhancer', function(require) {
                 def.resolve(res)
             })
         } catch(err) {
-            console.log(err)
+            console.error(err)
             def.reject()
         }
 
@@ -48,14 +48,14 @@ odoo.define('web_relational_enhancer.field_enhancer', function(require) {
                         if ( obj[field] ) {
                             data[i].display_name += `\xa0-\xa0${obj[field]}`
                         } else {
-                            console.log(`Field: '${field}' does not exist in model: ${self.field.relation}`)
+                            console.warn(`Field: '${field}' does not exist in model: ${self.field.relation}`)
                         }
                     })
                 })
 
 
                 def.resolve(data)
-            }).fail(err => console.log(`Error getting relational fields. Error: ${err}`))
+            }).fail(err => console.error(`Error getting relational fields. Error: ${err}`))
 
             return def
         }
@@ -78,14 +78,14 @@ odoo.define('web_relational_enhancer.field_enhancer', function(require) {
                         if ( obj[field] ) {
                             result[i].label += `\xa0-\xa0${obj[field]}`
                         } else {
-                            console.log(`Field: '${field}' does not exist in model: ${self.field.relation}`)
+                            console.warn(`Field: '${field}' does not exist in model: ${self.field.relation}`)
                         }
                     })
                 })
 
 
                 def.resolve(result)
-            }).fail(err => console.log(`Error getting relational fields. Error: ${err}`))
+            }).fail(err => console.error(`Error getting relational fields. Error: ${err}`))
 
             return def
         }
