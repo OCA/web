@@ -5,13 +5,12 @@
 {
     'name': 'Web Widget Timer',
     'summary': 'This module introduces a new timer widget for form views.',
-    'images': [],
     'category': 'Extra Tools',
     'version': '10.0.1.0.0',
     'author': 'Onestein, Odoo Community Association (OCA)',
     'license': 'AGPL-3',
-    'website': 'http://www.onestein.eu',
-    'depends': ['base', 'web'],
+    'website': 'https://github.com/OCA/web',
+    'depends': ['web'],
     'data': [
         'views/web_timer.xml',
     ],
