@@ -5,7 +5,7 @@
     "summary": "Allows to download any image from its widget",
     "version": "11.0.1.0.0",
     "category": "web",
-    "website": "https://www.tecnativa.com",
+    "website": "https://github.com/OCA/web",
     "author": "Tecnativa, Odoo Community Association (OCA), Kaushal Prajapati",
     "license": "LGPL-3",
     "application": False,
