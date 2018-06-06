@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2016 Flavio Corpa <flavio.corpa@tecnativa.com>
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
+
+<template>
+    <t t-extend="FieldBinaryImage">
+        <t t-jquery=".o_select_file_button" t-operation="after">
+            <t t-if="widget.value">
+                <a class="fa fa-download o_form_binary_file_download"
+                   title="Download"/>
+            </t>
+        </t>
+    </t>
+</template>
