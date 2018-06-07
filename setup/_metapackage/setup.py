@@ -37,6 +37,7 @@ setuptools.setup(
         'odoo8-addon-web_ir_actions_act_window_none',
         'odoo8-addon-web_ir_actions_act_window_page',
         'odoo8-addon-web_last_viewed_records',
+        'odoo8-addon-web_list_html_widget',
         'odoo8-addon-web_listview_custom_element_number',
         'odoo8-addon-web_listview_show_advanced_search',
         'odoo8-addon-web_m2x_options',
