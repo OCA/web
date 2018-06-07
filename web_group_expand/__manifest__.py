@@ -3,7 +3,7 @@
     'summary': """
         Enables expanding/reset all groups in list view
     """,
-    "version": "11.0.1.0.0",
+    "version": "11.0.1.0.1",
     "category": "Web",
     "author": "OpenERP SA, "
               "AvanzOSC, "
