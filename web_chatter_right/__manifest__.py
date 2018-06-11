@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -22,11 +21,10 @@
 {
     'name': 'Web Chatter Right',
     'version': '11.0.1.0.0',
-    'author': "Alexandre Díaz <dev@redneboa.es>",
+    'author': "Odoo Community Association (OCA), Alexandre Díaz <dev@redneboa.es>",
     'website': '',
     'category': 'web/theme',
     'summary': "Put chatter right",
-    'description': "Web Chatter Right",
     'depends': [
         'mail',
     ],
