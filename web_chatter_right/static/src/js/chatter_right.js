@@ -6,6 +6,7 @@ odoo.define('web_chatter_right.Chatter', function (require) {
    * Alexandre Díaz <dev@redneboa.es>
    */
 
+
   var FormRenderer = require('web.FormRenderer');
 
   FormRenderer.include({
