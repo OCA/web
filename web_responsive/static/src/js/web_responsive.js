@@ -9,8 +9,8 @@ odoo.define('web_responsive', function(require) {
     var SearchView = require('web.SearchView');
     var core = require('web.core');
     var config = require('web.config');
-    var FieldOne2Many = core.form_widget_registry.get('one2many');
     var ViewManager = require('web.ViewManager');
+    var Session = require('web.session');
 
     Menu.include({
 
@@ -26,7 +26,7 @@ odoo.define('web_responsive', function(require) {
             this._super(id);
             if (allowOpen) {
                 return;
-            };
+            }
             var $clicked_menu = this.$secondary_menus.find('a[data-menu=' + id + ']');
             $clicked_menu.parents('.oe_secondary_submenu').css('display', '');
         }
@@ -291,18 +291,18 @@ odoo.define('web_responsive', function(require) {
 
     // It inits a new AppDrawer when the web client is ready
     core.bus.on('web_client_ready', null, function() {
-        new AppDrawer();
+        return new AppDrawer();
     });
 
     // if we are in small screen change default view to kanban if exists
     ViewManager.include({
         get_default_view: function() {
-            var default_view = this._super()
+            var default_view = this._super();
             if (config.device.size_class <= config.device.SIZES.XS &&
                 default_view.type !== 'kanban' &&
                 this.views.kanban) {
                 default_view.type = 'kanban';
-            };
+            }
             return default_view;
         },
     });
