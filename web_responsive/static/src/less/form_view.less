@@ -1,14 +1,16 @@
 /* Copyright 2016 Ponto Suprimentos Ltda.
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
+ @sheet-margin: @sheet-padding;
+
 .o_form_view {
     // Form must fill 100% width in any size
     .o_form_sheet_bg {
-        padding: @sheet-padding;
 
         .o_form_sheet {
             min-width: auto;
             max-width: 100%;
+            margin: @sheet-margin;
         }
 
         @media (max-width: @screen-sm-max) {
