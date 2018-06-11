@@ -1,0 +1,23 @@
+@media only screen and (min-width: 1024px) {
+  .o_form_sheet_bg.o_form_sheet_chatter_right {
+    width: calc(100% - 390px);
+    display: inline-block;
+  }
+
+  .oe_chatter.o_chatter_right {
+    display: inline-block !important;
+    width: 390px !important;
+    min-width: 390px !important;
+    position: absolute;
+    background-color: white;
+  }
+
+  .o_followers {
+    position: absolute;
+    top: 2em;
+  }
+
+  .o_web_client > .o_main > .o_main_content > .o_content .table-responsive {
+    overflow-x: auto !important;
+  }
+}
