@@ -12,7 +12,7 @@ odoo.define('web_chatter_right.Chatter', function (require) {
   FormRenderer.include({
 
       _updateView: function ($newContent) {
-          this._super.apply(this, arguments);
+          this._super($newContent);
           var $chatter = this.$el.find('.oe_chatter');
           if (this.has_sheet && $chatter.length !== 0) {
               if ($chatter.css('visibility') === 'hidden' || $chatter.css('display') === 'none') {
