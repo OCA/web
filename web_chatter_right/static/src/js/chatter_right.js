@@ -14,10 +14,12 @@ odoo.define('web_chatter_right.Chatter', function (require) {
           this._super.apply(this, arguments);
           var $chatter = this.$el.find('.oe_chatter');
           if (this.has_sheet && $chatter.length !== 0) {
-              if ($chatter.css('visibility') === 'hidden'|| $chatter.css('display') === 'none') {
+              if ($chatter.css('visibility') === 'hidden' || $chatter.css('display') === 'none') {
                   this.$el.find('.o_form_sheet_bg').removeClass("o_form_sheet_chatter_right");
+                  $chatter.removeClass('o_chatter_right');
               } else {
                   this.$el.find('.o_form_sheet_bg').addClass("o_form_sheet_chatter_right");
+                  $chatter.addClass('o_chatter_right');
               }
           }
       },
