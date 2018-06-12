@@ -7,7 +7,6 @@ var Dialog = require('web.Dialog');
 var config = rpc.query({
     model: 'ir.config_parameter',
     method: 'get_web_dialog_size_config',
-    args: [],
 });
 
 Dialog.include({
