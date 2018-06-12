@@ -6,12 +6,12 @@ odoo.define('web_x2many_delete_all.Mixin', function (require) {
     var core = require('web.core');
     var _t = core._t;
     var ListRenderer = require('web.ListRenderer');
-    
+
     ListRenderer.include({
         events: _.extend({}, ListRenderer.prototype.events, {
             'click thead .o_list_record_delete_all': '_onTrashAllIconClick',
         }),
-        _renderHeader: function (isGrouped) {
+        _renderHeader: function () {
             var $header = this._super.apply(this, arguments);
             if (this.addTrashIcon) {
                 $header.find('tr').append(this._renderDeleteAll('th'));
@@ -20,7 +20,7 @@ odoo.define('web_x2many_delete_all.Mixin', function (require) {
         },
         _renderDeleteAll: function (tag) {
             var $icon = $('<button>', {class: 'fa fa-trash-o o_list_record_delete_all_btn', name: 'delete all',
-                'aria-label': _t('Delete All ')});
+                'aria-label': _t('Delete All')});
             return $('<th>', {class: 'o_list_record_delete_all'}).append($icon);
         },
         _onTrashAllIconClick: function (event) {

@@ -7,7 +7,7 @@
     'summary': """
         Adds a button to x2many fields that removes all linked records
     """,
-    'version': '10.0.1.0.0',
+    'version': '11.0.1.0.0',
     'category': 'Web',
     'author': 'Onestein, Meet Dholakia, Odoo Community Association (OCA)',
     'website': 'http://www.onestein.eu',
