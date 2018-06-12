@@ -34,6 +34,17 @@ The following keyboard shortcuts are implemented:
 * Type to select App Links
 * ``esc`` to close App Drawer
 
+Quick Search
+------------
+
+A search feature is provided in the App Drawer, which allow for you to easily
+navigate menus without a mouse.
+
+To activate the search, just begin typing while within the App Drawer.
+
+You can use the arrow keys or mouse to navigate and select results, in a similar
+fashion to navigating the apps in the drawer.
+
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
    :target: https://runbot.odoo-community.org/runbot/162/11.0
@@ -44,16 +55,18 @@ Known issues / Roadmap
 Note: Data added to the footer ``support_branding`` is not shown while using
 this module.
 
-* Provide full menu search feature instead of just App search
 * Drag drawer from left to open in mobile
 * Figure out how to test focus on hidden elements for keyboard nav tests
-* If you resize the window, body gets a wrong ``overflow: auto`` css property
-  and you need to refresh your view or open/close the app drawer to fix that.
 * Override LESS styling to allow for responsive widget layouts
 * Adding ``oe_main_menu_navbar`` ID to the top navigation bar triggers some
   great styles, but also `JavaScript that causes issues on mobile
   <https://github.com/OCA/web/pull/446#issuecomment-254827880>`_
-
+* The ``AppDrawer`` JavaScript object currently extends ``Class``. We should extend
+  ``Widget`` instead.
+* On Android (FireFox) - clicking the search icon does not focus the search input.
+* On Android (FireFox & Chrome) - clicking the search query input will show the on
+  screen keyboard for a split second, but the App Drawer immediately closes and the
+  keyboard closes with it.
 
 Bug Tracker
 ===========
