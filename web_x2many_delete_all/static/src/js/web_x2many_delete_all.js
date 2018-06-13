@@ -4,37 +4,34 @@
 odoo.define('web_x2many_delete_all.Mixin', function (require) {
     "use strict";
     var core = require('web.core');
+    var _t = core._t;
+    var ListRenderer = require('web.ListRenderer');
 
-    var X2ManyListDeleteAllMixin = {
-        events: {
-            'click th.o_list_record_delete': 'btn_delete_all_clicked'
-        },
-        reload_current_view: function() {
-            var self = this;
-            var res = this._super.apply(this, arguments);
-            res.then(function() {
-                self.toggle_btn_delete_all();
-            });
-            return res
-        },
-        toggle_btn_delete_all: function() {
-            if (this.get('effective_readonly')) {
-                this.$('th.o_list_record_delete > .fa-trash-o').addClass('hidden');
-            } else {
-                this.$('th.o_list_record_delete > .fa-trash-o').removeClass('hidden');
+    ListRenderer.include({
+        events: _.extend({}, ListRenderer.prototype.events, {
+            'click thead .o_list_record_delete_all': '_onTrashAllIconClick',
+        }),
+        _renderHeader: function () {
+            var $header = this._super.apply(this, arguments);
+            if (this.addTrashIcon) {
+                $header.find('tr').append(this._renderDeleteAll('th'));
             }
+            return $header;
         },
-        btn_delete_all_clicked: function() {
-            if (this.get('effective_readonly')) return;
-            this.delete_all();
+        _renderDeleteAll: function (tag) {
+            var $icon = $('<button>', {class: 'fa fa-trash-o o_list_record_delete_all_btn', name: 'delete all',
+                'aria-label': _t('Delete All')});
+            return $('<th>', {class: 'o_list_record_delete_all'}).append($icon);
         },
-        delete_all: function() {
-            this.viewmanager.views.list.controller.do_delete(this.dataset.ids);
-        }
-    }
-
-    core.form_widget_registry.get('many2many').include(X2ManyListDeleteAllMixin);
-    core.form_widget_registry.get('one2many').include(X2ManyListDeleteAllMixin);
-
-    return X2ManyListDeleteAllMixin;
+        _onTrashAllIconClick: function (event) {
+            event.stopPropagation();
+            var self = this;
+            var resIDs = _.map(self.$('tbody  tr.o_data_row'), function(rowID) {
+                return $(rowID).data('id')
+            });
+            _.each(resIDs, function(row_id){
+                self.trigger_up('list_record_delete', {id: row_id});
+            })
+        },
+    })
 });

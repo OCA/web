@@ -3,12 +3,12 @@
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 
 <odoo>
-    <template id="assets_backend" inherit_id="web.assets_backend">
+    <template id="assets_backend" inherit_id="web.assets_backend" name="web_x2many_delete_all assets">
         <xpath expr=".">
             <script type="text/javascript"
                     src="/web_x2many_delete_all/static/src/js/web_x2many_delete_all.js"/>
             <link rel="stylesheet"
-                  href="/web_x2many_delete_all/static/src/css/web_x2many_delete_all.css"/>
+                  href="/web_x2many_delete_all/static/src/less/web_x2many_delete_all.less"/>
         </xpath>
     </template>
 </odoo>
