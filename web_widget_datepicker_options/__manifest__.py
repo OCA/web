@@ -3,7 +3,7 @@
 {
     "name": "Web widget datepicker options",
     "summary": "Enhance customization for datepicker widgets",
-    "version": "11.0.1.0.0",
+    "version": "11.0.1.0.1",
     "category": "Web",
     "author": "Vincent Vinet, "
               "Odoo Community Association (OCA)",

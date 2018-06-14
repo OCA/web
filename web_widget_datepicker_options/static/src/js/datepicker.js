@@ -11,6 +11,7 @@ odoo.define('web_widget_datepicker_options.datepicker', function(require) {
             this._super.apply(this, arguments);
             var parent = this.getParent();
             if(typeof parent !== 'undefined'
+                    && typeof parent.field !== 'undefined'
                     && parent.field.type === 'date'
                     && parent.nodeOptions){
                 var datepicker = parent.nodeOptions.datepicker;
@@ -24,6 +25,7 @@ odoo.define('web_widget_datepicker_options.datepicker', function(require) {
             this._super.apply(this, arguments);
             var parent = this.getParent();
             if(typeof parent !== 'undefined'
+                    && typeof parent.field !== 'undefined'
                     && parent.field.type === 'datetime'
                     && parent.nodeOptions){
                 var datepicker = parent.nodeOptions.datepicker;
