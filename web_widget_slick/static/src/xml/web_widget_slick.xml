@@ -4,6 +4,6 @@
 
 <template>
     <t t-name="FieldSlickImages">
-        <div t-attf-class="o_form_field {{ widget.widget_class }}"></div>
+        <div t-attf-class="o_form_field {{ widget.className}}"></div>
     </t>
 </template>

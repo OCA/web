@@ -1,0 +1,1 @@
+* Adding / Deleting images from a carousel is not currently supported.

@@ -2,14 +2,16 @@
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html). */
 
 odoo.define('web_widget_slick', function(require) {
-  "use strict";
+    "use strict";
+    var core = require('web.core');
+    var relational_fields = require('web.relational_fields');
+    var registry = require('web.field_registry');
 
-  var core = require('web.core');
-  var AbstractManyField = require('web.form_relational').AbstractManyField;
+    var FieldOne2Many = relational_fields.FieldOne2Many;
 
-  var FieldSlickImages = AbstractManyField.extend({
+    var FieldSlickImages = FieldOne2Many.extend({
 
-    widget_class: 'o_slick',
+    className: 'o_slick',
     template: 'FieldSlickImages',
     $slick: null,
     no_rerender: true,
@@ -62,39 +64,36 @@ odoo.define('web_widget_slick', function(require) {
       ]
     },
 
-    init: function(field_manager, node) {
-      this._super(field_manager, node);
-      this.options = _.defaults(this.options, this.defaults);
+    init: function (parent, name, record, options) {
+        this._super.apply(this, arguments);
+        this.nodeOptions = _.defaults(this.nodeOptions, this.defaults);
     },
 
-    destroy_content: function() {
-      if (this.$slick) {
-        var $imgs = this.$el.find('img');
-        // Unslicking removes the carousel but re-appends any images,
-        // so removal of images is also required
-        $imgs.each($.proxy(this._slickRemove, this));
-        this.$slick.slick('unslick');
-      }
+    destroy: function () {
+        if (this.$slick) {
+            var $imgs = this.$el.find('img');
+            // Unslicking removes the carousel but re-appends any images,
+            // so removal of images is also required
+            $imgs.each($.proxy(this._slickRemove, this));
+            this.$slick.slick('unslick');
+          }
+        this._super.apply(this, arguments);
     },
 
-    render_value: function() {
-      this._super();
-      this.destroy_content();
-
-      this.$el.parent('td').addClass('o_slick_cell');
-      this.$slick = $('<div class="slick-container"></div>');
-      if (this.options.arrows) {
-        this.$slick.addClass('slick-arrowed');
-      }
-      this.$el.append(this.$slick);
-
-      var baseUrl = '/web/image/' + this.options.modelName + '/';
-      var value = this.get('value');
-      this.loading.push.apply(value);
-      _.each(value, $.proxy(this._slickRender, this, [baseUrl]));
-
-      this.$slick.slick(this.options);
-      core.bus.on('resize', this, this._resizeCarousel);
+    _render: function () {
+        this._super();
+        this.$el.empty()
+        this.$slick = $('<div class="slick-container"></div>');
+        if (this.nodeOptions.arrows) {
+            this.$slick.addClass('slick-arrowed');
+        }
+        this.$el.append(this.$slick);
+        var baseUrl = '/web/image/' + this.nodeOptions.modelName + '/';
+        var value = this.value.res_ids;
+        this.loading.push.apply(value);
+        _.each(value, $.proxy(this._slickRender, this, [baseUrl]));
+        this.$slick.slick(this.nodeOptions);
+        core.bus.on('resize', this, this._resizeCarousel);
     },
 
     _resizeCarousel: function () {
@@ -158,15 +157,16 @@ odoo.define('web_widget_slick', function(require) {
     _slickRender: function (baseUrl, id) {
       var $img = $('<img class="img img-responsive"></img>');
       var $div = $('<div></div>');
-      $img.attr('data-lazy', baseUrl + id + '/' + this.options.fieldName);
+      $img.attr('data-lazy', baseUrl + id + '/' + this.nodeOptions.fieldName);
       $div.append($img);
       this.$slick.append($div);
     }
 
   });
 
-  core.form_widget_registry.add("one2many_slick_images", FieldSlickImages);
+    registry
+        .add('one2many_slick_images', FieldSlickImages);
 
-  return {FieldSlickImages: FieldSlickImages};
+    return {FieldSlickImages: FieldSlickImages};
 
 });
