@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# © 2016 Onestein (<http://www.onestein.eu>)
+# Copyright 2016 Onestein (<http://www.onestein.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
@@ -10,7 +9,7 @@
     'version': '11.0.1.0.0',
     'category': 'Web',
     'author': 'Onestein, Meet Dholakia, Odoo Community Association (OCA)',
-    'website': 'http://www.onestein.eu',
+    'website': 'https://github.com/OCA/web',
     'license': 'AGPL-3',
     'depends': [
         'web',
@@ -21,6 +20,4 @@
     'qweb': [
         'static/src/xml/web_x2many_delete_all.xml'
     ],
-    'installable': True,
-    'application': False,
 }

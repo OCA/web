@@ -21,7 +21,7 @@ odoo.define('web_x2many_delete_all.Mixin', function (require) {
         _renderDeleteAll: function (tag) {
             var $icon = $('<button>', {class: 'fa fa-trash-o o_list_record_delete_all_btn', name: 'delete all',
                 'aria-label': _t('Delete All')});
-            return $('<' + tag + ' width="1">')
+            return $('<' + tag + '>')
                     .addClass('o_list_record_delete_all')
                     .append($icon);
         },
