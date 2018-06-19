@@ -6,7 +6,7 @@
     'website': 'https://github.com/szufisher',
     'depends': ['web','bus', 'mail'],
     'data': [
-        'views.xml',
+        'views/web_auto_refresh.xml',
         ],
     'qweb': [        
     ],
