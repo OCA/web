@@ -9,7 +9,7 @@
     "category": "web",
     "website": "http://akretion.com",
     "license": "AGPL-3",
-    "author": "Akretion / Odoo Community Association (OCA)",
+    "author": "Akretion, Odoo Community Association (OCA)",
     "depends": [
         'web',
     ],

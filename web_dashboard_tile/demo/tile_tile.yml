@@ -36,5 +36,5 @@
     name: Currencies (Max Rate)
     model_id: base.model_res_currency
     domain: []
-    field_function: max
-    field_id: base.field_res_currency_rate
+    secondary_function: max
+    secondary_field_id: base.field_res_currency_rate

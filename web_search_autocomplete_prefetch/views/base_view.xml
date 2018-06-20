@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_view_search_autocomplete">
+            <field name="model">ir.ui.view</field>
+            <field name="inherit_id" ref="base.view_view_search"/>
+            <field name="arch" type="xml">
+    
+            <field name="name" position="attributes">
+                <attribute name="options">{'web_search_autocomplete_prefetch.disable': true}</attribute>
+            </field>
+
+            </field>
+        </record>
+    </data>
+</openerp>

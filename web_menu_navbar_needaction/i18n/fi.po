@@ -1,0 +1,56 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_menu_navbar_needaction
+# 
+# Translators:
+# Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-26 01:59+0000\n"
+"PO-Revision-Date: 2016-11-26 01:59+0000\n"
+"Last-Translator: Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016\n"
+"Language-Team: Finnish (https://www.transifex.com/oca/teams/23907/fi/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: fi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: web_menu_navbar_needaction
+#: code:addons/web_menu_navbar_needaction/models/ir_ui_menu.py:138
+#, python-format
+msgid ""
+"Cannot evaluate %s to a search domain:\n"
+"%s"
+msgstr ""
+"Ei voida käyttää %s hakuehdoissa:\n"
+"%s"
+
+#. module: web_menu_navbar_needaction
+#: view:ir.ui.menu:web_menu_navbar_needaction.edit_menu_access
+msgid "Fill in a domain for a custom needaction"
+msgstr "Täytä rajaus räätälöidylle needaction-toiminnolle "
+
+#. module: web_menu_navbar_needaction
+#: help:ir.ui.menu,needaction_domain:0
+msgid ""
+"If your menu item needs a different domain, set it here. It will override "
+"the model's needaction domain completely."
+msgstr ""
+
+#. module: web_menu_navbar_needaction
+#: field:ir.ui.menu,needaction:0
+msgid "Needaction"
+msgstr "Needaction"
+
+#. module: web_menu_navbar_needaction
+#: field:ir.ui.menu,needaction_domain:0
+msgid "Needaction domain"
+msgstr "Needaction rajaus"
+
+#. module: web_menu_navbar_needaction
+#: help:ir.ui.menu,needaction:0
+msgid "Set to False to disable needaction for specific menu items"
+msgstr ""

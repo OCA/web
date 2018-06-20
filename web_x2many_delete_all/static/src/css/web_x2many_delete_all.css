@@ -1,0 +1,13 @@
+/* Copyright 2016 Onestein
+ * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
+
+div.oe_list th.oe_list_record_delete,
+div.oe_list th.oe_list_record_delete > button {
+    cursor: pointer;
+}
+
+div.oe_list th.oe_list_record_delete > button {
+    border: none;
+    background: transparent;
+    padding: 0;
+}

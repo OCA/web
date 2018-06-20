@@ -1,0 +1,10 @@
+<openerp>
+    <data>
+       <template id="assets_backend" name="web_graph_sort assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/web_graph_sort/static/src/css/web_graph_sort.css"/>
+                <script type="text/javascript" src="/web_graph_sort/static/src/js/web_graph_sort.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>

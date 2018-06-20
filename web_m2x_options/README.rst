@@ -103,6 +103,14 @@ To add these parameters go to Configuration -> Technical -> Parameters -> System
 - web_m2x_options.limit: 10
 - web_m2x_options.search_more: True
 
+ir.model options
+----------------
+
+Now you can disable quick create globally on model base of the target model.
+
+``disable_quick_create`` *boolean* (Default: ``False``)
+
+  Whether to disable quick create for this model globally. This has the same effect as if you would add ``no_create`` to all m2x fields in all fields with that target model in their relation.
 
 Example
 -------
@@ -125,6 +133,7 @@ Roadmap
 - Instead of making the tags rectangle clickable, I think it's better to put the text as a clickable link, so we will get a consistent behaviour/aspect with other clickable elements (many2one...).
 - In edit mode, it would be great to add an icon like the one on many2one fields to allow to open the many2many in a popup window.
 - Include this feature as a configurable option via parameter to have this behaviour by default in all many2many tags.
+- Client side caching of 'disable_quick_create' flag query on model.
 
 Bug Tracker
 ===========

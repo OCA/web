@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- © 2016 Thomas Rehn (initOS GmbH)
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+    <data>
+        <template id="assets_backend" name="web_offline_warning assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/web_offline_warning/static/src/js/web_offline_warning.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>

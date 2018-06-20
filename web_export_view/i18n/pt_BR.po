@@ -3,14 +3,34 @@
 # * web_export_view
 # 
 # Translators:
+# bossnm11 <bossnm11@gmail.com>, 2014
+# chans <kcsgoodboy@naver.com>, 2014
 # danimaribeiro <danimaribeiro@gmail.com>, 2016
+# danimaribeiro <danimaribeiro@gmail.com>, 2016
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2011-2012,2014
+# Hotellook, 2014
+# Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016
+# jeon <bluerespect@nate.com>, 2014
+# Jong-Dae Park <jdpark7@gmail.com>, 2013,2015
+# Gu Hong Min <placidmoon1@gmail.com>, 2015
+# Kunwoo Kim <crazyabtmath@naver.com>, 2015
+# LEE SI HYEONG <super2451894@gmail.com>, 2014
+# Leonardo J. Caballero G. <leonardocaballero@gmail.com>, 2016
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015-2016
+# Paolo Valier, 2016
+# Pedro M. Baeza <pedro.baeza@gmail.com>, 2015
+# Rudolf Schnapka <rs@techno-flex.de>, 2016
+# Sam Ryoo <samryoo@gmail.com>, 2014
+# Seo. Junmin <inactive+trans_alice@transifex.com>, 2015
+# seungil <luck8778@gmail.com>, 2014
+# SEUNGWON <baeksw0620@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-11 02:17+0000\n"
-"PO-Revision-Date: 2016-03-05 16:20+0000\n"
-"Last-Translator: danimaribeiro <danimaribeiro@gmail.com>\n"
+"POT-Creation-Date: 2018-01-16 08:57+0000\n"
+"PO-Revision-Date: 2017-11-08 09:19+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-web-8-0/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,17 +51,3 @@ msgstr "Excel"
 #, python-format
 msgid "Export Current View"
 msgstr "Exportar visão atual"
-
-#. module: web_export_view
-#. openerp-web
-#: code:addons/web_export_view/static/src/js/web_export_view.js:84
-#, python-format
-msgid "False"
-msgstr "False"
-
-#. module: web_export_view
-#. openerp-web
-#: code:addons/web_export_view/static/src/js/web_export_view.js:81
-#, python-format
-msgid "True"
-msgstr "True"

@@ -17,6 +17,7 @@
         <template id="assets_backend" name="web_easy_switch_company assets" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
                 <script type="text/javascript" src="/web_easy_switch_company/static/src/js/switch_company.js"></script>
+                <link rel="stylesheet" href="/web_easy_switch_company/static/src/css/switch_company.css"/>
             </xpath>
         </template>
 

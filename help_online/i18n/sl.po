@@ -3,13 +3,29 @@
 # * help_online
 # 
 # Translators:
-# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
+# Antonio Trueba, 2016
+# Armando Vulcano Junior <vulcano@uol.com.br>, 2015
+# Carles Antoli <carlesantoli@hotmail.com>, 2015
+# Carles Antoli <carlesantoli@hotmail.com>, 2015
+# danimaribeiro <danimaribeiro@gmail.com>, 2016
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012-2013
+# Hotellook, 2014
+# Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016
+# John Toro <johntoro@gmail.com>, 2015
+# Leonardo J. Caballero G. <leonardocaballero@gmail.com>, 2016
+# Leonardo J. Caballero G. <leonardocaballero@gmail.com>, 2016
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015-2016
+# Miku Laitinen <miku.laitinen@gmail.com>, 2015
+# Paolo Valier, 2016
+# Rudolf Schnapka <rs@techno-flex.de>, 2015-2016
+# SaFi J. <safi2266@gmail.com>, 2015
+# Thomas A. Jaeger, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-23 13:46+0000\n"
-"PO-Revision-Date: 2015-11-08 05:42+0000\n"
+"POT-Creation-Date: 2016-09-17 12:06+0000\n"
+"PO-Revision-Date: 2016-09-16 21:45+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-web-8-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +36,7 @@ msgstr ""
 
 #. module: help_online
 #. openerp-web
-#: code:addons/help_online/static/src/js/help_online.js:83
+#: code:addons/help_online/static/src/js/help_online.js:93
 #, python-format
 msgid "Cancel"
 msgstr "Preklic"
@@ -33,13 +49,13 @@ msgstr "Zaključi"
 
 #. module: help_online
 #. openerp-web
-#: code:addons/help_online/static/src/js/help_online.js:81
+#: code:addons/help_online/static/src/js/help_online.js:91
 #, python-format
 msgid "Confirm"
 msgstr "Potrdi"
 
 #. module: help_online
-#: code:addons/help_online/models/help_online.py:60
+#: code:addons/help_online/models/help_online.py:57
 #, python-format
 msgid "Create Help page for %s"
 msgstr "Ustvari stran pomoči za %s"
@@ -55,6 +71,12 @@ msgstr "Ustvaril"
 #: field:import.help.wizard,create_date:0
 msgid "Created on"
 msgstr "Ustvarjeno"
+
+#. module: help_online
+#: field:export.help.wizard,display_name:0 field:help.online,display_name:0
+#: field:import.help.wizard,display_name:0
+msgid "Display Name"
+msgstr "Prikazni naziv"
 
 #. module: help_online
 #: view:export.help.wizard:help_online.export_help_wizard_view
@@ -91,7 +113,7 @@ msgid "Help Online"
 msgstr "Spletna navodila"
 
 #. module: help_online
-#: code:addons/help_online/models/help_online.py:55
+#: code:addons/help_online/models/help_online.py:52
 #, python-format
 msgid "Help on %s"
 msgstr "Pomoč za %s"
@@ -133,6 +155,12 @@ msgid "Import Help Online"
 msgstr "Uvoz spletnih navodil"
 
 #. module: help_online
+#: field:export.help.wizard,__last_update:0 field:help.online,__last_update:0
+#: field:import.help.wizard,__last_update:0
+msgid "Last Modified on"
+msgstr "Zadnjič spremenjeno"
+
+#. module: help_online
 #: field:export.help.wizard,write_uid:0 field:help.online,write_uid:0
 #: field:import.help.wizard,write_uid:0
 msgid "Last Updated by"
@@ -158,14 +186,14 @@ msgstr "Predpona strani ni določena!"
 
 #. module: help_online
 #. openerp-web
-#: code:addons/help_online/static/src/js/help_online.js:88
+#: code:addons/help_online/static/src/js/help_online.js:98
 #, python-format
 msgid "Ok"
 msgstr "V redu"
 
 #. module: help_online
 #. openerp-web
-#: code:addons/help_online/static/src/js/help_online.js:107
+#: code:addons/help_online/static/src/js/help_online.js:117
 #, python-format
 msgid "Page does not exist. Do you want to create?"
 msgstr "Stran ne obstaja. Jo želite ustvariti?"

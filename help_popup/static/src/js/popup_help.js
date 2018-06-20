@@ -12,8 +12,6 @@ openerp.help_popup = function(instance, local) {
                     return true;
                 }
                 $elem.data('click-init', true);
-                //alert('ee' + self.action)
-                console.log(self.action.id)
                 if (self.action.id == undefined || (self.action.advanced_help == '' && self.action.enduser_help == '')) {
                     self.$el.find('span.view_help').hide()
                 }

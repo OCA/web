@@ -178,7 +178,9 @@ openerp.web_widget_one2many_tags = function(instance)
                         set: function() {},
                         build_context: function()
                         {
-                            return column.context;
+                            return new instance.web.CompoundContext(
+                                column.context
+                            );
                         },
                     },
                     value = record.get(column.id);
@@ -201,7 +203,6 @@ openerp.web_widget_one2many_tags = function(instance)
                             })
                             .join(', ')
                     );
-                    console.log(record.get(column.id + '__display'));
                 });
                 column = _(column).extend({type: 'one2many_tags'});
             }

@@ -1,23 +1,6 @@
-//-*- coding: utf-8 -*-
-//############################################################################
-//
-//   OpenERP, Open Source Management Solution
-//   This module copyright (C) 2015 Therp BV <http://therp.nl>.
-//
-//   This program is free software: you can redistribute it and/or modify
-//   it under the terms of the GNU Affero General Public License as
-//   published by the Free Software Foundation, either version 3 of the
-//   License, or (at your option) any later version.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU Affero General Public License for more details.
-//
-//   You should have received a copy of the GNU Affero General Public License
-//   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//
-//############################################################################
+/* Copyright 2015 Holger Brunn <hbrunn@therp.nl>
+ * Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+ * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
 openerp.web_widget_x2many_2d_matrix = function(instance)
 {
@@ -31,6 +14,8 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
         // those will be filled with rows from the dataset
         by_x_axis: {},
         by_y_axis: {},
+        by_x_axis_sorted: [],
+        by_y_axis_sorted: [],
         by_id: {},
         // configuration values
         field_x_axis: 'x',
@@ -44,15 +29,27 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
         show_column_totals: true,
         // this will be filled with the model's fields_get
         fields: {},
+        // Store fields used to fill HTML attributes
+        fields_att: {},
+        x_axis_clickable: true,
+        y_axis_clickable: true,
 
         // read parameters
         init: function(field_manager, node)
         {
             this.field_x_axis = node.attrs.field_x_axis || this.field_x_axis;
             this.field_y_axis = node.attrs.field_y_axis || this.field_y_axis;
+            this.x_axis_clickable = node.attrs.x_axis_clickable || this.x_axis_clickable;
+            this.y_axis_clickable = node.attrs.y_axis_clickable || this.y_axis_clickable;
             this.field_label_x_axis = node.attrs.field_label_x_axis || this.field_x_axis;
             this.field_label_y_axis = node.attrs.field_label_y_axis || this.field_y_axis;
             this.field_value = node.attrs.field_value || this.field_value;
+            for (var property in node.attrs) {
+                if (property.startsWith("field_att_")) {
+                    this.fields_att[property.substring(10)] = node.attrs[property];
+                }
+            }
+            this.field_editability = node.attrs.field_editability || this.field_editability;
             this.show_row_totals = node.attrs.show_row_totals || this.show_row_totals;
             this.show_column_totals = node.attrs.show_column_totals || this.show_column_totals;
             return this._super.apply(this, arguments);
@@ -81,6 +78,8 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
             var self = this,
                 result = this._super.apply(this, arguments);
 
+            self.by_x_axis_sorted = []
+            self.by_y_axis_sorted = []
             self.by_x_axis = {};
             self.by_y_axis = {};
             self.by_id = {};
@@ -93,6 +92,8 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
                     self.is_numeric = fields[self.field_value].type == 'float';
                     self.show_row_totals &= self.is_numeric;
                     self.show_column_totals &= self.is_numeric;
+                    self.x_axis_clickable &= self.is_numeric;
+                    self.y_axis_clickable &= self.is_numeric;
                 })
                 // if there are cached writes on the parent dataset, read below
                 // only returns the written data, which is not enough to properly
@@ -209,6 +210,10 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
                 }
                 return true;
             });
+            if(this.by_x_axis_sorted.indexOf(x) == -1)
+                this.by_x_axis_sorted.push(x)
+            if(this.by_y_axis_sorted.indexOf(y) == -1)
+                this.by_y_axis_sorted.push(y)
             this.by_x_axis[x] = this.by_x_axis[x] || {};
             this.by_y_axis[y] = this.by_y_axis[y] || {};
             this.by_x_axis[x][y] = row;
@@ -219,13 +224,13 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
         // get x axis values in the correct order
         get_x_axis_values: function()
         {
-            return _.keys(this.by_x_axis);
+            return this.by_x_axis_sorted
         },
 
         // get y axis values in the correct order
         get_y_axis_values: function()
         {
-            return _.keys(this.by_y_axis);
+            return this.by_y_axis_sorted
         },
 
         // get the label for a value on the x axis
@@ -259,6 +264,20 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
         get_xy_id: function(x, y)
         {
             return this.by_x_axis[x][y]['id'];
+        },
+
+        get_xy_att: function(x, y)
+        {
+            var vals = {};
+            for (var att in this.fields_att) {
+                var val = this.get_field_value(
+                    this.by_x_axis[x][y], this.fields_att[att]);
+                // Discard empty values
+                if (val) {
+                    vals[att] = val;
+                }
+            }
+            return vals;
         },
 
         // return the value of a coordinate
@@ -338,14 +357,14 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
 
         setup_many2one_axes: function()
         {
-            if(this.fields[this.field_x_axis].type == 'many2one')
+            if(this.fields[this.field_x_axis].type == 'many2one' && this.x_axis_clickable)
             {
                 this.$el.find('th[data-x]').addClass('oe_link')
                 .click(_.partial(
                     this.proxy(this.many2one_axis_click),
                     this.field_x_axis, 'x'));
             }
-            if(this.fields[this.field_y_axis].type == 'many2one')
+            if(this.fields[this.field_y_axis].type == 'many2one' && this.y_axis_clickable)
             {
                 this.$el.find('tr[data-y] th').addClass('oe_link')
                 .click(_.partial(

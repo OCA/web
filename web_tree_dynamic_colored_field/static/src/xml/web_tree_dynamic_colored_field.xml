@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates>
+
+    <tr t-extend="ListView.row">
+        <t t-jquery="td[t-att-data-field='column.id']" t-operation="attributes">
+            <attribute name="t-att-style">columns.fct_colorize(record, column)</attribute>
+        </t>
+    </tr>
+
+</templates>

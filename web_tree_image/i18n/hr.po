@@ -1,0 +1,26 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_tree_image
+# 
+# Translators:
+# Ana-Maria Olujić <ana-maria.olujic@slobodni-programi.hr>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: web (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-25 00:51+0000\n"
+"PO-Revision-Date: 2016-08-19 11:48+0000\n"
+"Last-Translator: Ana-Maria Olujić <ana-maria.olujic@slobodni-programi.hr>\n"
+"Language-Team: Croatian (http://www.transifex.com/oca/OCA-web-8-0/language/hr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: hr\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#. module: web_tree_image
+#. openerp-web
+#: code:addons/web_tree_image/static/src/xml/widget.xml:31
+#, python-format
+msgid "Image preview"
+msgstr "Pregled slike"

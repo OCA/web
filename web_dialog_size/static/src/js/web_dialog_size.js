@@ -8,11 +8,6 @@ openerp.web_dialog_size= function (instance) {
                 .on('click', self.proxy('_extending'));
             self.$dialog_box.find('.dialog_button_restore')
                 .on('click', self.proxy('_restore'));
-            if(this.dialog_options.size == 'large')
-            {
-                self._extending();
-                return result;
-            }
             return jQuery.when(result).then(function()
             {
                 var deferred = null;

@@ -3,13 +3,27 @@
 # * web_ckeditor4
 # 
 # Translators:
+# Ahmet Altınışık <aaltinisik@altinkaya.com.tr>, 2016
+# Antonio Trueba, 2016
+# Armando Vulcano Junior <vulcano@uol.com.br>, 2015
+# Bole <bole@dajmi5.com>, 2015
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012-2013
+# Gustavo Lepri <gustavolepri@gmail.com>, 2015
+# Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016
+# John Toro <johntoro@gmail.com>, 2015
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015-2016
+# Paolo Valier, 2016
+# Paolo Valier, 2016
+# Rudolf Schnapka <rs@techno-flex.de>, 2015-2016
+# Sofce Dimitrijeva <sofce@eskon.com.mk>, 2013
+# Thomas A. Jaeger, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-17 07:29+0000\n"
-"PO-Revision-Date: 2015-11-07 11:19+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2016-04-28 07:09+0000\n"
+"PO-Revision-Date: 2016-04-30 19:54+0000\n"
+"Last-Translator: Paolo Valier\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-web-8-0/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,9 +32,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: web_ckeditor4
+#: field:ckeditor.monkeypatch,display_name:0
+msgid "Display Name"
+msgstr "Nome da visualizzare"
+
+#. module: web_ckeditor4
 #: field:ckeditor.monkeypatch,id:0
 msgid "ID"
 msgstr "ID"
+
+#. module: web_ckeditor4
+#: field:ckeditor.monkeypatch,__last_update:0
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
 
 #. module: web_ckeditor4
 #: model:ir.model,name:web_ckeditor4.model_ckeditor_monkeypatch

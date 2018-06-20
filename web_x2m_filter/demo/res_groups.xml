@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_groups_form" model="ir.ui.view">
+            <field name="model">res.groups</field>
+            <field name="inherit_id" ref="base.view_groups_form" />
+            <field name="arch" type="xml">
+                <field name="users" position="attributes">
+                    <attribute name="options">{'web_x2m_filter': [{'name': 'Only admins', 'domain': [('groups_id', '=', %(base.group_erp_manager)s)], 'default': True}]}</attribute>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

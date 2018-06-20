@@ -28,6 +28,8 @@
     'depends': [
         'base',
         'website',
+        'web',
+        'web_kanban',
     ],
     'description': """
 Help Online

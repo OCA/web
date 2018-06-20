@@ -1,0 +1,8 @@
+.oe_form header {
+    position: sticky;
+    top: 0px;
+    left: 5px;
+    right: 5px;
+    z-index: 2;
+}
+

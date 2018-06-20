@@ -3,14 +3,33 @@
 # * web_ckeditor4
 # 
 # Translators:
-# Ahmet Altınışık <aaltinisik@altinkaya.com.tr>, 2015
+# Accounts-Payable - Alkemics, 2015
+# Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2015
+# Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2015
+# Antonio Trueba, 2016
+# Carles Antoli <carlesantoli@hotmail.com>, 2015
+# Chen-Do LU <clu@alkemics.com>, 2015
+# danimaribeiro <danimaribeiro@gmail.com>, 2016
+# Dimitrios Glentadakis <dglent@gmail.com>, 2013-2014, 2015-2016
+# Efstathios Iosifidis <iefstathios@gmail.com>, 2014
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012,2014
+# François Breysse <fb@alkemics.com>, 2015
+# Giacomo <giacomo.spettoli@gmail.com>, 2015
+# Guewen Baconnier <guewen.baconnier@camptocamp.com>, 2015
+# Hotellook, 2014
+# Jim Spentzos, 2014
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
+# Maxime Chambreuil <mchambreuil@ursainfosystems.com>, 2015
+# njeudy <njeudy@tuxservices.com>, 2015
+# Rudolf Schnapka <rs@techno-flex.de>, 2015
+# SaFi J. <safi2266@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-08 21:34+0000\n"
-"PO-Revision-Date: 2015-12-30 22:16+0000\n"
-"Last-Translator: Ahmet Altınışık <aaltinisik@altinkaya.com.tr>\n"
+"POT-Creation-Date: 2016-12-29 03:45+0000\n"
+"PO-Revision-Date: 2016-12-30 20:45+0000\n"
+"Last-Translator: Ahmet Altinisik <aaltinisik@altinkaya.com.tr>\n"
 "Language-Team: Turkish (http://www.transifex.com/oca/OCA-web-8-0/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,9 +38,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: web_ckeditor4
+#: field:ckeditor.monkeypatch,display_name:0
+msgid "Display Name"
+msgstr "Görünen İsim"
+
+#. module: web_ckeditor4
 #: field:ckeditor.monkeypatch,id:0
 msgid "ID"
 msgstr "ID"
+
+#. module: web_ckeditor4
+#: field:ckeditor.monkeypatch,__last_update:0
+msgid "Last Modified on"
+msgstr "Son değişiklik"
 
 #. module: web_ckeditor4
 #: model:ir.model,name:web_ckeditor4.model_ckeditor_monkeypatch

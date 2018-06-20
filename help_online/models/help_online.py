@@ -34,10 +34,6 @@ class HelpOnline(models.TransientModel):
         name = '%s-%s' % (page_prefix, model.replace('.', '-'))
         return name
 
-    def page_exists(self, name):
-        website_model = self.env['website']
-        return website_model.page_exists(name)
-
     def get_page_url(self, model, view_type, domain=None, context=None):
         user_model = self.env['res.users']
         if not user_model.has_group('help_online.help_online_group_reader'):
@@ -48,8 +44,9 @@ class HelpOnline(models.TransientModel):
         if res:
             description = res[0][1]
         name = self._get_view_name(model, view_type, domain, context)
-        if self.page_exists(name):
-            url = '/page/%s' % name
+        website_model = self.env['website']
+        url = '/page/' + website_model.page_for_name(name)
+        if website_model.page_exists(url):
             if view_type:
                 url = url + '#' + view_type
             title = _('Help on %s') % description

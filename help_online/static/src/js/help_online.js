@@ -41,6 +41,16 @@ openerp.help_online = function (instance) {
         },
     });
     
+    instance.web_kanban.KanbanView.include({
+        view_loading: function(r) {
+            var ret = this._super(r);
+            if(! _.isUndefined(this.ViewManager.load_help_buttons)){
+                this.ViewManager.load_help_buttons();
+            }
+            return ret
+        },
+    });
+    
     openerp.web.FormView.include({
         view_loading: function(r) {
             var ret = this._super(r);

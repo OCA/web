@@ -1,0 +1,64 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_favicon
+# 
+# Translators:
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: web (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-14 08:27+0000\n"
+"PO-Revision-Date: 2016-04-08 04:46+0000\n"
+"Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
+"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-web-8-0/language/sl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: sl\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+
+#. module: web_favicon
+#: model:ir.model,name:web_favicon.model_res_company
+msgid "Companies"
+msgstr "Družbe"
+
+#. module: web_favicon
+#: view:res.company:web_favicon.view_company_form
+msgid "Configuration"
+msgstr "Nastavitve"
+
+#. module: web_favicon
+#: view:res.company:web_favicon.view_company_form
+msgid "Favicon"
+msgstr "Favicon"
+
+#. module: web_favicon
+#: field:res.company,favicon_backend:0
+msgid "Favicon backend"
+msgstr "Favicon ozadje"
+
+#. module: web_favicon
+#: field:res.company,favicon_backend_mimetype:0
+msgid "Favicon backend mimetype"
+msgstr "Mimetype favicon ozadja"
+
+#. module: web_favicon
+#: help:res.company,favicon_backend_mimetype:0
+msgid "Set the mimetype of your file."
+msgstr "Nastavite mimetype svoje datoteke"
+
+#. module: web_favicon
+#: selection:res.company,favicon_backend_mimetype:0
+msgid "image/gif"
+msgstr "image/gif"
+
+#. module: web_favicon
+#: selection:res.company,favicon_backend_mimetype:0
+msgid "image/png"
+msgstr "image/png"
+
+#. module: web_favicon
+#: selection:res.company,favicon_backend_mimetype:0
+msgid "image/x-icon"
+msgstr "image/x-icon"

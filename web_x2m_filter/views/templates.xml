@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="web_x2m_filter assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/web_x2m_filter/static/src/js/web_x2m_filter.js"></script>
+                <link rel="stylesheet" href="/web_x2m_filter/static/src/css/web_x2m_filter.css"/>
+            </xpath>
+        </template>
+    </data>
+</openerp>
