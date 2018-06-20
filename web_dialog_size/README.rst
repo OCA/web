@@ -55,9 +55,6 @@ Authors
 Contributors
 ~~~~~~~~~~~~
 
-Contributors
-------------
-
 * Anthony Muschang <anthony.muschang@acsone.eu>
 * Stéphane Bidoul <stephane.bidoul@acsone.eu>
 * Holger Brunn <hbrunn@therp.nl>
