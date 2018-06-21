@@ -54,6 +54,7 @@ addon | version | summary
 [web_menu_autohide](web_menu_autohide/) | 8.0.1.0.0 | Hide top and left menu bar
 [web_menu_collapsible](web_menu_collapsible/) | 8.0.1.0.0 | Foldable second level Odoo menu
 [web_menu_navbar_needaction](web_menu_navbar_needaction/) | 8.0.1.0.0 | Show the sum of submenus' needaction counters in main menu
+[web_no_crawler](web_no_crawler/) | 8.0.1.0.0 | Implement robots.txt / disallow indexing
 [web_offline_warning](web_offline_warning/) | 8.0.1.0.0 | User-friendly Offline Warning
 [web_onchange_action](web_onchange_action/) | 8.0.1.0.0 | Run actions from onchange handlers
 [web_one2many_list_action](web_one2many_list_action/) | 8.0.1.0.0 | Enable tree_but_open action for One2ManyListView rows.
