@@ -5,7 +5,7 @@
 {
     'name': 'Implement robots.txt / disallow indexing',
     'author': 'Xpansa Group, Odoo Community Association (OCA)',
-    'website': 'http://xpansa.com',
+    'website': 'https://github.com/OCA/website/tree/8.0',
     'category': 'web',
     'version': '8.0.1.0.0',
     'depends': [
@@ -13,6 +13,5 @@
     ],
     'installable': True,
     'application': False,
-    'images': ['static/description/icon.png'],
     'license': 'AGPL-3',
 }
