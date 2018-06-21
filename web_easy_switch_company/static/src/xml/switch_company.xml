@@ -33,7 +33,7 @@
                     <t t-foreach="widget.companies" t-as="company">
                         <li>
                             <a class="easy_switch_company_company_item"
-                               href="#"
+                               href="javascript:void(0)"
                                t-att-data-company-id="company.id">
                                 <img class="oe_topbar_avatar" t-att-src="company.logo_topbar"/>
                                 <img class="oe_topbar_avatar" t-att-src="company.logo_state"/>
