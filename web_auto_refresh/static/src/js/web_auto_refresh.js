@@ -1,7 +1,7 @@
 odoo.define('web_auto_refresh', function (require) {
 	"use strict";
 	var WebClient = require('web.WebClient');
-    var bus = require('bus.bus')	
+    var bus = require('bus.bus');
 	
     WebClient.include({
         init: function(parent, client_options){
@@ -17,7 +17,7 @@ odoo.define('web_auto_refresh', function (require) {
             var self = this;
             bus.off('notification', this, this.bus_notification);
             _(this.known_bus_channels).each(function (channel) {
-                openerp.bus.bus.delete_channel(channel);
+                bus.bus.delete_channel(channel);
             });
             _(this.known_bus_events).each(function(e) {
                 self.bus_off(e[0], e[1]);
