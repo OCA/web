@@ -1,14 +1,65 @@
 /* Copyright 2016 Ponto Suprimentos Ltda.
+   Copyright 2018 Alexandre Díaz
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
+
+@sheet-margin: @sheet-padding;
+@chatter-side-width: 30%;
+
+// Sided Chatter
+@media (min-width: @screen-md) {
+    .o_chatter_position_sided {
+        .o_form_view {
+            display: flex;
+            height: 100%;
+
+            .o_form_sheet_bg {
+                border-right: 1px solid @table-border-color;
+                overflow: auto;
+                flex: 1 1 auto;
+            }
+
+            .oe_chatter {
+                overflow: auto;
+                flex: 0 0 @chatter-side-width;
+
+                .o_chatter_topbar {
+                    height: auto;
+                    flex-wrap: wrap;
+
+                    button:last-of-type {
+                        flex: 1 0 auto;
+                        text-align: left;
+                    }
+
+                    .o_followers {
+                        order: -10;
+                        flex: 0 1 100%;
+                    }
+                }
+
+                &:empty {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+// Normal Chatter
+.o_chatter_position_normal {
+    .oe_chatter {
+        max-width: initial;
+    }
+}
 
 .o_form_view {
     // Form must fill 100% width in any size
     .o_form_sheet_bg {
-        padding: @sheet-padding;
 
         .o_form_sheet {
             min-width: auto;
             max-width: 100%;
+            margin: @sheet-margin;
         }
 
         @media (max-width: @screen-sm-max) {
