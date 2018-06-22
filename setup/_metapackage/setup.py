@@ -17,6 +17,7 @@ setuptools.setup(
         'odoo11-addon-web_ir_actions_act_multi',
         'odoo11-addon-web_ir_actions_act_view_reload',
         'odoo11-addon-web_listview_range_select',
+        'odoo11-addon-web_m2x_options',
         'odoo11-addon-web_no_bubble',
         'odoo11-addon-web_notify',
         'odoo11-addon-web_responsive',
