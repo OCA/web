@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
-   <t t-name="GroupExpand.Buttons">
-       <div class="oe_list_buttons">
-            <ul id="oe_group_by" class="oe_view_manager_switch oe_button_group oe_right">
-                <li class="oe_group_expand"><a id="oe_group_by_expand"><i class="fa fa-expand" id="expand_icon" /></a></li>
-                <li class="oe_group_expand"><a id="oe_group_by_reset"><i class="fa fa-compress" id="compress_icon" /></a></li>
-            </ul>
-       </div>
-   </t>
+    <t t-name="GroupExpand.Buttons">
+        <div>
+            <div id="oe_group_by" class="btn-group btn-group-sm o_cp_switch_buttons">
+                <button id="oe_group_by_expand" type="button" class="btn btn-icon fa fa-expand oe_group_expand"/>
+                <button id="oe_group_by_reset" type="button" class="btn btn-icon fa fa-compress oe_group_expand"/>
+            </div>
+        </div>
+    </t>
 </templates>
