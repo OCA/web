@@ -45,7 +45,7 @@ Usage
 =====
 
 in the field's options dict
----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``create`` *boolean* (Default: depends if user have create rights)
 
@@ -90,7 +90,7 @@ in the field's options dict
   Deactivates the color picker on many2many_tags buttons to do nothing (ignored if open is set)
 
 ir.config_parameter options
----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Now you can disable "Create..." and "Create and Edit..." entry for all widgets in the odoo instance.
 If you disable one option, you can enable it for particular field by setting "create: True" option directly on the field definition.
@@ -125,7 +125,7 @@ To add these parameters go to Configuration -> Technical -> Parameters -> System
 
 
 Example
--------
+~~~~~~~
 
 Your XML form view definition could contain::
 
