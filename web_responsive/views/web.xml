@@ -2,6 +2,7 @@
 
 <!--
     Copyright 2016 LasLabs Inc.
+    Copyright 2018 Alexandre Díaz
     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 -->
 
@@ -92,6 +93,10 @@
 
             </header>
 
+        </xpath>
+
+        <xpath expr="//div[hasclass('o_main')]" position="attributes">
+            <attribute name="t-attf-class">o_main o_chatter_position_{{ json.loads(session_info)['chatter_position'] }}</attribute>
         </xpath>
 
     </template>
