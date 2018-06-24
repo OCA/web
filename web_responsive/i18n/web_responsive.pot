@@ -1,39 +1,32 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * web_responsive
+#	* web_responsive
 #
-# Translators:
-# Rodrigo de Almeida Sottomaior Macedo <rmsolucoeseminformatic4@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-22 08:27+0000\n"
-"PO-Revision-Date: 2017-06-22 08:27+0000\n"
-"Last-Translator: Rodrigo de Almeida Sottomaior Macedo "
-"<rmsolucoeseminformatic4@gmail.com>, 2017\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
-"teams/23907/pt_BR/)\n"
-"Language: pt_BR\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: \n"
 
 #. module: web_responsive
 #: model:ir.ui.view,arch_db:web_responsive.webclient_bootstrap
 msgid "<span class=\"sr-only\">Toggle App Drawer</span>"
-msgstr "<span class=\"sr-only\">Aplicativo Desenhador Alternativo</span>"
+msgstr ""
 
 #. module: web_responsive
 #: model:ir.ui.view,arch_db:web_responsive.webclient_bootstrap
 msgid "<span class=\"sr-only\">Toggle Navigation</span>"
-msgstr "<span class=\"sr-only\">Navegação Alternativa</span>"
+msgstr ""
 
 #. module: web_responsive
 #: model:ir.ui.view,arch_db:web_responsive.menu
 msgid "Apps"
-msgstr "Aplicativos"
+msgstr ""
 
 #. module: web_responsive
 #: model:ir.model.fields,field_description:web_responsive.field_res_users_chatter_position
@@ -48,7 +41,7 @@ msgstr ""
 #. module: web_responsive
 #: model:ir.ui.view,arch_db:web_responsive.menu
 msgid "More <b class=\"caret\"/>"
-msgstr "Mais <b class=\"caret\"/>"
+msgstr ""
 
 #. module: web_responsive
 #: selection:res.users,chatter_position:0
@@ -64,3 +57,4 @@ msgstr ""
 #: model:ir.model,name:web_responsive.model_res_users
 msgid "Users"
 msgstr ""
+
