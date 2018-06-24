@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * web_favicon
-# 
+#
 # Translators:
 # Peter Hageman <hageman.p@gmail.com>, 2017
 msgid ""
@@ -11,11 +11,12 @@ msgstr ""
 "POT-Creation-Date: 2017-07-01 03:34+0000\n"
 "PO-Revision-Date: 2017-07-01 03:34+0000\n"
 "Last-Translator: Peter Hageman <hageman.p@gmail.com>, 2017\n"
-"Language-Team: Dutch (Netherlands) (https://www.transifex.com/oca/teams/23907/nl_NL/)\n"
+"Language-Team: Dutch (Netherlands) (https://www.transifex.com/oca/"
+"teams/23907/nl_NL/)\n"
+"Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: nl_NL\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: web_favicon
@@ -30,12 +31,13 @@ msgstr "Favicon"
 
 #. module: web_favicon
 #: model:ir.model.fields,field_description:web_favicon.field_res_company_favicon_backend
-msgid "Favicon backend"
-msgstr ""
+#, fuzzy
+msgid "Favicon Backend"
+msgstr "Favicon"
 
 #. module: web_favicon
 #: model:ir.model.fields,field_description:web_favicon.field_res_company_favicon_backend_mimetype
-msgid "Favicon backend mimetype"
+msgid "Favicon Backend Mimetype"
 msgstr ""
 
 #. module: web_favicon
