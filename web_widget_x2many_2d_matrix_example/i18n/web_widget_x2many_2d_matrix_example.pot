@@ -1,0 +1,117 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* web_widget_x2many_2d_matrix_example
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_create_uid
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line_create_uid
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_matrix_demo_wiz_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_create_date
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line_create_date
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_matrix_demo_wiz_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.actions.act_window,name:web_widget_x2many_2d_matrix_example.action_x2m_demo
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line_demo_id
+msgid "Demo"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.ui.menu,name:web_widget_x2many_2d_matrix_example.base_matrix_widget_menu
+msgid "Demo x2m matrix widget"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_display_name
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line_display_name
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_matrix_demo_wiz_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_id
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line_id
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_matrix_demo_wiz_id
+msgid "ID"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo___last_update
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line___last_update
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_matrix_demo_wiz___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line_write_uid
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_write_uid
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_matrix_demo_wiz_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line_write_date
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_write_date
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_matrix_demo_wiz_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line_ids
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_matrix_demo_wiz_line_ids
+msgid "Line"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line_name
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_name
+msgid "Name"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.ui.view,arch_db:web_widget_x2many_2d_matrix_example.view_x2m_demo_form
+msgid "Try x2m 2d matrix"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line_user_id
+msgid "User"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line_value
+msgid "Value"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model,name:web_widget_x2many_2d_matrix_example.model_x2m_demo
+msgid "x2m.demo"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model,name:web_widget_x2many_2d_matrix_example.model_x2m_demo_line
+msgid "x2m.demo.line"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model,name:web_widget_x2many_2d_matrix_example.model_x2m_matrix_demo_wiz
+msgid "x2m.matrix.demo.wiz"
+msgstr ""
+
