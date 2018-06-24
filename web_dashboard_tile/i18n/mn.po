@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * web_dashboard_tile
-# 
+#
 # Translators:
 msgid ""
 msgstr ""
@@ -10,11 +10,12 @@ msgstr ""
 "POT-Creation-Date: 2018-01-16 08:57+0000\n"
 "PO-Revision-Date: 2017-11-23 23:29+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Mongolian (http://www.transifex.com/oca/OCA-web-8-0/language/mn/)\n"
+"Language-Team: Mongolian (http://www.transifex.com/oca/OCA-web-8-0/language/"
+"mn/)\n"
+"Language: mn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: mn\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: web_dashboard_tile
@@ -232,7 +233,7 @@ msgid "Number of records"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/models/tile_tile.py:239
+#: code:addons/web_dashboard_tile/models/tile_tile.py:235
 #, python-format
 msgid "Please select a field from the selected model."
 msgstr ""
@@ -314,7 +315,7 @@ msgid "Total value of '%s'"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/models/tile_tile.py:215
+#: code:addons/web_dashboard_tile/models/tile_tile.py:211
 #, python-format
 msgid "Unimplemented Feature. Search on Active field disabled."
 msgstr ""

@@ -1,22 +1,17 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * web_dashboard_tile
+#	* web_dashboard_tile
 #
-# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: web (8.0)\n"
+"Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-16 08:57+0000\n"
-"PO-Revision-Date: 2017-09-22 22:51+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Danish (Denmark) (http://www.transifex.com/oca/OCA-web-8-0/"
-"language/da_DK/)\n"
-"Language: da_DK\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: \n"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,action_id:0
@@ -153,10 +148,7 @@ msgstr ""
 
 #. module: web_dashboard_tile
 #: help:tile.tile,group_ids:0
-msgid ""
-"If this field is set, only users of this group can view this tile. Please "
-"note that it will only work for global tiles (that is, when User field is "
-"left empty)"
+msgid "If this field is set, only users of this group can view this tile. Please note that it will only work for global tiles (that is, when User field is left empty)"
 msgstr ""
 
 #. module: web_dashboard_tile
@@ -219,7 +211,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,model_id:0
 msgid "Model"
-msgstr "Model"
+msgstr ""
 
 #. module: web_dashboard_tile
 #: field:tile.tile,name:0
@@ -239,9 +231,9 @@ msgid "Please select a field from the selected model."
 msgstr ""
 
 #. module: web_dashboard_tile
-#: help:tile.tile,primary_format:0 help:tile.tile,secondary_format:0
-msgid ""
-"Python Format String valid with str.format()\n"
+#: help:tile.tile,primary_format:0
+#: help:tile.tile,secondary_format:0
+msgid "Python Format String valid with str.format()\n"
 "ie: '{:,} Kgs' will output '1,000 Kgs' if value is 1000."
 msgstr ""
 
@@ -274,7 +266,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,sequence:0
 msgid "Sequence"
-msgstr "Rækkefølge"
+msgstr ""
 
 #. module: web_dashboard_tile
 #. openerp-web
@@ -329,3 +321,4 @@ msgstr ""
 #: field:tile.tile,primary_value:0
 msgid "Value"
 msgstr ""
+
