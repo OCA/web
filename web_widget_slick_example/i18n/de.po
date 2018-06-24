@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * web_widget_slick_example
-# 
+#
 # Translators:
 # Niki Waibel <niki.waibel@gmail.com>, 2017
 # Rudolf Schnapka <rs@techno-flex.de>, 2018
@@ -13,10 +13,10 @@ msgstr ""
 "PO-Revision-Date: 2018-01-03 03:50+0000\n"
 "Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2018\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: web_widget_slick_example
@@ -40,11 +40,6 @@ msgid "ID"
 msgstr "ID"
 
 #. module: web_widget_slick_example
-#: model:ir.model.fields,field_description:web_widget_slick_example.field_slick_example_image_ids
-msgid "Image ids"
-msgstr "Bild-IDs"
-
-#. module: web_widget_slick_example
 #: model:ir.model.fields,field_description:web_widget_slick_example.field_slick_example___last_update
 msgid "Last Modified on"
 msgstr "Zuletzt geändert am"
@@ -66,6 +61,17 @@ msgstr "Slick"
 
 #. module: web_widget_slick_example
 #: model:ir.ui.view,arch_db:web_widget_slick_example.slick_example_view_form
+#, fuzzy
+msgid "Slick / Slickroom Examples"
+msgstr "Slick Beispiele"
+
+#. module: web_widget_slick_example
+#: model:ir.ui.view,arch_db:web_widget_slick_example.slick_example_view_form
+#, fuzzy
+msgid "Slick Carousel"
+msgstr "Slick Beispielmodell"
+
+#. module: web_widget_slick_example
 #: model:ir.ui.view,arch_db:web_widget_slick_example.slick_example_view_tree
 msgid "Slick Example"
 msgstr "Slick-Beispiel"
@@ -79,3 +85,19 @@ msgstr "Slick Beispielmodell"
 #: model:ir.actions.act_window,name:web_widget_slick_example.slick_example_action
 msgid "Slick Examples"
 msgstr "Slick Beispiele"
+
+#. module: web_widget_slick_example
+#: model:ir.model.fields,field_description:web_widget_slick_example.field_slick_example_slick_image_ids
+#, fuzzy
+msgid "Slick image ids"
+msgstr "Bild-IDs"
+
+#. module: web_widget_slick_example
+#: model:ir.ui.view,arch_db:web_widget_slick_example.slick_example_view_form
+msgid "Slickroom Carousel"
+msgstr ""
+
+#. module: web_widget_slick_example
+#: model:ir.model.fields,field_description:web_widget_slick_example.field_slick_example_slickroom_image_ids
+msgid "Slickroom image ids"
+msgstr ""
