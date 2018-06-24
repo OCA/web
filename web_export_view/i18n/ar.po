@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * web_export_view
-# 
+#
 # Translators:
 # Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2015
 # Alejandro Santana <alejandrosantana@anubia.es>, 2015
@@ -21,12 +21,14 @@ msgstr ""
 "POT-Creation-Date: 2018-01-16 08:57+0000\n"
 "PO-Revision-Date: 2017-11-08 09:19+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Arabic (http://www.transifex.com/oca/OCA-web-8-0/language/ar/)\n"
+"Language-Team: Arabic (http://www.transifex.com/oca/OCA-web-8-0/language/"
+"ar/)\n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: ar\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #. module: web_export_view
 #. openerp-web
@@ -41,3 +43,10 @@ msgstr "برنامج أكسل"
 #, python-format
 msgid "Export Current View"
 msgstr "تصدير العرض الحالي"
+
+#. module: web_export_view
+#. openerp-web
+#: code:addons/web_export_view/static/src/js/web_export_view.js:83
+#, python-format
+msgid "Selected records:"
+msgstr ""
