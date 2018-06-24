@@ -1,41 +1,35 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * web_environment_ribbon
+#	* web_environment_ribbon
 #
-# Translators:
-# Rodrigo de Almeida Sottomaior Macedo <rmsolucoeseminformatic4@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-13 16:06+0000\n"
-"PO-Revision-Date: 2017-07-13 16:06+0000\n"
-"Last-Translator: Rodrigo de Almeida Sottomaior Macedo "
-"<rmsolucoeseminformatic4@gmail.com>, 2017\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
-"teams/23907/pt_BR/)\n"
-"Language: pt_BR\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: \n"
 
 #. module: web_environment_ribbon
 #: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend_display_name
 msgid "Display Name"
-msgstr "Exibir Nome"
+msgstr ""
 
 #. module: web_environment_ribbon
 #: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend_id
 msgid "ID"
-msgstr "Identificação"
+msgstr ""
 
 #. module: web_environment_ribbon
 #: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend___last_update
 msgid "Last Modified on"
-msgstr "Última Modificação em"
+msgstr ""
 
 #. module: web_environment_ribbon
 #: model:ir.model,name:web_environment_ribbon.model_web_environment_ribbon_backend
 msgid "Web Environment Ribbon Backend"
 msgstr ""
+
