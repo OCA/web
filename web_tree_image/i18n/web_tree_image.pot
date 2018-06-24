@@ -1,0 +1,22 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* web_tree_image
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_tree_image
+#. openerp-web
+#: code:addons/web_tree_image/static/src/xml/widget.xml:31
+#, python-format
+msgid "Image preview"
+msgstr ""
+
