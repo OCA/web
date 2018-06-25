@@ -64,10 +64,8 @@ ListView.Column.include({
                     values.name = _.escape(row_data[this.id + '__display'].value ||
                                            options.value_if_empty);
                 }
-                return _.str.sprintf(
-                    '<a class="oe_form_uri" data-many2one-clickable-model="%(model)s" data-many2one-clickable-id="%(id)s">%(name)s</a>',
-                    values
-                );
+                return _.str.sprintf('<a class="oe_form_uri" data-many2one-clickable-context="%s" data-many2one-clickable-model="%s" data-many2one-clickable-id="%s">%s</a>',
+                    $.isEmptyObject(this.context) ? "" : this.context, values.model, values.id, values.name);
             }
         } else {
             return this._super(row_data, options);
@@ -81,11 +79,13 @@ ListView.List.include({
             self = this;
         this.$current.delegate('a[data-many2one-clickable-model]',
             'click', function() {
+                var context = $(this).data('many2one-clickable-context');
                 self.view.do_action({
                     type: 'ir.actions.act_window',
                     res_model: $(this).data('many2one-clickable-model'),
                     res_id: $(this).data('many2one-clickable-id'),
                     views: [[false, 'form']],
+                    context: context !== "" ? $.parseJSON(context.replace(/\'/g, '\"')) : undefined,
                 });
             });
         return result;
