@@ -10,7 +10,6 @@ odoo.define('web_responsive', function(require) {
     var core = require('web.core');
     var config = require('web.config');
     var ViewManager = require('web.ViewManager');
-    var Session = require('web.session');
 
     Menu.include({
 
