@@ -13,7 +13,7 @@
         <field name="inherit_id" ref="base.view_users_form_simple_modif" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='email']" position="after">
-                <field name="chatter_position" />
+                <field name="chatter_position" readonly="0" />
             </xpath>
         </field>
     </record>
