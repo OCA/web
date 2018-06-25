@@ -4,7 +4,7 @@
 Web Auto Refresh
 ===========
 
-Standard odoo 10.0 only support auto refreshing the inbox message, for kanban and list view when underlying model data updated by others, even though the auto search option in ir.actions.act_window activated, system will not auto refresh the kanban and list view as expected, this small moddue just fills this gap, this module is useful for keep monitoring orders, tickets etc without manual refresh the browser.
+Standard odoo 10.0 only support auto refreshing the inbox message, for kanban and list view when underlying model data updated by others, even though the auto search option in ir.actions.act_window activated, system will not auto refresh the kanban and list view as expected, this small module just fills this gap, this module is useful for keep monitoring orders, tickets etc without manual refresh the browser.
 
 
 Installation
@@ -20,7 +20,7 @@ To configure this module, you need to:
 
 1. go to setting->technical->actions->window actions, find the desired action, activate the auto search Check box
 2. add one automated action for the target model , in the linked server action add the following python code, this automated action can be applied(when to run) to creation, update or delete per your requirement
-    model.env['bus.bus'].sendone('auto_refresh', model._name)
+    model.env['bus.bus'].sendone('web_auto_refresh', model._name)
 
 
 Usage

@@ -4,11 +4,9 @@
     'author': 'Fisher Yu, Odoo Community Association (OCA)',
     'category': 'Base',
     'website': 'https://github.com/szufisher',
-    'depends': ['web','bus', 'mail'],
+    'depends': ['web', 'bus', 'mail'],
     'data': [
         'views/web_auto_refresh.xml',
-        ],
-    'qweb': [        
     ],
     'installable': True
 }
