@@ -1,8 +1,8 @@
 odoo.define('web_auto_refresh', function (require) {
 	"use strict";
-	var WebClient = require('web.WebClient');
-    var bus = require('bus.bus');
-    var session = require('web.session');
+	let WebClient = require('web.WebClient');
+    let bus = require('bus.bus');
+    let session = require('web.session');
 
     WebClient.include({
         init: function(parent, client_options){
@@ -35,9 +35,9 @@ odoo.define('web_auto_refresh', function (require) {
             if (typeof notification[0][0] === 'string') {
                 notification = [notification]
             }
-            for (var i = 0; i < notification.length; i++) {
-                var channel = notification[i][0];
-                var message = notification[i][1];
+            for (let i = 0; i < notification.length; i++) {
+                let channel = notification[i][0];
+                let message = notification[i][1];
                 if (channel[0] === session.db && channel[1] === 'web_auto_refresh'){
                     bus.bus.trigger(channel[1], message);
                 }
@@ -50,16 +50,16 @@ odoo.define('web_auto_refresh', function (require) {
         },
         bus_off: function(eventname, eventfunction) {
             bus.bus.off(eventname, this, eventfunction);
-            var index = _.indexOf(this.known_bus_events, [eventname, eventfunction]);
+            let index = _.indexOf(this.known_bus_events, [eventname, eventfunction]);
             this.known_bus_events.splice(index, 1);
         },
         declare_bus_channel: function() {
-            var channel = 'web_auto_refresh';
+            let channel = 'web_auto_refresh';
             this.bus_on(channel, function(message) {            // generic auto referesh
-                var active_view = this.action_manager.inner_widget.active_view;
+                let active_view = this.action_manager.inner_widget.active_view;
                 if (typeof(active_view) !== 'undefined'){   // in mail inbox page, no active view defined
-                    var controller = this.action_manager.inner_widget.active_view.controller;
-                    var action = this.action_manager.inner_widget.action;
+                    let controller = this.action_manager.inner_widget.active_view.controller;
+                    let action = this.action_manager.inner_widget.action;
                     if ( action.auto_search && controller.model === message ){
                         if (active_view.type === "kanban")
                             controller.do_reload();    // kanban view has reload function, but only do_reload works as expected
