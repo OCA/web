@@ -1,3 +1,3 @@
 The development of this module has been financially supported by:
 
-* Xpansa Group
+* Ventor, Xpansa Group (<https://ventor.tech/>)
