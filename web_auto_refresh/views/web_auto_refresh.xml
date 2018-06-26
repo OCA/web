@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 Kmee Informática
+    Gabriel Cardoso de Faria <gabriel.cardoso@kmee.com.br>
+    Fisher Yu <szufisher@gmail.com>
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
 <odoo>
     <template id="assets_backend" name="web_auto_refresh" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">

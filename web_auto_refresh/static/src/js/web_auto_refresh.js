@@ -1,3 +1,7 @@
+/* Copyright 2018 Kmee Informática
+* Gabriel Cardoso de Faria <gabriel.cardoso@kmee.com.br>
+* Fisher Yu <szufisher@gmail.com>
+* License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 odoo.define('web_auto_refresh', function (require) {
 	"use strict";
 	let WebClient = require('web.WebClient');

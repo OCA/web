@@ -58,6 +58,7 @@ Credits
 Contributors
 ------------
 
+* Gabriel Cardoso de Faria <gabriel.cardoso@kmee.com.br>
 * Fisher Yu <szufisher@gmail.com>
 
 Maintainer
