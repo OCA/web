@@ -21,7 +21,7 @@
 {
     "name": "Hide menus",
     "version": "8.0.1.0.0",
-    "author": "Therp BV",
+    "author": "Therp BV, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "category": "Tools",
     "summary": "Hide top and left menu bar",
