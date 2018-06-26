@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * web_dashboard_tile
-# 
+#
 # Translators:
 # Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2016
 # Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2016
@@ -27,11 +27,12 @@ msgstr ""
 "POT-Creation-Date: 2016-12-10 07:06+0000\n"
 "PO-Revision-Date: 2016-12-16 00:24+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Spanish (http://www.transifex.com/oca/OCA-web-8-0/language/es/)\n"
+"Language-Team: Spanish (http://www.transifex.com/oca/OCA-web-8-0/language/"
+"es/)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: web_dashboard_tile
@@ -249,7 +250,7 @@ msgid "Number of records"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/models/tile_tile.py:239
+#: code:addons/web_dashboard_tile/models/tile_tile.py:235
 #, python-format
 msgid "Please select a field from the selected model."
 msgstr "Seleccione por favor un campo del modelo seleccionado."
@@ -331,10 +332,11 @@ msgid "Total value of '%s'"
 msgstr "Valor total de \"%s\""
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/models/tile_tile.py:215
+#: code:addons/web_dashboard_tile/models/tile_tile.py:211
 #, python-format
 msgid "Unimplemented Feature. Search on Active field disabled."
-msgstr "Características no implementada: búsqueda en el campo activo deshabilitada."
+msgstr ""
+"Características no implementada: búsqueda en el campo activo deshabilitada."
 
 #. module: web_dashboard_tile
 #: field:tile.tile,user_id:0

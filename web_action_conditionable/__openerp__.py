@@ -7,6 +7,7 @@
         'base',
         'web',
     ],
+    "license": "AGPL-3",
     'data': ['views/view.xml'],
     "author": "Cristian Salamea,Odoo Community Association (OCA)",
     "installable": True,

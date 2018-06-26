@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * help_popup
-# 
+#
 # Translators:
 # Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2016
 msgid ""
@@ -11,11 +11,12 @@ msgstr ""
 "POT-Creation-Date: 2016-01-10 07:31+0000\n"
 "PO-Revision-Date: 2016-02-01 09:50+0000\n"
 "Last-Translator: Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>\n"
-"Language-Team: Finnish (http://www.transifex.com/oca/OCA-web-8-0/language/fi/)\n"
+"Language-Team: Finnish (http://www.transifex.com/oca/OCA-web-8-0/language/"
+"fi/)\n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: help_popup
@@ -55,11 +56,15 @@ msgstr "Ohje kehittäjältä"
 msgid ""
 "Use this field to add custom content for documentation purpose\n"
 "mainly by developers"
-msgstr "Käytä tätä kenttää lisätäksesi räätälöityä sisältöä dokumentointikäyttöön. Lähinnä kehittäjien käyttöön."
+msgstr ""
+"Käytä tätä kenttää lisätäksesi räätälöityä sisältöä dokumentointikäyttöön. "
+"Lähinnä kehittäjien käyttöön."
 
 #. module: help_popup
 #: help:ir.actions.act_window,enduser_help:0
 msgid ""
 "Use this field to add custom content for documentation purpose\n"
 "mainly by power users "
-msgstr "Käytä tätä kenttää lisätäksesi räätälöityä sisältöä dokumentointikäyttöön. Lähinnä tehokäyttäjien käyttöön."
+msgstr ""
+"Käytä tätä kenttää lisätäksesi räätälöityä sisältöä dokumentointikäyttöön. "
+"Lähinnä tehokäyttäjien käyttöön."

@@ -9,12 +9,10 @@
 This module allows to show an x2many field with 3-tuples
 ($x_value, $y_value, $value) in a table
 
-========= =========== ===========
-\          $x_value1   $x_value2
-========= =========== ===========
-$y_value1 $value(1/1) $value(2/1)
-$y_value2 $value(1/2) $value(2/2)
-========= =========== ===========
+|           | $x_value1   | $x_value2   |
+| :---:     | :---:       | :---:       |
+| $y_value1 | $value(1/1) | $value(2/1) |
+| $y_value2 | $value(1/2) | $value(2/2) |
 
 where `value(n/n)` is editable.
 

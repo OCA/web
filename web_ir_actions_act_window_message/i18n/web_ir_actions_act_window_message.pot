@@ -1,0 +1,29 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* web_ir_actions_act_window_message
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_ir_actions_act_window_message
+#. openerp-web
+#: code:addons/web_ir_actions_act_window_message/static/src/js/web_ir_actions_act_window_message.js:34
+#, python-format
+msgid "Close"
+msgstr ""
+
+#. module: web_ir_actions_act_window_message
+#. openerp-web
+#: code:addons/web_ir_actions_act_window_message/static/src/js/web_ir_actions_act_window_message.js:93
+#, python-format
+msgid "Non-db action dictionaries should provide either multiple view modes or a single view mode and an optional view id."
+msgstr ""
+

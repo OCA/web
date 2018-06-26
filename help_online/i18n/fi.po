@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * help_online
-# 
+#
 # Translators:
 # Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2015
 # Antonio Trueba, 2016
@@ -19,11 +19,12 @@ msgstr ""
 "POT-Creation-Date: 2016-09-17 12:06+0000\n"
 "PO-Revision-Date: 2016-09-15 12:45+0000\n"
 "Last-Translator: Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>\n"
-"Language-Team: Finnish (http://www.transifex.com/oca/OCA-web-8-0/language/fi/)\n"
+"Language-Team: Finnish (http://www.transifex.com/oca/OCA-web-8-0/language/"
+"fi/)\n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: help_online
@@ -201,15 +202,20 @@ msgid ""
 "This wizard allow you to export all QWeb views\n"
 "                        related to help online. The result will be an Odoo\n"
 "                        data xml file."
-msgstr "Tämä ohjattu toiminto sallii kaikkien verkko-ohjeisiin liittyvien\nQWeb-näkymien viennin. Tuloksena on Odoon tiedot sisältävä XML-tiedosto."
+msgstr ""
+"Tämä ohjattu toiminto sallii kaikkien verkko-ohjeisiin liittyvien\n"
+"QWeb-näkymien viennin. Tuloksena on Odoon tiedot sisältävä XML-tiedosto."
 
 #. module: help_online
 #: view:import.help.wizard:help_online.import_help_wizard_view
 msgid ""
 "This wizard allow you to import QWeb views\n"
-"                        related to help online. The required file format is an Odoo\n"
+"                        related to help online. The required file format is "
+"an Odoo\n"
 "                        data xml file."
-msgstr "Tämä ohjattu toiminto sallii kaikkien verkko-ohjeisiin liittyvien QWeb-näkymien viennin. Tuloksena on Odoon tiedot sisältävä XML-tiedosto."
+msgstr ""
+"Tämä ohjattu toiminto sallii kaikkien verkko-ohjeisiin liittyvien QWeb-"
+"näkymien viennin. Tuloksena on Odoon tiedot sisältävä XML-tiedosto."
 
 #. module: help_online
 #: code:addons/help_online/models/export_help_wizard.py:297

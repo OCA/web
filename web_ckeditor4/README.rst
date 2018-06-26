@@ -17,9 +17,10 @@ Known issues / Roadmap
 ======================
 
 * This version of CKEditor contains a patch that prevents the referencing of
-the editor's iframe if it has already been cleaned up by Odoo. In 8.0, this is
-the case if the editor was created in an x2many popup. The patch was proposed
-as https://github.com/ckeditor/ckeditor-dev/pull/200
+  the editor's iframe if it has already been cleaned up by Odoo. In 8.0, this is
+  the case if the editor was created in an x2many popup. The patch was proposed
+  as https://github.com/ckeditor/ckeditor-dev/pull/200
+
 
 Bug Tracker
 ===========

@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * web_dashboard_tile
-# 
+#
 # Translators:
 # Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2015-2016
 # Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2015-2016
@@ -19,11 +19,12 @@ msgstr ""
 "POT-Creation-Date: 2016-12-29 03:45+0000\n"
 "PO-Revision-Date: 2016-12-30 21:18+0000\n"
 "Last-Translator: Ahmet Altinisik <aaltinisik@altinkaya.com.tr>\n"
-"Language-Team: Turkish (http://www.transifex.com/oca/OCA-web-8-0/language/tr/)\n"
+"Language-Team: Turkish (http://www.transifex.com/oca/OCA-web-8-0/language/"
+"tr/)\n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: tr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: web_dashboard_tile
@@ -165,7 +166,9 @@ msgid ""
 "If this field is set, only users of this group can view this tile. Please "
 "note that it will only work for global tiles (that is, when User field is "
 "left empty)"
-msgstr "Eğer bu alan işaretlenirse, sadece bu grubun kullanıcıları bu paneli görür. Sadece global panellerde çalışır. (yani kullanıcı alanı boş olan paneller)"
+msgstr ""
+"Eğer bu alan işaretlenirse, sadece bu grubun kullanıcıları bu paneli görür. "
+"Sadece global panellerde çalışır. (yani kullanıcı alanı boş olan paneller)"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,__last_update:0
@@ -241,7 +244,7 @@ msgid "Number of records"
 msgstr "Kayıtların Adedi"
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/models/tile_tile.py:239
+#: code:addons/web_dashboard_tile/models/tile_tile.py:235
 #, python-format
 msgid "Please select a field from the selected model."
 msgstr "Seçilmiş modelden bir alan seçin."
@@ -251,7 +254,9 @@ msgstr "Seçilmiş modelden bir alan seçin."
 msgid ""
 "Python Format String valid with str.format()\n"
 "ie: '{:,} Kgs' will output '1,000 Kgs' if value is 1000."
-msgstr "Python biçim stringi str.format() fonsiyonu ile\nör:eğer değer 1000 ise. '{:,} Kg' çıktı olarak '1,000 Kg' verir"
+msgstr ""
+"Python biçim stringi str.format() fonsiyonu ile\n"
+"ör:eğer değer 1000 ise. '{:,} Kg' çıktı olarak '1,000 Kg' verir"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,secondary_field_id:0
@@ -323,7 +328,7 @@ msgid "Total value of '%s'"
 msgstr "'%s' nin toplam değeri"
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/models/tile_tile.py:215
+#: code:addons/web_dashboard_tile/models/tile_tile.py:211
 #, python-format
 msgid "Unimplemented Feature. Search on Active field disabled."
 msgstr "Uygulanmamış Özellik. Etkin alanı kapalı iken arayın."
