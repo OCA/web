@@ -28,8 +28,8 @@ Contributors
 Icon
 ----
 
-* http://commons.wikimedia.org/wiki/File:VisualEditor_-_Icon_-_Menu.svg
-* http://commons.wikimedia.org/wiki/File:ProhibitionSign2.svg
+* `http://commons.wikimedia.org/wiki/File:VisualEditor_-_Icon_-_Menu.svg`
+* `http://commons.wikimedia.org/wiki/File:ProhibitionSign2.svg`
 
 Maintainer
 ----------

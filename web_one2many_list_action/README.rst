@@ -11,8 +11,7 @@ use the 'tree_but_open' interface to define actions for rows.
 To use this just specify a 'tree_but_open' action on the target model of the
 one2many field relation.
 
-Example
-::
+Example::
 
     <!-- server action retrieves ir.actions.act_window to open row specific popup -->
     <record model="ir.actions.server" id="message_index_list_view_delegate_open">
