@@ -20,17 +20,14 @@ Usage
  
 In the view declaration, put autocolor="1" attribute in the field tag::
 
-...
-<field name="arch" type="xml">
-    <tree string="View name">
-        ...
-        <field name="name"/>
-        <field name="name2" autocolor="1"/>
-        ...
-    </tree>
-</field>
-...
- 
+    <field name="arch" type="xml">
+        <tree string="View name">
+            ...
+            <field name="name"/>
+            <field name="name2" autocolor="1"/>
+            ...
+        </tree>
+    </field>
 
 Bug Tracker
 ===========
