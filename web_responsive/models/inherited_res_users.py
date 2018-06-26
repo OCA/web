@@ -12,7 +12,6 @@ class ResUsers(models.Model):
         ('sided', 'Sided'),
     ], string="Chatter Position", default='normal')
 
-
     def __init__(self, pool, cr):
         """ Override of __init__ to add access rights.
         Access rights are disabled by default, but allowed on some specific
