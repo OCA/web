@@ -17,14 +17,14 @@
     </div>
 </t>
 
-<t t-extend="Notification">
+<t t-name="InteractiveNotification" t-extend="Notification">
     <t t-jquery=".o_notification_content" t-operation="after">
         <t t-call="Notification.reload"/>
         <t t-call="Notification.do_action"/>
     </t>
 </t>
 
-<t t-extend="Warning">
+<t t-name="InteractiveWarning" t-extend="Warning">
     <t t-jquery=".o_notification_content" t-operation="after">
         <t t-call="Notification.reload"/>
         <t t-call="Notification.do_action"/>
