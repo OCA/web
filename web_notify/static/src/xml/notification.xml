@@ -2,9 +2,17 @@
 <templates id="template" xml:space="preserve">
 
 <t t-name="Notification.reload">
-    <div class="o_notification_reload" t-if="widget.options.show_reload">
-        <a href="#" class="o_view_reload">
+    <div class="o_notification_action" t-if="widget.options.show_reload">
+        <a href="#" class="o_notification_reload_view">
             <span class="fa fa-refresh"/> Reload current view
+        </a>
+    </div>
+</t>
+
+<t t-name="Notification.do_action">
+    <div class="o_notification_action" t-if="widget.options.action">
+        <a href="#" class="o_notification_do_action">
+            <span class="fa fa-arrow-circle-left"/> Open
         </a>
     </div>
 </t>
@@ -12,12 +20,14 @@
 <t t-extend="Notification">
     <t t-jquery=".o_notification_content" t-operation="after">
         <t t-call="Notification.reload"/>
+        <t t-call="Notification.do_action"/>
     </t>
 </t>
 
 <t t-extend="Warning">
     <t t-jquery=".o_notification_content" t-operation="after">
         <t t-call="Notification.reload"/>
+        <t t-call="Notification.do_action"/>
     </t>
 </t>
 

@@ -30,15 +30,28 @@ or
    :scale: 80 %
    :alt: Sample notifications
 
-The notifications can optionally have some action buttons.
+The notifications can bring interactivity with some buttons.
 
 * One allowing to refresh the active view
+* Another allowing to send a window / client action
 
-It is activated when sending the notification with:
+The reload button is activated when sending the notification with:
 
 .. code-block:: python
   
    self.env.user.notify_info('My information message', show_reload=True)
+
+The action can be used using the ``action`` keyword:
+
+.. code-block:: python
+
+    action = self.env.ref('sale.action_orders').read()[0]
+    action.update({
+        'res_id': self.id,
+        'views': [(False, 'form')],
+    })
+   self.env.user.notify_info('My information message', action=action)
+
 
 Installation
 ============
@@ -74,6 +87,7 @@ Contributors
 
 * Laurent Mignon <laurent.mignon@acsone.eu>
 * Serpent Consulting Services Pvt. Ltd.<jay.vora@serpentcs.com>
+* Guewen Baconnier <guewen.baconnier@camptocamp.com>
 
 Maintainer
 ----------
