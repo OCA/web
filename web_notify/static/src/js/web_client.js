@@ -8,11 +8,17 @@ var core = require('web.core'),
 
 
 Widget.include({
-    do_notify: function(title, message, sticky, options) {
-        this.trigger_up('notification', {title: title, message: message, sticky: sticky, options: options});
+    do_interactive_notify: function(title, message, sticky, options) {
+        this.trigger_up(
+            'interactive_notification',
+            {title: title, message: message,
+             sticky: sticky, options: options});
     },
-    do_warn: function(title, message, sticky, options) {
-        this.trigger_up('warning', {title: title, message: message, sticky: sticky, options: options});
+    do_interactive_warn: function(title, message, sticky, options) {
+        this.trigger_up(
+            'interactive_warning',
+            {title: title, message: message,
+             sticky: sticky, options: options});
     },
 });
 
@@ -22,14 +28,20 @@ WebClient.include({
         {},
         WebClient.prototype.custom_events,
         {reload_active_view: 'reload_active_view',
-         notification: function (e) {
+         interactive_notification: function (e) {
              if(this.notification_manager) {
-                 this.notification_manager.notify(e.data.title, e.data.message, e.data.sticky, e.data.options);
+                 this.notification_manager.interactive_notify(
+                     e.data.title, e.data.message,
+                     e.data.sticky, e.data.options
+                 );
              }
          },
-         warning: function (e) {
+         interactive_warning: function (e) {
              if(this.notification_manager) {
-                 this.notification_manager.warn(e.data.title, e.data.message, e.data.sticky, e.data.options);
+                 this.notification_manager.interactive_warn(
+                     e.data.title, e.data.message,
+                     e.data.sticky, e.data.options
+                 );
              }
          }
         }
@@ -79,12 +91,16 @@ WebClient.include({
     },
     on_message_warning: function(message){
         if(this.notification_manager) {
-            this.notification_manager.do_warn(message.title, message.message, message.sticky, message);
+            this.notification_manager.do_interactive_warn(
+                message.title, message.message, message.sticky, message
+            );
         }
     },
     on_message_info: function(message){
         if(this.notification_manager) {
-            this.notification_manager.do_notify(message.title, message.message, message.sticky, message);
+            this.notification_manager.do_interactive_notify(
+                message.title, message.message, message.sticky, message
+            );
         }
     }
 });

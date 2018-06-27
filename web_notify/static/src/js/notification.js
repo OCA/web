@@ -6,7 +6,8 @@ odoo.define('web_notify.notification', function (require) {
         Notification = base_notification.Notification,
         Warning = base_notification.Warning;
 
-    Notification.include({
+    var InteractiveNotification = Notification.extend({
+        template: 'InteractiveNotification',
         events: _.extend(
             {},
             Notification.prototype.events,
@@ -21,7 +22,7 @@ odoo.define('web_notify.notification', function (require) {
             }
         ),
         init: function(parent, title, text, sticky, options) {
-            this._super.apply(this, arguments);
+            this._super.apply(this, [parent, title, text, sticky]);
             this.options = options || {};
         },
         reload_active_view: function() {
@@ -33,14 +34,23 @@ odoo.define('web_notify.notification', function (require) {
         }
     });
 
+    var InteractiveWarning = InteractiveNotification.extend({
+        template: 'InteractiveWarning',
+    });
+
     base_notification.NotificationManager.include({
-        notify: function(title, text, sticky, options) {
-            return this.display(new Notification(this, title, text, sticky, options));
+        interactive_notify(title, text, sticky, options) {
+            return this.display(new InteractiveNotification(this, title, text, sticky, options));
         },
-        warn: function(title, text, sticky, options) {
-            return this.display(new Warning(this, title, text, sticky, options));
-        },
+        interactive_warn(title, text, sticky, options) {
+            return this.display(new InteractiveWarning(this, title, text, sticky, options));
+        }
 
     });
+
+    return {
+        InteractiveNotification: InteractiveNotification,
+        InteractiveWarning: InteractiveWarning
+    };
 
 });
