@@ -10,8 +10,12 @@
     "summary": "Allows to drag files into Odoo",
     "depends": [
         'web',
+        'document'
     ],
     "data": [
         'views/templates.xml',
     ],
+    "qweb": [
+        'static/src/xml/widgets.xml',
+    ]
 }

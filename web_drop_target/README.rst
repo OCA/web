@@ -55,7 +55,6 @@ Known issues / Roadmap
 ======================
 
 * dropping on list or kanban views would be nice too
-* handle multiple files
 * add an upload progress meter for huge files
 * trigger custom events about different stages of the drop operation for other addons to hook in
 * Install document module to display attachments in the sidebar
@@ -82,7 +81,11 @@ Contributors
 ~~~~~~~~~~~~
 
 * Holger Brunn <hbrunn@therp.nl>
+<<<<<<< HEAD
 * Akim Juillerat <akim.juillerat@camptocamp.com>
+=======
+* Pablo Fuentes <pablo@studio73.es>
+>>>>>>> 25dd8787... [IMP] web_drop_target: Upload multiple files
 
 Maintainers
 ~~~~~~~~~~~
