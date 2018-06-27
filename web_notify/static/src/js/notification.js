@@ -10,10 +10,14 @@ odoo.define('web_notify.notification', function (require) {
         events: _.extend(
             {},
             Notification.prototype.events,
-            {'click .o_view_reload': function(e){
+            {'click .o_notification_reload_view': function(e){
                 e.preventDefault();
                 this.reload_active_view();
-            }
+            },
+             'click .o_notification_do_action': function(e){
+                 e.preventDefault();
+                 this.button_do_action();
+             }
             }
         ),
         init: function(parent, title, text, sticky, options) {
@@ -23,6 +27,10 @@ odoo.define('web_notify.notification', function (require) {
         reload_active_view: function() {
             this.trigger_up('reload_active_view');
         },
+        button_do_action: function() {
+            console.log(this.options.action);
+            this.getParent().do_action(this.options.action);
+        }
     });
 
     base_notification.NotificationManager.include({

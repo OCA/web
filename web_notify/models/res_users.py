@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models, _
+from odoo.addons.web.controllers.main import clean_action
 
 
 class ResUsers(models.Model):
@@ -24,26 +25,31 @@ class ResUsers(models.Model):
 
     @api.multi
     def notify_info(self, message, title=None, sticky=False,
-                    show_reload=False):
+                    show_reload=False, action=None):
         title = title or _('Information')
         self._notify_channel(
-            'notify_info_channel_name', message, title, sticky, show_reload)
+            'notify_info_channel_name', message, title,
+            sticky, show_reload, action)
 
     @api.multi
     def notify_warning(self, message, title=None, sticky=False,
-                       show_reload=False):
+                       show_reload=False, action=None):
         title = title or _('Warning')
         self._notify_channel(
-            'notify_warning_channel_name', message, title, sticky, show_reload)
+            'notify_warning_channel_name', message, title,
+            sticky, show_reload, action)
 
     @api.multi
     def _notify_channel(self, channel_name_field, message, title, sticky,
-                        show_reload):
+                        show_reload, action):
+        if action:
+            action = clean_action(action)
         bus_message = {
             'message': message,
             'title': title,
             'sticky': sticky,
             'show_reload': show_reload,
+            'action': action,
         }
         notifications = [(getattr(record, channel_name_field), bus_message)
                          for record in self]
