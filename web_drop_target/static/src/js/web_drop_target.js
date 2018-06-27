@@ -4,16 +4,17 @@
 
 odoo.define('web_drop_target', function(require) {
     var    FormController = require('web.FormController');
+    var    core = require('web.core');
+    var qweb = core.qweb;
 
     // this is the main contribution of this addon: A mixin you can use
     // to make some widget a drop target. Read on how to use this yourself
     var DropTargetMixin = {
         // add the mime types you want to support here, leave empty for
-        // all types. For more control, override _get_drop_item in your class
+        // all types. For more control, override _get_drop_items in your class
         _drop_allowed_types: [],
 
-        // a class being applied when the user drags something we can handle
-        _drag_over_class: 'o_drag_over',
+        _drop_overlay: null,
 
         start: function() {
             var result = this._super.apply(this, arguments);
@@ -25,45 +26,45 @@ odoo.define('web_drop_target', function(require) {
         },
 
         _on_drop: function(e) {
-            var drop_item = this._get_drop_item(e);
-            if(!drop_item || !(drop_item.getAsFile() instanceof Blob)) {
-                return;
-            }
-            jQuery(e.delegateTarget).removeClass(this._drag_over_class);
-            var reader = new FileReader();
-            reader.onloadend = this.proxy(
-                _.partial(this._handle_file_drop, drop_item.getAsFile())
-            );
-            reader.readAsArrayBuffer(drop_item.getAsFile());
-            e.stopPropagation();
+            var self = this;
+            var drop_items = this._get_drop_items(e);
+            _.each(drop_items, function(drop_item) {
+                var reader = new FileReader();
+                reader.onloadend = self.proxy(
+                    _.partial(self._handle_file_drop, drop_item.getAsFile())
+                );
+                reader.readAsArrayBuffer(drop_item.getAsFile());
+            });
+            this._remove_overlay();
             e.preventDefault();
         },
 
         _on_dragenter: function(e) {
-            if(this._get_drop_item(e)) {
+            if(this._get_drop_items(e).length) {
                 e.preventDefault();
-                jQuery(e.delegateTarget).addClass(this._drag_over_class);
+                this._add_overlay();
                 return false;
             }
         },
 
         _on_dragleave: function(e) {
-            jQuery(e.delegateTarget).removeClass(this._drag_over_class);
+            this._remove_overlay();
+            e.preventDefault();
         },
 
-        _get_drop_item: function(e) {
+        _get_drop_items: function(e) {
             var self = this,
                 dataTransfer = e.originalEvent.dataTransfer,
-                drop_item = null;
+                drop_items = [];
             _.each(dataTransfer.items, function(item) {
                 if(
                     _.contains(self._drop_allowed_types, item.type) ||
                     _.isEmpty(self._drop_allowed_types)
                 ) {
-                    drop_item = item;
+                    drop_items.push(item);
                 }
             });
-            return drop_item;
+            return drop_items;
         },
 
         // eslint-disable-next-line no-unused-vars
@@ -104,7 +105,30 @@ odoo.define('web_drop_target', function(require) {
                     }
                 }
             });
-        }
+        },
+
+        _add_overlay() {
+            if(!this._drop_overlay){
+                var o_content = jQuery('.o_content'),
+                    view_manager = jQuery('.o_view_manager_content');
+                this._drop_overlay = jQuery(
+                    qweb.render('web_drop_target.drop_overlay')
+                );
+                var o_content_position = o_content.position();
+                this._drop_overlay.css({
+                    'top': o_content_position.top, 
+                    'left': o_content_position.left,
+                    'width': view_manager.width(),
+                    'height': view_manager.height()
+                });
+                o_content.append(this._drop_overlay);
+            }
+        },
+        
+        _remove_overlay() {
+            this._drop_overlay.remove();
+            this._drop_overlay = null;
+        },
     };
 
     // and here we apply the mixin to form views, allowing any files and
