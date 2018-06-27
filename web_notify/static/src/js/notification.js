@@ -5,8 +5,7 @@ odoo.define('web_notify.notification', function (require) {
 
     var base_notification = require('web.notification'),
         WebClient = require('web.WebClient'),
-        Notification = base_notification.Notification,
-        Warning = base_notification.Warning;
+        Notification = base_notification.Notification;
 
     var InteractiveNotification = Notification.extend({
         template: 'InteractiveNotification',
@@ -23,15 +22,15 @@ odoo.define('web_notify.notification', function (require) {
              }
             }
         ),
-        init: function(parent, title, text, sticky, options) {
-            this._super.apply(this, [parent, title, text, sticky]);
+        init: function(parent, title, text, options) {
             this.options = options || {};
+            var sticky = this.options.sticky;
+            this._super.apply(this, [parent, title, text, sticky]);
         },
         reload_active_view: function() {
             this.trigger_up('reload_active_view');
         },
         button_do_action: function() {
-            console.log(this.options.action);
             this.getParent().do_action(this.options.action);
         }
     });
@@ -41,11 +40,11 @@ odoo.define('web_notify.notification', function (require) {
     });
 
     base_notification.NotificationManager.include({
-        interactive_notify(title, text, sticky, options) {
-            return this.display(new InteractiveNotification(this, title, text, sticky, options));
+        interactive_notify(title, text, options) {
+            return this.display(new InteractiveNotification(this, title, text, options));
         },
-        interactive_warn(title, text, sticky, options) {
-            return this.display(new InteractiveWarning(this, title, text, sticky, options));
+        interactive_warn(title, text, options) {
+            return this.display(new InteractiveWarning(this, title, text, options));
         }
 
     });

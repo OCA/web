@@ -12,7 +12,11 @@
 <t t-name="Notification.do_action">
     <div class="o_notification_action" t-if="widget.options.action">
         <a href="#" class="o_notification_do_action">
-            <span class="fa fa-arrow-circle-left"/> Open
+            <span t-att-class="'fa ' + (widget.options.action_fa_icon ? widget.options.action_fa_icon : 'fa-arrow-circle-left')"/>
+            <t t-if="widget.options.action_link_name">
+                <t t-esc="widget.options.action_link_name"/>
+            </t>
+            <t t-else="">Open</t>
         </a>
     </div>
 </t>

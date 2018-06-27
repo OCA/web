@@ -50,7 +50,12 @@ The action can be used using the ``action`` keyword:
         'res_id': self.id,
         'views': [(False, 'form')],
     })
-   self.env.user.notify_info('My information message', action=action)
+   self.env.user.notify_info(
+       'My information message',
+       action=action,
+       # optional
+       action_link_name=_('Open Sale'),
+   )
 
 
 Installation
