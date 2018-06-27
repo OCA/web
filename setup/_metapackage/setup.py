@@ -19,6 +19,7 @@ setuptools.setup(
         'odoo10-addon-web_decimal_numpad_dot',
         'odoo10-addon-web_dialog_size',
         'odoo10-addon-web_domain_field',
+        'odoo10-addon-web_drop_target',
         'odoo10-addon-web_editor_background_color',
         'odoo10-addon-web_environment_ribbon',
         'odoo10-addon-web_export_view',
