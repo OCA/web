@@ -72,13 +72,28 @@ or
 
 .. code-block:: python
 
-   self.env.user.notify_info(message='My information message')
+   self.env.user.notify_default(message='My default message')
 
-or
+
+The notifications can bring interactivity with some buttons.
+
+* One allowing to refresh the active view
+* Another allowing to send a window / client action
+
+The reload button is activated when sending the notification with:
+
+
+The action can be used using the ``action`` keyword:
 
 .. code-block:: python
 
-   self.env.user.notify_default(message='My default message')
+    action = self.env.ref('sale.action_orders').read()[0]
+    action.update({
+        'res_id': self.id,
+        'views': [(False, 'form')],
+    })
+   self.env.user.notify_info('My information message', action=action)
+
 
 .. figure:: https://raw.githubusercontent.com/OCA/web/16.0/web_notify/static/description/notifications_screenshot.gif
    :scale: 80 %
@@ -118,6 +133,7 @@ Contributors
 * Aitor Bouzas <aitor.bouzas@adaptivecity.com>
 * Shepilov Vladislav <shepilov.v@protonmail.com>
 * Kevin Khao <kevin.khao@akretion.com>
+* Guewen Baconnier <guewen.baconnier@camptocamp.com>
 * `Tecnativa <https://www.tecnativa.com>`_:
 
   * David Vidal

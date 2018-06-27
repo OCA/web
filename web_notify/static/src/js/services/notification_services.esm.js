@@ -4,27 +4,39 @@ import {browser} from "@web/core/browser/browser";
 import {registry} from "@web/core/registry";
 
 export const webNotificationService = {
-    dependencies: ["bus_service", "notification"],
+    dependencies: ["bus_service", "notification", "action"],
 
-    start(env, {bus_service, notification}) {
+    start(env, {bus_service, notification, action}) {
         let webNotifTimeouts = {};
         /**
          * Displays the web notification on user's screen
          */
-
         function displaywebNotification(notifications) {
             Object.values(webNotifTimeouts).forEach((notif) =>
                 browser.clearTimeout(notif)
             );
             webNotifTimeouts = {};
-
             notifications.forEach(function (notif) {
                 browser.setTimeout(function () {
+                    let buttons = [];
+
+                    if (notif.action) {
+                        buttons = [
+                            {
+                                name: env._t("Open"),
+                                primary: true,
+                                onClick: async () => {
+                                    await action.doAction(notif.action);
+                                },
+                            },
+                        ];
+                    }
                     notification.add(Markup(notif.message), {
                         title: notif.title,
                         type: notif.type,
                         sticky: notif.sticky,
                         className: notif.className,
+                        buttons: buttons,
                     });
                 });
             });
