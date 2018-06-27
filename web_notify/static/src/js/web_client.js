@@ -1,12 +1,51 @@
 odoo.define('web_notify.WebClient', function (require) {
 "use strict";
 
-var WebClient = require('web.WebClient');
-var base_bus = require('bus.bus');
+var core = require('web.core'),
+    WebClient = require('web.WebClient'),
+    base_bus = require('bus.bus'),
+    Widget = require('web.Widget');
+
+
+Widget.include({
+    do_notify: function(title, message, sticky, options) {
+        this.trigger_up('notification', {title: title, message: message, sticky: sticky, options: options});
+    },
+    do_warn: function(title, message, sticky, options) {
+        this.trigger_up('warning', {title: title, message: message, sticky: sticky, options: options});
+    },
+});
+
 
 WebClient.include({
+    custom_events: _.extend(
+        {},
+        WebClient.prototype.custom_events,
+        {reload_active_view: 'reload_active_view',
+         notification: function (e) {
+             if(this.notification_manager) {
+                 this.notification_manager.notify(e.data.title, e.data.message, e.data.sticky, e.data.options);
+             }
+         },
+         warning: function (e) {
+             if(this.notification_manager) {
+                 this.notification_manager.warn(e.data.title, e.data.message, e.data.sticky, e.data.options);
+             }
+         }
+        }
+    ),
     init: function(parent, client_options){
         this._super(parent, client_options);
+    },
+    reload_active_view: function(){
+        var action_manager = this.action_manager;
+        if(!action_manager){
+            return;
+        }
+        var active_view = action_manager.inner_widget.active_view;
+        if(active_view) {
+            active_view.controller.reload();
+        }
     },
     show_application: function() {
         var res = this._super();
@@ -40,12 +79,12 @@ WebClient.include({
     },
     on_message_warning: function(message){
         if(this.notification_manager) {
-            this.notification_manager.do_warn(message.title, message.message, message.sticky);
+            this.notification_manager.do_warn(message.title, message.message, message.sticky, message);
         }
     },
     on_message_info: function(message){
         if(this.notification_manager) {
-            this.notification_manager.do_notify(message.title, message.message, message.sticky);
+            this.notification_manager.do_notify(message.title, message.message, message.sticky, message);
         }
     }
 });

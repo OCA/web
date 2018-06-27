@@ -3,7 +3,9 @@
     <data>
         <template id="assets_backend" name="web_noify assets" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/web_notify/static/src/css/notification.less"/>
                 <script type="text/javascript" src="/web_notify/static/src/js/web_client.js"/>
+                <script type="text/javascript" src="/web_notify/static/src/js/notification.js"/>
             </xpath>
         </template>
     </data>
