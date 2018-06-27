@@ -35,16 +35,10 @@ odoo.define('web_auto_refresh', function (require) {
             bus.bus.start_polling();
         },
         bus_notification: function(notification) {
-            // Old versions passes single notification item here. Convert it to the latest format.
-            if (typeof notification[0][0] === 'string') {
-                notification = [notification]
-            }
-            for (let i = 0; i < notification.length; i++) {
-                let channel = notification[i][0];
-                let message = notification[i][1];
-                if (channel[0] === session.db && channel[1] === 'web_auto_refresh'){
-                    bus.bus.trigger(channel[1], message);
-                }
+            let channel = notification[0][0];
+            if (this.known_bus_channels.indexOf(channel) !== -1) {
+                let message = notification[0][1];
+                bus.bus.trigger(channel, message);
             }
         },
         bus_on: function(eventname, eventfunction) {
