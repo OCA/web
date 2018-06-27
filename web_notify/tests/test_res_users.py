@@ -14,7 +14,12 @@ class TestResUsers(common.TransactionCase):
         bus_bus = self.env["bus.bus"]
         domain = [("channel", "=", self.env.user.notify_success_channel_name)]
         existing = bus_bus.search(domain)
-        test_msg = {"message": "message", "title": "title", "sticky": True}
+        test_msg = {
+            "message": "message",
+            "title": "title",
+            "sticky": True,
+            "action": None,
+        }
         self.env.user.notify_success(**test_msg)
         news = bus_bus.search(domain) - existing
         self.assertEqual(1, len(news))
@@ -26,7 +31,12 @@ class TestResUsers(common.TransactionCase):
         bus_bus = self.env["bus.bus"]
         domain = [("channel", "=", self.env.user.notify_danger_channel_name)]
         existing = bus_bus.search(domain)
-        test_msg = {"message": "message", "title": "title", "sticky": True}
+        test_msg = {
+            "message": "message",
+            "title": "title",
+            "sticky": True,
+            "action": None,
+        }
         self.env.user.notify_danger(**test_msg)
         news = bus_bus.search(domain) - existing
         self.assertEqual(1, len(news))
@@ -38,7 +48,12 @@ class TestResUsers(common.TransactionCase):
         bus_bus = self.env["bus.bus"]
         domain = [("channel", "=", self.env.user.notify_warning_channel_name)]
         existing = bus_bus.search(domain)
-        test_msg = {"message": "message", "title": "title", "sticky": True}
+        test_msg = {
+            "message": "message",
+            "title": "title",
+            "sticky": True,
+            "action": None,
+        }
         self.env.user.notify_warning(**test_msg)
         news = bus_bus.search(domain) - existing
         self.assertEqual(1, len(news))
@@ -50,7 +65,12 @@ class TestResUsers(common.TransactionCase):
         bus_bus = self.env["bus.bus"]
         domain = [("channel", "=", self.env.user.notify_info_channel_name)]
         existing = bus_bus.search(domain)
-        test_msg = {"message": "message", "title": "title", "sticky": True}
+        test_msg = {
+            "message": "message",
+            "title": "title",
+            "sticky": True,
+            "action": None,
+        }
         self.env.user.notify_info(**test_msg)
         news = bus_bus.search(domain) - existing
         self.assertEqual(1, len(news))
@@ -62,7 +82,12 @@ class TestResUsers(common.TransactionCase):
         bus_bus = self.env["bus.bus"]
         domain = [("channel", "=", self.env.user.notify_default_channel_name)]
         existing = bus_bus.search(domain)
-        test_msg = {"message": "message", "title": "title", "sticky": True}
+        test_msg = {
+            "message": "message",
+            "title": "title",
+            "sticky": True,
+            "action": None,
+        }
         self.env.user.notify_default(**test_msg)
         news = bus_bus.search(domain) - existing
         self.assertEqual(1, len(news))
