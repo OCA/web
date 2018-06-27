@@ -23,23 +23,27 @@ class ResUsers(models.Model):
         compute='_compute_channel_names')
 
     @api.multi
-    def notify_info(self, message, title=None, sticky=False):
+    def notify_info(self, message, title=None, sticky=False,
+                    show_reload=False):
         title = title or _('Information')
         self._notify_channel(
-            'notify_info_channel_name', message, title, sticky)
+            'notify_info_channel_name', message, title, sticky, show_reload)
 
     @api.multi
-    def notify_warning(self, message, title=None, sticky=False):
+    def notify_warning(self, message, title=None, sticky=False,
+                       show_reload=False):
         title = title or _('Warning')
         self._notify_channel(
-            'notify_warning_channel_name', message, title, sticky)
+            'notify_warning_channel_name', message, title, sticky, show_reload)
 
     @api.multi
-    def _notify_channel(self, channel_name_field, message, title, sticky):
+    def _notify_channel(self, channel_name_field, message, title, sticky,
+                        show_reload):
         bus_message = {
             'message': message,
             'title': title,
-            'sticky': sticky
+            'sticky': sticky,
+            'show_reload': show_reload,
         }
         notifications = [(getattr(record, channel_name_field), bus_message)
                          for record in self]

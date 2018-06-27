@@ -30,6 +30,16 @@ or
    :scale: 80 %
    :alt: Sample notifications
 
+The notifications can optionally have some action buttons.
+
+* One allowing to refresh the active view
+
+It is activated when sending the notification with:
+
+.. code-block:: python
+  
+   self.env.user.notify_info('My information message', show_reload=True)
+
 Installation
 ============
 
