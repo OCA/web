@@ -3,6 +3,7 @@
 
 from odoo.tests import common
 
+
 class TestResUsers(common.TransactionCase):
 
     def test_chatter_position_wr(self):
