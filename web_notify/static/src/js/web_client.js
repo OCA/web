@@ -8,17 +8,15 @@ var core = require('web.core'),
 
 
 Widget.include({
-    do_interactive_notify: function(title, message, sticky, options) {
+    do_interactive_notify: function(title, message, options) {
         this.trigger_up(
             'interactive_notification',
-            {title: title, message: message,
-             sticky: sticky, options: options});
+            {title: title, message: message, options: options});
     },
-    do_interactive_warn: function(title, message, sticky, options) {
+    do_interactive_warn: function(title, message, options) {
         this.trigger_up(
             'interactive_warning',
-            {title: title, message: message,
-             sticky: sticky, options: options});
+            {title: title, message: message, options: options});
     },
 });
 
@@ -31,16 +29,14 @@ WebClient.include({
          interactive_notification: function (e) {
              if(this.notification_manager) {
                  this.notification_manager.interactive_notify(
-                     e.data.title, e.data.message,
-                     e.data.sticky, e.data.options
+                     e.data.title, e.data.message, e.data.options
                  );
              }
          },
          interactive_warning: function (e) {
              if(this.notification_manager) {
                  this.notification_manager.interactive_warn(
-                     e.data.title, e.data.message,
-                     e.data.sticky, e.data.options
+                     e.data.title, e.data.message, e.data.options
                  );
              }
          }
@@ -92,14 +88,14 @@ WebClient.include({
     on_message_warning: function(message){
         if(this.notification_manager) {
             this.notification_manager.do_interactive_warn(
-                message.title, message.message, message.sticky, message
+                message.title, message.message, message
             );
         }
     },
     on_message_info: function(message){
         if(this.notification_manager) {
             this.notification_manager.do_interactive_notify(
-                message.title, message.message, message.sticky, message
+                message.title, message.message, message
             );
         }
     }
