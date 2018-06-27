@@ -44,6 +44,7 @@ setuptools.setup(
         'odoo8-addon-web_menu_autohide',
         'odoo8-addon-web_menu_collapsible',
         'odoo8-addon-web_menu_navbar_needaction',
+        'odoo8-addon-web_no_crawler',
         'odoo8-addon-web_offline_warning',
         'odoo8-addon-web_onchange_action',
         'odoo8-addon-web_one2many_list_action',
