@@ -30,7 +30,7 @@ or
    :scale: 80 %
    :alt: Sample notifications
 
-The notifications can optionally have some action buttons.
+The notifications can bring interactivity with some buttons.
 
 * One allowing to refresh the active view
 * Another allowing to send a window / client action
@@ -54,7 +54,7 @@ The action can be used using the ``action`` keyword:
        'My information message',
        action=action,
        # optional
-       action_link_name='Open Sale',
+       action_link_name=_('Open Sale'),
    )
 
 
@@ -92,6 +92,7 @@ Contributors
 
 * Laurent Mignon <laurent.mignon@acsone.eu>
 * Serpent Consulting Services Pvt. Ltd.<jay.vora@serpentcs.com>
+* Guewen Baconnier <guewen.baconnier@camptocamp.com>
 
 Maintainer
 ----------
