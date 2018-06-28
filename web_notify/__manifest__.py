@@ -18,6 +18,9 @@
     'data': [
         'views/web_notify.xml'
     ],
+    'qweb': [
+        'static/src/xml/*.xml',
+    ],
     'demo': [
     ],
     'installable': True,
