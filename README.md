@@ -29,6 +29,7 @@ addon | version | summary
 [web_decimal_numpad_dot](web_decimal_numpad_dot/) | 10.0.1.1.0 | Allows using numpad dot to enter period decimal separator
 [web_dialog_size](web_dialog_size/) | 10.0.1.0.2 | A module that lets the user expand a dialog box to the full screen width.
 [web_domain_field](web_domain_field/) | 10.0.1.0.0 | Use computed field as domain
+[web_drop_target](web_drop_target/) | 10.0.1.0.0 | Allows to drag files into Odoo
 [web_editor_background_color](web_editor_background_color/) | 10.0.1.0.0 | Set any background color for web editor snippets
 [web_environment_ribbon](web_environment_ribbon/) | 10.0.1.0.0 | Web Environment Ribbon
 [web_export_view](web_export_view/) | 10.0.1.0.0 | Web Export Current View
