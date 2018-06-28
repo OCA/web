@@ -148,6 +148,8 @@ odoo.define('web_timeline.TimelineView', function (require) {
                         'value': temp.expressions[1].value
                     };
                 }).value();
+            } else {
+                this.colors = [];
             }
         },
 
