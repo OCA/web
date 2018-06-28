@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright 2016 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+import json
 
 from odoo.tests import common
 from odoo.addons.bus.models.bus import json_dump
@@ -17,12 +18,18 @@ class TestResUsers(common.TransactionCase):
         ]
         existing = bus_bus.search(domain)
         self.env.user.notify_info(
-            message='message', title='title', sticky=True)
+            message='message', title='title', sticky=True,
+            show_reload=True, foo="bar"
+        )
         news = bus_bus.search(domain) - existing
         self.assertEqual(1, len(news))
-        self.assertEqual(
-            '{"message":"message","sticky":true,"title":"title"}',
-            news.message)
+        expected = ('{"message":"message","sticky":true,"title":"title",'
+                    '"show_reload":true,"action":null,'
+                    '"action_link_name":null,"foo":"bar"}')
+        self.assertDictEqual(
+            json.loads(expected),
+            json.loads(news.message)
+        )
 
     def test_notify_warning(self):
         bus_bus = self.env['bus.bus']
@@ -32,12 +39,46 @@ class TestResUsers(common.TransactionCase):
         ]
         existing = bus_bus.search(domain)
         self.env.user.notify_warning(
-            message='message', title='title', sticky=True)
+            message='message', title='title', sticky=True,
+            show_reload=True, foo="bar"
+        )
         news = bus_bus.search(domain) - existing
         self.assertEqual(1, len(news))
-        self.assertEqual(
-            '{"message":"message","sticky":true,"title":"title"}',
-            news.message)
+        expected = ('{"message":"message","sticky":true,"title":"title",'
+                    '"show_reload":true,"action":null,'
+                    '"action_link_name":null,"foo":"bar"}')
+        self.assertDictEqual(
+            json.loads(expected),
+            json.loads(news.message)
+        )
+
+    def test_notify_with_action(self):
+        bus_bus = self.env['bus.bus']
+        domain = [
+            ('channel', '=',
+             json_dump(self.env.user.notify_info_channel_name))
+        ]
+        existing = bus_bus.search(domain)
+        self.env.user.notify_info(
+            message='message', title='title', sticky=True,
+            action={
+                "type": "ir.actions.act_window",
+                "view_mode": "form",
+            },
+            action_link_name="Open"
+        )
+        news = bus_bus.search(domain) - existing
+        self.assertEqual(1, len(news))
+        # the action should be transformed by Odoo (clean_action)
+        expected = ('{"message":"message","sticky":true,"title":"title",'
+                    '"show_reload":false,"action":'
+                    '{"type": "ir.actions.act_window", "view_mode":"form",'
+                    '"flags":{},"views":[[false, "form"]]},'
+                    '"action_link_name":"Open"}')
+        self.assertDictEqual(
+            json.loads(expected),
+            json.loads(news.message)
+        )
 
     def test_notify_many(self):
         # check that the notification of a list of users is done with
