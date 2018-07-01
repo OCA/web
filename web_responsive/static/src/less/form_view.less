@@ -52,6 +52,24 @@
     }
 }
 
+// Sticky Header & Footer in List View
+.o_view_manager_content {
+    >div {
+        >.table-responsive {
+            >.o_list_view {
+                thead {
+                    position: sticky;
+                    top: 0;
+                }
+                tfoot {
+                    position: sticky;
+                    bottom: 0;
+                }
+            }
+        }
+    }
+}
+
 .o_form_view {
     // Form must fill 100% width in any size
     .o_form_sheet_bg {
@@ -68,6 +86,12 @@
             .o_form_sheet {
                 border: none;
             }
+        }
+
+        .o_form_statusbar {
+            position: sticky;
+            top: 0;
+            z-index: 1;
         }
     }
 
@@ -151,11 +175,5 @@
     // Adapt chatter widget to small viewports
     .oe_chatter {
         min-width: inherit;
-    }
-
-    .o_form_statusbar {
-        position: sticky;
-        top: 0;
-        z-index: 1;
     }
 }
