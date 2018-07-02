@@ -1,11 +1,9 @@
-//-*- coding: utf-8 -*-
 //Copyright 2018 Therp BV <https://therp.nl>
 //License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 /*global Uint8Array base64js*/
 
 odoo.define('web_drop_target', function(require) {
-    var Model = require('web.Model'),
-        FormView = require('web.FormView');
+    var    FormController = require('web.FormController');
 
     // this is the main contribution of this addon: A mixin you can use
     // to make some widget a drop target. Read on how to use this yourself
@@ -79,20 +77,19 @@ odoo.define('web_drop_target', function(require) {
         ) {
             // helper to upload an attachment and update the sidebar
             var self = this;
-            return new Model('ir.attachment').call(
-                'create',
-                [
-                    _.extend({
-                        name: drop_file.name,
-                        datas: base64js.fromByteArray(
+            return this._rpc({
+                model: 'ir.attachment',
+                method: 'create',
+                args: [{
+                    'name': drop_file.name,
+                    'datas': base64js.fromByteArray(
                             new Uint8Array(e.target.result)
                         ),
-                        datas_fname: drop_file.name,
-                        res_model: res_model,
-                        res_id: res_id,
-                    }, extra_data || {})
-                ]
-            )
+                    'datas_fname': drop_file.name,
+                    'res_model': res_model,
+                    'res_id': res_id,
+                }],
+            })
             .then(function() {
                 // try to find a sidebar and update it if we found one
                 var p = self;
@@ -101,9 +98,9 @@ odoo.define('web_drop_target', function(require) {
                 }
                 if(p) {
                     var sidebar = p.sidebar;
-                    sidebar.do_attachement_update(
-                        sidebar.dataset, sidebar.model_id
-                    );
+                    if(sidebar && _.isFunction(sidebar._onFileUploaded)) {
+                        sidebar._onFileUploaded();
+                    }
                 }
             });
         }
@@ -111,7 +108,7 @@ odoo.define('web_drop_target', function(require) {
 
     // and here we apply the mixin to form views, allowing any files and
     // adding them as attachment
-    FormView.include(_.extend(DropTargetMixin, {
+    FormController.include(_.extend(DropTargetMixin, {
         _get_drop_file: function() {
             // disable drag&drop when we're on an unsaved record
             if(!this.datarecord.id) {
@@ -121,7 +118,7 @@ odoo.define('web_drop_target', function(require) {
         },
         _handle_file_drop: function(drop_file, e) {
             return this._handle_file_drop_attach(
-                drop_file, e, this.dataset.model, this.datarecord.id
+                drop_file, e, this.renderer.state.model, this.renderer.state.res_id
             );
         }
     }));
