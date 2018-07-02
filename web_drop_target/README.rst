@@ -22,7 +22,7 @@ To use this module, you need to:
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
     :alt: Try me on Runbot
-    :target: https://runbot.odoo-community.org/runbot/162/10.0
+    :target: https://runbot.odoo-community.org/runbot/162/11.0
 
 Known issues / Roadmap
 ======================
@@ -31,6 +31,7 @@ Known issues / Roadmap
 * handle multiple files
 * add an upload progress meter for huge files
 * trigger custom events about different stages of the drop operation for other addons to hook in
+* Install document module to display attachments in the sidebar
 
 Bug Tracker
 ===========
@@ -57,6 +58,7 @@ Contributors
 ------------
 
 * Holger Brunn <hbrunn@therp.nl>
+* Akim Juillerat <akim.juillerat@camptocamp.com>
 
 Do not contact contributors directly about help with questions or problems concerning this addon, but use the `community mailing list <mailto:community@mail.odoo.com>`_ or the `appropriate specialized mailinglist <https://odoo-community.org/groups>`_ for help, and the bug tracker linked in `Bug Tracker`_ above for technical issues.
 
