@@ -10,6 +10,7 @@ odoo.define('web_responsive', function(require) {
     var core = require('web.core');
     var config = require('web.config');
     var ViewManager = require('web.ViewManager');
+    var RelationalFields = require('web.relational_fields');
 
     Menu.include({
 
@@ -306,11 +307,27 @@ odoo.define('web_responsive', function(require) {
         },
     });
 
+    // FieldStatus toggle hidden-xs
+    RelationalFields.FieldStatus.include({
+        _render: function () {
+            this._super.apply(this, arguments);
+            this.$el.find('button.btn-primary').css('pointer-events', 'initial');
+        },
+
+        _onClickStage: function (e) {
+            this._super(e);
+            this.$el.find('button.btn-default').toggleClass('hidden-xs');
+            $(e.currentTarget).blur();
+        },
+    });
+
+
     return {
         'AppDrawer': AppDrawer,
         'SearchView': SearchView,
         'Menu': Menu,
         'ViewManager': ViewManager,
+        'FieldStatus': RelationalFields.FieldStatus,
     };
 
 });
