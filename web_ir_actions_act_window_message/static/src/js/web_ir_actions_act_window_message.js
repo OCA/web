@@ -25,8 +25,7 @@ odoo.define('web.web_ir_actions_act_window_message', function(require)
                     text: action.close_button_title || _t('Close'),
                     click: function() {
                         // refresh the view before closing the dialog
-                        self.inner_widget.active_view
-                            .controller.recursive_reload();
+                        self.ir_actions_act_window_message_refresh();
                         dialog.close()
                     },
                     classes: 'btn-default',
@@ -81,8 +80,7 @@ odoo.define('web.web_ir_actions_act_window_message', function(require)
                                 }
                                 // always refresh the view after the action
                                 // ex: action updates a status
-                                self.inner_widget.active_view
-                                .controller.recursive_reload();
+                                self.ir_actions_act_window_message_refresh();
                             });
                         }
                         else
@@ -93,6 +91,25 @@ odoo.define('web.web_ir_actions_act_window_message', function(require)
                     },
                 }
             });
+        },
+        ir_actions_act_window_message_refresh: function(){
+            var controller = this.inner_widget.active_view.controller;
+            // recursive_reload function is available
+            // in the form view
+            if(controller.recursive_reload)
+            {
+                controller.recursive_reload();
+            }
+            // reload_content function is available
+            // in the list view
+            else if(controller.reload_content)
+            {
+                controller.reload_content();
+            }
+            else
+            {
+                console.log("View refresh was requested");
+            }
         },
     });
 });
