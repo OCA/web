@@ -11,6 +11,9 @@ odoo.define('web_responsive', function(require) {
     var config = require('web.config');
     var ViewManager = require('web.ViewManager');
     var RelationalFields = require('web.relational_fields');
+    var FormRenderer = require('web.FormRenderer');
+
+    var qweb = core.qweb;
 
     Menu.include({
 
@@ -311,7 +314,7 @@ odoo.define('web_responsive', function(require) {
     RelationalFields.FieldStatus.include({
         _render: function () {
             this._super.apply(this, arguments);
-            this.$el.find('button.btn-primary').css('pointer-events', 'initial');
+            this.$el.find('button.btn-primary.disabled').css('pointer-events', 'initial');
         },
 
         _onClickStage: function (e) {
@@ -321,6 +324,49 @@ odoo.define('web_responsive', function(require) {
         },
     });
 
+    // if we are in small screen create a menu for header buttons
+    FormRenderer.include({
+        _renderHeaderButton: function (node) {
+            var $button = undefined;
+            if (config.device.size_class <= config.device.SIZES.XS) {
+                var $button = $(qweb.render('web_responsive.MenuHeaderItem', { name: node.attrs.string }));
+                var $button_r = $button.find('.dropdown-item');
+                this._addOnClickAction($button_r, node);
+                this._handleAttributes($button_r, node);
+                this._registerModifiers(node, this.state, $button_r);
+
+                // Display tooltip
+                if (config.debug || node.attrs.help) {
+                    this._addButtonTooltip(node, $button_r);
+                }
+            }
+            else {
+                $button = this._super(node);
+            }
+
+            return $button;
+        },
+
+        _renderHeaderButtons: function (node) {
+            var self = this;
+            var $buttons = undefined;
+            if (config.device.size_class <= config.device.SIZES.XS) {
+                $buttons = $(qweb.render('web_responsive.MenuHeader'));
+                var $dropdownMenu = $buttons.find('.dropdown-menu');
+                _.each(node.children, function (child) {
+                    if (child.tag === 'button') {
+                        $dropdownMenu.append(self._renderHeaderButton(child));
+                    }
+                });
+            }
+            else {
+                $buttons = this._super(node);
+            }
+
+            return $buttons;
+        }
+    });
+
 
     return {
         'AppDrawer': AppDrawer,
@@ -328,6 +374,7 @@ odoo.define('web_responsive', function(require) {
         'Menu': Menu,
         'ViewManager': ViewManager,
         'FieldStatus': RelationalFields.FieldStatus,
+        'FormRenderer': FormRenderer,
     };
 
 });

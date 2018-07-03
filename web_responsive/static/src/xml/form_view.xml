@@ -22,4 +22,19 @@
         </t>
     </t>
 
+    <t t-name="web_responsive.MenuHeader">
+        <div class="dropdown o_statusbar_dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuHeader" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Actions
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuHeader">
+            </ul>
+        </div>
+    </t>
+
+    <t t-name="web_responsive.MenuHeaderItem">
+        <li><button class="dropdown-item btn" type="button"><t t-esc="name"/></button></li>
+    </t>
+
 </templates>
