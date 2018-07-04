@@ -17,15 +17,12 @@ odoo.define('web_tree_dynamic_colored_field', function (require) {
                 if (colorAttr.length > 0) {
                     var colorField = colorAttr[0].split(':')[1].trim();
                     // validate the presence of that field in tree view
-                    var fieldNames = _(this.columns).map(
-                        (value) => { return value.attrs.name; }
-                    );
-                    if (fieldNames.indexOf(colorField) === -1) {
+                    if (this.state.data.length && colorField in this.state.data[0].data) {
+                        this.colorField = colorField;
+                    } else {
                         console.warn(
                             "No field named '" + colorField + "' present in view."
                         );
-                    } else {
-                        this.colorField = colorField;
                     }
                 }
             }
