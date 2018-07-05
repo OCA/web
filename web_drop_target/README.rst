@@ -81,11 +81,8 @@ Contributors
 ~~~~~~~~~~~~
 
 * Holger Brunn <hbrunn@therp.nl>
-<<<<<<< HEAD
 * Akim Juillerat <akim.juillerat@camptocamp.com>
-=======
 * Pablo Fuentes <pablo@studio73.es>
->>>>>>> 25dd8787... [IMP] web_drop_target: Upload multiple files
 
 Maintainers
 ~~~~~~~~~~~
