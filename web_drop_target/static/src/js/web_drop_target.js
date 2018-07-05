@@ -26,21 +26,17 @@ odoo.define('web_drop_target', function(require) {
         },
 
         _on_drop: function(e) {
-            var self = this;
             var drop_items = this._get_drop_items(e);
-            _.each(drop_items, function(drop_item) {
-                var reader = new FileReader();
-                reader.onloadend = self.proxy(
-                    _.partial(self._handle_file_drop, drop_item.getAsFile())
-                );
-                reader.readAsArrayBuffer(drop_item.getAsFile());
-            });
+            if(!drop_items) {
+                return;
+            }
             this._remove_overlay();
             e.preventDefault();
+            this._handle_drop_items(drop_items, e)
         },
 
         _on_dragenter: function(e) {
-            if(this._get_drop_items(e).length) {
+            if(this._get_drop_items(e)) {
                 e.preventDefault();
                 this._add_overlay();
                 return false;
@@ -68,29 +64,29 @@ odoo.define('web_drop_target', function(require) {
         },
 
         // eslint-disable-next-line no-unused-vars
-        _handle_file_drop: function(drop_file, e) {
+        _handle_drop_items: function(drop_items, e) {
             // do something here, for example call the helper function below
             // e is the on_load_end handler for the FileReader above,
             // so e.target.result contains an ArrayBuffer of the data
         },
 
-        _handle_file_drop_attach: function(
-                drop_file, e, res_model, res_id, extra_data
-        ) {
+        _create_attachment: function(file, reader, e, res_model, res_id, extra_data) {
             // helper to upload an attachment and update the sidebar
             var self = this;
             return this._rpc({
                 model: 'ir.attachment',
                 method: 'create',
-                args: [{
-                    'name': drop_file.name,
-                    'datas': base64js.fromByteArray(
-                            new Uint8Array(e.target.result)
+                args: [
+                    _.extend({
+                        name: file.name,
+                        datas: base64js.fromByteArray(
+                            new Uint8Array(reader.result)
                         ),
-                    'datas_fname': drop_file.name,
-                    'res_model': res_model,
-                    'res_id': res_id,
-                }],
+                        datas_fname: file.name,
+                        res_model: res_model,
+                        res_id: res_id,
+                    }, extra_data || {})
+                ],
             })
             .then(function() {
                 // try to find a sidebar and update it if we found one
@@ -105,6 +101,18 @@ odoo.define('web_drop_target', function(require) {
                     }
                 }
             });
+        },
+
+        _handle_file_drop_attach: function(
+            item, e, res_model, res_id, extra_data
+        ) {
+            var self = this;
+            var file = item.getAsFile();
+            var reader = new FileReader();
+            reader.onloadend = self.proxy(
+                _.partial(self._create_attachment, file, reader, e, res_model, res_id, extra_data)
+            );
+            reader.readAsArrayBuffer(file);
         },
 
         _add_overlay: function() {
@@ -141,12 +149,17 @@ odoo.define('web_drop_target', function(require) {
             }
             return this._super.apply(this, arguments);
         },
-        _handle_file_drop: function(drop_file, e) {
-            return this._handle_file_drop_attach(
-                drop_file, e, this.renderer.state.model, this.renderer.state.res_id
-            );
+        _handle_drop_items: function(drop_items, e) {
+            var self = this;
+            _.each(drop_items, function(item, e) {
+                return self._handle_file_drop_attach(
+                    item, e, self.renderer.state.model,
+                    self.renderer.state.res_id
+                );
+            });
         }
     }));
+
 
     return {
         'DropTargetMixin': DropTargetMixin,
