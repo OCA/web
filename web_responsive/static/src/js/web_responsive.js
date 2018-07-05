@@ -310,38 +310,37 @@ odoo.define('web_responsive', function(require) {
         },
     });
 
-    // FieldStatus toggle hidden-xs
+    // FieldStatus (responsive fold)
     RelationalFields.FieldStatus.include({
-        _render: function () {
+        _setState: function () {
             this._super.apply(this, arguments);
-            this.$el.find('button.btn-primary.disabled').css('pointer-events', 'initial');
+            _.each(this.status_information, function(item){
+                item.fold = !item.selected;
+            });
         },
 
-        _onClickStage: function (e) {
-            this._super(e);
-            this.$el.find('button.btn-default').toggleClass('hidden-xs');
-            $(e.currentTarget).blur();
-        },
+        _render: function () {
+            // Break inheritance!
+            this.$el.html(qweb.render("web_responsive.FieldStatus.content", {
+                selections: this.status_information,
+                has_folded: _.filter(this.status_information, {'fold': true}).length > 0,
+                clickable: !!this.attrs.clickable,
+            }));
+        }
     });
 
     // if we are in small screen create a menu for header buttons
     FormRenderer.include({
-        _renderHeaderButton: function (node) {
-            var $button = undefined;
-            if (config.device.size_class <= config.device.SIZES.XS) {
-                var $button = $(qweb.render('web_responsive.MenuHeaderItem', { name: node.attrs.string }));
-                var $button_r = $button.find('.dropdown-item');
-                this._addOnClickAction($button_r, node);
-                this._handleAttributes($button_r, node);
-                this._registerModifiers(node, this.state, $button_r);
+        _renderHeaderListButton: function (node) {
+            var $button = $(qweb.render('web_responsive.MenuHeaderItem', { name: node.attrs.string }));
+            var $button_r = $button.find('.dropdown-item');
+            this._addOnClickAction($button_r, node);
+            this._handleAttributes($button_r, node);
+            this._registerModifiers(node, this.state, $button_r);
 
-                // Display tooltip
-                if (config.debug || node.attrs.help) {
-                    this._addButtonTooltip(node, $button_r);
-                }
-            }
-            else {
-                $button = this._super(node);
+            // Display tooltip
+            if (config.debug || node.attrs.help) {
+                this._addButtonTooltip(node, $button_r);
             }
 
             return $button;
@@ -349,21 +348,19 @@ odoo.define('web_responsive', function(require) {
 
         _renderHeaderButtons: function (node) {
             var self = this;
-            var $buttons = undefined;
-            if (config.device.size_class <= config.device.SIZES.XS) {
-                $buttons = $(qweb.render('web_responsive.MenuHeader'));
-                var $dropdownMenu = $buttons.find('.dropdown-menu');
-                _.each(node.children, function (child) {
-                    if (child.tag === 'button') {
-                        $dropdownMenu.append(self._renderHeaderButton(child));
-                    }
-                });
-            }
-            else {
-                $buttons = this._super(node);
-            }
+            var $buttons = this._super(node);
 
-            return $buttons;
+            var $container = $(qweb.render('web_responsive.MenuHeader'));
+            $container.find('.o_statusbar_buttons').append($buttons);
+
+            var $dropdownMenu = $container.find('.dropdown-menu');
+            _.each(node.children, function (child) {
+                if (child.tag === 'button') {
+                    $dropdownMenu.append(self._renderHeaderListButton(child));
+                }
+            });
+
+            return $container;
         }
     });
 
