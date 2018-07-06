@@ -318,15 +318,6 @@ odoo.define('web_responsive', function(require) {
                 item.fold = !item.selected;
             });
         },
-
-        _render: function () {
-            // Break inheritance!
-            this.$el.html(qweb.render("web_responsive.FieldStatus.content", {
-                selections: this.status_information,
-                has_folded: _.filter(this.status_information, {'fold': true}).length > 0,
-                clickable: !!this.attrs.clickable,
-            }));
-        }
     });
 
     // if we are in small screen create a menu for header buttons

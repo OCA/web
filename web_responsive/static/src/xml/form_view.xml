@@ -23,20 +23,26 @@
     </t>
 
 
-    <t t-name="web_responsive.FieldStatus.content">
-        <t t-if="has_folded">
-            <ul class="dropdown-menu o-status-more hidden-lg hidden-md" role="menu">
-                <li t-foreach="selections" t-as="i">
-                    <t t-set="button_css" t-value="'hidden-lg hidden-md'" />
-                    <t t-if="!i.selected" t-call="FieldStatus.content.button"/>
-                </li>
-            </ul>
-            <button type="button" class="btn btn-sm o_arrow_button btn-default dropdown-toggle hidden-lg hidden-md" data-toggle="dropdown" aria-expanded="false">More <span class="caret"/></button>
+    <t t-extend="FieldStatus.content">
+        <t t-jquery="[t-if='selection_folded.length']" t-operation="replace">
+            <t t-set="selections" t-value="selection_unfolded.concat(selection_folded)" />
+            <t t-if="selection_unfolded.length">
+                <ul class="dropdown-menu o-status-more hidden-lg hidden-md" role="menu">
+                    <li t-foreach="selections" t-as="i">
+                        <t t-set="button_css" t-value="'hidden-lg hidden-md'" />
+                        <t t-if="!i.selected" t-call="FieldStatus.content.button"/>
+                    </li>
+                </ul>
+                <button type="button" class="btn btn-sm o_arrow_button btn-default dropdown-toggle hidden-lg hidden-md" data-toggle="dropdown" aria-expanded="false">More <span class="caret"/></button>
+            </t>
+            <t t-foreach="selections.reverse()" t-as="i">
+                <t t-if='i.selected' t-set="button_css" t-value="''" />
+                <t t-if='!i.selected' t-set="button_css" t-value="'hidden-xs hidden-sm'" />
+                <t t-call="FieldStatus.content.button"/>
+            </t>
         </t>
-        <t t-foreach="selections.reverse()" t-as="i">
-            <t t-if='i.selected' t-set="button_css" t-value="''" />
-            <t t-if='!i.selected' t-set="button_css" t-value="'hidden-xs hidden-sm'" />
-            <t t-call="FieldStatus.content.button"/>
+        <t t-jquery="[t-foreach='selection_unfolded.reverse()']" t-operation="replace">
+            <!-- EMPTY -->
         </t>
     </t>
 
