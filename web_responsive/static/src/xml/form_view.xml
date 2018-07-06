@@ -46,11 +46,11 @@
     </t>
 
     <t t-name="web_responsive.MenuStatusbarButtons">
-        <div class="o_statusbar_container">
-            <div class="o_statusbar_buttons hidden-xs hidden-sm">
+        <div class="o_statusbar_buttons_container">
+            <div class="o_statusbar_buttons_base hidden-xs hidden-sm">
                 <!-- Normal Buttons Zone -->
             </div>
-            <div class="dropdown o_statusbar_dropdown hidden-lg hidden-md">
+            <div class="dropdown o_statusbar_buttons_dropdown hidden-lg hidden-md">
                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuHeader" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     Task
                     <span class="caret"></span>

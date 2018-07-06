@@ -336,7 +336,7 @@ odoo.define('web_responsive', function(require) {
             var $buttons = this._super(node);
 
             var $container = $(qweb.render('web_responsive.MenuStatusbarButtons'));
-            $container.find('.o_statusbar_buttons').append($buttons);
+            $container.find('.o_statusbar_buttons_base').append($buttons);
 
             var $dropdownMenu = $container.find('.dropdown-menu');
             _.each(node.children, function (child) {
