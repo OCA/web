@@ -312,42 +312,36 @@ odoo.define('web_responsive', function(require) {
 
     // FieldStatus (responsive fold)
     RelationalFields.FieldStatus.include({
-        _setState: function () {
-            this._super.apply(this, arguments);
-            _.each(this.status_information, function(item){
-                item.fold = !item.selected;
-            });
+        _renderQWebValues: function () {
+            return {
+                selections: this.status_information, // Needed to preserve order
+                has_folded: _.filter(this.status_information, {'selected': false}).length > 0,
+                clickable: !!this.attrs.clickable,
+            };
         },
+
+        _render: function () {
+            // FIXME: Odoo framework creates view values & render qweb in the
+            //     same method. This cause a "double render" process to use
+            //     new custom values.
+            this._super.apply(this, arguments);
+            this.$el.html(qweb.render("FieldStatus.content", this._renderQWebValues()));
+        }
     });
 
-    // if we are in small screen create a menu for header buttons
+    // Responsive view "action" buttons
     FormRenderer.include({
-        _renderHeaderListButton: function (node) {
-            var $button = $(qweb.render('web_responsive.MenuHeaderItem', { name: node.attrs.string }));
-            var $button_r = $button.find('.dropdown-item');
-            this._addOnClickAction($button_r, node);
-            this._handleAttributes($button_r, node);
-            this._registerModifiers(node, this.state, $button_r);
-
-            // Display tooltip
-            if (config.debug || node.attrs.help) {
-                this._addButtonTooltip(node, $button_r);
-            }
-
-            return $button;
-        },
-
         _renderHeaderButtons: function (node) {
             var self = this;
             var $buttons = this._super(node);
 
-            var $container = $(qweb.render('web_responsive.MenuHeader'));
+            var $container = $(qweb.render('web_responsive.MenuStatusbarButtons'));
             $container.find('.o_statusbar_buttons').append($buttons);
 
             var $dropdownMenu = $container.find('.dropdown-menu');
             _.each(node.children, function (child) {
                 if (child.tag === 'button') {
-                    $dropdownMenu.append(self._renderHeaderListButton(child));
+                    $dropdownMenu.append($('<LI>').append(self._renderHeaderButton(child)));
                 }
             });
 

@@ -25,44 +25,40 @@
 
     <t t-extend="FieldStatus.content">
         <t t-jquery="[t-if='selection_folded.length']" t-operation="replace">
-            <t t-set="selections" t-value="selection_unfolded.concat(selection_folded)" />
-            <t t-if="selection_unfolded.length">
+            <t t-if="selections &amp;&amp; has_folded">
                 <ul class="dropdown-menu o-status-more hidden-lg hidden-md" role="menu">
+                    <t t-set="button_css" t-value="'hidden-lg hidden-md'" />
                     <li t-foreach="selections" t-as="i">
-                        <t t-set="button_css" t-value="'hidden-lg hidden-md'" />
                         <t t-if="!i.selected" t-call="FieldStatus.content.button"/>
                     </li>
                 </ul>
                 <button type="button" class="btn btn-sm o_arrow_button btn-default dropdown-toggle hidden-lg hidden-md" data-toggle="dropdown" aria-expanded="false">More <span class="caret"/></button>
             </t>
-            <t t-foreach="selections.reverse()" t-as="i">
-                <t t-if='i.selected' t-set="button_css" t-value="''" />
-                <t t-if='!i.selected' t-set="button_css" t-value="'hidden-xs hidden-sm'" />
-                <t t-call="FieldStatus.content.button"/>
-            </t>
         </t>
         <t t-jquery="[t-foreach='selection_unfolded.reverse()']" t-operation="replace">
-            <!-- EMPTY -->
+            <t t-if="selections">
+                <t t-foreach="selections.reverse()" t-as="i">
+                    <t t-set="button_css" t-value="i.selected?'':'hidden-xs hidden-sm'" />
+                    <t t-call="FieldStatus.content.button"/>
+                </t>
+            </t>
         </t>
     </t>
 
-    <t t-name="web_responsive.MenuHeader">
+    <t t-name="web_responsive.MenuStatusbarButtons">
         <div class="o_statusbar_container">
             <div class="o_statusbar_buttons hidden-xs hidden-sm">
+                <!-- Normal Buttons Zone -->
             </div>
             <div class="dropdown o_statusbar_dropdown hidden-lg hidden-md">
                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuHeader" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    Action
+                    Task
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuHeader">
                 </ul>
             </div>
         </div>
-    </t>
-
-    <t t-name="web_responsive.MenuHeaderItem">
-        <li><a class="dropdown-item"><t t-esc="name"/></a></li>
     </t>
 
 </templates>
