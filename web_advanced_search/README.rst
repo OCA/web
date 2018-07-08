@@ -51,6 +51,7 @@ Contributors
 * Vicent Cubells <vicent.cubells@tecnativa.com>
 * Jairo Llopis <jairo.llopis@tecnativa.com>
 * Rami Alwafaie <rami.alwafaie@initos.com>
+* Jose Mª Bernet <josemaria.bernet@guadaltech.es>
 
 Maintainer
 ----------
