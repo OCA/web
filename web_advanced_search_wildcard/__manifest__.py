@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014 initOS GmbH & Co. KG (<http://www.initos.com>).
 # Copyright 2016 Therp BV <http://therp.nl>.
 # Copyright 2017 Alex Comba - Agile Business Group
@@ -6,7 +5,7 @@
 {
     "name": "Wildcard in advanced search",
     "summary": "Webmodule to add wildcard operators in advanced search field",
-    "version": "10.0.1.0.0",
+    "version": "11.0.1.0.0",
     "category": "web",
     "license": "AGPL-3",
     "author": "initOS GmbH & Co. KG, Therp BV, "

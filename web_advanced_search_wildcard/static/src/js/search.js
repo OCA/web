@@ -2,11 +2,10 @@ odoo.define('web_advanced_search_wildcard', function (require) {
     "use strict";
 
     var core = require('web.core');
-    var search_filters = require('web.search_filters');
-
     var _lt = core._lt;
+    var Field = core.search_filters_registry.get("char");
 
-    search_filters.ExtendedSearchProposition.Char.prototype.operators.push(
+    Field.prototype.operators.push(
         {value: '=ilike', text: _lt("matches")}
     );
 });

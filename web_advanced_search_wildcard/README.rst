@@ -43,6 +43,7 @@ Contributors
 * Thomas Rehn <thomas.rehn@initos.com>
 * L Freeke <lfreeke@therp.nl>
 * Alex Comba <alex.comba@agilebg.com>
+* Jose Maria Bernet <josemaria.bernet@guadaltech.com>
 
 Do not contact contributors directly about support or help with technical issues.
 
