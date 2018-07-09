@@ -4,6 +4,7 @@ odoo.define('web_export_view', function (require) {
     var core = require('web.core');
     var Sidebar = require('web.Sidebar');
     var session = require('web.session');
+    var crash_manager = require('web.crash_manager');
 
     var QWeb = core.qweb;
 
@@ -26,6 +27,8 @@ odoo.define('web_export_view', function (require) {
             var self = this,
                 view = this.getParent(),
                 children = view.getChildren();
+            var c = crash_manager;
+
             if (children) {
                 children.every(function (child) {
                     if (child.field && child.field.type == 'one2many') {
@@ -94,6 +97,7 @@ odoo.define('web_export_view', function (require) {
                     export_rows.push(export_row);
                 });
             }
+
             session.get_file({
                 url: '/web/export/xls_view',
                 data: {data: JSON.stringify({
@@ -101,7 +105,8 @@ odoo.define('web_export_view', function (require) {
                     headers: export_columns_names,
                     rows: export_rows
                 })},
-                complete: $.unblockUI
+                complete: $.unblockUI,
+                error: c.rpc_error.bind(c)
             });
         }
 
