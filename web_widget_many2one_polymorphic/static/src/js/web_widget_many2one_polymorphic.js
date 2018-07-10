@@ -35,10 +35,10 @@ odoo.define('web_widget_many2one_polymorphic', function(require)
     });
 
     core.form_widget_registry.add(
-        'many2one_polymorphic', FieldMany2OnePolymorphic,
+        'many2one_polymorphic', FieldMany2OnePolymorphic
     )
 
     return {
-        FieldMany2OnePolymorphic: FieldMany2OnePolymorphic,
+        FieldMany2OnePolymorphic: FieldMany2OnePolymorphic
     }
 });
