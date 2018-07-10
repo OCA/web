@@ -18,7 +18,7 @@ odoo.define('web_widget_many2one_polymorphic', function(require)
                 function() {
                     // TODO: this resets too early
                     //self.set_value(false);
-                },
+                }
             )
             // pretend to have a field with a relation
             Object.defineProperty(
@@ -28,7 +28,7 @@ odoo.define('web_widget_many2one_polymorphic', function(require)
                         return field_manager.get_field_value(
                             self.options.model_field
                         );
-                    },
+                    }
                 }
             );
         },
