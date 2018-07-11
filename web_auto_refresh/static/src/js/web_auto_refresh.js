@@ -61,7 +61,9 @@ odoo.define('web_auto_refresh', function (require) {
                     if ( action.auto_search && controller.model === message ){
                         if (active_view.type === "kanban")
                             controller.do_reload();    // kanban view has reload function, but only do_reload works as expected
-                        if (active_view.type === "list" && ! controller.$buttons.hasClass('oe_editing'))
+                        if (active_view.type === "list" &&
+                            ! controller.$buttons.hasClass('oe_editing') &&
+                            ! controller.grouped)
                             controller.reload();     // list view only has reload
                     }
                 }
