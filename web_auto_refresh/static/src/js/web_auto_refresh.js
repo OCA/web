@@ -54,14 +54,14 @@ odoo.define('web_auto_refresh', function (require) {
         declare_bus_channel: function() {
             let channel = 'web_auto_refresh';
             this.bus_on(channel, function(message) {            // generic auto referesh
-                let active_view = this.action_manager.inner_widget.active_view;
-                if (typeof(active_view) !== 'undefined'){   // in mail inbox page, no active view defined
+                let inner_widget = this.action_manager.inner_widget;
+                if (inner_widget && inner_widget.active_view){
                     let controller = this.action_manager.inner_widget.active_view.controller;
                     let action = this.action_manager.inner_widget.action;
                     if ( action.auto_search && controller.model === message ){
-                        if (active_view.type === "kanban")
+                        if (inner_widget.active_view.type === "kanban")
                             controller.do_reload();    // kanban view has reload function, but only do_reload works as expected
-                        if (active_view.type === "list" &&
+                        if (inner_widget.active_view.type === "list" &&
                             ! controller.$buttons.hasClass('oe_editing') &&
                             ! controller.grouped)
                             controller.reload();     // list view only has reload
