@@ -20,7 +20,7 @@ the possible attributes for the tag:
 * date_start (required): it defines the name of the field of type date that
   contains the start of the event.
 * date_stop (optional): it defines the name of the field of type date that
-  contains the end of the event. The date_end can be equal to the attribute
+  contains the end of the event. The date_stop can be equal to the attribute
   date_start to display events has 'point' on the Timeline (instantaneous event)
 * date_delay (optional): it defines the name of the field of type float/integer
   that contain the duration in hours of the event, default = 1
