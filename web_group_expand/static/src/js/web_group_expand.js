@@ -23,21 +23,27 @@ odoo.define('web_group_expand.web_group_expand', function (require) {
                 }
             })
         },
-    })
+    });
 
     ViewManager.include({
-
+        init: function(parent, dataset, views, flags, options) {
+            this._super.apply(this, arguments);
+            this._show_group_expand_collapse_buttons = false;
+        },
         _process_search_data: function () {
             var res = this._super.apply(this, arguments);
-            if (this.active_view && this.active_view.type == 'list' && this.searchview) {
-                if(this.searchview.groupby_expand_menu){
-                    var has_groups = res.groupBy.length > 0
-                    this.searchview.groupby_expand_menu.do_toggle_visibility(has_groups)
+            if (this.searchview && this.searchview.groupby_expand_menu) {
+                this._show_group_expand_collapse_buttons = (res.groupBy.length > 0);
+                if (this.active_view && this.active_view.type === 'list') {
+                    this.searchview.groupby_expand_menu.do_toggle_visibility(this._show_group_expand_collapse_buttons);
                 }
-            }else{
-                this.searchview.groupby_expand_menu.do_toggle_visibility(false)
             }
             return res;
+        },
+        switch_mode: function(view_type, view_options) {
+            return this._super.apply(this, arguments).then(function(){
+                this.searchview.groupby_expand_menu.do_toggle_visibility(view_type === 'list' && this.searchview && this.searchview.groupby_expand_menu && this._show_group_expand_collapse_buttons);
+            }.bind(this));
         },
     });
 });
