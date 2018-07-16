@@ -22,3 +22,8 @@ Features
 * Display the color on list view to quickly find what's wrong!
 
   |listview|
+
+
+.. |picker| image:: ./images/picker.png
+.. |formview| image:: ./images/form_view.png
+.. |listview| image:: ./images/list_view.png

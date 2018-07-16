@@ -1,9 +1,9 @@
+/* Global jscolor */
 odoo.define('web.web_widget_color', function(require) {
     "use strict";
 
     var basic_fields = require('web.basic_fields');
     var field_registry = require('web.field_registry');
-    var FormController = require('web.FormController');
     var ListRenderer = require('web.ListRenderer');
 
     var FieldColor = basic_fields.FieldChar.extend({
