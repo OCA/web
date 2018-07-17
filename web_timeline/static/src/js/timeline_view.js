@@ -68,6 +68,17 @@ odoo.define('web_timeline.TimelineView', function (require) {
                     fieldNames.push(fieldName);
                 }
             });
+
+            var archFieldNames = _.map(_.filter(this.arch.children, function(item) {
+                return item.tag === 'field';
+            }), function(item) {
+                return item.attrs.name;
+            });
+            fieldNames = _.union(
+                fieldNames,
+                archFieldNames
+            );
+
             this.parse_colors();
             for (var i=0; i<this.colors.length; i++) {
                 fieldNames.push(this.colors[i].field);
