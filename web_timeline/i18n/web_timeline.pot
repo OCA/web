@@ -36,6 +36,13 @@ msgstr ""
 
 #. module: web_timeline
 #. openerp-web
+#: code:addons/web_timeline/static/src/js/timeline_renderer.js:288
+#, python-format
+msgid "Template \"timeline-item\" not present in timeline view definition."
+msgstr ""
+
+#. module: web_timeline
+#. openerp-web
 #: code:addons/web_timeline/static/src/js/timeline_view.js:32
 #, python-format
 msgid "Timeline"
@@ -43,7 +50,7 @@ msgstr ""
 
 #. module: web_timeline
 #. openerp-web
-#: code:addons/web_timeline/static/src/js/timeline_renderer.js:43
+#: code:addons/web_timeline/static/src/js/timeline_renderer.js:46
 #, python-format
 msgid "Timeline view has not defined 'date_start' attribute."
 msgstr ""
