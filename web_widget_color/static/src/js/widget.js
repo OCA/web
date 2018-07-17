@@ -15,13 +15,9 @@ odoo.define('web.web_widget_color', function(require) {
         },
 
         _renderEdit: function() {
-            var self = this;
-            // FIXME: For some reason needs 1ms delay for initilize jscolor...
-            _.delay(function(){
-                self.$input = self.$el.find('input');
-                jscolor.installByClassName('jscolor');
-            }, 1);
-        }
+            this.$input = this.$el.find('input');
+            this.jscolor = new jscolor(this.$input[0], {hash:true});
+        },
     });
     field_registry.add('color', FieldColor);
 
@@ -32,16 +28,17 @@ odoo.define('web.web_widget_color', function(require) {
             if (this.currentRow !== null) {
                 var record = this.state.data[this.currentRow];
                 var recordWidgets = this.allFieldWidgets[record.id];
-                _.each(recordWidgets, function (widget) {
+                canUnselect = !_.some(recordWidgets, function (widget) {
                     var $el = widget.getFocusableElement();
-                    if ($el.hasClass('jscolor') && $el.is(":focus")) {
-                        canUnselect = false;
-                        return false;
-                    }
+                    return ($el.hasClass('jscolor') && $el.is(":focus"));
                 });
             }
 
-            return canUnselect?this._super.apply(this, arguments):$.when();
+            if (canUnselect) {
+                return this._super.apply(this, arguments);
+            } else {
+                return $.Deferred().resolve();
+            }
         },
     });
 

@@ -8,7 +8,6 @@
                t-att-autofocus="widget.attrs.autofocus"
                t-att-placeholder="widget.attrs.placeholder"
                t-att-maxlength="widget.field.size"
-               t-attf-data-jscolor="{hash:true}"
                t-att-value="widget.value"
                class="jscolor o_input"
                t-if="widget.mode !== 'readonly'"/>
