@@ -2,7 +2,7 @@
 <odoo>
     <template id="assets_backend" name="web_groupby_expand assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
-            <link rel="stylesheet" href="/web_group_expand/static/src/css/web_group_expand.css"/>
+            <link rel="stylesheet" href="/web_group_expand/static/src/less/web_group_expand.less"/>
             <script type="text/javascript" src="/web_group_expand/static/src/js/web_group_expand.js"></script>
             <script type="text/javascript" src="/web_group_expand/static/src/js/web_group_expand_menu.js"></script>
         </xpath>
