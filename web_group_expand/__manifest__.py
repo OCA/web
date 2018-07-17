@@ -7,7 +7,7 @@
     "category": "Web",
     "author": "OpenERP SA, "
               "AvanzOSC, "
-              "Serv. Tecnol. Avanzados - Pedro M. Baeza, "
+              "Tecnativa, "
               "Odoo Community Association (OCA)",
     "website": "https://github.com/oca/web",
     'license': 'AGPL-3',
