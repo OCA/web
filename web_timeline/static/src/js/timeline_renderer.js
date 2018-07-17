@@ -4,6 +4,9 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
 var AbstractRenderer = require('web.AbstractRenderer');
 var core = require('web.core');
 var time = require('web.time');
+var utils = require('web.utils');
+var session = require('web.session');
+var QWeb = require('web.QWeb');
 
 var _t = core._t;
 
@@ -151,6 +154,16 @@ var CalendarRenderer = AbstractRenderer.extend({
             onUpdate: self.on_update,
             onRemove: self.on_remove,
         });
+        if (this.arch.children.length) {
+            this.qweb = new QWeb(session.debug, {_s: session.origin}, false);
+            var tmpl = utils.json_node_to_xml(
+                _.filter(this.arch.children, function(item) {
+                    return item.tag === 'templates';
+                })[0]
+            );
+            this.qweb.add_template(tmpl);
+        }
+
         this.timeline = new vis.Timeline(self.$timeline.empty().get(0));
         this.timeline.setOptions(this.options);
         if (self.mode && self['on_scale_' + self.mode + '_clicked']) {
@@ -264,9 +277,21 @@ var CalendarRenderer = AbstractRenderer.extend({
                 self.color = color.color;
             }
         });
+
+        var content = evt.__name != undefined ? evt.__name : evt.display_name;
+        if (this.arch.children.length) {
+            if(this.qweb.has_template('timeline-item')) {
+                content = this.qweb.render('timeline-item', {
+                    'record': evt
+                });
+            } else {
+                console.error(_t('Template "timeline-item" not present in timeline view definition.'));
+            }
+        }
+
         var r = {
             'start': date_start,
-            'content': evt.__name != undefined ? evt.__name : evt.display_name,
+            'content': content,
             'id': evt.id,
             'group': group,
             'evt': evt,
