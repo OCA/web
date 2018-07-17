@@ -110,7 +110,7 @@ odoo.define('web_drop_target', function(require) {
             );
             reader.readAsArrayBuffer(file);
         },
-        _add_overlay() {
+        _add_overlay: function() {
             if(!this._drop_overlay){
                 var o_content = jQuery('.o_content'),
                     view_manager = jQuery('.o_view_manager_content');
@@ -127,7 +127,7 @@ odoo.define('web_drop_target', function(require) {
                 o_content.append(this._drop_overlay);
             }
         },
-        _remove_overlay() {
+        _remove_overlay: function() {
             this._drop_overlay.remove();
             this._drop_overlay = null;
         }
