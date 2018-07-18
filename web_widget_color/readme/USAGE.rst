@@ -25,3 +25,19 @@ In the view declaration, put widget='color' attribute in the field tag::
         </form>
     </field>
     ...
+
+Widget Options::
+
+    - readonly_mode
+        - 'default' > Color Box + text
+        - 'color' > Only Color Box
+        - 'text' > Only Text
+    ...
+    <field name="arch" type="xml">
+        <tree string="View name">
+            ...
+            <field name="color" widget="color" options="{'readonly_mode': 'color'}"/>
+            ...
+        </tree>
+    </field>
+    ...
