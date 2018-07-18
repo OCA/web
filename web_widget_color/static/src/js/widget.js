@@ -21,7 +21,7 @@ odoo.define('web.web_widget_color', function(require) {
     });
     field_registry.add('color', FieldColor);
 
-    // Deny unselect row when a field color has the focus
+    // Deny unselect row if jscolor actived
     ListRenderer.include({
         unselectRow: function () {
             var canUnselect = true;
@@ -30,7 +30,7 @@ odoo.define('web.web_widget_color', function(require) {
                 var recordWidgets = this.allFieldWidgets[record.id];
                 canUnselect = !_.some(recordWidgets, function (widget) {
                     var $el = widget.getFocusableElement();
-                    return ($el.hasClass('jscolor') && $el.is(":focus"));
+                    return ($el instanceof jQuery && $el.hasClass('jscolor-active'));
                 });
             }
 
