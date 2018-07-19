@@ -27,20 +27,18 @@ odoo.define('web_drop_target', function(require) {
 
         _on_drop: function(e) {
             var drop_items = this._get_drop_items(e);
+            e.preventDefault();
+            this._remove_overlay();
             if(!drop_items) {
                 return;
             }
-            this._remove_overlay();
-            e.preventDefault();
             this._handle_drop_items(drop_items, e)
         },
 
         _on_dragenter: function(e) {
-            if(this._get_drop_items(e)) {
-                e.preventDefault();
-                this._add_overlay();
-                return false;
-            }
+            e.preventDefault();
+            this._add_overlay();
+            return false;
         },
 
         _on_dragleave: function(e) {
@@ -52,7 +50,7 @@ odoo.define('web_drop_target', function(require) {
             var self = this,
                 dataTransfer = e.originalEvent.dataTransfer,
                 drop_items = [];
-            _.each(dataTransfer.items, function(item) {
+            _.each(dataTransfer.files, function(item) {
                 if(
                     _.contains(self._drop_allowed_types, item.type) ||
                     _.isEmpty(self._drop_allowed_types)
@@ -107,7 +105,7 @@ odoo.define('web_drop_target', function(require) {
             item, e, res_model, res_id, extra_data
         ) {
             var self = this;
-            var file = item.getAsFile();
+            var file = item;
             var reader = new FileReader();
             reader.onloadend = self.proxy(
                 _.partial(self._create_attachment, file, reader, e, res_model, res_id, extra_data)
@@ -134,9 +132,11 @@ odoo.define('web_drop_target', function(require) {
         },
         
         _remove_overlay: function() {
-            this._drop_overlay.remove();
-            this._drop_overlay = null;
-        },
+            if (this._drop_overlay) {
+                this._drop_overlay.remove();
+                this._drop_overlay = null;
+            }
+        }
     };
 
     // and here we apply the mixin to form views, allowing any files and
