@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 Onestein
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).-->
+<odoo>
+
+    <record id="group_export_data" model="res.groups">
+        <field name="name">Export Data</field>
+    </record>
+
+</odoo>
