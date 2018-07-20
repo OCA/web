@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 
 {
-    "name": 'web_action_conditionable',
-    "version": "8.0.0.1.0",
+    "name": 'Web Action Conditionable',
+    "version": "9.0.1.0.0",
     "depends": [
-        'base',
         'web',
     ],
-    'data': ['views/view.xml'],
+    'data': [
+        'views/view.xml'
+    ],
     "author": "Cristian Salamea,Odoo Community Association (OCA)",
-    'installable': False,
+    "license": "AGPL-3",
 }
