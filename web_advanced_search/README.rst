@@ -1,6 +1,6 @@
-.. image:: https://img.shields.io/badge/license-LGPL--3-blue.svg
-   :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
-   :alt: License: LGPL-3
+.. image:: https://img.shields.io/badge/license-AGPL--3-blue.svg
+   :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
+   :alt: License: AGPL-3
 
 =========================================
 Search for x2x records in advanced search
@@ -51,7 +51,6 @@ Contributors
 * Vicent Cubells <vicent.cubells@tecnativa.com>
 * Jairo Llopis <jairo.llopis@tecnativa.com>
 * Rami Alwafaie <rami.alwafaie@initos.com>
-* Jose Mª Bernet <josemaria.bernet@guadaltech.es>
 
 Maintainer
 ----------
