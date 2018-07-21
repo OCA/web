@@ -21,6 +21,7 @@ addon | version | summary
 [help_online](help_online/) | 9.0.1.0.0 | Help Online
 [support_branding](support_branding/) | 9.0.2.0.0 | Adds your branding to an Odoo instance
 [web_access_rule_buttons](web_access_rule_buttons/) | 9.0.1.0.0 | Disable Edit button if access rules prevent this action
+[web_action_conditionable](web_action_conditionable/) | 9.0.1.0.0 | Web Action Conditionable
 [web_advanced_search_x2x](web_advanced_search_x2x/) | 9.0.1.0.1 | Use a search widget in advanced search for x2x fields
 [web_dashboard_tile](web_dashboard_tile/) | 9.0.1.1.0 | Add Tiles to Dashboard
 [web_decimal_numpad_dot](web_decimal_numpad_dot/) | 9.0.1.0.0 | Allows using numpad dot to enter period decimal separator
@@ -67,7 +68,6 @@ Unported addons
 addon | version | summary
 --- | --- | ---
 [help_popup](help_popup/) | 8.0.0.5.0 (unported) | Help Popup
-[web_action_conditionable](web_action_conditionable/) | 8.0.0.1.0 (unported) | web_action_conditionable
 [web_ckeditor4](web_ckeditor4/) | 8.0.1.0.0 (unported) | Provides a widget for editing HTML fields using CKEditor 4.x
 [web_confirm_window_close](web_confirm_window_close/) | 7.0.1 (unported) | Check for unsaved data when closing browser window
 [web_context_in_colors](web_context_in_colors/) | 8.0.1.1.0 (unported) | Use the context in a tree view's colors and fonts attribute
