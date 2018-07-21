@@ -11,6 +11,7 @@ setuptools.setup(
         'odoo9-addon-help_online',
         'odoo9-addon-support_branding',
         'odoo9-addon-web_access_rule_buttons',
+        'odoo9-addon-web_action_conditionable',
         'odoo9-addon-web_advanced_search_x2x',
         'odoo9-addon-web_dashboard_tile',
         'odoo9-addon-web_decimal_numpad_dot',
