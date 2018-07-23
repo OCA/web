@@ -1,0 +1,21 @@
+<templates>
+    <div t-name="SearchView.DateInterval" class="btn-group o_date_interval o_dropdown">
+        <button class="o_dropdown_toggler_btn btn btn-sm dropdown-toggle" t-att-data-toggle="widget.options.dropdown and 'dropdown' or ''">
+            <span class="fa fa-calendar"></span>
+            <t t-esc="widget.string" />
+            <span t-if="widget.options.dropdown" class="caret" />
+            <t t-else="" t-att-data-date_interval="widget.field">
+                <t t-foreach="widget.get_intervals()" t-as="interval">
+                    <a t-att-data-id="interval._id" t-att-data-start="interval.start" t-att-data-stop="interval.stop" href="#"><t t-esc="interval.name" /></a>
+                </t>
+            </t>
+        </button>
+        <ul t-if="widget.options.dropdown" class="dropdown-menu o_filters_menu" role="menu" t-att-data-date_interval="widget.field">
+            <t t-foreach="widget.get_intervals()" t-as="interval">
+                <li t-att-data-id="interval._id" t-att-data-start="interval.start" t-att-data-stop="interval.stop">
+                    <a href="#"><t t-esc="interval.name" /></a>
+                </li>
+            </t>
+        </ul>
+    </div>
+</templates>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_users_search" model="ir.ui.view">
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_search" />
+        <field name="arch" type="xml">
+            <xpath expr="." position="inside">
+                <field name="login_date" widget="date_interval" options="{'type': 'iso_week', 'dropdown': 0, 'exclusive': 1, 'cycle': 1}" />
+                <field name="create_date" widget="date_interval" options="{'type': 'iso_week', 'lookbehind': 104, 'lookahead': 1}" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

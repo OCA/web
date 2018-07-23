@@ -1,0 +1,8 @@
+div.o_date_interval > button > a
+{
+    color: #4c4c4c;
+}
+div.o_date_interval > button > a.selected
+{
+    font-weight: bold;
+}

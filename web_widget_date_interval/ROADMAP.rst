@@ -1,0 +1,4 @@
+- migrate the work done in https://github.com/OCA/web/pull/575 to 10 for the form view part
+- support tree and kanban views
+- support much more interval types (days, months, quarters...)
+- invent some textual way to fill in some interval (-1w+3w for now - one week to now + three weeks)
