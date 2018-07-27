@@ -7,6 +7,8 @@ var time = require('web.time');
 var utils = require('web.utils');
 var session = require('web.session');
 var QWeb = require('web.QWeb');
+var field_utils = require('web.field_utils');
+
 
 var _t = core._t;
 
@@ -282,7 +284,8 @@ var CalendarRenderer = AbstractRenderer.extend({
         if (this.arch.children.length) {
             if(this.qweb.has_template('timeline-item')) {
                 content = this.qweb.render('timeline-item', {
-                    'record': evt
+                    'record': evt,
+                    'field_utils': field_utils
                 });
             } else {
                 console.error(_t('Template "timeline-item" not present in timeline view definition.'));

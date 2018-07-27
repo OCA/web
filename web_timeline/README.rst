@@ -39,6 +39,13 @@ the possible attributes for the tag:
   view.
 * colors (optional): it allows to set certain specific colors if the expressed
   condition (JS syntax) is met.
+  
+Optionally you can declare a custom template, which will be used to render the 
+timeline items. You have to name the template 'timeline-item'. 
+These are the variables available in template rendering:
+
+* ``record``: to access the fields values selected in the timeline definition.
+* ``field_utils``: used to format and parse values (see available functions in ``web.field_utils``).
 
 You also need to declare the view in an action window of the involved model.
 
