@@ -15,8 +15,9 @@ odoo.define('web_auto_refresh', function (require) {
             this.known_bus_events = [];
         },
         show_application: function() {
-            this._super();
+            let res = this._super();
             this.start_polling();
+            return res;
         },
         on_logout: function() {
             bus.off('notification', this, this.bus_notification);
