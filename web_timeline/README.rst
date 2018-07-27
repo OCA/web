@@ -59,6 +59,14 @@ Example:
                           event_open_popup="true"
                           zoomKey="ctrlKey"
                           colors="#ec7063:user_id == false;#2ecb71:kanban_state=='done';">
+                    <field name="user_id"/>
+                    <templates>
+                        <div t-name="timeline-item">
+                            <div t-esc="record.display_name"/>
+                            Assigned to:
+                            <span t-esc="record.user_id[1]"/>
+                        </div>
+                    </templates>
                 </timeline>
             </field>
         </record>
@@ -135,6 +143,7 @@ Contributors
 * Pedro M. Baeza <pedro.baeza@tecnativa.com>
 * Leonardo Donelli <donelli@webmonks.it>
 * Adrien Didenot <adrien.didenot@horanet.com>
+* Dennis Sluijk <d.sluijk@onestein.nl>
 
 Do not contact contributors directly about support or help with technical issues.
 
