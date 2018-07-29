@@ -3,32 +3,40 @@
 
 odoo.define("web_listview_invert_selection", function (require) {
     "use strict";
-    var ListView = require("web.ListView");
+    var core = require('web.core');
+    var _t = core._t;
+    var ListRenderer = require('web.ListRenderer');
 
-    ListView.include(/** @lends instance.web.ListView# */{
+    ListRenderer.include(/** @lends instance.web.ListView# */{
 
-        load_list: function (data, grouped) {
-            var self = this;
-            var result = this._super.apply(this, arguments);
+        events: _.extend({}, ListRenderer.prototype.events, {
+            'click .o_invert_selection': '_onInvertSelection',
+        }),
 
-            this.$("span.o_invert_selection").click(function () {
-                var checked = self.$("tbody .o_list_record_selector input:checked");
-                var unchecked = self.$("tbody .o_list_record_selector input:not(:checked)");
-                checked.prop("checked", false);
-                unchecked.prop("checked", true);
+        _onInvertSelection: function (event) {
+            event.stopPropagation();
+            var checked = self.$("tbody .o_list_record_selector input:checked");
+            var unchecked = self.$("tbody .o_list_record_selector input:not(:checked)");
+            checked.prop("checked", false);
+            unchecked.prop("checked", true);
+            this._updateSelection();
+        },
 
-                var selected = [];
-                checked.each(function () {
-                    selected.push($(this).attr("name"));
-                });
-                if (selected.length === 0) {
-                    self.$("thead .o_list_record_selector input").prop("checked", true);
-                } else {
-                    self.$("thead .o_list_record_selector input").prop("checked", false);
-                }
-            });
+        _renderHeader: function (isGrouped) {
+            var $header = this._super.apply(this, arguments);
+            if (this.hasSelectors) {
+                $header.find('th.o_list_record_selector').prepend(this._renderInvertSelection('span'));
+            }
+            return $header;
+        },
 
-            return result;
-        }
+        _renderInvertSelection: function (tag) {
+            var $icon = $('<button>', {class: 'fa fa-refresh o_invert_selection_btn', name: 'Invert Selection',
+                'aria-label': _t('Invert Selection')});
+            return $('<' + tag + '>')
+                    .addClass('o_invert_selection')
+                    .append($icon);
+        },
+
     });
 });
