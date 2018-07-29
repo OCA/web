@@ -5,10 +5,10 @@
 {
     'name': 'List Invert Selection',
     'summary': 'Invert current selection of list of records',
-    'version': '10.0.1.0.0',
+    'version': '11.0.1.0.0',
     'category': 'Web',
     'author': 'Onestein,Odoo Community Association (OCA)',
-    'website': 'http://www.onestein.eu',
+    'website': 'https://github.com/OCA/web',
     'license': 'AGPL-3',
     'depends': [
         'web',
@@ -16,6 +16,5 @@
     'data': [
         'templates/assets.xml'
     ],
-    'qweb': ['static/src/xml/web_listview_invert_selection.xml'],
     'installable': True,
 }
