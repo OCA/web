@@ -12,6 +12,8 @@
               href="/web_environment_ribbon/static/src/css/ribbon.css"/>
         <script type="text/javascript"
                 src="/web_environment_ribbon/static/src/js/ribbon.js"/>
+        <script type="text/javascript"
+                src="/web_environment_ribbon/static/src/js/ribbon_show.js"/>
     </xpath>
 </template>
 

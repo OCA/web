@@ -10,7 +10,6 @@ odoo.define('web_environment_ribbon.ribbon', function(require) {
 
     var $ = require('jquery');
     var rpc = require('web.rpc');
-    var core = require('web.core');
 
     // Code from: http://jsfiddle.net/WK_of_Angmar/xgA5C/
     function validStrColour(strToTest) {
@@ -26,7 +25,7 @@ odoo.define('web_environment_ribbon.ribbon', function(require) {
         return image.style.color !== "rgb(255, 255, 255)";
     }
 
-    core.bus.on('web_client_ready', null, function () {
+    function showRibbon() {
         var ribbon = $('<div class="test-ribbon"/>');
         $('body').append(ribbon);
         ribbon.hide();
@@ -51,5 +50,8 @@ odoo.define('web_environment_ribbon.ribbon', function(require) {
                 }
             }
         );
-    });
+    }
+
+return showRibbon;
+
 }); // odoo.define
