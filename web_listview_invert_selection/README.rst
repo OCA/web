@@ -46,6 +46,7 @@ Contributors
 ------------
 
 * Antonio Esposito <a.esposito@onestein.nl>
+* Meet Dholakia <meetcomputer009@gmail.com>
 
 Maintainer
 ----------
