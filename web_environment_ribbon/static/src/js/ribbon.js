@@ -30,7 +30,7 @@ odoo.define('web_environment_ribbon.ribbon', function(require) {
         $('body').append(ribbon);
         ribbon.hide();
         // Get ribbon data from backend
-        rpc.query({
+        return rpc.query({
             model: 'web.environment.ribbon.backend',
             method: 'get_environment_ribbon',
         }).then(
