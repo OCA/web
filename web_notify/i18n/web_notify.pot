@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: web_notify
-#: code:addons/web_notify/models/res_users.py:27
+#: code:addons/web_notify/models/res_users.py:31
 #, python-format
 msgid "Information"
 msgstr ""
@@ -30,12 +30,26 @@ msgid "Notify warning channel name"
 msgstr ""
 
 #. module: web_notify
+#. openerp-web
+#: code:addons/web_notify/static/src/xml/notification.xml:19
+#, python-format
+msgid "Open"
+msgstr ""
+
+#. module: web_notify
+#. openerp-web
+#: code:addons/web_notify/static/src/xml/notification.xml:7
+#, python-format
+msgid "Reload current view"
+msgstr ""
+
+#. module: web_notify
 #: model:ir.model,name:web_notify.model_res_users
 msgid "Users"
 msgstr ""
 
 #. module: web_notify
-#: code:addons/web_notify/models/res_users.py:33
+#: code:addons/web_notify/models/res_users.py:42
 #, python-format
 msgid "Warning"
 msgstr ""
