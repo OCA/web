@@ -5,14 +5,15 @@ odoo.define('web_responsive', function(require) {
     'use strict';
 
     var Menu = require('web.Menu');
-    var Class = require('web.Class');
     var rpc = require('web.rpc');
     var SearchView = require('web.SearchView');
     var core = require('web.core');
     var config = require('web.config');
+    var session = require('web.session');
     var ViewManager = require('web.ViewManager');
     var RelationalFields = require('web.relational_fields');
     var FormRenderer = require('web.FormRenderer');
+    var Widget = require('web.Widget');
 
     var qweb = core.qweb;
 
@@ -30,7 +31,7 @@ odoo.define('web_responsive', function(require) {
             this._super(id);
             if (allowOpen) {
                 return;
-            };
+            }
             var $clicked_menu = this.$secondary_menus.find('a[data-menu=' + id + ']');
             $clicked_menu.parents('.oe_secondary_submenu').css('display', '');
         }
@@ -64,7 +65,7 @@ odoo.define('web_responsive', function(require) {
         }
     });
 
-    var AppDrawer = Class.extend({
+    var AppDrawer = Widget.extend({
 
         /* Provides all features inside of the application drawer navigation.
 
@@ -102,7 +103,7 @@ odoo.define('web_responsive', function(require) {
         searching: false,
 
         init: function() {
-
+            this._super.apply(this, arguments);
             this.directionCodes = {
                 'left': this.LEFT,
                 'right': this.RIGHT,
@@ -133,7 +134,7 @@ odoo.define('web_responsive', function(require) {
             this.$el.find('.drawer-search-close').hide().click(
                 $.proxy(this.closeSearchMenus, this)
             );
-
+            this.filter_timeout = $.Deferred();
             core.bus.on('resize', this, this.handleWindowResize);
             core.bus.on('keydown', this, this.handleKeyDown);
             core.bus.on('keyup', this, this.redirectKeyPresses);
@@ -199,29 +200,23 @@ odoo.define('web_responsive', function(require) {
             }
             var directionCode = $.hotkeys.specialKeys[e.keyCode.toString()];
             if (Object.keys(this.directionCodes).indexOf(directionCode) !== -1) {
-                var $link = this.findAdjacentAppLink(
-                    this.$el.find('a:first, a:focus').last(),
-                    this.directionCodes[directionCode]
-                );
-                this.selectAppLink($link);
-            } else if ($.hotkeys.specialKeys[e.keyCode.toString()] === 'esc') {
-                this.handleClickZones();
+                var $link = false;
                 if (this.searching) {
                     var $collection = this.$el.find('#appDrawerMenuSearch a');
-                    var $link = this.findAdjacentLink(
+                    $link = this.findAdjacentLink(
                         this.$el.find('#appDrawerMenuSearch a:first, #appDrawerMenuSearch a.web-responsive-focus').last(),
                         this.directionCodes[directionCode],
                         $collection,
                         true
                     );
                 } else {
-                    var $link = this.findAdjacentLink(
+                    $link = this.findAdjacentLink(
                         this.$el.find('#appDrawerApps a:first, #appDrawerApps a.web-responsive-focus').last(),
                         this.directionCodes[directionCode]
                     );
                 }
                 this.selectLink($link);
-            } else if ($.hotkeys.specialKeys[e.keyCode.toString()] == 'esc') {
+            } else if ($.hotkeys.specialKeys[e.keyCode.toString()] === 'esc') {
                 // We either back out of the search, or close the app drawer.
                 if (this.searching) {
                     this.closeSearchMenus();
@@ -240,7 +235,6 @@ odoo.define('web_responsive', function(require) {
          * @param e The key event that was triggered by ``core.bus``.
          */
         redirectKeyPresses: function(e) {
-
             if ( !this.isOpen ) {
                 // Drawer isn't open; Ignore.
                 return;
@@ -285,9 +279,8 @@ odoo.define('web_responsive', function(require) {
          * @listens ``drawer.opened`` and sends to onDrawerOpen
          */
         onDrawerClose: function() {
-            this.closeSearchMenus();
-            this.$searchAction.hide();
             core.bus.trigger('drawer.closed');
+            this.closeSearchMenus();
             this.$el.one('drawer.opened', $.proxy(this.onDrawerOpen, this));
             this.isOpen = false;
             // Remove inline style inserted by drawer.js
@@ -295,15 +288,17 @@ odoo.define('web_responsive', function(require) {
         },
 
         /* Finds app links and register event handlers
-         * @fires ``drawer.opened`` to the ``core.bus``
-         * @listens ``drawer.closed`` and sends to :meth:``onDrawerClose``
-         */
-        onDrawerOpen: function() {
+        * @fires ``drawer.opened`` to the ``core.bus``
+        * @listens ``drawer.closed`` and sends to :meth:``onDrawerClose``
+        */
+       onDrawerOpen: function() {
+            this.closeSearchMenus();
             this.$appLinks = $('.app-drawer-icon-app').parent();
             this.selectLink($(this.$appLinks[0]));
             this.$el.one('drawer.closed', $.proxy(this.onDrawerClose, this));
             core.bus.trigger('drawer.opened');
             this.isOpen = true;
+            this.$searchInput.val("");
         },
 
         // Selects a link visibly & deselects others.
@@ -314,25 +309,39 @@ odoo.define('web_responsive', function(require) {
             }
         },
 
-        /* Searches for menus by name, then triggers showFoundMenus
-         * @param query str to search
-         * @return jQuery obj
+        /**
+         * Search matching menus immediately
          */
-        searchMenus: function() {
-            this.$searchInput = $('#appDrawerSearchInput').focus();
-            var domain = [['name', 'ilike', this.$searchInput.val()],
-                          ['action', '!=', false]];
+        _searchMenus: function () {
             rpc.query({
                 model: 'ir.ui.menu',
                 method: 'search_read',
-                args: [{
+                kwargs: {
                     fields: ['action', 'display_name', 'id'],
-                    domain: domain
+                    domain: [
+                        ['name', 'ilike', this.$searchInput.val()],
+                        ['action', '!=', false],
+                    ],
+                    context: session.user_context,
+                },
+            }).then(this.showFoundMenus.bind(this));
+        },
 
-                }]
-            }).then(
-                $.proxy(this.showFoundMenus, this)
+        /**
+         * Queue the next menu search for the search input
+         */
+        searchMenus: function() {
+            // Stop current search, if any
+            this.filter_timeout.reject();
+            this.filter_timeout = $.Deferred();
+            // Schedule a new search
+            this.filter_timeout.done(this._searchMenus.bind(this));
+            setTimeout(
+                this.filter_timeout.resolve.bind(this.filter_timeout),
+                200
             );
+            // Focus search input
+            this.$searchInput = $('#appDrawerSearchInput').focus();
         },
 
         /* Display the menus that are provided as input.
@@ -372,7 +381,6 @@ odoo.define('web_responsive', function(require) {
             this.$el.find('.drawer-search-open').show();
             this.$searchResultsContainer.closest('#appDrawerMenuSearch').hide();
             this.$searchAction.show();
-            $('#appDrawerSearchInput').val('');
         },
 
         /* Returns the link adjacent to $link in provided direction.
@@ -393,12 +401,12 @@ odoo.define('web_responsive', function(require) {
          */
         findAdjacentLink: function($link, direction, $objs, restrictHorizontal) {
 
-            if ($objs === undefined) {
+            if (_.isUndefined($objs)) {
                 $objs = this.$appLinks;
             }
 
             var obj = [];
-            var $rows = (restrictHorizontal) ? $objs : this.getRowObjs($link, this.$appLinks);
+            var $rows = restrictHorizontal ? $objs : this.getRowObjs($link, this.$appLinks);
 
             switch (direction) {
                 case this.LEFT:
@@ -516,11 +524,6 @@ odoo.define('web_responsive', function(require) {
 
     return {
         'AppDrawer': AppDrawer,
-        'SearchView': SearchView,
-        'Menu': Menu,
-        'ViewManager': ViewManager,
-        'FieldStatus': RelationalFields.FieldStatus,
-        'FormRenderer': FormRenderer,
     };
 
 });
