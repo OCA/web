@@ -13,10 +13,10 @@ this module.
 * Sticky header and footer in list view only works on certain browsers:
   https://caniuse.com/#search=sticky (note that the used feature is in
   `thead`).
-* The ``AppDrawer`` JavaScript object currently extends ``Class``.
-  We should extend ``Widget`` instead.
 * On Android (FireFox) - clicking the search icon does not
   focus the search input.
 * On Android (FireFox & Chrome) - clicking the search query input will
   show the on screen keyboard for a split second, but the App Drawer
   immediately closes and the keyboard closes with it.
+* Filter menu items completely on client-side, to make it smoother and allow
+  users to filter on complete paths of menus and not only on the last item.
