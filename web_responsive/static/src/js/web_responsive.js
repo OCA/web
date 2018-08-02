@@ -243,8 +243,11 @@ odoo.define('web_responsive', function(require) {
             // Trigger navigation to pseudo-focused link
             // & fake a click (in case of anchor link).
             if (e.key === 'Enter') {
-                window.location.href = $('.web-responsive-focus').attr('href');
-                this.handleClickZones();
+                var href = $('.web-responsive-focus').attr('href');
+                if (!_.isUndefined(href)) {
+                    window.location.href = href;
+                    this.handleClickZones();
+                }
                 return;
             }
 
