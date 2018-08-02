@@ -10,6 +10,10 @@ odoo.define('web_responsive', function(require) {
     var core = require('web.core');
     var config = require('web.config');
     var ViewManager = require('web.ViewManager');
+    var RelationalFields = require('web.relational_fields');
+    var FormRenderer = require('web.FormRenderer');
+
+    var qweb = core.qweb;
 
     Menu.include({
 
@@ -306,11 +310,53 @@ odoo.define('web_responsive', function(require) {
         },
     });
 
+    // FieldStatus (responsive fold)
+    RelationalFields.FieldStatus.include({
+        _renderQWebValues: function () {
+            return {
+                selections: this.status_information, // Needed to preserve order
+                has_folded: _.filter(this.status_information, {'selected': false}).length > 0,
+                clickable: !!this.attrs.clickable,
+            };
+        },
+
+        _render: function () {
+            // FIXME: Odoo framework creates view values & render qweb in the
+            //     same method. This cause a "double render" process to use
+            //     new custom values.
+            this._super.apply(this, arguments);
+            this.$el.html(qweb.render("FieldStatus.content", this._renderQWebValues()));
+        }
+    });
+
+    // Responsive view "action" buttons
+    FormRenderer.include({
+        _renderHeaderButtons: function (node) {
+            var self = this;
+            var $buttons = this._super(node);
+
+            var $container = $(qweb.render('web_responsive.MenuStatusbarButtons'));
+            $container.find('.o_statusbar_buttons_base').append($buttons);
+
+            var $dropdownMenu = $container.find('.dropdown-menu');
+            _.each(node.children, function (child) {
+                if (child.tag === 'button') {
+                    $dropdownMenu.append($('<LI>').append(self._renderHeaderButton(child)));
+                }
+            });
+
+            return $container;
+        }
+    });
+
+
     return {
         'AppDrawer': AppDrawer,
         'SearchView': SearchView,
         'Menu': Menu,
         'ViewManager': ViewManager,
+        'FieldStatus': RelationalFields.FieldStatus,
+        'FormRenderer': FormRenderer,
     };
 
 });
