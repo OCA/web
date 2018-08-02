@@ -34,8 +34,10 @@ msgid "Chatter Position"
 msgstr ""
 
 #. module: web_responsive
-#: model:ir.model,name:web_responsive.model_ir_http
-msgid "HTTP routing"
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/form_view.xml:35
+#, python-format
+msgid "More"
 msgstr ""
 
 #. module: web_responsive
@@ -51,6 +53,13 @@ msgstr ""
 #. module: web_responsive
 #: selection:res.users,chatter_position:0
 msgid "Sided"
+msgstr ""
+
+#. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/form_view.xml:54
+#, python-format
+msgid "Task"
 msgstr ""
 
 #. module: web_responsive
