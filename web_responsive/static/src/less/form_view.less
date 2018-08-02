@@ -92,6 +92,39 @@
             position: sticky;
             top: 0;
             z-index: 1;
+
+            .o-status-more > li > button {
+                border: 0;
+            }
+
+            .o_statusbar_buttons_container {
+                .o_statusbar_buttons_dropdown {
+                    height: 100%;
+
+                    >#dropdownMenuHeader {
+                        height: 100%;
+                        border-top: 0;
+                        border-bottom: 0;
+                        border-radius: 0;
+                    }
+                    >.dropdown-menu > li > button {
+                        width: 100%;
+                        border-radius: 0;
+                        border: 0;
+                    }
+                }
+
+                .o_statusbar_buttons_base > .o_statusbar_buttons {
+                    .o-flex-flow(row, wrap);
+                    >.btn {
+                        @o-statusbar-buttons-vmargin: 4px;
+                        min-height: @odoo-statusbar-height - 2 * @o-statusbar-buttons-vmargin;
+                        margin: @o-statusbar-buttons-vmargin 3px @o-statusbar-buttons-vmargin 0;
+                        padding-top: 2px;
+                        padding-bottom: 2px;
+                    }
+                }
+            }
         }
     }
 
