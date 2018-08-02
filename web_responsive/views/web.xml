@@ -96,7 +96,7 @@
         </xpath>
 
         <xpath expr="//div[hasclass('o_main')]" position="attributes">
-            <attribute name="t-attf-class">o_main o_chatter_position_{{ json.loads(session_info)['chatter_position'] }}</attribute>
+            <attribute name="t-attf-class">o_main o_chatter_position_{{ request.env.user.chatter_position or 'normal' }}</attribute>
         </xpath>
 
     </template>

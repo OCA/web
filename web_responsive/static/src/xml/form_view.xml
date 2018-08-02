@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     Copyright 2017 LasLabs Inc.
+    Copyright 2018 Alexandre Díaz
     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 -->
 
@@ -10,6 +11,54 @@
         <t t-jquery="button[accesskey='a']" t-operation="attributes">
             <attribute name="accesskey">e</attribute>
         </t>
+    </t>
+
+    <t t-extend="FieldStatus.content.button">
+        <t t-jquery="button" t-operation="replace">
+            <button type="button" t-att-data-value="i.id" t-att-disabled="disabled ? 'disabled' : undefined"
+                t-attf-class="btn btn-sm o_arrow_button btn-#{i.selected ? 'primary' : 'default'}#{disabled ? ' disabled' : ''} #{button_css or ''}">
+                <t t-esc="i.display_name"/>
+            </button>
+        </t>
+    </t>
+
+
+    <t t-extend="FieldStatus.content">
+        <t t-jquery="[t-if='selection_folded.length']" t-operation="replace">
+            <t t-if="selections &amp;&amp; has_folded">
+                <ul class="dropdown-menu o-status-more hidden-lg hidden-md" role="menu">
+                    <t t-set="button_css" t-value="'hidden-lg hidden-md'" />
+                    <li t-foreach="selections" t-as="i">
+                        <t t-if="!i.selected" t-call="FieldStatus.content.button"/>
+                    </li>
+                </ul>
+                <button type="button" class="btn btn-sm o_arrow_button btn-default dropdown-toggle hidden-lg hidden-md" data-toggle="dropdown" aria-expanded="false">More <span class="caret"/></button>
+            </t>
+        </t>
+        <t t-jquery="[t-foreach='selection_unfolded.reverse()']" t-operation="replace">
+            <t t-if="selections">
+                <t t-foreach="selections.reverse()" t-as="i">
+                    <t t-set="button_css" t-value="i.selected?'':'hidden-xs hidden-sm'" />
+                    <t t-call="FieldStatus.content.button"/>
+                </t>
+            </t>
+        </t>
+    </t>
+
+    <t t-name="web_responsive.MenuStatusbarButtons">
+        <div class="o_statusbar_buttons_container">
+            <div class="o_statusbar_buttons_base hidden-xs hidden-sm">
+                <!-- Normal Buttons Zone -->
+            </div>
+            <div class="dropdown o_statusbar_buttons_dropdown hidden-lg hidden-md">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuHeader" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Task
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuHeader">
+                </ul>
+            </div>
+        </div>
     </t>
 
 </templates>
