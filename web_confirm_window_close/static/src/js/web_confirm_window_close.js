@@ -10,7 +10,7 @@ odoo.define('web_confirm_window_close', function (require) {
             if ($('html').find('.oe_form_dirty').length) {
                 e.preventDefault();
             }
-            return 'Your have unsaved data. Are you sure you want to close window?';
+            return "";
         },
 
         start: function() {
