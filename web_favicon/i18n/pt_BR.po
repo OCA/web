@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-22 08:26+0000\n"
-"PO-Revision-Date: 2018-08-03 13:14+0000\n"
+"PO-Revision-Date: 2018-08-04 13:35+0000\n"
 "Last-Translator: Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
 "23907/pt_BR/)\n"
@@ -48,7 +48,7 @@ msgstr "Defina o tipo mímico do seu arquivo."
 #. module: web_favicon
 #: model:ir.ui.view,arch_db:web_favicon.view_company_form
 msgid "Web Favicon"
-msgstr "Web Favicon"
+msgstr "Favicon Web"
 
 #. module: web_favicon
 #: selection:res.company,favicon_backend_mimetype:0
