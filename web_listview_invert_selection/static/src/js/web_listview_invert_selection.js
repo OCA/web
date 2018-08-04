@@ -31,8 +31,8 @@ odoo.define("web_listview_invert_selection", function (require) {
         },
 
         _renderInvertSelection: function (tag) {
-            var $icon = $('<button>', {class: 'fa fa-refresh o_invert_selection_btn', name: 'Invert Selection',
-                'aria-label': _t('Invert Selection')});
+            var $icon = $('<i>', {class: 'fa fa-refresh o_invert_selection_btn', name: 'Invert Selection',
+                'aria-label': _t('Invert Selection'), 'title': _t('Invert Selection')});
             return $('<' + tag + '>')
                     .addClass('o_invert_selection')
                     .append($icon);
