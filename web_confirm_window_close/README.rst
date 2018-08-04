@@ -42,6 +42,7 @@ Images
 Contributors
 ------------
 
+* Devang Pipaliya <devang@dreambits.in>
 * Stefan Rijnhart <stefan@opener.amsterdam>
 
 Maintainer
