@@ -1,0 +1,70 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_responsive
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: José Luis Sandoval Alaguna <alagunasalahaddin@live.com>\n"
+"Language-Team: Turkish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"PO-Revision-Date: 2018-08-08 12:04+0300\n"
+"Language: tr\n"
+
+#. module: web_responsive
+#: model:ir.ui.view,arch_db:web_responsive.webclient_bootstrap
+msgid "<span class=\"sr-only\">Toggle App Drawer</span>"
+msgstr "<span class=\"sr-only\">Uygulama Çekmecesini Değiştir</span>""
+
+#. module: web_responsive
+#: model:ir.ui.view,arch_db:web_responsive.webclient_bootstrap
+msgid "<span class=\"sr-only\">Toggle Navigation</span>"
+msgstr "<span class=\"sr-only\">Gezinmeyi Değiştir</span>"
+
+#. module: web_responsive
+#: model:ir.ui.view,arch_db:web_responsive.menu
+msgid "Apps"
+msgstr "Uygulamalar"
+
+#. module: web_responsive
+#: model:ir.model.fields,field_description:web_responsive.field_res_users_chatter_position
+msgid "Chatter Position"
+msgstr "Sohbetçi pozisyonu"
+
+#. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/form_view.xml:35
+#, python-format
+msgid "More"
+msgstr "Daha"
+
+#. module: web_responsive
+#: model:ir.ui.view,arch_db:web_responsive.menu
+msgid "More <b class=\"caret\"/>"
+msgstr "Daha <b class=\"caret\"/>"
+
+#. module: web_responsive
+#: selection:res.users,chatter_position:0
+msgid "Normal"
+msgstr "Normal"
+
+#. module: web_responsive
+#: selection:res.users,chatter_position:0
+msgid "Sided"
+msgstr "Taraflı"
+
+#. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/form_view.xml:54
+#, python-format
+msgid "Task"
+msgstr "Görev"
+
+#. module: web_responsive
+#: model:ir.model,name:web_responsive.model_res_users
+msgid "Users"
+msgstr "Kullanıcılar"
