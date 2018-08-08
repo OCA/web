@@ -67,6 +67,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
       // Wipe the content if something still exists
       this.by_x_axis = {};
       this.by_y_axis = {};
+      this.attrs.limit = Infinity;
       _.each(records, function(record) {
         var x = record.data[self.field_x_axis],
             y = record.data[self.field_y_axis];
