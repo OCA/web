@@ -47,7 +47,7 @@ var wrapping_dict = py.type('wrapping_dict', null, {
         return this.__getitem__(py.str.fromJSON(key));
     },
     __len__: function () {
-        return Object.keys(this._store).length
+        return Object.keys(this._store).length;
     },
     __nonzero__: function () {
         return py.PY_size(this) > 0 ? py.True : py.False;
@@ -99,8 +99,7 @@ function wrap_context (context) {
         if (val === null) { continue; }
         if (val.constructor === Array) {
             context[k] = wrapping_list.fromJSON(val);
-        } else if (val.constructor === Object
-                   && !py.PY_isInstance(val, py.object)) {
+        } else if (val.constructor === Object && !py.PY_isInstance(val, py.object)) {
             context[k] = wrapping_dict.fromJSON(val);
         }
     }

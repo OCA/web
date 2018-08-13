@@ -65,7 +65,7 @@ Usage
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/162/10.0
+   :target: https://runbot.odoo-community.org/runbot/162/11.0
 
 
 
@@ -90,6 +90,7 @@ Contributors
 
 * Laurent Mignon <laurent.mignon@acsone.eu>
 * Denis Roussel <denis.roussel@acsone.eu>
+* Martín Nicolás Cuesta <cuesta.martin.n@hotmail.com>
 
 Maintainer
 ----------
