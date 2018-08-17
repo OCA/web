@@ -84,11 +84,16 @@ odoo.define('web_timeline.TimelineView', function (require) {
                 fieldNames.push(this.colors[i].field);
             }
 
+            if (attrs.dependency_arrow) {
+                fieldNames.push(attrs.dependency_arrow);
+            }
+
             this.permissions = {};
             this.grouped_by = false;
             this.date_start = attrs.date_start;
             this.date_stop = attrs.date_stop;
             this.date_delay = attrs.date_delay;
+            this.dependency_arrow = attrs.dependency_arrow;
 
             this.no_period = this.date_start === this.date_stop;
             this.zoomKey = attrs.zoomKey || '';
@@ -125,6 +130,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
             this.rendererParams.colors = this.colors;
             this.rendererParams.fieldNames = fieldNames;
             this.rendererParams.view = this;
+            this.rendererParams.dependency_arrow = this.dependency_arrow;
             this.loadParams.modelName = this.modelName;
             this.loadParams.fieldNames = fieldNames;
             this.controllerParams.open_popup_action = this.open_popup_action;
