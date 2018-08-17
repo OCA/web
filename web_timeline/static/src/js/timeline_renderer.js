@@ -8,6 +8,7 @@ var utils = require('web.utils');
 var session = require('web.session');
 var QWeb = require('web.QWeb');
 var field_utils = require('web.field_utils');
+var TimelineCanvas = require('web_timeline.TimelineCanvas');
 
 
 var _t = core._t;
@@ -29,6 +30,7 @@ var CalendarRenderer = AbstractRenderer.extend({
         this.date_delay = params.date_delay;
         this.colors = params.colors;
         this.fieldNames = params.fieldNames;
+        this.dependency_arrow = params.dependency_arrow;
         this.view = params.view;
         this.modelClass = this.view.model;
     },
@@ -64,16 +66,21 @@ var CalendarRenderer = AbstractRenderer.extend({
 
     add_events: function() {
         var self = this;
-        this.$(".oe_timeline_button_today").click(function(){
-            self._onTodayClicked();});
-        this.$(".oe_timeline_button_scale_day").click(function(){
-            self._onScaleDayClicked();});
-        this.$(".oe_timeline_button_scale_week").click(function(){
-            self._onScaleWeekClicked();});
-        this.$(".oe_timeline_button_scale_month").click(function(){
-            self._onScaleMonthClicked();});
-        this.$(".oe_timeline_button_scale_year").click(function(){
-            self._onScaleYearClicked();});
+        this.$(".oe_timeline_button_today").click(function() {
+            self._onTodayClicked();
+        });
+        this.$(".oe_timeline_button_scale_day").click(function() {
+            self._onScaleDayClicked();
+        });
+        this.$(".oe_timeline_button_scale_week").click(function() {
+            self._onScaleWeekClicked();
+        });
+        this.$(".oe_timeline_button_scale_month").click(function() {
+            self._onScaleMonthClicked();
+        });
+        this.$(".oe_timeline_button_scale_year").click(function() {
+            self._onScaleYearClicked();
+        });
     },
 
     _onTodayClicked: function () {
@@ -156,8 +163,8 @@ var CalendarRenderer = AbstractRenderer.extend({
             onUpdate: self.on_update,
             onRemove: self.on_remove,
         });
+        this.qweb = new QWeb(session.debug, {_s: session.origin}, false);
         if (this.arch.children.length) {
-            this.qweb = new QWeb(session.debug, {_s: session.origin}, false);
             var tmpl = utils.json_node_to_xml(
                 _.filter(this.arch.children, function(item) {
                     return item.tag === 'templates';
@@ -176,9 +183,47 @@ var CalendarRenderer = AbstractRenderer.extend({
         this.last_group_bys = group_bys;
         this.last_domains = this.modelClass.data.domain;
         this.on_data_loaded(this.modelClass.data.data, group_bys);
+        this.$centerContainer = $(this.timeline.dom.centerContainer);
+        this.canvas = new TimelineCanvas(this);
+        this.canvas.appendTo(this.$centerContainer);
+        this.timeline.on('changed', function() {
+            self.draw_canvas();
+        });
     },
 
-    on_data_loaded: function (events, group_bys) {
+    draw_canvas: function() {
+        this.canvas.clear();
+        if (this.dependency_arrow) {
+            this.draw_dependencies();
+        }
+    },
+
+    draw_dependencies: function() {
+        var self = this;
+        var items = this.timeline.itemSet.items;
+        _.each(items, function(item) {
+            _.each(item.data.evt[self.dependency_arrow], function(id) {
+                if (id in items) {
+                    self.draw_dependency(item, items[id]);
+                }
+            });
+        });
+    },
+
+    draw_dependency: function(from, to, options) {
+        if (!from.displayed || !to.displayed) {
+            return;
+        }
+
+        var defaults = _.defaults({}, options, {
+            line_color: 'black',
+            line_width: 1
+        });
+
+        this.canvas.draw_arrow(from.dom.box, to.dom.box, defaults.line_color, defaults.line_width);
+    },
+
+    on_data_loaded: function (events, group_bys, adjust_window) {
         var self = this;
         var ids = _.pluck(events, "id");
         return this._rpc({
@@ -196,11 +241,11 @@ var CalendarRenderer = AbstractRenderer.extend({
                     })[1]
                 }, event);
             });
-            return self.on_data_loaded_2(nevents, group_bys);
+            return self.on_data_loaded_2(nevents, group_bys, adjust_window);
         });
     },
 
-    on_data_loaded_2: function (events, group_bys) {
+    on_data_loaded_2: function (events, group_bys, adjust_window) {
         var self = this;
         var data = [];
         var groups = [];
@@ -213,7 +258,9 @@ var CalendarRenderer = AbstractRenderer.extend({
         groups = this.split_groups(events, group_bys);
         this.timeline.setGroups(groups);
         this.timeline.setItems(data);
-        if (!this.mode || this.mode == 'fit'){
+        var mode = !this.mode || this.mode === 'fit';
+        var adjust = _.isUndefined(adjust_window) || adjust_window;
+        if (mode && adjust) {
             this.timeline.fit();
         }
     },
@@ -229,11 +276,15 @@ var CalendarRenderer = AbstractRenderer.extend({
             var group_name = event[_.first(group_bys)];
             if (group_name) {
                 if (group_name instanceof Array) {
-                    var group = _.find(groups, function (group) {
-                        return _.isEqual(group.id, group_name[0]);
+                    var group = _.find(groups, function (existing_group) {
+                        return _.isEqual(existing_group.id, group_name[0]);
                     });
-                    if (group == null) {
-                        group = {id: group_name[0], content: group_name[1]};
+
+                    if (_.isUndefined(group)) {
+                        group = {
+                            id: group_name[0],
+                            content: group_name[1]
+                        };
                         groups.push(group);
                     }
                 }
@@ -262,8 +313,7 @@ var CalendarRenderer = AbstractRenderer.extend({
             date_start = time.auto_str_to_date(evt[this.date_start]);
             date_stop = this.date_stop ? time.auto_str_to_date(evt[this.date_stop]) : null;
         }
-        if (date_start) {
-        }
+
         if (!date_stop && date_delay) {
             date_stop = moment(date_start).add(date_delay, 'hours').toDate();
         }
@@ -280,16 +330,9 @@ var CalendarRenderer = AbstractRenderer.extend({
             }
         });
 
-        var content = evt.__name != undefined ? evt.__name : evt.display_name;
+        var content = _.isUndefined(evt.__name) ? evt.display_name : evt.__name;
         if (this.arch.children.length) {
-            if(this.qweb.has_template('timeline-item')) {
-                content = this.qweb.render('timeline-item', {
-                    'record': evt,
-                    'field_utils': field_utils
-                });
-            } else {
-                console.error(_t('Template "timeline-item" not present in timeline view definition.'));
-            }
+            content = this.render_timeline_item(evt);
         }
 
         var r = {
@@ -308,10 +351,25 @@ var CalendarRenderer = AbstractRenderer.extend({
         return r;
     },
 
+    render_timeline_item: function(evt) {
+        if(this.qweb.has_template('timeline-item')) {
+            return this.qweb.render('timeline-item', {
+                'record': evt,
+                'field_utils': field_utils
+            });
+        }
+
+        console.error(
+            _t('Template "timeline-item" not present in timeline view definition.')
+        );
+    },
+
     on_group_click: function (e) {
         // handle a click on a group header
-        if (e.what === 'group-label' && e.group != -1) {
-            this._trigger(e, function(){}, 'onGroupClick');
+        if (e.what === 'group-label' && e.group !== -1) {
+            this._trigger(e, function() {
+                // Do nothing
+            }, 'onGroupClick');
         }
     },
 

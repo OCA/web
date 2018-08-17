@@ -5,6 +5,7 @@ var AbstractController = require('web.AbstractController');
 var dialogs = require('web.view_dialogs');
 var core = require('web.core');
 var time = require('web.time');
+var Dialog = require('web.Dialog');
 
 var _t = core._t;
 
@@ -31,6 +32,9 @@ var CalendarController = AbstractController.extend({
         if (_.isEmpty(params)){
             return;
         }
+        var defaults = _.defaults({}, options, {
+            adjust_window: true
+        });
         var self = this;
         var domains = params.domain;
         var contexts = params.context;
@@ -59,7 +63,7 @@ var CalendarController = AbstractController.extend({
             },
             context: self.getSession().user_context,
         }).then(function(data) {
-            return self.renderer.on_data_loaded(data, n_group_bys);
+            return self.renderer.on_data_loaded(data, n_group_bys, defaults.adjust_window);
         });
     },
 
@@ -82,13 +86,13 @@ var CalendarController = AbstractController.extend({
         var id = item.evt.id;
         var title = item.evt.__name;
         if (this.open_popup_action) {
-            var dialog = new dialogs.FormViewDialog(this, {
+            new dialogs.FormViewDialog(this, {
                 res_model: this.model.modelName,
-                res_id: parseInt(id).toString() == id ? parseInt(id) : id,
+                res_id: parseInt(id, 10).toString() === id ? parseInt(id, 10) : id,
                 context: this.getSession().user_context,
                 title: title,
-                view_id: +this.open_popup_action,
-                on_saved: function (record) {
+                view_id: Number(this.open_popup_action),
+                on_saved: function () {
                     self.write_completed();
                 },
             }).open();
@@ -99,7 +103,7 @@ var CalendarController = AbstractController.extend({
             }
             this.trigger_up('switch_view', {
                 view_type: 'form',
-                res_id: parseInt(id).toString() == id ? parseInt(id) : id,
+                res_id: parseInt(id, 10).toString() === id ? parseInt(id, 10) : id,
                 mode: mode,
                 model: this.model.modelName,
             });
@@ -114,7 +118,7 @@ var CalendarController = AbstractController.extend({
         var event_start = item.start;
         var event_end = item.end;
         var group = false;
-        if (item.group != -1) {
+        if (item.group !== -1) {
             group = item.group;
         }
         var data = {};
@@ -145,10 +149,13 @@ var CalendarController = AbstractController.extend({
             context: self.getSession().user_context,
         }).then(function() {
             event.data.callback(event.data.item);
+            self.write_completed({
+                adjust_window: false
+            });
         });
     },
 
-    _onRemove: function(event) {
+    _onRemove: function(e) {
         var self = this;
 
         function do_it(event) {
@@ -162,8 +169,9 @@ var CalendarController = AbstractController.extend({
             }).then(function() {
                 var unlink_index = false;
                 for (var i=0; i<self.model.data.data.length; i++) {
-                    if (self.model.data.data[i].id == event.data.item.id)
+                    if (self.model.data.data[i].id === event.data.item.id) {
                         unlink_index = i;
+                    }
                 }
                 if (!isNaN(unlink_index)) {
                     self.model.data.data.splice(unlink_index, 1);
@@ -173,9 +181,17 @@ var CalendarController = AbstractController.extend({
             });
         }
 
-        if (confirm(_t("Are you sure you want to delete this record ?"))) {
-            return do_it(event);
-        }
+        var message = _t("Are you sure you want to delete this record?");
+        var def = $.Deferred();
+        Dialog.confirm(this, message, {
+            title: _t("Warning"),
+            confirm_callback: function() {
+                do_it(e)
+                    .done(def.resolve.bind(def, true))
+                    .fail(def.reject.bind(def));
+            },
+        });
+        return def.promise();
     },
 
     _onAdd: function(event) {
@@ -194,11 +210,11 @@ var CalendarController = AbstractController.extend({
             default_context['default_'.concat(this.renderer.last_group_bys[0])] = item.group;
         }
         // Show popup
-        var dialog = new dialogs.FormViewDialog(this, {
+        new dialogs.FormViewDialog(this, {
             res_model: this.model.modelName,
             res_id: null,
             context: _.extend(default_context, this.context),
-            view_id: +this.open_popup_action,
+            view_id: Number(this.open_popup_action),
             on_saved: function (record) {
                 self.create_completed([record.res_id]);
             },
@@ -226,13 +242,14 @@ var CalendarController = AbstractController.extend({
         });
     },
 
-    write_completed: function () {
+    write_completed: function (options) {
         var params = {
             domain: this.renderer.last_domains,
             context: this.context,
             groupBy: this.renderer.last_group_bys,
         };
-        this.update(params, null);
+
+        this.update(params, options);
     },
 });
 
