@@ -39,9 +39,11 @@ the possible attributes for the tag:
   view.
 * colors (optional): it allows to set certain specific colors if the expressed
   condition (JS syntax) is met.
-  
-Optionally you can declare a custom template, which will be used to render the 
-timeline items. You have to name the template 'timeline-item'. 
+* dependency_arrow (optional): set this attribute to a x2many field to draw
+  arrows between the records referenced in the x2many field.
+
+Optionally you can declare a custom template, which will be used to render the
+timeline items. You have to name the template 'timeline-item'.
 These are the variables available in template rendering:
 
 * ``record``: to access the fields values selected in the timeline definition.
@@ -65,7 +67,8 @@ Example:
                           default_group_by="user_id"
                           event_open_popup="true"
                           zoomKey="ctrlKey"
-                          colors="#ec7063:user_id == false;#2ecb71:kanban_state=='done';">
+                          colors="#ec7063:user_id == false;#2ecb71:kanban_state=='done';"
+                          dependency_arrow="task_dependency_ids">
                     <field name="user_id"/>
                     <templates>
                         <div t-name="timeline-item">
