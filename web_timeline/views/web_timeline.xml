@@ -11,6 +11,7 @@
             <script type="text/javascript" src="/web_timeline/static/src/js/timeline_renderer.js"/>
             <script type="text/javascript" src="/web_timeline/static/src/js/timeline_controller.js"/>
             <script type="text/javascript" src="/web_timeline/static/src/js/timeline_model.js"/>
+            <script type="text/javascript" src="/web_timeline/static/src/js/timeline_canvas.js"/>
         </xpath>
     </template>
 
