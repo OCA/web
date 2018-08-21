@@ -16,9 +16,9 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
         widget_class: 'o_form_field_x2many_2d_matrix',
 
         /**
-         * Initialize the widget & parameters.
+         *Initialize the widget & parameters.
          *
-         * @param {Object} parent contains the form view.
+         *@param {Object} parent contains the form view.
          * @param {String} name the name of the field.
          * @param {Object} record information about the database records.
          * @param {Object} options view options.
@@ -29,7 +29,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
         },
 
         /**
-         * Initialize the widget specific parameters.
+         *Initialize the widget specific parameters.
          * Sets the axis and the values.
          */
         init_params: function () {
@@ -56,7 +56,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                         node[property];
                 }
             }
-            // and this?
+            // And this?
             this.field_editability =
                 node.field_editability || this.field_editability;
             this.show_row_totals =
@@ -80,11 +80,11 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                 var x = record.data[this.field_x_axis],
                     y = record.data[this.field_y_axis];
                 if (x.type === 'record') {
-                    // we have a related record
+                    // We have a related record
                     x = x.data.display_name;
                 }
                 if (y.type === 'record') {
-                    // we have a related record
+                    // We have a related record
                     y = y.data.display_name;
                 }
                 this.by_x_axis[x] = this.by_x_axis[x] || {};
@@ -92,7 +92,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                 this.by_x_axis[x][y] = record;
                 this.by_y_axis[y][x] = record;
             }.bind(this));
-            // init columns
+            // Init columns
             this.columns = [];
             $.each(this.by_x_axis, function (x) {
                 this.columns.push(this._make_column(x));
@@ -120,7 +120,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
          */
         _make_column: function (x) {
             return {
-                // simulate node parsed on xml arch
+                // Simulate node parsed on xml arch
                 'tag': 'field',
                 'attrs': {
                     'name': this.field_x_axis,
@@ -137,7 +137,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
          */
         _make_row: function (y) {
             var self = this;
-            // use object so that we can attach more data if needed
+            // Use object so that we can attach more data if needed
             var row = {'data': []};
             $.each(self.by_x_axis, function (x) {
                 row.data.push(self.by_y_axis[y][x]);
@@ -170,21 +170,45 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
             }
             // Ensure widget is re initiated when rendering
             this.init_matrix();
-            var arch = this.view.arch,
-                viewType = 'list';
+            var arch = this.view.arch;
+            // Update existing renderer
+            if (!_.isUndefined(this.renderer)) {
+                return this.renderer.updateState(this.value, {
+                    matrix_data: this.matrix_data,
+                });
+            }
+            // Create a new matrix renderer
             this.renderer = new X2Many2dMatrixRenderer(this, this.value, {
                 arch: arch,
-                editable: true,
-                viewType: viewType,
+                editable: this.mode === 'edit' && arch.attrs.editable,
+                viewType: "list",
                 matrix_data: this.matrix_data,
             });
             this.$el.addClass('o_field_x2many o_field_x2many_2d_matrix');
-            // Remove previous rendered and add the newly created one
-            this.$el.find('div:not(.o_x2m_control_panel)').remove();
             return this.renderer.appendTo(this.$el);
-
         },
 
+        /**
+         * Activate the widget.
+         *
+         * @override
+         */
+        activate: function (options) {
+            // Won't work fine without https://github.com/odoo/odoo/pull/26490
+            this._backwards = options.event.data.direction === "previous";
+            var result = this._super.apply(this, arguments);
+            delete this._backwards;
+            return result;
+        },
+
+        /**
+         * Get first element to focus.
+         *
+         * @override
+         */
+        getFocusableElement: function () {
+            return this.$(".o_input:" + (this._backwards ? "last" : "first"));
+        },
     });
 
     field_registry.add('x2many_2d_matrix', WidgetX2Many2dMatrix);
