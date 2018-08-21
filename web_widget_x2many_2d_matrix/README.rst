@@ -154,7 +154,7 @@ Contributors
 * Artem Kostyuk <a.kostyuk@mobilunity.com>
 * Simone Orsi <simone.orsi@camptocamp.com>
 * Timon Tschanz <timon.tschanz@camptocamp.com>
-
+* Jairo Llopis <jairo.llopis@tecnativa.com>
 
 Maintainer
 ----------
