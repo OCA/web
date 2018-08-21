@@ -4,14 +4,14 @@
 odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (require) {
     "use strict";
 
-    // heavily inspired by Odoo's `ListRenderer`
+    // Heavily inspired by Odoo's `ListRenderer`
     var BasicRenderer = require('web.BasicRenderer');
     var config = require('web.config');
     var core = require('web.core');
     var field_utils = require('web.field_utils');
     var _t = core._t;
     var FIELD_CLASSES = {
-        // copied from ListRenderer
+        // Copied from ListRenderer
         float: 'o_list_number',
         integer: 'o_list_number',
         monetary: 'o_list_number',
@@ -26,9 +26,18 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
         init: function (parent, state, params) {
             this._super.apply(this, arguments);
             this.editable = params.editable;
-            this.columns = params.matrix_data.columns;
-            this.rows = params.matrix_data.rows;
-            this.matrix_data = params.matrix_data;
+            this._saveMatrixData(params.matrix_data);
+        },
+
+        /**
+         * Update matrix data in current renderer instance.
+         *
+         * @param {Object} matrixData Contains the matrix data
+         */
+        _saveMatrixData: function (matrixData) {
+            this.columns = matrixData.columns;
+            this.rows = matrixData.rows;
+            this.matrix_data = matrixData;
         },
 
         /**
@@ -159,7 +168,6 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
          *
          * @private
          * @returns {String} a string with the generated html.
-         *
          */
         _renderRows: function () {
             return _.map(this.rows, this._renderRow.bind(this));
@@ -181,7 +189,7 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
             $tr = $tr.append(self._renderLabelCell(row.data[0]));
             var $cells = _.map(this.columns, function (node, index) {
                 var record = row.data[index];
-                // make the widget use our field value for each cell
+                // Make the widget use our field value for each cell
                 node.attrs.name = self.matrix_data.field_value;
                 return self._renderBodyCell(record, node, index, {mode:''});
             });
@@ -203,10 +211,10 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
             var $td = $('<td>');
             var value = record.data[this.matrix_data.field_y_axis];
             if (value.type === 'record') {
-                // we have a related record
+                // We have a related record
                 value = value.data.display_name;
             }
-            // get 1st column filled w/ Y label
+            // Get 1st column filled w/ Y label
             $td.text(value);
             return $td;
         },
@@ -272,7 +280,7 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
             if (modifiers.invisible && !(options && options.renderInvisible)) {
                 return $td;
             }
-            // enforce mode of the parent
+            // Enforce mode of the parent
             options.mode = this.getParent().mode;
             var widget = this._renderFieldWidget(
                 node, record, _.pick(options, 'mode')
@@ -329,7 +337,7 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
                 return;
             }
             var type = field.type;
-            if (!_.inArray(type, ['integer', 'float', 'monetary'])) {
+            if (!~['integer', 'float', 'monetary'].indexOf(type)) {
                 return;
             }
             _.each(this.columns, function (column, index) {
@@ -342,7 +350,45 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
                 _.each(this.rows, function (row) {
                     column.aggregate.value += row.data[index].data[fname];
                 });
-            });
+            }.bind(this));
+        },
+
+        /**
+         * @override
+         */
+        updateState: function (state, params) {
+            if (params.matrix_data) {
+                this._saveMatrixData(params.matrix_data);
+            }
+            return this._super.apply(this, arguments);
+        },
+
+        /**
+        * Traverse the fields matrix with the keyboard
+        *
+        * @override
+        * @private
+        * @param {OdooEvent} event "navigation_move" event
+        */
+        _onNavigationMove: function (event) {
+            var widgets = this.__parentedChildren,
+                index = widgets.indexOf(event.target),
+                first = index === 0,
+                last = index === widgets.length - 1,
+                move = 0;
+            // Guess if we have to move the focus
+            if (event.data.direction === "next" && !last) {
+                move = 1;
+            } else if (event.data.direction === "previous" && !first) {
+                move = -1;
+            }
+            // Move focus
+            if (move) {
+                var target = widgets[index + move];
+                index = this.allFieldWidgets[target.record.id].indexOf(target);
+                this._activateFieldWidget(target.record, index, {inc: 0});
+                event.stopPropagation();
+            }
         },
 
         /**
@@ -362,7 +408,7 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
                 return;
             }
             var type = field.type;
-            if (!_.inArray(type, ['integer', 'float', 'monetary'])) {
+            if (!~['integer', 'float', 'monetary'].indexOf(type)) {
                 return;
             }
             _.each(this.rows, function (row) {
