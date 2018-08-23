@@ -15,6 +15,4 @@
     'data': [
         'views/web_domain_field.xml',
     ],
-    'demo': [
-    ],
 }
