@@ -10,3 +10,6 @@ this module.
 * Adding ``oe_main_menu_navbar`` ID to the top navigation bar triggers some
   great styles, but also `JavaScript that causes issues on mobile
   <https://github.com/OCA/web/pull/446#issuecomment-254827880>`_
+* Sticky header and footer in list view only works on certain browsers:
+  https://caniuse.com/#search=sticky (note that the used feature is in
+  `thead`).
