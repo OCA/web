@@ -25,6 +25,7 @@ var CalendarRenderer = AbstractRenderer.extend({
         this.options = params.options;
         this.permissions = params.permissions;
         this.timeline = params.timeline;
+        this.min_height = params.min_height;
         this.date_start = params.date_start;
         this.date_stop = params.date_stop;
         this.date_delay = params.date_delay;
@@ -50,6 +51,15 @@ var CalendarRenderer = AbstractRenderer.extend({
             throw new Error(_t("Timeline view has not defined 'date_start' attribute."));
         }
         this._super.apply(this, self);
+    },
+
+    on_attach_callback: function() {
+        var height = this.$el.parent().height() - this.$el.find('.oe_timeline_buttons').height();
+        if (height > this.min_height) {
+            this.timeline.setOptions({
+                height: height
+            });
+        }
     },
 
     _render: function () {
@@ -161,7 +171,7 @@ var CalendarRenderer = AbstractRenderer.extend({
             onAdd: self.on_add,
             onMove: self.on_move,
             onUpdate: self.on_update,
-            onRemove: self.on_remove,
+            onRemove: self.on_remove
         });
         this.qweb = new QWeb(session.debug, {_s: session.origin}, false);
         if (this.arch.children.length) {
@@ -188,6 +198,10 @@ var CalendarRenderer = AbstractRenderer.extend({
         this.canvas.appendTo(this.$centerContainer);
         this.timeline.on('changed', function() {
             self.draw_canvas();
+            self.canvas.$el.attr(
+                'style',
+                self.$el.find('.vis-content').attr('style') + self.$el.find('.vis-itemset').attr('style')
+            );
         });
     },
 
@@ -202,6 +216,9 @@ var CalendarRenderer = AbstractRenderer.extend({
         var self = this;
         var items = this.timeline.itemSet.items;
         _.each(items, function(item) {
+            if (!item.data.evt) {
+                return;
+            }
             _.each(item.data.evt[self.dependency_arrow], function(id) {
                 if (id in items) {
                     self.draw_dependency(item, items[id]);
