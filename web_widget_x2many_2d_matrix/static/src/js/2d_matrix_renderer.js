@@ -180,22 +180,22 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
          * the aggregate cell.
          *
          * @private
-         * @param {Object} row: The row that will be rendered.
+         * @param {Object} row The row that will be rendered.
          * @returns {jQueryElement} the <tr> element that has been rendered.
          */
         _renderRow: function (row) {
-            var self = this;
-            var $tr = $('<tr/>', {class: 'o_data_row'});
-            $tr = $tr.append(self._renderLabelCell(row.data[0]));
+            var $tr = $('<tr/>', {class: 'o_data_row'}),
+                _data = _.without(row.data, undefined);
+            $tr = $tr.append(this._renderLabelCell(_data[0]));
             var $cells = _.map(this.columns, function (node, index) {
                 var record = row.data[index];
                 // Make the widget use our field value for each cell
-                node.attrs.name = self.matrix_data.field_value;
-                return self._renderBodyCell(record, node, index, {mode:''});
-            });
+                node.attrs.name = this.matrix_data.field_value;
+                return this._renderBodyCell(record, node, index, {mode:''});
+            }.bind(this));
             $tr = $tr.append($cells);
             if (row.aggregate) {
-                $tr.append(self._renderAggregateRowCell(row));
+                $tr.append(this._renderAggregateRowCell(row));
             }
             return $tr;
         },
@@ -223,7 +223,7 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
          * Create a cell and fill it with the aggregate value.
          *
          * @private
-         * @param {Object} row: the row object to aggregate.
+         * @param {Object} row the row object to aggregate.
          * @returns {jQueryElement} The rendered cell.
          */
         _renderAggregateRowCell: function (row) {
@@ -238,10 +238,10 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
          * we always want the widget to be editable.
          *
          * @private
-         * @param {Object} record: Contains the data for this cell
-         * @param {jQueryElement} node: The HTML of the field.
-         * @param {int} colIndex: The index of the current column.
-         * @param {Object} options: The obtions used for the widget
+         * @param {Object} record Contains the data for this cell
+         * @param {jQueryElement} node The HTML of the field.
+         * @param {int} colIndex The index of the current column.
+         * @param {Object} options The obtions used for the widget
          * @returns {jQueryElement} the rendered cell.
          */
         _renderBodyCell: function (record, node, colIndex, options) {
@@ -263,6 +263,12 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
             // the user might want to attach to each single cell.
             var $td = $('<td>', {
                 'class': tdClassName,
+            });
+            if (_.isUndefined(record)) {
+                // Without record, nothing elese to do
+                return $td;
+            }
+            $td.attr({
                 'data-form-id': record.id,
                 'data-id': record.data.id,
             });
@@ -348,7 +354,12 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
                     value: 0,
                 };
                 _.each(this.rows, function (row) {
-                    column.aggregate.value += row.data[index].data[fname];
+                    // TODO Use only one _.propertyOf in underscore 1.9.0+
+                    try {
+                        column.aggregate.value += row.data[index].data[fname];
+                    } catch (error) {
+                        // Nothing to do
+                    }
                 });
             }.bind(this));
         },
@@ -419,7 +430,12 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
                     value: 0,
                 };
                 _.each(row.data, function (col) {
-                    row.aggregate.value += col.data[fname];
+                    // TODO Use _.property in underscore 1.9+
+                    try {
+                        row.aggregate.value += col.data[fname];
+                    } catch (error) {
+                        // Nothing to do
+                    }
                 });
             });
         },
@@ -490,10 +506,11 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
          * @param {String} id: The id of the row that needs to be updated.
          */
         _updateRow: function (id) {
-            var record = _.findWhere(this.state.data, {id: id});
+            var record = _.findWhere(this.state.data, {id: id}),
+                _id = _.property("id");
             _.each(this.rows, function (row) {
                 _.each(row.data, function (col, i) {
-                    if (col.id === id) {
+                    if (_id(col) === id) {
                         row.data[i] = record;
                     }
                 });
