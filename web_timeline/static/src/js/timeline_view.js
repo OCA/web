@@ -98,6 +98,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
             this.no_period = this.date_start === this.date_stop;
             this.zoomKey = attrs.zoomKey || '';
             this.mode = attrs.mode || attrs.default_window || 'fit';
+            this.min_height = attrs.min_height || 300;
 
             this.current_window = {
                 start: new moment(),
@@ -110,6 +111,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
                 groupOrder: this.group_order,
                 orientation: 'both',
                 selectable: true,
+                multiselect: true,
                 showCurrentTime: true,
                 zoomKey: this.zoomKey
             };
@@ -130,6 +132,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
             this.rendererParams.colors = this.colors;
             this.rendererParams.fieldNames = fieldNames;
             this.rendererParams.view = this;
+            this.rendererParams.min_height = this.min_height;
             this.rendererParams.dependency_arrow = this.dependency_arrow;
             this.loadParams.modelName = this.modelName;
             this.loadParams.fieldNames = fieldNames;

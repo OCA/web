@@ -116,6 +116,8 @@ edit the involved record directly.
 
 Double-click on the record to edit it. Double-click in open area to create a
 new record with the group and start date linked to the area you clicked in.
+By holding the Ctrl key and dragging left to right, you can create a new record
+with the dragged start and end date.
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
@@ -125,8 +127,6 @@ new record with the group and start date linked to the area you clicked in.
 Known issues / Roadmap
 ======================
 
-* Implement support for vis.js timeline range item addition (with Ctrl key
-  pressed).
 * Implement a more efficient way of refreshing timeline after a record update.
 
 Bug Tracker
