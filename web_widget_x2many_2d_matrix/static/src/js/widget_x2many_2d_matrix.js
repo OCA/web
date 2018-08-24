@@ -16,9 +16,9 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
         widget_class: 'o_form_field_x2many_2d_matrix',
 
         /**
-         *Initialize the widget & parameters.
+         * Initialize the widget & parameters.
          *
-         *@param {Object} parent contains the form view.
+         * @param {Object} parent contains the form view.
          * @param {String} name the name of the field.
          * @param {Object} record information about the database records.
          * @param {Object} options view options.
@@ -29,7 +29,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
         },
 
         /**
-         *Initialize the widget specific parameters.
+         * Initialize the widget specific parameters.
          * Sets the axis and the values.
          */
         init_params: function () {
@@ -195,7 +195,12 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
          */
         activate: function (options) {
             // Won't work fine without https://github.com/odoo/odoo/pull/26490
-            this._backwards = options.event.data.direction === "previous";
+            // TODO Use _.propertyOf in underscore 1.9+
+            try {
+                this._backwards = options.event.data.direction === "previous";
+            } catch (error) {
+                this._backwards = false;
+            }
             var result = this._super.apply(this, arguments);
             delete this._backwards;
             return result;
