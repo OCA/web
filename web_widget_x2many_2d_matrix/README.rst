@@ -146,6 +146,8 @@ Known issues / Roadmap
   will enter into the 1st cell until https://github.com/odoo/odoo/pull/26490
   is merged.
 
+* Support extra invisible fields inside each cell.
+
 Bug Tracker
 ===========
 
