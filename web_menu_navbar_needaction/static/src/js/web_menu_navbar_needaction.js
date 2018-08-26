@@ -30,17 +30,24 @@ openerp.web_menu_navbar_needaction = function(instance)
                 new instance.web.Model('ir.config_parameter')
                     .call('get_param',
                           ['web_menu_navbar_needaction.refresh_timeout'])
-                    .then(self.proxy(self.refresh_navbar_needaction))
+                    .then(self.proxy(self.set_interval_navbar_needaction))
             });
             return result;
         },
-        refresh_navbar_needaction: function(timeout)
+        set_interval_navbar_needaction: function(timeout)
         {
             if(parseInt(timeout, 10))
             {
-                setTimeout(this.proxy(this.refresh_navbar_needaction), timeout, timeout);
+                this.navbar_needaction_timer = setInterval(
+                    this.proxy(this.load_navbar_needaction), timeout
+                );
             }
             return this.load_navbar_needaction();
+        },
+        clear_interval_navbar_needaction: function(error, ev)
+        {
+            clearInterval(this.navbar_needaction_timer);
+            ev.preventDefault();
         },
         load_navbar_needaction: function()
         {
@@ -52,7 +59,8 @@ openerp.web_menu_navbar_needaction = function(instance)
             return new instance.web.Model('ir.ui.menu')
                 .call('get_navbar_needaction_data', [this.navbar_menu_ids],
                       {}, {shadow: true})
-                .then(this.proxy(this.process_navbar_needaction));
+                .then(this.proxy(this.process_navbar_needaction))
+                .fail(this.proxy(this.clear_interval_navbar_needaction));
         },
         process_navbar_needaction: function(data)
         {
@@ -120,12 +128,17 @@ openerp.web_menu_navbar_needaction = function(instance)
     })
 
     instance.mail.Thread.include({
-        message_fetch_set_read: function (message_list)
+        message_fetch_set_read: function(message_list)
         {
             this._super.apply(this, arguments);
-            return this.render_mutex.exec(function()
+            return this.message_fetch_set_read_navbar_needaction(message_list);
+        },
+        message_fetch_set_read_navbar_needaction: function()
+        {
+            // don't return the deferred object, this should be asynchronous
+            this.render_mutex.exec(function()
             {
-                instance.client.menu.refresh_navbar_needaction();
+                instance.client.menu.load_navbar_needaction();
             });
         },
     })
