@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="group_custom_column" model="res.groups">
+            <field name="name">Customize list views</field>
+            <field name="category_id" ref="base.module_category_hidden" />
+        </record>
+        <record id="base.group_system" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('group_custom_column'))]" />
+        </record>
+    </data>
+</openerp>
