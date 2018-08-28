@@ -1,22 +1,6 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    This module copyright (C) 2015 Therp BV (<http://therp.nl>).
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# Copyright 2015-2018 Therp BV <https://therp.nl>
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 import operator
 from openerp import _, models, api, fields
 from openerp.tools.safe_eval import safe_eval
@@ -36,15 +20,22 @@ class IrUiMenu(models.Model):
 
     @api.multi
     def get_navbar_needaction_data(self):
+        """Return aggregated needaction data for all children of self"""
         result = {}
         for this in self:
             count_per_model = {}
             action_menu = self.env['ir.ui.menu'].browse([])
             if not this.needaction:
                 continue
+            custom_needaction = this._get_navbar_needaction_data_custom()
+            if custom_needaction:
+                result[this.id] = custom_needaction
+                continue
             for menu_id, needaction in self.search(
                     [('id', 'child_of', this.ids)])._filter_visible_menus()\
                     .get_needaction_data().iteritems():
+                if needaction.get('needaction_from_children'):
+                    continue
                 if needaction['needaction_enabled']:
                     menu = self.env['ir.ui.menu'].browse(menu_id)
                     model = menu._get_needaction_model()
@@ -64,6 +55,17 @@ class IrUiMenu(models.Model):
                     'action_domain': action_menu._eval_needaction_domain(),
                 })
         return result
+
+    @api.multi
+    def _get_navbar_needaction_data_custom(self):
+        """Return nonstandard needaction data for a menu item"""
+        self.ensure_one()
+        if self == self.env.ref('mail.mail_channel_menu_root_chat'):
+            return {
+                'count': self.env['mail.message']._needaction_count(),
+                'action_id':
+                self.env.ref('mail.mail_channel_action_client_chat').id,
+            }
 
     @api.multi
     def get_needaction_data(self):
@@ -90,6 +92,7 @@ class IrUiMenu(models.Model):
                     data['needaction_counter'] += result.get(child.id, {}).get(
                         'needaction_counter', 0)
                 data['needaction_enabled'] = bool(data['needaction_counter'])
+                data['needaction_from_children'] = True
         return result
 
     @api.multi

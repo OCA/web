@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <record id="mail.menu_mail_message" model="ir.ui.menu">
+        <!-- disable needaction for mails in sysadmin menu /-->
+        <field name="needaction" eval="False" />
+    </record>
+</odoo>
