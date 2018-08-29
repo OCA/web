@@ -4,7 +4,8 @@
 {
     'name': 'Check for unsaved data when closing browser window',
     'version': '10.0.1.0.0',
-    'author': "Devang Pipaliya - Dreambits,Therp BV,Odoo Community Association (OCA)",
+    'author': "Devang Pipaliya - Dreambits,Therp BV,"
+              "Odoo Community Association (OCA)",
     'category': 'Usability',
     'website': 'https://github.com/oca/web',
     'license': 'AGPL-3',
