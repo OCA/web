@@ -76,6 +76,7 @@ setuptools.setup(
         'odoo8-addon-web_widget_pattern',
         'odoo8-addon-web_widget_radio_tree',
         'odoo8-addon-web_widget_text_markdown',
+        'odoo8-addon-web_widget_url_listview',
         'odoo8-addon-web_widget_x2many_2d_matrix',
         'odoo8-addon-web_x2m_defaults_from_previous',
         'odoo8-addon-web_x2m_filter',
