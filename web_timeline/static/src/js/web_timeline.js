@@ -159,28 +159,7 @@ openerp.web_timeline = function(instance) {
 
         init_timeline: function() {
             var self = this;
-            var options = {
-                groupOrder: self.group_order,
-                editable: {
-                    add: self.permissions['create'],         // add new items by double tapping
-                    updateTime: self.permissions['write'],  // drag items horizontally
-                    updateGroup: self.permissions['write'], // drag items from one group to another
-                    remove: self.permissions['unlink'],       // delete an item by tapping the delete button top right
-                },
-                orientation: 'top',
-                selectable: true,
-                showCurrentTime: true,
-                onAdd: self.on_add,
-                onMove: self.on_move,
-                onUpdate: self.on_update,
-                onRemove: self.on_remove,
-                // start: self.start,
-                stack: true,
-                maxHeight: $(".oe_view_manager_wrapper").height(),
-                horizontalScroll: true,
-                verticalScroll: true,
-                zoomKey: 'ctrlKey',
-            };
+            var options = this.getTimelineOptions();
             self.timeline = new vis.Timeline(self.$timeline.empty().get(0));
             self.timeline.setOptions(options);
             if(self.mode && self['on_scale_' + self.mode + '_clicked'])
@@ -189,6 +168,31 @@ openerp.web_timeline = function(instance) {
             }
             self.timeline.on('click', self.on_click);
             return $.when();
+        },
+
+        getTimelineOptions: function() {
+            return {
+                groupOrder: this.group_order,
+                editable: {
+                    add: this.permissions['create'],         // add new items by double tapping
+                    updateTime: this.permissions['write'],  // drag items horizontally
+                    updateGroup: this.permissions['write'], // drag items from one group to another
+                    remove: this.permissions['unlink'],       // delete an item by tapping the delete button top right
+                },
+                orientation: 'top',
+                selectable: true,
+                showCurrentTime: true,
+                onAdd: this.on_add,
+                onMove: this.on_move,
+                onUpdate: this.on_update,
+                onRemove: this.on_remove,
+                // start: this.start,
+                stack: true,
+                maxHeight: $(".oe_view_manager_wrapper").height(),
+                horizontalScroll: true,
+                verticalScroll: true,
+                zoomKey: 'ctrlKey',
+            };
         },
 
         group_order: function(grp1, grp2) {
