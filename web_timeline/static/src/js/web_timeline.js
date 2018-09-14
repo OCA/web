@@ -245,7 +245,8 @@ odoo.define('web_timeline.TimelineView', function (require) {
                 group = -1;
             }
             _.each(self.colors, function (color) {
-                if (eval("'" + evt[color.field] + "' " + color.opt + " '" + color.value + "'"))
+                var escaped_field = evt[color.field].toString().replace("'", "\\'");
+                if (eval("'" + escaped_field + "' " + color.opt + " '" + color.value + "'"))
                     self.color = color.color;
             });
             var r = {
