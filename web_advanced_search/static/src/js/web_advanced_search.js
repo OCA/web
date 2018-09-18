@@ -178,6 +178,10 @@ odoo.define("web_advanced_search", function (require) {
             };
             // See https://stackoverflow.com/a/11508530/1468388
             params.fields[this.field.name] = _.omit(this.field, "onChange");
+            if (this.field.type.endsWith("2many")) {
+                // X2many fields behave like m2o in the search context
+                params.fields[this.field.name].type = "many2one";
+            }
             params.fieldsInfo.default[this.field.name] = {};
             // Emulate `model.load()`, without RPC-calling `default_get()`
             this.datapoint_id = this.model._makeDataPoint(params).id;
