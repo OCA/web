@@ -39,12 +39,21 @@ odoo.define("web_advanced_search", function (require) {
      * An almost dummy search proposition, to use with domain widget
      */
     var AdvancedSearchProposition = Widget.extend({
+
+        /**
+         * @override
+         */
         init: function (parent, model, domain) {
             this._super(parent);
             this.model = model;
             this.domain = new Domain(domain);
         },
 
+        /**
+         * Produce a filter descriptor for advanced searches.
+         *
+         * @returns {Object} In the format expected by `web.FilterMenu`.
+         */
         get_filter: function () {
             var domain_array = this.domain.toArray();
             return {
@@ -74,6 +83,9 @@ odoo.define("web_advanced_search", function (require) {
             "click .o_add_advanced_search": "advanced_search_open",
         }),
 
+        /**
+         * @override
+         */
         init: function () {
             this._super.apply(this, arguments);
             this.trigger_up("get_dataset");
@@ -131,6 +143,9 @@ odoo.define("web_advanced_search", function (require) {
         className: "x2x_container",
         attributes: {},
 
+        /**
+         * @override
+         */
         init: function () {
             this._super.apply(this, arguments);
             // To make widgets work, we need a model and an empty record
@@ -139,14 +154,14 @@ odoo.define("web_advanced_search", function (require) {
             // Make equal and not equal appear 1st and 2nd
             this.operators = _.sortBy(
                 this.operators,
-                function(op) {
-                    switch(op.value) {
-                        case "=":
-                            return -2;
-                        case "!=":
-                            return -1;
-                        default:
-                            return 0;
+                function (op) {
+                    switch (op.value) {
+                    case "=":
+                        return -2;
+                    case "!=":
+                        return -1;
+                    default:
+                        return 0;
                     }
                 });
             // Create dummy record with only the field the user is searching
@@ -154,7 +169,6 @@ odoo.define("web_advanced_search", function (require) {
                 fieldNames: [this.field.name],
                 modelName: this.dataset.model,
                 context: this.dataset.context,
-                // res_id: "virtual_0",
                 fields: {},
                 type: "record",
                 viewType: "default",
@@ -176,6 +190,9 @@ odoo.define("web_advanced_search", function (require) {
             this._fake_id = -1;
         },
 
+        /**
+         * @override
+         */
         start: function () {
             var result = this._super.apply(this, arguments);
             // Render the initial widget
@@ -183,6 +200,9 @@ odoo.define("web_advanced_search", function (require) {
             return result;
         },
 
+        /**
+         * @override
+         */
         destroy: function () {
             if (this._field_widget) {
                 this._field_widget.destroy();
@@ -192,19 +212,27 @@ odoo.define("web_advanced_search", function (require) {
             return this._super.apply(this, arguments);
         },
 
+        /**
+         * Get record object for current datapoint.
+         *
+         * @returns {Object}
+         */
         _get_record: function () {
             return this.model.get(this.datapoint_id);
         },
 
+        /**
+         * @override
+         */
         show_inputs: function ($operator) {
             // Get widget class to be used
             switch ($operator.val()) {
-                case "=":
-                case "!=":
-                    this._field_widget_name = "many2one";
-                    break;
-                default:
-                    this._field_widget_name = "char";
+            case "=":
+            case "!=":
+                this._field_widget_name = "many2one";
+                break;
+            default:
+                this._field_widget_name = "char";
             }
             var _Widget = field_registry.get(this._field_widget_name);
             // Destroy previous widget, if any
@@ -234,6 +262,9 @@ odoo.define("web_advanced_search", function (require) {
             return this._super.apply(this, arguments);
         },
 
+        /**
+         * @override
+         */
         _applyChanges: function (dataPointID, changes, event) {
             // Make char updates look like valid x2one updates
             if (_.isNaN(changes[this.field.name].id)) {
@@ -245,18 +276,24 @@ odoo.define("web_advanced_search", function (require) {
             return FieldManagerMixin._applyChanges.apply(this, arguments);
         },
 
+        /**
+         * @override
+         */
         _confirmChange: function (id, fields, event) {
             this.datapoint_id = id;
             return this._field_widget.reset(this._get_record(), event);
         },
 
+        /**
+         * @override
+         */
         get_value: function () {
             try {
                 switch (this._field_widget_name) {
-                    case "many2one":
-                        return this._field_widget.value.res_id;
-                    default:
-                        return this._field_widget.value.data.display_name;
+                case "many2one":
+                    return this._field_widget.value.res_id;
+                default:
+                    return this._field_widget.value.data.display_name;
                 }
             } catch (error) {
                 if (error.name === "TypeError") {
@@ -265,11 +302,16 @@ odoo.define("web_advanced_search", function (require) {
             }
         },
 
+        /**
+         * Extract the field's value in a human-readable format.
+         *
+         * @override
+         */
         toString: function () {
             try {
                 switch (this._field_widget_name) {
-                    case "many2one":
-                        return this._field_widget.value.data.display_name;
+                case "many2one":
+                    return this._field_widget.value.data.display_name;
                 }
                 return this._super.apply(this, arguments);
             } catch (error) {
