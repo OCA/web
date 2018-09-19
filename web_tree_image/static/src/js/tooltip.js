@@ -10,7 +10,8 @@ var ListRenderer = require('web.ListRenderer');
 		_onHoverRecord_img: function (event) {
 			var img_src = $(event.currentTarget).children('.img-responsive').attr('src')
 	    	$(event.currentTarget).tooltip({
-	    		title: "<img src="+img_src+" />"
+	    		title: "<img src="+img_src+" />",
+	    		delay: 0,
 	    	});
 		}
 	});
