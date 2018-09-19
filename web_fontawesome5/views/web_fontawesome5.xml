@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets_backend"
+              name="font_awesome_5" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/web_fontawesome_5/static/src/js/form_renderer.js"/>
+            <script type="text/javascript" src="/web_fontawesome_5/static/src/js/list_renderer.js"/>
+            <link rel="stylesheet" href="/web_fontawesome_5/static/src/lib/fontawesome/css/all.css"/>
+        </xpath>
+    </template>
+
+    <template id="report_assets_common"
+              name="font_awesome_5" inherit_id="web.report_assets_common">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/web_fontawesome_5/static/src/lib/fontawseome/css/all.css"/>
+        </xpath>
+    </template>
+
+</odoo>
