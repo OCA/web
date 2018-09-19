@@ -1,0 +1,6 @@
+.m2o_clickable a{
+visibility:hidden;
+}
+.m2o_clickable:hover a {
+ visibility:visible;
+}

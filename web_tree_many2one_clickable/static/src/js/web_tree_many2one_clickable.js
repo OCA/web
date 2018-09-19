@@ -50,7 +50,7 @@ ListView.Column.include({
             var value = row_data[this.id].value;
             var name = value[1] ? value[1].split("\n")[0] : value[1];
             name = _.escape(name || options.value_if_empty);
-            if (this.widget == 'many2one_unclickable') {
+            if (this.widget == 'many2one_unclickable' || !value) {
                 return name;
             } else if (this.use_many2one_clickable) {
                 var values = {
@@ -65,7 +65,7 @@ ListView.Column.include({
                                            options.value_if_empty);
                 }
                 return _.str.sprintf(
-                    '<a class="oe_form_uri" data-many2one-clickable-model="%(model)s" data-many2one-clickable-id="%(id)s">%(name)s</a>',
+                    '<span class="m2o_clickable">%(name)s <a class="oe_form_uri" data-many2one-clickable-model="%(model)s" data-many2one-clickable-id="%(id)s"><i class="fa fa-external-link"></i></a></span>',
                     values
                 );
             }

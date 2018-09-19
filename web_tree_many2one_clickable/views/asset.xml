@@ -7,6 +7,7 @@
     <xpath expr="." position="inside">
         <script type="text/javascript"
                 src="/web_tree_many2one_clickable/static/src/js/web_tree_many2one_clickable.js"/>
+        <link rel="stylesheet" href="/web_tree_many2one_clickable/static/src/css/m2o_clickable.css"/>
     </xpath>
 </template>
 
