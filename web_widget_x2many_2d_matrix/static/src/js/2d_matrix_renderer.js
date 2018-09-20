@@ -313,6 +313,12 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
             }
         },
 
+        /**
+         * Renders the total cell (of all rows / columns)
+         *
+         * @private
+         * @returns {jQueryElement} The td element with the total in it.
+         */
         _renderTotalCell: function() {
             if (!this.matrix_data.show_column_totals ||
                 !this.matrix_data.show_row_totals) {
