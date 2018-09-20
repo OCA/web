@@ -304,10 +304,30 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
         _renderFooter: function () {
             var $cells = this._renderAggregateColCells();
             if ($cells) {
-                return $('<tfoot>').append(
-                    $('<tr>').append('<td/>').append($cells)
-                );
+                var $tr = $('<tr>').append('<td/>').append($cells);
+                var $total_cell = this._renderTotalCell();
+                if ($total_cell) {
+                    $tr.append($total_cell);
+                }
+                return $('<tfoot>').append($tr);
             }
+        },
+
+        /**
+         * Renders the total cell (of all rows / columns)
+         *
+         * @private
+         * @returns {jQueryElement} The td element with the total in it.
+         */
+        _renderTotalCell: function() {
+            if (!this.matrix_data.show_column_totals ||
+                !this.matrix_data.show_row_totals) {
+                return;
+            }
+
+            var $cell = $('<td>', {class: 'col-total text-right'});
+            this._apply_aggregate_value($cell, this.total);
+            return $cell;
         },
 
         /**
@@ -346,6 +366,12 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
             if (!~['integer', 'float', 'monetary'].indexOf(type)) {
                 return;
             }
+            this.total = {
+                fname: fname,
+                ftype: type,
+                help: _t('Sum Total'),
+                value: 0,
+            };
             _.each(this.columns, function (column, index) {
                 column.aggregate = {
                     fname: fname,
@@ -361,6 +387,7 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
                         // Nothing to do
                     }
                 });
+                this.total.value += column.aggregate.value;
             }.bind(this));
         },
 
