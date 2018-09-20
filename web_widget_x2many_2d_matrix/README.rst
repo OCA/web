@@ -168,6 +168,7 @@ Contributors
 * Simone Orsi <simone.orsi@camptocamp.com>
 * Timon Tschanz <timon.tschanz@camptocamp.com>
 * Jairo Llopis <jairo.llopis@tecnativa.com>
+* Dennis Sluijk <d.sluijk@onestein.nl>
 
 Maintainer
 ----------
