@@ -8,7 +8,7 @@
 {
     "name": "Clickable many2one fields for tree views",
     "summary": "Open the linked resource when clicking on their name",
-    "version": "10.0.1.0.0",
+    "version": "10.0.1.0.1",
     "category": "Hidden",
     "website": "https://odoo-community.org/",
     "author": "Therp BV, "

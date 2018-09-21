@@ -65,7 +65,7 @@ ListView.Column.include({
                                            options.value_if_empty);
                 }
                 return _.str.sprintf(
-                    '<span class="m2o_clickable">%(name)s <a class="oe_form_uri" data-many2one-clickable-model="%(model)s" data-many2one-clickable-id="%(id)s"><i class="fa fa-external-link"></i></a></span>',
+                    '<span class="m2o_clickable">%(name)s <a class="oe_form_uri" data-many2one-clickable-model="%(model)s" data-many2one-clickable-id="%(id)s"><i class="fa fa-edit"></i></a></span>',
                     values
                 );
             }
