@@ -93,6 +93,7 @@ Contributors
 * Laurent Mignon <laurent.mignon@acsone.eu>
 * Serpent Consulting Services Pvt. Ltd.<jay.vora@serpentcs.com>
 * Guewen Baconnier <guewen.baconnier@camptocamp.com>
+* Wolfgang Pichler <wpichler@callino.at>
 
 Maintainer
 ----------
