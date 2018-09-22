@@ -14,6 +14,18 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: web_responsive
+#: model:ir.ui.view,arch_db:web_responsive.menu
+msgid "<i>Searching:</i>"
+msgstr ""
+
+#. module: web_responsive
+#: model:ir.ui.view,arch_db:web_responsive.menu
+msgid "<span class=\"hidden-xs\">\n"
+"                                &amp;nbsp;|&amp;nbsp;\n"
+"                            </span>"
+msgstr ""
+
+#. module: web_responsive
 #: model:ir.ui.view,arch_db:web_responsive.webclient_bootstrap
 msgid "<span class=\"sr-only\">Toggle App Drawer</span>"
 msgstr ""
@@ -43,6 +55,11 @@ msgstr ""
 #. module: web_responsive
 #: model:ir.ui.view,arch_db:web_responsive.menu
 msgid "More <b class=\"caret\"/>"
+msgstr ""
+
+#. module: web_responsive
+#: model:ir.ui.view,arch_db:web_responsive.menu
+msgid "No Search Supplied."
 msgstr ""
 
 #. module: web_responsive
