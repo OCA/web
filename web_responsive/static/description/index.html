@@ -370,14 +370,13 @@ ul.auto-toc {
 <p><a class="reference external" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external" href="http://www.gnu.org/licenses/lgpl-3.0-standalone.html"><img alt="License: LGPL-3" src="https://img.shields.io/badge/licence-LGPL--3-blue.png" /></a> <a class="reference external" href="https://github.com/OCA/web/tree/11.0/web_responsive"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external" href="https://translation.odoo-community.org/projects/web-11-0/web-11-0-web_responsive"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external" href="https://runbot.odoo-community.org/runbot/162/11.0"><img alt="Try me on Runbot" src="https://img.shields.io/badge/runbot-Try%20me-875A7B.png" /></a></p>
 <p>This module provides a mobile compliant interface for Odoo Community web.</p>
 <p>Features:</p>
-<blockquote>
 <ul class="simple">
 <li>New navigation with an App drawer</li>
 <li>Keyboard shortcuts for easier navigation</li>
 <li>Display kanban views for small screens if an action or field One2x</li>
 <li>Set chatter side (Optional per user)</li>
+<li>Quick search</li>
 </ul>
-</blockquote>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -418,6 +417,13 @@ great styles, but also <a class="reference external" href="https://github.com/OC
 <li>Sticky header and footer in list view only works on certain browsers:
 <a class="reference external" href="https://caniuse.com/#search=sticky">https://caniuse.com/#search=sticky</a> (note that the used feature is in
 <cite>thead</cite>).</li>
+<li>On Android (FireFox) - clicking the search icon does not
+focus the search input.</li>
+<li>On Android (FireFox &amp; Chrome) - clicking the search query input will
+show the on screen keyboard for a split second, but the App Drawer
+immediately closes and the keyboard closes with it.</li>
+<li>Filter menu items completely on client-side, to make it smoother and allow
+users to filter on complete paths of menus and not only on the last item.</li>
 </ul>
 </div>
 <div class="section" id="bug-tracker">
