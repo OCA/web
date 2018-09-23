@@ -29,10 +29,11 @@ This module provides a mobile compliant interface for Odoo Community web.
 
 Features:
 
- * New navigation with an App drawer
- * Keyboard shortcuts for easier navigation
- * Display kanban views for small screens if an action or field One2x
- * Set chatter side (Optional per user)
+* New navigation with an App drawer
+* Keyboard shortcuts for easier navigation
+* Display kanban views for small screens if an action or field One2x
+* Set chatter side (Optional per user)
+* Quick search
 
 **Table of contents**
 
@@ -67,6 +68,13 @@ this module.
 * Sticky header and footer in list view only works on certain browsers:
   https://caniuse.com/#search=sticky (note that the used feature is in
   `thead`).
+* On Android (FireFox) - clicking the search icon does not
+  focus the search input.
+* On Android (FireFox & Chrome) - clicking the search query input will
+  show the on screen keyboard for a split second, but the App Drawer
+  immediately closes and the keyboard closes with it.
+* Filter menu items completely on client-side, to make it smoother and allow
+  users to filter on complete paths of menus and not only on the last item.
 
 Bug Tracker
 ===========
