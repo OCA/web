@@ -44,6 +44,9 @@ WebClient.include({
     ),
     init: function(parent, client_options){
         this._super(parent, client_options);
+        this.channel_warning = 'notify_warning_' + this.session.uid;
+        this.channel_info = 'notify_info_' + this.session.uid;
+
     },
     reload_active_view: function(){
         var action_manager = this.action_manager;
@@ -57,23 +60,17 @@ WebClient.include({
     },
     show_application: function() {
         var res = this._super();
-        this.start_polling();
+        base_bus.bus.start_polling();
+        base_bus.bus.add_channel(this.channel_warning);
+        base_bus.bus.add_channel(this.channel_info);
+        base_bus.bus.on('notification', this, this._web_notify_notification);
         return res
     },
     on_logout: function() {
-        var self = this;
-        base_bus.bus.off('notification', this, this.bus_notification);
+        base_bus.bus.off('notification', this, this._web_notify_notification);
         this._super();
     },
-    start_polling: function() {
-        this.channel_warning = 'notify_warning_' + this.session.uid;
-        this.channel_info = 'notify_info_' + this.session.uid;
-        base_bus.bus.add_channel(this.channel_warning);
-        base_bus.bus.add_channel(this.channel_info);
-        base_bus.bus.on('notification', this, this.bus_notification);
-        base_bus.bus.start_polling();
-    },
-    bus_notification: function(notifications) {
+    _web_notify_notification: function (notifications) {
         var self = this;
         _.each(notifications, function (notification) { 
             var channel = notification[0];
