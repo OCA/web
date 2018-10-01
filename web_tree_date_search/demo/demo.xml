@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="base.action_res_users" model="ir.actions.act_window">
+            <field name="res_model">res.users</field>
+            <field name="context">{'dates_filter' : ['login_date']}</field>
+        </record>
+
+    </data>
+</openerp>

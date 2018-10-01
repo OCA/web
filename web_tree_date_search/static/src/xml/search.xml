@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+  <t t-name="TreeDateSearch">
+    <div class="ui-toolbar" style="margin-bottom:0px;">
+    </div>
+  </t>
+
+  <t t-name="TreeDateSearchField">
+    <div class='oe_form_dropdown_section' style="min-width: 208px; margin-left:4px;">
+          <h4><t t-esc="field_name"/> :</h4>
+          <div class='oe_form' style='margin-right:3px; display: inline;' >
+              <span/>
+          </div>
+          <div class='oe_form' style='margin-left:3px; display: inline; float: right;' >
+              <span/>
+          </div>
+    </div>
+  </t>
+</templates>
