@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="web_tree_date_search_toolbar">
+        <div class="ui-toolbar web_tree_date_search_toolbar" style="margin-bottom:0px;">
+        </div>
+    </t>
+
+    <t t-name="web_tree_date_search_field">
+        <div class="oe_form_dropdown_section web_tree_date_search_field">
+            <h4><t t-esc="field_name"/> :</h4>
+            <div class="oe_form">
+                <span/>
+            </div>
+            <div class="oe_form oe_right">
+                <span/>
+            </div>
+        </div>
+    </t>
+</templates>

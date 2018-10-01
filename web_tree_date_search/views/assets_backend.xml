@@ -3,8 +3,10 @@
     <data>
         <template id="assets_backend" name="search_assets_backends" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
-                <script type="text/javascript" src="/web_tree_date_search/static/src/js/search.js"></script>
-            </xpath> 
+                <link rel="stylesheet"
+                      href="/web_tree_date_search/static/src/css/web_tree_date_search.css"/>
+                <script type="text/javascript" src="/web_tree_date_search/static/src/js/web_tree_date_search.js"></script>
+            </xpath>
         </template>
     </data>
 </openerp>
