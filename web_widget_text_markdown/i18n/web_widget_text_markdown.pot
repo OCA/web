@@ -15,7 +15,7 @@ msgstr ""
 
 #. module: web_widget_text_markdown
 #. openerp-web
-#: code:addons/web_widget_text_markdown/static/src/js/web_widget_text_markdown.js:21
+#: code:addons/web_widget_text_markdown/static/src/js/web_widget_text_markdown.js:20
 #, python-format
 msgid "MarkDown"
 msgstr ""
