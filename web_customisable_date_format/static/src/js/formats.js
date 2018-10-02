@@ -1,7 +1,7 @@
 // © 2016- Leonardo Donelli (donelli at monksoftware it)
 // License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-odoo.define('web_widget_date_format.formats', function(require) {
+odoo.define('web_customisable_date_format.formats', function(require) {
     'use strict';
 
     var time = require('web.time');

@@ -2,9 +2,9 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-==============================
-Date widget with custom format
-==============================
+========================
+Customisable date format
+========================
 
 This module adds the possibility to specify a rendering format
 for date and datetime fields, using MomentJS tokens.
