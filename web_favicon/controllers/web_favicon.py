@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2015 Therp BV <http://therp.nl>
 # Copyright 2017 QubiQ 2010 <http://www.qubiq.es>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
