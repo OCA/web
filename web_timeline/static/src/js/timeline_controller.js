@@ -25,6 +25,8 @@ var CalendarController = AbstractController.extend({
         this.date_stop = params.date_stop;
         this.date_delay = params.date_delay;
         this.context = params.actionContext;
+        this.moveQueue = [];
+        this.debouncedInternalMove = _.debounce(this.internalMove, 0);
     },
 
     update: function(params, options) {
@@ -111,7 +113,6 @@ var CalendarController = AbstractController.extend({
     },
 
     _onMove: function(event) {
-        var self = this;
         var item = event.data.item;
         var view = this.renderer.view;
         var fields = view.fields;
@@ -139,16 +140,35 @@ var CalendarController = AbstractController.extend({
         if (this.renderer.last_group_bys && this.renderer.last_group_bys instanceof Array) {
             data[this.renderer.last_group_bys[0]] = group;
         }
-        self._rpc({
-            model: self.model.modelName,
-            method: 'write',
-            args: [
-                [event.data.item.id],
-                data,
-            ],
-            context: self.getSession().user_context,
-        }).then(function() {
-            event.data.callback(event.data.item);
+
+        this.moveQueue.push({
+            id: event.data.item.id,
+            data: data,
+            event: event
+        });
+
+        this.debouncedInternalMove();
+    },
+
+    internalMove: function() {
+        var self = this;
+        var queue = this.moveQueue.slice();
+        this.moveQueue = [];
+        var defers = [];
+        _.each(queue, function(item) {
+            defers.push(self._rpc({
+                model: self.model.modelName,
+                method: 'write',
+                args: [
+                    [item.event.data.item.id],
+                    item.data,
+                ],
+                context: self.getSession().user_context,
+            }).then(function() {
+                item.event.data.callback(item.event.data.item);
+            }));
+        });
+        return $.when.apply($, defers).done(function() {
             self.write_completed({
                 adjust_window: false
             });
@@ -203,8 +223,11 @@ var CalendarController = AbstractController.extend({
         if (this.date_delay) {
             default_context['default_'.concat(this.date_delay)] = 1;
         }
-        if (this.date_stop) {
-            default_context['default_'.concat(this.date_stop)] = moment(item.start).add(1, 'hours').toDate();
+        if (this.date_start) {
+            default_context['default_'.concat(this.date_start)] = moment(item.start).add(1, 'hours').toDate();
+        }
+        if (this.date_stop && item.end) {
+            default_context['default_'.concat(this.date_stop)] = moment(item.end).add(1, 'hours').toDate();
         }
         if (item.group > 0) {
             default_context['default_'.concat(this.renderer.last_group_bys[0])] = item.group;
@@ -218,7 +241,10 @@ var CalendarController = AbstractController.extend({
             on_saved: function (record) {
                 self.create_completed([record.res_id]);
             },
-        }).open();
+        }).open().on('closed', this, function() {
+            event.data.callback();
+        });
+
         return false;
     },
 
