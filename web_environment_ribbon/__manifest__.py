@@ -6,7 +6,7 @@
 
 {
     'name': "Web Environment Ribbon",
-    'version': '11.0.1.0.2',
+    'version': '12.0.1.0.0',
     'category': 'Web',
     'author': 'Francesco OpenCode Apruzzese, '
               'Tecnativa, '
@@ -17,11 +17,9 @@
         'web',
         ],
     "data": [
-        'view/base_view.xml',
         'data/ribbon_data.xml',
+        'view/base_view.xml',
         ],
-    "update_xml": [],
-    "demo_xml": [],
     "auto_install": False,
     'installable': True
 }
