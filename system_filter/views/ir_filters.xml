@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="ir_filters_tree_view">
+        <field name="name">ir.filters.tree (in system_filter)</field>
+        <field name="model">ir.filters</field>
+        <field name="inherit_id" ref="base.ir_filters_view_tree"/>
+        <field name="priority" eval="90"/>
+        <field name="arch" type="xml">
+            <field name="is_default" position="after">
+                <field name="is_system"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="ir_filters_form_view">
+        <field name="name">ir.filters.form (in system_filter)</field>
+        <field name="model">ir.filters</field>
+        <field name="inherit_id" ref="base.ir_filters_view_form"/>
+        <field name="priority" eval="90"/>
+        <field name="arch" type="xml">
+            <field name="is_default" position="after">
+                <field name="is_system"/>
+            </field>
+        </field>
+    </record>
+</odoo>
