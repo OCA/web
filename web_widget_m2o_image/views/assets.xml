@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- # License LGPLv3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.en.html). -->
+
+<odoo>
+    <template id="assets_backend" name="web_widget_m2o_image assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/web_widget_m2o_image/static/src/css/web_widget_m2o_image.css" />
+            <script type="text/javascript" src="/web_widget_m2o_image/static/src/js/web_widget_m2o_image.js" />
+        </xpath>
+    </template>
+</odoo>
