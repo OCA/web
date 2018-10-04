@@ -14,26 +14,74 @@ Web Responsive
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/11.0/web_responsive
+    :target: https://github.com/OCA/web/tree/12.0/web_responsive
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-11-0/web-11-0-web_responsive
+    :target: https://translation.odoo-community.org/projects/web-12-0/web-12-0-web_responsive
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/162/11.0
+    :target: https://runbot.odoo-community.org/runbot/162/12.0
     :alt: Try me on Runbot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
-This module provides a mobile compliant interface for Odoo Community web.
+This module adds responsiveness to web backend.
 
-Features:
+Features for all devices:
 
-* New navigation with an App drawer
-* Keyboard shortcuts for easier navigation
-* Display kanban views for small screens if an action or field One2x
-* Set chatter side (Optional per user)
-* Quick search
+* New navigation with an app drawer
+
+  .. image:: https://user-images.githubusercontent.com/973709/48417193-09a1e080-e74a-11e8-8a0c-e73eb689b2fb.gif
+
+* Quick menu search from the app drawer
+
+  .. image:: https://user-images.githubusercontent.com/973709/48417213-17576600-e74a-11e8-846a-57691e82636b.gif
+
+Features for mobile:
+
+* App-specific submenus are shown on full screen when toggling them from the
+  "hamburger" menu
+
+  .. image:: https://user-images.githubusercontent.com/973709/48417297-51286c80-e74a-11e8-9a47-22c810b18c43.gif
+
+* View type picker dropdown displays confortably
+
+  .. image:: https://user-images.githubusercontent.com/973709/50964322-e3d55580-14c6-11e9-8249-48db9539600f.gif
+
+* Top app bar is always visible, but the control panel is hidden when
+  scrolling down, to save some vaulable vertical space
+
+  .. image:: https://user-images.githubusercontent.com/973709/50964496-5cd4ad00-14c7-11e9-9261-fd223a329d02.gif
+
+* Form status bar action and status buttons are collapsed in dropdowns.
+  Other control panel buttons use icons to save space.
+
+  .. image:: https://user-images.githubusercontent.com/973709/50965446-e08f9900-14c9-11e9-92d6-dda472cb6557.gif
+
+* Breadcrumbs navigation is collapsed with a "back arrow" button.
+
+  .. image:: https://user-images.githubusercontent.com/973709/50965168-1d0ec500-14c9-11e9-82a0-dfee82ed0861.gif
+
+Features for computers:
+
+* Keyboard shortcuts for easier navigation, **using ``Alt + Shift + [key]``**
+  combination instead of just ``Alt + [key]``.
+  See https://github.com/odoo/odoo/issues/30068 to understand why.
+
+  .. image:: https://user-images.githubusercontent.com/973709/48417578-ff341680-e74a-11e8-8881-017709e912bc.png
+
+
+* Autofocus on search menu box when opening the drawer
+
+  .. image:: https://user-images.githubusercontent.com/973709/48417213-17576600-e74a-11e8-846a-57691e82636b.gif
+
+* Set chatter on the side of the screen, optional per user
+
+  .. image:: https://user-images.githubusercontent.com/973709/48417270-41108d00-e74a-11e8-9172-cba825d027ed.gif
+
+* Full width form sheets
+
+  .. image:: https://user-images.githubusercontent.com/973709/48417428-ac5a5f00-e74a-11e8-8839-5bc538c54c1d.png
 
 **Table of contents**
 
@@ -45,36 +93,20 @@ Usage
 
 The following keyboard shortcuts are implemented:
 
-* Toggle App Drawer - `ActionKey <https://en.wikipedia.org/wiki/Access_key#Access_in_different_browsers>` + ``A``
-* Navigate Apps Drawer - Arrow Keys
-* Type to select App Links
-* ``esc`` to close App Drawer
+* Toggle app drawer - ``Alt + Shift + H``
+* Navigate app search results - Arrow keys
+* Choose app result - ``Enter``
+* ``Esc`` to close app drawer
 
 Known issues / Roadmap
 ======================
 
-Note: Data added to the footer ``support_branding`` is not shown while using
-this module.
-
-* Provide full menu search feature instead of just App search
-* Drag drawer from left to open in mobile
-* Figure out how to test focus on hidden elements for keyboard nav tests
-* If you resize the window, body gets a wrong ``overflow: auto`` css property
-  and you need to refresh your view or open/close the app drawer to fix that.
-* Override LESS styling to allow for responsive widget layouts
-* Adding ``oe_main_menu_navbar`` ID to the top navigation bar triggers some
-  great styles, but also `JavaScript that causes issues on mobile
-  <https://github.com/OCA/web/pull/446#issuecomment-254827880>`_
-* Sticky header and footer in list view only works on certain browsers:
-  https://caniuse.com/#search=sticky (note that the used feature is in
-  `thead`).
-* On Android (FireFox) - clicking the search icon does not
-  focus the search input.
-* On Android (FireFox & Chrome) - clicking the search query input will
-  show the on screen keyboard for a split second, but the App Drawer
-  immediately closes and the keyboard closes with it.
-* Filter menu items completely on client-side, to make it smoother and allow
-  users to filter on complete paths of menus and not only on the last item.
+* To view the full experience in a device, the page must be loaded with the
+  device screen size. This means that, if you change the size of your browser,
+  you should reload the web client to get the full experience for that
+  new size. This is Odoo's own limitation.
+* App navigation with keyboard.
+* Make it more beautiful. Maybe OCA-branded?
 
 Bug Tracker
 ===========
@@ -82,7 +114,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_responsive%0Aversion:%2011.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_responsive%0Aversion:%2012.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -118,6 +150,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/11.0/web_responsive>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/12.0/web_responsive>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
