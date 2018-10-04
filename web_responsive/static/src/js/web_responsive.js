@@ -1,532 +1,409 @@
-/* Copyright 2016 LasLabs Inc.
+/* Copyright 2018 Tecnativa - Jairo Llopis
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
-odoo.define('web_responsive', function(require) {
+odoo.define('web_responsive', function (require) {
     'use strict';
 
-    var Menu = require('web.Menu');
-    var rpc = require('web.rpc');
-    var SearchView = require('web.SearchView');
-    var core = require('web.core');
-    var config = require('web.config');
-    var session = require('web.session');
-    var ViewManager = require('web.ViewManager');
-    var RelationalFields = require('web.relational_fields');
+    var AbstractWebClient = require("web.AbstractWebClient");
+    var AppsMenu = require("web.AppsMenu");
+    var config = require("web.config");
+    var core = require("web.core");
     var FormRenderer = require('web.FormRenderer');
-    var Widget = require('web.Widget');
+    var Menu = require("web.Menu");
+    var RelationalFields = require('web.relational_fields');
 
-    var qweb = core.qweb;
-
-    Menu.include({
-
-        // Force all_outside to prevent app icons from going into more menu
-        reflow: function() {
-            this._super('all_outside');
-        },
-
-        /* Overload to collapse unwanted visible submenus
-         * @param allow_open bool Switch to allow submenus to be opened
-         */
-        open_menu: function(id, allowOpen) {
-            this._super(id);
-            if (allowOpen) {
-                return;
-            }
-            var $clicked_menu = this.$secondary_menus.find('a[data-menu=' + id + ']');
-            $clicked_menu.parents('.oe_secondary_submenu').css('display', '');
+    /**
+     * Reduce menu data to a searchable format understandable by fuzzy.js
+     *
+     * `AppsMenu.init()` gets `menuData` in a format similar to this (only
+     * relevant data is shown):
+     *
+     * ```js
+     * {
+     *  [...],
+     *  children: [
+     *    // This is a menu entry:
+     *    {
+     *      action: "ir.actions.client,94", // Or `false`
+     *      children: [... similar to above "children" key],
+     *      name: "Actions",
+     *      parent_id: [146, "Settings/Technical/Actions"], // Or `false`
+     *    },
+     *    ...
+     *  ]
+     * }
+     * ```
+     *
+     * This format is very hard to process to search matches, and it would
+     * slow down the search algorithm, so we reduce it with this method to be
+     * able to later implement a simpler search.
+     *
+     * @param {Object} memo
+     * Reference to current result object, passed on recursive calls.
+     *
+     * @param {Object} menu
+     * A menu entry, as described above.
+     *
+     * @returns {Object}
+     * Reduced object, without entries that have no action, and with a
+     * format like this:
+     *
+     * ```js
+     * {
+     *  "Discuss": {Menu entry Object},
+     *  "Settings": {Menu entry Object},
+     *  "Settings/Technical/Actions/Actions": {Menu entry Object},
+     *  ...
+     * }
+     * ```
+     */
+    function findNames (memo, menu) {
+        if (menu.action) {
+            var key = menu.parent_id ? menu.parent_id[1] + "/" : "";
+            memo[key + menu.name] = menu;
         }
-
-    });
-
-    SearchView.include({
-
-        // Prevent focus of search field on mobile devices
-        toggle_visibility: function(is_visible) {
-            $('div.oe_searchview_input').last().one(
-              'focus', $.proxy(this.preventMobileFocus, this));
-            return this._super(is_visible);
-        },
-
-        // It prevents focusing of search el on mobile
-        preventMobileFocus: function(event) {
-            if (this.isMobile()) {
-                event.preventDefault();
-            }
-        },
-
-        // For lack of Modernizr, TouchEvent will do
-        isMobile: function() {
-            try {
-                document.createEvent('TouchEvent');
-                return true;
-            } catch (ex) {
-                return false;
-            }
+        if (menu.children.length) {
+            _.reduce(menu.children, findNames, memo);
         }
-    });
+        return memo;
+    }
 
-    var AppDrawer = Widget.extend({
+    AppsMenu.include({
+        events: _.extend({
+            "keydown .search-input input": "_searchResultsNavigate",
+            "click .o-menu-search-result": "_searchResultChosen",
+            "shown.bs.dropdown": "_searchFocus",
+            "hidden.bs.dropdown": "_searchReset",
+        }, AppsMenu.prototype.events),
 
-        /* Provides all features inside of the application drawer navigation.
-
-        Attributes:
-            directionCodes (str): Canonical key name to direction mappings.
-            deleteCodes
+        /**
+         * Rescue some menu data stripped out in original method.
+         *
+         * @override
          */
-
-        LEFT: 'left',
-        RIGHT: 'right',
-        UP: 'up',
-        DOWN: 'down',
-
-        // These keys are ignored when presented as single input
-        MODIFIERS: [
-            'Alt',
-            'ArrowDown',
-            'ArrowLeft',
-            'ArrowRight',
-            'ArrowUp',
-            'Control',
-            'Enter',
-            'Escape',
-            'Meta',
-            'Shift',
-            'Tab',
-        ],
-
-        isOpen: false,
-        keyBuffer: '',
-        keyBufferTime: 500,
-        keyBufferTimeoutEvent: false,
-        dropdownHeightFactor: 0.90,
-        initialized: false,
-        searching: false,
-
-        init: function() {
+        init: function (parent, menuData) {
             this._super.apply(this, arguments);
-            this.directionCodes = {
-                'left': this.LEFT,
-                'right': this.RIGHT,
-                'up': this.UP,
-                'pageup': this.UP,
-                'down': this.DOWN,
-                'pagedown': this.DOWN,
-                '+': this.RIGHT,
-                '-': this.LEFT
-            };
-            this.$searchAction = $('.app-drawer-search-action');
-            this.$searchAction.hide();
-            this.$searchResultsContainer = $('#appDrawerSearchResults');
-            this.$searchInput = $('#appDrawerSearchInput');
-            this.initDrawer();
-            this.handleWindowResize();
-            var $clickZones = $('.odoo_webclient_container, ' +
-                'a.oe_menu_leaf, ' +
-                'a.oe_menu_toggler, ' +
-                'a.oe_logo, ' +
-                'i.oe_logo_edit'
+            // Keep base64 icon for main menus
+            for (var n in this._apps) {
+                this._apps[n].web_icon_data =
+                    menuData.children[n].web_icon_data;
+            }
+            // Store menu data in a format searchable by fuzzy.js
+            this._searchableMenus = _.reduce(
+                menuData.children,
+                findNames,
+                {}
             );
-            $clickZones.click($.proxy(this.handleClickZones, this));
-            this.$searchResultsContainer.click($.proxy(this.searchMenus, this));
-            this.$el.find('.drawer-search-open').click(
-                $.proxy(this.searchMenus, this)
-            );
-            this.$el.find('.drawer-search-close').hide().click(
-                $.proxy(this.closeSearchMenus, this)
-            );
-            this.filter_timeout = $.Deferred();
-            core.bus.on('resize', this, this.handleWindowResize);
-            core.bus.on('keydown', this, this.handleKeyDown);
-            core.bus.on('keyup', this, this.redirectKeyPresses);
-            core.bus.on('keypress', this, this.redirectKeyPresses);
+            // Search only after timeout, for fast typers
+            this._search_def = $.Deferred();
         },
 
-        // Provides initialization handlers for Drawer
-        initDrawer: function() {
-            this.$el = $('.drawer');
-            this.$el.drawer();
-            this.$el.one('drawer.opened', $.proxy(this.onDrawerOpen, this));
-
-            // Setup the iScroll options.
-            // You should be able to pass these to ``.drawer``, but scroll freezes.
-            this.$el.on(
-                'drawer.opened',
-                function setIScrollProbes(){
-                    var onIScroll = $.proxy(
-                        function() {
-                            this.iScroll.refresh();
-                        },
-                        this
-                    );
-                    // Scroll probe aggressiveness level
-                    // 2 == always executes the scroll event except during momentum and bounce.
-                    this.iScroll.options.probeType = 2;
-                    this.iScroll.on('scroll', onIScroll);
-                    // Initialize Scrollbars manually
-                    this.iScroll.options.scrollbars = true;
-                    this.iScroll.options.fadeScrollbars = true;
-                    this.iScroll._initIndicators();
-                }
-            );
-            this.initialized = true;
-        },
-
-        // Provides handlers to hide drawer when "unfocused"
-        handleClickZones: function() {
-            this.$el.drawer('close');
-            $('.o_sub_menu_content')
-                .parent()
-                .collapse('hide');
-            $('.navbar-collapse').collapse('hide');
-        },
-
-        // Resizes bootstrap dropdowns for screen
-        handleWindowResize: function() {
-            $('.dropdown-scrollable').css(
-                'max-height', $(window).height() * this.dropdownHeightFactor
-            );
-        },
-
-        /* Provide keyboard shortcuts for app drawer nav.
-         *
-         * It is required to perform this functionality only on the ``keydown``
-         * event in order to prevent duplication of the arrow events.
-         *
-         * @param e The ``keydown`` event triggered by ``core.bus``.
+        /**
+         * @override
          */
-        handleKeyDown: function(e) {
-            if (!this.isOpen){
-                return;
-            }
-            var directionCode = $.hotkeys.specialKeys[e.keyCode.toString()];
-            if (Object.keys(this.directionCodes).indexOf(directionCode) !== -1) {
-                var $link = false;
-                if (this.searching) {
-                    var $collection = this.$el.find('#appDrawerMenuSearch a');
-                    $link = this.findAdjacentLink(
-                        this.$el.find('#appDrawerMenuSearch a:first, #appDrawerMenuSearch a.web-responsive-focus').last(),
-                        this.directionCodes[directionCode],
-                        $collection,
-                        true
-                    );
-                } else {
-                    $link = this.findAdjacentLink(
-                        this.$el.find('#appDrawerApps a:first, #appDrawerApps a.web-responsive-focus').last(),
-                        this.directionCodes[directionCode]
-                    );
-                }
-                this.selectLink($link);
-            } else if ($.hotkeys.specialKeys[e.keyCode.toString()] === 'esc') {
-                // We either back out of the search, or close the app drawer.
-                if (this.searching) {
-                    this.closeSearchMenus();
-                } else {
-                    this.handleClickZones();
-                }
-            } else {
-                this.redirectKeyPresses(e);
-            }
+        start: function () {
+            this.$search_container = this.$(".search-container");
+            this.$search_input = this.$(".search-input input");
+            this.$search_results = this.$(".search-results");
+            return this._super.apply(this, arguments);
         },
 
-        /* Provide centralized key event redirects for the App Drawer.
+        /**
+         * Get all info for a given menu.
          *
-         * This method is for all key events not related to arrow navigation.
+         * @param {String} key
+         * Full path to requested menu.
          *
-         * @param e The key event that was triggered by ``core.bus``.
+         * @returns {Object}
+         * Menu definition, plus extra needed keys.
          */
-        redirectKeyPresses: function(e) {
-            if ( !this.isOpen ) {
-                // Drawer isn't open; Ignore.
-                return;
-            }
-
-            // Trigger navigation to pseudo-focused link
-            // & fake a click (in case of anchor link).
-            if (e.key === 'Enter') {
-                var href = $('.web-responsive-focus').attr('href');
-                if (!_.isUndefined(href)) {
-                    window.location.href = href;
-                    this.handleClickZones();
-                }
-                return;
-            }
-
-            // Ignore any other modifier keys.
-            if (this.MODIFIERS.indexOf(e.key) !== -1) {
-                return;
-            }
-
-            // Event is already targeting the search input.
-            // Perform search, then stop processing.
-            if ( e.target === this.$searchInput[0] ) {
-                this.searchMenus();
-                return;
-            }
-
-            // Prevent default event,
-            // redirect it to the search input,
-            // and search.
-            e.preventDefault();
-            this.$searchInput.trigger({
-                type: e.type,
-                key: e.key,
-                keyCode: e.keyCode,
-                which: e.which,
-            });
-            this.searchMenus();
-
+        _menuInfo: function (key) {
+            var original = this._searchableMenus[key];
+            return _.extend({
+                action_id: parseInt(original.action.split(',')[1], 10),
+            }, original);
         },
 
-        /* Performs close actions
-         * @fires ``drawer.closed`` to the ``core.bus``
-         * @listens ``drawer.opened`` and sends to onDrawerOpen
+        /**
+         * Autofocus on search field on big screens.
          */
-        onDrawerClose: function() {
-            core.bus.trigger('drawer.closed');
-            this.closeSearchMenus();
-            this.$el.one('drawer.opened', $.proxy(this.onDrawerOpen, this));
-            this.isOpen = false;
-            // Remove inline style inserted by drawer.js
-            this.$el.css("overflow", "");
-        },
-
-        /* Finds app links and register event handlers
-        * @fires ``drawer.opened`` to the ``core.bus``
-        * @listens ``drawer.closed`` and sends to :meth:``onDrawerClose``
-        */
-       onDrawerOpen: function() {
-            this.closeSearchMenus();
-            this.$appLinks = $('.app-drawer-icon-app').parent();
-            this.selectLink($(this.$appLinks[0]));
-            this.$el.one('drawer.closed', $.proxy(this.onDrawerClose, this));
-            core.bus.trigger('drawer.opened');
-            this.isOpen = true;
-            this.$searchInput.val("");
-        },
-
-        // Selects a link visibly & deselects others.
-        selectLink: function($link) {
-            $('.web-responsive-focus').removeClass('web-responsive-focus');
-            if ($link) {
-                $link.addClass('web-responsive-focus');
+        _searchFocus: function () {
+            if (!config.device.isMobile) {
+                this.$search_input.focus();
             }
         },
 
         /**
-         * Search matching menus immediately
+         * Reset search input and results
+         */
+        _searchReset: function () {
+            this.$search_container.removeClass("has-results");
+            this.$search_results.empty();
+            this.$search_input.val("");
+        },
+
+        /**
+         * Schedule a search on current menu items.
+         */
+        _searchMenusSchedule: function () {
+            this._search_def.reject();
+            this._search_def = $.Deferred();
+            setTimeout(this._search_def.resolve.bind(this._search_def), 50);
+            this._search_def.done(this._searchMenus.bind(this));
+        },
+
+        /**
+         * Search among available menu items, and render that search.
          */
         _searchMenus: function () {
-            rpc.query({
-                model: 'ir.ui.menu',
-                method: 'search_read',
-                kwargs: {
-                    fields: ['action', 'display_name', 'id'],
-                    domain: [
-                        ['name', 'ilike', this.$searchInput.val()],
-                        ['action', '!=', false],
-                    ],
-                    context: session.user_context,
-                },
-            }).then(this.showFoundMenus.bind(this));
+            var query = this.$search_input.val();
+            if (query === "") {
+                this.$search_container.removeClass("has-results");
+                this.$search_results.empty();
+                return;
+            }
+            var results = fuzzy.filter(
+                query,
+                _.keys(this._searchableMenus),
+                {
+                    pre: "<b>",
+                    post: "</b>",
+                }
+            );
+            this.$search_container.toggleClass(
+                "has-results",
+                Boolean(results.length)
+            );
+            this.$search_results.html(
+                core.qweb.render(
+                    "web_responsive.MenuSearchResults",
+                    {
+                        results: results,
+                        widget: this,
+                    }
+                )
+            );
         },
 
         /**
-         * Queue the next menu search for the search input
+         * Use chooses a search result, so we navigate to that menu
+         *
+         * @param {jQuery.Event} event
          */
-        searchMenus: function() {
-            // Stop current search, if any
-            this.filter_timeout.reject();
-            this.filter_timeout = $.Deferred();
-            // Schedule a new search
-            this.filter_timeout.done(this._searchMenus.bind(this));
-            setTimeout(
-                this.filter_timeout.resolve.bind(this.filter_timeout),
-                200
-            );
-            // Focus search input
-            this.$searchInput = $('#appDrawerSearchInput').focus();
+        _searchResultChosen: function (event) {
+            event.preventDefault();
+            var $result = $(event.currentTarget),
+                text = $result.text().trim(),
+                data = $result.data(),
+                suffix = ~text.indexOf("/") ? "/" : "";
+            // Load the menu view
+            this.trigger_up("menu_clicked", {
+                action_id: data.actionId,
+                id: data.menuId,
+                previous_menu_id: data.parentId,
+            });
+            // Find app that owns the chosen menu
+            var app = _.find(this._apps, function (_app) {
+                return text.indexOf(_app.name + suffix) === 0;
+            });
+            // Update navbar menus
+            core.bus.trigger("change_menu_section", app.menuID);
         },
 
-        /* Display the menus that are provided as input.
+        /**
+         * Navigate among search results
+         *
+         * @param {jQuery.Event} event
          */
-        showFoundMenus: function(menus) {
-            this.searching = true;
-            this.$el.find('#appDrawerApps').hide();
-            this.$searchAction.hide();
-            this.$el.find('.drawer-search-close').show();
-            this.$el.find('.drawer-search-open').hide();
-            this.$searchResultsContainer
-                // Render the results
-                .html(
-                    core.qweb.render(
-                        'AppDrawerMenuSearchResults',
-                        {menus: menus}
-                    )
-                )
-                // Get the parent container and show it.
-                .closest('#appDrawerMenuSearch')
-                .show()
-                // Find the input, set focus.
-                .find('.menu-search-query')
-                .focus()
-            ;
-            var $menuLinks = this.$searchResultsContainer.find('a');
-            $menuLinks.click($.proxy(this.handleClickZones, this));
-            this.selectLink($menuLinks.first());
-        },
-
-        /* Close search menu and switch back to app menu.
-         */
-        closeSearchMenus: function() {
-            this.searching = false;
-            this.$el.find('#appDrawerApps').show();
-            this.$el.find('.drawer-search-close').hide();
-            this.$el.find('.drawer-search-open').show();
-            this.$searchResultsContainer.closest('#appDrawerMenuSearch').hide();
-            this.$searchAction.show();
-        },
-
-        /* Returns the link adjacent to $link in provided direction.
-         * It also handles edge cases in the following ways:
-         *   * Moves to last link if LEFT on first
-         *   * Moves to first link if PREV on last
-         *   * Moves to first link of following row if RIGHT on last in row
-         *   * Moves to last link of previous row if LEFT on first in row
-         *   * Moves to top link in same column if DOWN on bottom row
-         *   * Moves to bottom link in same column if UP on top row
-         * @param $link jQuery obj of App icon link
-         * @param direction str of direction to go (constants LEFT, UP, etc.)
-         * @param $objs jQuery obj representing the collection of links. Defaults
-         *  to `this.$appLinks`.
-         * @param restrictHorizontal bool Set to true if the collection consists
-         *  only of vertical elements.
-         * @return jQuery obj for adjacent link
-         */
-        findAdjacentLink: function($link, direction, $objs, restrictHorizontal) {
-
-            if (_.isUndefined($objs)) {
-                $objs = this.$appLinks;
+        _searchResultsNavigate: function (event) {
+            // Exit soon when not navigating results
+            if (this.$search_results.is(":empty")) {
+                // Just in case it is the 1st search
+                this._searchMenusSchedule();
+                return;
             }
-
-            var obj = [];
-            var $rows = restrictHorizontal ? $objs : this.getRowObjs($link, this.$appLinks);
-
-            switch (direction) {
-                case this.LEFT:
-                    obj = $objs[$objs.index($link) - 1];
-                    if (!obj) {
-                        obj = $objs[$objs.length - 1];
-                    }
-                    break;
-                case this.RIGHT:
-                    obj = $objs[$objs.index($link) + 1];
-                    if (!obj) {
-                        obj = $objs[0];
-                    }
-                    break;
-                case this.UP:
-                    obj = $rows[$rows.index($link) - 1];
-                    if (!obj) {
-                        obj = $rows[$rows.length - 1];
-                    }
-                    break;
-                case this.DOWN:
-                    obj = $rows[$rows.index($link) + 1];
-                    if (!obj) {
-                        obj = $rows[0];
-                    }
-                    break;
-            }
-
-            if (obj.length) {
+            // Find current results and active element (1st by default)
+            var all = this.$search_results.find(".o-menu-search-result"),
+                pre_focused = all.filter(".active") || $(all[0]),
+                offset = all.index(pre_focused),
+                key = event.key;
+                // Transform tab presses in arrow presses
+            if (key === "Tab") {
                 event.preventDefault();
+                key = event.shiftKey ? "ArrowUp" : "ArrowDown";
             }
+            switch (key) {
+            // Pressing enter is the same as clicking on the active element
+            case "Enter":
+                pre_focused.click();
+                break;
+            // Navigate up or down
+            case "ArrowUp":
+                offset--;
+                break;
+            case "ArrowDown":
+                offset++;
+                break;
+            // Other keys trigger a search
+            default:
+                this._searchMenusSchedule();
+                return;
+            }
+            // Allow looping on results
+            if (offset < 0) {
+                offset = all.length + offset;
+            } else if (offset >= all.length) {
+                offset -= all.length;
+            }
+            // Switch active element
+            var new_focused = $(all[offset]);
+            pre_focused.removeClass("active");
+            new_focused.addClass("active");
+            this.$search_results.scrollTo(new_focused, {
+                offset: {
+                    top: this.$search_results.height() * -0.5,
+                },
+            });
+        },
+    });
 
-            return $(obj);
+    Menu.include({
+        events: _.extend({
+            // Clicking a hamburger menu item should close the hamburger
+            "click .o_menu_sections [role=menuitem]": "_hideMobileSubmenus",
+            // Opening any dropdown in the navbar should hide the hamburger
+            "show.bs.dropdown .o_menu_systray, .o_menu_apps":
+                "_hideMobileSubmenus",
+        }, Menu.prototype.events),
 
+        start: function () {
+            this.$menu_toggle = this.$(".o-menu-toggle");
+            return this._super.apply(this, arguments);
         },
 
-        /* Returns els in the same row
-         * @param @obj jQuery object to get row for
-         * @param $grid jQuery objects representing grid
-         * @return $objs jQuery objects of row
+        /**
+         * Hide menus for current app if you're in mobile
          */
-        getRowObjs: function($obj, $grid) {
-            // Filter by object which middle lies within left/right bounds
-            function filterWithin(left, right) {
-                return function() {
-                    var $this = $(this),
-                        thisMiddle = $this.offset().left + $this.width() / 2;
-                    return thisMiddle >= left && thisMiddle <= right;
-                };
+        _hideMobileSubmenus: function () {
+            if (
+                this.$menu_toggle.is(":visible") &&
+                this.$section_placeholder.is(":visible")
+            ) {
+                this.$section_placeholder.collapse("hide");
             }
-            var left = $obj.offset().left,
-                right = left + $obj.outerWidth();
-            return $grid.filter(filterWithin(left, right));
-        }
+        },
 
-    });
-
-    // Init a new AppDrawer when the web client is ready
-    core.bus.on('web_client_ready', null, function () {
-        new AppDrawer();
-    });
-
-    // if we are in small screen change default view to kanban if exists
-    ViewManager.include({
-        get_default_view: function() {
-            var default_view = this._super();
-            if (config.device.size_class <= config.device.SIZES.XS &&
-                default_view.type !== 'kanban' &&
-                this.views.kanban) {
-                default_view.type = 'kanban';
+        /**
+         * No menu brand in mobiles
+         *
+         * @override
+         */
+        _updateMenuBrand: function () {
+            if (!config.device.isMobile) {
+                return this._super.apply(this, arguments);
             }
-            return default_view;
         },
     });
 
-    // FieldStatus (responsive fold)
     RelationalFields.FieldStatus.include({
-        _renderQWebValues: function () {
-            return {
-                selections: this.status_information, // Needed to preserve order
-                has_folded: _.filter(this.status_information, {'selected': false}).length > 0,
-                clickable: !!this.attrs.clickable,
-            };
-        },
 
-        _render: function () {
-            // FIXME: Odoo framework creates view values & render qweb in the
-            //     same method. This cause a "double render" process to use
-            //     new custom values.
+        /**
+         * Fold all on mobiles.
+         *
+         * @override
+         */
+        _setState: function () {
             this._super.apply(this, arguments);
-            this.$el.html(qweb.render("FieldStatus.content", this._renderQWebValues()));
-        }
+            if (config.device.isMobile) {
+                _.map(this.status_information, function (value) {
+                    value.fold = true;
+                });
+            }
+        },
     });
 
     // Responsive view "action" buttons
     FormRenderer.include({
-        _renderHeaderButtons: function (node) {
-            var self = this;
-            var $buttons = this._super(node);
 
-            var $container = $(qweb.render('web_responsive.MenuStatusbarButtons'));
-            $container.find('.o_statusbar_buttons_base').append($buttons);
+        /**
+         * In mobiles, put all statusbar buttons in a dropdown.
+         *
+         * @override
+         */
+        _renderHeaderButtons: function () {
+            var $buttons = this._super.apply(this, arguments);
+            if (
+                !config.device.isMobile ||
+                !$buttons.is(":has(>:not(.o_invisible_modifier))")
+            ) {
+                return $buttons;
+            }
 
-            var $dropdownMenu = $container.find('.dropdown-menu');
-            _.each(node.children, function (child) {
-                if (child.tag === 'button') {
-                    $dropdownMenu.append($('<LI>').append(self._renderHeaderButton(child)));
-                }
-            });
-
-            return $container;
-        }
+            // $buttons must be appended by JS because all events are bound
+            $buttons.addClass("dropdown-menu");
+            var $dropdown = $(core.qweb.render(
+                'web_responsive.MenuStatusbarButtons'
+            ));
+            $buttons.addClass("dropdown-menu").appendTo($dropdown);
+            return $dropdown;
+        },
     });
 
+    /**
+     * Use ALT+SHIFT instead of ALT as hotkey triggerer.
+     *
+     * HACK https://github.com/odoo/odoo/issues/30068 - See it to know why.
+     *
+     * Cannot patch in `KeyboardNavigationMixin` directly because it's a mixin,
+     * not a `Class`, and altering a mixin's `prototype` doesn't alter it where
+     * it has already been used.
+     *
+     * Instead, we provide an additional mixin to be used wherever you need to
+     * enable this behavior.
+     */
+    var KeyboardNavigationShiftAltMixin = {
 
-    return {
-        'AppDrawer': AppDrawer,
+        /**
+         * Alter the key event to require pressing Shift.
+         *
+         * This will produce a mocked event object where it will seem that
+         * `Alt` is not pressed if `Shift` is not pressed.
+         *
+         * The reason for this is that original upstream code, found in
+         * `KeyboardNavigationMixin` is very hardcoded against the `Alt` key,
+         * so it is more maintainable to mock its input than to rewrite it
+         * completely.
+         *
+         * @param {keyEvent} keyEvent
+         * Original event object
+         *
+         * @returns {keyEvent}
+         * Altered event object
+         */
+        _shiftPressed: function (keyEvent) {
+            var alt = keyEvent.altKey || keyEvent.key === "Alt",
+                newEvent = _.extend({}, keyEvent),
+                shift = keyEvent.shiftKey || keyEvent.key === "Shift";
+            // Mock event to make it seem like Alt is not pressed
+            if (alt && !shift) {
+                newEvent.altKey = false;
+                if (newEvent.key === "Alt") {
+                    newEvent.key = "Shift";
+                }
+            }
+            return newEvent;
+        },
+
+        _onKeyDown: function (keyDownEvent) {
+            return this._super(this._shiftPressed(keyDownEvent));
+        },
+
+        _onKeyUp: function (keyUpEvent) {
+            return this._super(this._shiftPressed(keyUpEvent));
+        },
     };
 
+    // Include the SHIFT+ALT mixin wherever
+    // `KeyboardNavigationMixin` is used upstream
+    AbstractWebClient.include(KeyboardNavigationShiftAltMixin);
 });
