@@ -30,6 +30,7 @@ setuptools.setup(
         'odoo10-addon-web_listview_invert_selection',
         'odoo10-addon-web_listview_range_select',
         'odoo10-addon-web_m2x_options',
+        'odoo10-addon-web_menu_navbar_needaction',
         'odoo10-addon-web_no_bubble',
         'odoo10-addon-web_notify',
         'odoo10-addon-web_readonly_bypass',
