@@ -40,6 +40,7 @@ addon | version | summary
 [web_listview_invert_selection](web_listview_invert_selection/) | 10.0.1.0.0 | Invert current selection of list of records
 [web_listview_range_select](web_listview_range_select/) | 10.0.1.0.0 | Enables selecting a range of records using the shift key
 [web_m2x_options](web_m2x_options/) | 10.0.1.1.1 | web_m2x_options
+[web_menu_navbar_needaction](web_menu_navbar_needaction/) | 10.0.1.0.0 | Show the sum of submenus' needaction counters in main menu
 [web_no_bubble](web_no_bubble/) | 10.0.1.0.0 | Remove the bubbles from the web interface
 [web_notify](web_notify/) | 10.0.1.1.0 | Send notification messages to user
 [web_readonly_bypass](web_readonly_bypass/) | 10.0.1.0.1 | Allow to save onchange modifications to readonly fields
@@ -87,7 +88,6 @@ addon | version | summary
 [web_graph_improved](web_graph_improved/) | 8.0.0.1.0 (unported) | Improves graph views.
 [web_group_expand](web_group_expand/) | 8.0.1.0.0 (unported) | Group Expand Buttons
 [web_last_viewed_records](web_last_viewed_records/) | 8.0.1.0.0 (unported) | Last viewed records
-[web_menu_navbar_needaction](web_menu_navbar_needaction/) | 8.0.1.0.0 (unported) | Show the sum of submenus' needaction counters in main menu
 [web_option_auto_color](web_option_auto_color/) | 8.0.0.1.0 (unported) | Web Option Auto Color
 [web_polymorphic_many2one](web_polymorphic_many2one/) | 0.2 (unported) | Web Polymorphic Many2One
 [web_recipients_uncheck](web_recipients_uncheck/) | 8.0.0.3.0 (unported) | Uncheck recipients on res.partner
