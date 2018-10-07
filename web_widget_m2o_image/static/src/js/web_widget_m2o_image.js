@@ -40,7 +40,7 @@ odoo.define('web_widget_m2o_image.FieldM2oImage', function (require) {
                 _.each(this.values, function (val, key) {
                     var $container = $('<div>').addClass('col-xs-4 text-center');
                     var $img = $('<img>')
-                        .addClass('img img-responsive img-thumbnail ml16')
+                        .addClass('img img-responsive img-thumbnail ml16 img-200')
                         .toggleClass('btn-info', val.id === self.value.res_id)
                         .attr({src: decodeURIComponent('/web/image?model='+self.field.relation+'&field=image&id='+val.id), onerror: 'this.src="'+self.placeholder+'"'})
                         .data('key', val.id);
@@ -60,7 +60,7 @@ odoo.define('web_widget_m2o_image.FieldM2oImage', function (require) {
                     this.$el.empty();
                     var $container = $('<div>').addClass('col-xs-6 text-center');
                     var $img = $('<img>')
-                        .addClass('img img-responsive img-thumbnail ml16')
+                        .addClass('img img-responsive img-thumbnail ml16 img-200')
                         .attr({src: decodeURIComponent('/web/image?model='+self.field.relation+'&field=image&id='+self.value.data.id), onerror: 'this.src="'+self.placeholder+'"'});
                     $container.append($img);
                     var $template_name = $('<p>').text(self.value.data.display_name);

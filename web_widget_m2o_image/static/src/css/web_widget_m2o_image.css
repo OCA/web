@@ -3,3 +3,8 @@
 .o_m2o_image {
     width: 100%;
 }
+
+.img-200 {
+    height: 200px;
+    width: 200px;
+}
