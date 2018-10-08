@@ -2,6 +2,7 @@
 # Copyright 2016 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from openerp import exceptions
 from openerp.tests import common
 from openerp.addons.bus.models.bus import json_dump
 import mock
@@ -49,3 +50,13 @@ class TestResUsers(common.TransactionCase):
             users.notify_warning('message')
             self.assertEqual(1, mockedSendMany.call_count)
             self.assertEqual(len(users), len(mockedSendMany.call_args[0][0]))
+
+    def test_notify_other_user(self):
+        other_user = self.env.ref('base.user_demo')
+        other_user_model = self.env['res.users'].sudo(other_user)
+        with self.assertRaises(exceptions.UserError):
+            other_user_model.browse(self.env.uid).notify_info('hello')
+
+    def test_notify_admin_allowed_other_user(self):
+        other_user = self.env.ref('base.user_demo')
+        other_user.notify_info('hello')
