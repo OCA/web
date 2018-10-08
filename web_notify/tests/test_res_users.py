@@ -1,6 +1,7 @@
 # Copyright 2016 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from odoo import exceptions
 from odoo.tests import common
 from odoo.addons.bus.models.bus import json_dump
 import json
@@ -55,3 +56,13 @@ class TestResUsers(common.TransactionCase):
             first_pos_call_args = pos_call_args[0]
             self.assertIsInstance(first_pos_call_args, list)
             self.assertEqual(len(users), len(first_pos_call_args))
+
+    def test_notify_other_user(self):
+        other_user = self.env.ref('base.user_demo')
+        other_user_model = self.env['res.users'].sudo(other_user)
+        with self.assertRaises(exceptions.UserError):
+            other_user_model.browse(self.env.uid).notify_info('hello')
+
+    def test_notify_admin_allowed_other_user(self):
+        other_user = self.env.ref('base.user_demo')
+        other_user.notify_info('hello')
