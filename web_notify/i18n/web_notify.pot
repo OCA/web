@@ -30,6 +30,12 @@ msgid "Notify Warning Channel Name"
 msgstr ""
 
 #. module: web_notify
+#: code:addons/web_notify/models/res_users.py:41
+#, python-format
+msgid "Sending a notification to another user is forbidden."
+msgstr ""
+
+#. module: web_notify
 #: model:ir.model,name:web_notify.model_res_users
 msgid "Users"
 msgstr ""
