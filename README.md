@@ -21,7 +21,7 @@ addon | version | summary
 [help_online](help_online/) | 10.0.1.0.0 | Help Online
 [support_branding](support_branding/) | 10.0.1.0.0 | Adds your branding to an Odoo instance
 [web_access_rule_buttons](web_access_rule_buttons/) | 10.0.1.0.0 | Disable Edit button if access rules prevent this action
-[web_action_conditionable](web_action_conditionable/) | 10.0.1.0.0 | web_action_conditionable
+[web_action_conditionable](web_action_conditionable/) | 10.0.0.1.0 | web_action_conditionable
 [web_advanced_search_wildcard](web_advanced_search_wildcard/) | 10.0.1.0.0 | Webmodule to add wildcard operators in advanced search field
 [web_advanced_search_x2x](web_advanced_search_x2x/) | 10.0.2.0.3 | Use a search widget in advanced search for x2x fields
 [web_chatter_paste](web_chatter_paste/) | 10.0.1.0.0 | Paste images and drop files into the chatter and upload them directly
