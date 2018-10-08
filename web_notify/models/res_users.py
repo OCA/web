@@ -1,7 +1,7 @@
 # Copyright 2016 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models, _
+from odoo import api, exceptions, fields, models, _, SUPERUSER_ID
 
 
 class ResUsers(models.Model):
@@ -35,6 +35,11 @@ class ResUsers(models.Model):
 
     @api.multi
     def _notify_channel(self, channel_name_field, message, title, sticky):
+        if (self.env.uid != SUPERUSER_ID
+                and any(user.id != self.env.uid for user in self)):
+            raise exceptions.UserError(
+                _('Sending a notification to another user is forbidden.')
+            )
         bus_message = {
             'message': message,
             'title': title,
