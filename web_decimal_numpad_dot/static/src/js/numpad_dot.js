@@ -19,11 +19,12 @@ odoo.define("web_decimal_numpad_dot.FieldFloat", function (require) {
                 ? ":" : translation._t.database.parameters.decimal_point;
         },
 
+        _replaceAt: function (cur_val, index, replacement) {
+            return cur_val.substr(0, index) + replacement +
+                   cur_val.substr(index + replacement.length);
+        },
+
         numpad_dot_replace: function (event) {
-            String.prototype.replaceAt = function (index, replacement) {
-                return this.substr(0, index) + replacement +
-                       this.substr(index + replacement.length);
-            };
             // Only act on numpad dot key
             event.stopPropagation();
             if (event.keyCode !== 110) {
@@ -34,7 +35,7 @@ odoo.define("web_decimal_numpad_dot.FieldFloat", function (require) {
                 to = this.$input.prop("selectionEnd"),
                 cur_val = this.$input.val(),
                 point = this.l10n_decimal_point();
-            var new_val = cur_val.replaceAt(from-1, point);
+            var new_val = this._replaceAt(cur_val, from-1, point);
             this.$input.val(new_val);
             // Put user caret in place
             to = from + point.length;
