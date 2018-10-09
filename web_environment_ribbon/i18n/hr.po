@@ -20,17 +20,17 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #. module: web_environment_ribbon
-#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend_display_name
+#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend__display_name
 msgid "Display Name"
 msgstr "Naziv za prikaz"
 
 #. module: web_environment_ribbon
-#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend_id
+#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend__id
 msgid "ID"
 msgstr "ID"
 
 #. module: web_environment_ribbon
-#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend___last_update
+#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend____last_update
 msgid "Last Modified on"
 msgstr "Zadnje modificirano"
 
