@@ -37,7 +37,7 @@ addon | version | summary
 [web_listview_custom_element_number](web_listview_custom_element_number/) | 9.0.1.0.0 | Allow users to set manually a quantity of items to display in a tree view
 [web_m2x_options](web_m2x_options/) | 9.0.1.1.0 | web_m2x_options
 [web_menu_collapsible](web_menu_collapsible/) | 9.0.1.0.0 | Foldable second level Odoo menu
-[web_notify](web_notify/) | 9.0.1.0.0 | Send notification messages to user
+[web_notify](web_notify/) | 9.0.1.1.0 | Send notification messages to user
 [web_readonly_bypass](web_readonly_bypass/) | 9.0.1.0.1 | Allow to save onchange modifications to readonly fields
 [web_responsive](web_responsive/) | 9.0.3.0.0 | It provides a mobile compliant interface for Odoo Community web
 [web_searchbar_full_width](web_searchbar_full_width/) | 9.0.1.0.0 | Show search bar in full screen width
