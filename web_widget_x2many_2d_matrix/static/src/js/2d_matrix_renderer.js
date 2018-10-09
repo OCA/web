@@ -259,8 +259,6 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
                     tdClassName += ' o_' + node.attrs.widget + '_cell';
                 }
             }
-            // TODO roadmap: here we should collect possible extra params
-            // the user might want to attach to each single cell.
             var nodeParams = {
                 'class': tdClassName,
             };

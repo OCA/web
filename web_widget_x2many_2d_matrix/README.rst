@@ -133,11 +133,6 @@ Now in our wizard, we can use:
 Known issues / Roadmap
 ======================
 
-* Support extra attributes on each field cell via `field_extra_attrs` param.
-  We could set a cell as not editable, required or readonly for instance.
-  The `readonly` case will also give the ability
-  to click on m2o to open related records.
-
 * Support limit total records in the matrix. Ref: https://github.com/OCA/web/issues/901
 
 * Support cell traversal through keyboard arrows.
