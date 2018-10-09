@@ -50,9 +50,10 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
             );
             this.field_value = node.field_value || this.field_value;
             // TODO: is this really needed? Holger?
+            this.fields_extra_attrs = {};
             for (var property in node) {
                 if (property.startsWith("field_att_")) {
-                    this.fields_att[property.substring(10)] =
+                    this.fields_extra_attrs[property.substring(10)] =
                         node[property];
                 }
             }
