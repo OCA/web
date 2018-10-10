@@ -5,10 +5,8 @@ from odoo import api, exceptions, fields, models, _, SUPERUSER_ID
 
 
 class ResUsers(models.Model):
-
     _inherit = 'res.users'
 
-    @api.multi
     @api.depends('create_date')
     def _compute_channel_names(self):
         for record in self:
@@ -21,19 +19,16 @@ class ResUsers(models.Model):
     notify_warning_channel_name = fields.Char(
         compute='_compute_channel_names')
 
-    @api.multi
     def notify_info(self, message, title=None, sticky=False):
         title = title or _('Information')
         self._notify_channel(
             'notify_info_channel_name', message, title, sticky)
 
-    @api.multi
     def notify_warning(self, message, title=None, sticky=False):
         title = title or _('Warning')
         self._notify_channel(
             'notify_warning_channel_name', message, title, sticky)
 
-    @api.multi
     def _notify_channel(self, channel_name_field, message, title, sticky):
         if (self.env.uid != SUPERUSER_ID
                 and any(user.id != self.env.uid for user in self)):
