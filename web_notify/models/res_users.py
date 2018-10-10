@@ -1,14 +1,12 @@
 # Copyright 2016 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, exceptions, fields, models, _, SUPERUSER_ID
+from odoo import api, exceptions, fields, models, _
 
 
 class ResUsers(models.Model):
-
     _inherit = 'res.users'
 
-    @api.multi
     @api.depends('create_date')
     def _compute_channel_names(self):
         for record in self:
@@ -21,21 +19,19 @@ class ResUsers(models.Model):
     notify_warning_channel_name = fields.Char(
         compute='_compute_channel_names')
 
-    @api.multi
-    def notify_info(self, message, title=None, sticky=False):
+    def notify_info(self, message="Default message", title=None, sticky=False):
         title = title or _('Information')
         self._notify_channel(
             'notify_info_channel_name', message, title, sticky)
 
-    @api.multi
-    def notify_warning(self, message, title=None, sticky=False):
+    def notify_warning(self, message="Default message",
+                       title=None, sticky=False):
         title = title or _('Warning')
         self._notify_channel(
             'notify_warning_channel_name', message, title, sticky)
 
-    @api.multi
     def _notify_channel(self, channel_name_field, message, title, sticky):
-        if (self.env.uid != SUPERUSER_ID
+        if (not self.env.user._is_admin()
                 and any(user.id != self.env.uid for user in self)):
             raise exceptions.UserError(
                 _('Sending a notification to another user is forbidden.')
@@ -45,6 +41,6 @@ class ResUsers(models.Model):
             'title': title,
             'sticky': sticky
         }
-        notifications = [(getattr(record, channel_name_field), bus_message)
+        notifications = [(record[channel_name_field], bus_message)
                          for record in self]
         self.env['bus.bus'].sendmany(notifications)
