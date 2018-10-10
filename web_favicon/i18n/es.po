@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-12-23 02:13+0000\n"
-"PO-Revision-Date: 2018-10-10 21:45+0000\n"
+"PO-Revision-Date: 2018-10-11 22:11+0000\n"
 "Last-Translator: Harald Panten <harald.panten@qubiq.es>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
@@ -42,7 +42,7 @@ msgstr "Tipo MIME del favicon de backend"
 #. module: web_favicon
 #: model:ir.model.fields,help:web_favicon.field_res_company_favicon_backend_mimetype
 msgid "Set the mimetype of your file."
-msgstr "Establece el tipo MIME de su archivo."
+msgstr "Establezca el tipo MIME de su archivo."
 
 #. module: web_favicon
 #: model:ir.ui.view,arch_db:web_favicon.view_company_form
