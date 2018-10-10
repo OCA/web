@@ -9,13 +9,13 @@ odoo.define_section('web_widget_char_switchcase', ['web.form_common', 'web.core'
         return field;
     }
 
-    test('Default is upper', function(assert, form_common, core, web_form_widgets) {
+    test('Default does nothing', function(assert, form_common, core, web_form_widgets) {
         this.field = createField(form_common, web_form_widgets, {'attrs': {}});
 
         var orig_val = 'Hello World!';
         this.field.$input.val(orig_val);
         this.field.$input.keyup();
-        assert.strictEqual(this.field.$input.val(), orig_val.toUpperCase());
+        assert.strictEqual(this.field.$input.val(), orig_val);
     });
 
     test('UPPER OPTION', function(assert, form_common, core, web_form_widgets) {

@@ -1,11 +1,11 @@
-Switch the text of the field `name` to uppercase:
+Switch the text of the char field `name` to uppercase:
 
 .. code-block:: xml
 
-    <field name="name" widget="char_switchcase" options="{'transform': 'upper'}" />
+    <field name="name" options="{'transform': 'upper'}" />
 
-Switch the text of the field `name` to lowercase:
+Switch the text of the char field `name` to lowercase:
 
 .. code-block:: xml
 
-    <field name="name" widget="char_switchcase" options="{'transform': 'lower'}" />
+    <field name="name" options="{'transform': 'lower'}" />

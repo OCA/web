@@ -25,7 +25,7 @@ Web Char Switchcase Widget
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
-This module provides the widget `char_switchcase` to switch the text of any char field to upper or lower.
+This module improves the char field and enables it to transform its own text.
 
 **Table of contents**
 
@@ -35,24 +35,31 @@ This module provides the widget `char_switchcase` to switch the text of any char
 Configuration
 =============
 
-In any char field, add the widget `char_switchcase`.
+In any char field (suppose it has value *Hello World!*), add the option `transform` having one of the following values:
 
-The only option that can be passed to the widget is `transform`, having value `upper` (default) or `lower`.
+* `default` or no value produces *Hello World!*
+* `upper` produces *HELLO WORLD!*
+* `lower` produces *hello world!*
+* `title` produces *Hello World!*
+* `sentence` produces *Hello world!*
+* `camel` produces *helloWorld!*
+* `pascal` produces *HelloWorld!*
+* `snake` produces *hello_world!*
 
 Usage
 =====
 
-Switch the text of the field `name` to uppercase:
+Switch the text of the char field `name` to uppercase:
 
 .. code-block:: xml
 
-    <field name="name" widget="char_switchcase" options="{'transform': 'upper'}" />
+    <field name="name" options="{'transform': 'upper'}" />
 
-Switch the text of the field `name` to lowercase:
+Switch the text of the char field `name` to lowercase:
 
 .. code-block:: xml
 
-    <field name="name" widget="char_switchcase" options="{'transform': 'lower'}" />
+    <field name="name" options="{'transform': 'lower'}" />
 
 Bug Tracker
 ===========

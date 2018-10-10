@@ -1,3 +1,10 @@
-In any char field, add the widget `char_switchcase`.
+In any char field (suppose it has value *Hello World!*), add the option `transform` having one of the following values:
 
-The only option that can be passed to the widget is `transform`, having value `upper` (default) or `lower`.
+* `default` or no value produces *Hello World!*
+* `upper` produces *HELLO WORLD!*
+* `lower` produces *hello world!*
+* `title` produces *Hello World!*
+* `sentence` produces *Hello world!*
+* `camel` produces *helloWorld!*
+* `pascal` produces *HelloWorld!*
+* `snake` produces *hello_world!*

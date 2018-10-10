@@ -1,1 +1,1 @@
-This module provides the widget `char_switchcase` to switch the text of any char field to upper or lower.
+This module improves the char field and enables it to transform its own text.
