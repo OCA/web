@@ -9,19 +9,20 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-12-23 02:13+0000\n"
-"PO-Revision-Date: 2016-12-23 02:13+0000\n"
-"Last-Translator: Pedro M. Baeza <pedro.baeza@gmail.com>, 2016\n"
+"PO-Revision-Date: 2018-10-10 21:25+0000\n"
+"Last-Translator: Harald Panten <harald.panten@qubiq.es>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.1.1\n"
 
 #. module: web_responsive
 #: model:ir.ui.view,arch_db:web_responsive.menu
 msgid "<i>Searching:</i>"
-msgstr ""
+msgstr "<i>Buscando:</i>"
 
 #. module: web_responsive
 #: model:ir.ui.view,arch_db:web_responsive.menu
@@ -30,6 +31,9 @@ msgid ""
 "                                &amp;nbsp;|&amp;nbsp;\n"
 "                            </span>"
 msgstr ""
+"<span class=\"hidden-xs\">1\n"
+"                                &amp;2nbsp;|&amp;3nbsp;\n"
+"                            </span>4"
 
 #. module: web_responsive
 #: model:ir.ui.view,arch_db:web_responsive.webclient_bootstrap
@@ -55,4 +59,4 @@ msgstr "Más <b class=\"caret\"/>"
 #. module: web_responsive
 #: model:ir.ui.view,arch_db:web_responsive.menu
 msgid "No Search Supplied."
-msgstr ""
+msgstr "Ninguna búsqueda suministrada."
