@@ -26,6 +26,7 @@ setuptools.setup(
         'odoo11-addon-web_responsive',
         'odoo11-addon-web_search_with_and',
         'odoo11-addon-web_searchbar_full_width',
+        'odoo11-addon-web_send_message_popup',
         'odoo11-addon-web_sheet_full_width',
         'odoo11-addon-web_timeline',
         'odoo11-addon-web_tree_dynamic_colored_field',
