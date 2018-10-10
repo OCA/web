@@ -5,19 +5,23 @@
     'name': 'Web Notify',
     'summary': """
         Send notification messages to user""",
-    'version': '11.0.1.1.0',
+    'version': '12.0.1.0.0',
     'description': 'Web Notify',
     'license': 'AGPL-3',
-    'author': 'ACSONE SA/NV,Odoo Community Association (OCA)',
-    'website': 'https://acsone.eu/',
+    'author': 'ACSONE SA/NV,'
+              'AdaptiveCity,'
+              'Odoo Community Association (OCA)',
+    'website': 'https://github.com/OCA/web',
     'depends': [
         'web',
         'bus',
+        'base',
     ],
     'data': [
         'views/web_notify.xml'
     ],
     'demo': [
+        'views/res_users_demo.xml'
     ],
     'installable': True,
 }
