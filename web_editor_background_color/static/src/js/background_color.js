@@ -3,23 +3,31 @@
 
 odoo.define("web_editor_background_color.colorpicker", function (require) {
     "use strict";
-    var ajax = require("web.ajax");
-    var core = require("web.core");
     var options = require("web_editor.snippets.options");
+    var colorpicker = options.registry.colorpicker;
 
-    ajax.loadXML(
-        "/web_editor_background_color/static/src/xml/colorpicker.xml",
-        core.qweb
-    );
-
-    return options.registry.colorpicker.include({
-        bind_events: function () {
-            this._super();
+    colorpicker.include({
+        events: _.extend({}, colorpicker.prototype.events, {
+            "changeColor [data-name=custom_color]":
+                "set_inline_background_color",
             // Remove inline background-color for normal class-based buttons
-            this.$el.find(".o_colorpicker_section button[data-color]").on(
-                "click",
-                $.proxy(this.remove_inline_background_color, this)
-            );
+            "click .o_colorpicker_section button[data-color]":
+                "remove_inline_background_color",
+            "click [data-name=custom_color] input": "input_select",
+            "click [data-name=custom_color]": "custom_abort_event",
+            "keydown [data-name=custom_color]": "custom_abort_event",
+            "keypress [data-name=custom_color]": "custom_abort_event",
+            "keyup [data-name=custom_color]": "custom_abort_event",
+        }),
+        xmlDependencies: colorpicker.prototype.xmlDependencies.concat([
+            "/web_editor_background_color/static/src/xml/colorpicker.xml",
+        ]),
+
+        /**
+         * @override
+         */
+        start: function () {
+            this._super();
             // Enable custom color picker
             this.$custom = this.$el.find('[data-name="custom_color"]');
             this.$custom.colorpicker({
@@ -39,38 +47,50 @@ odoo.define("web_editor_background_color.colorpicker", function (require) {
                     },
                 },
             });
-            this.$custom.on(
-                "changeColor",
-                $.proxy(this.set_inline_background_color, this));
-            this.$custom.on(
-                "click keypress keyup keydown",
-                $.proxy(this.custom_abort_event, this));
-            this.$custom.on(
-                "click", "input",
-                $.proxy(this.input_select, this));
-            this.$el.find(".note-color-reset").on(
-                "click",
-                $.proxy(this.remove_inline_background_color, this));
             // Activate border color changes if it matches background's
             var style = this.$target.prop("style");
             this.change_border =
                 style["border-color"] &&
                 style["background-color"] === style["border-color"];
         },
+
+        /**
+         * A HACK to avoid dropdown disappearing when picking colors
+         *
+         * @param {Event} event
+         */
         custom_abort_event: function (event) {
-            // HACK Avoid dropdown disappearing when picking colors
             event.stopPropagation();
         },
+
+        /**
+         * Select the color picker input
+         *
+         * @param {Event} event
+         */
         input_select: function (event) {
             $(event.target).focus().select();
         },
-        remove_inline_background_color: function (event) {
+
+        /**
+         * Undo the inline background color, besides upstream color classes
+         *
+         * @override
+         */
+        _onColorResetButtonClick: function (event) {
+            this._super.apply(this, arguments);
             this.$target.css("background-color", "");
             if (this.change_border) {
                 this.$target.css("border-color", "");
             }
             this.$target.trigger("background-color-event", event.type);
         },
+
+        /**
+         * Apply the chosen color as an inline style
+         *
+         * @param {Event} event
+         */
         set_inline_background_color: function (event) {
             var color = String(event.color);
             this.$target.css("background-color", color);

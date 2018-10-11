@@ -7,7 +7,7 @@
     <template id="assets_editor" inherit_id="web_editor.assets_editor">
         <xpath expr=".">
             <!-- External library bootstrap-colorpicker -->
-            <link rel="stylesheet" href="/web_editor_background_color/static/src/lib/bootstrap-colorpicker/colorpicker.less"/>
+            <link rel="stylesheet" href="/web_editor_background_color/static/src/lib/bootstrap-colorpicker/bootstrap-colorpicker.css"/>
             <script type="text/javascript" src="/web_editor_background_color/static/src/lib/bootstrap-colorpicker/bootstrap-colorpicker.js"/>
             <!-- Internal assets -->
             <link rel="stylesheet" href="/web_editor_background_color/static/src/css/background_color.less"/>
