@@ -40,10 +40,10 @@ odoo.define('web_notify.notification', function (require) {
     });
 
     base_notification.NotificationManager.include({
-        interactive_notify(title, text, options) {
+        interactive_notify: function (title, text, options) {
             return this.display(new InteractiveNotification(this, title, text, options));
         },
-        interactive_warn(title, text, options) {
+        interactive_warn: function (title, text, options) {
             return this.display(new InteractiveWarning(this, title, text, options));
         }
 
