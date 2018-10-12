@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo12-addon-web_environment_ribbon',
+        'odoo12-addon-web_listview_range_select',
     ],
     classifiers=[
         'Programming Language :: Python',
