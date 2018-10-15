@@ -6,6 +6,9 @@ odoo.define('web_widget_char_switchcase', function (require) {
     var form_widgets = require('web.form_widgets');
 
     form_widgets.FieldChar.include({
+        events: _.extend({}, form_widgets.FieldChar.prototype.events, {
+            'keyup': 'key_up_handler',
+        }),
         transformations: ['default', 'upper', 'lower', 'title', 'sentence', 'camel', 'pascal', 'snake'],
         init: function (field_manager, node) {
             this._super(field_manager, node);
@@ -17,19 +20,11 @@ odoo.define('web_widget_char_switchcase', function (require) {
             if (!_.contains(this.transformations, this.current_transformation))
                 console.error(this.current_transformation + ' case unknown');
         },
-        initialize_content: function() {
-            var res = this._super();
-            var self = this;
-            if(this.$input) {
-                this.$input.keyup(function(){
-                    var old_val = self.$input.val();
-                    if (!old_val)
-                        return;
-                    var new_val = self.current_transformation_handler(old_val);
-                    self.$input.val(new_val);
-                });
-            }
-            return res;
+        key_up_handler: function ($event) {
+            var $input = $($event.target);
+            var old_val = $input.val();
+            var new_val = this.current_transformation_handler(old_val);
+            $input.val(new_val);
         },
         parse_value: function (val, def) {
             return this._super(this.current_transformation_handler(val), def);
