@@ -41,13 +41,18 @@ odoo.define('web_widget_char_switchcase', function (require) {
             switch (this.current_transformation) {
                 case 'upper':
                     // HELLO WORLD!
-                    return function (val) { return val.toUpperCase(); };
+                    return function (val) {
+                        if (!val) return val;
+                        return val.toUpperCase();};
                 case 'lower':
                     // hello world!
-                    return function (val) { return val.toLowerCase(); };
+                    return function (val) {
+                        if (!val) return val;
+                        return val.toLowerCase();};
                 case 'title':
                     // Hello World!
                     return function (val) {
+                        if (!val) return val;
                         return val.replace(
                             /\w\S*/g,
                             function(txt) {
@@ -58,6 +63,7 @@ odoo.define('web_widget_char_switchcase', function (require) {
                 case 'sentence':
                     // Hello world!
                     return function (val) {
+                        if (!val) return val;
                         var first = true;
                         return val.replace(
                             /\w\S*/g,
@@ -74,6 +80,7 @@ odoo.define('web_widget_char_switchcase', function (require) {
                 case 'camel':
                     // helloWorld!
                     return function (val) {
+                        if (!val) return val;
                         var first = true;
                         return val.replace(
                             /\w\S*/g,
@@ -90,6 +97,7 @@ odoo.define('web_widget_char_switchcase', function (require) {
                 case 'pascal':
                     // HelloWorld!
                     return function (val) {
+                        if (!val) return val;
                         return val.replace(
                             /\w\S*/g,
                             function(txt) {
@@ -100,6 +108,7 @@ odoo.define('web_widget_char_switchcase', function (require) {
                 case 'snake':
                     // hello_world!
                     return function (val) {
+                        if (!val) return val;
                         return val.toLowerCase().replace(' ', '_');
                         };
                 case 'default':
