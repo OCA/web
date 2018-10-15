@@ -16,7 +16,7 @@ or
    :alt: Sample notifications
 
 You can test the behaviour of the notifications by installing this module in a demo database.
-   Click in your user logo in the top right corner of the screen then click "Preferences".
+Access the users form through Settings -> Users & Companies. You'll see a tab called "Test web notify", here you'll find two buttons that'll allow you test the module.
 
 .. figure:: static/description/test_notifications_demo.png
    :scale: 80 %
