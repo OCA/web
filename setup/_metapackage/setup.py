@@ -13,6 +13,7 @@ setuptools.setup(
         'odoo11-addon-web_decimal_numpad_dot',
         'odoo11-addon-web_dialog_size',
         'odoo11-addon-web_disable_export_group',
+        'odoo11-addon-web_editor_background_color',
         'odoo11-addon-web_environment_ribbon',
         'odoo11-addon-web_export_view',
         'odoo11-addon-web_favicon',
