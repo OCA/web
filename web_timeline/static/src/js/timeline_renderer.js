@@ -50,6 +50,7 @@ var CalendarRenderer = AbstractRenderer.extend({
         if (!this.date_start) {
             throw new Error(_t("Timeline view has not defined 'date_start' attribute."));
         }
+        this.add_events();        
         this._super.apply(this, self);
     },
 
@@ -63,7 +64,6 @@ var CalendarRenderer = AbstractRenderer.extend({
     },
 
     _render: function () {
-        this.add_events();
         var self = this;
         return $.when().then(function () {
             // Prevent Double Rendering on Updates
