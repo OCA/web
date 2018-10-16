@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Jairo Llopis <jairo.llopis@tecnativa.com>
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
+
+<templates>
+
+    <t t-extend="web_editor.colorpicker">
+        <t t-jquery="colorpicker" t-operation="append">
+            <div
+                class="o_colorpicker_section"
+                data-name="custom_color"
+                data-icon-class="fa fa-code">
+                <input type="text" class="form-control" />
+            </div>
+        </t>
+    </t>
+
+</templates>
