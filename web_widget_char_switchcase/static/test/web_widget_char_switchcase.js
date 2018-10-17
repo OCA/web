@@ -13,7 +13,7 @@ odoo.define_section('web_widget_char_switchcase', ['web.form_common', 'web.core'
 
         var orig_val = 'Hello World!';
         fieldWidget.$input.val(orig_val);
-        fieldWidget.$input.keyup();
+        fieldWidget.$input.trigger('keyup');
         assert.strictEqual(fieldWidget.$input.val(), orig_val);
     });
 
@@ -23,7 +23,7 @@ odoo.define_section('web_widget_char_switchcase', ['web.form_common', 'web.core'
 
         var orig_val = 'Hello World!';
         fieldWidget.$input.val(orig_val);
-        fieldWidget.$input.keyup();
+        fieldWidget.$input.trigger('keyup');
         assert.strictEqual(fieldWidget.$input.val(), orig_val.toUpperCase());
     });
 
@@ -33,7 +33,7 @@ odoo.define_section('web_widget_char_switchcase', ['web.form_common', 'web.core'
 
         var orig_val = 'Hello World!';
         fieldWidget.$input.val(orig_val);
-        fieldWidget.$input.keyup();
+        fieldWidget.$input.trigger('keyup');
         assert.strictEqual(fieldWidget.$input.val(), orig_val.toLowerCase());
     });
 
@@ -43,7 +43,7 @@ odoo.define_section('web_widget_char_switchcase', ['web.form_common', 'web.core'
 
         var orig_val = 'Hello World!';
         fieldWidget.$input.val(orig_val);
-        fieldWidget.$input.keyup();
+        fieldWidget.$input.trigger('keyup');
         assert.strictEqual(fieldWidget.$input.val(), 'Hello World!');
     });
 
@@ -53,7 +53,7 @@ odoo.define_section('web_widget_char_switchcase', ['web.form_common', 'web.core'
 
         var orig_val = 'Hello World!';
         fieldWidget.$input.val(orig_val);
-        fieldWidget.$input.keyup();
+        fieldWidget.$input.trigger('keyup');
         assert.strictEqual(fieldWidget.$input.val(), 'Hello world!');
     });
     
@@ -63,7 +63,7 @@ odoo.define_section('web_widget_char_switchcase', ['web.form_common', 'web.core'
 
         var orig_val = 'Hello World!';
         fieldWidget.$input.val(orig_val);
-        fieldWidget.$input.keyup();
+        fieldWidget.$input.trigger('keyup');
         assert.strictEqual(fieldWidget.$input.val(), 'helloWorld!');
     });
 
@@ -73,7 +73,7 @@ odoo.define_section('web_widget_char_switchcase', ['web.form_common', 'web.core'
 
         var orig_val = 'Hello World!';
         fieldWidget.$input.val(orig_val);
-        fieldWidget.$input.keyup();
+        fieldWidget.$input.trigger('keyup');
         assert.strictEqual(fieldWidget.$input.val(), 'HelloWorld!');
     });
 
@@ -83,7 +83,7 @@ odoo.define_section('web_widget_char_switchcase', ['web.form_common', 'web.core'
 
         var orig_val = 'Hello World!';
         fieldWidget.$input.val(orig_val);
-        fieldWidget.$input.keyup();
+        fieldWidget.$input.trigger('keyup');
         assert.strictEqual(fieldWidget.$input.val(), 'hello_world!');
     });
 });

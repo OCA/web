@@ -7,7 +7,7 @@ odoo.define('web_widget_char_switchcase', function (require) {
 
     form_widgets.FieldChar.include({
         events: _.extend({}, form_widgets.FieldChar.prototype.events, {
-            'keyup': 'key_up_handler',
+            'keyup': '_onKeyUp',
         }),
         transformations: ['default', 'upper', 'lower', 'title', 'sentence', 'camel', 'pascal', 'snake'],
         init: function (field_manager, node) {
@@ -20,11 +20,10 @@ odoo.define('web_widget_char_switchcase', function (require) {
             if (!_.contains(this.transformations, this.current_transformation))
                 console.error(this.current_transformation + ' case unknown');
         },
-        key_up_handler: function ($event) {
-            var $input = $($event.target);
-            var old_val = $input.val();
+        _onKeyUp: function (event) {
+            var old_val = this.$input.val();
             var new_val = this.current_transformation_handler(old_val);
-            $input.val(new_val);
+            this.$input.val(new_val);
         },
         parse_value: function (val, def) {
             return this._super(this.current_transformation_handler(val), def);
@@ -32,22 +31,25 @@ odoo.define('web_widget_char_switchcase', function (require) {
         format_value: function (val, def) {
             return this._super(this.current_transformation_handler(val), def);
         },
+        check_val: function (val) {
+            return val && val.trim();
+        },
         get_transformation_handler: function () {
             switch (this.current_transformation) {
                 case 'upper':
                     // HELLO WORLD!
                     return function (val) {
-                        if (!val) return val;
+                        if (!this.check_val(val)) return val;
                         return val.toUpperCase();};
                 case 'lower':
                     // hello world!
                     return function (val) {
-                        if (!val) return val;
+                        if (!this.check_val(val)) return val;
                         return val.toLowerCase();};
                 case 'title':
                     // Hello World!
                     return function (val) {
-                        if (!val) return val;
+                        if (!this.check_val(val)) return val;
                         return val.replace(
                             /\w\S*/g,
                             function(txt) {
@@ -58,7 +60,7 @@ odoo.define('web_widget_char_switchcase', function (require) {
                 case 'sentence':
                     // Hello world!
                     return function (val) {
-                        if (!val) return val;
+                        if (!this.check_val(val)) return val;
                         var first = true;
                         return val.replace(
                             /\w\S*/g,
@@ -75,7 +77,7 @@ odoo.define('web_widget_char_switchcase', function (require) {
                 case 'camel':
                     // helloWorld!
                     return function (val) {
-                        if (!val) return val;
+                        if (!this.check_val(val)) return val;
                         var first = true;
                         return val.replace(
                             /\w\S*/g,
@@ -92,7 +94,7 @@ odoo.define('web_widget_char_switchcase', function (require) {
                 case 'pascal':
                     // HelloWorld!
                     return function (val) {
-                        if (!val) return val;
+                        if (!this.check_val(val)) return val;
                         return val.replace(
                             /\w\S*/g,
                             function(txt) {
@@ -103,7 +105,7 @@ odoo.define('web_widget_char_switchcase', function (require) {
                 case 'snake':
                     // hello_world!
                     return function (val) {
-                        if (!val) return val;
+                        if (!this.check_val(val)) return val;
                         return val.toLowerCase().replace(' ', '_');
                         };
                 case 'default':
