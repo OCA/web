@@ -8,7 +8,7 @@
                "web",
     "version": "11.0.2.0.1",
     "category": "Website",
-    "website": "https://laslabs.com/",
+    "website": "https://github.com/OCA/web",
     "author": "LasLabs, Tecnativa, Alexandre Díaz, "
               "Odoo Community Association (OCA)",
     "license": "LGPL-3",
