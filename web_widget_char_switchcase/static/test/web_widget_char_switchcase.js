@@ -4,6 +4,7 @@ odoo.define_section('web_widget_char_switchcase', ['web.form_common', 'web.core'
     function createField(form_common, web_form_widgets, node) {
         var field_manager = new form_common.DefaultFieldManager(null, {});
         var fieldWidget = new web_form_widgets.FieldChar(field_manager, node);
+        fieldWidget.setElement($('<input/>'));
         fieldWidget.initialize_content();
         return fieldWidget;
     }

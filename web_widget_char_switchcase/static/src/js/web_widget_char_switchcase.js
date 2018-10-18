@@ -21,9 +21,18 @@ odoo.define('web_widget_char_switchcase', function (require) {
                 console.error(this.current_transformation + ' case unknown');
         },
         _onKeyUp: function (event) {
+            // save caret position
+            var input = this.$input[0];
+            var start = input.selectionStart;
+            var end = input.selectionEnd;
+            
+            // transform the value
             var old_val = this.$input.val();
             var new_val = this.current_transformation_handler(old_val);
             this.$input.val(new_val);
+
+            // restore caret position
+            input.setSelectionRange(start, end);
         },
         parse_value: function (val, def) {
             return this._super(this.current_transformation_handler(val), def);
