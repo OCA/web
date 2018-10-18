@@ -57,7 +57,7 @@ addon | version | summary
 [web_tree_image](web_tree_image/) | 10.0.1.1.0 | Show images in tree views
 [web_tree_many2one_clickable](web_tree_many2one_clickable/) | 10.0.1.0.0 | Open the linked resource when clicking on their name
 [web_widget_bokeh_chart](web_widget_bokeh_chart/) | 10.0.1.0.0 | This widget allows to display charts using Bokeh library.
-[web_widget_char_switchcase](web_widget_char_switchcase/) | 10.0.1.0.0 | Web Char Switchcase Widget
+[web_widget_char_switchcase](web_widget_char_switchcase/) | 10.0.1.0.1 | Web Char Switchcase Widget
 [web_widget_color](web_widget_color/) | 10.0.1.0.0 | Web Widget Color
 [web_widget_darkroom](web_widget_darkroom/) | 10.0.1.0.0 | Provides web widget for image editing and adds it to standard image widget as modal
 [web_widget_digitized_signature](web_widget_digitized_signature/) | 10.0.0.1.0 | Web Widget Digitized Signature
