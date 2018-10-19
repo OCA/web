@@ -353,7 +353,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                 }
             }
         },
-    })
+    });
 
     FormFieldMany2ManyTags.include({
         events: _.extend({}, FormFieldMany2ManyTags.prototype.events, {
@@ -368,6 +368,9 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
             this._super.apply(this, arguments);
             if (!open && !no_color_picker) {
                 this._onOpenColorPicker(event);
+            } else {
+                event.preventDefault();
+                event.stopPropagation();
             }
         },
     });
