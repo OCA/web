@@ -15,7 +15,13 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
 
     var TimelineRenderer = AbstractRenderer.extend({
         template: "TimelineView",
+
         events: _.extend({}, AbstractRenderer.prototype.events, {
+            'click .oe_timeline_button_today': '_onTodayClicked',
+            'click .oe_timeline_button_scale_day': '_onScaleDayClicked',
+            'click .oe_timeline_button_scale_week': '_onScaleWeekClicked',
+            'click .oe_timeline_button_scale_month': '_onScaleMonthClicked',
+            'click .oe_timeline_button_scale_year': '_onScaleYearClicked',
         }),
 
         /**
@@ -75,7 +81,6 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
          * @override
          */
         _render: function () {
-            this.add_events();
             var self = this;
             return $.when().then(function () {
                 // Prevent Double Rendering on Updates
@@ -83,30 +88,6 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
                     self.init_timeline();
                     $(window).trigger('resize');
                 }
-            });
-        },
-
-        /**
-         * Binds events to buttons.
-
-         * @private
-         */
-        add_events: function () {
-            var self = this;
-            this.$(".oe_timeline_button_today").click(function() {
-                self._onTodayClicked();
-            });
-            this.$(".oe_timeline_button_scale_day").click(function() {
-                self._onScaleDayClicked();
-            });
-            this.$(".oe_timeline_button_scale_week").click(function() {
-                self._onScaleWeekClicked();
-            });
-            this.$(".oe_timeline_button_scale_month").click(function() {
-                self._onScaleMonthClicked();
-            });
-            this.$(".oe_timeline_button_scale_year").click(function() {
-                self._onScaleYearClicked();
             });
         },
 
