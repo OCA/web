@@ -28,77 +28,77 @@ msgstr "!(widget.options.no_open || widget.options.no_open_edit)"
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:52
+#: code:addons/web_m2x_options/static/src/js/form.js:54
 #, python-format
 msgid "Cancel"
 msgstr "Abbrechen"
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:31
+#: code:addons/web_m2x_options/static/src/js/form.js:33
 #, python-format
 msgid "Create"
 msgstr "Anlegen"
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:241
+#: code:addons/web_m2x_options/static/src/js/form.js:243
 #, python-format
 msgid "Create \"<strong>%s</strong>\""
 msgstr "Anlegen \"<strong>%s</strong>"
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:28
+#: code:addons/web_m2x_options/static/src/js/form.js:30
 #, python-format
 msgid "Create a %s"
 msgstr "Eine %s anlegen"
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:261
+#: code:addons/web_m2x_options/static/src/js/form.js:263
 #, python-format
 msgid "Create and Edit..."
 msgstr "Anlegen und Bearbeiten"
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:42
+#: code:addons/web_m2x_options/static/src/js/form.js:44
 #, python-format
 msgid "Create and edit"
 msgstr "Anlegen und bearbeiten"
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:267
+#: code:addons/web_m2x_options/static/src/js/form.js:269
 #, python-format
 msgid "No results to show..."
 msgstr ""
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:341
+#: code:addons/web_m2x_options/static/src/js/form.js:342
 #, python-format
 msgid "Open: "
 msgstr ""
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:206
+#: code:addons/web_m2x_options/static/src/js/form.js:208
 #, python-format
 msgid "Search More..."
 msgstr "Suche weitere..."
 
 #. module: web_m2x_options
+#: model:ir.model,name:web_m2x_options.model_ir_config_parameter
+msgid "System Parameter"
+msgstr ""
+
+#. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:58
+#: code:addons/web_m2x_options/static/src/js/form.js:60
 #, python-format
 msgid "You are creating a new %s, are you sure it does not exist yet?"
 msgstr ""
 "Sie legen eine neue %s an, sind Sie sicher, dass diese nicht bereits "
 "vorhanden ist?"
-
-#. module: web_m2x_options
-#: model:ir.model,name:web_m2x_options.model_ir_config_parameter
-msgid "ir.config_parameter"
-msgstr ""
