@@ -39,6 +39,10 @@ odoo.define('web_timeline.TimelineView', function (require) {
             Renderer: TimelineRenderer,
         },
 
+        /**
+         * @constructor
+         * @override
+         */
         init: function (viewInfo, params) {
             this._super.apply(this, arguments);
             var self = this;
@@ -144,6 +148,9 @@ odoo.define('web_timeline.TimelineView', function (require) {
             return this;
         },
 
+        /**
+         * Order function for groups.
+         */
         group_order: function (grp1, grp2) {
             // display non grouped elements first
             if (grp1.id === -1) {
@@ -156,6 +163,11 @@ odoo.define('web_timeline.TimelineView', function (require) {
 
         },
 
+        /**
+         * Parse the colors attribute.
+         *
+         * @private
+         */
         parse_colors: function () {
             if (this.arch.attrs.colors) {
                 this.colors = _(this.arch.attrs.colors.split(';')).chain().compact().map(function (color_pair) {
