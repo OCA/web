@@ -73,7 +73,6 @@ addon | version | summary
 [web_context_in_colors](web_context_in_colors/) | 8.0.1.1.0 (unported) | Use the context in a tree view's colors and fonts attribute
 [web_dashboard_open_action](web_dashboard_open_action/) | 8.0.1.0.0 (unported) | Adds a button to open a dashboard in full mode
 [web_dom_model_classes](web_dom_model_classes/) | 8.0.1.0.0 (unported) | Allows small UI changes with simple CSS
-[web_graph_improved](web_graph_improved/) | 8.0.0.1.0 (unported) | Improves graph views.
 [web_group_expand](web_group_expand/) | 8.0.1.0.0 (unported) | Group Expand Buttons
 [web_ir_actions_act_window_page](web_ir_actions_act_window_page/) | 8.0.1.0.0 (unported) | Allows a developer to trigger a pager to show the previous or next next record in the form view
 [web_last_viewed_records](web_last_viewed_records/) | 8.0.1.0.0 (unported) | Last viewed records
