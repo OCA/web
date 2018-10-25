@@ -45,7 +45,7 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
             this.field_label_y_axis = node.attrs.field_label_y_axis || this.field_y_axis;
             this.field_value = node.attrs.field_value || this.field_value;
             for (var property in node.attrs) {
-                if (property.startsWith("field_att_")) {
+                if (property.indexOf("field_att_") === 0) {
                     this.fields_att[property.substring(10)] = node.attrs[property];
                 }
             }
