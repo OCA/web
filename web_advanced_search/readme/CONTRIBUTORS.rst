@@ -3,3 +3,4 @@
 * Jairo Llopis <jairo.llopis@tecnativa.com>
 * Rami Alwafaie <rami.alwafaie@initos.com>
 * Jose Mª Bernet <josemaria.bernet@guadaltech.es>
+* Simone Orsi <simone.orsi@camptocamp.com>
