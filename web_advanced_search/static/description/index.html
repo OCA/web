@@ -372,19 +372,25 @@ ul.auto-toc {
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#usage" id="id1">Usage</a></li>
-<li><a class="reference internal" href="#known-issues-roadmap" id="id2">Known issues / Roadmap</a></li>
-<li><a class="reference internal" href="#bug-tracker" id="id3">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="id4">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="id5">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="id6">Contributors</a></li>
-<li><a class="reference internal" href="#maintainers" id="id7">Maintainers</a></li>
+<li><a class="reference internal" href="#usage" id="id4">Usage</a></li>
+<li><a class="reference internal" href="#known-issues-roadmap" id="id5">Known issues / Roadmap</a></li>
+<li><a class="reference internal" href="#changelog" id="id6">Changelog</a><ul>
+<li><a class="reference internal" href="#id1" id="id7">11.0.1.0.2 (2018-10-31)</a></li>
+<li><a class="reference internal" href="#id2" id="id8">11.0.1.0.1 (2018-09-18)</a></li>
+<li><a class="reference internal" href="#id3" id="id9">11.0.1.0.0 (2018-07-20)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bug-tracker" id="id10">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="id11">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="id12">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="id13">Contributors</a></li>
+<li><a class="reference internal" href="#maintainers" id="id14">Maintainers</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="usage">
-<h1><a class="toc-backref" href="#id1">Usage</a></h1>
+<h1><a class="toc-backref" href="#id4">Usage</a></h1>
 <p>To use this module, you need to:</p>
 <ul class="simple">
 <li>Open <em>Filters</em> in a search view</li>
@@ -408,7 +414,7 @@ this indefinetely, so it is possible to search for moves belonging
 to a journal which has a user who is member of a certain group etc.</p>
 </div>
 <div class="section" id="known-issues-roadmap">
-<h1><a class="toc-backref" href="#id2">Known issues / Roadmap</a></h1>
+<h1><a class="toc-backref" href="#id5">Known issues / Roadmap</a></h1>
 <p>Improvements to the <tt class="docutils literal">domain</tt> widget, not exclusively related to this addon:</p>
 <ul class="simple">
 <li>Use relational widgets when filtering a relational field</li>
@@ -425,8 +431,49 @@ advanced domain editor</li>
 advanced filter</li>
 </ul>
 </div>
+<div class="section" id="changelog">
+<h1><a class="toc-backref" href="#id6">Changelog</a></h1>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id7">11.0.1.0.2 (2018-10-31)</a></h2>
+<ul>
+<li><p class="first">Fix initialization of 1st domain node</p>
+<p>Sometime the dialog is not ready yet, like on EE version.
+Hence when you inject the 1st domain node
+the dialog must be already opened.</p>
+<p>[simahawk]</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id8">11.0.1.0.1 (2018-09-18)</a></h2>
+<ul>
+<li><p class="first">Fix <cite>undefined</cite> in x2m fields</p>
+<p>Before this patch, when searching with the “equals to” operator in any
+x2many field, the searched parameter was always <cite>undefined</cite>.</p>
+<p>The problem was that the underlying field manager implementation was
+treating those fields as x2many, while the widget used was the <cite>one2many</cite>
+one.</p>
+<p>This patch simply mocks the underlying fake record to make think that
+any relational field is always a <cite>one2many</cite>. This sets all pieces in
+place and makes the field manager work as expected, and thus you can
+search as expected too.</p>
+</li>
+<li><p class="first">Make linter happy</p>
+<p>[Yajo]</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id9">11.0.1.0.0 (2018-07-20)</a></h2>
+<ul>
+<li><p class="first">Rename, refactor, migrate to v11</p>
+<p>[Yajo]</p>
+</li>
+</ul>
+</div>
+</div>
 <div class="section" id="bug-tracker">
-<h1><a class="toc-backref" href="#id3">Bug Tracker</a></h1>
+<h1><a class="toc-backref" href="#id10">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/web/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
@@ -434,26 +481,28 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1><a class="toc-backref" href="#id4">Credits</a></h1>
+<h1><a class="toc-backref" href="#id11">Credits</a></h1>
 <div class="section" id="authors">
-<h2><a class="toc-backref" href="#id5">Authors</a></h2>
+<h2><a class="toc-backref" href="#id12">Authors</a></h2>
 <ul class="simple">
 <li>Therp BV</li>
 <li>Tecnativa</li>
+<li>Camptocamp</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h2><a class="toc-backref" href="#id6">Contributors</a></h2>
+<h2><a class="toc-backref" href="#id13">Contributors</a></h2>
 <ul class="simple">
 <li>Holger Brunn &lt;<a class="reference external" href="mailto:hbrunn&#64;therp.nl">hbrunn&#64;therp.nl</a>&gt;</li>
 <li>Vicent Cubells &lt;<a class="reference external" href="mailto:vicent.cubells&#64;tecnativa.com">vicent.cubells&#64;tecnativa.com</a>&gt;</li>
 <li>Jairo Llopis &lt;<a class="reference external" href="mailto:jairo.llopis&#64;tecnativa.com">jairo.llopis&#64;tecnativa.com</a>&gt;</li>
 <li>Rami Alwafaie &lt;<a class="reference external" href="mailto:rami.alwafaie&#64;initos.com">rami.alwafaie&#64;initos.com</a>&gt;</li>
 <li>Jose Mª Bernet &lt;<a class="reference external" href="mailto:josemaria.bernet&#64;guadaltech.es">josemaria.bernet&#64;guadaltech.es</a>&gt;</li>
+<li>Simone Orsi &lt;<a class="reference external" href="mailto:simone.orsi&#64;camptocamp.com">simone.orsi&#64;camptocamp.com</a>&gt;</li>
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2><a class="toc-backref" href="#id7">Maintainers</a></h2>
+<h2><a class="toc-backref" href="#id14">Maintainers</a></h2>
 <p>This module is maintained by the OCA.</p>
 <a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
