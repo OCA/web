@@ -106,8 +106,10 @@ odoo.define("web_advanced_search", function (require) {
                     readonly: false,
                 }
             );
-            // Add 1st domain node by default
-            domain_selector_dialog.domainSelector._onAddFirstButtonClick();
+            domain_selector_dialog.opened(function () {
+                // Add 1st domain node by default
+                domain_selector_dialog.domainSelector._onAddFirstButtonClick();
+            });
             return domain_selector_dialog.open();
         },
 
