@@ -137,7 +137,6 @@ Authors
 
 * Therp BV
 * Tecnativa
-* Camptocamp
 
 Contributors
 ~~~~~~~~~~~~
