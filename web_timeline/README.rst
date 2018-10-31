@@ -41,30 +41,27 @@ Configuration
 You need to define a view with the tag <timeline> as base element. These are
 the possible attributes for the tag:
 
-* date_start (required): it defines the name of the field of type date that
-  contains the start of the event.
-* date_stop (optional): it defines the name of the field of type date that
-  contains the end of the event. The date_stop can be equal to the attribute
-  date_start to display events has 'point' on the Timeline (instantaneous event)
-* date_delay (optional): it defines the name of the field of type float/integer
-  that contain the duration in hours of the event, default = 1
-* default_group_by (required): it defines the name of the field that will be
-  taken as default group by when accessing the view or when no other group by
-  is selected.
-* zoomKey (optional): Specifies whether the Timeline is only zoomed when an
-  additional key is down. Available values are '' (does not apply), 'altKey',
-  'ctrlKey', or 'metaKey'. Set this option if you want to be able to use the
-  scroll to navigate vertically on views with a lot of events.
-* mode (optional): Specifies the initial visible window. Available values are:
-  'day' to display the current day, 'week', 'month' and 'fit'.
-  Default value is 'fit' to adjust the visible window such that it fits all items
-* event_open_popup (optional): when set to true, it allows to edit the events
-  in a popup. If not (default value), the record is edited changing to form
-  view.
-* colors (optional): it allows to set certain specific colors if the expressed
-  condition (JS syntax) is met.
-* dependency_arrow (optional): set this attribute to a x2many field to draw
-  arrows between the records referenced in the x2many field.
++--------------------+-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Attribute          | Required? | Description                                                                                                                                                                                                                                                               |
++====================+===========+===========================================================================================================================================================================================================================================================================+
+| date_start         | **Yes**   | Defines the name of the field of type date that contains the start of the event.                                                                                                                                                                                          |
++--------------------+-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| date_stop          | No        | Defines the name of the field of type date that contains the end of the event. The date_stop can be equal to the attribute date_start to display events has 'point' on the Timeline (instantaneous event).                                                                |
++--------------------+-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| date_delay         | No        | Defines the name of the field of type float/integer that contain the duration in hours of the event, default = 1.                                                                                                                                                         |
++--------------------+-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| default_group_by   | **Yes**   | Defines the name of the field that will be taken as default group by when accessing the view or when no other group by is selected.                                                                                                                                       |
++--------------------+-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| zoomKey            | No        | Specifies whether the Timeline is only zoomed when an additional key is down. Available values are '' (does not apply), 'altKey', 'ctrlKey', or 'metaKey'. Set this option if you want to be able to use the scroll to navigate vertically on views with a lot of events. |
++--------------------+-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| mode               | No        | Specifies the initial visible window. Available values are: 'day' to display the current day, 'week', 'month' and 'fit'. Default value is 'fit' to adjust the visible window such that it fits all items.                                                                 |
++--------------------+-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| event_open_popup   | No        | When set to true, it allows to edit the events in a popup. If not (default value), the record is edited changing to form view.                                                                                                                                            |
++--------------------+-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| colors             | No        | Allows to set certain specific colors if the expressed condition (JS syntax) is met.                                                                                                                                                                                      |
++--------------------+-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| dependency_arrow   | No        | Set this attribute to a x2many field to draw arrows between the records referenced in the x2many field.                                                                                                                                                                   |
++--------------------+-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Optionally you can declare a custom template, which will be used to render the
 timeline items. You have to name the template 'timeline-item'.
