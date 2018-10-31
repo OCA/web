@@ -20,10 +20,15 @@ msgstr ""
 
 #. module: web_timeline
 #. openerp-web
-#: code:addons/web_timeline/static/src/js/timeline_controller.js:176
-#, python-format
-msgid "Are you sure you want to delete this record ?"
+#: code:addons/web_timeline/static/src/js/timeline_controller.js:240
+#, fuzzy, python-format
+msgid "Are you sure you want to delete this record?"
 msgstr "¿Está seguro que desea eliminar este registro?"
+
+#. module: web_timeline
+#: selection:ir.ui.view,type:0
+msgid "Calendar"
+msgstr ""
 
 #. module: web_timeline
 #. openerp-web
@@ -33,6 +38,31 @@ msgid "Day"
 msgstr "Día"
 
 #. module: web_timeline
+#: selection:ir.ui.view,type:0
+msgid "Diagram"
+msgstr ""
+
+#. module: web_timeline
+#: selection:ir.ui.view,type:0
+msgid "Form"
+msgstr ""
+
+#. module: web_timeline
+#: selection:ir.ui.view,type:0
+msgid "Gantt"
+msgstr ""
+
+#. module: web_timeline
+#: selection:ir.ui.view,type:0
+msgid "Graph"
+msgstr ""
+
+#. module: web_timeline
+#: selection:ir.ui.view,type:0
+msgid "Kanban"
+msgstr ""
+
+#. module: web_timeline
 #. openerp-web
 #: code:addons/web_timeline/static/src/xml/web_timeline.xml:10
 #, python-format
@@ -40,15 +70,38 @@ msgid "Month"
 msgstr "Mes"
 
 #. module: web_timeline
+#: selection:ir.ui.view,type:0
+msgid "Pivot"
+msgstr ""
+
+#. module: web_timeline
+#: selection:ir.ui.view,type:0
+msgid "QWeb"
+msgstr ""
+
+#. module: web_timeline
+#: selection:ir.ui.view,type:0
+msgid "Search"
+msgstr ""
+
+#. module: web_timeline
+#. openerp-web
+#: code:addons/web_timeline/static/src/js/timeline_renderer.js:467
+#, python-format
+msgid "Template \"timeline-item\" not present in timeline view definition."
+msgstr ""
+
+#. module: web_timeline
 #. openerp-web
 #: code:addons/web_timeline/static/src/js/timeline_view.js:32
+#: selection:ir.ui.view,type:0
 #, python-format
 msgid "Timeline"
 msgstr "Línea de tiempo"
 
 #. module: web_timeline
 #. openerp-web
-#: code:addons/web_timeline/static/src/js/timeline_renderer.js:43
+#: code:addons/web_timeline/static/src/js/timeline_renderer.js:63
 #, python-format
 msgid "Timeline view has not defined 'date_start' attribute."
 msgstr ""
@@ -60,6 +113,28 @@ msgstr ""
 #, python-format
 msgid "Today"
 msgstr "Hoy"
+
+#. module: web_timeline
+#: selection:ir.ui.view,type:0
+msgid "Tree"
+msgstr ""
+
+#. module: web_timeline
+#: model:ir.model,name:web_timeline.model_ir_ui_view
+msgid "View"
+msgstr ""
+
+#. module: web_timeline
+#: model:ir.model.fields,field_description:web_timeline.field_ir_ui_view__type
+msgid "View Type"
+msgstr ""
+
+#. module: web_timeline
+#. openerp-web
+#: code:addons/web_timeline/static/src/js/timeline_controller.js:243
+#, python-format
+msgid "Warning"
+msgstr ""
 
 #. module: web_timeline
 #. openerp-web
@@ -75,7 +150,5 @@ msgstr "Semana"
 msgid "Year"
 msgstr "Año"
 
-#. module: web_timeline
-#: model:ir.model,name:web_timeline.model_ir_ui_view
-msgid "ir.ui.view"
-msgstr "ir.ui.view"
+#~ msgid "ir.ui.view"
+#~ msgstr "ir.ui.view"
