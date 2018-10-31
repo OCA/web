@@ -15,6 +15,7 @@ setuptools.setup(
         'odoo10-addon-web_advanced_search_wildcard',
         'odoo10-addon-web_advanced_search_x2x',
         'odoo10-addon-web_chatter_paste',
+        'odoo10-addon-web_ckeditor4',
         'odoo10-addon-web_confirm_window_close',
         'odoo10-addon-web_decimal_numpad_dot',
         'odoo10-addon-web_dialog_size',
