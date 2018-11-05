@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2015 AvanzOSC - Oihane Crucelaegui
 # Copyright 2015 Tecnativa - Pedro M. Baeza
 # Copyright 2015 Comunitea - Omar Castiñeira Saavedra
@@ -8,7 +7,7 @@
 
 {
     "name": "Web - Numpad Dot as decimal separator",
-    "version": "11.0.1.0.3",
+    "version": "12.0.1.0.0",
     "license": "AGPL-3",
     "summary": "Allows using numpad dot to enter period decimal separator",
     "depends": [
