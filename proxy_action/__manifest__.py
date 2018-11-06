@@ -15,6 +15,7 @@
     """,
     'depends': [
         'base',
+        'web',
     ],
     'data': [
         'static/src/xml/view.xml',
