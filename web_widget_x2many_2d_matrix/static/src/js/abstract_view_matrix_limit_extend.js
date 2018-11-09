@@ -12,6 +12,6 @@ odoo.define( "web_widget_x2many_2d_matrix.matrix_limit_extend", function (requir
                     attrs.limit = Infinity;
                 }
             },
-        };
+        });
     }
 );
