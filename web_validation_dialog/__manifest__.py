@@ -9,7 +9,7 @@
     'author': 'Serpent Consulting Services Pvt. Ltd., '
               'Odoo Community Association (OCA)',
     'license': 'LGPL-3',
-    'website': 'http://www.serpentcs.com',
+    'website': 'https://github.com/OCA/web',
     'depends': [
         'web',
     ],

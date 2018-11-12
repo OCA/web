@@ -2,7 +2,7 @@ odoo.define("web_validation_dialog.ValidationDialog", function(require) {
     "use strict";
 
     var core = require('web.core');
-    var FromWidget = require('web.form_widgets');
+    var FormWidget = require('web.form_widgets');
     var Dialog = require('web.Dialog');
     var Model = require('web.DataModel');
     var framework = require('web.framework');
@@ -11,13 +11,11 @@ odoo.define("web_validation_dialog.ValidationDialog", function(require) {
     var QWeb = core.qweb;
     var _t = core._t;
 
-    FromWidget.WidgetButton.include({
+    FormWidget.WidgetButton.include({
         init: function(field_manager, node) {
             this._super(field_manager, node);
             this.options = pyeval.py_eval(this.node.attrs.options || '{}');
-            this.is_dialog_security = this.options.security
-            ? this.options.security
-                    : false;
+            this.is_dialog_security = this.options.security ? this.options.security : false;
         },
         exec_action: function() {
             var self = this;
@@ -72,8 +70,8 @@ odoo.define("web_validation_dialog.ValidationDialog", function(require) {
                                    var password = this.$el.find("#pincode").val();
                                    if (password) {
                                        framework.blockUI();
-                                       var callback = self.validate_pincode(self.is_dialog_security, password);
-                                       callback.done(function(result) {
+                                       var check_pincode = self.validate_pincode(self.is_dialog_security, password);
+                                       check_pincode.done(function(result) {
                                            framework.unblockUI();
                                            if (result) {
                                                curr_obj.close();
