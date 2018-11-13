@@ -27,7 +27,7 @@ Usage
    :width: 70%
 
 * Pass the options and confirm attributes inside the button as below:
-* **<button name="method_name" type="object" string="Create Invoice" options='{"security": "security_field"}'/>**
+* ``<button name="method_name" type="object" string="Create Invoice" options='{"security": "security_field"}'/>``
 * As shown in the image, here options attribute is passed to "Create Invoice" button.
 
 .. image:: /web_validation_dialog/static/description/img/click_invoice.png
