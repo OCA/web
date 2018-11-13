@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014 Therp BV (<http://therp.nl>).
 # Copyright 2015 Leonardo Donelli @ MONKSoftware
 # Copyright 2013 Marcel van der Boom <marcel@hsdev.com>
@@ -7,13 +6,13 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
-    'name': 'Show images in tree views',
+    'name': 'Show images in tree views via tooltip',
     'version': '12.0.1.0.0',
     'author': "Therp BV, "
               "MONK Software, "
               "Odoo Community Association (OCA), "
               "Serpent Consulting Services Pvt. Ltd.",
-    'website': 'https://github.com/OCA/Web',
+    'website': 'https://github.com/OCA/web',
     'license': 'AGPL-3',
     'category': 'Web',
     'depends': [
