@@ -3,8 +3,8 @@
 
     <template id="assets_backend" name="tree icon assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
-            <link rel='stylesheet' href='/web_tree_image/static/src/scss/common.scss'/>
-            <script type="text/javascript" src="/web_tree_image/static/src/js/tooltip.js"/>
+            <link rel='stylesheet' href='/web_tree_image_tooltip/static/src/scss/common.scss'/>
+            <script type="text/javascript" src="/web_tree_image_tooltip/static/src/js/tooltip.js"/>
         </xpath>
     </template>
 
