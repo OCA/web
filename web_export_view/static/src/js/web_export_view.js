@@ -42,10 +42,16 @@ odoo.define('web_export_view', function (require) {
                     return true;
                 });
             }
+            var export_columns_searchs = [];
             var export_columns_keys = [];
             var export_columns_names = [];
             var column_index = 0;
             var column_header_selector;
+
+            $('.o_facet_values > span').each(function() {
+                export_columns_searchs.push($(this).text().trim()+"\n")
+            })
+
             $.each(view.renderer.columns, function () {
                 if (this.tag == 'field' && (this.attrs.widget === undefined || this.attrs.widget != 'handle')) {
                     // non-fields like `_group` or buttons
@@ -102,6 +108,7 @@ odoo.define('web_export_view', function (require) {
                 url: '/web/export/xls_view',
                 data: {data: JSON.stringify({
                     model: view.modelName,
+                    searchs:export_columns_searchs,
                     headers: export_columns_names,
                     rows: export_rows
                 })},
