@@ -26,6 +26,5 @@ class TestWebValidationDialog(common.TransactionCase):
             'password': '123',
             'field': 'security_code',
         })
-        self.assertFalse(res,
-                        'Invalid or Wrong Password! Contact your '
-                        'Administrator.')
+        self.assertFalse(
+            res, 'Invalid or Wrong Password! Contact your Administrator.')
