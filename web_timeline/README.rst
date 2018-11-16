@@ -201,7 +201,7 @@ promote its widespread use.
     :target: https://github.com/tarteo
     :alt: tarteo
 
-Current `maintainer <https://odoo-community.org/page/maintainer-role>`_:
+Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-tarteo| 
 
