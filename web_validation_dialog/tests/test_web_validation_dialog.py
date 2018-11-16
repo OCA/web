@@ -17,6 +17,15 @@ class TestWebValidationDialog(common.TransactionCase):
             'password': 'pwd',
             'field': 'security_code',
         })
-        self.assertTrue(res,
+        self.assertTrue(res)
+
+    def test_invalid_check_security(self):
+        self.company.security_code = '12345'
+        res = self.company.check_security({
+            'companyId': self.company.id,
+            'password': '123',
+            'field': 'security_code',
+        })
+        self.assertFalse(res,
                         'Invalid or Wrong Password! Contact your '
                         'Administrator.')
