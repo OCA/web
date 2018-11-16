@@ -14,6 +14,7 @@ setuptools.setup(
         'odoo12-addon-web_favicon',
         'odoo12-addon-web_listview_range_select',
         'odoo12-addon-web_notify',
+        'odoo12-addon-web_timeline',
     ],
     classifiers=[
         'Programming Language :: Python',
