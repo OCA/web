@@ -96,7 +96,7 @@ show_column_totals
     column totals. True by default
 
 Example
-=======
+~~~~~~~
 
 You need a data structure already filled with values. Let's assume we want to
 use this widget in a wizard that lets the user fill in planned hours for one
