@@ -28,9 +28,10 @@ import time
 import zlib
 from odoo.http import request
 from odoo.tools import crop_image, topological_sort, html_escape, pycompat
-from odoo.tools.misc import str2bool, xlwt, file_open
+from odoo.tools.misc import str2bool, xlwt, xlsxwriter, file_open
 from odoo.addons.web.controllers.main import ExcelExport
-
+from odoo.exceptions import AccessError, UserError
+from odoo.tools.translate import _
 
 class ExcelExportView(ExcelExport):
     def __getattribute__(self, name):
@@ -39,11 +40,13 @@ class ExcelExportView(ExcelExport):
         return super(ExcelExportView, self).__getattribute__(name)
 
     def from_data(self,fields, rows, searchs = []):
-        if len(rows) > 65535:
-            raise UserError(_('There are too many rows (%s rows, limit: 65535) to export as Excel 97-2003 (.xls) format. Consider splitting the export.') % len(rows))
+        output = io.BytesIO()
+        excl_limit = 65534
+        if len(rows) > excl_limit:
+            print(_('There are too many rows (%s rows, limit: 65535) to export as Excel 97-2003 (.xls) format. Consider splitting the export.') % len(rows))
 
-        workbook = xlwt.Workbook()
-        worksheet = workbook.add_sheet('Sheet 1')
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        worksheet = workbook.add_worksheet('Sheet 1')
 
         pos = 0
 
@@ -56,11 +59,11 @@ class ExcelExportView(ExcelExport):
 
         for i, fieldname in enumerate(fields):
             worksheet.write(pos, i, fieldname)
-            worksheet.col(i).width = 8000 # around 220 pixels
+            worksheet.set_column(pos, i, 8000)
 
-        base_style = xlwt.easyxf('align: wrap yes')
-        date_style = xlwt.easyxf('align: wrap yes', num_format_str='YYYY-MM-DD')
-        datetime_style = xlwt.easyxf('align: wrap yes', num_format_str='YYYY-MM-DD HH:mm:SS')
+        base_style = workbook.add_format({'align': 'wrap yes'})
+        date_style = workbook.add_format({'align': 'wrap yes','num_format': 'YYYY-MM-DD'})
+        datetime_style = workbook.add_format({'align': 'wrap yes','num_format': 'YYYY-MM-DD HH:mm:SS'})
 
         for row_index, row in enumerate(rows):
             for cell_index, cell_value in enumerate(row):
@@ -86,11 +89,10 @@ class ExcelExportView(ExcelExport):
                     cell_style = date_style
                 worksheet.write(row_index + pos + 1, cell_index, cell_value, cell_style)
 
-        fp = io.BytesIO()
-        workbook.save(fp)
-        fp.seek(0)
-        data = fp.read()
-        fp.close()
+        workbook.close()
+        output.seek(0)
+        data = output.read()
+        output.close()
         return data
 
 
