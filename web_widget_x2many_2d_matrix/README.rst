@@ -42,7 +42,7 @@ An example use case would be: Select some projects and some employees so that
 a manager can easily fill in the planned_hours for one task per employee. The
 result could look like this:
 
-.. image:: /web_widget_x2many_2d_matrix/static/description/screenshot.png
+.. image:: https://raw.githubusercontent.com/web_widget_x2many_2d_matrix/static/description/screenshot.png
     :alt: Screenshot
 
 The beauty of this is that you have an arbitrary amount of columns with this
@@ -96,7 +96,7 @@ show_column_totals
     column totals. True by default
 
 Example
-=======
+~~~~~~~
 
 You need a data structure already filled with values. Let's assume we want to
 use this widget in a wizard that lets the user fill in planned hours for one
