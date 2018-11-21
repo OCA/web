@@ -7,7 +7,7 @@
 <template id="assets_backend" inherit_id="web.assets_backend">
     <xpath expr=".">
         <link rel="stylesheet"
-            href="/web_widget_image_download/static/src/css/web_widget_image_download.css"/>
+            href="/web_widget_image_download/static/src/scss/web_widget_image_download.scss"/>
         <script type="text/javascript"
             src="/web_widget_image_download/static/src/js/web_widget_image_download.js"/>
     </xpath>
