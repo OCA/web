@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo12-addon-web_disable_export_group',
         'odoo12-addon-web_environment_ribbon',
         'odoo12-addon-web_favicon',
+        'odoo12-addon-web_ir_actions_act_view_reload',
         'odoo12-addon-web_listview_range_select',
         'odoo12-addon-web_notify',
         'odoo12-addon-web_timeline',
