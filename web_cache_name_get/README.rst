@@ -9,12 +9,12 @@ Web Cache Name Get
 This module improves the loading time of some views: mainly sale or purchase orders 
 with many order lines.
 
-It reduce the numer of useless requests done by the user's browser.
+It reduce the number of useless requests done by the user's browser.
 
 
 This modules cache some requests to name_get() done from list views.
 
-For instance, if you have 40 sale order lines on a sale. All theses lines have the same tax.
+For instance, if you have 40 sale order lines on a sale. All these lines have the same tax.
 
 - Without this module : your browser makes about 40 time the same name_get() request.
 - With this modules: your browser makes 1 request and reuse the result for all the lines.
