@@ -2,9 +2,9 @@
    :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
    :alt: License: LGPL-3
 
-================
-Cache name_get()
-================
+==================
+Web Cache Name Get
+==================
 
 This module improves the loading time of some views: mainly sale or purchase orders 
 with many order lines.
