@@ -7,5 +7,6 @@
 * Quentin Theuret <quentin.theuret@amaris.com>
 * `Tecnativa <https://www.tecnativa.com>`_:
 
-  * Pedro M. Baeza <pedro.baeza@tecnativa.com>
-  * Jairo Llopis <jairo.llopis@tecnativa.com>
+  * Pedro M. Baeza
+  * Jairo Llopis
+  * Ernesto Tejeda
