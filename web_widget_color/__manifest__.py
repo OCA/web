@@ -8,13 +8,15 @@
 {
     'name': "Web Widget Color",
     'category': "web",
-    'version': "11.0.1.0.0",
+    'version': "12.0.1.0.0",
     "author": "Savoir-faire Linux, "
               "Anybox, "
               "Taktik SA, "
               "Sudokeys, "
+              "Tecnativa, "
               "Odoo Community Association (OCA)",
-    'depends': ['base', 'web'],
+    'website': 'https://github.com/OCA/web',
+    'depends': ['web'],
     'data': [
         'view/web_widget_color_view.xml'
     ],
