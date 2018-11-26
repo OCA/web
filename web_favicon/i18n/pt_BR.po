@@ -11,8 +11,8 @@ msgstr ""
 "POT-Creation-Date: 2017-06-22 08:26+0000\n"
 "PO-Revision-Date: 2018-08-04 13:35+0000\n"
 "Last-Translator: Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
-"23907/pt_BR/)\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
+"teams/23907/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,27 +26,27 @@ msgid "Companies"
 msgstr "Empresas"
 
 #. module: web_favicon
-#: model:ir.ui.view,arch_db:web_favicon.view_company_form
+#: model_terms:ir.ui.view,arch_db:web_favicon.view_company_form
 msgid "Favicon"
 msgstr "Favicon"
 
 #. module: web_favicon
-#: model:ir.model.fields,field_description:web_favicon.field_res_company_favicon_backend
+#: model:ir.model.fields,field_description:web_favicon.field_res_company__favicon_backend
 msgid "Favicon Backend"
 msgstr "Favicon back-end"
 
 #. module: web_favicon
-#: model:ir.model.fields,field_description:web_favicon.field_res_company_favicon_backend_mimetype
+#: model:ir.model.fields,field_description:web_favicon.field_res_company__favicon_backend_mimetype
 msgid "Favicon Backend Mimetype"
 msgstr "Favicon back-end mimetype"
 
 #. module: web_favicon
-#: model:ir.model.fields,help:web_favicon.field_res_company_favicon_backend_mimetype
+#: model:ir.model.fields,help:web_favicon.field_res_company__favicon_backend_mimetype
 msgid "Set the mimetype of your file."
 msgstr "Defina o tipo mímico do seu arquivo."
 
 #. module: web_favicon
-#: model:ir.ui.view,arch_db:web_favicon.view_company_form
+#: model_terms:ir.ui.view,arch_db:web_favicon.view_company_form
 msgid "Web Favicon"
 msgstr "Favicon Web"
 
