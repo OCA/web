@@ -19,22 +19,43 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: web_notify
-#: code:addons/web_notify/models/res_users.py:26
+#: code:addons/web_notify/models/res_users.py:23
 #, python-format
 msgid "Information"
 msgstr "Información"
 
 #. module: web_notify
-#: model:ir.model.fields,field_description:web_notify.field_res_users_notify_info_channel_name
+#: model:ir.model.fields,field_description:web_notify.field_res_users__notify_info_channel_name
 #, fuzzy
 msgid "Notify Info Channel Name"
 msgstr "Nombre del canal de información notificada"
 
 #. module: web_notify
-#: model:ir.model.fields,field_description:web_notify.field_res_users_notify_warning_channel_name
+#: model:ir.model.fields,field_description:web_notify.field_res_users__notify_warning_channel_name
 #, fuzzy
 msgid "Notify Warning Channel Name"
 msgstr "Nombre del canal de avisos notificados"
+
+#. module: web_notify
+#: code:addons/web_notify/models/res_users.py:37
+#, python-format
+msgid "Sending a notification to another user is forbidden."
+msgstr ""
+
+#. module: web_notify
+#: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
+msgid "Test info notification"
+msgstr ""
+
+#. module: web_notify
+#: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
+msgid "Test warning notification"
+msgstr ""
+
+#. module: web_notify
+#: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
+msgid "Test web notify"
+msgstr ""
 
 #. module: web_notify
 #: model:ir.model,name:web_notify.model_res_users
@@ -42,7 +63,7 @@ msgid "Users"
 msgstr "Usuarios"
 
 #. module: web_notify
-#: code:addons/web_notify/models/res_users.py:32
+#: code:addons/web_notify/models/res_users.py:29
 #, python-format
 msgid "Warning"
 msgstr "Aviso"
