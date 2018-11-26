@@ -24,29 +24,29 @@ msgid "Companies"
 msgstr "Unternehmen"
 
 #. module: web_favicon
-#: model:ir.ui.view,arch_db:web_favicon.view_company_form
+#: model_terms:ir.ui.view,arch_db:web_favicon.view_company_form
 msgid "Favicon"
 msgstr "Favicon"
 
 #. module: web_favicon
-#: model:ir.model.fields,field_description:web_favicon.field_res_company_favicon_backend
+#: model:ir.model.fields,field_description:web_favicon.field_res_company__favicon_backend
 #, fuzzy
 msgid "Favicon Backend"
 msgstr "Icon"
 
 #. module: web_favicon
-#: model:ir.model.fields,field_description:web_favicon.field_res_company_favicon_backend_mimetype
+#: model:ir.model.fields,field_description:web_favicon.field_res_company__favicon_backend_mimetype
 #, fuzzy
 msgid "Favicon Backend Mimetype"
 msgstr "MIME-Type"
 
 #. module: web_favicon
-#: model:ir.model.fields,help:web_favicon.field_res_company_favicon_backend_mimetype
+#: model:ir.model.fields,help:web_favicon.field_res_company__favicon_backend_mimetype
 msgid "Set the mimetype of your file."
 msgstr "Wähle den MIME-Type der Datei."
 
 #. module: web_favicon
-#: model:ir.ui.view,arch_db:web_favicon.view_company_form
+#: model_terms:ir.ui.view,arch_db:web_favicon.view_company_form
 msgid "Web Favicon"
 msgstr "Web Favicon"
 

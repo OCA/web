@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_favicon
+# 	* web_favicon
 #
 msgid ""
 msgstr ""
@@ -22,27 +22,27 @@ msgid "Companies"
 msgstr "Virksomheder"
 
 #. module: web_favicon
-#: model:ir.ui.view,arch_db:web_favicon.view_company_form
+#: model_terms:ir.ui.view,arch_db:web_favicon.view_company_form
 msgid "Favicon"
 msgstr ""
 
 #. module: web_favicon
-#: model:ir.model.fields,field_description:web_favicon.field_res_company_favicon_backend
+#: model:ir.model.fields,field_description:web_favicon.field_res_company__favicon_backend
 msgid "Favicon Backend"
 msgstr ""
 
 #. module: web_favicon
-#: model:ir.model.fields,field_description:web_favicon.field_res_company_favicon_backend_mimetype
+#: model:ir.model.fields,field_description:web_favicon.field_res_company__favicon_backend_mimetype
 msgid "Favicon Backend Mimetype"
 msgstr ""
 
 #. module: web_favicon
-#: model:ir.model.fields,help:web_favicon.field_res_company_favicon_backend_mimetype
+#: model:ir.model.fields,help:web_favicon.field_res_company__favicon_backend_mimetype
 msgid "Set the mimetype of your file."
 msgstr "Sæt mimetypen af din fil."
 
 #. module: web_favicon
-#: model:ir.ui.view,arch_db:web_favicon.view_company_form
+#: model_terms:ir.ui.view,arch_db:web_favicon.view_company_form
 msgid "Web Favicon"
 msgstr ""
 
