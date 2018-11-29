@@ -10,7 +10,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
         view_dialogs = require('web.view_dialogs'),
         relational_fields = require('web.relational_fields'),
         FieldMany2One = relational_fields.FieldMany2One,
-        FormFieldMany2ManyTags = relational_fields.FormFieldMany2ManyTags,
+        FieldMany2ManyTags = relational_fields.FieldMany2ManyTags,
         rpc = require('web.rpc'),
         _t = core._t;
 
@@ -277,8 +277,8 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
         }
     });
 
-    FormFieldMany2ManyTags.include({
-        events: _.extend({}, FormFieldMany2ManyTags.prototype.events, {
+    FieldMany2ManyTags.include({
+        events: _.extend({}, FieldMany2ManyTags.prototype.events, {
             'click .badge': '_onOpenBadge',
         }),
 
