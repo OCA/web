@@ -59,14 +59,14 @@ or
   
    self.env.user.notify_warning(message='My marning message')
 
-.. figure:: static/description/notifications_screenshot.png
+.. figure:: https://raw.githubusercontent.com/OCA/web/12.0/web_notify/static/description/notifications_screenshot.png
    :scale: 80 %
    :alt: Sample notifications
 
 You can test the behaviour of the notifications by installing this module in a demo database.
 Access the users form through Settings -> Users & Companies. You'll see a tab called "Test web notify", here you'll find two buttons that'll allow you test the module.
 
-.. figure:: static/description/test_notifications_demo.png
+.. figure:: https://raw.githubusercontent.com/OCA/web/12.0/web_notify/static/description/test_notifications_demo.png
    :scale: 80 %
    :alt: Sample notifications
 
