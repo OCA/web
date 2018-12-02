@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <template id="assets_backend" name="web_keyboard_navigation assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script
+                    type="text/javascript"
+                    src="/web_keyboard_navigation/static/src/js/abstract_web_client.js">
+                </script>
+                <script
+                    type="text/javascript"
+                    src="/web_keyboard_navigation/static/src/js/browser_detection.js">
+                </script>
+                <script
+                    type="text/javascript"
+                    src="/web_keyboard_navigation/static/src/js/web_keyboard_navigation.js">
+                </script>
+                <link
+                    rel="stylesheet"
+                    href="/web_keyboard_navigation/static/src/css/web_keyboard_navigation.css"/>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>
