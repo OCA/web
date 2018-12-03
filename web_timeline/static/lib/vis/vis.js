@@ -2556,6 +2556,7 @@ return /******/ (function(modules) { // webpackBootstrap
       item[this._fieldId] = id;
     }
 
+
     var d = {};
     for (var field in item) {
       if (item.hasOwnProperty(field)) {
@@ -6588,7 +6589,8 @@ return /******/ (function(modules) { // webpackBootstrap
     this.components.push(this.customTime);
 
     // item set
-    this.itemSet = new ItemSet(this.body);
+    // this.itemSet = new ItemSet(this.body);
+    this.itemSet = new ItemSet(this.body, this.options);
     this.components.push(this.itemSet);
 
     this.itemsData = null;      // DataSet
@@ -9248,14 +9250,30 @@ return /******/ (function(modules) { // webpackBootstrap
    * formatted as "hh:mm".
    * @param {Date} [date] custom date. if not provided, current date is taken
    */
-  TimeStep.prototype.getLabelMinor = function(date) {
-    if (date == undefined) {
-      date = this.current;
-    }
+  TimeStep.prototype.getLabelMinor = function (date) {
+      if (date == undefined) {
+        date = this.current;
+      }
+      if (date instanceof Date) {
+        date = moment(date);
+      }
 
-    var format = this.format.minorLabels[this.scale];
-    return (format && format.length > 0) ? moment(date).format(format) : '';
-  };
+      if (typeof this.format.minorLabels === "function") {
+        return this.format.minorLabels(date, this.scale, this.step);
+      }
+
+      var format = this.format.minorLabels[this.scale];
+      // noinspection FallThroughInSwitchStatementJS
+      switch (this.scale) {
+        case 'week':
+          if (this.isMajor() && date.weekday() !== 0) {
+            return "";
+          }
+        default:
+          // eslint-disable-line no-fallthrough
+          return format && format.length > 0 ? moment(date).format(format) : '';
+      }
+    };
 
   /**
    * Returns formatted text for the major axis label, depending on the current
@@ -9263,13 +9281,20 @@ return /******/ (function(modules) { // webpackBootstrap
    * hours, and the hour will be formatted as "hh".
    * @param {Date} [date] custom date. if not provided, current date is taken
    */
-  TimeStep.prototype.getLabelMajor = function(date) {
-    if (date == undefined) {
-      date = this.current;
-    }
+  TimeStep.prototype.getLabelMajor = function (date) {
+      if (date == undefined) {
+        date = this.current;
+      }
+      if (date instanceof Date) {
+        date = moment(date);
+      }
 
-    var format = this.format.majorLabels[this.scale];
-    return (format && format.length > 0) ? moment(date).format(format) : '';
+      if (typeof this.format.majorLabels === "function") {
+        return this.format.majorLabels(date, this.scale, this.step);
+      }
+
+      var format = this.format.majorLabels[this.scale];
+      return format && format.length > 0 ? moment(date).format(format) : '';
   };
 
   TimeStep.prototype.getClassName = function() {
@@ -11857,44 +11882,75 @@ return /******/ (function(modules) { // webpackBootstrap
   var stack = __webpack_require__(18);
   var RangeItem = __webpack_require__(24);
 
-  /**
-   * @constructor Group
-   * @param {Number | String} groupId
-   * @param {Object} data
-   * @param {ItemSet} itemSet
-   */
-  function Group (groupId, data, itemSet) {
-    this.groupId = groupId;
-    this.subgroups = {};
-    this.subgroupIndex = 0;
-    this.subgroupOrderer = data && data.subgroupOrder;
-    this.itemSet = itemSet;
+/**
+ * @param {number | string} groupId
+ * @param {Object} data
+ * @param {ItemSet} itemSet
+ * @constructor Group
+ */
+function Group(groupId, data, itemSet) {
+  this.groupId = groupId;
+  this.subgroups = {};
+  this.subgroupStack = {};
+  this.subgroupStackAll = false;
+  this.doInnerStack = false;
+  this.subgroupIndex = 0;
+  this.subgroupOrderer = data && data.subgroupOrder;
+  this.itemSet = itemSet;
+  this.isVisible = null;
+  this.stackDirty = true; // if true, items will be restacked on next redraw
 
-    this.dom = {};
-    this.props = {
-      label: {
-        width: 0,
-        height: 0
-      }
-    };
-    this.className = null;
-
-    this.items = {};        // items filtered by groupId of this group
-    this.visibleItems = []; // items currently visible in window
-    this.orderedItems = {
-      byStart: [],
-      byEnd: []
-    };
-    this.checkRangedItems = false; // needed to refresh the ranged items if the window is programatically changed with NO overlap.
-    var me = this;
-    this.itemSet.body.emitter.on("checkRangedItems", function () {
-      me.checkRangedItems = true;
-    })
-
-    this._create();
-
-    this.setData(data);
+  if (data && data.nestedGroups) {
+    this.nestedGroups = data.nestedGroups;
+    if (data.showNested == false) {
+      this.showNested = false;
+    } else {
+      this.showNested = true;
+    }
   }
+
+  if (data && data.subgroupStack) {
+    if (typeof data.subgroupStack === "boolean") {
+      this.doInnerStack = data.subgroupStack;
+      this.subgroupStackAll = data.subgroupStack;
+    } else {
+      // We might be doing stacking on specific sub groups, but only
+      // if at least one is set to do stacking
+      for (var key in data.subgroupStack) {
+        this.subgroupStack[key] = data.subgroupStack[key];
+        this.doInnerStack = this.doInnerStack || data.subgroupStack[key];
+      }
+    }
+  }
+
+  this.nestedInGroup = null;
+
+  this.dom = {};
+  this.props = {
+    label: {
+      width: 0,
+      height: 0
+    }
+  };
+  this.className = null;
+
+  this.items = {}; // items filtered by groupId of this group
+  this.visibleItems = []; // items currently visible in window
+  this.itemsInRange = []; // items currently in range
+  this.orderedItems = {
+    byStart: [],
+    byEnd: []
+  };
+  this.checkRangedItems = false; // needed to refresh the ranged items if the window is programatically changed with NO overlap.
+  var me = this;
+  this.itemSet.body.emitter.on("checkRangedItems", function () {
+    me.checkRangedItems = true;
+  });
+
+  this._create();
+
+  this.setData(data);
+}
 
   /**
    * Create DOM elements for the group
@@ -11912,6 +11968,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
     var foreground = document.createElement('div');
     foreground.className = 'group';
+    //changes
+    if (this.groupId){
+        foreground.id = this.groupId;
+    }
+    //END CHANGES
     foreground['timeline-group'] = this;
     this.dom.foreground = foreground;
 
@@ -11931,58 +11992,108 @@ return /******/ (function(modules) { // webpackBootstrap
   };
 
   /**
-   * Set the group data for this group
-   * @param {Object} data   Group data, can contain properties content and className
-   */
-  Group.prototype.setData = function(data) {
-    // update contents
-    var content = data && data.content;
-    if (content instanceof Element) {
-      this.dom.inner.appendChild(content);
+ * Set the group data for this group
+ * @param {Object} data   Group data, can contain properties content and className
+ */
+Group.prototype.setData = function (data) {
+  // update contents
+  var content;
+  var templateFunction;
+
+  if (this.itemSet.options && this.itemSet.options.groupTemplate) {
+    templateFunction = this.itemSet.options.groupTemplate.bind(this);
+    content = templateFunction(data, this.dom.inner);
+  } else {
+    content = data && data.content;
+  }
+
+  if (content instanceof Element) {
+    this.dom.inner.appendChild(content);
+    while (this.dom.inner.firstChild) {
+      this.dom.inner.removeChild(this.dom.inner.firstChild);
     }
-    else if (content !== undefined && content !== null) {
-      this.dom.inner.innerHTML = content;
-    }
-    else {
-      this.dom.inner.innerHTML = this.groupId || ''; // groupId can be null
+    this.dom.inner.appendChild(content);
+  } else if (content instanceof Object) {
+    templateFunction(data, this.dom.inner);
+  } else if (content !== undefined && content !== null) {
+    this.dom.inner.innerHTML = content;
+  } else {
+    this.dom.inner.innerHTML = this.groupId || ''; // groupId can be null
+  }
+
+  // update title
+  this.dom.label.title = data && data.title || '';
+  if (!this.dom.inner.firstChild) {
+    util.addClassName(this.dom.inner, 'vis-hidden');
+  } else {
+    util.removeClassName(this.dom.inner, 'vis-hidden');
+  }
+
+  if (data && data.nestedGroups) {
+    if (!this.nestedGroups || this.nestedGroups != data.nestedGroups) {
+      this.nestedGroups = data.nestedGroups;
     }
 
-    // update title
-    this.dom.label.title = data && data.title || '';
-
-    if (!this.dom.inner.firstChild) {
-      util.addClassName(this.dom.inner, 'hidden');
-    }
-    else {
-      util.removeClassName(this.dom.inner, 'hidden');
-    }
-
-    // update className
-    var className = data && data.className || null;
-    if (className != this.className) {
-      if (this.className) {
-        util.removeClassName(this.dom.label, this.className);
-        util.removeClassName(this.dom.foreground, this.className);
-        util.removeClassName(this.dom.background, this.className);
-        util.removeClassName(this.dom.axis, this.className);
+    if (data.showNested !== undefined || this.showNested === undefined) {
+      if (data.showNested == false) {
+        this.showNested = false;
+      } else {
+        this.showNested = true;
       }
-      util.addClassName(this.dom.label, className);
-      util.addClassName(this.dom.foreground, className);
-      util.addClassName(this.dom.background, className);
-      util.addClassName(this.dom.axis, className);
-      this.className = className;
     }
 
-    // update style
-    if (this.style) {
-      util.removeCssText(this.dom.label, this.style);
-      this.style = null;
+    util.addClassName(this.dom.label, 'vis-nesting-group');
+    var collapsedDirClassName = this.itemSet.options.rtl ? 'collapsed-rtl' : 'collapsed';
+    if (this.showNested) {
+      util.removeClassName(this.dom.label, collapsedDirClassName);
+      util.addClassName(this.dom.label, 'expanded');
+    } else {
+      util.removeClassName(this.dom.label, 'expanded');
+      util.addClassName(this.dom.label, collapsedDirClassName);
     }
-    if (data && data.style) {
-      util.addCssText(this.dom.label, data.style);
-      this.style = data.style;
+  } else if (this.nestedGroups) {
+    this.nestedGroups = null;
+    collapsedDirClassName = this.itemSet.options.rtl ? 'collapsed-rtl' : 'collapsed';
+    util.removeClassName(this.dom.label, collapsedDirClassName);
+    util.removeClassName(this.dom.label, 'expanded');
+    util.removeClassName(this.dom.label, 'vis-nesting-group');
+  }
+
+  if (data && data.nestedInGroup) {
+    util.addClassName(this.dom.label, 'vis-nested-group');
+    if (this.itemSet.options && this.itemSet.options.rtl) {
+      this.dom.inner.style.paddingRight = '30px';
+    } else {
+      this.dom.inner.style.paddingLeft = '30px';
     }
-  };
+  }
+
+  // update className
+  var className = data && data.className || null;
+  if (className != this.className) {
+    if (this.className) {
+      util.removeClassName(this.dom.label, this.className);
+      util.removeClassName(this.dom.foreground, this.className);
+      util.removeClassName(this.dom.background, this.className);
+      util.removeClassName(this.dom.axis, this.className);
+    }
+    util.addClassName(this.dom.label, className);
+    util.addClassName(this.dom.foreground, className);
+    util.addClassName(this.dom.background, className);
+    util.addClassName(this.dom.axis, className);
+    this.className = className;
+  }
+
+  // update style
+  if (this.style) {
+    util.removeCssText(this.dom.label, this.style);
+    this.style = null;
+  }
+  if (data && data.style) {
+    util.addCssText(this.dom.label, data.style);
+    this.style = data.style;
+  }
+};
 
   /**
    * Get the width of the group label
@@ -12547,111 +12658,186 @@ return /******/ (function(modules) { // webpackBootstrap
    * @extends Component
    */
   function ItemSet(body, options) {
-    this.body = body;
+  this.body = body;
+  this.defaultOptions = {
+    type: null, // 'box', 'point', 'range', 'background'
+    orientation: {
+      item: 'bottom' // item orientation: 'top' or 'bottom'
+    },
+    align: 'auto', // alignment of box items
+    stack: true,
+    stackSubgroups: true,
+    groupOrderSwap: function groupOrderSwap(fromGroup, toGroup, groups) {
+      // eslint-disable-line no-unused-vars
+      var targetOrder = toGroup.order;
+      toGroup.order = fromGroup.order;
+      fromGroup.order = targetOrder;
+    },
+    groupOrder: 'order',
 
-    this.defaultOptions = {
-      type: null,  // 'box', 'point', 'range', 'background'
-      orientation: 'bottom',  // item orientation: 'top' or 'bottom'
-      align: 'auto', // alignment of box items
-      stack: true,
-      groupOrder: null,
+    selectable: true,
+    multiselect: false,
+    itemsAlwaysDraggable: {
+      item: false,
+      range: false
+    },
 
-      selectable: true,
-      editable: {
-        updateTime: false,
-        updateGroup: false,
-        add: false,
-        remove: false
+    editable: {
+      updateTime: false,
+      updateGroup: false,
+      add: false,
+      remove: false,
+      overrideItems: false
+    },
+
+    groupEditable: {
+      order: false,
+      add: false,
+      remove: false
+    },
+
+    snap: TimeStep.snap,
+
+    // Only called when `objectData.target === 'item'.
+    onDropObjectOnItem: function onDropObjectOnItem(objectData, item, callback) {
+      callback(item);
+    },
+    onAdd: function onAdd(item, callback) {
+      callback(item);
+    },
+    onUpdate: function onUpdate(item, callback) {
+      callback(item);
+    },
+    onMove: function onMove(item, callback) {
+      callback(item);
+    },
+    onRemove: function onRemove(item, callback) {
+      callback(item);
+    },
+    onMoving: function onMoving(item, callback) {
+      callback(item);
+    },
+    onAddGroup: function onAddGroup(item, callback) {
+      callback(item);
+    },
+    onMoveGroup: function onMoveGroup(item, callback) {
+      callback(item);
+    },
+    onRemoveGroup: function onRemoveGroup(item, callback) {
+      callback(item);
+    },
+
+    margin: {
+      item: {
+        horizontal: 10,
+        vertical: 10
       },
+      axis: 20
+    },
 
-      snap:  TimeStep.snap,
+    showTooltips: true,
 
-      onAdd: function (item, callback) {
-        callback(item);
-      },
-      onUpdate: function (item, callback) {
-        callback(item);
-      },
-      onMove: function (item, callback) {
-        callback(item);
-      },
-      onRemove: function (item, callback) {
-        callback(item);
-      },
-      onMoving: function (item, callback) {
-        callback(item);
-      },
+    tooltip: {
+      followMouse: false,
+      overflowMethod: 'flip'
+    },
 
-      margin: {
-        item: {
-          horizontal: 10,
-          vertical: 10
-        },
-        axis: 20
-      },
-      padding: 5
-    };
+    tooltipOnItemUpdateTime: false
+  };
 
-    // options is shared by this ItemSet and all its items
-    this.options = util.extend({}, this.defaultOptions);
+  // options is shared by this ItemSet and all its items
+  this.options = util.extend({}, this.defaultOptions);
+  this.options.rtl = options.rtl;
 
-    // options for getting items from the DataSet with the correct type
-    this.itemOptions = {
-      type: {start: 'Date', end: 'Date'}
-    };
+  // options for getting items from the DataSet with the correct type
+  this.itemOptions = {
+    type: { start: 'Date', end: 'Date' }
+  };
 
-    this.conversion = {
-      toScreen: body.util.toScreen,
-      toTime: body.util.toTime
-    };
-    this.dom = {};
-    this.props = {};
-    this.hammer = null;
+  this.conversion = {
+    toScreen: body.util.toScreen,
+    toTime: body.util.toTime
+  };
+  this.dom = {};
+  this.props = {};
+  this.hammer = null;
 
-    var me = this;
-    this.itemsData = null;    // DataSet
-    this.groupsData = null;   // DataSet
+  var me = this;
+  this.itemsData = null; // DataSet
+  this.groupsData = null; // DataSet
 
-    // listeners for the DataSet of the items
-    this.itemListeners = {
-      'add': function (event, params, senderId) {
-        me._onAdd(params.items);
-      },
-      'update': function (event, params, senderId) {
-        me._onUpdate(params.items);
-      },
-      'remove': function (event, params, senderId) {
-        me._onRemove(params.items);
+  // listeners for the DataSet of the items
+  this.itemListeners = {
+    'add': function add(event, params, senderId) {
+      // eslint-disable-line no-unused-vars
+      me._onAdd(params.items);
+    },
+    'update': function update(event, params, senderId) {
+      // eslint-disable-line no-unused-vars
+      me._onUpdate(params.items);
+    },
+    'remove': function remove(event, params, senderId) {
+      // eslint-disable-line no-unused-vars
+      me._onRemove(params.items);
+    }
+  };
+
+  // listeners for the DataSet of the groups
+  this.groupListeners = {
+    'add': function add(event, params, senderId) {
+      // eslint-disable-line no-unused-vars
+      me._onAddGroups(params.items);
+
+      if (me.groupsData && me.groupsData.length > 0) {
+        var groupsData = me.groupsData.getDataSet();
+        groupsData.get().forEach(function (groupData) {
+          if (groupData.nestedGroups) {
+            if (groupData.showNested != false) {
+              groupData.showNested = true;
+            }
+            var updatedGroups = [];
+            groupData.nestedGroups.forEach(function (nestedGroupId) {
+              var updatedNestedGroup = groupsData.get(nestedGroupId);
+              if (!updatedNestedGroup) {
+                return;
+              }
+              updatedNestedGroup.nestedInGroup = groupData.id;
+              if (groupData.showNested == false) {
+                updatedNestedGroup.visible = false;
+              }
+              updatedGroups = updatedGroups.concat(updatedNestedGroup);
+            });
+            groupsData.update(updatedGroups, senderId);
+          }
+        });
       }
-    };
+    },
+    'update': function update(event, params, senderId) {
+      // eslint-disable-line no-unused-vars
+      me._onUpdateGroups(params.items);
+    },
+    'remove': function remove(event, params, senderId) {
+      // eslint-disable-line no-unused-vars
+      me._onRemoveGroups(params.items);
+    }
+  };
 
-    // listeners for the DataSet of the groups
-    this.groupListeners = {
-      'add': function (event, params, senderId) {
-        me._onAddGroups(params.items);
-      },
-      'update': function (event, params, senderId) {
-        me._onUpdateGroups(params.items);
-      },
-      'remove': function (event, params, senderId) {
-        me._onRemoveGroups(params.items);
-      }
-    };
+  this.items = {}; // object with an Item for every data item
+  this.groups = {}; // Group object for every group
+  this.groupIds = [];
 
-    this.items = {};      // object with an Item for every data item
-    this.groups = {};     // Group object for every group
-    this.groupIds = [];
+  this.selection = []; // list with the ids of all selected nodes
 
-    this.selection = [];  // list with the ids of all selected nodes
-    this.stackDirty = true; // if true, all items will be restacked on next redraw
+  this.popup = null;
 
-    this.touchParams = {}; // stores properties while dragging
-    // create the HTML DOM
+  this.touchParams = {}; // stores properties while dragging
+  this.groupTouchParams = {};
+  // create the HTML DOM
 
-    this._create();
+  this._create();
 
-    this.setOptions(options);
-  }
+  this.setOptions(options);
+}
 
   ItemSet.prototype = new Component();
 
@@ -13218,53 +13404,70 @@ return /******/ (function(modules) { // webpackBootstrap
    * Set groups
    * @param {vis.DataSet} groups
    */
-  ItemSet.prototype.setGroups = function(groups) {
-    var me = this,
-        ids;
+ ItemSet.prototype.setGroups = function (groups) {
+  var me = this,
+      ids;
 
-    // unsubscribe from current dataset
-    if (this.groupsData) {
-      util.forEach(this.groupListeners, function (callback, event) {
-        me.groupsData.unsubscribe(event, callback);
-      });
+  // unsubscribe from current dataset
+  if (this.groupsData) {
+    util.forEach(this.groupListeners, function (callback, event) {
+      me.groupsData.off(event, callback);
+    });
 
-      // remove all drawn groups
-      ids = this.groupsData.getIds();
-      this.groupsData = null;
-      this._onRemoveGroups(ids); // note: this will cause a redraw
+    // remove all drawn groups
+    ids = this.groupsData.getIds();
+    this.groupsData = null;
+    this._onRemoveGroups(ids); // note: this will cause a redraw
+  }
+
+  // replace the dataset
+  if (!groups) {
+    this.groupsData = null;
+  } else if (groups instanceof DataSet || groups instanceof DataView) {
+    this.groupsData = groups;
+  } else {
+    throw new TypeError('Data must be an instance of DataSet or DataView');
+  }
+
+  if (this.groupsData) {
+    // go over all groups nesting
+    var groupsData = this.groupsData;
+    if (this.groupsData instanceof DataView) {
+      groupsData = this.groupsData.getDataSet();
     }
 
-    // replace the dataset
-    if (!groups) {
-      this.groupsData = null;
-    }
-    else if (groups instanceof DataSet || groups instanceof DataView) {
-      this.groupsData = groups;
-    }
-    else {
-      throw new TypeError('Data must be an instance of DataSet or DataView');
-    }
+    groupsData.get().forEach(function (group) {
+      if (group.nestedGroups) {
+        group.nestedGroups.forEach(function (nestedGroupId) {
+          var updatedNestedGroup = groupsData.get(nestedGroupId);
+          updatedNestedGroup.nestedInGroup = group.id;
+          if (group.showNested == false) {
+            updatedNestedGroup.visible = false;
+          }
+          groupsData.update(updatedNestedGroup);
+        });
+      }
+    });
 
-    if (this.groupsData) {
-      // subscribe to new dataset
-      var id = this.id;
-      util.forEach(this.groupListeners, function (callback, event) {
-        me.groupsData.on(event, callback, id);
-      });
+    // subscribe to new dataset
+    var id = this.id;
+    util.forEach(this.groupListeners, function (callback, event) {
+      me.groupsData.on(event, callback, id);
+    });
 
-      // draw all ms
-      ids = this.groupsData.getIds();
-      this._onAddGroups(ids);
-    }
+    // draw all ms
+    ids = this.groupsData.getIds();
+    this._onAddGroups(ids);
+  }
 
-    // update the group holding all ungrouped items
-    this._updateUngrouped();
+  // update the group holding all ungrouped items
+  this._updateUngrouped();
 
-    // update the order of all items in each group
-    this._order();
+  // update the order of all items in each group
+  this._order();
 
-    this.body.emitter.emit('change', {queue: true});
-  };
+  this.body.emitter.emit('_change', { queue: true });
+};
 
   /**
    * Get the current groups
@@ -13493,39 +13696,71 @@ return /******/ (function(modules) { // webpackBootstrap
   };
 
   /**
-   * Reorder the groups if needed
-   * @return {boolean} changed
-   * @private
-   */
-  ItemSet.prototype._orderGroups = function () {
-    if (this.groupsData) {
-      // reorder the groups
-      var groupIds = this.groupsData.getIds({
-        order: this.options.groupOrder
+ * Reorder the groups if needed
+ * @return {boolean} changed
+ * @private
+ */
+ItemSet.prototype._orderGroups = function () {
+  if (this.groupsData) {
+    // reorder the groups
+    var groupIds = this.groupsData.getIds({
+      order: this.options.groupOrder
+    });
+
+    groupIds = this._orderNestedGroups(groupIds);
+
+    var changed = !util.equalArray(groupIds, this.groupIds);
+    if (changed) {
+      // hide all groups, removes them from the DOM
+      var groups = this.groups;
+      groupIds.forEach(function (groupId) {
+        groups[groupId].hide();
       });
 
-      var changed = !util.equalArray(groupIds, this.groupIds);
-      if (changed) {
-        // hide all groups, removes them from the DOM
-        var groups = this.groups;
-        groupIds.forEach(function (groupId) {
-          groups[groupId].hide();
-        });
+      // show the groups again, attach them to the DOM in correct order
+      groupIds.forEach(function (groupId) {
+        groups[groupId].show();
+      });
 
-        // show the groups again, attach them to the DOM in correct order
-        groupIds.forEach(function (groupId) {
-          groups[groupId].show();
-        });
-
-        this.groupIds = groupIds;
-      }
-
-      return changed;
+      this.groupIds = groupIds;
     }
-    else {
-      return false;
+
+    return changed;
+  } else {
+    return false;
+  }
+};
+
+/**
+ * Reorder the nested groups
+ *
+ * @param {Array.<number>} groupIds
+ * @returns {Array.<number>}
+ * @private
+ */
+ItemSet.prototype._orderNestedGroups = function (groupIds) {
+  var newGroupIdsOrder = [];
+
+  groupIds.forEach(function (groupId) {
+    var groupData = this.groupsData.get(groupId);
+    if (!groupData.nestedInGroup) {
+      newGroupIdsOrder.push(groupId);
     }
-  };
+    if (groupData.nestedGroups) {
+      var nestedGroups = this.groupsData.get({
+        filter: function filter(nestedGroup) {
+          return nestedGroup.nestedInGroup == groupId;
+        },
+        order: this.options.groupOrder
+      });
+      var nestedGroupIds = nestedGroups.map(function (nestedGroup) {
+        return nestedGroup.id;
+      });
+      newGroupIdsOrder = newGroupIdsOrder.concat(nestedGroupIds);
+    }
+  }, this);
+  return newGroupIdsOrder;
+};
 
   /**
    * Add a new item
@@ -13887,6 +14122,206 @@ return /******/ (function(modules) { // webpackBootstrap
     }
   };
 
+  ItemSet.prototype._onGroupClick = function (event) {
+  var group = this.groupFromTarget(event);
+
+  if (!group || !group.nestedGroups) return;
+
+  var groupsData = this.groupsData.getDataSet();
+
+  var nestingGroup = groupsData.get(group.groupId);
+  if (nestingGroup.showNested == undefined) {
+    nestingGroup.showNested = true;
+  }
+  nestingGroup.showNested = !nestingGroup.showNested;
+
+  var nestedGroups = groupsData.get(group.nestedGroups).map(function (nestedGroup) {
+    nestedGroup.visible = nestingGroup.showNested;
+    return nestedGroup;
+  });
+
+  groupsData.update(nestedGroups.concat(nestingGroup));
+
+  if (nestingGroup.showNested) {
+    util.removeClassName(group.dom.label, 'collapsed');
+    util.addClassName(group.dom.label, 'expanded');
+  } else {
+    util.removeClassName(group.dom.label, 'expanded');
+    var collapsedDirClassName = this.options.rtl ? 'collapsed-rtl' : 'collapsed';
+    util.addClassName(group.dom.label, collapsedDirClassName);
+  }
+};
+
+ItemSet.prototype._onGroupDragStart = function (event) {
+  if (this.options.groupEditable.order) {
+    this.groupTouchParams.group = this.groupFromTarget(event);
+
+    if (this.groupTouchParams.group) {
+      event.stopPropagation();
+
+      this.groupTouchParams.originalOrder = this.groupsData.getIds({
+        order: this.options.groupOrder
+      });
+    }
+  }
+};
+
+ItemSet.prototype._onGroupDrag = function (event) {
+  if (this.options.groupEditable.order && this.groupTouchParams.group) {
+    event.stopPropagation();
+
+    var groupsData = this.groupsData;
+    if (this.groupsData instanceof DataView) {
+      groupsData = this.groupsData.getDataSet();
+    }
+    // drag from one group to another
+    var group = this.groupFromTarget(event);
+
+    // try to avoid toggling when groups differ in height
+    if (group && group.height != this.groupTouchParams.group.height) {
+      var movingUp = group.top < this.groupTouchParams.group.top;
+      var clientY = event.center ? event.center.y : event.clientY;
+      var targetGroupTop = util.getAbsoluteTop(group.dom.foreground);
+      var draggedGroupHeight = this.groupTouchParams.group.height;
+      if (movingUp) {
+        // skip swapping the groups when the dragged group is not below clientY afterwards
+        if (targetGroupTop + draggedGroupHeight < clientY) {
+          return;
+        }
+      } else {
+        var targetGroupHeight = group.height;
+        // skip swapping the groups when the dragged group is not below clientY afterwards
+        if (targetGroupTop + targetGroupHeight - draggedGroupHeight > clientY) {
+          return;
+        }
+      }
+    }
+
+    if (group && group != this.groupTouchParams.group) {
+      var targetGroup = groupsData.get(group.groupId);
+      var draggedGroup = groupsData.get(this.groupTouchParams.group.groupId);
+
+      // switch groups
+      if (draggedGroup && targetGroup) {
+        this.options.groupOrderSwap(draggedGroup, targetGroup, groupsData);
+        groupsData.update(draggedGroup);
+        groupsData.update(targetGroup);
+      }
+
+      // fetch current order of groups
+      var newOrder = groupsData.getIds({
+        order: this.options.groupOrder
+      });
+
+      // in case of changes since _onGroupDragStart
+      if (!util.equalArray(newOrder, this.groupTouchParams.originalOrder)) {
+        var origOrder = this.groupTouchParams.originalOrder;
+        var draggedId = this.groupTouchParams.group.groupId;
+        var numGroups = Math.min(origOrder.length, newOrder.length);
+        var curPos = 0;
+        var newOffset = 0;
+        var orgOffset = 0;
+        while (curPos < numGroups) {
+          // as long as the groups are where they should be step down along the groups order
+          while (curPos + newOffset < numGroups && curPos + orgOffset < numGroups && newOrder[curPos + newOffset] == origOrder[curPos + orgOffset]) {
+            curPos++;
+          }
+
+          // all ok
+          if (curPos + newOffset >= numGroups) {
+            break;
+          }
+
+          // not all ok
+          // if dragged group was move upwards everything below should have an offset
+          if (newOrder[curPos + newOffset] == draggedId) {
+            newOffset = 1;
+          }
+          // if dragged group was move downwards everything above should have an offset
+          else if (origOrder[curPos + orgOffset] == draggedId) {
+              orgOffset = 1;
+            }
+            // found a group (apart from dragged group) that has the wrong position -> switch with the
+            // group at the position where other one should be, fix index arrays and continue
+            else {
+                var slippedPosition = newOrder.indexOf(origOrder[curPos + orgOffset]);
+                var switchGroup = groupsData.get(newOrder[curPos + newOffset]);
+                var shouldBeGroup = groupsData.get(origOrder[curPos + orgOffset]);
+                this.options.groupOrderSwap(switchGroup, shouldBeGroup, groupsData);
+                groupsData.update(switchGroup);
+                groupsData.update(shouldBeGroup);
+
+                var switchGroupId = newOrder[curPos + newOffset];
+                newOrder[curPos + newOffset] = origOrder[curPos + orgOffset];
+                newOrder[slippedPosition] = switchGroupId;
+
+                curPos++;
+              }
+        }
+      }
+    }
+  }
+};
+
+ItemSet.prototype._onGroupDragEnd = function (event) {
+  if (this.options.groupEditable.order && this.groupTouchParams.group) {
+    event.stopPropagation();
+
+    // update existing group
+    var me = this;
+    var id = me.groupTouchParams.group.groupId;
+    var dataset = me.groupsData.getDataSet();
+    var groupData = util.extend({}, dataset.get(id)); // clone the data
+    me.options.onMoveGroup(groupData, function (groupData) {
+      if (groupData) {
+        // apply changes
+        groupData[dataset._fieldId] = id; // ensure the group contains its id (can be undefined)
+        dataset.update(groupData);
+      } else {
+
+        // fetch current order of groups
+        var newOrder = dataset.getIds({
+          order: me.options.groupOrder
+        });
+
+        // restore original order
+        if (!util.equalArray(newOrder, me.groupTouchParams.originalOrder)) {
+          var origOrder = me.groupTouchParams.originalOrder;
+          var numGroups = Math.min(origOrder.length, newOrder.length);
+          var curPos = 0;
+          while (curPos < numGroups) {
+            // as long as the groups are where they should be step down along the groups order
+            while (curPos < numGroups && newOrder[curPos] == origOrder[curPos]) {
+              curPos++;
+            }
+
+            // all ok
+            if (curPos >= numGroups) {
+              break;
+            }
+
+            // found a group that has the wrong position -> switch with the
+            // group at the position where other one should be, fix index arrays and continue
+            var slippedPosition = newOrder.indexOf(origOrder[curPos]);
+            var switchGroup = dataset.get(newOrder[curPos]);
+            var shouldBeGroup = dataset.get(origOrder[curPos]);
+            me.options.groupOrderSwap(switchGroup, shouldBeGroup, dataset);
+            dataset.update(switchGroup);
+            dataset.update(shouldBeGroup);
+
+            var switchGroupId = newOrder[curPos];
+            newOrder[curPos] = origOrder[curPos];
+            newOrder[slippedPosition] = switchGroupId;
+
+            curPos++;
+          }
+        }
+      }
+    });
+
+    me.body.emitter.emit('groupDragged', { groupId: id });
+  }
+};
   /**
    * Handle selecting/deselecting an item when tapping it
    * @param {Event} event
@@ -22879,6 +23314,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
     this.redrawCount = 0;
 
+
     // attach the root panel to the provided container
     if (!container) throw new Error('No container provided');
     container.appendChild(this.dom.root);
@@ -23127,6 +23563,25 @@ return /******/ (function(modules) { // webpackBootstrap
     this.redraw();
 
     return customBarId;
+  };
+
+  /**
+   * Set a custom title for the custom time bar.
+   * @param {string} [title] Custom title
+   * @param {number} [id=undefined]    Id of the custom time bar.
+   * @returns {*}
+   */
+  Core.prototype.setCustomTimeTitle = function (title, id) {
+    var customTimes = this.customTimes.filter(function (component) {
+      return component.options.id === id;
+    });
+
+    if (customTimes.length === 0) {
+      throw new Error('No custom time bar found with id ' + (0, _stringify2['default'])(id));
+    }
+    if (customTimes.length > 0) {
+      return customTimes[0].setCustomTitle(title);
+    }
   };
 
   /**
@@ -23727,6 +24182,66 @@ return /******/ (function(modules) { // webpackBootstrap
   Core.prototype._getScrollTop = function () {
     return this.props.scrollTop;
   };
+
+
+  /**
+   * Zoom in the window such that given time is centered on screen.
+   * @param {number} percentage - must be between [0..1]
+   * @param {Object} [options]  Available options:
+   *                                `animation: boolean | {duration: number, easingFunction: string}`
+   *                                    If true (default), the range is animated
+   *                                    smoothly to the new window. An object can be
+   *                                    provided to specify duration and easing function.
+   *                                    Default duration is 500 ms, and default easing
+   *                                    function is 'easeInOutQuad'.
+   * @param {function} [callback] a callback funtion to be executed at the end of this function
+   */
+  Core.prototype.zoomIn = function (percentage, options, callback) {
+    if (!percentage || percentage < 0 || percentage > 1) return;
+    if (typeof arguments[1] == "function") {
+      callback = arguments[1];
+      options = {};
+    }
+    var range = this.getWindow();
+    var start = range.start.valueOf();
+    var end = range.end.valueOf();
+    var interval = end - start;
+    var newInterval = interval / (1 + percentage);
+    var distance = (interval - newInterval) / 2;
+    var newStart = start + distance;
+    var newEnd = end - distance;
+
+    this.setWindow(newStart, newEnd, options, callback);
+  };
+
+  /**
+   * Zoom out the window such that given time is centered on screen.
+   * @param {number} percentage - must be between [0..1]
+   * @param {Object} [options]  Available options:
+   *                                `animation: boolean | {duration: number, easingFunction: string}`
+   *                                    If true (default), the range is animated
+   *                                    smoothly to the new window. An object can be
+   *                                    provided to specify duration and easing function.
+   *                                    Default duration is 500 ms, and default easing
+   *                                    function is 'easeInOutQuad'.
+   * @param {function} [callback] a callback funtion to be executed at the end of this function
+   */
+  Core.prototype.zoomOut = function (percentage, options, callback) {
+    if (!percentage || percentage < 0 || percentage > 1) return;
+    if (typeof arguments[1] == "function") {
+      callback = arguments[1];
+      options = {};
+    }
+    var range = this.getWindow();
+    var start = range.start.valueOf();
+    var end = range.end.valueOf();
+    var interval = end - start;
+    var newStart = start - interval * percentage / 2;
+    var newEnd = end + interval * percentage / 2;
+
+    this.setWindow(newStart, newEnd, options, callback);
+  };
+
 
   module.exports = Core;
 
