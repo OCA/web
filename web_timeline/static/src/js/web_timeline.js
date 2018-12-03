@@ -185,8 +185,8 @@ openerp.web_timeline = function(instance) {
                 onMove: self.on_move,
                 onUpdate: self.on_update,
                 onRemove: self.on_remove,
-                orientation: 'both',
             };
+
             self.timeline = new vis.Timeline(self.$timeline.empty().get(0));
             self.timeline.setOptions(options);
             if(self.mode && self['on_scale_' + self.mode + '_clicked'])
@@ -242,6 +242,7 @@ openerp.web_timeline = function(instance) {
             } else {
                     group = -1;
             }
+
             _.each(self.colors, function(color){
                 if(eval("'" + evt[color.field] + "' " + color.opt + " '" + color.value + "'"))
                     self.color = color.color;
@@ -278,6 +279,8 @@ openerp.web_timeline = function(instance) {
                 return self.fields_view.arch.attrs[key] || '';
             }));
 
+            fields.push(this.fields_view.arch.attrs.name);
+
             fields = _.uniq(fields.concat(_.pluck(this.colors, "field").concat(n_group_bys)));
             return $.when(this.has_been_loaded).then(function() {
                 return self.dataset.read_slice(fields, {
@@ -302,19 +305,22 @@ openerp.web_timeline = function(instance) {
             var ids = _.pluck(events, "id");
             return this.dataset.name_get(ids).then(function(names) {
                 var nevents = _.map(events, function(event) {
-                    return _.extend({__name: _.detect(names, function(name) { return name[0] == event.id; })[1]}, event);
+                    return _.extend({__name: _.detect(names, function(name) {
+                        return name[0] == event.id;
+                    })[1]}, event);
                 });
                 return self.on_data_loaded_2(nevents, group_bys);
             });
         },
-
         on_data_loaded_2: function(events, group_bys) {
             var self = this;
             var data = [];
             var groups = [];
             _.each(events, function(event) {
                 if (event[self.date_start]){
-                    data.push(self.event_data_transform(event));
+                    var item = self.event_data_transform(event);
+                    item.content = event.timeline_name;
+                    data.push(item);
                 }
             });
             // get the groups
@@ -366,32 +372,35 @@ openerp.web_timeline = function(instance) {
         },
 
         on_add: function(item, callback) {
-            var self = this;
-            var context = this.dataset.get_context();
-            // Initialize default values for creation
-            var default_context = {}
-            default_context['default_'.concat(this.date_start)] = item.start;
-            default_context['default_'.concat(this.date_stop)] = moment(item.start).add(1, 'hours').toDate();
-            if (item.group > 0) {
-                default_context['default_'.concat(this.last_group_bys[0])] = item.group;
-            }
-            context.add(default_context);
-            // Show popup
-            var dialog = new form_common.FormViewDialog(this, {
-                res_model: this.dataset.model,
-                res_id: null,
-                context: context,
-                view_id: +this.open_popup_action,
-            }).open();
-            dialog.on('create_completed', this, this.create_completed);
-            return false;
+            var self = this,
+                pop = new instance.web.form.SelectCreatePopup(this),
+                context = this.get_popup_context(item);
+                pop.on("elements_selected", self, function(element_ids) {
+                self.reload().then(function() {
+                    self.timeline.focus(element_ids);
+                });
+            });
+            pop.select_element(
+                self.dataset.model,
+                {
+                    title: _t("Create"),
+                    initial_view: "form",
+                },
+                null,
+               context
+            );
         },
 
-        write_completed: function(id) {
-            this.dataset.trigger("dataset_changed", id);
-            this.current_window = this.timeline.getWindow();
-            this.reload();
-            this.timeline.setWindow(this.current_window);
+        get_popup_context: function(item) {
+            var context = {};
+            context['default_'.concat(this.date_start)] = item.start;
+            context['default_'.concat(this.date_stop)] = item.start.clone()
+                .addHours(this.date_delay || 1);
+            if (item.group != -1) {
+                context['default_'.concat(this.last_group_bys[0])] = item.group;
+            }
+            return context
+
         },
 
         on_update: function(item, callback) {
@@ -408,33 +417,69 @@ openerp.web_timeline = function(instance) {
                 }
             }
             else {
-                var dialog = new form_common.FormViewDialog(this, {
-                    res_model: this.dataset.model,
-                    res_id: parseInt(id).toString() == id ? parseInt(id) : id,
-                    context: this.dataset.get_context(),
-                    title: title,
-                    view_id: +this.open_popup_action,
-                }).open();
-                dialog.on('write_completed', this, this.write_completed);
+
+                var id_cast = parseInt(id).toString() == id ? parseInt(id) : id;
+                var pop = new instance.web.form.FormOpenPopup(self);
+                pop.on('write_completed', self, self.reload);
+                pop.show_element(
+                    self.dataset.model,
+                    id_cast,
+                    null,
+                    {readonly: true, title: title}
+                );
+                var form_controller = pop.view_form;
+                form_controller.on("load_record", self, function() {
+                     var footer = pop.$el.closest(".modal").find(".modal-footer");
+                     footer.find('.oe_form_button_edit,.oe_form_button_save').remove();
+                     footer.find(".oe_form_button_cancel").prev().remove();
+                     footer.find('.oe_form_button_cancel').before("<span> or </span>");
+                     button_edit = _.str.sprintf("<button class='oe_button oe_form_button_edit oe_bold oe_highlight'><span> %s </span></button>",_t("Edit"));
+                     button_save = _.str.sprintf("<button class='oe_button oe_form_button_save oe_bold oe_highlight'><span> %s </span></button>",_t("Save"));
+                     footer.prepend(button_edit + button_save);
+                     footer.find('.oe_form_button_save').hide();
+                     footer.find('.oe_form_button_edit').on('click', function() {
+                         form_controller.to_edit_mode();
+                         footer.find('.oe_form_button_edit,.oe_form_button_save').toggle();
+                     });
+                     footer.find('.oe_form_button_save').on('click', function() {
+                         form_controller.save();
+                         form_controller.to_view_mode();
+                         footer.find('.oe_form_button_edit,.oe_form_button_save').toggle();
+                     });
+                     var chatter = pop.$el.closest(".modal").find(".oe_chatter");
+                     if(chatter.length){
+                         var chatter_toggler = $($.parseHTML(_.str.sprintf('<div class="oe_chatter_toggle fa fa-plus-circle"><span> %s </span><div class="oe_chatter_content"></div></div>', _t("Messages"))));
+                         chatter.before(chatter_toggler)
+                         var chatter_content = chatter_toggler.find(".oe_chatter_content");
+                             chatter_content.prepend(chatter);
+                             chatter_content.toggle();
+                             chatter_toggler.click(function(){
+                             chatter_content.toggle();
+                             chatter_toggler.toggleClass('fa-plus-circle fa-minus-circle');
+                         });
+                     }
+                });
             }
             return false;
         },
 
         on_move: function(item, callback) {
             var self = this;
-            var start = item.start;
-            var end = item.end;
+            var start = new moment(item.start);
+            var end = new moment(item.end);
             var group = false;
             if (item.group != -1) {
                 group = item.group;
             }
             var data = {};
+
             data[self.fields_view.arch.attrs.date_start] =
-                 str_to_datetime(new moment(start).format('YYYY-MM-DD hh:mm:ss'),
-                     self.fields[self.fields_view.arch.attrs.date_start].type);
+                str_to_datetime(start.utc().format('YYYY-MM-DD hh:mm:ss'),
+                self.fields[self.fields_view.arch.attrs.date_start].type);
+
             data[self.fields_view.arch.attrs.date_stop] =
-                 str_to_datetime(new moment(end).format('YYYY-MM-DD hh:mm:ss'),
-                     self.fields[self.fields_view.arch.attrs.date_stop].type);
+                str_to_datetime(end.utc().format('YYYY-MM-DD hh:mm:ss'),
+                self.fields[self.fields_view.arch.attrs.date_stop].type);
 
             data[self.fields_view.arch.attrs.default_group_by] = group;
             var id = item.evt.id;
@@ -463,7 +508,6 @@ openerp.web_timeline = function(instance) {
                 return this.on_group_click(e);
             }
         },
-
         on_group_click: function(e) {
             if (e.group == -1)
             {

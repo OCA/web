@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
-
+<openerp>
+    <data>
     <template id="assets_backend" name="web_timeline assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
             <link rel="stylesheet" href="/web_timeline/static/lib/vis/vis.css"/>
@@ -10,5 +10,5 @@
             <script type="text/javascript" src="/web_timeline/static/src/js/web_timeline.js"/>
         </xpath>
     </template>
-
-</odoo>
+    </data>
+</openerp>
