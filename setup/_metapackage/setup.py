@@ -60,6 +60,7 @@ setuptools.setup(
         'odoo8-addon-web_sheet_full_width_selective',
         'odoo8-addon-web_shortcuts',
         'odoo8-addon-web_switch_company_warning',
+        'odoo8-addon-web_timeline',
         'odoo8-addon-web_translate_dialog',
         'odoo8-addon-web_tree_dynamic_colored_field',
         'odoo8-addon-web_tree_image',
