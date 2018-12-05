@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_responsive
+# 	* web_responsive
 #
 msgid ""
 msgstr ""
@@ -15,6 +15,19 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.1.1\n"
+
+#. module: web_responsive
+#: model:ir.ui.view,arch_db:web_responsive.menu
+msgid "<i>Searching:</i>"
+msgstr ""
+
+#. module: web_responsive
+#: model:ir.ui.view,arch_db:web_responsive.menu
+msgid ""
+"<span class=\"hidden-xs\">\n"
+"                                &amp;nbsp;|&amp;nbsp;\n"
+"                            </span>"
+msgstr ""
 
 #. module: web_responsive
 #: model:ir.ui.view,arch_db:web_responsive.webclient_bootstrap
@@ -47,6 +60,11 @@ msgstr "Mere"
 #: model:ir.ui.view,arch_db:web_responsive.menu
 msgid "More <b class=\"caret\"/>"
 msgstr "Mere <b class=\"caret\"/>"
+
+#. module: web_responsive
+#: model:ir.ui.view,arch_db:web_responsive.menu
+msgid "No Search Supplied."
+msgstr ""
 
 #. module: web_responsive
 #: selection:res.users,chatter_position:0
