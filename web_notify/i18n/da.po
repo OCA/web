@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_notify
+# 	* web_notify
 #
 msgid ""
 msgstr ""
@@ -30,6 +30,12 @@ msgstr ""
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users_notify_warning_channel_name
 msgid "Notify Warning Channel Name"
+msgstr ""
+
+#. module: web_notify
+#: code:addons/web_notify/models/res_users.py:41
+#, python-format
+msgid "Sending a notification to another user is forbidden."
 msgstr ""
 
 #. module: web_notify
