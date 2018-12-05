@@ -1,0 +1,22 @@
+/* Button style */
+.openerp .oe_view_manager .oe_view_manager_switch .oe_vm_switch_timeline:after {
+    content: "N";
+}
+
+/* gray background in weekends, white text color */
+.vis.timeline .timeaxis .grid.saturday,
+.vis.timeline .timeaxis .grid.sunday {
+  background: gray;
+}
+
+.vis.timeline .item.range .content {
+      overflow: visible;
+}
+
+.oe_chatter_toggle {
+  padding: 15px;
+}
+
+.oe_timeline_view .vlabel .inner:hover{
+    cursor: pointer;
+}
