@@ -17,13 +17,14 @@ _.str.toBoolElse = function (str, elseValues, trueValues, falseValues) {
     return ret;
 };
 
+window.moment = vis.moment;
+
 openerp.web_timeline = function (instance) {
     'use strict';
     var Model = instance.web.Model;
     var str_to_datetime = instance.str_to_datetime;
     var _t = instance.web._t,
         _lt = instance.web._lt;
-    var moment = vis.moment;
 
     function isNullOrUndef (value) {
         return _.isUndefined(value) || _.isNull(value);
