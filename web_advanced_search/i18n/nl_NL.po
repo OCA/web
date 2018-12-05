@@ -19,9 +19,12 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. module: web_advanced_search_x2x
+#. module: web_advanced_search
 #. openerp-web
-#: code:addons/web_advanced_search_x2x/static/src/js/web_advanced_search_x2x.js:38
+#: code:addons/web_advanced_search/static/src/xml/web_advanced_search.xml:9
 #, python-format
-msgid "is in selection"
-msgstr "Is in selectie"
+msgid "Add Advanced Filter"
+msgstr ""
+
+#~ msgid "is in selection"
+#~ msgstr "Is in selectie"
