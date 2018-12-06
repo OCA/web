@@ -21,22 +21,22 @@ msgstr ""
 
 #. module: web_widget_x2many_2d_matrix
 #. openerp-web
-#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:60
+#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:65
 #, python-format
 msgid "Sorry no matrix data to display."
 msgstr "Desculpe não há dados de matriz para exibir."
 
 #. module: web_widget_x2many_2d_matrix
 #. openerp-web
-#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:379
-#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:456
+#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:409
+#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:484
 #, python-format
 msgid "Sum"
 msgstr ""
 
 #. module: web_widget_x2many_2d_matrix
 #. openerp-web
-#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:372
+#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:403
 #, fuzzy, python-format
 msgid "Sum Total"
 msgstr "Total"
