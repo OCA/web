@@ -1,23 +1,25 @@
 /* Copyright 2018 Simone Orsi <simone.orsi@camptocamp.com>
+ * Copyright 2018 Brainbean Apps
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
 odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (require) {
     "use strict";
 
-    // Heavily inspired by Odoo's `ListRenderer`
     var BasicRenderer = require('web.BasicRenderer');
     var config = require('web.config');
     var core = require('web.core');
     var field_utils = require('web.field_utils');
     var _t = core._t;
+    
     var FIELD_CLASSES = {
-        // Copied from ListRenderer
         float: 'o_list_number',
         integer: 'o_list_number',
         monetary: 'o_list_number',
         text: 'o_list_text',
     };
 
+    // X2Many2dMatrixRenderer is heavily inspired by Odoo's ListRenderer
+    // and is reusing portions of code from list_renderer.js
     var X2Many2dMatrixRenderer = BasicRenderer.extend({
 
         /**
@@ -53,8 +55,11 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
         _renderView: function () {
             var self = this;
 
+            this.$el
+                .removeClass('table-responsive')
+                .empty();
+
             // Display a nice message if there's no data to display
-            this.$el.empty();
             if (!self.rows.length) {
                 var $alert = $('<div>', {'class': 'alert alert-info'});
                 $alert.text(_t('Sorry no matrix data to display.'));
@@ -170,7 +175,10 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
          * @returns {String} a string with the generated html.
          */
         _renderRows: function () {
-            return _.map(this.rows, this._renderRow.bind(this));
+            return _.map(this.rows, function (row) {
+                row.attrs.name = this.matrix_data.field_value;
+                return this._renderRow(row);
+            }.bind(this));
         },
 
         /**
@@ -187,11 +195,11 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
             var $tr = $('<tr/>', {class: 'o_data_row'}),
                 _data = _.without(row.data, undefined);
             $tr = $tr.append(this._renderLabelCell(_data[0]));
-            var $cells = _.map(this.columns, function (node, index) {
+            var $cells = _.map(this.columns, function (column, index) {
                 var record = row.data[index];
                 // Make the widget use our field value for each cell
-                node.attrs.name = this.matrix_data.field_value;
-                return this._renderBodyCell(record, node, index, {mode:''});
+                column.attrs.name = this.matrix_data.field_value;
+                return this._renderBodyCell(record, column, index, {mode:''});
             }.bind(this));
             $tr = $tr.append($cells);
             if (row.aggregate) {
@@ -227,8 +235,8 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
          * @returns {jQueryElement} The rendered cell.
          */
         _renderAggregateRowCell: function (row) {
-            var $cell = $('<td/>', {class: 'row-total text-right'});
-            this._apply_aggregate_value($cell, row.aggregate);
+            var $cell = $('<td/>', {class: 'row-total'});
+            this.applyAggregateValue($cell, row);
             return $cell;
         },
 
@@ -246,9 +254,7 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
          */
         _renderBodyCell: function (record, node, colIndex, options) {
             var tdClassName = 'o_data_cell';
-            if (node.tag === 'button') {
-                tdClassName += ' o_list_button';
-            } else if (node.tag === 'field') {
+            if (node.tag === 'field') {
                 var typeClass = FIELD_CLASSES[
                     this.state.fields[node.attrs.name].type
                 ];
@@ -259,11 +265,14 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
                     tdClassName += ' o_' + node.attrs.widget + '_cell';
                 }
             }
+
             // TODO roadmap: here we should collect possible extra params
             // the user might want to attach to each single cell.
+
             var $td = $('<td>', {
                 'class': tdClassName,
             });
+
             if (_.isUndefined(record)) {
                 // Without record, nothing elese to do
                 return $td;
@@ -272,6 +281,7 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
                 'data-form-id': record.id,
                 'data-id': record.data.id,
             });
+
             // We register modifiers on the <td> element so that it gets
             // the correct modifiers classes (for styling)
             var modifiers = this._registerModifiers(
@@ -286,13 +296,28 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
             if (modifiers.invisible && !(options && options.renderInvisible)) {
                 return $td;
             }
+
             // Enforce mode of the parent
             options.mode = this.getParent().mode;
-            var widget = this._renderFieldWidget(
-                node, record, _.pick(options, 'mode')
-            );
-            this._handleAttributes(widget.$el, node);
-            return $td.append(widget.$el);
+
+            if (node.tag === 'widget') {
+                return $td.append(this._renderWidget(record, node));
+            }
+            if (node.attrs.widget || (options && (options.renderWidgets || options.mode === 'edit'))) {
+                var $el = this._renderFieldWidget(node, record, _.pick(options, 'mode'));
+                this._handleAttributes($el, node);
+                return $td.append($el);
+            }
+            var name = node.attrs.name;
+            var field = this.state.fields[name];
+            var value = record.data[name];
+            var formattedValue = field_utils.format[field.type](value, field, {
+                data: record.data,
+                escape: true,
+                isPassword: 'password' in node.attrs,
+            });
+            this._handleAttributes($td, node);
+            return $td.html(formattedValue);
         },
 
         /**
@@ -325,8 +350,8 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
                 return;
             }
 
-            var $cell = $('<td>', {class: 'col-total text-right'});
-            this._apply_aggregate_value($cell, this.total);
+            var $cell = $('<td>', {class: 'col-total'});
+            this.applyAggregateValue($cell, this.total);
             return $cell;
         },
 
@@ -338,10 +363,14 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
          */
         _renderAggregateColCells: function () {
             var self = this;
+
             return _.map(this.columns, function (column) {
-                var $cell = $('<td>', {class: 'col-total text-right'});
+                var $cell = $('<td>');
+                if (config.debug) {
+                    $cell.addClass(column.attrs.name);
+                }
                 if (column.aggregate) {
-                    self._apply_aggregate_value($cell, column.aggregate);
+                    self.applyAggregateValue($cell, column)
                 }
                 return $cell;
             });
@@ -367,15 +396,16 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
                 return;
             }
             this.total = {
-                fname: fname,
-                ftype: type,
-                help: _t('Sum Total'),
-                value: 0,
+                attrs: {
+                    name: fname,
+                },
+                aggregate: {
+                    help: _t('Sum Total'),
+                    value: 0,
+                },
             };
             _.each(this.columns, function (column, index) {
                 column.aggregate = {
-                    fname: fname,
-                    ftype: type,
                     help: _t('Sum'),
                     value: 0,
                 };
@@ -451,8 +481,6 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
             }
             _.each(this.rows, function (row) {
                 row.aggregate = {
-                    fname: fname,
-                    ftype: type,
                     help: _t('Sum'),
                     value: 0,
                 };
@@ -475,17 +503,19 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
          * @param {jQueryElement} $cell
          * The Cell where the aggregate should be added.
          *
-         * @param {Object} aggregate
-         * The object which contains the information about the aggregate value
+         * @param {Object} axis
+         * The object which contains the information about the aggregate value axis
          */
-        _apply_aggregate_value: function ($cell, aggregate) {
-            var field = this.state.fields[aggregate.fname],
-                formatter = field_utils.format[field.type];
-            var formattedValue = formatter(
-                aggregate.value, field, {escape: true}
-            );
-            $cell.addClass('total').attr('title', aggregate.help)
-                .html(formattedValue);
+        applyAggregateValue: function ($cell, axis) {
+            var field = this.state.fields[axis.attrs.name];
+            var value = axis.aggregate.value;
+            var help = axis.aggregate.help;
+            var formatFunc = field_utils.format[axis.attrs.widget];
+            if (!formatFunc) {
+                formatFunc = field_utils.format[field.type];
+            }
+            var formattedValue = formatFunc(value, field, { escape: true });
+            $cell.addClass('o_list_number').attr('title', help).html(formattedValue);
         },
 
         /**
