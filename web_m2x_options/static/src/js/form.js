@@ -167,14 +167,20 @@ openerp.web_m2x_options = function (instance) {
                     values.push({
                         label: _t("Search More..."),
                         action: function () {
-                            // limit = 80 for improving performance, similar
-                            // to Odoo implementation here:
+                            // Odoo JS framework is quite bad designed
+                            // _search_create_popup requires to receices the ids
+                            // even if it will do again a search when displayed
+                            // By default, Odoo display hard code a domain of 160 ids
+                            // preventing to make a search if your datalist has more that 160 items
                             // https://github.com/odoo/odoo/commit/8c3cdce539d87775b59b3f2d5ceb433f995821bf
-                            dataset.name_search(
-                                search_val, self.build_domain(),
-                                'ilike', 80).done(function (data) {
-                                    self._search_create_popup("search", data);
+                            new instance.web.Model(dataset.model).call(
+                                    'search', [self.build_domain()]).then(function (ids) {
+                                var ids_list = [];
+                                _.each(ids, function(id) {
+                                    ids_list.push([id]);
                                 });
+                                self._search_create_popup("search", ids_list);
+                            });
                         },
                         classname: 'oe_m2o_dropdown_option'
                     });

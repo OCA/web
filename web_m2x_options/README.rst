@@ -127,6 +127,11 @@ Known issues
 Double check that you have no inherited view that remove ``options`` you set on a field ! 
 If nothing works, add a debugger in the first line of ``get_search_result method`` and enable debug mode in Odoo. When you write something in a many2one field, javascript debugger should pause. If not verify your installation.
 
+This module fixes an Odoo bug in the pop up of search that limit the items quantity
+to 160 https://github.com/odoo/odoo/commit/8c3cdce539d87775b59b3f2d5ceb433f995821bf
+For that purpose, it makes previously a light ``search`` call, to get all the ids.
+This process could make the display of the pop up slow, in case of huge databases.
+
 Roadmap
 =======
 
