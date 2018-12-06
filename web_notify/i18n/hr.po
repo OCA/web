@@ -20,7 +20,7 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #. module: web_notify
-#: code:addons/web_notify/models/res_users.py:27
+#: code:addons/web_notify/models/res_users.py:31
 #, python-format
 msgid "Information"
 msgstr "Informacija"
@@ -36,12 +36,32 @@ msgid "Notify warning channel name"
 msgstr "Naziv kanala upozorenja"
 
 #. module: web_notify
+#. openerp-web
+#: code:addons/web_notify/static/src/xml/notification.xml:19
+#, python-format
+msgid "Open"
+msgstr ""
+
+#. module: web_notify
+#. openerp-web
+#: code:addons/web_notify/static/src/xml/notification.xml:7
+#, python-format
+msgid "Reload current view"
+msgstr ""
+
+#. module: web_notify
+#: code:addons/web_notify/models/res_users.py:54
+#, python-format
+msgid "Sending a notification to another user is forbidden."
+msgstr ""
+
+#. module: web_notify
 #: model:ir.model,name:web_notify.model_res_users
 msgid "Users"
 msgstr "Korisnici"
 
 #. module: web_notify
-#: code:addons/web_notify/models/res_users.py:33
+#: code:addons/web_notify/models/res_users.py:42
 #, python-format
 msgid "Warning"
 msgstr "Upozorenje"
