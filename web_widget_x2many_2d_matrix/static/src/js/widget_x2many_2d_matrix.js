@@ -56,9 +56,6 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                         node[property];
                 }
             }
-            // And this?
-            this.field_editability =
-                node.field_editability || this.field_editability;
             this.show_row_totals =
                 this.parse_boolean(node.show_row_totals || '1');
             this.show_column_totals =
@@ -138,7 +135,14 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
         _make_row: function (y) {
             var self = this;
             // Use object so that we can attach more data if needed
-            var row = {'data': []};
+            var row = {
+                'tag': 'field',
+                'attrs': {
+                    'name': this.field_y_axis,
+                    'string': y,
+                },
+                'data': [],
+            };
             $.each(self.by_x_axis, function (x) {
                 row.data.push(self.by_y_axis[y][x]);
             });
