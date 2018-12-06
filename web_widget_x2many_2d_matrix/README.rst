@@ -42,7 +42,7 @@ An example use case would be: Select some projects and some employees so that
 a manager can easily fill in the planned_hours for one task per employee. The
 result could look like this:
 
-.. image:: https://raw.githubusercontent.com/web_widget_x2many_2d_matrix/static/description/screenshot.png
+.. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_widget_x2many_2d_matrix/static/description/screenshot.png
     :alt: Screenshot
 
 The beauty of this is that you have an arbitrary amount of columns with this
@@ -168,6 +168,21 @@ Known issues / Roadmap
 
 * Support extra invisible fields inside each cell.
 
+Changelog
+=========
+
+12.0.1.0.1 (2018-12-07)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [FIX] Cells are unable to render property.
+  (`#1126 <https://github.com/OCA/web/issues/1126>`_)
+
+12.0.1.0.0 (2018-11-20)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [12.0][MIG] web_widget_x2many_2d_matrix
+  (`#1101 <https://github.com/OCA/web/issues/1101>`_)
+
 Bug Tracker
 ===========
 
@@ -187,6 +202,7 @@ Authors
 * Therp BV
 * Tecnativa
 * Camptocamp
+* Brainbean Apps
 
 Contributors
 ~~~~~~~~~~~~
