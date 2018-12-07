@@ -38,7 +38,7 @@ odoo.define('web_listview_range_select', function (require) {
 
             var new_range = this.get_range_selection(start, end);
             result.records = result.records.concat(new_range.records);
-            result.ids = result.ids.concat(new_range.ids);
+            result.ids = _.uniq(result.ids.concat(new_range.ids));
 
             return result;
         },
@@ -80,9 +80,13 @@ odoo.define('web_listview_range_select', function (require) {
                     if (selection.ids.indexOf(record_id) != -1)
                         $(this).find('td.o_list_record_selector input').prop('checked', true);
                 });
+
                 //Check input internal
-                $(self).trigger(
-                    'selected', [selection.ids, selection.records, true]);
+                this.trigger_up(
+                    'selection_changed', {
+                        'selection': selection.ids
+                    }
+                );
             }
             return res;
         }
