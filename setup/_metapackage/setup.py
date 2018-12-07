@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo12-addon-web_decimal_numpad_dot',
+        'odoo12-addon-web_dialog_size',
         'odoo12-addon-web_disable_export_group',
         'odoo12-addon-web_environment_ribbon',
         'odoo12-addon-web_favicon',
