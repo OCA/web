@@ -21,7 +21,7 @@ msgstr ""
 
 #. module: web_widget_image_download
 #. openerp-web
-#: code:addons/web_widget_image_download/static/src/xml/web_widget_image_download.xml:10
+#: code:addons/web_widget_image_download/static/src/xml/web_widget_image_download.xml:9
 #, python-format
 msgid "Download"
 msgstr "Atsisiūsti"
