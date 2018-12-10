@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<openerp><data noupdate="1">
+
+    <record id="keep_url" model="ir.config_parameter">
+        <field name="key">web_easy_switch_company.keep_url</field>
+        <field name="value">False</field>
+    </record>
+
+</data></openerp>

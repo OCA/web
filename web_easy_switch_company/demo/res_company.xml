@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<openerp><data>
+
+    <record id="other_company" model="res.company">
+        <field name="name">Other Company</field>
+    </record>
+
+</data></openerp>

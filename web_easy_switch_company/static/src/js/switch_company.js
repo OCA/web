@@ -1,20 +1,9 @@
 /******************************************************************************
-    Web Easy Switch Company module for OpenERP
-    Copyright (C) 2014 GRAP (http://www.grap.coop)
-    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
+Copyright (C) 2014 - Today: GRAP (http://www.grap.coop)
+@author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ******************************************************************************/
 
 openerp.web_easy_switch_company = function (instance) {
@@ -54,6 +43,7 @@ openerp.web_easy_switch_company = function (instance) {
          */
         renderElement: function() {
             var self = this;
+
             this._super();
             if (this.companies.length === 1) {
                 this.$el.hide();
@@ -62,13 +52,19 @@ openerp.web_easy_switch_company = function (instance) {
                 this.$el.show();
                 this.$el.find('.easy_switch_company_company_item').on('click', function(ev) {
                     var company_id = $(ev.target).data("company-id");
-
-
                     if (company_id != self.current_company_id){
                         var func = '/web_easy_switch_company/switch/change_current_company';
                         var param = {'company_id': company_id}
                         self.rpc(func, param).done(function(res) {
-                            window.location.reload()
+                            if (self.easy_switch_company_keep_url) {
+                                window.location.reload();
+                            } else {
+                                if (self.session.debug) {
+                                    window.location = "/web/?debug";
+                                } else {
+                                    window.location = "/web";
+                                }
+                            }
                         });
                     }
                 });
@@ -105,33 +101,43 @@ openerp.web_easy_switch_company = function (instance) {
                 //       user_preference=True in the context does 
                 //       not work either.
                 new instance.web.Model('res.company').call('name_search',{context:{'user_preference':'True'}}).then(function(res){
-                    var res_company = res;
-                    for ( var i=0 ; i < res_company.length; i++) {
-                        var logo_topbar, logo_state;
-                        // TODO: fetching the logo of other companies fails with the
-                        //       default res.company record rule, so we should
-                        //       probably remove the logos from the menu :(
-                        logo_topbar = self.session.url(
-                            '/web/binary/image', {
-                                model:'res.company', 
-                                field: 'logo_topbar', 
-                                id: res_company[i][0]
+
+                    self._fetch('ir.config_parameter', ['value'], [['key', '=', 'web_easy_switch_company.keep_url']]).then(function(res_config){
+                        if (res_config.length === 1 && res_config[0].value === 'True'){
+                            self.easy_switch_company_keep_url = true;
+                        }
+                        else {
+                            self.easy_switch_company_keep_url = false;
+                        }
+
+                        var res_company = res;
+                        for ( var i=0 ; i < res_company.length; i++) {
+                            var logo_topbar, logo_state;
+                            // TODO: fetching the logo of other companies fails with the
+                            //       default res.company record rule, so we should
+                            //       probably remove the logos from the menu :(
+                            logo_topbar = self.session.url(
+                                '/web/binary/image', {
+                                    model:'res.company', 
+                                    field: 'logo_topbar', 
+                                    id: res_company[i][0]
+                                });
+                            if (res_company[i][0] == self.current_company_id){
+                                logo_state = '/web_easy_switch_company/static/src/img/selection-on.png';
+                            }
+                            else{
+                                logo_state = '/web_easy_switch_company/static/src/img/selection-off.png';
+                            }
+                            self.companies.push({
+                                id: res_company[i][0],
+                                name: res_company[i][1],
+                                logo_topbar: logo_topbar,
+                                logo_state: logo_state
                             });
-                        if (res_company[i][0] == self.current_company_id){
-                            logo_state = '/web_easy_switch_company/static/description/selection-on.png';
                         }
-                        else{
-                            logo_state = '/web_easy_switch_company/static/description/selection-off.png';
-                        }
-                        self.companies.push({
-                            id: res_company[i][0],
-                            name: res_company[i][1],
-                            logo_topbar: logo_topbar,
-                            logo_state: logo_state
-                        });
-                    }
-                    // Update rendering
-                    self.renderElement();
+                        // Update rendering
+                        self.renderElement();
+                    });
                 });
             });
         },

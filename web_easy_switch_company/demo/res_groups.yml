@@ -1,8 +1,8 @@
-# -*- encoding: utf-8 -*-
-# #############################################################################
+# -*- coding: utf-8 -*-
+##############################################################################
 #
-#    Web Easy Switch Company module for OpenERP
-#    Copyright (C) 2014 GRAP (http://www.grap.coop)
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2015-Today GRAP
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -20,12 +20,6 @@
 #
 ##############################################################################
 
-from openerp.osv.orm import Model
-
-
-class res_users(Model):
-    _inherit = 'res.users'
-
-    # Custom Function Section
-    def change_current_company(self, cr, uid, company_id, context=None):
-        return self.write(cr, uid, uid, {'company_id': company_id})
+- !record {model: res.groups, id: base.group_no_one}:
+    users:
+        - base.user_root

@@ -1,5 +1,5 @@
 .switch_company_menu {
-    height: auto;
-    max-height: 50vh;
+    max-height: 100vh;
     overflow-x: hidden;
+    cursor: pointer;
 }
