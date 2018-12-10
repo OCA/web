@@ -9,7 +9,7 @@
                     t-as="year"
                     t-att-data-year="year"
                     t-attf-class="oe_button oe_form_button"
-                    t-att-disabled="date.getFullYear() == year ? 'disable' : null"
+                    t-att-disabled="widget.weeknumber_iso_year(date) == year ? 'disable' : null"
                 >
                     <t
                         t-esc="year"

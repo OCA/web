@@ -42,6 +42,14 @@ openerp.web_widget_date_interval = function (instance) {
                 var local = date.clone().clearTime().add(12).hours();
                 return parseInt(local.getISOWeek(), 10);
             },
+            weeknumber_iso_year: function (date) {
+                // The ISO year of a week is the year of the week's thursday
+                var _date = date.clone();
+                if (!_date.is().monday()) {
+                    _date.last().monday();
+                }
+                return _date.next().thursday().getFullYear();
+            },
             weeknumber_iso_get_years: function () {
                 if (this.options.hide_years) {
                     return [];
@@ -75,17 +83,21 @@ openerp.web_widget_date_interval = function (instance) {
                 }
                 return result;
             },
+            weeknumber_iso_date_from_week: function (year, week) {
+                // Pick any date within 'year', then change the week
+                return new Date(year, 5, 1).setWeek(week);
+            },
             weeknumber_iso_onchange_year: function (e) {
-                var year = parseInt(jQuery(e.currentTarget).data('year'), 10),
-                    value = this._get_date();
-                value.setFullYear(year);
-                return this.weeknumber_iso_update_interval(value);
+                var year = parseInt(jQuery(e.currentTarget).data('year'), 10);
+                var week = this.weeknumber_iso_weeknumber(this._get_date());
+                var monday = this.weeknumber_iso_date_from_week(year, week);
+                return this.weeknumber_iso_update_interval(monday);
             },
             weeknumber_iso_onchange_week: function (e) {
                 var week = parseInt(jQuery(e.currentTarget).val(), 10);
-                return this.weeknumber_iso_update_interval(
-                    this._get_date().setWeek(week)
-                );
+                var year = this.weeknumber_iso_year(this._get_date());
+                var monday = this.weeknumber_iso_date_from_week(year, week);
+                return this.weeknumber_iso_update_interval(monday);
             },
             weeknumber_iso_update_interval: function (start) {
                 return this.update_interval(
