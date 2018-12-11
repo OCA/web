@@ -34,16 +34,16 @@ msgstr ""
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:207
-#: code:addons/web_m2x_options/static/src/js/form.js:355
+#: code:addons/web_m2x_options/static/src/js/form.js:213
+#: code:addons/web_m2x_options/static/src/js/form.js:361
 #, python-format
 msgid "Create \"<strong>%s</strong>\""
 msgstr "إنشاء \"<strong>%s</strong>\""
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:233
-#: code:addons/web_m2x_options/static/src/js/form.js:381
+#: code:addons/web_m2x_options/static/src/js/form.js:239
+#: code:addons/web_m2x_options/static/src/js/form.js:387
 #, python-format
 msgid "Create and Edit..."
 msgstr "إنشاء وتحرير ..."
@@ -61,7 +61,7 @@ msgstr ""
 #. module: web_m2x_options
 #. openerp-web
 #: code:addons/web_m2x_options/static/src/js/form.js:168
-#: code:addons/web_m2x_options/static/src/js/form.js:325
+#: code:addons/web_m2x_options/static/src/js/form.js:331
 #, python-format
 msgid "Search More..."
 msgstr "البحث عن المزيد ..."
