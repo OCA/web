@@ -113,11 +113,11 @@ openerp.web_widget_date_interval = function (instance) {
                         end,
                         this.field_manager.fields[this.options.end_field]
                             .field.type
-                    ),
-                    values = {};
-                values[this.name] = start_str;
-                values[this.options.end_field] = end_str;
-                this.field_manager.set_values(values);
+                    );
+                this.field_manager.fields[this.name].set_value(start_str);
+                this.field_manager.fields[this.options.end_field].set_value(
+                    end_str
+                );
                 this.reinitialize();
             },
         }
