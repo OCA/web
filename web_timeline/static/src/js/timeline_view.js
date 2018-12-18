@@ -111,12 +111,17 @@ odoo.define('web_timeline.TimelineView', function (require) {
             if (!isNullOrUndef(attrs.quick_create_instance)) {
                 self.quick_create_instance = 'instance.' + attrs.quick_create_instance;
             }
+            this.stack = true;
+            if (!isNullOrUndef(attrs.stack) && !_.str.toBoolElse(attrs.stack, "true")) {
+                this.stack = false;
+            }
             this.options = {
                 groupOrder: this.group_order,
                 orientation: 'both',
                 selectable: true,
                 multiselect: true,
                 showCurrentTime: true,
+                stack: this.stack,
                 zoomKey: this.zoomKey
             };
             if (isNullOrUndef(attrs.event_open_popup) || !_.str.toBoolElse(attrs.event_open_popup, true)) {
