@@ -56,6 +56,9 @@ the possible attributes for the tag:
 +--------------------+-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | mode               | No        | Specifies the initial visible window. Available values are: 'day' to display the current day, 'week', 'month' and 'fit'. Default value is 'fit' to adjust the visible window such that it fits all items.                                                                 |
 +--------------------+-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| margin             | No        | Specifies the margins around the items. It should respect the JSON format. For example '{"item":{"horizontal":-10}}'. Available values are: '{"axis":<number>}', '{"item":<number>}', '{"item":{"horizontal":<number>}}', '{"item":{"vertical":<number>}}',               |
+|                    |           | '{"item":{"horizontal":<number>,"vertical":<number>}}'.                                                                                                                                                                                                                   |
++--------------------+-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | event_open_popup   | No        | When set to true, it allows to edit the events in a popup. If not (default value), the record is edited changing to form view.                                                                                                                                            |
 +--------------------+-----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | stack              | No        | When set to false, items will not be stacked on top of each other such that they do overlap.                                                                                                                                                                              |
@@ -89,6 +92,7 @@ Example:
                           string="Tasks"
                           default_group_by="user_id"
                           event_open_popup="true"
+                          margin='{"item":{"horizontal":-10}}'
                           zoomKey="ctrlKey"
                           colors="#ec7063:user_id == false;#2ecb71:kanban_state=='done';"
                           dependency_arrow="task_dependency_ids">
