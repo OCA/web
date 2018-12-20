@@ -2,3 +2,7 @@
 {
     margin-left: .3em;
 }
+#oe_main_menu_navbar .badge:hover
+{
+    transform: scale(1.1);
+}

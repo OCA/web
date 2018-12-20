@@ -4,10 +4,15 @@
 
 <odoo noupdate="1">
     <record id="rec_slick_example" model="slick.example">
-        <field name="image_ids">[(6, 0, [
+        <field name="slick_image_ids">[(6, 0, [
             ref('web_widget_slick_example.rec_slick_example_fonz1'),
             ref('web_widget_slick_example.rec_slick_example_fonz2'),
             ref('web_widget_slick_example.rec_slick_example_fonz3'),
+        ])]</field>
+        <field name="slickroom_image_ids">[(6, 0, [
+                    ref('web_widget_slick_example.rec_slick_example_fonz1'),
+                    ref('web_widget_slick_example.rec_slick_example_fonz2'),
+                    ref('web_widget_slick_example.rec_slick_example_fonz3'),
         ])]</field>
     </record>
     <record id="rec_slick_example_fonz1" model="ir.attachment">

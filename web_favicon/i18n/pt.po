@@ -1,0 +1,65 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_favicon
+#
+# Translators:
+# Pedro Castro Silva <pedrocs@exo.pt>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-03 03:50+0000\n"
+"PO-Revision-Date: 2018-08-02 07:29+0000\n"
+"Last-Translator: Pedro Castro Silva <pedrocs@exo.pt>\n"
+"Language-Team: Portuguese (https://www.transifex.com/oca/teams/23907/pt/)\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Weblate 3.1.1\n"
+
+#. module: web_favicon
+#: model:ir.model,name:web_favicon.model_res_company
+msgid "Companies"
+msgstr "Empresas"
+
+#. module: web_favicon
+#: model:ir.ui.view,arch_db:web_favicon.view_company_form
+msgid "Favicon"
+msgstr ""
+
+#. module: web_favicon
+#: model:ir.model.fields,field_description:web_favicon.field_res_company_favicon_backend
+msgid "Favicon backend"
+msgstr "Backend do Favicon"
+
+#. module: web_favicon
+#: model:ir.model.fields,field_description:web_favicon.field_res_company_favicon_backend_mimetype
+msgid "Favicon backend mimetype"
+msgstr "Mimetype do backend do Favicon"
+
+#. module: web_favicon
+#: model:ir.model.fields,help:web_favicon.field_res_company_favicon_backend_mimetype
+msgid "Set the mimetype of your file."
+msgstr "Indique o mimetype do seu ficheiro."
+
+#. module: web_favicon
+#: model:ir.ui.view,arch_db:web_favicon.view_company_form
+msgid "Web Favicon"
+msgstr "Favicon do Web"
+
+#. module: web_favicon
+#: selection:res.company,favicon_backend_mimetype:0
+msgid "image/gif"
+msgstr ""
+
+#. module: web_favicon
+#: selection:res.company,favicon_backend_mimetype:0
+msgid "image/png"
+msgstr "image/png"
+
+#. module: web_favicon
+#: selection:res.company,favicon_backend_mimetype:0
+msgid "image/x-icon"
+msgstr "image/x-icon"

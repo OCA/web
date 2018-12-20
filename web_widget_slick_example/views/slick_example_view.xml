@@ -7,12 +7,24 @@
         <field name="name">slick.example.view.form</field>
         <field name="model">slick.example</field>
         <field name="arch" type="xml">
-            <form string="Slick Example">
+            <form string="Slick / Slickroom Examples">
                 <header />
                 <sheet>
-                    <group>
-                        <field name="image_ids" widget="one2many_slick_images"
-                            options="{'slidesToShow': 2}" />
+                    <group col="2">
+                        <separator string="Slick Carousel" />
+                        <newline />
+                        <field name="slick_image_ids"
+                               nolabel="1"
+                               colspan="2"
+                               widget="one2many_slick_images"
+                               options="{'slidesToShow': 2}" />
+                        <separator string="Slickroom Carousel" />
+                        <newline />
+                        <field name="slickroom_image_ids"
+                               nolabel="1"
+                               colspan="2"
+                               widget="slickroom"
+                               options="{'slidesToShow': 2}" />
                     </group>
                 </sheet>
                 <footer />

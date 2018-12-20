@@ -141,7 +141,7 @@ var translateDialog = Dialog.extend({
                 deff.resolve();
             } else {
                 self.view.dataset.call('read',[[self.view.datarecord.id],
-                    self.translatable_fields_keys,
+                    self.translatable_fields_keys, '_classic_read',
                     self.view.dataset.get_context({
                         'lang': lg.code })]).done(
                         function (rows) {

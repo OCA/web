@@ -1,0 +1,52 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* web_menu_navbar_needaction
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_menu_navbar_needaction
+#: code:addons/web_menu_navbar_needaction/models/ir_ui_menu.py:141
+#, python-format
+msgid "Cannot evaluate %s to a search domain:\n"
+"%s"
+msgstr ""
+
+#. module: web_menu_navbar_needaction
+#: model:ir.ui.view,arch_db:web_menu_navbar_needaction.edit_menu_access
+msgid "Fill in a domain for a custom needaction"
+msgstr ""
+
+#. module: web_menu_navbar_needaction
+#: model:ir.model.fields,help:web_menu_navbar_needaction.field_ir_ui_menu_needaction_domain
+msgid "If your menu item needs a different domain, set it here. It will override the model's needaction domain completely."
+msgstr ""
+
+#. module: web_menu_navbar_needaction
+#: model:ir.model.fields,field_description:web_menu_navbar_needaction.field_ir_ui_menu_needaction
+msgid "Needaction"
+msgstr ""
+
+#. module: web_menu_navbar_needaction
+#: model:ir.model.fields,field_description:web_menu_navbar_needaction.field_ir_ui_menu_needaction_domain
+msgid "Needaction domain"
+msgstr ""
+
+#. module: web_menu_navbar_needaction
+#: model:ir.model.fields,help:web_menu_navbar_needaction.field_ir_ui_menu_needaction
+msgid "Set to False to disable needaction for specific menu items"
+msgstr ""
+
+#. module: web_menu_navbar_needaction
+#: model:ir.model,name:web_menu_navbar_needaction.model_ir_ui_menu
+msgid "ir.ui.menu"
+msgstr ""
+

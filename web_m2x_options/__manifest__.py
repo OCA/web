@@ -2,7 +2,7 @@
 
 {
     "name": 'web_m2x_options',
-    "version": "10.0.1.1.0",
+    "version": "10.0.1.1.1",
     "depends": [
         'base',
         'web',

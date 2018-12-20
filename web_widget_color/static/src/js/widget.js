@@ -22,7 +22,7 @@ odoo.define('web.web_widget_color', function(require) {
         widget_class: 'oe_form_field_color',
         is_syntax_valid: function () {
             var $input = this.$('input');
-            if (!this.get("effective_readonly") && $input.size() > 0) {
+            if (!this.get("effective_readonly") && $input.size() > 0 && $input.val().length>0) {
                 var val = $input.val();
                 var isOk = /^#[0-9A-F]{6}$/i.test(val);
                 if (!isOk) {

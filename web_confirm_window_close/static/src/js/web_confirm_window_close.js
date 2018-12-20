@@ -10,6 +10,7 @@ odoo.define('web_confirm_window_close', function (require) {
             if ($('html').find('.oe_form_dirty').length) {
                 e.preventDefault();
             }
+            return "";
         },
 
         start: function() {

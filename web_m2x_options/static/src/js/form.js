@@ -142,16 +142,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                 var search_result = searcher([["id", "not in", blacklist]]);
             }
 
-            if (!(self.options && (self.is_option_set(self.options.create) || self.is_option_set(self.options.create_edit)))) {
-                this.create_rights = this.create_rights || (function(){
-                return new Model(self.field.relation).call(
-                    "check_access_rights", ["create", false]);
-                })();
-            }
-
-            $.when(search_result, this.create_rights).then(function (data, can_create) {
-
-                self.can_create = can_create;  // for ``.show_error_displayer()``
+            $.when(search_result).then(function (data) {
                 self.last_search = data;
                 // possible selections for the m2o
                 var values = _.map(data, function (x) {
@@ -195,7 +186,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                     search_more_undef = _.isUndefined(self.options.search_more) && _.isUndefined(self.view.ir_options['web_m2x_options.search_more']),
                     search_more = self.is_option_set(self.view.ir_options['web_m2x_options.search_more']);
 
-                if (values.length > self.limit && (can_search_more || search_more_undef || search_more)) {
+                if ((values.length > self.limit && (can_search_more || search_more_undef)) || search_more) {
                     values = values.slice(0, self.limit);
                     values.push({
                         label: _t("Search More..."),
@@ -239,12 +230,23 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                     }
                 }
 
+                // TODO: Remove create_edit,create,no_create_edit and no_create options when migrating to 11.0 -> Odoo's core already support them by default
                 // create...
                 var create_edit = self.is_option_set(self.options.create) || self.is_option_set(self.options.create_edit),
-                    create_edit_undef = _.isUndefined(self.options.create) && _.isUndefined(self.options.create_edit),
+                    create_edit_undef = _.isUndefined(self.options.create) && _.isUndefined(self.options.create_edit) && _.isUndefined(self.options.no_create) && _.isUndefined(self.options.no_create_edit),
                     m2x_create_edit_undef = _.isUndefined(self.view.ir_options['web_m2x_options.create_edit']),
-                    m2x_create_edit = self.is_option_set(self.view.ir_options['web_m2x_options.create_edit']);
-                var show_create_edit = (!self.options && (m2x_create_edit_undef || m2x_create_edit)) || (self.options && (create_edit || (create_edit_undef && (m2x_create_edit_undef || m2x_create_edit))));
+                    m2x_create_edit = self.is_option_set(self.view.ir_options['web_m2x_options.create_edit']),
+                    no_create_edit = self.is_option_set(self.options.no_create) || self.is_option_set(self.options.no_create_edit),
+                    no_create_edit_undef = _.isUndefined(self.options.no_create) && _.isUndefined(self.options.no_create_edit);
+
+                var show_create_edit = (!self.options && (m2x_create_edit_undef || m2x_create_edit));
+                if (!show_create_edit) {
+                    if (no_create_edit_undef) {
+                        show_create_edit = (self.options && (create_edit || (create_edit_undef && (m2x_create_edit_undef || m2x_create_edit))));
+                    } else {
+                        show_create_edit = (self.options && !no_create_edit);
+                    }
+                }
                 if (self.can_create && show_create_edit){
                     values.push({
                         label: _t("Create and Edit..."),
@@ -389,12 +391,22 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                     }
                 }
 
+                // TODO: Remove create_edit,create,no_create_edit and no_create options when migrating to 11.0 -> Odoo's core already support them by default
                 // create...
                 var create_edit = self.is_option_set(self.options.create) || self.is_option_set(self.options.create_edit),
                     create_edit_undef = _.isUndefined(self.options.create) && _.isUndefined(self.options.create_edit),
                     m2x_create_edit_undef = _.isUndefined(self.view.ir_options['web_m2x_options.create_edit']),
-                    m2x_create_edit = self.is_option_set(self.view.ir_options['web_m2x_options.create_edit']);
-                var show_create_edit = (!self.options && (m2x_create_edit_undef || m2x_create_edit)) || (self.options && (create_edit || (create_edit_undef && (m2x_create_edit_undef || m2x_create_edit))));
+                    m2x_create_edit = self.is_option_set(self.view.ir_options['web_m2x_options.create_edit']),
+                    no_create_edit = self.is_option_set(self.options.no_create) || self.is_option_set(self.options.no_create_edit),
+                    no_create_edit_undef = _.isUndefined(self.options.no_create) && _.isUndefined(self.options.no_create_edit);
+                var show_create_edit = (!self.options && (m2x_create_edit_undef || m2x_create_edit))
+                if (!show_create_edit) {
+                    if (no_create_edit_undef) {
+                        show_create_edit = (self.options && (create_edit || (create_edit_undef && (m2x_create_edit_undef || m2x_create_edit))));
+                    } else {
+                        show_create_edit = (self.options && !no_create_edit);
+                    }
+                }
                 if (show_create_edit){
 
                     values.push({

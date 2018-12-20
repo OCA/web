@@ -1,0 +1,88 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_widget_digitized_signature
+#
+# Translators:
+# Rodrigo de Almeida Sottomaior Macedo <rmsolucoeseminformatic4@gmail.com>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-03 03:50+0000\n"
+"PO-Revision-Date: 2018-01-03 03:50+0000\n"
+"Last-Translator: Rodrigo de Almeida Sottomaior Macedo "
+"<rmsolucoeseminformatic4@gmail.com>, 2017\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
+"teams/23907/pt_BR/)\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: web_widget_digitized_signature
+#. openerp-web
+#: code:addons/web_widget_digitized_signature/static/src/xml/digital_sign.xml:7
+#, python-format
+msgid "Clear"
+msgstr ""
+
+#. module: web_widget_digitized_signature
+#. openerp-web
+#: code:addons/web_widget_digitized_signature/static/src/js/digital_sign.js:81
+#, python-format
+msgid "Could not display the selected image."
+msgstr ""
+
+#. module: web_widget_digitized_signature
+#: code:addons/web_widget_digitized_signature/models/mail_thread.py:33
+#, python-format
+msgid "Deletion date: %s"
+msgstr ""
+
+#. module: web_widget_digitized_signature
+#. openerp-web
+#: code:addons/web_widget_digitized_signature/static/src/xml/digital_sign.xml:10
+#, python-format
+msgid "Draw your signature"
+msgstr ""
+
+#. module: web_widget_digitized_signature
+#: model:ir.model,name:web_widget_digitized_signature.model_mail_thread
+msgid "Email Thread"
+msgstr ""
+
+#. module: web_widget_digitized_signature
+#. openerp-web
+#: code:addons/web_widget_digitized_signature/static/src/js/digital_sign.js:81
+#, python-format
+msgid "Image"
+msgstr ""
+
+#. module: web_widget_digitized_signature
+#: model:ir.model.fields,field_description:web_widget_digitized_signature.field_res_users_signature_image
+msgid "Signature"
+msgstr ""
+
+#. module: web_widget_digitized_signature
+#: code:addons/web_widget_digitized_signature/models/mail_thread.py:30
+#, python-format
+msgid "Signature date: %s"
+msgstr ""
+
+#. module: web_widget_digitized_signature
+#: code:addons/web_widget_digitized_signature/models/mail_thread.py:28
+#, python-format
+msgid "Signature has been created."
+msgstr ""
+
+#. module: web_widget_digitized_signature
+#: code:addons/web_widget_digitized_signature/models/mail_thread.py:32
+#, python-format
+msgid "Signature has been deleted."
+msgstr ""
+
+#. module: web_widget_digitized_signature
+#: model:ir.model,name:web_widget_digitized_signature.model_res_users
+msgid "Users"
+msgstr "Usuários"

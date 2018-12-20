@@ -1,13 +1,11 @@
-# Translation of OpenERP Server.
+# Translation of Odoo Server.
 # This file contains the translation of the following modules:
 #	* web_shortcut
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 7.0\n"
+"Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-07 19:37+0000\n"
-"PO-Revision-Date: 2013-06-07 19:37+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,8 +15,73 @@ msgstr ""
 
 #. module: web_shortcut
 #. openerp-web
-#: code:addons/web_shortcut/static/src/xml/web_shortcut.xml:20
+#: code:addons/web_shortcut/static/src/xml/web_shortcut.xml:21
 #, python-format
 msgid "Add / Remove Shortcut..."
+msgstr ""
+
+#. module: web_shortcut
+#: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: web_shortcut
+#: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: web_shortcut
+#: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_shortcut
+#: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_id
+msgid "ID"
+msgstr ""
+
+#. module: web_shortcut
+#: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: web_shortcut
+#: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: web_shortcut
+#: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: web_shortcut
+#: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_menu_id
+msgid "Menu id"
+msgstr ""
+
+#. module: web_shortcut
+#: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_name
+msgid "Shortcut Name"
+msgstr ""
+
+#. module: web_shortcut
+#: sql_constraint:web.shortcut:0
+msgid "Shortcut for this menu already exists!"
+msgstr ""
+
+#. module: web_shortcut
+#: model:ir.model.fields,field_description:web_shortcut.field_web_shortcut_user_id
+msgid "User Ref."
+msgstr ""
+
+#. module: web_shortcut
+#: model:ir.model,name:web_shortcut.model_ir_ui_menu
+msgid "ir.ui.menu"
+msgstr ""
+
+#. module: web_shortcut
+#: model:ir.model,name:web_shortcut.model_web_shortcut
+msgid "web.shortcut"
 msgstr ""
 

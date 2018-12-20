@@ -26,7 +26,9 @@ odoo.define('web.shortcut', function (require) {
             var self = this;
             this._super();
             this.trigger('load');
-            this.$el.on('click', '.oe_systray_shortcut_menu a', function () {
+            this.$el.on('click', '.oe_systray_shortcut_menu a', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
                 self.click($(this));
             });
         },
@@ -88,6 +90,7 @@ odoo.define('web.shortcut', function (require) {
                     return item instanceof ShortcutMenu;
                 });
             }
+            return this._super.apply(this, arguments);
         },
         show_application: function () {
             var self = this;

@@ -6,7 +6,7 @@
     "name": "Web Responsive",
     "summary": "It provides a mobile compliant interface for Odoo Community "
                "web",
-    "version": "10.0.1.2.2",
+    "version": "10.0.1.2.3",
     "category": "Website",
     "website": "https://laslabs.com/",
     "author": "LasLabs, Tecnativa, Odoo Community Association (OCA)",
@@ -20,6 +20,7 @@
         'views/web.xml',
     ],
     'qweb': [
+        'static/src/xml/app_drawer_menu_search.xml',
         'static/src/xml/form_view.xml',
         'static/src/xml/navbar.xml',
     ],

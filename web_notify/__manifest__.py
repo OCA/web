@@ -6,7 +6,7 @@
     'name': 'Web Notify',
     'summary': """
         Send notification messages to user""",
-    'version': '10.0.1.0.0',
+    'version': '10.0.1.2.0',
     'description': 'Web Notify',
     'license': 'AGPL-3',
     'author': 'ACSONE SA/NV,Odoo Community Association (OCA)',
@@ -18,7 +18,8 @@
     'data': [
         'views/web_notify.xml'
     ],
-    'demo': [
+    'qweb': [
+        'static/src/xml/*.xml',
     ],
     'installable': True,
 }

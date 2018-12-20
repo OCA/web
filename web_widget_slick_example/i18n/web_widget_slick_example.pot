@@ -1,0 +1,95 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* web_widget_slick_example
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_widget_slick_example
+#: model:ir.model.fields,field_description:web_widget_slick_example.field_slick_example_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: web_widget_slick_example
+#: model:ir.model.fields,field_description:web_widget_slick_example.field_slick_example_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: web_widget_slick_example
+#: model:ir.model.fields,field_description:web_widget_slick_example.field_slick_example_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_widget_slick_example
+#: model:ir.model.fields,field_description:web_widget_slick_example.field_slick_example_id
+msgid "ID"
+msgstr ""
+
+#. module: web_widget_slick_example
+#: model:ir.model.fields,field_description:web_widget_slick_example.field_slick_example___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: web_widget_slick_example
+#: model:ir.model.fields,field_description:web_widget_slick_example.field_slick_example_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: web_widget_slick_example
+#: model:ir.model.fields,field_description:web_widget_slick_example.field_slick_example_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: web_widget_slick_example
+#: model:ir.ui.menu,name:web_widget_slick_example.slick_example_menu
+msgid "Slick"
+msgstr ""
+
+#. module: web_widget_slick_example
+#: model:ir.ui.view,arch_db:web_widget_slick_example.slick_example_view_form
+msgid "Slick / Slickroom Examples"
+msgstr ""
+
+#. module: web_widget_slick_example
+#: model:ir.ui.view,arch_db:web_widget_slick_example.slick_example_view_form
+msgid "Slick Carousel"
+msgstr ""
+
+#. module: web_widget_slick_example
+#: model:ir.ui.view,arch_db:web_widget_slick_example.slick_example_view_tree
+msgid "Slick Example"
+msgstr ""
+
+#. module: web_widget_slick_example
+#: model:ir.model,name:web_widget_slick_example.model_slick_example
+msgid "Slick Example Model"
+msgstr ""
+
+#. module: web_widget_slick_example
+#: model:ir.actions.act_window,name:web_widget_slick_example.slick_example_action
+msgid "Slick Examples"
+msgstr ""
+
+#. module: web_widget_slick_example
+#: model:ir.model.fields,field_description:web_widget_slick_example.field_slick_example_slick_image_ids
+msgid "Slick image ids"
+msgstr ""
+
+#. module: web_widget_slick_example
+#: model:ir.ui.view,arch_db:web_widget_slick_example.slick_example_view_form
+msgid "Slickroom Carousel"
+msgstr ""
+
+#. module: web_widget_slick_example
+#: model:ir.model.fields,field_description:web_widget_slick_example.field_slick_example_slickroom_image_ids
+msgid "Slickroom image ids"
+msgstr ""
+

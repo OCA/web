@@ -9,12 +9,14 @@
 This module allows to show an x2many field with 3-tuples
 ($x_value, $y_value, $value) in a table
 
-========= =========== ===========
-\          $x_value1   $x_value2
-========= =========== ===========
-$y_value1 $value(1/1) $value(2/1)
-$y_value2 $value(1/2) $value(2/2)
-========= =========== ===========
++-----------+-------------+-------------+
+|           |  $x_value1  | $x_value2   |
++-----------+-------------+-------------+
+| $y_value1 | $value(1/1) | $value(2/1) |
++-----------+-------------+-------------+
+| $y_value2 | $value(1/2) | $value(2/2) |
++-----------+-------------+-------------+
+
 
 where `value(n/n)` is editable.
 
@@ -145,12 +147,12 @@ Known issues / Roadmap
 * If you pass values with an onchange, you need to overwrite the model's method
   `onchange` for making the widget work::
 
- @api.multi
- def onchange(self, values, field_name, field_onchange):
-     if "one2many_field" in field_onchange:
-         for sub in [<field_list>]:
-             field_onchange.setdefault("one2many_field." + sub, u"")
-     return super(model, self).onchange(values, field_name, field_onchange)
+    @api.multi
+    def onchange(self, values, field_name, field_onchange):
+        if "one2many_field" in field_onchange:
+            for sub in [<field_list>]:
+                field_onchange.setdefault("one2many_field." + sub, u"")
+        return super(model, self).onchange(values, field_name, field_onchange)
 
 Bug Tracker
 ===========
