@@ -9,7 +9,7 @@ odoo.define('web_advanced_search_wildcard', function (require) {
     search_filters.ExtendedSearchProposition.Char.prototype.operators.push(
         {value: "startswith", text: _lt("starts with")},
         {value: "endswith", text: _lt("ends with")},
-        {value: '=ilike', text: _lt("matches")},
+        {value: '=ilike', text: _lt("matches")}
     );
 
     search_filters.ExtendedSearchProposition.Char.include({
