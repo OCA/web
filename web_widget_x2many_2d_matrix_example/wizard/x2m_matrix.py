@@ -1,8 +1,10 @@
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import fields, models
 
 
-class DemoWizard(models.TransientModel):
+class X2mMatrixDemoWiz(models.TransientModel):
     _name = 'x2m.matrix.demo.wiz'
+    _description = 'X2Many Matrix Demo Wizard'
 
     line_ids = fields.Many2many(
         'x2m.demo.line', default=lambda self: self._default_line_ids())

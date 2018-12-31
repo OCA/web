@@ -1,8 +1,10 @@
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import models, api, fields
 
 
 class X2MDemo(models.Model):
     _name = 'x2m.demo'
+    _description = 'X2Many Demo'
 
     name = fields.Char()
     line_ids = fields.One2many('x2m.demo.line', 'demo_id')
@@ -24,6 +26,7 @@ class X2MDemo(models.Model):
 
 class X2MDemoLine(models.Model):
     _name = 'x2m.demo.line'
+    _description = 'X2Many Demo Line'
 
     name = fields.Char()
     demo_id = fields.Many2one('x2m.demo')
