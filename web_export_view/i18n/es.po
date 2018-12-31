@@ -1,0 +1,40 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_export_view
+#
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-04-28 18:03+0000\n"
+"PO-Revision-Date: 2017-04-28 18:03+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: web_export_view
+#. openerp-web
+#: code:addons/web_export_view/static/src/xml/web_export_view_template.xml:6
+#, python-format
+msgid "Export xls"
+msgstr "Exportar XLS"
+
+#. module: web_export_view
+#. openerp-web
+#: code:addons/web_export_view/static/src/js/web_export_view.js:72
+#, python-format
+msgid "False"
+msgstr "Falso"
+
+#. module: web_export_view
+#. openerp-web
+#: code:addons/web_export_view/static/src/js/web_export_view.js:72
+#, python-format
+msgid "True"
+msgstr "Verdadero"
