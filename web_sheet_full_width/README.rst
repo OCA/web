@@ -44,6 +44,7 @@ Contributors
 * Stephane (SOLIBRE) <stephane@omerp.net>
 * Sylvain LE GAL (https://twitter.com/legalsylvain)
 * Jérôme Thériault <jtheriault@metalsartigan.com>
+* Cristian Salamea <cs@prisehub.com>
 
 Maintainer
 ----------
