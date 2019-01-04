@@ -36,6 +36,7 @@ setuptools.setup(
         'odoo10-addon-web_notify',
         'odoo10-addon-web_readonly_bypass',
         'odoo10-addon-web_responsive',
+        'odoo10-addon-web_search_autocomplete_prefetch',
         'odoo10-addon-web_search_with_and',
         'odoo10-addon-web_searchbar_full_width',
         'odoo10-addon-web_send_message_popup',
