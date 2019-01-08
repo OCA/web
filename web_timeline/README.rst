@@ -93,7 +93,6 @@ Example:
                           string="Tasks"
                           default_group_by="user_id"
                           event_open_popup="true"
-                          margin='{"item":{"horizontal":-10}}'
                           zoomKey="ctrlKey"
                           colors="#ec7063:user_id == false;#2ecb71:kanban_state=='done';"
                           dependency_arrow="task_dependency_ids">
