@@ -101,6 +101,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
 
             this.no_period = this.date_start === this.date_stop;
             this.zoomKey = attrs.zoomKey || '';
+            this.margin = attrs.margin || '{}';
             this.mode = attrs.mode || attrs.default_window || 'fit';
             this.min_height = attrs.min_height || 300;
 
@@ -122,6 +123,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
                 multiselect: true,
                 showCurrentTime: true,
                 stack: this.stack,
+                margin: JSON.parse(this.margin),
                 zoomKey: this.zoomKey
             };
             if (isNullOrUndef(attrs.event_open_popup) || !_.str.toBoolElse(attrs.event_open_popup, true)) {
