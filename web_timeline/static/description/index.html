@@ -431,6 +431,12 @@ the possible attributes for the tag:</p>
 <td>No</td>
 <td>Specifies the initial visible window. Available values are: ‘day’ to display the current day, ‘week’, ‘month’ and ‘fit’. Default value is ‘fit’ to adjust the visible window such that it fits all items.</td>
 </tr>
+<tr><td>margin</td>
+<td>No</td>
+<td>Specifies the margins around the items. It should respect the JSON format. For example ‘{“item”:{“horizontal”:-10}}’. Available values are: ‘{“axis”:&lt;number&gt;}’ (The minimal margin in pixels between items and the time axis)
+‘{“item”:&lt;number&gt;}’ (The minimal margin in pixels between items in both horizontal and vertical direction), ‘{“item”:{“horizontal”:&lt;number&gt;}}’ (The minimal horizontal margin in pixels between items),
+‘{“item”:{“vertical”:&lt;number&gt;}}’ (The minimal vertical margin in pixels between items), ‘{“item”:{“horizontal”:&lt;number&gt;,”vertical”:&lt;number&gt;}}’ (Combination between horizontal and vertical margins in pixels between items).</td>
+</tr>
 <tr><td>event_open_popup</td>
 <td>No</td>
 <td>When set to true, it allows to edit the events in a popup. If not (default value), the record is edited changing to form view.</td>
