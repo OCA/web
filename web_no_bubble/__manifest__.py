@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 # © 2016 Savoir-faire Linux
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
     'name': 'Web No Bubble',
-    'version': '11.0.1.0.0',
+    'version': '12.0.1.0.0',
     'author': 'Savoir-faire Linux, '
               'Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/web',
@@ -16,5 +15,4 @@
         'views/web_no_bubble.xml',
     ],
     'installable': True,
-    'application': False,
 }
