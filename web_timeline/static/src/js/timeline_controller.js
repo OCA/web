@@ -37,9 +37,9 @@ odoo.define('web_timeline.TimelineController', function (require) {
          * @override
          */
         update: function (params, options) {
-            this._super.apply(this, arguments);
+            var res = this._super.apply(this, arguments);
             if (_.isEmpty(params)){
-                return;
+                return res;
             }
             var defaults = _.defaults({}, options, {
                 adjust_window: true
@@ -63,17 +63,20 @@ odoo.define('web_timeline.TimelineController', function (require) {
 
             var fields = this.renderer.fieldNames;
             fields = _.uniq(fields.concat(n_group_bys));
-            self._rpc({
-                model: self.model.modelName,
-                method: 'search_read',
-                kwargs: {
-                    fields: fields,
-                    domain: domains,
-                },
-                context: self.getSession().user_context,
-            }).then(function(data) {
-                return self.renderer.on_data_loaded(data, n_group_bys, defaults.adjust_window);
-            });
+            return $.when(
+                res,
+                self._rpc({
+                    model: self.model.modelName,
+                    method: 'search_read',
+                    kwargs: {
+                        fields: fields,
+                        domain: domains,
+                    },
+                    context: self.getSession().user_context,
+                }).then(function (data) {
+                    return self.renderer.on_data_loaded(data, n_group_bys, defaults.adjust_window);
+                })
+            );
         },
 
         /**
