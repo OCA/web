@@ -10,14 +10,15 @@
                     t-att-data-year="year"
                     t-attf-class="oe_button oe_form_button"
                     t-att-disabled="widget.weeknumber_iso_year(date) == year ? 'disable' : null"
+                    t-attf-title="Year {{year}}"
                 >
                     <t
                         t-esc="year"
                     />
                 </button>
             </div>
-            <span t-if="!widget.get('effective_readonly')" class="oe_form_field oe_form_field_selection oe_form_required">
-                <select class="weeks">
+            <div t-if="!widget.get('effective_readonly')" class="oe_form_field oe_form_field_selection oe_form_required weeks">
+                <select t-if="widget.options.week_type == 'select'" title="Select ISO week">
                     <option
                         t-foreach="widget.weeknumber_iso_get_weeks()"
                         t-as="week"
@@ -29,7 +30,21 @@
                         />
                     </option>
                 </select>
-            </span>
+                <t t-if="widget.options.week_type == 'buttons'">
+                    <button
+                        t-foreach="widget.weeknumber_iso_get_weeks()"
+                        t-as="week"
+                        t-att-data-week="week"
+                        t-attf-class="oe_button oe_form_button"
+                        t-att-disabled="widget.weeknumber_iso_weeknumber(date) == week ? 'disable' : null"
+                        t-attf-title="ISO week {{week}}"
+                    >
+                        <t
+                            t-esc="week"
+                        />
+                    </button>
+                </t>
+            </div>
             <t t-if="widget.get('effective_readonly')">
                 <t t-esc="widget.weeknumber_iso_year(date)" />,
                 week <t t-esc="widget.weeknumber_iso_weeknumber(date)" />

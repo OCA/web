@@ -24,6 +24,13 @@ weeknumber_iso
     allow the user to move to N years before the current date (or the field's value)
 ``years_after``
     allow the user to move to N years after the current date (or the field's value)
+``week_type``
+    `select` (default) will render a dropdown for weeks, `buttons` will show buttons
+``weeks_before``
+    allow the user to move to N weeks before the current date (or the field's value) if ``week_type`` has value `buttons`
+``weeks_after``
+    allow the user to move to N weeks after the current date (or the field's value) if ``week_type`` has value `buttons`
+
 
 Example::
 

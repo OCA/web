@@ -14,16 +14,29 @@ openerp.web_widget_date_interval = function (instance) {
         instance.web.form.ReinitializeFieldMixin,
         {
             events: {
-                'click .weeknumber_iso button': 'weeknumber_iso_onchange_year',
-                'change .weeknumber_iso select': 'weeknumber_iso_onchange_week',
+                'click .weeknumber_iso .years button':
+                'weeknumber_iso_onchange_year',
+                'change .weeknumber_iso .weeks select':
+                'weeknumber_iso_onchange_week',
+                'click .weeknumber_iso .weeks button':
+                'weeknumber_iso_onchange_week',
+            },
+            default_options: {
+                type: 'weeknumber_iso',
+                years_before: 5,
+                years_after: 5,
+                weeks_before: 5,
+                weeks_after: 5,
+                hide_years: false,
+                week_type: 'select',
             },
             template: 'FieldDateInterval',
             className: 'oe_form_date_interval',
             init: function () {
                 this._super.apply(this, arguments);
-                if (!this.options.type) {
-                    throw new Error('Pass a type in the options dictionary!');
-                }
+                this.options = _.extend(
+                    {}, this.default_options, this.options
+                );
                 if (!this.options.end_field) {
                     throw new Error(
                         'Pass an end field in the options dictionary');
@@ -55,8 +68,8 @@ openerp.web_widget_date_interval = function (instance) {
                     return [];
                 }
                 var result = [],
-                    years_before = this.options.years_before || 5,
-                    years_after = this.options.years_after || 5,
+                    years_before = this.options.years_before,
+                    years_after = this.options.years_after,
                     current_date = this._get_date();
                 for (
                     var year=current_date.getFullYear() - years_before;
@@ -70,6 +83,7 @@ openerp.web_widget_date_interval = function (instance) {
             weeknumber_iso_get_weeks: function () {
                 var result = [],
                     last_day = this._get_date(),
+                    min_week = 1,
                     max_week = 52;
                 if (!last_day.is().december()) {
                     last_day.december();
@@ -78,7 +92,19 @@ openerp.web_widget_date_interval = function (instance) {
                 if (this.weeknumber_iso_weeknumber(last_day) > 1) {
                     max_week = this.weeknumber_iso_weeknumber(last_day);
                 }
-                for (var week=1; week <= max_week; week++) {
+                if (this.options.week_type === 'buttons') {
+                    min_week = Math.max(
+                        min_week,
+                        this.weeknumber_iso_weeknumber(this._get_date()) -
+                        this.options.weeks_before
+                    );
+                    max_week = Math.min(
+                        max_week,
+                        this.weeknumber_iso_weeknumber(this._get_date()) +
+                        this.options.weeks_after
+                    );
+                }
+                for (var week=min_week; week <= max_week; week++) {
                     result.push(week);
                 }
                 return result;
@@ -94,7 +120,11 @@ openerp.web_widget_date_interval = function (instance) {
                 return this.weeknumber_iso_update_interval(monday);
             },
             weeknumber_iso_onchange_week: function (e) {
-                var week = parseInt(jQuery(e.currentTarget).val(), 10);
+                var week = parseInt(
+                    jQuery(e.currentTarget).val() ||
+                    jQuery(e.currentTarget).data('week'),
+                    10
+                );
                 var year = this.weeknumber_iso_year(this._get_date());
                 var monday = this.weeknumber_iso_date_from_week(year, week);
                 return this.weeknumber_iso_update_interval(monday);
