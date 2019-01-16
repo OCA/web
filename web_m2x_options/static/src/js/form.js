@@ -9,10 +9,12 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
         Dialog = require('web.Dialog'),
         view_dialogs = require('web.view_dialogs'),
         relational_fields = require('web.relational_fields'),
-        FieldMany2One = relational_fields.FieldMany2One,
+        rpc = require('web.rpc');
+
+    var _t = core._t,
         FieldMany2ManyTags = relational_fields.FieldMany2ManyTags,
-        rpc = require('web.rpc'),
-        _t = core._t;
+        FieldMany2One = relational_fields.FieldMany2One,
+        FormFieldMany2ManyTags = relational_fields.FormFieldMany2ManyTags;
 
     var web_m2x_options = rpc.query({
         model: "ir.config_parameter",
@@ -301,7 +303,6 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
         _onOpenBadge: function (event) {
             var self = this;
             var open = (self.nodeOptions && self.is_option_set(self.nodeOptions.open));
-            var no_color_picker = (self.nodeOptions && self.is_option_set(self.nodeOptions.no_color_picker));
             if (open) {
                 var context = self.record.getContext(self.recordParams);
                 var id = parseInt($(event.currentTarget).data('id'), 10);
@@ -350,9 +351,24 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                         }).open();
                     })
                 }
-            } else if (!no_color_picker) {
-                self._onOpenColorPicker(event);
             }
         },
     })
+
+    FormFieldMany2ManyTags.include({
+        events: _.extend({}, FormFieldMany2ManyTags.prototype.events, {
+            'click .badge': '_onOpenBadge',
+        }),
+
+        _onOpenBadge: function (event) {
+            var open = this.is_option_set(this.nodeOptions.open);
+            var no_color_picker = this.is_option_set(
+                this.nodeOptions.no_color_picker
+            );
+            this._super.apply(this, arguments);
+            if (!open && !no_color_picker) {
+                this._onOpenColorPicker(event);
+            }
+        },
+    });
 });
