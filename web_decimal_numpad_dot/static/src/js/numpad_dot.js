@@ -7,13 +7,6 @@ odoo.define("web_decimal_numpad_dot.FieldFloat", function (require) {
     var translation = require("web.translation");
 
     var NumpadDotReplaceMixin = {
-        init: function () {
-            this.events = $.extend({}, this.events, {
-                "keydown": "numpad_dot_replace",
-            });
-            return this._super.apply(this, arguments);
-        },
-
         l10n_decimal_point: function () {
             return this.formatType === "float_time"
                 ? ":" : translation._t.database.parameters.decimal_point;
@@ -24,10 +17,10 @@ odoo.define("web_decimal_numpad_dot.FieldFloat", function (require) {
                    cur_val.substring(to);
         },
 
-        numpad_dot_replace: function (event) {
+        _onKeydown: function (event) {
             // Only act on numpad dot key
             if (event.keyCode !== 110) {
-                return;
+                return this._super.apply(this, arguments);
             }
             event.preventDefault();
             var from = this.$input.prop("selectionStart"),
