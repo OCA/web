@@ -6,11 +6,16 @@
 Wildcard in advanced search
 ============================
 
-Allows =ilike ('matches') operator to advanced search option.
+This module adds 3 options to advanced search of char, many2one,
+many2many and one2many fields:
+
+* *starts with* (uses the domain *=ilike %<search string>*),
+* *ends with* (uses the domain *=ilike <search string>%*),
+* *matches* (uses the domain *=ilike <search string>*).
 
 Usage
 =====
-Use % as a placeholder.
+When selecting *matches*, use **%** as a placeholder.
 
 Example: "Zip" - 'matches' - "1%" gives all zip starting with 1
 
@@ -19,6 +24,10 @@ Example: "Zip" - 'matches' - "1%" gives all zip starting with 1
 
 Also allows insensitive exact search.
 Example "Name" - 'matches' - "john" will find "John" and "john" but not "Johnson".
+
+.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
+   :alt: Try me on Runbot
+   :target: https://runbot.odoo-community.org/runbot/162/10.0
 
 Bug Tracker
 ===========
@@ -43,6 +52,7 @@ Contributors
 * Thomas Rehn <thomas.rehn@initos.com>
 * L Freeke <lfreeke@therp.nl>
 * Alex Comba <alex.comba@agilebg.com>
+* Alexis de Lattre <alexis.delattre@akretion.com>
 
 Do not contact contributors directly about support or help with technical issues.
 
