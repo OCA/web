@@ -6,16 +6,13 @@
             <xpath expr="." position="inside">
                 <script
                     type="text/javascript"
-                    src="/web_keyboard_navigation/static/src/js/abstract_web_client.js">
-                </script>
+                    src="/web_keyboard_navigation/static/src/js/abstract_web_client.js"/>
                 <script
                     type="text/javascript"
-                    src="/web_keyboard_navigation/static/src/js/browser_detection.js">
-                </script>
+                    src="/web_keyboard_navigation/static/src/js/browser_detection.js"/>
                 <script
                     type="text/javascript"
-                    src="/web_keyboard_navigation/static/src/js/web_keyboard_navigation.js">
-                </script>
+                    src="/web_keyboard_navigation/static/src/js/web_keyboard_navigation.js"/>
                 <link
                     rel="stylesheet"
                     href="/web_keyboard_navigation/static/src/css/web_keyboard_navigation.css"/>
