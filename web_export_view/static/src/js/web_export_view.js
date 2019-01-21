@@ -16,8 +16,12 @@ odoo.define('web_export_view', function (require) {
             var self = this;
             this._super.apply(this, arguments);
             if (self.getParent().renderer.viewType == 'list') {
-                self.$el.find('.o_dropdown').last().append(QWeb.render('WebExportTreeViewXls', {widget: self}));
-                self.$el.find('.export_treeview_xls').on('click', self.on_sidebar_export_treeview_xls);
+                session.user_has_group('web_export_view.group_disallow_export_view_data_excel').then(function (has_group) {
+                    if (!has_group) {
+                        self.$el.find('.o_dropdown').last().append(QWeb.render('WebExportTreeViewXls', { widget: self }));
+                        self.$el.find('.export_treeview_xls').on('click', self.on_sidebar_export_treeview_xls);
+                    }
+                });
             }
         },
 
