@@ -16,6 +16,11 @@ A lot of customers want simply to export the tree view they are looking to.
 If you miss this feature as us, probably you'll find an answer into our
 web_export_view module.
 
+Configuration
+=============
+
+If we wanted to disallow users to use the features provided by this module, we
+can add them to the group *Disallow Export View Data to Excel*.
 
 Usage
 =====
@@ -60,6 +65,7 @@ Contributors
  * Stefan Rijnhart <stefan@therp.nl>
  * Leonardo Pistone <leonardo.pistone@camptocamp.com>
  * Jose Maria Bernet <josemaria.bernet@guadaltech.es>
+ * David Vidal <david.vidal@tecnativa.com>
 
 Maintainer
 ----------
