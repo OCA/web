@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<templates>
+
+    <t t-name="FieldIframe" t-extend="FieldChar">
+        <t t-jquery="span" t-operation="replace">
+            <t t-if="widget.get('effective_readonly')">
+                <iframe src=""
+                        class="oe_form_field oe_form_field_widget_iframe"
+                        t-att-sandbox="widget.node.attrs.sandbox or ''"
+                        t-att-style="widget.node.attrs.style"/>
+            </t>
+        </t>
+    </t>
+
+</templates>
