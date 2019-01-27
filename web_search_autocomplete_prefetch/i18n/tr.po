@@ -18,7 +18,5 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#. module: web_search_autocomplete_prefetch
-#: view:ir.ui.view:web_search_autocomplete_prefetch.view_view_search_autocomplete
-msgid "{'web_search_autocomplete_prefetch.disable': true}"
-msgstr "{'web_search_autocomplete_prefetch.disable': true}"
+#~ msgid "{'web_search_autocomplete_prefetch.disable': true}"
+#~ msgstr "{'web_search_autocomplete_prefetch.disable': true}"

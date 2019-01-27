@@ -19,7 +19,5 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
 "%100==4 ? 2 : 3);\n"
 
-#. module: web_search_autocomplete_prefetch
-#: view:ir.ui.view:web_search_autocomplete_prefetch.view_view_search_autocomplete
-msgid "{'web_search_autocomplete_prefetch.disable': true}"
-msgstr "{'web_search_autocomplete_prefetch.disable': true}"
+#~ msgid "{'web_search_autocomplete_prefetch.disable': true}"
+#~ msgstr "{'web_search_autocomplete_prefetch.disable': true}"
