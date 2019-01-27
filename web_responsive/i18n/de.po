@@ -19,38 +19,58 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: web_responsive
-#: model:ir.ui.view,arch_db:web_responsive.webclient_bootstrap
-msgid "<span class=\"sr-only\">Toggle App Drawer</span>"
-msgstr "<span class=\"sr-only\">App Ordner umschalten</span>"
-
-#. module: web_responsive
-#: model:ir.ui.view,arch_db:web_responsive.webclient_bootstrap
-msgid "<span class=\"sr-only\">Toggle Navigation</span>"
-msgstr "<span class=\"sr-only\">Navigation umschalten</span>"
-
-#. module: web_responsive
-#: model:ir.ui.view,arch_db:web_responsive.menu
-msgid "Apps"
-msgstr "Apps"
-
-#. module: web_responsive
-#: model:ir.model.fields,field_description:web_responsive.field_res_users_chatter_position
+#: model:ir.model.fields,field_description:web_responsive.field_res_users__chatter_position
 msgid "Chatter Position"
 msgstr ""
 
 #. module: web_responsive
-#: model:ir.model,name:web_responsive.model_ir_http
-msgid "HTTP routing"
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/form_view.xml:57
+#: code:addons/web_responsive/static/src/xml/form_view.xml:96
+#, python-format
+msgid "Create"
 msgstr ""
 
 #. module: web_responsive
-#: model:ir.ui.view,arch_db:web_responsive.menu
-msgid "More <b class=\"caret\"/>"
-msgstr "Mehr <b class=\"caret\"/>"
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/form_view.xml:71
+#: code:addons/web_responsive/static/src/xml/form_view.xml:110
+#, python-format
+msgid "Discard"
+msgstr ""
+
+#. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/form_view.xml:50
+#, python-format
+msgid "Edit"
+msgstr ""
 
 #. module: web_responsive
 #: selection:res.users,chatter_position:0
 msgid "Normal"
+msgstr ""
+
+#. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/form_view.xml:27
+#, python-format
+msgid "Quick actions"
+msgstr ""
+
+#. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/form_view.xml:64
+#: code:addons/web_responsive/static/src/xml/form_view.xml:103
+#, python-format
+msgid "Save"
+msgstr ""
+
+#. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/apps.xml:29
+#, python-format
+msgid "Search menus..."
 msgstr ""
 
 #. module: web_responsive
@@ -62,3 +82,15 @@ msgstr ""
 #: model:ir.model,name:web_responsive.model_res_users
 msgid "Users"
 msgstr ""
+
+#~ msgid "<span class=\"sr-only\">Toggle App Drawer</span>"
+#~ msgstr "<span class=\"sr-only\">App Ordner umschalten</span>"
+
+#~ msgid "<span class=\"sr-only\">Toggle Navigation</span>"
+#~ msgstr "<span class=\"sr-only\">Navigation umschalten</span>"
+
+#~ msgid "Apps"
+#~ msgstr "Apps"
+
+#~ msgid "More <b class=\"caret\"/>"
+#~ msgstr "Mehr <b class=\"caret\"/>"
