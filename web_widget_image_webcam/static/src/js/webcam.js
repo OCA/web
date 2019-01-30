@@ -141,9 +141,9 @@ var Webcam = {
 				// got access, attach stream to video
 				try {
 				    video.srcObject = stream;
-                } catch (error) {
-                    video.src = window.URL.createObjectURL(stream) || stream;
-                }
+                		} catch (error) {
+				    video.src = window.URL.createObjectURL(stream) || stream;
+                		}
 				self.stream = stream;
 				self.loaded = true;
 				self.live = true;
