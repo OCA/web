@@ -217,7 +217,7 @@ odoo.define('web_responsive', function (require) {
          */
         _searchResultsNavigate: function (event) {
             // Exit soon when not navigating results
-            if (this.$search_results.is(":empty")) {
+            if (this.$search_results.html().trim() === "") {
                 // Just in case it is the 1st search
                 this._searchMenusSchedule();
                 return;
@@ -227,7 +227,7 @@ odoo.define('web_responsive', function (require) {
                 pre_focused = all.filter(".active") || $(all[0]),
                 offset = all.index(pre_focused),
                 key = event.key;
-                // Transform tab presses in arrow presses
+            // Transform tab presses in arrow presses
             if (key === "Tab") {
                 event.preventDefault();
                 key = event.shiftKey ? "ArrowUp" : "ArrowDown";
@@ -246,7 +246,10 @@ odoo.define('web_responsive', function (require) {
                 break;
             // Other keys trigger a search
             default:
-                this._searchMenusSchedule();
+                // All keys that write a character have length 1
+                if (key.length === 1 || key === "Backspace") {
+                    this._searchMenusSchedule();
+                }
                 return;
             }
             // Allow looping on results
