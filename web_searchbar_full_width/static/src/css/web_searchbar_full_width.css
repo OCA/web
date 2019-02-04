@@ -3,6 +3,11 @@
     margin-bottom: 5px;
 }
 
+/* this is effective when web_shortcut is installed */
+.o_control_panel .oe_shortcut_toggle + .breadcrumb {
+    width: calc(100% - 24px);
+}
+
 .o_control_panel .o_cp_searchview {
     width: 100%;
 }
