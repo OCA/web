@@ -191,12 +191,14 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                     values.push({
                         label: _t("Search More..."),
                         action: function () {
-                            // limit = 160 for improving performance, similar
-                            // to Odoo implementation here:
-                            // https://github.com/odoo/odoo/blob/feeac2a4f1cd777770dd2b42534904ac71f23e46/addons/web/static/src/js/views/form_common.js#L213
+                            // As a search_read() is called at every pagination
+                            // on tree view level, the limit is set to false.
+                            // This avoid also to exclude in first search ids
+                            // that could correspond to a default filter
+                            // (search_default_...)
                             dataset.name_search(
                                 search_val, self.build_domain(),
-                                'ilike', 160).done(function (data) {
+                                'ilike', false).done(function (data) {
                                     self._search_create_popup("search", data);
                                 });
                         },
