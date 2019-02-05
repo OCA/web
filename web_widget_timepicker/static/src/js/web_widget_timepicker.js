@@ -1,89 +1,96 @@
+/* Copyright 2016 Vividlab <http://www.vividlab.de>
+ * Copyright 2017 Kaushal Prajapati <kbprajapati@live.com>
+ * Copyright 2019 Alexandre Díaz <dev@redneboa.es>
+ * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
 odoo.define('web_widget_timepicker', function (require) {
-    "use strict";
+    'use strict';
 
-    var core = require('web.core');
-    var formats = require('web.formats');
-    var common = require('web.form_common');
+    var field_registry = require('web.field_registry');
+    var field_utils = require('web.field_utils');
+    var basic_fields = require('web.basic_fields');
+    var datepicker = require('web.datepicker');
+    var FieldDate = basic_fields.FieldDate;
 
-    var TimePickerField = common.AbstractField.extend(common.ReinitializeFieldMixin, {
-        is_field_number: true,
-        template: "TimePickerField",
-        internal_format: 'float_time',
-        widget_class: 'o_form_field_time',
-        events: {
-            'change input': 'store_dom_value',
-        },
-        init: function (field_manager, node) {
-            this._super(field_manager, node);
 
-            this.internal_set_value(0);
+    var TimeWidget = datepicker.DateWidget.extend({
+        type_of_date: "float_time",
 
-            this.options = _.defaults(this.options, {
-                step: 15,
-                selectOnBlur: true,
-                timeFormat: 'H:i',
-                scrollDefault: 'now',
-            });
-        },
-        initialize_content: function() {
-            if(!this.get("effective_readonly")) {
-                this.$el.find('input').timepicker(this.options);
-                this.setupFocus(this.$('input'));
+        _onShow: function () {
+            if (this.$input.val().length !== 0 && this.isValid()) {
+                var value = this.$input.val();
+                this.picker.date(new moment(value, this.options.format));
+                this.$input.select();
             }
         },
-        is_syntax_valid: function() {
-            if (!this.get("effective_readonly") && this.$("input").size() > 0) {
-                try {
-                    this.parse_value(this.$('input').val(), '');
-                    return true;
-                } catch(e) {
-                    return false;
+
+        setValue: function (value) {
+            this.set({'value': value});
+            var formatted_value = value ? this._formatClient(value) : null;
+            this.$input.val(formatted_value);
+            if (this.picker) {
+                var fdate = new moment(formatted_value, this.options.format);
+                this.picker.date(fdate && fdate.isValid()
+                    ? fdate : new moment());
+            }
+        },
+
+        getValue: function () {
+            var value = this.get('value');
+            return value ? this._formatClient(value) : null;
+        },
+
+        changeDatetime: function () {
+            if (this.isValid()) {
+                var oldValue = this.getValue();
+                this._setValueFromUi();
+                var newValue = this.getValue();
+                if (oldValue && newValue && newValue !== oldValue) {
+                    this.trigger("datetime_changed");
                 }
-            }
-            return true;
-        },
-        is_false: function() {
-            return this.get('value') === '' || this._super();
-        },
-        focus: function() {
-            var input = this.$('input:first')[0];
-            return input ? input.focus() : false;
-        },
-        set_dimensions: function (height, width) {
-            this._super(height, width);
-            this.$('input').css({
-                height: height,
-                width: width
-            });
-        },
-        store_dom_value: function () {
-            if (!this.get('effective_readonly')) {
-                this.internal_set_value(
-                    this.parse_value(
-                        this.$('input').val(), ''));
-            }
-        },
-        parse_value: function(val, def) {
-            return formats.parse_value(val, {"widget": this.internal_format}, def);
-        },
-        format_value: function(val, def) {
-            return formats.format_value(val, {"widget": this.internal_format}, def);
-        },
-        render_value: function() {
-            var show_value = this.format_value(this.get('value'), '');
-
-            if (!this.get("effective_readonly")) {
-                this.$input = this.$el.find('input');
-                this.$input.val(show_value);
-            } else {
-                this.$(".o_form_time_content").text(show_value);
             }
         },
     });
 
-    core.form_widget_registry.add('timepicker', TimePickerField);
+    var FieldTimePicker = FieldDate.extend({
+        supportedFieldTypes: ['float'],
+        floatTimeFormat: "HH:mm",
 
+        init: function () {
+            this._super.apply(this, arguments);
+            var defDate = null;
+            if (this.value) {
+                defDate = new moment(this._formatValue(this.value),
+                    this.floatTimeFormat);
+            }
+            // Hard-Coded Format: Field is an float and conversion only accept
+            // HH:mm format
+            this.datepickerOptions = _.extend(this.datepickerOptions, {
+                format: this.floatTimeFormat,
+                defaultDate: defDate && defDate.isValid()
+                    ? defDate : new moment(),
+            });
+        },
+
+        _isSameValue: function (value) {
+            return value === this.value;
+        },
+
+        _makeDatePicker: function () {
+            return new TimeWidget(this, this.datepickerOptions);
+        },
+
+        _formatValue: function (value) {
+            return field_utils.format.float_time(value);
+        },
+
+        _parseValue: function (value) {
+            return field_utils.parse.float_time(value);
+        },
+    });
+
+    field_registry.add('timepicker', FieldTimePicker);
     return {
-        TimePickerField: TimePickerField,
+        TimeWidget: TimeWidget,
+        FieldTimePicker: FieldTimePicker,
     };
 });
