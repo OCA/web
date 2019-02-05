@@ -4,6 +4,11 @@
 
 <template>
     <t t-extend="AppsMenu">
+        <!-- App icons must be clickable -->
+        <t t-jquery=".o_app" t-operation="attributes">
+            <attribute name="t-attf-href">#menu_id=#{app.menuID}&amp;action_id=#{app.actionID}</attribute>
+        </t>
+
         <!-- App icons should be more than a text -->
         <t t-jquery=".o_app &gt; t" t-operation="replace">
             <t t-call="web_responsive.AppIcon"/>
@@ -47,8 +52,9 @@
     <t t-name="web_responsive.MenuSearchResults">
         <t t-foreach="results" t-as="result">
             <t t-set="menu" t-value="widget._menuInfo(result.original)"/>
-            <div t-attf-class="o-menu-search-result dropdown-item col-12 ml-auto mr-auto #{result_first ? 'active' : ''}"
+            <a t-attf-class="o-menu-search-result dropdown-item col-12 ml-auto mr-auto #{result_first ? 'active' : ''}"
                  t-attf-style="background-image:url('data:image/png;base64,#{menu.web_icon_data}')"
+                 t-attf-href="#menu_id=#{menu.id}&amp;action_id=#{menu.action_id}"
                  t-att-data-menu-id="menu.id"
                  t-att-data-action-id="menu.action_id"
                  t-att-data-parent-id="menu.parent_id[0]"
