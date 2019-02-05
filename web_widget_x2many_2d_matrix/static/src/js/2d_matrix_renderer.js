@@ -417,7 +417,7 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
                         // Nothing to do
                     }
                 });
-                this.total.value += column.aggregate.value;
+                this.total.aggregate.value += column.aggregate.value;
             }.bind(this));
         },
 
