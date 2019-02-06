@@ -4,3 +4,4 @@
 * Thomas Binsfeld <thomas.binsfeld@acsone.eu>
 * Xavier Jiménez <xavier.jimenez@qubiq.es>
 * Dennis Sluijk <d.sluijk@onestein.nl>
+* Majda El Mariouli <majda.elmariouli@smile-maroc.com>

@@ -6,7 +6,7 @@
 
 {
     'name': "Web Environment Ribbon",
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.0.1',
     'category': 'Web',
     'author': 'Francesco OpenCode Apruzzese, '
               'Tecnativa, '
