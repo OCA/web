@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+
+    <t t-name="web_database_rollback.ButtonsWidget">
+        <div>
+            <button class="activate oe_button" string="Activate" style="width: 60px; height: 15px; font-size: 9px;">
+                <span>Activate</span>
+            </button>
+            <button class="rollback oe_button" string="Rollback" style="width: 60px; height: 15px; font-size: 9px;">
+                <span>Rollback</span>
+            </button>
+        </div>
+    </t>
+
+</template>
