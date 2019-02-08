@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 Onestein
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+    <template id="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr=".">
+            <script src="/web_edit_user_filter/static/src/js/backend.js"></script>
+        </xpath>
+        <xpath expr="//link[last()]">
+            <link href="/web_edit_user_filter/static/src/scss/backend.scss"
+                  rel="stylesheet"
+                  type="text/scss"/>
+        </xpath>
+    </template>
+</odoo>
