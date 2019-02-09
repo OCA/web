@@ -1,139 +1,160 @@
+/* global marked */
 /* Copyright 2014 Sudokeys <http://www.sudokeys.com>
  * Copyright 2017 Komit - <http:///komit-consulting.com>
+ * Copyright 2019 Alexandre Díaz - <dev@redneboa.es>
  * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
-odoo.define("web_widget_text_markdown.bootstrap_markdown",
-  function(require) {
-    "use strict";
+odoo.define("web_widget_text_markdown.FieldTextMarkDown", function (require) {
+    'use strict';
 
+    var basic_fields = require('web.basic_fields');
+    var field_registry = require('web.field_registry');
     var core = require('web.core');
-    var form_common = require('web.form_common');
-    var formats = require("web.formats");
 
-    var _lt = core._lt;
-    var ListView = require('web.ListView');
-    var list_widget_registry = core.list_widget_registry;
+    var _t = core._t;
+    var LIBS_PATH = '/web_widget_text_markdown/static/src/lib/';
 
-    var FieldTextMarkDown = form_common.AbstractField.extend(
-      form_common.ReinitializeFieldMixin, {
 
-        template: 'FieldMarkDown',
-        display_name: _lt('MarkDown'),
-        widget_class: 'oe_form_field_bootstrap_markdown',
-        events: {
-          'change input': 'store_dom_value'
+    var FieldTextMarkDown = basic_fields.FieldText.extend({
+        className: [
+            basic_fields.FieldText.prototype.className,
+            'o_field_text_markdown',
+        ].join(' '),
+        jsLibs: [
+            LIBS_PATH + 'marked.js',
+            LIBS_PATH + 'dropzone.js',
+            LIBS_PATH + 'bootstrap-markdown.js',
+        ],
+        cssLibs: [
+            LIBS_PATH + 'bootstrap-markdown.min.css',
+        ],
+
+        _getValue: function () {
+            return this.$markdown.getContent();
         },
 
-        init: function(field_manager, node) {
-          this._super(field_manager, node);
-          this.$txt = false;
-
-          this.old_value = null;
+        _prepareInput: function () {
+            var $input = this._super.apply(this, arguments);
+            _.defer(function ($elm) {
+                $input.removeClass(this.className);
+                $input.wrap(
+                    _.str.sprintf("<div class='%s'></div>", this.className));
+                $elm.markdown(this._getMarkdownOptions());
+                this.$markdown = $elm.data("markdown");
+                this.$markdown.setContent(this.value || "");
+            }.bind(this), $input);
+            return $input;
         },
 
-        parse_value: function(val, def) {
-          return formats.parse_value(val, this, def);
+        _renderReadonly: function () {
+            this.$el.html(marked(this._formatValue(this.value)));
         },
 
-        initialize_content: function() {
-          // Gets called at each redraw of widget
-          //  - switching between read-only mode and edit mode
-          //  - BUT NOT when switching to next object.
-          this.$txt = this.$el.find('textarea[name="' + this.name + '"]');
-          if (!this.get('effective_readonly')) {
-            this.$txt.markdown({
-              autofocus: false,
-              savable: false,
-              iconlibrary: "fa"
+
+        _getMarkdownOptions: function () {
+            var markdownOpts = {
+                autofocus: false,
+                savable: false,
+                language: this.getSession().user_context.lang,
+            };
+
+            // Only can create attachments on non-virtual records
+            if (this.res_id) {
+                var self = this;
+                markdownOpts.dropZoneOptions = {
+                    paramName: 'ufile',
+                    url: '/web/binary/upload_attachment',
+                    acceptedFiles: 'image/*',
+                    width: 'o_field_text_markdown',
+                    params: {
+                        csrf_token: core.csrf_token,
+                        session_id: this.getSession().override_session,
+                        callback: '',
+                        model: this.model,
+                        id: this.res_id,
+                    },
+                    success: function () {
+                        self._markdownDropZoneUploadSuccess(this);
+                    },
+                    error: function () {
+                        self._markdownDropZoneUploadError(this);
+                    },
+                    init: function () {
+                        self._markdownDropZoneInit(this);
+                    },
+                };
+
+                if (_t.database.multi_lang && this.field.translate) {
+                    markdownOpts.additionalButtons = [
+                        [{
+                            name: 'oTranslate',
+                            data: [{
+                                name: 'cmdTranslate',
+                                title: _t('Translate'),
+                                icon: {glyph: 'glyphicon glyphicon-flag'},
+                                callback: this._markdownTranslate,
+                            }],
+                        }],
+                    ];
+                }
+            }
+
+            return markdownOpts;
+        },
+
+        _getAttachmentId: function (response) {
+            var matchElms = response.match(/"id":\s?(\d+)/);
+            if (matchElms && matchElms.length) {
+                return matchElms[1];
+            }
+            return null;
+        },
+
+        _markdownDropZoneInit: function (markdown) {
+            var self = this;
+            var caretPos = 0;
+            var $textarea = null;
+            markdown.on('drop', function (e) {
+                $textarea = $(e.target);
+                caretPos = $textarea.prop('selectionStart');
             });
-          }
-          this.old_value = null; // will trigger a redraw
-        },
-
-        store_dom_value: function() {
-          if (!this.get('effective_readonly') &&
-            this.is_syntax_valid()) {
-            // We use internal_set_value because we were called by
-            // ``.commit_value()`` which is called by a ``.set_value()``
-            // itself called because of a ``onchange`` event
-            this.internal_set_value(
-              this.parse_value(
-                this._get_raw_value()
-              )
-            );
-          }
-        },
-
-        commit_value: function() {
-          this.store_dom_value();
-          return this._super();
-        },
-
-        _get_raw_value: function() {
-          if (this.$txt === false) {
-            return '';
-          }
-          return this.$txt.val();
-        },
-
-        render_value: function() {
-          // Gets called at each redraw/save of widget
-          //  - switching between read-only mode and edit mode
-          //  - when switching to next object.
-
-          var show_value = this.format_value(this.get('value'), '');
-          if (!this.get("effective_readonly")) {
-            this.$txt.val(show_value);
-            this.$el.trigger('resize');
-          } else {
-            // avoids loading markitup...
-            marked.setOptions({
-              highlight: function(code) {
-                return hljs.highlightAuto(code).value;
-              }
+            markdown.on('success', function (file, response) {
+                var text = $textarea.val();
+                var attachment_id = self._getAttachmentId(response);
+                if (attachment_id) {
+                    var ftext = text.substring(0, caretPos) + '\n![' +
+                                _t('description') +
+                                '](/web/image/' + attachment_id + ')\n' +
+                                text.substring(caretPos);
+                    $textarea.val(ftext);
+                } else {
+                    self.do_warn(
+                        _t('Error'),
+                        _t("Can't create the attachment."));
+                }
             });
-            this.$el.find('span[class="oe_form_text_content"]').html(marked(show_value));
-          }
+            markdown.on('error', function (file, error) {
+                console.warn(error);
+            });
         },
 
-        format_value: function(val, def) {
-          return formats.format_value(val, this, def);
-        }
-      }
-    );
+        _markdownDropZoneUploadSuccess: function () {
+            this.isDirty = true;
+            this._doDebouncedAction();
+            this.$markdown.$editor.find(".dz-error-mark:last")
+                .css("display", "none");
+        },
 
-    core.form_widget_registry.add('bootstrap_markdown',
-      FieldTextMarkDown);
+        _markdownDropZoneUploadError: function () {
+            this.$markdown.$editor.find(".dz-success-mark:last")
+                .css("display", "none");
+        },
 
-    /**
-     * bootstrap_markdown support on list view
-     **/
-    ListView.Column.include({
-
-      init: function() {
-        this._super.apply(this, arguments);
-        hljs.initHighlightingOnLoad();
-        marked.setOptions({
-          sanitize: true,
-          highlight: function(code) {
-            return hljs.highlightAuto(code).value;
-          }
-        });
-      },
-
-      _format: function(row_data, options) {
-        if (this.type === "text") {
-          options = options || {};
-          var markdown_text = marked(
-            formats.format_value(
-              row_data[this.id].value, this, options.value_if_empty
-            )
-          );
-          return markdown_text;
-        }
-        return this._super(row_data, options)
-      }
+        _markdownTranslate: function () {
+            this._onTranslate();
+        },
     });
 
-    list_widget_registry.add('field.bootstrap_markdown', ListView.Column);
 
-  });
+    field_registry.add('bootstrap_markdown', FieldTextMarkDown);
+    return FieldTextMarkDown;
+});
