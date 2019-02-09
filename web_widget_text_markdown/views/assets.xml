@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- * Copyright 2014 Sudokeys <http://www.sudokeys.com>
+ * Copyright 2017 Komit - <http:///komit-consulting.com>
+ * Copyright 2019 Alexandre Díaz - <dev@redneboa.es>
+ * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).-->
+<odoo>
+    <template id="assets_backend" name="web_widget_text_markdown_assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel='stylesheet'
+                  href='/web_widget_text_markdown/static/src/less/web_widget_text_markdown.less'/>
+            <script type="text/javascript"
+                    src="/web_widget_text_markdown/static/src/js/web_widget_text_markdown.js"/>
+        </xpath>
+    </template>
+    <template id="qunit_suite" inherit_id="web.qunit_suite">
+        <xpath expr="//t[@t-set='head']" position="inside">
+            <script type="application/javascript"
+                    src="/web_widget_text_markdown/static/tests/js/web_widget_text_markdown.js"
+                    />
+        </xpath>
+    </template>
+</odoo>
