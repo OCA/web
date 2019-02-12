@@ -420,6 +420,22 @@ html .o_web_client .o_main .o_main_content {
                     max-width: 50%;
                     min-width: 30%;
                     overflow: auto;
+
+                    .o_chatter_topbar,
+                    .o_thread_composer {
+                        position: sticky;
+                    }
+
+                    .o_chatter_topbar {
+                        top: 0;
+                        z-index: 2;
+                        background-color: $o-view-background-color;
+                    }
+
+                    .o_thread_composer {
+                        top: $o-statusbar-height;
+                        z-index: 1;
+                    }
                 }
             }
         }
