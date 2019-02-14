@@ -33,6 +33,7 @@ setuptools.setup(
         'odoo11-addon-web_tree_dynamic_colored_field',
         'odoo11-addon-web_tree_image',
         'odoo11-addon-web_tree_many2one_clickable',
+        'odoo11-addon-web_tree_resize_column',
         'odoo11-addon-web_widget_bokeh_chart',
         'odoo11-addon-web_widget_color',
         'odoo11-addon-web_widget_datepicker_options',
