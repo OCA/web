@@ -68,7 +68,8 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
             }
 
             var $table = $('<table>').addClass(
-                'o_list_view table table-condensed table-striped'
+                'o_list_view table table-condensed table-striped ' +
+                'o_x2many_2d_matrix '
             );
             this.$el
                 .addClass('table-responsive')
@@ -153,6 +154,8 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
                 field.type === 'monetary'
             ) {
                 $th.addClass('text-right');
+            } else {
+                $th.addClass('text-center');
             }
 
             if (config.debug) {
