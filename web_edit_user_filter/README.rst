@@ -51,13 +51,14 @@ Edit a facet:
 #. a menu is now shown which allows you to remove values from the facet;
 #. to cancel removal you can click outside the popover.
 
-.. image:: /web_edit_user_filter/static/description/edit_facet.png
+.. image:: https://raw.githubusercontent.com/web_edit_user_filter/static/description/edit_facet.png
    :alt: Edit Facet
 
 Known issues / Roadmap
 ======================
 
 * Make individual values in facets editable.
+* Make saved filters easy overwritable.
 
 Bug Tracker
 ===========
