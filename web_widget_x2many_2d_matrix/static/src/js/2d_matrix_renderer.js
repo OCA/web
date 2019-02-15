@@ -153,6 +153,8 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
                 field.type === 'monetary'
             ) {
                 $th.addClass('text-right');
+            } else {
+                $th.addClass('text-center');
             }
 
             if (config.debug) {
