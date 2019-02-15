@@ -11,6 +11,7 @@ setuptools.setup(
         'odoo12-addon-web_decimal_numpad_dot',
         'odoo12-addon-web_dialog_size',
         'odoo12-addon-web_disable_export_group',
+        'odoo12-addon-web_edit_user_filter',
         'odoo12-addon-web_environment_ribbon',
         'odoo12-addon-web_favicon',
         'odoo12-addon-web_ir_actions_act_multi',
