@@ -1,0 +1,10 @@
+.o_field_x2many_2d_matrix .row-total {
+    font-weight: bold;
+}
+
+.o_x2many_2d_matrix {
+    thead > tr > th {
+        // Respect newline characters
+        white-space: pre-line;
+    }
+}
