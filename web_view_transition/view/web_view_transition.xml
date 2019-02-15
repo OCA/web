@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="assets_backend" name="web_view_transition_assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/web_view_transition/static/src/css/transitions.less"/>
+            <script type="text/javascript" src="/web_view_transition/static/src/js/view_manager.js"></script>
+        </xpath>
+    </template>
+</odoo>
