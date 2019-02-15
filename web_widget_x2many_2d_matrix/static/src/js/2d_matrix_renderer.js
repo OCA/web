@@ -146,7 +146,7 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
             if (_.isNull(description)) {
                 description = node.attrs.string || field.string;
             }
-            $th.text(description).data('name', name);
+            $th.html(description).data('name', name);
 
             if (
                 field.type === 'float' || field.type === 'integer' ||
@@ -225,7 +225,7 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
                 value = value.data.display_name;
             }
             // Get 1st column filled w/ Y label
-            $td.text(value);
+            $td.html(value);
             return $td;
         },
 
