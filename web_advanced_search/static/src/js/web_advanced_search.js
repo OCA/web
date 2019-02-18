@@ -10,7 +10,7 @@ odoo.define("web_advanced_search", function (require) {
     var DomainSelectorDialog = require("web.DomainSelectorDialog");
     var field_registry = require("web.field_registry");
     var FieldManagerMixin = require("web.FieldManagerMixin");
-    var FilterMenu = require("web.FilterMenu");
+    var FiltersMenu = require("web.FiltersMenu");
     var human_domain = require("web_advanced_search.human_domain");
     var SearchView = require("web.SearchView");
     var Widget = require("web.Widget");
@@ -52,7 +52,7 @@ odoo.define("web_advanced_search", function (require) {
         /**
          * Produce a filter descriptor for advanced searches.
          *
-         * @returns {Object} In the format expected by `web.FilterMenu`.
+         * @returns {Object} In the format expected by `web.FiltersMenu`.
          */
         get_filter: function () {
             var domain_array = this.domain.toArray();
@@ -74,12 +74,12 @@ odoo.define("web_advanced_search", function (require) {
     });
 
     // Add advanced search features
-    FilterMenu.include({
-        custom_events: _.extend({}, FilterMenu.prototype.custom_events, {
+    FiltersMenu.include({
+        custom_events: _.extend({}, FiltersMenu.prototype.custom_events, {
             "domain_selected": "advanced_search_commit",
         }),
 
-        events: _.extend({}, FilterMenu.prototype.events, {
+        events: _.extend({}, FiltersMenu.prototype.events, {
             "click .o_add_advanced_search": "advanced_search_open",
         }),
 
@@ -126,7 +126,7 @@ odoo.define("web_advanced_search", function (require) {
                 event.data.domain
             );
             this.propositions = [proposition];
-            this.commit_search();
+            this._commitSearch();
         },
     });
 
