@@ -55,3 +55,7 @@ Features for computers:
 * Full width form sheets
 
   .. image:: https://user-images.githubusercontent.com/973709/48417428-ac5a5f00-e74a-11e8-8839-5bc538c54c1d.png
+
+* Sticky chatter topbar
+
+  .. image:: ./static/img/chatter_topbar.gif
