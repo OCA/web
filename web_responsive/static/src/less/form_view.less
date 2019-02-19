@@ -57,13 +57,16 @@
     >div {
         >.table-responsive {
             >.o_list_view {
-                thead {
+                thead tr:nth-child(1) th {
                     position: sticky;
                     top: 0;
+                    background-color: #EEEEEE;
+                    border: none;
                 }
-                tfoot {
+                tfoot tr:nth-child(1) td {
                     position: sticky;
                     bottom: 0;
+                    background-color: #EEEEEE;
                 }
             }
         }

@@ -5,13 +5,15 @@ odoo.define('web_responsive', function(require) {
     'use strict';
 
     var Menu = require('web.Menu');
-    var Class = require('web.Class');
+    var rpc = require('web.rpc');
     var SearchView = require('web.SearchView');
     var core = require('web.core');
     var config = require('web.config');
+    var session = require('web.session');
     var ViewManager = require('web.ViewManager');
     var RelationalFields = require('web.relational_fields');
     var FormRenderer = require('web.FormRenderer');
+    var Widget = require('web.Widget');
 
     var qweb = core.qweb;
 
@@ -63,12 +65,34 @@ odoo.define('web_responsive', function(require) {
         }
     });
 
-    var AppDrawer = Class.extend({
+    var AppDrawer = Widget.extend({
+
+        /* Provides all features inside of the application drawer navigation.
+
+        Attributes:
+            directionCodes (str): Canonical key name to direction mappings.
+            deleteCodes
+         */
 
         LEFT: 'left',
         RIGHT: 'right',
         UP: 'up',
         DOWN: 'down',
+
+        // These keys are ignored when presented as single input
+        MODIFIERS: [
+            'Alt',
+            'ArrowDown',
+            'ArrowLeft',
+            'ArrowRight',
+            'ArrowUp',
+            'Control',
+            'Enter',
+            'Escape',
+            'Meta',
+            'Shift',
+            'Tab',
+        ],
 
         isOpen: false,
         keyBuffer: '',
@@ -76,8 +100,10 @@ odoo.define('web_responsive', function(require) {
         keyBufferTimeoutEvent: false,
         dropdownHeightFactor: 0.90,
         initialized: false,
+        searching: false,
 
         init: function() {
+            this._super.apply(this, arguments);
             this.directionCodes = {
                 'left': this.LEFT,
                 'right': this.RIGHT,
@@ -88,6 +114,10 @@ odoo.define('web_responsive', function(require) {
                 '+': this.RIGHT,
                 '-': this.LEFT
             };
+            this.$searchAction = $('.app-drawer-search-action');
+            this.$searchAction.hide();
+            this.$searchResultsContainer = $('#appDrawerSearchResults');
+            this.$searchInput = $('#appDrawerSearchInput');
             this.initDrawer();
             this.handleWindowResize();
             var $clickZones = $('.odoo_webclient_container, ' +
@@ -97,127 +127,266 @@ odoo.define('web_responsive', function(require) {
                 'i.oe_logo_edit'
             );
             $clickZones.click($.proxy(this.handleClickZones, this));
+            this.$searchResultsContainer.click($.proxy(this.searchMenus, this));
+            this.$el.find('.drawer-search-open').click(
+                $.proxy(this.searchMenus, this)
+            );
+            this.$el.find('.drawer-search-close').hide().click(
+                $.proxy(this.closeSearchMenus, this)
+            );
+            this.filter_timeout = $.Deferred();
             core.bus.on('resize', this, this.handleWindowResize);
-            core.bus.on('keydown', this, this.handleNavKeys);
+            core.bus.on('keydown', this, this.handleKeyDown);
+            core.bus.on('keyup', this, this.redirectKeyPresses);
+            core.bus.on('keypress', this, this.redirectKeyPresses);
         },
 
-        // It provides initialization handlers for Drawer
+        // Provides initialization handlers for Drawer
         initDrawer: function() {
             this.$el = $('.drawer');
             this.$el.drawer();
             this.$el.one('drawer.opened', $.proxy(this.onDrawerOpen, this));
-            this.$el.on('drawer.opened', function setIScrollProbes() {
-                var onIScroll = function() {
-                    var transform = this.iScroll.y ? this.iScroll.y * -1 : 0;
-                    $(this).find('#appDrawerAppPanelHead').css(
-                        'transform', 'matrix(1, 0, 0, 1, 0, ' + transform + ')'
+
+            // Setup the iScroll options.
+            // You should be able to pass these to ``.drawer``, but scroll freezes.
+            this.$el.on(
+                'drawer.opened',
+                function setIScrollProbes(){
+                    var onIScroll = $.proxy(
+                        function() {
+                            this.iScroll.refresh();
+                        },
+                        this
                     );
-                };
-                // Scroll probe aggressiveness level
-                // 2 == always executes the scroll event except during momentum and bounce.
-                this.iScroll.options.probeType = 2;
-                // Set options because
-                this.iScroll.on('scroll', $.proxy(onIScroll, this));
-            });
+                    // Scroll probe aggressiveness level
+                    // 2 == always executes the scroll event except during momentum and bounce.
+                    this.iScroll.options.probeType = 2;
+                    this.iScroll.on('scroll', onIScroll);
+                    // Initialize Scrollbars manually
+                    this.iScroll.options.scrollbars = true;
+                    this.iScroll.options.fadeScrollbars = true;
+                    this.iScroll._initIndicators();
+                }
+            );
             this.initialized = true;
         },
 
-        // It provides handlers to hide drawer when "unfocused"
+        // Provides handlers to hide drawer when "unfocused"
         handleClickZones: function() {
             this.$el.drawer('close');
             $('.o_sub_menu_content')
                 .parent()
                 .collapse('hide');
+            $('.navbar-collapse').collapse('hide');
         },
 
-        // It resizes bootstrap dropdowns for screen
+        // Resizes bootstrap dropdowns for screen
         handleWindowResize: function() {
             $('.dropdown-scrollable').css(
                 'max-height', $(window).height() * this.dropdownHeightFactor
             );
         },
 
-        // It provides keyboard shortcuts for app drawer nav
-        handleNavKeys: function(e) {
-            if (!this.isOpen) {
+        /* Provide keyboard shortcuts for app drawer nav.
+         *
+         * It is required to perform this functionality only on the ``keydown``
+         * event in order to prevent duplication of the arrow events.
+         *
+         * @param e The ``keydown`` event triggered by ``core.bus``.
+         */
+        handleKeyDown: function(e) {
+            if (!this.isOpen){
                 return;
             }
             var directionCode = $.hotkeys.specialKeys[e.keyCode.toString()];
             if (Object.keys(this.directionCodes).indexOf(directionCode) !== -1) {
-                var $link = this.findAdjacentAppLink(
-                    this.$el.find('a:first, a:focus').last(),
-                    this.directionCodes[directionCode]
-                );
-                this.selectAppLink($link);
+                var $link = false;
+                if (this.searching) {
+                    var $collection = this.$el.find('#appDrawerMenuSearch a');
+                    $link = this.findAdjacentLink(
+                        this.$el.find('#appDrawerMenuSearch a:first, #appDrawerMenuSearch a.web-responsive-focus').last(),
+                        this.directionCodes[directionCode],
+                        $collection,
+                        true
+                    );
+                } else {
+                    $link = this.findAdjacentLink(
+                        this.$el.find('#appDrawerApps a:first, #appDrawerApps a.web-responsive-focus').last(),
+                        this.directionCodes[directionCode]
+                    );
+                }
+                this.selectLink($link);
             } else if ($.hotkeys.specialKeys[e.keyCode.toString()] === 'esc') {
-                this.handleClickZones();
+                // We either back out of the search, or close the app drawer.
+                if (this.searching) {
+                    this.closeSearchMenus();
+                } else {
+                    this.handleClickZones();
+                }
             } else {
-                var buffer = this.handleKeyBuffer(e.keyCode);
-                this.selectAppLink(this.searchAppLinks(buffer));
+                this.redirectKeyPresses(e);
             }
         },
 
-        /* It adds to keybuffer, sets expire timer, and returns buffer
-         * @returns str of current buffer
+        /* Provide centralized key event redirects for the App Drawer.
+         *
+         * This method is for all key events not related to arrow navigation.
+         *
+         * @param e The key event that was triggered by ``core.bus``.
          */
-        handleKeyBuffer: function(keyCode) {
-            this.keyBuffer += String.fromCharCode(keyCode);
-            if (this.keyBufferTimeoutEvent) {
-                clearTimeout(this.keyBufferTimeoutEvent);
+        redirectKeyPresses: function(e) {
+            if ( !this.isOpen ) {
+                // Drawer isn't open; Ignore.
+                return;
             }
-            this.keyBufferTimeoutEvent = setTimeout(
-                $.proxy(this.clearKeyBuffer, this),
-                this.keyBufferTime
-            );
-            return this.keyBuffer;
+
+            // Trigger navigation to pseudo-focused link
+            // & fake a click (in case of anchor link).
+            if (e.key === 'Enter') {
+                var href = $('.web-responsive-focus').attr('href');
+                if (!_.isUndefined(href)) {
+                    window.location.href = href;
+                    this.handleClickZones();
+                }
+                return;
+            }
+
+            // Ignore any other modifier keys.
+            if (this.MODIFIERS.indexOf(e.key) !== -1) {
+                return;
+            }
+
+            // Event is already targeting the search input.
+            // Perform search, then stop processing.
+            if ( e.target === this.$searchInput[0] ) {
+                this.searchMenus();
+                return;
+            }
+
+            // Prevent default event,
+            // redirect it to the search input,
+            // and search.
+            e.preventDefault();
+            this.$searchInput.trigger({
+                type: e.type,
+                key: e.key,
+                keyCode: e.keyCode,
+                which: e.which,
+            });
+            this.searchMenus();
+
         },
 
-        clearKeyBuffer: function() {
-            this.keyBuffer = '';
-        },
-
-        /* It performs close actions
+        /* Performs close actions
          * @fires ``drawer.closed`` to the ``core.bus``
          * @listens ``drawer.opened`` and sends to onDrawerOpen
          */
         onDrawerClose: function() {
             core.bus.trigger('drawer.closed');
+            this.closeSearchMenus();
             this.$el.one('drawer.opened', $.proxy(this.onDrawerOpen, this));
             this.isOpen = false;
             // Remove inline style inserted by drawer.js
             this.$el.css("overflow", "");
         },
 
-        /* It finds app links and register event handlers
-         * @fires ``drawer.opened`` to the ``core.bus``
-         * @listens ``drawer.closed`` and sends to :meth:``onDrawerClose``
-         */
-        onDrawerOpen: function() {
+        /* Finds app links and register event handlers
+        * @fires ``drawer.opened`` to the ``core.bus``
+        * @listens ``drawer.closed`` and sends to :meth:``onDrawerClose``
+        */
+       onDrawerOpen: function() {
+            this.closeSearchMenus();
             this.$appLinks = $('.app-drawer-icon-app').parent();
-            this.selectAppLink($(this.$appLinks[0]));
+            this.selectLink($(this.$appLinks[0]));
             this.$el.one('drawer.closed', $.proxy(this.onDrawerClose, this));
             core.bus.trigger('drawer.opened');
             this.isOpen = true;
+            this.$searchInput.val("");
         },
 
-        // It selects an app link visibly
-        selectAppLink: function($appLink) {
-            if ($appLink) {
-                $appLink.focus();
+        // Selects a link visibly & deselects others.
+        selectLink: function($link) {
+            $('.web-responsive-focus').removeClass('web-responsive-focus');
+            if ($link) {
+                $link.addClass('web-responsive-focus');
             }
         },
 
-        /* It returns first App Link by its name according to query
-         * @param query str to search
-         * @return jQuery obj
+        /**
+         * Search matching menus immediately
          */
-        searchAppLinks: function(query) {
-            return this.$appLinks.filter(function() {
-                return $(this).data('menuName').toUpperCase().startsWith(query);
-            }).first();
+        _searchMenus: function () {
+            rpc.query({
+                model: 'ir.ui.menu',
+                method: 'search_read',
+                kwargs: {
+                    fields: ['action', 'display_name', 'id'],
+                    domain: [
+                        ['name', 'ilike', this.$searchInput.val()],
+                        ['action', '!=', false],
+                    ],
+                    context: session.user_context,
+                },
+            }).then(this.showFoundMenus.bind(this));
         },
 
-        /* It returns the link adjacent to $appLink in provided direction.
+        /**
+         * Queue the next menu search for the search input
+         */
+        searchMenus: function() {
+            // Stop current search, if any
+            this.filter_timeout.reject();
+            this.filter_timeout = $.Deferred();
+            // Schedule a new search
+            this.filter_timeout.done(this._searchMenus.bind(this));
+            setTimeout(
+                this.filter_timeout.resolve.bind(this.filter_timeout),
+                200
+            );
+            // Focus search input
+            this.$searchInput = $('#appDrawerSearchInput').focus();
+        },
+
+        /* Display the menus that are provided as input.
+         */
+        showFoundMenus: function(menus) {
+            this.searching = true;
+            this.$el.find('#appDrawerApps').hide();
+            this.$searchAction.hide();
+            this.$el.find('.drawer-search-close').show();
+            this.$el.find('.drawer-search-open').hide();
+            this.$searchResultsContainer
+                // Render the results
+                .html(
+                    core.qweb.render(
+                        'AppDrawerMenuSearchResults',
+                        {menus: menus}
+                    )
+                )
+                // Get the parent container and show it.
+                .closest('#appDrawerMenuSearch')
+                .show()
+                // Find the input, set focus.
+                .find('.menu-search-query')
+                .focus()
+            ;
+            var $menuLinks = this.$searchResultsContainer.find('a');
+            $menuLinks.click($.proxy(this.handleClickZones, this));
+            this.selectLink($menuLinks.first());
+        },
+
+        /* Close search menu and switch back to app menu.
+         */
+        closeSearchMenus: function() {
+            this.searching = false;
+            this.$el.find('#appDrawerApps').show();
+            this.$el.find('.drawer-search-close').hide();
+            this.$el.find('.drawer-search-open').show();
+            this.$searchResultsContainer.closest('#appDrawerMenuSearch').hide();
+            this.$searchAction.show();
+        },
+
+        /* Returns the link adjacent to $link in provided direction.
          * It also handles edge cases in the following ways:
          *   * Moves to last link if LEFT on first
          *   * Moves to first link if PREV on last
@@ -225,40 +394,46 @@ odoo.define('web_responsive', function(require) {
          *   * Moves to last link of previous row if LEFT on first in row
          *   * Moves to top link in same column if DOWN on bottom row
          *   * Moves to bottom link in same column if UP on top row
-         * @param $appLink jQuery obj of App icon link
+         * @param $link jQuery obj of App icon link
          * @param direction str of direction to go (constants LEFT, UP, etc.)
-         * @return jQuery obj for adjacent applink
+         * @param $objs jQuery obj representing the collection of links. Defaults
+         *  to `this.$appLinks`.
+         * @param restrictHorizontal bool Set to true if the collection consists
+         *  only of vertical elements.
+         * @return jQuery obj for adjacent link
          */
-        findAdjacentAppLink: function($appLink, direction) {
+        findAdjacentLink: function($link, direction, $objs, restrictHorizontal) {
 
-            var obj = [],
+            if (_.isUndefined($objs)) {
                 $objs = this.$appLinks;
+            }
+
+            var obj = [];
+            var $rows = restrictHorizontal ? $objs : this.getRowObjs($link, this.$appLinks);
 
             switch (direction) {
                 case this.LEFT:
-                    obj = $objs[$objs.index($appLink) - 1];
+                    obj = $objs[$objs.index($link) - 1];
                     if (!obj) {
                         obj = $objs[$objs.length - 1];
                     }
                     break;
                 case this.RIGHT:
-                    obj = $objs[$objs.index($appLink) + 1];
+                    obj = $objs[$objs.index($link) + 1];
                     if (!obj) {
                         obj = $objs[0];
                     }
                     break;
                 case this.UP:
-                    $objs = this.getRowObjs($appLink, this.$appLinks);
-                    obj = $objs[$objs.index($appLink) - 1];
+                    obj = $rows[$rows.index($link) - 1];
                     if (!obj) {
-                        obj = $objs[$objs.length - 1];
+                        obj = $rows[$rows.length - 1];
                     }
                     break;
                 case this.DOWN:
-                    $objs = this.getRowObjs($appLink, this.$appLinks);
-                    obj = $objs[$objs.index($appLink) + 1];
+                    obj = $rows[$rows.index($link) + 1];
                     if (!obj) {
-                        obj = $objs[0];
+                        obj = $rows[0];
                     }
                     break;
             }
@@ -271,7 +446,7 @@ odoo.define('web_responsive', function(require) {
 
         },
 
-        /* It returns els in the same row
+        /* Returns els in the same row
          * @param @obj jQuery object to get row for
          * @param $grid jQuery objects representing grid
          * @return $objs jQuery objects of row
@@ -292,9 +467,9 @@ odoo.define('web_responsive', function(require) {
 
     });
 
-    // It inits a new AppDrawer when the web client is ready
-    core.bus.on('web_client_ready', null, function() {
-        return new AppDrawer();
+    // Init a new AppDrawer when the web client is ready
+    core.bus.on('web_client_ready', null, function () {
+        new AppDrawer();
     });
 
     // if we are in small screen change default view to kanban if exists
@@ -352,11 +527,6 @@ odoo.define('web_responsive', function(require) {
 
     return {
         'AppDrawer': AppDrawer,
-        'SearchView': SearchView,
-        'Menu': Menu,
-        'ViewManager': ViewManager,
-        'FieldStatus': RelationalFields.FieldStatus,
-        'FormRenderer': FormRenderer,
     };
 
 });

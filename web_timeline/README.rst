@@ -39,9 +39,11 @@ the possible attributes for the tag:
   view.
 * colors (optional): it allows to set certain specific colors if the expressed
   condition (JS syntax) is met.
-  
-Optionally you can declare a custom template, which will be used to render the 
-timeline items. You have to name the template 'timeline-item'. 
+* dependency_arrow (optional): set this attribute to a x2many field to draw
+  arrows between the records referenced in the x2many field.
+
+Optionally you can declare a custom template, which will be used to render the
+timeline items. You have to name the template 'timeline-item'.
 These are the variables available in template rendering:
 
 * ``record``: to access the fields values selected in the timeline definition.
@@ -65,7 +67,8 @@ Example:
                           default_group_by="user_id"
                           event_open_popup="true"
                           zoomKey="ctrlKey"
-                          colors="#ec7063:user_id == false;#2ecb71:kanban_state=='done';">
+                          colors="#ec7063:user_id == false;#2ecb71:kanban_state=='done';"
+                          dependency_arrow="task_dependency_ids">
                     <field name="user_id"/>
                     <templates>
                         <div t-name="timeline-item">
@@ -113,6 +116,8 @@ edit the involved record directly.
 
 Double-click on the record to edit it. Double-click in open area to create a
 new record with the group and start date linked to the area you clicked in.
+By holding the Ctrl key and dragging left to right, you can create a new record
+with the dragged start and end date.
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
@@ -122,9 +127,9 @@ new record with the group and start date linked to the area you clicked in.
 Known issues / Roadmap
 ======================
 
-* Implement support for vis.js timeline range item addition (with Ctrl key
-  pressed).
 * Implement a more efficient way of refreshing timeline after a record update.
+* Make `attrs` attribute work;
+* Make action attributes work (create, edit, delete) like in form and tree views.
 
 Bug Tracker
 ===========

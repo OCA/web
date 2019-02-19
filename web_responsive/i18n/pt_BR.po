@@ -11,14 +11,27 @@ msgstr ""
 "POT-Creation-Date: 2017-06-22 08:27+0000\n"
 "PO-Revision-Date: 2018-08-03 13:16+0000\n"
 "Last-Translator: Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
-"23907/pt_BR/)\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
+"teams/23907/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 3.1.1\n"
+
+#. module: web_responsive
+#: model:ir.ui.view,arch_db:web_responsive.menu
+msgid "<i>Searching:</i>"
+msgstr ""
+
+#. module: web_responsive
+#: model:ir.ui.view,arch_db:web_responsive.menu
+msgid ""
+"<span class=\"hidden-xs\">\n"
+"                                &amp;nbsp;|&amp;nbsp;\n"
+"                            </span>"
+msgstr ""
 
 #. module: web_responsive
 #: model:ir.ui.view,arch_db:web_responsive.webclient_bootstrap
@@ -41,14 +54,21 @@ msgid "Chatter Position"
 msgstr "Posição do Chatter"
 
 #. module: web_responsive
-#: model:ir.model,name:web_responsive.model_ir_http
-msgid "HTTP routing"
-msgstr "roteamento HTTP"
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/form_view.xml:35
+#, python-format
+msgid "More"
+msgstr ""
 
 #. module: web_responsive
 #: model:ir.ui.view,arch_db:web_responsive.menu
 msgid "More <b class=\"caret\"/>"
 msgstr "Mais <b class=\"caret\"/>"
+
+#. module: web_responsive
+#: model:ir.ui.view,arch_db:web_responsive.menu
+msgid "No Search Supplied."
+msgstr ""
 
 #. module: web_responsive
 #: selection:res.users,chatter_position:0
@@ -61,6 +81,16 @@ msgid "Sided"
 msgstr "Frente e verso"
 
 #. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/form_view.xml:54
+#, python-format
+msgid "Task"
+msgstr ""
+
+#. module: web_responsive
 #: model:ir.model,name:web_responsive.model_res_users
 msgid "Users"
 msgstr "Usuários"
+
+#~ msgid "HTTP routing"
+#~ msgstr "roteamento HTTP"
