@@ -138,4 +138,14 @@
         </t>
     </t>
 
+    <t t-extend="mail.Chatter">
+        <t t-jquery=".o_chatter_topbar" t-operation="replace">
+            <div class="o_chatter_header_container">
+                <div class="o_chatter_topbar">
+                    <div class="o_topbar_right_area"/>
+                </div>
+            </div>
+        </t>
+    </t>
+
 </templates>
