@@ -83,6 +83,10 @@ Features for computers:
 
   .. image:: https://user-images.githubusercontent.com/973709/48417428-ac5a5f00-e74a-11e8-8839-5bc538c54c1d.png
 
+* Sticky chatter topbar
+
+  .. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_responsive/static/img/chatter_topbar.gif
+
 **Table of contents**
 
 .. contents::
