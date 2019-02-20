@@ -11,6 +11,7 @@ setuptools.setup(
         'odoo12-addon-web_decimal_numpad_dot',
         'odoo12-addon-web_dialog_size',
         'odoo12-addon-web_disable_export_group',
+        'odoo12-addon-web_edit_user_filter',
         'odoo12-addon-web_environment_ribbon',
         'odoo12-addon-web_favicon',
         'odoo12-addon-web_ir_actions_act_multi',
@@ -23,6 +24,7 @@ setuptools.setup(
         'odoo12-addon-web_widget_image_download',
         'odoo12-addon-web_widget_many2many_tags_multi_selection',
         'odoo12-addon-web_widget_x2many_2d_matrix',
+        'odoo12-addon-web_widget_x2many_2d_matrix_example',
     ],
     classifiers=[
         'Programming Language :: Python',
