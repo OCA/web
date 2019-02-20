@@ -15,13 +15,11 @@ class ResConfigSettings(models.TransientModel):
                                                    ('2', 'Tuesday')],
                                                   default='1')
     calendar_row_duration = fields.Selection([('0.25', '00:15'),
-                                                   ('0.5', '00:30'),
-                                                   ('1.0', '01:00')],
-                                                  default='0.25')
-    is_weekend_active = fields.Boolean('Calendar Weekends',
-                                                default=True)
-    is_event_overlap = fields.Boolean('Calendar Overlap Events',
-                                            default=False)
+                                              ('0.5', '00:30'),
+                                              ('1.0', '01:00')],
+                                             default='0.25')
+    is_weekend_active = fields.Boolean('Calendar Weekends', default=True)
+    is_event_overlap = fields.Boolean('Calendar Overlap Events', default=False)
 
     _sql_constraints = [
         ('check_calendar_start_and_end_time',
@@ -34,10 +32,6 @@ class ResConfigSettings(models.TransientModel):
          "(calendar_start_work_time < calendar_end_time) AND"
          "( calendar_start_time < 24) AND (calendar_end_time >= 0))",
          _('Start work time must be set between start and end time')),
-        ('check_calendar_row_duration',
-         "CHECK ((calendar_row_duration >= 0.25)"
-         "AND(calendar_row_duration <= 1))",
-         _('Row Duration must be between 15 minutes and 1 hour')),
     ]
 
     @api.model
