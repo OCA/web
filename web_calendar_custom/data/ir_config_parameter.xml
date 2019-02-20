@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1" >
+    <record id="calendar_start_time" model="ir.config_parameter">
+        <field name="key">web_calendar_custom.calendar_start_time</field>
+        <field name="value">0.0</field>
+    </record>
+    <record id="calendar_end_time" model="ir.config_parameter">
+        <field name="key">web_calendar_custom.calendar_end_time</field>
+        <field name="value">23.0</field>
+    </record>
+    <record id="calendar_start_work_time" model="ir.config_parameter">
+        <field name="key">web_calendar_custom.calendar_start_work_time</field>
+        <field name="value">7.0</field>
+    </record>
+    <record id="calendar_row_duration" model="ir.config_parameter">
+        <field name="key">web_calendar_custom.calendar_row_duration</field>
+        <field name="value">0.25</field>
+    </record>
+    <record id="calendar_first_day_of_week" model="ir.config_parameter">
+        <field name="key">web_calendar_custom.calendar_first_day_of_week</field>
+        <field name="value">1</field>
+    </record>
+</odoo>

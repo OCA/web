@@ -1,0 +1,148 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_calendar_custom
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-10-16 21:26+0000\n"
+"PO-Revision-Date: 2018-10-16 18:12-0400\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 2.2\n"
+
+#. module: web_calendar_custom
+#. openerp-web
+#: code:addons/web_calendar_custom/static/src/js/web_calendar_custom.js:88
+#, python-format
+msgid "All day"
+msgstr "Toute la journée"
+
+#. module: web_calendar_custom
+#: model:ir.ui.view,arch_db:web_calendar_custom.res_config_settings_view_form
+msgid "Allow events overlapping"
+msgstr "Autoriser les événements qui se chevauchent"
+
+#. module: web_calendar_custom
+#: model:ir.ui.view,arch_db:web_calendar_custom.res_config_settings_view_form
+msgid "Calendar"
+msgstr "Calendrier"
+
+#. module: web_calendar_custom
+#: model:ir.model.fields,field_description:web_calendar_custom.field_res_config_settings_calendar_end_time
+msgid "Calendar End Time"
+msgstr "Heure de fin du calendrier"
+
+#. module: web_calendar_custom
+#: model:ir.model.fields,field_description:web_calendar_custom.field_res_config_settings_calendar_first_day_of_week
+msgid "Calendar First Day Of Week"
+msgstr "Premier jour de la semaine du calendrier"
+
+#. module: web_calendar_custom
+#: model:ir.ui.view,arch_db:web_calendar_custom.res_config_settings_view_form
+msgid "Calendar Other settings"
+msgstr "Autres paramètres du calendrier"
+
+#. module: web_calendar_custom
+#: model:ir.model.fields,field_description:web_calendar_custom.field_res_config_settings_is_event_overlap
+msgid "Calendar Overlap Events"
+msgstr "Événements chevauchés du calendrier"
+
+#. module: web_calendar_custom
+#: model:ir.model.fields,field_description:web_calendar_custom.field_res_config_settings_calendar_row_duration
+msgid "Calendar Row Duration"
+msgstr "Durée d'un créneau du calendrier"
+
+#. module: web_calendar_custom
+#: model:ir.model.fields,field_description:web_calendar_custom.field_res_config_settings_calendar_start_time
+msgid "Calendar Start Time"
+msgstr "Heure de début du calendrier"
+
+#. module: web_calendar_custom
+#: model:ir.model.fields,field_description:web_calendar_custom.field_res_config_settings_calendar_start_work_time
+msgid "Calendar Start Working Time"
+msgstr "Heure de début de travail du calendrier"
+
+#. module: web_calendar_custom
+#: model:ir.ui.view,arch_db:web_calendar_custom.res_config_settings_view_form
+msgid "Calendar Time Settings"
+msgstr "Paramètres temporels du calendrier"
+
+#. module: web_calendar_custom
+#: model:ir.model.fields,field_description:web_calendar_custom.field_res_config_settings_is_weekend_active
+msgid "Calendar Weekends"
+msgstr "Fin de semaines du calendrier"
+
+#. module: web_calendar_custom
+#: model:ir.ui.view,arch_db:web_calendar_custom.res_config_settings_view_form
+msgid "End Time"
+msgstr "Heure de fin"
+
+#. module: web_calendar_custom
+#: model:ir.ui.view,arch_db:web_calendar_custom.res_config_settings_view_form
+msgid "First day of week"
+msgstr "Premier jour de la  semaine"
+
+#. module: web_calendar_custom
+#: selection:res.config.settings,calendar_first_day_of_week:0
+msgid "Monday"
+msgstr "Lundi"
+
+#. module: web_calendar_custom
+#: code:addons/web_calendar_custom/models/res_config_settings.py:36
+#: sql_constraint:res.config.settings:0
+#, python-format
+msgid "Row Duration must be between 15 minutes and 1 hour"
+msgstr "La durée d'un créneau doit être comprise entre 15 minutes et une heure"
+
+#. module: web_calendar_custom
+#: model:ir.ui.view,arch_db:web_calendar_custom.res_config_settings_view_form
+msgid "Row duration in minutes"
+msgstr "Durée d'un créneau en minutes"
+
+#. module: web_calendar_custom
+#: model:ir.ui.view,arch_db:web_calendar_custom.res_config_settings_view_form
+msgid "Start Time"
+msgstr "Heure de début"
+
+#. module: web_calendar_custom
+#: model:ir.ui.view,arch_db:web_calendar_custom.res_config_settings_view_form
+msgid "Start Work Time"
+msgstr "Heure de début de travail"
+
+#. module: web_calendar_custom
+#: sql_constraint:res.config.settings:0
+msgid "Start time must be before end time"
+msgstr "L'heure de début doit être avant l'heure de fin "
+
+
+#. module: web_calendar_custom
+#: sql_constraint:res.config.settings:0
+msgid "Start work time must be set between start and end time"
+msgstr "L'heure de début de travail doit être entre l'heure de début du calendrier et l'heure de fin"
+
+#. module: web_calendar_custom
+#: selection:res.config.settings,calendar_first_day_of_week:0
+msgid "Sunday"
+msgstr "Dimanche"
+
+#. module: web_calendar_custom
+#: selection:res.config.settings,calendar_first_day_of_week:0
+msgid "Tuesday"
+msgstr "Mardi"
+
+#. module: web_calendar_custom
+#: model:ir.ui.view,arch_db:web_calendar_custom.res_config_settings_view_form
+msgid "Weekend days are visible"
+msgstr "Les jours de fin de semaine sont visibles"
+
+#. module: web_calendar_custom
+#: model:ir.model,name:web_calendar_custom.model_res_config_settings
+msgid "res.config.settings"
+msgstr "res.config.settings"
