@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017-2018 Jairo Llopis <jairo.llopis@tecnativa.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<templates>
+    <t t-extend="FiltersMenuGenerator">
+        <t t-jquery=".o_add_filter_menu" t-operation="after">
+            <div role="separator" class="dropdown-divider"/>
+            <a class="dropdown-item o_add_advanced_search">Add Advanced Filter</a>
+        </t>
+    </t>
+</templates>
