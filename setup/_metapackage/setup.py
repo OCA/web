@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-web Odoo addons",
     version=version,
     install_requires=[
+        'odoo12-addon-web_advanced_search',
         'odoo12-addon-web_decimal_numpad_dot',
         'odoo12-addon-web_dialog_size',
         'odoo12-addon-web_disable_export_group',
