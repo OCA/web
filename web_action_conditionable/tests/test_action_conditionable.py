@@ -2,8 +2,7 @@
 
 from mock import patch
 from openerp.tests.common import TransactionCase
-from openerp.addons.web_action_conditionable.controllers.main \
-    import MainController
+from ..controllers.main import MainController
 
 
 class TestActionConditionable(TransactionCase):

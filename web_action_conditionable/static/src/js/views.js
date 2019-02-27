@@ -1,6 +1,7 @@
-/*global openerp, _, $ */
+/* global openerp, py, jQuery, _, _t, $ */
 
 openerp.web_action_conditionable = function (instance) {
+    'use strict';
     instance.web.View.include({
         /**
          * @override
@@ -14,11 +15,11 @@ openerp.web_action_conditionable = function (instance) {
                     var expr = attrs[action];
                     var expression = py.parse(py.tokenize(expr));
                     var cxt = new instance.web.CompoundContext(
-                        this.get_fields_values && !_.isEmpty(this.fields) ?
-                        // we're on a form that has loaded its fields
-                        this.get_fields_values() :
-                        // this always exists
-                        this.dataset.get_context().get_eval_context() ||
+                        this.get_fields_values && !_.isEmpty(this.fields)
+                            // We're on a form that has loaded its fields
+                            ? this.get_fields_values()
+                            // This always exists
+                            : this.dataset.get_context().get_eval_context() ||
                         {}
                     ).eval();
 
@@ -40,8 +41,8 @@ openerp.web_action_conditionable = function (instance) {
             }
         },
         _is_action_enabled_eval_context: function(cxt) {
-            cxt['_group_refs'] = instance.session.group_refs;
-            cxt['_context'] = this.dataset.get_context().eval();
+            cxt._group_refs = instance.session.group_refs;
+            cxt._context = this.dataset.get_context().eval();
         },
 
     });
@@ -54,7 +55,7 @@ openerp.web_action_conditionable = function (instance) {
         },
         _load_record_web_action_conditionable: function() {
             var self = this;
-            // set correct classes
+            // Set correct classes
             this.$el.toggleClass(
                 'oe_cannot_create', !this.is_action_enabled('create')
             );
@@ -96,13 +97,13 @@ openerp.web_action_conditionable = function (instance) {
                 this.guard_active(this.on_button_cancel)
             );
             this.check_actual_mode();
-            // update sidebar menu
+            // Update sidebar menu
             if (this.sidebar) {
                 this.sidebar.items.other = _.filter(
                     this.sidebar.items.other, function(item) {
                         return (
-                            item.callback != self.on_button_delete &&
-                            item.callback != self.on_button_duplicate
+                            item.callback !== self.on_button_delete &&
+                            item.callback !== self.on_button_duplicate
                         );
                     }
                 );
@@ -114,9 +115,9 @@ openerp.web_action_conditionable = function (instance) {
                     self.is_action_enabled('create') && {
                         label: _t('Duplicate'),
                         callback: self.on_button_duplicate,
-                    }
+                    },
                 ]));
             }
         },
-    })
-}
+    });
+};
