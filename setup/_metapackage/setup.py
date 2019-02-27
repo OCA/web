@@ -37,6 +37,7 @@ setuptools.setup(
         'odoo11-addon-web_widget_bokeh_chart',
         'odoo11-addon-web_widget_color',
         'odoo11-addon-web_widget_datepicker_options',
+        'odoo11-addon-web_widget_domain_editor_dialog',
         'odoo11-addon-web_widget_image_download',
         'odoo11-addon-web_widget_image_url',
         'odoo11-addon-web_widget_many2many_tags_multi_selection',
