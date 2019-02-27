@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_res_groups_form" model="ir.ui.view">
+            <field name="model">res.groups</field>
+            <field name="inherit_id" ref="base.view_groups_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='model_access']/tree" position="attributes">
+                    <attribute name="create">name == 'Access Rights'</attribute>
+                    <attribute name="delete">name != 'Access Rights'</attribute>
+                </xpath>
+                <xpath expr="." position="attributes">
+                    <attribute name="edit">name == 'Access Rights'</attribute>
+                    <attribute name="delete">name != 'Access Rights'</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

@@ -11,6 +11,9 @@
         'web',
     ],
     "license": "AGPL-3",
+    "demo": [
+        "demo/ir_ui_view.xml",
+    ],
     'data': [
         'views/view.xml'
     ],
