@@ -38,7 +38,7 @@ the possible attributes for the tag:
   in a popup. If not (default value), the record is edited changing to form
   view.
 * colors (optional): it allows to set certain specific colors if the expressed
-  condition (JS syntax) is met.
+  condition (Python syntax) is met.
 * dependency_arrow (optional): set this attribute to a x2many field to draw
   arrows between the records referenced in the x2many field.
 
@@ -67,7 +67,7 @@ Example:
                           default_group_by="user_id"
                           event_open_popup="true"
                           zoomKey="ctrlKey"
-                          colors="#ec7063:user_id == false;#2ecb71:kanban_state=='done';"
+                          colors="#ec7063:user_id == False;#2ecb71:kanban_state=='done';#f6d5d5:date_end &gt; date_deadline"
                           dependency_arrow="task_dependency_ids">
                     <field name="user_id"/>
                     <templates>
