@@ -100,21 +100,35 @@ odoo.define('web_edit_user_filter', function (require) {
                         self.trigger_up('menu_item_toggled', eventData);
                     });
                 } else if (segment.cat === 'filterCategory') {
+                    var new_filters = [];
                     _.each(segment.values, function (value) {
-                        var filterDomain = _.find(
-                            self.searchview.filtersMapping,
-                            function (mapping) {
-                                return mapping.filter.attrs.domain === value.attrs.domain;
-                            }
-                        );
-                        var eventData = {
-                            category: 'filterCategory',
-                            itemId: filterDomain.filterId,
-                            isActive: true,
-                            groupId: filterDomain.groupId,
-                        };
-                        self.trigger_up('menu_item_toggled', eventData);
+                        if (value.attrs.name) {
+                            var filterDomain = _.find(
+                                self.searchview.filtersMapping,
+                                function (mapping) {
+                                    return mapping.filter.attrs.name === value.attrs.name;
+                                }
+                            );
+                            var eventData = {
+                                category: 'filterCategory',
+                                itemId: filterDomain.filterId,
+                                isActive: true,
+                                groupId: filterDomain.groupId,
+                            };
+
+                            self.trigger_up('menu_item_toggled', eventData);
+                        } else {
+                            new_filters.push({
+                                groupId: null,
+                                filter: {
+                                    tag: 'filter',
+                                    attrs: value.attrs
+                                },
+                                itemId: _.uniqueId('__filter__')
+                            });
+                        }
                     });
+                    self.trigger_up('new_filters', new_filters);
                 } else {
                     var search_widget = _.find(
                         self.searchview.search_fields, function (f) {
@@ -145,7 +159,7 @@ odoo.define('web_edit_user_filter', function (require) {
         _removeValue: function (model, value) {
             var toRemove = model.values.filter(function (v) {
                 if (typeof v.attributes.value === 'object') {
-                    return v.attributes.value.attrs.name === value;
+                    return v.attributes.value.attrs.domain === value;
                 }
 
                 return v.attributes.value.toString() === value;
@@ -162,7 +176,6 @@ odoo.define('web_edit_user_filter', function (require) {
          */
         _renderPopover: function ($facet, model) {
             var self = this;
-
             var $content = $(qweb.render('web_edit_user_filter.Popover', {
                 values: model.get('values'),
             }));
