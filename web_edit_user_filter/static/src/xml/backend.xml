@@ -8,7 +8,7 @@
         <div class="list-group">
             <t t-foreach="values" t-as="value">
                 <a class="list-group-item list-group-item-action"
-                   t-attf-data-value="#{typeof value.value === 'object' ? value.value.attrs.name : value.value}">
+                   t-attf-data-value="#{typeof value.value === 'object' ? value.value.attrs.domain : value.value}">
                     <span>
                         <t t-esc="value.label"/>
                     </span>
