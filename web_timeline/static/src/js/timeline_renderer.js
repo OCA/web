@@ -10,7 +10,6 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
     var field_utils = require('web.field_utils');
     var TimelineCanvas = require('web_timeline.TimelineCanvas');
 
-
     var _t = core._t;
 
     var TimelineRenderer = AbstractRenderer.extend({
@@ -422,7 +421,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
                 group = -1;
             }
             _.each(self.colors, function (color) {
-                if (eval("'" + evt[color.field] + "' " + color.opt + " '" + color.value + "'")) {
+            if (py.PY_isTrue(py.evaluate(color.ast, evt))) {
                     self.color = color.color;
                 }
             });
