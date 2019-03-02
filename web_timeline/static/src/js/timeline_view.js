@@ -84,9 +84,11 @@ odoo.define('web_timeline.TimelineView', function (require) {
             );
 
             this.parse_colors();
-            for (let color of this.colors) {
-                for (let token of color.tokens) {
-                    if (token.id == '(name)') fieldNames.push(token.value)
+            for (var i=0; i<this.colors.length; i++) {
+                for (var j=0; j<this.colors[i].tokens.length; j++) {
+                    if (this.colors[i].tokens[j].id == '(name)') {
+                        fieldNames.push(this.colors[i].tokens[j].value)
+                    }
                 }
             }
 
