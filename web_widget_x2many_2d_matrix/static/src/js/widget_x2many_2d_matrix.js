@@ -63,6 +63,8 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                 this.parse_boolean(node.show_row_totals || '1');
             this.show_column_totals =
                 this.parse_boolean(node.show_column_totals || '1');
+            this.label_cell_max_char = this.nodeOptions.label_cell_max_char || -1;
+            this.header_max_char = this.nodeOptions.header_max_char || -1;
         },
 
         /**
@@ -109,6 +111,8 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                 'rows': this.rows,
                 'show_row_totals': this.show_row_totals,
                 'show_column_totals': this.show_column_totals,
+                'label_cell_max_char': this.label_cell_max_char,
+                'header_cell_max_char': this.header_cell_max_char,
             };
         },
 

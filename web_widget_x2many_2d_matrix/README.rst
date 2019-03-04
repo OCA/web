@@ -70,6 +70,12 @@ show_row_totals
 show_column_totals
     If field_value is a numeric field, it indicates if you want to calculate
     column totals. True by default
+options: header_cell_max_char
+    Will cut header cell text if the length is bigger that the indicated number.
+    Default is no maximum.
+options: label_cell_max_char
+    Will cut label cell text if the length is bigger that the indicated number.
+    Default is no maximum.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot

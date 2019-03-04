@@ -133,6 +133,9 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
             if (!field) {
                 return $th;
             }
+            if (this.matrix_data.header_cell_max_char > 0 && node.attrs.string.length > this.matrix_data.header_cell_max_char) {
+                node.attrs.string = node.attrs.string.substring(0, this.matrix_data.header_cell_max_char-1) + '…';
+            }
             var description = null;
             if (node.attrs.widget) {
                 description = this.state.fieldsInfo.list[name]
@@ -221,6 +224,9 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
                 value = value.data.display_name;
             }
             // Get 1st column filled w/ Y label
+            if (this.matrix_data.label_cell_max_char > 0 && value.length > this.matrix_data.label_cell_max_char) {
+                value = value.substring(0, this.matrix_data.label_cell_max_char-1) + '…';
+            }
             $td.text(value);
             return $td;
         },
