@@ -421,7 +421,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
                 group = -1;
             }
             _.each(self.colors, function (color) {
-            if (py.PY_isTrue(py.evaluate(color.ast, evt))) {
+                if (py.PY_isTrue(py.evaluate(color.ast, evt))) {
                     self.color = color.color;
                 }
             });
