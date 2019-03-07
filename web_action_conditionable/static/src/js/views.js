@@ -46,6 +46,16 @@ openerp.web_action_conditionable = function (instance) {
         },
 
     });
+    instance.web.form.Many2ManyListView.include({
+        is_action_enabled: function(action) {
+            if (action in this.fields_view.arch.attrs) {
+                return (new instance.web.View()).is_action_enabled.apply(
+                    this, arguments
+                );
+            }
+            return true;
+        },
+    });
     instance.web.FormView.include({
         init: function() {
             this._super.apply(this, arguments);
