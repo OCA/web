@@ -81,6 +81,9 @@ odoo.define('web_widget_digitized_signature.web_digital_sign', function(require)
                     self.do_warn(_t("Image"), _t("Could not display the selected image."));
                 });
             } else if (this.view.get("actual_mode") === 'edit') {
+                if (! self.$el.find(".signature").jSignature("isModified")) {
+                    return;
+                }
                 this.$el.find('> img').remove();
                 if (this.get('value')) {
                     var field_name = this.options.preview_image
@@ -119,4 +122,3 @@ odoo.define('web_widget_digitized_signature.web_digital_sign', function(require)
     });
 
 });
-
