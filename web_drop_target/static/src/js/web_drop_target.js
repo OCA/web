@@ -26,7 +26,7 @@ odoo.define('web_drop_target', function(require) {
 
         _on_drop: function(e) {
             var drop_item = this._get_drop_item(e);
-            if(!drop_item) {
+            if(!drop_item || !(drop_item.getAsFile() instanceof Blob)) {
                 return;
             }
             jQuery(e.delegateTarget).removeClass(this._drag_over_class);
@@ -35,6 +35,7 @@ odoo.define('web_drop_target', function(require) {
                 _.partial(this._handle_file_drop, drop_item.getAsFile())
             );
             reader.readAsArrayBuffer(drop_item.getAsFile());
+            e.stopPropagation();
             e.preventDefault();
         },
 
