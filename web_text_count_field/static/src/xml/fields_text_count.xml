@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+
+  <t t-name="FieldTextCount" t-extend="FieldText">
+    <t t-jquery="textarea" t-operation="after">
+        <span t-att-name="widget.char_counter"></span>
+    </t>
+  </t>
+
+</templates>
