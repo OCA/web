@@ -15,7 +15,7 @@ msgstr ""
 
 #. module: web_edit_user_filter
 #. openerp-web
-#: code:addons/web_edit_user_filter/static/src/js/backend.js:176
+#: code:addons/web_edit_user_filter/static/src/js/backend.js:189
 #, python-format
 msgid "Edit Facet"
 msgstr ""
