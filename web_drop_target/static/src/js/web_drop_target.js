@@ -110,6 +110,9 @@ odoo.define('web_drop_target', function(require) {
         ) {
             var self = this;
             var file = item;
+            if(!file || !(file instanceof Blob)) {
+                return;
+            }
             var reader = new FileReader();
             reader.onloadend = self.proxy(
                 _.partial(self._create_attachment, file, reader, e, res_model, res_id, extra_data)
