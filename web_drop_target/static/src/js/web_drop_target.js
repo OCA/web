@@ -101,6 +101,10 @@ odoo.define('web_drop_target', function(require) {
             });
         },
 
+        _file_reader_error_handler: function(e){
+            console.error(e);
+        },
+
         _handle_file_drop_attach: function(
             item, e, res_model, res_id, extra_data
         ) {
@@ -110,6 +114,7 @@ odoo.define('web_drop_target', function(require) {
             reader.onloadend = self.proxy(
                 _.partial(self._create_attachment, file, reader, e, res_model, res_id, extra_data)
             );
+            reader.onerror = self.proxy('_file_reader_error_handler');
             reader.readAsArrayBuffer(file);
         },
 
