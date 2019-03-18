@@ -5,7 +5,7 @@
     'name': 'Resize Columns',
     'summary': 'Resize columns in tree views',
     'category': 'Extra Tools',
-    'version': '11.0.1.0.0',
+    'version': '12.0.1.0.0',
     'development_status': 'Production/Stable',
     'author': 'Onestein, Odoo Community Association (OCA)',
     'license': 'AGPL-3',
