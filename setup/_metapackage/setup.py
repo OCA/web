@@ -21,6 +21,7 @@ setuptools.setup(
         'odoo12-addon-web_m2x_options',
         'odoo12-addon-web_notify',
         'odoo12-addon-web_responsive',
+        'odoo12-addon-web_searchbar_full_width',
         'odoo12-addon-web_timeline',
         'odoo12-addon-web_widget_color',
         'odoo12-addon-web_widget_image_download',
