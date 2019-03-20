@@ -13,7 +13,7 @@ odoo.define('web_tree_dynamic_colored_field', function (require) {
         _renderBody: function () {
             if (this.arch.attrs.colors) {
                 var colorAttr = this.arch.attrs.colors.split(';')
-                    .filter(color => color.trim().startsWith('color_field'));
+                    .filter(color >= color.trim().startsWith('color_field'));
                 if (colorAttr.length > 0) {
                     var colorField = colorAttr[0].split(':')[1].trim();
                     // validate the presence of that field in tree view
@@ -90,7 +90,7 @@ odoo.define('web_tree_dynamic_colored_field', function (require) {
 
         /**
          * Parse `<color>: <field> <operator> <value>` forms to
-         * evaluatable expressions
+         * evaluable expressions
          *
          * @param {string} pairColor `color: expression` pair
          */
