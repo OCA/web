@@ -1,0 +1,173 @@
+/**********************************************************************************
+*
+*    Copyright (c) 2017-2019 MuK IT GmbH.
+*
+*    This file is part of MuK Search Panel 
+*    (see https://mukit.at).
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU Lesser General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU Lesser General Public License for more details.
+*
+*    You should have received a copy of the GNU Lesser General Public License
+*    along with this program. If not, see <http://www.gnu.org/licenses/>.
+*
+**********************************************************************************/
+
+.o_kanban_with_searchpanel {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+
+    .o_onboarding_container {
+   		flex: 1 1 100%;
+   	}
+    .o_kanban_view {
+        flex: 1 1 calc(100% - #{$o-searchpanel-w});
+        overflow: auto;
+        max-height: 100%;
+    }
+    .o_search_panel {
+        flex: 0 0 $o-searchpanel-w;
+        overflow: auto;
+        height: 100%;
+        padding: $o-searchpanel-p-small $o-searchpanel-p-small $o-searchpanel-p*2 $o-searchpanel-p;
+        border-right: 1px solid $gray-300;
+        background-color: white;
+        position: relative;
+
+		.o_search_panel_loading {
+		    position: absolute;
+		    margin-top: -30px;
+		    margin-left: -30px;
+		    margin-bottom: 0;
+		    margin-right: 0;
+		    font-size: 60px;
+		    height: 60px;
+			width: 60px;
+		    left: 50%;
+		    top: 50%;
+		}
+
+        .o_search_panel_category .o_search_panel_section_icon {
+            color: $o-searchpanel-category-default-color;
+        }
+        .o_search_panel_filter .o_search_panel_section_icon {
+            color: $o-searchpanel-filter-default-color;
+        }
+
+        .o_search_panel_label {
+            cursor: pointer;
+            user-select: none;
+
+            .o_toggle_fold {
+                padding: 3px;
+            }
+        }
+        .o_search_panel_section_header {
+            padding: $o-searchpanel-p-small 0;
+        }
+        .list-group-item {
+            padding: 0 0 $o-searchpanel-p-small 0;
+
+            .list-group-item {
+                padding: 0 0 0 $custom-control-gutter;
+                margin-bottom: $o-searchpanel-p-tiny*0.5;
+                &:first-child {
+                    margin-top: $o-searchpanel-p-tiny*0.5;
+                }
+            }
+            span.o_search_panel_label_title {
+                color: $headings-color;
+                @include o-text-overflow(inline-block, calc(100% - 22px));
+            }
+            header.active {
+                background-color: $list-group-action-active-bg;
+            }
+        }
+        .o_search_panel_category_value {
+            header {
+                margin-left: -$o-searchpanel-p-tiny;
+                padding-left: $o-searchpanel-p-tiny;
+            }
+            .o_search_panel_category_value {
+                position: relative;
+                padding-left: $o-searchpanel-p;
+                padding-bottom: $o-searchpanel-p-tiny;
+                margin-bottom: 0;
+
+                &:before, &:after {
+                    @include o-position-absolute(0, $left: $o-searchpanel-p-tiny)
+                    @include size(1px, 100%);
+                    background: $gray-500;
+                    content: '';
+                }
+                &:after {
+                    top: 10px;
+                    @include size(8px, 1px);
+                }
+                &:last-child {
+                    &:before {
+                        height: 11px;
+                    }
+                    &:after {
+                        top: 11px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@include media-breakpoint-down(sm) {
+	.o_kanban_with_searchpanel {
+        flex-direction: column;
+	
+		.o_onboarding_container {
+	   		display: none;
+	   	}
+	
+        details.o_search_panel {
+            flex-basis: auto;
+            height: auto;
+            width: 100%;
+            padding: 0;
+
+            > summary {
+                padding: $o-searchpanel-p-small;
+                // Hide the caret. For details see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/summary
+                list-style-type: none;
+                &::-webkit-details-marker {
+                    display: none
+                }
+
+                .badge {
+                    font-size: 100%;
+                    background-color: white;
+                }
+            }
+
+            > .o_search_panel_section {
+                margin: 0 $o-searchpanel-p-small 0 $o-searchpanel-p;
+            }
+
+            &[open] {
+                z-index: $zindex-dropdown;
+
+                > summary {
+                    background-color: $list-group-action-active-bg;
+                }
+
+                .fa-chevron-left:before {
+                    content: "\f078";
+                }
+            }
+        }
+    }
+}
