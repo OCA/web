@@ -1,5 +1,5 @@
 # Copyright 2017 Eficent Business and IT Consulting Services S.L.
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).#
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
     "name": "Web Widget Bokeh Chart",
@@ -7,7 +7,7 @@
     "summary": "This widget allows to display charts using Bokeh library.",
     "author": "Eficent, "
               "Odoo Community Association (OCA)",
-    "version": "11.0.1.1.0",
+    "version": "12.0.1.0.0",
     "website": "https://github.com/OCA/web",
     "depends": ["web"],
     "data": [
@@ -17,5 +17,5 @@
         "python": ['bokeh'],
     },
     "auto_install": False,
-    "license": "AGPL-3",
+    "license": "LGPL-3",
 }
