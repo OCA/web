@@ -1,11 +1,12 @@
-.. image:: https://img.shields.io/badge/licence-LGPL--3-blue.svg
-    :alt: License LGPL-3
+.. image:: https://img.shields.io/badge/license-LGPL--3-blue.png
+   :target: https://www.gnu.org/licenses/lgpl
+   :alt: License: LGPL-3
 
 ======================
 Web Widget Bokeh Chart
 ======================
 
-This module add the posibility to insert Bokeh charts into Odoo standard views.
+This module add the possibility to insert Bokeh charts into Odoo standard views.
 
 .. image:: /web_widget_bokeh_chart/static/description/example.png
    :alt: Bokeh Chart inserted into an Odoo view
@@ -27,7 +28,7 @@ Installation
 
 You need to install the python bokeh library::
 
-    pip install bokeh==0.12.7
+    pip3 install bokeh==0.12.7
 
 Usage
 =====
@@ -62,10 +63,10 @@ To insert a Bokeh chart in a view proceed as follows:
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
-In case of trouble, please check there if your issue has already been
-reported. If you spotted it first, help us smash it by providing detailed and
-welcomed feedback.
+Bugs are tracked on `GitHub Issues
+<https://github.com/OCA/web/issues>`_. In case of trouble, please
+check there if your issue has already been reported. If you spotted it first,
+help us smash it by providing detailed and welcomed feedback.
 
 Credits
 =======
@@ -85,9 +86,9 @@ Contributors
 Maintainer
 ----------
 
-.. image:: http://odoo-community.org/logo.png
+.. image:: https://odoo-community.org/logo.png
    :alt: Odoo Community Association
-   :target: http://odoo-community.org
+   :target: https://odoo-community.org
 
 This module is maintained by the OCA.
 
@@ -95,4 +96,4 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-To contribute to this module, please visit http://odoo-community.org.
+To contribute to this module, please visit https://odoo-community.org.
