@@ -1,30 +1,3 @@
-.. image:: https://img.shields.io/badge/license-AGPL--3-blue.png
-   :target: https://www.gnu.org/licenses/agpl
-   :alt: License: AGPL-3
-
-============================
-Colorize field in tree views
-============================
-
-This module aims to add support for dynamically coloring fields in tree view
-according to data in the record.
-
-It provides attributes on fields with the similar syntax as the ``colors`` attribute
-in tree tags.
-
-Further, it provides a ``color_field`` attribute on tree tags's ``colors`` to use
-a field's value as color.
-
-Features
-========
-
-* Add attribute ``bg_color`` on field's ``options`` to color background of a cell in tree view
-* Add attribute ``fg_color`` on field's ``options`` to change text color of a cell in tree view
-* Add attribute ``color_field`` on the tree element's ``colors`` to use as color
-
-Usage
-=====
-
 * In the tree view declaration, put ``options='{"bg_color": "red: customer==True"}`` attribute in the ``field`` tag::
 
     ...
@@ -92,42 +65,3 @@ Example:
     to load your field in the first place by adding it as invisible field.
 
 **Note that you should always use single quotes for fields' ``options`` and wrap nested values in double quotes since ``options`` is a JSON object.**
-
-Bug Tracker
-===========
-
-Bugs are tracked on `GitHub Issues
-<https://github.com/OCA/web/issues>`_. In case of trouble, please
-check there if your issue has already been reported. If you spotted it first,
-help us smash it by providing detailed and welcomed feedback.
-
-Credits
-=======
-
-Images
-------
-
-* Odoo Community Association: `Icon <https://odoo-community.org/logo.png>`_.
-
-Contributors
-------------
-
-* Damien Crier <damien.crier@camptocamp.com>
-* Holger Brunn <hbrunn@therp.nl>
-* Artem Kostyuk <a.kostyuk@mobilunity.com>
-* Guewen Baconnier <guewen.baconnier@camptocamp.com>
-
-Maintainer
-----------
-
-.. image:: https://odoo-community.org/logo.png
-   :alt: Odoo Community Association
-   :target: https://odoo-community.org
-
-This module is maintained by the OCA.
-
-OCA, or the Odoo Community Association, is a nonprofit organization whose
-mission is to support the collaborative development of Odoo features and
-promote its widespread use.
-
-To contribute to this module, please visit https://odoo-community.org.
