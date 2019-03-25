@@ -49,11 +49,31 @@ odoo.define('web_ckeditor4', function(require){
         init: function () {
             this._super.apply(this, arguments);
             this.editor_lang = session.user_context.lang.split('_')[0];
+            this.view.on("load_record", this, this._on_load_record);
         },
         start: function()
         {
             this._super.apply(this, arguments);
             CKEDITOR.lang.load(this.editor_lang, 'en', function() {});
+        },
+        _on_load_record: function() {
+            /* Fix widget not re-initialized on form discard.
+
+            When you hit "cancel" button or when you navigate away
+            from the form, for instance by clicking on the breadcrumb
+            or on  "edit translations", we have to remove the CKEditor widget.
+
+            BUT then if you hit "create" Odoo's form machinery is not initializing
+            the widget anymore (which really sounds inconsistent).
+            If the widget is not initialized again it means that if CKEditor
+            got destroyed there's no way to re-init again.
+
+            Here we make sure that on create (no id on datarecord)
+            if the editor is not initialized yet we force it.
+            */
+            if (!this.view.datarecord.id && !this.editor) {
+                this.initialize_content();
+            }
         },
         initialize_content: function()
         {
@@ -62,8 +82,7 @@ odoo.define('web_ckeditor4', function(require){
             if(!this.$el)
             {
                 return;
-            } else if (!this.get('effective_readonly')) {
-
+            } else if (!this.get('effective_readonly') && !this.editor) {
                 this.editor = CKEDITOR.replace(this.$el.get(0),
                     _.extend(
                         {
@@ -116,6 +135,9 @@ odoo.define('web_ckeditor4', function(require){
                 }
             }
         },
+        destroy_content: function () {
+            this._cleanup_editor();
+        },
         undelegateEvents: function()
         {
             this._cleanup_editor();
@@ -123,35 +145,35 @@ odoo.define('web_ckeditor4', function(require){
         },
         _cleanup_editor: function()
         {
-            if(this.editor && this.editor.status != 'unloaded')
+            if(this.editor && this.editor.status == 'ready')
             {
-                var id = this.editor.id
+                CKEDITOR.remove(this.editor.name);
+                $('#cke_' + this.editor.name).remove();
                 this.editor.removeAllListeners();
                 this.editor.destroy();
                 this.editor = null;
-                $('.' + id).remove();
             }
         },
         destroy: function()
         {
-          this._cleanup_editor();
-          this._super();
-        },
-        destroy_content: function()
-        {
+            this.view.off("load_record", this, this._on_load_record);
             this._cleanup_editor();
+            this._super();
         }
     });
+
     var FieldCKEditor4Raw = FieldCKEditor4.extend({
         filter_html: function(value)
         {
             return value;
         }
     });
+
     core.form_widget_registry.add('text_ckeditor4', FieldCKEditor4);
     core.form_widget_registry.add('text_ckeditor4_raw', FieldCKEditor4Raw);
     core.form_widget_registry.add('text_html', FieldCKEditor4);
     core.form_widget_registry.add('html', FieldCKEditor4);
+
     return {
         'FieldCKEditor4': FieldCKEditor4,
         'FieldCKEditor4Raw': FieldCKEditor4Raw
