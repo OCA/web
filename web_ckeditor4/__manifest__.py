@@ -13,7 +13,7 @@
         'web',
     ],
     'data': [
-        'views/qweb.xml',
+        'templates/assets.xml',
     ],
     'css': [
         'static/src/css/web_ckeditor4.css',
