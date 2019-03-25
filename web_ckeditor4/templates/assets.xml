@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="assets_backend" name="web_ckeditor4 assets"
+                    inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript"
+                    src="/web_ckeditor4/static/src/js/ckeditor_basepath.js" />
+            <script type="text/javascript"
+                    src="/web_ckeditor4/static/lib/ckeditor/ckeditor.js" />
+            <script type="text/javascript"
+                    src="/web_ckeditor4/static/lib/ckeditor/config.js" />
+            <script type="text/javascript"
+                    src="/web_ckeditor4/static/src/js/web_ckeditor4_config.js" />
+            <script type="text/javascript"
+                    src="/web_ckeditor4/static/src/js/web_ckeditor4_formview.js" />
+            <script type="text/javascript"
+                    src="/web_ckeditor4/static/src/js/web_ckeditor4.js" />
+        </xpath>
+    </template>
+</odoo>

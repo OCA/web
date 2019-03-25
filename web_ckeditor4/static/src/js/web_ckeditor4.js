@@ -25,114 +25,35 @@ odoo.define('web_ckeditor4', function(require){
     var core = require('web.core');
     var session = require('web.session');
     var formats = require('web.formats');
+    var ckconfig = require('web_ckeditor4.config');
 
-    var ckeditor_addFunction_org = CKEDITOR.tools.addFunction;
-    //this is a quite complicated way to kind of monkey patch the private
-    //method onDomReady of ckeditor's plugin wysiwigarea, which causes problems
-    //when the editor is about to be destroyed but because of OpenERP's
-    //architecture updated one last time with its current value
-    CKEDITOR.tools.addFunction = function(fn, scope)
-    {
-        if(scope && scope._ && scope._.attrChanges && scope._.detach)
-        {
-            var scope_reference = scope;
-            return ckeditor_addFunction_org(function()
-                {
-                    var self = this,
-                        self_arguments=arguments;
-                    setTimeout(function()
-                        {
-                            if(self.editor)
-                            {
-                                fn.apply(self, self_arguments);
-                            }
-                        }, 0);
-                }, scope);
-        }
-        return ckeditor_addFunction_org(fn, scope);
-    };
-
-    CKEDITOR.on('dialogDefinition', function(e)
-        {
-            _.each(e.data.definition.contents, function(element)
-                {
-                    if(!element || element.filebrowser!='uploadButton')
-                    {
-                        return
-                    }
-                    _.each(element.elements, function(element)
-                        {
-                            if(!element.onClick || element.type!='fileButton')
-                            {
-                                return
-                            }
-                            var onClick_org = element.onClick;
-                            element.onClick = function(e1)
-                            {
-                                onClick_org.apply(this, arguments);
-                                _.each(jQuery('#'+this.domId).closest('table')
-                                    .find('iframe').contents().find(':file')
-                                    .get(0).files,
-                                    function(file)
-                                    {
-                                        var reader = new FileReader();
-                                        reader.onload = function(load_event)
-                                        {
-                                            CKEDITOR.tools.callFunction(
-                                                e.editor._.filebrowserFn,
-                                                load_event.target.result,
-                                                '');
-                                        }
-                                        reader.readAsDataURL(file);
-                                    });
-                                return false;
-                            }
-                        });
-                });
-        });
-    function filter_html(value, ckeditor_filter, ckeditor_writer)
-    {
-        var fragment = CKEDITOR.htmlParser.fragment.fromHtml(value);
-        ckeditor_filter.applyTo(fragment);
-        ckeditor_writer.reset();
-        fragment.writeHtml(ckeditor_writer);
-        return ckeditor_writer.getHtml();
-    };
-
-    var default_ckeditor_filter = new CKEDITOR.filter(
-        {
-            '*':
-            {
-                attributes: 'href,src,style,alt,width,height,dir',
-                styles: '*',
-                classes: '*',
-            },
-            'html head title meta style body p div span a h1 h2 h3 h4 h5 img br hr table tr th td ul ol li dd dt strong pre b i': true,
-        });
-    var default_ckeditor_writer = new CKEDITOR.htmlParser.basicWriter();
     var FieldCKEditor4 = core.form_widget_registry.get('text').extend({
         ckeditor_config: function () {
-          return {
-              removePlugins: this._getRemovePlugins(),
-              removeButtons: this._getRemoveButtons(),
-              filebrowserImageUploadUrl: 'dummy',
-              extraPlugins: 'filebrowser',
-              // this is '#39' per default which screws up single quoted text in ${}
-              entities_additional: ''
-          };
+            return {
+                removePlugins: this._getRemovePlugins(),
+                removeButtons: this._getRemoveButtons(),
+                filebrowserImageUploadUrl: 'dummy',
+                extraPlugins: 'filebrowser',
+                // this is '#39' per default which screws up single quoted text in ${}
+                entities_additional: ''
+            };
         },
-        ckeditor_filter: default_ckeditor_filter,
-        ckeditor_writer: default_ckeditor_writer,
+        ckeditor_filter: ckconfig.default_ckeditor_filter,
+        ckeditor_writer: ckconfig.default_ckeditor_writer,
         _getRemovePlugins: function () {
             return 'iframe,flash,forms,smiley,pagebreak,stylescombo';
         },
         _getRemoveButtons: function () {
             return '';
         },
+        init: function () {
+            this._super.apply(this, arguments);
+            this.editor_lang = session.user_context.lang.split('_')[0];
+        },
         start: function()
         {
             this._super.apply(this, arguments);
-            CKEDITOR.lang.load(session.user_context.lang.split('_')[0], 'en', function() {});
+            CKEDITOR.lang.load(this.editor_lang, 'en', function() {});
         },
         initialize_content: function()
         {
@@ -146,7 +67,7 @@ odoo.define('web_ckeditor4', function(require){
                 this.editor = CKEDITOR.replace(this.$el.get(0),
                     _.extend(
                         {
-                            language: session.user_context.lang.split('_')[0],
+                            language: this.editor_lang,
                             on:
                             {
                                 'change': function()
@@ -166,7 +87,7 @@ odoo.define('web_ckeditor4', function(require){
         },
         filter_html: function(value)
         {
-            return filter_html(value, this.ckeditor_filter, this.ckeditor_writer);
+            return ckconfig.filter_html(value, this.ckeditor_filter, this.ckeditor_writer);
         },
         render_value: function()
         {
