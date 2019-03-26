@@ -18,6 +18,7 @@ odoo.define('web_calendar_custom.renderer_setting', function (require) {
     AbstractRenderer.include({
 
         willStart: function () {
+
             /* Get configuration values from res.config.settings */
             return rpc.query({
                 model: 'res.config.settings',
@@ -32,7 +33,8 @@ odoo.define('web_calendar_custom.renderer_setting', function (require) {
 
             var self = this;
 
-            /*eslint no-extend-native: ["error", { "exceptions": ["Object"] }]*/
+            /* eslint no-extend-native:
+            ["error", { "exceptions": ["Object"] }] */
             String.prototype.toHHMMSS = function () {
                 var hour_num = parseFloat(this);
                 var hours = Math.trunc(hour_num);
@@ -49,8 +51,9 @@ odoo.define('web_calendar_custom.renderer_setting', function (require) {
 
             this.$calendar = this.$(".o_calendar_widget");
 
-            /*documentation here : http://arshaw.com/fullcalendar/docs*/
-            if (typeof this.$calendar.fullCalendar !== 'undefined' && this.$calendar.fullCalendar !== null) {
+            /* Documentation here : http://arshaw.com/fullcalendar/docs */
+            if (typeof this.$calendar.fullCalendar !== 'undefined' &&
+            this.$calendar.fullCalendar !== null) {
 
                 var fc_options = $.extend({}, this.state.fc_options, {
 
@@ -64,7 +67,8 @@ odoo.define('web_calendar_custom.renderer_setting', function (require) {
                         self.trigger_up('openEvent', event);
                         self.$calendar.fullCalendar('unselect');
                     },
-                    select: function (target_date, end_date, event, _js_event, _view) {
+                    select: function (target_date,
+                                        end_date, event, _js_event, _view) {
                         var data = {'start': target_date, 'end': end_date};
                         if (self.state.context.default_name) {
                             data.title = self.state.context.default_name;
@@ -74,7 +78,8 @@ odoo.define('web_calendar_custom.renderer_setting', function (require) {
                     },
                     eventRender: function (event, element) {
                         var $render = $(self._eventRender(event));
-                        event.title = $render.find('.o_field_type_char:first').text();
+                        event.title = $render.find('.o_field_type_char:first')
+                        .text();
 
                         element.find('.fc-content').html($render.html());
                         element.addClass($render.attr('class'));
@@ -82,24 +87,32 @@ odoo.define('web_calendar_custom.renderer_setting', function (require) {
                         if (!event.allDay) {
                             var start = event.r_start || event.start;
                             var end = event.r_end || event.end;
-                            var timeFormat = _t.database.parameters.time_format.search("%H") !== -1 ? 'HH:mm': 'h:mma';
-                            display_hour = start.format(timeFormat) + ' - ' + end.format(timeFormat);
+                            var timeFormat = _t.database.parameters
+                            .time_format
+                            .search("%H") != -1 ? 'HH:mm': 'h:mma';
+                            display_hour = start.format(timeFormat) + ' - '
+                            + end.format(timeFormat);
                             if (display_hour === '00:00 - 00:00') {
                                 display_hour = _t('All day');
                             }
                         }
-                        element.find('.fc-content .fc-time').text(display_hour);
+                        element.find('.fc-content .fc-time')
+                        .text(display_hour);
                     },
                     eventAfterAllRender: function () {
                         $(window).trigger('resize');
                     },
                     viewRender: function (view) {
 
-                        /*compute mode from view.name which is either 'month', 'agendaWeek' or 'agendaDay'*/
-                        var mode = view.name === 'month' ? 'month' : (view.name === 'agendaWeek' ? 'week' : 'day');
+                        /* Compute mode from view.name which is either 'month',
+                         'agendaWeek' or 'agendaDay' */
+                        var mode = view.name === 'month' ? 'month' :
+                        (view.name === 'agendaWeek' ? 'week' : 'day');
 
-                        /*compute title: in week mode, display the week number*/
-                        var title = mode === 'week' ? view.intervalStart.week() : view.title;
+                        /* Compute title: in week mode,
+                        display the week number */
+                        var title = mode === 'week' ? view.intervalStart.week()
+                        : view.title;
                         self.trigger_up('viewUpdated', {
                             mode: mode,
                             title: title,
@@ -108,10 +121,14 @@ odoo.define('web_calendar_custom.renderer_setting', function (require) {
                     height: 'parent',
                     unselectAuto: false,
                     editable: true,
-                    minTime: String(config_values.calendar_start_time).toHHMMSS(),
-                    maxTime: String(config_values.calendar_end_time).toHHMMSS(),
-                    scrollTime: String(config_values.calendar_start_work_time).toHHMMSS(),
-                    slotDuration: String(config_values.calendar_row_duration).toHHMMSS(),
+                    minTime: String(config_values.calendar_start_time)
+                    .toHHMMSS(),
+                    maxTime: String(config_values.calendar_end_time)
+                    .toHHMMSS(),
+                    scrollTime: String(config_values.calendar_start_work_time)
+                    .toHHMMSS(),
+                    slotDuration: String(config_values.calendar_row_duration)
+                    .toHHMMSS(),
                     firstDay: String(config_values.calendar_first_day_of_week),
                     weekends: config_values.is_weekend_active,
                     slotEventOverlap: config_values.is_event_overlap,
