@@ -14,16 +14,13 @@ Calendar settings customization
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/12.0/web_widget_color
+    :target: https://github.com/OCA/web/tree/11.0
     :alt: OCA/web
-.. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-12-0/web-12-0-web_widget_color
-    :alt: Translate me on Weblate
-.. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/162/12.0
+.. |badge4| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
+    :target: http://3363627-1199-bfbfa7.runbot1.odoo-community.org/web/login
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5|
+|badge1| |badge2| |badge3| |badge4|
 
 This module allow changing Odoo default calendar settings (based on Javascript library "http://fullcalendar.io/")
 

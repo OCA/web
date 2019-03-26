@@ -1,5 +1,5 @@
-# Copyright 2018 Savoir-faire Linux
-# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+# Copyright 2019 Savoir-faire Linux
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import api, fields, models, _
 
