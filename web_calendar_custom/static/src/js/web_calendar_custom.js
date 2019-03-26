@@ -39,12 +39,12 @@ odoo.define('web_calendar_custom.renderer_setting', function (require) {
                 var minutes = (hour_num - hours) * 60;
 
                 if (hours < 10) {
-                    hours = `0` + hours;
+                    hours = '0' + hours;
                 }
                 if (minutes < 10) {
-                    minutes = `0` + minutes;
+                    minutes = '0' + minutes;
                 }
-                return hours + `:` + minutes + `:` + `00`;
+                return hours + ':' + minutes + ':' + '00';
             };
 
             this.$calendar = this.$(".o_calendar_widget");
@@ -83,7 +83,7 @@ odoo.define('web_calendar_custom.renderer_setting', function (require) {
                             var start = event.r_start || event.start;
                             var end = event.r_end || event.end;
                             var timeFormat = _t.database.parameters.time_format.search("%H") !== -1 ? 'HH:mm': 'h:mma';
-                            display_hour = start.format(timeFormat) + ` - ` + end.format(timeFormat);
+                            display_hour = start.format(timeFormat) + ' - ' + end.format(timeFormat);
                             if (display_hour === '00:00 - 00:00') {
                                 display_hour = _t('All day');
                             }
