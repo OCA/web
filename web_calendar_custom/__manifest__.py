@@ -1,4 +1,4 @@
-# © 2018 Savoir-faire Linux
+# Copyright 2018 Savoir-faire Linux
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/LGPL).
 
 {
@@ -6,7 +6,7 @@
     'version': '11.0.1.0.0',
     'author': 'Savoir-faire Linux',
     'maintainer': 'Savoir-faire Linux',
-    'website': 'https://www.savoirfairelinux.com',
+    'website': 'https://github.com/OCA/web',
     'license': 'LGPL-3',
     'category': 'Web',
     'summary': 'Change default calendar settings',
