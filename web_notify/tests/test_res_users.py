@@ -6,7 +6,7 @@ import json
 import mock
 from odoo import exceptions
 from odoo.addons.bus.models.bus import json_dump
-from odoo.addons.web_notify_extended.models.res_users import NotificationType
+from odoo.addons.web_notify.models.res_users import NotificationType
 from odoo.tests import common
 
 
