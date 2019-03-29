@@ -16,7 +16,7 @@ odoo.define("web_access_rule_buttons.main", function (require) {
                 model: this.modelName,
                 method: 'check_access_rule_all',
                 args: [[this.initialState.data.id], ["write"]],
-            }).then (function(accesses) {
+            }).then(function (accesses) {
                 self.show_hide_edit_button(accesses.write);
             });
         },
