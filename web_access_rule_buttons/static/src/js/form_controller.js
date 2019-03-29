@@ -6,11 +6,9 @@ odoo.define("web_access_rule_buttons.main", function(require) {
     var FormController = require("web.FormController");
     FormController.include({
 
-        _update: function () {
+        _update: function (state) {
             var self = this;
-            var ret = this._super.apply(this, arguments);
-            self.show_hide_buttons();
-            return ret;
+            return this._super(state).then(self.proxy('show_hide_buttons'));
         },
         show_hide_buttons : function() {
             var self = this;
