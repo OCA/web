@@ -27,7 +27,7 @@ odoo.define("web_access_rule_buttons.main", function (require) {
                     button.prop("disabled", !access);
                 }
             }
-        };
+        },
 
     });
 });
