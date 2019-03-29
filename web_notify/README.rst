@@ -23,11 +23,11 @@ Web Notify
     :target: https://runbot.odoo-community.org/runbot/162/12.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 Send instant notification messages to the user in live.
 
-This technical module allows you to send instant notification messages from the server to the user in live. 
+This technical module allows you to send instant notification messages from the server to the user in live.
 Two kinds of notification are supported.
 
 * Warning: Displayed in a red flying popup div
@@ -50,13 +50,13 @@ Usage
 To send a notification to the user you just need to call one of the new methods defined on res.users:
 
 .. code-block:: python
-  
+
    self.env.user.notify_info(message='My information message')
 
-or 
+or
 
 .. code-block:: python
-  
+
    self.env.user.notify_warning(message='My marning message')
 
 .. figure:: https://raw.githubusercontent.com/OCA/web/12.0/web_notify/static/description/notifications_screenshot.png
