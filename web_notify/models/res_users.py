@@ -78,7 +78,8 @@ class ResUsers(models.Model):
             raise exceptions.UserError(
                 _("Sending a notification to another user is forbidden.")
             )
-        channel_name_field = "notify_{}_channel_name".format(type_message.value)
+        channel_name_field = "notify_{}_channel_name".format(
+            type_message.value)
         bus_message = {
             "type": type_message.value,
             "message": message,
