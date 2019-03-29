@@ -36,15 +36,21 @@ class ResUsers(models.Model):
     notify_info_channel_name = fields.Char(compute="_compute_channel_names")
     notify_default_channel_name = fields.Char(compute="_compute_channel_names")
 
-    def notify_success(self, message="Default message", title=None, sticky=False):
+    def notify_success(
+        self, message="Default message", title=None, sticky=False
+    ):
         title = title or _("Success")
         self._notify_channel(NotificationType.SUCCESS, message, title, sticky)
 
-    def notify_danger(self, message="Default message", title=None, sticky=False):
+    def notify_danger(
+        self, message="Default message", title=None, sticky=False
+    ):
         title = title or _("Danger")
         self._notify_channel(NotificationType.DANGER, message, title, sticky)
 
-    def notify_warning(self, message="Default message", title=None, sticky=False):
+    def notify_warning(
+        self, message="Default message", title=None, sticky=False
+    ):
         title = title or _("Warning")
         self._notify_channel(NotificationType.WARNING, message, title, sticky)
 
@@ -52,15 +58,34 @@ class ResUsers(models.Model):
         title = title or _("Information")
         self._notify_channel(NotificationType.INFO, message, title, sticky)
 
-    def notify_default(self, message="Default message", title=None, sticky=False):
+    def notify_default(
+        self, message="Default message", title=None, sticky=False
+    ):
         title = title or _("Default")
         self._notify_channel(NotificationType.DEFAULT, message, title, sticky)
 
-    def _notify_channel(self, type_message=NotificationType.DEFAULT, message=DEFAULT_MESSAGE, title=None, sticky=False):
+    def _notify_channel(
+        self,
+        type_message=NotificationType.DEFAULT,
+        message=DEFAULT_MESSAGE,
+        title=None,
+        sticky=False,
+    ):
         # pylint: disable=protected-access
-        if not self.env.user._is_admin() and any(user.id != self.env.uid for user in self):
-            raise exceptions.UserError(_("Sending a notification to another user is forbidden."))
+        if not self.env.user._is_admin() and any(
+            user.id != self.env.uid for user in self
+        ):
+            raise exceptions.UserError(
+                _("Sending a notification to another user is forbidden.")
+            )
         channel_name_field = "notify_{}_channel_name".format(type_message.value)
-        bus_message = {"type": type_message.value, "message": message, "title": title, "sticky": sticky}
-        notifications = [(record[channel_name_field], bus_message) for record in self]
+        bus_message = {
+            "type": type_message.value,
+            "message": message,
+            "title": title,
+            "sticky": sticky,
+        }
+        notifications = [
+            (record[channel_name_field], bus_message) for record in self
+        ]
         self.env["bus.bus"].sendmany(notifications)
