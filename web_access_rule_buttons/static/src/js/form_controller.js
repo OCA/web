@@ -2,9 +2,9 @@
  * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
 
 odoo.define("web_access_rule_buttons.main", function(require) {
-	"use strict";
-	var FormController = require("web.FormController");
-	FormController.include({
+    "use strict";
+    var FormController = require("web.FormController");
+    FormController.include({
 
         _update: function () {
             var self = this;
@@ -12,8 +12,8 @@ odoo.define("web_access_rule_buttons.main", function(require) {
             self.show_hide_buttons();
             return ret;
         },
-		show_hide_buttons : function() {
-			var self = this;
+        show_hide_buttons : function() {
+            var self = this;
             return self._rpc({
                 model: this.modelName,
                 method: 'check_access_rule_all',
@@ -21,15 +21,15 @@ odoo.define("web_access_rule_buttons.main", function(require) {
             }).then(function(accesses) {
                 self.show_hide_edit_button(accesses.write);
             });
-		},
-		show_hide_edit_button : function(access) {
-			if (this.$buttons) {
-				var button = this.$buttons.find(".o_form_button_edit");
-				if (button) {
-					button.prop("disabled", !access);
-				}
-			}
-		}
+        },
+        show_hide_edit_button : function(access) {
+            if (this.$buttons) {
+                var button = this.$buttons.find(".o_form_button_edit");
+                if (button) {
+                    button.prop("disabled", !access);
+                }
+            }
+        }
 
-	});
+    });
 });
