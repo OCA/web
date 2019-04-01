@@ -1,0 +1,11 @@
+<odoo>
+    <!-- Prefixed Widget Asset-->
+    <template id="assets_widget_prefixed_url" inherit_id="web.assets_backend"
+              name="Widget Prefixed URL assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript"
+                    src="/web_widget_prefixed_url/static/src/js/widget_prefixed_url.js"/>
+        </xpath>
+    </template>
+
+</odoo>
