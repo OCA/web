@@ -6,7 +6,7 @@ import json
 import mock
 from odoo import exceptions
 from odoo.addons.bus.models.bus import json_dump
-from ..models.res_users import NotificationType
+from ..models.res_users import SUCCESS, DANGER, WARNING, INFO, DEFAULT
 from odoo.tests import common
 
 
@@ -25,7 +25,7 @@ class TestResUsers(common.TransactionCase):
         self.env.user.notify_success(**test_msg)
         news = bus_bus.search(domain) - existing
         self.assertEqual(1, len(news))
-        test_msg.update({"type": NotificationType.SUCCESS.value})
+        test_msg.update({"type": SUCCESS})
         self.assertDictEqual(test_msg, json.loads(news.message))
 
     def test_notify_danger(self):
@@ -42,7 +42,7 @@ class TestResUsers(common.TransactionCase):
         self.env.user.notify_danger(**test_msg)
         news = bus_bus.search(domain) - existing
         self.assertEqual(1, len(news))
-        test_msg.update({"type": NotificationType.DANGER.value})
+        test_msg.update({"type": DANGER})
         self.assertDictEqual(test_msg, json.loads(news.message))
 
     def test_notify_warning(self):
@@ -59,7 +59,7 @@ class TestResUsers(common.TransactionCase):
         self.env.user.notify_warning(**test_msg)
         news = bus_bus.search(domain) - existing
         self.assertEqual(1, len(news))
-        test_msg.update({"type": NotificationType.WARNING.value})
+        test_msg.update({"type": WARNING})
         self.assertDictEqual(test_msg, json.loads(news.message))
 
     def test_notify_info(self):
@@ -72,7 +72,7 @@ class TestResUsers(common.TransactionCase):
         self.env.user.notify_info(**test_msg)
         news = bus_bus.search(domain) - existing
         self.assertEqual(1, len(news))
-        test_msg.update({"type": NotificationType.INFO.value})
+        test_msg.update({"type": INFO})
         self.assertDictEqual(test_msg, json.loads(news.message))
 
     def test_notify_default(self):
@@ -89,7 +89,7 @@ class TestResUsers(common.TransactionCase):
         self.env.user.notify_default(**test_msg)
         news = bus_bus.search(domain) - existing
         self.assertEqual(1, len(news))
-        test_msg.update({"type": NotificationType.DEFAULT.value})
+        test_msg.update({"type": DEFAULT})
         self.assertDictEqual(test_msg, json.loads(news.message))
 
     def test_notify_many(self):
