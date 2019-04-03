@@ -2,6 +2,7 @@ odoo.define('web_notify.WebClient', function (require) {
     "use strict";
 
     var WebClient = require('web.WebClient');
+    var base_bus = require('bus.Longpolling');
     var session = require('web.session');
     require('bus.BusService');
 
@@ -33,10 +34,10 @@ odoo.define('web_notify.WebClient', function (require) {
             _.each(notifications, function (notification) {
                 // Not used: var channel = notification[0];
                 var message = notification[1];
-                self.on_message_received(message);
+                self.on_message(message);
             });
         },
-        on_message_received: function (message) {
+        on_message: function (message) {
             return this.call(
                 'notification', 'notify', {
                     type: message.type,
