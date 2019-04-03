@@ -19,9 +19,10 @@ odoo.define('web_export_view', function (require) {
                 session.user_has_group(
                     'web_export_view.group_disallow_export_view_data_excel')
                     .then(function (has_group) {
-                        if (!has_group) {
+                        var export_btn = self.$el.find('.export_treeview_xls');
+                        if (!has_group && !export_btn.length) {
                             self.$el.find('.o_dropdown')
-                                .last().append(QWeb.render(
+                                .parent().append(QWeb.render(
                                     'WebExportTreeViewXls', {widget: self}));
                             self.$el.find('.export_treeview_xls').on('click',
                                 self.on_sidebar_export_treeview_xls);
@@ -54,17 +55,14 @@ odoo.define('web_export_view', function (require) {
             var export_columns_names = [];
             var column_index = 0;
             var column_header_selector = '';
-            var isGrouped = view.renderer.state.groupedBy.length > 0;
             $.each(view.renderer.columns, function () {
                 if (this.tag === 'field' &&
                     (this.attrs.widget === undefined ||
                         this.attrs.widget !== 'handle')) {
                     export_columns_keys.push(column_index);
-                    var css_selector_index = isGrouped
-                        ? column_index+1 : column_index;
                     column_header_selector = '.o_list_view > thead > tr> ' +
                         'th:not([class*="o_list_record_selector"]):eq(' +
-                        css_selector_index + ')';
+                        column_index + ')';
                     export_columns_names.push(
                         view.$el.find(column_header_selector)[0].textContent);
                 }
