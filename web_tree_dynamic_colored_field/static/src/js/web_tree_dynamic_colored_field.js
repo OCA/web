@@ -2,7 +2,7 @@ odoo.define('web_tree_dynamic_colored_field', function (require) {
     'use strict';
 
     var ListRenderer = require('web.ListRenderer');
-    var pyeval = require('web.pyeval');
+    var pyUtils = require("web.py_utils");
 
     ListRenderer.include({
         /**
@@ -12,8 +12,7 @@ odoo.define('web_tree_dynamic_colored_field', function (require) {
          */
         _renderBody: function () {
             if (this.arch.attrs.colors) {
-                var colorAttr = this.arch.attrs.colors.split(';')
-                    .filter(color >= color.trim().startsWith('color_field'));
+                var colorAttr = this.arch.attrs.colors.split(';');
                 if (colorAttr.length > 0) {
                     var colorField = colorAttr[0].split(':')[1].trim();
                     // validate the presence of that field in tree view
@@ -57,7 +56,7 @@ odoo.define('web_tree_dynamic_colored_field', function (require) {
             if (node.tag !== 'field') { return; }
             var nodeOptions = node.attrs.options;
             if (!_.isObject(nodeOptions)) {
-                nodeOptions = pyeval.py_eval(nodeOptions);
+                nodeOptions = pyUtils.py_eval(nodeOptions);
             }
             this.applyColorizeHelper($td, nodeOptions, node, 'fg_color', 'color', ctx);
             this.applyColorizeHelper($td, nodeOptions, node, 'bg_color', 'background-color', ctx);
@@ -115,7 +114,7 @@ odoo.define('web_tree_dynamic_colored_field', function (require) {
             var ctx = _.extend(
                 {},
                 record.data,
-                pyeval.context()
+                pyUtils.context()
             );
             for (var key in ctx) {
                 var value = ctx[key];
