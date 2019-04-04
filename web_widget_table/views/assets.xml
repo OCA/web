@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr=".">
+            <link href="/web_widget_table/static/css/web_widget.css"
+                  rel="stylesheet"/>
+            <link href="/web_widget_table/static/css/dt-1.10.18-datatables.css"
+                  rel="stylesheet"/>
+            <script type="text/javascript" src="/web_widget_table/static/jsdt-1.10.18-datatables.js"></script>
+            <script type="text/javascript" src="/web_widget_table/static/js/web_widget_table.js"></script>
+        </xpath>
+    </template>
+</odoo>
