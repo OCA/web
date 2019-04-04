@@ -1,4 +1,4 @@
-# Copyright 2018 Carlos Dauden - Tecnativa <carlos.dauden@tecnativa.com>
+# Copyright 2019 Creu Blanca
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 {
