@@ -426,7 +426,7 @@ html .o_web_client .o_main .o_main_content {
                     overflow: auto;
 
                     .o_chatter_header_container {
-                        padding-top: $grid-gutter-width*0.5;
+                        padding-top: $grid-gutter-width * 0.5;
                         top: 0;
                         position: sticky;
                         background-color: $o-view-background-color;
@@ -438,7 +438,7 @@ html .o_web_client .o_main .o_main_content {
 
                         .o_attachments_previews {
                             overflow: auto;
-                            max-height: $o-mail-attachment-image-size * 2 * 3;
+                            max-height: $o-mail-attachment-image-size * 6;
                         }
                     }
                 }
