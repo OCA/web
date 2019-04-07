@@ -6,7 +6,7 @@
     "name": "Web Responsive",
     "summary": "It provides a mobile compliant interface for Odoo Community "
                "web",
-    "version": "11.0.2.0.2",
+    "version": "11.0.2.0.3",
     "category": "Website",
     "website": "https://github.com/OCA/web",
     "author": "LasLabs, Tecnativa, Alexandre Díaz, "
