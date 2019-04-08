@@ -41,14 +41,12 @@ msgstr "Informação"
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users__notify_danger_channel_name
 #, fuzzy
-#| msgid "Notify Warning Channel Name"
 msgid "Notify Danger Channel Name"
 msgstr "Notificar o nome do canal de alerta"
 
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users__notify_default_channel_name
 #, fuzzy
-#| msgid "Notify Info Channel Name"
 msgid "Notify Default Channel Name"
 msgstr "Notificar o nome do canal de informações"
 
@@ -60,7 +58,6 @@ msgstr "Notificar o nome do canal de informações"
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users__notify_success_channel_name
 #, fuzzy
-#| msgid "Notify Info Channel Name"
 msgid "Notify Success Channel Name"
 msgstr "Notificar o nome do canal de informações"
 
