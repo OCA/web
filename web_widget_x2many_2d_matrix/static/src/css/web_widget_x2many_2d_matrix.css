@@ -6,3 +6,7 @@
 {
     white-space: normal;
 }
+.widget_x2many_hide_xy
+{
+    display: none !important;
+}
