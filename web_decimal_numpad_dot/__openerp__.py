@@ -18,21 +18,17 @@
 
 {
     "name": "Web - Numpad Dot as decimal separator",
-    "version": "1.0",
+    "version": "8.0.1.0.0",
     "depends": [
         "web",
     ],
-    "author": "OdooMRP team, "
-              "AvanzOSC, "
-              "Serv. Tecnol. Avanzados - Pedro M. Baeza",
-    "website": "http://www.odoomrp.com",
-    "contributors": [
-        "Oihane Crucelaegui <oihanecrucelaegi@avanzosc.es>",
-        "Pedro M. Baeza <pedro.baeza@serviciosbaeza.com>",
-        "Ana Juaristi <anajuaristi@avanzosc.es>",
-    ],
+    "author": "AvanzOSC,"
+              "Tecnativa,"
+              "Comunitea Servicios Tecnológicos,"
+              "Odoo Community Association (OCA)",
+    "website": "http://github.com/OCA/web",
     "category": "Custom Module",
-    "summary": "",
+    "license": "AGPL-3",
     "data": [
         "views/web_decimal_numpad_dot.xml",
     ],
