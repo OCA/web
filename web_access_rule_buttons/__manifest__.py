@@ -14,6 +14,6 @@
     "website": "https://github.com/OCA/web/tree/11.0/web_access_rule_buttons",
     "data": [
         "views/web_access_rule_buttons.xml",
-     ],
+    ],
     "installable": True,
 }
