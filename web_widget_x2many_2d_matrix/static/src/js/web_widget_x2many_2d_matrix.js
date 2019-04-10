@@ -371,6 +371,13 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
                     this.proxy(this.many2one_axis_click),
                     this.field_y_axis, 'y'));
             }
+            if(this.fields[this.field_value])
+            {
+                this.$el.find('tbody tr td[data-x]').addClass('oe_link')
+                .click(_.partial(
+                    this.proxy(this.xy_axis_click),
+                    this.field_value));
+            }
         },
 
         many2one_axis_click: function(field, id_attribute, e)
@@ -383,6 +390,35 @@ openerp.web_widget_x2many_2d_matrix = function(instance)
                 views: [[false, 'form']],
                 target: 'current',
             })
+        },
+
+        xy_axis_click: function(field, e)
+        {
+            var self = this;
+            var pop = new instance.web.form.FormOpenPopup(self);
+            var context = self.build_context().eval();
+            var model_obj = new instance.web.Model(self.field.relation);
+            model_obj.call('get_formview_id', [self.get("value"), context]).then(function(view_id){
+                pop.show_element(
+                    self.field.relation,
+                    self.get_xy_id(
+                        jQuery(e.currentTarget).data('x'),
+                        jQuery(e.currentTarget).data('y')
+                    ),
+                    self.build_context(),
+                    {
+                        title: _t("Open: ") + self.string,
+                        view_id: view_id
+                    }
+                );
+                pop.on('write_completed', self, function(){
+                    self.display_value = {};
+                    self.display_value_backup = {};
+                    self.render_value();
+                    self.focus();
+                    self.trigger('changed_value');
+                });
+            });
         },
 
         start: function()
