@@ -30,6 +30,7 @@ addon | version | summary
 [web_copy_confirm](web_copy_confirm/) | 8.0.1.0.0 | Show confirmation dialogue before copying records
 [web_dashboard_open_action](web_dashboard_open_action/) | 8.0.1.0.0 | Adds a button to open a dashboard in full mode
 [web_dashboard_tile](web_dashboard_tile/) | 8.0.4.0.0 | Add Tiles to Dashboard
+[web_decimal_numpad_dot](web_decimal_numpad_dot/) | 8.0.1.0.0 | Web - Numpad Dot as decimal separator
 [web_dialog_size](web_dialog_size/) | 8.0.0.1.0 | A module that lets the user expand a dialog box to the full screen width.
 [web_dom_model_classes](web_dom_model_classes/) | 8.0.1.0.0 | Allows small UI changes with simple CSS
 [web_easy_switch_company](web_easy_switch_company/) | 8.0.1.0.0 | Multicompany - Easy Switch Company
