@@ -1,17 +1,19 @@
-# -*- coding: utf-8 -*-
-# © 2016 Camptocamp SA
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
+# Copyright 2016 Camptocamp SA
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-{'name': 'Web Access Rules Buttons',
- 'summary': 'Disable Edit button if access rules prevent this action',
- 'version': '10.0.1.0.0',
- 'author': 'Camptocamp,Odoo Community Association (OCA)',
- 'license': 'AGPL-3',
- 'category': 'Web',
- 'depends': ['web',
-             ],
- 'website': 'http://www.camptocamp.com',
- 'data': ['views/web_access_rule_buttons.xml',
-          ],
- 'installable': True,
- }
+{
+    "name": "Web Access Rules Buttons",
+    "summary": "Disable Edit button if access rules prevent this action",
+    "version": "11.0.1.0.0",
+    "author": "Camptocamp, Onestein, Odoo Community Association (OCA)",
+    "license": "AGPL-3",
+    "category": "Web",
+    "depends": [
+        "web",
+    ],
+    "website": "https://github.com/OCA/web/tree/11.0/web_access_rule_buttons",
+    "data": [
+        "views/web_access_rule_buttons.xml",
+    ],
+    "installable": True,
+}
