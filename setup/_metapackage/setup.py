@@ -20,6 +20,7 @@ setuptools.setup(
         'odoo8-addon-web_copy_confirm',
         'odoo8-addon-web_dashboard_open_action',
         'odoo8-addon-web_dashboard_tile',
+        'odoo8-addon-web_decimal_numpad_dot',
         'odoo8-addon-web_dialog_size',
         'odoo8-addon-web_dom_model_classes',
         'odoo8-addon-web_easy_switch_company',
