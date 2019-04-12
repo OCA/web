@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="web_edit_mode assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/web_edit_mode/static/src/js/web_edit_mode_view.js"></script>
+        </xpath>
+    </template>
+
+</odoo>

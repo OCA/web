@@ -1,0 +1,48 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* web_edit_mode
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-04-12 12:35+0000\n"
+"PO-Revision-Date: 2019-04-12 12:35+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_edit_mode
+#. openerp-web
+#: code:addons/web_edit_mode/static/src/xml/web_edit_mode_view.xml:7
+#, python-format
+msgid "Create"
+msgstr ""
+
+#. module: web_edit_mode
+#: model:ir.model.fields,field_description:web_edit_mode.field_res_users_context_default_view_mode
+msgid "Default view mode"
+msgstr ""
+
+#. module: web_edit_mode
+#: selection:res.users,context_default_view_mode:0
+msgid "Edit-Mode"
+msgstr ""
+
+#. module: web_edit_mode
+#: model:ir.model.fields,help:web_edit_mode.field_res_users_context_default_view_mode
+msgid "Set the default mode when form views are opened."
+msgstr ""
+
+#. module: web_edit_mode
+#: model:ir.model,name:web_edit_mode.model_res_users
+msgid "Users"
+msgstr ""
+
+#. module: web_edit_mode
+#: selection:res.users,context_default_view_mode:0
+msgid "View-Mode"
+msgstr ""
