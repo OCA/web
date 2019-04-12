@@ -7,6 +7,7 @@ odoo.define('web_tree_duplicate', function (require) {
     var _t = core._t;
     var ListController = require('web.ListController');
     var ListView = require('web.ListView');
+    var search_inputs = require('web.search_inputs');
 
 
     ListView.include({
@@ -73,7 +74,27 @@ odoo.define('web_tree_duplicate', function (require) {
                 done.push(self.model.duplicateRecord(id));
             });
             return $.when.apply($, done).done(function () {
-                self.update({});
+                var dataPoints = arguments;
+                var ids = _.map(dataPoints, function (dataPoint) {
+                    return self.model.localData[dataPoint].res_id;
+                });
+                var filter = {
+                    attrs: {
+                        domain: JSON.stringify([['id', 'in', ids]]),
+                        string: _t('Duplicated Records')
+                    }
+                }
+                var filterWidget = new search_inputs.Filter(filter);
+
+                var filterGroup = new search_inputs.FilterGroup(
+                    [filterWidget],
+                    self.searchView,
+                    self.searchView.intervalMapping,
+                    self.searchView.periodMapping
+                );
+
+                var facet = filterGroup.make_facet([filterGroup.make_value(filter)]);
+                self.searchView.query.add([facet]);
             });
         },
     });
