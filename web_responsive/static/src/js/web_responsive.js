@@ -72,6 +72,7 @@ odoo.define('web_responsive', function (require) {
     AppsMenu.include({
         events: _.extend({
             "keydown .search-input input": "_searchResultsNavigate",
+            "input .search-input input": "_searchMenusSchedule",
             "click .o-menu-search-result": "_searchResultChosen",
             "shown.bs.dropdown": "_searchFocus",
             "hidden.bs.dropdown": "_searchReset",
@@ -217,17 +218,15 @@ odoo.define('web_responsive', function (require) {
          * @param {jQuery.Event} event
          */
         _searchResultsNavigate: function (event) {
-            // Exit soon when not navigating results
-            if (this.$search_results.html().trim() === "") {
-                // Just in case it is the 1st search
-                this._searchMenusSchedule();
-                return;
-            }
             // Find current results and active element (1st by default)
             var all = this.$search_results.find(".o-menu-search-result"),
                 pre_focused = all.filter(".active") || $(all[0]),
                 offset = all.index(pre_focused),
                 key = event.key;
+            // Keyboard navigation only supports search results
+            if (!all.length) {
+                return;
+            }
             // Transform tab presses in arrow presses
             if (key === "Tab") {
                 event.preventDefault();
@@ -245,12 +244,8 @@ odoo.define('web_responsive', function (require) {
             case "ArrowDown":
                 offset++;
                 break;
-            // Other keys trigger a search
             default:
-                // All keys that write a character have length 1
-                if (key.length === 1 || key === "Backspace") {
-                    this._searchMenusSchedule();
-                }
+                // Other keys are useless in this event
                 return;
             }
             // Allow looping on results
