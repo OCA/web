@@ -25,6 +25,7 @@ setuptools.setup(
         'odoo10-addon-web_environment_ribbon',
         'odoo10-addon-web_export_view',
         'odoo10-addon-web_favicon',
+        'odoo10-addon-web_fullscreen',
         'odoo10-addon-web_hide_db_manager_link',
         'odoo10-addon-web_ir_actions_act_window_message',
         'odoo10-addon-web_ir_actions_act_window_page',
