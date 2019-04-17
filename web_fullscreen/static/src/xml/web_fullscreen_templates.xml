@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+    <t t-extend="ControlPanel">
+        <t t-jquery=".o_cp_switch_buttons" t-operation="after">
+            <div class="btn-group btn-group-sm o_cp_fullscreen">
+                <button class="btn btn-icon fa fa-lg fa-tablet"
+                   data-toggle="tooltip" data-placement="top"
+                   aria-expanded="false" href="#">
+                        <i title="Fullscreen Mode"
+                           aria-hidden="true"/>
+                </button>
+            </div>
+        </t>
+    </t>
+</templates>
