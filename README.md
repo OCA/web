@@ -35,6 +35,7 @@ addon | version | summary
 [web_environment_ribbon](web_environment_ribbon/) | 10.0.1.0.0 | Web Environment Ribbon
 [web_export_view](web_export_view/) | 10.0.1.0.0 | Web Export Current View
 [web_favicon](web_favicon/) | 10.0.1.0.0 | Allows to set a custom shortcut icon (aka favicon)
+[web_fullscreen](web_fullscreen/) | 10.0.1.0.0 | Adds a fullscreen mode button
 [web_hide_db_manager_link](web_hide_db_manager_link/) | 10.0.1.0.0 | Hide link to database manager in login screen
 [web_ir_actions_act_window_message](web_ir_actions_act_window_message/) | 10.0.1.0.0 | Show a message box to users
 [web_ir_actions_act_window_page](web_ir_actions_act_window_page/) | 10.0.1.0.0 | Allows a developer to trigger a pager to show the previous or next next record in the form view
