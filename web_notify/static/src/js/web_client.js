@@ -34,7 +34,9 @@ odoo.define('web_notify.WebClient', function (require) {
             _.each(notifications, function (notification) {
                 // Not used: var channel = notification[0];
                 var message = notification[1];
-                self.on_message(message);
+                if (message.type){
+                    self.on_message(message);
+                }
             });
         },
         on_message: function (message) {

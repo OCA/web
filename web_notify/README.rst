@@ -117,6 +117,7 @@ Contributors
 * Serpent Consulting Services Pvt. Ltd.<jay.vora@serpentcs.com>
 * Aitor Bouzas <aitor.bouzas@adaptivecity.com>
 * Shepilov Vladislav <shepilov.v@protonmail.com>
+* Loc Nguyen Thanh <locnt@trobz.com>
 
 Maintainers
 ~~~~~~~~~~~
