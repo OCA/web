@@ -23,6 +23,7 @@ setuptools.setup(
         'odoo12-addon-web_responsive',
         'odoo12-addon-web_searchbar_full_width',
         'odoo12-addon-web_timeline',
+        'odoo12-addon-web_tree_duplicate',
         'odoo12-addon-web_widget_color',
         'odoo12-addon-web_widget_image_download',
         'odoo12-addon-web_widget_many2many_tags_multi_selection',
