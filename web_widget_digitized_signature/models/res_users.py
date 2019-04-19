@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2004-2010 OpenERP SA (<http://www.openerp.com>)
 # Copyright 2011-2015 Serpent Consulting Services Pvt. Ltd.
 # Copyright 2017 Tecnativa - Vicent Cubells
@@ -11,17 +10,18 @@ class ResUsers(models.Model):
     _name = 'res.users'
     _inherit = ['res.users', 'mail.thread']
 
-    signature_image = fields.Binary(
+    digital_signature = fields.Binary(
         string='Signature',
+        oldname="signature_image",
     )
 
     @api.model
     def create(self, vals):
         res = super(ResUsers, self).create(vals)
-        res._track_signature(vals, 'signature_image')
+        res._track_signature(vals, 'digital_signature')
         return res
 
     @api.multi
     def write(self, vals):
-        self._track_signature(vals, 'signature_image')
+        self._track_signature(vals, 'digital_signature')
         return super(ResUsers, self).write(vals)
