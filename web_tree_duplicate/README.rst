@@ -65,7 +65,7 @@ To use this module, you need to:
 #. select some records;
 #. open the sidebar menu and click 'Duplicate'.
 
-.. image:: /web_tree_duplicate/static/description/screenshot-duplicate.png
+.. image:: https://raw.githubusercontent.com/web_tree_duplicate/static/description/screenshot-duplicate.png
 
 Bug Tracker
 ===========
@@ -107,7 +107,7 @@ promote its widespread use.
     :target: https://github.com/tarteo
     :alt: tarteo
 
-Current `maintainer <https://odoo-community.org/page/maintainer-role>`_:
+Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-tarteo| 
 
