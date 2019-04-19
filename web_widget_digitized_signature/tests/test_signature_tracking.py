@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
@@ -25,14 +24,14 @@ class TestSignatureTracking(common.SavepointCase):
         direct chatter"""
         prev_attachment_num = self.attachment_obj.search_count([])
         prev_messages = self.message_obj.search([])
-        self.user.signature_image = self.image
+        self.user.digital_signature = self.image
         current_attachment_num = self.attachment_obj.search_count([])
         self.assertEqual(current_attachment_num - prev_attachment_num, 1)
         current_messages = self.message_obj.search([])
         message = current_messages - prev_messages
         self.assertIn('Signature has been created.', message.body)
         prev_messages = current_messages
-        self.user.signature_image = False
+        self.user.digital_signature = False
         current_messages = self.message_obj.search([])
         message = current_messages - prev_messages
         self.assertIn('Signature has been deleted.', message.body)
