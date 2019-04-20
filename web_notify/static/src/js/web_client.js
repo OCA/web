@@ -19,6 +19,13 @@ odoo.define('web_notify.WebClient', function (require) {
             this.channel_warning = 'notify_warning_' + session.uid;
             this.channel_info = 'notify_info_' + session.uid;
             this.channel_default = 'notify_default_' + session.uid;
+            this.all_channels = [
+                this.channel_success,
+                this.channel_danger,
+                this.channel_warning,
+                this.channel_info,
+                this.channel_default,
+            ];
             this.call('bus_service', 'addChannel', this.channel_success);
             this.call('bus_service', 'addChannel', this.channel_danger);
             this.call('bus_service', 'addChannel', this.channel_warning);
@@ -32,9 +39,14 @@ odoo.define('web_notify.WebClient', function (require) {
         bus_notification: function (notifications) {
             var self = this;
             _.each(notifications, function (notification) {
-                // Not used: var channel = notification[0];
+                var channel = notification[0];
                 var message = notification[1];
-                self.on_message(message);
+                if (
+                    self.all_channels != null &&
+                    self.all_channels.indexOf(channel) > -1
+                ) {
+                    self.on_message(message);
+                }
             });
         },
         on_message: function (message) {
