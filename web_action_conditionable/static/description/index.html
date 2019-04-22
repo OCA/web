@@ -368,8 +368,9 @@ ul.auto-toc {
 !! changes will be overwritten.                   !!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <p><a class="reference external" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external" href="https://github.com/OCA/web/tree/8.0/web_action_conditionable"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external" href="https://translation.odoo-community.org/projects/web-8-0/web-8-0-web_action_conditionable"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external" href="https://runbot.odoo-community.org/runbot/162/8.0"><img alt="Try me on Runbot" src="https://img.shields.io/badge/runbot-Try%20me-875A7B.png" /></a></p>
-<p>This module was written to extend the functionality of actions in tree views.
-Odoo by default support:</p>
+<p>This module was written to allow developers to fine tune available actions in
+form and tree views.</p>
+<p>Odoo by default supports:</p>
 <pre class="literal-block">
 &lt;tree delete=&quot;false&quot; create=&quot;false&quot;&gt;
 </pre>
@@ -377,11 +378,18 @@ Odoo by default support:</p>
 <pre class="literal-block">
 &lt;tree delete=&quot;state=='draft'&quot;&gt;
 </pre>
-<p>you can use <cite>_group_refs</cite> to make a condition based on the user’s groups:</p>
+<p>Further, you can use <cite>_group_refs</cite> to make a condition based on the user’s
+groups:</p>
 <pre class="literal-block">
-&lt;tree delete=&quot;'base.group_user' in _group_refs&quot;&gt;
+&lt;form delete=&quot;'base.group_user' in _group_refs&quot;&gt;
 </pre>
-<p>It works in any tree view, so you can use it in One2many.</p>
+<p>You also have access to <tt class="docutils literal">_context</tt> for the current context. This way, you can
+for example craft actions that pass a context key which decides if some of the
+action buttons are shown.</p>
+<p>Note that for tree views, this will not work on a per record base, and the
+values you have access to are the values of the form the x2many field is in.</p>
+<p>You do however have access to <tt class="docutils literal">_context</tt> and <tt class="docutils literal">_group_refs</tt> in for the
+actions of standalone tree views.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
