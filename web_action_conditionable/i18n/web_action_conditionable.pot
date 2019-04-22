@@ -1,5 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
+#	* web_action_conditionable
 #
 msgid ""
 msgstr ""
@@ -11,4 +12,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: web_action_conditionable
+#. openerp-web
+#: code:addons/web_action_conditionable/static/src/js/views.js:122
+#, python-format
+msgid "Delete"
+msgstr ""
+
+#. module: web_action_conditionable
+#. openerp-web
+#: code:addons/web_action_conditionable/static/src/js/views.js:126
+#, python-format
+msgid "Duplicate"
+msgstr ""
+
+#. module: web_action_conditionable
+#: view:res.groups:web_action_conditionable.view_res_groups_form
+msgid "name != 'Access Rights'"
+msgstr ""
+
+#. module: web_action_conditionable
+#: view:res.groups:web_action_conditionable.view_res_groups_form
+msgid "name == 'Access Rights'"
+msgstr ""
 
