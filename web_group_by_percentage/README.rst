@@ -27,7 +27,7 @@ Show percentage (of total) in groups
 
 This module shows the percentage of the total sum in group by rows.
 
-.. image:: ../static/description/screenshot.png
+.. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_group_by_percentage/static/description/screenshot.png
    :alt: Printscreen of percentages in group rows
 
 **Table of contents**
