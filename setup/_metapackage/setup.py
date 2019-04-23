@@ -15,6 +15,7 @@ setuptools.setup(
         'odoo12-addon-web_edit_user_filter',
         'odoo12-addon-web_environment_ribbon',
         'odoo12-addon-web_favicon',
+        'odoo12-addon-web_group_by_percentage',
         'odoo12-addon-web_ir_actions_act_multi',
         'odoo12-addon-web_ir_actions_act_view_reload',
         'odoo12-addon-web_listview_range_select',
