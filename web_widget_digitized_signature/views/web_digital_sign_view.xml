@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="web_widget_digitized_signature_backend" name="web_widget_digitized_signature assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/web_widget_digitized_signature/static/src/js/digital_sign.js"></script>
+        </xpath>
+    </template>
+
+</odoo>

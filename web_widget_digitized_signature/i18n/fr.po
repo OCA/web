@@ -1,0 +1,99 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_widget_digitized_signature
+#
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
+# Quentin THEURET <odoo@kerpeo.com>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-07-30 02:50+0000\n"
+"PO-Revision-Date: 2017-07-30 02:50+0000\n"
+"Last-Translator: Quentin THEURET <odoo@kerpeo.com>, 2017\n"
+"Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: web_widget_digitized_signature
+#. openerp-web
+#: code:addons/web_widget_digitized_signature/static/src/xml/digital_sign.xml:7
+#, python-format
+msgid "Clear"
+msgstr "Effacer"
+
+#. module: web_widget_digitized_signature
+#. openerp-web
+#: code:addons/web_widget_digitized_signature/static/src/js/digital_sign.js:81
+#, python-format
+msgid "Could not display the selected image."
+msgstr "Impossible d'afficher l'image sélectionnée."
+
+#. module: web_widget_digitized_signature
+#: code:addons/web_widget_digitized_signature/models/mail_thread.py:33
+#, python-format
+msgid "Deletion date: %s"
+msgstr "Date de suppression : %s"
+
+#. module: web_widget_digitized_signature
+#. openerp-web
+#: code:addons/web_widget_digitized_signature/static/src/xml/digital_sign.xml:10
+#, python-format
+msgid "Draw your signature"
+msgstr "Dessinez votre signature"
+
+#. module: web_widget_digitized_signature
+#: model:ir.model,name:web_widget_digitized_signature.model_mail_thread
+msgid "Email Thread"
+msgstr "Fil du courriel"
+
+#. module: web_widget_digitized_signature
+#. openerp-web
+#: code:addons/web_widget_digitized_signature/static/src/js/digital_sign.js:81
+#, python-format
+msgid "Image"
+msgstr "Image"
+
+#. module: web_widget_digitized_signature
+#: model:ir.model.fields,field_description:web_widget_digitized_signature.field_res_users_signature_image
+msgid "Signature"
+msgstr "Signature"
+
+#. module: web_widget_digitized_signature
+#: code:addons/web_widget_digitized_signature/models/mail_thread.py:30
+#, python-format
+msgid "Signature date: %s"
+msgstr "Date de la signature : %s"
+
+#. module: web_widget_digitized_signature
+#: code:addons/web_widget_digitized_signature/models/mail_thread.py:28
+#, python-format
+msgid "Signature has been created."
+msgstr "La signature a été créée."
+
+#. module: web_widget_digitized_signature
+#: code:addons/web_widget_digitized_signature/models/mail_thread.py:32
+#, python-format
+msgid "Signature has been deleted."
+msgstr "La signature a été supprimée."
+
+#. module: web_widget_digitized_signature
+#: model:ir.model,name:web_widget_digitized_signature.model_res_users
+msgid "Users"
+msgstr "Utilisateurs"
+
+#~ msgid "Created by"
+#~ msgstr "Créé par"
+
+#~ msgid "Created on"
+#~ msgstr "Créé le"
+
+#~ msgid "Last Updated by"
+#~ msgstr "Mis à jour par"
+
+#~ msgid "Last Updated on"
+#~ msgstr "Mis à jour le"
