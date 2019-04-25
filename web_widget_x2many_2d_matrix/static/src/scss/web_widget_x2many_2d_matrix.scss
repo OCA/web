@@ -2,9 +2,13 @@
     font-weight: bold;
 }
 
-.o_x2many_2d_matrix {
+.o_form_view .o_x2many_2d_matrix.o_list_view {
     thead > tr > th {
         // Respect newline characters
         white-space: pre-line;
+    }
+
+    > tfoot > tr > td {
+        padding: 0.75rem;
     }
 }
