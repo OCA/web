@@ -4,7 +4,7 @@
 
 {
     "name": "Cache name_get",
-    "version": "10.0.1.0.0",
+    "version": "10.0.1.0.1",
     "website": "https://github.com/OCA/web",
     "author": "Akretion, "
               "Odoo Community Association (OCA)",

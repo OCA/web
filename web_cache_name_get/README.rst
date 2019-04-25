@@ -19,7 +19,7 @@ For instance, if you have 40 sale order lines on a sale. All these lines have th
 - Without this module : your browser makes about 40 time the same name_get() request.
 - With this modules: your browser makes 1 request and reuse the result for all the lines.
 
-It works on many2many on list views.
+It works on many2many and many2one on list views.
 The cache is cleaned when you navigate to other objects.
 
 
@@ -35,6 +35,8 @@ Known issues / Roadmap
 ======================
 
 * The cache is not very aggressive, if put more globally it may catch more useless requests.
+* some requests can be done twice in many2one, because of 'this' been erased in
+other parts of the core code.
 
 
 Credits
