@@ -16,19 +16,21 @@ odoo.define('web_switch_company_warning.widget', function (require) {
             this._super();
             var self = this;
             var w = new SharedWorker('/web_switch_company_warning/static/src/js/switch_company_warning_worker.js');
-
             w.port.addEventListener('message', function (msg) {
                 if (msg.data.type !== 'newCtx') {
                     return;
                 }
-                if(msg.data.newCtx === self.session.company_id) {
+                if(msg.data.newCtx === self.generateSignature()) {
                     self.$el.hide();
                 } else {
                     self.$el.show();
                 }
             });
             w.port.start();
-            w.port.postMessage(this.session.company_id);
+            w.port.postMessage(this.generateSignature());
+        },
+        generateSignature: function() {
+            return [this.session.company_id, this.session.db].join();
         }
     });
 
