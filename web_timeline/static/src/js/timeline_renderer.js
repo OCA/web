@@ -308,23 +308,49 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
         on_data_loaded: function (events, group_bys, adjust_window) {
             var self = this;
             var ids = _.pluck(events, "id");
-            return this._rpc({
-                model: this.modelName,
-                method: 'name_get',
-                args: [
-                    ids,
-                ],
-                context: this.getSession().user_context,
-            }).then(function(names) {
-                var nevents = _.map(events, function (event) {
-                    return _.extend({
-                        __name: _.detect(names, function (name) {
-                            return name[0] === event.id;
-                        })[1]
-                    }, event);
+            var group_by_field = self.view.fields[group_bys];
+            if (group_by_field.type == 'one2many' | group_by_field.type == 'many2many') {
+                self.x2x = true;
+                return self.split_groups_x2x(events, group_bys).then(function (groups) {
+                    self.groups = groups;
+                    return self._rpc({
+                        model: self.modelName,
+                        method: 'name_get',
+                        args: [
+                            ids,
+                        ],
+                        context: self.getSession().user_context,
+                    }).then(function(names) {
+                        var nevents = _.map(events, function (event) {
+                            return _.extend({
+                                __name: _.detect(names, function (name) {
+                                    return name[0] === event.id;
+                                })[1]
+                            }, event);
+                        });
+                        return self.on_data_loaded_2(nevents, group_bys, self.x2x, adjust_window);
+                    });
                 });
-                return self.on_data_loaded_2(nevents, group_bys, adjust_window);
-            });
+            } else {
+                self.x2x = false;
+                return this._rpc({
+                    model: this.modelName,
+                    method: 'name_get',
+                    args: [
+                        ids,
+                    ],
+                    context: this.getSession().user_context,
+                }).then(function(names) {
+                    var nevents = _.map(events, function (event) {
+                        return _.extend({
+                            __name: _.detect(names, function (name) {
+                                return name[0] === event.id;
+                            })[1]
+                        }, event);
+                    });
+                    return self.on_data_loaded_2(nevents, group_bys, self.x2x, adjust_window);
+                });
+            };
         },
 
         /**
@@ -332,17 +358,30 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
          *
          * @private
          */
-        on_data_loaded_2: function (events, group_bys, adjust_window) {
+        on_data_loaded_2: function (events, group_bys, x2x, adjust_window) {
             var self = this;
             var data = [];
             var groups = [];
             this.grouped_by = group_bys;
             _.each(events, function (event) {
                 if (event[self.date_start]) {
-                    data.push(self.event_data_transform(event));
+                    if (x2x) {
+                        _.each(event[group_bys], function (gr) {
+                            var x2x_object = jQuery.extend({}, event);
+                            x2x_object[group_bys] = [gr];
+                            x2x_object.id = event.id + "_" + gr;
+                            data.push(self.event_data_transform(x2x_object));
+                        })
+                    } else {
+                        data.push(self.event_data_transform(event));
+                    }
                 }
             });
-            groups = this.split_groups(events, group_bys);
+            if (x2x) {
+                groups = this.groups;
+            } else {
+                groups = this.split_groups(events, group_bys);
+            }
             this.timeline.setGroups(groups);
             this.timeline.setItems(data);
             var mode = !this.mode || this.mode === 'fit';
@@ -371,7 +410,6 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
                         var group = _.find(groups, function (existing_group) {
                             return _.isEqual(existing_group.id, group_name[0]);
                         });
-
                         if (_.isUndefined(group)) {
                             group = {
                                 id: group_name[0],
@@ -383,6 +421,40 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
                 }
             });
             return groups;
+        },
+
+        split_groups_x2x: function (events, group_bys) {
+            var self = this;
+            var group_ids = [];
+            _.each(events, function (event) {
+                var group_name = event[_.first(group_bys)];
+                if (group_name) {
+                    _.each(group_name, function (gr) {
+                        if (!group_ids.includes(gr)) {
+                            group_ids.push(gr);
+                        }
+                    });
+                }
+            });
+            var group_by_field = self.view.fields[group_bys];
+            return this._rpc({
+                model: group_by_field.relation,
+                method: 'name_get',
+                args: [
+                    group_ids,
+                ],
+                context: this.getSession().user_context,
+            }).then(function(names) {
+                var groups = [];
+                groups.push({id: -1, content: _t('-')});
+                _.each(names, function (gr_name) {
+                    groups.push({
+                        id: gr_name[0],
+                        content: gr_name[1],
+                    })
+                });
+                return groups;
+            });
         },
 
         /**

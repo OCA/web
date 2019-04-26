@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_calendar_event_timeline" model="ir.ui.view">
+        <field name="model">calendar.event</field>
+        <field name="type">timeline</field>
+        <field name="arch" type="xml">
+            <timeline date_start="start"
+                      date_stop="stop"
+                      string="Meetings"
+                      default_group_by="user_ids"
+                      event_open_popup="true"
+                      zoomKey="ctrlKey">
+            </timeline>
+        </field>
+    </record>
+
+    <record id="calendar.action_calendar_event" model="ir.actions.act_window">
+        <field name="view_mode">calendar,timeline,tree</field>
+        <field name="context">{"search_default_week": 1}</field>
+    </record>
+
+</odoo>
