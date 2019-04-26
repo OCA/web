@@ -16,7 +16,7 @@ Known issues / Roadmap
 
     * If the browser don't implement Sharded Worker (http://www.w3.org/TR/workers/#sharedworker), the warning message will not be displayed (there is no polyfill).
 
-    * Switching company in a separate browser or in private browsing mode will not be detected by this module. It's a limitation of Shared Wworker(limit to browser session, server:port...)
+    * Switching company in a separate browser or in private browsing mode will not be detected by this module. It's a limitation of Shared Worker(limit to browser session, server:port...)
 
 
 Bug Tracker
