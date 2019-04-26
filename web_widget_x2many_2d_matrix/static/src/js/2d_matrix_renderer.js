@@ -306,21 +306,9 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
             if (node.tag === 'widget') {
                 return $td.append(this._renderWidget(record, node));
             }
-            if (node.attrs.widget || (options && (options.renderWidgets || options.mode === 'edit'))) {
-                var $el = this._renderFieldWidget(node, record, _.pick(options, 'mode'));
-                this._handleAttributes($el, node);
-                return $td.append($el);
-            }
-            var name = node.attrs.name;
-            var field = this.state.fields[name];
-            var value = record.data[name];
-            var formattedValue = field_utils.format[field.type](value, field, {
-                data: record.data,
-                escape: true,
-                isPassword: 'password' in node.attrs,
-            });
-            this._handleAttributes($td, node);
-            return $td.html(formattedValue);
+            var $el = this._renderFieldWidget(node, record, _.pick(options, 'mode'));
+            this._handleAttributes($el, node);
+            return $td.append($el);
         },
 
         /**
@@ -513,10 +501,10 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
             var field = this.state.fields[axis.attrs.name];
             var value = axis.aggregate.value;
             var help = axis.aggregate.help;
-            var formatFunc = field_utils.format[axis.attrs.widget];
-            if (!formatFunc) {
-                formatFunc = field_utils.format[field.type];
-            }
+            var fieldInfo = this.state.fieldsInfo.list[axis.attrs.name];
+            var formatFunc = field_utils.format[
+                fieldInfo.widget ? fieldInfo.widget : field.type
+            ];
             var formattedValue = formatFunc(value, field, { escape: true });
             $cell.addClass('o_list_number').attr('title', help).html(formattedValue);
         },
