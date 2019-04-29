@@ -9,6 +9,7 @@ odoo.define('web.fullscreen', function (require) {
             this.$el.on('click', '.o_cp_fullscreen', function () {
                 $("#oe_main_menu_navbar").toggle();
                 $(".o_sub_menu").toggle();
+                $(".o_main_navbar").toggle();
             });
         },
     });
