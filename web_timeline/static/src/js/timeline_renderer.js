@@ -308,7 +308,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
         on_data_loaded: function (events, group_bys, adjust_window) {
             var self = this;
             var ids = _.pluck(events, "id");
-            var group_by_field = self.view.fields[group_bys];
+            var group_by_field = self.view.fields[group_bys[0]];
             if (group_by_field.type == 'one2many' | group_by_field.type == 'many2many') {
                 self.x2x = true;
                 return self.split_groups_x2x(events, group_bys).then(function (groups) {
@@ -417,6 +417,17 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
                             };
                             groups.push(group);
                         }
+                    } else {
+                        var group = _.find(groups, function (existing_group) {
+                            return _.isEqual(existing_group.id, group_name);
+                        });
+                        if (_.isUndefined(group)) {
+                            group = {
+                                id: group_name,
+                                content: group_name
+                            };
+                            groups.push(group);
+                        }
                     }
                 }
             });
@@ -424,7 +435,6 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
         },
 
         split_groups_x2x: function (events, group_bys) {
-            var self = this;
             var group_ids = [];
             _.each(events, function (event) {
                 var group_name = event[_.first(group_bys)];
@@ -436,7 +446,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
                     });
                 }
             });
-            var group_by_field = self.view.fields[group_bys];
+            var group_by_field = this.view.fields[group_bys];
             return this._rpc({
                 model: group_by_field.relation,
                 method: 'name_get',
@@ -488,8 +498,10 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
             }
 
             var group = evt[self.last_group_bys[0]];
-            if (group && group instanceof Array) {
-                group = _.first(group);
+            if (group) {
+                if (group instanceof Array) {
+                    group = _.first(group);
+                }
             } else {
                 group = -1;
             }

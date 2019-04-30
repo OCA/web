@@ -9,8 +9,8 @@
     background: #DCDCDC;
 }
 
-.vis-item .vis-item-overflow {
-    overflow: visible !important;
+.vis-item .vis-item-overflow:hover {
+    overflow: visible;
 }
 
 .oe_chatter_toggle {
