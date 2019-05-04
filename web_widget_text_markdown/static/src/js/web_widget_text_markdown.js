@@ -121,7 +121,7 @@ odoo.define("web_widget_text_markdown.bootstrap_markdown",
       },
 
       _format: function(row_data, options) {
-        if (this.type === "text") {
+        if (this.type === "text" && this.widget === "bootstrap_markdown") {
           options = options || {};
           var markdown_text = marked(
             formats.format_value(
