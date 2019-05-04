@@ -19,7 +19,7 @@ Usage
 Use this widget by saying:
 
 .. code-block:: xml
-   :linenos:
+
 <field name="my_table" widget="widget_table" options="{
                             'field_name': 'child_ids',
                             'datatable_params':{'searching': False,
@@ -31,6 +31,7 @@ Use this widget by saying:
 "my_table" field must be of type char, it is only used to display the table. For example:
 
 .. code-block:: python
+
 my_table = fields.Char(
         store=False)
 
