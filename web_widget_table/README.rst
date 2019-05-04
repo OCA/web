@@ -2,7 +2,7 @@
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-===============
+================
 Web Widget Table
 ===============
 
