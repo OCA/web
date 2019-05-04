@@ -14,7 +14,7 @@ A module to add datatable https://datatables.net/ as a widget
    :local:
 
 Usage
-=============
+=====
 
 Use this widget by saying:
 
