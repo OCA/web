@@ -2,7 +2,7 @@
 
 {
     "name": "Web Datatable Widget",
-    "cateogry": "web",
+    "category": "web",
     "summary": "This widget allows to display tables using Datatable jQeury library.",
     "author": "Savoir-faire Linux, Odoo Community Association (OCA)",
     "maintainer": "Savoir-faire Linux",
