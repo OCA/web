@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <template id="assets_backend" name="Backend Assets for Web Widget Text Markdown" inherit_id="web.assets_backend">
+    <xpath expr="//link[last()]" position="after">
+      <link rel="stylesheet" href="/web_widget_text_markdown/static/src/scss/web_widget_text_markdown.scss"/>
+    </xpath>
+    <xpath expr="//script[last()]" position="after">
+      <script type="text/javascript" src="/web_widget_text_markdown/static/lib/js/bootstrap-markdown.js"/>
+      <script type="text/javascript" src="/web_widget_text_markdown/static/lib/js/showdown/showdown.min.js"/>
+      <script type="text/javascript" src="/web_widget_text_markdown/static/src/js/web_widget_text_markdown.js"/>
+    </xpath>
+  </template>
+
+</odoo>

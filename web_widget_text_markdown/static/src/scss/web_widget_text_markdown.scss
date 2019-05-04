@@ -1,0 +1,33 @@
+.md-editor {
+  border: 1px $gray-400 solid;
+
+  .md-header.btn-toolbar {
+    padding: 5px;
+    border-bottom: 1px $gray-300 dashed;
+    background: $gray-100;
+
+    .btn-group {
+      padding-right: 5px;
+
+      .btn-default {
+        background: white;
+        border: 1px $gray-400 solid;
+      }
+    }
+  }
+
+  .md-input {
+    margin: 0;
+    padding: 5px;
+    border: none;
+  }
+
+  .md-preview {
+    padding: 5px;
+  }
+}
+
+blockquote {
+  border-left: 1px solid $gray-400;
+  padding-left: 10px;
+}
