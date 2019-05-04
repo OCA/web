@@ -15,4 +15,6 @@
     "data": [
         "views/assets.xml",
     ],
+    "development_status": "Beta",
+    "maintainers": ["eilst"],
 }
