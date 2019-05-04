@@ -25,7 +25,7 @@ odoo.define('web_widget_timepicker', function (require) {
 
         setValue: function (value) {
             this.set({'value': value});
-            var formatted_value = value ? this._formatClient(value) : null;
+            var formatted_value = this._formatClient(value) || value;
             this.$input.val(formatted_value);
             if (this.picker) {
                 var fdate = new moment(formatted_value, this.options.format);
@@ -36,7 +36,7 @@ odoo.define('web_widget_timepicker', function (require) {
 
         getValue: function () {
             var value = this.get('value');
-            return value ? this._formatClient(value) : null;
+            return this._formatClient(value) || value;
         },
 
         changeDatetime: function () {
