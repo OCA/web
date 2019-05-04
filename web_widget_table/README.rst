@@ -20,20 +20,20 @@ Use this widget by saying:
 
 .. code-block:: xml
 
-<field name="my_table" widget="widget_table" options="{
-                            'field_name': 'child_ids',
-                            'datatable_params':{'searching': False,
-                            'paging': False,
-                            'info': False},
-                            'fields': ['name','date_start', 'date_end', 'real_date_start', 'real_date_end', 'total_time'],
-                            'headers': ['Name','Date Start', 'Date End', 'Real Date Start', 'Real Date End', 'Total Time']}"/>
+    <field name="my_table" widget="widget_table" options="{
+                                'field_name': 'child_ids',
+                                'datatable_params':{'searching': False,
+                                'paging': False,
+                                'info': False},
+                                'fields': ['name','date_start', 'date_end', 'real_date_start', 'real_date_end', 'total_time'],
+                                'headers': ['Name','Date Start', 'Date End', 'Real Date Start', 'Real Date End', 'Total Time']}"/>
 
 "my_table" field must be of type char, it is only used to display the table. For example:
 
 .. code-block:: python
 
-my_table = fields.Char(
-        store=False)
+    my_table = fields.Char(
+            store=False)
 
 You need to pass the following parameters:
 
