@@ -9,7 +9,7 @@
     "author": "Savoir-faire Linux, Odoo Community Association (OCA)",
     "maintainer": "Savoir-faire Linux",
     "website": "https://github.com/OCA/web",
-    "license": "AGPL-3.0",
+    "license": "AGPL-3",
     "version": "11.0.1.0.0",
     "depends": ["web"],
     "data": [
