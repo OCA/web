@@ -4,7 +4,7 @@
 {
     'name': 'Calendar Custom Settings',
     'version': '11.0.1.0.0',
-    'author': 'Savoir-faire Linux',
+    'author': 'Savoir-faire Linux, '
                  'Odoo Community Association (OCA)',
     'maintainer': 'Savoir-faire Linux',
     'website': 'https://github.com/OCA/web',
