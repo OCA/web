@@ -70,7 +70,6 @@ Authors
 Contributors
 ~~~~~~~~~~~~
 
-------------
 * Larbi Gharib <larbi.gharib@savoirfairelinux.com>
 * Rim BEN DHAOU <rim.bendhaou@savoirfairelinux.com>
 * Jananjoy Rajkumar <jananjoy.rajkumar@savoirfairelinux.com>
