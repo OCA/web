@@ -1,0 +1,41 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_export_view
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: web_export_view
+#: model:res.groups,name:web_export_view.group_disallow_export_view_data_excel
+msgid "Disallow Export View Data to Excel"
+msgstr ""
+
+#. module: web_export_view
+#. openerp-web
+#: code:addons/web_export_view/static/src/xml/web_export_view_template.xml:6
+#, python-format
+msgid "Export xls"
+msgstr ""
+
+#. module: web_export_view
+#. openerp-web
+#: code:addons/web_export_view/static/src/js/web_export_view.js:90
+#, python-format
+msgid "False"
+msgstr ""
+
+#. module: web_export_view
+#. openerp-web
+#: code:addons/web_export_view/static/src/js/web_export_view.js:90
+#, python-format
+msgid "True"
+msgstr ""

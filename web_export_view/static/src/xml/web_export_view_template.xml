@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+<t t-name="WebExportTreeViewXls">
+    <div class="o_cp_sidebar btn-group btn-group-sm">
+        <button class="btn btn-default export_treeview_xls" type="button" title="Export xls">
+            <i t-translation="off" class="fa fa-file-excel-o"></i>
+        </button>
+    </div>
+</t>
+</templates>
