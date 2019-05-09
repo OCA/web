@@ -18,7 +18,7 @@ class Base(models.AbstractModel):
        :param operation: a list of ``read``, ``create``, ``write``, ``unlink``
        :return: {operation: access} (access is a boolean)
         """
-        if not operations:
+        if not operations or not any(operations):
             operations = ['read', 'create', 'write', 'unlink']
         result = {}
         for operation in operations:
