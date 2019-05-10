@@ -8,9 +8,6 @@ odoo.define('web.web_widget_uom', function(require) {
     var rpc = require('web.rpc');
 
     var FieldUoM = basic_fields.FieldFloat.extend({
-        className: 'o_field_float o_field_number',
-        supportedFieldTypes: ['float'],
-
         /**
          * Float fields have an additional precision parameter that is read from
          * either the field node in the view or the field python definition itself.
@@ -33,22 +30,11 @@ odoo.define('web.web_widget_uom', function(require) {
          * @returns {Deferred|undefined}
          */
         _render: function () {
-            this._asyncFunction()
-        },
-
-        _asyncFunction: async function () {
-
-            await this._getDecimalPlaces()
-            this.nodeOptions.digits = [32, this.decimal_places];
-
-            if (this.attrs.decorations) {
-                this._applyDecorations();
-            }
-            if (this.mode === 'edit') {
-                return this._renderEdit();
-            } else if (this.mode === 'readonly') {
-                return this._renderReadonly();
-            }
+            var self = this;
+            var parent = this._super;
+            this._getDecimalPlaces().then(function (){
+                parent.apply(self, arguments);
+            });
         },
 
         _getDecimalPlaces: function () {
@@ -62,7 +48,7 @@ odoo.define('web.web_widget_uom', function(require) {
                 args: [,uomID],
             }).then(function(result) {
                 if (result != null) {
-                    self.decimal_places = result;
+                    self.nodeOptions.digits = [32, result];
                 }
             });
         },
