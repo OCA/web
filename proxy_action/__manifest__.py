@@ -10,9 +10,6 @@
     "website": "www.akretion.com",
     "license": "AGPL-3",
     "category": "Generic Modules",
-    "description": """
-    Forward to pywebdriver odoo's actions.
-    """,
     "depends": ["base", "web"],
     "data": ["static/src/xml/view.xml"],
     "installable": True,
