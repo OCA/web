@@ -12,4 +12,3 @@ class CalendarEvent(models.Model):
         'calendar.event.color', string="Meeting type (color)"
     )
     color = fields.Char(string=" ", related="color_id.color")
-
