@@ -1,0 +1,9 @@
+id,name,color
+calendar_event_color_briefing,Briefing,#FF9900
+calendar_event_color_presentation,Presentation,#00FF00
+calendar_event_color_training,Training,#FF0000
+calendar_event_color_incoming_call,Incoming call,#663399
+calendar_event_color_administration,Administration,#EEEEEE
+calendar_event_color_accompaniment,Accompaniment,#FFFFCC
+calendar_event_color_coaching,Coaching,#FFFF00
+calendar_event_color_launch_pack,Launch Pack,#34DDDD

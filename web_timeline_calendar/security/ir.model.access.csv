@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_calendar_event_color,calendar.event.color.access,model_calendar_event_color,base.group_user,1,0,0,0
+access_calendar_event_color_admin,calendar.event.color.access_admin,model_calendar_event_color,base.group_no_one,1,1,1,1

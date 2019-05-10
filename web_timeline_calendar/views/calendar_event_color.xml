@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record id="calendar_event_form_inherit" model="ir.ui.view">
+        <field name="name">calendar.event.inherit.form.color</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='location']" position="after">
+                <field name="color_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="calendar_event_color_view_tree" model="ir.ui.view">
+        <field name="model">calendar.event.color</field>
+        <field name="name">calendar.event.color.tree</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="color" widget="color"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="calendar_event_color_view_form" model="ir.ui.view">
+        <field name="model">calendar.event.color</field>
+        <field name="type">form</field>
+        <field name="name">calendar.event.color.form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="color" widget="color"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="calendar_event_color_action">
+        <field name="name">Calendar event color</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">calendar.event.color</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="calendar_event_color_menu" name="Calendar event color" sequence="30"
+    parent="calendar.menu_calendar_configuration" action="calendar_event_color_action" />
+
+</odoo>
