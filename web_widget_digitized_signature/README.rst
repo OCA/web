@@ -41,7 +41,7 @@ Configuration
 
 #. To use this module, you need to add ``widget="signature"`` to your binary
    field in your view.
-#. You can specifify signature dimensions like the following:
+#. You can specify signature dimensions like the following:
    ``<field name="signature_image" widget="signature" width="400"
    height="100"/>``
 
@@ -78,7 +78,7 @@ Contributors
 * Jay Vora <jay.vora@serpentcs.com>
 * Tecnativa <https://www.tecnativa.com>:
 
-  * Vicent Cubells <vicent.cubells@tecnativa.com>
+  * Vicent Cubells
 
 Maintainers
 ~~~~~~~~~~~
