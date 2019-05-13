@@ -1,0 +1,6 @@
+* Luis Garcia (luis.garcia@savoirfairelinux.com)
+* Rim Ben Dhaou (rim.bendhaou@savoirfairelinux.com)
+* Larbi Gharib (larbi.gharib@savoirfairelinux.com)
+* William Beverly (william.beverly@savoirfairelinux.com)
+* Jananjoy Rajkumar (jananjoy.rajkumar@savoirfairelinux.com)
+* Pierre Gault (pierre.gault@savoirfairelinux.com)
