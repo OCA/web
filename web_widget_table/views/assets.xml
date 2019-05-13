@@ -6,7 +6,7 @@
                   rel="stylesheet"/>
             <link href="/web_widget_table/static/css/dt-1.10.18-datatables.css"
                   rel="stylesheet"/>
-            <script type="text/javascript" src="/web_widget_table/static/lib/jsdt/jsdt-1.10.18-datatables.js"></script>
+            <script type="text/javascript" src="/web_widget_table/static/lib/jsdt-1.10.18-datatables.js"></script>
             <script type="text/javascript" src="/web_widget_table/static/js/web_widget_table.js"></script>
         </xpath>
     </template>
