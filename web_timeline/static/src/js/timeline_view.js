@@ -159,7 +159,8 @@ odoo.define('web_timeline.TimelineView', function (require) {
             if (grp2.id === -1) {
                 return +1;
             }
-            return grp1.content - grp2.content;
+
+            return  grp1.content.localeCompare(grp2.content);
 
         },
 
