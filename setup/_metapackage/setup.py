@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-web Odoo addons",
     version=version,
     install_requires=[
+        'odoo11-addon-web_access_rule_buttons',
         'odoo11-addon-web_action_conditionable',
         'odoo11-addon-web_advanced_search',
         'odoo11-addon-web_decimal_numpad_dot',
