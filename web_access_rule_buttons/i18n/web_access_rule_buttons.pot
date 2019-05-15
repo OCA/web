@@ -1,0 +1,35 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* web_access_rule_buttons
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_access_rule_buttons
+#: model:ir.model.fields,field_description:web_access_rule_buttons.field_ir_cron_channel_ids
+msgid "Add Channels"
+msgstr ""
+
+#. module: web_access_rule_buttons
+#: model:ir.model.fields,field_description:web_access_rule_buttons.field_ir_cron_partner_ids
+msgid "Add Followers"
+msgstr ""
+
+#. module: web_access_rule_buttons
+#: model:ir.model.fields,field_description:web_access_rule_buttons.field_ir_cron_template_id
+msgid "Email Template"
+msgstr ""
+
+#. module: web_access_rule_buttons
+#: model:ir.model,name:web_access_rule_buttons.model_base
+msgid "base"
+msgstr ""
+
