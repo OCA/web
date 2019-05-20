@@ -20,6 +20,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: web_timeline
+#: selection:ir.ui.view,type:0
+msgid "Activity"
+msgstr ""
+
+#. module: web_timeline
 #. openerp-web
 #: code:addons/web_timeline/static/src/js/timeline_controller.js:243
 #, fuzzy, python-format
