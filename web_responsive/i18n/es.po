@@ -76,7 +76,7 @@ msgstr "Guardar"
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/xml/apps.xml:34
+#: code:addons/web_responsive/static/src/xml/apps.xml:35
 #, python-format
 msgid "Search menus..."
 msgstr "Buscar menús..."
