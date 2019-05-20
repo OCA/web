@@ -21,27 +21,27 @@ msgstr ""
 
 #. module: web_widget_digitized_signature
 #. openerp-web
-#: code:addons/web_widget_digitized_signature/static/src/xml/digital_sign.xml:7
+#: code:addons/web_widget_digitized_signature/static/src/xml/digital_sign.xml:8
 #, python-format
 msgid "Clear"
 msgstr "bereinigen"
 
 #. module: web_widget_digitized_signature
 #. openerp-web
-#: code:addons/web_widget_digitized_signature/static/src/js/digital_sign.js:81
+#: code:addons/web_widget_digitized_signature/static/src/js/digital_sign.js:99
 #, python-format
 msgid "Could not display the selected image."
 msgstr "Kann ausgewähltes Bild nicht anzeigen."
 
 #. module: web_widget_digitized_signature
-#: code:addons/web_widget_digitized_signature/models/mail_thread.py:33
+#: code:addons/web_widget_digitized_signature/models/mail_thread.py:32
 #, python-format
 msgid "Deletion date: %s"
 msgstr "Löschdatum %s"
 
 #. module: web_widget_digitized_signature
 #. openerp-web
-#: code:addons/web_widget_digitized_signature/static/src/xml/digital_sign.xml:10
+#: code:addons/web_widget_digitized_signature/static/src/xml/digital_sign.xml:11
 #, python-format
 msgid "Draw your signature"
 msgstr "Ihre Unterschift eindrucken"
@@ -53,30 +53,32 @@ msgstr "Email-Thema"
 
 #. module: web_widget_digitized_signature
 #. openerp-web
-#: code:addons/web_widget_digitized_signature/static/src/js/digital_sign.js:81
+#: code:addons/web_widget_digitized_signature/static/src/js/digital_sign.js:99
 #, python-format
 msgid "Image"
 msgstr "Bild"
 
 #. module: web_widget_digitized_signature
-#: model:ir.model.fields,field_description:web_widget_digitized_signature.field_res_users_signature_image
+#: model:ir.model.fields,field_description:web_widget_digitized_signature.field_res_users_digital_signature
+#: model:ir.ui.view,arch_db:web_widget_digitized_signature.inherited_res_users_form
+#: model:ir.ui.view,arch_db:web_widget_digitized_signature.inherited_res_users_preferences_form
 msgid "Signature"
 msgstr "Unterschrift"
 
 #. module: web_widget_digitized_signature
-#: code:addons/web_widget_digitized_signature/models/mail_thread.py:30
+#: code:addons/web_widget_digitized_signature/models/mail_thread.py:29
 #, python-format
 msgid "Signature date: %s"
 msgstr "Unterschriftdatum: %s"
 
 #. module: web_widget_digitized_signature
-#: code:addons/web_widget_digitized_signature/models/mail_thread.py:28
+#: code:addons/web_widget_digitized_signature/models/mail_thread.py:27
 #, python-format
 msgid "Signature has been created."
 msgstr "Unterschrift wurde angelegt."
 
 #. module: web_widget_digitized_signature
-#: code:addons/web_widget_digitized_signature/models/mail_thread.py:32
+#: code:addons/web_widget_digitized_signature/models/mail_thread.py:31
 #, python-format
 msgid "Signature has been deleted."
 msgstr "Unterschrift wurde entfernt."
