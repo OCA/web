@@ -111,10 +111,25 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
                 this.columns,
                 this._renderHeaderCell.bind(this)
             ));
-            if (this.matrix_data.show_row_totals) {
-                $tr.append($('<th/>', {class: 'total'}));
-            }
+            $tr.append(this._renderHeaderSpecial());
             return $('<thead>').append($tr);
+        },
+
+        /**
+         * Render the special headers of our matrix, like totals
+         *
+         * @private
+         * @returns {jQueryElement} a list of elements
+         */
+        _renderHeaderSpecial: function () {
+            var ths = [];
+            if (this.matrix_data.show_row_totals) {
+                var $th = $('<th>', {class: 'total text-right'});
+                // label_row_totals contains either something or ''
+                $th.append(this.matrix_data.label_row_totals).append('</th>');
+                ths.push($th);
+            }
+            return ths;
         },
 
         /**
