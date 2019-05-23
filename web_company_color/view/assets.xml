@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2019 Alexandre Díaz
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<odoo>
+    <template id="assets_backend" name="web_company_color assets"
+              inherit_id="web.assets_backend">
+        <xpath expr=".">
+            <t t-set="company_id" t-value="request.env.user and request.env.user.company_id" />
+            <link t-if="company_id" rel="stylesheet" type="text/scss"
+                  t-att-href="company_id.scss_get_url()" />
+        </xpath>
+    </template>
+</odoo>
