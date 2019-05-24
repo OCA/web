@@ -38,7 +38,12 @@ odoo.define('web_switch_company_warning.widget', function (require) {
         init: function(parent) {
             this._super(parent);
             var switchCompanyWarning = new SwitchCompanyWarningWidget();
-            switchCompanyWarning.appendTo('#oe_main_menu_navbar');
+            // Choose where to append depending on whether web_responsive is installed or not
+            if (document.getElementById('oe_main_menu_navbar')) {
+                switchCompanyWarning.appendTo('#oe_main_menu_navbar');
+            } else {
+                switchCompanyWarning.insertAfter('.main-nav');
+            }
         }
 
     });
