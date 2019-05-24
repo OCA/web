@@ -1,8 +1,9 @@
-'use strict';
-
 odoo.define('web_switch_company_warning.widget', function (require) {
+    'use strict';
+
     var Widget = require('web.Widget');
     var UserMenu = require('web.UserMenu');
+    var session = require('web.session');
     //Show a big banner in the top of the page if the company has been
     //changed in another tab or window (in the same browser)
 
@@ -30,7 +31,7 @@ odoo.define('web_switch_company_warning.widget', function (require) {
             w.port.postMessage(this.generateSignature());
         },
         generateSignature: function() {
-            return [this.session.company_id, this.session.db].join();
+            return [session.company_id, session.db].join();
         }
     });
 
