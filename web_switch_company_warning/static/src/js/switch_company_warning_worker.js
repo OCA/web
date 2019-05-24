@@ -1,11 +1,12 @@
-"use strict";
-//Show a big banner in the top of the page if the company has been
-//changed in another tab or window (in the same browser)
+// Show a big banner in the top of the page if the company has been
+// Changed in another tab or window (in the same browser)
 
 var con = [];
 var lastCtx = null;
 
-addEventListener("connect", function(ee) {
+addEventListener("connect", function (ee) {
+    "use strict";
+
     var port = ee.ports[0];
     con.push(port);
 

@@ -1,18 +1,19 @@
-'use strict';
-
 odoo.define('web_switch_company_warning.widget', function (require) {
+    'use strict';
+
     var Widget = require('web.Widget');
     var UserMenu = require('web.UserMenu');
-    //Show a big banner in the top of the page if the company has been
-    //changed in another tab or window (in the same browser)
+    var session = require('web.session');
+    // Show a big banner in the top of the page if the company has been
+    // changed in another tab or window (in the same browser)
 
     if (!window.SharedWorker) {
-        //not supported
+        // Not supported
         return;
     }
     var SwitchCompanyWarningWidget = Widget.extend({
         template:'web_switch_company_warning.warningWidget',
-        init: function() {
+        init: function () {
             this._super();
             var self = this;
             var w = new SharedWorker('/web_switch_company_warning/static/src/js/switch_company_warning_worker.js');
@@ -20,7 +21,7 @@ odoo.define('web_switch_company_warning.widget', function (require) {
                 if (msg.data.type !== 'newCtx') {
                     return;
                 }
-                if(msg.data.newCtx === self.generateSignature()) {
+                if (msg.data.newCtx === self.generateSignature()) {
                     self.$el.hide();
                 } else {
                     self.$el.show();
@@ -29,22 +30,28 @@ odoo.define('web_switch_company_warning.widget', function (require) {
             w.port.start();
             w.port.postMessage(this.generateSignature());
         },
-        generateSignature: function() {
-            return [this.session.company_id, this.session.db].join();
-        }
+        generateSignature: function () {
+            return [session.company_id, session.db].join();
+        },
     });
 
     UserMenu.include({
-        init: function(parent) {
+        init: function (parent) {
             this._super(parent);
             var switchCompanyWarning = new SwitchCompanyWarningWidget();
-            // Choose where to append depending on whether web_responsive is installed or not
-            if (document.getElementById('oe_main_menu_navbar')) {
-                switchCompanyWarning.appendTo('#oe_main_menu_navbar');
+            // Check if Odoo version is Enterprise
+            var isEnterprise = odoo.session_info.server_version_info[5] === 'e';
+            if (isEnterprise) {
+                switchCompanyWarning.insertAfter('.o_main_navbar');
             } else {
-                switchCompanyWarning.insertAfter('.main-nav');
+                // Choose where to append depending on whether web_responsive is installed or not
+                if (document.getElementById('oe_main_menu_navbar')) {
+                    switchCompanyWarning.appendTo('#oe_main_menu_navbar');
+                } else {
+                    switchCompanyWarning.insertAfter('.main-nav');
+                }
             }
-        }
+        },
 
     });
 
