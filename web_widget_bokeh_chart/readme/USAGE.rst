@@ -15,8 +15,9 @@ To insert a Bokeh chart in a view proceed as follows:
             p = figure()  # import that as `from bokeh.plotting import figure`
             line = p.line([0, 2], [1, 8], line_width=5)
             # (...)
-            # `p.html.data` contains both markup and the script of a chart.
-            rec.bokeh_chart = p.html.data
+            # fill the record field with both markup and the script of a chart.
+            script, div = components(p)
+            rec.bokeh_chart = '%s%s' % (div, script)
 
 #. In the view, add something like this wherever you want to display your
    bokeh chart::
