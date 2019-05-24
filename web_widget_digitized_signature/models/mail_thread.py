@@ -8,7 +8,7 @@ import base64
 from openerp import _, models, fields
 
 
-class MailThread(models.Model):
+class MailThread(models.AbstractModel):
     _inherit = "mail.thread"
 
     def _track_signature(self, values, field):
