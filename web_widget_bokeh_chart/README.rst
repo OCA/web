@@ -27,7 +27,7 @@ Installation
 
 You need to install the python bokeh library::
 
-    pip install bokeh==0.12.7
+    pip install bokeh==1.1.0
 
 Usage
 =====
