@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_switch_company_warning
+#	* web_switch_context_warning
 #
 msgid ""
 msgstr ""
@@ -13,23 +13,23 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: web_switch_company_warning
+#. module: web_switch_context_warning
 #. openerp-web
-#: code:addons/web_switch_company_warning/static/src/xml/switch_company_warning.xml:6
+#: code:addons/web_switch_context_warning/static/src/xml/switch_company_warning.xml:6
 #, python-format
 msgid "Reload"
 msgstr ""
 
-#. module: web_switch_company_warning
+#. module: web_switch_context_warning
 #. openerp-web
-#: code:addons/web_switch_company_warning/static/src/xml/switch_company_warning.xml:5
+#: code:addons/web_switch_context_warning/static/src/xml/switch_company_warning.xml:5
 #, python-format
-msgid "You switched to a different company or database with another tab or window"
+msgid "You switched to a different user, company or database with another tab or window"
 msgstr ""
 
-#. module: web_switch_company_warning
+#. module: web_switch_context_warning
 #. openerp-web
-#: code:addons/web_switch_company_warning/static/src/xml/switch_company_warning.xml:6
+#: code:addons/web_switch_context_warning/static/src/xml/switch_company_warning.xml:6
 #, python-format
 msgid "to refresh your session"
 msgstr ""

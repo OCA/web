@@ -43,7 +43,7 @@ setuptools.setup(
         'odoo10-addon-web_send_message_popup',
         'odoo10-addon-web_sheet_full_width',
         'odoo10-addon-web_shortcut',
-        'odoo10-addon-web_switch_company_warning',
+        'odoo10-addon-web_switch_context_warning',
         'odoo10-addon-web_timeline',
         'odoo10-addon-web_translate_dialog',
         'odoo10-addon-web_tree_dynamic_colored_field',
