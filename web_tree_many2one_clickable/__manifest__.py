@@ -20,6 +20,6 @@
         'web',
     ],
     "data": [
-        'static/src/xml/assets.xml',
+        'views/assets.xml',
     ],
 }
