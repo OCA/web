@@ -6,7 +6,7 @@
                " in another tab or window.",
     "version": "12.0.1.0.0",
     "category": "web",
-    "website": "http://akretion.com",
+    "website": "https://github.com/OCA/web",
     "license": "AGPL-3",
     "author": "Akretion, "
               "Odoo Community Association (OCA)",
