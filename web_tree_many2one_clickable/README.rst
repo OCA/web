@@ -38,6 +38,7 @@ Usage
 =====
 
 Put the mouse pointer over a many2one cell and click the button.
+
 .. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_tree_many2one_clickable/static/img/clickable.gif
 
 Bug Tracker
