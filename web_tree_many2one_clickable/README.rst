@@ -27,12 +27,18 @@ Clickable many2one fields for tree views
 
 This addon forces Odoo to use many2one widget on a many2one fields in
 tree views. This allows users to open linked resources from trees directly,
-without accessing the form.
+using a button without accessing the form.
 
 **Table of contents**
 
 .. contents::
    :local:
+
+Usage
+=====
+
+Put the mouse pointer over a many2one cell and click the button.
+.. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_tree_many2one_clickable/static/img/clickable.gif
 
 Bug Tracker
 ===========
