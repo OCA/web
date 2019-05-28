@@ -1,6 +1,7 @@
 # Copyright 2015 Holger Brunn <hbrunn@therp.nl>
 # Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
 # Copyright 2018 Simone Orsi <simone.orsi@camptocamp.com>
+# Copyright 2019 Vincent Hatakeyama <vincent.hatakeyama@xcg-consulting.fr>
 # Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
