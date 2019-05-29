@@ -6,7 +6,7 @@
 /* very light gray background in weekends */
 .vis-timeline .vis-grid.vis-saturday,
 .vis-timeline .vis-grid.vis-sunday {
-    background: #DCDCDC;
+    background: #e7e7e7;
 }
 
 .vis-item .vis-item-overflow {
@@ -14,7 +14,7 @@
 }
 
 .oe_chatter_toggle {
-    padding: 15px;
+    padding: 18px;
 }
 
 .oe_timeline_view .vlabel .inner:hover{
@@ -26,6 +26,6 @@
     width: 100%;
     height: 100%;
     position: absolute;
-    left: 0px;
-    top: 0px;
+    left: 5px;
+    top: 5px;
 }
