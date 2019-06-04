@@ -1,4 +1,4 @@
-odoo.define('web_switch_company_warning.widget', function (require) {
+odoo.define('web_switch_context_warning.widget', function (require) {
     'use strict';
 
     var Widget = require('web.Widget');
@@ -12,11 +12,11 @@ odoo.define('web_switch_company_warning.widget', function (require) {
         return;
     }
     var SwitchCompanyWarningWidget = Widget.extend({
-        template:'web_switch_company_warning.warningWidget',
+        template:'web_switch_context_warning.warningWidget',
         init: function () {
             this._super();
             var self = this;
-            var w = new SharedWorker('/web_switch_company_warning/static/src/js/switch_company_warning_worker.js');
+            var w = new SharedWorker('/web_switch_context_warning/static/src/js/switch_company_warning_worker.js');
             w.port.addEventListener('message', function (msg) {
                 if (msg.data.type !== 'newCtx') {
                     return;
@@ -31,7 +31,8 @@ odoo.define('web_switch_company_warning.widget', function (require) {
             w.port.postMessage(this.generateSignature());
         },
         generateSignature: function () {
-            return [session.company_id, session.db].join();
+            console.log(session)
+            return [session.uid, session.company_id, session.db].join();
         },
     });
 
