@@ -5,17 +5,18 @@
 
 odoo.define('web_drop_target', function(require) {
     var Model = require('web.Model'),
-        FormView = require('web.FormView');
+        FormView = require('web.FormView'),
+        core = require('web.core');
+    var qweb = core.qweb;
 
     // this is the main contribution of this addon: A mixin you can use
     // to make some widget a drop target. Read on how to use this yourself
     var DropTargetMixin = {
         // add the mime types you want to support here, leave empty for
-        // all types. For more control, override _get_drop_item in your class
+        // all types. For more control, override _get_drop_items in your class
         _drop_allowed_types: [],
 
-        // a class being applied when the user drags something we can handle
-        _drag_over_class: 'o_drag_over',
+        _drop_overlay: null,
 
         start: function() {
             var result = this._super.apply(this, arguments);
@@ -27,68 +28,60 @@ odoo.define('web_drop_target', function(require) {
         },
 
         _on_drop: function(e) {
-            var drop_item = this._get_drop_item(e);
-            if(!drop_item || !(drop_item.getAsFile() instanceof Blob)) {
+            var drop_items = this._get_drop_items(e);
+            e.preventDefault();
+            this._remove_overlay();
+            if(!drop_items) {
                 return;
             }
-            jQuery(e.delegateTarget).removeClass(this._drag_over_class);
-            var reader = new FileReader();
-            reader.onloadend = this.proxy(
-                _.partial(this._handle_file_drop, drop_item.getAsFile())
-            );
-            reader.readAsArrayBuffer(drop_item.getAsFile());
-            e.stopPropagation();
-            e.preventDefault();
+            this._handle_drop_items(drop_items, e)
         },
 
         _on_dragenter: function(e) {
-            if(this._get_drop_item(e)) {
-                e.preventDefault();
-                jQuery(e.delegateTarget).addClass(this._drag_over_class);
-                return false;
-            }
+            e.preventDefault();
+            this._add_overlay();
+            return false;
         },
 
         _on_dragleave: function(e) {
-            jQuery(e.delegateTarget).removeClass(this._drag_over_class);
+            this._remove_overlay();
+            e.preventDefault();
         },
 
-        _get_drop_item: function(e) {
+        _get_drop_items: function(e) {
             var self = this,
                 dataTransfer = e.originalEvent.dataTransfer,
-                drop_item = null;
-            _.each(dataTransfer.items, function(item) {
+                drop_items = [];
+            _.each(dataTransfer.files, function(item) {
                 if(
                     _.contains(self._drop_allowed_types, item.type) ||
                     _.isEmpty(self._drop_allowed_types)
                 ) {
-                    drop_item = item;
+                    drop_items.push(item);
                 }
             });
-            return drop_item;
+            return drop_items;
         },
 
         // eslint-disable-next-line no-unused-vars
-        _handle_file_drop: function(drop_file, e) {
+        _handle_drop_items: function(drop_items, e) {
             // do something here, for example call the helper function below
             // e is the on_load_end handler for the FileReader above,
             // so e.target.result contains an ArrayBuffer of the data
         },
 
-        _handle_file_drop_attach: function(
-                drop_file, e, res_model, res_id, extra_data
-        ) {
+        _create_attachment: function(file, reader, e, res_model, res_id, extra_data) {
             // helper to upload an attachment and update the sidebar
             var self = this;
             return new Model('ir.attachment').call(
                 'create',
                 [
                     _.extend({
-                        name: drop_file.name,
+                        name: file.name,
                         datas: base64js.fromByteArray(
-                            new Uint8Array(e.target.result)
+                            new Uint8Array(reader.result)
                         ),
-                        datas_fname: drop_file.name,
+                        datas_fname: file.name,
                         res_model: res_model,
                         res_id: res_id,
                     }, extra_data || {})
@@ -107,6 +100,51 @@ odoo.define('web_drop_target', function(require) {
                     );
                 }
             });
+        },
+
+        _file_reader_error_handler: function(e){
+            console.error(e);
+        },
+
+        _handle_file_drop_attach: function(
+            item, e, res_model, res_id, extra_data
+        ) {
+            var self = this;
+            var file = item;
+            if(!file || !(file instanceof Blob)) {
+                return;
+            }
+            var reader = new FileReader();
+            reader.onloadend = self.proxy(
+                _.partial(self._create_attachment, file, reader, e, res_model, res_id, extra_data)
+            );
+            reader.onerror = self.proxy('_file_reader_error_handler');
+            reader.readAsArrayBuffer(file);
+        },
+
+        _add_overlay: function() {
+            if(!this._drop_overlay){
+                var o_content = jQuery('.o_content'),
+                    view_manager = jQuery('.o_view_manager_content');
+                this._drop_overlay = jQuery(
+                    qweb.render('web_drop_target.drop_overlay')
+                );
+                var o_content_position = o_content.position();
+                this._drop_overlay.css({
+                    'top': o_content_position.top, 
+                    'left': o_content_position.left,
+                    'width': view_manager.width(),
+                    'height': view_manager.height()
+                });
+                o_content.append(this._drop_overlay);
+            }
+        },
+        
+        _remove_overlay: function() {
+            if (this._drop_overlay) {
+                this._drop_overlay.remove();
+                this._drop_overlay = null;
+            }
         }
     };
 
@@ -120,10 +158,13 @@ odoo.define('web_drop_target', function(require) {
             }
             return this._super.apply(this, arguments);
         },
-        _handle_file_drop: function(drop_file, e) {
-            return this._handle_file_drop_attach(
-                drop_file, e, this.dataset.model, this.datarecord.id
-            );
+        _handle_drop_items: function(drop_items, e) {
+            var self = this;
+            _.each(drop_items, function(item, e) {
+                return self._handle_file_drop_attach(
+                    item, e, self.dataset.model, self.datarecord.id
+                );
+            });
         }
     }));
 
