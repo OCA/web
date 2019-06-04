@@ -31,9 +31,9 @@ odoo.define('web_widget_image_webcam.webcam_widget', function(require) {
                 image_format: 'jpeg',
                 jpeg_quality: 90,
                 force_flash: false,
-                fps: 45,
-                swfURL: '/web_widget_image_webcam/static/src/js/webcam.swf',
+                fps: 45
             });
+            Webcam.setSWFLocation('/web_widget_image_webcam/static/src/js/webcam.swf');
 
             self.$el.find('.o_form_binary_file_web_cam').removeClass('col-md-offset-5');
 
