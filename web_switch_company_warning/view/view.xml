@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="web_switch_company_warning assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/web_switch_company_warning/static/src/js/switch_company_warning.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>
