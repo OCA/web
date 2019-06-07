@@ -25,7 +25,7 @@ msgstr "Actualiser"
 #: code:addons/web_switch_company_warning/static/src/xml/switch_company_warning.xml:5
 #, python-format
 msgid "You switched to a different company or database with another tab or window"
-msgstr "Vous avez changé de société dans un autre onglet ou une autre fenêtre"
+msgstr "Vous avez changé de société ou de base de données dans un autre onglet ou une autre fenêtre"
 
 #. module: web_switch_company_warning
 #. openerp-web
