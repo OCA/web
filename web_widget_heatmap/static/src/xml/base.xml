@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2019 Dinar Gabbasov <https://it-projects.info/team/GabbasovDinar>
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<templates id="template" xml:space="preserve">
+    <t t-name="HeatMapWidget">
+        <div class="heatmap_widget">
+            <span class="controls" t-if="widget.controls">
+                <button class="btn btn-sm btn-default previous fa fa-chevron-left"></button>
+                <button class="btn btn-sm btn-default next fa fa-chevron-right"></button>
+            </span>
+            <span class="o_field_heatmap"></span>
+        </div>
+    </t>
+</templates>

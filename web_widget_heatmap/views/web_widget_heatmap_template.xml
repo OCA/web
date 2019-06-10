@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!-- Copyright 2019 Dinar Gabbasov <https://it-projects.info/team/GabbasovDinar>
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <template id="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/web_widget_heatmap/static/src/js/heatmap_widget.js"></script>
+            <link rel="stylesheet" type="text/css" href="/web_widget_heatmap/static/src/css/heatmap_widget.css"/>
+        </xpath>
+    </template>
+
+</odoo>

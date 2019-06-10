@@ -1,0 +1,12 @@
+/* Copyright 2019 Dinar Gabbasov <https://it-projects.info/team/GabbasovDinar>
+ * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
+.heatmap_widget {
+	width: 100%;
+	padding: 10px 0px;
+}
+.o_field_heatmap {
+	width: 100%;
+}
+.o_field_heatmap .cal-heatmap-container {
+    margin: 0 auto;
+}

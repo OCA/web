@@ -1,0 +1,75 @@
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 class="oe_slogan">Web Widget HeatMap</h2>
+            <p>This module aims to add a heatmap calendar to Odoo.</p>
+            <p>It's a <a class="reference external" href="https://cal-heatmap.com/">cal-heatmap</a> lib integration.</p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 class="oe_slogan">Installation</h2>
+        </div>
+        <div class="oe_span12">
+            <p class="oe_mt32">Install this module in a usual way</p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 class="oe_slogan">Usage</h2>
+        </div>
+        <div class="oe_span12">
+            <p class="oe_mt32">You need to declare a One2many or Many2many field:
+                <pre class="literal-block">
+                    sale_order_ids = fields.One2many("sale.order", "partner_id", "Sales Order")
+                </pre>
+                <p>In the view declaration, put widget="heatmap" attribute in the field tag:</p>
+                <pre class="literal-block">
+                ...
+                &lt;field name=&quot;arch&quot; type=&quot;xml&quot;&gt;
+                    &lt;form string=&quot;View name&quot;&gt;
+                        ...
+                        &lt;field name=&quot;sale_order_ids&quot; widget=&quot;heatmap&quot;/&gt;
+                        ...
+                    &lt;/form&gt;
+                &lt;/field&gt;
+                ...
+            </pre>
+            </p>
+            <p class="oe_mt32">For further information, please visit:
+                <ul>
+                    <li><a href="https://www.odoo.com/forum/help-1">https://www.odoo.com/forum/help-1</a></li>
+                </ul>
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row">
+        <div class="oe_span12">
+            <h2 class="oe_slogan">Credits</h2>
+        </div>
+        <div class="oe_span12">
+            <h3>Contributors</h3>
+            <ul>
+                <li>Dinar Gabbasov &lt;<a href="mailto:gabbasov@it-projects.info">gabbasov@it-projects.info</a>&gt;</li>
+            </ul>
+        </div>
+        <div class="oe_span12">
+            <h3>Maintainer</h3>
+            <p>
+                This module is maintained by the OCA.<br/>
+                OCA, or the Odoo Community Association, is a nonprofit organization whose mission is to support the collaborative development of Odoo features and promote its widespread use.<br/>
+                To contribute to this module, please visit <a href="http://odoo-community.org">http://odoo-community.org</a>.<br/>
+                <a href="http://odoo-community.org"><img class="oe_picture oe_centered" src="http://odoo-community.org/logo.png"></a>
+            </p>
+        </div>
+    </div>
+</section>
