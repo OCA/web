@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="demo_matrix_view">
+            <field name="name">Sticky matrix</field>
+            <field name="model">web.widget.x2many.matrix.demo.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Demo matrix">
+                    <field name="line_ids"
+                           nolabel="1"
+                           widget="x2many_2d_matrix"
+                           field_value="projected_sales"
+                           field_y_axis="partner_id"
+                           field_label_y_axis="partner_name"
+                           field_x_axis="country_id"
+                           field_label_x_axis="country_name"
+                           sticky="True"/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="demo_matrix_action">
+            <field name="name">Sticky matrix</field>
+            <field name="res_model">web.widget.x2many.matrix.demo.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="usage">menu</field>
+        </record> 
+
+        <menuitem 
+            id="demo_matrix_menu"
+            parent="base.menu_management"
+            action="demo_matrix_action"
+            sequence="100"/>
+
+        <record model="ir.ui.view" id="demo_matrix2_view">
+            <field name="name">Sticky matrix (2 columns)</field>
+            <field name="model">web.widget.x2many.matrix.demo.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Demo matrix">
+                    <field name="line_ids"
+                           nolabel="1"
+                           widget="x2many_2d_matrix"
+                           field_value="projected_sales"
+                           field_y_axis="partner_id"
+                           field_label_y_axis="partner_name"
+                           field_x_axis="country_id"
+                           field_label_x_axis="country_name"
+                           sticky="True"
+                           sticky_x="2"/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="demo_matrix2_action">
+            <field name="name">Sticky matrix (2 columns)</field>
+            <field name="res_model">web.widget.x2many.matrix.demo.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="demo_matrix2_view"/>
+            <field name="usage">menu</field>
+        </record> 
+
+        <menuitem 
+            id="demo_matrix2_menu"
+            parent="base.menu_management"
+            action="demo_matrix2_action"
+            sequence="100"/>
+
+    </data>
+</openerp>

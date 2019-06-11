@@ -1,0 +1,50 @@
+.sticky-wrap {
+    overflow-x: auto;
+    overflow-y: hidden;
+    position: relative;
+    margin: 3em 0;
+    width: 100%;
+}
+.sticky-wrap .sticky-thead,
+.sticky-wrap .sticky-col,
+.sticky-wrap .sticky-intersect {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all .125s ease-in-out;
+    z-index: 50;
+    width: auto; /* Prevent table from stretching to full size */
+}
+.sticky-wrap .sticky-thead {
+    box-shadow: 0 0.25em 0.1em -0.1em rgba(0,0,0,.125);
+    z-index: 100;
+    width: 100%; /* Force stretch */
+}
+.sticky-wrap .sticky-intersect {
+    opacity: 1;
+    z-index: 150;
+
+}
+.sticky-wrap .sticky-intersect th {
+    background-color: #666;
+    color: #eee;
+}
+.sticky-wrap td,
+.sticky-wrap th {
+    box-sizing: border-box;
+}
+
+.sticky-wrap th {
+    border-bottom: solid #dfdfdf 1px;
+}
+
+.sticky-wrap.overflow-y {
+    overflow-y: auto;
+    /*max-height: 50vh;*/
+    max-height: 200px;
+}
+.sticky-wrap table.sticky-enabled {
+    margin: 0;
+    width: "100%";
+}

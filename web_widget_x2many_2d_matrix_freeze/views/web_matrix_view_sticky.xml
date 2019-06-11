@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="web_widget_x2many_2d_matrix_freeze assets for backend" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/web_widget_x2many_2d_matrix_freeze/static/src/css/component.css"/>
+                <script type="text/javascript" src="/web_widget_x2many_2d_matrix_freeze/static/src/js/web_matrix_view_sticky.js"/>
+            </xpath>
+        </template>
+    </data>
+</openerp>
