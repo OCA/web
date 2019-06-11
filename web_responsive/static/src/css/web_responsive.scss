@@ -365,9 +365,20 @@ html .o_web_client .o_main .o_main_content {
             z-index: 1;
         }
 
+        // Support for long title (with ellipsis)
         .oe_title {
-            max-width: 100%;
             width: initial;
+
+            >h1>span {
+                max-width: 100%;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                width: initial;
+            }
+            >h1>span:active {
+                white-space: normal;
+            }
         }
 
         @include media-breakpoint-down(sm) {
