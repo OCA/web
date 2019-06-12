@@ -2,26 +2,25 @@
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
 // AppMenu icon waiting indicator anim
-@keyframes o-app-icon-bounce-animation {
-  0% {
-    transform-origin: bottom center;
-  }
-  25% {
-    transform: translateY(-20px);
-  }
-  50% {
-    transform: translateY(0px);
-  }
-  75% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0);
-    transform-origin: bottom center;
-  }
+@keyframes o-app-icon-flash-animation {
+    0% {
+        filter: brightness(1.0);
+    }
+    25% {
+        filter: brightness(2.0);
+    }
+    50% {
+        filter: brightness(1.0);
+    }
+    75% {
+        filter: brightness(2.0);
+    }
+    100% {
+        filter: brightness(1.0);
+    }
 }
-.o-app-icon-waiting {
-  animation: 1.3s infinite cubic-bezier(.65,.05,.36,1) o-app-icon-bounce-animation;
+.o-app-waiting img {
+  animation: 1.3s infinite cubic-bezier(.65,.05,.36,1) o-app-icon-flash-animation;
 }
 
 @mixin full-screen-dropdown {
@@ -349,32 +348,6 @@ html .o_web_client .o_main .o_main_content {
 .o_content, .modal-content {
     max-width: 100%;
 
-    // Sticky Header & Footer in List View
-    >div {
-        >.table-responsive {
-            overflow-x: initial;
-
-            >.o_list_view {
-                // th & td are here for compatibility with chrome
-                thead, thead tr:nth-child(1) th {
-                    position: sticky;
-                    top: 0;
-                    z-index: 1;
-                }
-                thead tr:nth-child(1) th {
-                    background-color: $o-list-footer-bg-color;
-                }
-                tfoot, tfoot tr:nth-child(1) td {
-                    position: sticky;
-                    bottom: 0;
-                }
-                tfoot tr:nth-child(1) td {
-                    background-color: $o-list-footer-bg-color;
-                }
-            }
-        }
-    }
-
     // Form views
     .o_form_view {
         .o_form_sheet {
@@ -392,14 +365,14 @@ html .o_web_client .o_main .o_main_content {
         .oe_title {
             width: initial;
 
-            >h1>span {
+            span {
                 max-width: 100%;
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 overflow: hidden;
                 width: initial;
             }
-            >h1>span:active {
+            span:active {
                 white-space: normal;
             }
         }
@@ -529,6 +502,30 @@ html .o_web_client .o_main .o_main_content {
                     }
                 }
             }
+        }
+    }
+}
+
+// Sticky Header & Footer in List View
+.table-responsive {
+    overflow-x: initial;
+
+    .o_list_view {
+        // th & td are here for compatibility with chrome
+        thead, thead tr:nth-child(1) th {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        thead tr:nth-child(1) th {
+            background-color: $o-list-footer-bg-color;
+        }
+        tfoot, tfoot tr:nth-child(1) td {
+            position: sticky;
+            bottom: 0;
+        }
+        tfoot tr:nth-child(1) td {
+            background-color: $o-list-footer-bg-color;
         }
     }
 }
