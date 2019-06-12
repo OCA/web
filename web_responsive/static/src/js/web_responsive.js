@@ -4,6 +4,7 @@
 odoo.define('web_responsive', function (require) {
     'use strict';
 
+    var ActionManager = require('web.ActionManager');
     var AbstractWebClient = require("web.AbstractWebClient");
     var AppsMenu = require("web.AppsMenu");
     var config = require("web.config");
@@ -264,6 +265,14 @@ odoo.define('web_responsive', function (require) {
                 },
             });
         },
+
+        // Load view indicator
+        _onAppsMenuItemClicked: function (ev) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            $(ev.currentTarget).find('img').addClass('o-app-icon-waiting');
+            this._super.apply(this, arguments);
+        },
     });
 
     Menu.include({
@@ -358,7 +367,24 @@ odoo.define('web_responsive', function (require) {
             } else {
                 this._super.apply(this, arguments);
             }
-        }
+        },
+    });
+
+    // Hide AppMenu & remove waiting anim when loaded action
+    ActionManager.include({
+        doAction: function () {
+            return this._super.apply(this, arguments).then(function () {
+                var $app_menu = $('.o_menu_apps .dropdown');
+                if ($app_menu.length) {
+                    if ($app_menu.hasClass('show')) {
+                        $app_menu.dropdown('toggle');
+                    }
+
+                    $app_menu.find('img.o-app-icon-waiting').removeClass(
+                        'o-app-icon-waiting');
+                }
+            });
+        },
     });
 
     /**
