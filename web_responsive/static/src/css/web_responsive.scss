@@ -22,6 +22,30 @@
 .o-app-waiting img {
   animation: 1.3s infinite cubic-bezier(.65,.05,.36,1) o-app-icon-flash-animation;
 }
+// Menu icon waiting indicator anim
+@keyframes o-menu-item-flash-animation {
+    0% {
+        background-color: $dropdown-link-hover-bg;
+    }
+    25% {
+        background-color: transparent;
+    }
+    50% {
+        background-color: $dropdown-link-hover-bg;
+    }
+    75% {
+        background-color: transparent;
+    }
+    100% {
+        background-color: $dropdown-link-hover-bg;
+    }
+}
+.o-menu-item-waiting {
+  animation: 1.3s infinite cubic-bezier(.65,.05,.36,1) o-menu-item-flash-animation;
+}
+.o-cursor-waiting {
+  cursor: progress;
+}
 
 @mixin full-screen-dropdown {
     border: none;
