@@ -275,7 +275,7 @@ odoo.define('web_responsive', function (require) {
             this.$el.find('.o-app-waiting').removeClass(
                 'o-app-waiting');
             $(ev.currentTarget).addClass('o-app-waiting');
-            document.body.style.cursor = 'progress';
+            $(document.body).addClass('o-cursor-waiting');
             this._super.apply(this, arguments);
         },
     });
@@ -283,10 +283,13 @@ odoo.define('web_responsive', function (require) {
     Menu.include({
         events: _.extend({
             // Clicking a hamburger menu item should close the hamburger
-            "click .o_menu_sections [role=menuitem]": "_hideMobileSubmenus",
+            // and sets waiting menu-item
+            "click .o_menu_sections [role=menuitem]": "_clickMenuItem",
             // Opening any dropdown in the navbar should hide the hamburger
             "show.bs.dropdown .o_menu_systray, .o_menu_apps":
                 "_hideMobileSubmenus",
+            // Prevent close section menu
+            "hide.bs.dropdown .o_menu_sections": "_hideMenuSection",
         }, Menu.prototype.events),
 
         start: function () {
@@ -304,6 +307,36 @@ odoo.define('web_responsive', function (require) {
             ) {
                 this.$section_placeholder.collapse("hide");
             }
+        },
+
+        /**
+         * Menu Item Click Event
+         *
+         * @param {jQuery.Event} event
+         */
+        _clickMenuItem: function (event) {
+            this._hideMobileSubmenus();
+            // Prevents anim more menu-item if user click other
+            // before action is fully loaded
+            this.$el.find('.o-menu-item-waiting').removeClass(
+                'o-menu-item-waiting');
+            $(document.body).addClass('o-cursor-waiting');
+            $(event.currentTarget).addClass('o-menu-item-waiting');
+        },
+
+        /**
+         * Hide Menu Section
+         *
+         * @param {jQuery.Event} event
+         * @returns {Boolean}
+         */
+        _hideMenuSection: function (event) {
+            var $target = $(event.target);
+            var $selected = $target.find('.o-menu-item-waiting');
+            if ($selected.length) {
+                return false;
+            }
+            return true;
         },
 
         /**
@@ -378,22 +411,52 @@ odoo.define('web_responsive', function (require) {
     // Hide AppMenu & remove waiting anim when loaded action
     ActionManager.include({
         doAction: function (action, options) {
-            return this._super.apply(this, arguments).then(function () {
-                var $app_menu = $('.o_menu_apps .dropdown');
-                if ($app_menu.length && options &&
-                        'action_menu_id' in options) {
+            return this._super.apply(this, arguments).always(function () {
+                if (options && 'action_menu_id' in options) {
+                    // Need hide AppMenu?
+                    var $app_menu = $('.o_menu_apps .dropdown');
+                    if (!$app_menu.length) {
+                        return;
+                    }
                     var $app = $app_menu.find('.o_app.active');
-                    var menu_id = $app.data('menuId');
-                    if (menu_id === options.action_menu_id) {
+                    var app_menu_id = $app.data('menuId');
+                    if (app_menu_id === options.action_menu_id) {
+                        // Now uses this way because Odoo 12.0 uses
+                        // bootstrap 4.1
+                        // TODO: Change to use "hide" method in modern
+                        // bootstrap versions (>4.1)
                         if ($app_menu.hasClass('show')) {
                             $app_menu.dropdown('toggle');
                         }
 
-                        document.body.style.cursor = 'default';
+                        $(document.body).removeClass('o-cursor-waiting');
                         $app_menu.find('.o-app-waiting').removeClass(
                             'o-app-waiting');
                     }
+                } else if (action) {
+                    // Need hide Menu?
+                    var $menu = $('.o_menu_sections');
+                    if (!$menu.length) {
+                        return;
+                    }
+                    var $item = $menu.find('.o-menu-item-waiting');
+                    if (!$item.length) {
+                        return;
+                    }
+                    var action_id = $item.data('actionId');
+                    if (action_id === action.id) {
+                        $item.removeClass('o-menu-item-waiting');
 
+                        $menu.find('li.show').each(
+                            function (i, el) {
+                                if ($.contains(el, $item[0])) {
+                                    $(el).find('.dropdown-toggle')
+                                        .dropdown('toggle');
+                                }
+                            });
+
+                        $(document.body).removeClass('o-cursor-waiting');
+                    }
                 }
             });
         },
