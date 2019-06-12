@@ -270,7 +270,12 @@ odoo.define('web_responsive', function (require) {
         _onAppsMenuItemClicked: function (ev) {
             ev.preventDefault();
             ev.stopPropagation();
-            $(ev.currentTarget).find('img').addClass('o-app-icon-waiting');
+            // Prevents anim more app-icon if user click other before action
+            // is fully loaded
+            this.$el.find('.o-app-waiting').removeClass(
+                'o-app-waiting');
+            $(ev.currentTarget).addClass('o-app-waiting');
+            document.body.style.cursor = 'progress';
             this._super.apply(this, arguments);
         },
     });
@@ -372,16 +377,23 @@ odoo.define('web_responsive', function (require) {
 
     // Hide AppMenu & remove waiting anim when loaded action
     ActionManager.include({
-        doAction: function () {
+        doAction: function (action, options) {
             return this._super.apply(this, arguments).then(function () {
                 var $app_menu = $('.o_menu_apps .dropdown');
-                if ($app_menu.length) {
-                    if ($app_menu.hasClass('show')) {
-                        $app_menu.dropdown('toggle');
+                if ($app_menu.length && options &&
+                        'action_menu_id' in options) {
+                    var $app = $app_menu.find('.o_app.active');
+                    var menu_id = $app.data('menuId');
+                    if (menu_id === options.action_menu_id) {
+                        if ($app_menu.hasClass('show')) {
+                            $app_menu.dropdown('toggle');
+                        }
+
+                        document.body.style.cursor = 'default';
+                        $app_menu.find('.o-app-waiting').removeClass(
+                            'o-app-waiting');
                     }
 
-                    $app_menu.find('img.o-app-icon-waiting').removeClass(
-                        'o-app-icon-waiting');
                 }
             });
         },
