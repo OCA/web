@@ -59,3 +59,7 @@ Features for computers:
 * Sticky chatter topbar
 
   .. image:: ./static/img/chatter_topbar.gif
+
+* AppMenu waits for action finished to show the view
+
+  .. image:: ./static/img/appmenu.gif
