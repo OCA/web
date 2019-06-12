@@ -1,6 +1,29 @@
 /* Copyright 2018 Tecnativa - Jairo Llopis
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
+// AppMenu icon waiting indicator anim
+@keyframes o-app-icon-bounce-animation {
+  0% {
+    transform-origin: bottom center;
+  }
+  25% {
+    transform: translateY(-20px);
+  }
+  50% {
+    transform: translateY(0px);
+  }
+  75% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+    transform-origin: bottom center;
+  }
+}
+.o-app-icon-waiting {
+  animation: 1.3s infinite cubic-bezier(.65,.05,.36,1) o-app-icon-bounce-animation;
+}
+
 @mixin full-screen-dropdown {
     border: none;
     box-shadow: none;
