@@ -87,6 +87,10 @@ Features for computers:
 
   .. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_responsive/static/img/chatter_topbar.gif
 
+* AppMenu waits for action finished to show the view
+
+  .. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_responsive/static/img/appmenu.gif
+
 **Table of contents**
 
 .. contents::
