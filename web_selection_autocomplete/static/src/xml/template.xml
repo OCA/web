@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+<t t-name="SelectionAutocomplete">
+    <span t-if="widget.get('effective_readonly')"/>
+
+    <input t-if="!widget.get('effective_readonly')"
+           class="o_form_input selection-ac"
+           type="text"
+           t-att-name="widget.name"
+           t-att-tabindex="widget.node.attrs.tabindex"
+           t-att-autofocus="widget.node.attrs.autofocus"
+           t-att-id="widget.id_for_label"/>
+</t>
+
+</templates>
