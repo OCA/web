@@ -6,22 +6,23 @@
 web_keyboard_navigation
 ==============================
 
-This module was written to extend the functionality of ... to support ...
-and allow you to ...
+This module was written to extend the functionality of the Web Client to
+support easier navigation and allow you to use the Alt key in order to get
+some shortcuts shown on your client.
 
 Installation
 ============
 
 To install this module, you need to:
 
-#. do this ...
+Follow the usual procedure for your version of Odoo.
 
 Configuration
 =============
 
 To configure this module, you need to:
 
-#. go to ...
+No configuration can take place at this point.
 
 Usage
 =====
@@ -30,20 +31,14 @@ To use this module, you need to:
 
 #. go to ...
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
-   :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/162
-163
-164
-186
-210
-225
-258/11.0
+:alt: Try me on Runbot
+:target: https://runbot.odoo-community.org/runbot/162
 
 
 Known issues / Roadmap
 ======================
 
-* None
+* Allow customization of the keys.
 
 Bug Tracker
 ===========
@@ -82,3 +77,7 @@ mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
 To contribute to this module, please visit https://odoo-community.org.
+
+**This module is a backport from Odoo SA and as such, it is not included in the
+OCA CLA. That means we do not have a copy of the copyright on it like all other
+OCA modules.

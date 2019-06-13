@@ -1,5 +1,5 @@
 odoo.define('web_keyboard_navigation.KeyboardNavigationMixin', function (
-        require) {
+    require) {
     "use strict";
     var BrowserDetection = require('web.BrowserDetection');
 
@@ -12,7 +12,7 @@ odoo.define('web_keyboard_navigation.KeyboardNavigationMixin', function (
         'A',
         'C',
         'H',
-        'J', 
+        'J',
         'K',
         'L',
         'N',
@@ -22,7 +22,7 @@ odoo.define('web_keyboard_navigation.KeyboardNavigationMixin', function (
         'E',
         'F',
         'D',
-        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
     ];
 
     var KeyboardNavigationMixin = {
@@ -32,7 +32,7 @@ odoo.define('web_keyboard_navigation.KeyboardNavigationMixin', function (
         },
 
         init: function () {
-            this._super()
+            this._super();
             this._areAccessKeyVisible = false;
             this.BrowserDetection = new BrowserDetection();
         },
@@ -44,7 +44,7 @@ odoo.define('web_keyboard_navigation.KeyboardNavigationMixin', function (
                 var overlay = $(_.str.sprintf(
                     "<div class='o_web_accesskey_overlay'>%s</div>",
                     $(elem).attr('accesskey').toUpperCase()));
-                var $overlayParent;
+                var $overlayParent = null;
                 if (elem.tagName.toUpperCase() === "INPUT") {
                     $overlayParent = $(elem).parent();
                 } else {
@@ -75,7 +75,7 @@ odoo.define('web_keyboard_navigation.KeyboardNavigationMixin', function (
 
         _setAccessKeyOnTopNavigation: function () {
             this.$el.find(
-                    '.o_menu_sections>li>a').each(function (number, item) {
+                '.o_menu_sections>li>a').each(function (number, item) {
                 item.accessKey = number + 1;
             });
         },
@@ -104,7 +104,7 @@ odoo.define('web_keyboard_navigation.KeyboardNavigationMixin', function (
                 this._setAccessKeyOnTopNavigation();
                 var usedAccessKey = this._getAllUsedAccessKeys();
                 var buttonsWithoutAccessKey = this.$el.find(
-                        'button.btn:visible')
+                    'button.btn:visible')
                     .not('[accesskey]')
                     .not('[disabled]')
                     .not('[tabindex="-1"]');
@@ -112,8 +112,8 @@ odoo.define('web_keyboard_navigation.KeyboardNavigationMixin', function (
                     var buttonString = [elem.innerText, elem.title,
                         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"].join('');
                     for (var letterIndex = 0;
-                            letterIndex < buttonString.length;
-                            letterIndex++) {
+                        letterIndex < buttonString.length;
+                        letterIndex++) {
                         var candidateAccessKey = buttonString[
                             letterIndex].toUpperCase();
                         if (candidateAccessKey >= 'A' &&
@@ -134,8 +134,9 @@ odoo.define('web_keyboard_navigation.KeyboardNavigationMixin', function (
                 });
                 this._addAccessKeyOverlays();
             }
-            if (this.BrowserDetection.isOsMac())
+            if (this.BrowserDetection.isOsMac()) {
                 return;
+            }
             if (keyDownEvent.altKey &&
                     !keyDownEvent.ctrlKey &&
                     keyDownEvent.key.length === 1) {
@@ -168,9 +169,9 @@ odoo.define('web_keyboard_navigation.KeyboardNavigationMixin', function (
                             return false;
                         }
                     }
-                }
+                    }
                 else {
-                    var numberKey;
+                    var numberKey = null;
                     if (keyDownEvent.originalEvent.code &&
                             keyDownEvent.originalEvent.code.indexOf(
                                 'Digit') === 0) {
