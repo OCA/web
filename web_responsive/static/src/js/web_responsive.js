@@ -74,10 +74,10 @@ odoo.define('web_responsive', function (require) {
         events: _.extend({
             "keydown .search-input input": "_searchResultsNavigate",
             "input .search-input input": "_searchMenusSchedule",
-            "click .search-input input": "_searchMenusClicked",
             "click .o-menu-search-result": "_searchResultChosen",
             "shown.bs.dropdown": "_searchFocus",
             "hidden.bs.dropdown": "_searchReset",
+            "hide.bs.dropdown": "_hideAppsMenu",
         }, AppsMenu.prototype.events),
 
         /**
@@ -213,13 +213,6 @@ odoo.define('web_responsive', function (require) {
             });
             // Update navbar menus
             core.bus.trigger("change_menu_section", app.menuID);
-
-            // Prevents anim more app-icon if user click other before action
-            // is fully loaded
-            this.$el.find('.o-menu-item-waiting').removeClass(
-                'o-menu-item-waiting');
-            $(event.currentTarget).addClass('o-menu-item-waiting');
-            $(document.body).addClass('o-cursor-waiting');
         },
 
         /**
@@ -275,30 +268,18 @@ odoo.define('web_responsive', function (require) {
             });
         },
 
-        // Prevent hide AppDrawer
-        _searchMenusClicked: function (ev) {
-            ev.stopPropagation();
-        },
-
-        // Load view indicator
-        _onAppsMenuItemClicked: function (ev) {
-            ev.preventDefault();
-            ev.stopPropagation();
-            // Prevents anim more app-icon if user click other before action
-            // is fully loaded
-            this.$el.find('.o-app-waiting').removeClass(
-                'o-app-waiting');
-            $(ev.currentTarget).addClass('o-app-waiting');
-            $(document.body).addClass('o-cursor-waiting');
-            this._super.apply(this, arguments);
+        /*
+        * Control if AppDrawer can be closed
+        */
+        _hideAppsMenu: function () {
+            return $('.oe_wait').length === 0 && !this.$('input').is(':focus');
         },
     });
 
     Menu.include({
         events: _.extend({
             // Clicking a hamburger menu item should close the hamburger
-            // and sets waiting menu-item
-            "click .o_menu_sections [role=menuitem]": "_clickMenuItem",
+            "click .o_menu_sections [role=menuitem]": "_hideMobileSubmenus",
             // Opening any dropdown in the navbar should hide the hamburger
             "show.bs.dropdown .o_menu_systray, .o_menu_apps":
                 "_hideMobileSubmenus",
@@ -317,40 +298,20 @@ odoo.define('web_responsive', function (require) {
         _hideMobileSubmenus: function () {
             if (
                 this.$menu_toggle.is(":visible") &&
-                this.$section_placeholder.is(":visible")
+                this.$section_placeholder.is(":visible") &&
+                $('.oe_wait').length === 0
             ) {
                 this.$section_placeholder.collapse("hide");
             }
         },
 
         /**
-         * Menu Item Click Event
-         *
-         * @param {jQuery.Event} event
-         */
-        _clickMenuItem: function (event) {
-            this._hideMobileSubmenus();
-            // Prevents anim more menu-item if user click other
-            // before action is fully loaded
-            this.$el.find('.o-menu-item-waiting').removeClass(
-                'o-menu-item-waiting');
-            $(document.body).addClass('o-cursor-waiting');
-            $(event.currentTarget).addClass('o-menu-item-waiting');
-        },
-
-        /**
          * Hide Menu Section
          *
-         * @param {jQuery.Event} event
          * @returns {Boolean}
          */
-        _hideMenuSection: function (event) {
-            var $target = $(event.target);
-            var $selected = $target.find('.o-menu-item-waiting');
-            if ($selected.length) {
-                return false;
-            }
-            return true;
+        _hideMenuSection: function () {
+            return $('.oe_wait').length === 0;
         },
 
         /**
@@ -422,82 +383,34 @@ odoo.define('web_responsive', function (require) {
         },
     });
 
-    // Hide AppDrawer or Menu and remove waiting anim when loaded action
+    // Hide AppDrawer or Menu when the action has been completed
     ActionManager.include({
-        wc_long_running_timer: false,
-        doAction: function (action, options) {
-            var self = this;
-            return this._super.apply(this, arguments).always(function () {
-                var removeWaitingCursor = function () {
-                    clearTimeout(self.wc_long_running_timer);
-                    self.wc_long_running_timer = false;
-                    $(document.body).removeClass('o-cursor-waiting');
-                };
 
-                var $app_menu = $('.o_menu_apps .dropdown.show');
-                var closeAppDrawer = function ($elm, classname) {
-                    $elm.removeClass(classname);
-                    removeWaitingCursor();
-                    // Now uses this way because Odoo 12.0 uses
-                    // bootstrap 4.1
-                    // TODO: Change to use "hide" method in modern
-                    // bootstrap versions (>4.1)
-                    if ($app_menu.hasClass('show')) {
-                        $app_menu.dropdown('toggle');
-                    }
-                };
+        /**
+        * Because the menu aren't closed when click, this method
+        * searchs for the menu with the action executed to close it.
+        *
+        * @param {action} action
+        * The executed action
+        */
+        _hideMenusByAction: function (action) {
+            var uniq_sel = '[data-action-id='+action.id+']';
+            // Need close AppDrawer?
+            $(_.str.sprintf('.o_menu_apps .dropdown.show:has(%s)', uniq_sel))
+                .dropdown('toggle');
+            // Need close Sections Menu?
+            // TODO: Change to 'hide' in modern Bootstrap >4.1
+            $(_.str.sprintf(
+                '.o_menu_sections li.show:has(%s) .dropdown-toggle', uniq_sel))
+                .dropdown('toggle');
+            // Need close Mobile?
+            $(_.str.sprintf('.o_menu_sections.show:has(%s)', uniq_sel))
+                .collapse('hide');
+        },
 
-                // Fallback, ~3secs appears the BlockUI
-                if (!self.wc_long_running_timer) {
-                    self.wc_long_running_timer = setTimeout(function () {
-                        removeWaitingCursor();
-                    }, 3000);
-                }
-
-                // Need hide AppMenu? (AppDrawer)
-                if ($app_menu.length) {
-                    if (options && 'action_menu_id' in options) {
-                        // App Icon
-                        var $item_app = $app_menu.find('.o_app.active');
-                        if ($item_app.length) {
-                            var app_menu_id = $item_app.data('menuId');
-                            if (app_menu_id === options.action_menu_id) {
-                                closeAppDrawer($item_app, 'o-app-waiting');
-                            }
-                        }
-                    } else {
-                        // Menu Search
-                        var $item = $app_menu.find('.o-menu-item-waiting');
-                        if ($item.length) {
-                            var action_id = $item.data('actionId');
-                            if (action_id === action.id) {
-                                closeAppDrawer($item, 'o-menu-item-waiting');
-                            }
-                        }
-                    }
-                }
-
-                // Need hide Menu?
-                var $menu = $('.o_menu_sections');
-                if ($menu.length) {
-                    var $item_menu = $menu.find('.o-menu-item-waiting');
-                    if (!$item_menu.length) {
-                        return;
-                    }
-                    var item_action_id = $item_menu.data('actionId');
-                    if (item_action_id === action.id) {
-                        $item_menu.removeClass('o-menu-item-waiting');
-                        removeWaitingCursor();
-                        $menu.find('li.show').each(
-                            function (i, el) {
-                                if ($.contains(el, $item_menu[0])) {
-                                    $(el).find('.dropdown-toggle')
-                                        .dropdown('toggle');
-                                }
-                            });
-                    }
-                }
-            });
+        _handleAction: function (action) {
+            return this._super.apply(this, arguments).always(
+                $.proxy(this, '_hideMenusByAction', action));
         },
     });
 
