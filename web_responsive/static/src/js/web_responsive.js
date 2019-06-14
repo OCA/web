@@ -74,6 +74,7 @@ odoo.define('web_responsive', function (require) {
         events: _.extend({
             "keydown .search-input input": "_searchResultsNavigate",
             "input .search-input input": "_searchMenusSchedule",
+            "click .search-input input": "_searchMenusClicked",
             "click .o-menu-search-result": "_searchResultChosen",
             "shown.bs.dropdown": "_searchFocus",
             "hidden.bs.dropdown": "_searchReset",
@@ -195,6 +196,7 @@ odoo.define('web_responsive', function (require) {
          */
         _searchResultChosen: function (event) {
             event.preventDefault();
+            event.stopPropagation();
             var $result = $(event.currentTarget),
                 text = $result.text().trim(),
                 data = $result.data(),
@@ -211,6 +213,13 @@ odoo.define('web_responsive', function (require) {
             });
             // Update navbar menus
             core.bus.trigger("change_menu_section", app.menuID);
+
+            // Prevents anim more app-icon if user click other before action
+            // is fully loaded
+            this.$el.find('.o-menu-item-waiting').removeClass(
+                'o-menu-item-waiting');
+            $(event.currentTarget).addClass('o-menu-item-waiting');
+            $(document.body).addClass('o-cursor-waiting');
         },
 
         /**
@@ -264,6 +273,11 @@ odoo.define('web_responsive', function (require) {
                     top: this.$search_results.height() * -0.5,
                 },
             });
+        },
+
+        // Prevent hide AppDrawer
+        _searchMenusClicked: function (ev) {
+            ev.stopPropagation();
         },
 
         // Load view indicator
@@ -408,54 +422,79 @@ odoo.define('web_responsive', function (require) {
         },
     });
 
-    // Hide AppMenu & remove waiting anim when loaded action
+    // Hide AppDrawer or Menu and remove waiting anim when loaded action
     ActionManager.include({
+        wc_long_running_timer: false,
         doAction: function (action, options) {
+            var self = this;
             return this._super.apply(this, arguments).always(function () {
-                if (options && 'action_menu_id' in options) {
-                    // Need hide AppMenu?
-                    var $app_menu = $('.o_menu_apps .dropdown');
-                    if (!$app_menu.length) {
-                        return;
+                var removeWaitingCursor = function () {
+                    clearTimeout(self.wc_long_running_timer);
+                    self.wc_long_running_timer = false;
+                    $(document.body).removeClass('o-cursor-waiting');
+                };
+
+                var $app_menu = $('.o_menu_apps .dropdown.show');
+                var closeAppDrawer = function ($elm, classname) {
+                    $elm.removeClass(classname);
+                    removeWaitingCursor();
+                    // Now uses this way because Odoo 12.0 uses
+                    // bootstrap 4.1
+                    // TODO: Change to use "hide" method in modern
+                    // bootstrap versions (>4.1)
+                    if ($app_menu.hasClass('show')) {
+                        $app_menu.dropdown('toggle');
                     }
-                    var $app = $app_menu.find('.o_app.active');
-                    var app_menu_id = $app.data('menuId');
-                    if (app_menu_id === options.action_menu_id) {
-                        // Now uses this way because Odoo 12.0 uses
-                        // bootstrap 4.1
-                        // TODO: Change to use "hide" method in modern
-                        // bootstrap versions (>4.1)
-                        if ($app_menu.hasClass('show')) {
-                            $app_menu.dropdown('toggle');
+                };
+
+                // Fallback, ~3secs appears the BlockUI
+                if (!self.wc_long_running_timer) {
+                    self.wc_long_running_timer = setTimeout(function () {
+                        removeWaitingCursor();
+                    }, 3000);
+                }
+
+                // Need hide AppMenu? (AppDrawer)
+                if ($app_menu.length) {
+                    if (options && 'action_menu_id' in options) {
+                        // App Icon
+                        var $item_app = $app_menu.find('.o_app.active');
+                        if ($item_app.length) {
+                            var app_menu_id = $item_app.data('menuId');
+                            if (app_menu_id === options.action_menu_id) {
+                                closeAppDrawer($item_app, 'o-app-waiting');
+                            }
                         }
-
-                        $(document.body).removeClass('o-cursor-waiting');
-                        $app_menu.find('.o-app-waiting').removeClass(
-                            'o-app-waiting');
+                    } else {
+                        // Menu Search
+                        var $item = $app_menu.find('.o-menu-item-waiting');
+                        if ($item.length) {
+                            var action_id = $item.data('actionId');
+                            if (action_id === action.id) {
+                                closeAppDrawer($item, 'o-menu-item-waiting');
+                            }
+                        }
                     }
-                } else if (action) {
-                    // Need hide Menu?
-                    var $menu = $('.o_menu_sections');
-                    if (!$menu.length) {
+                }
+
+                // Need hide Menu?
+                var $menu = $('.o_menu_sections');
+                if ($menu.length) {
+                    var $item_menu = $menu.find('.o-menu-item-waiting');
+                    if (!$item_menu.length) {
                         return;
                     }
-                    var $item = $menu.find('.o-menu-item-waiting');
-                    if (!$item.length) {
-                        return;
-                    }
-                    var action_id = $item.data('actionId');
-                    if (action_id === action.id) {
-                        $item.removeClass('o-menu-item-waiting');
-
+                    var item_action_id = $item_menu.data('actionId');
+                    if (item_action_id === action.id) {
+                        $item_menu.removeClass('o-menu-item-waiting');
+                        removeWaitingCursor();
                         $menu.find('li.show').each(
                             function (i, el) {
-                                if ($.contains(el, $item[0])) {
+                                if ($.contains(el, $item_menu[0])) {
                                     $(el).find('.dropdown-toggle')
                                         .dropdown('toggle');
                                 }
                             });
-
-                        $(document.body).removeClass('o-cursor-waiting');
                     }
                 }
             });
