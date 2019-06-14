@@ -1,4 +1,4 @@
-// Show a big banner in the top of the page if the company has been
+// Show a big banner in the top of the page if the context has been
 // Changed in another tab or window (in the same browser)
 
 var con = [];
