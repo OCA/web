@@ -25,6 +25,7 @@ setuptools.setup(
         'odoo12-addon-web_notify',
         'odoo12-addon-web_responsive',
         'odoo12-addon-web_searchbar_full_width',
+        'odoo12-addon-web_switch_context_warning',
         'odoo12-addon-web_timeline',
         'odoo12-addon-web_tree_duplicate',
         'odoo12-addon-web_tree_dynamic_colored_field',
