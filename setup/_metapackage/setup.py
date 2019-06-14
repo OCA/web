@@ -32,6 +32,7 @@ setuptools.setup(
         'odoo11-addon-web_searchbar_full_width',
         'odoo11-addon-web_send_message_popup',
         'odoo11-addon-web_sheet_full_width',
+        'odoo11-addon-web_switch_context_warning',
         'odoo11-addon-web_timeline',
         'odoo11-addon-web_tree_dynamic_colored_field',
         'odoo11-addon-web_tree_image',
