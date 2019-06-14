@@ -1,52 +1,6 @@
 /* Copyright 2018 Tecnativa - Jairo Llopis
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
-// AppMenu icon waiting indicator anim
-@keyframes o-app-icon-flash-animation {
-    0% {
-        filter: brightness(1.0);
-    }
-    25% {
-        filter: brightness(2.0);
-    }
-    50% {
-        filter: brightness(1.0);
-    }
-    75% {
-        filter: brightness(2.0);
-    }
-    100% {
-        filter: brightness(1.0);
-    }
-}
-.o-app-waiting img {
-  animation: 1.3s infinite cubic-bezier(.65,.05,.36,1) o-app-icon-flash-animation;
-}
-// Menu icon waiting indicator anim
-@keyframes o-menu-item-flash-animation {
-    0% {
-        background-color: $dropdown-link-hover-bg;
-    }
-    25% {
-        background-color: transparent;
-    }
-    50% {
-        background-color: $dropdown-link-hover-bg;
-    }
-    75% {
-        background-color: transparent;
-    }
-    100% {
-        background-color: $dropdown-link-hover-bg;
-    }
-}
-.o-menu-item-waiting {
-  animation: 1.3s infinite cubic-bezier(.65,.05,.36,1) o-menu-item-flash-animation;
-}
-.o-cursor-waiting {
-  cursor: progress;
-}
-
 @mixin full-screen-dropdown {
     border: none;
     box-shadow: none;
@@ -551,4 +505,9 @@ html .o_web_client .o_main .o_main_content {
             background-color: $o-list-footer-bg-color;
         }
     }
+}
+
+// Waiting Cursor
+.oe_wait {
+  cursor: progress;
 }
