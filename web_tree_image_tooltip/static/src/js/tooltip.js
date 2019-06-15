@@ -13,7 +13,7 @@ odoo.define('web_tree_image_tooltip.web_tree_image_tooltip',
             $(event.currentTarget).tooltip({
                 title: "<img src="+img_src+" />",
                 delay: 0,
-            });
+            }).tooltip('show');
         }
     });
 })
