@@ -33,4 +33,5 @@
     ],
     'installable': True,
     'auto_install': False,
+    'license': 'AGPL-3',
 }
