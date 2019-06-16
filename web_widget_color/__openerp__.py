@@ -41,4 +41,5 @@
     'auto_install': False,
     'installable': True,
     'web_preload': True,
+    'license': 'GPL-3 or any later version',
 }
