@@ -40,4 +40,5 @@
         'static/src/xml/popup_help.xml',
     ],
     'installable': True,
+    'license': 'AGPL-3',
 }
