@@ -11,5 +11,6 @@
     'qweb': [
         "static/src/xml/main.xml",
     ],
-    'installable': True
+    'installable': True,
+    'license': 'AGPL-3',
 }
