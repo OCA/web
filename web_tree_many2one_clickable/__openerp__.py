@@ -35,4 +35,5 @@
         'views/asset.xml',
     ],
     "installable": True,
+    "license": "AGPL-3",
 }
