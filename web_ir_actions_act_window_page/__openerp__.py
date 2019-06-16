@@ -28,4 +28,5 @@
     "depends": ['web'],
     'data': ['view/qweb.xml'],
     'installable': True,
+    'license': 'AGPL-3',
 }
