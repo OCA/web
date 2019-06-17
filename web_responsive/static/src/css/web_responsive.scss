@@ -427,7 +427,7 @@ html .o_web_client .o_main .o_main_content {
 
     // Sided chatter, if user wants
     .o_chatter_position_sided & {
-        @include media-breakpoint-up(md) {
+        @include media-breakpoint-up(lg) {
             .o_form_view:not(.o_form_nosheet) {
                 display: flex;
                 flex-flow: row nowrap;
@@ -444,7 +444,7 @@ html .o_web_client .o_main .o_main_content {
 
                 .o_chatter {
                     border-left: 1px solid gray('400');
-                    flex: 0 0 30%;
+                    flex: 0 0 35%;
                     max-width: initial;
                     min-width: initial;
                     overflow: auto;
