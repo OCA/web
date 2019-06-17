@@ -91,6 +91,18 @@ Features for computers:
 
   .. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_responsive/static/img/appmenu.gif
 
+* Sticky header & footer in list view
+
+  .. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_responsive/static/img/listview.gif
+
+* Sticky statusbar in form view
+
+  .. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_responsive/static/img/formview.gif
+
+* Followers and send button is displayed on mobile. Avatar is hidden.
+
+  .. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_responsive/static/img/chatter.gif
+
 **Table of contents**
 
 .. contents::
