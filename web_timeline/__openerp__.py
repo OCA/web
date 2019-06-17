@@ -20,4 +20,5 @@
     'data': [
         'views/web_timeline.xml',
     ],
+    'license': 'AGPL-3',
 }
