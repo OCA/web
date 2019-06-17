@@ -58,8 +58,20 @@ Features for computers:
 
 * Sticky chatter topbar
 
-  .. image:: ./static/img/chatter_topbar.gif
+  .. image:: ../static/img/chatter_topbar.gif
 
 * AppMenu waits for action finished to show the view
 
-  .. image:: ./static/img/appmenu.gif
+  .. image:: ../static/img/appmenu.gif
+
+* Sticky header & footer in list view
+
+  .. image:: ../static/img/listview.gif
+
+* Sticky statusbar in form view
+
+  .. image:: ../static/img/formview.gif
+
+* Followers and send button is displayed on mobile. Avatar is hidden.
+
+  .. image:: ../static/img/chatter.gif
