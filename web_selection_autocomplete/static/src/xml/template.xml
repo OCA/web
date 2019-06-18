@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+<t t-name="SelectionAutocomplete">
+    <span t-if="widget.mode === 'readonly'"/>
+
+    <input t-if="widget.mode !== 'readonly'"
+        class="o_input"
+        type="text"
+        t-att-name="widget.name"
+        t-att-tabindex="widget.attrs.tabindex"
+        t-att-autofocus="widget.attrs.autofocus"
+        t-att-id="widget.idForLabel"/>
+</t>
+
+
+
+
+
+</templates>

@@ -1,0 +1,9 @@
+.o_selection_autocomplete_invalid {
+    &::before {
+        color: #DF382C !important;
+        content: 'Wrong value. Insert one of the available options.' !important;
+    }
+    input {
+        border-color: #DF382C !important;
+    }
+}

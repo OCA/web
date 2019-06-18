@@ -1,0 +1,9 @@
+<odoo>
+
+    <template id="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr=".">
+            <script type="text/javascript" src="/web_selection_autocomplete/static/src/js/web_selection_autocomplete.js"/>
+            <style rel="stylesheet" href="/web_selection_autocomplete/static/src/scss/web_selection_autocomplete.scss"/>
+        </xpath>
+    </template>
+</odoo>
