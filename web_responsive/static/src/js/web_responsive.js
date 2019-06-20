@@ -396,8 +396,9 @@ odoo.define('web_responsive', function (require) {
         _hideMenusByAction: function (action) {
             var uniq_sel = '[data-action-id='+action.id+']';
             // Need close AppDrawer?
-            $(_.str.sprintf('.o_menu_apps .dropdown.show:has(%s)', uniq_sel))
-                .dropdown('toggle');
+            $(_.str.sprintf(
+                '.o_menu_apps .dropdown:has(.dropdown-menu.show:has(%s)) > a',
+                uniq_sel)).dropdown('toggle');
             // Need close Sections Menu?
             // TODO: Change to 'hide' in modern Bootstrap >4.1
             $(_.str.sprintf(
