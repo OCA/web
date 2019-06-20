@@ -423,6 +423,40 @@ html .o_web_client .o_main .o_main_content {
                     margin: 0;
                 }
             }
+
+            .o_chatter {
+                // Display send button on small screens
+                .o_thread_composer {
+                    padding-left: $o-mail-thread-avatar-size*0.5;
+
+                    .o_composer_button_send {
+                        display: initial !important; // Forced in core
+                    }
+                    .o_chatter_avatar {
+                        display: none;
+                    }
+                }
+
+                .o_chatter_topbar {
+                    height: auto;
+                    flex-wrap: wrap-reverse;
+
+                    > .o_topbar_right_area {
+                        flex: 1 0 auto;
+                        flex-wrap: wrap;
+                        max-width: 100%;
+
+                        // Display followers on small screens
+                        .o_followers {
+                            display: initial !important; // Forced in core
+
+                            @include media-breakpoint-down(xs) {
+                                padding-bottom: 50px;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
