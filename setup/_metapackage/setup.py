@@ -22,6 +22,7 @@ setuptools.setup(
         'odoo12-addon-web_ir_actions_act_view_reload',
         'odoo12-addon-web_listview_range_select',
         'odoo12-addon-web_m2x_options',
+        'odoo12-addon-web_no_bubble',
         'odoo12-addon-web_notify',
         'odoo12-addon-web_responsive',
         'odoo12-addon-web_searchbar_full_width',
