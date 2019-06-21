@@ -6,49 +6,37 @@ odoo.define('web_translate_dialog.translate_dialog', function(require){
 "use strict";
 
 var core = require('web.core');
-var common = require('web.form_common');
+var BasicController = require('web.BasicController');
 var data = require('web.data');
-
+var Context = require('web.Context');
+var concurrency = require('web.concurrency');
 var Dialog = require('web.Dialog');
 var FormView = require('web.FormView');
-var View = require('web.View');
+var View = require('web.AbstractView');
+var session  = require('web.session');
 
 var _t = core._t;
 var QWeb = core.qweb;
+var Mutex = concurrency.Mutex;
 
 var translateDialog = Dialog.extend({
     template: "TranslateDialog",
-    init: function(parent, field, content) {
+    init: function(parent, event_data, res_id, content) {
         this._super(parent,
                     {title: _t("Translations"),
                      width: '90%',
                      height: '80%'},
                     content);
-        this.view_language = this.session.user_context.lang;
+        this.view_language = session.user_context.lang;
         this.view = parent;
-        this.view_type = parent.fields_view.type || '';
+        this.view_type = parent.viewType || '';
         this.$view_form = null;
         this.$sidebar_form = null;
-        if (field) {
-            this.translatable_fields_keys = [field];
-            this.translatable_fields = _.filter(
-                this.view.translatable_fields || [],
-                function(i) {
-                    return i.name === field;
-                }
-            );
-        } else {
-            this.translatable_fields_keys = _.map(
-                this.view.translatable_fields || [],
-                function(i) {
-                    return i.name;
-                }
-            );
-            this.translatable_fields = this.view.translatable_fields.slice(0);
-        }
+        this.translatable_fields = [event_data.fieldName];
+        this.res_id = res_id;
         this.languages = null;
         this.languages_loaded = $.Deferred();
-        (new data.DataSetSearch(this, 'res.lang', this.view.dataset.get_context(),
+        (new data.DataSetSearch(this, 'res.lang', parent.searchView.dataset.get_context(),
                                 [['translatable', '=', '1']])).read_slice(['code', 'name'],
                                 { sort: 'id' }).then(this.on_languages_loaded);
     },
@@ -78,7 +66,7 @@ var translateDialog = Dialog.extend({
     },
     initialize_html_fields: function(lang) {
         var self = this;
-        _.each(this.translatable_fields_keys, function(f) {
+        _.each(this.translatable_fields, function(f) {
             // Initialize summernote if HTML field
             self.$el.find('.oe_form_field_html .oe_translation_field[name="' + lang.code + '-' + f + '"]').each(function() {
                 var $parent = $(this).summernote({
@@ -113,7 +101,7 @@ var translateDialog = Dialog.extend({
     },
     set_fields_values: function(lang, values) {
         var self = this;
-        _.each(this.translatable_fields_keys, function(f) {
+        _.each(this.translatable_fields, function(f) {
             self.$el.find('.oe_translation_field[name="' + lang.code +
                     '-' + f + '"]').val(values[f] || '').attr(
                     'data-value', values[f] || '');
@@ -130,32 +118,35 @@ var translateDialog = Dialog.extend({
 
         this.$el.find('.oe_translation_field').val('').removeClass('touched');
         _.each(self.languages, function(lg) {
+            var context = session.user_context;
+            context.lang = lg.code;
             var deff = $.Deferred();
             deferred.push(deff);
-            if (lg.code === self.view_language) {
-                var values = {};
-                _.each(self.translatable_fields_keys, function(field) {
-                    values[field] = self.view.fields[field].get_value();
-                });
-                self.set_fields_values(lg, values);
-                deff.resolve();
-            } else {
-                self.view.dataset.call('read',[[self.view.datarecord.id],
-                    self.translatable_fields_keys, '_classic_read',
-                    self.view.dataset.get_context({
-                        'lang': lg.code })]).done(
-                        function (rows) {
+            self._rpc({
+            model: self.view.modelName,
+            method: 'read',
+            args: [
+                [self.res_id],
+            ],
+            kwargs: {
+                fields: self.translatable_fields,
+                context: context,
+            },
+            }).done(
+                    function (rows) {
+                        
+                        if (rows[0]){
                             self.set_fields_values(lg, rows[0]);
                             deff.resolve();
-                        });
-            }
+                        }
+                    });
         });
         return deferred;
     },
     on_button_save: function() {
         var translations = {},
             self = this,
-            translation_mutex = new $.Mutex();
+            save_mutex = new Mutex();
         self.$el.find('.oe_translation_field.touched').each(function() {
             var field = $(this).attr('name').split('-');
             if (!translations[field[0]]) {
@@ -164,16 +155,23 @@ var translateDialog = Dialog.extend({
             translations[field[0]][field[1]] = $(this).val();
         });
         _.each(translations, function(text, code) {
-            if (code === self.view_language) {
-                self.view.set_values(text);
-            }
-            translation_mutex.exec(function() {
-                return new data.DataSet(self, self.view.dataset.model,
-                                        self.view.dataset.get_context()).write(
-                                        self.view.datarecord.id, text,
-                                        { context : { 'lang': code }});
+            save_mutex.exec(function() {
+                var context = new Context(session.user_context);
+                context.lang = code;
+                self._rpc({
+                    model: self.view.modelName,
+                    method: 'write',
+                    args: [self.res_id, text],
+                    kwargs: {context: context}
+                });
+                if (code === self.view_language) {
+                    _.each(text, function(value, key) {
+                        self.view.$el.find('input[name="'+ key + '"]').val(value);
+                    });
+                }
             });
         });
+        session.user_context.lang = self.view_language;
         this.close();
     },
     on_button_close: function() {
@@ -204,15 +202,17 @@ FormView.include({
 });
 
 View.include({
-    open_translate_dialog: function(field) {
-        new translateDialog(this, field).open();
-    }
 });
 
-common.AbstractField.include({
-    on_translate: function() {
+BasicController.include({
+
+    open_translate_dialog: function(field, res_id) {
+        new translateDialog(this, field, res_id).open();
+    },
+
+    _onTranslate: function(event) {
         // the image next to the fields opens the translate dialog
-        this.view.open_translate_dialog(this.name);
+        this.open_translate_dialog(event.data, event.target.res_id);
     },
 });
 
