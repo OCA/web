@@ -4,6 +4,7 @@
 odoo.define('web_responsive', function (require) {
     'use strict';
 
+    var ActionManager = require('web.ActionManager');
     var AbstractWebClient = require("web.AbstractWebClient");
     var AppsMenu = require("web.AppsMenu");
     var config = require("web.config");
@@ -76,6 +77,7 @@ odoo.define('web_responsive', function (require) {
             "click .o-menu-search-result": "_searchResultChosen",
             "shown.bs.dropdown": "_searchFocus",
             "hidden.bs.dropdown": "_searchReset",
+            "hide.bs.dropdown": "_hideAppsMenu",
         }, AppsMenu.prototype.events),
 
         /**
@@ -194,6 +196,7 @@ odoo.define('web_responsive', function (require) {
          */
         _searchResultChosen: function (event) {
             event.preventDefault();
+            event.stopPropagation();
             var $result = $(event.currentTarget),
                 text = $result.text().trim(),
                 data = $result.data(),
@@ -264,6 +267,13 @@ odoo.define('web_responsive', function (require) {
                 },
             });
         },
+
+        /*
+        * Control if AppDrawer can be closed
+        */
+        _hideAppsMenu: function () {
+            return $('.oe_wait').length === 0 && !this.$('input').is(':focus');
+        },
     });
 
     Menu.include({
@@ -273,6 +283,8 @@ odoo.define('web_responsive', function (require) {
             // Opening any dropdown in the navbar should hide the hamburger
             "show.bs.dropdown .o_menu_systray, .o_menu_apps":
                 "_hideMobileSubmenus",
+            // Prevent close section menu
+            "hide.bs.dropdown .o_menu_sections": "_hideMenuSection",
         }, Menu.prototype.events),
 
         start: function () {
@@ -286,10 +298,20 @@ odoo.define('web_responsive', function (require) {
         _hideMobileSubmenus: function () {
             if (
                 this.$menu_toggle.is(":visible") &&
-                this.$section_placeholder.is(":visible")
+                this.$section_placeholder.is(":visible") &&
+                $('.oe_wait').length === 0
             ) {
                 this.$section_placeholder.collapse("hide");
             }
+        },
+
+        /**
+         * Hide Menu Section
+         *
+         * @returns {Boolean}
+         */
+        _hideMenuSection: function () {
+            return $('.oe_wait').length === 0;
         },
 
         /**
@@ -358,7 +380,39 @@ odoo.define('web_responsive', function (require) {
             } else {
                 this._super.apply(this, arguments);
             }
-        }
+        },
+    });
+
+    // Hide AppDrawer or Menu when the action has been completed
+    ActionManager.include({
+
+        /**
+        * Because the menu aren't closed when click, this method
+        * searchs for the menu with the action executed to close it.
+        *
+        * @param {action} action
+        * The executed action
+        */
+        _hideMenusByAction: function (action) {
+            var uniq_sel = '[data-action-id='+action.id+']';
+            // Need close AppDrawer?
+            $(_.str.sprintf(
+                '.o_menu_apps .dropdown:has(.dropdown-menu.show:has(%s)) > a',
+                uniq_sel)).dropdown('toggle');
+            // Need close Sections Menu?
+            // TODO: Change to 'hide' in modern Bootstrap >4.1
+            $(_.str.sprintf(
+                '.o_menu_sections li.show:has(%s) .dropdown-toggle', uniq_sel))
+                .dropdown('toggle');
+            // Need close Mobile?
+            $(_.str.sprintf('.o_menu_sections.show:has(%s)', uniq_sel))
+                .collapse('hide');
+        },
+
+        _handleAction: function (action) {
+            return this._super.apply(this, arguments).always(
+                $.proxy(this, '_hideMenusByAction', action));
+        },
     });
 
     /**
