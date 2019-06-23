@@ -278,6 +278,8 @@ odoo.define('web_responsive', function (require) {
 
     Menu.include({
         events: _.extend({
+            // Clicking on apps menu
+    	    "click .o_menu_apps a[data-toggle=dropdown]": "_onAppsMenuClick",
             // Clicking a hamburger menu item should close the hamburger
             "click .o_menu_sections [role=menuitem]": "_hideMobileSubmenus",
             // Opening any dropdown in the navbar should hide the hamburger
@@ -322,6 +324,22 @@ odoo.define('web_responsive', function (require) {
         _updateMenuBrand: function () {
             if (!config.device.isMobile) {
                 return this._super.apply(this, arguments);
+            }
+        },
+        
+        /**
+         * Check if Controller can be removed
+         */
+        _onAppsMenuClick: function(event, checkedCanBeRemoved) {
+            var action_manager = this.getParent().action_manager;
+            var controller = action_manager.getCurrentController();
+            if (controller && !checkedCanBeRemoved) {
+                controller.widget.canBeRemoved().done(function () {
+                    $(event.currentTarget).trigger('click', [true]);
+                    $(event.currentTarget).off('.bs.dropdown');
+                });
+                event.stopPropagation();
+                event.preventDefault();
             }
         },
     });
