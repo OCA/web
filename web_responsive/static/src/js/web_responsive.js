@@ -7,6 +7,7 @@ odoo.define('web_responsive', function (require) {
     var ActionManager = require('web.ActionManager');
     var AbstractWebClient = require("web.AbstractWebClient");
     var AppsMenu = require("web.AppsMenu");
+    var BasicController = require('web.BasicController');
     var config = require("web.config");
     var core = require("web.core");
     var FormRenderer = require('web.FormRenderer');
@@ -110,6 +111,14 @@ odoo.define('web_responsive', function (require) {
             this.$search_input = this.$(".search-input input");
             this.$search_results = this.$(".search-results");
             return this._super.apply(this, arguments);
+        },
+
+        /**
+         * @override
+         */
+        _onAppsMenuItemClicked: function (ev) {
+            this._super.apply(this, arguments);
+            ev.preventDefault();
         },
 
         /**
@@ -276,10 +285,21 @@ odoo.define('web_responsive', function (require) {
         },
     });
 
+    BasicController.include({
+        
+        /**
+         * @override
+         */
+        canBeDiscarded: function (recordID) {
+            if (this.model.isDirty(recordID || this.handle)) {
+                $('.o_menu_apps .dropdown:has(.dropdown-menu.show) > a').dropdown('toggle');
+            }
+            return this._super.apply(this, arguments);
+        },
+    });
+
     Menu.include({
         events: _.extend({
-            // Clicking on apps menu
-    	    "click .o_menu_apps a[data-toggle=dropdown]": "_onAppsMenuClick",
             // Clicking a hamburger menu item should close the hamburger
             "click .o_menu_sections [role=menuitem]": "_hideMobileSubmenus",
             // Opening any dropdown in the navbar should hide the hamburger
@@ -324,22 +344,6 @@ odoo.define('web_responsive', function (require) {
         _updateMenuBrand: function () {
             if (!config.device.isMobile) {
                 return this._super.apply(this, arguments);
-            }
-        },
-        
-        /**
-         * Check if Controller can be removed
-         */
-        _onAppsMenuClick: function(event, checkedCanBeRemoved) {
-            var action_manager = this.getParent().action_manager;
-            var controller = action_manager.getCurrentController();
-            if (controller && !checkedCanBeRemoved) {
-                controller.widget.canBeRemoved().done(function () {
-                    $(event.currentTarget).trigger('click', [true]);
-                    $(event.currentTarget).off('.bs.dropdown');
-                });
-                event.stopPropagation();
-                event.preventDefault();
             }
         },
     });
