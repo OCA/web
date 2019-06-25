@@ -14,6 +14,7 @@ var Dialog = require('web.Dialog');
 var FormView = require('web.FormView');
 var View = require('web.AbstractView');
 var session  = require('web.session');
+var rpc = require('web.rpc');
 
 var _t = core._t;
 var QWeb = core.qweb;
@@ -118,11 +119,10 @@ var translateDialog = Dialog.extend({
 
         this.$el.find('.oe_translation_field').val('').removeClass('touched');
         _.each(self.languages, function(lg) {
-            var context = session.user_context;
-            context.lang = lg.code;
+            var context = new Context(session.user_context, {lang: lg.code});
             var deff = $.Deferred();
             deferred.push(deff);
-            self._rpc({
+            rpc.query({
             model: self.view.modelName,
             method: 'read',
             args: [
@@ -130,7 +130,7 @@ var translateDialog = Dialog.extend({
             ],
             kwargs: {
                 fields: self.translatable_fields,
-                context: context,
+                context: context.eval(),
             },
             }).done(
                     function (rows) {
@@ -156,22 +156,25 @@ var translateDialog = Dialog.extend({
         });
         _.each(translations, function(text, code) {
             save_mutex.exec(function() {
-                var context = new Context(session.user_context);
-                context.lang = code;
-                self._rpc({
+                var done = new $.Deferred(); // holds the mutex
+
+                var context = new Context(session.user_context, {lang: code});
+                rpc.query({
                     model: self.view.modelName,
                     method: 'write',
                     args: [self.res_id, text],
-                    kwargs: {context: context}
+                    kwargs: {context: context.eval()}
+                }).then(function() {
+                    done.resolve();
                 });
                 if (code === self.view_language) {
                     _.each(text, function(value, key) {
                         self.view.$el.find('input[name="'+ key + '"]').val(value);
                     });
                 }
+                return done;
             });
         });
-        session.user_context.lang = self.view_language;
         this.close();
     },
     on_button_close: function() {
