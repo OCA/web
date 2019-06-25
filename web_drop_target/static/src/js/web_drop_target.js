@@ -3,8 +3,8 @@
 /*global Uint8Array base64js*/
 
 odoo.define('web_drop_target', function(require) {
-    var    FormController = require('web.FormController');
-    var    core = require('web.core');
+    var FormController = require('web.FormController');
+    var core = require('web.core');
     var qweb = core.qweb;
 
     // this is the main contribution of this addon: A mixin you can use
@@ -26,10 +26,13 @@ odoo.define('web_drop_target', function(require) {
         },
 
         _on_drop: function(e) {
+            if (!this._drop_overlay){
+                return;
+            }
             var drop_items = this._get_drop_items(e);
             e.preventDefault();
             this._remove_overlay();
-            if(!drop_items) {
+            if (!drop_items) {
                 return;
             }
             this._handle_drop_items(drop_items, e)
@@ -51,7 +54,7 @@ odoo.define('web_drop_target', function(require) {
                 dataTransfer = e.originalEvent.dataTransfer,
                 drop_items = [];
             _.each(dataTransfer.files, function(item) {
-                if(
+                if (
                     _.contains(self._drop_allowed_types, item.type) ||
                     _.isEmpty(self._drop_allowed_types)
                 ) {
@@ -92,9 +95,9 @@ odoo.define('web_drop_target', function(require) {
                 while(p && !p.sidebar) {
                     p = p.getParent ? p.getParent() : null;
                 }
-                if(p) {
+                if (p) {
                     var sidebar = p.sidebar;
-                    if(sidebar && _.isFunction(sidebar._onFileUploaded)) {
+                    if (sidebar && _.isFunction(sidebar._onFileUploaded)) {
                         sidebar._onFileUploaded();
                     }
                 }
@@ -110,7 +113,7 @@ odoo.define('web_drop_target', function(require) {
         ) {
             var self = this;
             var file = item;
-            if(!file || !(file instanceof Blob)) {
+            if (!file || !(file instanceof Blob)) {
                 return;
             }
             var reader = new FileReader();
@@ -122,7 +125,7 @@ odoo.define('web_drop_target', function(require) {
         },
 
         _add_overlay: function() {
-            if(!this._drop_overlay){
+            if (!this._drop_overlay){
                 var o_content = jQuery('.o_content'),
                     view_manager = jQuery('.o_view_manager_content');
                 this._drop_overlay = jQuery(
@@ -152,7 +155,7 @@ odoo.define('web_drop_target', function(require) {
     FormController.include(_.extend(DropTargetMixin, {
         _get_drop_file: function() {
             // disable drag&drop when we're on an unsaved record
-            if(!this.datarecord.id) {
+            if (!this.datarecord.id) {
                 return null;
             }
             return this._super.apply(this, arguments);
