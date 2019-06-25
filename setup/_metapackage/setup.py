@@ -30,6 +30,7 @@ setuptools.setup(
         'odoo12-addon-web_timeline',
         'odoo12-addon-web_tree_duplicate',
         'odoo12-addon-web_tree_dynamic_colored_field',
+        'odoo12-addon-web_tree_image_tooltip',
         'odoo12-addon-web_tree_many2one_clickable',
         'odoo12-addon-web_tree_resize_column',
         'odoo12-addon-web_widget_color',
