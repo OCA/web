@@ -215,7 +215,8 @@ BasicController.include({
 
     _onTranslate: function(event) {
         // the image next to the fields opens the translate dialog
-        this.open_translate_dialog(event.data, event.target.res_id);
+        var res_id = event.target.res_id ? event.target.res_id : event.target.state.res_id;
+        this.open_translate_dialog(event.data, res_id);
     },
 });
 
