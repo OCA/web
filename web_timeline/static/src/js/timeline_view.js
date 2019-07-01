@@ -167,7 +167,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
                 return +1;
             }
 
-            return grp1.content.locateCompare(grp2.content);
+            return grp1.content.localeCompare(grp2.content);
 
         },
 
