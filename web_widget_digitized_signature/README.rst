@@ -71,6 +71,7 @@ Authors
 * Serpent Consulting Services Pvt. Ltd.
 * Agile Business Group
 * Tecnativa
+* Open Source Integrators
 
 Contributors
 ~~~~~~~~~~~~
@@ -79,6 +80,7 @@ Contributors
 * Tecnativa <https://www.tecnativa.com>:
 
   * Vicent Cubells
+* Mayank Gosai <mgosai@opensourceintegrators.com>
 
 Maintainers
 ~~~~~~~~~~~
