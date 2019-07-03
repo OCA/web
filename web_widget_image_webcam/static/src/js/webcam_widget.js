@@ -1,20 +1,21 @@
 /*
-    Copyright 2016 Siddharth Bhalgami <siddharth.bhalgami@techreceptives.com>
+    Copyright 2016 Siddharth Bhalgami <siddharth.bhalgami@gmail.com>
     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 */
 odoo.define('web_widget_image_webcam.webcam_widget', function(require) {
     "use strict";
 
     var core = require('web.core');
-    var Model = require('web.Model');
+    var rpc = require('web.rpc');
     var Dialog = require('web.Dialog');
+    var FieldBinaryImage = require('web.basic_fields').FieldBinaryImage;
 
     var _t = core._t;
     var QWeb = core.qweb;
 
-    core.form_widget_registry.get("image").include({
+    FieldBinaryImage.include({
 
-        render_value: function () {
+        _render: function () {
             this._super();
 
             var self = this,
@@ -35,10 +36,10 @@ odoo.define('web_widget_image_webcam.webcam_widget', function(require) {
                 swfURL: '/web_widget_image_webcam/static/src/js/webcam.swf',
             });
 
-            self.$el.find('.o_form_binary_file_web_cam').removeClass('col-md-offset-5');
-
-            new Model('ir.config_parameter').call('get_param', ['web_widget_image_webcam.flash_fallback_mode', false]).
-            then(function(default_flash_fallback_mode) {
+            rpc.query({
+                model: 'ir.config_parameter',
+                method: 'get_webcam_flash_fallback_mode_config',
+            }).then(function(default_flash_fallback_mode) {
                 if (default_flash_fallback_mode == 1) {
                     Webcam.set({
                         /*
@@ -52,7 +53,7 @@ odoo.define('web_widget_image_webcam.webcam_widget', function(require) {
 
             self.$el.find('.o_form_binary_file_web_cam').off().on('click', function(){
                 // Init Webcam
-                new Dialog(self, {
+                var dialog = new Dialog(self, {
                     size: 'large',
                     dialogClass: 'o_act_window',
                     title: _t("WebCam Booth"),
@@ -66,8 +67,10 @@ odoo.define('web_widget_image_webcam.webcam_widget', function(require) {
                                     // Display Snap besides Live WebCam Preview
                                     WebCamDialog.find("#webcam_result").html('<img src="'+img_data+'"/>');
                                 });
-                                // Remove "disabled" attr from "Save & Close" button
-                                $('.save_close_btn').removeAttr('disabled');
+                                if (Webcam.live) {
+                                    // Remove "disabled" attr from "Save & Close" button
+                                    $('.save_close_btn').removeAttr('disabled');
+                                }
                             }
                         },
                         {
@@ -100,13 +103,15 @@ odoo.define('web_widget_image_webcam.webcam_widget', function(require) {
                     ]
                 }).open();
 
-                Webcam.attach('#live_webcam');
+                dialog.opened().then(function() {
+                    Webcam.attach('#live_webcam');
 
-                // At time of Init "Save & Close" button is disabled
-                $('.save_close_btn').attr('disabled', 'disabled');
+                    // At time of Init "Save & Close" button is disabled
+                    $('.save_close_btn').attr('disabled', 'disabled');
 
-                // Placeholder Image in the div "webcam_result"
-                WebCamDialog.find("#webcam_result").html('<img src="/web_widget_image_webcam/static/src/img/webcam_placeholder.png"/>');
+                    // Placeholder Image in the div "webcam_result"
+                    WebCamDialog.find("#webcam_result").html('<img src="/web_widget_image_webcam/static/src/img/webcam_placeholder.png"/>');
+                });
             });
         },
     });
