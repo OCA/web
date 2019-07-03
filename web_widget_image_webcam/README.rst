@@ -39,7 +39,7 @@ Credits
 Contributors
 ------------
 
-* Siddharth Bhalgami <siddharth.bhalgami@techreceptives.com>
+* Siddharth Bhalgami <siddharth.bhalgami@gmail.com>
 * Kaushal Prajapati <kbprajapati@live.com>
 
 Maintainer
