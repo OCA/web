@@ -69,7 +69,7 @@ odoo.define('web_export_view', function (require) {
                             if (text.search(":")) { 
                                 export_row.push(text);
                             }
-                            if ($cell.hasClass("o_list_number")) {
+			    else if ($cell.hasClass("o_list_number")) {
                                 export_row.push(parseFloat(
                                     text
                                     // Remove thousands separator
