@@ -65,6 +65,10 @@ odoo.define('web_export_view', function (require) {
                         }
                         else {
                             var text = $cell.text().trim();
+                            // Search : for hour value
+                            if (text.search(":")) { 
+                                export_row.push(text);
+                            }
                             if ($cell.hasClass("o_list_number")) {
                                 export_row.push(parseFloat(
                                     text
