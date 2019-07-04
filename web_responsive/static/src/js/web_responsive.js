@@ -7,6 +7,7 @@ odoo.define('web_responsive', function (require) {
     var ActionManager = require('web.ActionManager');
     var AbstractWebClient = require("web.AbstractWebClient");
     var AppsMenu = require("web.AppsMenu");
+    var BasicController = require('web.BasicController');
     var config = require("web.config");
     var core = require("web.core");
     var FormRenderer = require('web.FormRenderer');
@@ -110,6 +111,16 @@ odoo.define('web_responsive', function (require) {
             this.$search_input = this.$(".search-input input");
             this.$search_results = this.$(".search-results");
             return this._super.apply(this, arguments);
+        },
+
+        /**
+         * Prevent the menu from being opened twice
+         * 
+         * @override
+         */
+        _onAppsMenuItemClicked: function (ev) {
+            this._super.apply(this, arguments);
+            ev.preventDefault();
         },
 
         /**
@@ -273,6 +284,22 @@ odoo.define('web_responsive', function (require) {
         */
         _hideAppsMenu: function () {
             return $('.oe_wait').length === 0 && !this.$('input').is(':focus');
+        },
+    });
+
+    BasicController.include({
+        
+        /**
+         * Close the AppDrawer if the data set is dirty and a discard dialog is opened
+         * 
+         * @override
+         */
+        canBeDiscarded: function (recordID) {
+            if (this.model.isDirty(recordID || this.handle)) {
+                $('.o_menu_apps .dropdown:has(.dropdown-menu.show) > a').dropdown('toggle');
+                $('.o_menu_sections li.show .dropdown-toggle').dropdown('toggle');
+            }
+            return this._super.apply(this, arguments);
         },
     });
 
