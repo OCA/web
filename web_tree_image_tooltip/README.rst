@@ -34,6 +34,11 @@ Additionally, Default width with 30px.
 .. contents::
    :local:
 
+Configuration
+=============
+
+Insert `widget='image'` in your field view definition in any image field
+
 Usage
 =====
 
