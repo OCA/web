@@ -6,7 +6,7 @@
 {
     "name": "Wildcard in advanced search",
     "summary": "Webmodule to add wildcard operators in advanced search field",
-    "version": "10.0.1.0.0",
+    "version": "12.0.1.0.0",
     "category": "web",
     "license": "AGPL-3",
     "author": "initOS GmbH & Co. KG, Therp BV, "
