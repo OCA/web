@@ -25,11 +25,13 @@ Wildcard in advanced search
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
-This module adds 3 options to advanced search of char, many2one,
+This module adds new options to advanced search of char, many2one,
 many2many and one2many fields:
 
 * *starts with* (uses the domain *=ilike %<search string>*),
+* *doesn't start with* (uses the domain *not ilike %<search string>*),
 * *ends with* (uses the domain *=ilike <search string>%*),
+* *doesn't end with* (uses the domain *not ilike <search string>%*),
 * *matches* (uses the domain *=ilike <search string>*).
 
 
@@ -79,7 +81,7 @@ Contributors
 * L Freeke <lfreeke@therp.nl>
 * Alex Comba <alex.comba@agilebg.com>
 * Alexis de Lattre <alexis.delattre@akretion.com>
-
+* Souheil Bejaoui <souheil.bejaoui@acsone.eu>
 
 Maintainers
 ~~~~~~~~~~~
