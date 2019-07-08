@@ -7,7 +7,9 @@ odoo.define('web_advanced_search_wildcard', function (require) {
 
     Char.prototype.operators.push(
         {value: "startswith", text: _lt("starts with")},
+        {value: "not_startswith", text: _lt("doesn't start with")},
         {value: "endswith", text: _lt("ends with")},
+        {value: "not_endswith", text: _lt("doesn't end with")},
         {value: '=ilike', text: _lt("matches")}
     );
 
@@ -17,7 +19,9 @@ odoo.define('web_advanced_search_wildcard', function (require) {
             case '∃': return [[field.name, '!=', false]];
             case '∄': return [[field.name, '=', false]];
             case 'startswith': return [[field.name, '=ilike', this.get_value() + '%']];
+            case 'not_startswith': return [[field.name, 'not =ilike', this.get_value() + '%']];
             case 'endswith': return [[field.name, '=ilike', '%' + this.get_value()]];
+            case 'not_endswith': return [[field.name, 'not =ilike', '%' + this.get_value()]];
             default: return [[field.name, operator.value, this.get_value()]];
             }
         },
