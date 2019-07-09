@@ -3,9 +3,9 @@
 {
     "name": "Web Editor Background Color Picker",
     "summary": "Set any background color for web editor snippets",
-    "version": "11.0.1.0.0",
+    "version": "12.0.1.0.0",
     "category": "Website",
-    "website": "https://www.tecnativa.com",
+    "website": "https://github.com/OCA/web",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "LGPL-3",
     "application": False,
@@ -18,5 +18,6 @@
     ],
     "data": [
         "templates/assets.xml",
+        "templates/editor.xml",
     ],
 }
