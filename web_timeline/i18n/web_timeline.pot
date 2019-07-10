@@ -86,7 +86,7 @@ msgstr ""
 
 #. module: web_timeline
 #. openerp-web
-#: code:addons/web_timeline/static/src/js/timeline_renderer.js:467
+#: code:addons/web_timeline/static/src/js/timeline_renderer.js:476
 #, python-format
 msgid "Template \"timeline-item\" not present in timeline view definition."
 msgstr ""
