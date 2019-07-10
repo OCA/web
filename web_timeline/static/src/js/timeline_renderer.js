@@ -210,7 +210,10 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
                 onAdd: self.on_add,
                 onMove: self.on_move,
                 onUpdate: self.on_update,
-                onRemove: self.on_remove
+                onRemove: self.on_remove,
+                horizontalScroll: false,
+                verticalScroll:true,
+                zoomKey: 'ctrlKey',
             });
             this.qweb = new QWeb(session.debug, {_s: session.origin}, false);
             if (this.arch.children.length) {
@@ -223,6 +226,12 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
             }
 
             this.timeline = new vis.Timeline(self.$timeline.empty().get(0));
+            $(this.timeline.dom.leftContainer).scroll(function() {
+                var hei = ($('.vis-foreground .vis-group:first-child')[0].style.height).split("px");
+                var itemset_height = ($('.vis-itemset')[0].style.height).split("px");
+                var new_height = parseInt(itemset_height[0]) - (parseInt(hei[0]) - 100)
+                $('.vis-itemset').css('height', new_height)
+            });
             this.timeline.setOptions(this.options);
             if (self.mode && self['on_scale_' + self.mode + '_clicked']) {
                 self['on_scale_' + self.mode + '_clicked']();
