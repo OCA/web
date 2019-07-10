@@ -29,3 +29,35 @@
     left: 0px;
     top: 0px;
 }
+
+.vis-labelset {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: visible !important;
+}
+
+.vis-labelset .vis-label:first-child {
+    background: lightgrey;
+    position: sticky;
+    top: 0px !important;
+    z-index: 999;
+    max-height: 100px;
+    height: 100px !important;
+    display: -webkit-flex;
+}
+
+.vis-foreground .vis-group:first-child {
+    background: lightgrey;
+    position: sticky;
+    top: 0px !important;
+    z-index: 999;
+    max-height: 100px;
+    height: 100px !important;
+    display: -webkit-flex;
+    overflow: auto;
+}
+
+.vis-background .vis-group:nth-child(2) .vis-line{
+    display:none !important;
+}
