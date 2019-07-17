@@ -15,6 +15,7 @@ var FormView = require('web.FormView');
 var View = require('web.AbstractView');
 var session  = require('web.session');
 var rpc = require('web.rpc');
+var dom = require('web.dom');
 
 var _t = core._t;
 var QWeb = core.qweb;
@@ -107,9 +108,9 @@ var translateDialog = Dialog.extend({
                     '-' + f + '"]').val(values[f] || '').attr(
                     'data-value', values[f] || '');
         });
-        this.$el.find('textarea.oe_translation_field').css({
-            minHeight:'100px',
-        });
+        var textarea = this.$el.find('textarea.oe_translation_field');
+        textarea.css({minHeight:'100px',});
+        dom.autoresize(textarea, {parent: this.$el});
         $(window).resize();
         this.initialize_html_fields(lang);
     },
