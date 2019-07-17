@@ -35,6 +35,7 @@ setuptools.setup(
         'odoo12-addon-web_tree_many2one_clickable',
         'odoo12-addon-web_tree_resize_column',
         'odoo12-addon-web_widget_color',
+        'odoo12-addon-web_widget_digitized_signature',
         'odoo12-addon-web_widget_domain_editor_dialog',
         'odoo12-addon-web_widget_image_download',
         'odoo12-addon-web_widget_image_url',
