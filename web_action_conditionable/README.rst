@@ -40,10 +40,7 @@ This module has no direct interface, it only adds functionality for custom views
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/162/11.0
-
-.. repo_id is available in https://github.com/OCA/maintainer-tools/blob/master/tools/repos_with_ids.txt
-.. branch is "8.0" for example
+   :target: https://runbot.odoo-community.org/runbot/162/12.0
 
 Bug Tracker
 ===========
