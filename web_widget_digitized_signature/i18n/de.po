@@ -28,7 +28,7 @@ msgstr "bereinigen"
 
 #. module: web_widget_digitized_signature
 #. openerp-web
-#: code:addons/web_widget_digitized_signature/static/src/js/digital_sign.js:99
+#: code:addons/web_widget_digitized_signature/static/src/js/digital_sign.js:97
 #, python-format
 msgid "Could not display the selected image."
 msgstr "Kann ausgewähltes Bild nicht anzeigen."
@@ -38,6 +38,13 @@ msgstr "Kann ausgewähltes Bild nicht anzeigen."
 #, python-format
 msgid "Deletion date: %s"
 msgstr "Löschdatum %s"
+
+#. module: web_widget_digitized_signature
+#: model:ir.model.fields,field_description:web_widget_digitized_signature.field_res_users__digital_signature
+#, fuzzy
+#| msgid "Signature"
+msgid "Digital Signature"
+msgstr "Unterschrift"
 
 #. module: web_widget_digitized_signature
 #. openerp-web
@@ -53,15 +60,14 @@ msgstr "Email-Thema"
 
 #. module: web_widget_digitized_signature
 #. openerp-web
-#: code:addons/web_widget_digitized_signature/static/src/js/digital_sign.js:99
+#: code:addons/web_widget_digitized_signature/static/src/js/digital_sign.js:97
 #, python-format
 msgid "Image"
 msgstr "Bild"
 
 #. module: web_widget_digitized_signature
-#: model:ir.model.fields,field_description:web_widget_digitized_signature.field_res_users_digital_signature
-#: model:ir.ui.view,arch_db:web_widget_digitized_signature.inherited_res_users_form
-#: model:ir.ui.view,arch_db:web_widget_digitized_signature.inherited_res_users_preferences_form
+#: model_terms:ir.ui.view,arch_db:web_widget_digitized_signature.inherited_res_users_form
+#: model_terms:ir.ui.view,arch_db:web_widget_digitized_signature.inherited_res_users_preferences_form
 msgid "Signature"
 msgstr "Unterschrift"
 
