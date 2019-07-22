@@ -183,7 +183,6 @@ Contributors
 * Leonardo Donelli <donelli@webmonks.it>
 * Adrien Didenot <adrien.didenot@horanet.com>
 * Dennis Sluijk <d.sluijk@onestein.nl>
-* Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
 
 Other credits
 ~~~~~~~~~~~~~
