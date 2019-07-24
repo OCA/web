@@ -44,6 +44,9 @@ To use this module, you need to:
 #. drag a file from your local computer onto an Odoo form view
 #. it should become an attachment of the currently opened record
 
+.. image:: https://raw.githubusercontent.com/web_drop_target/static/description/screenshot.png
+    :alt: Screenshot
+
 Development
 ===========
 
@@ -55,6 +58,7 @@ Known issues / Roadmap
 ======================
 
 * dropping on list or kanban views would be nice too
+* handle multiple files
 * add an upload progress meter for huge files
 * trigger custom events about different stages of the drop operation for other addons to hook in
 * Install document module to display attachments in the sidebar
@@ -81,8 +85,9 @@ Contributors
 ~~~~~~~~~~~~
 
 * Holger Brunn <hbrunn@therp.nl>
-* Akim Juillerat <akim.juillerat@camptocamp.com>
 * Pablo Fuentes <pablo@studio73.es>
+* Akim Juillerat <akim.juillerat@camptocamp.com>
+* Enric Tobella <etobella@creublanca.es>
 
 Maintainers
 ~~~~~~~~~~~
