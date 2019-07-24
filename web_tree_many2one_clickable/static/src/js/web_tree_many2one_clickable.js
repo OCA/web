@@ -44,7 +44,7 @@ ListView.Column.include({
         }
     },
     _format: function (row_data, options) {
-        if (this.type == 'many2one' &&
+        if ((this.type == 'many2one' || this.type == 'reference') &&
             (this.widget == 'many2one_unclickable' || this.use_many2one_clickable) &&
             !!row_data[this.id]) {
             var value = row_data[this.id].value;
@@ -53,14 +53,18 @@ ListView.Column.include({
             if (this.widget == 'many2one_unclickable') {
                 return name;
             } else if (this.use_many2one_clickable) {
+                let value = row_data[this.id].value;
                 var values = {
                     model: this.relation,
-                    id: row_data[this.id].value[0],
+                    id: value[0],
                     name: name,
                 };
-                if(this.type == 'reference' && !!row_data[this.id + '__display']) {
-                    values.model = row_data[this.id].value.split(',', 1)[0];
-                    values.id = row_data[this.id].value.split(',', 2)[1];
+                if(this.type == 'reference') {
+                    values.model = value.split(',', 1)[0];
+                    values.id = value.split(',', 2)[1];
+                    values.name = value;
+                }
+                if (!!row_data[this.id + '__display']) {
                     values.name = _.escape(row_data[this.id + '__display'].value ||
                                            options.value_if_empty);
                 }
