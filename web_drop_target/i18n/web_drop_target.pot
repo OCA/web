@@ -1,5 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
+#	* web_drop_target
 #
 msgid ""
 msgstr ""
@@ -11,4 +12,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: web_drop_target
+#. openerp-web
+#: code:addons/web_drop_target/static/src/xml/widgets.xml:11
+#, python-format
+msgid "Drop your files here"
+msgstr ""
 
