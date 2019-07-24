@@ -172,7 +172,8 @@ var translateDialog = Dialog.extend({
                 });
                 if (code === self.view_language) {
                     _.each(text, function(value, key) {
-                        self.view.$el.find('input[name="'+ key + '"]').val(value);
+                        var view_elem = self.view.$el.find('input[name="'+ key + '"]');
+                        view_elem.val(value).trigger('change');
                     });
                 }
                 return done;
