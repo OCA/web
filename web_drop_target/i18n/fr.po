@@ -4,8 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-10 14:31+0000\n"
+"PO-Revision-Date: 2018-07-10 14:31+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,8 +17,8 @@ msgstr ""
 
 #. module: web_drop_target
 #. openerp-web
-#: code:addons/web_drop_target/static/src/xml/widgets.xml:11
+#: code:addons/web_drop_target/static/src/xml/widgets.xml:10
 #, python-format
 msgid "Drop your files here"
-msgstr ""
+msgstr "Déposez les fichiers ici"
 
