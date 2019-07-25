@@ -34,7 +34,7 @@ var translateDialog = Dialog.extend({
         this.view_type = parent.viewType || '';
         this.$view_form = null;
         this.$sidebar_form = null;
-        this.translatable_fields = [event_data.fieldName];
+        this.translatable_field = event_data.fieldName;
         this.res_id = res_id;
         this.languages = null;
         this.languages_loaded = $.Deferred();
@@ -68,46 +68,46 @@ var translateDialog = Dialog.extend({
     },
     initialize_html_fields: function(lang) {
         var self = this;
-        _.each(this.translatable_fields, function(f) {
-            // Initialize summernote if HTML field
-            self.$el.find('.oe_form_field_html .oe_translation_field[name="' + lang.code + '-' + f + '"]').each(function() {
-                var $parent = $(this).summernote({
-                    'focus': false,
-                    'toolbar': [
-                        ['style', ['style']],
-                        ['font', ['bold', 'italic', 'underline', 'clear']],
-                        ['fontsize', ['fontsize']],
-                        ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['table', ['table']],
-                        ['insert', ['link', 'picture']],
-                        ['misc', ['codeview']],
-                        ['history', ['undo', 'redo']]
-                    ],
-                    'prettifyHtml': false,
-                    'styleWithSpan': false,
-                    'inlinemedia': ['p'],
-                    'lang': "odoo",
-                    'onChange': function (value) {
-                        $(this).toggleClass('touched', value !== $(this).attr('data-value'));
-                    }
-                }).parent();
-                // Triggers a mouseup to refresh the editor toolbar
-                $parent.find('.note-editable').trigger('mouseup');
-                $parent.find('.note-editing-area').css({
-                    minHeight:'100px',
-                    minWidth:'260px',
-                });
+
+        // Initialize summernote if HTML field
+        this.$el.find('.oe_form_field_html .oe_translation_field[name="' + lang + '-' + this.translatable_field + '"]').each(function() {
+            var $parent = $(this).summernote({
+                'focus': false,
+                'toolbar': [
+                    ['style', ['style']],
+                    ['font', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture']],
+                    ['misc', ['codeview']],
+                    ['history', ['undo', 'redo']]
+                ],
+                'prettifyHtml': false,
+                'styleWithSpan': false,
+                'inlinemedia': ['p'],
+                'lang': "odoo",
+                'onChange': function (value) {
+                    $(this).toggleClass('touched', value !== $(this).attr('data-value'));
+                }
+            }).parent();
+            // Triggers a mouseup to refresh the editor toolbar
+            $parent.find('.note-editable').trigger('mouseup');
+            $parent.find('.note-editing-area').css({
+                minHeight:'100px',
+                minWidth:'260px',
             });
         });
+
     },
-    set_fields_values: function(lang, values) {
+    set_fields_values: function(lang, tr_value) {
         var self = this;
-        _.each(this.translatable_fields, function(f) {
-            self.$el.find('.oe_translation_field[name="' + lang.code +
-                    '-' + f + '"]').val(values[f] || '').attr(
-                    'data-value', values[f] || '');
-        });
+
+        this.$el.find('.oe_translation_field[name="' + lang +
+                '-' + this.translatable_field + '"]').val(tr_value || '').attr(
+                'data-value', tr_value || '');
+
         var textarea = this.$el.find('textarea.oe_translation_field');
         if (textarea !== undefined && textarea[0] !== undefined) {
             textarea.css({minHeight:'100px',});
@@ -121,29 +121,28 @@ var translateDialog = Dialog.extend({
             deferred = [];
 
         this.$el.find('.oe_translation_field').val('').removeClass('touched');
-        _.each(self.languages, function(lg) {
-            var context = new Context(session.user_context, {lang: lg.code});
-            var deff = $.Deferred();
-            deferred.push(deff);
-            rpc.query({
+
+        var deff = $.Deferred();
+        deferred.push(deff);
+        rpc.query({
             model: self.view.modelName,
-            method: 'read',
+            method: 'get_field_translations',
             args: [
                 [self.res_id],
             ],
             kwargs: {
-                fields: self.translatable_fields,
-                context: context.eval(),
+                field_name: self.translatable_field,
             },
-            }).done(
-                    function (rows) {
-                        
-                        if (rows[0]){
-                            self.set_fields_values(lg, rows[0]);
-                            deff.resolve();
-                        }
+        }).done(
+            function (res) {
+                if (res[self.res_id]){
+                    _.each(res[self.res_id], function(translation, lang) {
+                        self.set_fields_values(lang, translation[1]);
                     });
-        });
+                    deff.resolve();
+                }
+            });
+
         return deferred;
     },
     on_button_save: function() {
@@ -193,7 +192,7 @@ FormView.include({
         if (this.sidebar) {
             this.sidebar.add_items('other', _.compact([
                 this.is_action_enabled('edit') &&
-                this.translatable_fields.length > 0 && {
+                this.translatable_field && {
                     label: _t('Translate'),
                     callback: this.on_button_translate
                 },
