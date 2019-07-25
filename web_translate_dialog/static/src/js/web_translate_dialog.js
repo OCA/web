@@ -23,19 +23,19 @@ var Mutex = concurrency.Mutex;
 
 var translateDialog = Dialog.extend({
     template: "TranslateDialog",
-    init: function(parent, event_data, res_id, content) {
+    init: function(parent, options) {
         this._super(parent,
                     {title: _t("Translations"),
                      width: '90%',
-                     height: '80%'},
-                    content);
+                     height: '80%'}
+                    );
         this.view_language = session.user_context.lang;
         this.view = parent;
         this.view_type = parent.viewType || '';
         this.$view_form = null;
         this.$sidebar_form = null;
-        this.translatable_field = event_data.fieldName;
-        this.res_id = res_id;
+        this.translatable_field = options.field.fieldName;
+        this.res_id = options.res_id;
         this.languages = null;
         this.languages_loaded = $.Deferred();
         (new data.DataSetSearch(this, 'res.lang', parent.searchView.dataset.get_context(),
@@ -67,8 +67,6 @@ var translateDialog = Dialog.extend({
         this.do_load_fields_values();
     },
     initialize_html_fields: function(lang) {
-        var self = this;
-
         // Initialize summernote if HTML field
         this.$el.find('.oe_form_field_html .oe_translation_field[name="' + lang + '-' + this.translatable_field + '"]').each(function() {
             var $parent = $(this).summernote({
@@ -102,8 +100,6 @@ var translateDialog = Dialog.extend({
 
     },
     set_fields_values: function(lang, tr_value) {
-        var self = this;
-
         this.$el.find('.oe_translation_field[name="' + lang +
                 '-' + this.translatable_field + '"]').val(tr_value || '').attr(
                 'data-value', tr_value || '');
@@ -125,13 +121,13 @@ var translateDialog = Dialog.extend({
         var deff = $.Deferred();
         deferred.push(deff);
         rpc.query({
-            model: self.view.modelName,
+            model: this.view.modelName,
             method: 'get_field_translations',
             args: [
-                [self.res_id],
+                [this.res_id],
             ],
             kwargs: {
-                field_name: self.translatable_field,
+                field_name: this.translatable_field,
             },
         }).done(
             function (res) {
@@ -149,7 +145,7 @@ var translateDialog = Dialog.extend({
         var translations = {},
             self = this,
             save_mutex = new Mutex();
-        self.$el.find('.oe_translation_field.touched').each(function() {
+        this.$el.find('.oe_translation_field.touched').each(function() {
             var field = $(this).attr('name').split('-');
             if (!translations[field[0]]) {
                 translations[field[0]] = {};
@@ -207,13 +203,11 @@ FormView.include({
     },
 });
 
-View.include({
-});
 
 BasicController.include({
 
     open_translate_dialog: function(field, res_id) {
-        new translateDialog(this, field, res_id).open();
+        new translateDialog(this, {'field': field, 'res_id': res_id}).open();
     },
 
     _onTranslate: function(event) {
@@ -228,4 +222,3 @@ return {
 };
 
 });
-

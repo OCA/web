@@ -7,7 +7,7 @@
     "summary": "Easy-to-use pop-up to translate fields in several languages",
     "version": "12.0.1.0.0",
     "category": "Web",
-    "website": "https://odoo-community.org/",
+    "website": "https://github.com/OCA/web",
     "author": "Camptocamp, "
               "Tecnativa, "
               "Odoo Community Association (OCA)",
