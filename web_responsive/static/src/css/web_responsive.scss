@@ -343,7 +343,7 @@ html .o_web_client .o_main .o_main_content {
         .oe_title {
             width: initial;
 
-            span {
+            span.o_field_widget {
                 max-width: 100%;
                 text-overflow: ellipsis;
                 white-space: nowrap;
