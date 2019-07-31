@@ -25,7 +25,17 @@ web_action_conditionable
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
-This module was written to extend the functionality of actions in tree views.
+This module was written to extend the functionality of actions in
+tree view (One2Many fields).
+
+**Table of contents**
+
+.. contents::
+   :local:
+
+Usage
+=====
+
 Odoo by default support:
 
 ::
@@ -36,19 +46,9 @@ with this module you can:
 
 ::
 
-   <tree delete="state=='draft'">
+   <tree delete="state=='draft'" create="state!='sent'">
 
 It works in any tree view, so you can use it in One2many.
-
-**Table of contents**
-
-.. contents::
-   :local:
-
-Usage
-=====
-
-This module has no direct interface, it only adds functionality for custom views.
 
 Bug Tracker
 ===========
@@ -73,6 +73,7 @@ Contributors
 
 * Cristian Salamea <cristian.salamea@gmail.com>
 * André Paramés <github@andreparames.com> (https://www.acsone.eu/)
+* Alexandre Díaz <alexandre.diaz@tecnativa.com>
 
 Maintainers
 ~~~~~~~~~~~
