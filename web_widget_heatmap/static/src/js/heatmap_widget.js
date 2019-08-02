@@ -155,7 +155,7 @@ odoo.define('web_widget_heatmap.widget', function (require) {
             date = moment(date);
             var options = this.heatmap_options;
             var elements = this.value ? _.pluck(this.value.data, 'data') : [];
-            if (elements && elements.length) {
+            if (_.some(elements)) {
                 // TODO: make faster
                 var current_elements_ids = elements.filter(function(el) {
                     var duration = moment.duration(date.diff(el.create_date));
