@@ -160,7 +160,7 @@ odoo.define('web_widget_heatmap.widget', function (require) {
                 var current_elements_ids = elements.filter(function(el) {
                     var duration = moment.duration(date.diff(el.create_date));
                     if (options.domain === 'hour') {
-                        return duration.years() === 0 && duration.months() === 0 && duration.weeks() === 0 && duration.days() === 0 && duration.hours() === 0;
+                        return duration.hours() === 0 && duration.days() === 0 && duration.weeks() === 0 && duration.months() === 0 && duration.years() === 0;
                     } else if (options.domain === 'day') {
                         return duration.years() === 0 && duration.months() === 0 && duration.weeks() === 0 && duration.days() === 0;
                     } else if (options.domain === 'week') {
