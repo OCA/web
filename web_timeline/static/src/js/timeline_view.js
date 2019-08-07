@@ -61,6 +61,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
                 "default_group_by",
                 "progress",
                 "date_delay",
+                "color_field",
             ];
 
             fieldsToGather.push(attrs.default_group_by);

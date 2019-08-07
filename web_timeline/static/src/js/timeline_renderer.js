@@ -421,11 +421,16 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
             } else {
                 group = -1;
             }
-            _.each(self.colors, function (color) {
-                if (eval("'" + evt[color.field] + "' " + color.opt + " '" + color.value + "'")) {
-                    self.color = color.color;
-                }
-            });
+            var color = null;
+            if (self.arch.attrs.color_field !== undefined) {
+                color = evt[self.arch.attrs.color_field];
+            } else {
+                _.each(self.colors, function (col) {
+                    if (eval("'" + evt[col.field] + "' " + col.opt + " '" + col.value + "'")) {
+                        color = col.color;
+                    }
+                });
+            }
 
             var content = _.isUndefined(evt.__name) ? evt.display_name : evt.__name;
             if (this.arch.children.length) {
@@ -438,13 +443,12 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
                 'id': evt.id,
                 'group': group,
                 'evt': evt,
-                'style': 'background-color: ' + self.color + ';'
+                'style': 'background-color: ' + color + ';'
             };
             // Check if the event is instantaneous, if so, display it with a point on the timeline (no 'end')
             if (date_stop && !moment(date_start).isSame(date_stop)) {
                 r.end = date_stop;
             }
-            self.color = null;
             return r;
         },
 
