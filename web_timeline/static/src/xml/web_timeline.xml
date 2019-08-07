@@ -2,18 +2,28 @@
   <t t-name="TimelineView">
     <div class="oe_timeline_view">
         <div class="oe_timeline_buttons">
-          <button class="btn btn-default btn-sm oe_timeline_button_today">Today</button>
-          
-          <div class="btn-group btn-sm">
+            <button class="btn btn-default btn-sm oe_timeline_button_today">Today</button>
+
+            <div class="btn-group btn-sm">
                 <button class="btn btn-default oe_timeline_button_scale_day">Day</button>
                 <button class="btn btn-default oe_timeline_button_scale_week">Week</button>
                 <button class="btn btn-default oe_timeline_button_scale_month">Month</button>
                 <button class="btn btn-default oe_timeline_button_scale_year">Year</button>
             </div>
-      </div>
+            |
+            <div class="selected-groups"/>
+        </div>
       <div class="oe_timeline_widget" />
     </div>
   </t>
+
+    <t t-name="TimelineSelectGroups">
+        <select class="select-groups" multiple="multiple">
+            <t t-foreach="groups" t-as="group">
+                <option t-att-value='group.id' selected="selected"><t t-esc="group.content"/></option>
+            </t>
+        </select>
+    </t>
 
   <svg t-name="TimelineView.Canvas"
        class="oe_timeline_view_canvas">

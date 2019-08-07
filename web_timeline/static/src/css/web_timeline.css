@@ -9,7 +9,7 @@
     background: #DCDCDC;
 }
 
-.vis-item .vis-item-overflow {
+.vis-item .vis-item-overflow:hover {
     overflow: visible;
 }
 
@@ -28,4 +28,8 @@
     position: absolute;
     left: 0px;
     top: 0px;
+}
+
+.selected-groups {
+    display: inline-flex;
 }

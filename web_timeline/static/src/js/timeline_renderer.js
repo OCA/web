@@ -10,7 +10,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
     var field_utils = require('web.field_utils');
     var TimelineCanvas = require('web_timeline.TimelineCanvas');
 
-
+    core.qweb.add_template("/web_timeline/static/src/xml/web_timeline.xml");
     var _t = core._t;
 
     var TimelineRenderer = AbstractRenderer.extend({
@@ -63,6 +63,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
                 throw new Error(_t("Timeline view has not defined 'date_start' attribute."));
             }
             this._super.apply(this, self);
+
         },
 
         /**
@@ -298,7 +299,6 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
 
             this.canvas.draw_arrow(from.dom.box, to.dom.box, defaults.line_color, defaults.line_width);
         },
-
         /**
          * Load display_name of records.
          *
@@ -308,41 +308,164 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
         on_data_loaded: function (events, group_bys, adjust_window) {
             var self = this;
             var ids = _.pluck(events, "id");
-            return this._rpc({
-                model: this.modelName,
+            var group_by_field = self.view.fields[group_bys[0]];
+            if (group_by_field.type == 'one2many' | group_by_field.type == 'many2many') {
+                self.x2x = true;
+                return self.split_groups_x2x(events, group_bys).then(function (groups) {
+                    self.groups = groups.sort((a, b) => (a.content > b.content) ? 1 : -1);
+                    return self._rpc({
+                        model: self.modelName,
+                        method: 'name_get',
+                        args: [
+                            ids,
+                        ],
+                        context: self.getSession().user_context,
+                    }).then(function(names) {
+                        var nevents = _.map(events, function (event) {
+                            return _.extend({
+                                __name: _.detect(names, function (name) {
+                                    return name[0] === event.id;
+                                })[1]
+                            }, event);
+                        });
+                        return self.on_data_loaded_2(nevents, group_bys, self.x2x, adjust_window);
+                    });
+                });
+            } else {
+                self.x2x = false;
+                return this._rpc({
+                    model: this.modelName,
+                    method: 'name_get',
+                    args: [
+                        ids,
+                    ],
+                    context: this.getSession().user_context,
+                }).then(function(names) {
+                    var nevents = _.map(events, function (event) {
+                        return _.extend({
+                            __name: _.detect(names, function (name) {
+                                return name[0] === event.id;
+                            })[1]
+                        }, event);
+                    });
+                    return self.on_data_loaded_2(nevents, group_bys, self.x2x, adjust_window);
+                });
+            };
+        },
+        updateGroups: function(events) {
+            var self = this;
+            var group_ids = [];
+            // Get the missing groups from new events
+            _.each(events, function (event) {
+                var group = event[_.first(self.last_group_bys)];
+                if (group) {
+                    _.each(group, function (gr) {
+                        var found = _.find(self.groups, function(existing_group) {
+                            return existing_group.id == gr
+                        });
+                        if (found === undefined) {
+                            group_ids.push(gr);
+                        }
+                    });
+                }
+            });
+            var group_by_field = this.view.fields[self.last_group_bys];
+            self._rpc({
+                model: group_by_field.relation,
                 method: 'name_get',
                 args: [
-                    ids,
+                    group_ids,
                 ],
-                context: this.getSession().user_context,
+                context: self.getSession().user_context,
             }).then(function(names) {
-                var nevents = _.map(events, function (event) {
-                    return _.extend({
-                        __name: _.detect(names, function (name) {
-                            return name[0] === event.id;
-                        })[1]
-                    }, event);
+                _.each(names, function (gr_name) {
+                    self.groups.push({
+                        id: gr_name[0],
+                        content: gr_name[1],
+                    })
+                    self.$select_groups.append($("<option value='" + gr_name[0] + "' selected='selected'>" + gr_name[1] + "</option>"));
                 });
-                return self.on_data_loaded_2(nevents, group_bys, adjust_window);
+                self.$select_groups.multiselect('rebuild');
+                self.timeline.setGroups();
+                self.updateSelectedGroups();
+                return true;
             });
         },
-
+        arrayRemove: function (arr, id) {
+           return arr.filter( function (elmt) {
+               return elmt.id != id;
+           });
+        },
+        updateSelectedGroups: function() {
+            var self = this;
+            var selected = self.$select_groups.find("option:selected");
+            self.selected_groups = [];
+            _.each(selected, function (elmt) {
+                self.selected_groups.push({
+                    id: elmt.value,
+                    content: elmt.text,
+                })
+            });
+            self.timeline.setGroups(self.selected_groups);
+        },
+        createSelectGroups: function () {
+            var self = this;
+            var select_groups = $(core.qweb.render('TimelineSelectGroups', {'groups': self.groups}));
+            self.$el.find('.selected-groups').html(select_groups);
+            self.$select_groups = select_groups;
+            select_groups.multiselect({
+                buttonWidth: '350px',
+                maxHeight: 400,
+                enableFiltering: true,
+                enableClickableOptGroups: true,
+                includeSelectAllOption: true,
+                allSelectedText: _t('All groups selected'),
+                onChange: function(element, checked) {
+                    self.updateSelectedGroups();
+                },
+                onSelectAll: function() {
+                    self.updateSelectedGroups();
+                },
+                onDeselectAll: function() {
+                    self.updateSelectedGroups();
+                },
+            });
+        },
         /**
          * Set groups and events.
          *
          * @private
          */
-        on_data_loaded_2: function (events, group_bys, adjust_window) {
+        on_data_loaded_2: function (events, group_bys, x2x, adjust_window) {
             var self = this;
             var data = [];
             var groups = [];
             this.grouped_by = group_bys;
             _.each(events, function (event) {
                 if (event[self.date_start]) {
-                    data.push(self.event_data_transform(event));
+                    if (x2x) {
+                        _.each(event[group_bys], function (gr) {
+                            var x2x_object = jQuery.extend({}, event);
+                            x2x_object[group_bys] = [gr];
+                            x2x_object.id = event.id + "_" + gr;
+                            data.push(self.event_data_transform(x2x_object));
+                        })
+                    } else {
+                        data.push(self.event_data_transform(event));
+                    }
                 }
             });
-            groups = this.split_groups(events, group_bys);
+            if (x2x) {
+                groups = this.groups;
+                this.selected_groups = this.groups;
+                this.createSelectGroups();
+            } else {
+                if (this.$select_groups !== undefined) {
+                    this.$el.find('.selected-groups').html('');
+                    this.$select_groups.remove();
+                }
+                groups = this.split_groups(events, group_bys);
+            }
             this.timeline.setGroups(groups);
             this.timeline.setItems(data);
             var mode = !this.mode || this.mode === 'fit';
@@ -371,7 +494,6 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
                         var group = _.find(groups, function (existing_group) {
                             return _.isEqual(existing_group.id, group_name[0]);
                         });
-
                         if (_.isUndefined(group)) {
                             group = {
                                 id: group_name[0],
@@ -379,10 +501,54 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
                             };
                             groups.push(group);
                         }
+                    } else {
+                        var group = _.find(groups, function (existing_group) {
+                            return _.isEqual(existing_group.id, group_name);
+                        });
+                        if (_.isUndefined(group)) {
+                            group = {
+                                id: group_name,
+                                content: group_name
+                            };
+                            groups.push(group);
+                        }
                     }
                 }
             });
             return groups;
+        },
+
+        split_groups_x2x: function (events, group_bys) {
+            var group_ids = [];
+            _.each(events, function (event) {
+                var group_name = event[_.first(group_bys)];
+                if (group_name) {
+                    _.each(group_name, function (gr) {
+                        if (!group_ids.includes(gr)) {
+                            group_ids.push(gr);
+                        }
+                    });
+                }
+            });
+            var group_by_field = this.view.fields[group_bys];
+            return this._rpc({
+                model: group_by_field.relation,
+                method: 'name_get',
+                args: [
+                    group_ids,
+                ],
+                context: this.getSession().user_context,
+            }).then(function(names) {
+                var groups = [];
+                groups.push({id: -1, content: _t('-')});
+                _.each(names, function (gr_name) {
+                    groups.push({
+                        id: gr_name[0],
+                        content: gr_name[1],
+                    })
+                });
+                return groups;
+            });
         },
 
         /**
@@ -416,8 +582,10 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
             }
 
             var group = evt[self.last_group_bys[0]];
-            if (group && group instanceof Array) {
-                group = _.first(group);
+            if (group) {
+                if (group instanceof Array) {
+                    group = _.first(group);
+                }
             } else {
                 group = -1;
             }

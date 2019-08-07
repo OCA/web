@@ -5,7 +5,9 @@
         <xpath expr="." position="inside">
             <link rel="stylesheet" href="/web_timeline/static/lib/vis/vis-timeline-graph2d.min.css"/>
             <link rel="stylesheet" href="/web_timeline/static/src/css/web_timeline.css"/>
+            <link rel="stylesheet" href="/web_timeline/static/lib/multiselect/bootstrap-multiselect.css"/>
 
+            <script type="text/javascript" src="/web_timeline/static/lib/multiselect/bootstrap-multiselect.js"/>
             <script type="text/javascript" src="/web_timeline/static/lib/vis/vis-timeline-graph2d.min.js"/>
             <script type="text/javascript" src="/web_timeline/static/src/js/timeline_view.js"/>
             <script type="text/javascript" src="/web_timeline/static/src/js/timeline_renderer.js"/>

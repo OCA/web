@@ -107,6 +107,9 @@ odoo.define('web_timeline.TimelineController', function (require) {
             var rights = event.data.rights;
             var item = event.data.item;
             var id = item.evt.id;
+            if (this.renderer.x2x) {
+                id = id.split('_')[0];
+            }
             var title = item.evt.__name;
             if (this.open_popup_action) {
                 new dialogs.FormViewDialog(this, {
@@ -163,7 +166,7 @@ odoo.define('web_timeline.TimelineController', function (require) {
                 var diff_seconds = Math.round((event_end.getTime() - event_start.getTime()) / 1000);
                 data[this.date_delay] = diff_seconds / 3600;
             }
-            if (this.renderer.last_group_bys && this.renderer.last_group_bys instanceof Array) {
+            if (!this.renderer.x2x && this.renderer.last_group_bys && this.renderer.last_group_bys instanceof Array) {
                 data[this.renderer.last_group_bys[0]] = group;
             }
 
@@ -192,7 +195,7 @@ odoo.define('web_timeline.TimelineController', function (require) {
                     model: self.model.modelName,
                     method: 'write',
                     args: [
-                        [item.event.data.item.id],
+                        [self.renderer.x2x ? item.event.data.item.id.split('_')[0] : item.event.data.item.id],
                         item.data,
                     ],
                     context: self.getSession().user_context,
@@ -222,7 +225,7 @@ odoo.define('web_timeline.TimelineController', function (require) {
                     model: self.model.modelName,
                     method: 'unlink',
                     args: [
-                        [event.data.item.id],
+                        [self.renderer.x2x ? event.data.item.id.split('_')[0] : event.data.item.id],
                     ],
                     context: self.getSession().user_context,
                 }).then(function () {
@@ -277,7 +280,7 @@ odoo.define('web_timeline.TimelineController', function (require) {
                     'YYYY-MM-DD HH:mm:ss'
                 );
             }
-            if (item.group > 0) {
+            if (!this.renderer.x2x && item.group > 0) {
                 default_context['default_'.concat(this.renderer.last_group_bys[0])] = item.group;
             }
             // Show popup
@@ -314,9 +317,15 @@ odoo.define('web_timeline.TimelineController', function (require) {
                 context: this.context,
             })
             .then(function (records) {
+                if (self.renderer.x2x) {
+                    records[0].id = records[0].id + "_" + records[0][self.renderer.grouped_by][0];
+                }
                 var new_event = self.renderer.event_data_transform(records[0]);
                 var items = self.renderer.timeline.itemsData;
                 items.add(new_event);
+                if (self.renderer.x2x) {
+                    self.renderer.updateGroups(records);
+                }
                 self.renderer.timeline.setItems(items);
                 self.reload();
             });
