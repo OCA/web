@@ -32,9 +32,9 @@ Example
         </record>
     </odoo>
 
-.. image:: /images/main_screenshot.png
-    :width: 800px
-    :alt: screenshot
+.. image:: /web_hierarchy/description/screenshot.png
+  :width: 800
+  :alt: Hierarchy View
 
 
 Credits
