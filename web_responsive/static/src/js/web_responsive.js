@@ -351,6 +351,17 @@ odoo.define('web_responsive', function (require) {
                 return this._super.apply(this, arguments);
             }
         },
+
+        /**
+         * Don't display the menu if are waiting for an action to end
+         *
+         * @override
+         */
+        _onMouseOverMenu: function () {
+            if ($('.oe_wait').length === 0) {
+                this._super.apply(this, arguments);
+            }
+        },
     });
 
     RelationalFields.FieldStatus.include({
