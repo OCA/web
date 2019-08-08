@@ -32,6 +32,11 @@ Example
         </record>
     </odoo>
 
+.. image:: /images/main_screenshot.png
+    :width: 800px
+    :alt: screenshot
+
+
 Credits
 =======
 

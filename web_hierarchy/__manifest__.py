@@ -8,7 +8,7 @@
     'depends': [
         'web'
     ],
-    'author': "Kevin Kamau,",
+    'author': "Kevin Kamau,Odoo Community Association (OCA)",
     'website': "https://github.com/KKamaa",
     'category': 'Extra Tools',
     'license': 'AGPL-3',

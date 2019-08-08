@@ -18,9 +18,10 @@ odoo.define('web.HierarchyView', function (require) {
         mobile_friendly: true,
         require_fields: true,
         display_name: _lt('Hierarchy'),
-        render_chart: function (size = "medium") {
+        render_chart: function (size) {
             var self = this;
-            var parent_name = self.options.action.display_name;
+            var size = (!size) ? "medium": size;  // default value
+            var parent_name = this.options.action.display_name;
             google.charts.load('current', {packages: ["orgchart"]});
             google.charts.setOnLoadCallback(drawChart);
 
@@ -32,7 +33,6 @@ odoo.define('web.HierarchyView', function (require) {
                 data.addColumn('string', 'ToolTip');
                 self.dataset.read_slice(self.fields_view.fields, {}).then(
                     function (results) {
-                        console.log(results);
                         var root = parent_name || "Root"
                         vals.push([{v: root, f: root}, '', 'root element']);
                         for (var i = 0; i < results.length; i++) {
@@ -92,3 +92,4 @@ odoo.define('web.HierarchyView', function (require) {
     core.view_registry.add("hierarchy", HierarchyView);
     return HierarchyView;
 });
+
