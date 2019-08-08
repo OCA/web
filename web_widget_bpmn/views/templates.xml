@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template
+        id="assets_backend"
+        name="web_widget_bpmn assets"
+        inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link
+                type="stylesheet"
+                href="/web_widget_bpmn/static/src/css/lib/bpmn/modeler/bpmn.css"/>
+            <link
+                type="stylesheet"
+                href="/web_widget_bpmn/static/src/css/lib/bpmn/modeler/diagram-js.css"/>
+            <script
+                type="text/javascript"
+                src="/web_widget_bpmn/static/src/js/lib/bpmn/modeler/bpmn-modeler.development.js"/>
+            <script
+                type="text/javascript"
+                src="/web_widget_bpmn/static/src/js/web_widget_bpmn.js">
+            </script>
+        </xpath>
+    </template>
+
+</odoo>
