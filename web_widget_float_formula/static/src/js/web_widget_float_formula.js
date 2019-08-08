@@ -4,34 +4,25 @@
 *    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 **/
 
-odoo.define('web_widget_float_formula', function(require) {
+odoo.define('web.web_widget_float_formula', function(require) {
     "use strict";
 
     var core = require('web.core');
     var basic_fields = require('web.basic_fields');
-    var FieldFloat = basic_fields.FieldFloat;
-    FieldFloat.include({
-        start: function() {
-            this._super();
-            this.on('blurred', this, this._compute_result);
-            this.on('focused', this, this._display_formula);
+    var field_utils = require('web.field_utils');
+    var NumericField = basic_fields.FieldFloat;
 
-            this.setUpFocus();
-        },
+    NumericField.include({
+        _formula_text: '',
 
-        setUpFocus: function() {
-            var self = this;
-            this.$el.on({
-                focus: function() { self.trigger('focused'); },
-                blur: function() { self.trigger('blurred'); }
-            });
-        },
+        events: _.extend({
+            "blur": "_compute_result",
+            "focus": "_display_formula",
+        }, NumericField.prototype.events),
 
         commitChanges: function() {
             this._compute_result();
         },
-
-        _formula_text: '',
 
         _clean_formula_text: function() {
             this._formula_text = '';
@@ -76,19 +67,17 @@ odoo.define('web_widget_float_formula', function(require) {
         _compute_result: function() {
             this._clean_formula_text();
 
-            var input = this.$input.val();
+            // Convert Text to valid formula
+            var text = this._getValue();
+            var formula = this._process_formula(text);
 
-            var formula = this._process_formula(input);
             if (formula !== false) {
                 var value = this._eval_formula(formula);
                 if (value !== false) {
                     this._formula_text = "=" + formula;
-
-                    var decimal_point = core._t.database.parameters.decimal_point;
-
-                    // _setValue
-                    this._setValue(value.toString().replace(decimal_point, '.'))
-                    this._render();
+                    var newText = field_utils.format.float(value);
+                    this._setValue(newText);
+                    this.$input.val(newText);
                 }
             }
         },
