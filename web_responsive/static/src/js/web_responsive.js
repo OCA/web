@@ -15,6 +15,14 @@ odoo.define('web_responsive', function (require) {
     var RelationalFields = require('web.relational_fields');
     var Chatter = require('mail.Chatter');
 
+    /*
+     * Helper function to know if are waiting
+     *
+     */
+    function isWaiting () {
+        return $('.oe_wait').length !== 0;
+    }
+
     /**
      * Reduce menu data to a searchable format understandable by fuzzy.js
      *
@@ -115,7 +123,7 @@ odoo.define('web_responsive', function (require) {
 
         /**
          * Prevent the menu from being opened twice
-         * 
+         *
          * @override
          */
         _onAppsMenuItemClicked: function (ev) {
@@ -283,15 +291,15 @@ odoo.define('web_responsive', function (require) {
         * Control if AppDrawer can be closed
         */
         _hideAppsMenu: function () {
-            return $('.oe_wait').length === 0 && !this.$('input').is(':focus');
+            return !isWaiting() && !this.$('input').is(':focus');
         },
     });
 
     BasicController.include({
-        
+
         /**
          * Close the AppDrawer if the data set is dirty and a discard dialog is opened
-         * 
+         *
          * @override
          */
         canBeDiscarded: function (recordID) {
@@ -326,7 +334,7 @@ odoo.define('web_responsive', function (require) {
             if (
                 this.$menu_toggle.is(":visible") &&
                 this.$section_placeholder.is(":visible") &&
-                $('.oe_wait').length === 0
+                !isWaiting()
             ) {
                 this.$section_placeholder.collapse("hide");
             }
@@ -338,7 +346,7 @@ odoo.define('web_responsive', function (require) {
          * @returns {Boolean}
          */
         _hideMenuSection: function () {
-            return $('.oe_wait').length === 0;
+            return !isWaiting();
         },
 
         /**
@@ -358,7 +366,7 @@ odoo.define('web_responsive', function (require) {
          * @override
          */
         _onMouseOverMenu: function () {
-            if ($('.oe_wait').length === 0) {
+            if (!isWaiting()) {
                 this._super.apply(this, arguments);
             }
         },
