@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="web_hierarchy_assets_backend" name="web_hierarchy_assets"
+              inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript"
+                    src="/web_hierarchy/static/src/lib/loader.js">
+            </script>
+            <script type="text/javascript"
+                    src="/web_hierarchy/static/src/js/view/web_hierarchy_view.js">
+            </script>
+        </xpath>
+    </template>
+</odoo>

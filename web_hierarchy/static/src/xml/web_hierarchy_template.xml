@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+     <t t-name="HierarchyView">
+       <div id="chart_div" style="margin: 50px 0 0 0;">
+
+       </div>
+     </t>
+     <t t-name="HierarchyView.buttons">
+        <t t-if="!widget.no_leaf and widget.options.action_buttons !== false">
+            <div class="o_list_buttons">
+                <t t-if="widget.is_action_enabled('create')">
+                    <button type="button"
+                            class="btn btn-primary btn-sm o_org_button_add"
+                            accesskey="c">
+                        <t t-esc="widget.options.create_text || _t('Create')"/>
+                    </button>
+                </t>
+                 <select class="btn o_select_btn" name="size" readonly="1"
+                         style="width: 100px;">
+                        <option value="small" >small</option>
+                        <option value="medium">medium</option>
+                        <option value="large">large</option>
+                 </select>
+            </div>
+        </t>
+    </t>
+
+</template>
