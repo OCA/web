@@ -32,7 +32,7 @@ odoo.define('web_ckeditor4', function(require){
             return {
                 removePlugins: this._getRemovePlugins(),
                 removeButtons: this._getRemoveButtons(),
-                filebrowserImageUploadUrl: 'dummy',
+                filebrowserUploadUrl: '/web_ckeditor4/static/lib/ckeditor/ckeditor.js',
                 extraPlugins: 'filebrowser',
                 // this is '#39' per default which screws up single quoted text in ${}
                 entities_additional: ''
