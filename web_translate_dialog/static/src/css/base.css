@@ -7,3 +7,6 @@
 .oe_translation_field.touched {
   border: 1px solid green !important;
 }
+.modal-xl {
+  max-width: 90%;
+}
