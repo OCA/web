@@ -57,7 +57,7 @@ var translateDialog = Dialog.extend({
     },
     start: function() {
         var self = this;
-        this.$el.find('.oe_translation_field').change(function() {
+        this.$('.oe_translation_field').change(function() {
             $(this).toggleClass('touched', $(this).val() !== $(this).attr('data-value'));
         });
         this.$footer.html(QWeb.render("TranslateDialog.buttons"));
@@ -73,7 +73,7 @@ var translateDialog = Dialog.extend({
     },
     initialize_html_fields: function(lang) {
         // Initialize summernote if HTML field
-        this.$el.find('.oe_form_field_html .oe_translation_field[name="' + lang + '-' + this.translatable_field + '"]').each(function() {
+        this.$('.oe_form_field_html .oe_translation_field[name="' + lang + '-' + this.translatable_field + '"]').each(function() {
             var $parent = $(this).summernote({
                 'focus': false,
                 'toolbar': [
@@ -105,11 +105,11 @@ var translateDialog = Dialog.extend({
 
     },
     set_fields_values: function(lang, tr_value) {
-        this.$el.find('.oe_translation_field[name="' + lang +
+        this.$('.oe_translation_field[name="' + lang +
                 '-' + this.translatable_field + '"]').val(tr_value || '').attr(
                 'data-value', tr_value || '');
 
-        var textarea = this.$el.find('textarea.oe_translation_field');
+        var textarea = this.$('textarea.oe_translation_field');
         if (textarea !== undefined && textarea[0] !== undefined) {
             textarea.css({minHeight:'100px',});
             dom.autoresize(textarea, {parent: this.$el});
@@ -121,7 +121,7 @@ var translateDialog = Dialog.extend({
         var self = this,
             deferred = [];
 
-        this.$el.find('.oe_translation_field').val('').removeClass('touched');
+        this.$('.oe_translation_field').val('').removeClass('touched');
 
         var deff = $.Deferred();
         deferred.push(deff);
@@ -150,7 +150,7 @@ var translateDialog = Dialog.extend({
         var translations = {},
             self = this,
             save_mutex = new Mutex();
-        this.$el.find('.oe_translation_field.touched').each(function() {
+        this.$('.oe_translation_field.touched').each(function() {
             var field = $(this).attr('name').split('-');
             if (!translations[field[0]]) {
                 translations[field[0]] = {};
@@ -172,7 +172,7 @@ var translateDialog = Dialog.extend({
                 });
                 if (code === self.view_language) {
                     _.each(text, function(value, key) {
-                        var view_elem = self.view.$el.find('input[name="'+ key + '"]');
+                        var view_elem = self.view.$('input[name="'+ key + '"]');
                         view_elem.val(value).trigger('change');
                     });
                 }
