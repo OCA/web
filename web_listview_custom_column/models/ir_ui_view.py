@@ -102,7 +102,7 @@ class IrUiView(models.Model):
             'arch': arch,
             'inherit_id': self.id,
             'mode': 'extension',
-            'priority': 10000 + (diff['type'] == 'user' and 1 or 0),
+            'priority': 10000 + (diff['type'] == 'all' and 1 or 0),
             'user_ids': [(4, self.env.uid)] if diff['type'] == 'user' else [],
         })[0]
         result = self.create(values)
