@@ -25,10 +25,7 @@ var translateDialog = Dialog.extend({
     template: "TranslateDialog",
     init: function(parent, options) {
         this._super(parent,
-                    {title: _t("Translations"),
-                     width: '90%',
-                     height: '80%'}
-                    );
+                    {title: _t("Translations"), size: 'x-large'});
         this.view_language = session.user_context.lang;
         this.view = parent;
         this.view_type = parent.viewType || '';
@@ -41,6 +38,14 @@ var translateDialog = Dialog.extend({
         (new data.DataSetSearch(this, 'res.lang', parent.searchView.dataset.get_context(),
                                 [['translatable', '=', '1']])).read_slice(['code', 'name'],
                                 { sort: 'id' }).then(this.on_languages_loaded);
+    },
+    willStart: function () {
+        var self = this;
+        return this._super.apply(this, arguments).then(function () {
+            if (self.size == 'x-large') {
+                self.$modal.find('.modal-dialog').addClass('modal-xl');
+            }
+        });
     },
     on_languages_loaded: function(langs) {
         this.languages = langs;
