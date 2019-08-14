@@ -15,7 +15,6 @@ var FormView = require('web.FormView');
 var View = require('web.AbstractView');
 var session  = require('web.session');
 var rpc = require('web.rpc');
-var dom = require('web.dom');
 
 var _t = core._t;
 var QWeb = core.qweb;
@@ -71,6 +70,22 @@ var translateDialog = Dialog.extend({
 
         this.do_load_fields_values();
     },
+    resize_textareas: function(){
+        var textareas = this.$('textarea.oe_translation_field');
+        var max_height = 100
+        // Resize textarea either to the max height of its content if it stays
+        // in the modal or to the max height available in the modal
+        if (textareas.length) {
+            _.each(textareas, function(textarea) {
+                if (textarea.scrollHeight > max_height) {
+                    max_height = textarea.scrollHeight
+                }
+            });
+            var max_client_height = $(window).height() - $('.modal-content').height()
+            var new_height = Math.min(max_height, max_client_height)
+            textareas.css({'minHeight': new_height});
+        }
+    },
     initialize_html_fields: function(lang) {
         // Initialize summernote if HTML field
         this.$('.oe_form_field_html .oe_translation_field[name="' + lang + '-' + this.translatable_field + '"]').each(function() {
@@ -109,12 +124,6 @@ var translateDialog = Dialog.extend({
                 '-' + this.translatable_field + '"]').val(tr_value || '').attr(
                 'data-value', tr_value || '');
 
-        var textarea = this.$('textarea.oe_translation_field');
-        if (textarea !== undefined && textarea[0] !== undefined) {
-            textarea.css({minHeight:'100px',});
-            dom.autoresize(textarea, {parent: this.$el});
-        }
-        $(window).resize();
         this.initialize_html_fields(lang);
     },
     do_load_fields_values: function() {
@@ -140,6 +149,7 @@ var translateDialog = Dialog.extend({
                     _.each(res[self.res_id], function(translation, lang) {
                         self.set_fields_values(lang, translation[1]);
                     });
+                    self.resize_textareas()
                     deff.resolve();
                 }
             });
