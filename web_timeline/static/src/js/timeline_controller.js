@@ -106,10 +106,7 @@ odoo.define('web_timeline.TimelineController', function (require) {
             this.renderer = event.data.renderer;
             var rights = event.data.rights;
             var item = event.data.item;
-            var id = item.evt.id;
-            if (this.renderer.x2x) {
-                id = id.split('_')[0];
-            }
+            var id = self._getDatabaseId(item.evt.id);
             var title = item.evt.__name;
             if (this.open_popup_action) {
                 new dialogs.FormViewDialog(this, {
@@ -195,7 +192,7 @@ odoo.define('web_timeline.TimelineController', function (require) {
                     model: self.model.modelName,
                     method: 'write',
                     args: [
-                        [self.renderer.x2x ? item.event.data.item.id.split('_')[0] : item.event.data.item.id],
+                        [self._getDatabaseId(item.event.data.item.id)],
                         item.data,
                     ],
                     context: self.getSession().user_context,
@@ -225,7 +222,7 @@ odoo.define('web_timeline.TimelineController', function (require) {
                     model: self.model.modelName,
                     method: 'unlink',
                     args: [
-                        [self.renderer.x2x ? event.data.item.id.split('_')[0] : event.data.item.id],
+                        [self._getDatabaseId(event.data.item.id)],
                     ],
                     context: self.getSession().user_context,
                 }).then(function () {
@@ -343,6 +340,14 @@ odoo.define('web_timeline.TimelineController', function (require) {
 
             this.update(params, options);
         },
+
+        /**
+         * When relation is O2M or M2M the id = [ID]_[GR]
+         * so we split it to return the [ID] part.
+         */
+        _getDatabaseId: function (id) {
+            return this.renderer.x2x ? id.split('_')[0] : id;
+        }
     });
 
     return TimelineController;

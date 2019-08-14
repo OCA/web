@@ -63,7 +63,6 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
                 throw new Error(_t("Timeline view has not defined 'date_start' attribute."));
             }
             this._super.apply(this, self);
-
         },
 
         /**
@@ -309,10 +308,10 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
             var self = this;
             var ids = _.pluck(events, "id");
             var group_by_field = self.view.fields[group_bys[0]];
-            if (group_by_field.type == 'one2many' | group_by_field.type == 'many2many') {
+            if (group_by_field.type === 'one2many' | group_by_field.type === 'many2many') {
                 self.x2x = true;
                 return self.split_groups_x2x(events, group_bys).then(function (groups) {
-                    self.groups = groups.sort((a, b) => (a.content > b.content) ? 1 : -1);
+                    self.groups = groups.sort(function (a, b) { return (a.content > b.content) ? 1 : -1; })
                     return self._rpc({
                         model: self.modelName,
                         method: 'name_get',
@@ -411,7 +410,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
         createSelectGroups: function () {
             var self = this;
             var select_groups = $(core.qweb.render('TimelineSelectGroups', {'groups': self.groups}));
-            self.$el.find('.selected-groups').html(select_groups);
+            self.$('.selected-groups').html(select_groups);
             self.$select_groups = select_groups;
             select_groups.multiselect({
                 buttonWidth: '350px',
@@ -447,6 +446,9 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
                         _.each(event[group_bys], function (gr) {
                             var x2x_object = jQuery.extend({}, event);
                             x2x_object[group_bys] = [gr];
+                            // Creating a UNIQUE id with [id]_[gr].
+                            // This id is unique due the unique relationship
+                            // between two records in O2M or M2M
                             x2x_object.id = event.id + "_" + gr;
                             data.push(self.event_data_transform(x2x_object));
                         })
@@ -460,8 +462,8 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
                 this.selected_groups = this.groups;
                 this.createSelectGroups();
             } else {
-                if (this.$select_groups !== undefined) {
-                    this.$el.find('.selected-groups').html('');
+                if (typeof this.$select_groups !== 'undefined') {
+                    this.$('.selected-groups').html('');
                     this.$select_groups.remove();
                 }
                 groups = this.split_groups(events, group_bys);
