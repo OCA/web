@@ -10,9 +10,6 @@
                    class="oe_frame oe_forms oe_translation_form"
                    border="0" cellpadding="0" cellspacing="0" width="100%">
             <tr>
-                <th class="oe_form_separator" width="1%" nowrap="nowrap">
-                    <div class="separator horizontal">Field</div>
-                </th>
                 <th t-foreach="widget.languages" align="left">
                     <div class="separator horizontal"><t t-esc="name"/></div>
                 </th>
@@ -20,9 +17,6 @@
             <t t-value="widget.translatable_field" t-set="field_name" />
               <t t-set="field" t-value="widget.view.searchView.fields[field_name]" />
               <tr t-att-data-field="field_name">
-                  <td class="oe_form_frame_cell" width="1%" nowrap="nowrap">
-                      <label class="oe_label"><t t-esc="field.string"/>:</label>
-                  </td>
                   <td t-foreach="widget.languages" t-as="lg" class="oe_form_frame_cell">
                       <input t-if="['char','url'].indexOf(field.type) !== -1"
                              type="text" t-attf-name="#{lg.code}-#{field_name}"

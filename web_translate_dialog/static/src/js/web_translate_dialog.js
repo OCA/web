@@ -23,8 +23,9 @@ var Mutex = concurrency.Mutex;
 var translateDialog = Dialog.extend({
     template: "TranslateDialog",
     init: function(parent, options) {
+        var title_string = _t("Translate field: /")
         this._super(parent,
-                    {title: _t("Translations"), size: 'x-large'});
+                    {title: title_string.replace('/', options.field.fieldName) , size: 'x-large'});
         this.view_language = session.user_context.lang;
         this.view = parent;
         this.view_type = parent.viewType || '';
