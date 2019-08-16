@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="res_lang_form" model="ir.ui.view">
+        <field name="name">res.lang.form.inherit</field>
+        <field name="inherit_id" ref="base.res_lang_form" />
+        <field name="model">res.lang</field>
+        <field name="arch" type="xml">
+            <field name="translatable" position="after">
+                <field name="tr_sequence" attrs="{'invisible': [('translatable', '!=', True)]}" />
+            </field>
+        </field>
+    </record>
+</odoo>
