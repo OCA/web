@@ -18,7 +18,8 @@
         "web",
     ],
     "data": [
-        "view/web_translate.xml",
+        "views/res_lang.xml",
+        "views/web_translate.xml",
     ],
     "qweb": [
         "static/src/xml/base.xml",
