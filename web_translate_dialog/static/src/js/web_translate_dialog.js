@@ -29,15 +29,16 @@ var translateDialog = Dialog.extend({
         this.view_language = session.user_context.lang;
         this.view = parent;
         this.view_type = parent.viewType || '';
-        this.$view_form = null;
-        this.$sidebar_form = null;
         this.translatable_field = options.field.fieldName;
         this.res_id = options.res_id;
         this.languages = null;
         this.languages_loaded = $.Deferred();
-        (new data.DataSetSearch(this, 'res.lang', parent.searchView.dataset.get_context(),
-                                [['translatable', '=', '1']])).read_slice(['code', 'name'],
-                                { sort: 'id' }).then(this.on_languages_loaded);
+        this.lang_data = new data.DataSetSearch(
+            this, 'res.lang', parent.searchView.dataset.get_context(),
+            [['translatable', '=', '1']]
+        );
+        this.lang_data.set_sort(['tr_sequence asc','id asc']);
+        this.lang_data.read_slice(['code', 'name']).then(this.on_languages_loaded);
     },
     willStart: function () {
         var self = this;
