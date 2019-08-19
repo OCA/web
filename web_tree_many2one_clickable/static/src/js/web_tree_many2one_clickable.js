@@ -34,9 +34,9 @@ function clickable_get(callback){
 ListView.Column.include({
     init: function(id, tag, attrs) {
         this._super(id, tag, attrs);
-        if (this.widget == 'many2one_clickable') {
+        if (this.widget === 'many2one_clickable') {
             this.use_many2one_clickable = true;
-        } else if (this.type == 'many2one') {
+        } else if (this.type === 'many2one') {
             this.use_many2one_clickable = false;
             clickable_get().done($.proxy(function(value){
                 this.use_many2one_clickable = value;
@@ -44,27 +44,27 @@ ListView.Column.include({
         }
     },
     _format: function (row_data, options) {
-        if ((this.type == 'many2one' || this.type == 'reference') &&
-            (this.widget == 'many2one_unclickable' || this.use_many2one_clickable) &&
+        if ((this.type === 'many2one' || this.type === 'reference') &&
+            (this.widget === 'many2one_unclickable' || this.use_many2one_clickable) &&
             !!row_data[this.id]) {
             var value = row_data[this.id].value;
             var name = value[1] ? value[1].split("\n")[0] : value[1];
             name = _.escape(name || options.value_if_empty);
-            if (this.widget == 'many2one_unclickable') {
+            if (this.widget === 'many2one_unclickable') {
                 return name;
             } else if (this.use_many2one_clickable) {
-                let value = row_data[this.id].value;
+                var value = row_data[this.id].value;
                 var values = {
                     model: this.relation,
                     id: value[0],
                     name: name,
                 };
-                if(this.type == 'reference') {
+                if(this.type === 'reference') {
                     values.model = value.split(',', 1)[0];
                     values.id = value.split(',', 2)[1];
                     values.name = value;
                 }
-                if (!!row_data[this.id + '__display']) {
+                if (_.has(row_data, this.id + '__display')) {
                     values.name = _.escape(row_data[this.id + '__display'].value ||
                                            options.value_if_empty);
                 }
