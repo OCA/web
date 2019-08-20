@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="installed_modules" model="tile.tile">
+            <field name="name">Installed Modules</field>
+            <field name="model_id" eval="ref('base.model_ir_module_module')"/>
+            <field name="domain">[('state', 'in', ['installed', 'to upgrade', 'to remove'])]</field>
+            <field name="action_id" eval="ref('base.open_module_tree')"/>
+        </record>
+
+        <record id="installed_OCA_modules" model="tile.tile">
+            <field name="name">Installed OCA Modules</field>
+            <field name="model_id" eval="ref('base.model_ir_module_module')"/>
+            <field name="domain">[('state', 'in', ['installed', 'to upgrade', 'to remove']), ('author', 'ilike', 'Odoo Community Association (OCA)')]</field>
+            <field name="action_id" eval="ref('base.open_module_tree')"/>
+        </record>
+
+        <record id="all_currency_with_rate" model="tile.tile">
+            <field name="name">Currencies (Max Rate)</field>
+            <field name="model_id" eval="ref('base.model_res_currency')"/>
+            <field name="domain">[]</field>
+            <field name="secondary_function">max</field>
+            <field name="secondary_field_id" eval="ref('base.field_res_currency_rate')"></field>
+        </record>
+    </data>
+</odoo>
