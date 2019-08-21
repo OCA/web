@@ -32,7 +32,7 @@ Example
         </record>
     </odoo>
 
-.. image:: /web_hierarchy/description/screenshot.png
+.. image:: ./static/description/screenshot.png
   :width: 800
   :alt: Hierarchy View
 
