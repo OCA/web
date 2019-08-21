@@ -26,6 +26,6 @@
         'static/src/xml/digital_sign.xml',
     ],
     'installable': True,
-    'development_status': 'Stable',
+    'development_status': 'Production/Stable',
     'maintainers': ['mgosai'],
 }
