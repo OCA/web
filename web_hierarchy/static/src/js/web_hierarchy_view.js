@@ -39,12 +39,12 @@ odoo.define('web.HierarchyView', function (require) {
                             if (results[i].parent_id) {
                                 if (results[i].parent_id[1].search("/")) {
                                     var x = results[i].parent_id[1].split("/");
-                                    var parent = x[x.length - 1]
-                                    vals.push([results[i].name, parent,
+                                    var parent = x[x.length - 1];
+                                    vals.push([results[i].name, parent.trim(),
                                         results[i].name]);
                                 } else {
                                     vals.push([results[i].name,
-                                        results[i].parent_id[1],
+                                        results[i].parent_id[1].trim(),
                                         results[i].name]);
                                 }
                             } else {

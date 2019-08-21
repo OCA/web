@@ -3,11 +3,13 @@
     <template id="web_hierarchy_assets_backend" name="web_hierarchy_assets"
               inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/css"
+                  href="/web_hierarchy/static/src/css/custom.css"/>
             <script type="text/javascript"
                     src="/web_hierarchy/static/src/lib/loader.js">
             </script>
             <script type="text/javascript"
-                    src="/web_hierarchy/static/src/js/view/web_hierarchy_view.js">
+                    src="/web_hierarchy/static/src/js/web_hierarchy_view.js">
             </script>
         </xpath>
     </template>

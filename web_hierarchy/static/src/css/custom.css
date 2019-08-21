@@ -1,3 +1,3 @@
-.google-visualization-orgchart-linenode {
-    border: 0;
+#chart_div table{
+    border-collapse: unset;
 }
