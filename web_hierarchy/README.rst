@@ -45,6 +45,7 @@ Contributors
 ------------
 
 * Kevin Kamau <kevkamaa96@gmail.com>
+* Tom Blauwendraat <tblauwendraat@therp.nl>
 
 Do not contact contributors directly about support or help with technical issues.
 
