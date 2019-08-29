@@ -11839,6 +11839,9 @@ Group.prototype._create = function () {
 
   var foreground = document.createElement('div');
   foreground.className = 'vis-group';
+  if (this.groupId){
+     foreground.id = this.groupId;
+  }
   foreground['timeline-group'] = this;
   this.dom.foreground = foreground;
 
