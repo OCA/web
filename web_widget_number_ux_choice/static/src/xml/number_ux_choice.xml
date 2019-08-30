@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2019 - Today: GRAP (http://www.grap.coop)
+@author: Quentin DUPONT <quentin.dupont@grap.coop>
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<templates>
+    <t t-name="NumberUxChoice">
+        <t t-if="widget.mode != 'readonly'">
+            <input class="input_number_ux_choice"/>
+            <div class="btns_number_ux_choice">
+                <button class="fa fa-plus btn btn-secondary btn_number_ux_choice_plus" aria-label="Plus" title="Plus"/><button class="fa fa-minus btn btn-secondary btn_number_ux_choice_minus" aria-label="Minus" title="Minus"/>
+            </div>
+        </t>
+        <t t-if="widget.mode == 'readonly'">
+            <field/>
+        </t>
+    </t>
+</templates>
