@@ -9,16 +9,16 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-22 08:26+0000\n"
-"PO-Revision-Date: 2018-08-04 13:35+0000\n"
+"PO-Revision-Date: 2019-09-03 01:23+0000\n"
 "Last-Translator: Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
-"teams/23907/pt_BR/)\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
+"23907/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.1.1\n"
+"X-Generator: Weblate 3.8\n"
 
 #. module: web_favicon
 #: model:ir.model,name:web_favicon.model_res_company
@@ -28,7 +28,7 @@ msgstr "Empresas"
 #. module: web_favicon
 #: model_terms:ir.ui.view,arch_db:web_favicon.view_company_form
 msgid "Favicon"
-msgstr "Favicon"
+msgstr "Ícone"
 
 #. module: web_favicon
 #: model:ir.model.fields,field_description:web_favicon.field_res_company__favicon_backend
@@ -38,12 +38,12 @@ msgstr "Favicon back-end"
 #. module: web_favicon
 #: model:ir.model.fields,field_description:web_favicon.field_res_company__favicon_backend_mimetype
 msgid "Favicon Backend Mimetype"
-msgstr "Favicon back-end mimetype"
+msgstr "Mimetype Favicon Backend"
 
 #. module: web_favicon
 #: model:ir.model.fields,help:web_favicon.field_res_company__favicon_backend_mimetype
 msgid "Set the mimetype of your file."
-msgstr "Defina o tipo mímico do seu arquivo."
+msgstr "Defina o mimetype do seu arquivo."
 
 #. module: web_favicon
 #: model_terms:ir.ui.view,arch_db:web_favicon.view_company_form
