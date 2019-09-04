@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2019 - Today: GRAP (http://www.grap.coop)
+@author: Quentin DUPONT <quentin.dupont@grap.coop>
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<templates>
+    <t t-name="web_widget_numeric_step">
+        <t t-if="widget.mode != 'readonly'">
+            <input type="number" class="input_numeric_step"/>
+            <div class="btns_numeric_step">
+                <button class="fa fa-plus btn btn-secondary btn_numeric_step_plus" aria-label="Plus" title="Plus"/><button class="fa fa-minus btn btn-secondary btn_numeric_step_minus" aria-label="Minus" title="Minus"/>
+            </div>
+        </t>
+        <t t-if="widget.mode == 'readonly'">
+            <field/>
+        </t>
+    </t>
+</templates>
