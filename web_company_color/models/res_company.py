@@ -55,11 +55,11 @@ class ResCompany(models.Model):
                                     sparse='company_colors')
     scss_modif_timestamp = fields.Char('SCSS Modif. Timestamp')
 
-    @api.model
-    def create(self, values):
-        record = super().create(values)
-        record.scss_create_or_update_attachment()
-        return record
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
+        records.scss_create_or_update_attachment()
+        return records
 
     @api.multi
     def unlink(self):
@@ -106,12 +106,17 @@ class ResCompany(models.Model):
     @api.multi
     def _scss_get_sanitized_values(self):
         self.ensure_one()
-        values = dict(self.company_colors)
+        # Clone company_color as dictionary to avoid ORM operations
+        # This allow extend company_colors and only sanitize selected fields
+        # or add custom values
+        values = dict(self.company_colors or {})
         values.update({
-            'color_navbar_bg': values['color_navbar_bg'] or '$o-brand-odoo',
-            'color_navbar_bg_hover': values['color_navbar_bg_hover']
-            or '$o-navbar-inverse-link-hover-bg',
-            'color_navbar_text': values['color_navbar_text'] or '#FFF',
+            'color_navbar_bg': (values.get('color_navbar_bg')
+                                or '$o-brand-odoo'),
+            'color_navbar_bg_hover': (
+                values.get('color_navbar_bg_hover')
+                or '$o-navbar-inverse-link-hover-bg'),
+            'color_navbar_text': (values.get('color_navbar_text') or '#FFF'),
         })
         return values
 
@@ -139,7 +144,10 @@ class ResCompany(models.Model):
     @api.multi
     def scss_create_or_update_attachment(self):
         IrAttachmentObj = self.env['ir.attachment']
-        modif_timestamp = str(int(time.time()))     # One second resolution
+        # The time window is 1 second
+        # This mean that all modifications realized in that second will
+        # have the same timestamp
+        modif_timestamp = str(int(time.time()))
         for record in self:
             datas = base64.b64encode(
                 record._scss_generate_content().encode('utf-8'))
