@@ -15,12 +15,6 @@ class TestResCompany(common.TransactionCase):
         num_companies = self.env['res.company'].search_count([])
         self.assertEqual(num_scss, num_companies, "Invalid scss attachments")
 
-    def test_change_logo(self):
-        company_id = self.env['res.company'].search([], limit=1)
-        company_id.sudo().write({'logo': self.IMG_GREEN})
-        self.assertEqual(company_id.color_navbar_bg, '#00ff00',
-                         "Invalid Navbar Background Color")
-
     def test_create_unlink_company(self):
         company_id = self.env['res.company'].create({
             'name': 'Company Test'
@@ -33,3 +27,33 @@ class TestResCompany(common.TransactionCase):
                          "Invalid Navbar Background Color")
         company_id.sudo().unlink()
         self.test_scss_attachment()
+
+    def test_change_logo(self):
+        company_id = self.env['res.company'].search([], limit=1)
+        company_id.sudo().write({'logo': self.IMG_GREEN})
+        self.assertEqual(company_id.color_navbar_bg, '#00ff00',
+                         "Invalid Navbar Background Color")
+
+    def test_scss_sanitized_values(self):
+        company_id = self.env['res.company'].search([], limit=1)
+        company_id.sudo().write({'color_navbar_bg': False})
+        values = company_id.sudo()._scss_get_sanitized_values()
+        self.assertEqual(values['color_navbar_bg'], '$o-brand-odoo',
+                         "Invalid Navbar Background Color")
+        company_id.sudo().write({'color_navbar_bg': '#DEAD00'})
+        values = company_id.sudo()._scss_get_sanitized_values()
+        self.assertEqual(values['color_navbar_bg'], '#DEAD00',
+                         "Invalid Navbar Background Color")
+
+    def test_change_color(self):
+        company_id = self.env['res.company'].search([], limit=1)
+        company_id.sudo().write({'color_navbar_bg': '#DEAD00'})
+        self.assertEqual(company_id.color_navbar_bg, '#DEAD00',
+                         "Invalid Navbar Background Color")
+        self.assertEqual(company_id.company_colors['color_navbar_bg'],
+                         '#DEAD00', "Invalid Navbar Background Color")
+        company_id.sudo().write({'color_navbar_bg': False})
+        self.assertFalse(company_id.color_navbar_bg,
+                         "Invalid Navbar Background Color")
+        self.assertNotIn('color_navbar_bg', company_id.company_colors,
+                         "Invalid Navbar Background Color")
