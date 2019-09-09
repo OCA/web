@@ -5,7 +5,7 @@ odoo.define('web_widget_bokeh_chart', function (require) {
     var AbstractField = require('web.AbstractField');
 
     var BokehChartWidget = AbstractField.extend({
-        start: function() {
+        _renderReadonly: function() {
             var val = this.value;
             this.$el.html(val);
         }
