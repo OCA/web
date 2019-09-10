@@ -1,0 +1,13 @@
+<odoo>
+    <template id="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr="//script[last()]" position="after">
+
+            <!-- Library -->
+            <script type="text/javascript" src="/web_widget_plotly_chart/static/lib/plotly/plotly-latest.min.js"></script>
+
+            <!-- Widget -->
+            <script type="text/javascript" src="/web_widget_plotly_chart/static/src/js/widget_plotly.js"></script>
+
+        </xpath>
+    </template>
+</odoo>
