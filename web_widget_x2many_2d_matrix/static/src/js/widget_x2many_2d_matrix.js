@@ -56,10 +56,23 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                         node[property];
                 }
             }
-            this.show_row_totals =
-                this.parse_boolean(node.show_row_totals || '1');
-            this.show_column_totals =
-                this.parse_boolean(node.show_column_totals || '1');
+            var field_defs = this.recordData[this.name].fields;
+            // TODO: raise when any of the fields above don't exist with a
+            // helpful error message
+            if (!field_defs[this.field_value]) {
+                throw new Error(_.str.sprintf(
+                    'You need to include %s in your view definition',
+                    this.field_value
+                ));
+            }
+            this.show_row_totals = this.parse_boolean(
+                node.show_row_totals ||
+                this.is_aggregatable(field_defs[this.field_value]) ? '1' : ''
+            );
+            this.show_column_totals = this.parse_boolean(
+                node.show_column_totals ||
+                this.is_aggregatable(field_defs[this.field_value]) ? '1' : ''
+            );
         },
 
         /**
@@ -147,6 +160,13 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                 row.data.push(self.by_y_axis[y][x]);
             });
             return row;
+        },
+
+        /**
+         * Determine if a field represented by field_def can be aggregated
+         */
+        is_aggregatable: function (field_def) {
+            return field_def.type in {float: 1, monetary: 1, integer: 1};
         },
 
         /**
