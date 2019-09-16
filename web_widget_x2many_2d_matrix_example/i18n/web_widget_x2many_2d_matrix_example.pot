@@ -91,6 +91,16 @@ msgid "Try x2m 2d matrix"
 msgstr ""
 
 #. module: web_widget_x2many_2d_matrix_example
+#: model_terms:ir.ui.view,arch_db:web_widget_x2many_2d_matrix_example.view_x2m_demo_form
+msgid "Try x2m 2d matrix (many2one)"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model_terms:ir.ui.view,arch_db:web_widget_x2many_2d_matrix_example.view_x2m_demo_form
+msgid "Try x2m 2d matrix (selection)"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
 #: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__user_id
 msgid "User"
 msgstr ""
@@ -98,6 +108,26 @@ msgstr ""
 #. module: web_widget_x2many_2d_matrix_example
 #: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__value
 msgid "Value"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
+#: selection:x2m.demo.line,value_selection:0
+msgid "Value 1"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
+#: selection:x2m.demo.line,value_selection:0
+msgid "Value 2"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__value_many2one
+msgid "Value Many2One"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__value_selection
+msgid "Value Selection"
 msgstr ""
 
 #. module: web_widget_x2many_2d_matrix_example
