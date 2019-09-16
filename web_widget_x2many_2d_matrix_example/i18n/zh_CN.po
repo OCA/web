@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_widget_x2many_2d_matrix_example
+# 	* web_widget_x2many_2d_matrix_example
 #
 msgid ""
 msgstr ""
@@ -94,6 +94,20 @@ msgid "Try x2m 2d matrix"
 msgstr "试试x2m 2d矩阵"
 
 #. module: web_widget_x2many_2d_matrix_example
+#: model_terms:ir.ui.view,arch_db:web_widget_x2many_2d_matrix_example.view_x2m_demo_form
+#, fuzzy
+#| msgid "Try x2m 2d matrix"
+msgid "Try x2m 2d matrix (many2one)"
+msgstr "试试x2m 2d矩阵"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model_terms:ir.ui.view,arch_db:web_widget_x2many_2d_matrix_example.view_x2m_demo_form
+#, fuzzy
+#| msgid "Try x2m 2d matrix"
+msgid "Try x2m 2d matrix (selection)"
+msgstr "试试x2m 2d矩阵"
+
+#. module: web_widget_x2many_2d_matrix_example
 #: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__user_id
 msgid "User"
 msgstr "用户"
@@ -102,6 +116,30 @@ msgstr "用户"
 #: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__value
 msgid "Value"
 msgstr "值"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: selection:x2m.demo.line,value_selection:0
+#, fuzzy
+#| msgid "Value"
+msgid "Value 1"
+msgstr "值"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: selection:x2m.demo.line,value_selection:0
+#, fuzzy
+#| msgid "Value"
+msgid "Value 2"
+msgstr "值"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__value_many2one
+msgid "Value Many2One"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__value_selection
+msgid "Value Selection"
+msgstr ""
 
 #. module: web_widget_x2many_2d_matrix_example
 #: model:ir.model,name:web_widget_x2many_2d_matrix_example.model_x2m_demo
