@@ -13,6 +13,8 @@
                             <tree>
                                 <field name="name"/>
                                 <field name="value"/>
+                                <field name="value_selection"/>
+                                <field name="value_many2one"/>
                                 <field name="user_id"/>
                             </tree>
                         </field>
@@ -20,7 +22,13 @@
                     <footer>
                         <button name="open_x2m_matrix" type="object"
                                 string="Try x2m 2d matrix"
-                                class="oe_stat_button" icon="fa-edit"/>
+                                class="oe_link" icon="fa-edit"/>
+                        <button name="open_x2m_matrix_selection" type="object"
+                                string="Try x2m 2d matrix (selection)"
+                                class="oe_link" icon="fa-edit"/>
+                        <button name="open_x2m_matrix_many2one" type="object"
+                                string="Try x2m 2d matrix (many2one)"
+                                class="oe_link" icon="fa-edit"/>
                     </footer>
                 </sheet>
             </form>
