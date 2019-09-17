@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2019-09-01 17:23+0000\n"
+"PO-Revision-Date: 2019-09-17 19:24+0000\n"
 "Last-Translator: 黎伟杰 <674416404@qq.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -95,17 +95,13 @@ msgstr "试试x2m 2d矩阵"
 
 #. module: web_widget_x2many_2d_matrix_example
 #: model_terms:ir.ui.view,arch_db:web_widget_x2many_2d_matrix_example.view_x2m_demo_form
-#, fuzzy
-#| msgid "Try x2m 2d matrix"
 msgid "Try x2m 2d matrix (many2one)"
-msgstr "试试x2m 2d矩阵"
+msgstr "试试x2m 2d矩阵(many2one)"
 
 #. module: web_widget_x2many_2d_matrix_example
 #: model_terms:ir.ui.view,arch_db:web_widget_x2many_2d_matrix_example.view_x2m_demo_form
-#, fuzzy
-#| msgid "Try x2m 2d matrix"
 msgid "Try x2m 2d matrix (selection)"
-msgstr "试试x2m 2d矩阵"
+msgstr "试试x2m 2d矩阵 (selection)"
 
 #. module: web_widget_x2many_2d_matrix_example
 #: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__user_id
@@ -119,27 +115,23 @@ msgstr "值"
 
 #. module: web_widget_x2many_2d_matrix_example
 #: selection:x2m.demo.line,value_selection:0
-#, fuzzy
-#| msgid "Value"
 msgid "Value 1"
-msgstr "值"
+msgstr "值1"
 
 #. module: web_widget_x2many_2d_matrix_example
 #: selection:x2m.demo.line,value_selection:0
-#, fuzzy
-#| msgid "Value"
 msgid "Value 2"
-msgstr "值"
+msgstr "值2"
 
 #. module: web_widget_x2many_2d_matrix_example
 #: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__value_many2one
 msgid "Value Many2One"
-msgstr ""
+msgstr "值 Many2One"
 
 #. module: web_widget_x2many_2d_matrix_example
 #: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__value_selection
 msgid "Value Selection"
-msgstr ""
+msgstr "值Selection"
 
 #. module: web_widget_x2many_2d_matrix_example
 #: model:ir.model,name:web_widget_x2many_2d_matrix_example.model_x2m_demo
