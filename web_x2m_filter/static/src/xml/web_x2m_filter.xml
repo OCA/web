@@ -4,12 +4,14 @@
         <t t-jquery="thead tr:first-child" t-operation="after">
             <tr t-if="getParent().options &amp;&amp; getParent().options.web_x2m_filter" class="web_x2m_filter">
                 <th t-att-colspan="columns_count">
+                    <t t-set="has_default" t-value="False" />
                     <t t-foreach="getParent().options.web_x2m_filter || {}" t-as="filter">
-                        <button t-attf-class="oe_button oe_list_add web_x2m_filter #{filter.class || ''}" t-att-data-domain="JSON.stringify(filter.domain || [])" t-att-data-default="filter.default">
+                        <button t-attf-class="oe_button oe_list_add web_x2m_filter #{filter.class || ''}" t-att-data-domain="JSON.stringify(filter.domain || [])" t-att-data-default="filter.default" t-att-disabled="has_default and 'disabled' or filter.default and 'disabled' or None">
+                            <t t-set="has_default" t-value="has_default or filter.default" />
                             <t t-esc="_t(filter.name)" />
                         </button>
                     </t>
-                    <button t-att-data-domain="JSON.stringify(getParent().field.domain)" class="oe_button oe_list_add web_x2m_filter" disabled="disabled"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                    <button t-att-data-domain="JSON.stringify(getParent().field.domain)" class="oe_button oe_list_add web_x2m_filter" t-att-disabled="!has_default and 'disabled' or None"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                 </th>
             </tr>
         </t>
@@ -18,12 +20,14 @@
         <t t-jquery="thead tr:first-child" t-operation="after">
             <tr t-if="getParent().o2m.options.web_x2m_filter" class="web_x2m_filter">
                 <th t-att-colspan="columns_count">
+                    <t t-set="has_default" t-value="False" />
                     <t t-foreach="getParent().o2m.options.web_x2m_filter" t-as="filter">
-                        <button t-attf-class="oe_button oe_list_add web_x2m_filter #{filter.class || ''}" t-att-data-domain="JSON.stringify(filter.domain || [])" t-att-data-default="filter.default">
+                        <button t-attf-class="oe_button oe_list_add web_x2m_filter #{filter.class || ''}" t-att-data-domain="JSON.stringify(filter.domain || [])" t-att-data-default="filter.default" t-att-disabled="has_default and 'disabled' or filter.default and 'disabled' or None">
+                            <t t-set="has_default" t-value="has_default or filter.default" />
                             <t t-esc="_t(filter.name)" />
                         </button>
                     </t>
-                    <button t-att-data-domain="JSON.stringify(getParent().o2m.field.domain || [])" class="oe_button oe_list_add web_x2m_filter" disabled="disabled"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                    <button t-att-data-domain="JSON.stringify(getParent().o2m.field.domain || [])" class="oe_button oe_list_add web_x2m_filter" t-att-disabled="!has_default and 'disabled' or None"><i class="fa fa-refresh" aria-hidden="true"></i></button>
                 </th>
             </tr>
         </t>

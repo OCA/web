@@ -19,14 +19,6 @@ openerp.web_x2m_filter = function(instance)
             .web_x2m_filter_apply_domain($button.attr('data-domain'))
             .then(this.proxy('reload_content'));
         },
-        start: function()
-        {
-            var self = this;
-            return this._super.apply(this, arguments).then(function()
-            {
-                self.$('button.web_x2m_filter[data-default]').click();
-            });
-        },
     });
     var apply_domain = function(o2m, domain)
     {
@@ -57,16 +49,44 @@ openerp.web_x2m_filter = function(instance)
             o2m._inhibit_on_change_flag = original;
         });
     };
+    var apply_default_domain = function(o2m)
+    {
+        var default_filter = _.filter(
+            o2m.options.web_x2m_filter,
+            function(filter) { return filter.default }
+        );
+        if(default_filter.length) {
+            return apply_domain(
+                o2m, JSON.stringify(default_filter[0].domain)
+            );
+        }
+    };
     instance.web.form.FieldOne2Many.include({
         web_x2m_filter_apply_domain: function(domain)
         {
             return apply_domain(this, domain);
+        },
+        set_value: function(value) {
+            var self = this;
+            return jQuery.when(
+                this._super.apply(this, arguments)
+            ).then(function() {
+                return apply_default_domain(self);
+            });
         },
     });
     instance.web.form.FieldMany2Many.include({
         web_x2m_filter_apply_domain: function(domain)
         {
             return apply_domain(this, domain);
+        },
+        set_value: function(value) {
+            var self = this;
+            return jQuery.when(
+                this._super.apply(this, arguments)
+            ).then(function() {
+                return apply_default_domain(self);
+            });
         },
     });
 };
