@@ -65,9 +65,23 @@ Usage
 
     With this example, the content of the field named `color` will be used to
     populate the `color` CSS value. Use a function field to return whichever
-    color you want depending on the other record values. Note that this
+    text color you want for each row depending on the other record values. Note that this
     overrides the `colors` attribute, and that you need the tree to load your
     field in the first place by adding it as invisible field.
+
+* In the tree view declaration, use background_color_field="color" attribute in the tree tag::
+
+    ...
+    <field name="arch" type="xml">
+        <tree string="View name" background_color_field="color">
+            ...
+            <field name="color" invisible="1" />
+            ...
+        </tree>
+    </field>
+    ...
+
+    Same as above, but this changes background color of rows.
 
 Bug Tracker
 ===========

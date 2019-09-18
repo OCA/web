@@ -60,35 +60,39 @@ odoo.define('web_tree_dynamic_colored_field', function(require)
     });
 
     ListView.include({
-        load_view: function()
+        willStart: function()
         {
-            var self = this;
-            return this._super.apply(this, arguments)
-            .then(function()
+	    // the style_for helper is only called if one of colors or
+            // fonts is not null
+            if(
+                this.fields_view.arch.attrs.color_field ||
+                this.fields_view.arch.attrs.background_color_field
+	    )
             {
-                // the style_for helper is only called if one of colors or
-                // fonts is not null
-                if(self.fields_view.arch.attrs.color_field)
-                {
-                    self.colors = [];
-                }
-            });
+                this.colors = [];
+            }
+            return this._super.apply(this, arguments)
         },
-        style_for: function (record)
-        {
-            var result = this._super.apply(this, arguments);
-            if(this.fields_view.arch.attrs.color_field)
+	_style_for_color_field: function (record, css_property, field_attribute) {
+            if(this.fields_view.arch.attrs[field_attribute])
             {
                 var color = py.evaluate(
                     py.parse(py.tokenize(
-                        this.fields_view.arch.attrs.color_field
+                        this.fields_view.arch.attrs[field_attribute]
                     )),
                     get_eval_context(record)).toJSON();
                 if(color)
                 {
-                    result += 'color: ' + color;
+                    return _.str.sprintf('%s: %s;', css_property, color);
                 }
             }
+	    return '';
+	},
+        style_for: function (record)
+        {
+            var result = this._super.apply(this, arguments);
+	    result += this._style_for_color_field(record, 'color', 'color_field');
+	    result += this._style_for_color_field(record, 'background-color', 'background_color_field');
             return result;
         },
     });
