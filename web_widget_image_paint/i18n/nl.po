@@ -1,0 +1,192 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* web_widget_image_paint
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-08-13 18:36+0000\n"
+"PO-Revision-Date: 2019-08-13 18:36+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:29
+#, python-format
+msgid "Add marker"
+msgstr "Plaats merkteken"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:35
+#, python-format
+msgid "Circle"
+msgstr "Cirkel"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:15
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:67
+#, python-format
+msgid "Clear"
+msgstr "Leegmaken"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:13
+#, python-format
+msgid "Edit"
+msgstr "Bewerken"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/js/web_paint.js:358
+#: code:addons/web_widget_image_paint/static/src/js/web_paint.js:433
+#, python-format
+msgid "Enter drawing mode"
+msgstr "Tekenmodus"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:46
+#, python-format
+msgid "Line color:"
+msgstr "Kleur:"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:43
+#, python-format
+msgid "Line width:"
+msgstr "Breedte:"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:32
+#, python-format
+msgid "Mode:"
+msgstr "Mode:"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:37
+#, python-format
+msgid "Pattern"
+msgstr "Patroon"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:34
+#, python-format
+msgid "Pencil"
+msgstr "Potlood"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/js/web_paint.js:355
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:28
+#, python-format
+msgid "Return moving mode"
+msgstr "Verplaatsingsmodus"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:55
+#, python-format
+msgid "Shadow color:"
+msgstr "Schaduwkleur:"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:52
+#, python-format
+msgid "Shadow offset:"
+msgstr "Afstandsverschil van de schaduw:"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:49
+#, python-format
+msgid "Shadow width:"
+msgstr "Schaduwbreedte"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:36
+#, python-format
+msgid "Spray"
+msgstr "Spray"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/js/web_paint.js:321
+#, python-format
+msgid "circle"
+msgstr "cirkel"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/js/web_paint.js:317
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:41
+#, python-format
+msgid "diamond"
+msgstr "diamant"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/js/web_paint.js:309
+#, python-format
+msgid "hline"
+msgstr "horizontaal\n"
+""
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/js/web_paint.js:327
+#, python-format
+msgid "motif"
+msgstr "Motief"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/js/web_paint.js:323
+#, python-format
+msgid "pencil"
+msgstr "potlood"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/js/web_paint.js:325
+#, python-format
+msgid "spray"
+msgstr "spray"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/js/web_paint.js:315
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:40
+#, python-format
+msgid "square"
+msgstr "vierkant"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/js/web_paint.js:319
+#, python-format
+msgid "texture"
+msgstr "textuur"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/js/web_paint.js:312
+#, python-format
+msgid "vline"
+msgstr "verticaal\n"
+""
+

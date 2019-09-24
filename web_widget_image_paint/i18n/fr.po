@@ -1,0 +1,192 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* web_widget_image_paint
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-08-13 18:36+0000\n"
+"PO-Revision-Date: 2019-08-13 18:36+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:29
+#, python-format
+msgid "Add marker"
+msgstr "Ajouter un signe"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:35
+#, python-format
+msgid "Circle"
+msgstr "Cercle"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:15
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:67
+#, python-format
+msgid "Clear"
+msgstr "Effacer"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:13
+#, python-format
+msgid "Edit"
+msgstr "Editer"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/js/web_paint.js:358
+#: code:addons/web_widget_image_paint/static/src/js/web_paint.js:433
+#, python-format
+msgid "Enter drawing mode"
+msgstr "Mode dessin"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:46
+#, python-format
+msgid "Line color:"
+msgstr "Couleur de ligne:"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:43
+#, python-format
+msgid "Line width:"
+msgstr "Epaisseur du trait:"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:32
+#, python-format
+msgid "Mode:"
+msgstr "Mode:"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:37
+#, python-format
+msgid "Pattern"
+msgstr "Motif"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:34
+#, python-format
+msgid "Pencil"
+msgstr "Stylo"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/js/web_paint.js:355
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:28
+#, python-format
+msgid "Return moving mode"
+msgstr "Mode déplacement"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:55
+#, python-format
+msgid "Shadow color:"
+msgstr "Couleur d'ombre:"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:52
+#, python-format
+msgid "Shadow offset:"
+msgstr "Décalage de l'ombre:"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:49
+#, python-format
+msgid "Shadow width:"
+msgstr "Largeur d'ombre"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:36
+#, python-format
+msgid "Spray"
+msgstr "Spray"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/js/web_paint.js:321
+#, python-format
+msgid "circle"
+msgstr "cercle"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/js/web_paint.js:317
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:41
+#, python-format
+msgid "diamond"
+msgstr "diamant"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/js/web_paint.js:309
+#, python-format
+msgid "hline"
+msgstr "horizontal\n"
+""
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/js/web_paint.js:327
+#, python-format
+msgid "motif"
+msgstr "motif"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/js/web_paint.js:323
+#, python-format
+msgid "pencil"
+msgstr "stylo"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/js/web_paint.js:325
+#, python-format
+msgid "spray"
+msgstr "spray"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/js/web_paint.js:315
+#: code:addons/web_widget_image_paint/static/src/xml/web_paint.xml:40
+#, python-format
+msgid "square"
+msgstr "carré"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/js/web_paint.js:319
+#, python-format
+msgid "texture"
+msgstr "texture"
+
+#. module: web_widget_image_paint
+#. openerp-web
+#: code:addons/web_widget_image_paint/static/src/js/web_paint.js:312
+#, python-format
+msgid "vline"
+msgstr "vertical\n"
+""
+

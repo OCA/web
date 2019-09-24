@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template_for_painting">
+
+    <t t-name="DesignBox">
+        <div id='box'
+             style='display: inline-block; margin-left: 10px; padding:10px; border:solid 1px grey;width:200px;'>
+            <div class="o_field_image o_field_widget oe_avatar" data-original-title="" title="" style="width:100%;">
+                <img src=""></img>
+                <br/>
+                <br/>
+                <div class="o_form_image_controls" style="opacity: 100;">
+                    <t t-if="edit_background_image">
+                        <span id="edit_click" class="fa fa-pencil fa-lg pull-left o_select_file_button"
+                              title="Edit"></span>
+                    </t>
+                    <span id="clear_click" class="fa fa-trash-o fa-lg pull-right o_clear_file_button"
+                          title="Clear"></span>
+                    <div class="o_hidden_input_file ">
+                        <form class="o_form_binary_form" enctype="multipart/form-data" method="post"
+                              action="/web/binary/upload">
+                            <input accept="image/*" id="file_paint" name="ufile" type="file" style="font-size: small;"
+                                   class="o_input_file"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <button id='save_paint' class='btn btn-default btn-block save_paint' style="display:none">save</button>
+            <t t-if="drawing_mode">
+                <button id='drawing-mode' class='btn btn-default btn-block'>Return moving mode</button>
+            </t>
+            <t t-if="add_marker">
+                <button id="add_marker" class="btn btn-default btn-block">Add marker</button>
+            </t>
+            <div id='drawing-mode-options' style='display:true;'>
+                <br/>
+                <label class='o_form_label o_form_label_help' for='drawing-mode-selector'>Mode:</label>
+                <select id='drawing-mode-selector' class='o_form_label o_form_label_help'>
+                    <option>Pencil</option>
+                    <option>Circle</option>
+                    <option>Spray</option>
+                    <option>Pattern</option>
+                    <!--<option>hline</option>-->
+                    <!--<option>vline</option>-->
+                    <option>square</option>
+                    <option>diamond</option>
+                </select>
+                <label class='o_form_label o_form_label_help' for='drawing-line-width'>Line width:</label>
+                <span class='info o_form_label '>3</span>
+                <input type='range' value='3' min='0' max='150' id='drawing-line-width'/>
+                <label class='o_form_label o_form_label_help' for='drawing-color'>Line color:</label>
+                <input style='width:100%;' type='color' value='#FF0000' id='drawing-color'/>
+                <br/>
+                <label class='o_form_label o_form_label_help' for='drawing-shadow-width'>Shadow width:</label>
+                <span class='info o_form_label '>5</span>
+                <input type='range' value='5' min='0' max='50' id='drawing-shadow-width'/>
+                <label class='o_form_label o_form_label_help' for='drawing-shadow-offset'>Shadow offset:</label>
+                <span class='info o_form_label '>0</span>
+                <input type='range' value='0' min='0' max='50' id='drawing-shadow-offset'/>
+                <label class='o_form_label o_form_label_help' for='drawing-shadow-color'>Shadow color:</label>
+                <input style='width:100%;' type='color' value='#FFFFFF' id='drawing-shadow-color'/>
+                <br/>
+            </div>
+        </div>
+        <br/>
+    </t>
+
+    <!--<t t-name="FieldPainting" xml:space="preserve">-->
+    <t t-name="FieldPainting">
+        <div id="field_painting" style="display:flex;" class="field_painting_class">
+            <t t-if="widget.mode != 'readonly'">
+                <!--<t t-call="CanvasTemplate"/>-->
+                <div class="pull-right">
+                    <a id="sign_clean" class="btn btn-xs oe_edit_only">Clear</a>
+                    <a class="oe_edit_only save_sign"></a>
+                </div>
+            </t>
+            <t t-if="widget.mode == 'readonly'">
+                <!--<t t-call="CanvasTemplate"/>-->
+            </t>
+        </div>
+    </t>
+
+    <t t-name="FieldBinaryImage-extend">
+        <img t-att-src='url'
+             t-att-border="(widget.mode == 'readonly') ? 0 : 1"
+             t-att-name="widget.name"
+             t-att-width="widget.node.attrs.img_width || widget.node.attrs.width"
+             t-att-height="widget.node.attrs.img_height || widget.node.attrs.height"
+             t-att-tabindex="widget.node.attrs.img_tabindex || widget.node.attrs.tabindex"
+        />
+    </t>
+
+    <t t-name="CanvasTemplate">
+        <div class=" " id="drawsign" style="float:inline-block;">
+            <div class="painting_class">
+                <canvas id='c' width='500' height='650'
+                        style='border: 1px solid rgb(170, 170, 170); position: relative;  left: 0px; top: 0px; touch-action: none; -moz-user-select: none;'
+                        class='lower-canvas'>
+                </canvas>
+            </div>
+        </div>
+    </t>
+
+</templates>
