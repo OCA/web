@@ -329,7 +329,14 @@ html .o_web_client .o_main .o_main_content {
     .o_form_view {
         .o_form_sheet {
             max-width: calc(100% - 32px);
-            overflow-x: scroll;
+            overflow-x: auto;
+
+            .oe_button_box {
+                .o_dropdown_more {
+                    padding: 0.1em;
+                    width: min-content;
+                }
+            }
         }
 
         // Sticky statusbar
