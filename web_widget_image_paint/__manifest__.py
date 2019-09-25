@@ -5,7 +5,7 @@
     'name': 'Image Paint widget',
     'version': '12.0.1.0.0',
     'author': 'Noviat',
-    'website': 'http://www.noviat.com',
+    'website': 'https://github.com/OCA/web',
     'license': 'AGPL-3',
     'category': 'web',
     'depends': [

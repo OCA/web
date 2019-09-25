@@ -39,8 +39,6 @@
                     <option>Circle</option>
                     <option>Spray</option>
                     <option>Pattern</option>
-                    <!--<option>hline</option>-->
-                    <!--<option>vline</option>-->
                     <option>square</option>
                     <option>diamond</option>
                 </select>
