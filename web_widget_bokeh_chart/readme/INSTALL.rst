@@ -1,3 +1,3 @@
 You need to install the python bokeh library::
 
-    pip3 install bokeh==0.12.7
+    pip3 install bokeh==1.1.0
