@@ -16,8 +16,20 @@ odoo.define('web.web_widget_color', function(require) {
 
         _renderEdit: function() {
             this.$input = this.$el.find('input');
-            this.jscolor = new jscolor(this.$input[0], {hash:true, zIndex: 2000});
+            this.jscolor = new jscolor(this.$input[0], {
+                hash: true,
+                zIndex: 2000,
+                required: this.attrs.modifiersValue.required
+            });
         },
+
+        updateModifiersValue: function () {
+            this._super.apply(this, arguments);
+            if (this.mode !== 'readonly') {
+                this._renderEdit();
+            }
+        },
+
     });
     field_registry.add('color', FieldColor);
 
