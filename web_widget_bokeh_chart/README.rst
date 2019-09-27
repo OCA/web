@@ -7,9 +7,9 @@ Web Widget Bokeh Chart
    !! changes will be overwritten.                   !!
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
+.. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Beta
+    :alt: Production/Stable
 .. |badge2| image:: https://img.shields.io/badge/licence-LGPL--3-blue.png
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
@@ -52,7 +52,7 @@ Installation
 
 You need to install the python bokeh library::
 
-    pip3 install bokeh==0.12.7
+    pip3 install bokeh==1.1.0
 
 Usage
 =====
@@ -130,6 +130,14 @@ This module is maintained by the OCA.
 OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
+
+.. |maintainer-lreficent| image:: https://github.com/lreficent.png?size=40px
+    :target: https://github.com/lreficent
+    :alt: lreficent
+
+Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+
+|maintainer-lreficent| 
 
 This module is part of the `OCA/web <https://github.com/OCA/web/tree/12.0/web_widget_bokeh_chart>`_ project on GitHub.
 
