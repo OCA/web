@@ -1,4 +1,4 @@
-odoo.define('web_advanced_search_wildcard', function (require) {
+odoo.define('web_advanced_search_list', function (require) {
     "use strict";
 
     var core = require('web.core');
