@@ -8,6 +8,8 @@
     "author": "Eficent, "
               "Odoo Community Association (OCA)",
     "version": "12.0.1.0.1",
+    "maintainers": ["lreficent"],
+    "development_status": "Production/Stable",
     "website": "https://github.com/OCA/web",
     "depends": ["web"],
     "data": [
