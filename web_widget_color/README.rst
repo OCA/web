@@ -140,6 +140,8 @@ Contributors
 
   * Ernesto Tejeda
 
+* Dennis Sluijk <d.sluijk@onestein.nl>
+
 Maintainers
 ~~~~~~~~~~~
 

@@ -5,3 +5,5 @@
 * `Tecnativa <https://www.tecnativa.com>`_:
 
   * Ernesto Tejeda
+
+* Dennis Sluijk <d.sluijk@onestein.nl>

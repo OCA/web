@@ -16,7 +16,23 @@ odoo.define('web.web_widget_color', function(require) {
 
         _renderEdit: function() {
             this.$input = this.$el.find('input');
-            this.jscolor = new jscolor(this.$input[0], {hash:true, zIndex: 2000});
+
+            if (!this.$input[0]._jscLinkedInstance) {
+                this.jscolor = new jscolor(this.$input[0], {
+                    hash: true,
+                    zIndex: 2000,
+                });
+            }
+
+            this.jscolor.fromString(this.value);
+        },
+
+        updateModifiersValue: function () {
+            this._super.apply(this, arguments);
+            if (this.mode !== 'readonly') {
+                this.jscolor.required = this.attrs.modifiersValue.required;
+                this.$el.removeClass('o_required_modifier');
+            }
         },
     });
     field_registry.add('color', FieldColor);
