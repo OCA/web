@@ -4,7 +4,10 @@
 {
     'name': 'Image Paint widget',
     'version': '12.0.1.0.0',
-    'author': 'Noviat',
+    'author': 'Noviat, '
+              'Odoo Community Association (OCA)',
+    "development_status": "Production/Stable",
+    "maintainers": ["Noviat"],
     'website': 'https://github.com/OCA/web',
     'license': 'AGPL-3',
     'category': 'web',

@@ -97,7 +97,6 @@ odoo.define('web_widget_image_paint.web_paint', function (require) {
                 if (self['value']) {
                     url = session.url('/web/image', {
                         model: self.model,
-                        id: JSON.stringify(self.res_id),
                         field: self.nodeOptions.preview_image ? self.nodeOptions.preview_image : self.name,
                         unique: field_utils.format.datetime(self.recordData.__last_update).replace(/[^0-9]/g, ''),
                         id: JSON.stringify(self.recordData.id || null),

@@ -62,30 +62,15 @@
         <br/>
     </t>
 
-    <!--<t t-name="FieldPainting" xml:space="preserve">-->
     <t t-name="FieldPainting">
         <div id="field_painting" style="display:flex;" class="field_painting_class">
             <t t-if="widget.mode != 'readonly'">
-                <!--<t t-call="CanvasTemplate"/>-->
                 <div class="pull-right">
                     <a id="sign_clean" class="btn btn-xs oe_edit_only">Clear</a>
                     <a class="oe_edit_only save_sign"></a>
                 </div>
             </t>
-            <t t-if="widget.mode == 'readonly'">
-                <!--<t t-call="CanvasTemplate"/>-->
-            </t>
         </div>
-    </t>
-
-    <t t-name="FieldBinaryImage-extend">
-        <img t-att-src='url'
-             t-att-border="(widget.mode == 'readonly') ? 0 : 1"
-             t-att-name="widget.name"
-             t-att-width="widget.node.attrs.img_width || widget.node.attrs.width"
-             t-att-height="widget.node.attrs.img_height || widget.node.attrs.height"
-             t-att-tabindex="widget.node.attrs.img_tabindex || widget.node.attrs.tabindex"
-        />
     </t>
 
     <t t-name="CanvasTemplate">
