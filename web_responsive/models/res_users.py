@@ -1,4 +1,4 @@
-# Copyright 2018 Alexandre Díaz
+# Copyright 2018-2019 Alexandre Díaz
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import models, fields
@@ -10,7 +10,7 @@ class ResUsers(models.Model):
     chatter_position = fields.Selection([
         ('normal', 'Normal'),
         ('sided', 'Sided'),
-    ], string="Chatter Position", default='normal')
+    ], string="Chatter Position", default='sided')
 
     def __init__(self, pool, cr):
         """ Override of __init__ to add access rights.
