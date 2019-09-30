@@ -23,11 +23,10 @@ class BaseModel(models.BaseModel):
         for rec_id, values in res.items():
             tr_read_res = self.env['ir.translation'].search_read([
                 ('name', '=', '%s,%s' % (self._name, field_name)),
-                ('res_id', '=', rec_id)
+                ('res_id', '=', rec_id),
+                ('lang', '!=', 'en_US')
             ])
             for tr_res in tr_read_res:
-                if tr_res.get('lang') == 'en_US':
-                    continue
                 values[tr_res.get('lang')] = (
                     tr_res.get('id'), tr_res.get('value')
                 )
