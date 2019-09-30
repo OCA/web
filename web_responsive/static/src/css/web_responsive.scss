@@ -207,12 +207,12 @@
 }
 
 // Scroll all but top bar
-html .o_web_client .o_main .o_main_content {
+html .o_web_client .o_action_manager .o_action {
     @include media-breakpoint-down(sm) {
         overflow: auto;
 
         .o_content {
-            overflow: initial;
+            overflow: visible;
         }
     }
 
@@ -330,13 +330,10 @@ html .o_web_client .o_main .o_main_content {
         .o_form_sheet {
             max-width: calc(100% - 32px);
             overflow-x: auto;
+        }
 
-            .oe_button_box {
-                .o_dropdown_more {
-                    padding: 0.1em;
-                    width: min-content;
-                }
-            }
+        .oe_chatter {
+            padding-top: 0;
         }
 
         // Sticky statusbar
@@ -365,8 +362,16 @@ html .o_web_client .o_main .o_main_content {
         @include media-breakpoint-down(sm) {
             min-width: auto;
 
+            // More buttons border
+            .oe_button_box {
+                .o_dropdown_more {
+                    button:last-child {
+                        border-right: 1px solid gray('400');
+                    }
+                }
+            }
+
             // Avoid overflow on forms with title and/or button box
-            .oe_button_box,
             .oe_title,
             {
                 max-width: 100%;
@@ -432,6 +437,8 @@ html .o_web_client .o_main .o_main_content {
             }
 
             .o_chatter {
+                padding-top: initial;
+
                 // Display send button on small screens
                 .o_thread_composer {
                     padding-left: $o-mail-thread-avatar-size*0.5;
@@ -497,22 +504,7 @@ html .o_web_client .o_main .o_main_content {
                         position: sticky;
                         background-color: $o-view-background-color;
                         z-index: 1;
-
-                        .o_chatter_topbar {
-                            margin-top: 0;
-                            flex-wrap: wrap;
-                            height: auto;
-                            button:last-of-type {
-                                flex: 1 0 auto;
-                                text-align: left;
-                            }
-
-                            .o_topbar_right_area {
-                                order: -10;
-                                flex: 0 1 100%;
-                                border-bottom-color: transparent;
-                            }
-                        }
+                        overflow-x: auto;
 
                         .o_attachments_previews {
                             overflow: auto;
@@ -526,25 +518,25 @@ html .o_web_client .o_main .o_main_content {
 }
 
 // Sticky Header & Footer in List View
-.table-responsive {
-    overflow-x: initial;
-
-    .o_list_view {
-        // th & td are here for compatibility with chrome
-        thead, thead tr:nth-child(1) th {
-            position: sticky;
-            top: 0;
-            z-index: 1;
-        }
-        thead tr:nth-child(1) th {
-            background-color: $o-list-footer-bg-color;
-        }
-        tfoot, tfoot tr:nth-child(1) td {
-            position: sticky;
-            bottom: 0;
-        }
-        tfoot tr:nth-child(1) td {
-            background-color: $o-list-footer-bg-color;
+.o_list_view {
+    .table-responsive  {
+        .o_list_table {
+            // th & td are here for compatibility with chrome
+            thead, thead tr:nth-child(1) th {
+                position: sticky;
+                top: 0;
+                z-index: 1;
+            }
+            thead tr:nth-child(1) th {
+                background-color: $o-list-footer-bg-color;
+            }
+            tfoot, tfoot tr:nth-child(1) td {
+                position: sticky;
+                bottom: 0;
+            }
+            tfoot tr:nth-child(1) td {
+                background-color: $o-list-footer-bg-color;
+            }
         }
     }
 }
