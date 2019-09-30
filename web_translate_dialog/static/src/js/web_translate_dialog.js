@@ -20,7 +20,7 @@ var _t = core._t;
 var QWeb = core.qweb;
 var Mutex = concurrency.Mutex;
 
-var translateDialog = Dialog.extend({
+var TranslateDialog = Dialog.extend({
     template: "TranslateDialog",
     init: function(parent, options) {
         var title_string = _t("Translate field: /")
@@ -134,8 +134,8 @@ var translateDialog = Dialog.extend({
 
         this.$('.oe_translation_field').val('').removeClass('touched');
 
-        var deff = $.Deferred();
-        deferred.push(deff);
+        var def = $.Deferred();
+        deferred.push(def);
         rpc.query({
             model: this.view.modelName,
             method: 'get_field_translations',
@@ -151,8 +151,8 @@ var translateDialog = Dialog.extend({
                     _.each(res[self.res_id], function(translation, lang) {
                         self.set_fields_values(lang, translation[1]);
                     });
-                    self.resize_textareas()
-                    deff.resolve();
+                    self.resize_textareas();
+                    def.resolve();
                 }
             });
 
@@ -224,7 +224,7 @@ FormView.include({
 BasicController.include({
 
     open_translate_dialog: function(field, res_id) {
-        new translateDialog(this, {'field': field, 'res_id': res_id}).open();
+        new TranslateDialog(this, {'field': field, 'res_id': res_id}).open();
     },
 
     _onTranslate: function(event) {
@@ -235,7 +235,7 @@ BasicController.include({
 });
 
 return {
-    translateDialog: translateDialog,
+    TranslateDialog: TranslateDialog,
 };
 
 });
