@@ -1,14 +1,14 @@
 # Copyright 2016-2017 LasLabs Inc.
-# Copyright 2018 Alexandre Díaz
+# Copyright 2018-2019 Alexandre Díaz
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 {
     "name": "Web Responsive",
     "summary": "Responsive web client, community-supported",
-    "version": "12.0.1.3.0",
+    "version": "13.0.1.0.0",
     "category": "Website",
     "website": "https://github.com/OCA/web",
-    "author": "LasLabs, Tecnativa, Alexandre Díaz, "
+    "author": "LasLabs, Tecnativa, "
               "Odoo Community Association (OCA)",
     "license": "LGPL-3",
     "installable": True,
