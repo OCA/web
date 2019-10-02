@@ -91,7 +91,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
             if (_.isUndefined(this.ir_options_loaded)) {
                 this.ir_options_loaded = $.Deferred();
                 this.ir_options = {};
-                web_m2x_options.done(function (records) {
+                web_m2x_options.then(function (records) {
                     _(records).each(function(record) {
                         self.ir_options[record.key] = record.value;
                     });
@@ -120,161 +120,173 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
 
         _search: function (search_val) {
             var self = this;
-            var def = $.Deferred();
-            this.orderer.add(def);
-
-            // add options limit used to change number of selections record
-            // returned.
-            if (!_.isUndefined(this.ir_options['web_m2x_options.limit'])) {
-                this.limit = parseInt(this.ir_options['web_m2x_options.limit'], 10);
-            }
-
-            if (typeof this.nodeOptions.limit === 'number') {
-                this.limit = this.nodeOptions.limit;
-            }
-
-            // add options field_color and colors to color item(s) depending on field_color value
-            this.field_color = this.nodeOptions.field_color;
-            this.colors = this.nodeOptions.colors;
-
-            var context = this.record.getContext(this.recordParams);
-            var domain = this.record.getDomain(this.recordParams);
-
-            var blacklisted_ids = this._getSearchBlacklist();
-            if (blacklisted_ids.length > 0) {
-                domain.push(['id', 'not in', blacklisted_ids]);
-            }
-
-            this._rpc({
-                model: this.field.relation,
-                method: "name_search",
-                kwargs: {
-                    name: search_val,
-                    args: domain,
-                    operator: "ilike",
-                    limit: this.limit + 1,
-                    context: context,
+            var def = new Promise(function (resolve) {
+                // add options limit used to change number of selections record
+                // returned.
+                if (!_.isUndefined(self.ir_options['web_m2x_options.limit'])) {
+                    self.limit = parseInt(self.ir_options['web_m2x_options.limit'], 10);
                 }
-            }).then(function (result) {
-                // possible selections for the m2o
-                var values = _.map(result, function (x) {
-                    x[1] = self._getDisplayName(x[1]);
-                    return {
-                        label: _.str.escapeHTML(x[1].trim()) || data.noDisplayContent,
-                        value: x[1],
-                        name: x[1],
-                        id: x[0],
-                    };
-                });
 
-                // Search result value colors
-                if (self.colors && self.field_color) {
-                    var value_ids = [];
-                    for (var index in values) {
-                        value_ids.push(values[index].id);
+                if (typeof self.nodeOptions.limit === 'number') {
+                    self.limit = self.nodeOptions.limit;
+                }
+
+                // add options field_color and colors to color item(s) depending on field_color value
+                self.field_color = self.nodeOptions.field_color;
+                self.colors = self.nodeOptions.colors;
+
+                var context = self.record.getContext(self.recordParams);
+                var domain = self.record.getDomain(self.recordParams);
+
+                var blacklisted_ids = self._getSearchBlacklist();
+                if (blacklisted_ids.length > 0) {
+                    domain.push(['id', 'not in', blacklisted_ids]);
+                }
+
+                self._rpc({
+                    model: self.field.relation,
+                    method: "name_search",
+                    kwargs: {
+                        name: search_val,
+                        args: domain,
+                        operator: "ilike",
+                        limit: self.limit + 1,
+                        context: context,
                     }
-                    self._rpc({
-                        model: self.field.relation,
-                        method: 'search_read',
-                        fields: [self.field_color],
-                        domain: [['id', 'in', value_ids]]
-                    }).then(function (objects) {
-                        for (var index in objects) {
-                            for (var index_value in values) {
-                                if (values[index_value].id == objects[index].id) {
-                                    // Find value in values by comparing ids
-                                    var value = values[index_value];
-                                    // Find color with field value as key
-                                    var color = self.colors[objects[index][self.field_color]] || 'black';
-                                    value.label = '<span style="color:' + color + '">' + value.label + '</span>';
-                                    break;
+                }).then(function (result) {
+                    // possible selections for the m2o
+                    var values = _.map(result, function (x) {
+                        x[1] = self._getDisplayName(x[1]);
+                        return {
+                            label: _.str.escapeHTML(x[1].trim()) || data.noDisplayContent,
+                            value: x[1],
+                            name: x[1],
+                            id: x[0],
+                        };
+                    });
+
+                    // Search result value colors
+                    if (self.colors && self.field_color) {
+                        var value_ids = [];
+                        for (var index in values) {
+                            value_ids.push(values[index].id);
+                        }
+                        self._rpc({
+                            model: self.field.relation,
+                            method: 'search_read',
+                            fields: [self.field_color],
+                            domain: [['id', 'in', value_ids]]
+                        }).then(function (objects) {
+                            for (var index in objects) {
+                                for (var index_value in values) {
+                                    if (values[index_value].id == objects[index].id) {
+                                        // Find value in values by comparing ids
+                                        var value = values[index_value];
+                                        // Find color with field value as key
+                                        var color = self.colors[objects[index][self.field_color]] || 'black';
+                                        value.label = '<span style="color:' + color + '">' + value.label + '</span>';
+                                        break;
+                                    }
                                 }
                             }
-                        }
-                        def.resolve(values);
-                    })
+                            resolve(values);
+                        })
 
-                }
+                    }
 
-                // search more... if more results that max
-                var can_search_more = (self.nodeOptions && self.is_option_set(self.nodeOptions.search_more)),
-                    search_more_undef = _.isUndefined(self.nodeOptions.search_more) && _.isUndefined(self.ir_options['web_m2x_options.search_more']),
-                    search_more = self.is_option_set(self.ir_options['web_m2x_options.search_more']);
+                    // search more... if more results that max
+                    var can_search_more = (self.nodeOptions && self.is_option_set(self.nodeOptions.search_more)),
+                        search_more_undef = _.isUndefined(self.nodeOptions.search_more) && _.isUndefined(self.ir_options['web_m2x_options.search_more']),
+                        search_more = self.is_option_set(self.ir_options['web_m2x_options.search_more']);
 
-                if (values.length > self.limit) {
-                    values = values.slice(0, self.limit);
-                    if (can_search_more || search_more_undef || search_more) {
-                        values.push({
+                    if (values.length > self.limit) {
+                        values = values.slice(0, self.limit);
+                        if (can_search_more || search_more_undef || search_more) {
+                            values.push({
                             label: _t("Search More..."),
                             action: function () {
-                                // limit = 80 for improving performance, similar
-                                // to Odoo implementation here:
-                                // https://github.com/odoo/odoo/commit/8c3cdce539d87775b59b3f2d5ceb433f995821bf
-                                self._rpc({
+                                var prom;
+                                if (search_val !== '') {
+                                    prom = self._rpc({
                                         model: self.field.relation,
                                         method: 'name_search',
                                         kwargs: {
                                             name: search_val,
                                             args: domain,
                                             operator: "ilike",
-                                            limit: 80,
+                                            limit: self.SEARCH_MORE_LIMIT,
                                             context: context,
                                         },
-                                    })
-                                    .then(self._searchCreatePopup.bind(self, "search"));
+                                    });
+                                }
+                                Promise.resolve(prom).then(function (results) {
+                                    var dynamicFilters;
+                                    if (results) {
+                                        var ids = _.map(results, function (x) {
+                                            return x[0];
+                                        });
+                                        dynamicFilters = [{
+                                            description: _.str.sprintf(_t('Quick search: %s'), search_val),
+                                            domain: [['id', 'in', ids]],
+                                        }];
+                                    }
+                                    self._searchCreatePopup("search", false, {}, dynamicFilters);
+                                });
                             },
                             classname: 'o_m2o_dropdown_option',
                         });
+                        }
                     }
-                }
 
-                var create_enabled = self.can_create && !self.nodeOptions.no_create;
-                // quick create
-                var raw_result = _.map(result, function (x) { return x[1]; });
-                var quick_create = self.is_option_set(self.nodeOptions.create),
-                    quick_create_undef = _.isUndefined(self.nodeOptions.create),
-                    m2x_create_undef = _.isUndefined(self.ir_options['web_m2x_options.create']),
-                    m2x_create = self.is_option_set(self.ir_options['web_m2x_options.create']);
-                var show_create = (!self.nodeOptions && (m2x_create_undef || m2x_create)) || (self.nodeOptions && (quick_create || (quick_create_undef && (m2x_create_undef || m2x_create))));
-                if (create_enabled && !self.nodeOptions.no_quick_create &&
-                    search_val.length > 0 && !_.contains(raw_result, search_val) &&
-                    show_create) {
-                    values.push({
-                        label: _.str.sprintf(_t('Create "<strong>%s</strong>"'),
-                            $('<span />').text(search_val).html()),
-                        action: self._quickCreate.bind(self, search_val),
-                        classname: 'o_m2o_dropdown_option'
-                    });
-                }
-                // create and edit ...
+                    var create_enabled = self.can_create && !self.nodeOptions.no_create;
+                    // quick create
+                    var raw_result = _.map(result, function (x) { return x[1]; });
+                    var quick_create = self.is_option_set(self.nodeOptions.create),
+                        quick_create_undef = _.isUndefined(self.nodeOptions.create),
+                        m2x_create_undef = _.isUndefined(self.ir_options['web_m2x_options.create']),
+                        m2x_create = self.is_option_set(self.ir_options['web_m2x_options.create']);
+                    var show_create = (!self.nodeOptions && (m2x_create_undef || m2x_create)) || (self.nodeOptions && (quick_create || (quick_create_undef && (m2x_create_undef || m2x_create))));
+                    if (create_enabled && !self.nodeOptions.no_quick_create &&
+                        search_val.length > 0 && !_.contains(raw_result, search_val) &&
+                        show_create) {
+                        values.push({
+                            label: _.str.sprintf(_t('Create "<strong>%s</strong>"'),
+                                $('<span />').text(search_val).html()),
+                            action: self._quickCreate.bind(self, search_val),
+                            classname: 'o_m2o_dropdown_option'
+                        });
+                    }
+                    // create and edit ...
 
-                var create_edit = self.is_option_set(self.nodeOptions.create) || self.is_option_set(self.nodeOptions.create_edit),
-                    create_edit_undef = _.isUndefined(self.nodeOptions.create) && _.isUndefined(self.nodeOptions.create_edit),
-                    m2x_create_edit_undef = _.isUndefined(self.ir_options['web_m2x_options.create_edit']),
-                    m2x_create_edit = self.is_option_set(self.ir_options['web_m2x_options.create_edit']);
-                var show_create_edit = (!self.nodeOptions && (m2x_create_edit_undef || m2x_create_edit)) || (self.nodeOptions && (create_edit || (create_edit_undef && (m2x_create_edit_undef || m2x_create_edit))));
-                if (create_enabled && !self.nodeOptions.no_create_edit && show_create_edit) {
-                    var createAndEditAction = function () {
-                        // Clear the value in case the user clicks on discard
-                        self.$('input').val('');
-                        return self._searchCreatePopup("form", false, self._createContext(search_val));
-                    };
-                    values.push({
-                        label: _t("Create and Edit..."),
-                        action: createAndEditAction,
-                        classname: 'o_m2o_dropdown_option',
-                    });
-                } else if (values.length === 0) {
-                    values.push({
-                        label: _t("No results to show..."),
-                    });
-                }
-                // Check if colors specified to wait for RPC
-                if (!(self.field_color && self.colors)) {
-                    def.resolve(values);
-                }
+                    var create_edit = self.is_option_set(self.nodeOptions.create) || self.is_option_set(self.nodeOptions.create_edit),
+                        create_edit_undef = _.isUndefined(self.nodeOptions.create) && _.isUndefined(self.nodeOptions.create_edit),
+                        m2x_create_edit_undef = _.isUndefined(self.ir_options['web_m2x_options.create_edit']),
+                        m2x_create_edit = self.is_option_set(self.ir_options['web_m2x_options.create_edit']);
+                    var show_create_edit = (!self.nodeOptions && (m2x_create_edit_undef || m2x_create_edit)) || (self.nodeOptions && (create_edit || (create_edit_undef && (m2x_create_edit_undef || m2x_create_edit))));
+                    if (create_enabled && !self.nodeOptions.no_create_edit && show_create_edit) {
+                        var createAndEditAction = function () {
+                            // Clear the value in case the user clicks on discard
+                            self.$('input').val('');
+                            return self._searchCreatePopup("form", false, self._createContext(search_val));
+                        };
+                        values.push({
+                            label: _t("Create and Edit..."),
+                            action: createAndEditAction,
+                            classname: 'o_m2o_dropdown_option',
+                        });
+                    } else if (values.length === 0) {
+                        values.push({
+                            label: _t("No results to show..."),
+                        });
+                    }
+                    // Check if colors specified to wait for RPC
+                    if (!(self.field_color && self.colors)) {
+                        resolve(values);
+                    }
+                });
+
             });
-
+            this.orderer.add(def);
             return def;
         }
     });
