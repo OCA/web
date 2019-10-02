@@ -43,6 +43,7 @@ odoo.define('web_widget_image_paint.web_paint', function (require) {
             var self = this;
             this.$el.find('#file_paint').click();
         },
+
         // **********************************************************
         // * file_paint_onchange
         // **********************************************************
@@ -138,7 +139,25 @@ odoo.define('web_widget_image_paint.web_paint', function (require) {
             };
             return options;
         },
-
+        // **********************************************************
+        // * _render
+        // **********************************************************
+        _render: function(parent) {
+            var url = this.placeholder;
+            if (this.value) {
+                if (!utils.is_bin_size(this.value)) {
+                    url = 'data:image/' + (this.file_type_magic_word[this.value[0]] || 'png') + ';base64,' + this.value;
+                } else {
+                    url = session.url('/web/image', {
+                        model: this.model,
+                        id: JSON.stringify(this.res_id),
+                        field: this.nodeOptions.preview_image || this.name,
+                        unique: field_utils.format.datetime(this.recordData.__last_update).replace(/[^0-9]/g, ''),
+                    });
+                }
+            }
+            this.sizing(this.__canvas, url);
+        },
         // **********************************************************
         // * start
         // **********************************************************
@@ -153,10 +172,8 @@ odoo.define('web_widget_image_paint.web_paint', function (require) {
             var self = this;
             var canvas = self.$el.find("#c")[0];
             var data = canvas.toDataURL().replace('data:image/png;base64,', '');
-            this.$el.find("#field_painting").prevObject[0].firstElementChild.style="display:none"
             this._setValue(data);
         },
-
         // **********************************************************
         // * render_value
         // **********************************************************
