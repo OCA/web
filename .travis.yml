@@ -11,6 +11,7 @@ addons:
     packages:
       - expect-dev  # provides unbuffer utility
       - python-lxml  # because pip installation is slow
+  postgresql: "9.6"
 
 env:
   global:
