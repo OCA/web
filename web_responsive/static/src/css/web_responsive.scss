@@ -506,6 +506,16 @@ html .o_web_client .o_action_manager .o_action {
                         z-index: 1;
                         overflow-x: auto;
 
+                        // Scrollable input text to avoid hide conversation & buttons
+                        .o_composer_text_field {
+                            max-height: 120px;
+                            overflow-y: auto !important; /* Forced because Odoo uses inline style */
+                        }
+                        .o_attachments_list {
+                            overflow: auto;
+                            max-height: $o-mail-attachment-image-size * 3;
+                            margin-top: 0.4em;
+                        }
                         .o_attachments_previews {
                             overflow: auto;
                             max-height: $o-mail-attachment-image-size * 6;
