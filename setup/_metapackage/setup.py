@@ -27,6 +27,7 @@ setuptools.setup(
         'odoo12-addon-web_no_bubble',
         'odoo12-addon-web_notify',
         'odoo12-addon-web_responsive',
+        'odoo12-addon-web_search_with_and',
         'odoo12-addon-web_searchbar_full_width',
         'odoo12-addon-web_send_message_popup',
         'odoo12-addon-web_switch_context_warning',
