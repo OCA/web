@@ -126,6 +126,7 @@ Known issues / Roadmap
   new size. This is Odoo's own limitation.
 * App navigation with keyboard.
 * Make it more beautiful. Maybe OCA-branded?
+* Handle long titles on forms in a better way
 
 Bug Tracker
 ===========
