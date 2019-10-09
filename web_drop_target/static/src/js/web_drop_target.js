@@ -90,16 +90,13 @@ odoo.define('web_drop_target', function(require) {
                 ],
             })
             .then(function() {
-                // try to find a sidebar and update it if we found one
-                var p = self;
-                while(p && !p.sidebar) {
-                    p = p.getParent ? p.getParent() : null;
-                }
-                if (p) {
-                    var sidebar = p.sidebar;
-                    if (sidebar && _.isFunction(sidebar._onFileUploaded)) {
-                        sidebar._onFileUploaded();
-                    }
+                // find the chatter among the children, there should be only
+                // one
+                var res = _.filter(self.getChildren(), 'chatter')
+                if (res.length) {
+                    res[0].chatter._reloadAttachmentBox();
+                    res[0].chatter.trigger_up('reload');
+                    res[0].chatter.$('.o_chatter_button_attachment').click();
                 }
             });
         },
