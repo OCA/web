@@ -16,6 +16,15 @@
     transform: none !important;
 }
 
+// Support for long titles
+@include media-breakpoint-up(md) {
+    .o_form_view .oe_button_box + .oe_title,
+    .o_form_view .oe_button_box + .oe_avatar + .oe_title {
+        /* Button-box has a hardcoded width of 132px per button and have three columns */
+        width: calc(100% - 450px);
+    }
+}
+
 // Main navbar (with apps menu, user menu, debug menu...)
 @include media-breakpoint-down(sm) {
     .o_main_navbar {
@@ -345,8 +354,6 @@ html .o_web_client .o_action_manager .o_action {
 
         // Support for long title (with ellipsis)
         .oe_title {
-            width: initial;
-
             span.o_field_widget {
                 max-width: 100%;
                 text-overflow: ellipsis;
@@ -375,6 +382,11 @@ html .o_web_client .o_action_manager .o_action {
             .oe_title,
             {
                 max-width: 100%;
+            }
+
+            .oe_button_box + .oe_title,
+            .oe_button_box + .oe_avatar + .oe_title {
+                width: 100%;
             }
 
             // Avoid overflow on modals
