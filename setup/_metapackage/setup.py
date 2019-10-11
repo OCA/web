@@ -4,6 +4,7 @@ with open('VERSION.txt', 'r') as f:
     version = f.read().strip()
 
 setuptools.setup(
+<<<<<<< HEAD
     name="odoo12-addons-oca-web",
     description="Meta package for oca-web Odoo addons",
     version=version,
@@ -47,6 +48,13 @@ setuptools.setup(
         'odoo12-addon-web_widget_url_advanced',
         'odoo12-addon-web_widget_x2many_2d_matrix',
         'odoo12-addon-web_widget_x2many_2d_matrix_example',
+=======
+    name="odoo13-addons-oca-web",
+    description="Meta package for oca-web Odoo addons",
+    version=version,
+    install_requires=[
+        'odoo13-addon-web_dialog_size',
+>>>>>>> de410947... [ADD] setup.py
     ],
     classifiers=[
         'Programming Language :: Python',
