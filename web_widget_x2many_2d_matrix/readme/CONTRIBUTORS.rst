@@ -6,3 +6,4 @@
 * Jairo Llopis <jairo.llopis@tecnativa.com>
 * Dennis Sluijk <d.sluijk@onestein.nl>
 * Alexey Pelykh <alexey.pelykh@brainbeanapps.com>
+* Alexandre Díaz <alexandre.diaz@tecnativa.com>
