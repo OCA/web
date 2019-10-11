@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo13-addon-web_dialog_size',
+        'odoo13-addon-web_environment_ribbon',
     ],
     classifiers=[
         'Programming Language :: Python',
