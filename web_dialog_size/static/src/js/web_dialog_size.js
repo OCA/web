@@ -16,7 +16,7 @@ Dialog.include({
         return this._super.apply(this, arguments).then(function () {
             self.$modal.find('.dialog_button_extend').on('click', self.proxy('_extending'));
             self.$modal.find('.dialog_button_restore').on('click', self.proxy('_restore'));
-            return (function(r) {
+            return config.then(function(r) {
                 if (r.default_maximize) {
                     self._extending();
                 } else {
