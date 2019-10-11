@@ -215,6 +215,7 @@ Contributors
 * Jairo Llopis <jairo.llopis@tecnativa.com>
 * Dennis Sluijk <d.sluijk@onestein.nl>
 * Alexey Pelykh <alexey.pelykh@brainbeanapps.com>
+* Alexandre D??az <alexandre.diaz@tecnativa.com>
 
 Maintainers
 ~~~~~~~~~~~
