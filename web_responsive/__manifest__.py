@@ -5,7 +5,7 @@
 {
     "name": "Web Responsive",
     "summary": "Responsive web client, community-supported",
-    "version": "12.0.1.3.1",
+    "version": "12.0.1.3.2",
     "category": "Website",
     "website": "https://github.com/OCA/web",
     "author": "LasLabs, Tecnativa, Alexandre Díaz, "
