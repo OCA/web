@@ -9,12 +9,12 @@ class TestWebDialogSize(TransactionCase):
         super(TestWebDialogSize, self).setUp()
 
     def test_get_web_dialog_size_config(self):
-        obj = self.env['ir.config_parameter']
+        obj = self.env["ir.config_parameter"]
 
-        self.assertFalse(obj.get_web_dialog_size_config()['default_maximize'])
+        self.assertFalse(obj.get_web_dialog_size_config()["default_maximize"])
 
         obj.set_param("web_dialog_size.default_maximize", "True")
-        self.assertTrue(obj.get_web_dialog_size_config()['default_maximize'])
+        self.assertTrue(obj.get_web_dialog_size_config()["default_maximize"])
 
         obj.set_param("web_dialog_size.default_maximize", "False")
-        self.assertFalse(obj.get_web_dialog_size_config()['default_maximize'])
+        self.assertFalse(obj.get_web_dialog_size_config()["default_maximize"])
