@@ -1,0 +1,10 @@
+[flake8]
+max-line-length = 80
+max-complexity = 16
+# B = bugbear
+# B9 = bugbear opinionated (incl line length)
+select = C,E,F,W,B,B9
+# E203: whitespace before ':' (black behaviour)
+# E501: flake8 line length (covered by bugbear B950)
+# W503: line break before binary operator (black behaviour)
+ignore = E203,E501,W503
