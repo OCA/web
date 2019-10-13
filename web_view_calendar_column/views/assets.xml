@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 Creu Blanca
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+    <template id="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr=".">
+            <script type="text/javascript" src="/web_view_calendar_column/static/src/js/calendar_view.js"/>
+            <script type="text/javascript" src="/web_view_calendar_column/static/src/js/calendar_model.js"/>
+            <script type="text/javascript" src="/web_view_calendar_column/static/src/js/calendar_renderer.js"/>
+            <script type="text/javascript" src="/web_view_calendar_column/static/src/js/calendar_controller.js"/>
+        </xpath>
+    </template>
+</odoo>
