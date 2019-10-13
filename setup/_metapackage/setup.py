@@ -38,6 +38,7 @@ setuptools.setup(
         'odoo11-addon-web_tree_image',
         'odoo11-addon-web_tree_many2one_clickable',
         'odoo11-addon-web_tree_resize_column',
+        'odoo11-addon-web_view_calendar_column',
         'odoo11-addon-web_view_transition',
         'odoo11-addon-web_widget_bokeh_chart',
         'odoo11-addon-web_widget_color',
