@@ -7,9 +7,9 @@ Web Responsive
    !! changes will be overwritten.                   !!
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
+.. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Beta
+    :alt: Production/Stable
 .. |badge2| image:: https://img.shields.io/badge/licence-LGPL--3-blue.png
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
@@ -169,6 +169,17 @@ This module is maintained by the OCA.
 OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
+
+.. |maintainer-Yajo| image:: https://github.com/Yajo.png?size=40px
+    :target: https://github.com/Yajo
+    :alt: Yajo
+.. |maintainer-Tardo| image:: https://github.com/Tardo.png?size=40px
+    :target: https://github.com/Tardo
+    :alt: Tardo
+
+Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
+
+|maintainer-Yajo| |maintainer-Tardo| 
 
 This module is part of the `OCA/web <https://github.com/OCA/web/tree/13.0/web_responsive>`_ project on GitHub.
 
