@@ -1,5 +1,6 @@
 # Copyright 2016-2017 LasLabs Inc.
-# Copyright 2018-2019 Alexandre Díaz
+# Copyright 2017-2018 Tecnativa - Jairo Llopis
+# Copyright 2018-2019 Tecnativa - Alexandre Díaz
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 {
@@ -12,6 +13,8 @@
     "license": "LGPL-3",
     "installable": True,
     "depends": ["web", "mail"],
+    "development_status": "Production/Stable",
+    "maintainers": ['Yajo', 'Tardo'],
     "data": ["views/assets.xml", "views/res_users.xml", "views/web.xml"],
     "qweb": [
         "static/src/xml/apps.xml",
