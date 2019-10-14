@@ -5,14 +5,14 @@
    Copyright 2017 Xavier Jiménez <xavier.jimenez@qubiq.es>
    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
-odoo.define('web_environment_ribbon.ribbon', function(require) {
-"use strict";
+odoo.define('web_environment_ribbon.ribbon', function (require) {
+    "use strict";
 
     var rpc = require('web.rpc');
     var core = require('web.core');
 
     // Code from: http://jsfiddle.net/WK_of_Angmar/xgA5C/
-    function validStrColour(strToTest) {
+    function validStrColour (strToTest) {
         if (strToTest === "") {
             return false;
         }
@@ -53,7 +53,8 @@ odoo.define('web_environment_ribbon.ribbon', function(require) {
                     ribbon.css('color', ribbon_data.color);
                 }
                 // Ribbon background color
-                if (ribbon_data.background_color && validStrColour(ribbon_data.background_color)) {
+                if (ribbon_data.background_color &&
+                    validStrColour(ribbon_data.background_color)) {
                     ribbon.css('background-color', ribbon_data.background_color);
                 }
             }
