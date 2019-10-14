@@ -14,7 +14,7 @@
     "installable": True,
     "depends": ["web", "mail"],
     "development_status": "Production/Stable",
-    "maintainers": ['Yajo', 'Tardo'],
+    "maintainers": ["Yajo", "Tardo"],
     "data": ["views/assets.xml", "views/res_users.xml", "views/web.xml"],
     "qweb": [
         "static/src/xml/apps.xml",
