@@ -6,6 +6,7 @@
 
     <template id="assets_backend" name="web_widget_x2many_2d_matrix assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
+            <script type="text/javascript" src="/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_view.js" />
             <script type="text/javascript" src="/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js" />
             <script type="text/javascript" src="/web_widget_x2many_2d_matrix/static/src/js/widget_x2many_2d_matrix.js" />
             <script type="text/javascript" src="/web_widget_x2many_2d_matrix/static/src/js/abstract_view_matrix_limit_extend.js" />
