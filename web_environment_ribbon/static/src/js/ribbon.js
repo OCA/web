@@ -53,7 +53,7 @@ odoo.define('web_environment_ribbon.ribbon', function (require) {
                     ribbon.css('color', ribbon_data.color);
                 }
                 // Ribbon background color
-                if (ribbon_data.background_color && 
+                if (ribbon_data.background_color &&
                     validStrColour(ribbon_data.background_color)) {
                     ribbon.css('background-color', ribbon_data.background_color);
                 }
