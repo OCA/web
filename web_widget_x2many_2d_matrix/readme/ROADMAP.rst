@@ -12,3 +12,5 @@
   is merged.
 
 * Support extra invisible fields inside each cell.
+
+* Support kanban mode. Current behaviour forces list mode.
