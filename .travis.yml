@@ -15,7 +15,11 @@ addons:
 
 env:
   global:
+<<<<<<< HEAD
   - VERSION="12.0" TESTS="0" LINT_CHECK="0" TRANSIFEX="0"
+=======
+  - VERSION="13.0" TESTS="0" LINT_CHECK="0" TRANSIFEX="0"
+>>>>>>> 28ba5105... [MIG] Add metafiles
 
   matrix:
   - LINT_CHECK="1"

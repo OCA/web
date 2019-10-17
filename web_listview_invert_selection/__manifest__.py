@@ -5,7 +5,7 @@
 {
     'name': 'List Invert Selection',
     'summary': 'Invert current selection of list of records',
-    'version': '11.0.1.0.0',
+    'version': '12.0.1.0.0',
     'category': 'Web',
     'author': 'Onestein,Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/web',
