@@ -4,7 +4,7 @@
 {
     'name': "Web timeline",
     'summary': "Interactive visualization chart to show events in time",
-    "version": "12.0.1.0.5",
+    "version": "12.0.1.1.0",
     "development_status": "Production/Stable",
     'author': 'ACSONE SA/NV, '
               'Tecnativa, '

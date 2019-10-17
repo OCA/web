@@ -29,3 +29,20 @@
     left: 0px;
     top: 0px;
 }
+
+.oe_timeline_view .vis-item .oe_timeline_duplicate_button {
+    position: absolute;
+    top: 0px;
+    left: -24px;
+    width: 24px;
+    height: 24px;
+    box-sizing: border-box;
+    padding: 0 5px;
+    cursor: pointer;
+    line-height: 24px;
+}
+
+.oe_timeline_view .vis-item .oe_timeline_duplicate_button:hover {
+    color: #FFF;
+    background-color: #000;
+}
