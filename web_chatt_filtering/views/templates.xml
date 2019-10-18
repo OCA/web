@@ -1,0 +1,9 @@
+<openerp>
+    <data>
+        <template id="assets_backend_chatt_filtering" name="assets.backend.chatt.filtering" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/web_chatt_filtering/static/src/js/chatter.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>

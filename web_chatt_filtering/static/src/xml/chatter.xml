@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="mail.MessagesFilter">
+        <div class="wrapper">
+            <span class="inline">
+                <input id="search_partner" type="search" class="search-query form-control oe_search_box" placeholder="Search by author or content..." t-att-value="search_partner"/>
+            </span>
+        </div>
+    </t>
+
+    <t t-extend="mail.widget.Thread.Content">
+        <t t-jquery="t:first" t-operation="before">
+            <t t-call="mail.MessagesFilter">
+            </t>
+        </t>
+    </t>
+
+</templates>
