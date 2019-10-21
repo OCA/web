@@ -35,7 +35,7 @@ odoo.define('web.web_widget_float_formula', function(require) {
                 return false;
             }
             var clean_formula = formula.toString().replace(/^\s+|\s+$/g, '');
-            if (clean_formula[0] == '=') {
+            if (clean_formula[0] === '=') {
                 clean_formula = clean_formula.substring(1);
                 var myreg = new RegExp('[0-9]|\\s|\\.|,|\\(|\\)|\\+|\\-|\\*|\\/', 'g');
                 if (clean_formula.replace(myreg, '') === '') {
