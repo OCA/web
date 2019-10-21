@@ -8,7 +8,7 @@
     'version': '12.0.1.0.0',
     'category': 'Web',
     'author': 'GRAP, LasLabs, Odoo Community Association (OCA)',
-    'website': 'http://www.grap.coop',
+    'website': 'https://github.com/OCA/web',
     'license': 'AGPL-3',
     'depends': [
         'web',
