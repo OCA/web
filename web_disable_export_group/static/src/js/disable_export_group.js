@@ -7,6 +7,7 @@ odoo.define("web_disable_export_group", function(require) {
     var core = require("web.core");
     var Sidebar = require("web.Sidebar");
     var session = require("web.session");
+    var ListController = require("web.ListController");
     var _t = core._t;
 
     Sidebar.include({
@@ -18,4 +19,18 @@ odoo.define("web_disable_export_group", function(require) {
             this._super(sectionCode, _items);
         },
     });
+
+    ListController.include({
+        _updateButtons: function (mode) {
+            if (this.$buttons) {
+                this.$buttons.toggleClass('o-editing', mode === 'edit');
+                const state = this.model.get(this.handle, {raw: true});
+                if (state.count && session.group_export_data) {
+                    this.$('.o_list_export_xlsx').show();
+                } else {
+                    this.$('.o_list_export_xlsx').hide();
+                }
+            }
+        },
+    })
 });
