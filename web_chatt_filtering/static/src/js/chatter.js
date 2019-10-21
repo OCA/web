@@ -1,4 +1,5 @@
-/* License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
+/** Copyright <2019> Pesol <pedro.gonzalez@pesol.es>
+ License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
 
 odoo.define('mymail.Chatter', function (require) {
     "use strict";
@@ -14,33 +15,8 @@ odoo.define('mymail.Chatter', function (require) {
             },
         }),
 
-        filter_message: function (substring) {
+        render_thread: function (domain) {
             var self = this;
-            if (this.last_model_id !== this.fields.thread.model_id ||
-            this.last_res_id !== this.fields.thread.res_id) {
-                this.last_model_id = this.fields.thread.model_id;
-                this.last_res_id = this.fields.thread.res_id;
-                this.original_msgs = Array.from(this.fields.thread.value.res_ids);
-            }
-            this.filtered_msgs = [];
-            this.reverse_author = false;
-            this.substring = substring;
-
-            // In case substring is empty, avoid ORM and render original
-            if (!substring) {
-                this.fields.thread._fetchAndRenderThread();
-                return;
-            }
-            // Reset messages to none
-            this.fields.thread._documentThread._messages = [];
-            // Get domain
-            var domain = ['&', ["id", "in", this.original_msgs], '|',
-                ['body', 'ilike', substring], ['author_id', 'ilike', substring]];
-            if (substring.trim().charAt(0) === '-') {
-                domain = [["id", "in", this.original_msgs]];
-                this.reverse_author = true;
-            }
-            // Set as variable for later use
             var dThread = this.fields.thread;
             this._rpc({
                 model: 'mail.message',
@@ -65,10 +41,40 @@ odoo.define('mymail.Chatter', function (require) {
                         });
                         // Reload thread view
                         dThread._threadWidget.render(dThread._documentThread, {});
+                        self.$('#search_partner').val(self.substring);
+                    } else {
+                        self.$('#search_partner').val("No messages found");
                     }
-                    self.$('#search_partner').val(substring);
                     self.$('#search_partner').select();
                 });
+        },
+
+        filter_message: function (substring) {
+            if (this.last_model_id !== this.fields.thread.model_id ||
+            this.last_res_id !== this.fields.thread.res_id) {
+                this.last_model_id = this.fields.thread.model_id;
+                this.last_res_id = this.fields.thread.res_id;
+                this.original_msgs = Array.from(this.fields.thread.value.res_ids);
+            }
+            this.filtered_msgs = [];
+            this.reverse_author = false;
+            this.substring = substring;
+
+            // In case substring is empty, avoid ORM and render original
+            if (!substring) {
+                this.fields.thread._fetchAndRenderThread();
+                return;
+            }
+            // Reset messages to none
+            this.fields.thread._documentThread._messages = [];
+            // Get domain
+            var domain = ['&', ["id", "in", this.original_msgs], '|',
+                ['body', 'ilike', substring], ['author_id', 'ilike', substring]];
+            if (substring.trim().charAt(0) === '-') {
+                domain = [["id", "in", this.original_msgs]];
+                this.reverse_author = true;
+            }
+            this.render_thread(domain);
         },
     });
     return Chatt;
