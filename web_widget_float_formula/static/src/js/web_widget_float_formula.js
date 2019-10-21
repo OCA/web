@@ -84,7 +84,7 @@ odoo.define('web.web_widget_float_formula', function(require) {
 
         // Display the formula stored in the field to allow modification
         _display_formula: function() {
-            if (this._formula_text !== '') {
+            if (!_.isEmpty(this._formula_text)) {
                 this.$input.val(this._formula_text);
             }
         },
