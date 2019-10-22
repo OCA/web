@@ -88,6 +88,13 @@ var TranslateDialog = Dialog.extend({
             textareas.css({'minHeight': new_height});
         }
     },
+    set_maxlength: function(){
+        // set maxlength if initial field has size attr
+        var size = $('[name='+this.translatable_field+']')[0].maxLength;
+        if (size > 0){
+            this.$('input.oe_translation_field, textarea.oe_translation_field').attr('maxlength', size);
+        }
+    },
     initialize_html_fields: function(lang) {
         // Initialize summernote if HTML field
         this.$('.oe_form_field_html .oe_translation_field[name="' + lang + '-' + this.translatable_field + '"]').each(function() {
@@ -152,6 +159,7 @@ var TranslateDialog = Dialog.extend({
                         self.set_fields_values(lang, translation[1]);
                     });
                     self.resize_textareas();
+                    self.set_maxlength();
                     def.resolve();
                 }
             });
