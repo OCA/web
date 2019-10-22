@@ -59,6 +59,7 @@ setuptools.setup(
         'odoo10-addon-web_widget_image_download',
         'odoo10-addon-web_widget_image_webcam',
         'odoo10-addon-web_widget_many2many_tags_multi_selection',
+        'odoo10-addon-web_widget_mermaid',
         'odoo10-addon-web_widget_slick',
         'odoo10-addon-web_widget_slick_example',
         'odoo10-addon-web_widget_slickroom',
