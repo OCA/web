@@ -4,7 +4,7 @@
         <xpath expr="." position="inside">
             <script type="text/javascript" src="/web_widget_mermaid/static/lib/mermaid/mermaid.js"></script>
             <script type="text/javascript" src="/web_widget_mermaid/static/src/js/web_widget_mermaid.js"></script>
-            <link rel="stylesheet" type="text/less" href="/web_widget_mermaid/static/src/less/web_widget_mermaid_default_theme.less"/>
+            <link rel="stylesheet" type="text/scss" href="/web_widget_mermaid/static/src/scss/web_widget_mermaid_default_theme.scss"/>
         </xpath>
     </template>
 </odoo>
