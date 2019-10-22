@@ -69,6 +69,7 @@ addon | version | summary
 [web_widget_image_download](web_widget_image_download/) | 10.0.1.0.0 | Allows to download any image from its widget
 [web_widget_image_webcam](web_widget_image_webcam/) | 10.0.1.0.0 | Allows to take image with WebCam
 [web_widget_many2many_tags_multi_selection](web_widget_many2many_tags_multi_selection/) | 10.0.1.0.0 | Tags multiple selection
+[web_widget_mermaid](web_widget_mermaid/) | 10.0.8.4.0 | Render mermaid markdown flowcharts
 [web_widget_slick](web_widget_slick/) | 10.0.1.0.0 | Adds SlickJS slider widget for use as a carousel on Many2one attachment fields in backend form views.
 [web_widget_slick_example](web_widget_slick_example/) | 10.0.1.0.0 | Example usage of the web_widget_slick and web_widget_slickroom modules
 [web_widget_slickroom](web_widget_slickroom/) | 10.0.1.0.0 | Provides Slick Carousel Widget with DarkroomJS image editing
