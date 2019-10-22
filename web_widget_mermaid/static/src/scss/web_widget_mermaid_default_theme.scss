@@ -8,43 +8,43 @@
 
 .o_form_field_mermaid .node .label {
   font-family: "Lucida Grande", Helvetica, Verdana, Arial, sans-serif;
-  color: @label-color; }
+  color: $o-tooltip-color; }
 
 .o_form_field_mermaid .cluster .label {
   font-family: "Lucida Grande", Helvetica, Verdana, Arial, sans-serif;
-  color: @odoo-main-text-color; }
+  color: $o-main-text-color; }
 
 .o_form_field_mermaid .label text {
-  fill: @odoo-main-text-color; }
+  fill: $o-main-text-color; }
 
 .o_form_field_mermaid .node rect,
 .o_form_field_mermaid .node circle,
 .o_form_field_mermaid .node ellipse,
 .o_form_field_mermaid .node polygon {
-  fill: @odoo-brand-primary;
-  stroke: @odoo-brand-optional;
+  fill: $o-brand-primary;
+  stroke: $o-brand-primary;
   stroke-width: 1px; }
 
 .o_form_field_mermaid .node.clickable {
   cursor: pointer; }
 
 .o_form_field_mermaid .arrowheadPath {
-  fill: @odoo-main-text-color; }
+  fill: $o-main-text-color; }
 
 .o_form_field_mermaid .edgePath .path {
-  stroke: @odoo-main-text-color;
+  stroke: $o-main-text-color;
   stroke-width: 1.5px; }
 
 .o_form_field_mermaid .edgeLabel {
   background-color: #e8e8e8; }
 
 .o_form_field_mermaid .cluster rect {
-  fill: @odoo-brand-secondary;
-  stroke: @odoo-main-color-muted;
+  fill: $o-brand-secondary;
+  stroke: $o-main-color-muted;
   stroke-width: 1px; }
 
 .o_form_field_mermaid .cluster text {
-  fill: @odoo-main-text-color; }
+  fill: $o-main-text-color; }
 
 .o_form_field_mermaid div.mermaidTooltip {
   position: absolute;
@@ -53,15 +53,15 @@
   padding: 2px;
   font-family: "Lucida Grande", Helvetica, Verdana, Arial, sans-serif;
   font-size: 12px;
-  background: @odoo-brand-secondary;
-  border: 1px solid @odoo-main-color-muted;
+  background: $o-brand-secondary;
+  border: 1px solid $o-main-color-muted;
   border-radius: 2px;
   pointer-events: none;
   z-index: 100; }
 
 .o_form_field_mermaid .actor {
-  stroke: @odoo-brand-optional;
-  fill: @odoo-brand-primary; }
+  stroke: $o-brand-primary;
+  fill: $o-brand-primary; }
 
 .o_form_field_mermaid text.actor {
   fill: white;
@@ -73,33 +73,33 @@
 .o_form_field_mermaid .messageLine0 {
   stroke-width: 1.5;
   stroke-dasharray: '2 2';
-  stroke: @odoo-main-text-color; }
+  stroke: $o-main-text-color; }
 
 .o_form_field_mermaid .messageLine1 {
   stroke-width: 1.5;
   stroke-dasharray: '2 2';
-  stroke: @odoo-main-text-color; }
+  stroke: $o-main-text-color; }
 
 .o_form_field_mermaid #arrowhead {
-  fill: @odoo-main-text-color; }
+  fill: $o-main-text-color; }
 
 .o_form_field_mermaid .sequenceNumber {
   fill: white; }
 
 .o_form_field_mermaid #sequencenumber {
-  fill: @odoo-main-text-color; }
+  fill: $o-main-text-color; }
 
 .o_form_field_mermaid #crosshead path {
-  fill: @odoo-main-text-color !important;
-  stroke: @odoo-main-text-color !important; }
+  fill: $o-main-text-color !important;
+  stroke: $o-main-text-color !important; }
 
 .o_form_field_mermaid .messageText {
-  fill: @odoo-main-text-color;
+  fill: $o-main-text-color;
   stroke: none; }
 
 .o_form_field_mermaid .labelBox {
-  stroke: @odoo-brand-optional;
-  fill: @odoo-brand-primary; }
+  stroke: $o-brand-primary;
+  fill: $o-brand-primary; }
 
 .o_form_field_mermaid .labelText {
   fill: white;
@@ -112,10 +112,10 @@
 .o_form_field_mermaid .loopLine {
   stroke-width: 2;
   stroke-dasharray: '2 2';
-  stroke: @odoo-brand-optional; }
+  stroke: $o-brand-primary; }
 
 .o_form_field_mermaid .note {
-  stroke: @odoo-main-color-muted;
+  stroke: $o-main-color-muted;
   fill: #fff5ad; }
 
 .o_form_field_mermaid .noteText {
@@ -153,16 +153,16 @@
   opacity: 0.2; }
 
 .o_form_field_mermaid .sectionTitle0 {
-  fill: @odoo-main-text-color; }
+  fill: $o-main-text-color; }
 
 .o_form_field_mermaid .sectionTitle1 {
-  fill: @odoo-main-text-color; }
+  fill: $o-main-text-color; }
 
 .o_form_field_mermaid .sectionTitle2 {
-  fill: @odoo-main-text-color; }
+  fill: $o-main-text-color; }
 
 .o_form_field_mermaid .sectionTitle3 {
-  fill: @odoo-main-text-color; }
+  fill: $o-main-text-color; }
 
 .o_form_field_mermaid .sectionTitle {
   text-anchor: start;
@@ -194,12 +194,12 @@
   font-size: 11px; }
 
 .o_form_field_mermaid .taskTextOutsideRight {
-  fill: @odoo-main-text-color;
+  fill: $o-main-text-color;
   text-anchor: start;
   font-size: 11px; }
 
 .o_form_field_mermaid .taskTextOutsideLeft {
-  fill: @odoo-main-text-color;
+  fill: $o-main-text-color;
   text-anchor: end;
   font-size: 11px; }
 
@@ -233,16 +233,16 @@
 .o_form_field_mermaid .task1,
 .o_form_field_mermaid .task2,
 .o_form_field_mermaid .task3 {
-  fill: @odoo-brand-primary;
-  stroke: @odoo-brand-primary; }
+  fill: $o-brand-primary;
+  stroke: $o-brand-primary; }
 
 .o_form_field_mermaid .taskTextOutside0,
 .o_form_field_mermaid .taskTextOutside2 {
-  fill: @odoo-main-text-color; }
+  fill: $o-main-text-color; }
 
 .o_form_field_mermaid .taskTextOutside1,
 .o_form_field_mermaid .taskTextOutside3 {
-  fill: @odoo-main-text-color; }
+  fill: $o-main-text-color; }
 
 /* Active task */
 .o_form_field_mermaid .active0,
@@ -250,13 +250,13 @@
 .o_form_field_mermaid .active2,
 .o_form_field_mermaid .active3 {
   fill: #bfc7ff;
-  stroke: @odoo-brand-primary; }
+  stroke: $o-brand-primary; }
 
 .o_form_field_mermaid .activeText0,
 .o_form_field_mermaid .activeText1,
 .o_form_field_mermaid .activeText2,
 .o_form_field_mermaid .activeText3 {
-  fill: @odoo-main-text-color !important; }
+  fill: $o-main-text-color !important; }
 
 /* Completed task */
 .o_form_field_mermaid .done0,
@@ -271,7 +271,7 @@
 .o_form_field_mermaid .doneText1,
 .o_form_field_mermaid .doneText2,
 .o_form_field_mermaid .doneText3 {
-  fill: @odoo-main-text-color !important; }
+  fill: $o-main-text-color !important; }
 
 /* Tasks on the critical line */
 .o_form_field_mermaid .crit0,
@@ -310,18 +310,18 @@
 .o_form_field_mermaid .doneCritText1,
 .o_form_field_mermaid .doneCritText2,
 .o_form_field_mermaid .doneCritText3 {
-  fill: @odoo-main-text-color !important; }
+  fill: $o-main-text-color !important; }
 
 .o_form_field_mermaid .activeCritText0,
 .o_form_field_mermaid .activeCritText1,
 .o_form_field_mermaid .activeCritText2,
 .o_form_field_mermaid .activeCritText3 {
-  fill: @odoo-main-text-color !important; }
+  fill: $o-main-text-color !important; }
 
 .o_form_field_mermaid .titleText {
   text-anchor: middle;
   font-size: 18px;
-  fill: @odoo-main-text-color; }
+  fill: $o-main-text-color; }
 
 .o_form_field_mermaid g.classGroup text {
   fill: white;
@@ -330,74 +330,74 @@
   font-size: 10px; }
 
 .o_form_field_mermaid g.classGroup rect {
-  fill: @odoo-brand-primary;
-  stroke: @odoo-main-text-color; }
+  fill: $o-brand-primary;
+  stroke: $o-main-text-color; }
 
 .o_form_field_mermaid g.classGroup line {
-  stroke: @odoo-main-text-color;
+  stroke: $o-main-text-color;
   stroke-width: 1; }
 
 .o_form_field_mermaid .classLabel .box {
   stroke: none;
   stroke-width: 0;
-  fill: @odoo-brand-primary;
+  fill: $o-brand-primary;
   opacity: 0.5; }
 
 .o_form_field_mermaid .classLabel .label {
-  fill: @odoo-main-text-color;
+  fill: $o-main-text-color;
   font-size: 10px;
   font-weight: normal; }
 
 .o_form_field_mermaid .relation {
-  stroke: @odoo-main-text-color;
+  stroke: $o-main-text-color;
   stroke-width: 1;
   fill: none; }
 
 .o_form_field_mermaid #compositionStart {
-  fill: @odoo-main-text-color;
-  stroke: @odoo-main-text-color;
+  fill: $o-main-text-color;
+  stroke: $o-main-text-color;
   stroke-width: 1; }
 
 .o_form_field_mermaid #compositionEnd {
-  fill: @odoo-main-text-color;
-  stroke: @odoo-main-text-color;
+  fill: $o-main-text-color;
+  stroke: $o-main-text-color;
   stroke-width: 1; }
 
 .o_form_field_mermaid #aggregationStart {
-  fill: @odoo-brand-primary;
-  stroke: @odoo-main-text-color;
+  fill: $o-brand-primary;
+  stroke: $o-main-text-color;
   stroke-width: 1; }
 
 .o_form_field_mermaid #aggregationEnd {
-  fill: @odoo-brand-primary;
-  stroke: @odoo-main-text-color;
+  fill: $o-brand-primary;
+  stroke: $o-main-text-color;
   stroke-width: 1; }
 
 .o_form_field_mermaid #dependencyStart {
-  fill: @odoo-main-text-color;
-  stroke: @odoo-main-text-color;
+  fill: $o-main-text-color;
+  stroke: $o-main-text-color;
   stroke-width: 1; }
 
 .o_form_field_mermaid #dependencyEnd {
-  fill: @odoo-main-text-color;
-  stroke: @odoo-main-text-color;
+  fill: $o-main-text-color;
+  stroke: $o-main-text-color;
   stroke-width: 1; }
 
 .o_form_field_mermaid #extensionStart {
-  fill: @odoo-main-text-color;
-  stroke: @odoo-main-text-color;
+  fill: $o-main-text-color;
+  stroke: $o-main-text-color;
   stroke-width: 1; }
 
 .o_form_field_mermaid #extensionEnd {
-  fill: @odoo-main-text-color;
-  stroke: @odoo-main-text-color;
+  fill: $o-main-text-color;
+  stroke: $o-main-text-color;
   stroke-width: 1; }
 
 .o_form_field_mermaid .commit-id,
 .o_form_field_mermaid .commit-msg,
 .o_form_field_mermaid .branch-label {
   fill: lightgrey;
-  color: @odoo-main-text-color; }
+  color: $o-main-text-color; }
 
 .o_form_field_mermaid .node-label p {
   margin-top: 9px; }
@@ -405,4 +405,4 @@
 .o_form_field_mermaid .pieTitleText {
   text-anchor: middle;
   font-size: 25px;
-  fill: @odoo-main-text-color; }
+  fill: $o-main-text-color; }
