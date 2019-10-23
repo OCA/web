@@ -82,13 +82,26 @@ odoo.define('web.web_widget_mermaid', function(require) {
                     this.$el.html.bind(this.$el)
                 );
             } catch (e) {
-                this.$el.html($('<pre/>').text(e.message));
+                this.$el.html($('<pre/>').text(e.message || e.str));
             }
             // Mermaid uses a temporary div for rendering. It doesn't remove
             // it if an error occurs, and perhaps in other cases too, so get
             // rid of it if it's still around. The id is based on the chartId.
             $('#d' + this.chartId).remove();
-        }
+        },
+        _parseValue: function(value) {
+            if (this.errorMessage) {
+                this.errorMessage.remove();
+            }
+            try {
+                mermaid.parse(value);
+            } catch (e) {
+                this.errorMessage = $('<pre/>').text(e.message || e.str);
+                this.$el.after(this.errorMessage);
+                throw e;
+            }
+            return value;
+        },
     });
 
     field_registry.add('mermaid', MermaidField);
