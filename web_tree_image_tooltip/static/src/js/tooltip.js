@@ -11,7 +11,7 @@ odoo.define('web_tree_image_tooltip.web_tree_image_tooltip',
             var img_src =
                 $(event.currentTarget).children('.img-fluid').attr('src')
             $(event.currentTarget).tooltip({
-                title: "<img src="+img_src+" />",
+                title: "<img src="+img_src+" class='tooltip_image' />",
                 delay: 0,
             }).tooltip('show');
         }
