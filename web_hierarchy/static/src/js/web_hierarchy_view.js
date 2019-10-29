@@ -22,7 +22,8 @@ odoo.define('web.HierarchyView', function (require) {
         display_name: _lt('Hierarchy'),
         render_chart: function (size) {
             var self = this;
-            var size_val = size ? "medium": size;
+            var size_val = !size ? "medium": size; /*eslint no-negated-condition: "error"*/
+            console.log(size_val);
             var parent_name = this.options.action.display_name;
             google.charts.load('current', {packages: ["orgchart"]});
             google.charts.setOnLoadCallback(drawChart);
