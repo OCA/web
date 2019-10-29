@@ -30,7 +30,7 @@ Example
             </field>
         </record>
         <record id="hr.open_module_tree_department" model="ir.actions.act_window">
-    	        <field name="view_mode">kanban,tree,form,hierarchy</field>
+            <field name="view_mode">kanban,tree,form,hierarchy</field>
         </record>
     </odoo>
 

@@ -3,6 +3,8 @@
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
  */
 
+ /*eslint no-undef: "google", "drawChart" */
+
 odoo.define('web.HierarchyView', function (require) {
     'use strict';
 
@@ -20,7 +22,7 @@ odoo.define('web.HierarchyView', function (require) {
         display_name: _lt('Hierarchy'),
         render_chart: function (size) {
             var self = this;
-            var size = (!size) ? "medium": size;  // default value
+            var size_val = size ? "medium": size;
             var parent_name = this.options.action.display_name;
             google.charts.load('current', {packages: ["orgchart"]});
             google.charts.setOnLoadCallback(drawChart);
@@ -28,12 +30,12 @@ odoo.define('web.HierarchyView', function (require) {
             function drawChart() {
                 var vals = [];
                 var data = new google.visualization.DataTable();
-                data.addColumn('string', 'ID')
+                data.addColumn('string', 'ID');
                 data.addColumn('string', 'Name');
                 data.addColumn('string', 'ToolTip');
                 self.dataset.read_slice(self.fields_view.fields, {}).then(
                     function (results) {
-                        var root = parent_name || "Root"
+                        var root = parent_name || "Root";
                         vals.push([{v: root, f: root}, '', 'root element']);
                         for (var i = 0; i < results.length; i++) {
                             if (results[i].parent_id) {
@@ -57,7 +59,7 @@ odoo.define('web.HierarchyView', function (require) {
                             document.getElementById('chart_div'));
                         // Draw the chart, setting the allowHtml option to
                         // true for the tooltips.
-                        chart.draw(data, {allowHtml: true, size: size});
+                        chart.draw(data, {allowHtml: true, size: size_val});
                     });
             }
         },
@@ -82,7 +84,7 @@ odoo.define('web.HierarchyView', function (require) {
                 this.$buttons.on('change', '.o_select_btn',
                     function () {
                         var val = $('.o_select_btn').val();
-                        self.render_chart(val)
+                        self.render_chart(val);
                     });
                 this.$buttons.appendTo($node);
             }
