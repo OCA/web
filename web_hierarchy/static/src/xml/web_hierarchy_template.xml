@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <template>
      <t t-name="HierarchyView">
-       <div id="chart_div" style="margin: 50px 0 0 0;">
+       <div id="chart_div">
 
        </div>
      </t>
@@ -15,8 +15,7 @@
                         <t t-esc="widget.options.create_text || _t('Create')"/>
                     </button>
                 </t>
-                 <select class="btn o_select_btn" name="size" readonly="1"
-                         style="width: 100px;">
+                 <select class="btn o_select_btn" name="size" readonly="1">
                         <option value="small" >small</option>
                         <option value="medium">medium</option>
                         <option value="large">large</option>

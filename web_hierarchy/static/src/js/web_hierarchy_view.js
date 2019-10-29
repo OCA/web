@@ -79,7 +79,7 @@ odoo.define('web.HierarchyView', function (require) {
                     {'widget': this}));
                 this.$buttons.on('click', '.o_org_button_add',
                     this.proxy('do_add_record'));
-                this.$buttons.on('click', '.o_select_btn',
+                this.$buttons.on('change', '.o_select_btn',
                     function () {
                         var val = $('.o_select_btn').val();
                         self.render_chart(val)

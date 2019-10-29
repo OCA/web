@@ -1,3 +1,11 @@
+#chart_div {
+     margin: 50px 0 0 0;
+}
+
 #chart_div table{
     border-collapse: unset;
+}
+
+.o_select_btn {
+     width: 100px;
 }

@@ -18,19 +18,22 @@ Example
 
 .. code-block:: xml
 
-    <?xml version="1.0" encoding="utf-8"?>
-       <odoo>
-        <record id="hr_employee_hierarchy_view" model="ir.ui.view">
-            <field name="name">hr employee hierarchy</field>
-            <field name="model">hr.employee</field>
+    <odoo>
+        <record id="view_employee_hierarchy" model="ir.ui.view">
+            <field name="name">hr.employee.hierarchy</field>
+            <field name="model">hr.department</field>
             <field name="arch" type="xml">
-                <hierarchy>
+                <hierarchy string="Employees">
                     <field name="name"/>
                     <field name="parent_id"/>
                 </hierarchy>
             </field>
         </record>
+        <record id="hr.open_module_tree_department" model="ir.actions.act_window">
+    	        <field name="view_mode">kanban,tree,form,hierarchy</field>
+        </record>
     </odoo>
+
 
 .. image:: ./static/description/screenshot.png
   :width: 800

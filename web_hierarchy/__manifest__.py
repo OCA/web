@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#   © 2019 Kevin Kamau
+#   Copyright 2019 Kevin Kamau
 #   License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
@@ -9,7 +9,7 @@
         'web'
     ],
     'author': "Odoo Community Association (OCA)",
-    'website': "https://github.com/KKamaa",
+    'website': "https://github.com/oca/web",
     'category': 'Extra Tools',
     'license': 'AGPL-3',
     'data': [
