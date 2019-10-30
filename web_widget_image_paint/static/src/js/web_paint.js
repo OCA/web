@@ -31,19 +31,9 @@ odoo.define('web_widget_image_paint.web_paint', function (require) {
             "change #drawing-shadow-width": "drawingShadowWidth_onchange",
             "change #drawing-shadow-offset": "drawingShadowOffset_onchange",
             "change #file_paint": "file_paint_onchange",
-            "click #edit_click": "edit_click",
             "click #clear_click": "reset_clicked",
             'click .save_paint': 'save_paint',
         }),
-
-        // **********************************************************
-        // * edit_click
-        // **********************************************************
-        edit_click: function (ev) {
-            var self = this;
-            this.$el.find('#file_paint').click();
-        },
-
         // **********************************************************
         // * file_paint_onchange
         // **********************************************************

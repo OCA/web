@@ -5,7 +5,6 @@
         <div id='box'
              style='display: inline-block; margin-left: 10px; padding:10px; border:solid 1px grey;width:200px;'>
             <div class="o_field_image o_field_widget oe_avatar" data-original-title="" title="" style="width:100%;">
-                <img src=""></img>
                 <br/>
                 <br/>
                 <div class="o_form_image_controls" style="opacity: 100;">

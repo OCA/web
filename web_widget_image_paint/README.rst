@@ -1,10 +1,20 @@
+=====================
+Image painting widget
+=====================
+
+
 .. image:: https://img.shields.io/badge/license-AGPL--3-blue.png
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-=====================
-Image painting widget
-=====================
+**Table of contents**
+
+.. contents::
+   :local:
+
+
+Description
+===========
 
 This module adds a form view widget that makes it possible to paint and save the resulting picture
 into a binary field of the form view model.
@@ -16,8 +26,9 @@ The painted image can be reset at any time to the predefined static or dynamic i
 The toolbox, based on the Fabrics.js (version 1.7.6) library(cf. http://fabricjs.com/),
 has different brushes and markers whereby shape, size, shadow and color can be selected.
 
-Configuration
-=============
+
+Usage
+=====
 
 Add the widget to your module as follows:
 
@@ -65,7 +76,7 @@ widget options:
 * drawing_mode : True | False (default: True)
 
   When False the ‘Enter Drawing Mode’ button becomes invisible, hence only moving mode available
-  
+
 * edit_background_image : True | False (default: True)
 
   Set this option to False if you do not want the end-user to upload his own background image
@@ -84,7 +95,6 @@ widget options:
 
 * marker_size (default 20)
 
-
 Known issues / Roadmap
 ======================
 
@@ -92,11 +102,34 @@ Known issues / Roadmap
 * layers : background + overlay, 2 fields, fusion or merge background and overlay
 * only one widget image_paint by view
 
+Credits
+=======
+
+Authors
+-------
+
+* Pascal Vanderperre <pascal.vanderperre@noviat.com>
 
 Contributors
-============
+------------
 
 * Pascal Vanderperre <pascal.vanderperre@noviat.com>
 * Benjamin Henquet <benjamin.henquet@noviat.com>
 * Luc De Meyer <luc.demeyer@noviat.com>
 
+Maintainers
+-----------
+
+This module is maintained by the OCA.
+
+.. image:: https://odoo-community.org/logo.png
+   :alt: Odoo Community Association
+   :target: https://odoo-community.org
+
+OCA, or the Odoo Community Association, is a nonprofit organization whose
+mission is to support the collaborative development of Odoo features and
+promote its widespread use.
+
+This module is part of the `OCA/web <https://github.com/OCA/web>`_ project on GitHub.
+
+You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

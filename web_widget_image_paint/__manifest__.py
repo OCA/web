@@ -17,7 +17,7 @@
     'qweb': [
         'static/src/xml/web_paint.xml'],
     'data': [
-        'templates/assets_backend.xml',
+        'views/assets_backend.xml',
     ],
     'installable': True,
 }
