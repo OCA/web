@@ -91,7 +91,7 @@ odoo.define('web_widget_image_webcam.webcam_widget', function(require) {
                                 */
 
                                 // From the above info, we doing the opposite stuff to find the approx size of Image in bytes.
-                                var approx_img_size = 3 * (img_data_base64.length / 4)  // like... "3[n/4]"
+                                var approx_img_size = 3 * (img_data_base64.length / 4) - (img_data_base64.match(/=+$/g) || []).length;  // like... "3[n/4]"
 
                                 // Upload image in Binary Field
                                 self.on_file_uploaded(approx_img_size, "web-cam-preview.jpeg", "image/jpeg", img_data_base64);
