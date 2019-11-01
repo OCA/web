@@ -7,8 +7,8 @@
     "category": "web",
     "website": "https://github.com/OCA/web",
     "author": "Tech Receptives, "
-              "Odoo Community Association (OCA), "
-              "Kaushal Prajapati",
+              "Kaushal Prajapati, "
+              "Odoo Community Association (OCA)",
     "license": "LGPL-3",
     "data": [
         "views/assets.xml",
