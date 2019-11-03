@@ -45,6 +45,7 @@ setuptools.setup(
         'odoo12-addon-web_widget_image_url',
         'odoo12-addon-web_widget_many2many_tags_multi_selection',
         'odoo12-addon-web_widget_url_advanced',
+        'odoo12-addon-web_widget_url_translatable',
         'odoo12-addon-web_widget_x2many_2d_matrix',
         'odoo12-addon-web_widget_x2many_2d_matrix_example',
     ],
