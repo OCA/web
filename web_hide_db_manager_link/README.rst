@@ -14,10 +14,10 @@ Installation
 
 To install this module, you need to:
 
- * Go to Settings / Local Modules
- * Search by module name "Hide link to database manager in login screen" or
-   by module technical name "*web_hide_db_manager_link*"
- * Click install button
+* Go to Settings / Local Modules
+* Search by module name "Hide link to database manager in login screen" or
+  by module technical name "*web_hide_db_manager_link*"
+* Click install button
 
 Usage
 =====
@@ -33,8 +33,7 @@ resulting loging screen.
 In order to access to the database management, the administrator should use a
 specific URL <myserver>/web/database/manager
 
-.. image:: https://odoo-community.org/website/image/ir
-.attachment/5784_f2813bd/datas
+.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
    :target: https://runbot.odoo-community.org/runbot/162/9.0
 
