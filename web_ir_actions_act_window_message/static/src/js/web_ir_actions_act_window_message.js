@@ -81,6 +81,11 @@ openerp.web_ir_actions_act_window_message = function(instance)
                                     // clean the action as it is done in the method ``fix_view_modes``
                                     // in the main controller of the web module
                                     action = result;
+                                    if (action.type != 'ir.actions.act_window'){
+                                        self.do_action(action);
+                                        close_func();
+                                        return;
+                                    }
                                     if ( ! ('views' in action) ){
                                         view_id = action.view_id || false;
                                         if ( view_id instanceof Array ){
