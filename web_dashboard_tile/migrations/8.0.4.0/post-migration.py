@@ -8,10 +8,12 @@ def migrate(cr, version):
         return
 
     # Update ir.rule
-    cr.execute("""
+    cr.execute(
+        """
         SELECT res_id FROM ir_model_data
         WHERE name = 'model_tile_rule'
-        AND module = 'web_dashboard_tile'""")
+        AND module = 'web_dashboard_tile'"""
+    )
     rule_id = cr.fetchone()[0]
     new_domain = """[
         "|",
@@ -21,6 +23,9 @@ def migrate(cr, version):
         ("group_ids","=",False),
         ("group_ids","in",[g.id for g in user.groups_id]),
         ]"""
-    cr.execute("""
+    cr.execute(
+        """
         UPDATE ir_rule SET domain_force = '%(domain)s'
-        WHERE id = '%(id)s' """ % {'domain': new_domain, 'id': rule_id})
+        WHERE id = '%(id)s' """
+        % {"domain": new_domain, "id": rule_id}
+    )
