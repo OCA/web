@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_dashboard_tile"
+        parent="base.menu_board_root"
+        name="Overview"
+        sequence="0"/>
+
+    <menuitem id="menu_dashboard_tile_settings"
+        parent="base.menu_board_root"
+        name="Settings"
+        sequence="100"/>
+
+</odoo>
