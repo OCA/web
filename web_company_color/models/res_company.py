@@ -15,44 +15,22 @@ class ResCompany(models.Model):
     _inherit = 'res.company'
 
     SCSS_TEMPLATE = """
-        .o_main_navbar {
-          background-color: %(color_navbar_bg)s !important;
-          color: %(color_navbar_text)s !important;
+        $o-community-color: %(primary_color)s; 
+        $o-required-color: %(required_color)s;
 
-          > .o_menu_brand {
-            color: %(color_navbar_text)s !important;
-            &:hover, &:focus, &:active, &:focus:active {
-              background-color: %(color_navbar_bg_hover)s !important;
-            }
-          }
+        $o-brand-odoo: $o-community-color;
+        $o-brand-primary: $o-community-color;
 
-          .show {
-            .dropdown-toggle {
-              background-color: %(color_navbar_bg_hover)s !important;
-            }
-          }
-
-          > ul {
-            > li {
-              > a, > label {
-                color: %(color_navbar_text)s !important;
-
-                &:hover, &:focus, &:active, &:focus:active {
-                  background-color: %(color_navbar_bg_hover)s !important;
-                }
-              }
-            }
-          }
-        }
+        $o-main-text-color: %(primary_text_color)s;
+        $o-required-text-color: %(required_text_color)s;
     """
-
+    
     company_colors = fields.Serialized()
-    color_navbar_bg = fields.Char('Navbar Background Color',
-                                  sparse='company_colors')
-    color_navbar_bg_hover = fields.Char(
-        'Navbar Background Color Hover', sparse='company_colors')
-    color_navbar_text = fields.Char('Navbar Text Color',
-                                    sparse='company_colors')
+    primary_color = fields.Char(sparse='company_colors')
+    primary_text_color = fields.Char(sparse='company_colors')
+    required_color = fields.Char(sparse='company_colors')
+    required_text_color = fields.Char(sparse='company_colors')
+
     scss_modif_timestamp = fields.Char('SCSS Modif. Timestamp')
 
     @api.model_create_multi
@@ -74,9 +52,10 @@ class ResCompany(models.Model):
     @api.multi
     def write(self, values):
         if not self.env.context.get('ignore_company_color', False):
-            fields_to_check = ('color_navbar_bg',
-                               'color_navbar_bg_hover',
-                               'color_navbar_text')
+            fields_to_check = ('primary_color',
+                               'primary_text_color',
+                               'required_color',
+                               'required_text_color')
             if 'logo' in values:
                 if values['logo']:
                     _r, _g, _b = image_to_rgb(convert_to_image(values['logo']))
@@ -88,9 +67,12 @@ class ResCompany(models.Model):
                     # Grayscale human vision perception (Rec. 709 values)
                     _a = 1 - (0.2126 * _r + 0.7152 * _g + 0.0722 * _b)
                     values.update({
-                        'color_navbar_bg': n_rgb_to_hex(_r, _g, _b),
-                        'color_navbar_bg_hover': n_rgb_to_hex(_rd, _gd, _bd),
-                        'color_navbar_text': '#000' if _a < 0.5 else '#fff',
+                        'required_color': n_rgb_to_hex(_r, _g, _b),
+                        'primary_color': n_rgb_to_hex(_rd, _gd, _bd),
+                        'primary_text_color': '#4c4c4c' if _a < 0.5 
+                                                else '#fff',
+                        'required_text_color': '#4c4c4c' if _a < 0.5 
+                                                else '#fff',
                     })
                 else:
                     values.update(self.default_get(fields_to_check))
@@ -111,21 +93,18 @@ class ResCompany(models.Model):
         # or add custom values
         values = dict(self.company_colors or {})
         values.update({
-            'color_navbar_bg': (values.get('color_navbar_bg')
-                                or '$o-brand-odoo'),
-            'color_navbar_bg_hover': (
-                values.get('color_navbar_bg_hover')
-                or '$o-navbar-inverse-link-hover-bg'),
-            'color_navbar_text': (values.get('color_navbar_text') or '#FFF'),
+            'required_color': (values.get('required_color') or '#D2D2FF'),
+            'primary_color': (values.get('primary_color') or '#7C7BAD'),
+            'primary_text_color': (values.get('primary_text_color') 
+                                    or '#4c4c4c'),
+            'required_text_color': (values.get('required_text_color') 
+                                    or '#4c4c4c'),
         })
         return values
 
     @api.multi
     def _scss_generate_content(self):
         self.ensure_one()
-        # ir.attachment need files with content to work
-        if not self.company_colors:
-            return "// No Web Company Color SCSS Content\n"
         return self.SCSS_TEMPLATE % self._scss_get_sanitized_values()
 
     # URL to scss related with this company, without timestamp
@@ -171,3 +150,4 @@ class ResCompany(models.Model):
                 IrAttachmentObj.sudo().create(values)
         self.write({'scss_modif_timestamp': modif_timestamp})
         self.env['ir.qweb'].sudo().clear_caches()
+        

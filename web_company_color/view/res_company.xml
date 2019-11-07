@@ -15,10 +15,11 @@
             <notebook position="inside">
                 <page string="Company Styles" name="company_styles"
                       groups="base.group_system">
-                    <group string="Navbar Colors" name="navbar_colors">
-                        <field name="color_navbar_bg" widget="color" />
-                        <field name="color_navbar_bg_hover" widget="color" />
-                        <field name="color_navbar_text" widget="color" />
+                    <group string="Colors" name="colors">
+                        <field name="primary_color" widget="color" />
+                        <field name="primary_text_color" widget="color" />
+                        <field name="required_color" widget="color" />
+                        <field name="required_text_color" widget="color" />
                     </group>
                     <div class="alert alert-info info_icon" role="alert">
                         <span class="fa fa-info fa-2x" />

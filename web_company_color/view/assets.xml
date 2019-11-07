@@ -6,12 +6,15 @@
 -->
 
 <odoo>
-    <template id="assets_backend" name="web_company_color assets"
-              inherit_id="web.assets_backend">
+    <template id="_assets_primary_variables" name="web_company_color assets" inherit_id="web._assets_primary_variables">
         <xpath expr=".">
             <t t-set="company_id" t-value="request.env.user and request.env.user.company_id" />
-            <link t-if="company_id" rel="stylesheet" type="text/scss"
-                  t-att-href="company_id.scss_get_url()" />
+            <link t-if="company_id" rel="stylesheet" type="text/scss" t-att-href="company_id.scss_get_url()" />
+        </xpath>
+    </template>
+    <template id="assets_backend" name="web_company_color assets" inherit_id="web.assets_backend">
+        <xpath expr=".">
+            <link rel="stylesheet" type="text/scss" href="/web_company_color/static/src/scss/overrides.scss"/>
         </xpath>
     </template>
 </odoo>
