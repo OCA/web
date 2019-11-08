@@ -70,6 +70,7 @@ odoo.define('web_view_calendar_column.CalendarRenderer', function (require) {
                 //eventResourceEditable: true, // except for between resources
                 height: 'parent',
                 unselectAuto: false,
+                schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
                 locale: locale, // reset locale when fullcalendar has already been instanciated before now
             });
 
