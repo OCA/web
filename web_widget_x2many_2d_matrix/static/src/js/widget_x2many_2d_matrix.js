@@ -223,6 +223,15 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
             } catch (error) {
                 this._backwards = false;
             }
+            var x2many_matrix = this.renderer;
+            // Copied from 2d_matrix_renderer.js _onNavigationMove#L452-L454
+            var target = x2many_matrix.__parentedChildren[0];
+            if (this._backwards) {
+                target = x2many_matrix.__parentedChildren.slice(-1)[0];
+            }
+            var id = target.record.id;
+            var index = x2many_matrix.allFieldWidgets[id].indexOf(target);
+            x2many_matrix._activateFieldWidget(target.record, index, {inc: 0});
             var result = this._super.apply(this, arguments);
             delete this._backwards;
             return result;
