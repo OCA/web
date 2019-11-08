@@ -8,3 +8,4 @@
 * `CorporateHub <https://corporatehub.eu/>`__
 
   * Alexey Pelykh <alexey.pelykh@corphub.eu>
+* Pablo Fuentes <pablo@studio73.es>

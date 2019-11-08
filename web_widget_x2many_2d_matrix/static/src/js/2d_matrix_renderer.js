@@ -10,7 +10,7 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
     var core = require('web.core');
     var field_utils = require('web.field_utils');
     var _t = core._t;
-    
+
     var FIELD_CLASSES = {
         float: 'o_list_number',
         integer: 'o_list_number',
@@ -434,12 +434,18 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
                 index = widgets.indexOf(event.target),
                 first = index === 0,
                 last = index === widgets.length - 1,
-                move = 0;
+                move = 0,
+                row = Math.floor(index / this.columns.length),
+                direction = event.data.direction;
             // Guess if we have to move the focus
-            if (event.data.direction === "next" && !last) {
+            if (~["next", "next_line", "right"].indexOf(direction) && !last) {
                 move = 1;
-            } else if (event.data.direction === "previous" && !first) {
+            } else if (~["previous", "left"].indexOf(direction) && !first) {
                 move = -1;
+            } else if (direction === "up" && row) {
+                move = this.columns.length * -1;
+            } else if (direction === "down" && row + 1 < this.rows.length) {
+                move = this.columns.length;
             }
             // Move focus
             if (move) {
