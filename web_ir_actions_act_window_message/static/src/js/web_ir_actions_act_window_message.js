@@ -24,8 +24,9 @@ odoo.define('web.web_ir_actions_act_window_message', function(require)
                     text: action.close_button_title || _t('Close'),
                     click: function() {
                         // refresh the view before closing the dialog
-                        self.inner_widget.active_view
-                            .controller.recursive_reload();
+                        var controller = self.inner_widget.active_view.controller,
+                            reload = controller.recursive_reload || controller.reload;
+                        reload.apply(controller);
                         dialog.close()
                     },
                     classes: 'btn-default',
@@ -89,8 +90,9 @@ odoo.define('web.web_ir_actions_act_window_message', function(require)
                                 }
                                 // always refresh the view after the action
                                 // ex: action updates a status
-                                self.inner_widget.active_view
-                                .controller.recursive_reload();
+                                var controller = self.inner_widget.active_view.controller,
+                                    reload = controller.recursive_reload || controller.reload;
+                                reload.apply(controller);
                             });
                         }
                         else
