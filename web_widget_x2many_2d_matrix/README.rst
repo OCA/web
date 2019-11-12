@@ -105,6 +105,7 @@ the field in the default function::
 
     task_ids = fields.Many2many('project.task', default=_default_task_ids)
 
+
 Now in our wizard, we can use::
 
 <field name="task_ids" widget="x2many_2d_matrix" field_x_axis="project_id" field_y_axis="user_id" field_value="planned_hours" />
@@ -123,7 +124,7 @@ Known issues / Roadmap
 * If you pass values with an onchange, you need to overwrite the model's method
   `onchange` for making the widget work::
 
- .. code-block:: python
+.. code-block:: python
 
     @api.multi
     def onchange(self, values, field_name, field_onchange):
