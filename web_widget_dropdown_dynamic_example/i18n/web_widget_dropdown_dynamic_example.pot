@@ -1,0 +1,119 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* web_widget_dropdown_dynamic_example
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_widget_dropdown_dynamic_example
+#: model:ir.model.fields,field_description:web_widget_dropdown_dynamic_example.field_web_widget_dropdown_dynamic_example__char_field
+#: model_terms:ir.ui.view,arch_db:web_widget_dropdown_dynamic_example.web_widget_dropdown_dynamic_example_form
+msgid "Char field"
+msgstr ""
+
+#. module: web_widget_dropdown_dynamic_example
+#: model:ir.model.fields,field_description:web_widget_dropdown_dynamic_example.field_web_widget_dropdown_dynamic_example__char_field_options
+msgid "Char field options"
+msgstr ""
+
+#. module: web_widget_dropdown_dynamic_example
+#: model:ir.model.fields,field_description:web_widget_dropdown_dynamic_example.field_web_widget_dropdown_dynamic_example__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: web_widget_dropdown_dynamic_example
+#: model:ir.model.fields,field_description:web_widget_dropdown_dynamic_example.field_web_widget_dropdown_dynamic_example__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: web_widget_dropdown_dynamic_example
+#: model:ir.model.fields,field_description:web_widget_dropdown_dynamic_example.field_web_widget_dropdown_dynamic_example__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_widget_dropdown_dynamic_example
+#: model:ir.model.fields,field_description:web_widget_dropdown_dynamic_example.field_web_widget_dropdown_dynamic_example__id
+msgid "ID"
+msgstr ""
+
+#. module: web_widget_dropdown_dynamic_example
+#: model:ir.model.fields,field_description:web_widget_dropdown_dynamic_example.field_web_widget_dropdown_dynamic_example__int_field
+#: model_terms:ir.ui.view,arch_db:web_widget_dropdown_dynamic_example.web_widget_dropdown_dynamic_example_form
+msgid "Int field"
+msgstr ""
+
+#. module: web_widget_dropdown_dynamic_example
+#: model:ir.model.fields,field_description:web_widget_dropdown_dynamic_example.field_web_widget_dropdown_dynamic_example__int_field_max
+msgid "Int field (max)"
+msgstr ""
+
+#. module: web_widget_dropdown_dynamic_example
+#: model:ir.model.fields,field_description:web_widget_dropdown_dynamic_example.field_web_widget_dropdown_dynamic_example__int_field_min
+msgid "Int field (min)"
+msgstr ""
+
+#. module: web_widget_dropdown_dynamic_example
+#: model:ir.model.fields,field_description:web_widget_dropdown_dynamic_example.field_web_widget_dropdown_dynamic_example____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: web_widget_dropdown_dynamic_example
+#: model:ir.model.fields,field_description:web_widget_dropdown_dynamic_example.field_web_widget_dropdown_dynamic_example__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: web_widget_dropdown_dynamic_example
+#: model:ir.model.fields,field_description:web_widget_dropdown_dynamic_example.field_web_widget_dropdown_dynamic_example__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: web_widget_dropdown_dynamic_example
+#: model:ir.model.fields,field_description:web_widget_dropdown_dynamic_example.field_web_widget_dropdown_dynamic_example__name
+msgid "Name"
+msgstr ""
+
+#. module: web_widget_dropdown_dynamic_example
+#: selection:web.widget.dropdown.dynamic.example,selection_field:0
+msgid "Option A"
+msgstr ""
+
+#. module: web_widget_dropdown_dynamic_example
+#: selection:web.widget.dropdown.dynamic.example,selection_field:0
+msgid "Option B"
+msgstr ""
+
+#. module: web_widget_dropdown_dynamic_example
+#: selection:web.widget.dropdown.dynamic.example,selection_field:0
+msgid "Option C"
+msgstr ""
+
+#. module: web_widget_dropdown_dynamic_example
+#: model:ir.model.fields,field_description:web_widget_dropdown_dynamic_example.field_web_widget_dropdown_dynamic_example__selection_field
+#: model_terms:ir.ui.view,arch_db:web_widget_dropdown_dynamic_example.web_widget_dropdown_dynamic_example_form
+msgid "Selection field"
+msgstr ""
+
+#. module: web_widget_dropdown_dynamic_example
+#: model:ir.model.fields,field_description:web_widget_dropdown_dynamic_example.field_web_widget_dropdown_dynamic_example__selection_field_options
+msgid "Selection field options"
+msgstr ""
+
+#. module: web_widget_dropdown_dynamic_example
+#: model:ir.model,name:web_widget_dropdown_dynamic_example.model_web_widget_dropdown_dynamic_example
+msgid "Web Widget Dropdown Dynamic Example"
+msgstr ""
+
+#. module: web_widget_dropdown_dynamic_example
+#: model:ir.actions.act_window,name:web_widget_dropdown_dynamic_example.action_web_widget_dropdown_dynamic_example
+#: model:ir.ui.menu,name:web_widget_dropdown_dynamic_example.web_widget_dropdown_dynamic_example_menu
+msgid "web_widget_dropdown_dynamic Demo"
+msgstr ""
+
