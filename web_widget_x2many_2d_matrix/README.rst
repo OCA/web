@@ -126,12 +126,12 @@ Known issues / Roadmap
 
 .. code-block:: python
 
-    @api.multi
-    def onchange(self, values, field_name, field_onchange):
-        if "one2many_field" in field_onchange:
-            for sub in [<field_list>]:
-                field_onchange.setdefault("one2many_field." + sub, u"")
-        return super(model, self).onchange(values, field_name, field_onchange)
+   @api.multi
+   def onchange(self, values, field_name, field_onchange):
+       if "one2many_field" in field_onchange:
+           for sub in [<field_list>]:
+               field_onchange.setdefault("one2many_field." + sub, u"")
+       return super(model, self).onchange(values, field_name, field_onchange)
 
 
 Bug Tracker
