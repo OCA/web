@@ -27,7 +27,7 @@ Web Widget Plotly
 
 This module add the possibility to insert Plotly charts into Odoo standard views.
 
-.. image:: https://raw.githubusercontent.com/web_widget_plotly_chart/static/description/example.png
+.. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_widget_plotly_chart/static/description/example.png
    :alt: Plotly Chart inserted into an Odoo view
    :width: 600 px
 
