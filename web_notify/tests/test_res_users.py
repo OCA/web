@@ -97,7 +97,7 @@ class TestResUsers(common.TransactionCase):
 
     def test_notify_other_user(self):
         other_user = self.env.ref("base.user_demo")
-        other_user_model = self.env["res.users"].sudo(other_user)
+        other_user_model = self.env["res.users"].with_user(other_user)
         with self.assertRaises(exceptions.UserError):
             other_user_model.browse(self.env.uid).notify_info(message="hello")
 
