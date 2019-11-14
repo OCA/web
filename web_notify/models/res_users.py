@@ -32,21 +32,15 @@ class ResUsers(models.Model):
     notify_info_channel_name = fields.Char(compute="_compute_channel_names")
     notify_default_channel_name = fields.Char(compute="_compute_channel_names")
 
-    def notify_success(
-        self, message="Default message", title=None, sticky=False
-    ):
+    def notify_success(self, message="Default message", title=None, sticky=False):
         title = title or _("Success")
         self._notify_channel(SUCCESS, message, title, sticky)
 
-    def notify_danger(
-        self, message="Default message", title=None, sticky=False
-    ):
+    def notify_danger(self, message="Default message", title=None, sticky=False):
         title = title or _("Danger")
         self._notify_channel(DANGER, message, title, sticky)
 
-    def notify_warning(
-        self, message="Default message", title=None, sticky=False
-    ):
+    def notify_warning(self, message="Default message", title=None, sticky=False):
         title = title or _("Warning")
         self._notify_channel(WARNING, message, title, sticky)
 
@@ -54,18 +48,12 @@ class ResUsers(models.Model):
         title = title or _("Information")
         self._notify_channel(INFO, message, title, sticky)
 
-    def notify_default(
-        self, message="Default message", title=None, sticky=False
-    ):
+    def notify_default(self, message="Default message", title=None, sticky=False):
         title = title or _("Default")
         self._notify_channel(DEFAULT, message, title, sticky)
 
     def _notify_channel(
-        self,
-        type_message=DEFAULT,
-        message=DEFAULT_MESSAGE,
-        title=None,
-        sticky=False,
+        self, type_message=DEFAULT, message=DEFAULT_MESSAGE, title=None, sticky=False
     ):
         # pylint: disable=protected-access
         if not self.env.user._is_admin() and any(
@@ -81,7 +69,5 @@ class ResUsers(models.Model):
             "title": title,
             "sticky": sticky,
         }
-        notifications = [
-            (record[channel_name_field], bus_message) for record in self
-        ]
+        notifications = [(record[channel_name_field], bus_message) for record in self]
         self.env["bus.bus"].sendmany(notifications)
