@@ -46,7 +46,7 @@ Additional jquery-timepicker plugin options can be specified by an options attri
     <field name="mytimefieldname" widget="timepicker" options="{'step': '30', 'disableTextInput': false}"/>
     ...
 
-See the available options at `jquery-timepicker <https://github.com//jonthornton//jquery-timepicker#timepicker-plugin-for-jquery>`_.
+See the available options at `jquery-timepicker <https://github.com//jonthornton//jquery-timepicker#timepicker-plugin-for-jquery>`__.
 
 .. |picker| image:: ./images/picker.png
 .. |formview| image:: ./images/form_view.png
@@ -61,7 +61,7 @@ Known issues / Roadmap
 Credits
 =======
 
-* The module uses the `jquery-timepicker <https://cdnjs.com//libraries//jquery-timepicker>`_ plugin by Jon Thornton. This software is made available under the open source MIT License. © 2014 Jon Thornton and contributors
+* The module uses the `jquery-timepicker <https://cdnjs.com//libraries//jquery-timepicker>`__ plugin by Jon Thornton. This software is made available under the open source MIT License. © 2014 Jon Thornton and contributors
 
 * Odoo Community Association (OCA)
 
