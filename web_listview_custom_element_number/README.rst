@@ -44,9 +44,13 @@ Technical information
   See browser Support: http://www.w3schools.com/tags/tag_datalist.asp
 
 * The display of the datalist input can be different depending of the browser.
-    * FireFox Display:
+
+  * FireFox Display:
+  
     .. image:: ./web_listview_custom_element_number/static/src/img/screnshot_firefox.png
-    * Chrome Display:
+
+  * Chrome Display:
+
     .. image:: ./web_listview_custom_element_number/static/src/img/screnshot_chrome.png
 
 
