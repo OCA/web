@@ -11,15 +11,11 @@
     "category": "Hidden",
     "website": "https://github.com/OCA/web",
     "author": "Therp BV, "
-              "Tecnativa, "
-              "Camptocamp, "
-              "Odoo Community Association (OCA)",
+    "Tecnativa, "
+    "Camptocamp, "
+    "Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "installable": True,
-    "depends": [
-        'web',
-    ],
-    "data": [
-        'views/assets.xml',
-    ],
+    "depends": ["web"],
+    "data": ["views/assets.xml"],
 }
