@@ -6,7 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2019-11-18 14:34+0000\n"
+"Last-Translator: Bole <bole@dajmi5.com>\n"
 "Language-Team: none\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
@@ -14,6 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
 "4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 3.8\n"
 
 #. module: web_company_color
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
@@ -21,43 +23,46 @@ msgid "<span class=\"fa fa-info fa-2x\"/>\n"
 "                        In order for the changes to take effect, please refresh\n"
 "                        the page."
 msgstr ""
+"<span class=\"fa fa-info fa-2x\"/>\n"
+"                        Kako bi promjene postale vidljive, molimo \n"
+"                        učitajte ponovo ovu stranicu."
 
 #. module: web_company_color
 #: model:ir.model,name:web_company_color.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Tvrtke"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__company_colors
 msgid "Company Colors"
-msgstr ""
+msgstr "Boje tvrtke"
 
 #. module: web_company_color
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
 msgid "Company Styles"
-msgstr ""
+msgstr "Stilovi tvrtke"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_bg
 msgid "Navbar Background Color"
-msgstr ""
+msgstr "Boja pozadine Navigacijske trake"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_bg_hover
 msgid "Navbar Background Color Hover"
-msgstr ""
+msgstr "Poja pozadine navigacijske trake (hoover)"
 
 #. module: web_company_color
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
 msgid "Navbar Colors"
-msgstr ""
+msgstr "Boje navigacijske trake"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_text
 msgid "Navbar Text Color"
-msgstr ""
+msgstr "Boja teksta navigacijske trake"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__scss_modif_timestamp
 msgid "SCSS Modif. Timestamp"
-msgstr ""
+msgstr "SCSS Modif. Vremenski žig"
