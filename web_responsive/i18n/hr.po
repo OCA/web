@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-28 18:03+0000\n"
-"PO-Revision-Date: 2019-11-14 10:34+0000\n"
+"PO-Revision-Date: 2019-11-18 14:34+0000\n"
 "Last-Translator: Bole <bole@dajmi5.com>\n"
 "Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
 "Language: hr\n"
@@ -25,7 +25,7 @@ msgstr ""
 #: code:addons/web_responsive/static/src/xml/apps.xml:9
 #, python-format
 msgid "#menu_id=#{app.menuID}&action_id=#{app.actionID}"
-msgstr ""
+msgstr "#menu_id=#{app.menuID}&action_id=#{app.actionID}"
 
 #. module: web_responsive
 #: model:ir.model.fields,field_description:web_responsive.field_res_users__chatter_position
