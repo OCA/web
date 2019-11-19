@@ -1,0 +1,15 @@
+# Defaults for all prettier-supported languages
+bracketSpacing: false
+endOfLine: lf
+printWidth: 88
+semi: true
+tabWidth: 4
+trailingComma: "es5"
+
+# Language-specific
+overrides:
+  - files:
+      - "*.yml"
+      - "*.yaml"
+    options:
+      tabWidth: 2

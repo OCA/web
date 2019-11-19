@@ -61,8 +61,16 @@ repos:
   - id: isort
     name: isort except __init__.py
     exclude: /__init__\.py$
+- repo: https://github.com/prettier/prettier
+  rev: "1.19.1"
+  hooks:
+    - id: prettier
+      exclude: /static/(lib|description)/
 - repo: https://github.com/pre-commit/mirrors-eslint
   rev: v6.5.1
   hooks:
   - id: eslint
     verbose: true
+    args: [--fix]
+    additional_dependencies:
+      - eslint-config-prettier@v6.6.0
