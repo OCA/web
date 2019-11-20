@@ -8,24 +8,10 @@ openerp.web_pivot_zoom = function(instance)
         start: function()
         {
             this.$el.on(
-                'click', 'td.web_pivot_zoom',
+                'click', 'td:not(.graph_border)',
                 this.proxy('_web_pivot_zoom_on_click_cell')
             );
             return this._super.apply(this, arguments);
-        },
-        draw_row: function (row, frozen_rows)
-        {
-            var self = this,
-                $result = this._super.apply(this, arguments);
-            _.each(this.pivot_options.measures, function(measure, i)
-            {
-                if(!_.isEmpty(self.graph_view._web_pivot_zoom[measure.field]))
-                {
-                    jQuery($result.children().get(i + 1))
-                    .addClass('web_pivot_zoom');
-                }
-            });
-            return $result;
         },
         draw_measure_row: function(measure_row)
         {
@@ -75,6 +61,7 @@ openerp.web_pivot_zoom = function(instance)
                     (e.currentTarget.cellIndex - 1) %
                     this.pivot.measures.length
                 ],
+                config = this.graph_view._web_pivot_zoom[current_field.field];
                 row_header = this.pivot.get_header(row_id),
                 col_header = this.pivot.get_header(col_id),
                 // see https://github.com/OCA/OCB/blob/8.0/addons/web_graph/
@@ -105,17 +92,35 @@ openerp.web_pivot_zoom = function(instance)
                     i + self.pivot_options.measures.length
                 ];
             });
-            var model = this.graph_view._web_pivot_zoom[current_field.field]
-                .model,
+            var model = config.model ||
+                this.pivot_options.web_pivot_zoom.model || this.model.name,
                 domain = instance.web.pyeval.eval(
                     'domain',
-                    this.graph_view._web_pivot_zoom[current_field.field]
-                    .domain || [],
+                    config.domain ||
+                    // fall back to cell's domain if no domain given, use
+                    // mapping if given
+                    _.map(
+                        row_header.domain.concat(col_header.domain),
+                        function(proposition)
+                        {
+                            if(_.isArray(proposition))
+                            {
+                                return [
+                                    self.pivot_options.web_pivot_zoom
+                                    .domain_map[proposition[0]] ||
+                                    proposition[0],
+                                    proposition[1],
+                                    proposition[2],
+                                ];
+                            }
+                            return proposition;
+                        }
+                    ),
                     group_values
                 );
-            if(!model || !domain)
+            if(!config.domain)
             {
-                return;
+
             }
             return this._web_pivot_zoom_action(
                 model, domain, current_field, row_header, col_header
@@ -157,6 +162,11 @@ openerp.web_pivot_zoom = function(instance)
             }
             result = this._super.apply(this, arguments);
             this.widget_config.invisible_measures = invisible_measures;
+            this.widget_config.web_pivot_zoom = instance.web.py_eval(
+                fields_view_get.arch.attrs.options || '{}'
+            ).web_pivot_zoom || {};
+            this.widget_config.web_pivot_zoom.domain_map =
+                this.widget_config.web_pivot_zoom.domain_map || {};
             return result;
         },
     });

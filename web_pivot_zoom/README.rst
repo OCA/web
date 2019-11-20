@@ -9,24 +9,32 @@ Zoom in pivot views
 This module was written to allow your users to zoom into cells in pivot views
 by simply clicking a cell in question.
 
-Installation
-============
-
-Don't install this module manually, it won't do anything. A module that uses it
-will pull it as dependency.
-
 Usage
 =====
 
-To use this module, you need to:
+The module will simply open a list view of the underlying model. You can change
+what happens here on a per view or measure basis:
 
 #. depend on this module
+#. in the graph element, declare an options dictionary as in
+   ``<graph type="pivot" options="{'web_pivot_zoom': {
+         'model': 'account.move.line',
+         'domain_map': {'user_type': 'account_id.user_type'}
+      }}" />``
+
+   to override the model to show, and to map field names in the report model
+   to field names/dotted paths of the custom model. The above for example makes
+   the accounting entries pivot work as expected.
+
 #. in your measure elements in your pivot view, declare an options dictionary
    as in
    ``<field name="field" type="measure" options="{'web_pivot_zoom': {}}" />``
 
    The options dictionary must have a key ``model`` to inform the module which
-   model should be shown, and a key ``domain`` for the domain to be used.
+   model should be shown, and can have a key ``domain`` for the domain to be
+   used. If you set no domain, the current cell's domain will be used, this
+   can be used to show rows from the pivot view's model.
+
    The domain is subject to evaluation, so you can use the grouped values in
    there. Note that if a field is not grouped, it will evaluate as ``None``, so
    the ``=?`` is your friend for expressions refering to the grouped fields.

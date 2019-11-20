@@ -1,4 +1,4 @@
-.graph_pivot_mode td.web_pivot_zoom
+.graph_pivot_mode td:not(.graph_border)
 {
     cursor: pointer;
 }
