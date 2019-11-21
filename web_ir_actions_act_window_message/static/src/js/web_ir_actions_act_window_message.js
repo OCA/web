@@ -7,13 +7,18 @@ odoo.define('web.web_ir_actions_act_window_message', function(require)
 
     var ActionManager = require('web.ActionManager'),
         core = require('web.core'),
-        Model = require('web.Model'),
         Dialog = require('web.Dialog');
 
     var _t = core._t;
 
     ActionManager.include({
-        ir_actions_act_window_message: function(action, options)
+        _handleAction: function (action, options) {
+            if (action.type === 'ir.actions.act_window.message') {
+                return this._executeWindowMessageAction(action, options);
+            }
+            return this._super.apply(this, arguments);
+        },
+        _executeWindowMessageAction: function(action, options)
         {
             var self = this,
                 buttons = [];
@@ -24,8 +29,10 @@ odoo.define('web.web_ir_actions_act_window_message', function(require)
                     text: action.close_button_title || _t('Close'),
                     click: function() {
                         // refresh the view before closing the dialog
-                        self.inner_widget.active_view
-                            .controller.recursive_reload();
+                        var controller = self.getCurrentController();
+                        if (controller && controller.widget) {
+                            controller.widget.reload();
+                        }
                         dialog.close()
                     },
                     classes: 'btn-default',
@@ -62,7 +69,7 @@ odoo.define('web.web_ir_actions_act_window_message', function(require)
                     },
                     options)
             )
-            return dialog.open();
+            return dialog.open()._opened;
         },
         ir_actions_act_window_message_get_buttons: function(action, close_func)
         {
@@ -76,12 +83,12 @@ odoo.define('web.web_ir_actions_act_window_message', function(require)
                     click: function() {
                         if(button_definition.type == 'method')
                         {
-                            (new Model(button_definition.model))
-                            .call(
-                                button_definition.method,
-                                button_definition.args,
-                                button_definition.kwargs
-                            ).then(function(result)
+                            self._rpc({
+                                model: button_definition.model,
+                                method: button_definition.method,
+                                args: button_definition.args,
+                                kwargs: button_definition.kwargs
+                            }).then(function(result)
                             {
                                 if(_.isObject(result))
                                 {
@@ -89,8 +96,10 @@ odoo.define('web.web_ir_actions_act_window_message', function(require)
                                 }
                                 // always refresh the view after the action
                                 // ex: action updates a status
-                                self.inner_widget.active_view
-                                .controller.recursive_reload();
+                                var controller = self.getCurrentController();
+                                if (controller && controller.widget) {
+                                    controller.widget.reload();
+                                }
                             });
                         }
                         else
