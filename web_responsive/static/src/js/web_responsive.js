@@ -442,22 +442,24 @@ odoo.define('web_responsive', function (require) {
         * The executed action
         */
         _hideMenusByAction: function (action) {
-            var uniq_sel = '[data-action-id='+action.id+']';
-            // Need close AppDrawer?
-            var menu_apps_dropdown = document.querySelector(
-                '.o_menu_apps .dropdown');
-            $(menu_apps_dropdown).has('.dropdown-menu.show')
-                .has(uniq_sel).find('> a').dropdown('toggle');
-            // Need close Sections Menu?
-            // TODO: Change to 'hide' in modern Bootstrap >4.1
-            var menu_sections = document.querySelector(
-                '.o_menu_sections li.show');
-            $(menu_sections).has(uniq_sel).find('.dropdown-toggle')
-                .dropdown('toggle');
-            // Need close Mobile?
-            var menu_sections_mobile = document.querySelector(
-                '.o_menu_sections.show');
-            $(menu_sections_mobile).has(uniq_sel).collapse('hide');
+            _.defer(function () {
+                var uniq_sel = '[data-action-id='+action.id+']';
+                // Need close AppDrawer?
+                var menu_apps_dropdown = document.querySelector(
+                    '.o_menu_apps .dropdown');
+                $(menu_apps_dropdown).has('.dropdown-menu.show')
+                    .has(uniq_sel).find('> a').dropdown('toggle');
+                // Need close Sections Menu?
+                // TODO: Change to 'hide' in modern Bootstrap >4.1
+                var menu_sections = document.querySelector(
+                    '.o_menu_sections li.show');
+                $(menu_sections).has(uniq_sel).find('.dropdown-toggle')
+                    .dropdown('toggle');
+                // Need close Mobile?
+                var menu_sections_mobile = document.querySelector(
+                    '.o_menu_sections.show');
+                $(menu_sections_mobile).has(uniq_sel).collapse('hide');
+            });
         },
 
         _handleAction: function (action) {
