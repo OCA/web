@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id="template" xml:space="preserve">
+    <t t-name="Map">
+        <div id="map">
+            <button id="loadMap" type="button" class="btn btn-primary">View Map</button>
+        </div>
+        <div id="mapLegend" class="map-legend legend-hidden"></div>
+    </t>
+</template>

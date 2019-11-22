@@ -1,0 +1,16 @@
+.map {
+    height: 400px;
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+    border: 1px #5a598f;
+    border-style: solid;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.map-legend {
+    margin: 10px;
+}
+.legend-hidden {
+    display: none;
+}

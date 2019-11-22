@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets_backend" name="web_map assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/web_widget_map/static/src/lib/ol.css"/>
+            <link rel="stylesheet" href="/web_widget_map/static/src/css/map.css"/>
+
+            <script type="text/javascript" src="/web_widget_map/static/src/lib/ol.js"/>
+            <script type="text/javascript" src="/web_widget_map/static/src/js/web_widget_map.js"/>
+        </xpath>
+    </template>
+
+</odoo>
