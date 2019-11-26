@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo13-addon-web_dialog_size',
         'odoo13-addon-web_environment_ribbon',
         'odoo13-addon-web_responsive',
+        'odoo13-addon-web_tree_many2one_clickable',
     ],
     classifiers=[
         'Programming Language :: Python',
