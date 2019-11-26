@@ -21,7 +21,7 @@ msgstr ""
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/xml/apps.xml:9
+#: code:addons/web_responsive/static/src/xml/apps.xml:0
 #, python-format
 msgid "#menu_id=#{app.menuID}&action_id=#{app.actionID}"
 msgstr ""
@@ -33,56 +33,53 @@ msgstr "Posición del chatter"
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/xml/form_view.xml:57
-#: code:addons/web_responsive/static/src/xml/form_view.xml:96
+#: code:addons/web_responsive/static/src/xml/form_view.xml:0
 #, python-format
 msgid "Create"
 msgstr "Crear"
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/xml/form_view.xml:71
-#: code:addons/web_responsive/static/src/xml/form_view.xml:110
+#: code:addons/web_responsive/static/src/xml/form_view.xml:0
 #, python-format
 msgid "Discard"
 msgstr "Descartar"
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/xml/form_view.xml:50
+#: code:addons/web_responsive/static/src/xml/form_view.xml:0
 #, python-format
 msgid "Edit"
 msgstr "Editar"
 
 #. module: web_responsive
-#: selection:res.users,chatter_position:0
+#: model:ir.model.fields.selection,name:web_responsive.selection__res_users__chatter_position__normal
 msgid "Normal"
 msgstr "Normal"
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/xml/form_view.xml:27
+#: code:addons/web_responsive/static/src/xml/form_view.xml:0
 #, python-format
 msgid "Quick actions"
 msgstr "Acciones rápidas"
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/xml/form_view.xml:64
-#: code:addons/web_responsive/static/src/xml/form_view.xml:103
+#: code:addons/web_responsive/static/src/xml/form_view.xml:0
 #, python-format
 msgid "Save"
 msgstr "Guardar"
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/xml/apps.xml:35
+#: code:addons/web_responsive/static/src/xml/apps.xml:0
 #, python-format
 msgid "Search menus..."
 msgstr "Buscar menús..."
 
 #. module: web_responsive
-#: selection:res.users,chatter_position:0
+#: model:ir.model.fields.selection,name:web_responsive.selection__res_users__chatter_position__sided
 msgid "Sided"
 msgstr "Lateral"
 
