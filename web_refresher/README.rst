@@ -50,6 +50,11 @@ Credits
 Authors
 ~~~~~~~
 
+* Compassion Switzerland
+
+Contributors
+~~~~~~~~~~~~
+
 * Samuel Fringeli
 
 Maintainers
