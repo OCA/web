@@ -5,7 +5,7 @@
     'name': 'Web View Calendar Column',
     'summary': """
         Allow to define columns on calendars""",
-    'version': '11.0.1.0.0',
+    'version': '11.0.1.0.1',
     'license': 'AGPL-3',
     'author': 'Creu Blanca,Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/web',
