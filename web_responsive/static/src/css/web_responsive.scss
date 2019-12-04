@@ -353,7 +353,7 @@ html .o_web_client .o_main .o_main_content {
         .o_form_statusbar {
             position: sticky;
             top: 0;
-            z-index: 1;
+            z-index: 2;
         }
 
         // Support for long title (with ellipsis)
