@@ -1,0 +1,68 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_favicon
+#
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
+# Bole <bole@dajmi5.com>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-04-28 18:03+0000\n"
+"PO-Revision-Date: 2017-04-28 18:03+0000\n"
+"Last-Translator: Bole <bole@dajmi5.com>, 2017\n"
+"Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
+"Language: hr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#. module: web_favicon
+#: model:ir.model,name:web_favicon.model_res_company
+msgid "Companies"
+msgstr "Tvrtke"
+
+#. module: web_favicon
+#: model_terms:ir.ui.view,arch_db:web_favicon.view_company_form
+msgid "Favicon"
+msgstr "Favicon"
+
+#. module: web_favicon
+#: model:ir.model.fields,field_description:web_favicon.field_res_company__favicon_backend
+#, fuzzy
+msgid "Favicon Backend"
+msgstr "Favicon backend"
+
+#. module: web_favicon
+#: model:ir.model.fields,field_description:web_favicon.field_res_company__favicon_backend_mimetype
+#, fuzzy
+msgid "Favicon Backend Mimetype"
+msgstr "Favicon backend"
+
+#. module: web_favicon
+#: model:ir.model.fields,help:web_favicon.field_res_company__favicon_backend_mimetype
+msgid "Set the mimetype of your file."
+msgstr ""
+
+#. module: web_favicon
+#: model_terms:ir.ui.view,arch_db:web_favicon.view_company_form
+msgid "Web Favicon"
+msgstr ""
+
+#. module: web_favicon
+#: selection:res.company,favicon_backend_mimetype:0
+msgid "image/gif"
+msgstr "image/gif"
+
+#. module: web_favicon
+#: selection:res.company,favicon_backend_mimetype:0
+msgid "image/png"
+msgstr "image/png"
+
+#. module: web_favicon
+#: selection:res.company,favicon_backend_mimetype:0
+msgid "image/x-icon"
+msgstr "image/x-icon"

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="FieldColor">
+        <span t-attf-class="oe_form_field {{widget.widget_class}}" t-att-style="widget.attrs.style">
+            <input type="text"
+               t-att-id="widget.id_for_label"
+               t-att-tabindex="widget.attrs.tabindex"
+               t-att-autofocus="widget.attrs.autofocus"
+               t-att-placeholder="widget.attrs.placeholder"
+               t-att-maxlength="widget.field.size"
+               t-att-value="widget.value"
+               class="o_input"
+               t-if="widget.mode !== 'readonly'"/>
+            <t t-else="">
+                <div t-if="!('readonly_mode' in widget.nodeOptions) or widget.nodeOptions.readonly_mode != 'text'" class="color_box" t-attf-style="background-color: {{widget.value}}" />
+                <span t-if="!('readonly_mode' in widget.nodeOptions) or widget.nodeOptions.readonly_mode != 'color'" class="oe_form_char_content"><t t-esc="widget.value" /></span>
+            </t>
+        </span>
+    </t>
+</templates>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="web_widget_many2many_tags_multi_selection" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/web_widget_many2many_tags_multi_selection/static/src/js/view_form.js"></script>
+        </xpath>
+    </template>
+</odoo>
