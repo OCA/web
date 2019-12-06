@@ -24,6 +24,7 @@ setuptools.setup(
         'odoo12-addon-web_ir_actions_act_multi',
         'odoo12-addon-web_ir_actions_act_view_reload',
         'odoo12-addon-web_ir_actions_act_window_message',
+        'odoo12-addon-web_ir_actions_close_wizard_refresh_view',
         'odoo12-addon-web_listview_range_select',
         'odoo12-addon-web_m2x_options',
         'odoo12-addon-web_no_bubble',
