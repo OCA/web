@@ -42,7 +42,5 @@
         </field>
     </record>
 
-    <menuitem id="menu_model_external_help" 
-        name="Model Help" parent="base.next_id_9" 
-        action="model_external_help_action_form" />
+    <menuitem id="menu_model_external_help" name="Model Help" parent="base.next_id_9" action="model_external_help_action_form" />
 </odoo>

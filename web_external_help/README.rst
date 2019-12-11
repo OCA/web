@@ -25,17 +25,11 @@ For Model:
 
 * Go to Settings > Technical > Database Structure > Model Help.
 
-or
-==
-
 * Go to the view of the model, Open Developer Tools > Model Help.
 
 For Fields:
 
 * Go to Settings > Technical > Database Structure > Fields Help.
-
-or
-==
 
 * Go to the view of the model, Open Developer Tools > Fields Help.
 

@@ -16,7 +16,7 @@
         "views/view_fields_external_help.xml",
         "views/view_model_external_help.xml",
     ],
-    "qweb": ["views/debug_menu.xml"],
+    "qweb": ["static/src/xml/debug_menu.xml"],
     "auto_install": False,
     "installable": True,
 }

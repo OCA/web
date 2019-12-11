@@ -10,8 +10,7 @@ class ModelExternalHelp(models.Model):
     _rec_name = "model_id"
 
     model_id = fields.Many2one(
-        string="Model", comodel_name="ir.model",
-        ondelete="cascade", required=True
+        string="Model", comodel_name="ir.model", ondelete="cascade", required=True
     )
     external_url = fields.Char(string="External URL")
     link_text = fields.Char(string="Link Text")

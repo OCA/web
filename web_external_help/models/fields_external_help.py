@@ -60,9 +60,7 @@ class FieldHelpLine(models.Model):
     field_name = fields.Char(related="field_id.name")
     external_url = fields.Char(string="External Url", required=True)
     external_help_id = fields.Many2one(
-        string="External Help",
-        comodel_name="fields.external.help",
-        ondelete="cascade"
+        string="External Help", comodel_name="fields.external.help", ondelete="cascade"
     )
     model_id = fields.Many2one(related="external_help_id.model_id")
     model = fields.Char(related="model_id.model", string="Model Name")
