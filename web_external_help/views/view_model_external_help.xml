@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="model_external_help_view_form" model="ir.ui.view">
+        <field name="name">model.external.help.form</field>
+        <field name="model">model.external.help</field>
+        <field name="arch" type="xml">
+            <form string="Model External Help">
+                <sheet>
+                    <group>
+                        <field name="model_id" />
+                        <field name="external_url" />
+                        <field name="link_text" />
+                        <field name="help_text" />
+                        <field name="model" invisible="1" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="model_external_help_view_tree" model="ir.ui.view">
+        <field name="name">model.external.help.tree</field>
+        <field name="model">model.external.help</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="model_id" />
+                <field name="external_url" />
+                <field name="link_text" />
+                <field name="model" invisible="1" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="model_external_help_action_form" model="ir.actions.act_window">
+        <field name="name">Model External Help</field>
+        <field name="res_model">model.external.help</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click on Create to add External Help!
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_model_external_help" 
+        name="Model Help" parent="base.next_id_9" 
+        action="model_external_help_action_form" />
+</odoo>

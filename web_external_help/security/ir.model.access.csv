@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fields_external_help,access_fields_external_help,model_fields_external_help,base.group_user,1,1,1,1
+access_field_help_line,access_field_help_line,model_field_help_line,base.group_user,1,1,1,1
+access_model_external_help,access_model_external_help,model_model_external_help,base.group_user,1,1,1,1

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="fields_external_help_view_form" model="ir.ui.view">
+        <field name="name">fields.external.help.form</field>
+        <field name="model">fields.external.help</field>
+        <field name="arch" type="xml">
+            <form string="Fields External Help">
+                <sheet>
+                    <group>
+                        <field name="model_id" />
+                        <field name="model" invisible="1" />
+                    </group>
+                    <notebook>
+                        <page string="Fields">
+                            <field name="help_line_ids" nolabel="1">
+                                <tree>
+                                    <field name="field_id" domain="[('model_id', '=', model_id)]" />
+                                    <field name="external_url" />
+                                    <field name="link_text" />
+                                    <field name="help_text" invisible="1" />
+                                    <field name="field_name" invisible="1" />
+                                    <field name="external_help_id" invisible="1" />
+                                    <field name="model_id" invisible="1" />
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="field_id" domain="[('model_id', '=', model_id)]" />
+                                            <field name="external_url" />
+                                            <field name="model_id" invisible="1" />
+                                        </group>
+                                        <group>
+                                            <field name="link_text" />
+                                            <field name="field_name" invisible="1" />
+                                            <field name="external_help_id" invisible="1" />
+                                        </group>
+                                        <field name="help_text" />
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="fields_external_help_view_tree" model="ir.ui.view">
+        <field name="name">fields.external.help.tree</field>
+        <field name="model">fields.external.help</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="model_id" />
+                <field name="model" invisible="1" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="fields_external_help_action_form" model="ir.actions.act_window">
+        <field name="name">Fields External Help</field>
+        <field name="res_model">fields.external.help</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click on Create to add External Help!
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_fields_external_help" name="Fields Help" parent="base.next_id_9" action="fields_external_help_action_form" />
+</odoo>

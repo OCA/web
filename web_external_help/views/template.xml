@@ -1,0 +1,10 @@
+<odoo>
+    <!-- List Draggable Asset-->
+    <template id="web_external_help_asset" inherit_id="web.assets_backend" name="Web External Help assets">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="web_external_help/static/src/css/web-external-help.css" />
+            <script type="text/javascript" src="/web_external_help/static/src/js/web_external_help.js" />
+        </xpath>
+    </template>
+
+</odoo>
