@@ -15,10 +15,12 @@
     <t t-name="FieldChildSelectorChild">
         <div class="row">
             <div t-foreach="childs" t-as="key" class="col-xs-12">
-                <button t-att-data-id="childs[key][0]" t-att-data-index="key"
-                        data-type="child" class="o_child_selection_button btn">
+                <t t-set="id_for_label" t-value="'o_child_hierarchy_selector_' + _.uniqueId()"/>
+                <input type="radio" t-att-data-id="childs[key][0]" t-att-data-index="key"
+                       t-att-id="id_for_label" data-type="child" class="o_child_selection_button"/>
+                <label class="o_form_label o_child_selection_label" t-att-for="id_for_label">
                     <t t-esc="childs[key][1]"/>
-                </button>
+                </label>
             </div>
         </div>
     </t>
@@ -31,6 +33,9 @@
                     <t t-esc="parents[key][1]"/>
                 </a>
             </t>
+        <t t-if="Object.keys(parents).length > 0">
+            <i class="fa fa-times o_child_selection_button o_child_selection_clear" aria-hidden="true" data-type="clear"/>
+        </t>
         </span>
     </t>
 </templates>
