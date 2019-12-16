@@ -8,15 +8,9 @@
     "category": "Web",
     "version": "12.0.1.0.0",
     "license": "LGPL-3",
-    "author": "Modoolar, "
-              "Brainbean Apps, "
-              "Odoo Community Association (OCA)",
+    "author": "Modoolar, Brainbean Apps, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web/",
-    "depends": [
-        "web"
-    ],
-    "data": [
-        "views/web_ir_actions_act_view_reload.xml",
-    ],
+    "depends": ["web"],
+    "data": ["views/web_ir_actions_act_view_reload.xml"],
     "installable": True,
 }
