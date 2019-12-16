@@ -13,7 +13,7 @@ odoo.define('web.web_widget_child_selector', function(require) {
             'click .o_child_selection_button': '_onChildSelectionClick',
         }),
         start: function () {
-            // booleean indicating that the content of the input isn't synchronized
+            // boolean indicating that the content of the input isn't synchronized
             // with the current m2o value (for instance, the user is currently
             // typing something in the input, and hasn't selected a value yet).
 
@@ -41,7 +41,11 @@ odoo.define('web.web_widget_child_selector', function(require) {
             this._rpc({
                 model: this.field.relation,
                 method: 'get_record_direct_childs_parents',
-                args: [ resources, this.nodeOptions],
+                args: [
+                    resources,
+                    this.nodeOptions,
+                    this.record.getDomain({fieldName: this.name}),
+                ],
                 context: this.record.getContext(this.recordParams),
             })
             .then(function (data) {
@@ -59,31 +63,17 @@ odoo.define('web.web_widget_child_selector', function(require) {
                 }));
             });
         },
-        _onChildSelectionParent: function(event) {
-            var self = this;
-            this._rpc({
-                model: this.field.relation,
-                method: 'get_record_parent',
-                args: [[this.value.res_id || false]],
-                context: this.record.getContext(this.recordParams),
-            })
-            .then(function (parent) {
-                if (parent)
-                    self._setValue({
-                        id: parent[0], display_name: parent[1]
-                    })
-                else
-                    self._setValue({
-                        id: false, display_name: false
-                    });
-            });
-        },
         _onChildSelectionClick: function(event) {
             var target = $(event.target);
-            var index = target.data('index');
             var type =  target.data('type');
-            var value = (type === 'child') ? this.childs[index]: this.parents[index];
-            this._setValue({id: value[0], display_name: value[1]});
+            if (type === 'clear') {
+                this._setValue({id: false});
+            }
+            else {
+                var index = target.data('index');
+                var value = (type === 'child') ? this.childs[index]: this.parents[index];
+                this._setValue({id: value[0], display_name: value[1]});
+            }
         },
         _renderEdit: function() {
             this._set_childs();
