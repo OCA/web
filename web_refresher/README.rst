@@ -27,7 +27,7 @@ Web Refresher
 
 Adds a button next to the pager (in trees/kanban views) to refresh the displayed list.
 
-.. |refresh| image:: https://raw.githubusercontent.com/OCA/web/11.0/web_refresher/images/refresh.png
+.. |refresh| image:: ./images/refresh.png
 
 **Table of contents**
 
