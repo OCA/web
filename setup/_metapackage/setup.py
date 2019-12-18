@@ -27,6 +27,7 @@ setuptools.setup(
         'odoo11-addon-web_m2x_options',
         'odoo11-addon-web_no_bubble',
         'odoo11-addon-web_notify',
+        'odoo11-addon-web_refresher',
         'odoo11-addon-web_responsive',
         'odoo11-addon-web_search_with_and',
         'odoo11-addon-web_searchbar_full_width',
