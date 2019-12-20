@@ -17,7 +17,8 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                    'web_m2x_options.create_edit',
                    'web_m2x_options.limit',
                    'web_m2x_options.search_more',
-                   'web_m2x_options.m2o_dialog',];
+                   'web_m2x_options.m2o_dialog',
+                   'web_m2x_options.m2o_delay',];
 
     // In odoo 9.c FielMany2One is not exposed by form_relational
     // To bypass this limitation we use the widget registry to get the
@@ -256,6 +257,24 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
             });
 
             return def;
+        },
+
+        render_editable: function() {
+            this._super();
+            // Get the options
+            // FIXME: could it be avoided here and get benefits
+            // from the call already done in 'start'?
+            this.get_options();
+            // Set the delay beyond which the name_search request is triggered
+            if (!_.isUndefined(this.view.ir_options['web_m2x_options.m2o_delay'])) {
+                this.delay = parseInt(this.view.ir_options['web_m2x_options.m2o_delay']);
+            }
+            if (typeof this.options.delay === 'number') {
+                this.delay = this.options.delay;
+            }
+            if (!_.isUndefined(this.delay)) {
+                this.$input.autocomplete("option", "delay", this.delay);
+            }
         }
     });
 

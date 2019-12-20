@@ -47,6 +47,10 @@ in the field's options dict
 
   Number of displayed record in drop-down panel
 
+``delay`` *int* (Default: openerp default value is ``200``)
+
+  Number of milliseconds after a user input to trigger the ``name_search``.
+
 ``search_more`` *boolean*
 
   Used to force disable/enable search more button.
@@ -90,6 +94,10 @@ If you disable one option, you can enable it for particular field by setting "cr
 ``web_m2x_options.limit`` *int* (Default: openerp default value is ``7``)
 
   Number of displayed record in drop-down panel for all fields in the odoo instance
+
+``web_m2x_options.m2o_delay`` *int* (Default: openerp default value is ``200``)
+
+  Number of milliseconds after a user input to trigger the ``name_search`` for all fields in the odoo instance.
 
 ``web_m2x_options.search_more`` *boolean* (Default: default value is ``False``)
 
