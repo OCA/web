@@ -47,7 +47,7 @@ in the field's options dict
 
   Number of displayed record in drop-down panel
 
-``delay`` *int* (Default: openerp default value is ``200``)
+``search_delay`` *int* (Default: openerp default value is ``200``)
 
   Number of milliseconds after a user input to trigger the ``name_search``.
 
@@ -95,9 +95,9 @@ If you disable one option, you can enable it for particular field by setting "cr
 
   Number of displayed record in drop-down panel for all fields in the odoo instance
 
-``web_m2x_options.m2o_delay`` *int* (Default: openerp default value is ``200``)
+``web_m2x_options.m2o_search_delay`` *int* (Default: openerp default value is ``200`` for all data models)
 
-  Number of milliseconds after a user input to trigger the ``name_search`` for all fields in the odoo instance.
+  A JSON object where each key is the name of a a data model, and the value is a number of milliseconds beyond which the user input triggers the ``name_search``.
 
 ``web_m2x_options.search_more`` *boolean* (Default: default value is ``False``)
 
@@ -108,6 +108,7 @@ To add these parameters go to Configuration -> Technical -> Parameters -> System
 - web_m2x_options.create: False
 - web_m2x_options.create_edit: False
 - web_m2x_options.m2o_dialog: False
+- web_m2x_options.m2o_search_delay: {"res.partner": 800}
 - web_m2x_options.limit: 10
 - web_m2x_options.search_more: True
 

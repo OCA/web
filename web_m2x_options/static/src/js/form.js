@@ -18,7 +18,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                    'web_m2x_options.limit',
                    'web_m2x_options.search_more',
                    'web_m2x_options.m2o_dialog',
-                   'web_m2x_options.m2o_delay',];
+                   'web_m2x_options.m2o_search_delay',];
 
     // In odoo 9.c FielMany2One is not exposed by form_relational
     // To bypass this limitation we use the widget registry to get the
@@ -259,23 +259,34 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
             return def;
         },
 
+        set_option_autocomplete_delay: function() {
+            var self = this;
+            this.get_options().then( function() {
+              // Handle the 'search_delay' option
+              //  - global m2o_search_delay from ir_config_parameter
+              if ('web_m2x_options.m2o_search_delay' in self.view.ir_options) {
+                  var m2o_search_delay = JSON.parse(
+                      self.view.ir_options['web_m2x_options.m2o_search_delay']
+                  )
+                  if (self.field.relation in m2o_search_delay) {
+                    self.search_delay = parseInt(m2o_search_delay[self.field.relation]);
+                  }
+              }
+              // - 'search_delay' option on field takes precedence
+              if (typeof self.options.search_delay === 'number') {
+                  self.search_delay = self.options.search_delay;
+              }
+              // Change the autocomplete 'delay' option
+              if (!_.isUndefined(self.search_delay)) {
+                  self.$input.autocomplete("option", "delay", self.search_delay);
+              }
+            });
+        },
+
         render_editable: function() {
-            this._super();
-            // Get the options
-            // FIXME: could it be avoided here and get benefits
-            // from the call already done in 'start'?
-            this.get_options();
-            // Set the delay beyond which the name_search request is triggered
-            if (!_.isUndefined(this.view.ir_options['web_m2x_options.m2o_delay'])) {
-                this.delay = parseInt(this.view.ir_options['web_m2x_options.m2o_delay']);
-            }
-            if (typeof this.options.delay === 'number') {
-                this.delay = this.options.delay;
-            }
-            if (!_.isUndefined(this.delay)) {
-                this.$input.autocomplete("option", "delay", this.delay);
-            }
-        }
+            this._super.apply(this, arguments);
+            this.set_option_autocomplete_delay();
+        },
     });
 
     form_relational.FieldMany2ManyTags.include({
