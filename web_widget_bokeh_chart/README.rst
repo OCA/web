@@ -23,7 +23,7 @@ Web Widget Bokeh Chart
     :target: https://runbot.odoo-community.org/runbot/162/13.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5|
+|badge1| |badge2| |badge3| |badge4| |badge5| 
 
 This module add the possibility to insert Bokeh charts into Odoo standard views.
 
@@ -131,13 +131,13 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-.. |maintainer-lreficent| image:: https://github.com/lreficent.png?size=40px
-    :target: https://github.com/lreficent
-    :alt: lreficent
+.. |maintainer-LoisRForgeFlow| image:: https://github.com/LoisRForgeFlow.png?size=40px
+    :target: https://github.com/LoisRForgeFlow
+    :alt: LoisRForgeFlow
 
 Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-lreficent|
+|maintainer-LoisRForgeFlow| 
 
 This module is part of the `OCA/web <https://github.com/OCA/web/tree/13.0/web_widget_bokeh_chart>`_ project on GitHub.
 
