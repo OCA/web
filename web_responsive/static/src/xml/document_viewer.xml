@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2019 Tecnativa - Alexandre Díaz
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
+
+<template>
+    <t t-extend="DocumentViewer">
+        <t t-jquery=".o_modal_fullscreen" t-operation="attributes">
+            <attribute name="class">modal o_modal_fullscreen o_document_viewer o_responsive_document_viewer</attribute>
+            <attribute name="data-backdrop">false</attribute>
+        </t>
+    </t>
+
+    <t t-extend="DocumentViewer.Content">
+        <t t-jquery=".o_close_btn" t-operation="replace">
+            <div class="o_buttons float-right mr8">
+                <a role="button" class="mr8 o_maximize_btn" tabindex="0" aria-label="Maximize" title="Maximize"><i class="fa fa-window-maximize"></i></a>
+                <a role="button" class="mr8 o_minimize_btn" tabindex="0" aria-label="Minimize" title="Minimize"><i class="fa fa-window-minimize"></i></a>
+                <a role="button" class="o_close_btn" tabindex="0" aria-label="Close" title="Close"><i class="fa fa-close"></i></a>
+            </div>
+        </t>
+    </t>
+</template>
