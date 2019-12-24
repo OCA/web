@@ -103,6 +103,12 @@ Features for computers:
 
   .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/chatter.gif
 
+* When the chatter is configured on the side part, the document viewer fills that
+  part for side-by-side reading instead of full screen. You can still put it on full
+  width preview clicking on the new maximize button.
+
+  .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/document_viewer.gif
+
 **Table of contents**
 
 .. contents::
