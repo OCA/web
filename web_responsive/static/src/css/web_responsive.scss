@@ -1,6 +1,8 @@
 /* Copyright 2018 Tecnativa - Jairo Llopis
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
+$chatter_zone_width: 35%;
+
 @mixin full-screen-dropdown {
     border: none;
     box-shadow: none;
@@ -505,7 +507,7 @@ html .o_web_client .o_action_manager .o_action {
 
                 .o_chatter {
                     border-left: 1px solid gray('400');
-                    flex: 0 0 35%;
+                    flex: 0 0 $chatter_zone_width;
                     max-width: initial;
                     min-width: initial;
                     overflow: auto;
@@ -566,4 +568,81 @@ html .o_web_client .o_action_manager .o_action {
 // Waiting Cursor
 .oe_wait {
   cursor: progress;
+}
+
+// Document Viewer
+.o_web_client.o_chatter_position_sided {
+    .o_modal_fullscreen.o_document_viewer {
+        // On-top of navbar
+        z-index: 10;
+
+        &.o_responsive_document_viewer {
+            /* Show sided viewer on large screens */
+            @include media-breakpoint-up(lg) {
+                width: $chatter_zone_width;
+                margin-left: auto;
+                right: 0;
+
+                /* Show/Hide control buttons (next, prev, etc..) */
+                &:hover .arrow, &:hover .o_viewer_toolbar {
+                    display: flex;
+                }
+                .arrow, .o_viewer_toolbar {
+                    display: none;
+                }
+
+                .o_viewer_img_wrapper {
+                    position: relative;
+
+                    .o_viewer_pdf {
+                        width: 95%;
+                    }
+                }
+            }
+
+            .o_minimize_btn {
+                display: none;
+            }
+        }
+        &:not(.o_responsive_document_viewer) {
+            .o_maximize_btn {
+                display: none;
+            }
+        }
+        @include media-breakpoint-down(lg) {
+            .o_minimize_btn, .o_maximize_btn {
+                display: none;
+            }
+        }
+    }
+}
+/* Max/Min buttons only are usefull in sided mode */
+.o_web_client:not(.o_chatter_position_sided) {
+    .o_minimize_btn, .o_maximize_btn {
+        display: none;
+    }
+}
+// Apply improvements for Document Viewer on all modes
+.o_modal_fullscreen .o_viewer_content {
+    .o_viewer-header {
+        .o_image_caption {
+            display: contents;
+        }
+
+        // Now uses a container to have more buttons
+        .o_buttons {
+            min-width: 35px;
+            text-align: right;
+
+            // Now close button ('X') it's a fa-icon
+            > .o_close_btn {
+                top: unset;
+                left: unset;
+                bottom: unset;
+                right: unset;
+                font-size: unset;
+                font-weight: unset;
+            }
+        }
+    }
 }
