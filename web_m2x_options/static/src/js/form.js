@@ -9,6 +9,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
         data = require('web.data'),
         Dialog = require('web.Dialog'),
         Model = require('web.Model'),
+        View = require('web.View'),
         form_relational = require('web.form_relational'),
         _ = require('_'),
         _t  = core._t;
@@ -58,29 +59,33 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
         },
     });
 
+    View.include({
+
+        start: function () {
+            var d = this._super.apply(this, arguments);
+            return $.when(d, this.get_web_m2x_options());
+        },
+
+        get_web_m2x_options: function() {
+            var self = this;
+            this.ir_options = {};
+            return (new Model("ir.config_parameter"))
+                .query(["key", "value"]).filter([['key', 'in', OPTIONS]])
+                .all().then(function(records) {
+                    _(records).each(function(record) {
+                        self.ir_options[record.key] = record.value;
+                    });
+                });
+        },
+
+    });
+
     FieldMany2One.include({
 
         start: function() {
-            this._super.apply(this, arguments);
-            return this.get_options();
-        },
-
-        get_options: function() {
-            var self = this;
-            if (!_.isUndefined(this.view) && _.isUndefined(this.view.ir_options_loaded)) {
-            this.view.ir_options_loaded = $.Deferred();
-            this.view.ir_options = {};
-            (new Model("ir.config_parameter"))
-                .query(["key", "value"]).filter([['key', 'in', OPTIONS]])
-                .all().then(function(records) {
-                _(records).each(function(record) {
-                    self.view.ir_options[record.key] = record.value;
-                });
-                self.view.ir_options_loaded.resolve();
-                });
-                return this.view.ir_options_loaded;
-            }
-            return $.when();
+            var d = this._super.apply(this, arguments);
+            this.set_option_autocomplete_delay();
+            return d;
         },
 
         is_option_set: function(option) {
@@ -261,31 +266,24 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
 
         set_option_autocomplete_delay: function() {
             var self = this;
-            this.get_options().then( function() {
-              // Handle the 'search_delay' option
-              //  - global m2o_search_delay from ir_config_parameter
-              if ('web_m2x_options.m2o_search_delay' in self.view.ir_options) {
-                  var m2o_search_delay = JSON.parse(
-                      self.view.ir_options['web_m2x_options.m2o_search_delay']
-                  )
-                  if (self.field.relation in m2o_search_delay) {
-                    self.search_delay = parseInt(m2o_search_delay[self.field.relation]);
-                  }
-              }
-              // - 'search_delay' option on field takes precedence
-              if (typeof self.options.search_delay === 'number') {
-                  self.search_delay = self.options.search_delay;
-              }
-              // Change the autocomplete 'delay' option
-              if (!_.isUndefined(self.search_delay)) {
-                  self.$input.autocomplete("option", "delay", self.search_delay);
-              }
-            });
-        },
-
-        render_editable: function() {
-            this._super.apply(this, arguments);
-            this.set_option_autocomplete_delay();
+            // Handle the 'search_delay' option
+            //  - global m2o_search_delay from ir_config_parameter
+            if ('web_m2x_options.m2o_search_delay' in self.view.ir_options) {
+                var m2o_search_delay = JSON.parse(
+                    self.view.ir_options['web_m2x_options.m2o_search_delay']
+                )
+                if (self.field.relation in m2o_search_delay) {
+                  self.search_delay = parseInt(m2o_search_delay[self.field.relation]);
+                }
+            }
+            // - 'search_delay' option on field takes precedence
+            if (typeof self.options.search_delay === 'number') {
+                self.search_delay = self.options.search_delay;
+            }
+            // Change the autocomplete 'delay' option
+            if (!_.isUndefined(self.search_delay)) {
+                self.$input.autocomplete("option", "delay", self.search_delay);
+            }
         },
     });
 
@@ -299,28 +297,6 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                 this.options.m2o_dialog) {
                 new M2ODialog(this).open();
             }
-        },
-
-        start: function() {
-            this._super.apply(this, arguments);
-            return this.get_options();
-        },
-
-        get_options: function() {
-            var self = this;
-            if (_.isUndefined(this.view.ir_options_loaded)) {
-                this.view.ir_options_loaded = $.Deferred();
-                this.view.ir_options = {};
-                (new Model("ir.config_parameter"))
-                        .query(["key", "value"]).filter([['key', 'in', OPTIONS]])
-                        .all().then(function(records) {
-                        _(records).each(function(record) {
-                    self.view.ir_options[record.key] = record.value;
-                    });
-                self.view.ir_options_loaded.resolve();
-            });
-            }
-            return this.view.ir_options_loaded;
         },
 
         is_option_set: function(option) {
