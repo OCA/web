@@ -19,7 +19,6 @@ odoo.define('web_timeline.TimelineController', function (require) {
         }),
 
         /**
-         * @constructor
          * @override
          */
         init: function (parent, model, renderer, params) {
@@ -38,11 +37,11 @@ odoo.define('web_timeline.TimelineController', function (require) {
          */
         update: function (params, options) {
             var res = this._super.apply(this, arguments);
-            if (_.isEmpty(params)){
+            if (_.isEmpty(params)) {
                 return res;
             }
             var defaults = _.defaults({}, options, {
-                adjust_window: true
+                adjust_window: true,
             });
             var self = this;
             var domains = params.domain;
@@ -50,7 +49,7 @@ odoo.define('web_timeline.TimelineController', function (require) {
             var group_bys = params.groupBy;
             this.last_domains = domains;
             this.last_contexts = contexts;
-            // select the group by
+            // Select the group by
             var n_group_bys = [];
             if (this.renderer.arch.attrs.default_group_by) {
                 n_group_bys = this.renderer.arch.attrs.default_group_by.split(',');
@@ -83,6 +82,7 @@ odoo.define('web_timeline.TimelineController', function (require) {
          * Gets triggered when a group in the timeline is clicked (by the TimelineRenderer).
          *
          * @private
+         * @param {EventObject} event
          * @returns {jQuery.Deferred}
          */
         _onGroupClick: function (event) {
@@ -92,7 +92,7 @@ odoo.define('web_timeline.TimelineController', function (require) {
                 res_model: this.renderer.view.fields[groupField].relation,
                 res_id: event.data.item.group,
                 target: 'new',
-                views: [[false, 'form']]
+                views: [[false, 'form']],
             });
         },
 
@@ -100,6 +100,7 @@ odoo.define('web_timeline.TimelineController', function (require) {
          * Opens a form view of a clicked timeline item (triggered by the TimelineRenderer).
          *
          * @private
+         * @param {EventObject} event
          */
         _onUpdate: function (event) {
             var self = this;
@@ -137,6 +138,7 @@ odoo.define('web_timeline.TimelineController', function (require) {
          * Gets triggered when a timeline item is moved (triggered by the TimelineRenderer).
          *
          * @private
+         * @param {EventObject} event
          */
         _onMove: function (event) {
             var item = event.data.item;
@@ -149,7 +151,8 @@ odoo.define('web_timeline.TimelineController', function (require) {
                 group = item.group;
             }
             var data = {};
-            // In case of a move event, the date_delay stay the same, only date_start and stop must be updated
+            // In case of a move event, the date_delay stay the same,
+            // only date_start and stop must be updated
             data[this.date_start] = time.auto_date_to_str(event_start, fields[this.date_start].type);
             if (this.date_stop) {
                 // In case of instantaneous event, item.end is not defined
@@ -170,7 +173,7 @@ odoo.define('web_timeline.TimelineController', function (require) {
             this.moveQueue.push({
                 id: event.data.item.id,
                 data: data,
-                event: event
+                event: event,
             });
 
             this.debouncedInternalMove();
@@ -187,7 +190,7 @@ odoo.define('web_timeline.TimelineController', function (require) {
             var queue = this.moveQueue.slice();
             this.moveQueue = [];
             var defers = [];
-            _.each(queue, function(item) {
+            _.each(queue, function (item) {
                 defers.push(self._rpc({
                     model: self.model.modelName,
                     method: 'write',
@@ -196,13 +199,13 @@ odoo.define('web_timeline.TimelineController', function (require) {
                         item.data,
                     ],
                     context: self.getSession().user_context,
-                }).then(function() {
+                }).then(function () {
                     item.event.data.callback(item.event.data.item);
                 }));
             });
-            return $.when.apply($, defers).done(function() {
+            return $.when.apply($, defers).done(function () {
                 self.write_completed({
-                    adjust_window: false
+                    adjust_window: false,
                 });
             });
         },
@@ -212,12 +215,13 @@ odoo.define('web_timeline.TimelineController', function (require) {
          * Requires user confirmation before it gets actually deleted.
          *
          * @private
+         * @param {EventObject} e
          * @returns {jQuery.Deferred}
          */
         _onRemove: function (e) {
             var self = this;
 
-            function do_it(event) {
+            function do_it (event) {
                 return self._rpc({
                     model: self.model.modelName,
                     method: 'unlink',
@@ -244,7 +248,7 @@ odoo.define('web_timeline.TimelineController', function (require) {
             var def = $.Deferred();
             Dialog.confirm(this, message, {
                 title: _t("Warning"),
-                confirm_callback: function() {
+                confirm_callback: function () {
                     do_it(e)
                         .done(def.resolve.bind(def, true))
                         .fail(def.reject.bind(def));
@@ -257,6 +261,8 @@ odoo.define('web_timeline.TimelineController', function (require) {
          * Triggered when a timeline item gets added and opens a form view.
          *
          * @private
+         * @param {EventObject} event
+         * @returns {dialogs.FormViewDialog}
          */
         _onAdd: function (event) {
             var self = this;
@@ -300,6 +306,7 @@ odoo.define('web_timeline.TimelineController', function (require) {
          * Triggered upon completion of a new record.
          * Updates the timeline view with the new record.
          *
+         * @param {RecordId} id
          * @returns {jQuery.Deferred}
          */
         create_completed: function (id) {
@@ -312,8 +319,7 @@ odoo.define('web_timeline.TimelineController', function (require) {
                     this.model.fieldNames,
                 ],
                 context: this.context,
-            })
-            .then(function (records) {
+            }).then(function (records) {
                 var new_event = self.renderer.event_data_transform(records[0]);
                 var items = self.renderer.timeline.itemsData;
                 items.add(new_event);
@@ -324,6 +330,7 @@ odoo.define('web_timeline.TimelineController', function (require) {
 
         /**
          * Triggered upon completion of writing a record.
+         * @param {ControllerOptions} options
          */
         write_completed: function (options) {
             var params = {
@@ -331,7 +338,6 @@ odoo.define('web_timeline.TimelineController', function (require) {
                 context: this.context,
                 groupBy: this.renderer.last_group_bys,
             };
-
             this.update(params, options);
         },
     });

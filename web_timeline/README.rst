@@ -23,7 +23,7 @@ Web timeline
     :target: https://runbot.odoo-community.org/runbot/162/12.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 Define a new view displaying events in an interactive visualization chart.
 
@@ -173,6 +173,7 @@ Authors
 * Tecnativa
 * Monk Software
 * Onestein
+* Trobz
 
 Contributors
 ~~~~~~~~~~~~
@@ -183,6 +184,7 @@ Contributors
 * Leonardo Donelli <donelli@webmonks.it>
 * Adrien Didenot <adrien.didenot@horanet.com>
 * Dennis Sluijk <d.sluijk@onestein.nl>
+* Thong Nguyen Van <thongnv@trobz.com>
 
 Other credits
 ~~~~~~~~~~~~~
@@ -211,7 +213,7 @@ promote its widespread use.
 
 Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-tarteo| 
+|maintainer-tarteo|
 
 This module is part of the `OCA/web <https://github.com/OCA/web/tree/12.0/web_timeline>`_ project on GitHub.
 

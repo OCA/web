@@ -33,9 +33,7 @@ odoo.define('web_timeline.TimelineCanvas', function (require) {
          * @param {Number} breakAt The space between the line turns
          * @returns {Array} Each item represents a coordinate
          */
-        get_polyline_points: function (coordx1, coordy1, coordx2, coordy2,
-                                       width1, height1, width2, height2,
-                                       widthMarker, breakAt) {
+        get_polyline_points: function (coordx1, coordy1, coordx2, coordy2, width1, height1, width2, height2, widthMarker, breakAt) {
             var halfHeight1 = height1 / 2;
             var halfHeight2 = height2 / 2;
             var x1 = coordx1 - widthMarker;
@@ -59,7 +57,7 @@ odoo.define('web_timeline.TimelineCanvas', function (require) {
                     points.push([x2 + breakAt, y2 + yDiffSpace]);
                     points.push([x2 + breakAt, y2]);
                 }
-            } else if(x1 < x2) {
+            } else if (x1 < x2) {
                 points.push([x1 - breakAt, y1]);
                 points.push([x1 - breakAt, y1 + spaceY]);
                 points.push([x2 + breakAt, y2 + spaceY]);
@@ -105,11 +103,9 @@ odoo.define('web_timeline.TimelineCanvas', function (require) {
                 width2 = to.clientWidth,
                 height2 = to.clientHeight;
 
-            var points = this.get_polyline_points(
-                x1, y1, x2, y2, width1, height1, width2, height2, widthMarker, breakLineAt
-            );
+            var points = this.get_polyline_points(x1, y1, x2, y2, width1, height1, width2, height2, widthMarker, breakLineAt);
 
-            var polyline_points = _.map(points, function(point) {
+            var polyline_points = _.map(points, function (point) {
                 return point.join(',');
             }).join();
 

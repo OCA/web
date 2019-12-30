@@ -31,8 +31,8 @@ odoo.define('web_timeline.TimelineView', function (require) {
     var TimelineView = AbstractView.extend({
         display_name: _lt('Timeline'),
         icon: 'fa-clock-o',
-        jsLibs: ['/web_timeline/static/lib/vis/vis-timeline-graph2d.min.js'],
-        cssLibs: ['/web_timeline/static/lib/vis/vis-timeline-graph2d.min.css'],
+        jsLibs: ['/web_timeline/static/lib/vis-timeline/vis-timeline-graph2d.min.js'],
+        cssLibs: ['/web_timeline/static/lib/vis-timeline/vis-timeline-graph2d.min.css'],
         config: {
             Model: TimelineModel,
             Controller: TimelineController,
@@ -40,7 +40,6 @@ odoo.define('web_timeline.TimelineView', function (require) {
         },
 
         /**
-         * @constructor
          * @override
          */
         init: function (viewInfo, params) {
@@ -73,9 +72,9 @@ odoo.define('web_timeline.TimelineView', function (require) {
                 }
             });
 
-            var archFieldNames = _.map(_.filter(this.arch.children, function(item) {
+            var archFieldNames = _.map(_.filter(this.arch.children, function (item) {
                 return item.tag === 'field';
-            }), function(item) {
+            }), function (item) {
                 return item.attrs.name;
             });
             fieldNames = _.union(
@@ -84,7 +83,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
             );
 
             this.parse_colors();
-            for (var i=0; i<this.colors.length; i++) {
+            for (var i = 0; i < this.colors.length; i++) {
                 fieldNames.push(this.colors[i].field);
             }
 
@@ -107,7 +106,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
 
             this.current_window = {
                 start: new moment(),
-                end: new moment().add(24, 'hours')
+                end: new moment().add(24, 'hours'),
             };
             if (!isNullOrUndef(attrs.quick_create_instance)) {
                 self.quick_create_instance = 'instance.' + attrs.quick_create_instance;
@@ -124,7 +123,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
                 showCurrentTime: true,
                 stack: this.stack,
                 margin: JSON.parse(this.margin),
-                zoomKey: this.zoomKey
+                zoomKey: this.zoomKey,
             };
             if (isNullOrUndef(attrs.event_open_popup) || !_.str.toBoolElse(attrs.event_open_popup, true)) {
                 this.open_popup_action = false;
@@ -152,14 +151,15 @@ odoo.define('web_timeline.TimelineView', function (require) {
             this.controllerParams.date_stop = this.date_stop;
             this.controllerParams.date_delay = this.date_delay;
             this.controllerParams.actionContext = this.action.context;
-            return this;
+            this.withSearchPanel = false;
         },
 
         /**
          * Order function for groups.
+         * @returns {Integer}
          */
         group_order: function (grp1, grp2) {
-            // display non grouped elements first
+            // Display non grouped elements first
             if (grp1.id === -1) {
                 return -1;
             }
@@ -168,7 +168,6 @@ odoo.define('web_timeline.TimelineView', function (require) {
             }
 
             return grp1.content.localeCompare(grp2.content);
-
         },
 
         /**
@@ -185,7 +184,7 @@ odoo.define('web_timeline.TimelineView', function (require) {
                         'color': color,
                         'field': temp.expressions[0].value,
                         'opt': temp.operators[0],
-                        'value': temp.expressions[1].value
+                        'value': temp.expressions[1].value,
                     };
                 }).value();
             } else {
