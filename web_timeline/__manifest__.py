@@ -4,20 +4,21 @@
 {
     "name": "Web timeline",
     "summary": "Interactive visualization chart to show events in time",
-    "version": "12.0.1.0.5",
+    "version": "13.0.1.0.0",
     "development_status": "Production/Stable",
     "author": "ACSONE SA/NV, "
     "Tecnativa, "
     "Monk Software, "
     "Onestein, "
+    "Trobz, "
     "Odoo Community Association (OCA)",
     "category": "web",
     "license": "AGPL-3",
-    "application": False,
-    "installable": True,
     "website": "https://github.com/OCA/web",
     "depends": ["web"],
     "qweb": ["static/src/xml/web_timeline.xml"],
     "data": ["views/web_timeline.xml"],
     "maintainers": ["tarteo"],
+    "application": False,
+    "installable": True,
 }
