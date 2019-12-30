@@ -4,3 +4,4 @@
 * Leonardo Donelli <donelli@webmonks.it>
 * Adrien Didenot <adrien.didenot@horanet.com>
 * Dennis Sluijk <d.sluijk@onestein.nl>
+* Thong Nguyen Van <thongnv@trobz.com>
