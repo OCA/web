@@ -5,16 +5,10 @@ odoo.define('web_timeline.TimelineModel', function (require) {
 
     var TimelineModel = AbstractModel.extend({
 
-        /**
-         * @constructor
-         */
         init: function () {
             this._super.apply(this, arguments);
         },
 
-        /**
-         * @override
-         */
         load: function (params) {
             var self = this;
             this.modelName = params.modelName;
@@ -22,10 +16,22 @@ odoo.define('web_timeline.TimelineModel', function (require) {
             if (!this.preload_def) {
                 this.preload_def = $.Deferred();
                 $.when(
-                    this._rpc({model: this.modelName, method: 'check_access_rights', args: ["write", false]}),
-                    this._rpc({model: this.modelName, method: 'check_access_rights', args: ["unlink", false]}),
-                    this._rpc({model: this.modelName, method: 'check_access_rights', args: ["create", false]}))
-                .then(function (write, unlink, create) {
+                    this._rpc({
+                        model: this.modelName,
+                        method: 'check_access_rights',
+                        args: ["write", false],
+                    }),
+                    this._rpc({
+                        model: this.modelName,
+                        method: 'check_access_rights',
+                        args: ["unlink", false],
+                    }),
+                    this._rpc({
+                        model: this.modelName,
+                        method: 'check_access_rights',
+                        args: ["create", false],
+                    })
+                ).then(function (write, unlink, create) {
                     self.write_right = write;
                     self.unlink_right = unlink;
                     self.create_right = create;
@@ -55,8 +61,7 @@ odoo.define('web_timeline.TimelineModel', function (require) {
                 context: self.data.context,
                 fields: self.fieldNames,
                 domain: self.data.domain,
-            })
-            .then(function (events) {
+            }).then(function (events) {
                 self.data.data = events;
                 self.data.rights = {
                     'unlink': self.unlink_right,
