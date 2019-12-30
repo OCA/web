@@ -24,9 +24,6 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
             'click .oe_timeline_button_scale_year': '_onScaleYearClicked',
         }),
 
-        /**
-         * @constructor
-         */
         init: function (parent, state, params) {
             this._super.apply(this, arguments);
             this.modelName = params.model;
@@ -53,11 +50,11 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
             var attrs = this.arch.attrs;
             this.current_window = {
                 start: new moment(),
-                end: new moment().add(24, 'hours')
+                end: new moment().add(24, 'hours'),
             };
 
             this.$el.addClass(attrs.class);
-            this.$timeline = this.$el.find(".oe_timeline_widget");
+            this.$timeline = this.$('.oe_timeline_widget');
 
             if (!this.date_start) {
                 throw new Error(_t("Timeline view has not defined 'date_start' attribute."));
@@ -68,11 +65,11 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
         /**
          * Triggered when the timeline is attached to the DOM.
          */
-        on_attach_callback: function() {
-            var height = this.$el.parent().height() - this.$el.find('.oe_timeline_buttons').height();
-            if (height > this.min_height) {
+        on_attach_callback: function () {
+            var height = this.$el.parent().height() - this.$('.oe_timeline_buttons').height();
+            if (height > this.min_height && this.timeline) {
                 this.timeline.setOptions({
-                    height: height
+                    height: height,
                 });
             }
         },
@@ -99,7 +96,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
         _onTodayClicked: function () {
             this.current_window = {
                 start: new moment(),
-                end: new moment().add(24, 'hours')
+                end: new moment().add(24, 'hours'),
             };
 
             if (this.timeline) {
@@ -131,7 +128,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
          * @private
          */
         _onScaleMonthClicked: function () {
-            this._scaleCurrentWindow(24 * 30);
+            this._scaleCurrentWindow(24 * moment(this.current_window.start).daysInMonth());
         },
 
         /**
@@ -140,7 +137,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
          * @private
          */
         _onScaleYearClicked: function () {
-            this._scaleCurrentWindow(24 * 365);
+            this._scaleCurrentWindow(24 * (moment(this.current_window.start).isLeapYear() ? 366 : 365));
         },
 
         /**
@@ -166,30 +163,30 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
             if (this.mode) {
                 var start = false, end = false;
                 switch (this.mode) {
-                    case 'day':
-                        start = new moment().startOf('day');
-                        end = new moment().endOf('day');
-                        break;
-                    case 'week':
-                        start = new moment().startOf('week');
-                        end = new moment().endOf('week');
-                        break;
-                    case 'month':
-                        start = new moment().startOf('month');
-                        end = new moment().endOf('month');
-                        break;
+                case 'day':
+                    start = new moment().startOf('day');
+                    end = new moment().endOf('day');
+                    break;
+                case 'week':
+                    start = new moment().startOf('week');
+                    end = new moment().endOf('week');
+                    break;
+                case 'month':
+                    start = new moment().startOf('month');
+                    end = new moment().endOf('month');
+                    break;
                 }
                 if (end && start) {
                     this.options.start = start;
                     this.options.end = end;
                 } else {
-                   this.mode = 'fit';
+                    this.mode = 'fit';
                 }
             }
         },
 
         /**
-         * Initializes the timeline (http://visjs.org/docs/timeline/).
+         * Initializes the timeline (https://visjs.github.io/vis-timeline/docs/timeline).
          *
          * @private
          */
@@ -197,32 +194,32 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
             var self = this;
             this._computeMode();
             this.options.editable = {
-                // add new items by double tapping
+                // Add new items by double tapping
                 add: this.modelClass.data.rights.create,
-                // drag items horizontally
+                // Drag items horizontally
                 updateTime: this.modelClass.data.rights.write,
-                // drag items from one group to another
+                // Drag items from one group to another
                 updateGroup: this.modelClass.data.rights.write,
-                // delete an item by tapping the delete button top right
+                // Delete an item by tapping the delete button top right
                 remove: this.modelClass.data.rights.unlink,
             };
             $.extend(this.options, {
                 onAdd: self.on_add,
                 onMove: self.on_move,
                 onUpdate: self.on_update,
-                onRemove: self.on_remove
+                onRemove: self.on_remove,
             });
             this.qweb = new QWeb(session.debug, {_s: session.origin}, false);
             if (this.arch.children.length) {
                 var tmpl = utils.json_node_to_xml(
-                    _.filter(this.arch.children, function(item) {
+                    _.filter(this.arch.children, function (item) {
                         return item.tag === 'templates';
                     })[0]
                 );
                 this.qweb.add_template(tmpl);
             }
 
-            this.timeline = new vis.Timeline(self.$timeline.empty().get(0));
+            this.timeline = new vis.Timeline(self.$timeline.get(0));
             this.timeline.setOptions(this.options);
             if (self.mode && self['on_scale_' + self.mode + '_clicked']) {
                 self['on_scale_' + self.mode + '_clicked']();
@@ -235,11 +232,12 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
             this.$centerContainer = $(this.timeline.dom.centerContainer);
             this.canvas = new TimelineCanvas(this);
             this.canvas.appendTo(this.$centerContainer);
-            this.timeline.on('changed', function() {
+            this.timeline.on('changed', function () {
                 self.draw_canvas();
                 self.canvas.$el.attr(
                     'style',
-                    self.$el.find('.vis-content').attr('style') + self.$el.find('.vis-itemset').attr('style')
+                    self.$('.vis-content').attr('style') +
+                    self.$('.vis-itemset').attr('style')
                 );
             });
         },
@@ -264,16 +262,16 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
         draw_dependencies: function () {
             var self = this;
             var items = this.timeline.itemSet.items;
-            _.each(items, function(item) {
+            for (const item of items) {
                 if (!item.data.evt) {
                     return;
                 }
-                _.each(item.data.evt[self.dependency_arrow], function(id) {
+                for (const id of item.data.evt[self.dependency_arrow]) {
                     if (id in items) {
                         self.draw_dependency(item, items[id]);
                     }
-                });
-            });
+                }
+            }
         },
 
         /**
@@ -293,7 +291,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
 
             var defaults = _.defaults({}, options, {
                 line_color: 'black',
-                line_width: 1
+                line_width: 1,
             });
 
             this.canvas.draw_arrow(from.dom.box, to.dom.box, defaults.line_color, defaults.line_width);
@@ -315,12 +313,12 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
                     ids,
                 ],
                 context: this.getSession().user_context,
-            }).then(function(names) {
+            }).then(function (names) {
                 var nevents = _.map(events, function (event) {
                     return _.extend({
                         __name: _.detect(names, function (name) {
                             return name[0] === event.id;
-                        })[1]
+                        })[1],
                     }, event);
                 });
                 return self.on_data_loaded_2(nevents, group_bys, adjust_window);
@@ -337,11 +335,11 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
             var data = [];
             var groups = [];
             this.grouped_by = group_bys;
-            _.each(events, function (event) {
-                if (event[self.date_start]) {
-                    data.push(self.event_data_transform(event));
+            for (const evt of events) {
+                if (evt[self.date_start]) {
+                    data.push(self.event_data_transform(evt));
                 }
-            });
+            }
             groups = this.split_groups(events, group_bys);
             this.timeline.setGroups(groups);
             this.timeline.setItems(data);
@@ -364,24 +362,22 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
             }
             var groups = [];
             groups.push({id: -1, content: _t('-')});
-            _.each(events, function (event) {
-                var group_name = event[_.first(group_bys)];
+            for (const evt of events) {
+                var group_name = evt[_.first(group_bys)];
                 if (group_name) {
                     if (group_name instanceof Array) {
                         var group = _.find(groups, function (existing_group) {
-                            return _.isEqual(existing_group.id, group_name[0]);
+                            return existing_group.id === group_name[0];
                         });
-
                         if (_.isUndefined(group)) {
-                            group = {
+                            groups.push({
                                 id: group_name[0],
-                                content: group_name[1]
-                            };
-                            groups.push(group);
+                                content: group_name[1],
+                            });
                         }
                     }
                 }
-            });
+            }
             return groups;
         },
 
@@ -412,7 +408,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
             }
 
             if (!date_stop && date_delay) {
-                date_stop = moment(date_start).add(date_delay, 'hours').toDate();
+                date_stop = date_start.clone().add(date_delay, 'hours').toDate();
             }
 
             var group = evt[self.last_group_bys[0]];
@@ -421,13 +417,14 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
             } else {
                 group = -1;
             }
-            _.each(self.colors, function (color) {
-                if (eval("'" + evt[color.field] + "' " + color.opt + " '" + color.value + "'")) {
+
+            for (const color of self.colors) {
+                if (py.eval("'" + evt[color.field] + "' " + color.opt + " '" + color.value + "'")) {
                     self.color = color.color;
                 }
-            });
+            }
 
-            var content = _.isUndefined(evt.__name) ? evt.display_name : evt.__name;
+            var content = evt.__name || evt.display_name;
             if (this.arch.children.length) {
                 content = this.render_timeline_item(evt);
             }
@@ -438,13 +435,14 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
                 'id': evt.id,
                 'group': group,
                 'evt': evt,
-                'style': 'background-color: ' + self.color + ';'
+                'style': `background-color: ${this.color};`,
             };
-            // Check if the event is instantaneous, if so, display it with a point on the timeline (no 'end')
+            // Check if the event is instantaneous,
+            // if so, display it with a point on the timeline (no 'end')
             if (date_stop && !moment(date_start).isSame(date_stop)) {
                 r.end = date_stop;
             }
-            self.color = null;
+            this.color = null;
             return r;
         },
 
@@ -456,10 +454,10 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
          * @returns {String} Rendered template
          */
         render_timeline_item: function (evt) {
-            if(this.qweb.has_template('timeline-item')) {
+            if (this.qweb.has_template('timeline-item')) {
                 return this.qweb.render('timeline-item', {
                     'record': evt,
-                    'field_utils': field_utils
+                    'field_utils': field_utils,
                 });
             }
 
@@ -475,7 +473,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
          */
         on_group_click: function (e) {
             if (e.what === 'group-label' && e.group !== -1) {
-                this._trigger(e, function() {
+                this._trigger(e, function () {
                     // Do nothing
                 }, 'onGroupClick');
             }
@@ -518,7 +516,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
         },
 
         /**
-         * trigger_up encapsulation adds by default the rights, and the renderer.
+         * Trigger_up encapsulation adds by default the rights, and the renderer.
          *
          * @private
          */
