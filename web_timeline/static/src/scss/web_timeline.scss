@@ -1,0 +1,17 @@
+.oe_timeline_view .vis-timeline {
+    .vis-grid {
+        .vis-saturday, .vis-sunday {
+            // very light gray background in weekends
+            background: #DCDCDC;
+        }
+    }
+
+    .vis-item {
+        &.vis-box:hover {
+            cursor: pointer !important;
+        }
+        &.vis-item-overflow {
+            overflow: visible;
+        }
+    }
+}
