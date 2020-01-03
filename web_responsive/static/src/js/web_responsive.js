@@ -14,6 +14,7 @@ odoo.define('web_responsive', function (require) {
     var Menu = require("web.Menu");
     var RelationalFields = require('web.relational_fields');
     var Chatter = require('mail.Chatter');
+    var DocumentViewer = require('mail.DocumentViewer');
 
     /*
      * Helper function to know if are waiting
@@ -525,4 +526,25 @@ odoo.define('web_responsive', function (require) {
     // Include the SHIFT+ALT mixin wherever
     // `KeyboardNavigationMixin` is used upstream
     AbstractWebClient.include(KeyboardNavigationShiftAltMixin);
+
+    // DocumentViewer: Add support to maximize/minimize
+    DocumentViewer.include({
+        events: _.extend(DocumentViewer.prototype.events, {
+            'click .o_maximize_btn': '_onClickMaximize',
+            'click .o_minimize_btn': '_onClickMinimize',
+        }),
+
+        start: function () {
+            this.$btnMaximize = this.$('.o_maximize_btn');
+            this.$btnMinimize = this.$('.o_minimize_btn');
+            return this._super.apply(this, arguments);
+        },
+
+        _onClickMaximize: function () {
+            this.$el.removeClass('o_responsive_document_viewer');
+        },
+        _onClickMinimize: function () {
+            this.$el.addClass('o_responsive_document_viewer');
+        },
+    });
 });
