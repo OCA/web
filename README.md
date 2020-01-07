@@ -59,6 +59,7 @@ addon | version | summary
 [web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 10.0.1.0.0 | Allows you to dynamically color fields on tree views
 [web_tree_image](web_tree_image/) | 10.0.1.1.0 | Show images in tree views
 [web_tree_many2one_clickable](web_tree_many2one_clickable/) | 10.0.1.0.0 | Open the linked resource when clicking on their name
+[web_unclickable](web_unclickable/) | 10.0.1.0.0 | This module allows to define a class on an element to disable click event
 [web_widget_bokeh_chart](web_widget_bokeh_chart/) | 10.0.1.0.0 | This widget allows to display charts using Bokeh library.
 [web_widget_char_switchcase](web_widget_char_switchcase/) | 10.0.1.0.2 | Web Char Switchcase Widget
 [web_widget_color](web_widget_color/) | 10.0.1.0.1 | Web Widget Color
