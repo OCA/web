@@ -49,6 +49,7 @@ setuptools.setup(
         'odoo10-addon-web_tree_dynamic_colored_field',
         'odoo10-addon-web_tree_image',
         'odoo10-addon-web_tree_many2one_clickable',
+        'odoo10-addon-web_unclickable',
         'odoo10-addon-web_widget_bokeh_chart',
         'odoo10-addon-web_widget_char_switchcase',
         'odoo10-addon-web_widget_color',
