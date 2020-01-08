@@ -14,12 +14,9 @@ odoo.define('web_widget_open_tab.FieldOpen', function(require) {
         isSet: function () {
             return true;
         },
-        _getReference: function () {
-            return 'model=' + this.model + '&id=' + this.res_id;
-        },
         _renderReadonly: function () {
             var $content = $(
-                '<a href="#' + this._getReference() + '">'
+                '<a href="#">'
             ).addClass('fa fa-eye');
             this.$el.append($content)
         },
@@ -28,7 +25,9 @@ odoo.define('web_widget_open_tab.FieldOpen', function(require) {
             ev.stopPropagation();
             var element = $(ev.currentTarget).find('a');
             if (element != null && element[0].href != null) {
-                window.open(element[0].href);
+                var url = new URL(window.location.href);
+                var href = url.hash.replace("list", "form") + '&id=' + this.res_id;
+                window.open(href);
             }
         },
     });
