@@ -527,13 +527,29 @@ odoo.define('web_responsive', function (require) {
     // `KeyboardNavigationMixin` is used upstream
     AbstractWebClient.include(KeyboardNavigationShiftAltMixin);
 
-    // DocumentViewer: Add support to maximize/minimize
+    // DocumentViewer: Add support to maximize/minimize and changes key events
+    // to listen globally
     DocumentViewer.include({
-        events: _.extend(DocumentViewer.prototype.events, {
+        events: _.extend(_.omit(DocumentViewer.prototype.events, [
+            'keydown',
+            'keyup',
+        ]), {
             'click .o_maximize_btn': '_onClickMaximize',
             'click .o_minimize_btn': '_onClickMinimize',
             'shown.bs.modal': '_onShownModal',
         }),
+
+        start: function () {
+            core.bus.on('keydown', this, this._onKeydown);
+            core.bus.on('keyup', this, this._onKeyUp);
+            return this._super.apply(this, arguments);
+        },
+
+        destroy: function () {
+            core.bus.off('keydown', this, this._onKeydown);
+            core.bus.off('keyup', this, this._onKeyUp);
+            this._super.apply(this, arguments);
+        },
 
         _onShownModal: function () {
             // Disable auto-focus to allow to use controls in edit mode.
