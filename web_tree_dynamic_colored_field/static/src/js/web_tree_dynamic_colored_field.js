@@ -11,11 +11,14 @@ odoo.define('web_tree_dynamic_colored_field', function (require) {
          * @override
          */
         _renderBody: function () {
-            if (this.arch.attrs.colors) {
-                var colorAttr = this.arch.attrs.colors.split(';');
-                if (colorAttr.length > 0) {
-                    var colorField = colorAttr[0].split(':')[1].trim();
-                    // validate the presence of that field in tree view
+            if (this.arch.attrs.options) {
+                var archOptions = this.arch.attrs.options;
+                if (!_.isObject(archOptions)) {
+                    archOptions = pyUtils.py_eval(archOptions);
+                }
+                var colorField = archOptions.color_field;
+                if (colorField) {
+                    // Validate the presence of that field in tree view
                     if (this.state.data.length && colorField in this.state.data[0].data) {
                         this.colorField = colorField;
                     } else {
