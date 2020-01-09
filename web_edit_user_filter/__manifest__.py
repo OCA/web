@@ -4,7 +4,7 @@
 {
     'name': 'Edit User Filters',
     'category': 'Extra Tools',
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.0.1',
     'development_status': 'Production/Stable',
     'author': 'Onestein,Odoo Community Association (OCA)',
     'license': 'AGPL-3',

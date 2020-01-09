@@ -1,0 +1,149 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_widget_x2many_2d_matrix_example
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2019-09-17 19:24+0000\n"
+"Last-Translator: 黎伟杰 <674416404@qq.com>\n"
+"Language-Team: none\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.8\n"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo__create_uid
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__create_uid
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_matrix_demo_wiz__create_uid
+msgid "Created by"
+msgstr "创建者"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo__create_date
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__create_date
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_matrix_demo_wiz__create_date
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.actions.act_window,name:web_widget_x2many_2d_matrix_example.action_x2m_demo
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__demo_id
+msgid "Demo"
+msgstr "演示"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.ui.menu,name:web_widget_x2many_2d_matrix_example.base_matrix_widget_menu
+msgid "Demo x2m matrix widget"
+msgstr "演示x2m矩阵小部件"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo__display_name
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__display_name
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_matrix_demo_wiz__display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo__id
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__id
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_matrix_demo_wiz__id
+msgid "ID"
+msgstr "ID"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo____last_update
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line____last_update
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_matrix_demo_wiz____last_update
+msgid "Last Modified on"
+msgstr "最后修改时间"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo__write_uid
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__write_uid
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_matrix_demo_wiz__write_uid
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo__write_date
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__write_date
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_matrix_demo_wiz__write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo__line_ids
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_matrix_demo_wiz__line_ids
+msgid "Line"
+msgstr "行"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo__name
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__name
+msgid "Name"
+msgstr "名称"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model_terms:ir.ui.view,arch_db:web_widget_x2many_2d_matrix_example.view_x2m_demo_form
+msgid "Try x2m 2d matrix"
+msgstr "试试x2m 2d矩阵"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model_terms:ir.ui.view,arch_db:web_widget_x2many_2d_matrix_example.view_x2m_demo_form
+msgid "Try x2m 2d matrix (many2one)"
+msgstr "试试x2m 2d矩阵(many2one)"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model_terms:ir.ui.view,arch_db:web_widget_x2many_2d_matrix_example.view_x2m_demo_form
+msgid "Try x2m 2d matrix (selection)"
+msgstr "试试x2m 2d矩阵 (selection)"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__user_id
+msgid "User"
+msgstr "用户"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__value
+msgid "Value"
+msgstr "值"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: selection:x2m.demo.line,value_selection:0
+msgid "Value 1"
+msgstr "值1"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: selection:x2m.demo.line,value_selection:0
+msgid "Value 2"
+msgstr "值2"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__value_many2one
+msgid "Value Many2One"
+msgstr "值 Many2One"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__value_selection
+msgid "Value Selection"
+msgstr "值Selection"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model,name:web_widget_x2many_2d_matrix_example.model_x2m_demo
+msgid "X2Many Demo"
+msgstr "X2Many演示"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model,name:web_widget_x2many_2d_matrix_example.model_x2m_demo_line
+msgid "X2Many Demo Line"
+msgstr "X2Many演示行"
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model,name:web_widget_x2many_2d_matrix_example.model_x2m_matrix_demo_wiz
+msgid "X2Many Matrix Demo Wizard"
+msgstr "X2Many Matrix演示向导"

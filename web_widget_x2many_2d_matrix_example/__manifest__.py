@@ -2,7 +2,7 @@
 {
     'name': 'web_widget_x2many_2d_matrix example',
     'summary': "A small example on how to use `web_widget_x2many_2d_matrix`.",
-    "version": "12.0.1.0.0",
+    "version": "12.0.1.1.0",
     "author": "Camptocamp, "
               "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",

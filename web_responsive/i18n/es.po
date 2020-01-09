@@ -20,9 +20,23 @@ msgstr ""
 "X-Generator: Poedit 2.2\n"
 
 #. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/apps.xml:9
+#, python-format
+msgid "#menu_id=#{app.menuID}&action_id=#{app.actionID}"
+msgstr ""
+
+#. module: web_responsive
 #: model:ir.model.fields,field_description:web_responsive.field_res_users__chatter_position
 msgid "Chatter Position"
 msgstr "Posición del chatter"
+
+#. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/document_viewer.xml:18
+#, python-format
+msgid "Close"
+msgstr ""
 
 #. module: web_responsive
 #. openerp-web
@@ -48,6 +62,20 @@ msgid "Edit"
 msgstr "Editar"
 
 #. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/document_viewer.xml:16
+#, python-format
+msgid "Maximize"
+msgstr ""
+
+#. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/document_viewer.xml:17
+#, python-format
+msgid "Minimize"
+msgstr ""
+
+#. module: web_responsive
 #: selection:res.users,chatter_position:0
 msgid "Normal"
 msgstr "Normal"
@@ -69,7 +97,7 @@ msgstr "Guardar"
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/xml/apps.xml:29
+#: code:addons/web_responsive/static/src/xml/apps.xml:35
 #, python-format
 msgid "Search menus..."
 msgstr "Buscar menús..."
@@ -83,3 +111,17 @@ msgstr "Lateral"
 #: model:ir.model,name:web_responsive.model_res_users
 msgid "Users"
 msgstr "Usuarios"
+
+#. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/document_viewer.xml:9
+#, python-format
+msgid "false"
+msgstr ""
+
+#. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/document_viewer.xml:8
+#, python-format
+msgid "modal o_modal_fullscreen o_document_viewer o_responsive_document_viewer"
+msgstr ""

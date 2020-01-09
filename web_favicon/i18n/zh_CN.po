@@ -1,0 +1,62 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* web_favicon
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2019-09-01 12:52+0000\n"
+"Last-Translator: 黎伟杰 <674416404@qq.com>\n"
+"Language-Team: none\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.8\n"
+
+#. module: web_favicon
+#: model:ir.model,name:web_favicon.model_res_company
+msgid "Companies"
+msgstr "公司"
+
+#. module: web_favicon
+#: model_terms:ir.ui.view,arch_db:web_favicon.view_company_form
+msgid "Favicon"
+msgstr "图标"
+
+#. module: web_favicon
+#: model:ir.model.fields,field_description:web_favicon.field_res_company__favicon_backend
+msgid "Favicon Backend"
+msgstr "后台图标"
+
+#. module: web_favicon
+#: model:ir.model.fields,field_description:web_favicon.field_res_company__favicon_backend_mimetype
+msgid "Favicon Backend Mimetype"
+msgstr "后台图标MIME类型"
+
+#. module: web_favicon
+#: model:ir.model.fields,help:web_favicon.field_res_company__favicon_backend_mimetype
+msgid "Set the mimetype of your file."
+msgstr "设置文件的MIME类型。"
+
+#. module: web_favicon
+#: model_terms:ir.ui.view,arch_db:web_favicon.view_company_form
+msgid "Web Favicon"
+msgstr "网站图标"
+
+#. module: web_favicon
+#: selection:res.company,favicon_backend_mimetype:0
+msgid "image/gif"
+msgstr "image/gif"
+
+#. module: web_favicon
+#: selection:res.company,favicon_backend_mimetype:0
+msgid "image/png"
+msgstr "image/png"
+
+#. module: web_favicon
+#: selection:res.company,favicon_backend_mimetype:0
+msgid "image/x-icon"
+msgstr "image/x-icon"

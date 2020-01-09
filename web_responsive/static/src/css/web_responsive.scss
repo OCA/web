@@ -1,6 +1,8 @@
 /* Copyright 2018 Tecnativa - Jairo Llopis
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
+$chatter_zone_width: 35%;
+
 @mixin full-screen-dropdown {
     border: none;
     box-shadow: none;
@@ -14,6 +16,15 @@
     // Inline style will override our `top`, so we need !important here
     top: $o-navbar-height !important;
     transform: none !important;
+}
+
+// Support for long titles
+@include media-breakpoint-up(md) {
+    .o_form_view .oe_button_box + .oe_title,
+    .o_form_view .oe_button_box + .oe_avatar + .oe_title {
+        /* Button-box has a hardcoded width of 132px per button and have three columns */
+        width: calc(100% - 450px);
+    }
 }
 
 // Main navbar (with apps menu, user menu, debug menu...)
@@ -60,6 +71,7 @@
         .o_menu_sections.show {
             @include full-screen-dropdown();
             background-color: $dropdown-bg;
+            overflow: auto;
 
             .show {
                 display: flex;
@@ -172,7 +184,6 @@
         .o-app-icon {
             height: auto;
             max-width: 7rem;
-            width: 100%;
         }
 
         // Search input for menus
@@ -216,6 +227,8 @@ html .o_web_client .o_main .o_main_content {
             overflow: initial;
         }
     }
+
+    max-width: 100%;
 }
 
 // Control panel (breadcrumbs, search box, buttons...)
@@ -328,6 +341,35 @@ html .o_web_client .o_main .o_main_content {
     .o_form_view {
         .o_form_sheet {
             max-width: calc(100% - 32px);
+            overflow-x: auto;
+
+            .oe_button_box {
+                .o_dropdown_more {
+                    padding: 0.1em;
+                    width: min-content;
+                }
+            }
+        }
+
+        // Sticky statusbar
+        .o_form_statusbar {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+
+        // Support for long title (with ellipsis)
+        .oe_title {
+            span.o_field_widget {
+                max-width: 100%;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                width: initial;
+            }
+            span:active {
+                white-space: normal;
+            }
         }
 
         @include media-breakpoint-down(sm) {
@@ -338,6 +380,11 @@ html .o_web_client .o_main .o_main_content {
             .oe_title,
             {
                 max-width: 100%;
+            }
+
+            .oe_button_box + .oe_title,
+            .oe_button_box + .oe_avatar + .oe_title {
+                width: 100%;
             }
 
             // Avoid overflow on modals
@@ -398,46 +445,239 @@ html .o_web_client .o_main .o_main_content {
                     margin: 0;
                 }
             }
+
+            .o_chatter {
+                // Display send button on small screens
+                .o_thread_composer {
+                    padding-left: $o-mail-thread-avatar-size*0.5;
+
+                    .o_composer_button_send {
+                        display: initial !important; // Forced in core
+                    }
+                    .o_chatter_avatar {
+                        display: none;
+                    }
+                }
+
+                .o_chatter_topbar {
+                    height: auto;
+                    flex-wrap: wrap-reverse;
+
+                    > .o_topbar_right_area {
+                        flex: 1 0 auto;
+                        flex-wrap: wrap;
+                        max-width: 100%;
+
+                        // Display followers on small screens
+                        .o_followers {
+                            display: initial !important; // Forced in core
+
+                            @include media-breakpoint-down(xs) {
+                                padding-bottom: 50px;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
     // Sided chatter, if user wants
     .o_chatter_position_sided & {
-        @include media-breakpoint-up(md) {
+        @include media-breakpoint-up(lg) {
             .o_form_view:not(.o_form_nosheet) {
                 display: flex;
                 flex-flow: row nowrap;
                 height: 100%;
 
                 .o_form_sheet_bg {
-                    flex: 1 1 60%;
+                    flex: 1 1 auto;
                     overflow: auto;
+
+                    > .o_form_sheet {
+                        min-width: unset;
+                    }
                 }
 
                 .o_chatter {
                     border-left: 1px solid gray('400');
-                    flex: 1 1 40%;
-                    max-width: 50%;
-                    min-width: 30%;
+                    flex: 0 0 $chatter_zone_width;
+                    max-width: initial;
+                    min-width: initial;
                     overflow: auto;
 
-                    .o_chatter_topbar,
-                    .o_thread_composer {
-                        position: sticky;
-                    }
-
-                    .o_chatter_topbar {
+                    .o_chatter_header_container {
+                        padding-top: $grid-gutter-width * 0.5;
                         top: 0;
-                        z-index: 2;
+                        position: sticky;
                         background-color: $o-view-background-color;
-                    }
-
-                    .o_thread_composer {
-                        top: $o-statusbar-height;
                         z-index: 1;
+
+                        .o_chatter_topbar {
+                            margin-top: 0;
+                            flex-wrap: wrap;
+                            height: auto;
+                            button:last-of-type {
+                                flex: 1 0 auto;
+                                text-align: left;
+                            }
+
+                            .o_topbar_right_area {
+                                order: -10;
+                                flex: 0 1 100%;
+                                border-bottom-color: transparent;
+                            }
+                        }
+
+                        // Scrollable input text to avoid hide conversation & buttons
+                        .o_composer_text_field {
+                            max-height: 120px;
+                            overflow-y: auto !important; /* Forced because Odoo uses inline style */
+                        }
+                        .o_attachments_list {
+                            overflow: auto;
+                            max-height: $o-mail-attachment-image-size * 3;
+                            margin-top: 0.4em;
+                        }
+                        .o_attachments_previews {
+                            overflow: auto;
+                            max-height: $o-mail-attachment-image-size * 6;
+                        }
                     }
                 }
             }
         }
+    }
+}
+
+// Sticky Header & Footer in List View
+.table-responsive {
+    overflow-x: initial;
+
+    .o_list_view {
+        // th & td are here for compatibility with chrome
+        thead, thead tr:nth-child(1) th {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        thead tr:nth-child(1) th {
+            background-color: $o-list-footer-bg-color;
+        }
+        tfoot, tfoot tr:nth-child(1) td {
+            position: sticky;
+            bottom: 0;
+        }
+        tfoot tr:nth-child(1) td {
+            background-color: $o-list-footer-bg-color;
+        }
+    }
+}
+
+// Waiting Cursor
+.oe_wait {
+  cursor: progress;
+}
+
+// Document Viewer
+.o_web_client.o_chatter_position_sided {
+    .o_modal_fullscreen.o_document_viewer {
+        // On-top of navbar
+        z-index: 10;
+
+        &.o_responsive_document_viewer {
+            /* Show sided viewer on large screens */
+            @include media-breakpoint-up(lg) {
+                width: $chatter_zone_width;
+                margin-left: auto;
+
+                /* Show/Hide control buttons (next, prev, etc..) */
+                &:hover .arrow, &:hover .o_viewer_toolbar {
+                    display: unset;
+                }
+                .arrow, .o_viewer_toolbar {
+                    display: none;
+                }
+
+                .o_viewer_img_wrapper {
+                    position: relative;
+
+                    .o_viewer_pdf {
+                        width: 95%;
+                    }
+                }
+            }
+
+            .o_minimize_btn {
+                display: none;
+            }
+        }
+        &:not(.o_responsive_document_viewer) {
+            .o_maximize_btn {
+                display: none;
+            }
+        }
+        @include media-breakpoint-down(lg) {
+            .o_minimize_btn, .o_maximize_btn {
+                display: none;
+            }
+        }
+    }
+}
+/* Max/Min buttons only are usefull in sided mode */
+.o_web_client:not(.o_chatter_position_sided) {
+    .o_minimize_btn, .o_maximize_btn {
+        display: none;
+    }
+}
+// Apply improvements for Document Viewer on all modes
+.o_modal_fullscreen .o_viewer_content {
+    .o_viewer-header {
+        .o_image_caption {
+            display: contents;
+
+            .o_split_pdf_area {
+                padding: 16px;
+                margin-bottom: 0;
+                position: relative;
+                top: -5px;
+
+                label {
+                    margin-bottom: unset;
+                }
+
+                .o_page_number_input {
+                    border: 1px solid white;
+                    border-radius: 3px;
+                }
+            }
+
+            /* Hide 'split pdf' feature on small screens */
+            @include media-breakpoint-down(xs) {
+                .o_split_pdf_area {
+                    display: none;
+                }
+            }
+        }
+
+        // Now uses a container to have more buttons
+        .o_buttons {
+            min-width: 35px;
+            text-align: right;
+
+            // Now close button ('X') it's a fa-icon
+            > .o_close_btn {
+                top: unset;
+                left: unset;
+                bottom: unset;
+                right: unset;
+                font-size: unset;
+                font-weight: unset;
+            }
+        }
+    }
+
+    .o_viewer_toolbar {
+        width: max-content;
     }
 }

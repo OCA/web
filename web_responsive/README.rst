@@ -83,6 +83,32 @@ Features for computers:
 
   .. image:: https://user-images.githubusercontent.com/973709/48417428-ac5a5f00-e74a-11e8-8839-5bc538c54c1d.png
 
+* Sticky chatter topbar
+
+  .. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_responsive/static/img/chatter_topbar.gif
+
+* AppMenu waits for action finished to show the view
+
+  .. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_responsive/static/img/appmenu.gif
+
+* Sticky header & footer in list view
+
+  .. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_responsive/static/img/listview.gif
+
+* Sticky statusbar in form view
+
+  .. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_responsive/static/img/formview.gif
+
+* Followers and send button is displayed on mobile. Avatar is hidden.
+
+  .. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_responsive/static/img/chatter.gif
+
+* When the chatter is configured on the side part, the document viewer fills that
+  part for side-by-side reading instead of full screen. You can still put it on full
+  width preview clicking on the new maximize button.
+
+  .. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_responsive/static/img/document_viewer.gif
+
 **Table of contents**
 
 .. contents::
@@ -107,6 +133,7 @@ Known issues / Roadmap
   new size. This is Odoo's own limitation.
 * App navigation with keyboard.
 * Make it more beautiful. Maybe OCA-branded?
+* Handle long titles on forms in a better way
 
 Bug Tracker
 ===========
@@ -136,6 +163,7 @@ Contributors
 * Dennis Sluijk <d.sluijk@onestein.nl>
 * Sergio Teruel <sergio.teruel@tecnativa.com>
 * Alexandre Díaz <dev@redneboa.es>
+* Mathias Markl <mathias.markl@mukit.at>
 
 Maintainers
 ~~~~~~~~~~~
