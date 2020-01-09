@@ -5,7 +5,7 @@
         <field name="inherit_id" ref="base.view_users_tree" />
         <field name="arch" type="xml">
           <tree position="attributes">
-            <attribute name="colors">color_field: lang</attribute>
+            <attribute name="options">{"color_field": "lang"}</attribute>
           </tree>
           <field name="login_date" position="attributes">
             <attribute name="options">{
