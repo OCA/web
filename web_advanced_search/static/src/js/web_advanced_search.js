@@ -279,14 +279,18 @@ odoo.define("web_advanced_search", function (require) {
          * @override
          */
         _applyChanges: function (dataPointID, changes, event) {
-            // Make char updates look like valid x2one updates
-            if (_.isNaN(changes[this.field.name].id)) {
-                changes[this.field.name] = {
-                    id: this._fake_id--,
-                    display_name: event.target.lastSetValue,
-                };
+            if (this._field_widget_name === 'many2one') {
+                // Make char updates look like valid x2one updates
+                if (_.isNaN(changes[this.field.name].id)) {
+                    changes[this.field.name] = {
+                        id: this._fake_id--,
+                        display_name: event.target.lastSetValue,
+                    };
+                }
+                return FieldManagerMixin._applyChanges.apply(this, arguments);
             }
-            return FieldManagerMixin._applyChanges.apply(this, arguments);
+
+            return $.Deferred().resolve();
         },
 
         /**
@@ -306,7 +310,7 @@ odoo.define("web_advanced_search", function (require) {
                 case "many2one":
                     return this._field_widget.value.res_id;
                 default:
-                    return this._field_widget.value.data.display_name;
+                    return this._field_widget.$el.val();
                 }
             } catch (error) {
                 if (error.name === "TypeError") {
@@ -325,6 +329,8 @@ odoo.define("web_advanced_search", function (require) {
                 switch (this._field_widget_name) {
                 case "many2one":
                     return this._field_widget.value.data.display_name;
+                default:
+                    return this._field_widget.$el.val();
                 }
                 return this._super.apply(this, arguments);
             } catch (error) {
