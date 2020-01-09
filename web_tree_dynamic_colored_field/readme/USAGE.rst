@@ -26,11 +26,11 @@
 
     With this example, column which renders 'name' field will have its text colored in white on a customer records.
 
-* In the tree view declaration, use ``options='"color_field": "my_color"'`` attribute in the ``tree`` tag::
+* In the tree view declaration, use ``options='{"color_field": "my_color"}'`` attribute in the ``tree`` tag::
 
     ...
     <field name="arch" type="xml">
-        <tree string="View name" colors="color_field: my_color" >
+        <tree string="View name" options='{"color_field": "my_color"}' >
             ...
             <field name="my_color" invisible="1"/>
             ...
