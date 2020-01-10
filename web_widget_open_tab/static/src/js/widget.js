@@ -1,11 +1,15 @@
-odoo.define('web_widget_open_tab.FieldOpen', function(require) {
+odoo.define('web_widget_open_tab.FieldOpenTab', function(require) {
     "use strict";
 
     var AbstractField = require('web.AbstractField');
     var field_registry = require('web.field_registry');
     var ListRenderer = require('web.ListRenderer');
+    var core = require('web.core');
+    var config = require('web.config');
+    var qweb = core.qweb;
+    var _t = core._t;
 
-    var FieldOpen = AbstractField.extend({
+    var FieldOpenTab = AbstractField.extend({
         description: "",
         supportedFieldTypes: ['integer'],
         events: _.extend({}, AbstractField.prototype.events, {
@@ -14,10 +18,30 @@ odoo.define('web_widget_open_tab.FieldOpen', function(require) {
         isSet: function () {
             return true;
         },
+        _getReference: function () {
+            var url = new URL(window.location.href);
+            return url.hash.replace(/view_type=\w+/i, "view_type=form") + '&id=' + this.res_id;
+        },
         _renderReadonly: function () {
             var $content = $(
-                '<a href="#">'
-            ).addClass('fa fa-eye');
+                '<a href="'+ this._getReference() + '">'
+            ).addClass('open_tab_widget fa fa-eye');
+            var self = this;
+            $content.tooltip({
+                delay: { show: 1000, hide: 0 },
+                title: function () {
+                    return qweb.render('WidgetButton.tooltip', {
+                        debug: config.debug,
+                        state: self.record,
+                        node: {
+                            attrs: {
+                                'help': _t('Click in order to open on new tab'),
+                                'type': _t('Widget')
+                            }
+                        },
+                    });
+                },
+            });
             this.$el.append($content)
         },
         _onClick: function (ev) {
@@ -25,9 +49,7 @@ odoo.define('web_widget_open_tab.FieldOpen', function(require) {
             ev.stopPropagation();
             var element = $(ev.currentTarget).find('a');
             if (element != null && element[0].href != null) {
-                var url = new URL(window.location.href);
-                var href = url.hash.replace("list", "form") + '&id=' + this.res_id;
-                window.open(href);
+                window.open(this._getReference());
             }
         },
     });
@@ -36,7 +58,7 @@ odoo.define('web_widget_open_tab.FieldOpen', function(require) {
         // and disallow sorting
         _renderHeaderCell: function (node) {
             var $th = this._super.apply(this, arguments);
-            if (node.attrs.widget === 'open') {
+            if (node.attrs.widget === 'open_tab') {
                 $th.removeClass('o_column_sortable');
                 $th[0].width = 1;
             }
@@ -44,7 +66,7 @@ odoo.define('web_widget_open_tab.FieldOpen', function(require) {
         },
     });
 
-    field_registry.add('open', FieldOpen);
-    return FieldOpen;
+    field_registry.add('open_tab', FieldOpenTab);
+    return FieldOpenTab;
 
 });
