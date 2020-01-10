@@ -8,7 +8,7 @@ class Base(models.AbstractModel):
     _inherit = 'base'
 
     def _get_record_parents(self, field):
-        if not self:
+        if not self or not hasattr(self, self._parent_name):
             return []
         return getattr(
             self, self._parent_name
