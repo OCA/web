@@ -2,7 +2,7 @@ language: python
 
 python:
   - "2.7"
-  
+
 sudo: false
 cache: pip
 
@@ -11,6 +11,8 @@ addons:
     packages:
       - expect-dev  # provides unbuffer utility
       - python-lxml  # because pip installation is slow
+
+dist: trusty      
 
 env:
   global:
