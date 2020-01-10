@@ -6,31 +6,6 @@ odoo.define('web_tree_dynamic_colored_field', function (require) {
 
     ListRenderer.include({
         /**
-         * Look up for a `color_field` parameter in tree `colors` attribute
-         *
-         * @override
-         */
-        _renderBody: function () {
-            if (this.arch.attrs.options) {
-                var archOptions = this.arch.attrs.options;
-                if (!_.isObject(archOptions)) {
-                    archOptions = pyUtils.py_eval(archOptions);
-                }
-                var colorField = archOptions.color_field;
-                if (colorField) {
-                    // Validate the presence of that field in tree view
-                    if (this.state.data.length && colorField in this.state.data[0].data) {
-                        this.colorField = colorField;
-                    } else {
-                        console.warn(
-                            "No field named '" + colorField + "' present in view."
-                        );
-                    }
-                }
-            }
-            return this._super();
-        },
-        /**
          * Colorize a cell during it's render
          *
          * @override
@@ -49,12 +24,6 @@ odoo.define('web_tree_dynamic_colored_field', function (require) {
          * @param {Object} node an XML node (must be a <field>)
          */
         applyColorize: function ($td, record, node, ctx) {
-            // safely resolve value of `color_field` given in <tree>
-            var treeColor = record.data[this.colorField];
-            if (treeColor) {
-                $td.css('color', treeColor);
-            }
-            // apply <field>'s own `options`
             if (!node.attrs.options) { return; }
             if (node.tag !== 'field') { return; }
             var nodeOptions = node.attrs.options;
