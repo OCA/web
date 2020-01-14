@@ -130,7 +130,7 @@ odoo.define('web_drop_target', function(require) {
                 );
                 var o_content_position = o_content.position();
                 this._drop_overlay.css({
-                    'top': o_content_position.top, 
+                    'top': o_content_position.top,
                     'left': o_content_position.left,
                     'width': view_manager.width(),
                     'height': view_manager.height()
@@ -138,7 +138,7 @@ odoo.define('web_drop_target', function(require) {
                 o_content.append(this._drop_overlay);
             }
         },
-        
+
         _remove_overlay: function() {
             if (this._drop_overlay) {
                 this._drop_overlay.remove();
