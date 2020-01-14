@@ -8,14 +8,7 @@
     "license": "AGPL-3",
     "category": "Usability",
     "summary": "Allows to drag files into Odoo",
-    "depends": [
-        'web',
-        'document'
-    ],
-    "data": [
-        'views/templates.xml',
-    ],
-    "qweb": [
-        'static/src/xml/widgets.xml',
-    ]
+    "depends": ["web", "document"],
+    "data": ["views/templates.xml"],
+    "qweb": ["static/src/xml/widgets.xml"],
 }
