@@ -7,11 +7,11 @@ odoo.define('web_drop_target', function(require) {
     var core = require('web.core');
     var qweb = core.qweb;
 
-    // this is the main contribution of this addon: A mixin you can use
-    // to make some widget a drop target. Read on how to use this yourself
+    // This is the main contribution of this addon: A mixin you can use
+    // To make some widget a drop target. Read on how to use this yourself
     var DropTargetMixin = {
-        // add the mime types you want to support here, leave empty for
-        // all types. For more control, override _get_drop_items in your class
+        // Add the mime types you want to support here, leave empty for
+        // All types. For more control, override _get_drop_items in your class
         _drop_allowed_types: [],
 
         _drop_overlay: null,
@@ -64,15 +64,15 @@ odoo.define('web_drop_target', function(require) {
             return drop_items;
         },
 
-        // eslint-disable-next-line no-unused-vars
+        // Eslint-disable-next-line no-unused-vars
         _handle_drop_items: function(drop_items, e) {
-            // do something here, for example call the helper function below
+            // Do something here, for example call the helper function below
             // e is the on_load_end handler for the FileReader above,
             // so e.target.result contains an ArrayBuffer of the data
         },
 
         _create_attachment: function(file, reader, e, res_model, res_id, extra_data) {
-            // helper to upload an attachment and update the sidebar
+            // Helper to upload an attachment and update the sidebar
             var self = this;
             return this._rpc({
                 model: 'ir.attachment',
@@ -83,14 +83,13 @@ odoo.define('web_drop_target', function(require) {
                         datas: base64js.fromByteArray(
                             new Uint8Array(reader.result)
                         ),
-                        datas_fname: file.name,
                         res_model: res_model,
                         res_id: res_id,
                     }, extra_data || {})
                 ],
             })
             .then(function() {
-                // find the chatter among the children, there should be only
+                // Find the chatter among the children, there should be only
                 // one
                 var res = _.filter(self.getChildren(), 'chatter')
                 if (res.length) {
@@ -147,11 +146,11 @@ odoo.define('web_drop_target', function(require) {
         }
     };
 
-    // and here we apply the mixin to form views, allowing any files and
+    // And here we apply the mixin to form views, allowing any files and
     // adding them as attachment
     FormController.include(_.extend(DropTargetMixin, {
         _get_drop_file: function() {
-            // disable drag&drop when we're on an unsaved record
+            // Disable drag&drop when we're on an unsaved record
             if (!this.datarecord.id) {
                 return null;
             }
