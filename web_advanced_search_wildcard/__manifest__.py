@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014 initOS GmbH & Co. KG (<http://www.initos.com>).
 # Copyright 2016 Therp BV <http://therp.nl>.
 # Copyright 2017 Alex Comba - Agile Business Group
