@@ -15,13 +15,12 @@ odoo.define('web_advanced_search_wildcard', function (require) {
 
     Char.include({
         get_domain: function (field, operator) {
-            var res = this._super(field, operator);
             switch (operator.value) {
-            case 'startswith': return [[field.name, '=ilike', this.get_value() + '%']];
-            case 'not_startswith': return ['!', [field.name, '=ilike', this.get_value() + '%']];
-            case 'endswith': return [[field.name, '=ilike', '%' + this.get_value()]];
-            case 'not_endswith': return ['!', [field.name, '=ilike', '%' + this.get_value()]];
-            default: return res;
+                case 'startswith': return [[field.name, '=ilike', this.get_value() + '%']];
+                case 'not_startswith': return ['!', [field.name, '=ilike', this.get_value() + '%']];
+                case 'endswith': return [[field.name, '=ilike', '%' + this.get_value()]];
+                case 'not_endswith': return ['!', [field.name, '=ilike', '%' + this.get_value()]];
+                default: return this._super(field, operator);
             }
         },
     });
