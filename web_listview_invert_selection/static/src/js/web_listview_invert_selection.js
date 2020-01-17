@@ -15,8 +15,8 @@ odoo.define("web_listview_invert_selection", function (require) {
 
         _onInvertSelection: function (event) {
             event.stopPropagation();
-            var checked = self.$("tbody .o_list_record_selector input:checked");
-            var unchecked = self.$("tbody .o_list_record_selector input:not(:checked)");
+            var checked = $("tbody .o_list_record_selector input:checked");
+            var unchecked = $("tbody .o_list_record_selector input:not(:checked)");
             checked.prop("checked", false);
             unchecked.prop("checked", true);
             this._updateSelection();
