@@ -345,6 +345,11 @@ html .o_web_client .o_action_manager .o_action {
             padding-top: 0;
         }
 
+        .o_chatter_topbar {
+            height: auto;
+            flex-wrap: wrap-reverse;
+        }
+
         // Sticky statusbar
         .o_form_statusbar {
             position: sticky;
@@ -464,9 +469,6 @@ html .o_web_client .o_action_manager .o_action {
                 }
 
                 .o_chatter_topbar {
-                    height: auto;
-                    flex-wrap: wrap-reverse;
-
                     > .o_topbar_right_area {
                         flex: 1 0 auto;
                         flex-wrap: wrap;
@@ -516,7 +518,6 @@ html .o_web_client .o_action_manager .o_action {
                         position: sticky;
                         background-color: $o-view-background-color;
                         z-index: 1;
-                        overflow-x: auto;
 
                         // Scrollable input text to avoid hide conversation & buttons
                         .o_composer_text_field {
