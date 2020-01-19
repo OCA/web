@@ -532,14 +532,15 @@ odoo.define('web_responsive', function (require) {
         events: _.extend(DocumentViewer.prototype.events, {
             'click .o_maximize_btn': '_onClickMaximize',
             'click .o_minimize_btn': '_onClickMinimize',
+            'shown.bs.modal': '_onShownModal',
         }),
 
-        start: function () {
-            this.$btnMaximize = this.$('.o_maximize_btn');
-            this.$btnMinimize = this.$('.o_minimize_btn');
-            return this._super.apply(this, arguments);
+        _onShownModal: function () {
+            // Disable auto-focus to allow to use controls in edit mode.
+            // This only affects the active modal.
+            // More info: https://stackoverflow.com/a/14795256
+            $(document).off('focusin.modal');
         },
-
         _onClickMaximize: function () {
             this.$el.removeClass('o_responsive_document_viewer');
         },
