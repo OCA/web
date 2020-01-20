@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_notify
+# 	* web_notify
 #
 msgid ""
 msgstr ""
@@ -17,19 +17,19 @@ msgstr ""
 "X-Generator: Weblate 3.8\n"
 
 #. module: web_notify
-#: code:addons/web_notify/models/res_users.py:44
+#: code:addons/web_notify/models/res_users.py:0
 #, python-format
 msgid "Danger"
 msgstr "危险"
 
 #. module: web_notify
-#: code:addons/web_notify/models/res_users.py:60
+#: code:addons/web_notify/models/res_users.py:0
 #, python-format
 msgid "Default"
 msgstr "默认"
 
 #. module: web_notify
-#: code:addons/web_notify/models/res_users.py:54
+#: code:addons/web_notify/models/res_users.py:0
 #, python-format
 msgid "Information"
 msgstr "信息"
@@ -60,13 +60,13 @@ msgid "Notify Warning Channel Name"
 msgstr "通知警告频道名称"
 
 #. module: web_notify
-#: code:addons/web_notify/models/res_users.py:75
+#: code:addons/web_notify/models/res_users.py:0
 #, python-format
 msgid "Sending a notification to another user is forbidden."
 msgstr "禁止向其他用户发送通知。"
 
 #. module: web_notify
-#: code:addons/web_notify/models/res_users.py:38
+#: code:addons/web_notify/models/res_users.py:0
 #, python-format
 msgid "Success"
 msgstr "成功"
@@ -107,7 +107,7 @@ msgid "Users"
 msgstr "用户"
 
 #. module: web_notify
-#: code:addons/web_notify/models/res_users.py:50
+#: code:addons/web_notify/models/res_users.py:0
 #, python-format
 msgid "Warning"
 msgstr "警告"
