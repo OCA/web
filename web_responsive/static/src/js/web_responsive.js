@@ -542,9 +542,7 @@ odoo.define('web_responsive', function (require) {
         start: function () {
             core.bus.on('keydown', this, this._onKeydown);
             core.bus.on('keyup', this, this._onKeyUp);
-            const res = this._super.apply(this, arguments);
-            console.log(this.$el);
-            return res;
+            return this._super.apply(this, arguments);
         },
 
         destroy: function () {
