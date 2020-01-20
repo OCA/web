@@ -266,6 +266,9 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
 
         set_option_autocomplete_delay: function() {
             var self = this;
+            if (_.isUndefined(self.field.relation)) {
+                return;
+            }
             // Handle the 'search_delay' option
             //  - global m2o_search_delay from ir_config_parameter
             if ('web_m2x_options.m2o_search_delay' in self.view.ir_options) {
@@ -282,7 +285,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
             }
             // Change the autocomplete 'delay' option
             if (!_.isUndefined(self.search_delay)) {
-                self.$input.autocomplete("option", "delay", self.search_delay);
+                self.$el.find("input").autocomplete("option", "delay", self.search_delay);
             }
         },
     });
