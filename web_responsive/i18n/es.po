@@ -33,6 +33,13 @@ msgstr "Posición del chatter"
 
 #. module: web_responsive
 #. openerp-web
+#: code:addons/web_responsive/static/src/xml/document_viewer.xml:0
+#, python-format
+msgid "Close"
+msgstr ""
+
+#. module: web_responsive
+#. openerp-web
 #: code:addons/web_responsive/static/src/xml/form_view.xml:0
 #, python-format
 msgid "Create"
@@ -51,6 +58,20 @@ msgstr "Descartar"
 #, python-format
 msgid "Edit"
 msgstr "Editar"
+
+#. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/document_viewer.xml:0
+#, python-format
+msgid "Maximize"
+msgstr ""
+
+#. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/document_viewer.xml:0
+#, python-format
+msgid "Minimize"
+msgstr ""
 
 #. module: web_responsive
 #: model:ir.model.fields.selection,name:web_responsive.selection__res_users__chatter_position__normal
@@ -87,3 +108,17 @@ msgstr "Lateral"
 #: model:ir.model,name:web_responsive.model_res_users
 msgid "Users"
 msgstr "Usuarios"
+
+#. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/document_viewer.xml:0
+#, python-format
+msgid "false"
+msgstr ""
+
+#. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/document_viewer.xml:0
+#, python-format
+msgid "modal o_modal_fullscreen o_document_viewer o_responsive_document_viewer"
+msgstr ""
