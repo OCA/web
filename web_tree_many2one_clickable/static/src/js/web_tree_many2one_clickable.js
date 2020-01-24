@@ -11,6 +11,7 @@ odoo.define('web_tree_many2one_clickable.many2one_clickable', function (require)
 
     var ListRenderer = require('web.ListRenderer');
     var ListFieldMany2One = require('web.relational_fields').ListFieldMany2One;
+    var rpc = require('web.rpc');
 
     ListRenderer.include({
         _renderBodyCell: function (record, node, colIndex, options) {
@@ -48,12 +49,12 @@ odoo.define('web_tree_many2one_clickable.many2one_clickable', function (require)
                     ev.preventDefault();
                     ev.stopPropagation();
 
-                    self.do_action({
-                        type: 'ir.actions.act_window',
-                        res_model: self.field.relation,
-                        res_id: self.value.res_id,
-                        views: [[false, 'form']],
-                        target: 'target',
+                    rpc.query({
+                        model: self.field.relation,
+                        method: 'get_formview_action',
+                        args: [[self.value.res_id]],
+                    }).then(function (action) {
+                        return self.do_action(action);
                     });
                 });
                 this.$el.append($a);
