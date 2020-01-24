@@ -2,23 +2,23 @@
     .o_notification {
         &.o_success {
             color: white;
-            background-color: theme-color('success');
+            background-color: theme-color("success");
         }
         &.o_danger {
             color: white;
-            background-color: theme-color('danger');
+            background-color: theme-color("danger");
         }
         &.o_warning {
             color: white;
-            background-color: theme-color('warning');
+            background-color: theme-color("warning");
         }
         &.o_info {
             color: white;
-            background-color: theme-color('info');
+            background-color: theme-color("info");
         }
         &.o_default {
             color: black;
-            background-color: theme-color('default');
+            background-color: theme-color("default");
         }
     }
 }
