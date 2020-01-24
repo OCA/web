@@ -13,6 +13,7 @@ odoo.define("web_m2x_options.web_m2x_options", function (require) {
     var _t = core._t,
         FieldMany2ManyTags = relational_fields.FieldMany2ManyTags,
         FieldMany2One = relational_fields.FieldMany2One,
+        FieldOne2Many = relational_fields.FieldOne2Many,
         FormFieldMany2ManyTags = relational_fields.FormFieldMany2ManyTags;
 
     var web_m2x_options = rpc.query({
@@ -457,6 +458,29 @@ odoo.define("web_m2x_options.web_m2x_options", function (require) {
                         }).open();
                     });
                 }
+            }
+        },
+    });
+
+    FieldOne2Many.include({
+        _onOpenRecord: function (ev) {
+            var self = this;
+            var open = this.nodeOptions.open;
+            if (open && self.mode === "readonly") {
+                ev.stopPropagation();
+                var id = ev.data.id;
+                var res_id = self.record.data[self.name].data.filter(
+                    (line) => line.id === id
+                )[0].res_id;
+                self._rpc({
+                    model: self.field.relation,
+                    method: "get_formview_action",
+                    args: [[res_id]],
+                }).then(function (action) {
+                    return self.do_action(action);
+                });
+            } else {
+                return this._super.apply(this, arguments);
             }
         },
     });
