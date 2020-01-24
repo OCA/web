@@ -23,7 +23,7 @@ jobs:
       name: "pre-commit"
       before_install:
       install: pip install pre-commit
-      script: pre-commit run --all --show-diff-on-failure
+      script: pre-commit run --all --show-diff-on-failure --verbose --color always
       after_success:
     - stage: test
       env:
