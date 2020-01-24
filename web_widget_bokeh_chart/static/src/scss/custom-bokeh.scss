@@ -6,15 +6,12 @@
     /* Overriding this styling option Odoo menu is now displayed on top of bokeh graphs */
     z-index: 0;
     height: inherit !important;
-
 }
 .bk-root > .bk {
     height: inherit !important;
-
 }
 .bk-root > .bk > .bk {
     height: inherit !important;
-
 }
 .bk-root > .bk > .bk > .bk-canvas {
     height: inherit !important;

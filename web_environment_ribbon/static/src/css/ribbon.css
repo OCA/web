@@ -2,7 +2,7 @@
    Copyright 2017 Thomas Binsfeld <thomas.binsfeld@acsone.eu>
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
-.test-ribbon{
+.test-ribbon {
     width: 300px;
     top: 25px;
     left: -100px;
@@ -18,8 +18,8 @@
     transform: rotate(-45deg);
     z-index: 9999;
     position: fixed;
-    box-shadow: 0 0 3px rgba(0,0,0,.3);
-    background: rgba(255,0,0,.6);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 0, 0, 0.6);
     pointer-events: none;
 }
 

@@ -1,23 +1,23 @@
 /* License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
-odoo.define("web_decimal_numpad_dot.FieldFloat", function (require) {
+odoo.define("web_decimal_numpad_dot.FieldFloat", function(require) {
     "use strict";
 
     var basic_fields = require("web.basic_fields");
     var translation = require("web.translation");
 
     var NumpadDotReplaceMixin = {
-        l10n_decimal_point: function () {
+        l10n_decimal_point: function() {
             return this.formatType === "float_time"
-                ? ":" : translation._t.database.parameters.decimal_point;
+                ? ":"
+                : translation._t.database.parameters.decimal_point;
         },
 
-        _replaceAt: function (cur_val, from, to, replacement) {
-            return cur_val.substring(0, from) + replacement +
-                   cur_val.substring(to);
+        _replaceAt: function(cur_val, from, to, replacement) {
+            return cur_val.substring(0, from) + replacement + cur_val.substring(to);
         },
 
-        _onKeydown: function (event) {
+        _onKeydown: function(event) {
             // Only act on numpad dot key
             if (event.keyCode !== 110) {
                 return this._super.apply(this, arguments);
