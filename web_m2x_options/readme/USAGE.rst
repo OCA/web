@@ -37,7 +37,7 @@ in the field's options dict
 
 ``open`` *boolean* (Default: ``False``)
 
-  Makes many2many_tags buttons that open the linked resource
+  Makes many2many_tags and one2many rows buttons that open the linked resource
 
 ``no_color_picker`` *boolean* (Default: ``False``)
 
