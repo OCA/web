@@ -23,7 +23,7 @@ Web No Bubble
     :target: https://runbot.odoo-community.org/runbot/162/13.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5|
+|badge1| |badge2| |badge3| |badge4| |badge5| 
 
 This module removes from the web interface the bubbles introduced in the version 10.0.
 The help boxes are not removed though.
