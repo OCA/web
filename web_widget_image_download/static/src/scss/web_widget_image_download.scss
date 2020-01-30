@@ -1,8 +1,8 @@
-
 .o_field_widget {
     &.o_field_image {
         .o_form_image_controls {
-            > .fa, .o_form_binary_file_download {
+            > .fa,
+            .o_form_binary_file_download {
                 margin: 5px 0;
                 padding: 1px 0;
                 width: 33.333333%;
@@ -23,11 +23,11 @@
             }
         }
         @include media-breakpoint-down(xs, $o-extra-grid-breakpoints) {
-            .o_form_image_controls{
+            .o_form_image_controls {
                 .o_form_binary_file_download {
                     display: none;
                 }
-                > .fa{
+                > .fa {
                     width: 50%;
                     padding: 6px;
                     margin: 0px;
