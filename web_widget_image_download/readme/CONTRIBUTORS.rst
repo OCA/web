@@ -4,5 +4,6 @@
   * Jairo Llopis
   * Pedro M. Baeza
   * Ernesto Tejeda
+  * Alexandre Díaz
 
 * Kaushal Prajapati <kbprajapati@live.com>
