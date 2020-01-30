@@ -1,6 +1,5 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* web_domain_field
 #
 msgid ""
 msgstr ""
@@ -12,10 +11,3 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: web_domain_field
-#. openerp-web
-#: code:addons/web_domain_field/static/src/js/pyeval.js:0
-#, python-format
-msgid "Unknown nonliteral type "
-msgstr ""
