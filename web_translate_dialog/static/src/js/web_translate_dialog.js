@@ -15,7 +15,7 @@ var FormView = require('web.FormView');
 var View = require('web.AbstractView');
 var session  = require('web.session');
 var rpc = require('web.rpc');
-
+var FormController = require('web.FormController');
 var _t = core._t;
 var QWeb = core.qweb;
 var Mutex = concurrency.Mutex;
@@ -23,14 +23,25 @@ var Mutex = concurrency.Mutex;
 var TranslateDialog = Dialog.extend({
     template: "TranslateDialog",
     init: function(parent, options) {
-        var title_string = _t("Translate field: /")
+        var title_string = _t("Translate fields: /");
+        var field_names;
+        var single_field = false;
+        if (options.field){
+            field_names = [options.field.fieldName];
+            single_field = true;
+            title_string = title_string.replace('/', field_names);
+        }
+        else {
+            field_names = this.get_translatable_fields(parent);
+        }
         this._super(parent,
-                    {title: title_string.replace('/', options.field.fieldName) , size: 'x-large'});
+                    {title: title_string , size: 'x-large'});
         this.view_language = session.user_context.lang;
         this.view = parent;
         this.view_type = parent.viewType || '';
-        this.translatable_field = options.field.fieldName;
+        this.translatable_fields = field_names;
         this.res_id = options.res_id;
+        this.single_field = single_field;
         this.languages = null;
         this.languages_loaded = $.Deferred();
         this.lang_data = new data.DataSetSearch(
@@ -47,6 +58,15 @@ var TranslateDialog = Dialog.extend({
                 self.$modal.find('.modal-dialog').addClass('modal-xl');
             }
         });
+    },
+    get_translatable_fields: function(parent) {
+        var field_list = [];
+        _.each(parent.renderer.state.fields, function(field, name){
+            if (field.translate == true){
+                field_list.push(name);
+            }
+        });
+        return field_list;
     },
     on_languages_loaded: function(langs) {
         this.languages = langs;
@@ -74,13 +94,13 @@ var TranslateDialog = Dialog.extend({
     },
     resize_textareas: function(){
         var textareas = this.$('textarea.oe_translation_field');
-        var max_height = 100
+        var max_height = 100;
         // Resize textarea either to the max height of its content if it stays
         // in the modal or to the max height available in the modal
         if (textareas.length) {
             _.each(textareas, function(textarea) {
                 if (textarea.scrollHeight > max_height) {
-                    max_height = textarea.scrollHeight
+                    max_height = textarea.scrollHeight;
                 }
             });
             var max_client_height = $(window).height() - $('.modal-content').height()
@@ -90,14 +110,16 @@ var TranslateDialog = Dialog.extend({
     },
     set_maxlength: function(){
         // set maxlength if initial field has size attr
-        var size = $('[name='+this.translatable_field+']')[0].maxLength;
-        if (size > 0){
-            this.$('input.oe_translation_field, textarea.oe_translation_field').attr('maxlength', size);
-        }
+        _.each(this.translatable_fields, function(field_name){
+            var size = $('[name='+field_name+']')[0].maxLength;
+            if (size > 0){
+                this.$('input.oe_translation_field[name$="'+field_name+'"], textarea.oe_translation_field[name$="'+field_name+'"]').attr('maxlength', size);
+            }
+        }, this);
     },
     initialize_html_fields: function(lang) {
         // Initialize summernote if HTML field
-        this.$('.oe_form_field_html .oe_translation_field[name="' + lang + '-' + this.translatable_field + '"]').each(function() {
+        this.$('.oe_form_field_html .oe_translation_field[name^="' + lang + '-"]').each(function() {
             var $parent = $(this).summernote({
                 'focus': false,
                 'toolbar': [
@@ -129,10 +151,11 @@ var TranslateDialog = Dialog.extend({
 
     },
     set_fields_values: function(lang, tr_value) {
-        this.$('.oe_translation_field[name="' + lang +
-                '-' + this.translatable_field + '"]').val(tr_value || '').attr(
-                'data-value', tr_value || '');
-
+        _.each(tr_value, function(translation, field){
+            this.$('.oe_translation_field[name="' + lang +
+                    '-' + field + '"]').val(translation || '').attr(
+                    'data-value', translation || '');
+        }, this);
         this.initialize_html_fields(lang);
     },
     do_load_fields_values: function() {
@@ -150,13 +173,13 @@ var TranslateDialog = Dialog.extend({
                 [this.res_id],
             ],
             kwargs: {
-                field_name: this.translatable_field,
+                field_names: this.translatable_fields,
             },
         }).done(
             function (res) {
                 if (res[self.res_id]){
                     _.each(res[self.res_id], function(translation, lang) {
-                        self.set_fields_values(lang, translation[1]);
+                        self.set_fields_values(lang, translation);
                     });
                     self.resize_textareas();
                     self.set_maxlength();
@@ -207,30 +230,30 @@ var TranslateDialog = Dialog.extend({
 
 });
 
-FormView.include({
-    render_sidebar: function($node) {
+
+FormController.include({
+    renderSidebar: function($node) {
         this._super($node);
         if (this.sidebar) {
-            this.sidebar.add_items('other', _.compact([
-                this.is_action_enabled('edit') &&
-                this.translatable_field && {
+            var item = this.is_action_enabled('edit') && {
                     label: _t('Translate'),
                     callback: this.on_button_translate
-                },
-            ]));
+                };
+            if (item){
+                this.sidebar.items.other.push(item);
+            }
         }
     },
     on_button_translate: function() {
         var self = this;
         $.when(this.has_been_loaded).then(function() {
-            self.open_translate_dialog();
+            self.open_translate_dialog(null, self.initialState.res_id);
         });
     },
+
 });
 
-
 BasicController.include({
-
     open_translate_dialog: function(field, res_id) {
         new TranslateDialog(this, {'field': field, 'res_id': res_id}).open();
     },
