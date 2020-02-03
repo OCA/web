@@ -37,6 +37,8 @@ odoo.define("web_decimal_numpad_dot.FieldFloat", function (require) {
 
     basic_fields.FieldFloat.include(NumpadDotReplaceMixin);
     basic_fields.FieldMonetary.include(NumpadDotReplaceMixin);
+    basic_fields.FieldChar.include(NumpadDotReplaceMixin);
+    basic_fields.FieldText.include(NumpadDotReplaceMixin);
 
     return {
         NumpadDotReplaceMixin: NumpadDotReplaceMixin,
