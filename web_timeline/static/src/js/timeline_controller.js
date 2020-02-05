@@ -50,12 +50,9 @@ odoo.define('web_timeline.TimelineController', function (require) {
             this.last_domains = domains;
             this.last_contexts = contexts;
             // Select the group by
-            var n_group_bys = [];
-            if (this.renderer.arch.attrs.default_group_by) {
+            var n_group_bys = group_bys;
+            if (!n_group_bys.length && this.renderer.arch.attrs.default_group_by) {
                 n_group_bys = this.renderer.arch.attrs.default_group_by.split(',');
-            }
-            if (group_bys.length) {
-                n_group_bys = group_bys;
             }
             this.renderer.last_group_bys = n_group_bys;
             this.renderer.last_domains = domains;
@@ -107,12 +104,12 @@ odoo.define('web_timeline.TimelineController', function (require) {
             this.renderer = event.data.renderer;
             var rights = event.data.rights;
             var item = event.data.item;
-            var id = item.evt.id;
+            var id = Number(item.evt.id) || item.evt.id;
             var title = item.evt.__name;
             if (this.open_popup_action) {
                 new dialogs.FormViewDialog(this, {
                     res_model: this.model.modelName,
-                    res_id: parseInt(id, 10).toString() === id ? parseInt(id, 10) : id,
+                    res_id: id,
                     context: this.getSession().user_context,
                     title: title,
                     view_id: Number(this.open_popup_action),
@@ -127,7 +124,7 @@ odoo.define('web_timeline.TimelineController', function (require) {
                 }
                 this.trigger_up('switch_view', {
                     view_type: 'form',
-                    res_id: parseInt(id, 10).toString() === id ? parseInt(id, 10) : id,
+                    res_id: id,
                     mode: mode,
                     model: this.model.modelName,
                 });
@@ -187,10 +184,10 @@ odoo.define('web_timeline.TimelineController', function (require) {
          */
         internalMove: function () {
             var self = this;
-            var queue = this.moveQueue.slice();
+            var queues = this.moveQueue.slice();
             this.moveQueue = [];
             var defers = [];
-            _.each(queue, function (item) {
+            for (const item of queues) {
                 defers.push(self._rpc({
                     model: self.model.modelName,
                     method: 'write',
@@ -202,7 +199,7 @@ odoo.define('web_timeline.TimelineController', function (require) {
                 }).then(function () {
                     item.event.data.callback(item.event.data.item);
                 }));
-            });
+            }
             return $.when.apply($, defers).done(function () {
                 self.write_completed({
                     adjust_window: false,
@@ -215,46 +212,22 @@ odoo.define('web_timeline.TimelineController', function (require) {
          * Requires user confirmation before it gets actually deleted.
          *
          * @private
-         * @param {EventObject} e
+         * @param {EventObject} event
          * @returns {jQuery.Deferred}
          */
-        _onRemove: function (e) {
+        _onRemove: function (event) {
             var self = this;
-
-            function do_it (event) {
-                return self._rpc({
-                    model: self.model.modelName,
-                    method: 'unlink',
-                    args: [
-                        [event.data.item.id],
-                    ],
-                    context: self.getSession().user_context,
-                }).then(function () {
-                    var unlink_index = false;
-                    for (var i = 0; i < self.model.data.data.length; i++) {
-                        if (self.model.data.data[i].id === event.data.item.id) {
-                            unlink_index = i;
-                        }
-                    }
-                    if (!isNaN(unlink_index)) {
-                        self.model.data.data.splice(unlink_index, 1);
-                    }
-
-                    event.data.callback(event.data.item);
-                });
-            }
-
-            var message = _t("Are you sure you want to delete this record?");
             var def = $.Deferred();
-            Dialog.confirm(this, message, {
+
+            Dialog.confirm(this, _t("Are you sure you want to delete this record?"), {
                 title: _t("Warning"),
                 confirm_callback: function () {
-                    do_it(e)
-                        .done(def.resolve.bind(def, true))
-                        .fail(def.reject.bind(def));
+                    self.remove_completed(event).then(def.resolve.bind(def));
                 },
+                cancel_callback: def.resolve.bind(def),
             });
-            return def.promise();
+
+            return def;
         },
 
         /**
@@ -339,6 +312,32 @@ odoo.define('web_timeline.TimelineController', function (require) {
                 groupBy: this.renderer.last_group_bys,
             };
             this.update(params, options);
+        },
+
+        /**
+         * Triggered upon confirm of removing a record.
+         * @param {EventObject} event
+         * @returns {jQuery.Deferred}
+         */
+        remove_completed: function (event) {
+            var self = this;
+            return self._rpc({
+                model: self.modelName,
+                method: 'unlink',
+                args: [[event.data.item.id]],
+                context: self.getSession().user_context,
+            }).then(function () {
+                var unlink_index = false;
+                for (var i = 0; i < self.model.data.data.length; i++) {
+                    if (self.model.data.data[i].id === event.data.item.id) {
+                        unlink_index = i;
+                    }
+                }
+                if (!isNaN(unlink_index)) {
+                    self.model.data.data.splice(unlink_index, 1);
+                }
+                event.data.callback(event.data.item);
+            });
         },
     });
 

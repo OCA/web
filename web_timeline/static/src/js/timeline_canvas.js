@@ -15,7 +15,7 @@ odoo.define('web_timeline.TimelineCanvas', function (require) {
          * Clears all drawings (svg elements) from the canvas.
          */
         clear: function () {
-            this.$el.find(' > :not(defs)').remove();
+            this.$(' > :not(defs)').remove();
         },
 
         /**
@@ -50,7 +50,7 @@ odoo.define('web_timeline.TimelineCanvas', function (require) {
                 if (xDiff > threshold) {
                     points.push([x1 - breakAt, y1]);
                     points.push([x1 - breakAt, y1 - yDiff]);
-                } else if (xDiff <= threshold) {
+                } else {
                     var yDiffSpace = yDiff > 0 ? spaceY : -spaceY;
                     points.push([x1 - breakAt, y1]);
                     points.push([x1 - breakAt, y2 + yDiffSpace]);

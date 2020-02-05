@@ -54,7 +54,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
             };
 
             this.$el.addClass(attrs.class);
-            this.$timeline = this.$el.find(".oe_timeline_widget");
+            this.$timeline = this.$('.oe_timeline_widget');
 
             if (!this.date_start) {
                 throw new Error(_t("Timeline view has not defined 'date_start' attribute."));
@@ -66,7 +66,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
          * Triggered when the timeline is attached to the DOM.
          */
         on_attach_callback: function () {
-            var height = this.$el.parent().height() - this.$el.find('.oe_timeline_buttons').height();
+            var height = this.$el.parent().height() - this.$('.oe_timeline_buttons').height();
             if (height > this.min_height && this.timeline) {
                 this.timeline.setOptions({
                     height: height,
@@ -128,7 +128,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
          * @private
          */
         _onScaleMonthClicked: function () {
-            this._scaleCurrentWindow(24 * 30);
+            this._scaleCurrentWindow(24 * moment(this.current_window.start).daysInMonth());
         },
 
         /**
@@ -137,7 +137,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
          * @private
          */
         _onScaleYearClicked: function () {
-            this._scaleCurrentWindow(24 * 365);
+            this._scaleCurrentWindow(24 * (moment(this.current_window.start).isLeapYear() ? 366 : 365));
         },
 
         /**
@@ -186,7 +186,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
         },
 
         /**
-         * Initializes the timeline (http://visjs.org/docs/timeline/).
+         * Initializes the timeline (https://visjs.github.io/vis-timeline/docs/timeline).
          *
          * @private
          */
@@ -219,7 +219,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
                 this.qweb.add_template(tmpl);
             }
 
-            this.timeline = new vis.Timeline(self.$timeline.empty().get(0));
+            this.timeline = new vis.Timeline(self.$timeline.get(0));
             this.timeline.setOptions(this.options);
             if (self.mode && self['on_scale_' + self.mode + '_clicked']) {
                 self['on_scale_' + self.mode + '_clicked']();
@@ -236,8 +236,8 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
                 self.draw_canvas();
                 self.canvas.$el.attr(
                     'style',
-                    self.$el.find('.vis-content').attr('style') +
-                    self.$el.find('.vis-itemset').attr('style')
+                    self.$('.vis-content').attr('style') +
+                    self.$('.vis-itemset').attr('style')
                 );
             });
         },
@@ -262,16 +262,16 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
         draw_dependencies: function () {
             var self = this;
             var items = this.timeline.itemSet.items;
-            _.each(items, function (item) {
+            for (const item of items) {
                 if (!item.data.evt) {
                     return;
                 }
-                _.each(item.data.evt[self.dependency_arrow], function (id) {
+                for (const id of item.data.evt[self.dependency_arrow]) {
                     if (id in items) {
                         self.draw_dependency(item, items[id]);
                     }
-                });
-            });
+                }
+            }
         },
 
         /**
@@ -335,11 +335,11 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
             var data = [];
             var groups = [];
             this.grouped_by = group_bys;
-            _.each(events, function (event) {
-                if (event[self.date_start]) {
-                    data.push(self.event_data_transform(event));
+            for (const evt of events) {
+                if (evt[self.date_start]) {
+                    data.push(self.event_data_transform(evt));
                 }
-            });
+            }
             groups = this.split_groups(events, group_bys);
             this.timeline.setGroups(groups);
             this.timeline.setItems(data);
@@ -362,24 +362,22 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
             }
             var groups = [];
             groups.push({id: -1, content: _t('-')});
-            _.each(events, function (event) {
-                var group_name = event[_.first(group_bys)];
+            for (const evt of events) {
+                var group_name = evt[_.first(group_bys)];
                 if (group_name) {
                     if (group_name instanceof Array) {
                         var group = _.find(groups, function (existing_group) {
-                            return _.isEqual(existing_group.id, group_name[0]);
+                            return existing_group.id === group_name[0];
                         });
-
                         if (_.isUndefined(group)) {
-                            group = {
+                            groups.push({
                                 id: group_name[0],
                                 content: group_name[1],
-                            };
-                            groups.push(group);
+                            });
                         }
                     }
                 }
-            });
+            }
             return groups;
         },
 
@@ -410,7 +408,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
             }
 
             if (!date_stop && date_delay) {
-                date_stop = moment(date_start).add(date_delay, 'hours').toDate();
+                date_stop = date_start.clone().add(date_delay, 'hours').toDate();
             }
 
             var group = evt[self.last_group_bys[0]];
@@ -419,13 +417,14 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
             } else {
                 group = -1;
             }
-            _.each(self.colors, function (color) {
-                if (eval("'" + evt[color.field] + "' " + color.opt + " '" + color.value + "'")) {
+
+            for (const color of self.colors) {
+                if (py.eval("'" + evt[color.field] + "' " + color.opt + " '" + color.value + "'")) {
                     self.color = color.color;
                 }
-            });
+            }
 
-            var content = _.isUndefined(evt.__name) ? evt.display_name : evt.__name;
+            var content = evt.__name || evt.display_name;
             if (this.arch.children.length) {
                 content = this.render_timeline_item(evt);
             }
@@ -436,14 +435,14 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
                 'id': evt.id,
                 'group': group,
                 'evt': evt,
-                'style': 'background-color: ' + self.color + ';',
+                'style': `background-color: ${this.color};`,
             };
             // Check if the event is instantaneous,
             // if so, display it with a point on the timeline (no 'end')
             if (date_stop && !moment(date_start).isSame(date_stop)) {
                 r.end = date_stop;
             }
-            self.color = null;
+            this.color = null;
             return r;
         },
 
