@@ -18,6 +18,7 @@ setuptools.setup(
         'odoo13-addon-web_responsive',
         'odoo13-addon-web_tree_many2one_clickable',
         'odoo13-addon-web_widget_bokeh_chart',
+        'odoo13-addon-web_widget_image_download',
     ],
     classifiers=[
         'Programming Language :: Python',
