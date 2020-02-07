@@ -49,6 +49,7 @@ setuptools.setup(
         'odoo11-addon-web_widget_image_url',
         'odoo11-addon-web_widget_many2many_tags_multi_selection',
         'odoo11-addon-web_widget_prefixed_url',
+        'odoo11-addon-web_widget_text_markdown',
         'odoo11-addon-web_widget_timepicker',
         'odoo11-addon-web_widget_url_advanced',
         'odoo11-addon-web_widget_x2many_2d_matrix',
