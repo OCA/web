@@ -1,95 +1,245 @@
-/**
-* Copyright (C) 2019 - Today: GRAP (http://www.grap.coop)
-* @author: Quentin DUPONT <quentin.dupont@grap.coop>
-* License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html) **/
+/* Copyright 2019 GRAP - Quentin DUPONT
+ * Copyright 2020 Tecnativa - Alexandre Díaz
+ * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html) */
 
-odoo.define('web.web_widget_numeric_step', function(require) {
+odoo.define('web_widget_numeric_step.field', function (require) {
     "use strict";
 
     var Registry = require('web.field_registry');
-    var NumericStep = require('web.basic_fields').FieldFloat;
-
-    /**
-    * Get decimal precision for the input field
-    *
-    * @param {object} input Input field
-    * @return {int} Precision
-    */
-    function getPrecision(input) {
-      if (!isFinite(input)) return 0;
-      var ten_multiple = 1, precision = 0;
-      while (Math.round(input * ten_multiple) / ten_multiple !== input) {
-        ten_multiple *= 10;
-        precision++;
-       }
-      return precision;
-    }
-
-    /**
-    * Increase input number with chosen step iteration
-    *
-    * @param {object} self Input field
-    * @param {Float} step Step iteration
-    * @param {String} minusOrPlus Choose "minus" to decrease. Default is "plus"
-    */
-    function addStep(self, step, minusOrPlus) {
-        var oldVal= parseFloat(self._getValue());
-        var precision = Math.max(getPrecision(oldVal), getPrecision(step))
-        if (minusOrPlus == "minus") {
-            step = -step
-        }
-        var newVal = oldVal + step;
-        // Check input limits
-        if (newVal > self.attrs.options.max) {
-            newVal = self.attrs.options.max;
-        } else if (newVal < self.attrs.options.min) {
-            newVal = self.attrs.options.min;
-        }
-        var newVal_s = newVal.toFixed(precision).toString();
-        self._setValue(newVal_s); 
-        self.$input[0].value = newVal_s;
-    }
+    var FieldFloat = require('web.basic_fields').FieldFloat;
 
 
-    NumericStep.include({
+    var NumericStep = FieldFloat.extend({
         template: 'web_widget_numeric_step',
+        className: 'o_field_numeric_step o_field_number',
+        events: _.extend({}, FieldFloat.prototype.events, {
+            'mousedown .btn_numeric_step': '_onStepMouseDown',
+            'touchstart .btn_numeric_step': '_onStepMouseDown',
+            'click .btn_numeric_step': '_onStepClick',
+            'wheel .input_numeric_step': '_onWheel',
+            'keydown .input_numeric_step': '_onKeyDown',
+            'change .input_numeric_step': '_onChange',
+        }),
+        supportedFieldTypes: ['float', 'integer'],
 
-        _render: function () {
-            var self = this;
-            // Use native options for input number
-            this.nodeOptions['type'] = "number";
-            this._super();
+        // Values in milliseconds used for mouse down smooth speed feature
+        DEF_CLICK_DELAY: 400,
+        MIN_DELAY: 50,
+        SUBSTRACT_DELAY_STEP: 25,
 
-            // Add native options for input number
-            var input_number_options = ['max', 'min', 'placeholder', 'step'];
-            for (var options of input_number_options) {
-                if (typeof this.nodeOptions[options] !== 'undefined') {
-                    this.$el[0][options] = this.nodeOptions[options];
-                } 
+        init: function () {
+            this._super.apply(this, arguments);
+
+            // Widget config
+            var max_val = this.nodeOptions.max;
+            var min_val = this.nodeOptions.min;
+            if (!_.isUndefined(min_val) && !_.isUndefined(max_val) && min_val > max_val) {
+                min_val = this.nodeOptions.max;
+                max_val = this.nodeOptions.min;
             }
 
-            this.$("button").parents().removeClass("o_field_integer o_field_number o_input o_required_modifier");
-            this.$("button").click(function() {
-                var node = $(this).parent()[0];
+            this._config = {
+                'step': Number(this.nodeOptions.step) || 1,
+                'min': Number(min_val),
+                'max': Number(max_val),
+            };
+        },
 
-                // Get step option or default is 1
-                if (typeof node.attributes['step'] !== 'undefined') {
-                    var step = parseFloat(node.attributes['step'].value);
-                } else {
-                    var step = 1;
-                }
-                // PLUS button
-                if ($(this).hasClass("btn_numeric_step_plus")) {
-                    addStep(self, step, "plus")
-                // MINUS button
-                } else if ($(this).hasClass("btn_numeric_step_minus")){
-                    addStep(self, step, "minus")
-
-                };
+        /**
+         * Add global events listeners
+         *
+         * @override
+         */
+        start: function () {
+            var self = this;
+            this._click_delay = this.DEF_CLICK_DELAY;
+            this._autoStep = false;
+            return this._super.apply(this, arguments).then(function () {
+                document.addEventListener(
+                    'mouseup', $.proxy(self, "_onMouseUp"), false);
+                document.addEventListener(
+                    'touchend', $.proxy(self, "_onMouseUp"), false);
             });
+        },
+
+        /**
+         * Transform database value to usable widget value
+         *
+         * @override
+         */
+        _formatValue: function (value) {
+            if (this.mode === 'edit') {
+                return this._sanitizeNumberValue(value);
+            }
+            return this._super.apply(this, arguments);
+        },
+
+        /**
+         * Transform widget value to usable database value
+         *
+         * @override
+         */
+        _parseValue: function () {
+            var parsedVal = this._super.apply(this, arguments);
+            if (this.mode === 'edit') {
+                return Number(parsedVal) || 0;
+            }
+            return parsedVal;
+        },
+
+        /**
+         * Adds HTML attributes to the input
+         *
+         * @override
+         */
+        _prepareInput: function () {
+            var result = this._super.apply(this, arguments);
+            this.$input.attr(_.pick(this.nodeOptions, ['placeholder']));
+            // InputField hard set the input type to 'text' or 'password',
+            // we force it again to be 'tel'.
+            // The widget uses 'tel' type because offers a good layout on
+            // mobiles and can accept alphanumeric characters.
+            // The bad news is that require implement all good 'number' type
+            // features like the minus and plus buttons, steps, min and max...
+            // Perhaps in a near future this can be improved to have the best of
+            // two types without hacky developments.
+            this.$input.attr('type', 'tel');
+            return result;
+        },
+
+        /**
+         * Select the proper widget input
+         *
+         * @override
+         */
+        _renderEdit: function () {
+            this._prepareInput(this.$el.find('input.input_numeric_step'));
+        },
+
+        /**
+         * Increase/Decrease widget input value
+         *
+         * @param {String} mode can be "plus" or "minus"
+         */
+        _doStep: function (mode) {
+            var cval = Number(this.$input.val());
+            if (_.isNaN(cval)) {
+                return;
+            }
+            if (mode === 'plus') {
+                cval += this._config.step;
+            } else if (mode === 'minus') {
+                cval -= this._config.step;
+            }
+            this.$input.val(this._sanitizeNumberValue(cval));
+            this.isDirty = true;
+            this._doDebouncedAction();
+        },
+
+        // Handle Events
+        _onStepClick: function (ev) {
+            if (!this._autoStep) {
+                var mode = ev.target.dataset.mode;
+                this._doStep(mode);
+            }
+            this._autoStep = false;
+        },
+
+        _onStepMouseDown: function (ev) {
+            this._interval = setTimeout(
+                $.proxy(this, "_whileMouseDown", ev), this._click_delay);
+        },
+
+        _onMouseUp: function () {
+            clearTimeout(this._interval);
+            this._interval = false;
+            this._click_delay = this.DEF_CLICK_DELAY;
+        },
+
+        _whileMouseDown: function (ev) {
+            this._autoStep = true;
+            var mode = ev.target.dataset.mode;
+            this._doStep(mode);
+            if (this._click_delay > this.MIN_DELAY) {
+                this._click_delay -= this.SUBSTRACT_DELAY_STEP;
+            }
+
+            this._onStepMouseDown(ev);
+        },
+
+        /**
+         * Enable mouse wheel support
+         *
+         * @param {WheelEvent} ev
+         */
+        _onWheel: function (ev) {
+            ev.preventDefault();
+            if (ev.originalEvent.deltaY > 0) {
+                this._doStep('minus');
+            } else {
+                this._doStep('plus');
+            }
+        },
+
+        /**
+         * Enable keyboard arrows support
+         *
+         * @param {KeyEvent} ev
+         */
+        _onKeyDown: function (ev) {
+            if (ev.keyCode === $.ui.keyCode.UP) {
+                this._doStep('plus');
+            } else if (ev.keyCode === $.ui.keyCode.DOWN) {
+                this._doStep('minus');
+            }
+        },
+
+        /**
+         * Sanitize user input value
+         *
+         * @param {ChangeEvent} ev
+         */
+        _onChange: function (ev) {
+            ev.target.value = this._sanitizeNumberValue(ev.target.value);
+        },
+
+        // Helper Functions
+        /*
+         * Get field precision (really used by floats)
+         */
+        _getPrecision: function () {
+            var field = this.record.fields[this.name];
+            if (field && 'digits' in field && field.digits.length === 2) {
+                return field.digits[1];
+            }
+
+            return 0;
+        },
+
+        /**
+         * Check limits and precision of the value.
+         * If the value 'is not a number', the function does nothing to
+         * be good with other possible modules.
+         *
+         * @param {Number} value
+         * @returns {Number}
+         */
+        _sanitizeNumberValue: function (value) {
+            var cval = Number(value);
+            if (_.isNaN(cval)) {
+                return value;
+            }
+            if (!_.isNaN(this._config.min) && cval < this._config.min) {
+                cval = this._config.min;
+            } else if (!_.isNaN(this._config.max) && cval > this._config.max) {
+                cval = this._config.max;
+            }
+            return cval.toFixed(this._getPrecision());
         },
     });
 
     Registry.add('numeric_step', NumericStep);
+
+    return NumericStep;
 
 });
