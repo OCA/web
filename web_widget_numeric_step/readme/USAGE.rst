@@ -11,13 +11,15 @@ Add an option to choose the step iteration and limits (min and max values).
 
 Example for an 0.25 step, min to -1 and max to 10 :
 
-``<field name="sale_delay" widget="numeric_step" options="{'step': 0.25, 'min': -1, 'max': 10}" /> days``
+.. code:: xml
+
+  <field name="sale_delay" widget="numeric_step" options="{'step': 0.25, 'min': -1, 'max': 10}" /> days
 
 **Examples**
 
 Iteration with 0.25 step, min to -1 and max to 10.
 
-Start to incremente with button, continue incrementing with scrolling mouse.
+Start to increment with button, continue incrementing with scrolling mouse.
 
 .. figure:: ../static/description/step0,25andlimits.gif
 
