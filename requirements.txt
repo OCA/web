@@ -2,3 +2,6 @@
 bokeh==1.1.0
 # web_widget_plotly_chart
 plotly==4.1.0
+# web_widget_mpld3_chart
+matplotlib>=2.0.0
+mpld3==0.3
