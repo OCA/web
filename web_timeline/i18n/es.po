@@ -9,19 +9,20 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-03 03:50+0000\n"
-"PO-Revision-Date: 2018-01-03 03:50+0000\n"
-"Last-Translator: Pedro M. Baeza <pedro.baeza@gmail.com>, 2017\n"
+"PO-Revision-Date: 2020-02-04 23:13+0000\n"
+"Last-Translator: Nelson Ramírez Sánchez <info@konos.cl>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: web_timeline
 #: selection:ir.ui.view,type:0
 msgid "Activity"
-msgstr ""
+msgstr "Actividad"
 
 #. module: web_timeline
 #. openerp-web
@@ -33,7 +34,7 @@ msgstr "¿Está seguro que desea eliminar este registro?"
 #. module: web_timeline
 #: selection:ir.ui.view,type:0
 msgid "Calendar"
-msgstr ""
+msgstr "Calendario"
 
 #. module: web_timeline
 #. openerp-web
@@ -45,12 +46,12 @@ msgstr "Día"
 #. module: web_timeline
 #: selection:ir.ui.view,type:0
 msgid "Diagram"
-msgstr ""
+msgstr "Diagrama"
 
 #. module: web_timeline
 #: selection:ir.ui.view,type:0
 msgid "Form"
-msgstr ""
+msgstr "Formulario"
 
 #. module: web_timeline
 #: selection:ir.ui.view,type:0
@@ -60,7 +61,7 @@ msgstr ""
 #. module: web_timeline
 #: selection:ir.ui.view,type:0
 msgid "Graph"
-msgstr ""
+msgstr "Gráfico"
 
 #. module: web_timeline
 #: selection:ir.ui.view,type:0
@@ -87,7 +88,7 @@ msgstr ""
 #. module: web_timeline
 #: selection:ir.ui.view,type:0
 msgid "Search"
-msgstr ""
+msgstr "Buscar"
 
 #. module: web_timeline
 #. openerp-web
@@ -95,6 +96,8 @@ msgstr ""
 #, python-format
 msgid "Template \"timeline-item\" not present in timeline view definition."
 msgstr ""
+"Plantilla \"timeline-item\" no está presente en la definición de vista de "
+"línea de tiempo."
 
 #. module: web_timeline
 #. openerp-web
@@ -122,24 +125,24 @@ msgstr "Hoy"
 #. module: web_timeline
 #: selection:ir.ui.view,type:0
 msgid "Tree"
-msgstr ""
+msgstr "Arbol"
 
 #. module: web_timeline
 #: model:ir.model,name:web_timeline.model_ir_ui_view
 msgid "View"
-msgstr ""
+msgstr "Vista"
 
 #. module: web_timeline
 #: model:ir.model.fields,field_description:web_timeline.field_ir_ui_view__type
 msgid "View Type"
-msgstr ""
+msgstr "Tipo de Vista"
 
 #. module: web_timeline
 #. openerp-web
 #: code:addons/web_timeline/static/src/js/timeline_controller.js:246
 #, python-format
 msgid "Warning"
-msgstr ""
+msgstr "Advertencia"
 
 #. module: web_timeline
 #. openerp-web

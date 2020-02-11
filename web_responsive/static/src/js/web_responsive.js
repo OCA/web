@@ -529,17 +529,37 @@ odoo.define('web_responsive', function (require) {
 
     // DocumentViewer: Add support to maximize/minimize
     DocumentViewer.include({
-        events: _.extend(DocumentViewer.prototype.events, {
+        // Widget 'keydown' and 'keyup' events are only dispatched when
+        // this.$el is active, but now the modal have buttons that can obtain
+        // the focus. For this reason we now listen core events, that are
+        // dispatched every time.
+        events: _.extend(_.omit(DocumentViewer.prototype.events, [
+            'keydown',
+            'keyup',
+        ]), {
             'click .o_maximize_btn': '_onClickMaximize',
             'click .o_minimize_btn': '_onClickMinimize',
+            'shown.bs.modal': '_onShownModal',
         }),
 
         start: function () {
-            this.$btnMaximize = this.$('.o_maximize_btn');
-            this.$btnMinimize = this.$('.o_minimize_btn');
+            core.bus.on('keydown', this, this._onKeydown);
+            core.bus.on('keyup', this, this._onKeyUp);
             return this._super.apply(this, arguments);
         },
 
+        destroy: function () {
+            core.bus.off('keydown', this, this._onKeydown);
+            core.bus.off('keyup', this, this._onKeyUp);
+            this._super.apply(this, arguments);
+        },
+
+        _onShownModal: function () {
+            // Disable auto-focus to allow to use controls in edit mode.
+            // This only affects the active modal.
+            // More info: https://stackoverflow.com/a/14795256
+            $(document).off('focusin.modal');
+        },
         _onClickMaximize: function () {
             this.$el.removeClass('o_responsive_document_viewer');
         },
