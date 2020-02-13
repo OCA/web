@@ -47,6 +47,7 @@ odoo.define("web_advanced_search", function (require) {
             this._super(parent);
             this.model = model;
             this.domain = new Domain(domain);
+            this.domain_array = domain;
         },
 
         /**
@@ -55,16 +56,15 @@ odoo.define("web_advanced_search", function (require) {
          * @returns {Object} In the format expected by `web.FiltersMenu`.
          */
         get_filter: function () {
-            var domain_array = this.domain.toArray();
             return {
                 attrs: {
-                    domain: domain_array,
+                    domain: this.domain_array,
                     // TODO Remove when merged
                     // https://github.com/odoo/odoo/pull/25922
                     string: human_domain.getHumanDomain(
                         this,
                         this.model,
-                        domain_array
+                        this.domain_array
                     ),
                 },
                 children: [],
