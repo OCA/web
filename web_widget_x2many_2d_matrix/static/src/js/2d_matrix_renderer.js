@@ -9,6 +9,7 @@ odoo.define("web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer", function(requi
     var config = require("web.config");
     var core = require("web.core");
     var field_utils = require("web.field_utils");
+    var utils = require("web.utils");
     var _t = core._t;
 
     var FIELD_CLASSES = {
@@ -73,10 +74,16 @@ odoo.define("web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer", function(requi
             this._computeColumnAggregates();
             this._computeRowAggregates();
 
+            // We need to initialize the deferred list object for inherited functions that use this.defs even if it
+            // is empty at the moment.
+            var defs = [];
+            this.defs = defs;
+
             $table.append(this._renderHeader()).append(this._renderBody());
             if (self.matrix_data.show_column_totals) {
                 $table.append(this._renderFooter());
             }
+            delete this.defs;
             return this._super();
         },
 
@@ -192,8 +199,7 @@ odoo.define("web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer", function(requi
             var $tr = $("<tr/>", {class: "o_data_row"}),
                 _data = _.without(row.data, undefined);
             $tr = $tr.append(this._renderLabelCell(_data[0]));
-            var $cells = _.map(
-                this.columns,
+            var $cells = this.columns.map(
                 function(column, index) {
                     var record = row.data[index];
                     // Make the widget use our field value for each cell
@@ -302,7 +308,6 @@ odoo.define("web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer", function(requi
                 return $td.append(this._renderWidget(record, node));
             }
             var $el = this._renderFieldWidget(node, record, _.pick(options, "mode"));
-            this._handleAttributes($el, node);
             return $td.append($el);
         },
 
@@ -412,6 +417,16 @@ odoo.define("web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer", function(requi
                     this.total.aggregate.value += column.aggregate.value;
                 }.bind(this)
             );
+        },
+
+        _getRecord: function(recordId) {
+            var record = null;
+            utils.traverse_records(this.state, function(r) {
+                if (r.id === recordId) {
+                    record = r;
+                }
+            });
+            return record;
         },
 
         /**
