@@ -132,6 +132,7 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function(require) {
                 show_row_totals: this.show_row_totals,
                 show_column_totals: this.show_column_totals,
             };
+            console.log(this.matrix_data);
         },
 
         /**
