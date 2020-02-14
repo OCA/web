@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "2D matrix for x2many fields",
-    "version": "12.0.2.2.0",
+    "version": "13.0.1.0.0",
     "author": (
         "Therp BV, "
         "Tecnativa, "
@@ -16,7 +16,7 @@
     "license": "AGPL-3",
     "category": "Hidden/Dependency",
     "summary": "Show list fields as a matrix",
-    "depends": ["web",],
-    "data": ["views/assets.xml",],
+    "depends": ["web"],
+    "data": ["views/assets.xml"],
     "installable": True,
 }
