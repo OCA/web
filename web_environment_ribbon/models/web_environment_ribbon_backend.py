@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, models
+from odoo.tools.safe_eval import safe_eval
 
 
 class WebEnvironmentRibbonBackend(models.AbstractModel):
@@ -14,10 +15,20 @@ class WebEnvironmentRibbonBackend(models.AbstractModel):
         return {"db_name": self.env.cr.dbname}
 
     @api.model
-    def _prepare_ribbon_name(self):
-        name_tmpl = self.env["ir.config_parameter"].sudo().get_param("ribbon.name")
+    def _prepare_ribbon_eval_environment(self):
+        return {"env": self.env}
+
+    @api.model
+    def _get_ribbon_value(self, name):
+        ir_config_model = self.env["ir.config_parameter"].sudo()
+        code = ir_config_model.get_param("ribbon.%s.code" % name)
+        if code:
+            return safe_eval(
+                code, globals_dict=self._prepare_ribbon_eval_environment(),
+            )
+        value_tmpl = ir_config_model.get_param("ribbon.%s" % name)
         vals = self._prepare_ribbon_format_vals()
-        return name_tmpl and name_tmpl.format(**vals) or name_tmpl
+        return value_tmpl and value_tmpl.format(**vals) or value_tmpl
 
     @api.model
     def get_environment_ribbon(self):
@@ -25,12 +36,8 @@ class WebEnvironmentRibbonBackend(models.AbstractModel):
         This method returns the ribbon data from ir config parameters
         :return: dictionary
         """
-        ir_config_model = self.env["ir.config_parameter"]
-        name = self._prepare_ribbon_name()
         return {
-            "name": name,
-            "color": ir_config_model.sudo().get_param("ribbon.color"),
-            "background_color": ir_config_model.sudo().get_param(
-                "ribbon.background.color"
-            ),
+            "name": self._get_ribbon_value("name"),
+            "color": self._get_ribbon_value("color"),
+            "background_color": self._get_ribbon_value("background.color"),
         }
