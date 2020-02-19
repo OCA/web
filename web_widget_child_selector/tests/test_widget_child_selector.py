@@ -8,12 +8,13 @@ class TestWidgetChildSelector(TransactionCase):
 
     def setUp(self):
         super().setUp()
-        self.partner_1 = self.env['res.partner'].create({'name': 'P1'})
-        self.partner_2 = self.env['res.partner'].create({
+        ResPartner = self.env['res.partner'].with_context(tracking_disable=True)
+        self.partner_1 = ResPartner.create({'name': 'P1'})
+        self.partner_2 = ResPartner.create({
             'name': 'P2',
             'parent_id': self.partner_1.id
         })
-        self.partner_3 = self.env['res.partner'].create({
+        self.partner_3 = ResPartner.create({
             'name': 'P3',
             'parent_id': self.partner_2.id
         })
