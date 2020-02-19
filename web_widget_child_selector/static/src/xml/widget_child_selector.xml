@@ -14,7 +14,7 @@
     </t>
     <t t-name="FieldChildSelectorChild">
         <div class="row">
-            <div t-foreach="childs" t-as="key" class="col-xs-12">
+            <div t-foreach="childs" t-as="key" class="col-xl-12">
                 <t t-set="id_for_label" t-value="'o_child_hierarchy_selector_' + _.uniqueId()"/>
                 <input type="radio" t-att-data-id="childs[key][0]" t-att-data-index="key"
                        t-att-id="id_for_label" data-type="child" class="o_child_selection_button"/>
@@ -34,7 +34,7 @@
                 </a>
             </t>
         <t t-if="Object.keys(parents).length > 0">
-            <i class="fa fa-times o_child_selection_button o_child_selection_clear" aria-hidden="true" data-type="clear"/>
+            <i class="fa fa-times o_child_selection_button o_child_selection_clear" aria-hidden="false" data-type="clear"/>
         </t>
         </span>
     </t>

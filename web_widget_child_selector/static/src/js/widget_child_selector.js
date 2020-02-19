@@ -13,10 +13,6 @@ odoo.define('web.web_widget_child_selector', function(require) {
             'click .o_child_selection_button': '_onChildSelectionClick',
         }),
         start: function () {
-            // boolean indicating that the content of the input isn't synchronized
-            // with the current m2o value (for instance, the user is currently
-            // typing something in the input, and hasn't selected a value yet).
-
             this.$input_dropdown = this.$('.o_input_dropdown');
             this.$input_value = this.$('.o_input_value')
             return this._super.apply(this, arguments);
