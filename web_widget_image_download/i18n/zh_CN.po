@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_widget_image_download
+# 	* web_widget_image_download
 #
 msgid ""
 msgstr ""
@@ -18,7 +18,7 @@ msgstr ""
 
 #. module: web_widget_image_download
 #. openerp-web
-#: code:addons/web_widget_image_download/static/src/xml/web_widget_image_download.xml:9
+#: code:addons/web_widget_image_download/static/src/xml/web_widget_image_download.xml:0
 #, python-format
 msgid "Download"
 msgstr "下载"
