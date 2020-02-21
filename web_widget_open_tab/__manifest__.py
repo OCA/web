@@ -1,4 +1,4 @@
-# Copyright 2019 Creu Blanca
+# Copyright 2019-2020 Creu Blanca
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
@@ -9,10 +9,7 @@
     'license': 'AGPL-3',
     'author': 'Creu Blanca,Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/web',
-    'depends': [
-        'web'
-    ],
-    'data': [
-        'views/assets.xml',
-    ],
+    'depends': ['web'],
+    'data': ['templates/assets.xml'],
+    'demo': ['demo/res_users_view.xml'],
 }
