@@ -11,6 +11,7 @@ odoo.define('web_widget_open_tab.FieldOpenTab', function(require) {
 
     var FieldOpenTab = AbstractField.extend({
         description: "",
+        // We want to maintain it black in order to show nothing on the header
         supportedFieldTypes: ['integer'],
         events: _.extend({}, AbstractField.prototype.events, {
             'click': '_onClick',
@@ -19,13 +20,21 @@ odoo.define('web_widget_open_tab.FieldOpenTab', function(require) {
             return true;
         },
         _getReference: function () {
-            var url = new URL(window.location.href);
-            return url.hash.replace(/view_type=\w+/i, "view_type=form") + '&id=' + this.res_id;
+            var url = window.location.href;
+            var searchParams = new URLSearchParams(url.split('#')[1]);
+            searchParams.set('view_type', 'form');
+            searchParams.set('id', this.res_id);
+            if (! searchParams.has('model') || searchParams.get('model') !== this.model) {
+                searchParams.set('model', this.model);
+                searchParams.delete('action');
+            }
+            return url.split('#')[0] + '#' + searchParams.toString();
         },
         _renderReadonly: function () {
-            var $content = $(
-                '<a href="'+ this._getReference() + '">'
-            ).addClass('open_tab_widget fa fa-eye');
+            var $content = $("<a/>", {
+                "href": this._getReference(),
+                "class": "open_tab_widget fa fa-eye",
+            });
             var self = this;
             $content.tooltip({
                 delay: { show: 1000, hide: 0 },
@@ -42,7 +51,7 @@ odoo.define('web_widget_open_tab.FieldOpenTab', function(require) {
                     });
                 },
             });
-            this.$el.append($content)
+            this.$el.append($content);
         },
         _onClick: function (ev) {
             ev.preventDefault();
