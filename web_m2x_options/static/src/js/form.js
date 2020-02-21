@@ -271,12 +271,14 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
             }
             // Handle the 'search_delay' option
             //  - global m2o_search_delay from ir_config_parameter
-            if ('web_m2x_options.m2o_search_delay' in self.view.ir_options) {
-                var m2o_search_delay = JSON.parse(
-                    self.view.ir_options['web_m2x_options.m2o_search_delay']
-                )
-                if (self.field.relation in m2o_search_delay) {
-                  self.search_delay = parseInt(m2o_search_delay[self.field.relation]);
+            if (!_.isUndefined(self.view.ir_options)) {
+                if ('web_m2x_options.m2o_search_delay' in self.view.ir_options) {
+                    var m2o_search_delay = JSON.parse(
+                        self.view.ir_options['web_m2x_options.m2o_search_delay']
+                    )
+                    if (self.field.relation in m2o_search_delay) {
+                        self.search_delay = parseInt(m2o_search_delay[self.field.relation]);
+                    }
                 }
             }
             // - 'search_delay' option on field takes precedence
