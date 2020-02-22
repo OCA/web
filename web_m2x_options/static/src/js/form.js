@@ -119,12 +119,11 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
         },
 
         _search: function (search_val) {
-            var self = this;
-            var def = new Promise(function (resolve) {
+            var def = new Promise(resolve => {
                 // add options limit used to change number of selections record
                 // returned.
                 if (!_.isUndefined(self.ir_options['web_m2x_options.limit'])) {
-                    self.limit = parseInt(self.ir_options['web_m2x_options.limit'], 10);
+                    this.limit = parseInt(self.ir_options['web_m2x_options.limit'], 10);
                 }
 
                 if (typeof self.nodeOptions.limit === 'number') {
@@ -153,9 +152,9 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                         limit: self.limit + 1,
                         context: context,
                     }
-                }).then(function (result) {
+                }).then(result => {
                     // possible selections for the m2o
-                    var values = _.map(result, function (x) {
+                    var values = _.map(result, x => {
                         x[1] = self._getDisplayName(x[1]);
                         return {
                             label: _.str.escapeHTML(x[1].trim()) || data.noDisplayContent,
@@ -176,7 +175,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                             method: 'search_read',
                             fields: [self.field_color],
                             domain: [['id', 'in', value_ids]]
-                        }).then(function (objects) {
+                        }).then(objects => {
                             for (var index in objects) {
                                 for (var index_value in values) {
                                     if (values[index_value].id == objects[index].id) {
