@@ -167,8 +167,8 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                     // Search result value colors
                     if (self.colors && self.field_color) {
                         var value_ids = [];
-                        for (var index in values) {
-                            value_ids.push(values[index].id);
+                        for (var val_index in values) {
+                            value_ids.push(values[val_index].id);
                         }
                         self._rpc({
                             model: self.field.relation,
@@ -178,7 +178,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                         }).then(objects => {
                             for (var index in objects) {
                                 for (var index_value in values) {
-                                    if (values[index_value].id == objects[index].id) {
+                                    if (values[index_value].id === objects[index].id) {
                                         // Find value in values by comparing ids
                                         var value = values[index_value];
                                         // Find color with field value as key
