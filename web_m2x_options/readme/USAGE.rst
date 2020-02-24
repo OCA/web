@@ -19,6 +19,10 @@ in the field's options dict
 
 ``search_more`` *boolean*
 
+  Number of milliseconds after a user input to trigger the ``name_search``.
+
+``search_delay`` *int* (Default: openerp default value is ``200``)
+
   Used to force disable/enable search more button.
 
 ``field_color`` *string*
@@ -48,6 +52,12 @@ ir.config_parameter options
 
 Now you can disable "Create..." and "Create and Edit..." entry for all widgets in the odoo instance.
 If you disable one option, you can enable it for particular field by setting "create: True" option directly on the field definition.
+
+``web_m2x_options.m2o_search_delay`` *int* (Default: odoo default value is ``200`` for all data models)
+
+  A JSON object where each key is the name of a a data model, and the value is a number of milliseconds beyond which the user input triggers the ``name_search``.
+
+  Number of milliseconds after a user input to trigger the ``name_search``.
 
 ``web_m2x_options.create`` *boolean* (Default: depends if user have create rights)
 
@@ -81,6 +91,7 @@ To add these parameters go to Configuration -> Technical -> Parameters -> System
 - web_m2x_options.limit: 10
 - web_m2x_options.search_more: True
 - web_m2x_options.field_limit_entries: 5
+- web_m2x_options.m2o_search_delay: {"res.partner": 800}
 
 
 Example

@@ -22,7 +22,10 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
         if (_.isUndefined(option))
             return false;
         if (typeof option === 'string')
-            return option === 'true' || option === 'True';
+            if (option === 'true' || option === 'True')
+                return true;
+            else
+                return JSON.parse(option);
         if (typeof option === 'boolean')
             return option;
         return false
@@ -91,6 +94,15 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
             var m2o_dialog_opt = is_option_set(this.nodeOptions.m2o_dialog) || _.isUndefined(this.nodeOptions.m2o_dialog) && is_option_set(ir_options['web_m2x_options.m2o_dialog']) || _.isUndefined(this.nodeOptions.m2o_dialog) && _.isUndefined(ir_options['web_m2x_options.m2o_dialog']);
             if (this.can_create && this.floating && m2o_dialog_opt) {
                 new M2ODialog(this, this.string, this.$input.val()).open();
+            }
+        },
+
+        _bindAutoComplete: function () {
+            this._super.apply(this, arguments);
+            var delay = is_option_set(ir_options['web_m2x_options.m2o_search_delay']);
+            if (delay &&
+                (this.field.relation in delay)){
+                this.$input.autocomplete("option", "delay", delay[this.field.relation]);
             }
         },
 
