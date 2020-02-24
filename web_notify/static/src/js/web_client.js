@@ -26,15 +26,26 @@ odoo.define('web_notify.WebClient', function (require) {
                 this.channel_info,
                 this.channel_default,
             ];
-            this.call('bus_service', 'addChannel', this.channel_success);
-            this.call('bus_service', 'addChannel', this.channel_danger);
-            this.call('bus_service', 'addChannel', this.channel_warning);
-            this.call('bus_service', 'addChannel', this.channel_info);
-            this.call('bus_service', 'addChannel', this.channel_default);
+
+            // startPolling to get this new tab registered,
+            // in order to be able to call isMasterTab
+            this.call('bus_service', 'startPolling');
+
+            // - no need to add channels again if it was done already
+            // - this is also a workaround for the infinite loop issue
+            //   that occures when user logs in as a different user
+            //   while still being logged in 2+ other tabs
+            if(this.call('bus_service', 'isMasterTab')) {
+                this.call('bus_service', 'addChannel', this.channel_success);
+                this.call('bus_service', 'addChannel', this.channel_danger);
+                this.call('bus_service', 'addChannel', this.channel_warning);
+                this.call('bus_service', 'addChannel', this.channel_info);
+                this.call('bus_service', 'addChannel', this.channel_default);
+            }
+
             this.call(
                 'bus_service', 'on', 'notification',
                 this, this.bus_notification);
-            this.call('bus_service', 'startPolling');
         },
         bus_notification: function (notifications) {
             var self = this;
