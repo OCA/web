@@ -50,6 +50,7 @@ setuptools.setup(
         'odoo12-addon-web_widget_image_url',
         'odoo12-addon-web_widget_many2many_tags_multi_selection',
         'odoo12-addon-web_widget_mermaid',
+        'odoo12-addon-web_widget_numeric_step',
         'odoo12-addon-web_widget_open_tab',
         'odoo12-addon-web_widget_plotly_chart',
         'odoo12-addon-web_widget_url_advanced',
