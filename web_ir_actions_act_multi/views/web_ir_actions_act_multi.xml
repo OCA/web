@@ -10,7 +10,6 @@
         inherit_id="web.assets_backend"
     >
         <xpath expr="." position="inside">
-
             <script
                 type="text/javascript"
                 src="/web_ir_actions_act_multi/static/src/js/web_ir_actions_act_multi.js"
