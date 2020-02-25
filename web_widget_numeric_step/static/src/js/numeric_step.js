@@ -5,6 +5,7 @@
 odoo.define('web_widget_numeric_step.field', function (require) {
     "use strict";
 
+    var field_utils = require('web.field_utils');
     var Registry = require('web.field_registry');
     var FieldFloat = require('web.basic_fields').FieldFloat;
 
@@ -204,18 +205,6 @@ odoo.define('web_widget_numeric_step.field', function (require) {
         },
 
         // Helper Functions
-        /*
-         * Get field precision (really used by floats)
-         */
-        _getPrecision: function () {
-            var field = this.record.fields[this.name];
-            if (field && 'digits' in field && field.digits.length === 2) {
-                return field.digits[1];
-            }
-
-            return 0;
-        },
-
         /**
          * Check limits and precision of the value.
          * If the value 'is not a number', the function does nothing to
@@ -234,7 +223,15 @@ odoo.define('web_widget_numeric_step.field', function (require) {
             } else if (!_.isNaN(this._config.max) && cval > this._config.max) {
                 cval = this._config.max;
             }
-            return cval.toFixed(this._getPrecision());
+
+            var field = this.record.fields[this.name];
+            var formattedValue = field_utils.format[field.type](cval, field, {
+                data: this.record.data,
+                escape: true,
+                isPassword: false,
+                digits: field.digits,
+            });
+            return formattedValue;
         },
     });
 
