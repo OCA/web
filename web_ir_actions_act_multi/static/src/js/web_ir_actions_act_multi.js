@@ -1,5 +1,6 @@
 // Copyright 2017 - 2018 Modoolar <info@modoolar.com>
 // Copyright 2018 Brainbean Apps <hello@brainbeanapps.com>
+// Copyright 2020 Manuel Calero - Tecnativa
 // License LGPLv3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.en.html).
 
 odoo.define("web_ir_actions_act_multi.ir_actions_act_multi", function(require) {
@@ -16,7 +17,6 @@ odoo.define("web_ir_actions_act_multi.ir_actions_act_multi", function(require) {
             if (action.type === "ir.actions.act_multi") {
                 return this._executeMultiAction(action, options);
             }
-
             return this._super.apply(this, arguments);
         },
 
@@ -24,25 +24,20 @@ odoo.define("web_ir_actions_act_multi.ir_actions_act_multi", function(require) {
          * Handle 'ir.actions.act_multi' action
          * @param {Object} action see _handleAction() parameters
          * @param {Object} options see _handleAction() parameters
-         * @param {integer|undefined} index Index of action being handled
          * @returns {$.Promise}
          */
-        _executeMultiAction: function(action, options, index) {
-            var self = this;
+        _executeMultiAction: function(action, options) {
+            const self = this;
 
-            if (index === undefined) {
-                index = 0; // eslint-disable-line no-param-reassign
-            }
-
-            if (index === action.actions.length - 1) {
-                return this._handleAction(action.actions[index], options);
-            } else if (index >= action.actions.length) {
-                return $.when();
-            }
-
-            return this._handleAction(action.actions[index], options).then(function() {
-                return self._executeMultiAction(action, options, index + 1);
-            });
+            return action.actions
+                .map(item => {
+                    return () => {
+                        return self._handleAction(item, options);
+                    };
+                })
+                .reduce((prev, cur) => {
+                    return prev.then(cur);
+                }, Promise.resolve());
         },
     });
 });
