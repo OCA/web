@@ -2,19 +2,18 @@
 // Copyright 2018 Brainbean Apps <hello@brainbeanapps.com>
 // License LGPLv3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.en.html).
 
-odoo.define('web_ir_actions_act_multi.ir_actions_act_multi', function (require) {
+odoo.define("web_ir_actions_act_multi.ir_actions_act_multi", function(require) {
     "use strict";
 
-    var ActionManager = require('web.ActionManager');
+    var ActionManager = require("web.ActionManager");
 
     ActionManager.include({
-
         /**
          * Intercept action handling to detect extra action type
          * @override
          */
-        _handleAction: function (action, options) {
-            if (action.type === 'ir.actions.act_multi') {
+        _handleAction: function(action, options) {
+            if (action.type === "ir.actions.act_multi") {
                 return this._executeMultiAction(action, options);
             }
 
@@ -28,7 +27,7 @@ odoo.define('web_ir_actions_act_multi.ir_actions_act_multi', function (require) 
          * @param {integer|undefined} index Index of action being handled
          * @returns {$.Promise}
          */
-        _executeMultiAction: function (action, options, index) {
+        _executeMultiAction: function(action, options, index) {
             var self = this;
 
             if (index === undefined) {
@@ -41,13 +40,9 @@ odoo.define('web_ir_actions_act_multi.ir_actions_act_multi', function (require) 
                 return $.when();
             }
 
-            return this
-                ._handleAction(action.actions[index], options)
-                .then(function () {
-                    return self._executeMultiAction(action, options, index + 1);
-                });
+            return this._handleAction(action.actions[index], options).then(function() {
+                return self._executeMultiAction(action, options, index + 1);
+            });
         },
-
     });
-
 });
