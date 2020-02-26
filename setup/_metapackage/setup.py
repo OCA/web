@@ -35,6 +35,7 @@ setuptools.setup(
         'odoo12-addon-web_send_message_popup',
         'odoo12-addon-web_switch_context_warning',
         'odoo12-addon-web_timeline',
+        'odoo12-addon-web_translate_dialog',
         'odoo12-addon-web_tree_duplicate',
         'odoo12-addon-web_tree_dynamic_colored_field',
         'odoo12-addon-web_tree_image_tooltip',
