@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2012 Guewen Baconnier (Camptocamp SA)
+     Copyright 2016 Antonio Espinosa <antonio.espinosa@tecnativa.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<template>
+
+  <t t-name="TranslateDialog">
+    <div class="modal-body">
+      <table t-if="widget.translatable_fields"
+             class="oe_frame oe_forms oe_translation_form"
+             border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+          <th t-if="!widget.single_field" class="oe_form_separator" width="1%" nowrap="nowrap">
+            <div class="separator horizontal">Field</div>
+          </th>
+          <th t-foreach="widget.languages" align="left">
+              <div class="separator horizontal"><t t-esc="name"/></div>
+          </th>
+      </tr>
+      <t t-foreach="widget.translatable_fields" t-as="field_name">
+        <t t-set="field" t-value="widget.view.searchView.fields[field_name]" />
+        <tr t-att-data-field="field_name">
+          <td t-if="!widget.single_field" class="oe_form_frame_cell field_name" width="1%" nowrap="nowrap">
+            <label class="oe_label"><t t-esc="field.string"/>:</label>
+          </td>
+          <td t-foreach="widget.languages" t-as="lg" class="oe_form_frame_cell">
+            <input t-if="['char','url'].indexOf(field.type) !== -1"
+                   type="text" t-attf-name="#{lg.code}-#{field_name}"
+                   value="" data-value="" class="oe_translation_field"/>
+            <textarea t-elif="field.type == 'text'"
+                      t-attf-name="#{lg.code}-#{field_name}" data-value=""
+                      class="oe_translation_field" />
+            <div t-elif="field.type == 'html'" class="oe_form_field_html">
+              <textarea class="oe_translation_field oe_form_field"
+                        t-attf-name="#{lg.code}-#{field_name}" data-value=""/>
+            </div>
+          </td>
+          </tr>
+      </t>
+      </table>
+    </div>
+  </t>
+
+  <t t-name="TranslateDialog.buttons">
+    <button class="btn btn-sm oe_button btn-primary oe_form_translate_dialog_save_button">
+      <span>Save</span>
+    </button>
+    <button class="btn btn-sm oe_button btn-default oe_form_translate_dialog_cancel_button">
+      <span>Cancel</span>
+    </button>
+  </t>
+
+</template>
