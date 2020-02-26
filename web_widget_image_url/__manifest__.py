@@ -9,9 +9,7 @@
     "author": "Modoolar, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web/",
     "depends": ["web"],
-    "data": [
-        "views/web_widget_image_url.xml",
-    ],
+    "data": ["views/web_widget_image_url.xml",],
     "qweb": ["static/src/xml/*.xml"],
     "installable": True,
 }
