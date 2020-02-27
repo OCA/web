@@ -6,16 +6,16 @@
                 <div class="panel-heading">
                     <div class="pull-right">
                         <a id="sign_clean" class="btn btn-xs oe_edit_only">Clear</a>
-                        <a class="oe_edit_only save_sign"></a>
+                        <a class="oe_edit_only save_sign" />
                     </div>
                     <strong>Draw your signature</strong>
                 </div>
-                <div class="signature"></div>
+                <div class="signature" />
             </div>
        </t>
        <t t-if="widget.mode == 'readonly'">
            <div class="panel panel-default mt16 mb0 " id="drawsign">
-                <div class="signature"></div>
+                <div class="signature" />
             </div>
        </t>
     </t>
