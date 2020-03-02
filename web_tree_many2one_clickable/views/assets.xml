@@ -3,7 +3,6 @@
      Copyright 2019 Alexandre Díaz <alexandre.diaz@tecnativa.com>
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
-
     <template
         id="assets_backend"
         name="web_tree_many2one_clickable assets"
@@ -20,5 +19,4 @@
             />
         </xpath>
     </template>
-
 </odoo>
