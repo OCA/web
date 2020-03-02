@@ -10,7 +10,6 @@
             <attribute name="data-backdrop">false</attribute>
         </t>
     </t>
-
     <t t-extend="DocumentViewer.Content">
         <t t-jquery=".o_close_btn" t-operation="replace">
             <div class="o_buttons float-right mr8">
@@ -20,21 +19,27 @@
                     tabindex="0"
                     aria-label="Maximize"
                     title="Maximize"
-                ><i class="fa fa-window-maximize" /></a>
+                >
+                    <i class="fa fa-window-maximize" />
+                </a>
                 <a
                     role="button"
                     class="mr8 o_minimize_btn"
                     tabindex="0"
                     aria-label="Minimize"
                     title="Minimize"
-                ><i class="fa fa-window-minimize" /></a>
+                >
+                    <i class="fa fa-window-minimize" />
+                </a>
                 <a
                     role="button"
                     class="o_close_btn"
                     tabindex="0"
                     aria-label="Close"
                     title="Close"
-                ><i class="fa fa-close" /></a>
+                >
+                    <i class="fa fa-close" />
+                </a>
             </div>
         </t>
     </t>
