@@ -3,19 +3,21 @@
      Copyright 2016 Antonio Espinosa <antonio.espinosa@tecnativa.com>
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
-
-<!-- Load css for ribbons -->
-<template id="assets_backend" name="ribbon_test assets" inherit_id="web.assets_backend">
-    <xpath expr="." position="inside">
-        <link
+    <!-- Load css for ribbons -->
+    <template
+        id="assets_backend"
+        name="ribbon_test assets"
+        inherit_id="web.assets_backend"
+    >
+        <xpath expr="." position="inside">
+            <link
                 rel="stylesheet"
                 href="/web_environment_ribbon/static/src/css/ribbon.css"
             />
-        <script
+            <script
                 type="text/javascript"
                 src="/web_environment_ribbon/static/src/js/ribbon.js"
             />
-    </xpath>
-</template>
-
+        </xpath>
+    </template>
 </odoo>

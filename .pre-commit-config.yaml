@@ -9,7 +9,7 @@ exclude: |
   # Repos using Sphinx to generate docs don't need prettying
   ^docs/_templates/.*\.html$|
   # You don't usually want a bot to modify your legal texts
-  /(LICENSE|COPYING)
+  (LICENSE.*|COPYING.*)
 default_language_version:
   python: python3
 repos:
@@ -30,7 +30,7 @@ repos:
         name: prettier xml plugin
         additional_dependencies:
           - "prettier@1.19.1"
-          - "@prettier/plugin-xml@0.5.0"
+          - "@prettier/plugin-xml@0.7.2"
         files: \.xml$
   - repo: https://github.com/pre-commit/mirrors-eslint
     rev: v6.8.0
@@ -85,10 +85,6 @@ repos:
     rev: v1.26.2
     hooks:
       - id: pyupgrade
-  - repo: https://github.com/asottile/seed-isort-config
-    rev: v1.9.4
-    hooks:
-      - id: seed-isort-config
   - repo: https://github.com/pre-commit/mirrors-isort
     rev: v4.3.21
     hooks:
