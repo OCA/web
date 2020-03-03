@@ -25,3 +25,15 @@ This is going to change the rendering from
 to
 
 .. figure:: ../static/description/after.png
+
+Or user can add any hyperlink text using 'prefix_name' attribute
+
+.. code-block:: xml
+
+    <field name="skype_name" widget="url" 'prefix_name': 'skype'/>
+
+both can be applied inside the options attribute too:
+
+.. code-block:: xml
+
+    <field name="skype_name" widget="url" options="{'prefix_name': 'skype'}"/>
