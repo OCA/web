@@ -23,5 +23,17 @@ odoo.define("web_widget_url_advanced", function(require) {
                 this.attrs.text = field_value;
             }
         },
+        /**
+         *
+         * @override
+         * @private
+         */
+        _renderReadonly: function() {
+            this._super.apply(this, arguments);
+            var prefix = this.attrs.prefix_name || this.attrs.options.prefix_name;
+            if (prefix) {
+                this.$el.attr("href", prefix + ":" + this.value);
+            }
+        },
     });
 });
