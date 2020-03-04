@@ -135,6 +135,9 @@ odoo.define('web_widget_numeric_step.field', function (require) {
             this.$input.val(this._sanitizeNumberValue(cval));
             this.isDirty = true;
             this._doDebouncedAction();
+            // Every time that user update the value we must trigger an
+            // onchange method.
+            this.$input.trigger("change");
         },
 
         // Handle Events
@@ -202,6 +205,8 @@ odoo.define('web_widget_numeric_step.field', function (require) {
          */
         _onChange: function (ev) {
             ev.target.value = this._sanitizeNumberValue(ev.target.value);
+            // Call _onChange of input widget
+            this._super.apply(this, arguments);
         },
 
         // Helper Functions
