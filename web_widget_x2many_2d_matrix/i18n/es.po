@@ -1,0 +1,41 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_widget_x2many_2d_matrix
+#
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: web (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-11-23 13:46+0000\n"
+"PO-Revision-Date: 2015-11-07 11:29+0000\n"
+"Last-Translator: Pedro M. Baeza <pedro.baeza@gmail.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/oca/OCA-web-8-0/language/"
+"es/)\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: web_widget_x2many_2d_matrix
+#. openerp-web
+#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:65
+#, python-format
+msgid "Sorry no matrix data to display."
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix
+#. openerp-web
+#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:400
+#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:475
+#, python-format
+msgid "Sum"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix
+#. openerp-web
+#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:394
+#, fuzzy, python-format
+msgid "Sum Total"
+msgstr "Total"
