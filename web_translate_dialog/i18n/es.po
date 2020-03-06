@@ -19,11 +19,21 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: web_translate_dialog
+#: model:ir.model,name:web_translate_dialog.model_base
+msgid "Base"
+msgstr ""
+
+#. module: web_translate_dialog
 #. openerp-web
-#: code:addons/web_translate_dialog/static/src/xml/base.xml:47
+#: code:addons/web_translate_dialog/static/src/xml/base.xml:49
 #, python-format
 msgid "Cancel"
 msgstr "Cancelar"
+
+#. module: web_translate_dialog
+#: model:ir.model.fields,help:web_translate_dialog.field_res_lang__tr_sequence
+msgid "Defines the order of language to appear in translation dialog"
+msgstr ""
 
 #. module: web_translate_dialog
 #. openerp-web
@@ -33,22 +43,35 @@ msgid "Field"
 msgstr "Campo"
 
 #. module: web_translate_dialog
+#: model:ir.model,name:web_translate_dialog.model_res_lang
+msgid "Languages"
+msgstr ""
+
+#. module: web_translate_dialog
 #. openerp-web
-#: code:addons/web_translate_dialog/static/src/xml/base.xml:44
+#: code:addons/web_translate_dialog/static/src/xml/base.xml:46
 #, python-format
 msgid "Save"
 msgstr "Guardar"
 
 #. module: web_translate_dialog
 #. openerp-web
-#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:192
+#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:239
 #, python-format
 msgid "Translate"
 msgstr "Traducir"
 
 #. module: web_translate_dialog
 #. openerp-web
-#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:23
-#, python-format
-msgid "Translations"
+#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:26
+#, fuzzy, python-format
+#| msgid "Translations"
+msgid "Translate fields: /"
+msgstr "Traducciones"
+
+#. module: web_translate_dialog
+#: model:ir.model.fields,field_description:web_translate_dialog.field_res_lang__tr_sequence
+#, fuzzy
+#| msgid "Translations"
+msgid "Translation sequence"
 msgstr "Traducciones"
