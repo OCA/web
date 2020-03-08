@@ -215,7 +215,7 @@ var TranslateDialog = Dialog.extend({
                 });
                 if (code === self.view_language) {
                     _.each(text, function(value, key) {
-                        var view_elem = self.view.$('input[name="'+ key + '"]');
+                        var view_elem = self.view.$( ":input[name='" + key +"']")
                         view_elem.val(value).trigger('change');
                     });
                 }
