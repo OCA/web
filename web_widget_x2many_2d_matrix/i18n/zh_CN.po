@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_widget_x2many_2d_matrix
+# 	* web_widget_x2many_2d_matrix
 #
 msgid ""
 msgstr ""
@@ -18,22 +18,21 @@ msgstr ""
 
 #. module: web_widget_x2many_2d_matrix
 #. openerp-web
-#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:65
+#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:0
 #, python-format
 msgid "Sorry no matrix data to display."
 msgstr "抱歉没有要显示的矩阵数据。"
 
 #. module: web_widget_x2many_2d_matrix
 #. openerp-web
-#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:400
-#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:475
+#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:0
 #, python-format
 msgid "Sum"
 msgstr "总和"
 
 #. module: web_widget_x2many_2d_matrix
 #. openerp-web
-#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:394
+#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:0
 #, python-format
 msgid "Sum Total"
 msgstr "总和"
