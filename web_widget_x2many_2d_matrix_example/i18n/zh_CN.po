@@ -114,12 +114,12 @@ msgid "Value"
 msgstr "值"
 
 #. module: web_widget_x2many_2d_matrix_example
-#: selection:x2m.demo.line,value_selection:0
+#: model:ir.model.fields.selection,name:web_widget_x2many_2d_matrix_example.selection__x2m_demo_line__value_selection__val1
 msgid "Value 1"
 msgstr "值1"
 
 #. module: web_widget_x2many_2d_matrix_example
-#: selection:x2m.demo.line,value_selection:0
+#: model:ir.model.fields.selection,name:web_widget_x2many_2d_matrix_example.selection__x2m_demo_line__value_selection__val2
 msgid "Value 2"
 msgstr "值2"
 
