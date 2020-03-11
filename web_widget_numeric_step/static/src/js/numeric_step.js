@@ -31,7 +31,6 @@ odoo.define('web_widget_numeric_step.field', function (require) {
 
         DELAY_THROTTLE_CHANGE: 200,
 
-        _prevValue: null, // Used to know if the value was really changed
 
         init: function () {
             this._super.apply(this, arguments);
@@ -133,9 +132,13 @@ odoo.define('web_widget_numeric_step.field', function (require) {
          * @param {String} mode can be "plus" or "minus"
          */
         _doStep: function (mode) {
-            var cval = Number(this.$input.val());
-            if (_.isNaN(cval)) {
-                return;
+            var cval = 0;
+            try {
+                var field = this.record.fields[this.name];
+                cval = field_utils.parse[field.type](this.$input.val())
+            } catch {
+                cval = this.value;
+                mode = false; // Only set the value in this case
             }
             if (mode === 'plus') {
                 cval += this._config.step;
@@ -143,13 +146,12 @@ odoo.define('web_widget_numeric_step.field', function (require) {
                 cval -= this._config.step;
             }
             var nval = this._sanitizeNumberValue(cval);
-            if (nval !== this._prevValue) {
+            if (nval !== this.lastSetValue || !mode) {
                 this.$input.val(nval);
                 // Every time that user update the value we must trigger an
                 // onchange method.
                 this._lazyOnChangeTrigger();
             }
-            this._prevValue = nval;
         },
 
         // Handle Events
