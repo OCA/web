@@ -2,7 +2,7 @@
 
 {
     'name': 'Web Refresher',
-    'version': '11.0.1.0.0',
+    'version': '12.0.1.0.0',
     'author': 'Compassion Switzerland, '
               'Odoo Community Association (OCA)',
     'license': 'AGPL-3',
