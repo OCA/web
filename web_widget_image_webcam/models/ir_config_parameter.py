@@ -1,10 +1,11 @@
 # Copyright 2019 Siddharth Bhalgami <siddharth.bhalgami@gmail.com>
+# Copyright 2019-Today: Druidoo (<https://www.druidoo.io>)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo.models import api, Model
+from odoo import api, models
 
 
-class IrConfigParameter(Model):
+class IrConfigParameter(models.Model):
     _inherit = "ir.config_parameter"
 
     @api.model
