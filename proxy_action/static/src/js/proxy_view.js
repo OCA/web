@@ -1,4 +1,4 @@
-odoo.define('proxy_action.proxy_view', function (require) {
+odoo.define('proxy_action.proxy_view', function(require) {
     'use strict';
     var ActionManager = require('web.ActionManager');
     var core = require('web.core')
@@ -6,39 +6,34 @@ odoo.define('proxy_action.proxy_view', function (require) {
 
     ActionManager.include({
 
-        _handleAction: function (action, options) {
+        _handleAction: function(action, options) {
             if (action.type == 'ir.actions.act_proxy') {
                 return this._executeProxyAction(action, options);
             }
             return this._super.apply(this, arguments);
         },
 
-        _executeProxyAction: function(action, options){
+        _executeProxyAction: function(action, options) {
             var self = this;
             self.do_notify(_t('Proxy action executing'), _t('Your action is being executed'));
             var action_success = true;
-            action.action_list.forEach(function (task) {
+
+            action.action_list.map(function(act, idx) {
                 $.ajax({
-                    url: task['url'],
+                    url: act['url'],
                     type: 'POST',
-                    data: JSON.stringify(task['params']),
+                    data: JSON.stringify(act['params']),
                     contentType: 'application/json',
-                    async: false,
-                }).done(function (result) {
-                    console.log("Proxy action has been successfully sent: ", result);
-                }).fail(function (result) {
+                }).fail(function(result) {
                     console.log('Proxy action has failed: ', result);
-                    action_success = false;
+                    self.do_warn(_t("Failure"), _t("Proxy action failure. Please check logs."));
+                    return result;
                 })
-            })
-            if (action_success == true){
-                self.do_notify(_t('Success'), _t('Proxy action successfully sent'));
-            }
-            else{
-                self.do_warn(_t("Failure"), _t("Proxy action failure. Please check logs."));
-            }
-            action = { type: 'ir.actions.act_window_close' };
-            return self.doAction(action, []);
+            });
+            var act_close = {
+                type: 'ir.actions.act_window_close'
+            };
+            return self.doAction(act_close, []);
         },
     });
 
