@@ -65,6 +65,8 @@ repos:
       - id: check-docstring-first
       - id: check-executables-have-shebangs
       - id: check-merge-conflict
+        # exclude files where underlines are not distinguishable from merge conflicts
+        exclude: /README\.rst$|^docs/.*\.rst$
       - id: check-symlinks
       - id: check-xml
       - id: mixed-line-ending
@@ -76,11 +78,11 @@ repos:
         name: pylint with optional checks
         args: ["--rcfile=.pylintrc", "--exit-zero"]
         verbose: true
-        additional_dependencies: ["pylint-odoo==3.0.3"]
+        additional_dependencies: ["pylint-odoo==3.1.0"]
       - id: pylint
         name: pylint with mandatory checks
         args: ["--rcfile=.pylintrc-mandatory"]
-        additional_dependencies: ["pylint-odoo==3.0.3"]
+        additional_dependencies: ["pylint-odoo==3.1.0"]
   - repo: https://github.com/asottile/pyupgrade
     rev: v1.26.2
     hooks:
@@ -91,3 +93,7 @@ repos:
       - id: isort
         name: isort except __init__.py
         exclude: /__init__\.py$
+  - repo: https://github.com/acsone/setuptools-odoo
+    rev: 2.5.2
+    hooks:
+      - id: setuptools-odoo-make-default
