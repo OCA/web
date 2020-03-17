@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="assets_backend"
+        name="web_widget_mpld3_chart assets"
+        inherit_id="web.assets_backend"
+    >
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/web_widget_mpld3_chart/static/src/lib/d3/d3.v3.min.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_widget_mpld3_chart/static/src/lib/mpld3/mpld3.v0.3.1.dev1.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_widget_mpld3_chart/static/src/js/web_widget_mpld3_chart.js"
+            />
+        </xpath>
+    </template>
+</odoo>
