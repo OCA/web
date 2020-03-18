@@ -1,10 +1,12 @@
-//Copyright 2018 Therp BV <https://therp.nl>
-//License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
-/*global Uint8Array base64js*/
+// Copyright 2018 Therp BV <https://therp.nl>
+// License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+/* global Uint8Array base64js*/
 
-odoo.define('web_drop_target', function(require) {
-    var FormController = require('web.FormController');
-    var core = require('web.core');
+odoo.define("web_drop_target", function(require) {
+    "use strict";
+
+    var FormController = require("web.FormController");
+    var core = require("web.core");
     var qweb = core.qweb;
 
     // This is the main contribution of this addon: A mixin you can use
@@ -18,15 +20,15 @@ odoo.define('web_drop_target', function(require) {
 
         start: function() {
             var result = this._super.apply(this, arguments);
-            this.$el.on('drop.widget_events', this.proxy('_on_drop'));
-            this.$el.on('dragenter.widget_events', this.proxy('_on_dragenter'));
-            this.$el.on('dragover.widget_events', this.proxy('_on_dragenter'));
-            this.$el.on('dragleave.widget_events', this.proxy('_on_dragleave'));
+            this.$el.on("drop.widget_events", this.proxy("_on_drop"));
+            this.$el.on("dragenter.widget_events", this.proxy("_on_dragenter"));
+            this.$el.on("dragover.widget_events", this.proxy("_on_dragenter"));
+            this.$el.on("dragleave.widget_events", this.proxy("_on_dragleave"));
             return result;
         },
 
         _on_drop: function(e) {
-            if (!this._drop_overlay){
+            if (!this._drop_overlay) {
                 return;
             }
             var drop_items = this._get_drop_items(e);
@@ -35,7 +37,7 @@ odoo.define('web_drop_target', function(require) {
             if (!drop_items) {
                 return;
             }
-            this._handle_drop_items(drop_items, e)
+            this._handle_drop_items(drop_items, e);
         },
 
         _on_dragenter: function(e) {
@@ -50,21 +52,24 @@ odoo.define('web_drop_target', function(require) {
         },
 
         _get_drop_items: function(e) {
-            var self = this,
-                dataTransfer = e.originalEvent.dataTransfer,
-                drop_items = [];
-            _.each(dataTransfer.files, function(item) {
-                if (
-                    _.contains(self._drop_allowed_types, item.type) ||
-                    _.isEmpty(self._drop_allowed_types)
-                ) {
-                    drop_items.push(item);
-                }
-            });
-            return drop_items;
+            if (this.renderer.state.res_id) {
+                var self = this,
+                    dataTransfer = e.originalEvent.dataTransfer,
+                    drop_items = [];
+                _.each(dataTransfer.files, function(item) {
+                    if (
+                        _.contains(self._drop_allowed_types, item.type) ||
+                        _.isEmpty(self._drop_allowed_types)
+                    ) {
+                        drop_items.push(item);
+                    }
+                });
+                return drop_items;
+            }
+            return null;
         },
 
-        // Eslint-disable-next-line no-unused-vars
+        // eslint-disable-next-line no-unused-vars
         _handle_drop_items: function(drop_items, e) {
             // Do something here, for example call the helper function below
             // e is the on_load_end handler for the FileReader above,
@@ -75,38 +80,38 @@ odoo.define('web_drop_target', function(require) {
             // Helper to upload an attachment and update the sidebar
             var self = this;
             return this._rpc({
-                model: 'ir.attachment',
-                method: 'create',
+                model: "ir.attachment",
+                method: "create",
                 args: [
-                    _.extend({
-                        name: file.name,
-                        datas: base64js.fromByteArray(
-                            new Uint8Array(reader.result)
-                        ),
-                        res_model: res_model,
-                        res_id: res_id,
-                    }, extra_data || {})
+                    _.extend(
+                        {
+                            name: file.name,
+                            datas: base64js.fromByteArray(
+                                new Uint8Array(reader.result)
+                            ),
+                            res_model: res_model,
+                            res_id: res_id,
+                        },
+                        extra_data || {}
+                    ),
                 ],
-            })
-            .then(function() {
+            }).then(function() {
                 // Find the chatter among the children, there should be only
                 // one
-                var res = _.filter(self.getChildren(), 'chatter')
+                var res = _.filter(self.getChildren(), "chatter");
                 if (res.length) {
                     res[0].chatter._reloadAttachmentBox();
-                    res[0].chatter.trigger_up('reload');
-                    res[0].chatter.$('.o_chatter_button_attachment').click();
+                    res[0].chatter.trigger_up("reload");
+                    res[0].chatter.$(".o_chatter_button_attachment").click();
                 }
             });
         },
 
-        _file_reader_error_handler: function(e){
+        _file_reader_error_handler: function(e) {
             console.error(e);
         },
 
-        _handle_file_drop_attach: function(
-            item, e, res_model, res_id, extra_data
-        ) {
+        _handle_file_drop_attach: function(item, e, res_model, res_id, extra_data) {
             var self = this;
             var file = item;
             if (!file || !(file instanceof Blob)) {
@@ -114,26 +119,40 @@ odoo.define('web_drop_target', function(require) {
             }
             var reader = new FileReader();
             reader.onloadend = self.proxy(
-                _.partial(self._create_attachment, file, reader, e, res_model, res_id, extra_data)
+                _.partial(
+                    self._create_attachment,
+                    file,
+                    reader,
+                    e,
+                    res_model,
+                    res_id,
+                    extra_data
+                )
             );
-            reader.onerror = self.proxy('_file_reader_error_handler');
+            reader.onerror = self.proxy("_file_reader_error_handler");
             reader.readAsArrayBuffer(file);
         },
 
         _add_overlay: function() {
-            if (!this._drop_overlay){
-                var o_content = jQuery('.o_content'),
-                    view_manager = jQuery('.o_view_manager_content');
+            var self = this;
+            if (!this._drop_overlay) {
+                var o_content = jQuery(".o_content"),
+                    view_manager = jQuery(".o_view_manager_content");
                 this._drop_overlay = jQuery(
-                    qweb.render('web_drop_target.drop_overlay')
+                    qweb.render("web_drop_target.drop_overlay", {
+                        id: self.renderer.state.res_id,
+                    })
                 );
                 var o_content_position = o_content.position();
                 this._drop_overlay.css({
-                    'top': o_content_position.top,
-                    'left': o_content_position.left,
-                    'width': view_manager.width(),
-                    'height': view_manager.height()
+                    top: o_content_position.top,
+                    left: o_content_position.left,
+                    width: view_manager.width(),
+                    height: view_manager.height(),
                 });
+                if (!this.renderer.state.res_id) {
+                    this._drop_overlay.css("background", "#FF000020");
+                }
                 o_content.append(this._drop_overlay);
             }
         },
@@ -143,32 +162,29 @@ odoo.define('web_drop_target', function(require) {
                 this._drop_overlay.remove();
                 this._drop_overlay = null;
             }
-        }
+        },
     };
 
     // And here we apply the mixin to form views, allowing any files and
     // adding them as attachment
-    FormController.include(_.extend(DropTargetMixin, {
-        _get_drop_file: function() {
-            // Disable drag&drop when we're on an unsaved record
-            if (!this.datarecord.id) {
-                return null;
-            }
-            return this._super.apply(this, arguments);
-        },
-        _handle_drop_items: function(drop_items, e) {
-            var self = this;
-            _.each(drop_items, function(item, e) {
-                return self._handle_file_drop_attach(
-                    item, e, self.renderer.state.model,
-                    self.renderer.state.res_id
-                );
-            });
-        }
-    }));
-
+    FormController.include(
+        _.extend(DropTargetMixin, {
+            // eslint-disable-next-line no-unused-vars
+            _handle_drop_items: function(drop_items, e) {
+                var self = this;
+                _.each(drop_items, function(item, e) {
+                    return self._handle_file_drop_attach(
+                        item,
+                        e,
+                        self.renderer.state.model,
+                        self.renderer.state.res_id
+                    );
+                });
+            },
+        })
+    );
 
     return {
-        'DropTargetMixin': DropTargetMixin,
+        DropTargetMixin: DropTargetMixin,
     };
 });
