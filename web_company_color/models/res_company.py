@@ -1,7 +1,6 @@
 # Copyright 2019 Alexandre Díaz <dev@redneboa.es>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import base64
-import time
 from colorsys import hls_to_rgb, rgb_to_hls
 
 from odoo import api, fields, models
@@ -9,7 +8,7 @@ from odoo import api, fields, models
 from ..utils import convert_to_image, image_to_rgb, n_rgb_to_hex
 
 URL_BASE = "/web_company_color/static/src/scss/"
-URL_SCSS_GEN_TEMPLATE = URL_BASE + "custom_colors.%d.%s.gen.scss"
+URL_SCSS_GEN_TEMPLATE = URL_BASE + "custom_colors.%d.gen.scss"
 
 
 class ResCompany(models.Model):
@@ -53,7 +52,6 @@ class ResCompany(models.Model):
         "Navbar Background Color Hover", sparse="company_colors"
     )
     color_navbar_text = fields.Char("Navbar Text Color", sparse="company_colors")
-    scss_modif_timestamp = fields.Char("SCSS Modif. Timestamp")
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -61,17 +59,14 @@ class ResCompany(models.Model):
         records.scss_create_or_update_attachment()
         return records
 
-    @api.multi
     def unlink(self):
-        result = super().unlink()
         IrAttachmentObj = self.env["ir.attachment"]
         for record in self:
             IrAttachmentObj.sudo().search(
-                [("url", "like", "%s%%" % record._scss_get_url_simplified())]
+                [("url", "=", record.scss_get_url()), ("company_id", "=", record.id)]
             ).sudo().unlink()
-        return result
+        return super().unlink()
 
-    @api.multi
     def write(self, values):
         if not self.env.context.get("ignore_company_color", False):
             fields_to_check = (
@@ -107,7 +102,6 @@ class ResCompany(models.Model):
             result = super().write(values)
         return result
 
-    @api.multi
     def _scss_get_sanitized_values(self):
         self.ensure_one()
         # Clone company_color as dictionary to avoid ORM operations
@@ -126,7 +120,6 @@ class ResCompany(models.Model):
         )
         return values
 
-    @api.multi
     def _scss_generate_content(self):
         self.ensure_one()
         # ir.attachment need files with content to work
@@ -134,41 +127,28 @@ class ResCompany(models.Model):
             return "// No Web Company Color SCSS Content\n"
         return self.SCSS_TEMPLATE % self._scss_get_sanitized_values()
 
-    # URL to scss related with this company, without timestamp
-    # /web_company_color/static/src/scss/custom_colors.<company_id>
-    def _scss_get_url_simplified(self):
+    def scss_get_url(self):
         self.ensure_one()
-        NTEMPLATE = ".".join(URL_SCSS_GEN_TEMPLATE.split(".")[:2])
-        return NTEMPLATE % self.id
+        return URL_SCSS_GEN_TEMPLATE % self.id
 
-    @api.multi
-    def scss_get_url(self, timestamp=None):
-        self.ensure_one()
-        return URL_SCSS_GEN_TEMPLATE % (self.id, timestamp or self.scss_modif_timestamp)
-
-    @api.multi
     def scss_create_or_update_attachment(self):
         IrAttachmentObj = self.env["ir.attachment"]
-        # The time window is 1 second
-        # This mean that all modifications realized in that second will
-        # have the same timestamp
-        modif_timestamp = str(int(time.time()))
         for record in self:
             datas = base64.b64encode(record._scss_generate_content().encode("utf-8"))
+            custom_url = record.scss_get_url()
             custom_attachment = IrAttachmentObj.sudo().search(
-                [("url", "like", "%s%%" % record._scss_get_url_simplified())]
+                [("url", "=", custom_url), ("company_id", "=", record.id)]
             )
-            custom_url = record.scss_get_url(timestamp=modif_timestamp)
             values = {
                 "datas": datas,
+                "db_datas": datas,
                 "url": custom_url,
                 "name": custom_url,
-                "datas_fname": custom_url.split("/")[-1],
+                "company_id": record.id,
             }
             if custom_attachment:
                 custom_attachment.sudo().write(values)
             else:
                 values.update({"type": "binary", "mimetype": "text/scss"})
                 IrAttachmentObj.sudo().create(values)
-        self.write({"scss_modif_timestamp": modif_timestamp})
         self.env["ir.qweb"].sudo().clear_caches()
