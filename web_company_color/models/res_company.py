@@ -61,17 +61,18 @@ class ResCompany(models.Model):
         records.scss_create_or_update_attachment()
         return records
 
-    @api.multi
     def unlink(self):
         result = super().unlink()
         IrAttachmentObj = self.env["ir.attachment"]
         for record in self:
             IrAttachmentObj.sudo().search(
-                [("url", "like", "%s%%" % record._scss_get_url_simplified()),]
+                [
+                    ("url", "like", "%s%%" % record._scss_get_url_simplified()),
+                    ("company_id", "=", record.id),
+                ]
             ).sudo().unlink()
         return result
 
-    @api.multi
     def write(self, values):
         if not self.env.context.get("ignore_company_color", False):
             fields_to_check = (
@@ -107,7 +108,6 @@ class ResCompany(models.Model):
             result = super().write(values)
         return result
 
-    @api.multi
     def _scss_get_sanitized_values(self):
         self.ensure_one()
         # Clone company_color as dictionary to avoid ORM operations
@@ -126,7 +126,6 @@ class ResCompany(models.Model):
         )
         return values
 
-    @api.multi
     def _scss_generate_content(self):
         self.ensure_one()
         # ir.attachment need files with content to work
@@ -141,12 +140,10 @@ class ResCompany(models.Model):
         NTEMPLATE = ".".join(URL_SCSS_GEN_TEMPLATE.split(".")[:2])
         return NTEMPLATE % self.id
 
-    @api.multi
     def scss_get_url(self, timestamp=None):
         self.ensure_one()
         return URL_SCSS_GEN_TEMPLATE % (self.id, timestamp or self.scss_modif_timestamp)
 
-    @api.multi
     def scss_create_or_update_attachment(self):
         IrAttachmentObj = self.env["ir.attachment"]
         # The time window is 1 second
@@ -156,21 +153,23 @@ class ResCompany(models.Model):
         for record in self:
             datas = base64.b64encode(record._scss_generate_content().encode("utf-8"))
             custom_attachment = IrAttachmentObj.sudo().search(
-                [("url", "like", "%s%%" % record._scss_get_url_simplified())]
+                [
+                    ("url", "like", "%s%%" % record._scss_get_url_simplified()),
+                    ("company_id", "=", record.id),
+                ]
             )
             custom_url = record.scss_get_url(timestamp=modif_timestamp)
             values = {
                 "datas": datas,
+                "db_datas": datas,
                 "url": custom_url,
                 "name": custom_url,
-                "datas_fname": custom_url.split("/")[-1],
+                "company_id": record.id,
             }
             if custom_attachment:
                 custom_attachment.sudo().write(values)
             else:
-                values.update(
-                    {"type": "binary", "mimetype": "text/scss",}
-                )
+                values.update({"type": "binary", "mimetype": "text/scss"})
                 IrAttachmentObj.sudo().create(values)
         self.write({"scss_modif_timestamp": modif_timestamp})
         self.env["ir.qweb"].sudo().clear_caches()

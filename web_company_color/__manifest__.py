@@ -5,10 +5,10 @@
 {
     "name": "Web Company Color",
     "category": "web",
-    "version": "12.0.1.1.0",
+    "version": "13.0.1.1.0",
     "author": "Alexandre Díaz, " "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
-    "depends": ["web", "base_sparse_field", "web_widget_color"],
+    "depends": ["web", "base_sparse_field"],
     "data": ["view/assets.xml", "view/res_company.xml"],
     "uninstall_hook": "uninstall_hook",
     "post_init_hook": "post_init_hook",
