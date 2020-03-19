@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_company_color
+# 	* web_company_color
 #
 msgid ""
 msgstr ""
@@ -18,8 +18,10 @@ msgstr ""
 
 #. module: web_company_color
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
-msgid "<span class=\"fa fa-info fa-2x\"/>\n"
-"                        In order for the changes to take effect, please refresh\n"
+msgid ""
+"<span class=\"fa fa-info fa-2x\"/>\n"
+"                        In order for the changes to take effect, please "
+"refresh\n"
 "                        the page."
 msgstr ""
 "<span class=\"fa fa-info fa-2x\"/>\n"
@@ -62,6 +64,9 @@ msgid "Navbar Text Color"
 msgstr "导航栏文字颜色"
 
 #. module: web_company_color
-#: model:ir.model.fields,field_description:web_company_color.field_res_company__scss_modif_timestamp
-msgid "SCSS Modif. Timestamp"
-msgstr "SCSS修改时间戳"
+#: model:ir.model,name:web_company_color.model_ir_qweb
+msgid "Qweb"
+msgstr ""
+
+#~ msgid "SCSS Modif. Timestamp"
+#~ msgstr "SCSS修改时间戳"

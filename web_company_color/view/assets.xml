@@ -4,22 +4,16 @@
     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 -->
 <odoo>
+    <!-- Workarround to use custom assets bundle
+        This specific 't-call-assets' xmlid will be handled in a 'special' way
+    -->
     <template
-        id="assets_backend"
+        id="webclient_bootstrap"
         name="web_company_color assets"
-        inherit_id="web.assets_backend"
+        inherit_id="web.webclient_bootstrap"
     >
-        <xpath expr=".">
-            <t
-                t-set="company_id"
-                t-value="request.env.user and request.env.user.company_id"
-            />
-            <link
-                t-if="company_id"
-                rel="stylesheet"
-                type="text/scss"
-                t-att-href="company_id.scss_get_url()"
-            />
+        <xpath expr="//t[@t-set='head_web']">
+            <t t-call-assets="web_company_color.company_color_assets" />
         </xpath>
     </template>
 </odoo>
