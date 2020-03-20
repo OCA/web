@@ -1,9 +1,9 @@
-odoo.define('web_switch_context_warning.widget', function (require) {
-    'use strict';
+odoo.define("web_switch_context_warning.widget", function(require) {
+    "use strict";
 
-    var Widget = require('web.Widget');
-    var UserMenu = require('web.UserMenu');
-    var session = require('web.session');
+    var Widget = require("web.Widget");
+    var UserMenu = require("web.UserMenu");
+    var session = require("web.session");
     // Show a big banner in the top of the page if the context has been
     // changed in another tab or window (in the same browser)
 
@@ -12,13 +12,15 @@ odoo.define('web_switch_context_warning.widget', function (require) {
         return;
     }
     var SwitchCompanyWarningWidget = Widget.extend({
-        template:'web_switch_context_warning.warningWidget',
-        init: function () {
+        template: "web_switch_context_warning.warningWidget",
+        init: function() {
             this._super();
             var self = this;
-            var w = new SharedWorker('/web_switch_context_warning/static/src/js/switch_context_warning_worker.js');
-            w.port.addEventListener('message', function (msg) {
-                if (msg.data.type !== 'newCtx') {
+            var w = new SharedWorker(
+                "/web_switch_context_warning/static/src/js/switch_context_warning_worker.js"
+            );
+            w.port.addEventListener("message", function(msg) {
+                if (msg.data.type !== "newCtx") {
                     return;
                 }
                 if (msg.data.newCtx === self.generateSignature()) {
@@ -30,20 +32,18 @@ odoo.define('web_switch_context_warning.widget', function (require) {
             w.port.start();
             w.port.postMessage(this.generateSignature());
         },
-        generateSignature: function () {
+        generateSignature: function() {
             return [session.uid, session.company_id, session.db].join();
         },
     });
 
     UserMenu.include({
-        init: function (parent) {
+        init: function(parent) {
             this._super(parent);
             var switchCompanyWarning = new SwitchCompanyWarningWidget();
-            switchCompanyWarning.insertAfter('.o_main_navbar');
+            switchCompanyWarning.insertAfter(".o_main_navbar");
         },
-
     });
 
     return SwitchCompanyWarningWidget;
 });
-
