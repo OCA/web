@@ -6,7 +6,7 @@
             style="text-align: center; display:none;padding-top:20px;padding-bottom:5px"
         >
             <h3
-            >You switched to a different user, company or database with another tab or window</h3>
+            >You switched to a different user or database with another tab or window</h3>
             <p><button
                     onclick="location.reload(true);"
                     class="btn"
