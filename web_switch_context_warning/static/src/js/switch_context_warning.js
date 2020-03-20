@@ -11,7 +11,7 @@ odoo.define("web_switch_context_warning.widget", function(require) {
         // Not supported
         return;
     }
-    var SwitchCompanyWarningWidget = Widget.extend({
+    var SwitchContextWarningWidget = Widget.extend({
         template: "web_switch_context_warning.warningWidget",
         init: function() {
             this._super();
@@ -33,17 +33,17 @@ odoo.define("web_switch_context_warning.widget", function(require) {
             w.port.postMessage(this.generateSignature());
         },
         generateSignature: function() {
-            return [session.uid, session.company_id, session.db].join();
+            return [session.uid, session.db].join();
         },
     });
 
     UserMenu.include({
         init: function(parent) {
             this._super(parent);
-            var switchCompanyWarning = new SwitchCompanyWarningWidget();
-            switchCompanyWarning.insertAfter(".o_main_navbar");
+            var switchContextWarning = new SwitchContextWarningWidget();
+            switchContextWarning.insertAfter(".o_main_navbar");
         },
     });
 
-    return SwitchCompanyWarningWidget;
+    return SwitchContextWarningWidget;
 });
