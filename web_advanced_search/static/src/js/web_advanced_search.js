@@ -1,5 +1,6 @@
 /* Copyright 2015 Therp BV <http://therp.nl>
  * Copyright 2017-2018 Jairo Llopis <jairo.llopis@tecnativa.com>
+ * Copyright 2020 Brainbean Apps (https://brainbeanapps.com)
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
 odoo.define("web_advanced_search", function (require) {
@@ -15,6 +16,8 @@ odoo.define("web_advanced_search", function (require) {
     var SearchView = require("web.SearchView");
     var Widget = require("web.Widget");
     var Char = core.search_filters_registry.get("char");
+
+    var _lt = core._lt;
 
     SearchView.include({
         custom_events: _.extend({}, SearchView.prototype.custom_events, {
@@ -153,14 +156,23 @@ odoo.define("web_advanced_search", function (require) {
             // To make widgets work, we need a model and an empty record
             FieldManagerMixin.init.call(this);
             this.trigger_up("get_dataset");
-            // Make equal and not equal appear 1st and 2nd
+            // Unfortunately, it's impossible to check if model supports these
+            this.operators = this.operators.concat([
+                {value: "child_of", text: _lt("is child of")},
+                {value: "parent_of", text: _lt("is parent of")}
+            ])
+            // Prioritize equal, not equal, child_of, parent_of
             this.operators = _.sortBy(
                 this.operators,
                 function (op) {
                     switch (op.value) {
                     case "=":
-                        return -2;
+                        return -4;
                     case "!=":
+                        return -3;
+                    case "child_of":
+                        return -2;
+                    case "parent_of":
                         return -1;
                     default:
                         return 0;
@@ -242,6 +254,8 @@ odoo.define("web_advanced_search", function (require) {
             switch ($operator.val()) {
             case "=":
             case "!=":
+            case "child_of":
+            case "parent_of":
                 this._field_widget_name = "many2one";
                 break;
             default:

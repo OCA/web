@@ -2,7 +2,8 @@ To use this module, you need to:
 
 * Open *Filters* in a search view
 * Select any relational field
-* Select operator `is equal to` or `is not equal to`
+* Select one of operators: `is equal to`, `is not equal to`, `is child of`,
+  or `is parent of`
 * The text field changes to a relational selection field where you
   can search for the record in question
 * Click *Apply*
