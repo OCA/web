@@ -22,3 +22,17 @@ msgstr ""
 #, python-format
 msgid "Add Advanced Filter"
 msgstr "Tilføj avanceret filter"
+
+#. module: web_advanced_search
+#. openerp-web
+#: code:addons/web_advanced_search/static/src/js/web_advanced_search.js:161
+#, python-format
+msgid "is child of"
+msgstr ""
+
+#. module: web_advanced_search
+#. openerp-web
+#: code:addons/web_advanced_search/static/src/js/web_advanced_search.js:162
+#, python-format
+msgid "is parent of"
+msgstr ""
