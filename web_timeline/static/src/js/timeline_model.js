@@ -1,16 +1,14 @@
-odoo.define('web_timeline.TimelineModel', function (require) {
+odoo.define("web_timeline.TimelineModel", function(require) {
     "use strict";
 
-    var AbstractModel = require('web.AbstractModel');
+    const AbstractModel = require("web.AbstractModel");
 
-    var TimelineModel = AbstractModel.extend({
-
-        init: function () {
+    const TimelineModel = AbstractModel.extend({
+        init: function() {
             this._super.apply(this, arguments);
         },
 
-        load: function (params) {
-            var self = this;
+        load: function(params) {
             this.modelName = params.modelName;
             this.fieldNames = params.fieldNames;
             if (!this.preload_def) {
@@ -18,24 +16,24 @@ odoo.define('web_timeline.TimelineModel', function (require) {
                 $.when(
                     this._rpc({
                         model: this.modelName,
-                        method: 'check_access_rights',
+                        method: "check_access_rights",
                         args: ["write", false],
                     }),
                     this._rpc({
                         model: this.modelName,
-                        method: 'check_access_rights',
+                        method: "check_access_rights",
                         args: ["unlink", false],
                     }),
                     this._rpc({
                         model: this.modelName,
-                        method: 'check_access_rights',
+                        method: "check_access_rights",
                         args: ["create", false],
                     })
-                ).then(function (write, unlink, create) {
-                    self.write_right = write;
-                    self.unlink_right = unlink;
-                    self.create_right = create;
-                    self.preload_def.resolve();
+                ).then((write, unlink, create) => {
+                    this.write_right = write;
+                    this.unlink_right = unlink;
+                    this.create_right = create;
+                    this.preload_def.resolve();
                 });
             }
 
@@ -53,20 +51,19 @@ odoo.define('web_timeline.TimelineModel', function (require) {
          * @private
          * @returns {jQuery.Deferred}
          */
-        _loadTimeline: function () {
-            var self = this;
-            return self._rpc({
-                model: self.modelName,
-                method: 'search_read',
-                context: self.data.context,
-                fields: self.fieldNames,
-                domain: self.data.domain,
-            }).then(function (events) {
-                self.data.data = events;
-                self.data.rights = {
-                    'unlink': self.unlink_right,
-                    'create': self.create_right,
-                    'write': self.write_right,
+        _loadTimeline: function() {
+            return this._rpc({
+                model: this.modelName,
+                method: "search_read",
+                context: this.data.context,
+                fields: this.fieldNames,
+                domain: this.data.domain,
+            }).then(events => {
+                this.data.data = events;
+                this.data.rights = {
+                    unlink: this.unlink_right,
+                    create: this.create_right,
+                    write: this.write_right,
                 };
             });
         },

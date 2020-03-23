@@ -48,7 +48,7 @@ Example:
             <field name="model">project.task</field>
             <field name="type">timeline</field>
             <field name="arch" type="xml">
-                <timeline date_start="date_start"
+                <timeline date_start="date_assign"
                           date_stop="date_end"
                           string="Tasks"
                           default_group_by="user_id"
