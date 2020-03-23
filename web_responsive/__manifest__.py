@@ -24,6 +24,7 @@
     'qweb': [
         'static/src/xml/apps.xml',
         'static/src/xml/form_view.xml',
+        "static/src/xml/menu.xml",
         'static/src/xml/navbar.xml',
         'static/src/xml/document_viewer.xml',
     ],
