@@ -21,79 +21,36 @@ msgstr ""
 "X-Generator: Weblate 3.7.1\n"
 
 #. module: web_timeline
-#: selection:ir.ui.view,type:0
-msgid "Activity"
-msgstr "Activité"
+#. openerp-web
+#: code:addons/web_timeline/static/src/js/timeline_renderer.js:0
+#, python-format
+msgid "<b>UNASSIGNED</b>"
+msgstr ""
 
 #. module: web_timeline
 #. openerp-web
-#: code:addons/web_timeline/static/src/js/timeline_controller.js:243
+#: code:addons/web_timeline/static/src/js/timeline_controller.js:0
 #, python-format
 msgid "Are you sure you want to delete this record?"
 msgstr "Êtes vous sûr de vouloir supprimer cet enregistrement ?"
 
 #. module: web_timeline
-#: selection:ir.ui.view,type:0
-msgid "Calendar"
-msgstr "Calendrier"
-
-#. module: web_timeline
 #. openerp-web
-#: code:addons/web_timeline/static/src/xml/web_timeline.xml:8
+#: code:addons/web_timeline/static/src/xml/web_timeline.xml:0
 #, python-format
 msgid "Day"
 msgstr "Jour"
 
 #. module: web_timeline
-#: selection:ir.ui.view,type:0
-msgid "Diagram"
-msgstr "Diagramme"
-
-#. module: web_timeline
-#: selection:ir.ui.view,type:0
-msgid "Form"
-msgstr "Formulaire"
-
-#. module: web_timeline
-#: selection:ir.ui.view,type:0
-msgid "Gantt"
-msgstr "Gantt"
-
-#. module: web_timeline
-#: selection:ir.ui.view,type:0
-msgid "Graph"
-msgstr "Graphique"
-
-#. module: web_timeline
-#: selection:ir.ui.view,type:0
-msgid "Kanban"
-msgstr "Kanban"
-
-#. module: web_timeline
 #. openerp-web
-#: code:addons/web_timeline/static/src/xml/web_timeline.xml:10
+#: code:addons/web_timeline/static/src/xml/web_timeline.xml:0
 #, python-format
 msgid "Month"
 msgstr "Mois"
 
 #. module: web_timeline
-#: selection:ir.ui.view,type:0
-msgid "Pivot"
-msgstr "Pivot"
-
-#. module: web_timeline
-#: selection:ir.ui.view,type:0
-msgid "QWeb"
-msgstr "QWeb"
-
-#. module: web_timeline
-#: selection:ir.ui.view,type:0
-msgid "Search"
-msgstr "Recherche"
-
-#. module: web_timeline
 #. openerp-web
-#: code:addons/web_timeline/static/src/js/timeline_renderer.js:467
+#: code:addons/web_timeline/static/src/js/timeline_renderer.js:0
 #, python-format
 msgid "Template \"timeline-item\" not present in timeline view definition."
 msgstr ""
@@ -102,30 +59,25 @@ msgstr ""
 
 #. module: web_timeline
 #. openerp-web
-#: code:addons/web_timeline/static/src/js/timeline_view.js:32
-#: selection:ir.ui.view,type:0
+#: code:addons/web_timeline/static/src/js/timeline_view.js:0
+#: model:ir.model.fields.selection,name:web_timeline.selection__ir_ui_view__type__timeline
 #, python-format
 msgid "Timeline"
 msgstr "Chronologie"
 
 #. module: web_timeline
 #. openerp-web
-#: code:addons/web_timeline/static/src/js/timeline_renderer.js:63
+#: code:addons/web_timeline/static/src/js/timeline_renderer.js:0
 #, python-format
 msgid "Timeline view has not defined 'date_start' attribute."
 msgstr "La vue chronologique n'a pas défini l'attribut 'date_start'."
 
 #. module: web_timeline
 #. openerp-web
-#: code:addons/web_timeline/static/src/xml/web_timeline.xml:5
+#: code:addons/web_timeline/static/src/xml/web_timeline.xml:0
 #, python-format
 msgid "Today"
 msgstr "Aujourd'hui"
-
-#. module: web_timeline
-#: selection:ir.ui.view,type:0
-msgid "Tree"
-msgstr "Arborescence"
 
 #. module: web_timeline
 #: model:ir.model,name:web_timeline.model_ir_ui_view
@@ -139,24 +91,57 @@ msgstr "Type de vue"
 
 #. module: web_timeline
 #. openerp-web
-#: code:addons/web_timeline/static/src/js/timeline_controller.js:246
+#: code:addons/web_timeline/static/src/js/timeline_controller.js:0
 #, python-format
 msgid "Warning"
 msgstr "Alerte"
 
 #. module: web_timeline
 #. openerp-web
-#: code:addons/web_timeline/static/src/xml/web_timeline.xml:9
+#: code:addons/web_timeline/static/src/xml/web_timeline.xml:0
 #, python-format
 msgid "Week"
 msgstr "Semaine"
 
 #. module: web_timeline
 #. openerp-web
-#: code:addons/web_timeline/static/src/xml/web_timeline.xml:11
+#: code:addons/web_timeline/static/src/xml/web_timeline.xml:0
 #, python-format
 msgid "Year"
 msgstr "Année"
+
+#~ msgid "Activity"
+#~ msgstr "Activité"
+
+#~ msgid "Calendar"
+#~ msgstr "Calendrier"
+
+#~ msgid "Diagram"
+#~ msgstr "Diagramme"
+
+#~ msgid "Form"
+#~ msgstr "Formulaire"
+
+#~ msgid "Gantt"
+#~ msgstr "Gantt"
+
+#~ msgid "Graph"
+#~ msgstr "Graphique"
+
+#~ msgid "Kanban"
+#~ msgstr "Kanban"
+
+#~ msgid "Pivot"
+#~ msgstr "Pivot"
+
+#~ msgid "QWeb"
+#~ msgstr "QWeb"
+
+#~ msgid "Search"
+#~ msgstr "Recherche"
+
+#~ msgid "Tree"
+#~ msgstr "Arborescence"
 
 #~ msgid "ir.ui.view"
 #~ msgstr "ir.ui.view"
