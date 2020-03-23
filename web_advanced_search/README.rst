@@ -39,7 +39,8 @@ To use this module, you need to:
 
 * Open *Filters* in a search view
 * Select any relational field
-* Select operator `is equal to` or `is not equal to`
+* Select one of operators: `is equal to`, `is not equal to`, `is child of`,
+  or `is parent of`
 * The text field changes to a relational selection field where you
   can search for the record in question
 * Click *Apply*
@@ -70,6 +71,10 @@ Improvements to the search view in this addon:
 * Use widgets ``one2many_tags`` when searching ``one2many`` fields
 * Use widgets ``many2many_tags`` when searching ``many2many`` fields
 * Allow to edit current full search using the advanced domain editor
+
+Improvements to the `is child of`/`is parent of` operators:
+
+* Show the operators only for models with `_parent_store = True`
 
 Changelog
 =========
@@ -144,6 +149,7 @@ Contributors
 * Jose Mª Bernet <josemaria.bernet@guadaltech.es>
 * Simone Orsi <simone.orsi@camptocamp.com>
 * Dennis Sluijk <d.sluijk@onestein.nl>
+* Alexey Pelykh <alexey.pelykh@brainbeanapps.com>
 
 Maintainers
 ~~~~~~~~~~~

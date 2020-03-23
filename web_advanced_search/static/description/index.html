@@ -395,7 +395,8 @@ ul.auto-toc {
 <ul class="simple">
 <li>Open <em>Filters</em> in a search view</li>
 <li>Select any relational field</li>
-<li>Select operator <cite>is equal to</cite> or <cite>is not equal to</cite></li>
+<li>Select one of operators: <cite>is equal to</cite>, <cite>is not equal to</cite>, <cite>is child of</cite>,
+or <cite>is parent of</cite></li>
 <li>The text field changes to a relational selection field where you
 can search for the record in question</li>
 <li>Click <em>Apply</em></li>
@@ -425,6 +426,10 @@ to a journal which has a user who is member of a certain group etc.</p>
 <li>Use widgets <tt class="docutils literal">one2many_tags</tt> when searching <tt class="docutils literal">one2many</tt> fields</li>
 <li>Use widgets <tt class="docutils literal">many2many_tags</tt> when searching <tt class="docutils literal">many2many</tt> fields</li>
 <li>Allow to edit current full search using the advanced domain editor</li>
+</ul>
+<p>Improvements to the <cite>is child of</cite>/<cite>is parent of</cite> operators:</p>
+<ul class="simple">
+<li>Show the operators only for models with <cite>_parent_store = True</cite></li>
 </ul>
 </div>
 <div class="section" id="changelog">
@@ -495,6 +500,7 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 <li>Jose Mª Bernet &lt;<a class="reference external" href="mailto:josemaria.bernet&#64;guadaltech.es">josemaria.bernet&#64;guadaltech.es</a>&gt;</li>
 <li>Simone Orsi &lt;<a class="reference external" href="mailto:simone.orsi&#64;camptocamp.com">simone.orsi&#64;camptocamp.com</a>&gt;</li>
 <li>Dennis Sluijk &lt;<a class="reference external" href="mailto:d.sluijk&#64;onestein.nl">d.sluijk&#64;onestein.nl</a>&gt;</li>
+<li>Alexey Pelykh &lt;<a class="reference external" href="mailto:alexey.pelykh&#64;brainbeanapps.com">alexey.pelykh&#64;brainbeanapps.com</a>&gt;</li>
 </ul>
 </div>
 <div class="section" id="maintainers">
