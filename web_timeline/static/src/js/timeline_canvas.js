@@ -1,69 +1,83 @@
 /* Copyright 2018 Onestein
  * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
 
-odoo.define('web_timeline.TimelineCanvas', function (require) {
+odoo.define("web_timeline.TimelineCanvas", function(require) {
     "use strict";
-    var Widget = require('web.Widget');
+    const Widget = require("web.Widget");
 
     /**
      * Used to draw stuff on upon the timeline view.
      */
-    var TimelineCanvas = Widget.extend({
-        template: 'TimelineView.Canvas',
+    const TimelineCanvas = Widget.extend({
+        template: "TimelineView.Canvas",
 
         /**
          * Clears all drawings (svg elements) from the canvas.
          */
-        clear: function () {
-            this.$(' > :not(defs)').remove();
+        clear: function() {
+            this.$(" > :not(defs)").remove();
         },
 
         /**
          * Gets the path from one point to another.
          *
-         * @param {Number} coordx1
-         * @param {Number} coordy1
-         * @param {Number} coordx2
-         * @param {Number} coordy2
-         * @param {Number} width1
-         * @param {Number} height1
-         * @param {Number} width2
-         * @param {Number} height2
+         * @param {Object} rectFrom
+         * @param {Object} rectTo
          * @param {Number} widthMarker The marker's width of the polyline
          * @param {Number} breakAt The space between the line turns
          * @returns {Array} Each item represents a coordinate
          */
-        get_polyline_points: function (coordx1, coordy1, coordx2, coordy2, width1, height1, width2, height2, widthMarker, breakAt) {
-            var halfHeight1 = height1 / 2;
-            var halfHeight2 = height2 / 2;
-            var x1 = coordx1 - widthMarker;
-            var y1 = coordy1 + halfHeight1;
-            var x2 = coordx2 + width2;
-            var y2 = coordy2 + halfHeight2;
-            var xDiff = x1 - x2;
-            var yDiff = y1 - y2;
-            var threshold = breakAt + widthMarker;
-            var spaceY = halfHeight2 + 6;
-
-            var points = [[x1, y1]];
-            if (y1 !== y2) {
-                if (xDiff > threshold) {
-                    points.push([x1 - breakAt, y1]);
-                    points.push([x1 - breakAt, y1 - yDiff]);
-                } else {
-                    var yDiffSpace = yDiff > 0 ? spaceY : -spaceY;
-                    points.push([x1 - breakAt, y1]);
-                    points.push([x1 - breakAt, y2 + yDiffSpace]);
-                    points.push([x2 + breakAt, y2 + yDiffSpace]);
-                    points.push([x2 + breakAt, y2]);
-                }
-            } else if (x1 < x2) {
-                points.push([x1 - breakAt, y1]);
-                points.push([x1 - breakAt, y1 + spaceY]);
-                points.push([x2 + breakAt, y2 + spaceY]);
-                points.push([x2 + breakAt, y2]);
+        get_polyline_points: function(rectFrom, rectTo, widthMarker, breakAt) {
+            let fromX = 0,
+                toX = 0;
+            if (rectFrom.x < rectTo.x + rectTo.w) {
+                fromX = rectFrom.x + rectFrom.w + widthMarker;
+                toX = rectTo.x;
+            } else {
+                fromX = rectFrom.x - widthMarker;
+                toX = rectTo.x + rectTo.w;
             }
-            points.push([x2, y2]);
+            let deltaBreak = 0;
+            if (fromX < toX) {
+                deltaBreak = fromX + breakAt - (toX - breakAt);
+            } else {
+                deltaBreak = fromX - breakAt - (toX + breakAt);
+            }
+            const fromHalfHeight = rectFrom.h / 2;
+            const fromY = rectFrom.y + fromHalfHeight;
+            const toHalfHeight = rectTo.h / 2;
+            const toY = rectTo.y + toHalfHeight;
+            const xDiff = fromX - toX;
+            const yDiff = fromY - toY;
+            const threshold = breakAt + widthMarker;
+            const spaceY = toHalfHeight + 2;
+
+            const points = [[fromX, fromY]];
+            const _addPoints = (space, ePoint, mode) => {
+                if (mode) {
+                    points.push([fromX + breakAt, fromY]);
+                    points.push([fromX + breakAt, ePoint + space]);
+                    points.push([toX - breakAt, toY + space]);
+                    points.push([toX - breakAt, toY]);
+                } else {
+                    points.push([fromX - breakAt, fromY]);
+                    points.push([fromX - breakAt, ePoint + space]);
+                    points.push([toX + breakAt, toY + space]);
+                    points.push([toX + breakAt, toY]);
+                }
+            };
+            if (fromY !== toY) {
+                if (Math.abs(xDiff) < threshold) {
+                    points.push([fromX + breakAt, toY + yDiff]);
+                    points.push([fromX + breakAt, toY]);
+                } else {
+                    const yDiffSpace = yDiff > 0 ? spaceY : -spaceY;
+                    _addPoints(yDiffSpace, toY, rectFrom.x < rectTo.x + rectTo.w);
+                }
+            } else if (Math.abs(deltaBreak) >= threshold) {
+                _addPoints(spaceY, fromY, fromX < toX);
+            }
+            points.push([toX, toY]);
 
             return points;
         },
@@ -77,8 +91,8 @@ odoo.define('web_timeline.TimelineCanvas', function (require) {
          * @param {Number} width Width of the line
          * @returns {HTMLElement} The created SVG polyline
          */
-        draw_arrow: function (from, to, color, width) {
-            return this.draw_line(from, to, color, width, '#arrowhead', 10, 12);
+        draw_arrow: function(from, to, color, width) {
+            return this.draw_line(from, to, color, width, "#arrowhead", 10, 12);
         },
 
         /**
@@ -93,31 +107,49 @@ odoo.define('web_timeline.TimelineCanvas', function (require) {
          * @param {Number} breakLineAt The space between the line turns
          * @returns {HTMLElement} The created SVG polyline
          */
-        draw_line: function (from, to, color, width, markerStart, widthMarker, breakLineAt) {
-            var x1 = from.offsetLeft,
-                y1 = from.offsetTop + from.parentElement.offsetTop,
-                x2 = to.offsetLeft,
-                y2 = to.offsetTop + to.parentElement.offsetTop,
-                width1 = from.clientWidth,
-                height1 = from.clientHeight,
-                width2 = to.clientWidth,
-                height2 = to.clientHeight;
-
-            var points = this.get_polyline_points(x1, y1, x2, y2, width1, height1, width2, height2, widthMarker, breakLineAt);
-
-            var polyline_points = _.map(points, function (point) {
-                return point.join(',');
-            }).join();
-
-            var line = document.createElementNS(
-                'http://www.w3.org/2000/svg', 'polyline'
+        draw_line: function(
+            from,
+            to,
+            color,
+            width,
+            markerStart,
+            widthMarker,
+            breakLineAt
+        ) {
+            const $from = $(from);
+            const childPosFrom = $from.offset();
+            const parentPosFrom = $from.closest(".vis-center").offset();
+            const rectFrom = {
+                x: childPosFrom.left - parentPosFrom.left,
+                y: childPosFrom.top - parentPosFrom.top,
+                w: $from.width(),
+                h: $from.height(),
+            };
+            const $to = $(to);
+            const childPosTo = $to.offset();
+            const parentPosTo = $to.closest(".vis-center").offset();
+            const rectTo = {
+                x: childPosTo.left - parentPosTo.left,
+                y: childPosTo.top - parentPosTo.top,
+                w: $to.width(),
+                h: $to.height(),
+            };
+            const points = this.get_polyline_points(
+                rectFrom,
+                rectTo,
+                widthMarker,
+                breakLineAt
             );
-            line.setAttribute('points', polyline_points);
-            line.setAttribute('stroke', color || '#000');
-            line.setAttribute('stroke-width', width || 1);
-            line.setAttribute('fill', 'none');
+            const line = document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "polyline"
+            );
+            line.setAttribute("points", _.flatten(points).join(","));
+            line.setAttribute("stroke", color || "#000");
+            line.setAttribute("stroke-width", width || 1);
+            line.setAttribute("fill", "none");
             if (markerStart) {
-                line.setAttribute('marker-start', 'url(' + markerStart + ')');
+                line.setAttribute("marker-start", "url(" + markerStart + ")");
             }
             this.$el.append(line);
             return line;
