@@ -1,36 +1,34 @@
-odoo.define('web_timeline.TimelineRenderer', function (require) {
+/* global vis, py */
+odoo.define("web_timeline.TimelineRenderer", function(require) {
     "use strict";
 
-    var AbstractRenderer = require('web.AbstractRenderer');
-    var core = require('web.core');
-    var time = require('web.time');
-    var utils = require('web.utils');
-    var session = require('web.session');
-    var QWeb = require('web.QWeb');
-    var field_utils = require('web.field_utils');
-    var TimelineCanvas = require('web_timeline.TimelineCanvas');
+    const AbstractRenderer = require("web.AbstractRenderer");
+    const core = require("web.core");
+    const time = require("web.time");
+    const utils = require("web.utils");
+    const session = require("web.session");
+    const QWeb = require("web.QWeb");
+    const field_utils = require("web.field_utils");
+    const TimelineCanvas = require("web_timeline.TimelineCanvas");
 
+    const _t = core._t;
 
-    var _t = core._t;
-
-    var TimelineRenderer = AbstractRenderer.extend({
+    const TimelineRenderer = AbstractRenderer.extend({
         template: "TimelineView",
 
         events: _.extend({}, AbstractRenderer.prototype.events, {
-            'click .oe_timeline_button_today': '_onTodayClicked',
-            'click .oe_timeline_button_scale_day': '_onScaleDayClicked',
-            'click .oe_timeline_button_scale_week': '_onScaleWeekClicked',
-            'click .oe_timeline_button_scale_month': '_onScaleMonthClicked',
-            'click .oe_timeline_button_scale_year': '_onScaleYearClicked',
+            "click .oe_timeline_button_today": "_onTodayClicked",
+            "click .oe_timeline_button_scale_day": "_onScaleDayClicked",
+            "click .oe_timeline_button_scale_week": "_onScaleWeekClicked",
+            "click .oe_timeline_button_scale_month": "_onScaleMonthClicked",
+            "click .oe_timeline_button_scale_year": "_onScaleYearClicked",
         }),
 
-        init: function (parent, state, params) {
+        init: function(parent, state, params) {
             this._super.apply(this, arguments);
             this.modelName = params.model;
             this.mode = params.mode;
             this.options = params.options;
-            this.permissions = params.permissions;
-            this.timeline = params.timeline;
             this.min_height = params.min_height;
             this.date_start = params.date_start;
             this.date_stop = params.date_stop;
@@ -38,35 +36,39 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
             this.colors = params.colors;
             this.fieldNames = params.fieldNames;
             this.dependency_arrow = params.dependency_arrow;
-            this.view = params.view;
-            this.modelClass = this.view.model;
+            this.modelClass = params.view.model;
+            this.fields = params.fields;
+
+            this.timeline = false;
         },
 
         /**
          * @override
          */
-        start: function () {
-            var self = this;
-            var attrs = this.arch.attrs;
+        start: function() {
+            const attrs = this.arch.attrs;
             this.current_window = {
                 start: new moment(),
-                end: new moment().add(24, 'hours'),
+                end: new moment().add(24, "hours"),
             };
 
             this.$el.addClass(attrs.class);
-            this.$timeline = this.$('.oe_timeline_widget');
+            this.$timeline = this.$(".oe_timeline_widget");
 
             if (!this.date_start) {
-                throw new Error(_t("Timeline view has not defined 'date_start' attribute."));
+                throw new Error(
+                    _t("Timeline view has not defined 'date_start' attribute.")
+                );
             }
-            this._super.apply(this, self);
+            this._super.apply(this, arguments);
         },
 
         /**
          * Triggered when the timeline is attached to the DOM.
          */
-        on_attach_callback: function () {
-            var height = this.$el.parent().height() - this.$('.oe_timeline_buttons').height();
+        on_attach_callback: function() {
+            const height =
+                this.$el.parent().height() - this.$(".oe_timeline_buttons").height();
             if (height > this.min_height && this.timeline) {
                 this.timeline.setOptions({
                     height: height,
@@ -77,13 +79,12 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
         /**
          * @override
          */
-        _render: function () {
-            var self = this;
-            return $.when().then(function () {
+        _render: function() {
+            return Promise.resolve().then(() => {
                 // Prevent Double Rendering on Updates
-                if (!self.timeline) {
-                    self.init_timeline();
-                    $(window).trigger('resize');
+                if (!this.timeline) {
+                    this.init_timeline();
+                    $(window).trigger("resize");
                 }
             });
         },
@@ -93,10 +94,10 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
          *
          * @private
          */
-        _onTodayClicked: function () {
+        _onTodayClicked: function() {
             this.current_window = {
                 start: new moment(),
-                end: new moment().add(24, 'hours'),
+                end: new moment().add(24, "hours"),
             };
 
             if (this.timeline) {
@@ -109,7 +110,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
          *
          * @private
          */
-        _onScaleDayClicked: function () {
+        _onScaleDayClicked: function() {
             this._scaleCurrentWindow(24);
         },
 
@@ -118,7 +119,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
          *
          * @private
          */
-        _onScaleWeekClicked: function () {
+        _onScaleWeekClicked: function() {
             this._scaleCurrentWindow(24 * 7);
         },
 
@@ -127,8 +128,10 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
          *
          * @private
          */
-        _onScaleMonthClicked: function () {
-            this._scaleCurrentWindow(24 * moment(this.current_window.start).daysInMonth());
+        _onScaleMonthClicked: function() {
+            this._scaleCurrentWindow(
+                24 * moment(this.current_window.start).daysInMonth()
+            );
         },
 
         /**
@@ -136,8 +139,10 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
          *
          * @private
          */
-        _onScaleYearClicked: function () {
-            this._scaleCurrentWindow(24 * (moment(this.current_window.start).isLeapYear() ? 366 : 365));
+        _onScaleYearClicked: function() {
+            this._scaleCurrentWindow(
+                24 * (moment(this.current_window.start).isLeapYear() ? 366 : 365)
+            );
         },
 
         /**
@@ -146,10 +151,13 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
          * @param {Integer} factor The timespan (in hours) the window must be scaled to.
          * @private
          */
-        _scaleCurrentWindow: function (factor) {
+        _scaleCurrentWindow: function(factor) {
             if (this.timeline) {
                 this.current_window = this.timeline.getWindow();
-                this.current_window.end = moment(this.current_window.start).add(factor, 'hours');
+                this.current_window.end = moment(this.current_window.start).add(
+                    factor,
+                    "hours"
+                );
                 this.timeline.setWindow(this.current_window);
             }
         },
@@ -159,39 +167,40 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
          *
          * @private
          */
-        _computeMode: function () {
+        _computeMode: function() {
             if (this.mode) {
-                var start = false, end = false;
+                let start = false,
+                    end = false;
                 switch (this.mode) {
-                case 'day':
-                    start = new moment().startOf('day');
-                    end = new moment().endOf('day');
-                    break;
-                case 'week':
-                    start = new moment().startOf('week');
-                    end = new moment().endOf('week');
-                    break;
-                case 'month':
-                    start = new moment().startOf('month');
-                    end = new moment().endOf('month');
-                    break;
+                    case "day":
+                        start = new moment().startOf("day");
+                        end = new moment().endOf("day");
+                        break;
+                    case "week":
+                        start = new moment().startOf("week");
+                        end = new moment().endOf("week");
+                        break;
+                    case "month":
+                        start = new moment().startOf("month");
+                        end = new moment().endOf("month");
+                        break;
                 }
                 if (end && start) {
                     this.options.start = start;
                     this.options.end = end;
                 } else {
-                    this.mode = 'fit';
+                    this.mode = "fit";
                 }
             }
         },
 
         /**
-         * Initializes the timeline (https://visjs.github.io/vis-timeline/docs/timeline).
+         * Initializes the timeline
+         * (https://visjs.github.io/vis-timeline/docs/timeline).
          *
          * @private
          */
-        init_timeline: function () {
-            var self = this;
+        init_timeline: function() {
             this._computeMode();
             this.options.editable = {
                 // Add new items by double tapping
@@ -204,41 +213,34 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
                 remove: this.modelClass.data.rights.unlink,
             };
             $.extend(this.options, {
-                onAdd: self.on_add,
-                onMove: self.on_move,
-                onUpdate: self.on_update,
-                onRemove: self.on_remove,
+                onAdd: this.on_add,
+                onMove: this.on_move,
+                onUpdate: this.on_update,
+                onRemove: this.on_remove,
             });
             this.qweb = new QWeb(session.debug, {_s: session.origin}, false);
             if (this.arch.children.length) {
-                var tmpl = utils.json_node_to_xml(
-                    _.filter(this.arch.children, function (item) {
-                        return item.tag === 'templates';
-                    })[0]
+                const tmpl = utils.json_node_to_xml(
+                    _.filter(this.arch.children, item => item.tag === "templates")[0]
                 );
                 this.qweb.add_template(tmpl);
             }
 
-            this.timeline = new vis.Timeline(self.$timeline.get(0));
+            this.timeline = new vis.Timeline(this.$timeline.get(0));
             this.timeline.setOptions(this.options);
-            if (self.mode && self['on_scale_' + self.mode + '_clicked']) {
-                self['on_scale_' + self.mode + '_clicked']();
+            if (this.mode && this["on_scale_" + this.mode + "_clicked"]) {
+                this["on_scale_" + this.mode + "_clicked"]();
             }
-            this.timeline.on('click', self.on_group_click);
-            var group_bys = this.arch.attrs.default_group_by.split(',');
+            this.timeline.on("click", this.on_group_click);
+            const group_bys = this.arch.attrs.default_group_by.split(",");
             this.last_group_bys = group_bys;
             this.last_domains = this.modelClass.data.domain;
             this.on_data_loaded(this.modelClass.data.data, group_bys);
             this.$centerContainer = $(this.timeline.dom.centerContainer);
             this.canvas = new TimelineCanvas(this);
             this.canvas.appendTo(this.$centerContainer);
-            this.timeline.on('changed', function () {
-                self.draw_canvas();
-                self.canvas.$el.attr(
-                    'style',
-                    self.$('.vis-content').attr('style') +
-                    self.$('.vis-itemset').attr('style')
-                );
+            this.timeline.on("changed", () => {
+                this.draw_canvas();
             });
         },
 
@@ -247,7 +249,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
          *
          * @private
          */
-        draw_canvas: function () {
+        draw_canvas: function() {
             this.canvas.clear();
             if (this.dependency_arrow) {
                 this.draw_dependencies();
@@ -259,16 +261,22 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
          *
          * @private
          */
-        draw_dependencies: function () {
-            var self = this;
-            var items = this.timeline.itemSet.items;
-            for (const item of items) {
-                if (!item.data.evt) {
+        draw_dependencies: function() {
+            const items = this.timeline.itemSet.items;
+            const datas = this.timeline.itemsData;
+            if (!items || !datas) {
+                return;
+            }
+            const keys = Object.keys(items);
+            for (const key of keys) {
+                const item = items[key];
+                const data = datas._data[key];
+                if (!data || !data.evt) {
                     return;
                 }
-                for (const id of item.data.evt[self.dependency_arrow]) {
-                    if (id in items) {
-                        self.draw_dependency(item, items[id]);
+                for (const id of data.evt[this.dependency_arrow]) {
+                    if (keys.indexOf(id.toString()) !== -1) {
+                        this.draw_dependency(item, items[id]);
                     }
                 }
             }
@@ -284,67 +292,72 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
          * @param {Object} options.line_width The width of the line
          * @private
          */
-        draw_dependency: function (from, to, options) {
+        draw_dependency: function(from, to, options) {
             if (!from.displayed || !to.displayed) {
                 return;
             }
-
-            var defaults = _.defaults({}, options, {
-                line_color: 'black',
+            const defaults = _.defaults({}, options, {
+                line_color: "black",
                 line_width: 1,
             });
-
-            this.canvas.draw_arrow(from.dom.box, to.dom.box, defaults.line_color, defaults.line_width);
+            this.canvas.draw_arrow(
+                from.dom.box,
+                to.dom.box,
+                defaults.line_color,
+                defaults.line_width
+            );
         },
 
         /**
          * Load display_name of records.
          *
+         * @param {Object[]} events
+         * @param {String[]} group_bys
+         * @param {Boolean} adjust_window
          * @private
          * @returns {jQuery.Deferred}
          */
-        on_data_loaded: function (events, group_bys, adjust_window) {
-            var self = this;
-            var ids = _.pluck(events, "id");
+        on_data_loaded: function(events, group_bys, adjust_window) {
+            const ids = _.pluck(events, "id");
             return this._rpc({
                 model: this.modelName,
-                method: 'name_get',
-                args: [
-                    ids,
-                ],
+                method: "name_get",
+                args: [ids],
                 context: this.getSession().user_context,
-            }).then(function (names) {
-                var nevents = _.map(events, function (event) {
-                    return _.extend({
-                        __name: _.detect(names, function (name) {
-                            return name[0] === event.id;
-                        })[1],
-                    }, event);
-                });
-                return self.on_data_loaded_2(nevents, group_bys, adjust_window);
+            }).then(names => {
+                const nevents = _.map(events, event =>
+                    _.extend(
+                        {
+                            __name: _.detect(names, name => name[0] === event.id)[1],
+                        },
+                        event
+                    )
+                );
+                return this.on_data_loaded_2(nevents, group_bys, adjust_window);
             });
         },
 
         /**
          * Set groups and events.
          *
+         * @param {Object[]} events
+         * @param {String[]} group_bys
+         * @param {Boolean} adjust_window
          * @private
          */
-        on_data_loaded_2: function (events, group_bys, adjust_window) {
-            var self = this;
-            var data = [];
-            var groups = [];
+        on_data_loaded_2: function(events, group_bys, adjust_window) {
+            const data = [];
             this.grouped_by = group_bys;
             for (const evt of events) {
-                if (evt[self.date_start]) {
-                    data.push(self.event_data_transform(evt));
+                if (evt[this.date_start]) {
+                    data.push(this.event_data_transform(evt));
                 }
             }
-            groups = this.split_groups(events, group_bys);
+            const groups = this.split_groups(events, group_bys);
             this.timeline.setGroups(groups);
             this.timeline.setItems(data);
-            var mode = !this.mode || this.mode === 'fit';
-            var adjust = _.isUndefined(adjust_window) || adjust_window;
+            const mode = !this.mode || this.mode === "fit";
+            const adjust = _.isUndefined(adjust_window) || adjust_window;
             if (mode && adjust) {
                 this.timeline.fit();
             }
@@ -353,22 +366,25 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
         /**
          * Get the groups.
          *
+         * @param {Object[]} events
+         * @param {String[]} group_bys
          * @private
          * @returns {Array}
          */
-        split_groups: function (events, group_bys) {
+        split_groups: function(events, group_bys) {
             if (group_bys.length === 0) {
                 return events;
             }
-            var groups = [];
-            groups.push({id: -1, content: _t('-')});
+            const groups = [];
+            groups.push({id: -1, content: _t("<b>UNASSIGNED</b>")});
             for (const evt of events) {
-                var group_name = evt[_.first(group_bys)];
+                const group_name = evt[_.first(group_bys)];
                 if (group_name) {
                     if (group_name instanceof Array) {
-                        var group = _.find(groups, function (existing_group) {
-                            return existing_group.id === group_name[0];
-                        });
+                        const group = _.find(
+                            groups,
+                            existing_group => existing_group.id === group_name[0]
+                        );
                         if (_.isUndefined(group)) {
                             groups.push({
                                 id: group_name[0],
@@ -382,60 +398,84 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
         },
 
         /**
-         * Transform Odoo event object to timeline event object.
+         * Get dates from given event
          *
-         * @private
+         * @param {TransformEvent} evt
          * @returns {Object}
          */
-        event_data_transform: function (evt) {
-            var self = this;
-            var date_start = new moment();
-            var date_stop = null;
+        _get_event_dates: function(evt) {
+            let date_start = new moment();
+            let date_stop = null;
 
-            var date_delay = evt[this.date_delay] || false,
+            const date_delay = evt[this.date_delay] || false,
                 all_day = this.all_day ? evt[this.all_day] : false;
 
             if (all_day) {
-                date_start = time.auto_str_to_date(evt[this.date_start].split(' ')[0], 'start');
+                date_start = time.auto_str_to_date(
+                    evt[this.date_start].split(" ")[0],
+                    "start"
+                );
                 if (this.no_period) {
                     date_stop = date_start;
                 } else {
-                    date_stop = this.date_stop ? time.auto_str_to_date(evt[this.date_stop].split(' ')[0], 'stop') : null;
+                    date_stop = this.date_stop
+                        ? time.auto_str_to_date(
+                              evt[this.date_stop].split(" ")[0],
+                              "stop"
+                          )
+                        : null;
                 }
             } else {
                 date_start = time.auto_str_to_date(evt[this.date_start]);
-                date_stop = this.date_stop ? time.auto_str_to_date(evt[this.date_stop]) : null;
+                date_stop = this.date_stop
+                    ? time.auto_str_to_date(evt[this.date_stop])
+                    : null;
             }
 
             if (!date_stop && date_delay) {
-                date_stop = date_start.clone().add(date_delay, 'hours').toDate();
+                date_stop = date_start
+                    .clone()
+                    .add(date_delay, "hours")
+                    .toDate();
             }
 
-            var group = evt[self.last_group_bys[0]];
+            return [date_start, date_stop];
+        },
+
+        /**
+         * Transform Odoo event object to timeline event object.
+         *
+         * @param {TransformEvent} evt
+         * @private
+         * @returns {Object}
+         */
+        event_data_transform: function(evt) {
+            const [date_start, date_stop] = this._get_event_dates(evt);
+            let group = evt[this.last_group_bys[0]];
             if (group && group instanceof Array) {
                 group = _.first(group);
             } else {
                 group = -1;
             }
 
-            for (const color of self.colors) {
-                if (py.eval("'" + evt[color.field] + "' " + color.opt + " '" + color.value + "'")) {
-                    self.color = color.color;
+            for (const color of this.colors) {
+                if (py.eval(`'${evt[color.field]}' ${color.opt} '${color.value}'`)) {
+                    this.color = color.color;
                 }
             }
 
-            var content = evt.__name || evt.display_name;
+            let content = evt.__name || evt.display_name;
             if (this.arch.children.length) {
                 content = this.render_timeline_item(evt);
             }
 
-            var r = {
-                'start': date_start,
-                'content': content,
-                'id': evt.id,
-                'group': group,
-                'evt': evt,
-                'style': `background-color: ${this.color};`,
+            const r = {
+                start: date_start,
+                content: content,
+                id: evt.id,
+                group: group,
+                evt: evt,
+                style: `background-color: ${this.color};`,
             };
             // Check if the event is instantaneous,
             // if so, display it with a point on the timeline (no 'end')
@@ -453,11 +493,11 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
          * @private
          * @returns {String} Rendered template
          */
-        render_timeline_item: function (evt) {
-            if (this.qweb.has_template('timeline-item')) {
-                return this.qweb.render('timeline-item', {
-                    'record': evt,
-                    'field_utils': field_utils,
+        render_timeline_item: function(evt) {
+            if (this.qweb.has_template("timeline-item")) {
+                return this.qweb.render("timeline-item", {
+                    record: evt,
+                    field_utils: field_utils,
                 });
             }
 
@@ -469,66 +509,81 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
         /**
          * Handle a click on a group header.
          *
+         * @param {ClickEvent} e
          * @private
          */
-        on_group_click: function (e) {
-            if (e.what === 'group-label' && e.group !== -1) {
-                this._trigger(e, function () {
-                    // Do nothing
-                }, 'onGroupClick');
+        on_group_click: function(e) {
+            if (e.what === "group-label" && e.group !== -1) {
+                this._trigger(
+                    e,
+                    () => {
+                        // Do nothing
+                    },
+                    "onGroupClick"
+                );
             }
         },
 
         /**
          * Trigger onUpdate.
          *
+         * @param {Object} item
+         * @param {Function} callback
          * @private
          */
-        on_update: function (item, callback) {
-            this._trigger(item, callback, 'onUpdate');
+        on_update: function(item, callback) {
+            this._trigger(item, callback, "onUpdate");
         },
 
         /**
          * Trigger onMove.
          *
+         * @param {Object} item
+         * @param {Function} callback
          * @private
          */
-        on_move: function (item, callback) {
-            this._trigger(item, callback, 'onMove');
+        on_move: function(item, callback) {
+            this._trigger(item, callback, "onMove");
         },
 
         /**
          * Trigger onRemove.
          *
+         * @param {Object} item
+         * @param {Function} callback
          * @private
          */
-        on_remove: function (item, callback) {
-            this._trigger(item, callback, 'onRemove');
+        on_remove: function(item, callback) {
+            this._trigger(item, callback, "onRemove");
         },
 
         /**
          * Trigger onAdd.
          *
+         * @param {Object} item
+         * @param {Function} callback
          * @private
          */
-        on_add: function (item, callback) {
-            this._trigger(item, callback, 'onAdd');
+        on_add: function(item, callback) {
+            this._trigger(item, callback, "onAdd");
         },
 
         /**
          * Trigger_up encapsulation adds by default the rights, and the renderer.
          *
+         * @param {HTMLElement} item
+         * @param {Function} callback
+         * @param {String} trigger
          * @private
          */
-        _trigger: function (item, callback, trigger) {
+        _trigger: function(item, callback, trigger) {
             this.trigger_up(trigger, {
-                'item': item,
-                'callback': callback,
-                'rights': this.modelClass.data.rights,
-                'renderer': this,
+                item: item,
+                callback: callback,
+                rights: this.modelClass.data.rights,
+                renderer: this,
             });
         },
-
     });
 
     return TimelineRenderer;
