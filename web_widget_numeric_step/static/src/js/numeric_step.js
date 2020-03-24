@@ -53,6 +53,7 @@ odoo.define('web_widget_numeric_step.field', function (require) {
             this._lazyOnChangeTrigger = _.debounce(function() {
                 self.$input.trigger("change");
             }, this.DELAY_THROTTLE_CHANGE);
+            this._auto_step_interval = false;
         },
 
         /**
@@ -164,13 +165,15 @@ odoo.define('web_widget_numeric_step.field', function (require) {
         },
 
         _onStepMouseDown: function (ev) {
-            this._interval = setTimeout(
-                $.proxy(this, "_whileMouseDown", ev), this._click_delay);
+            if (!this._auto_step_interval) {
+                this._auto_step_interval = setTimeout(
+                    $.proxy(this, "_whileMouseDown", ev), this._click_delay);
+            }
         },
 
         _onMouseUp: function () {
-            clearTimeout(this._interval);
-            this._interval = false;
+            clearTimeout(this._auto_step_interval);
+            this._auto_step_interval = false;
             this._click_delay = this.DEF_CLICK_DELAY;
         },
 
@@ -182,6 +185,7 @@ odoo.define('web_widget_numeric_step.field', function (require) {
                 this._click_delay -= this.SUBSTRACT_DELAY_STEP;
             }
 
+            this._auto_step_interval = false;
             this._onStepMouseDown(ev);
         },
 
