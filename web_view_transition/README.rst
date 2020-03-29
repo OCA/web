@@ -40,7 +40,7 @@ Go to user menu > Preferences > View Transition Mode
   |config|
 
 
-.. |config| image:: ./images/config.gif
+.. |config| image:: https://raw.githubusercontent.com/OCA/web/11.0/web_view_transition/images/config.gif
 
 Bug Tracker
 ===========
