@@ -397,7 +397,7 @@ ul.auto-toc {
     <span class="c1"># ir.actions.act_window_close</span>
     <span class="s1">'close_button_title'</span><span class="p">:</span> <span class="s1">'Make this window go away'</span><span class="p">,</span>
     <span class="c1"># Use HTML instead of text</span>
-    <span class="s1">'is_html_message'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="s1">'is_html_message'</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
     <span class="c1"># this is an optional list of buttons to show</span>
     <span class="s1">'buttons'</span><span class="p">:</span> <span class="p">[</span>
         <span class="c1"># a button can be any action (also ir.actions.report.xml et al)</span>
@@ -406,8 +406,8 @@ ul.auto-toc {
             <span class="s1">'name'</span><span class="p">:</span> <span class="s1">'All customers'</span><span class="p">,</span>
             <span class="s1">'res_model'</span><span class="p">:</span> <span class="s1">'res.partner'</span><span class="p">,</span>
             <span class="s1">'view_mode'</span><span class="p">:</span> <span class="s1">'form'</span><span class="p">,</span>
-            <span class="s1">'views'</span><span class="p">:</span> <span class="p">[[</span><span class="bp">False</span><span class="p">,</span> <span class="s1">'list'</span><span class="p">],</span> <span class="p">[</span><span class="bp">False</span><span class="p">,</span> <span class="s1">'form'</span><span class="p">]],</span>
-            <span class="s1">'domain'</span><span class="p">:</span> <span class="p">[(</span><span class="s1">'customer'</span><span class="p">,</span> <span class="s1">'='</span><span class="p">,</span> <span class="bp">True</span><span class="p">)],</span>
+            <span class="s1">'views'</span><span class="p">:</span> <span class="p">[[</span><span class="kc">False</span><span class="p">,</span> <span class="s1">'list'</span><span class="p">],</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="s1">'form'</span><span class="p">]],</span>
+            <span class="s1">'domain'</span><span class="p">:</span> <span class="p">[(</span><span class="s1">'customer'</span><span class="p">,</span> <span class="s1">'='</span><span class="p">,</span> <span class="kc">True</span><span class="p">)],</span>
         <span class="p">},</span>
         <span class="c1"># or if type == method, you need to pass a model, a method name and</span>
         <span class="c1"># parameters</span>
@@ -419,7 +419,7 @@ ul.auto-toc {
             <span class="c1"># list of arguments to pass positionally</span>
             <span class="s1">'args'</span><span class="p">:</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="p">],</span>
             <span class="c1"># dictionary of keyword arguments</span>
-            <span class="s1">'kwargs'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'force'</span><span class="p">:</span> <span class="bp">True</span><span class="p">},</span>
+            <span class="s1">'kwargs'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'force'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
             <span class="c1"># button style</span>
             <span class="s1">'classes'</span><span class="p">:</span> <span class="s1">'btn-primary'</span><span class="p">,</span>
         <span class="p">}</span>
