@@ -51,9 +51,9 @@ Features
   |listview|
 
 
-.. |picker| image:: ./images/picker.png
-.. |formview| image:: ./images/form_view.png
-.. |listview| image:: ./images/list_view.png
+.. |picker| image:: https://raw.githubusercontent.com/OCA/web/12.0/web_widget_color/images/picker.png
+.. |formview| image:: https://raw.githubusercontent.com/OCA/web/12.0/web_widget_color/images/form_view.png
+.. |listview| image:: https://raw.githubusercontent.com/OCA/web/12.0/web_widget_color/images/list_view.png
 
 **Table of contents**
 
