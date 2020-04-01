@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <template
         id="assets_backend"
         name="m2x options assets"
@@ -13,5 +12,4 @@
             />
         </xpath>
     </template>
-
 </odoo>
