@@ -6,6 +6,7 @@ odoo.define('web_pivot_computed_measure.PivotModel', function (require) {
 
     var core = require('web.core');
     var PivotModel = require('web.PivotModel');
+    var ComparisonUtils = require('web.dataComparisonUtils');
 
     var _t = core._t;
 
@@ -15,7 +16,7 @@ odoo.define('web_pivot_computed_measure.PivotModel', function (require) {
 
         /**
          * Create a new computed measure
-         * 
+         *
          * @param {string} id
          * @param {string} field1
          * @param {string} field2
@@ -55,7 +56,7 @@ odoo.define('web_pivot_computed_measure.PivotModel', function (require) {
 
         /**
          * Create and enable a measure based on a 'fake' field
-         * 
+         *
          * @param {Object} cmDef
          * @param {List} fields *Optional*
          */
@@ -103,28 +104,78 @@ odoo.define('web_pivot_computed_measure.PivotModel', function (require) {
         },
 
         /**
+         * Helper function to add computed measure fields data into 'dataPoint'
+         *
+         * @param {Object} dataPoint
+         * @param {Object} dataPointComp
+         */
+        _fillComputedMeasuresData: function (dataPoint, dataPointComp) {
+            var self = this;
+            _.each(this._computed_measures, function (cm) {
+                if (!self._isMeasureEnabled(cm.id)) {
+                    return;
+                }
+                if (dataPointComp) {
+                    var resData =
+                        py.eval(cm.operation, dataPointComp.data);
+                    var resComparison =
+                        py.eval(cm.operation, dataPointComp.comparison);
+                    dataPoint[cm.id] = {
+                        data: resData,
+                        comparisonData: resComparison,
+                        variation: ComparisonUtils.computeVariation(
+                            resData, resComparison),
+                    };
+                } else {
+                    dataPoint[cm.id] = py.eval(cm.operation, dataPoint);
+                }
+            });
+        },
+
+        /**
          * Fill the dataPoints with the computed measures values
-         * 
+         *
          * @override
          */
         _mergeData: function (data, comparisonData, groupBys) {
             var res = this._super.apply(this, arguments);
-            var l = groupBys.length; // Cached loop (This is not python! hehe)
-            for (var index = 0; index < l; ++index) {
-                if (data.length) {
-                    var l2 = data[index].length;
-                    for (var k = 0; k < l2; ++k) {
-                        var dataPoint  = data[index][k];
+            var len = groupBys.length; // Cached loop (This is not python! hehe)
+            for (var index = 0; index < len; ++index) {
+                if (res.length) {
+                    var len2 = res[index].length;
+                    for (var k = 0; k < len2; ++k) {
+                        var dataPoint = res[index][k];
                         if (_.isEmpty(dataPoint)) {
                             break;
                         }
-                        var l3 = this._computed_measures.length;
-                        for (var x = 0; x < l3; ++x) {
-                            var cm = this._computed_measures[x];
-                            if (!this._isMeasureEnabled(cm.id)) {
-                                continue;
-                            }
-                            dataPoint[cm.id] = py.eval(cm.operation, dataPoint);
+                        if ('__comparisonDomain' in dataPoint) {
+                            // Transform comparison dataPoint object to be compatible
+                            var pairsDataPoint = _.pairs(dataPoint);
+                            var dataPointComp = {
+                                data: _.object(_.map(
+                                    pairsDataPoint, (item) => {
+                                        return [
+                                            item[0],
+                                            item[1] && item[1].data,
+                                        ];
+                                    })),
+                                comparison: _.object(_.map(
+                                    pairsDataPoint, (item) => {
+                                        return [
+                                            item[0],
+                                            item[1] && item[1].comparisonData,
+                                        ];
+                                    })),
+                            };
+                            // Update datas. Required by computed measures that uses
+                            // other computed measures to work
+                            this._fillComputedMeasuresData(dataPointComp.data);
+                            this._fillComputedMeasuresData(dataPointComp.comparison);
+                            // Update comparison dataPoint
+                            this._fillComputedMeasuresData(dataPoint, dataPointComp);
+                        } else {
+                            // Update standard dataPoint
+                            this._fillComputedMeasuresData(dataPoint);
                         }
                     }
                 }
@@ -134,7 +185,7 @@ odoo.define('web_pivot_computed_measure.PivotModel', function (require) {
 
         /**
          * Load the computed measures in context. This is used by filters.
-         * 
+         *
          * @override
          */
         load: function (params) {
@@ -167,7 +218,7 @@ odoo.define('web_pivot_computed_measure.PivotModel', function (require) {
 
         /**
          * Load the computed measures in context. This is used by filters.
-         * 
+         *
          * @override
          */
         reload: function (handle, params) {
@@ -198,7 +249,7 @@ odoo.define('web_pivot_computed_measure.PivotModel', function (require) {
 
         /**
          * Add the computed measures to the state. This is used by filters.
-         * 
+         *
          * @override
          */
         get: function () {
@@ -210,7 +261,7 @@ odoo.define('web_pivot_computed_measure.PivotModel', function (require) {
         /**
          * Adds a rule to deny that measures can be disabled if are being used by a computed measure.
          * In the other hand, when enables a measure analyzes it to active all involved measures.
-         * 
+         *
          * @override
          */
         toggleMeasure: function (field) {
