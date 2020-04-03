@@ -1,0 +1,102 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * web_m2x_options
+#
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-03 03:50+0000\n"
+"PO-Revision-Date: 2018-01-03 03:50+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"Language-Team: Arabic (https://www.transifex.com/oca/teams/23907/ar/)\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#. module: web_m2x_options
+#. openerp-web
+#: code:addons/web_m2x_options/static/src/xml/base.xml:8
+#, python-format
+msgid "!(widget.nodeOptions.no_open || widget.nodeOptions.no_open_edit)"
+msgstr ""
+
+#. module: web_m2x_options
+#. openerp-web
+#: code:addons/web_m2x_options/static/src/js/form.js:54
+#, python-format
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: web_m2x_options
+#. openerp-web
+#: code:addons/web_m2x_options/static/src/js/form.js:33
+#, python-format
+msgid "Create"
+msgstr ""
+
+#. module: web_m2x_options
+#. openerp-web
+#: code:addons/web_m2x_options/static/src/js/form.js:243
+#, python-format
+msgid "Create \"<strong>%s</strong>\""
+msgstr "إنشاء \"<strong>%s</strong>\""
+
+#. module: web_m2x_options
+#. openerp-web
+#: code:addons/web_m2x_options/static/src/js/form.js:30
+#, python-format
+msgid "Create a %s"
+msgstr ""
+
+#. module: web_m2x_options
+#. openerp-web
+#: code:addons/web_m2x_options/static/src/js/form.js:263
+#, python-format
+msgid "Create and Edit..."
+msgstr "إنشاء وتحرير ..."
+
+#. module: web_m2x_options
+#. openerp-web
+#: code:addons/web_m2x_options/static/src/js/form.js:44
+#, python-format
+msgid "Create and edit"
+msgstr ""
+
+#. module: web_m2x_options
+#. openerp-web
+#: code:addons/web_m2x_options/static/src/js/form.js:269
+#, python-format
+msgid "No results to show..."
+msgstr ""
+
+#. module: web_m2x_options
+#. openerp-web
+#: code:addons/web_m2x_options/static/src/js/form.js:342
+#, python-format
+msgid "Open: "
+msgstr ""
+
+#. module: web_m2x_options
+#. openerp-web
+#: code:addons/web_m2x_options/static/src/js/form.js:208
+#, python-format
+msgid "Search More..."
+msgstr "البحث عن المزيد ..."
+
+#. module: web_m2x_options
+#: model:ir.model,name:web_m2x_options.model_ir_config_parameter
+msgid "System Parameter"
+msgstr ""
+
+#. module: web_m2x_options
+#. openerp-web
+#: code:addons/web_m2x_options/static/src/js/form.js:60
+#, python-format
+msgid "You are creating a new %s, are you sure it does not exist yet?"
+msgstr ""
