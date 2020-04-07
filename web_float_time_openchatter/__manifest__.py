@@ -4,7 +4,7 @@
     'name': 'Web Float Time Openchatter',
     'version': '12.0.1.0.0',
     'license': 'AGPL-3',
-    'author': 'Trobz, Odoo Community Association(OCA)',
+    'author': 'Trobz, Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/web',
     'category': 'Web',
     'depends': [
