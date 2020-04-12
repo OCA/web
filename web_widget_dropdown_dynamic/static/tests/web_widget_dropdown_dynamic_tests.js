@@ -29,7 +29,7 @@ odoo.define("web_widget_dropdown_dynamic.web_widget_dropdown_dynamic_tests", fun
                     "</form>",
                 mockRPC: function(route, args) {
                     if (args.method === "_get_test_field_values") {
-                        return $.when([["value", "Title"]]);
+                        return Promise.resolve([["value", "Title"]]);
                     }
                     return this._super.apply(this, arguments);
                 },
@@ -61,7 +61,7 @@ odoo.define("web_widget_dropdown_dynamic.web_widget_dropdown_dynamic_tests", fun
                     "</form>",
                 mockRPC: function(route, args) {
                     if (args.method === "_get_test_field_values") {
-                        return $.when([[0, "Title"]]);
+                        return Promise.resolve([[0, "Title"]]);
                     }
                     return this._super.apply(this, arguments);
                 },
@@ -95,7 +95,7 @@ odoo.define("web_widget_dropdown_dynamic.web_widget_dropdown_dynamic_tests", fun
                     "</form>",
                 mockRPC: function(route, args) {
                     if (args.method === "_get_test_field_values") {
-                        return $.when([["value", "Title"]]);
+                        return Promise.resolve([["value", "Title"]]);
                     }
                     return this._super.apply(this, arguments);
                 },
@@ -130,14 +130,14 @@ odoo.define("web_widget_dropdown_dynamic.web_widget_dropdown_dynamic_tests", fun
                 mockRPC: function(route, args) {
                     if (args.method === "_get_test_field_values") {
                         if (args.kwargs.context.step === "step-1") {
-                            return $.when([["value", "Title"]]);
+                            return Promise.resolve([["value", "Title"]]);
                         } else if (args.kwargs.context.step === "step-2") {
-                            return $.when([
+                            return Promise.resolve([
                                 ["value", "Title"],
                                 ["value_2", "Title 2"],
                             ]);
                         }
-                        return $.when([]);
+                        return Promise.resolve([]);
                     }
                     return this._super.apply(this, arguments);
                 },
