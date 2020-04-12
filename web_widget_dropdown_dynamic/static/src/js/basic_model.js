@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
+ * Copyright 2019-2020 Brainbean Apps (https://brainbeanapps.com)
  * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
  */
 odoo.define("web_widget_dropdown_dynamic.basic_model", function(require) {
@@ -24,7 +24,7 @@ odoo.define("web_widget_dropdown_dynamic.basic_model", function(require) {
             var model = fieldInfo.options.model || record.model;
             var method = fieldInfo.values || fieldInfo.options.values;
             if (!method) {
-                return $.when();
+                return Promise.resolve();
             }
 
             var context = record.getContext({fieldName: fieldName});
@@ -34,7 +34,7 @@ odoo.define("web_widget_dropdown_dynamic.basic_model", function(require) {
                 context: context,
             });
             if (!hasChanged) {
-                return $.when();
+                return Promise.resolve();
             }
 
             return this._rpc({
