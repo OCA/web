@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_m2x_options
+# 	* web_m2x_options
 #
 msgid ""
 msgstr ""
@@ -18,70 +18,77 @@ msgstr ""
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/xml/base.xml:8
+#: code:addons/web_m2x_options/static/src/xml/base.xml:0
 #, python-format
 msgid "!(widget.nodeOptions.no_open || widget.nodeOptions.no_open_edit)"
 msgstr "!(widget.nodeOptions.no_open || widget.nodeOptions.no_open_edit)"
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:54
+#: code:addons/web_m2x_options/static/src/js/form.js:0
 #, python-format
 msgid "Cancel"
 msgstr "取消"
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:33
+#: code:addons/web_m2x_options/static/src/js/form.js:0
 #, python-format
 msgid "Create"
 msgstr "创建"
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:243
+#: code:addons/web_m2x_options/static/src/js/form.js:0
 #, python-format
 msgid "Create \"<strong>%s</strong>\""
 msgstr "创建 \"<strong>%s</strong>\""
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:30
+#: code:addons/web_m2x_options/static/src/js/form.js:0
 #, python-format
 msgid "Create a %s"
 msgstr "创建一个%s"
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:263
+#: code:addons/web_m2x_options/static/src/js/form.js:0
 #, python-format
 msgid "Create and Edit..."
 msgstr "创建和编辑..."
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:44
+#: code:addons/web_m2x_options/static/src/js/form.js:0
 #, python-format
 msgid "Create and edit"
 msgstr "创建和编辑"
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:269
+#: code:addons/web_m2x_options/static/src/js/form.js:0
 #, python-format
 msgid "No results to show..."
 msgstr "没有结果显示..."
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:342
+#: code:addons/web_m2x_options/static/src/js/form.js:0
 #, python-format
 msgid "Open: "
 msgstr "打开： "
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:208
+#: code:addons/web_m2x_options/static/src/js/form.js:0
+#, python-format
+msgid "Quick search: %s"
+msgstr ""
+
+#. module: web_m2x_options
+#. openerp-web
+#: code:addons/web_m2x_options/static/src/js/form.js:0
 #, python-format
 msgid "Search More..."
 msgstr "搜索更多..."
@@ -93,7 +100,7 @@ msgstr "系统参数"
 
 #. module: web_m2x_options
 #. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:60
+#: code:addons/web_m2x_options/static/src/js/form.js:0
 #, python-format
 msgid "You are creating a new %s, are you sure it does not exist yet?"
 msgstr "你正在创建一个新的%s，你确定它还不存在吗？"
