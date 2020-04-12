@@ -1,147 +1,143 @@
-odoo.define('web_widget_dropdown_dynamic.web_widget_dropdown_dynamic_tests', function (require) {
+odoo.define("web_widget_dropdown_dynamic.web_widget_dropdown_dynamic_tests", function(
+    require
+) {
     "use strict";
-    
-    var FormView = require('web.FormView');
-    var testUtils = require('web.test_utils');
 
-    QUnit.module('web_widget_dropdown_dynamic', {}, function () {
+    /* global QUnit*/
 
-        QUnit.test('values are fetched w/o context (char)', async function (assert) {
+    var FormView = require("web.FormView");
+    var testUtils = require("web.test_utils");
+
+    QUnit.module("web_widget_dropdown_dynamic", {}, function() {
+        QUnit.test("values are fetched w/o context (char)", async function(assert) {
             assert.expect(2);
 
             var form = await testUtils.createView({
                 View: FormView,
-                model: 'demo_entry',
+                model: "demo_entry",
                 data: {
                     demo_entry: {
                         fields: {
-                            test_field: {string: 'Test Field', type: 'char'},
+                            test_field: {string: "Test Field", type: "char"},
                         },
-                        records: [{id: 1, test_field: ''}],
+                        records: [{id: 1, test_field: ""}],
                     },
                 },
                 arch:
-                    '<form>' +
-                        '<field name="test_field" widget="dynamic_dropdown" values="_get_test_field_values"/>' +
-                    '</form>',
-                mockRPC: function (route, args) {
-                    if (args.method === '_get_test_field_values') {
-                        return $.when([
-                            ['value', 'Title'],
-                        ]);
+                    "<form>" +
+                    '<field name="test_field" widget="dynamic_dropdown" values="_get_test_field_values"/>' +
+                    "</form>",
+                mockRPC: function(route, args) {
+                    if (args.method === "_get_test_field_values") {
+                        return $.when([["value", "Title"]]);
                     }
                     return this._super.apply(this, arguments);
                 },
             });
 
-            assert.containsN(form, 'option', 2);
-            assert.containsOnce(form, 'option[value=\'"value"\']');
+            assert.containsN(form, "option", 2);
+            assert.containsOnce(form, "option[value='\"value\"']");
 
             form.destroy();
         });
 
-        QUnit.test('values are fetched w/o context (integer)', async function (assert) {
+        QUnit.test("values are fetched w/o context (integer)", async function(assert) {
             assert.expect(2);
 
             var form = await testUtils.createView({
                 View: FormView,
-                model: 'demo_entry',
+                model: "demo_entry",
                 data: {
                     demo_entry: {
                         fields: {
-                            test_field: {string: 'Test Field', type: 'integer'},
+                            test_field: {string: "Test Field", type: "integer"},
                         },
                         records: [{id: 1, test_field: 0}],
                     },
                 },
                 arch:
-                    '<form>' +
-                        '<field name="test_field" widget="dynamic_dropdown" values="_get_test_field_values"/>' +
-                    '</form>',
-                mockRPC: function (route, args) {
-                    if (args.method === '_get_test_field_values') {
-                        return $.when([
-                            [0, 'Title'],
-                        ]);
+                    "<form>" +
+                    '<field name="test_field" widget="dynamic_dropdown" values="_get_test_field_values"/>' +
+                    "</form>",
+                mockRPC: function(route, args) {
+                    if (args.method === "_get_test_field_values") {
+                        return $.when([[0, "Title"]]);
                     }
                     return this._super.apply(this, arguments);
                 },
             });
 
-            assert.containsN(form, 'option', 2);
-            assert.containsOnce(form, 'option[value=\'0\']');
+            assert.containsN(form, "option", 2);
+            assert.containsOnce(form, "option[value='0']");
 
             form.destroy();
         });
 
-        QUnit.test('values are fetched w/o context (selection)', async function (assert) {
+        QUnit.test("values are fetched w/o context (selection)", async function(
+            assert
+        ) {
             assert.expect(2);
 
             var form = await testUtils.createView({
                 View: FormView,
-                model: 'demo_entry',
+                model: "demo_entry",
                 data: {
                     demo_entry: {
                         fields: {
-                            test_field: {string: 'Test Field', type: 'selection'},
+                            test_field: {string: "Test Field", type: "selection"},
                         },
-                        records: [{id: 1, test_field: ''}],
+                        records: [{id: 1, test_field: ""}],
                     },
                 },
                 arch:
-                    '<form>' +
-                        '<field name="test_field" widget="dynamic_dropdown" values="_get_test_field_values"/>' +
-                    '</form>',
-                mockRPC: function (route, args) {
-                    if (args.method === '_get_test_field_values') {
-                        return $.when([
-                            ['value', 'Title'],
-                        ]);
+                    "<form>" +
+                    '<field name="test_field" widget="dynamic_dropdown" values="_get_test_field_values"/>' +
+                    "</form>",
+                mockRPC: function(route, args) {
+                    if (args.method === "_get_test_field_values") {
+                        return $.when([["value", "Title"]]);
                     }
                     return this._super.apply(this, arguments);
                 },
             });
 
-            assert.containsN(form, 'option', 2);
-            assert.containsOnce(form, 'option[value=\'"value"\']');
+            assert.containsN(form, "option", 2);
+            assert.containsOnce(form, "option[value='\"value\"']");
 
             form.destroy();
         });
 
-        QUnit.test('values are fetched with changing context', async function (assert) {
+        QUnit.test("values are fetched with changing context", async function(assert) {
             assert.expect(6);
 
             var form = await testUtils.createView({
                 View: FormView,
-                model: 'demo_entry',
+                model: "demo_entry",
                 data: {
                     demo_entry: {
                         fields: {
-                            other_field: {string: 'Other Field', type: 'char'}, 
-                            test_field: {string: 'Test Field', type: 'char'},
+                            other_field: {string: "Other Field", type: "char"},
+                            test_field: {string: "Test Field", type: "char"},
                         },
-                        records: [{id: 1, other_field: '', test_field: ''}],
+                        records: [{id: 1, other_field: "", test_field: ""}],
                     },
                 },
                 arch:
-                    '<form>' +
-                        '<field name="other_field" />' +
-                        '<field name="test_field" widget="dynamic_dropdown" values="_get_test_field_values" context="{\'step\': other_field}"/>' +
-                    '</form>',
-                mockRPC: function (route, args) {
-                    if (args.method === '_get_test_field_values') {
-                        if (args.kwargs.context.step === 'step-1') {
+                    "<form>" +
+                    '<field name="other_field" />' +
+                    '<field name="test_field" widget="dynamic_dropdown" values="_get_test_field_values" context="{\'step\': other_field}"/>' +
+                    "</form>",
+                mockRPC: function(route, args) {
+                    if (args.method === "_get_test_field_values") {
+                        if (args.kwargs.context.step === "step-1") {
+                            return $.when([["value", "Title"]]);
+                        } else if (args.kwargs.context.step === "step-2") {
                             return $.when([
-                                ['value', 'Title'],
+                                ["value", "Title"],
+                                ["value_2", "Title 2"],
                             ]);
-                        } else if (args.kwargs.context.step === 'step-2') {
-                            return $.when([
-                                ['value', 'Title'],
-                                ['value_2', 'Title 2'],
-                            ]);
-                        } else {
-                            return $.when([]);
                         }
+                        return $.when([]);
                     }
                     return this._super.apply(this, arguments);
                 },
@@ -149,27 +145,27 @@ odoo.define('web_widget_dropdown_dynamic.web_widget_dropdown_dynamic_tests', fun
 
             await testUtils.fields.editAndTrigger(
                 form.$('.o_field_widget[name="other_field"]'),
-                'step-1',
-                ['input']
+                "step-1",
+                ["input"]
             );
-            assert.containsN(form, 'option', 2);
-            assert.containsOnce(form, 'option[value=\'"value"\']');
+            assert.containsN(form, "option", 2);
+            assert.containsOnce(form, "option[value='\"value\"']");
 
             await testUtils.fields.editAndTrigger(
                 form.$('.o_field_widget[name="other_field"]'),
-                'step-2',
-                ['input']
+                "step-2",
+                ["input"]
             );
-            assert.containsN(form, 'option', 3);
-            assert.containsOnce(form, 'option[value=\'"value"\']');
-            assert.containsOnce(form, 'option[value=\'"value_2"\']');
+            assert.containsN(form, "option", 3);
+            assert.containsOnce(form, "option[value='\"value\"']");
+            assert.containsOnce(form, "option[value='\"value_2\"']");
 
             await testUtils.fields.editAndTrigger(
                 form.$('.o_field_widget[name="other_field"]'),
-                'step-other',
-                ['input']
+                "step-other",
+                ["input"]
             );
-            assert.containsN(form, 'option', 1);
+            assert.containsN(form, "option", 1);
 
             form.destroy();
         });
