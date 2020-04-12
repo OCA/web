@@ -19,6 +19,10 @@
                 type="application/javascript"
                 src="/web_responsive/static/src/js/web_responsive.js"
             />
+            <script
+                type="application/javascript"
+                src="/web_responsive/static/src/js/discuss.js"
+            />
         </xpath>
     </template>
 </odoo>
