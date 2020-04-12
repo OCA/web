@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo13-addon-web_dialog_size',
         'odoo13-addon-web_domain_field',
         'odoo13-addon-web_environment_ribbon',
+        'odoo13-addon-web_ir_actions_act_multi',
         'odoo13-addon-web_ir_actions_act_view_reload',
         'odoo13-addon-web_m2x_options',
         'odoo13-addon-web_no_bubble',
