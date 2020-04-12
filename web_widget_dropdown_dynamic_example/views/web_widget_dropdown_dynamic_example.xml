@@ -46,7 +46,6 @@
     >
         <field name="name">web_widget_dropdown_dynamic Demo</field>
         <field name="res_model">web.widget.dropdown.dynamic.example</field>
-        <field name="view_type">form</field>
         <field name="view_mode">form</field>
     </record>
     <menuitem
