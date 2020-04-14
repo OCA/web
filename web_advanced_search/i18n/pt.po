@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_advanced_search
+# 	* web_advanced_search
 #
 msgid ""
 msgstr ""
@@ -18,7 +18,7 @@ msgstr ""
 
 #. module: web_advanced_search
 #. openerp-web
-#: code:addons/web_advanced_search/static/src/xml/web_advanced_search.xml:8
+#: code:addons/web_advanced_search/static/src/xml/web_advanced_search.xml:0
 #, python-format
 msgid "Add Advanced Filter"
 msgstr "Adicionar Filtro Avançado"
