@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo13-addon-web_advanced_search',
+        'odoo13-addon-web_company_color',
         'odoo13-addon-web_decimal_numpad_dot',
         'odoo13-addon-web_dialog_size',
         'odoo13-addon-web_domain_field',
