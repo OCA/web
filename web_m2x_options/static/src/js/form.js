@@ -258,15 +258,19 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
                                             var ids = _.map(results, function(x) {
                                                 return x[0];
                                             });
-                                            dynamicFilters = [
-                                                {
-                                                    description: _.str.sprintf(
-                                                        _t("Quick search: %s"),
-                                                        search_val
-                                                    ),
-                                                    domain: [["id", "in", ids]],
-                                                },
-                                            ];
+                                            if (search_val) {
+                                                dynamicFilters = [
+                                                    {
+                                                        description: _.str.sprintf(
+                                                            _t("Quick search: %s"),
+                                                            search_val
+                                                        ),
+                                                        domain: [["id", "in", ids]],
+                                                    },
+                                                ];
+                                            } else {
+                                                dynamicFilters = [];
+                                            }
                                         }
                                         self._searchCreatePopup(
                                             "search",
