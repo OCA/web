@@ -97,7 +97,7 @@ odoo.define("web_advanced_search", function(require) {
                 this._modelName,
                 "[]",
                 {
-                    debugMode: config.debug,
+                    debugMode: config.isDebug(),
                     readonly: false,
                 }
             );
