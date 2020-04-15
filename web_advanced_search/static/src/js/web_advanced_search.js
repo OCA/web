@@ -16,6 +16,7 @@ odoo.define("web_advanced_search", function (require) {
     var SearchView = require("web.SearchView");
     var Widget = require("web.Widget");
     var Char = core.search_filters_registry.get("char");
+    var config = require("web.config");
 
     var _lt = core._lt;
 
@@ -105,7 +106,7 @@ odoo.define("web_advanced_search", function (require) {
                 this.dataset.model,
                 "[]",
                 {
-                    debugMode: core.debug,
+                    debugMode: config.debug,
                     readonly: false,
                 }
             );
