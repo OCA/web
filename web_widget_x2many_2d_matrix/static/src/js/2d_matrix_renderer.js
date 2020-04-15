@@ -156,7 +156,7 @@ odoo.define("web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer", function(requi
                 $th.addClass("text-center");
             }
 
-            if (config.debug) {
+            if (config.isDebug()) {
                 var fieldDescr = {
                     field: field,
                     name: name,
@@ -361,7 +361,7 @@ odoo.define("web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer", function(requi
 
             return _.map(this.columns, function(column) {
                 var $cell = $("<td>");
-                if (config.debug) {
+                if (config.isDebug()) {
                     $cell.addClass(column.attrs.name);
                 }
                 if (column.aggregate) {
