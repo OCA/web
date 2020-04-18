@@ -108,6 +108,14 @@ msgstr "Utilizadores"
 
 #. module: web_responsive
 #. openerp-web
+#: code:addons/web_responsive/static/src/xml/discuss.xml:0
+#, python-format
+msgid ""
+"btn btn-secondary o_mail_discuss_button_multi_user_channel d-md-block d-none"
+msgstr ""
+
+#. module: web_responsive
+#. openerp-web
 #: code:addons/web_responsive/static/src/xml/document_viewer.xml:0
 #, python-format
 msgid "false"

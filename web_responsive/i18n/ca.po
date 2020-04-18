@@ -38,14 +38,12 @@ msgstr "Tancar"
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/xml/form_view.xml:0
-#: code:addons/web_responsive/static/src/xml/form_view.xml:0
 #, python-format
 msgid "Create"
 msgstr "Crear"
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/xml/form_view.xml:0
 #: code:addons/web_responsive/static/src/xml/form_view.xml:0
 #, python-format
 msgid "Discard"
@@ -87,7 +85,6 @@ msgstr "Accions ràpides"
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/xml/form_view.xml:0
-#: code:addons/web_responsive/static/src/xml/form_view.xml:0
 #, python-format
 msgid "Save"
 msgstr "Guardar"
@@ -111,6 +108,14 @@ msgstr "Usuaris"
 
 #. module: web_responsive
 #. openerp-web
+#: code:addons/web_responsive/static/src/xml/discuss.xml:0
+#, python-format
+msgid ""
+"btn btn-secondary o_mail_discuss_button_multi_user_channel d-md-block d-none"
+msgstr ""
+
+#. module: web_responsive
+#. openerp-web
 #: code:addons/web_responsive/static/src/xml/document_viewer.xml:0
 #, python-format
 msgid "false"
@@ -120,6 +125,5 @@ msgstr "fals"
 #. openerp-web
 #: code:addons/web_responsive/static/src/xml/document_viewer.xml:0
 #, python-format
-msgid ""
-"modal o_modal_fullscreen o_document_viewer o_responsive_document_viewer"
+msgid "modal o_modal_fullscreen o_document_viewer o_responsive_document_viewer"
 msgstr ""
