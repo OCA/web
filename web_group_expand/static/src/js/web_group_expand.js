@@ -1,45 +1,73 @@
-"use strict";
-openerp.web_group_expand = function(openerp) {
-    var QWeb = openerp.web.qweb;
-    openerp.web.ViewManager.include({
-        switch_mode: function(view_type, no_store, view_options) {
-            if (view_type != 'list' && view_type != 'tree' ) {
-                this.$el.find("ul#oe_group_by").remove();
-            }
-            if(view_type == 'tree'){
-                this.load_expand_buttons();
-                this.$ExpandButtons.find("a#oe_group_by_reset").click(function(){
-                    $('.oe_open .treeview-tr.oe-treeview-first').filter(function(){return ($(this).parents('tr').attr('data-level') == 1)}).click()
-                });
-                this.$ExpandButtons.find("a#oe_group_by_expand").click(function(){
-                    $('.treeview-tr.oe-treeview-first').filter(function(){return (!$(this).parents().is('.oe_open')) & ($(this).parents().css( "display" ) != 'none')}).click();
-                });
-            }
+odoo.define("web.web_group_expand", function(require) {
+    "use strict";
+
+    var qweb = require("web.core").qweb;
+
+    require("web.ListController").include({
+        start: function () {
+            this.$expandGroupButtons = $(qweb.render("web_group_expand.Buttons"));
+            this.$expandGroupButtons.find("#oe_group_by_expand").on(
+                "click", this.expandAllGroups.bind(this)
+            );
+            this.$expandGroupButtons.find("#oe_group_by_collapse").on(
+                "click", this.collapseAllGroups.bind(this)
+            );
             return this._super.apply(this, arguments);
         },
-        expand: function(domains, contexts, groupbys) {
-            this.$el.find("ul#oe_group_by").remove();
-            if(groupbys.length && this.active_view == 'list') {
-                this.load_expand_buttons();
-                this.$el.find("a#oe_group_by_reset").click(function(){
-                    $('span.ui-icon-triangle-1-s').click()
-                });
-                this.$el.find("a#oe_group_by_expand").click(function(){
-                    $('span.ui-icon-triangle-1-e').click()
-                });
+
+        renderPager: function ($node) {
+            this._super.apply(this, arguments);
+            this.$expandGroupButtons.toggleClass("o_hidden", !this.renderer.isGrouped);
+            $node.append(this.$expandGroupButtons);
+        },
+
+        expandAllGroups: function () {
+            // We expand layer by layer. So first we need to find the highest
+            // layer that's not already fully expanded.
+            var layer = this.renderer.state.data;
+            while (layer.length) {
+                var closed = layer.filter(function (group) {return !group.isOpen;});
+                if (closed.length) {
+                    // This layer is not completely expanded, expand it
+                    this._toggleGroups(closed);
+                    break;
+                }
+                // This layer is completely expanded, move to the next
+                layer = _.flatten(layer.map(function (group) {return group.data;}), true);
             }
         },
-        load_expand_buttons:function() {
-            var self = this;
-            this.$el.find("ul#oe_group_by").remove();
-            this.$ExpandButtons = $(QWeb.render("GroupExpand.Buttons", {'widget':self}));
-            this.$el.find("ul.oe_view_manager_switch.oe_button_group.oe_right").before(this.$ExpandButtons);
+
+        collapseAllGroups: function () {
+            // We collapse layer by layer. So first we need to find the deepest
+            // layer that's not already fully collapsed.
+            var layer = this.renderer.state.data
+                .filter(function (group) {return group.isOpen;});
+            while (layer.length) {
+                var next = _.flatten(layer.map(function (group) {return group.data;}), true)
+                    .filter(function (group) {return group.isOpen;});
+                if (!next.length) {
+                    // Next layer is fully collapsed, so collapse this one
+                    this._toggleGroups(layer);
+                    break;
+                }
+                layer = next;
+            }
         },
-        setup_search_view: function(view_id, search_defaults) {
+
+        _toggleGroups: function (groups) {
             var self = this;
+            var defs = groups.map(function (group) {
+                return self.model.toggleGroup(group.id);
+            });
+            $.when(...defs).then(this.update.bind(this, {}, {keepSelection: true, reload: false}));
+        }
+    });
+
+    require("web.ListRenderer").include({
+        updateState: function () {
             var res = this._super.apply(this, arguments);
-            this.searchview.on('search_data', self, this.expand);
-            return res
+            $("nav.oe_group_by_expand_buttons").toggleClass("o_hidden", !this.isGrouped);
+            return res;
         },
-    })
-}
+    });
+});
