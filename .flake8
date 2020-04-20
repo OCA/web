@@ -1,5 +1,5 @@
 [flake8]
-max-line-length = 80
+max-line-length = 88
 max-complexity = 16
 # B = bugbear
 # B9 = bugbear opinionated (incl line length)
