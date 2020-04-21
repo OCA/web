@@ -1,0 +1,7 @@
+.o_advanced_filter_menu .o_menu_item[data-id$='-header'] a {
+    font-weight: bold;
+    cursor: default;
+}
+.o_advanced_filter_menu .o_menu_item[data-id$='-header'] a:hover {
+    background-color: inherit;
+}
