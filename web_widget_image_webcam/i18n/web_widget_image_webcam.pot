@@ -1,0 +1,55 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* web_widget_image_webcam
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_widget_image_webcam
+#. openerp-web
+#: code:addons/web_widget_image_webcam/static/src/js/webcam_widget.js:101
+#, python-format
+msgid "Close"
+msgstr ""
+
+#. module: web_widget_image_webcam
+#. openerp-web
+#: code:addons/web_widget_image_webcam/static/src/js/webcam_widget.js:77
+#, python-format
+msgid "Save & Close"
+msgstr ""
+
+#. module: web_widget_image_webcam
+#: model:ir.model,name:web_widget_image_webcam.model_ir_config_parameter
+msgid "System Parameter"
+msgstr ""
+
+#. module: web_widget_image_webcam
+#. openerp-web
+#: code:addons/web_widget_image_webcam/static/src/js/webcam_widget.js:63
+#, python-format
+msgid "Take Snapshot"
+msgstr ""
+
+#. module: web_widget_image_webcam
+#. openerp-web
+#: code:addons/web_widget_image_webcam/static/src/xml/web_widget_image_webcam.xml:9
+#, python-format
+msgid "WebCam"
+msgstr ""
+
+#. module: web_widget_image_webcam
+#. openerp-web
+#: code:addons/web_widget_image_webcam/static/src/js/webcam_widget.js:59
+#, python-format
+msgid "WebCam Booth"
+msgstr ""
+
