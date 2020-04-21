@@ -1,14 +1,7 @@
 td.o_many2one_cell {
-    a {
-        color: $o-main-text-color !important;
-        &:hover {
-            color: $o-main-text-color !important;
-        }
-
-        .many2one_clickable {
-            margin-left: 0.5em;
-            visibility: hidden;
-        }
+    .many2one_clickable {
+        margin-left: 0.5em;
+        visibility: hidden;
     }
 
     &:hover a.many2one_clickable {
