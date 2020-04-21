@@ -52,6 +52,7 @@ setuptools.setup(
         'odoo12-addon-web_widget_dropdown_dynamic_example',
         'odoo12-addon-web_widget_image_download',
         'odoo12-addon-web_widget_image_url',
+        'odoo12-addon-web_widget_image_webcam',
         'odoo12-addon-web_widget_many2many_tags_multi_selection',
         'odoo12-addon-web_widget_mermaid',
         'odoo12-addon-web_widget_mpld3_chart',
