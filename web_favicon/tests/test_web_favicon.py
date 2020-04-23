@@ -25,8 +25,7 @@ class TestWebFavicon(TransactionCase):
     def test_web_favicon(self):
         original_request = http.request
         http.request = FakeRequest(self.env)
-        from odoo.addons.web_favicon.controllers.web_favicon import\
-            WebFavicon
+        from ..controllers.web_favicon import WebFavicon
         company = self.env['res.company'].search([], limit=1)
         # default icon
         company.write({
