@@ -1,7 +1,6 @@
 {
     'name': "Web Widget Plotly",
     'summary': """Allow to draw plotly charts.""",
-    'description': """Allow to draw plotly charts.""",
     'author': "LevelPrime srl, "
               "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
