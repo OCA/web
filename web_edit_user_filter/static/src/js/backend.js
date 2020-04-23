@@ -241,7 +241,6 @@ odoo.define("web_edit_user_filter", function(require) {
          * @override
          */
         start: function() {
-            var self = this;
             var res = this._super.apply(this, arguments);
             this._proxyHidePopovers = this.proxy("_hidePopovers");
             $(document).click(this._proxyHidePopovers);
