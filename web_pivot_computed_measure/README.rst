@@ -25,7 +25,7 @@ Web Pivot Computed Measure
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
-Adds support for computed measures on the pivot view
+Adds support for computed measures on the pivot view.
 
 **Table of contents**
 
