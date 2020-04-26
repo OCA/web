@@ -10,6 +10,7 @@
     'license': 'AGPL-3',
     'summary': 'Email widget available in list views',
     'author': 'Akretion,Odoo Community Association (OCA)',
+    'maintainers': ['alexis-via'],
     'website': 'https://github.com/OCA/web',
     'depends': ['web'],
     'data': ['views/email_widget_tree.xml'],
