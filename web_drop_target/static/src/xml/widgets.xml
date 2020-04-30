@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<template>
+    <t t-name="web_drop_target.drop_overlay">
+        <div class="o_drag_over">
+            <div class="o_drag_over_content">
+                <div>
+                    <i class="fa fa-file-o fa-5x" aria-hidden="true" />
+                </div>
+                <div>
+                    <t t-if="id">
+                        <h2>Drop your files here</h2>
+                    </t>
+                    <t t-else="">
+                        <h2>Please save the record before dropping a file</h2>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>
