@@ -9,7 +9,7 @@ class TestSignatureTracking(common.SavepointCase):
     def setUpClass(cls):
         super(TestSignatureTracking, cls).setUpClass()
         cls.user = cls.env["res.users"].create(
-            {"name": "Test User", "login": "Test User", "email": "test@example.com",}
+            {"name": "Test User", "login": "Test User", "email": "test@example.com"}
         )
         cls.user.lang = "en_US"
         # Simple 1x1 transparent base64 encoded GIF

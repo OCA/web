@@ -4,3 +4,4 @@
 * Vicent Cubells <vicent@vcubells.net>
 * Mayank Gosai <mgosai@opensourceintegrators.com>
 * Maxime Chambreuil <mchambreuil@opensourceintegrators.com>
+* Phuc Tran Thanh <phuc@trobz.com>

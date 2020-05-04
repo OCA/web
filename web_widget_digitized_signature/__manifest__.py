@@ -6,7 +6,7 @@
 
 {
     "name": "Web Widget Digitized Signature",
-    "version": "12.0.1.0.0",
+    "version": "13.0.1.0.0",
     "author": "Serpent Consulting Services Pvt. Ltd., "
     "Agile Business Group, "
     "Tecnativa, "
@@ -14,9 +14,9 @@
     "website": "https://github.com/OCA/web",
     "license": "AGPL-3",
     "category": "Web",
-    "depends": ["web", "mail",],
-    "data": ["views/web_digital_sign_view.xml", "views/res_users_view.xml",],
-    "qweb": ["static/src/xml/digital_sign.xml",],
+    "depends": ["web", "mail"],
+    "data": ["views/web_digital_sign_view.xml", "views/res_users_view.xml"],
+    "qweb": ["static/src/xml/digital_sign.xml"],
     "installable": True,
     "development_status": "Production/Stable",
     "maintainers": ["mgosai"],
