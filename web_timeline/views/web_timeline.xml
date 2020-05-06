@@ -8,17 +8,8 @@
         <xpath expr="." position="inside">
             <link
                 rel="stylesheet"
-                type="text/css"
-                href="/web_timeline/static/lib/vis-timeline/vis-timeline-graph2d.css"
-            />
-            <link
-                rel="stylesheet"
                 type="text/scss"
                 href="/web_timeline/static/src/scss/web_timeline.scss"
-            />
-            <script
-                type="text/javascript"
-                src="/web_timeline/static/lib/vis-timeline/vis-timeline-graph2d.min.js"
             />
             <script
                 type="text/javascript"
