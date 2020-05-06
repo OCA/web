@@ -9,7 +9,7 @@
             <link
                 rel="stylesheet"
                 type="text/css"
-                href="/web_timeline/static/lib/vis-timeline/vis-timeline-graph2d.css"
+                href="/web_timeline/static/lib/vis-timeline/vis-timeline-graph2d.min.css"
             />
             <link
                 rel="stylesheet"

@@ -23,7 +23,7 @@ odoo.define("web_timeline.TimelineView", function(require) {
 
     var TimelineView = AbstractView.extend({
         display_name: _lt("Timeline"),
-        icon: "fa-tasks",
+        icon: "fa-hourglass-start",
         jsLibs: ["/web_timeline/static/lib/vis-timeline/vis-timeline-graph2d.min.js"],
         cssLibs: ["/web_timeline/static/lib/vis-timeline/vis-timeline-graph2d.min.css"],
         config: {
