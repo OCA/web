@@ -270,7 +270,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
             const keys = Object.keys(items);
             for (const key of keys) {
                 const item = items[key];
-                const data = datas._data[key];
+                const data = datas.get(Number(key));
                 if (!data || !data.evt) {
                     return;
                 }
