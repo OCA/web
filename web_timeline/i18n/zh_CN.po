@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2019-09-01 12:52+0000\n"
+"PO-Revision-Date: 2020-07-08 05:19+0000\n"
 "Last-Translator: 黎伟杰 <674416404@qq.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -14,14 +14,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 3.8\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: web_timeline
 #. openerp-web
 #: code:addons/web_timeline/static/src/js/timeline_renderer.js:0
 #, python-format
 msgid "<b>UNASSIGNED</b>"
-msgstr ""
+msgstr "<b>未分配</b>"
 
 #. module: web_timeline
 #. openerp-web
