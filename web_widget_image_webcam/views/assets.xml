@@ -5,7 +5,7 @@
     <template id="assets_backend" inherit_id="web.assets_backend">
         <xpath expr=".">
             <script type="text/javascript"
-                    src="/web_widget_image_webcam/static/src/js/webcam.js"/>
+                    src="/web_widget_image_webcam/static/src/lib/webcam.js"/>
             <link rel="stylesheet"
                   href="/web_widget_image_webcam/static/src/css/web_widget_image_webcam.css"/>
             <script type="text/javascript"
