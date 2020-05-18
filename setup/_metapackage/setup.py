@@ -50,6 +50,7 @@ setuptools.setup(
         'odoo11-addon-web_widget_dropdown_dynamic_example',
         'odoo11-addon-web_widget_image_download',
         'odoo11-addon-web_widget_image_url',
+        'odoo11-addon-web_widget_image_webcam',
         'odoo11-addon-web_widget_many2many_tags_multi_selection',
         'odoo11-addon-web_widget_prefixed_url',
         'odoo11-addon-web_widget_text_markdown',
