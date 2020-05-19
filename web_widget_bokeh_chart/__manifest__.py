@@ -16,7 +16,7 @@
         "views/web_widget_bokeh_chart.xml",
     ],
     "external_dependencies": {
-        "python": ['bokeh'],
+        "python": ['bokeh==2.0.2'],
     },
     "auto_install": False,
     "license": "LGPL-3",
