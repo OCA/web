@@ -25,6 +25,8 @@ setuptools.setup(
         'odoo13-addon-web_tree_dynamic_colored_field',
         'odoo13-addon-web_tree_many2one_clickable',
         'odoo13-addon-web_widget_bokeh_chart',
+        'odoo13-addon-web_widget_dropdown_dynamic',
+        'odoo13-addon-web_widget_dropdown_dynamic_example',
         'odoo13-addon-web_widget_image_download',
         'odoo13-addon-web_widget_mpld3_chart',
         'odoo13-addon-web_widget_url_advanced',
