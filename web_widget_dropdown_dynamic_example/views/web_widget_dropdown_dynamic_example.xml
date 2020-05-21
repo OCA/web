@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2019 Brainbean Apps (https://brainbeanapps.com)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+    <record id="web_widget_dropdown_dynamic_example_form" model="ir.ui.view">
+        <field name="name">web.widget.dropdown.dynamic.example.form</field>
+        <field name="model">web.widget.dropdown.dynamic.example</field>
+        <field name="arch" type="xml">
+            <form>
+                <group string="Char field">
+                    <field name="char_field_options" />
+                    <field
+                        name="char_field"
+                        widget="dynamic_dropdown"
+                        values="values_char_field"
+                        context="{'options': char_field_options}"
+                    />
+                </group>
+                <group string="Int field">
+                    <field name="int_field_min" />
+                    <field name="int_field_max" />
+                    <field
+                        name="int_field"
+                        widget="dynamic_dropdown"
+                        values="values_int_field"
+                        context="{'min': int_field_min, 'max': int_field_max}"
+                    />
+                </group>
+                <group string="Selection field">
+                    <field name="selection_field_options" />
+                    <field
+                        name="selection_field"
+                        widget="dynamic_dropdown"
+                        values="values_selection_field"
+                        context="{'options': selection_field_options}"
+                    />
+                </group>
+            </form>
+        </field>
+    </record>
+    <record
+        id="action_web_widget_dropdown_dynamic_example"
+        model="ir.actions.act_window"
+    >
+        <field name="name">web_widget_dropdown_dynamic Demo</field>
+        <field name="res_model">web.widget.dropdown.dynamic.example</field>
+        <field name="view_mode">form</field>
+    </record>
+    <menuitem
+        id="web_widget_dropdown_dynamic_example_menu"
+        name="web_widget_dropdown_dynamic Demo"
+        action="action_web_widget_dropdown_dynamic_example"
+    />
+</odoo>
