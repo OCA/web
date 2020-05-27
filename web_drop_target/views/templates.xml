@@ -16,7 +16,7 @@
             />
             <link
                 rel="stylesheet"
-                href="/web_drop_target/static/src/less/web_drop_target.less"
+                href="/web_drop_target/static/src/scss/web_drop_target.scss"
             />
         </xpath>
     </template>
