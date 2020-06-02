@@ -37,14 +37,16 @@ class WebShortcut(models.Model):
                                       self.env.user.lang,
                                       current.name, current.id),
                     name_translated))
-            _name = shortcut.menu_id.name_get()
-            _name = _name[0][1] if len(_name) else ''
-            _id = shortcut.menu_id.id
+            menu_name = shortcut.menu_id.name_get()
+            menu_name = menu_name[0][1] if len(menu_name) else ''
+            menu_id = shortcut.menu_id.id
+            action_id = shortcut.menu_id.action.id
             res.append(
                 {
                     'id': shortcut.id,
                     'name': name_translated,
-                    'menu_id': (_id, _name)
+                    'menu_id': (menu_id, menu_name),
+                    'action_id': action_id,
                 }
             )
         return res

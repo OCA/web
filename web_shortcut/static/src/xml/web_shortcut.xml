@@ -10,7 +10,7 @@
     </t>
     <t t-name="Systray.ShortcutMenu.Item">
         <li>
-            <a t-attf-href="/web#menu_id={{shortcut.menu_id[0]}}" t-att-data-id="shortcut.menu_id[0]" t-att-data-shortcut-id="shortcut.id">
+            <a t-attf-href="/web#menu_id={{shortcut.menu_id[0]}}&amp;action={{shortcut.action_id}}" t-att-data-id="shortcut.menu_id[0]" t-att-data-action-id="shortcut.action_id" t-att-data-shortcut-id="shortcut.id">
                 <t t-esc="shortcut.name"/>
             </a>
         </li>

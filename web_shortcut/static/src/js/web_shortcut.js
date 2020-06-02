@@ -60,14 +60,9 @@ odoo.define('web.shortcut', function (require) {
             this.model.call('unlink', [shortcut_id]);
         },
         click: function ($link) {
-            var self = this,
-                action_id = $link.data('id');
-            new DataModel('ir.ui.menu').query(['action']).filter([['id', '=', action_id]]).context(null).all().then(function (menu) {
-                var action_str = menu[0].action;
-                var action_str_parts = action_str.split(',');
-                action_id = parseInt(action_str_parts[1]);
-                self.trigger('click', action_id);
-            });
+            var menu_id = $link.data('id');
+            var action_id = $link.data('action-id');
+            this.trigger('click', menu_id, action_id);
         },
         has: function (menu_id) {
             return !!this.$el.find('a[data-id=' + menu_id + ']').length;
@@ -105,10 +100,12 @@ odoo.define('web.shortcut', function (require) {
                         return item instanceof ShortcutMenu;
                     });
                 }
-                self.shortcut_menu.on('click', self, function (action_id) {
-                    self.do_action(action_id, {
+                self.shortcut_menu.on('click', self, function (menu_id, action_id) {
+                    self.menu.open_menu(menu_id);
+                    self.action_manager.do_action(action_id, {
                         clear_breadcrumbs: true,
-                        replace_breadcrumb: true
+                        replace_breadcrumb: true,
+                        action_menu_id: menu_id,
                     });
                 });
             });
