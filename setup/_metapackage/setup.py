@@ -31,6 +31,7 @@ setuptools.setup(
         'odoo12-addon-web_no_bubble',
         'odoo12-addon-web_notify',
         'odoo12-addon-web_pivot_computed_measure',
+        'odoo12-addon-web_pwa',
         'odoo12-addon-web_refresher',
         'odoo12-addon-web_responsive',
         'odoo12-addon-web_search_with_and',
