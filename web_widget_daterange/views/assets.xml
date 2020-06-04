@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_common" name="web_widget_daterange assets" inherit_id="web.assets_common">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/scss" href="/web_widget_daterange/static/src/scss/daterangepicker.scss"/>
+            <link rel="stylesheet" href="/web_widget_daterange/static/lib/daterangepicker/daterangepicker.css"/>
+            <script type="text/javascript" src="/web_widget_daterange/static/lib/daterangepicker/daterangepicker.js"></script>
+            <script type="text/javascript" src="/web_widget_daterange/static/src/js/widget.js"></script>
+        </xpath>
+    </template>
+</odoo>
