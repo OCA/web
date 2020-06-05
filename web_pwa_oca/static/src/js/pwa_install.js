@@ -1,4 +1,4 @@
-odoo.define('web_pwa.systray.install', function (require) {
+odoo.define('web_pwa_oca.systray.install', function (require) {
 "use strict";
 
 var core = require('web.core');
