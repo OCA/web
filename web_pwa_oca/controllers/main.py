@@ -25,36 +25,42 @@ class PWA(Controller):
             version_list.append(url.split('/')[3])
         cache_version = '-'.join(version_list)
         mimetype = 'text/javascript;charset=utf-8'
-        content = qweb.render('web_pwa.service_worker', {
+        content = qweb.render('web_pwa_oca.service_worker', {
             'pwa_cache_name': cache_version,
             'pwa_files_to_cache': urls,
         })
         return request.make_response(content, [('Content-Type', mimetype)])
 
-    @route('/web_pwa/manifest.json', type='http', auth="public")
+    @route('/web_pwa_oca/manifest.json', type='http', auth="public")
     def manifest(self):
         qweb = request.env['ir.qweb'].sudo()
         config_param = request.env['ir.config_parameter'].sudo()
         pwa_name = config_param.get_param("pwa.manifest.name", "Odoo PWA")
         pwa_short_name = config_param.get_param("pwa.manifest.short_name", "Odoo PWA")
         icon128x128 = config_param.get_param(
-            "pwa.manifest.icon128x128", "/web_pwa/static/img/icons/icon-128x128.png")
+            "pwa.manifest.icon128x128",
+            "/web_pwa_oca/static/img/icons/icon-128x128.png")
         icon144x144 = config_param.get_param(
-            "pwa.manifest.icon144x144", "/web_pwa/static/img/icons/icon-144x144.png")
+            "pwa.manifest.icon144x144",
+            "/web_pwa_oca/static/img/icons/icon-144x144.png")
         icon152x152 = config_param.get_param(
-            "pwa.manifest.icon152x152", "/web_pwa/static/img/icons/icon-152x152.png")
+            "pwa.manifest.icon152x152",
+            "/web_pwa_oca/static/img/icons/icon-152x152.png")
         icon192x192 = config_param.get_param(
-            "pwa.manifest.icon192x192", "/web_pwa/static/img/icons/icon-192x192.png")
+            "pwa.manifest.icon192x192",
+            "/web_pwa_oca/static/img/icons/icon-192x192.png")
         icon256x256 = config_param.get_param(
-            "pwa.manifest.icon256x256", "/web_pwa/static/img/icons/icon-256x256.png")
+            "pwa.manifest.icon256x256",
+            "/web_pwa_oca/static/img/icons/icon-256x256.png")
         icon512x512 = config_param.get_param(
-            "pwa.manifest.icon512x512", "/web_pwa/static/img/icons/icon-512x512.png")
+            "pwa.manifest.icon512x512",
+            "/web_pwa_oca/static/img/icons/icon-512x512.png")
         background_color = config_param.get_param(
             "pwa.manifest.background_color", "#2E69B5")
         theme_color = config_param.get_param(
             "pwa.manifest.theme_color", "#2E69B5")
         mimetype = 'application/json;charset=utf-8'
-        content = qweb.render('web_pwa.manifest', {
+        content = qweb.render('web_pwa_oca.manifest', {
             'pwa_name': pwa_name,
             'pwa_short_name': pwa_short_name,
             'icon128x128': icon128x128,

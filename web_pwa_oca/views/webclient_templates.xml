@@ -3,19 +3,19 @@
     <template id="web_layout_pwa" name="Web layout PWA" inherit_id="web.layout">
         <xpath expr="//meta[@name='viewport']" position="after">
             <!-- Add link rel manifest -->
-            <link rel="manifest" href="/web_pwa/manifest.json"/>
+            <link rel="manifest" href="/web_pwa_oca/manifest.json"/>
             <!-- Add iOS meta tags and icons -->
             <meta name="apple-mobile-web-app-capable" content="yes"/>
             <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
             <meta name="apple-mobile-web-app-title" content="Odoo PWA"/>
-            <link rel="apple-touch-icon" href="/web_pwa/static/img/icons/icon-152x152.png"/>
+            <link rel="apple-touch-icon" href="/web_pwa_oca/static/img/icons/icon-152x152.png"/>
             <!-- Add meta theme-color -->
             <meta name="theme-color" content="#2E69B5" />
         </xpath>
     </template>
     <template id="assets_backend" name="PWA assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
-            <script type="text/javascript" src="/web_pwa/static/src/js/pwa_install.js"/>
+            <script type="text/javascript" src="/web_pwa_oca/static/src/js/pwa_install.js"/>
         </xpath>
     </template>
     <template id="service_worker" name="PWA service worker">
