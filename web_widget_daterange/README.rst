@@ -13,18 +13,16 @@ This module provides widget daterange backported from odoo 13.0.
 Usage
 =====
 
-- daterange (FieldDateRange)
-    This widget allow user to select start and end date into single picker.
-    - Supported field types: *date*, *datetime*
-    Options:
-    - related_start_date: apply on end date field to get start date value which
-      is used to display range in the picker.
-    - related_end_date: apply on start date field to get end date value which
-      is used to display range in the picker.
-    - picker_options: extra settings for picker.
-    .. code-block:: xml
-        <field name="start_date_field" widget="daterange" options='{"related_end_date": "end_date_field"}'/>
-        <field name="end_date_field" widget="daterange" options='{"related_start_date": "start_date_field"}'/>
+This widget allow user to select start and end date into single picker.
+Supported field types: *date*, *datetime*
+Options:
+- related_start_date: apply on end date field to get start date value which is used to display range in the picker.
+- related_end_date: apply on start date field to get end date value which is used to display range in the picker.
+- picker_options: extra settings for picker.
+
+.. code-block:: xml
+   <field name="start_date_field" widget="daterange" options='{"related_end_date": "end_date_field"}'/>
+   <field name="end_date_field" widget="daterange" options='{"related_start_date": "start_date_field"}'/>
 
 Bug Tracker
 ===========
@@ -58,13 +56,13 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-.. |maintainer-mgosai| image:: https://github.com/mgosai.png?size=40px
-    :target: https://github.com/mgosai
-    :alt: mgosai
+.. |maintainer-AyoubZahid| image:: https://github.com/AyoubZahid.png?size=40px
+    :target: https://github.com/AyoubZahid
+    :alt: AyoubZahid
 
 Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-mgosai|
+|maintainer-AyoubZahid|
 
 This module is part of the `OCA/web <https://github.com/OCA/web/tree/12.0/web_widget_digitized_signature>`_ project on GitHub.
 
