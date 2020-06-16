@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="assets_backend"
+        name="web_orgchart_library assets"
+        inherit_id="web.assets_backend"
+    >
+        <xpath expr="." position="inside">
+            <link
+                rel="stylesheet"
+                type="text/css"
+                href="/web_orgchart_library/static/src/lib/orgchart/jquery.orgchart.css"
+            />
+            <script
+                type="text/javascript"
+                src="/web_orgchart_library/static/src/lib/orgchart/jquery.orgchart.js"
+            />
+        </xpath>
+    </template>
+</odoo>
