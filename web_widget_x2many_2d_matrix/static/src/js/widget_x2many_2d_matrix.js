@@ -68,11 +68,11 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
             }
             this.show_row_totals = this.parse_boolean(
                 node.show_row_totals ||
-                this.is_aggregatable(field_defs[this.field_value]) ? '1' : ''
+                (this.is_aggregatable(field_defs[this.field_value]) ? '1' : '')
             );
             this.show_column_totals = this.parse_boolean(
                 node.show_column_totals ||
-                this.is_aggregatable(field_defs[this.field_value]) ? '1' : ''
+                (this.is_aggregatable(field_defs[this.field_value]) ? '1' : '')
             );
         },
 
