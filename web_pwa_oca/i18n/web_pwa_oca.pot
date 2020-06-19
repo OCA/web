@@ -1,12 +1,12 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_pwa_oca
+# 	* web_pwa_oca
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: <>\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,7 +15,8 @@ msgstr ""
 
 #. module: web_pwa_oca
 #: model_terms:ir.ui.view,arch_db:web_pwa_oca.manifest
-msgid "\",\n"
+msgid ""
+"\",\n"
 "      \"sizes\": \"128x128\",\n"
 "      \"type\": \"image/png\"\n"
 "    }, {\n"
@@ -24,7 +25,8 @@ msgstr ""
 
 #. module: web_pwa_oca
 #: model_terms:ir.ui.view,arch_db:web_pwa_oca.manifest
-msgid "\",\n"
+msgid ""
+"\",\n"
 "      \"sizes\": \"144x144\",\n"
 "      \"type\": \"image/png\"\n"
 "    }, {\n"
@@ -33,7 +35,8 @@ msgstr ""
 
 #. module: web_pwa_oca
 #: model_terms:ir.ui.view,arch_db:web_pwa_oca.manifest
-msgid "\",\n"
+msgid ""
+"\",\n"
 "      \"sizes\": \"152x152\",\n"
 "      \"type\": \"image/png\"\n"
 "    }, {\n"
@@ -42,7 +45,8 @@ msgstr ""
 
 #. module: web_pwa_oca
 #: model_terms:ir.ui.view,arch_db:web_pwa_oca.manifest
-msgid "\",\n"
+msgid ""
+"\",\n"
 "      \"sizes\": \"192x192\",\n"
 "      \"type\": \"image/png\"\n"
 "    }, {\n"
@@ -51,7 +55,8 @@ msgstr ""
 
 #. module: web_pwa_oca
 #: model_terms:ir.ui.view,arch_db:web_pwa_oca.manifest
-msgid "\",\n"
+msgid ""
+"\",\n"
 "      \"sizes\": \"256x256\",\n"
 "      \"type\": \"image/png\"\n"
 "    }, {\n"
@@ -60,7 +65,8 @@ msgstr ""
 
 #. module: web_pwa_oca
 #: model_terms:ir.ui.view,arch_db:web_pwa_oca.manifest
-msgid "\",\n"
+msgid ""
+"\",\n"
 "      \"sizes\": \"512x512\",\n"
 "      \"type\": \"image/png\"\n"
 "    }],\n"
@@ -71,45 +77,51 @@ msgstr ""
 
 #. module: web_pwa_oca
 #: model_terms:ir.ui.view,arch_db:web_pwa_oca.manifest
-msgid "\",\n"
+msgid ""
+"\",\n"
 "  \"icons\": [{\n"
 "    \"src\": \""
 msgstr ""
 
 #. module: web_pwa_oca
 #: model_terms:ir.ui.view,arch_db:web_pwa_oca.manifest
-msgid "\",\n"
+msgid ""
+"\",\n"
 "  \"short_name\": \""
 msgstr ""
 
 #. module: web_pwa_oca
 #: model_terms:ir.ui.view,arch_db:web_pwa_oca.manifest
-msgid "\",\n"
+msgid ""
+"\",\n"
 "  \"theme_color\": \""
 msgstr ""
 
 #. module: web_pwa_oca
 #: model_terms:ir.ui.view,arch_db:web_pwa_oca.service_worker
-msgid "';\n"
+msgid ""
+"';\n"
 "const FILES_TO_CACHE = ["
 msgstr ""
 
 #. module: web_pwa_oca
 #: model_terms:ir.ui.view,arch_db:web_pwa_oca.service_worker
-msgid "'use strict';\n"
+msgid ""
+"'use strict';\n"
 "const CACHE_NAME = '"
 msgstr ""
 
 #. module: web_pwa_oca
 #. openerp-web
-#: code:addons/web_pwa_oca/static/src/xml/pwa_install.xml:5
+#: code:addons/web_pwa_oca/static/src/xml/pwa_install.xml:0
 #, python-format
 msgid "Install PWA"
 msgstr ""
 
 #. module: web_pwa_oca
 #: model_terms:ir.ui.view,arch_db:web_pwa_oca.service_worker
-msgid "];\n"
+msgid ""
+"];\n"
 "self.addEventListener('install', function (evt) {\n"
 "  console.log('[ServiceWorker] Install');\n"
 "  evt.waitUntil(\n"
@@ -152,7 +164,7 @@ msgstr ""
 
 #. module: web_pwa_oca
 #: model_terms:ir.ui.view,arch_db:web_pwa_oca.manifest
-msgid "{\n"
+msgid ""
+"{\n"
 "  \"name\": \""
 msgstr ""
-
