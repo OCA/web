@@ -13,15 +13,8 @@
     "license": "LGPL-3",
     "application": True,
     "installable": True,
-    "depends": [
-        'web',
-        'mail',
-    ],
-    "data": [
-        "views/webclient_templates.xml",
-    ],
-    'qweb': [
-        'static/src/xml/pwa_install.xml',
-    ],
-    'images': ['static/description/pwa.png'],
+    "depends": ["web", "mail"],
+    "data": ["views/webclient_templates.xml"],
+    "qweb": ["static/src/xml/pwa_install.xml"],
+    "images": ["static/description/pwa.png"],
 }
