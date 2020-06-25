@@ -1,12 +1,10 @@
-# -*- coding: utf-8 -*-
 # Copyright (C) 2018 Ventor, Xpansa Group (<https://ventor.tech/>)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+from odoo import http
+from odoo.addons.web.controllers.main import Home
 
-import openerp
-from openerp import http
 
-
-class Main(openerp.addons.web.controllers.main.Home):
+class Main(Home):
 
     @http.route('/robots.txt', type='http', auth="none")
     def robots(self):
