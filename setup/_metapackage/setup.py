@@ -20,6 +20,7 @@ setuptools.setup(
         'odoo13-addon-web_m2x_options',
         'odoo13-addon-web_no_bubble',
         'odoo13-addon-web_notify',
+        'odoo13-addon-web_pwa_oca',
         'odoo13-addon-web_responsive',
         'odoo13-addon-web_timeline',
         'odoo13-addon-web_tree_dynamic_colored_field',
