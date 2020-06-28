@@ -420,12 +420,50 @@ And like all other installed apps, it’s a top level app in the task switcher.<
 </div>
 <div class="section" id="known-issues-roadmap">
 <h1><a class="toc-backref" href="#id3">Known issues / Roadmap</a></h1>
-<ul class="simple">
-<li>Evaluate to extend <tt class="docutils literal">FILES_TO_CACHE</tt></li>
-<li>Evaluate to use a normal JS file for service worker and download data from a normal JSON controller</li>
-<li>Integrate <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification">Notification API</a></li>
-<li>Integrate <a class="reference external" href="https://web.dev/web-share/">Web Share API</a></li>
-<li>Create <tt class="docutils literal">portal_pwa</tt> module, intended to be used by front-end users (customers, suppliers…)</li>
+<ul>
+<li><p class="first">Evaluate to extend <tt class="docutils literal">FILES_TO_CACHE</tt></p>
+</li>
+<li><p class="first">Integrate <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification">Notification API</a></p>
+</li>
+<li><p class="first">Integrate <a class="reference external" href="https://web.dev/web-share/">Web Share API</a></p>
+</li>
+<li><p class="first">Create <tt class="docutils literal">portal_pwa</tt> module, intended to be used by front-end users (customers, suppliers…)</p>
+</li>
+<li><dl class="first docutils">
+<dt>Current <tt class="docutils literal">John Resig's inheritance</tt> doesn’t support <tt class="docutils literal">async</tt> functions. So we need use the following workaround:</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>Natural ‘async/await’ example (This breaks “_super” call)</dt>
+<dd><pre class="code javascript first last literal-block">
+<span class="kr">const</span> <span class="nx">MyClass</span> <span class="o">=</span> <span class="nx">OdooClass</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+    <span class="nx">myFunc</span><span class="o">:</span> <span class="nx">async</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kr">const</span> <span class="nx">mydata</span> <span class="o">=</span> <span class="nx">await</span> <span class="p">...</span><span class="k">do</span> <span class="nx">await</span> <span class="nx">stuff</span><span class="p">...</span>
+        <span class="k">return</span> <span class="nx">mydata</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Same code with the workaround:</dt>
+<dd><pre class="code javascript first last literal-block">
+<span class="kr">const</span> <span class="nx">MyClass</span> <span class="o">=</span> <span class="nx">OdooClass</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+    <span class="nx">myFunc</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="nx">async</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+            <span class="kr">const</span> <span class="nx">mydata</span> <span class="o">=</span> <span class="nx">await</span> <span class="p">...</span><span class="k">do</span> <span class="nx">await</span> <span class="nx">stuff</span><span class="p">...</span>
+            <span class="nx">resolve</span><span class="p">(</span><span class="nx">mydata</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 </div>
 <div class="section" id="bug-tracker">
@@ -442,6 +480,7 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 <h2><a class="toc-backref" href="#id6">Authors</a></h2>
 <ul class="simple">
 <li>TAKOBI</li>
+<li>Tecnativa</li>
 </ul>
 </div>
 <div class="section" id="contributors">
@@ -449,6 +488,10 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 <ul class="simple">
 <li><a class="reference external" href="https://takobi.online">TAKOBI</a>:<ul>
 <li>Lorenzo Battistini</li>
+</ul>
+</li>
+<li><a class="reference external" href="https://tecnativa.com">Tecnativa</a>:<ul>
+<li>Alexandre D. Díaz</li>
 </ul>
 </li>
 </ul>
