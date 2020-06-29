@@ -17,6 +17,7 @@ setuptools.setup(
         'odoo13-addon-web_environment_ribbon',
         'odoo13-addon-web_ir_actions_act_multi',
         'odoo13-addon-web_ir_actions_act_view_reload',
+        'odoo13-addon-web_ir_actions_act_window_message',
         'odoo13-addon-web_m2x_options',
         'odoo13-addon-web_no_bubble',
         'odoo13-addon-web_notify',
