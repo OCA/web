@@ -29,6 +29,7 @@ setuptools.setup(
         'odoo12-addon-web_listview_range_select',
         'odoo12-addon-web_m2x_options',
         'odoo12-addon-web_no_bubble',
+        'odoo12-addon-web_no_crawler',
         'odoo12-addon-web_notify',
         'odoo12-addon-web_pivot_computed_measure',
         'odoo12-addon-web_pwa_oca',
