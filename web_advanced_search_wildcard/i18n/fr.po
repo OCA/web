@@ -7,30 +7,29 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-25 23:17+0000\n"
-"PO-Revision-Date: 2018-12-25 23:17+0000\n"
-"Last-Translator: <>\n"
+"PO-Revision-Date: 2020-07-05 16:19+0000\n"
+"Last-Translator: Yann Papouin <y.papouin@dec-industrie.com>\n"
 "Language-Team: \n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: web_advanced_search_wildcard
 #. openerp-web
 #: code:addons/web_advanced_search_wildcard/static/src/js/search.js:12
-#, fuzzy, python-format
-#| msgid "ends with"
+#, python-format
 msgid "doesn't end with"
-msgstr "finit par"
+msgstr "ne finit pas par"
 
 #. module: web_advanced_search_wildcard
 #. openerp-web
 #: code:addons/web_advanced_search_wildcard/static/src/js/search.js:10
-#, fuzzy, python-format
-#| msgid "starts with"
+#, python-format
 msgid "doesn't start with"
-msgstr "commence par"
+msgstr "ne commence pas par"
 
 #. module: web_advanced_search_wildcard
 #. openerp-web
