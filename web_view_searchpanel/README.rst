@@ -62,10 +62,10 @@ of the search panel. Consider
 
 .. code-block:: xml
 
-	<searchpanel>
-	  <field name="department_id"/>
-	  <field name="manager_id" select="multi" domain="[('department_id', '=', department_id)]"/>
-	</searchpanel>
+    <searchpanel>
+        <field name="department_id"/>
+        <field name="manager_id" select="multi" domain="[('department_id', '=', department_id)]"/>
+    </searchpanel>
 
 In the above example, the range of values for manager_id (manager names) available at screen
 will depend on the value currently selected for the field ``department_id``.
