@@ -16,12 +16,28 @@ odoo.define('web_responsive', function (require) {
     var Chatter = require('mail.Chatter');
     var DocumentViewer = require('mail.DocumentViewer');
 
-    /*
-     * Helper function to know if are waiting
-     *
+
+    /* Hide AppDrawer in desktop and mobile modes.
+     * To avoid delays in pages with a lot of DOM nodes we make
+     * sub-groups' with 'querySelector' to improve the performance.
      */
-    function isWaiting () {
-        return $('.oe_wait').length !== 0;
+    function closeAppDrawer () {
+        _.defer(function () {
+            // Need close AppDrawer?
+            var menu_apps_dropdown = document.querySelector(
+                '.o_menu_apps .dropdown');
+            $(menu_apps_dropdown).has('.dropdown-menu.show')
+                .find('> a').dropdown('toggle');
+            // Need close Sections Menu?
+            // TODO: Change to 'hide' in modern Bootstrap >4.1
+            var menu_sections = document.querySelector(
+                '.o_menu_sections li.show .dropdown-toggle');
+            $(menu_sections).dropdown('toggle');
+            // Need close Mobile?
+            var menu_sections_mobile = document.querySelector(
+                '.o_menu_sections.show');
+            $(menu_sections_mobile).collapse('hide');
+        });
     }
 
     /**
@@ -130,6 +146,7 @@ odoo.define('web_responsive', function (require) {
         _onAppsMenuItemClicked: function (ev) {
             this._super.apply(this, arguments);
             ev.preventDefault();
+            ev.stopPropagation();
         },
 
         /**
@@ -292,21 +309,21 @@ odoo.define('web_responsive', function (require) {
         * Control if AppDrawer can be closed
         */
         _hideAppsMenu: function () {
-            return !isWaiting() && !this.$('input').is(':focus');
+            return !this.$('input').is(':focus');
         },
     });
 
     BasicController.include({
 
         /**
-         * Close the AppDrawer if the data set is dirty and a discard dialog is opened
+         * Close the AppDrawer if the data set is dirty and a discard dialog
+         * is opened
          *
          * @override
          */
         canBeDiscarded: function (recordID) {
             if (this.model.isDirty(recordID || this.handle)) {
-                $('.o_menu_apps .dropdown:has(.dropdown-menu.show) > a').dropdown('toggle');
-                $('.o_menu_sections li.show .dropdown-toggle').dropdown('toggle');
+                closeAppDrawer();
             }
             return this._super.apply(this, arguments);
         },
@@ -315,12 +332,10 @@ odoo.define('web_responsive', function (require) {
     Menu.include({
         events: _.extend({
             // Clicking a hamburger menu item should close the hamburger
-            "click .o_menu_sections [role=menuitem]": "_hideMobileSubmenus",
+            "click .o_menu_sections [role=menuitem]": "_onClickMenuItem",
             // Opening any dropdown in the navbar should hide the hamburger
             "show.bs.dropdown .o_menu_systray, .o_menu_apps":
                 "_hideMobileSubmenus",
-            // Prevent close section menu
-            "hide.bs.dropdown .o_menu_sections": "_hideMenuSection",
         }, Menu.prototype.events),
 
         start: function () {
@@ -333,21 +348,21 @@ odoo.define('web_responsive', function (require) {
          */
         _hideMobileSubmenus: function () {
             if (
+                config.device.isMobile &&
                 this.$menu_toggle.is(":visible") &&
-                this.$section_placeholder.is(":visible") &&
-                !isWaiting()
+                this.$section_placeholder.is(":visible")
             ) {
                 this.$section_placeholder.collapse("hide");
             }
         },
 
         /**
-         * Hide Menu Section
+         * Prevent hide the menu (should be closed when action is loaded)
          *
-         * @returns {Boolean}
+         * @param {ClickEvent} ev
          */
-        _hideMenuSection: function () {
-            return !isWaiting();
+        _onClickMenuItem: function (ev) {
+            ev.stopPropagation();
         },
 
         /**
@@ -358,17 +373,6 @@ odoo.define('web_responsive', function (require) {
         _updateMenuBrand: function () {
             if (!config.device.isMobile) {
                 return this._super.apply(this, arguments);
-            }
-        },
-
-        /**
-         * Don't display the menu if are waiting for an action to end
-         *
-         * @override
-         */
-        _onMouseOverMenu: function () {
-            if (!isWaiting()) {
-                this._super.apply(this, arguments);
             }
         },
     });
@@ -434,38 +438,11 @@ odoo.define('web_responsive', function (require) {
     ActionManager.include({
 
         /**
-        * Because the menu aren't closed when click, this method
-        * searchs for the menu with the action executed to close it.
-        * To avoid delays in pages with a lot of DOM nodes we make
-        * 'sub-groups' with 'querySelector' to improve the performance.
-        *
-        * @param {action} action
-        * The executed action
+        * @override
         */
-        _hideMenusByAction: function (action) {
-            _.defer(function () {
-                var uniq_sel = '[data-action-id='+action.id+']';
-                // Need close AppDrawer?
-                var menu_apps_dropdown = document.querySelector(
-                    '.o_menu_apps .dropdown');
-                $(menu_apps_dropdown).has('.dropdown-menu.show')
-                    .has(uniq_sel).find('> a').dropdown('toggle');
-                // Need close Sections Menu?
-                // TODO: Change to 'hide' in modern Bootstrap >4.1
-                var menu_sections = document.querySelector(
-                    '.o_menu_sections li.show');
-                $(menu_sections).has(uniq_sel).find('.dropdown-toggle')
-                    .dropdown('toggle');
-                // Need close Mobile?
-                var menu_sections_mobile = document.querySelector(
-                    '.o_menu_sections.show');
-                $(menu_sections_mobile).has(uniq_sel).collapse('hide');
-            });
-        },
-
-        _handleAction: function (action) {
-            return this._super.apply(this, arguments).always(
-                $.proxy(this, '_hideMenusByAction', action));
+        _appendController: function () {
+            this._super.apply(this, arguments);
+            closeAppDrawer();
         },
     });
 

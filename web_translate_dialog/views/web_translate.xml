@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2012 Guewen Baconnier (Camptocamp SA)
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+    <template id="assets_backend" name="web_translate_dialog assets"
+            inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript"
+                    src="/web_translate_dialog/static/src/js/web_translate_dialog.js"/>
+            <link rel="stylesheet" id="translate-dialog-stylesheet"
+                href="/web_translate_dialog/static/src/css/base.css"/>
+        </xpath>
+    </template>
+</odoo>

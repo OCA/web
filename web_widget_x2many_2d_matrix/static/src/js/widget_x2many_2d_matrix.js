@@ -11,6 +11,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
     var X2Many2dMatrixRenderer = require(
         'web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer'
     );
+    var utils = require('web.utils');
 
     var WidgetX2Many2dMatrix = relational_fields.FieldOne2Many.extend({
         widget_class: 'o_form_field_x2many_2d_matrix',
@@ -43,11 +44,13 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                 node.field_label_x_axis || this.field_x_axis;
             this.field_label_y_axis =
                 node.field_label_y_axis || this.field_y_axis;
-            this.x_axis_clickable = this.parse_boolean(
-                node.x_axis_clickable || '1'
+            this.x_axis_clickable = utils.toBoolElse(
+                node.x_axis_clickable,
+                true
             );
-            this.y_axis_clickable = this.parse_boolean(
-                node.y_axis_clickable || '1'
+            this.y_axis_clickable = utils.toBoolElse(
+                node.y_axis_clickable,
+                true
             );
             this.field_value = node.field_value || this.field_value;
             // TODO: is this really needed? Holger?
@@ -66,13 +69,15 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                     this.field_value
                 ));
             }
-            this.show_row_totals = this.parse_boolean(
+            this.show_row_totals = utils.toBoolElse(
                 node.show_row_totals ||
-                this.is_aggregatable(field_defs[this.field_value]) ? '1' : ''
+                this.is_aggregatable(field_defs[this.field_value]),
+                false
             );
-            this.show_column_totals = this.parse_boolean(
+            this.show_column_totals = utils.toBoolElse(
                 node.show_column_totals ||
-                this.is_aggregatable(field_defs[this.field_value]) ? '1' : ''
+                this.is_aggregatable(field_defs[this.field_value]),
+                false
             );
         },
 
@@ -172,20 +177,7 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
          * Determine if a field represented by field_def can be aggregated
          */
         is_aggregatable: function (field_def) {
-            return field_def.type in {float: 1, monetary: 1, integer: 1};
-        },
-
-        /**
-         * Parse a String containing a bool and convert it to a JS bool.
-         *
-         * @param {String} val: the string to be parsed.
-         * @returns {Boolean} The parsed boolean.
-         */
-        parse_boolean: function (val) {
-            if (val.toLowerCase() === 'true' || val === '1') {
-                return true;
-            }
-            return false;
+            return field_def.type in { float: 1, monetary: 1, integer: 1 };
         },
 
         /**

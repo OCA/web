@@ -519,6 +519,14 @@ html .o_web_client .o_main .o_main_content {
 
                     > .o_form_sheet {
                         min-width: unset;
+
+                        .oe_subtotal_footer .popover {
+                            /* This is an inaccurate workaround for a problem with how Odoo places the popover
+                             * See: https://github.com/odoo/odoo/blob/12.0/addons/account/static/src/js/account_payment_field.js#L83
+                             */
+                            position: fixed !important;
+                            top: 11.4em !important;
+                        }
                     }
                 }
 

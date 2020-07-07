@@ -396,12 +396,12 @@ instead.</p>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#id1">Usage</a></h1>
 <pre class="code python literal-block">
-<span class="nd">&#64;api.model</span>
+<span class="nd">&#64;api</span><span class="o">.</span><span class="n">model</span>
 <span class="k">def</span> <span class="nf">method_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="n">values</span> <span class="o">=</span> <span class="p">[</span>
         <span class="p">(</span><span class="s1">'value_a'</span><span class="p">,</span> <span class="s1">'Title A'</span><span class="p">),</span>
     <span class="p">]</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'depending_on'</span><span class="p">)</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'depending_on'</span><span class="p">)</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">values</span> <span class="o">+=</span> <span class="p">[</span>
             <span class="p">(</span><span class="s1">'value_b'</span><span class="p">,</span> <span class="s1">'Title B'</span><span class="p">),</span>
         <span class="p">]</span>

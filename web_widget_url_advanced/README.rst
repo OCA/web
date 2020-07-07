@@ -72,7 +72,6 @@ Known issues / Roadmap
 ======================
 
 * ``<field text_field="foo"/>`` is not supported in tree views.
-            
 
 Bug Tracker
 ===========
