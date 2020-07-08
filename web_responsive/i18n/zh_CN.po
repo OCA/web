@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2020-03-23 06:13+0000\n"
+"PO-Revision-Date: 2020-07-08 05:19+0000\n"
 "Last-Translator: 黎伟杰 <674416404@qq.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -113,6 +113,7 @@ msgstr "用户"
 msgid ""
 "btn btn-secondary o_mail_discuss_button_multi_user_channel d-md-block d-none"
 msgstr ""
+"btn btn-secondary o_mail_discuss_button_multi_user_channel d-md-block d-none"
 
 #. module: web_responsive
 #. openerp-web
