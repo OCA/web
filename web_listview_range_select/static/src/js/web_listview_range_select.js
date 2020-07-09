@@ -28,7 +28,7 @@ odoo.define("web_listview_range_select", function(require) {
                     .data("id");
                 var checked = self._range_history.indexOf(id) !== -1;
                 if (checked && $(el).is(":checked")) {
-                    if (start == null) {
+                    if (start === null) {
                         start = i;
                     } else {
                         end = i;
@@ -49,9 +49,9 @@ odoo.define("web_listview_range_select", function(require) {
                 .closest("tr")
                 .each(function(i, el) {
                     var record_id = $(el).data("id");
-                    if (start != null && end != null && i >= start && i <= end) {
+                    if (start !== null && end !== null && i >= start && i <= end) {
                         result.push(record_id);
-                    } else if (start != null && end == null && start == i) {
+                    } else if (start !== null && end === null && start === i) {
                         result.push(record_id);
                     }
                 });
