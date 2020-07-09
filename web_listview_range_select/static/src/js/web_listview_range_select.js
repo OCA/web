@@ -1,17 +1,17 @@
 /* Copyright 2017 Onestein
-* License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
+ * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
-odoo.define('web_listview_range_select', function (require) {
-"use strict";
+odoo.define("web_listview_range_select", function(require) {
+    "use strict";
 
-    var ListRenderer = require('web.ListRenderer');
+    var ListRenderer = require("web.ListRenderer");
 
     ListRenderer.include({
         _range_history: [],
 
         _render: function() {
             var res = this._super.apply(this, arguments);
-            this.$table = this.$el.find('.o_list_view');
+            this.$table = this.$el.find(".o_list_view");
             return res;
         },
 
@@ -22,10 +22,12 @@ odoo.define('web_listview_range_select', function (require) {
             var start = null,
                 end = null;
 
-            this.$el.find('td.o_list_record_selector input').each(function (i, el) {
-                var id = $(el).closest('tr').data('id');
+            this.$el.find("td.o_list_record_selector input").each(function(i, el) {
+                var id = $(el)
+                    .closest("tr")
+                    .data("id");
                 var checked = self._range_history.indexOf(id) !== -1;
-                if (checked && $(el).is(':checked')) {
+                if (checked && $(el).is(":checked")) {
                     if (start == null) {
                         start = i;
                     } else {
@@ -42,14 +44,17 @@ odoo.define('web_listview_range_select', function (require) {
 
         _getSelectionByRange: function(start, end) {
             var result = [];
-            this.$el.find('td.o_list_record_selector input').closest('tr').each(function (i, el) {
-                var record_id = $(el).data('id');
-                if (start != null && end != null && i >= start && i <= end) {
-                    result.push(record_id);
-                } else if(start != null && end == null && start == i) {
-                    result.push(record_id);
-                }
-            });
+            this.$el
+                .find("td.o_list_record_selector input")
+                .closest("tr")
+                .each(function(i, el) {
+                    var record_id = $(el).data("id");
+                    if (start != null && end != null && i >= start && i <= end) {
+                        result.push(record_id);
+                    } else if (start != null && end == null && start == i) {
+                        result.push(record_id);
+                    }
+                });
             return result;
         },
 
@@ -71,22 +76,26 @@ odoo.define('web_listview_range_select', function (require) {
 
             // Firefox shift click fix
             if (/firefox/i.test(navigator.userAgent) && event.shiftKey) {
-                el.find('input').prop('checked', !el.find('input').prop('checked'));
+                el.find("input").prop("checked", !el.find("input").prop("checked"));
             }
 
-            if (el.find('input').prop('checked')) {
-                this._pushRangeHistory(el.closest('tr').data('id'));
+            if (el.find("input").prop("checked")) {
+                this._pushRangeHistory(el.closest("tr").data("id"));
             }
 
             if (event.shiftKey) {
                 // Get selection
                 var selection = this._getRangeSelection();
-                var $rows = this.$el.find('td.o_list_record_selector input').closest('tr');
-                $rows.each(function () {
+                var $rows = this.$el
+                    .find("td.o_list_record_selector input")
+                    .closest("tr");
+                $rows.each(function() {
                     // Check input visual
-                    var record_id = $(this).data('id');
+                    var record_id = $(this).data("id");
                     if (selection.indexOf(record_id) !== -1) {
-                        $(this).find('td.o_list_record_selector input').prop('checked', true);
+                        $(this)
+                            .find("td.o_list_record_selector input")
+                            .prop("checked", true);
                     }
                 });
                 // Update selection internally
@@ -94,6 +103,6 @@ odoo.define('web_listview_range_select', function (require) {
                 this._deselectTable();
             }
             return res;
-        }
+        },
     });
 });
