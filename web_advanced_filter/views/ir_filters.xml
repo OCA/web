@@ -7,7 +7,7 @@
             <sheet position="before">
                 <header>
                     <button type="object" string="Test filter" name="button_test" class="btn-primary" />
-                    <button type="object" string="Freeze filter" name="button_freeze" attrs="{'invisible': [('is_frozen', '=', True)]}" help="Have this filter contain extly the records it currently contains, with no changes in the future. Be careful, you can&apos;t undo this operation!" confirm="Are you sure? You can&apos;t undo this operation!" />
+                    <button type="object" string="Freeze filter" name="button_freeze" attrs="{'invisible': [('is_frozen', '=', True)]}" help="Have this filter contain exactly the records it currently contains, with no changes in the future. Be careful, you can&apos;t undo this operation!" confirm="Are you sure? You can&apos;t undo this operation!" />
                 </header>
             </sheet>
             <group position="after">
@@ -21,10 +21,15 @@
                 </group>
             </group>
             <field name="domain" position="attributes">
-                <attribute name="attrs">{'readonly': ['|', ('union_filter_ids', '!=', [[6, False, []]]), ('complement_filter_ids', '!=', [[6, False, []]])]}</attribute>
+                <attribute name="attrs">
+                    {'readonly': ['|', ('union_filter_ids', '!=', []), ('complement_filter_ids', '!=', [])]}
+                </attribute>
             </field>
             <field name="domain" position="after">
-                <field name="domain_this" attrs="{'invisible': [('union_filter_ids', '=', [[6, False, []]]), ('complement_filter_ids', '=', [[6, False, []]])]}" />
+                <field name="domain_this"
+                       widget="domain"
+                       options="{'model': 'model_id'}"
+                       attrs="{'invisible': [('union_filter_ids', '=', []), ('complement_filter_ids', '=', [])]}" />
             </field>
         </field>
     </record>

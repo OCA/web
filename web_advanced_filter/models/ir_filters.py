@@ -17,45 +17,51 @@ class IrFilters(models.Model):
     union_filter_ids = fields.Many2many(
         'ir.filters', 'ir_filters_union_rel', 'left_filter_id',
         'right_filter_id', 'Add result of filters',
-        domain=['|', ('active', '=', False), ('active', '=', True)],
+        context={"active_test": False},
     )
     complement_filter_ids = fields.Many2many(
         'ir.filters', 'ir_filters_complement_rel', 'left_filter_id',
         'right_filter_id', 'Remove result of filters',
-        domain=['|', ('active', '=', False), ('active', '=', True)],
+        context={"active_test": False},
     )
     domain = fields.Text(compute='_compute_domain', inverse='_inverse_domain')
-    domain_this = fields.Text('This filter\'s own domain', oldname='domain')
+    domain_this = fields.Text("Domain without helpers", oldname='domain')
     evaluate_before_negate = fields.Boolean(
         'Evaluate this filter before negating',
-        compute='_compute_flags',
+        compute='_compute_pre_evaluate',
         help='This is necessary if this filter contains positive operators'
         'on x2many fields',
     )
-    evaluate_always = fields.Boolean(
-        'Always evaluate this filter before using it',
-        compute='_compute_flags',
+    evaluate_before_join = fields.Boolean(
+        'Evaluate this filter before joining',
+        compute='_compute_pre_evaluate',
         help='This is necessary if this filter contains x2many fields with'
         '_auto_join activated',
     )
     save_as_public = fields.Boolean(
-        'Share with all users', default=False,
-        compute=lambda self: None, inverse=lambda self: None,
+        'Share with all users', default=False, store=False
     )
+
+    @api.model
+    def _eval_domain(self, domain):
+        """Parse a domain and normalize it, with a default if it's invalid."""
+        try:
+            domain = safe_eval(domain) or [expression.FALSE_LEAF]
+        except (SyntaxError, TypeError, ValueError, NameError):
+            domain = [expression.FALSE_LEAF]
+        return expression.normalize_domain(domain)
 
     @api.multi
     @api.depends('domain')
     def _compute_is_frozen(self):
         '''determine if this is fixed list of ids'''
         for this in self:
-            try:
-                domain = safe_eval(this.domain)
-            except (SyntaxError, TypeError, ValueError, NameError):
-                domain = [expression.FALSE_LEAF]
+            domain = self._eval_domain(this.domain)
             this.is_frozen = (
-                len(domain) == 1 and
-                expression.is_leaf(domain[0]) and
-                domain[0][0] == 'id'
+                len(domain) == 1
+                and expression.is_leaf(domain[0])
+                and domain[0][0] == "id"
+                and domain[0][1] == "in"
             )
 
     @api.multi
@@ -66,37 +72,53 @@ class IrFilters(models.Model):
     def _compute_domain(self):
         '''combine our domain with all domains to union/complement,
         this works recursively'''
-        def eval_n(domain):
-            '''parse a domain and normalize it'''
-            try:
-                domain = safe_eval(domain)
-            except (SyntaxError, TypeError, ValueError, NameError):
-                domain = [expression.FALSE_LEAF]
-            return expression.normalize_domain(
-                domain or [expression.FALSE_LEAF])
 
         for this in self:
             if this.model_id not in self.env:
                 this.domain = '[]'
-                _logger.error('Unknown model %s used in filter', this.model_id)
+                _logger.error(
+                    "Unknown model %s used in filter %d",
+                    this.model_id,
+                    this.id,
+                )
                 continue
-            domain = eval_n(this.domain_this)
+            domain = self._eval_domain(this.domain_this)
             for u in this.union_filter_ids:
-                if u.evaluate_always:
-                    matching_ids = self.env[u.model_id].search(
-                        eval_n(u.domain),
-                    ).ids
+                if u.model_id != this.model_id:
+                    _logger.warning(
+                        "Model mismatch in helper %d on filter %d!",
+                        u.model_id,
+                        this.model_id,
+                    )
+                    continue
+                if u.evaluate_before_join:
+                    matching_ids = (
+                        self.env[this.model_id]
+                        .search(self._eval_domain(u.domain))
+                        .ids
+                    )
                     domain = expression.OR([
                         domain,
                         [('id', 'in', matching_ids)],
                     ])
                 else:
-                    domain = expression.OR([domain, eval_n(u.domain)])
+                    domain = expression.OR(
+                        [domain, self._eval_domain(u.domain)]
+                    )
             for c in this.complement_filter_ids:
+                if c.model_id != this.model_id:
+                    _logger.warning(
+                        "Model mismatch in helper %d on filter %d!",
+                        c.model_id,
+                        this.model_id,
+                    )
+                    continue
                 if c.evaluate_before_negate:
-                    matching_ids = self.env[c.model_id].search(
-                        eval_n(c.domain),
-                    ).ids
+                    matching_ids = (
+                        self.env[this.model_id]
+                        .search(self._eval_domain(c.domain))
+                        .ids
+                    )
                     domain = expression.AND([
                         domain,
                         [('id', 'not in', matching_ids)],
@@ -104,9 +126,9 @@ class IrFilters(models.Model):
                 else:
                     domain = expression.AND([
                         domain,
-                        ['!'] + eval_n(c['domain']),
+                        ["!"] + self._eval_domain(c["domain"])
                     ])
-            this.domain = str(expression.normalize_domain(domain))
+            this.domain = repr(expression.normalize_domain(domain))
 
     @api.multi
     def _inverse_domain(self):
@@ -114,43 +136,69 @@ class IrFilters(models.Model):
             this.domain_this = this.domain
 
     @api.multi
-    @api.depends('domain')
-    def _compute_flags(self):
-        """check if this filter contains references to x2many fields. If so,
-        then negation goes wrong in nearly all cases, so we evaluate the
-        filter and remove its resulting ids"""
+    @api.depends('domain', 'model_id')
+    def _compute_pre_evaluate(self):
+        """Check if this filter contains problematic fields.
+
+        Domains with certain fields can't be negated or joined properly.
+        They have to be evaluated in advance. In particular:
+
+        - Negating a query on a 2many field doesn't invert the matched records.
+          ``foo.bar != 3`` will yield all records with a ``foo.bar`` that
+          isn't ``3``, not all records without a ``foo.bar`` that is ``3``.
+          So just putting a ``!`` in front of the domain doesn't do what we
+          want.
+
+        - Querying an autojoined field constrains the entire search, even if
+          it's joined with ``|``. If ``('user_ids.login', '=', 'admin')`` is
+          used anywhere in the domain then only records that satisfy that leaf
+          are found.
+
+        - Fields with custom search logic (``search=...``) might do one of the
+          above, or some other strange thing.
+
+        Examples can be found in the tests for this module.
+        """
         for this in self:
-            this.evaluate_before_negate = False
-            this.evaluate_always = False
-            domain = expression.normalize_domain(
-                safe_eval(this.domain or 'False') or [expression.FALSE_LEAF]
-            )
+            evaluate_before_negate = False
+            evaluate_before_join = False
+            domain = self._eval_domain(this.domain)
             for arg in domain:
+                if not expression.is_leaf(arg) or not isinstance(arg[0], str):
+                    continue
                 current_model = self.env.get(this.model_id)
                 if current_model is None:
                     _logger.error(
-                        'Unknown model %s used in filter', this.model_id)
+                        "Unknown model %s used in filter %d",
+                        this.model_id,
+                        this.id,
+                    )
                     continue
-                if not expression.is_leaf(arg) or not isinstance(arg[0], str):
-                    continue
-                has_x2many = False
-                has_auto_join = False
                 for field_name in arg[0].split('.'):
                     if field_name in models.MAGIC_COLUMNS:
                         continue
                     field = current_model._fields[field_name]
-                    has_x2many |= field.type in self._evaluate_before_negate
-                    has_x2many |= bool(field.compute)
-                    has_auto_join |= getattr(field, 'auto_join', False)
-                    has_auto_join |= bool(field.compute)
+                    evaluate_before_negate = (
+                        evaluate_before_negate
+                        or field.search
+                        or field.type in self._evaluate_before_negate
+                        or getattr(field, "auto_join", False)
+                    )
+                    evaluate_before_join = (
+                        evaluate_before_join
+                        or field.search
+                        or getattr(field, "auto_join", False)
+                    )
                     if field.comodel_name:
                         current_model = self.env.get(field.comodel_name)
-                    if current_model is None or has_x2many and has_auto_join:
+                    if current_model is None or (
+                        evaluate_before_negate and evaluate_before_join
+                    ):
                         break
-                this.evaluate_before_negate |= has_x2many
-                this.evaluate_always |= has_auto_join
-                if this.evaluate_before_negate and this.evaluate_always:
+                if evaluate_before_negate and evaluate_before_join:
                     break
+            this.evaluate_before_negate = evaluate_before_negate
+            this.evaluate_before_join = evaluate_before_join
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -164,9 +212,11 @@ class IrFilters(models.Model):
     @api.multi
     def _evaluate(self):
         self.ensure_one()
-        return self.env[self.model_id].with_context(
-            safe_eval(self.context)
-        ).search(safe_eval(self.domain))
+        return (
+            self.env[self.model_id]
+            .with_context(**safe_eval(self.context))
+            .search(safe_eval(self.domain))
+        )
 
     @api.multi
     def button_save(self):
@@ -177,27 +227,59 @@ class IrFilters(models.Model):
         '''evaluate the filter and write a fixed [('id', 'in', [])] domain'''
         for this in self:
             ids = this._evaluate().ids
-            removed_filters = \
-                this.union_filter_ids + this.complement_filter_ids
             this.write({
-                'domain': str([('id', 'in', ids)]),
+                'domain': repr([('id', 'in', ids)]),
                 'union_filter_ids': [(6, 0, [])],
                 'complement_filter_ids': [(6, 0, [])],
             })
-            # if we removed inactive filters which are orphaned now, delete
-            # them
-            if removed_filters:
-                self.env.cr.execute(
-                    '''delete from ir_filters
-                    where
-                    not active and id in %s
-                    and not exists (select right_filter_id
-                    from ir_filters_union_rel where left_filter_id=id)
-                    and not exists (select right_filter_id
-                    from ir_filters_complement_rel where
-                    left_filter_id=id)''',
-                    (tuple(removed_filters.ids),)
-                )
+
+    @api.multi
+    def write(self, vals):
+        if not ("union_filter_ids" in vals or "complement_filter_ids" in vals):
+            return super().write(vals)
+        old = self.mapped("union_filter_ids") | self.mapped(
+            "complement_filter_ids"
+        )
+        res = super().write(vals)
+        new = self.mapped("union_filter_ids") | self.mapped(
+            "complement_filter_ids"
+        )
+        (old - new)._garbage_collect_helpers()
+        return res
+
+    @api.multi
+    def unlink(self):
+        helpers = self.mapped("union_filter_ids") | self.mapped(
+            "complement_filter_ids"
+        )
+        res = super().unlink()
+        helpers._garbage_collect_helpers()
+        return res
+
+    @api.multi
+    def _garbage_collect_helpers(self):
+        """Remove filters that have been made obsolete.
+
+        This method should only be called on filters that are/were in some
+        other filter's union_filter_ids or complement_filter_ids.
+
+        Filters are removed if they're not active and no longer used.
+        """
+        if not self:
+            return
+        self.env.cr.execute(
+            """DELETE FROM ir_filters
+            WHERE NOT active AND id IN %s
+            AND NOT EXISTS (
+                SELECT left_filter_id FROM ir_filters_union_rel
+                WHERE right_filter_id = id
+            )
+            AND NOT EXISTS (
+                SELECT left_filter_id FROM ir_filters_complement_rel
+                WHERE right_filter_id = id
+            )""",
+            (tuple(self.ids),),
+        )
 
     @api.multi
     def button_test(self):

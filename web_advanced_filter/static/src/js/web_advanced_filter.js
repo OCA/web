@@ -52,7 +52,7 @@ AdvancedFiltersMenu = DropdownMenu.extend({
         return [
             {
                 itemId: 'domain-header',
-                description: _t('Whole selection (criteria)'),
+                description: _t('Search query'),
             },
             {
                 itemId: 'domain-new',
@@ -61,14 +61,14 @@ AdvancedFiltersMenu = DropdownMenu.extend({
             },
             {
                 itemId: 'domain-union',
-                description: _t('To existing filter'),
+                description: _t('Add to existing filter'),
                 callback: this._advanced_filters_combine_with_existing.bind(
                     this, 'union', 'domain'
                 ),
             },
             {
                 itemId: 'domain-complement',
-                description: _t('Remove from existing filter'),
+                description: _t('Subtract from existing filter'),
                 callback: this._advanced_filters_combine_with_existing.bind(
                     this, 'complement', 'domain'
                 ),
@@ -84,14 +84,14 @@ AdvancedFiltersMenu = DropdownMenu.extend({
             },
             {
                 itemId: 'ids-union',
-                description: _t('To existing filter'),
+                description: _t('Add to existing filter'),
                 callback: this._advanced_filters_combine_with_existing.bind(
                     this, 'union', 'ids'
                 ),
             },
             {
                 itemId: 'ids-complement',
-                description: _t('Remove from existing filter'),
+                description: _t('Subtract from existing filter'),
                 callback: this._advanced_filters_combine_with_existing.bind(
                     this, 'complement', 'ids'
                 ),

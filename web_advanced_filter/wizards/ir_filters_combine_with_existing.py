@@ -23,45 +23,47 @@ class IrFiltersCombineWithExisting(models.TransientModel):
     @api.multi
     def button_save(self):
         self.ensure_one()
-        this = self
-        domain = json.loads(this.domain)
-        is_frozen = (len(domain) == 1 and
-                     expression.is_leaf(domain[0]) and
-                     domain[0][0] == 'id')
+        domain = json.loads(self.domain)
+        is_frozen = (
+            len(domain) == 1
+            and expression.is_leaf(domain[0])
+            and domain[0][0] == "id"
+            and domain[0][1] == "in"
+        )
 
-        if this.action == 'union':
-            if is_frozen and this.filter_id.is_frozen:
+        if self.action == 'union':
+            if is_frozen and self.filter_id.is_frozen:
                 domain[0][2] = list(set(domain[0][2]).union(
-                    set(safe_eval(this.filter_id.domain)[0][2])))
-                this.filter_id.write({'domain': str(domain)})
+                    set(safe_eval(self.filter_id.domain)[0][2])))
+                self.filter_id.write({'domain': repr(domain)})
             else:
-                this.filter_id.write({
+                self.filter_id.write({
                     'union_filter_ids': [(0, 0, {
                         'name': '%s_%s_%d' % (
-                            this.filter_id.name, 'add', time.time()),
+                            self.filter_id.name, 'add', time.time()),
                         'active': False,
-                        'domain': str(domain),
-                        'context': this.context,
-                        'model_id': this.model,
-                        'user_id': this.filter_id.user_id.id or False,
+                        'domain': repr(domain),
+                        'context': repr(json.loads(self.context)),
+                        'model_id': self.model,
+                        'user_id': self.filter_id.user_id.id or False,
                     })],
                 })
-        elif this.action == 'complement':
-            if is_frozen and this.filter_id.is_frozen:
-                complement_set = set(safe_eval(this.filter_id.domain)[0][2])
+        elif self.action == 'complement':
+            if is_frozen and self.filter_id.is_frozen:
+                complement_set = set(safe_eval(self.filter_id.domain)[0][2])
                 domain[0][2] = list(
                     complement_set.difference(set(domain[0][2])))
-                this.filter_id.write({'domain': str(domain)})
+                self.filter_id.write({'domain': repr(domain)})
             else:
-                this.filter_id.write({
+                self.filter_id.write({
                     'complement_filter_ids': [(0, 0, {
                         'name': '%s_%s_%d' % (
-                            this.filter_id.name, 'remove', time.time()),
+                            self.filter_id.name, 'remove', time.time()),
                         'active': False,
-                        'domain': str(domain),
-                        'context': this.context,
-                        'model_id': this.model,
-                        'user_id': this.filter_id.user_id.id or False,
+                        'domain': repr(domain),
+                        'context': repr(json.loads(self.context)),
+                        'model_id': self.model,
+                        'user_id': self.filter_id.user_id.id or False,
                     })],
                 })
 
