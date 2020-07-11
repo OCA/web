@@ -1,0 +1,68 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_widget_model_viewer
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-14 15:43+0000\n"
+"PO-Revision-Date: 2020-07-14 17:44+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: it\n"
+"X-Generator: Poedit 2.0.6\n"
+
+#. module: web_widget_model_viewer
+#. openerp-web
+#: code:addons/web_widget_model_viewer/static/src/js/web_widget_model_viewer.js:57
+#: code:addons/web_widget_model_viewer/static/src/xml/web_widget_model_viewer.xml:27
+#, python-format
+msgid "3D model"
+msgstr "Modello 3D"
+
+#. module: web_widget_model_viewer
+#. openerp-web
+#: code:addons/web_widget_model_viewer/static/src/xml/web_widget_model_viewer.xml:8
+#, python-format
+msgid "Clear"
+msgstr "Eliminare"
+
+#. module: web_widget_model_viewer
+#. openerp-web
+#: code:addons/web_widget_model_viewer/static/src/js/web_widget_model_viewer.js:57
+#, python-format
+msgid "Could not display the selected model."
+msgstr "Impossibile visualizzare il modello selezionatp"
+
+#. module: web_widget_model_viewer
+#. openerp-web
+#: code:addons/web_widget_model_viewer/static/src/xml/web_widget_model_viewer.xml:7
+#, python-format
+msgid "Edit"
+msgstr "Modificare"
+
+#. module: web_widget_model_viewer
+#. openerp-web
+#: code:addons/web_widget_model_viewer/static/src/xml/web_widget_model_viewer.xml:29
+#, python-format
+msgid "Fullscreen"
+msgstr "Schermo intero"
+
+#. module: web_widget_model_viewer
+#. openerp-web
+#: code:addons/web_widget_model_viewer/static/src/xml/web_widget_model_viewer.xml:10
+#, python-format
+msgid "Uploading..."
+msgstr "Caricamento..."
+
+#. module: web_widget_model_viewer
+#. openerp-web
+#: code:addons/web_widget_model_viewer/static/src/xml/web_widget_model_viewer.xml:29
+#, python-format
+msgid "View fullscreen"
+msgstr "Vista schermo intero"
