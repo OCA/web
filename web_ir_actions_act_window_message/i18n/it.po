@@ -20,7 +20,7 @@ msgstr ""
 
 #. module: web_ir_actions_act_window_message
 #. openerp-web
-#: code:addons/web_ir_actions_act_window_message/static/src/js/web_ir_actions_act_window_message.js:29
+#: code:addons/web_ir_actions_act_window_message/static/src/js/web_ir_actions_act_window_message.js:0
 #, python-format
 msgid "Close"
 msgstr "Chiudi"
