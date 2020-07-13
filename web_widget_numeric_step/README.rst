@@ -19,11 +19,8 @@ Web Widget Numeric Step
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
     :target: https://translation.odoo-community.org/projects/web-12-0/web-12-0-web_widget_numeric_step
     :alt: Translate me on Weblate
-.. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/162/12.0
-    :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| 
 
 This widget changes input number field and make it easier to increment the number thanks to 2 buttons (+ and -).
 Use JS native logic for input number, so you can use the options ``min``, ``max``, ``step``, ``placeholder``.
