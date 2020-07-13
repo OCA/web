@@ -19,11 +19,8 @@ Edit User Filters
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
     :target: https://translation.odoo-community.org/projects/web-12-0/web-12-0-web_edit_user_filter
     :alt: Translate me on Weblate
-.. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/162/12.0
-    :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| 
 
 In standard Odoo you can edit user filters via the debug module.
 The problem is that normal users often don't have access to this menu therefore can't adjust filters once they're saved.
