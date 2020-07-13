@@ -19,8 +19,11 @@ Web Actions View Reload
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
     :target: https://translation.odoo-community.org/projects/web-13-0/web-13-0-web_ir_actions_act_view_reload
     :alt: Translate me on Weblate
+.. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
+    :target: https://runbot.odoo-community.org/runbot/162/13.0
+    :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| 
+|badge1| |badge2| |badge3| |badge4| |badge5| 
 
 This module provides a way to trigger reload of the current window on ActionManager
 
@@ -36,8 +39,7 @@ To use this functionality you need to return following action:
 
 .. code-block:: python
 
-      @api.multi
-      def foo():
+      def foo(self):
          self.ensure_one()
          return {
             'type': 'ir.actions.act_view_reload',
@@ -60,13 +62,15 @@ Authors
 ~~~~~~~
 
 * Modoolar
-* Brainbean Apps
+* CorporateHub
 
 Contributors
 ~~~~~~~~~~~~
 
 * Petar Najman <petar.najman@modoolar.com>
-* Alexey Pelykh <alexey.pelykh@brainbeanapps.com>
+* `CorporateHub <https://corporatehub.eu/>`__
+
+  * Alexey Pelykh <alexey.pelykh@corphub.eu>
 
 Maintainers
 ~~~~~~~~~~~
