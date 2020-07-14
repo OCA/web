@@ -15,15 +15,15 @@ odoo.define('web_view_calendar_list.CalendarListModel', function (require) {
                 the_title = '',
                 attendees = [];
 
-            if (!all_day) {
-                date_start = evt[this.mapping.date_start].clone();
-                date_stop = this.mapping.date_stop ? evt[
-                    this.mapping.date_stop].clone() : null;
-            } else {
+            if (all_day) {
                 date_start = evt[this.mapping.date_start].clone().startOf(
                     'day');
                 date_stop = this.mapping.date_stop ? evt[
                     this.mapping.date_stop].clone().startOf('day') : null;
+            } else {
+                date_start = evt[this.mapping.date_start].clone();
+                date_stop = this.mapping.date_stop ? evt[
+                    this.mapping.date_stop].clone() : null;
             }
 
             if (!date_stop && date_delay) {
