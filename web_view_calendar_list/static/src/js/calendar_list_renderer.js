@@ -2,15 +2,13 @@ odoo.define('web_view_calendar_list.CalendarListRenderer', function (require) {
     "use strict";
 
     var CalendarRenderer = require('web.CalendarRenderer');
-    var session = require('web.session');
     var core = require('web.core');
-    var qweb = core.qweb;
     var _t = core._t;
 
     var scales = {
         day: 'listDay',
         week: 'listWeek',
-        month: 'listMonth'
+        month: 'listMonth',
     };
 
     var AppointmentRenderer= CalendarRenderer.extend({
@@ -24,7 +22,7 @@ odoo.define('web_view_calendar_list.CalendarListRenderer', function (require) {
             var locale = moment.locale();
             $.fullCalendar.locale(locale);
 
-            //Documentation here : http://arshaw.com/fullcalendar/docs/
+            // Documentation here : http://arshaw.com/fullcalendar/docs/
             var fc_options = $.extend({}, this.state.fc_options, {
                 eventDrop: function (event) {
                     self.trigger_up('dropRecord', event);
@@ -53,8 +51,14 @@ odoo.define('web_view_calendar_list.CalendarListRenderer', function (require) {
                     if (!event.allDay) {
                         var start = event.r_start || event.start;
                         var end = event.r_end || event.end;
-                        var timeFormat = _t.database.parameters.time_format.search("%H") != -1 ? 'HH:mm': 'h:mma';
-                        display_hour = start.format(timeFormat) + ' - ' + end.format(timeFormat);
+                        var timeFormat = (
+                            _t.database.parameters.time_format.search(
+                                "%H"
+                            ) != -1 ? 'HH:mm': 'h:mma'
+                        );
+                        display_hour = start.format(
+                            timeFormat
+                        ) + ' - ' + end.format(timeFormat);
                         if (display_hour === '00:00 - 00:00') {
                             display_hour = _t('All day');
                         }
@@ -66,10 +70,13 @@ odoo.define('web_view_calendar_list.CalendarListRenderer', function (require) {
                     $(window).trigger('resize');
                 },
                 viewRender: function (view) {
-                    // compute mode from view.name which is either 'month', 'agendaWeek' or 'agendaDay'
+                    // Compute mode from view.name which is either 'month',
+                    // 'agendaWeek' or 'agendaDay'
                     var mode = view.name === 'listMonth' ? 'month' : (view.name === 'listWeek' ? 'week' : 'day');
-                    // compute title: in week mode, display the week number
-                    var title = mode === 'week' ? view.intervalStart.week() : view.title;
+                    // Compute title: in week mode, display the week number
+                    var title = mode === 'week' ? _t(
+                        'Week '
+                    ) + view.intervalStart.week() : view.title;
                     self.trigger_up('viewUpdated', {
                         mode: mode,
                         title: title,
@@ -78,7 +85,9 @@ odoo.define('web_view_calendar_list.CalendarListRenderer', function (require) {
                 height: 'parent',
                 unselectAuto: false,
                 locale: locale,
-                // reset locale when fullcalendar has already been instanciated before now
+                /* Reset locale when fullcalendar has already been
+                instanciated before now
+                */
             });
 
             this.$calendar.fullCalendar(fc_options);
@@ -97,7 +106,9 @@ odoo.define('web_view_calendar_list.CalendarListRenderer', function (require) {
             $fc_view.scrollLeft(0);
             $calendar.fullCalendar('unselect');
 
-            if (scales[this.state.scale] !== $calendar.data('fullCalendar').getView().type) {
+            if (scales[this.state.scale] !== $calendar.data(
+                'fullCalendar'
+            ).getView().type) {
                 $calendar.fullCalendar('changeView', scales[this.state.scale]);
             }
 
@@ -112,16 +123,16 @@ odoo.define('web_view_calendar_list.CalendarListRenderer', function (require) {
             ).find('.o_selected_range').removeClass('o_color o_selected_range');
             var $a = false;
             switch (this.state.scale) {
-                case 'month':
-                    $a = this.$small_calendar.find('td a');
-                    break;
-                case 'week':
-                    $a = this.$small_calendar.find(
-                        'tr:has(.ui-state-active) a');
-                    break;
-                case 'day':
-                    $a = this.$small_calendar.find('a.ui-state-active');
-                    break;
+            case 'month':
+                $a = this.$small_calendar.find('td a');
+                break;
+            case 'week':
+                $a = this.$small_calendar.find(
+                    'tr:has(.ui-state-active) a');
+                break;
+            case 'day':
+                $a = this.$small_calendar.find('a.ui-state-active');
+                break;
             }
             $a.addClass('o_selected_range');
             setTimeout(function () {
@@ -136,7 +147,7 @@ odoo.define('web_view_calendar_list.CalendarListRenderer', function (require) {
                 .toggleClass('fa-chevron-left', fullWidth)
                 .attr(
                     'title',
-                    !fullWidth ? _('Close Sidebar') : _('Open Sidebar'));
+                    fullWidth ? _('Open Sidebar') : _('Close Sidebar'));
             this.$sidebar_container.toggleClass('o_sidebar_hidden', fullWidth);
             this.$sidebar.toggleClass('o_hidden', fullWidth);
 
