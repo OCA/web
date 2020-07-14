@@ -19,8 +19,11 @@ Web Editor Background Color Picker
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
     :target: https://translation.odoo-community.org/projects/web-12-0/web-12-0-web_editor_background_color
     :alt: Translate me on Weblate
+.. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
+    :target: https://runbot.odoo-community.org/runbot/162/12.0
+    :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| 
+|badge1| |badge2| |badge3| |badge4| |badge5| 
 
 This module extends the functionality of the web editor to support
 setting a custom background color to any snippet allowing you to customize it.
