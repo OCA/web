@@ -38,6 +38,13 @@ msgid "Calendar"
 msgstr "Calendrier"
 
 #. module: web_timeline
+#: selection:ir.ui.view,type:0
+#, fuzzy
+#| msgid "Calendar"
+msgid "Calendar List"
+msgstr "Calendrier"
+
+#. module: web_timeline
 #. openerp-web
 #: code:addons/web_timeline/static/src/xml/web_timeline.xml:8
 #, python-format
