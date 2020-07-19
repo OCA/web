@@ -46,6 +46,7 @@ setuptools.setup(
         'odoo12-addon-web_tree_image_tooltip',
         'odoo12-addon-web_tree_many2one_clickable',
         'odoo12-addon-web_tree_resize_column',
+        'odoo12-addon-web_view_calendar_list',
         'odoo12-addon-web_view_searchpanel',
         'odoo12-addon-web_widget_bokeh_chart',
         'odoo12-addon-web_widget_color',
