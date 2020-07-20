@@ -1,0 +1,20 @@
+div.web_tree_date_search_toolbar {
+    margin-bottom:0px;
+}
+
+div.web_tree_date_search_field {
+    min-width: 208px; margin-left:4px;
+}
+
+div.web_tree_date_search_field div.oe_form {
+    margin-right:3px; display: inline;
+}
+
+input.web_tree_date_search_input {
+    height: 23px;
+}
+
+input.web_tree_date_search_input_date {
+    width: 105px;
+}
+
