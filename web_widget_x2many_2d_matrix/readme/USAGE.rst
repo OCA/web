@@ -29,12 +29,21 @@ field_label_y_axis
     Use another field to display in the table header
 field_value
     Show this field as value
-show_row_totals
+show_row_agg
     If field_value is a numeric field, it indicates if you want to calculate
-    row totals. True by default
-show_column_totals
+    row aggregates. True by default
+show_col_agg
     If field_value is a numeric field, it indicates if you want to calculate
-    column totals. True by default
+    column aggregates. True by default
+agg_function
+    'sum' or 'avg' (arithmetic mean)
+    Indicates the computation to be done in the aggregates columns/rows.
+    'sum' by default
+agg_format
+    If passed, can force formatting of the aggregates computation results.
+    e.g.: You might want 'float' formatting for 'avg' computations on integer
+    values rather than leaving the default 'integer' formatting which would
+    round the computed means.
 
 Example
 ~~~~~~~

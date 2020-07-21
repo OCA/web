@@ -10,7 +10,7 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
     var core = require('web.core');
     var field_utils = require('web.field_utils');
     var _t = core._t;
-    
+
     var FIELD_CLASSES = {
         float: 'o_list_number',
         integer: 'o_list_number',
@@ -81,7 +81,7 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
             $table
                 .append(this._renderHeader())
                 .append(this._renderBody());
-            if (self.matrix_data.show_column_totals) {
+            if (self.matrix_data.show_col_agg) {
                 $table.append(this._renderFooter());
             }
             return this._super();
@@ -104,6 +104,17 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
             return $body;
         },
 
+        _getAggregateText: function() {
+            switch (this.matrix_data.agg_function) {
+                case 'sum':
+                    return _t("Sum");
+                case 'avg':
+                    return _t("Average");
+                default:
+                    return '';
+            }
+        },
+
         /**
          * Render the table head of our matrix. Looks for the first table head
          * and inserts the header into it.
@@ -117,8 +128,11 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
                 this.columns,
                 this._renderHeaderCell.bind(this)
             ));
-            if (this.matrix_data.show_row_totals) {
-                $tr.append($('<th/>', {class: 'total'}));
+            if (this.matrix_data.show_row_agg) {
+                var $el = $('<th/>', {class: 'total'})
+                    .addClass('text-center')
+                    .text(this._getAggregateText());
+                $tr.append($el);
             }
             return $('<thead>').append($tr);
         },
@@ -320,7 +334,8 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
         _renderFooter: function () {
             var $cells = this._renderAggregateColCells();
             if ($cells) {
-                var $tr = $('<tr>').append('<td/>').append($cells);
+                var $first_cell = $('<td>').text(this._getAggregateText());
+                var $tr = $('<tr>').append($first_cell).append($cells);
                 var $total_cell = this._renderTotalCell();
                 if ($total_cell) {
                     $tr.append($total_cell);
@@ -336,8 +351,8 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
          * @returns {jQueryElement} The td element with the total in it.
          */
         _renderTotalCell: function () {
-            if (!this.matrix_data.show_column_totals ||
-                !this.matrix_data.show_row_totals) {
+            if (!this.matrix_data.show_col_agg ||
+                !this.matrix_data.show_row_agg) {
                 return;
             }
 
@@ -368,21 +383,15 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
         },
 
         /**
-         * Compute the column aggregates.
-         * This function is called everytime the value is changed.
+         * Compute a sum over the rows
          *
          * @private
          */
-        _computeColumnAggregates: function () {
-            if (!this.matrix_data.show_column_totals) {
-                return;
-            }
+        _computeColSum: function() {
             var fname = this.matrix_data.field_value,
-                field = this.state.fields[fname];
-            if (!field) {
-                return;
-            }
-            var type = field.type;
+                field = this.state.fields[fname],
+                type = field.type;
+
             if (!~['integer', 'float', 'monetary'].indexOf(type)) {
                 return;
             }
@@ -391,17 +400,16 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
                     name: fname,
                 },
                 aggregate: {
-                    help: _t('Sum Total'),
-                    value: 0,
+                    help: _t("Sum Total"),
+                    value: 0
                 },
             };
-            _.each(this.columns, function (column, index) {
+            _.each(this.columns, function(column, index) {
                 column.aggregate = {
-                    help: _t('Sum'),
+                    help: _t("Sum"),
                     value: 0,
                 };
-                _.each(this.rows, function (row) {
-                    // TODO Use only one _.propertyOf in underscore 1.9.0+
+                _.each(this.rows, function(row) {
                     try {
                         column.aggregate.value += row.data[index].data[fname];
                     } catch (error) {
@@ -410,6 +418,74 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
                 });
                 this.total.aggregate.value += column.aggregate.value;
             }.bind(this));
+        },
+
+        /**
+         * Compute an arithmetic mean over the rows
+         *
+         * @private
+         */
+        _computeColAvg: function() {
+            var fname = this.matrix_data.field_value,
+                field = this.state.fields[fname],
+                type = field.type;
+
+            if (!~['integer', 'float', 'monetary'].indexOf(type)) {
+                return;
+            }
+            this.total = {
+                attrs: {
+                    name: fname,
+                },
+                aggregate: {
+                    help: _t("Avg Total"),
+                    value: 0,
+                }
+            };
+            _.each(this.columns, function(column, index) {
+                column.aggregate = {
+                    help: _t("Avg"),
+                    value: 0,
+                };
+                _.each(this.rows, function(row) {
+                    try {
+                        column.aggregate.value += row.data[index].data[fname];
+                    } catch (error) {
+                        // Nothing to do
+                    }
+                });
+                column.aggregate.value /= this.rows.length;
+                this.total.aggregate.value += column.aggregate.value;
+            }.bind(this));
+            this.total.aggregate.value /= this.columns.length;
+        },
+
+        /**
+         * Compute the column aggregates.
+         * This function is called everytime the value is changed.
+         *
+         * @private
+         */
+        _computeColumnAggregates: function () {
+            if (!this.matrix_data.show_col_agg) {
+                return;
+            }
+            var fname = this.matrix_data.field_value,
+                field = this.state.fields[fname];
+            if (!field) {
+                return;
+            }
+
+            switch (this.matrix_data.agg_function) {
+                case 'sum':
+                    this._computeColSum();
+                    break;
+                case 'avg':
+                    this._computeColAvg();
+                    break;
+                default:
+                    break;
+            }
         },
 
         /**
@@ -451,32 +527,24 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
         },
 
         /**
-         * Compute the row aggregates.
-         *
-         * This function is called everytime the value is changed.
+         * Compute a sum over the columns
          *
          * @private
          */
-        _computeRowAggregates: function () {
-            if (!this.matrix_data.show_row_totals) {
-                return;
-            }
+        _computeRowSum: function() {
             var fname = this.matrix_data.field_value,
-                field = this.state.fields[fname];
-            if (!field) {
-                return;
-            }
-            var type = field.type;
+                field = this.state.fields[fname],
+                type = field.type;
+
             if (!~['integer', 'float', 'monetary'].indexOf(type)) {
                 return;
             }
-            _.each(this.rows, function (row) {
+            _.each(this.rows, function(row) {
                 row.aggregate = {
-                    help: _t('Sum'),
+                    help: _t("Sum"),
                     value: 0,
                 };
-                _.each(row.data, function (col) {
-                    // TODO Use _.property in underscore 1.9+
+                _.each(row.data, function(col) {
                     try {
                         row.aggregate.value += col.data[fname];
                     } catch (error) {
@@ -484,6 +552,63 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
                     }
                 });
             });
+        },
+
+        /**
+         * Compute an arithmetic mean over the columns
+         *
+         * @private
+         */
+        _computeRowAvg: function() {
+            var fname = this.matrix_data.field_value,
+                field = this.state.fields[this.matrix_data.field_value],
+                type = field.type;
+            if (!~['integer', 'float', 'monetary'].indexOf(type)) {
+                return;
+            }
+            _.each(this.rows, function(row) {
+                row.aggregate = {
+                    help: _t("Avg"),
+                    value: 0,
+                };
+                _.each(row.data, function(col) {
+                    try {
+                        row.aggregate.value += col.data[fname];
+                    } catch (error) {
+                        // Nothing to do
+                    }
+                });
+                row.aggregate.value /= row.data.length;
+            });
+        },
+
+        /**
+         * Compute the row aggregates.
+         *
+         * This function is called everytime the value is changed.
+         *
+         * @private
+         */
+        _computeRowAggregates: function () {
+            if (!this.matrix_data.show_row_agg) {
+                return;
+            }
+            var fname = this.matrix_data.field_value,
+                field = this.state.fields[fname];
+            if (!field) {
+                return;
+            }
+
+            switch (this.matrix_data.agg_function) {
+                case 'sum':
+                    this._computeRowSum();
+                    break;
+                case 'avg':
+                    this._computeRowAvg();
+                    break;
+                default:
+                    break;
+            }
         },
 
         /**
@@ -505,6 +630,10 @@ odoo.define('web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer', function (requ
             var formatFunc = field_utils.format[
                 fieldInfo.widget ? fieldInfo.widget : field.type
             ];
+            // Allow formatting override
+            if (this.matrix_data.agg_format) {
+                formatFunc = field_utils.format[this.matrix_data.agg_format];
+            }
             var formattedValue = formatFunc(value, field, { escape: true });
             $cell.addClass('o_list_number').attr('title', help).html(formattedValue);
         },

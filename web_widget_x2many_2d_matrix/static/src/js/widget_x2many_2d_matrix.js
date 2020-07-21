@@ -69,16 +69,18 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                     this.field_value
                 ));
             }
-            this.show_row_totals = utils.toBoolElse(
-                node.show_row_totals ||
+            this.show_row_agg = utils.toBoolElse(
+                node.show_row_agg ||
                 this.is_aggregatable(field_defs[this.field_value]),
                 false
             );
-            this.show_column_totals = utils.toBoolElse(
-                node.show_column_totals ||
+            this.show_col_agg = utils.toBoolElse(
+                node.show_col_agg ||
                 this.is_aggregatable(field_defs[this.field_value]),
                 false
             );
+            this.agg_function = node.agg_function || 'sum';
+            this.agg_format = node.agg_format || undefined;
         },
 
         /**
@@ -128,8 +130,10 @@ odoo.define('web_widget_x2many_2d_matrix.widget', function (require) {
                 'field_y_axis': this.field_y_axis,
                 'columns': this.columns,
                 'rows': this.rows,
-                'show_row_totals': this.show_row_totals,
-                'show_column_totals': this.show_column_totals,
+                'show_row_agg': this.show_row_agg,
+                'show_col_agg': this.show_row_agg,
+                'agg_function': this.agg_function,
+                'agg_format': this.agg_format
             };
         },
 
