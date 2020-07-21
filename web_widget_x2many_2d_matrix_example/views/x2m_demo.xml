@@ -23,6 +23,9 @@
                         <button name="open_x2m_matrix" type="object"
                                 string="Try x2m 2d matrix"
                                 class="oe_link" icon="fa-edit"/>
+                        <button name="open_x2m_matrix_avg_and_format" type="object"
+                                string="Try x2m 2d matrix with avg aggregate"
+                                class="oe_link" icon="fa-edit"/>
                         <button name="open_x2m_matrix_selection" type="object"
                                 string="Try x2m 2d matrix (selection)"
                                 class="oe_link" icon="fa-edit"/>

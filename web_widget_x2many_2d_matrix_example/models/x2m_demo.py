@@ -32,6 +32,10 @@ class X2MDemo(models.Model):
         return self._open_x2m_matrix('x2many_2d_matrix_demo')
 
     @api.multi
+    def open_x2m_matrix_avg_and_format(self):
+        return self._open_x2m_matrix('x2many_2d_matrix_demo_integer_avg_and_format')
+
+    @api.multi
     def open_x2m_matrix_selection(self):
         return self._open_x2m_matrix('x2many_2d_matrix_demo_selection')
 
