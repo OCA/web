@@ -88,6 +88,19 @@ odoo.define("web_advanced_search", function (require) {
         }),
 
         /**
+         * Handle dropdown hidden event to prevent the menu from closing when using a 
+         * relational field 
+         *
+         * @override
+         */
+        start: function () {
+            this._super.apply(this, arguments);
+            this.$el.on('hide.bs.dropdown', function() {
+                return !($('.o_technical_modal.show').length || $('body.oe_wait').length);
+            });
+        },
+
+        /**
          * @override
          */
         init: function () {
