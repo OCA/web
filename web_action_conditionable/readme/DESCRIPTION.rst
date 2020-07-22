@@ -1,2 +1,1 @@
-This module was written to extend the functionality of actions in
-tree view (One2Many fields).
+Add support for conditions on create and delete actions on One2Many fields.
