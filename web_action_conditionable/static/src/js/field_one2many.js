@@ -24,7 +24,11 @@ odoo.define("web.web_action_conditionable", function(require) {
                                 .evaluate(py.parse(py.tokenize(expr)), self.recordData)
                                 .toJSON();
                         } catch (ignored) {
-                            // Do nothing
+                            console.log(
+                                "[web_action_conditionable] unrecognized expr '" +
+                                    expr +
+                                    "', ignoring"
+                            );
                         }
                     });
                     this.editable = arch.attrs.editable;
