@@ -22,6 +22,7 @@ setuptools.setup(
         'odoo12-addon-web_export_view',
         'odoo12-addon-web_favicon',
         'odoo12-addon-web_group_by_percentage',
+        'odoo12-addon-web_group_expand',
         'odoo12-addon-web_ir_actions_act_multi',
         'odoo12-addon-web_ir_actions_act_view_reload',
         'odoo12-addon-web_ir_actions_act_window_message',
