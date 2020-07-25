@@ -24,13 +24,16 @@ odoo.define("web_notify.WebClient", function(require) {
                 this.channel_info,
                 this.channel_default,
             ];
-            this.call("bus_service", "addChannel", this.channel_success);
-            this.call("bus_service", "addChannel", this.channel_danger);
-            this.call("bus_service", "addChannel", this.channel_warning);
-            this.call("bus_service", "addChannel", this.channel_info);
-            this.call("bus_service", "addChannel", this.channel_default);
-            this.call("bus_service", "on", "notification", this, this.bus_notification);
             this.call("bus_service", "startPolling");
+
+            if (this.call("bus_service", "isMasterTab")) {
+                this.call("bus_service", "addChannel", this.channel_success);
+                this.call("bus_service", "addChannel", this.channel_danger);
+                this.call("bus_service", "addChannel", this.channel_warning);
+                this.call("bus_service", "addChannel", this.channel_info);
+                this.call("bus_service", "addChannel", this.channel_default);
+            }
+            this.call("bus_service", "on", "notification", this, this.bus_notification);
         },
         bus_notification: function(notifications) {
             var self = this;
