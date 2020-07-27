@@ -11,7 +11,7 @@ odoo.define('web_view_searchpanel.KanbanView', function (require) {
     var pyUtils = require('web.py_utils');
 
     var KanbanView = require('web.KanbanView');
-    var SearchPanel = require('web.SearchPanel');
+    var SearchPanel = require('web_view_searchpanel.SearchPanel');
 
 
     KanbanView.include({
