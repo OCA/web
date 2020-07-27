@@ -1,10 +1,11 @@
-/* Global jscolor */
-odoo.define('web.web_widget_color', function(require) {
+/* global jscolor */
+odoo.define('web.web_widget_color', function (require) {
     "use strict";
 
     var basic_fields = require('web.basic_fields');
     var field_registry = require('web.field_registry');
     var ListRenderer = require('web.ListRenderer');
+    var pyUtils = require('web.py_utils');
 
     var FieldColor = basic_fields.FieldChar.extend({
         template: 'FieldColor',
@@ -14,9 +15,19 @@ odoo.define('web.web_widget_color', function(require) {
             // Do Nothing
         },
 
-        _renderEdit: function() {
+        _renderEdit: function () {
+            var isRequired = false;
+            if ('required' in this.attrs) {
+                isRequired = pyUtils.py_eval(this.attrs.required);
+            } else {
+                isRequired = this.field.required;
+            }
             this.$input = this.$el.find('input');
-            this.jscolor = new jscolor(this.$input[0], {hash:true, zIndex: 2000});
+            this.jscolor = new jscolor(this.$input[0], {
+                hash: true,
+                zIndex: 2000,
+                required: isRequired,
+            });
         },
     });
     field_registry.add('color', FieldColor);
@@ -30,15 +41,16 @@ odoo.define('web.web_widget_color', function(require) {
                 var recordWidgets = this.allFieldWidgets[record.id];
                 canUnselect = !_.some(recordWidgets, function (widget) {
                     var $el = widget.getFocusableElement();
-                    return ($el instanceof jQuery && $el.hasClass('jscolor-active'));
+                    return $el instanceof jQuery &&
+                        $el.hasClass('jscolor-active');
                 });
             }
 
             if (canUnselect) {
                 return this._super.apply(this, arguments);
-            } else {
-                return $.Deferred().resolve();
             }
+
+            return $.Deferred().resolve();
         },
     });
 

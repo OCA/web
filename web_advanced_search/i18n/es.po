@@ -9,15 +9,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-03 03:49+0000\n"
-"PO-Revision-Date: 2019-08-04 17:44+0000\n"
-"Last-Translator: eduardgm <eduard.garcia@qubiq.es>\n"
+"PO-Revision-Date: 2020-07-23 14:19+0000\n"
+"Last-Translator: claudiagn <claudia.gargallo@qubiq.es>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.7.1\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: web_advanced_search
 #. openerp-web
@@ -28,17 +28,17 @@ msgstr "Añadir un Filtro Avanzado"
 
 #. module: web_advanced_search
 #. openerp-web
-#: code:addons/web_advanced_search/static/src/js/web_advanced_search.js:162
+#: code:addons/web_advanced_search/static/src/js/web_advanced_search.js:175
 #, python-format
 msgid "is child of"
-msgstr ""
+msgstr "Es hijo de"
 
 #. module: web_advanced_search
 #. openerp-web
-#: code:addons/web_advanced_search/static/src/js/web_advanced_search.js:163
+#: code:addons/web_advanced_search/static/src/js/web_advanced_search.js:176
 #, python-format
 msgid "is parent of"
-msgstr ""
+msgstr "Es padre de"
 
 #~ msgid "is in selection"
 #~ msgstr "está en la selección"

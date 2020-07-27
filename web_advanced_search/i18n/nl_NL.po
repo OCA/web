@@ -28,14 +28,14 @@ msgstr ""
 
 #. module: web_advanced_search
 #. openerp-web
-#: code:addons/web_advanced_search/static/src/js/web_advanced_search.js:162
+#: code:addons/web_advanced_search/static/src/js/web_advanced_search.js:175
 #, python-format
 msgid "is child of"
 msgstr ""
 
 #. module: web_advanced_search
 #. openerp-web
-#: code:addons/web_advanced_search/static/src/js/web_advanced_search.js:163
+#: code:addons/web_advanced_search/static/src/js/web_advanced_search.js:176
 #, python-format
 msgid "is parent of"
 msgstr ""
