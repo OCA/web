@@ -60,6 +60,7 @@ setuptools.setup(
         'odoo12-addon-web_widget_image_webcam',
         'odoo12-addon-web_widget_many2many_tags_multi_selection',
         'odoo12-addon-web_widget_mermaid',
+        'odoo12-addon-web_widget_model_viewer',
         'odoo12-addon-web_widget_mpld3_chart',
         'odoo12-addon-web_widget_numeric_step',
         'odoo12-addon-web_widget_open_tab',
