@@ -49,7 +49,7 @@ Many engine developers have already started transitioning to glTF 2.0 to reap pe
 Usage
 =====
 
-Add ``widget="model_viewer"`` to your binary field in form view. Optionally you can set ``height`` and ``width`` attributes.
+Add ``widget="model_viewer"`` to your binary field in form view. Optionally you can set ``style`` and ``max_upload_size`` (in MB) attributes.
 
 Changelog
 =========
