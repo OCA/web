@@ -19,7 +19,7 @@
         </t>
         <!-- Search bar -->
         <t t-jquery="[t-as=app]" t-operation="before">
-            <div class="search-container form-row align-items-center mb-4 col-12">
+            <div class="search-container align-items-center col-12">
                 <div class="search-input col-md-10 ml-auto mr-auto mb-2">
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -34,8 +34,8 @@
                             class="form-control"
                         />
                     </div>
+                    <div class="search-results ml-auto mr-auto rounded" />
                 </div>
-                <div class="search-results col-md-10 ml-auto mr-auto" />
             </div>
         </t>
     </t>
