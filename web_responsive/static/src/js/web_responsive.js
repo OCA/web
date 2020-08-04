@@ -172,7 +172,8 @@ odoo.define("web_responsive", function(require) {
          */
         _searchFocus: function() {
             if (!config.device.isMobile) {
-                this.$search_input.focus();
+                // This timeout is necessary since the menu has a 100ms fading animation
+                setTimeout(() => this.$search_input.focus(), 100);
             }
         },
 
