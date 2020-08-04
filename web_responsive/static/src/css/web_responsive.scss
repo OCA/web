@@ -9,8 +9,8 @@ $chatter_zone_width: 35%;
     display: flex;
     flex-direction: column;
     height: calc(100vh - #{$o-navbar-height});
-    max-height: calc(100vh - #{$o-navbar-height});
     position: fixed;
+    margin: 0;
     width: 100vw;
     z-index: 100;
     // Inline style will override our `top`, so we need !important here
@@ -131,16 +131,47 @@ $chatter_zone_width: 35%;
         }
     }
 }
+.o_main_navbar {
+    color: color-yiq($o-brand-odoo);
 
+    > ul > li > a,
+    > ul > li > label {
+        color: color-yiq($o-brand-odoo);
+    }
+    .dropdown-menu.show {
+        max-height: calc(100vh - #{$o-navbar-height});
+    }
+}
 // Iconized full screen apps menu
 .o_menu_apps {
     .search-input:focus {
         border-color: $o-brand-primary;
     }
 
+    a.full {
+        width: $o-navbar-height;
+        text-align: center;
+    }
+
     .dropdown-menu.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .dropdown-menu {
         @include full-screen-dropdown();
 
+        opacity: 0;
+        visibility: hidden;
+        transition: visibility 100ms ease, opacity 100ms ease;
+        background: url("../img/home-menu-bg-overlay.svg"),
+            linear-gradient(
+                to bottom,
+                $o-brand-odoo,
+                desaturate(lighten($o-brand-odoo, 20%), 15)
+            );
+        background-size: cover;
+        border-radius: 0;
         // Display apps in a grid
         align-content: flex-start;
         display: flex;
@@ -160,6 +191,12 @@ $chatter_zone_width: 35%;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
+            background: none;
+            img {
+                box-shadow: none;
+                transition: 300ms ease;
+                transition-property: box-shadow, transform;
+            }
 
             // Size depends on screen
             width: 33.33333333%;
@@ -171,6 +208,11 @@ $chatter_zone_width: 35%;
             }
         }
 
+        .o_app:hover img {
+            transform: translateY(-3px);
+            box-shadow: 0 9px 12px -4px rgba(0, 0, 0, 0.3);
+        }
+
         // Hide app icons when searching
         .has-results ~ .o_app {
             display: none;
@@ -178,9 +220,15 @@ $chatter_zone_width: 35%;
 
         .o-app-icon {
             height: auto;
-            max-width: 7rem;
+            max-width: 6rem;
         }
 
+        .o-app-name {
+            color: white;
+            margin-top: 4px;
+            font-size: 1.25rem;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+        }
         // Search input for menus
         .form-row {
             width: 100%;
@@ -197,17 +245,22 @@ $chatter_zone_width: 35%;
             white-space: normal;
         }
 
+        .search-container {
+            margin-bottom: 1.5rem;
+        }
         // Allow to scroll only on results, keeping static search box above
         .search-container.has-results {
             height: 100%;
-
-            .search-input {
-                height: 3em;
-            }
-
+            margin-bottom: 0;
             .search-results {
-                height: calc(100% - 3em);
+                max-height: calc(100vh - 47px - 4em);
+                overflow-y: hidden;
+                overflow-x: scroll;
                 overflow: auto;
+                background: url("../img/home-menu-bg-overlay.svg"),
+                    linear-gradient(to bottom, gray("200"), gray("white"));
+                background-position: center;
+                background-size: cover;
             }
         }
     }
