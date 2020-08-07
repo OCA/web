@@ -1,0 +1,14 @@
+<template>
+
+    <t t-name="One2ManyProductPicker.QuickModifPrice.FormButtons">
+        <div class="oe_one2many_product_picker_form_buttons">
+            <button class="btn btn-success oe_record_change mr-2"><i class="fa fa-check" /></button>
+            <button class="btn btn-warning oe_record_discard ml-2"><i class="fa fa-times" /></button>
+        </div>
+    </t>
+
+    <t t-name="One2ManyProductPicker.QuickModifPrice.Price">
+        <div class="text-left"><strong>Price:</strong> <div class="oe_price" /></div>
+    </t>
+
+</template>

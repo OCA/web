@@ -1,0 +1,18 @@
+<template>
+
+    <t t-name="One2ManyProductPicker.QuickCreate.FormButtons">
+        <div class="oe_one2many_product_picker_form_buttons">
+            <t t-if="state == 'new'">
+                <button class="btn btn-primary oe_record_add">Add</button>
+            </t>
+            <t t-elif="state == 'dirty'">
+                <button class="btn btn-success oe_record_change mr-2"><i class="fa fa-check" /></button>
+                <button class="btn btn-warning oe_record_discard ml-2"><i class="fa fa-times" /></button>
+            </t>
+            <t t-else="">
+                <button class="btn btn-danger oe_record_remove w-100"><i class="fa fa-trash"/> Remove</button>
+            </t>
+        </div>
+    </t>
+
+</template>
