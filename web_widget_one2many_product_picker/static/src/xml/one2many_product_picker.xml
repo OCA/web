@@ -1,0 +1,112 @@
+<template>
+
+    <t t-name="One2ManyProductPicker.ControlPanelButtons">
+        <div class="text-center mx-auto">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <t t-if="search_category_names">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-search" />
+                        </button>
+                        <div class="dropdown-menu">
+                            <t t-foreach="search_category_names" t-as="name">
+                                <a t-attf-class="dropdown-item search_mode_option {{name_index == search_mode ? 'active' : ''}}" href="#" t-esc="name" />
+                            </t>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <button type="button" t-attf-class="btn btn-secondary btn-lg input-group-button">
+                            <i class="fa fa-search" />
+                        </button>
+                    </t>
+                </div>
+                <input type="search" class="form-control form-control-lg oe_search_input" placeholder="Search..." aria-label="Search..." aria-describedby="btnGroupAddon2" />
+                <div class="input-group-append">
+                    <button type="button" t-attf-class="btn btn-secondary btn-lg input-group-button oe_search_erase">
+                        <i class="fa fa-eraser" />
+                    </button>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="One2ManyProductPicker.ControlPanelGroupButtons">
+        <div class="oe_one2many_product_picker_groups">
+            <div class="btn-group" role="group" aria-label="Groups">
+                <t t-foreach="groups" t-as="group">
+                    <button type="button" t-att-name="group.name" t-attf-class="btn btn-lg btn-secondary rounded-0 border-top-0 {{group.active &amp;&amp; 'active' || ''}} oe_btn_search_group" t-att-data-group="group_index">
+                        <t t-esc="group.string" />
+                    </button>
+                </t>
+            </div>
+
+            <button type="button" class="btn btn-light btn-lg oe_btn_lines">
+                Lines
+                <span class="ml-1 badge badge-light">0</span>
+            </button>
+        </div>
+    </t>
+
+    <t t-name="One2ManyProductPicker.ButtonMaximize">
+        <button if="product_picker_maximize" class='o_fullscreen btn btn-primary position-absolute border border-dark py-1 px-2'>
+            <i class='fa fa-expand' />
+        </button>
+    </t>
+
+    <t t-name="One2ManyProductPicker.Total">
+        <div id="product_picker_total" class="text-right">
+            <h2>
+                Subtotal:
+                <span class="total_price" />
+            </h2>
+        </div>
+    </t>
+
+    <t t-name="One2ManyProductPicker.ExtraButtons">
+        <div class="w-100 row">
+            <button id="productPickerLoadMore" class="btn btn-lg btn-secondary m-auto d-none">Load More</button>
+        </div>
+    </t>
+
+    <t t-name="One2ManyProductPicker.FlipCard">
+        <div class="oe_flip_container p-1 col-4 col-sm-4 col-md-2 col-lg-2 col-xl-1">
+            <div t-attf-class="oe_flip_card {{!state &amp;&amp; 'disabled' || ''}}">
+                <div class="oe_flip_card_inner text-center">
+                    <div t-attf-class="oe_flip_card_front p-0 {{state &amp;&amp; !is_virtual &amp;&amp; 'border-primary' || ''}}">
+                        <t t-if="state">
+                            <t t-if="!is_virtual">
+                                <div class="position-absolute m-0 text-left">
+                                    <span t-att-data-field="field_map.product_uom_qty" t-attf-data-esc="str({{field_map.product_uom_qty}}) + ' x ' + {{field_map.product_uom}}.data.display_name" class="badge badge-primary font-weight-bold rounded-0 mt-1 p-2" />
+                                </div>
+                            </t>
+                            <div class="position-absolute m-0 text-left badge_price">
+                                <t t-if="show_discount">
+                                    <span t-att-data-field="field_map.discount" t-attf-data-esc="'-' + str({{field_map.discount}}) +'%'" class="badge badge-dark discount_price font-weight-bold rounded-0 mt-1 p-2" />
+                                    <span t-att-data-field="field_map.price_unit" t-attf-data-esc="'{{monetary('price_unit',true)}}'" class="badge font-weight-bold rounded-0 original_price" />
+                                    <span class="badge badge-info price_unit font-weight-bold rounded-0 mt-1 p-2" />
+                                </t>
+                                <t t-else="">
+                                    <span t-att-data-field="field_map.price_unit" t-attf-data-esc="'{{monetary('price_unit',true)}}'" class="badge badge-info price_unit font-weight-bold rounded-0 mt-1 p-2" />
+                                </t>
+                            </div>
+                            <span data-field="display_name" class="oe_one2many_product_picker_title position-absolute fixed-bottom p-1" data-esc="display_name" />
+                            <img alt="" class="img img-fluid" t-att-src="image(state.data[field_map.product].data.id,'image_medium')" t-att-data-src-alt="image(state.data[field_map.product].data.id,'image')" />
+                        </t>
+                        <t t-else="">
+                            <span class="oe_one2many_product_picker_title position-absolute fixed-bottom p-1" t-esc="record_search.display_name" />
+                            <img alt="" class="img img-fluid" t-att-src="image(record_search.id,'image_medium')" t-att-data-src-alt="image(record_search.id,'image')" />
+                        </t>
+                    </div>
+                    <div class="oe_flip_card_back">
+                        <widget name="product_picker_quick_create_form" t-att-compare-key="field_map.product_uom" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="One2ManyProductPicker.QuickModifPricePopup">
+        <div class="oe_product_picker_quick_modif_price shadow" />
+    </t>
+
+</template>
