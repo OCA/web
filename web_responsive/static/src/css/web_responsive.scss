@@ -38,7 +38,7 @@ $chatter_zone_width: 35%;
             display: flex;
 
             .navbar-toggler {
-                color: white;
+                color: gray("white");
             }
 
             .o_menu_sections,
@@ -144,9 +144,7 @@ $chatter_zone_width: 35%;
 }
 // Iconized full screen apps menu
 .o_menu_apps {
-    .search-input:focus {
-        border-color: $o-brand-primary;
-    }
+    user-select: none;
 
     a.full {
         width: $o-navbar-height;
@@ -181,21 +179,30 @@ $chatter_zone_width: 35%;
 
         @include media-breakpoint-up(lg) {
             padding: {
-                left: 20vw;
-                right: 20vw;
+                left: calc((100vw - 850px) / 2);
+                right: calc((100vw - 850px) / 2);
             }
         }
 
         .o_app {
             align-items: center;
             display: flex;
+            padding: 10px 0;
+            border-radius: 4px;
             flex-direction: column;
             justify-content: flex-start;
             background: none;
+            transition: 300ms ease;
+            transition-property: background-color;
+
             img {
                 box-shadow: none;
                 transition: 300ms ease;
                 transition-property: box-shadow, transform;
+            }
+
+            &:focus {
+                background-color: rgba(gray("white"), 0.05);
             }
 
             // Size depends on screen
@@ -210,7 +217,7 @@ $chatter_zone_width: 35%;
 
         .o_app:hover img {
             transform: translateY(-3px);
-            box-shadow: 0 9px 12px -4px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 9px 12px -4px rgba(gray("black"), 0.3);
         }
 
         // Hide app icons when searching
@@ -224,10 +231,10 @@ $chatter_zone_width: 35%;
         }
 
         .o-app-name {
-            color: white;
+            color: gray("white");
             margin-top: 4px;
             font-size: 1.25rem;
-            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+            text-shadow: 1px 1px 1px rgba(gray("black"), 0.4);
         }
         // Search input for menus
         .form-row {
@@ -240,20 +247,61 @@ $chatter_zone_width: 35%;
             background-repeat: no-repeat;
             background-size: contain;
             cursor: pointer;
-            display: flex;
             padding-left: 3rem;
             white-space: normal;
         }
 
         .search-container {
-            margin-bottom: 1.5rem;
+            padding-top: 1rem;
+            padding-bottom: 1.5rem;
+
+            .search-input {
+                margin-bottom: 0 !important;
+                padding: 0;
+
+                .input-group {
+                    box-shadow: inset 0 1px 0 rgba(gray("white"), 0.1),
+                        0 1px 0 rgba(gray("black"), 0.1);
+                    text-shadow: 0 1px 0 rgba(gray("black"), 0.5);
+                    border-radius: 4px;
+                    padding: 0.4rem 0.8rem;
+                    background-color: rgba(gray("white"), 0.1);
+
+                    @include media-breakpoint-up(md) {
+                        padding: 0.8rem 1.2rem;
+                    }
+
+                    .input-group-prepend {
+                        span.fa {
+                            color: gray("white");
+                            font-size: 1.5rem;
+                            margin-right: 1rem;
+                            padding-top: 1px;
+                        }
+                    }
+
+                    .form-control {
+                        height: 2rem;
+                        background: none;
+                        border: none;
+                        color: gray("white");
+                        display: block;
+                        padding: 1px 2px 2px 2px;
+                        box-shadow: none;
+
+                        &::placeholder {
+                            color: gray("white");
+                            opacity: 0.5;
+                        }
+                    }
+                }
+            }
         }
         // Allow to scroll only on results, keeping static search box above
         .search-container.has-results {
             height: 100%;
-            margin-bottom: 0;
             .search-results {
-                max-height: calc(100vh - 47px - 4em);
+                max-height: calc(100vh - 47px - 6em);
                 overflow-y: hidden;
                 overflow-x: scroll;
                 overflow: auto;
