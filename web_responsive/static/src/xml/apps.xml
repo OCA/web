@@ -8,6 +8,7 @@
             <attribute
                 name="t-attf-href"
             >#menu_id=#{app.menuID}&amp;action_id=#{app.actionID}</attribute>
+            <attribute name="draggable">false</attribute>
         </t>
         <!-- App icons should be more than a text -->
         <t t-jquery=".o_app &gt; t" t-operation="replace">
@@ -20,12 +21,10 @@
         <!-- Search bar -->
         <t t-jquery="[t-as=app]" t-operation="before">
             <div class="search-container align-items-center col-12">
-                <div class="search-input col-md-10 ml-auto mr-auto mb-2">
+                <div class="search-input">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <i class="fa fa-search" />
-                            </div>
+                            <span class="fa fa-search" />
                         </div>
                         <input
                             type="search"
@@ -43,6 +42,7 @@
     <t t-name="web_responsive.AppIcon">
         <img
             class="o-app-icon"
+            draggable="false"
             t-attf-src="data:image/png;base64,#{app.web_icon_data}"
         />
         <span class="o-app-name">
@@ -60,6 +60,7 @@
                 t-att-data-menu-id="menu.id"
                 t-att-data-action-id="menu.action_id"
                 t-att-data-parent-id="menu.parent_id[0]"
+                draggable="false"
                 t-raw="result.string"
             />
         </t>
