@@ -6,7 +6,7 @@
 
 {
     "name": "Advanced search",
-    "version": "12.0.1.1.2",
+    "version": "12.0.1.1.3",
     "author": "Therp BV, "
               "Tecnativa, "
               "Odoo Community Association (OCA)",
