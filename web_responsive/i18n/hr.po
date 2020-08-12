@@ -119,6 +119,7 @@ msgstr ""
 
 #. module: web_responsive
 #. openerp-web
+#: code:addons/web_responsive/static/src/xml/apps.xml:0
 #: code:addons/web_responsive/static/src/xml/document_viewer.xml:0
 #, python-format
 msgid "false"
