@@ -42,7 +42,6 @@ msgstr "Date de suppression : %s"
 #. module: web_widget_digitized_signature
 #: model:ir.model.fields,field_description:web_widget_digitized_signature.field_res_users__digital_signature
 #, fuzzy
-#| msgid "Signature"
 msgid "Digital Signature"
 msgstr "Signature"
 
