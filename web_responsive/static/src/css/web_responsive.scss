@@ -434,13 +434,24 @@ html .o_web_client .o_action_manager .o_action {
 
     // Form views
     .o_form_view {
+
+        display: block;
+
+        .o_form_sheet_bg {
+            max-width: 100%;
+            width: unset;
+            overflow-x: auto;
+        }
+
         .o_form_sheet {
             max-width: calc(100% - 32px);
+            width: unset;
             overflow-x: auto;
         }
 
         .oe_chatter {
             padding-top: 0;
+            width: unset;
         }
 
         .o_chatter_topbar {
