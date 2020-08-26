@@ -26,7 +26,9 @@ Web No Bubble
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
 This module removes from the web interface the bubbles introduced in the version 10.0.
-The help boxes are not removed though.
+The help boxes are not removed though. 
+
+[A screenshot would be useful here. It's hard for recent users to know what kind of bubbles were introduced back in the version 10.0]
 
 **Table of contents**
 
