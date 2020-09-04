@@ -52,7 +52,7 @@ odoo.define("web_drop_target", function(require) {
         },
 
         _get_drop_items: function(e) {
-            if (this.renderer.state.res_id) {
+            if (this._get_record_id()) {
                 var self = this,
                     dataTransfer = e.originalEvent.dataTransfer,
                     drop_items = [];
@@ -133,6 +133,12 @@ odoo.define("web_drop_target", function(require) {
             reader.readAsArrayBuffer(file);
         },
 
+        _get_record_id: function() {
+            // Implement when including this mixin. Return the record ID.
+            console.log("'_get_record_id': Not Implemented");
+            return false;
+        },
+
         _add_overlay: function() {
             var self = this;
             if (!this._drop_overlay) {
@@ -140,7 +146,7 @@ odoo.define("web_drop_target", function(require) {
                     view_manager = jQuery(".o_view_manager_content");
                 this._drop_overlay = jQuery(
                     qweb.render("web_drop_target.drop_overlay", {
-                        id: self.renderer.state.res_id,
+                        id: self._get_record_id(),
                     })
                 );
                 var o_content_position = o_content.position();
@@ -150,7 +156,7 @@ odoo.define("web_drop_target", function(require) {
                     width: view_manager.width(),
                     height: view_manager.height(),
                 });
-                if (!this.renderer.state.res_id) {
+                if (!this._get_record_id()) {
                     this._drop_overlay.css("background", "#FF000020");
                 }
                 o_content.append(this._drop_overlay);
@@ -180,6 +186,9 @@ odoo.define("web_drop_target", function(require) {
                         self.renderer.state.res_id
                     );
                 });
+            },
+            _get_record_id: function() {
+                return this.renderer.state.res_id;
             },
         })
     );
