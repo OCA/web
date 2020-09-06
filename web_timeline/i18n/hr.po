@@ -40,7 +40,6 @@ msgstr "Kalendar"
 #. module: web_timeline
 #: selection:ir.ui.view,type:0
 #, fuzzy
-#| msgid "Calendar"
 msgid "Calendar List"
 msgstr "Kalendar"
 

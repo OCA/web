@@ -232,20 +232,22 @@ html .o_web_client .o_main .o_main_content {
 }
 
 // Control panel (breadcrumbs, search box, buttons...)
-.o_search_options {
-    flex-grow: 1;
+.o_control_panel {
+    .o_search_options {
+        flex-grow: 1;
 
-    > div {
-        width: 100%;
+        > div {
+            width: 100%;
 
 
-        > .btn-group {
-            max-width: 33%;
+            > .btn-group {
+                max-width: 33%;
 
-            .o_dropdown_toggler_btn {
-                max-width: 100%;
-                overflow: hidden;
-                text-overflow: ellipsis;
+                .o_dropdown_toggler_btn {
+                    max-width: 100%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
             }
         }
     }
