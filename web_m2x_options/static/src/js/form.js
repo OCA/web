@@ -137,6 +137,9 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
 
         _search: function(search_val) {
             var self = this;
+            if (search_val === undefined) {
+                return this._super.apply(this, arguments);
+            }
             var def = new Promise(resolve => {
                 // Add options limit used to change number of selections record
                 // returned.
