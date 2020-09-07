@@ -6,7 +6,7 @@
     'name': 'Web Notify',
     'summary': """
         Send notification messages to user""",
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.0.1',
     'license': 'AGPL-3',
     'author': 'ACSONE SA/NV,'
               'AdaptiveCity,'
