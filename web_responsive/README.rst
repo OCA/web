@@ -131,8 +131,8 @@ Known issues / Roadmap
   you should reload the web client to get the full experience for that
   new size. This is Odoo's own limitation.
 * App navigation with keyboard.
-* Make it more beautiful. Maybe OCA-branded?
 * Handle long titles on forms in a better way
+* Standard sticky headers seems to not work properly on iOS Safari/Chrome (see #1626).
 
 Bug Tracker
 ===========
