@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-12-23 02:13+0000\n"
-"PO-Revision-Date: 2020-07-09 18:19+0000\n"
+"PO-Revision-Date: 2020-09-16 14:00+0000\n"
 "Last-Translator: claudiagn <claudia.gargallo@qubiq.es>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
@@ -39,33 +39,28 @@ msgstr "Información"
 
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users__notify_danger_channel_name
-#, fuzzy
 msgid "Notify Danger Channel Name"
-msgstr "Nombre del canal de avisos notificados"
+msgstr "Notificar el nombre del canal peligroso"
 
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users__notify_default_channel_name
-#, fuzzy
 msgid "Notify Default Channel Name"
-msgstr "Nombre del canal de información notificada"
+msgstr "Notificar el nombre del canal por defecto"
 
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users__notify_info_channel_name
-#, fuzzy
 msgid "Notify Info Channel Name"
-msgstr "Nombre del canal de información notificada"
+msgstr "Notificar la información del nombre del canal"
 
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users__notify_success_channel_name
-#, fuzzy
 msgid "Notify Success Channel Name"
-msgstr "Nombre del canal de información notificada"
+msgstr "Notificar el éxito del nombre del canal"
 
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users__notify_warning_channel_name
-#, fuzzy
 msgid "Notify Warning Channel Name"
-msgstr "Nombre del canal de avisos notificados"
+msgstr "Notificar el nombre del canal de advertencia"
 
 #. module: web_notify
 #: code:addons/web_notify/models/res_users.py:75
