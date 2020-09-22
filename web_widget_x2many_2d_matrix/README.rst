@@ -125,6 +125,7 @@ the field in the default function:
                     'planned_hours': 0,
                     'message_needaction': False,
                     'date_deadline': fields.Date.today(),
+                    'x_axis_label': f"This is {project.name}" # This could be computed too
                 })
                 # if the project doesn't have a task for the user,
                 # create a new one
@@ -141,11 +142,12 @@ Now in our wizard, we can use:
 
 .. code-block:: xml
 
-    <field name="task_ids" widget="x2many_2d_matrix" field_x_axis="project_id" field_y_axis="user_id" field_value="planned_hours">
+    <field name="task_ids" widget="x2many_2d_matrix" field_x_axis="project_id" field_label_x_axis="x_axis_label" field_y_axis="user_id" field_value="planned_hours">
         <tree>
             <field name="task_ids"/>
             <field name="project_id"/>
-            <field name="user_id"/>
+            <field name="x_axis_label"/>
+            <field name="user_id"/>,
             <field name="planned_hours"/>
         </tree>
     </field>

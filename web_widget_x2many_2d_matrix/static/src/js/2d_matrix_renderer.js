@@ -142,10 +142,9 @@ odoo.define("web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer", function(requi
                     .description;
             }
             if (_.isNull(description)) {
-                description = node.attrs.string || field.string;
+                description = node.attrs.label || node.attrs.string || field.string;
             }
             $th.text(description).data("name", name);
-
             if (
                 field.type === "float" ||
                 field.type === "integer" ||
@@ -223,7 +222,7 @@ odoo.define("web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer", function(requi
          */
         _renderLabelCell: function(record) {
             var $td = $("<td>");
-            var value = record.data[this.matrix_data.field_y_axis];
+            var value = record.data[this.matrix_data.field_label_y_axis];
             if (value.type === "record") {
                 // We have a related record
                 value = value.data.display_name;
