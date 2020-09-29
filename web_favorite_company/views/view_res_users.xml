@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<!--
+    Copyright (C) 2020 - Today: GRAP (http://www.grap.coop)
+    @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<odoo>
+
+    <record id="view_res_users_form_simple" model="ir.ui.view">
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif" />
+        <field name="arch" type="xml">
+            <field name="company_id" position="after">
+                <field name="favorite_company_ids" widget="many2many_tags"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

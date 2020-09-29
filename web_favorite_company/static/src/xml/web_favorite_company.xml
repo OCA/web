@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2020 - Today: GRAP (http://www.grap.coop)
+    @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<template>
+    <t t-extend="SwitchCompanyMenu">
+        <t t-jquery=".dropdown-menu" t-operation="append">
+            <t t-foreach="widget.getCompanies()" t-as="company">
+                <t t-call="web_favorite_company.CompanyIcon"/>
+            </t>
+        </t>
+    </t>
+
+    <!-- Separate Company icon template, for easier inheritance -->
+    <t t-name="web_favorite_company.CompanyIcon">
+        <a role="menuitem"
+                data-menu="company" t-att-data-company-id="company.id"
+                t-attf-class="dropdown-item o-company o-company-selected-#{widget.isCurrentCompany(company) ? 'yes' : 'no'}">
+            <div class="o-company-logo-container">
+                <img class="o-company-logo-img"
+                    t-attf-src="/web/image?model=res.company&amp;field=logo_web&amp;id=#{company.id}"/>
+            </div>
+            <div class="o-company-code" t-if="company.code">
+                <t t-esc="company.code"/>
+            </div>
+            <div class="o-company-name">
+                <t t-if="company.is_favorite">
+                    <span t-attf-class="o-company-favorite o-company-favorite-yes"/>
+                </t>
+                <t t-esc="company.name"/>
+            </div>
+        </a>
+    </t>
+
+</template>
