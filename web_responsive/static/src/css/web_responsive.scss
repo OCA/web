@@ -537,7 +537,7 @@ html .o_web_client .o_main .o_main_content {
                     flex: 0 0 $chatter_zone_width;
                     max-width: initial;
                     min-width: initial;
-                    overflow: auto;
+                    overflow: initial;
 
                     .o_chatter_header_container {
                         padding-top: $grid-gutter-width * 0.5;
