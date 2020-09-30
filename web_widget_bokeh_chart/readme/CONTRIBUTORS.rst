@@ -1,3 +1,3 @@
-* Jordi Ballester Alomar <jordi.ballester@eficent.com>
-* Lois Rilo Antelo <lois.rilo@eficent.com>
+* Jordi Ballester Alomar <jordi.ballester@forgeflow.com>
+* Lois Rilo Antelo <lois.rilo@forgeflow.com>
 * Artem Kostyuk <a.kostyuk@mobilunity.com>
