@@ -11,3 +11,6 @@ This project aims to deal with modules related to the webclient of Odoo. You'll 
 - Add widgets
 - Ease the import/export features
 - Generally add clientside functionality
+
+
+Need to add more functionality in this web application
