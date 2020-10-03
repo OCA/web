@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Best Free Web Development Course | webdevcourse.com</title>
+    <link rel="stylesheet" href="css/mystyle.css">
+    <link rel="stylesheet" media="screen and (max-width: 1170px)" href="css/phone.css">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@500&family=Baloo+Bhaina+2&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <nav id="navbar">
+        <div id="logo">
+            <img src="img/logo/logomain.png" alt="webdevcourse.com">
+        </div>
+        <ul>
+
+
+            <li class="item"><a href="#home">Home</a></li>
+            <li class="item"><a href="#packages-container">Packages</a></li>
+            <li class="item"><a href="#client-section">Our Clients</a></li>
+            <li class="item"><a href="#contact">Contact Us</a></li>
+
+        </ul>
+
+
+    </nav>
+    <section id="home">
+        <h1 class="h-primary">Welcome to my Web Development Course</h1>
+        <p>My self Lakshyadeep Gogoi. This is a online free web Development corse</p>
+        <p>Here we are learning about how to develop a creative and amazing website in a easy method. There are three
+            language HTML , CSS and JAVA. Now LET'S GO </p>
+        <button class="btn">Register Now</button>
+
+    </section>
+
+    <section id="packages-container">
+        <h1 class="h-primary center">
+            Our Packages
+        </h1>
+        <div id="packages">
+            <div class="box">
+                <img src="img/logo/html.png" alt="">
+                <h2 class="h-secondary center">HTML</h2>
+                <p class="center">HTML (HyperText Markup Language) is the most basic building block of the Web. It
+                    defines the meaning
+                    and structure of web content. Other technologies besides HTML are generally used to describe a web
+                    page's appearance/presentation (CSS) or functionality/behavior (JavaScript).
+                    "Hypertext" refers to links that connect web pages to one another, either within a single website or
+                    between websites.
+                    Links are a fundamental aspect of the Web. By uploading content to the Internet and linking it to
+                    pages created by other people, you become an active participant in the World Wide Web.</p>
+
+            </div>
+            <div class="box">
+                <img src="img/logo/css.png" alt="">
+                <h2 class="h-secondary center">CSS</h2>
+                <p class="center">CSS is used to define styles for your web pages, including the design, layout and
+                    variations in display for different devices and screen sizes.</p>
+
+            </div>
+            <div class="box">
+                <img src="img/logo/java.png" alt="">
+                <h2 class="h-secondary center">JAVA</h2>
+                <p class="center">Java is a general-purpose programming language that is class-based, object-oriented,
+                    and designed to have as few implementation dependencies as possible. It is intended to let
+                    application developers write once, run anywhere (WORA),[17] meaning that compiled Java code can run
+                    on all platforms that support Java without the need for recompilation.[18] Java applications are
+                    typically compiled to bytecode that can run on any Java virtual machine (JVM) regardless of the
+                    underlying computer architecture. The syntax of Java is similar to C and C++, but it has fewer
+                    low-level facilities than either of them. As of 2019, Java was one of the most popular programming
+                    languages in use
+                    according to GitHub,[19][20] particularly for client-server web applications, with a reported 9
+                    million developers.</p>
+
+            </div>
+        </div>
+    </section>
+    <section id="client-section">
+        <h1 class="h-primary center">Our Clients</h1>
+        <div id="clients">
+            <div class="client-item">
+                <img src="img/logo/oracle.jpg" alt="">
+            </div>
+            <div class="client-item">
+                <img src="img/logo/vscode.png" alt="">
+            </div>
+            <div class="client-item">
+                <img src="img/logo/llogo.png" alt="">
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h1 class="h-primary center">contact us</h1>
+        <div id="contact-box">
+            <form action="">
+                <div class="form-group">
+                    <label for="name">Name: </label>
+                    <input type="text" name="name" id="name" placeholder="Enter Your Name">
+                </div>
+                <div class="form-group">
+                    <label for="name">Email: </label>
+                    <input type="email" name="name" id="email" placeholder="Enter Your Email id">
+                </div>
+                <div class="form-group">
+                    <label for="name">Phone No.: </label>
+                    <input type="phone" name="name" id="phone" placeholder="Enter Your Phone number">
+                </div>
+                <div class="form-group">
+                    <label for="message">message: </label>
+                    <textarea name="message" id="message" cols="30" rows="10"></textarea>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="center">
+            copyright &copy; www.webdevcourse.com. All rights reserved
+        </div>
+    </footer>
+</body>
+
+</html>
