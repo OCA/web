@@ -147,7 +147,7 @@ Now in our wizard, we can use:
             <field name="task_ids"/>
             <field name="project_id"/>
             <field name="x_axis_label"/>
-            <field name="user_id"/>,
+            <field name="user_id"/>
             <field name="planned_hours"/>
         </tree>
     </field>
