@@ -8,7 +8,7 @@
         <xpath expr="." position="inside">
             <link
                 rel="stylesheet"
-                href="/web_sheet_full_width/static/src/css/web_sheet_full_width.less"
+                href="/web_sheet_full_width/static/src/scss/web_sheet_full_width.scss"
             />
         </xpath>
     </template>
