@@ -24,3 +24,4 @@
                     });
                 }
             });
+* Fix issue when trying to run in localhost with several databases. The browser doesn't send the cookie and web manifest returns 404.

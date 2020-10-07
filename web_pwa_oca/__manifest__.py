@@ -1,5 +1,6 @@
 # Copyright 2020 Lorenzo Battistini @ TAKOBI
 # Copyright 2020 Tecnativa - Alexandre D. Díaz
+# Copyright 2020 Tecnativa - João Marques
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 
 {
@@ -21,6 +22,7 @@
     "data": [
         "templates/assets.xml",
         "templates/service_worker.xml",
+        "views/res_config_settings_views.xml",
     ],
     'qweb': [
         'static/src/xml/pwa_install.xml',

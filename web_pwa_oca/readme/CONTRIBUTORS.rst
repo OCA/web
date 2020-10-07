@@ -5,3 +5,4 @@
 * `Tecnativa <https://tecnativa.com>`_:
 
   * Alexandre D. Díaz
+  * João Marques
