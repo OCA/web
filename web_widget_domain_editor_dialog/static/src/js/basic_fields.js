@@ -4,19 +4,19 @@
 odoo.define("web_widget_domain_editor_dialog.basic_fields", function(require) {
     "use strict";
 
-    var core = require("web.core");
-    var basic_fields = require("web.basic_fields");
-    var DomainEditorDialog = require("web_widget_domain_editor_dialog.DomainEditorDialog");
-    var _t = core._t;
+    const core = require("web.core");
+    const basic_fields = require("web.basic_fields");
+    const DomainEditorDialog = require("web_widget_domain_editor_dialog.DomainEditorDialog");
+    const _t = core._t;
 
     basic_fields.FieldDomain.include({
         _onShowSelectionButtonClick: function(event) {
             event.preventDefault();
-            var _this = this;
+            const _this = this;
             if (this.mode === "readonly") {
                 return this._super.apply(this, arguments);
             }
-            var dialog = new DomainEditorDialog(this, {
+            const dialog = new DomainEditorDialog(this, {
                 title: _t("Select records..."),
                 res_model: this._domainModel,
                 default_domain: this.value,
