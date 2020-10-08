@@ -1,0 +1,12 @@
+# Do NOT update manually; changes here will be overwritten by Copier
+_commit: v1.0.2
+_src_path: gh:oca/oca-addons-repo-template
+dependency_installation_mode: PIP
+include_wkhtmltopdf: false
+odoo_version: 14.0
+rebel_module_groups: []
+repo_description: "TODO: add repo description."
+repo_name: web
+repo_slug: web
+travis_apt_packages: []
+travis_apt_sources: []
