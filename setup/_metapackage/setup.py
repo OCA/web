@@ -45,6 +45,7 @@ setuptools.setup(
         'odoo11-addon-web_view_calendar_list',
         'odoo11-addon-web_view_transition',
         'odoo11-addon-web_widget_bokeh_chart',
+        'odoo11-addon-web_widget_child_selector',
         'odoo11-addon-web_widget_color',
         'odoo11-addon-web_widget_digitized_signature',
         'odoo11-addon-web_widget_domain_editor_dialog',
