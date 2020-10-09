@@ -127,7 +127,11 @@ odoo.define('web_pivot_computed_measure.PivotModel', function (require) {
                             resData, resComparison),
                     };
                 } else {
-                    dataPoint[cm.id] = py.eval(cm.operation, dataPoint);
+                    if (dataPoint.__count === 0) {
+                        dataPoint[cm.id] = false;
+                    } else {
+                        dataPoint[cm.id] = py.eval(cm.operation, dataPoint);
+                    }
                 }
             });
         },
