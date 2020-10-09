@@ -1,20 +1,19 @@
 /* Copyright 2020 Tecnativa - Alexandre Díaz
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html) */
 
-odoo.define('web_pivot_computed_measure.PivotController', function (require) {
+odoo.define("web_pivot_computed_measure.PivotController", function(require) {
     "use strict";
 
-    var core = require('web.core');
-    var config = require('web.config');
-    var PivotController = require('web.PivotController');
+    var core = require("web.core");
+    var config = require("web.config");
+    var PivotController = require("web.PivotController");
 
     var QWeb = core.qweb;
 
-
     PivotController.include({
         custom_events: _.extend({}, PivotController.prototype.custom_events, {
-            add_measure: '_onAddMeasure',
-            remove_measure: '_onRemoveMeasure',
+            add_measure: "_onAddMeasure",
+            remove_measure: "_onRemoveMeasure",
         }),
 
         computed_measures_open: false,
@@ -25,7 +24,7 @@ odoo.define('web_pivot_computed_measure.PivotController', function (require) {
          *
          * @override
          */
-        getContext: function () {
+        getContext: function() {
             var res = this._super.apply(this, arguments);
             var state = this.model.get();
             res.pivot_computed_measures = state.computed_measures;
@@ -47,27 +46,50 @@ odoo.define('web_pivot_computed_measure.PivotController', function (require) {
          *
          * @override
          */
-        _onButtonClick: function (event) {
+        _onButtonClick: function(event) {
             var $target = $(event.target);
             if ($target.parents("div[data-id='__computed__']").length) {
                 var hideMenu = false;
                 event.preventDefault();
 
-                if ($target.hasClass('dropdown-item') || $target.hasClass('o_submenu_switcher')) {
+                if (
+                    $target.hasClass("dropdown-item") ||
+                    $target.hasClass("o_submenu_switcher")
+                ) {
                     this.computed_measures_open = !this.computed_measures_open;
                     this._renderComputedMeasures();
-                } else if ($target.hasClass('o_add_computed_measure')) {
+                } else if ($target.hasClass("o_add_computed_measure")) {
                     hideMenu = true;
-                    var field1 = this.$buttons_measures_ex.find('#computed_measure_field_1').val();
-                    var field2 = this.$buttons_measures_ex.find('#computed_measure_field_2').val();
-                    var oper = this.$buttons_measures_ex.find('#computed_measure_operation').val();
+                    var field1 = this.$buttons_measures_ex
+                        .find("#computed_measure_field_1")
+                        .val();
+                    var field2 = this.$buttons_measures_ex
+                        .find("#computed_measure_field_2")
+                        .val();
+                    var oper = this.$buttons_measures_ex
+                        .find("#computed_measure_operation")
+                        .val();
                     if (oper === "custom") {
-                        oper = this.$buttons_measures_ex.find('#computed_measure_operation_custom').val();
+                        oper = this.$buttons_measures_ex
+                            .find("#computed_measure_operation_custom")
+                            .val();
                     }
-                    var name = this.$buttons_measures_ex.find('#computed_measure_name').val();
-                    var format = this.$buttons_measures_ex.find('#computed_measure_format').val();
-                    var uniqueId = (new Date()).getTime();
-                    this.model.createComputedMeasure(uniqueId, field1, field2, oper, name, format)
+                    var name = this.$buttons_measures_ex
+                        .find("#computed_measure_name")
+                        .val();
+                    var format = this.$buttons_measures_ex
+                        .find("#computed_measure_format")
+                        .val();
+                    var uniqueId = new Date().getTime();
+                    this.model
+                        .createComputedMeasure(
+                            uniqueId,
+                            field1,
+                            field2,
+                            oper,
+                            name,
+                            format
+                        )
                         .then(this.update.bind(this, {}, {reload: false}));
                 }
 
@@ -89,18 +111,36 @@ odoo.define('web_pivot_computed_measure.PivotController', function (require) {
                 this.$buttons_measures_ex.remove();
             }
             var self = this;
-            var measures = _.sortBy(_.pairs(_.omit(this.measures, '__count')), function (x) { return x[1].string.toLowerCase(); });
-            this.$buttons_measures_ex = $(QWeb.render('web_pivot_computed_measure.ExtendedMenu', {
-                isOpen: this.computed_measures_open,
-                debug: config.debug,
-                measures: measures,
-                computed_measures: _.map(_.reject(measures, function(item) { return !item[1].__computed_id; }), function(item) {
-                    item[1].active = _.contains(self.model.data.measures, item[0]);
-                    return item;
-                }),
-            }));
-            this.$buttons_measures_ex.find('#computed_measure_operation').on('change', this._onChangeComputedMeasureOperation.bind(this));
-            this.$buttons.find('.o_pivot_measures_list').append(this.$buttons_measures_ex);
+            var measures = _.sortBy(_.pairs(_.omit(this.measures, "__count")), function(
+                x
+            ) {
+                return x[1].string.toLowerCase();
+            });
+            this.$buttons_measures_ex = $(
+                QWeb.render("web_pivot_computed_measure.ExtendedMenu", {
+                    isOpen: this.computed_measures_open,
+                    debug: config.debug,
+                    measures: measures,
+                    computed_measures: _.map(
+                        _.reject(measures, function(item) {
+                            return !item[1].__computed_id;
+                        }),
+                        function(item) {
+                            item[1].active = _.contains(
+                                self.model.data.measures,
+                                item[0]
+                            );
+                            return item;
+                        }
+                    ),
+                })
+            );
+            this.$buttons_measures_ex
+                .find("#computed_measure_operation")
+                .on("change", this._onChangeComputedMeasureOperation.bind(this));
+            this.$buttons
+                .find(".o_pivot_measures_list")
+                .append(this.$buttons_measures_ex);
         },
 
         /**
@@ -131,15 +171,20 @@ odoo.define('web_pivot_computed_measure.PivotController', function (require) {
         _onChangeComputedMeasureOperation: function(ev) {
             var $option = $(ev.target.options[ev.target.selectedIndex]);
             if ($(ev.target).val() === "custom") {
-                this.$buttons_measures_ex.find('#container_computed_measure_operation_custom').removeClass('d-none');
+                this.$buttons_measures_ex
+                    .find("#container_computed_measure_operation_custom")
+                    .removeClass("d-none");
             } else {
-                var format = $option.data('format');
+                var format = $option.data("format");
                 if (format) {
-                    this.$buttons_measures_ex.find('#computed_measure_format').val(format);
+                    this.$buttons_measures_ex
+                        .find("#computed_measure_format")
+                        .val(format);
                 }
-                this.$buttons_measures_ex.find('#container_computed_measure_operation_custom').addClass('d-none');
+                this.$buttons_measures_ex
+                    .find("#container_computed_measure_operation_custom")
+                    .addClass("d-none");
             }
-        }
+        },
     });
-
 });
