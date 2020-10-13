@@ -222,6 +222,7 @@ var TranslateDialog = Dialog.extend({
                 return done;
             });
         });
+        this.view.reload();
         this.close();
     },
     on_button_close: function() {
