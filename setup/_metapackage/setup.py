@@ -24,6 +24,7 @@ setuptools.setup(
         'odoo13-addon-web_notify',
         'odoo13-addon-web_pwa_oca',
         'odoo13-addon-web_responsive',
+        'odoo13-addon-web_sheet_full_width',
         'odoo13-addon-web_timeline',
         'odoo13-addon-web_tree_dynamic_colored_field',
         'odoo13-addon-web_tree_many2one_clickable',
