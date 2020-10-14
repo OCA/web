@@ -62,7 +62,8 @@ var TranslateDialog = Dialog.extend({
     get_translatable_fields: function(parent) {
         var field_list = [];
         _.each(parent.renderer.state.fields, function(field, name){
-            if (field.translate == true && parent.renderer.state.getFieldNames().includes(name)){
+            var related_readonly = typeof field.related !== 'undefined' && field.readonly;
+            if (field.translate == true && !related_readonly && parent.renderer.state.getFieldNames().includes(name)){
                 field_list.push(name);
             }
         });
