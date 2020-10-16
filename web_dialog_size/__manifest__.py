@@ -15,7 +15,7 @@
     "Odoo Community Association (OCA)",
     "website": "http://github.com/OCA/web",
     "category": "web",
-    "version": "13.0.1.0.0",
+    "version": "14.0.1.0.0",
     "license": "AGPL-3",
     "depends": ["web"],
     "qweb": ["static/src/xml/web_dialog_size.xml"],
