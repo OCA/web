@@ -13,7 +13,7 @@
     "Tecnativa, "
     "Amaris, "
     "Odoo Community Association (OCA)",
-    "website": "http://github.com/OCA/web",
+    "website": "https://github.com/OCA/web",
     "category": "web",
     "version": "14.0.1.0.0",
     "license": "AGPL-3",
