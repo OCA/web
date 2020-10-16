@@ -1,4 +1,4 @@
-odoo.define("web_dialog_size.web_dialog_size", function(require) {
+odoo.define("web_dialog_size.web_dialog_size", function (require) {
     "use strict";
 
     var rpc = require("web.rpc");
@@ -10,16 +10,16 @@ odoo.define("web_dialog_size.web_dialog_size", function(require) {
     });
 
     Dialog.include({
-        willStart: function() {
+        willStart: function () {
             var self = this;
-            return this._super.apply(this, arguments).then(function() {
+            return this._super.apply(this, arguments).then(function () {
                 self.$modal
                     .find(".dialog_button_extend")
                     .on("click", self.proxy("_extending"));
                 self.$modal
                     .find(".dialog_button_restore")
                     .on("click", self.proxy("_restore"));
-                return config.then(function(r) {
+                return config.then(function (r) {
                     if (r.default_maximize) {
                         self._extending();
                     } else {
@@ -29,9 +29,9 @@ odoo.define("web_dialog_size.web_dialog_size", function(require) {
             });
         },
 
-        opened: function() {
+        opened: function () {
             return this._super.apply(this, arguments).then(
-                function() {
+                function () {
                     if (this.$modal) {
                         this.$modal.draggable({
                             handle: ".modal-header",
@@ -42,7 +42,7 @@ odoo.define("web_dialog_size.web_dialog_size", function(require) {
             );
         },
 
-        close: function() {
+        close: function () {
             if (this.$modal) {
                 var draggable = this.$modal.draggable("instance");
                 if (draggable) {
@@ -52,14 +52,14 @@ odoo.define("web_dialog_size.web_dialog_size", function(require) {
             return this._super.apply(this, arguments);
         },
 
-        _extending: function() {
+        _extending: function () {
             var dialog = this.$modal.find(".modal-dialog");
             dialog.addClass("dialog_full_screen");
             dialog.find(".dialog_button_extend").hide();
             dialog.find(".dialog_button_restore").show();
         },
 
-        _restore: function() {
+        _restore: function () {
             var dialog = this.$modal.find(".modal-dialog");
             dialog.removeClass("dialog_full_screen");
             dialog.find(".dialog_button_restore").hide();
