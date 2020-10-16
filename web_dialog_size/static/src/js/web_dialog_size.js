@@ -33,7 +33,7 @@ odoo.define("web_dialog_size.web_dialog_size", function (require) {
             return this._super.apply(this, arguments).then(
                 function () {
                     if (this.$modal) {
-                        this.$modal.draggable({
+                        this.$modal.find(">:first-child").draggable({
                             handle: ".modal-header",
                             helper: false,
                         });
@@ -44,9 +44,9 @@ odoo.define("web_dialog_size.web_dialog_size", function (require) {
 
         close: function () {
             if (this.$modal) {
-                var draggable = this.$modal.draggable("instance");
+                var draggable = this.$modal.find(">:first-child").draggable("instance");
                 if (draggable) {
-                    this.$modal.draggable("destroy");
+                    this.$modal.find(">:first-child").draggable("destroy");
                 }
             }
             return this._super.apply(this, arguments);
