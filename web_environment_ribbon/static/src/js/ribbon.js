@@ -5,7 +5,7 @@
    Copyright 2017 Xavier Jiménez <xavier.jimenez@qubiq.es>
    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
-odoo.define("web_environment_ribbon.ribbon", function(require) {
+odoo.define("web_environment_ribbon.ribbon", function (require) {
     "use strict";
 
     var rpc = require("web.rpc");
@@ -33,7 +33,7 @@ odoo.define("web_environment_ribbon.ribbon", function(require) {
         return image.style.color !== "rgb(255, 255, 255)";
     }
 
-    core.bus.on("web_client_ready", null, function() {
+    core.bus.on("web_client_ready", null, function () {
         var ribbon = $('<div class="test-ribbon hidden"/>');
         $("body").append(ribbon);
         ribbon.hide();
@@ -41,7 +41,7 @@ odoo.define("web_environment_ribbon.ribbon", function(require) {
         rpc.query({
             model: "web.environment.ribbon.backend",
             method: "get_environment_ribbon",
-        }).then(function(ribbon_data) {
+        }).then(function (ribbon_data) {
             // Ribbon name
             if (ribbon_data.name && ribbon_data.name !== "False") {
                 ribbon.html(ribbon_data.name);
