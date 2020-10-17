@@ -14,13 +14,13 @@ Web Responsive
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/13.0/web_responsive
+    :target: https://github.com/OCA/web/tree/14.0/web_responsive
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-13-0/web-13-0-web_responsive
+    :target: https://translation.odoo-community.org/projects/web-14-0/web-14-0-web_responsive
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/162/13.0
+    :target: https://runbot.odoo-community.org/runbot/162/14.0
     :alt: Try me on Runbot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
@@ -85,29 +85,29 @@ Features for computers:
 
 * Sticky chatter topbar
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/chatter_topbar.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/14.0/web_responsive/static/img/chatter_topbar.gif
 
 * AppMenu waits for action finished to show the view
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/appmenu.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/14.0/web_responsive/static/img/appmenu.gif
 
 * Sticky header & footer in list view
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/listview.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/14.0/web_responsive/static/img/listview.gif
 
 * Sticky statusbar in form view
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/formview.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/14.0/web_responsive/static/img/formview.gif
 
 * Followers and send button is displayed on mobile. Avatar is hidden.
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/chatter.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/14.0/web_responsive/static/img/chatter.gif
 
 * When the chatter is configured on the side part, the document viewer fills that
   part for side-by-side reading instead of full screen. You can still put it on full
   width preview clicking on the new maximize button.
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/document_viewer.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/14.0/web_responsive/static/img/document_viewer.gif
 
 **Table of contents**
 
@@ -140,7 +140,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_responsive%0Aversion:%2013.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_responsive%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -163,6 +163,7 @@ Contributors
 * Alexandre Díaz <dev@redneboa.es>
 * Mathias Markl <mathias.markl@mukit.at>
 * Iván Todorovich <ivan.todorovich@gmail.com>
+* Pierre Pizzetta <pierre@devreaction.com>
 
 Maintainers
 ~~~~~~~~~~~
@@ -188,6 +189,6 @@ Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-Yajo| |maintainer-Tardo| 
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/13.0/web_responsive>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/14.0/web_responsive>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

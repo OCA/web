@@ -17,4 +17,16 @@
             />
         </xpath>
     </template>
+    <template
+        id="responsive_web_layout"
+        inherit_id="web.layout"
+        name="Responsive Layout"
+    >
+        <xpath expr="//head" position="inside">
+            <meta
+                name="viewport"
+                content="width=device-width, initial-scale=1, user-scalable=no"
+            />
+        </xpath>
+    </template>
 </odoo>

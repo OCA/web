@@ -13,7 +13,6 @@ odoo.define("web_responsive", function (require) {
     const FormRenderer = require("web.FormRenderer");
     const Menu = require("web.Menu");
     const RelationalFields = require("web.relational_fields");
-    const Chatter = require("mail.Chatter");
     const ListRenderer = require("web.ListRenderer");
     const DocumentViewer = require("mail.DocumentViewer");
 
@@ -436,21 +435,6 @@ odoo.define("web_responsive", function (require) {
             );
             $buttons.addClass("dropdown-menu").appendTo($dropdown);
             return $dropdown;
-        },
-    });
-
-    // Chatter Hide Composer
-    Chatter.include({
-        _openComposer: function (options) {
-            if (
-                this._composer &&
-                options.isLog === this._composer.options.isLog &&
-                this._composer.$el.is(":visible")
-            ) {
-                this._closeComposer(false);
-            } else {
-                this._super.apply(this, arguments);
-            }
         },
     });
 

@@ -11,12 +11,12 @@ odoo.define("web_responsive.Discuss", function (require) {
     }
 
     const core = require("web.core");
-    const Discuss = require("mail.Discuss");
+    const Discuss = require("mail/static/src/widgets/discuss/discuss.js");
 
     const QWeb = core.qweb;
 
     Discuss.include({
-        contentTemplate: "mail.discuss_mobile",
+        contentTemplate: "KanbanView.MobileTabs",
         events: Object.assign({}, Discuss.prototype.events, {
             "click .o_mail_mobile_tab": "_onClickMobileTab",
             "click .o_mailbox_inbox_item": "_onClickMobileMailboxItem",

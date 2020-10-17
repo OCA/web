@@ -439,7 +439,7 @@ html .o_web_client .o_action_manager .o_action {
             overflow-x: auto;
         }
 
-        .oe_chatter {
+        .o_FormRenderer_chatterContainer {
             padding-top: 0;
         }
 
@@ -537,7 +537,7 @@ html .o_web_client .o_action_manager .o_action {
 
             // Full width in form sheets
             .o_form_sheet,
-            .oe_chatter {
+            .o_FormRenderer_chatterContainer {
                 min-width: auto;
                 max-width: 98%;
             }
@@ -549,7 +549,7 @@ html .o_web_client .o_action_manager .o_action {
                 }
             }
 
-            .o_chatter {
+            .o_FormRenderer_chatterContainer {
                 padding-top: initial;
 
                 // Display send button on small screens
@@ -601,7 +601,7 @@ html .o_web_client .o_action_manager .o_action {
                     }
                 }
 
-                .o_chatter {
+                .o_FormRenderer_chatterContainer {
                     border-left: 1px solid gray("400");
                     flex: 0 0 $chatter_zone_width;
                     max-width: initial;
