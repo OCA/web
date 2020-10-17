@@ -14,7 +14,7 @@ class ResUsers(models.Model):
     )
 
     def __init__(self, pool, cr):
-        """ Override of __init__ to add access rights.
+        """Override of __init__ to add access rights.
         Access rights are disabled by default, but allowed on some specific
         fields defined in self.SELF_{READ/WRITE}ABLE_FIELDS.
         """

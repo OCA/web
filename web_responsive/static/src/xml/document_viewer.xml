@@ -4,9 +4,9 @@
 <template>
     <t t-extend="DocumentViewer">
         <t t-jquery=".o_modal_fullscreen" t-operation="attributes">
-            <attribute
-                name="class"
-            >modal o_modal_fullscreen o_document_viewer o_responsive_document_viewer</attribute>
+            <attribute name="class">
+                modal o_modal_fullscreen o_document_viewer o_responsive_document_viewer
+            </attribute>
             <attribute name="data-backdrop">false</attribute>
         </t>
     </t>

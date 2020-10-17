@@ -2,7 +2,7 @@
  * Ported to 13.0 by Copyright 2020 Tecnativa - Alexandre Díaz
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
-odoo.define("web_responsive.Discuss", function(require) {
+odoo.define("web_responsive.Discuss", function (require) {
     "use strict";
 
     const config = require("web.config");
@@ -26,7 +26,7 @@ odoo.define("web_responsive.Discuss", function(require) {
         /**
          * @override
          */
-        init: function() {
+        init: function () {
             this._super.apply(this, arguments);
             this._currentState = this._defaultThreadID;
         },
@@ -34,7 +34,7 @@ odoo.define("web_responsive.Discuss", function(require) {
         /**
          * @override
          */
-        start: function() {
+        start: function () {
             this._$mainContent = this.$(".o_mail_discuss_content");
             return this._super
                 .apply(this, arguments)
@@ -44,7 +44,7 @@ odoo.define("web_responsive.Discuss", function(require) {
         /**
          * @override
          */
-        on_attach_callback: function() {
+        on_attach_callback: function () {
             if (this._thread && this._isInInboxTab()) {
                 this._threadWidget.scrollToPosition(
                     this._threadsScrolltop[this._thread.getID()]
@@ -54,7 +54,7 @@ odoo.define("web_responsive.Discuss", function(require) {
         /**
          * @override
          */
-        on_detach_callback: function() {
+        on_detach_callback: function () {
             if (this._isInInboxTab()) {
                 this._threadsScrolltop[
                     this._thread.getID()
@@ -70,16 +70,16 @@ odoo.define("web_responsive.Discuss", function(require) {
          * @private
          * @returns {Boolean} true iff we currently are in the Inbox tab
          */
-        _isInInboxTab: function() {
+        _isInInboxTab: function () {
             return _.contains(["mailbox_inbox", "mailbox_starred"], this._currentState);
         },
         /**
          * @override
          * @private
          */
-        _renderButtons: function() {
+        _renderButtons: function () {
             this._super.apply(this, arguments);
-            _.each(["dm_chat", "multi_user_channel"], type => {
+            _.each(["dm_chat", "multi_user_channel"], (type) => {
                 const selector = ".o_mail_discuss_button_" + type;
                 this.$buttons.on("click", selector, this._onAddThread.bind(this));
             });
@@ -91,7 +91,7 @@ odoo.define("web_responsive.Discuss", function(require) {
          * @override
          * @private
          */
-        _restoreThreadState: function() {
+        _restoreThreadState: function () {
             if (this._isInInboxTab()) {
                 this._super.apply(this, arguments);
             }
@@ -102,7 +102,7 @@ odoo.define("web_responsive.Discuss", function(require) {
          * @override
          * @private
          */
-        _selectMessage: function() {
+        _selectMessage: function () {
             this._super.apply(this, arguments);
             this.$(".o_mail_mobile_tabs").addClass("o_hidden");
         },
@@ -110,7 +110,7 @@ odoo.define("web_responsive.Discuss", function(require) {
          * @override
          * @private
          */
-        _setThread: function(threadID) {
+        _setThread: function (threadID) {
             const thread = this.call("mail_service", "getThread", threadID);
             this._thread = thread;
             if (thread.getType() !== "mailbox") {
@@ -126,7 +126,7 @@ odoo.define("web_responsive.Discuss", function(require) {
          * @override
          * @private
          */
-        _storeThreadState: function() {
+        _storeThreadState: function () {
             if (this._thread && this._isInInboxTab()) {
                 this._super.apply(this, arguments);
             }
@@ -138,7 +138,7 @@ odoo.define("web_responsive.Discuss", function(require) {
          * @override
          * @private
          */
-        _unselectMessage: function() {
+        _unselectMessage: function () {
             this._super.apply(this, arguments);
             this.$(".o_mail_mobile_tabs").removeClass("o_hidden");
         },
@@ -146,7 +146,7 @@ odoo.define("web_responsive.Discuss", function(require) {
          * @override
          * @private
          */
-        _updateThreads: function() {
+        _updateThreads: function () {
             return this._updateContent(this._currentState);
         },
         /**
@@ -157,7 +157,7 @@ odoo.define("web_responsive.Discuss", function(require) {
          *   'mailbox_starred', 'dm_chat'...).
          * @returns {Promise}
          */
-        _updateContent: function(type) {
+        _updateContent: function (type) {
             const inMailbox = type === "mailbox_inbox" || type === "mailbox_starred";
             if (!inMailbox && this._isInInboxTab()) {
                 // We're leaving the inbox, so store the thread scrolltop
@@ -172,12 +172,12 @@ odoo.define("web_responsive.Discuss", function(require) {
                 def = this._fetchAndRenderThread();
             } else {
                 const allChannels = this.call("mail_service", "getChannels");
-                const channels = _.filter(allChannels, function(channel) {
+                const channels = _.filter(allChannels, function (channel) {
                     return channel.getType() === type;
                 });
                 def = this.call("mail_service", "getChannelPreviews", channels);
             }
-            return def.then(previews => {
+            return def.then((previews) => {
                 // Update content
                 if (inMailbox) {
                     if (!previouslyInInbox) {
@@ -203,10 +203,7 @@ odoo.define("web_responsive.Discuss", function(require) {
                 }
 
                 // Update control panel
-                this.$buttons
-                    .find("button")
-                    .removeClass("d-block")
-                    .addClass("d-none");
+                this.$buttons.find("button").removeClass("d-block").addClass("d-none");
                 this.$buttons
                     .find(".o_mail_discuss_button_" + type)
                     .removeClass("d-none")
@@ -255,11 +252,8 @@ odoo.define("web_responsive.Discuss", function(require) {
          * @override
          * @private
          */
-        _onAddThread: function() {
-            this.$(".o_mail_add_thread")
-                .show()
-                .find("input")
-                .focus();
+        _onAddThread: function () {
+            this.$(".o_mail_add_thread").show().find("input").focus();
         },
         /**
          * Switches to the clicked thread in the Inbox page (Inbox or Starred).
@@ -267,7 +261,7 @@ odoo.define("web_responsive.Discuss", function(require) {
          * @private
          * @param {MouseEvent} ev
          */
-        _onClickMobileMailboxItem: function(ev) {
+        _onClickMobileMailboxItem: function (ev) {
             const mailboxID = $(ev.currentTarget).data("type");
             this._setThread(mailboxID);
             this._updateContent(this._thread.getID());
@@ -278,7 +272,7 @@ odoo.define("web_responsive.Discuss", function(require) {
          * @private
          * @param {MouseEvent} ev
          */
-        _onClickMobileTab: function(ev) {
+        _onClickMobileTab: function (ev) {
             const type = $(ev.currentTarget).data("type");
             if (type === "mailbox") {
                 const inbox = this.call("mail_service", "getMailbox", "inbox");
@@ -292,7 +286,7 @@ odoo.define("web_responsive.Discuss", function(require) {
          * @private
          * @param {MouseEvent} ev
          */
-        _onClickMobileMailPreview: function(ev) {
+        _onClickMobileMailPreview: function (ev) {
             const threadID = $(ev.currentTarget).data("preview-id");
             this.call("mail_service", "openThreadWindow", threadID);
         },
