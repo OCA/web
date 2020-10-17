@@ -3,6 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/OCA/web/badge.png?branch=13.0)](https://coveralls.io/r/OCA/web?branch=13.0)
 
 Web addons for Odoo
+Web addons for Odoo. This project aims to deal with modules related to the webclient of Odoo. You'll find modules that: Add facilities to the UI;
 ===================
 
 This project aims to deal with modules related to the webclient of Odoo. You'll find modules that:
