@@ -9,37 +9,12 @@ from odoo.http import request, Controller, route
 
 class PWA(Controller):
     def _get_pwa_scripts(self):
-        """ Scripts to be imported in the service worker (Order is important) """
+        """Scripts to be imported in the service worker (Order is important)"""
         return [
             "/web/static/lib/underscore/underscore.js",
             "/web_pwa_oca/static/src/js/worker/libs/class.js",
-            "/web_pwa_oca/static/src/js/worker/base/tools.js",
-            "/web_pwa_oca/static/src/js/worker/base/cache_manager.js",
             "/web_pwa_oca/static/src/js/worker/pwa.js",
         ]
-
-    def _get_asset_urls(self, asset_xml_id):
-        """Get all urls that have 'asset_xml_id'"""
-        qweb_sudo = request.env["ir.qweb"].sudo()
-        assets = qweb_sudo._get_asset_nodes(asset_xml_id, {}, True, True)
-        urls = []
-        for asset in assets:
-            if asset[0] == "link":
-                urls.append(asset[1]["href"])
-            if asset[0] == "script":
-                urls.append(asset[1]["src"])
-        return urls
-
-    def _get_pwa_params(self):
-        """Get javascript PWA class initialzation params"""
-        urls = []
-        urls.extend(self._get_asset_urls("web.assets_common"))
-        urls.extend(self._get_asset_urls("web.assets_backend"))
-        version_list = []
-        for url in urls:
-            version_list.append(url.split("/")[3])
-        cache_version = "-".join(version_list)
-        return [cache_version, urls]
 
     @route("/service-worker.js", type="http", auth="public")
     def render_service_worker(self):
@@ -52,6 +27,10 @@ class PWA(Controller):
             },
             headers=[("Content-Type", "text/javascript;charset=utf-8")],
         )
+
+    def _get_pwa_params(self):
+        """Get javascript PWA class initialzation params"""
+        return {}
 
     def _get_pwa_manifest_icons(self, pwa_icon):
         icons = []
@@ -126,7 +105,7 @@ class PWA(Controller):
             "name": pwa_name,
             "short_name": pwa_short_name,
             "icons": self._get_pwa_manifest_icons(pwa_icon),
-            "start_url": "/web",
+            "start_url": '/web',
             "display": "standalone",
             "background_color": background_color,
             "theme_color": theme_color,
@@ -137,5 +116,5 @@ class PWA(Controller):
         """Returns the manifest used to install the page as app"""
         return request.make_response(
             json.dumps(self._get_pwa_manifest()),
-            headers=[("Content-Type", "text/javascript;charset=utf-8")],
+            headers=[("Content-Type", "application/json;charset=utf-8")],
         )

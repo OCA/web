@@ -1,62 +1,35 @@
+"use strict";
+/* eslint strict: ["error", "global"] */
+/* eslint-disable no-undef, no-empty-function, no-implicit-globals,
+no-unused-vars */
 /* Copyright 2020 Tecnativa - Alexandre D. Díaz
  * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
-"use strict";
 
+/**
+ * Services workers are a piece of software separated from the user page.
+ * Here can't use 'Odoo Bootstrap', so we can't work with 'require' system.
+ * When the service worker is called to be installed from the "pwa_manager"
+ * this class is instantiated.
+ */
 var PWA = OdooClass.extend({
 
-    /**
-     * @param {String} cache_name
-     * @param {Array[String]} prefetched_urls
-     */
-    init: function (cache_name, prefetched_urls) {
-        this._cache_name = cache_name;
-        this._prefetched_urls = prefetched_urls;
-        this._cache = new CacheManager();
-        this._cacheLoadPromise = this._cache.initCache(this._cache_name);
+    // eslint-disable-next-line
+    init: function (params) {
+        // To be overridden
     },
 
     /**
      * @returns {Promise}
      */
     installWorker: function () {
-        return this._prefetchData();
+        return Promise.resolve();
     },
 
     /**
      * @returns {Promise}
      */
     activateWorker: function () {
-        return new Promise(async resolve => {
-            await this._cacheLoadPromise;
-            await this._cache.clean();
-            return resolve();
-        });
-    },
-
-    /**
-     * @returns {Promise[Response]}
-     */
-    processRequest: function (request) {
-        if (request.method === 'GET' && (request.cache !== 'only-if-cached' || request.mode === 'same-origin')) {
-            // Strategy: Cache First
-            return this._cache.get(this._cache_name).match(request).then(function(response){
-                return response || fetch(request);
-            });
-        }
-        // Default browser behaviour
-        return fetch(request);
-    },
-
-    /**
-     * @returns {Promise}
-     */
-    _prefetchData: function() {
-        // Prefetch URL's
-        return new Promise(resolve => {
-            this._cacheLoadPromise.then(async () => {
-                return resolve(await this._cache.get(this._cache_name).addAll(this._prefetched_urls));
-            });
-        });
+        return Promise.resolve();
     },
 
 });

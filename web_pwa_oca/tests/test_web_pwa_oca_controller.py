@@ -66,7 +66,9 @@ class TestUi(odoo.tests.HttpCase):
 
         self.assertEquals(manifest_content["icons"][0]["src"], "/web_pwa_oca/icon.svg")
         self.assertTrue(manifest_content["icons"][0]["type"].startswith("image/svg"))
-        self.assertEquals(manifest_content["icons"][0]["sizes"], "128x128 144x144 152x152 192x192 256x256 512x512")
+        self.assertEquals(
+            manifest_content["icons"][0]["sizes"],
+            "128x128 144x144 152x152 192x192 256x256 512x512")
 
         # Get the icon and compare it
         icon_data = self.url_open("/web_pwa_oca/icon.svg")

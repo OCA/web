@@ -2,7 +2,7 @@
 <odoo>
 
     <template id="pwa_init" name="PWA Initialization">
-        const oca_pwa = new PWA(...<t t-esc="str(pwa_params)"/>);
+        const oca_pwa = new PWA(<t t-esc="str(pwa_params)"/>);
     </template>
     <template id="pwa_core_events" name="PWA Core Events">
         <t t-set="evt_install">
@@ -14,11 +14,10 @@
             <t t-raw="evt_install" />
         });
 
-        <t t-set="evt_fetch">
-            evt.respondWith(oca_pwa.processRequest(evt.request));
-        </t>
+        <!-- This is necessary to get PWA installable.
+            Other modules can add logic using 'evt_fetch' -->
+        <t t-set="evt_fetch" />
         self.addEventListener('fetch', evt =&gt; {
-            console.log('[ServiceWorker] Fetching...');
             <t t-raw="evt_fetch" />
         });
 

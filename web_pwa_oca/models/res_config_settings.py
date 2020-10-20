@@ -12,6 +12,7 @@ from odoo.tools.mimetypes import guess_mimetype
 
 class ResConfigSettings(models.TransientModel):
     _inherit = "res.config.settings"
+    _pwa_icon_url_base = "/web_pwa_oca/icon"
 
     pwa_name = fields.Char(
         "Progressive Web App Name", help="Name of the Progressive Web Application"
@@ -21,20 +22,20 @@ class ResConfigSettings(models.TransientModel):
         help="Short Name of the Progressive Web Application",
     )
     pwa_icon = fields.Binary("Icon", readonly=False)
-    _pwa_icon_url_base = "/web_pwa_oca/icon"
+    pwa_background_color = fields.Char("Background Color")
+    pwa_theme_color = fields.Char("Theme Color")
 
     @api.model
     def get_values(self):
+        config_parameter_obj_sudo = self.env["ir.config_parameter"].sudo()
         res = super(ResConfigSettings, self).get_values()
         res["pwa_name"] = (
-            self.env["ir.config_parameter"]
-            .sudo()
-            .get_param("pwa.manifest.name", default="")
+            config_parameter_obj_sudo.get_param(
+                "pwa.manifest.name", default="Odoo PWA")
         )
         res["pwa_short_name"] = (
-            self.env["ir.config_parameter"]
-            .sudo()
-            .get_param("pwa.manifest.short_name", default="")
+            config_parameter_obj_sudo.get_param(
+                "pwa.manifest.short_name", default="Odoo")
         )
         pwa_icon_ir_attachment = (
             self.env["ir.attachment"]
@@ -43,6 +44,14 @@ class ResConfigSettings(models.TransientModel):
         )
         res["pwa_icon"] = (
             pwa_icon_ir_attachment.datas if pwa_icon_ir_attachment else False
+        )
+        res["pwa_background_color"] = (
+            config_parameter_obj_sudo.get_param(
+                "pwa.manifest.background_color", default="#2E69B5")
+        )
+        res["pwa_theme_color"] = (
+            config_parameter_obj_sudo.get_param(
+                "pwa.manifest.theme_color", default="#2E69B5")
         )
         return res
 
@@ -89,12 +98,19 @@ class ResConfigSettings(models.TransientModel):
 
     @api.model
     def set_values(self):
+        config_parameter_obj_sudo = self.env["ir.config_parameter"].sudo()
         res = super(ResConfigSettings, self).set_values()
-        self.env["ir.config_parameter"].sudo().set_param(
+        config_parameter_obj_sudo.set_param(
             "pwa.manifest.name", self.pwa_name
         )
-        self.env["ir.config_parameter"].sudo().set_param(
+        config_parameter_obj_sudo.set_param(
             "pwa.manifest.short_name", self.pwa_short_name
+        )
+        config_parameter_obj_sudo.set_param(
+            "pwa.manifest.background_color", self.pwa_background_color
+        )
+        config_parameter_obj_sudo.set_param(
+            "pwa.manifest.theme_color", self.pwa_theme_color
         )
         # Retrieve previous value for pwa_icon from ir_attachment
         pwa_icon_ir_attachments = (
