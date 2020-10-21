@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 Tecnativa - João Marques
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).-->
+<odoo>
+    <template
+        id="assets_tests"
+        inherit_id="web.assets_tests"
+        name="Web Disable Export Group Assets Tests"
+    >
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/web_disable_export_group/static/src/js/web_disable_export_group_tour.js"
+            />
+        </xpath>
+    </template>
+</odoo>
