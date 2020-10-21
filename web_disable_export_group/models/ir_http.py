@@ -9,7 +9,7 @@ class Http(models.AbstractModel):
     _inherit = "ir.http"
 
     def session_info(self):
-        res = super(Http, self).session_info()
+        res = super().session_info()
         user = request.env.user
         res.update(
             {
