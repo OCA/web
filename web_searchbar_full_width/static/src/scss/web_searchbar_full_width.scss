@@ -1,4 +1,9 @@
 .o_control_panel {
+
+    >div:first-of-type {
+        display: block;
+    }
+
 	.breadcrumb {
 		width: 100%;
 		margin-bottom: 5px;
