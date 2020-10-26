@@ -14,10 +14,10 @@ web_m2x_options
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/13.0/web_m2x_options
+    :target: https://github.com/OCA/web/tree/14.0/web_m2x_options
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-13-0/web-13-0-web_m2x_options
+    :target: https://translation.odoo-community.org/projects/web-14-0/web-14-0-web_m2x_options
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
     :target: https://runbot.odoo-community.org/runbot/162/13.0
@@ -178,6 +178,7 @@ Contributors
   * David Vidal <david.vidal@tecnativa.com>
   * Ernesto Tejeda <ernesto.tejeda87@gmail.com>
 * Bhavesh Odedra <bodedra@opensourceintegrators.com>
+* Dhara Solanki <dhara.solanki@initos.com>
 
 Maintainers
 ~~~~~~~~~~~
