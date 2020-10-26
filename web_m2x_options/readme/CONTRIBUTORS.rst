@@ -10,3 +10,4 @@
   * David Vidal <david.vidal@tecnativa.com>
   * Ernesto Tejeda <ernesto.tejeda87@gmail.com>
 * Bhavesh Odedra <bodedra@opensourceintegrators.com>
+* Dhara Solanki <dhara.solanki@initos.com> (http://www.initos.com)
