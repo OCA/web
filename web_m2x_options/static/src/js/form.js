@@ -1,7 +1,7 @@
 /* Copyright 2016 0k.io,ACSONE SA/NV
  *  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
-odoo.define("web_m2x_options.web_m2x_options", function(require) {
+odoo.define("web_m2x_options.web_m2x_options", function (require) {
     "use strict";
 
     var core = require("web.core"),
@@ -23,7 +23,7 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
 
     var M2ODialog = Dialog.extend({
         template: "M2ODialog",
-        init: function(parent, name, value) {
+        init: function (parent, name, value) {
             this.name = name;
             this.value = value;
             this._super(parent, {
@@ -33,8 +33,8 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
                     {
                         text: _t("Create"),
                         classes: "btn-primary",
-                        click: function() {
-                            if (this.$("input").val() !== "") {
+                        click: function () {
+                            if (this.$("input").val()) {
                                 this.trigger_up("quick_create", {
                                     value: this.$("input").val(),
                                 });
@@ -48,7 +48,7 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
                         text: _t("Create and edit"),
                         classes: "btn-primary",
                         close: true,
-                        click: function() {
+                        click: function () {
                             this.trigger_up("search_create_popup", {
                                 view_type: "form",
                                 value: this.$("input").val(),
@@ -62,7 +62,7 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
                 ],
             });
         },
-        start: function() {
+        start: function () {
             this.$("p").text(
                 _.str.sprintf(
                     _t(
@@ -77,14 +77,14 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
          * @override
          * @param {Boolean} isSet
          */
-        close: function(isSet) {
+        close: function (isSet) {
             this.isSet = isSet;
             this._super.apply(this, arguments);
         },
         /**
          * @override
          */
-        destroy: function() {
+        destroy: function () {
             if (!this.isSet) {
                 this.trigger_up("closed_unset");
             }
@@ -93,18 +93,18 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
     });
 
     FieldMany2One.include({
-        start: function() {
+        start: function () {
             this._super.apply(this, arguments);
             return this.get_options();
         },
 
-        get_options: function() {
+        get_options: function () {
             var self = this;
             if (_.isUndefined(this.ir_options_loaded)) {
                 this.ir_options_loaded = $.Deferred();
                 this.ir_options = {};
-                web_m2x_options.then(function(records) {
-                    _(records).each(function(record) {
+                web_m2x_options.then(function (records) {
+                    _(records).each(function (record) {
                         self.ir_options[record.key] = record.value;
                     });
                     self.ir_options_loaded.resolve();
@@ -113,7 +113,7 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
             return $.when();
         },
 
-        is_option_set: function(option) {
+        is_option_set: function (option) {
             if (_.isUndefined(option)) return false;
             if (typeof option === "string")
                 return option === "true" || option === "True";
@@ -121,7 +121,7 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
             return false;
         },
 
-        _onInputFocusout: function() {
+        _onInputFocusout: function () {
             var m2o_dialog_opt =
                 this.is_option_set(this.nodeOptions.m2o_dialog) ||
                 (_.isUndefined(this.nodeOptions.m2o_dialog) &&
@@ -135,12 +135,12 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
             }
         },
 
-        _search: function(search_val) {
+        _search: function (search_val) {
             var self = this;
             if (search_val === undefined) {
                 return this._super.apply(this, arguments);
             }
-            var def = new Promise(resolve => {
+            var def = new Promise((resolve) => {
                 // Add options limit used to change number of selections record
                 // returned.
                 if (!_.isUndefined(self.ir_options["web_m2x_options.limit"])) {
@@ -173,9 +173,9 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
                         limit: self.limit + 1,
                         context: context,
                     },
-                }).then(result => {
+                }).then((result) => {
                     // Possible selections for the m2o
-                    var values = _.map(result, x => {
+                    var values = _.map(result, (x) => {
                         x[1] = self._getDisplayName(x[1]);
                         return {
                             label:
@@ -197,7 +197,7 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
                             method: "search_read",
                             fields: [self.field_color],
                             domain: [["id", "in", value_ids]],
-                        }).then(objects => {
+                        }).then((objects) => {
                             for (var index in objects) {
                                 for (var index_value in values) {
                                     if (values[index_value].id === objects[index].id) {
@@ -240,7 +240,7 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
                         if (can_search_more || search_more_undef || search_more) {
                             values.push({
                                 label: _t("Search More..."),
-                                action: function() {
+                                action: function () {
                                     var prom = [];
                                     if (search_val !== "") {
                                         prom = self._rpc({
@@ -255,10 +255,10 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
                                             },
                                         });
                                     }
-                                    Promise.resolve(prom).then(function(results) {
+                                    Promise.resolve(prom).then(function (results) {
                                         var dynamicFilters = [];
                                         if (results) {
-                                            var ids = _.map(results, function(x) {
+                                            var ids = _.map(results, function (x) {
                                                 return x[0];
                                             });
                                             if (search_val) {
@@ -290,7 +290,7 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
 
                     var create_enabled = self.can_create && !self.nodeOptions.no_create;
                     // Quick create
-                    var raw_result = _.map(result, function(x) {
+                    var raw_result = _.map(result, function (x) {
                         return x[1];
                     });
                     var quick_create = self.is_option_set(self.nodeOptions.create),
@@ -317,9 +317,7 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
                         values.push({
                             label: _.str.sprintf(
                                 _t('Create "<strong>%s</strong>"'),
-                                $("<span />")
-                                    .text(search_val)
-                                    .html()
+                                $("<span />").text(search_val).html()
                             ),
                             action: self._quickCreate.bind(self, search_val),
                             classname: "o_m2o_dropdown_option",
@@ -351,7 +349,7 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
                         !self.nodeOptions.no_create_edit &&
                         show_create_edit
                     ) {
-                        var createAndEditAction = function() {
+                        var createAndEditAction = function () {
                             // Clear the value in case the user clicks on discard
                             self.$("input").val("");
                             return self._searchCreatePopup(
@@ -386,13 +384,13 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
             "click .badge": "_onOpenBadge",
         }),
 
-        _onDeleteTag: function(event) {
+        _onDeleteTag: function (event) {
             var result = this._super.apply(this, arguments);
             event.stopPropagation();
             return result;
         },
 
-        is_option_set: function(option) {
+        is_option_set: function (option) {
             if (_.isUndefined(option)) return false;
             if (typeof option === "string")
                 return option === "true" || option === "True";
@@ -400,7 +398,7 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
             return false;
         },
 
-        _onOpenBadge: function(event) {
+        _onOpenBadge: function (event) {
             var self = this;
             var open = self.nodeOptions && self.is_option_set(self.nodeOptions.open);
             if (open) {
@@ -415,7 +413,7 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
                         method: "get_formview_action",
                         args: [[id]],
                         context: context,
-                    }).then(function(action) {
+                    }).then(function (action) {
                         self.trigger_up("do_action", {action: action});
                     });
                 } else {
@@ -431,7 +429,7 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
                             method: "check_access_rights",
                             kwargs: {operation: "write", raise_exception: false},
                         })
-                    ).then(function(view_id, write_access) {
+                    ).then(function (view_id, write_access) {
                         var can_write =
                             "can_write" in self.attrs
                                 ? JSON.parse(self.attrs.can_write)
@@ -443,7 +441,7 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
                             title: _t("Open: ") + self.string,
                             view_id: view_id,
                             readonly: !can_write || !write_access,
-                            on_saved: function(record, changed) {
+                            on_saved: function (record, changed) {
                                 if (changed) {
                                     self._setValue(self.value.data, {
                                         forceChange: true,
@@ -463,7 +461,7 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
             "click .badge": "_onOpenBadge",
         }),
 
-        _onOpenBadge: function(event) {
+        _onOpenBadge: function (event) {
             var open = this.is_option_set(this.nodeOptions.open);
             var no_color_picker = this.is_option_set(this.nodeOptions.no_color_picker);
             this._super.apply(this, arguments);
