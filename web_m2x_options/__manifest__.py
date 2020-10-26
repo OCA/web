@@ -5,12 +5,13 @@
 
 {
     "name": "web_m2x_options",
-    "version": "13.0.1.0.2",
+    "version": "14.0.1.0.0",
     "category": "Web",
     "author": "ACSONE SA/NV, "
     "0k.io, "
     "Tecnativa, "
-    "Odoo Community Association (OCA)",
+    "Odoo Community Association (OCA),"
+    "InitOS GmbH",
     "website": "https://github.com/OCA/web",
     "license": "AGPL-3",
     "depends": ["web"],
