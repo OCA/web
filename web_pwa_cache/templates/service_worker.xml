@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="pwa_core_events" inherit_id="web_pwa_oca.pwa_core_events" >
+
+        <xpath expr="//t[@t-set='evt_fetch']" position="inside">
+            evt.respondWith(oca_pwa.processRequest(evt.request));
+        </xpath>
+
+    </template>
+
+</odoo>

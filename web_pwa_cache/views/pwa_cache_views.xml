@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="pwa_cache_view_form" model="ir.ui.view">
+        <field name="name">pwa.cache.form</field>
+        <field name="model">pwa.cache</field>
+        <field name="arch" type="xml">
+            <form string="PWA Cache">
+                <div class="oe_button_box" name="button_box">
+                    <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                        <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                    </button>
+                </div>
+
+                <field name="model_name" invisible="1" />
+                <group col="4">
+                    <field name="name" />
+                    <field name="cache_type" />
+                </group>
+                <group>
+                    <field name="group_ids" widget="many2many_tags" />
+                </group>
+                <group attrs="{'invisible': [('cache_type', 'not in', ['model', 'onchange', 'onchange_formula', 'function'])]}">
+                    <field name="model_id" attrs="{'required': [('cache_type', 'in', ['model', 'onchange', 'onchange_formula', 'function'])]}" />
+                </group>
+                <group attrs="{'invisible': [('cache_type', '!=', 'model')]}">
+                    <field name="model_domain" widget="domain" options="{'model': 'model_name', 'in_dialog': True}" attrs="{'required': [('cache_type', '=', 'model')]}" />
+                    <field name="model_domain_raw" options="{'model': 'model_name', 'in_dialog': True}" attrs="{'required': [('cache_type', '=', 'model')]}" />
+                    <field name="model_field_excluded_ids" widget="many2many_tags" />
+                </group>
+                <group attrs="{'invisible': [('cache_type', '!=', 'function')]}">
+                    <field name="function_name" attrs="{'required': [('cache_type', '=', 'function')]}" />
+                </group>
+                <group attrs="{'invisible': [('cache_type', 'not in', ['onchange', 'onchange_formula'])]}">
+                    <field name="onchange_field" attrs="{'required': [('cache_type', 'in', ['onchange', 'onchange_formula'])]}" />
+                    <field name="onchange_triggers"/>
+                </group>
+                <group attrs="{'invisible': [('cache_type', '!=', 'clientqweb')]}">
+                    <field name="xml_refs" attrs="{'required': [('cache_type', '=', 'clientqweb')]}" />
+                    <div colspan="2" class="text-right">
+                        <span>
+                            <i class="fa fa-info" />
+                            Use one line per view ref.
+                        </span>
+                    </div>
+                </group>
+                <group attrs="{'invisible': [('cache_type', '!=', 'post')]}">
+                    <field name="post_url" attrs="{'required': [('cache_type', '=', 'post')]}" />
+                </group>
+                <group attrs="{'invisible': [('cache_type', '!=', 'get')]}">
+                    <field name="get_urls" attrs="{'required': [('cache_type', '=', 'get')]}" />
+                    <div colspan="2" class="text-right">
+                        <span>
+                            <i class="fa fa-info" />
+                            Use one line per url.
+                        </span>
+                    </div>
+                </group>
+
+                <notebook>
+                    <page string="Javascript Code" name='code' autofocus="autofocus" attrs="{'invisible': [('cache_type', '!=', 'onchange_formula')]}">
+                        <field name="code_js" widget="ace" options="{'mode': 'python'}" placeholder="Enter Javascript code here." />
+                    </page>
+
+                    <page string="Python Code" name='code' autofocus="autofocus" attrs="{'invisible': [('cache_type', 'not in', ['onchange','onchange_formula','function','post'])]}">
+                        <field name="code" widget="ace" options="{'mode': 'python'}" placeholder="Enter Python code here. Help about Python expression is available in the help tab of this document." />
+                    </page>
+
+                    <page string="Help" attrs="{'invisible': [('cache_type', 'not in', ['onchange','function','post'])]}">
+                        <group>
+                            <div style="margin-top: 4px;">
+                                <h3>Help with Python expressions</h3>
+                                <p>Various fields may use Python code or Python expressions. The following variables can be used:</p>
+                                <ul>
+                                    <li>
+                                        <code>env</code>
+                                        : Odoo Environment on which the request is triggered
+                                    </li>
+                                    <li>
+                                        <code>user</code>
+                                        ,
+                                        <code>uid</code>
+                                        : The user that trigger the request
+                                    </li>
+                                    <li>
+                                        <code>record</code>
+                                        : This record
+                                    </li>
+                                    <li>
+                                        <code>time</code>
+                                        ,
+                                        <code>datetime</code>
+                                        ,
+                                        <code>dateutil</code>
+                                        ,
+                                        <code>timezone</code>
+                                        : useful Python libraries
+                                    </li>
+                                    <li>
+                                        <code>b64encode</code>
+                                        ,
+                                        <code>b64decode</code>
+                                        : To work with base64
+                                    </li>
+                                    <li>
+                                        <code>DEFAULT_SERVER_DATETIME_FORMAT</code>
+                                        ,
+                                        <code>DEFAULT_SERVER_DATE_FORMAT</code>
+                                        ,
+                                        <code>DEFAULT_SERVER_TIME_FORMAT</code>
+                                        : Odoo date format
+                                    </li>
+                                    <li>
+                                        To return an params definition, assign:
+                                        <code>params = [...]</code>
+                                    </li>
+                                </ul>
+                                <div>
+                                    <p>'params' normally its an array of arrays. You can use an special parameter to define range of values: '['__r', MIN, MAX]'</p>
+                                </div>
+                                <div>
+                                    <p>Example of Python code</p>
+                                    <code style='white-space: pre-wrap'>
+                                        params = [ [10, 'Text'], [30, 'Other Text'], [['__r', 10, 20], 'The Text'] ]
+                                    </code>
+                                </div>
+                            </div>
+                        </group>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+    <record id="pwa_cache_view_tree" model="ir.ui.view">
+        <field name="name">pwa.cache.tree</field>
+        <field name="model">pwa.cache</field>
+        <field name="arch" type="xml">
+            <tree string="PWA Cache Rules">
+                <field name="name" />
+                <field name="cache_type" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_pwa_cache_form" model="ir.actions.act_window">
+        <field name="name">PWA Cache</field>
+        <field name="res_model">pwa.cache</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_pwa" name="PWA" parent="base.menu_custom" />
+    <menuitem name="PWA Cache" action="action_pwa_cache_form" id="menu_action_pwa_cache_form" parent="menu_pwa" sequence="1" />
+
+</odoo>

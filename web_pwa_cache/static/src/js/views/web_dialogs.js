@@ -1,0 +1,19 @@
+odoo.define("web_pwa_cache.view_dialogs", function (require) {
+    "use strict";
+
+    var view_dialogs = require("web.view_dialogs");
+    var WebClientObj = require("web.web_client");
+
+
+    view_dialogs.FormViewDialog.include({
+        /**
+         * @override
+         */
+        open: function () {
+            if (WebClientObj.pwa_manager.isPWAStandalone()) {
+                this.options.fields_view = this.loadFieldView(this.dataset, false, 'formPWA');
+            }
+            return this._super.apply(this, arguments);
+        },
+    });
+});
