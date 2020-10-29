@@ -66,8 +66,12 @@ class IrFilters(models.Model):
 
     @api.multi
     @api.depends(
-        'domain_this', 'union_filter_ids.domain',
-        'complement_filter_ids.domain',
+        # Morally, this should have union_filter_ids.domain and
+        # complement_filter_ids.domain. But that causes the domain to be
+        # invalidated much too often, sometimes giving an enormous slowdown.
+        # This comment was added in version 12. It should be reinvestigated
+        # when migrating to a higher version.
+        'domain_this', 'union_filter_ids', 'complement_filter_ids',
     )
     def _compute_domain(self):
         '''combine our domain with all domains to union/complement,
