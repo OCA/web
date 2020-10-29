@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="account assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/web_widget_one2many_product_picker_secondary_unit/static/src/js/views/One2ManyProductPicker/quick_create_form.js"></script>
+            <script type="text/javascript" src="/web_widget_one2many_product_picker_secondary_unit/static/src/js/widgets/field_one2many_product_picker.js"></script>
+        </xpath>
+    </template>
+</odoo>

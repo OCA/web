@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+
+    <t t-extend="One2ManyProductPicker.QuickCreateForm">
+        <t t-jquery="field[t-att-name='field_map.parent_id']" t-operation="after">
+            <field t-att-name="field_map.secondary_uom_qty" class="mb-3" widget="numeric_step" />
+            <field t-att-name="field_map.secondary_uom_id" options="{'no_open': True, 'no_create': True, 'no_edit': True}"  class="mb-3" />
+        </t>
+    </t>
+
+</template>
