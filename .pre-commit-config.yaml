@@ -18,8 +18,8 @@ repos:
     rev: 19.10b0
     hooks:
       - id: black
-  - repo: https://github.com/prettier/prettier
-    rev: "1.19.1"
+  - repo: https://github.com/prettier/pre-commit
+    rev: "v1.19.1"
     hooks:
       - id: prettier
   # TODO Avoid awebdeveloper/pre-commit-prettier if possible
