@@ -13,6 +13,7 @@ setuptools.setup(
         'odoo13-addon-web_company_color',
         'odoo13-addon-web_decimal_numpad_dot',
         'odoo13-addon-web_dialog_size',
+        'odoo13-addon-web_disable_export_group',
         'odoo13-addon-web_domain_field',
         'odoo13-addon-web_drop_target',
         'odoo13-addon-web_environment_ribbon',
