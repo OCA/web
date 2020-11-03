@@ -51,7 +51,7 @@ msgstr ""
 
 #. module: web_translate_dialog
 #. openerp-web
-#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:239
+#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:240
 #, python-format
 msgid "Translate"
 msgstr ""
