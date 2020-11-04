@@ -4,7 +4,6 @@ odoo.define("web_export_view", function(require) {
     var core = require("web.core");
     var Sidebar = require("web.Sidebar");
     var session = require("web.session");
-    var crash_manager = require("web.crash_manager");
 
     var QWeb = core.qweb;
 
@@ -41,7 +40,6 @@ odoo.define("web_export_view", function(require) {
             // or assume the main view is a list view and use that
             var view = this.getParent(),
                 children = view.getChildren();
-            var c = crash_manager;
 
             if (children) {
                 children.every(function(child) {
@@ -67,7 +65,7 @@ odoo.define("web_export_view", function(require) {
                 ) {
                     export_columns_keys.push(column_index);
                     column_header_selector =
-                        ".o_list_view > thead > tr> " +
+                        ".o_list_table > thead > tr> " +
                         'th:not([class*="o_list_record_selector"]):eq(' +
                         column_index +
                         ")";
@@ -83,7 +81,7 @@ odoo.define("web_export_view", function(require) {
                 // Find only rows with data
                 view.$el
                     .find(
-                        ".o_list_view > tbody > tr.o_data_row:" +
+                        ".o_list_table > tbody > tr.o_data_row:" +
                             "has(.o_list_record_selector input:checkbox:checked)"
                     )
                     .each(function() {
@@ -92,7 +90,7 @@ odoo.define("web_export_view", function(require) {
                         $.each(export_columns_keys, function() {
                             var $cell = $row.find("td.o_data_cell:eq(" + this + ")");
                             var $cellcheckbox = $cell.find(
-                                ".o_checkbox input:checkbox"
+                                ".custom-checkbox input:checkbox"
                             );
                             if ($cellcheckbox.length) {
                                 export_row.push(
@@ -139,7 +137,7 @@ odoo.define("web_export_view", function(require) {
                     }),
                 },
                 complete: $.unblockUI,
-                error: c.rpc_error.bind(c),
+                error: error => self.call("crash_manager", "rpc_error", error),
             });
         },
     });
