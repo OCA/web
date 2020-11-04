@@ -23,7 +23,7 @@ Web Actions Multi
     :target: https://runbot.odoo-community.org/runbot/162/12.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 This module provides a way to trigger more than one action on ActionManager
 
@@ -67,14 +67,16 @@ Authors
 ~~~~~~~
 
 * Modoolar
-* Brainbean Apps
+* CorporateHub
 
 Contributors
 ~~~~~~~~~~~~
 
 * Petar Najman <petar.najman@modoolar.com>
 * Mladen Meseldzija <mladen.meseldzija@modoolar.com>
-* Alexey Pelykh <alexey.pelykh@brainbeanapps.com>
+* `CorporateHub <https://corporatehub.eu/>`__
+
+  * Alexey Pelykh <alexey.pelykh@corphub.eu>
 
 Maintainers
 ~~~~~~~~~~~

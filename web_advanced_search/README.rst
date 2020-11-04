@@ -23,7 +23,7 @@ Advanced search
     :target: https://runbot.odoo-community.org/runbot/162/12.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 More powerful and easy to use search, especially for related fields.
 
@@ -152,7 +152,9 @@ Contributors
 * Jose Mª Bernet <josemaria.bernet@guadaltech.es>
 * Simone Orsi <simone.orsi@camptocamp.com>
 * Dennis Sluijk <d.sluijk@onestein.nl>
-* Alexey Pelykh <alexey.pelykh@brainbeanapps.com>
+* `CorporateHub <https://corporatehub.eu/>`__
+
+  * Alexey Pelykh <alexey.pelykh@corphub.eu>
 
 Maintainers
 ~~~~~~~~~~~

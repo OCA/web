@@ -9,7 +9,7 @@
         'Therp BV, '
         'Tecnativa, '
         'Camptocamp, '
-        'Brainbean Apps, '
+        'CorporateHub, '
         'Odoo Community Association (OCA)'
     ),
     'website': 'https://github.com/OCA/web',

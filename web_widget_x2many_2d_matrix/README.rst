@@ -23,7 +23,7 @@
     :target: https://runbot.odoo-community.org/runbot/162/12.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 This module allows to show an x2many field with 3-tuples
 ($x_value, $y_value, $value) in a table
@@ -204,7 +204,7 @@ Authors
 * Therp BV
 * Tecnativa
 * Camptocamp
-* Brainbean Apps
+* CorporateHub
 
 Contributors
 ~~~~~~~~~~~~
@@ -216,7 +216,9 @@ Contributors
 * Timon Tschanz <timon.tschanz@camptocamp.com>
 * Jairo Llopis <jairo.llopis@tecnativa.com>
 * Dennis Sluijk <d.sluijk@onestein.nl>
-* Alexey Pelykh <alexey.pelykh@brainbeanapps.com>
+* `CorporateHub <https://corporatehub.eu/>`__
+
+  * Alexey Pelykh <alexey.pelykh@corphub.eu>
 
 Maintainers
 ~~~~~~~~~~~
