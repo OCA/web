@@ -10,14 +10,7 @@
     "license": "LGPL-3",
     "application": False,
     "installable": True,
-    "images": [
-        "static/description/mass_mailing_editor.png",
-    ],
-    "depends": [
-        "web_editor",
-    ],
-    "data": [
-        "templates/assets.xml",
-        "templates/editor.xml",
-    ],
+    "images": ["static/description/mass_mailing_editor.png"],
+    "depends": ["web_editor"],
+    "data": ["templates/assets.xml", "templates/editor.xml"],
 }
