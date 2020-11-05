@@ -1,4 +1,4 @@
-odoo.define("web_notify.WebClient", function(require) {
+odoo.define("web_notify.WebClient", function (require) {
     "use strict";
 
     var WebClient = require("web.WebClient");
@@ -6,12 +6,12 @@ odoo.define("web_notify.WebClient", function(require) {
     require("bus.BusService");
 
     WebClient.include({
-        show_application: function() {
+        show_application: function () {
             var res = this._super();
             this.start_polling();
             return res;
         },
-        start_polling: function() {
+        start_polling: function () {
             this.channel_success = "notify_success_" + session.uid;
             this.channel_danger = "notify_danger_" + session.uid;
             this.channel_warning = "notify_warning_" + session.uid;
@@ -35,9 +35,9 @@ odoo.define("web_notify.WebClient", function(require) {
             }
             this.call("bus_service", "on", "notification", this, this.bus_notification);
         },
-        bus_notification: function(notifications) {
+        bus_notification: function (notifications) {
             var self = this;
-            _.each(notifications, function(notification) {
+            _.each(notifications, function (notification) {
                 var channel = notification[0];
                 var message = notification[1];
                 if (
@@ -48,7 +48,7 @@ odoo.define("web_notify.WebClient", function(require) {
                 }
             });
         },
-        on_message: function(message) {
+        on_message: function (message) {
             return this.call("notification", "notify", {
                 type: message.type,
                 title: message.title,
