@@ -1,4 +1,4 @@
-odoo.define("web_notify.Notification", function(require) {
+odoo.define("web_notify.Notification", function (require) {
     "use strict";
 
     var Notification = require("web.Notification");
@@ -11,7 +11,7 @@ odoo.define("web_notify.Notification", function(require) {
             info: "fa-info",
             default: "fa-lightbulb-o",
         },
-        init: function() {
+        init: function () {
             this._super.apply(this, arguments);
             // Delete default classes
             this.className = this.className.replace(" o_error", "");
