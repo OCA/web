@@ -1,9 +1,9 @@
-/* Copyright 2016-2019 Jairo Llopis <jairo.llopis@tecnativa.com>
+/* Copyright 2016-2019 Tecnativa - Jairo Llopis
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
 odoo.define("web_editor_background_color.colorpicker", function(require) {
     "use strict";
-    var ColorpickerDialog = require("web.colorpicker");
+    var ColorpickerDialog = require("web.ColorpickerDialog");
     var options = require("web_editor.snippets.options");
     var colorpicker = options.registry.colorpicker;
 
@@ -12,7 +12,7 @@ odoo.define("web_editor_background_color.colorpicker", function(require) {
             "colorpicker:saved": "_onCustomColorSave",
         }),
         events: _.extend({}, colorpicker.prototype.events, {
-            "click .o_colorpicker_section[data-name=custom]>.text-muted":
+            "click .o_colorpicker_section[data-name=custom]> #add-color":
                 "_onCustomColorAsk",
         }),
 

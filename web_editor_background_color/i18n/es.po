@@ -17,5 +17,3 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: Poedit 1.8.6\n"
 
-#~ msgid "Pick Background Color"
-#~ msgstr "Escoger el color de fondo"
