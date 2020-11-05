@@ -23,12 +23,12 @@ Web Notify
     :target: https://runbot.odoo-community.org/runbot/162/13.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 Send instant notification messages to the user in live.
 
 This technical module allows you to send instant notification messages from the server to the user in live.
-Two kinds of notification are supported.
+Five kinds of notification are supported.
 
 * Success: Displayed in a `success` theme color flying popup div
 * Danger: Displayed in a `danger` theme color flying popup div
