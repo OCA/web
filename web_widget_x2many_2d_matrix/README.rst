@@ -204,7 +204,7 @@ Authors
 * Therp BV
 * Tecnativa
 * Camptocamp
-* Brainbean Apps
+* CorporateHub
 
 Contributors
 ~~~~~~~~~~~~
@@ -216,7 +216,10 @@ Contributors
 * Timon Tschanz <timon.tschanz@camptocamp.com>
 * Jairo Llopis <jairo.llopis@tecnativa.com>
 * Dennis Sluijk <d.sluijk@onestein.nl>
-* Alexey Pelykh <alexey.pelykh@brainbeanapps.com>
+* `CorporateHub <https://corporatehub.eu/>`__
+
+  * Alexey Pelykh <alexey.pelykh@corphub.eu>
+
 * Adrià Gil Sorribes <adria.gil@forgeflow.com>
 
 Maintainers
