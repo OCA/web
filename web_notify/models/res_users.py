@@ -31,10 +31,11 @@ class ResUsers(models.Model):
     notify_warning_channel_name = fields.Char(compute="_compute_channel_names")
     notify_info_channel_name = fields.Char(compute="_compute_channel_names")
     notify_default_channel_name = fields.Char(compute="_compute_channel_names")
-    
-    allow_native_notifications = fields.Boolean(_('Allow Native notifications'),
-                                                help=_('Notifications will be send to your OS via the browser'),
-                                                default=False)
+
+    allow_native_notifications = fields.Boolean(
+        _('Allow Native notifications'),
+        help=_('Notifications will be send to your OS via the browser'),
+        default=False)
 
     def notify_success(
         self, message="Default message", title=None, sticky=False

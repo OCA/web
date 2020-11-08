@@ -2,7 +2,6 @@ odoo.define('web_notify.WebClient', function (require) {
     "use strict";
 
     var WebClient = require('web.WebClient');
-    var base_bus = require('bus.Longpolling');
     var session = require('web.session');
     require('bus.BusService');
 
