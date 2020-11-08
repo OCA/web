@@ -6,10 +6,11 @@
     'name': 'Web Notify',
     'summary': """
         Send notification messages to user""",
-    'version': '12.0.1.0.1',
+    'version': '12.0.1.0.2',
     'license': 'AGPL-3',
     'author': 'ACSONE SA/NV,'
               'AdaptiveCity,'
+              'Mind And Go,'
               'Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/web',
     'depends': [

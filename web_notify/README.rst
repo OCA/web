@@ -23,7 +23,7 @@ Web Notify
     :target: https://runbot.odoo-community.org/runbot/162/12.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 Send instant notification messages to the user in live.
 
@@ -91,6 +91,9 @@ Access the users form through Settings -> Users & Companies. You'll see a tab ca
    :scale: 80 %
    :alt: Sample notifications
 
+You can specify per user if you want to notify user through Desktop and native notifications of your browser.
+Access the users form through Settings -> Users, in the settings tab you would be able to setup the option.
+
 Bug Tracker
 ===========
 
@@ -117,6 +120,7 @@ Contributors
 * Serpent Consulting Services Pvt. Ltd.<jay.vora@serpentcs.com>
 * Aitor Bouzas <aitor.bouzas@adaptivecity.com>
 * Shepilov Vladislav <shepilov.v@protonmail.com>
+* Florent THOMAS <florent.thomas@mind-and-go.com>
 
 Maintainers
 ~~~~~~~~~~~

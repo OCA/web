@@ -1,12 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="assets_backend" name="web_notify assets" inherit_id="web.assets_backend">
-        <link rel="stylesheet" type="text/scss" href="/web/static/src/scss/webclient.scss" position="after">
-            <link rel="stylesheet" type="text/scss" href="/web_notify/static/src/scss/webclient.scss"/>
-        </link>
-        <xpath expr="." position="inside">
-            <script type="text/javascript" src="/web_notify/static/src/js/web_client.js"/>
-            <script type="text/javascript" src="/web_notify/static/src/js/widgets/notification.js"/>
-        </xpath>
-    </template>
+	<data>
+		<template id="assets_backend" name="web_notify assets"
+			inherit_id="web.assets_backend">
+			<link rel="stylesheet" type="text/scss"
+				href="/web/static/src/scss/webclient.scss" position="after">
+				<link rel="stylesheet" type="text/scss"
+					href="/web_notify/static/src/scss/webclient.scss" />
+			</link>
+			<xpath expr="." position="inside">
+				<script type="text/javascript"
+					src="/web_notify/static/src/js/web_client.js" />
+				<script type="text/javascript"
+					src="/web_notify/static/src/js/widgets/notification.js" />
+				<script type="text/javascript"
+					src="/web_notify/static/src/js/services/notification_service.js" />
+			</xpath>
+		</template>
+
+		<record id="view_users_form_simple_modif_inherit"
+			model="ir.ui.view">
+			<field name="name">res.users.form.simple.view.modif.inherit</field>
+			<field name="model">res.users</field>
+			<field name="inherit_id" ref="base.view_users_form" />
+			<field name="arch" type="xml">
+				<xpath
+					expr="//group[@name='messaging']//field[@name='notification_type']"
+					position="after">
+					<field name="allow_native_notifications"
+						widget="boolean_toggle"></field>
+				</xpath>
+			</field>
+		</record>
+	</data>
 </odoo>
