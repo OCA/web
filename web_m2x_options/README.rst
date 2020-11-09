@@ -23,7 +23,7 @@ web_m2x_options
     :target: https://runbot.odoo-community.org/runbot/162/15.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 This modules modifies "many2one" and "many2manytags" form widgets so as to add some new display
 control options.
@@ -178,6 +178,7 @@ Contributors
   * Jairo Llopis <jairo.llopis@tecnativa.com>
   * David Vidal <david.vidal@tecnativa.com>
   * Ernesto Tejeda <ernesto.tejeda87@gmail.com>
+  * Carlos Roca
 * Bhavesh Odedra <bodedra@opensourceintegrators.com>
 * Dhara Solanki <dhara.solanki@initos.com> (http://www.initos.com)
 
