@@ -17,7 +17,10 @@
     "license": "AGPL-3",
     "depends": ["web"],
     "assets": {
-        "web.assets_backend": ["web_m2x_options/static/src/js/form.js"],
+        "web.assets_backend": [
+            "web_m2x_options/static/src/js/form.js",
+            "web_m2x_options/static/src/js/ir_options.js",
+        ],
         "web.assets_qweb": ["web_m2x_options/static/src/xml/base.xml"],
     },
     "installable": True,
