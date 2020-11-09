@@ -177,6 +177,7 @@ Contributors
   * Jairo Llopis <jairo.llopis@tecnativa.com>
   * David Vidal <david.vidal@tecnativa.com>
   * Ernesto Tejeda <ernesto.tejeda87@gmail.com>
+  * Carlos Roca
 
 Maintainers
 ~~~~~~~~~~~

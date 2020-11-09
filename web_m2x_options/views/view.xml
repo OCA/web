@@ -6,6 +6,8 @@
         <xpath expr="." position="inside">
             <script type="text/javascript"
                     src="/web_m2x_options/static/src/js/form.js"></script>
+            <script type="text/javascript"
+                    src="/web_m2x_options/static/src/js/ir_options.js"></script>
         </xpath>
     </template>
 
