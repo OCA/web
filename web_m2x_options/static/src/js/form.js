@@ -474,4 +474,16 @@ odoo.define("web_m2x_options.web_m2x_options", function (require) {
             }
         },
     });
+
+    // Extending class to allow change the limit of o2m registry entries using the
+    // system parameter "web_m2x_options.field_limit_entries".
+    FormView.include({
+        _setSubViewLimit: function (attrs) {
+            this._super(attrs);
+            var limit = ir_options["web_m2x_options.field_limit_entries"];
+            if (!_.isUndefined(limit)) {
+                attrs.limit = parseInt(limit);
+            }
+        },
+    });
 });

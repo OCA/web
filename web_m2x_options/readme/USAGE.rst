@@ -69,6 +69,10 @@ If you disable one option, you can enable it for particular field by setting "cr
 
   Whether the field should always show "Search more..." entry or not.
 
+``web_m2x_options.field_limit_entries`` *int*
+
+  Number of displayed lines on all One2many fields
+
 To add these parameters go to Configuration -> Technical -> Parameters -> System Parameters and add new parameters like:
 
 - web_m2x_options.create: False
@@ -76,6 +80,7 @@ To add these parameters go to Configuration -> Technical -> Parameters -> System
 - web_m2x_options.m2o_dialog: False
 - web_m2x_options.limit: 10
 - web_m2x_options.search_more: True
+- web_m2x_options.field_limit_entries: 5
 
 
 Example
