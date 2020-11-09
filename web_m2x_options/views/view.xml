@@ -10,6 +10,10 @@
                 type="text/javascript"
                 src="/web_m2x_options/static/src/js/form.js"
             />
+            <script
+                type="text/javascript"
+                src="/web_m2x_options/static/src/js/ir_options.js"
+            />
         </xpath>
     </template>
 </odoo>
