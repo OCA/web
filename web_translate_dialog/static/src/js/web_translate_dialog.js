@@ -222,7 +222,9 @@ var TranslateDialog = Dialog.extend({
                 return done;
             });
         });
-        this.view.reload();
+        save_mutex.exec(function() {
+            self.view.reload();
+        });
         this.close();
     },
     on_button_close: function() {
