@@ -1,55 +1,39 @@
-odoo.define('web_search_with_and', function (require) {
+odoo.define("web_search_with_and", function(require) {
     "use strict";
 
-    var SearchView = require('web.SearchView');
-    var Backbone = window.Backbone;
+    var searchBarAutocompleteRegistry = require("web.search_bar_autocomplete_sources_registry");
+    var SearchBar = require("web.SearchBar");
 
-    SearchView.include({
-        // Override the base method to detect a 'shift' event
-        select_completion: function (e, ui) {
-            if (e.shiftKey
-                && ui.item.facet.values
-                && ui.item.facet.values.length
-                && String(ui.item.facet.values[0].value).trim() !== "") {
-                // In case of an 'AND' search a new facet is added regarding of the previous facets
+    SearchBar.include({
+        // Override the base method to detect a "shift" event
+        _onAutoCompleteSelected: function(e, ui) {
+            var values = ui.item.facet.values;
+            if (
+                e.shiftKey &&
+                values &&
+                values.length &&
+                String(values[0].value).trim() !== ""
+            ) {
+                // In case of an "AND" search a new facet is added regarding of
+                // the previous facets
                 e.preventDefault();
-
-                this.query.add(ui.item.facet, {shiftKey: true});
+                var filter = ui.item.facet.filter;
+                var field = this.fields[filter.attrs.name];
+                var Obj = searchBarAutocompleteRegistry.getAny([
+                    filter.attrs.widget,
+                    field.type,
+                ]);
+                var obj = new Obj(this, filter, field, this.actionContext);
+                var new_filter = Object.assign({}, ui.item.facet.filter, {
+                    domain: obj.getDomain(values),
+                    autoCompleteValues: values,
+                });
+                this.trigger_up("new_filters", {
+                    filters: [new_filter],
+                });
             } else {
-
                 return this._super.apply(this, arguments);
             }
-        }
+        },
     });
-
-    SearchView.SearchQuery.prototype = SearchView.SearchQuery.extend({
-        // Override the odoo method to (conditionally) add a search facet even if a existing
-        // facet for the same field/category already exists.
-        // The prototype is used to override the 'add' function in order to execute the
-        // following code before the Odoo native override (trick)
-        add: function (values, options) {
-            options = options || {};
-            if (options.shiftKey) {
-
-                if (!values) {
-                    values = [];
-                }
-                else if (!(values instanceof Array)) {
-                    values = [values];
-                }
-
-                delete options.shiftKey;
-                _(values).each(function (value) {
-                    var model = this._prepareModel(value, options);
-                    Backbone.Collection.prototype.add.call(this, model, options);
-                }, this);
-
-                return this;
-            }
-            else {
-                return this.constructor.__super__.add.call(this, values, options);
-            }
-        }
-    }).prototype;
-
 });
