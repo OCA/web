@@ -48,7 +48,7 @@ Credits
 Authors
 ~~~~~~~
 
-* CorporateHub OU
+* CorporateHub
 
 Contributors
 ~~~~~~~~~~~~
@@ -56,7 +56,6 @@ Contributors
 * `CorporateHub <https://corporatehub.eu/>`__
 
   * Alexey Pelykh <alexey.pelykh@corphub.eu>
-
 
 Maintainers
 ~~~~~~~~~~~
