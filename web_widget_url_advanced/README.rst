@@ -23,7 +23,7 @@ Web URL widget advanced
     :target: https://runbot.odoo-community.org/runbot/162/12.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 Extend URL widget features to ease customization of anchor's text.
 
@@ -95,7 +95,9 @@ Contributors
 ~~~~~~~~~~~~
 
 * Simone Orsi <simone.orsi@camptocamp.com>
-* Alexey Pelykh <alexey.pelykh@brainbeanapps.com>
+* `CorporateHub <https://corporatehub.eu/>`__
+
+  * Alexey Pelykh <alexey.pelykh@corphub.eu>
 
 Maintainers
 ~~~~~~~~~~~

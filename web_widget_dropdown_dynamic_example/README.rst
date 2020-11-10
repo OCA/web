@@ -23,7 +23,7 @@ Dynamic Dropdown Widget: Example
     :target: https://runbot.odoo-community.org/runbot/162/12.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 Demonstration of web_widget_dropdown_dynamic.
 
@@ -48,7 +48,7 @@ Credits
 Authors
 ~~~~~~~
 
-* Brainbean Apps OU
+* CorporateHub OU
 
 Maintainers
 ~~~~~~~~~~~
