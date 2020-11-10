@@ -23,7 +23,7 @@
     :target: https://runbot.odoo-community.org/runbot/162/12.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5|
+|badge1| |badge2| |badge3| |badge4| |badge5| 
 
 This module allows to show an x2many field with 3-tuples
 ($x_value, $y_value, $value) in a table
