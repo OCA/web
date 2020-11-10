@@ -23,7 +23,7 @@ Dynamic Dropdown Widget
     :target: https://runbot.odoo-community.org/runbot/162/11.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 Dynamic dropdown widget that supports resolving options from backend of:
 
@@ -89,12 +89,14 @@ Credits
 Authors
 ~~~~~~~
 
-* Brainbean Apps OU
+* CorporateHub
 
 Contributors
 ~~~~~~~~~~~~
 
-* Alexey Pelykh <alexey.pelykh@brainbeanapps.com>
+* `CorporateHub <https://corporatehub.eu/>`__
+
+  * Alexey Pelykh <alexey.pelykh@corphub.eu>
 
 Maintainers
 ~~~~~~~~~~~
