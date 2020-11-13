@@ -44,5 +44,7 @@ class X2MDemoLine(models.Model):
     demo_id = fields.Many2one("x2m.demo")
     user_id = fields.Many2one("res.users")
     value = fields.Integer()
-    value_selection = fields.Selection([("val1", "Value 1"), ("val2", "Value 2")],)
+    value_selection = fields.Selection(
+        [("val1", "Value 1"), ("val2", "Value 2")],
+    )
     value_many2one = fields.Many2one("res.groups")
