@@ -200,33 +200,36 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                 // search more... if more results that max
                 var can_search_more = (self.nodeOptions && self.is_option_set(self.nodeOptions.search_more)),
                     search_more_undef = _.isUndefined(self.nodeOptions.search_more) && _.isUndefined(self.ir_options['web_m2x_options.search_more']),
-                    search_more = self.is_option_set(self.ir_options['web_m2x_options.search_more']);
+                    search_more = self.is_option_set(self.ir_options['web_m2x_options.search_more']),
+                    search_more_always = self.is_option_set(self.ir_options['web_m2x_options.search_more_always']);
 
                 if (values.length > self.limit) {
                     values = values.slice(0, self.limit);
-                    if (can_search_more || search_more_undef || search_more) {
-                        values.push({
-                            label: _t("Search More..."),
-                            action: function () {
-                                // limit = 80 for improving performance, similar
-                                // to Odoo implementation here:
-                                // https://github.com/odoo/odoo/commit/8c3cdce539d87775b59b3f2d5ceb433f995821bf
-                                self._rpc({
-                                        model: self.field.relation,
-                                        method: 'name_search',
-                                        kwargs: {
-                                            name: search_val,
-                                            args: domain,
-                                            operator: "ilike",
-                                            limit: 80,
-                                            context: context,
-                                        },
-                                    })
-                                    .then(self._searchCreatePopup.bind(self, "search"));
-                            },
-                            classname: 'o_m2o_dropdown_option',
-                        });
-                    }
+                    var show_search_more = can_search_more || search_more_undef || search_more;
+                }
+
+                if (show_search_more || search_more_always) {
+                    values.push({
+                        label: _t("Search More..."),
+                        action: function () {
+                            // limit = 80 for improving performance, similar
+                            // to Odoo implementation here:
+                            // https://github.com/odoo/odoo/commit/8c3cdce539d87775b59b3f2d5ceb433f995821bf
+                            self._rpc({
+                                    model: self.field.relation,
+                                    method: 'name_search',
+                                    kwargs: {
+                                        name: search_val,
+                                        args: domain,
+                                        operator: "ilike",
+                                        limit: 80,
+                                        context: context,
+                                    },
+                                })
+                                .then(self._searchCreatePopup.bind(self, "search"));
+                        },
+                        classname: 'o_m2o_dropdown_option',
+                    });
                 }
 
                 var create_enabled = self.can_create && !self.nodeOptions.no_create;
