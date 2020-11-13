@@ -3,7 +3,7 @@
  * Copyright 2018 Simone Orsi <simone.orsi@camptocamp.com>
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
-odoo.define("web_widget_x2many_2d_matrix.widget", function(require) {
+odoo.define("web_widget_x2many_2d_matrix.widget", function (require) {
     "use strict";
 
     var field_registry = require("web.field_registry");
@@ -21,7 +21,7 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function(require) {
          * @param {Object} record information about the database records.
          * @param {Object} options view options.
          */
-        init: function(parent, name, record, options) {
+        init: function (parent, name, record, options) {
             this._super(parent, name, record, options);
             this.init_params();
         },
@@ -30,7 +30,7 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function(require) {
          * Initialize the widget specific parameters.
          * Sets the axis and the values.
          */
-        init_params: function() {
+        init_params: function () {
             var node = this.attrs;
             this.by_y_axis = {};
             this.x_axis = [];
@@ -79,7 +79,7 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function(require) {
          * Puts the values in the grid.
          * If we have related items we use the display name.
          */
-        init_matrix: function() {
+        init_matrix: function () {
             var records = this.recordData[this.name].data;
             // Wipe the content if something still exists
             this.by_y_axis = {};
@@ -87,7 +87,7 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function(require) {
             this.y_axis = [];
             _.each(
                 records,
-                function(record) {
+                function (record) {
                     var x = record.data[this.field_x_axis],
                         y = record.data[this.field_y_axis];
                     if (x.type === "record") {
@@ -112,14 +112,14 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function(require) {
             this.columns = [];
             _.each(
                 this.x_axis,
-                function(x) {
+                function (x) {
                     this.columns.push(this._make_column(x));
                 }.bind(this)
             );
             this.rows = [];
             _.each(
                 this.y_axis,
-                function(y) {
+                function (y) {
                     this.rows.push(this._make_row(y));
                 }.bind(this)
             );
@@ -141,7 +141,7 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function(require) {
          * @param {String} x The string used as a column title
          * @returns {Object}
          */
-        _make_column: function(x) {
+        _make_column: function (x) {
             return {
                 // Simulate node parsed on xml arch
                 tag: "field",
@@ -158,7 +158,7 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function(require) {
          * @param {String} y The string used as a row title
          * @returns {Object}
          */
-        _make_row: function(y) {
+        _make_row: function (y) {
             var self = this;
             // Use object so that we can attach more data if needed
             var row = {
@@ -169,7 +169,7 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function(require) {
                 },
                 data: [],
             };
-            _.each(self.x_axis, function(x) {
+            _.each(self.x_axis, function (x) {
                 row.data.push(self.by_y_axis[y][x]);
             });
             return row;
@@ -178,7 +178,7 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function(require) {
         /**
          * Determine if a field represented by field_def can be aggregated
          */
-        is_aggregatable: function(field_def) {
+        is_aggregatable: function (field_def) {
             return field_def.type in {float: 1, monetary: 1, integer: 1};
         },
 
@@ -188,7 +188,7 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function(require) {
          * @param {String} val: the string to be parsed.
          * @returns {Boolean} The parsed boolean.
          */
-        parse_boolean: function(val) {
+        parse_boolean: function (val) {
             if (val.toLowerCase() === "true" || val === "1") {
                 return true;
             }
@@ -201,7 +201,7 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function(require) {
          * @returns {Deferred}
          * A deferred object to be completed when it finished rendering.
          */
-        _render: function() {
+        _render: function () {
             if (!this.view) {
                 return this._super();
             }
@@ -230,7 +230,7 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function(require) {
          *
          * @override
          */
-        activate: function(options) {
+        activate: function (options) {
             // Won't work fine without https://github.com/odoo/odoo/pull/26490
             // TODO Use _.propertyOf in underscore 1.9+
             try {
@@ -248,7 +248,7 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function(require) {
          *
          * @override
          */
-        getFocusableElement: function() {
+        getFocusableElement: function () {
             return this.$(".o_input:" + (this._backwards ? "last" : "first"));
         },
     });
