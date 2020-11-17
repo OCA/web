@@ -6,3 +6,4 @@
 * Dennis Sluijk <d.sluijk@onestein.nl>
 * Thong Nguyen Van <thongnv@trobz.com>
 * Alexandre Díaz <alexandre.diaz@tecnativa.com>
+* Nattapol Sinsuphan <gamso321@gmail.com>
