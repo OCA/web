@@ -111,7 +111,7 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function(require) {
                     }
                     if (this.x_axis.indexOf(x) === -1) {
                         this.x_axis.push(x);
-                        this.x_axis_labels[x] = x_label
+                        this.x_axis_labels[x] = x_label;
                     }
                 }.bind(this)
             );
