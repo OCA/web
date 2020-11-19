@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <t t-name="JSONGraph">
+        <div class="oe_form_field_json_graph">
+            <div class="nv_content">
+                <svg/>
+            </div>
+        </div>
+    </t>
+</odoo>
