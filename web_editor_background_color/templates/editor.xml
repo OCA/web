@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2019 Tecnativa - Jairo Llopis
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<data>
+    <template id="colorpicker" inherit_id="web_editor.colorpicker">
+        <xpath expr="//colorpicker" position="inside">
+            <div
+                class="o_colorpicker_section"
+                data-name="custom"
+                data-display="Custom Color"
+                style="position: relative;"
+            >
+                <span
+                    id="add-color"
+                    class="fa fa-plus"
+                    style="position: absolute; right: 2px; top: 0px;"
+                />
+            </div>
+        </xpath>
+    </template>
+</data>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2017-2019 Tecnativa - Jairo Llopis
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html). -->
+<odoo>
+    <template id="assets_common" inherit_id="web_editor.assets_common">
+        <xpath expr=".">
+            <link
+                rel="stylesheet"
+                href="/web_editor_background_color/static/src/css/background_color.scss"
+            />
+            <script
+                type="text/javascript"
+                src="/web_editor_background_color/static/src/js/background_color.js"
+            />
+        </xpath>
+    </template>
+</odoo>

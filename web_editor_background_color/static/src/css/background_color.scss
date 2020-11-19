@@ -1,0 +1,14 @@
+/* Copyright 2017-2019 Tecnativa - Jairo Llopis
+ * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
+
+.snippet-option-colorpicker {
+    .o_colorpicker_section[data-name="custom"] > #add-color {
+        cursor: pointer;
+        border-radius: 2px;
+
+        &:hover {
+            background-color: gray("400");
+            color: $black;
+        }
+    }
+}
