@@ -7,6 +7,15 @@ odoo.define("web_listview_range_select", function(require) {
     var ListRenderer = require("web.ListRenderer");
 
     ListRenderer.include({
+        /*
+        I extend 'events' because in v13 Odoo catches 'change' event instead
+        of the 'click' event for the selector .o_list_record_selector ",
+        so shift + [click] is not caught.
+        https://github.com/OCA/OCB/blob/13.0/addons/web/static/src/js/views/list/list_renderer.js#L42:L42
+        */
+        events: _.extend({}, ListRenderer.prototype.events, {
+            "click tbody .o_list_record_selector": "_onClickSelectRecord",
+        }),
         _range_history: [],
 
         _render: function() {
@@ -17,7 +26,6 @@ odoo.define("web_listview_range_select", function(require) {
 
         _getRangeSelection: function() {
             var self = this;
-
             // Get start and end
             var start = null,
                 end = null;
@@ -28,7 +36,7 @@ odoo.define("web_listview_range_select", function(require) {
                     .data("id");
                 var checked = self._range_history.indexOf(id) !== -1;
                 if (checked && $(el).is(":checked")) {
-                    if (start == null) {
+                    if (start === null) {
                         start = i;
                     } else {
                         end = i;
@@ -49,9 +57,9 @@ odoo.define("web_listview_range_select", function(require) {
                 .closest("tr")
                 .each(function(i, el) {
                     var record_id = $(el).data("id");
-                    if (start != null && end != null && i >= start && i <= end) {
+                    if (start !== null && end !== null && i >= start && i <= end) {
                         result.push(record_id);
-                    } else if (start != null && end == null && start == i) {
+                    } else if (start !== null && end === null && start === i) {
                         result.push(record_id);
                     }
                 });
@@ -70,9 +78,8 @@ odoo.define("web_listview_range_select", function(require) {
             window.getSelection().removeAllRanges();
         },
 
-        _onSelectRecord: function(event) {
+        _onClickSelectRecord: function(event) {
             var el = $(event.currentTarget);
-            var res = this._super(event);
 
             // Firefox shift click fix
             if (/firefox/i.test(navigator.userAgent) && event.shiftKey) {
@@ -102,7 +109,6 @@ odoo.define("web_listview_range_select", function(require) {
                 this._updateSelection();
                 this._deselectTable();
             }
-            return res;
         },
     });
 });
