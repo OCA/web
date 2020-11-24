@@ -141,7 +141,6 @@ Contributors
 * Luis González <lgonzalez@vauxoo.com>
 * Nhomar Hernández <nhomar@vauxoo.com>
 
-
 Other credits
 ~~~~~~~~~~~~~
 
