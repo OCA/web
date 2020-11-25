@@ -23,9 +23,9 @@ odoo.define("web_pwa_oca.systray.install", function(require) {
         },
         saveBeforeInstallPromptEvent: function(evt) {
             deferredInstallPrompt = evt;
-            var install_buttons = this.$.find("#pwa_install_button");
-            if (install_buttons.length)
-                intall_buttons[0].removeAttribute("hidden");
+            var install_button = this.$.find("#pwa_install_button");
+            if (install_button.length)
+                install_button[0].removeAttribute("hidden");
         },
         _onMenuInstallpwa: function() {
             deferredInstallPrompt.prompt();
