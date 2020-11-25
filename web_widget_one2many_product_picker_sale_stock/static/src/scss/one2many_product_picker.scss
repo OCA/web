@@ -1,0 +1,45 @@
+.oe_field_one2many_product_picker {
+    .oe_one2many_product_picker_view {
+        .oe_flip_card {
+            &.oe_flip_card_maximized {
+                .oe_flip_card_inner {
+                    .stock_info {
+                        > .o_widget {
+                            > div {
+                                width: 5.1em !important;
+                                height: 5.1em !important;
+
+                                .fa {
+                                    margin-top: -6px !important;
+                                    font-size: 6em !important;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .oe_flip_card_inner {
+                .stock_info {
+                    top: 50%;
+                    left: 5px;
+                    transform: translateY(-50%);
+
+                    > .o_widget {
+                        > div {
+                            background-color: white;
+                            border-radius: 50%;
+                            width: 2.5em;
+                            height: 2.5em;
+
+                            .fa {
+                                margin-top: -3px;
+                                font-size: 3em;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

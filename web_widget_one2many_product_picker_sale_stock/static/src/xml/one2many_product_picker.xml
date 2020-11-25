@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+
+    <t t-extend="One2ManyProductPicker.FlipCard">
+        <t t-jquery="div[t-attf-class*=oe_flip_card_front] t[t-if='state']" t-operation="append">
+            <t t-if="state.model === 'sale.order.line'">
+                <div class="position-absolute m-0 text-left stock_info">
+                    <widget name="qty_at_date_widget" width="0.1"/>
+                </div>
+            </t>
+        </t>
+    </t>
+
+</template>
