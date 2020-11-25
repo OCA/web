@@ -67,8 +67,7 @@ self.addEventListener('fetch', function(evt) {
 });
     </template>
 
-    <template id="manifest" name="PWA manifest">
-{
+    <template id="manifest" name="PWA manifest">{
   "name": "<t t-esc="pwa_name"/>",
   "short_name": "<t t-esc="pwa_short_name"/>",
   "icons": [{
@@ -100,7 +99,6 @@ self.addEventListener('fetch', function(evt) {
   "display": "standalone",
   "background_color": "<t t-esc="background_color"/>",
   "theme_color": "<t t-esc="theme_color"/>"
-}
-    </template>
+}</template>
 
 </odoo>
