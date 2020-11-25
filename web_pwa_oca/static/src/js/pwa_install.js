@@ -17,18 +17,21 @@ if ('serviceWorker' in navigator) {
 var deferredInstallPrompt = null;
 
 UserMenu.include({
+
     start: function () {
-        window.addEventListener('beforeinstallprompt', this.saveBeforeInstallPromptEvent);
+        window.addEventListener('beforeinstallprompt', this.saveBeforeInstallPromptEvent, false);
         return this._super.apply(this, arguments);
     },
-    saveBeforeInstallPromptEvent: function(evt) {
-        deferredInstallPrompt = evt;
-        this.$.find('#pwa_install_button')[0].removeAttribute('hidden');
+
+   saveBeforeInstallPromptEvent: function(event) {
+        deferredInstallPrompt = event;
     },
-    _onMenuInstallpwa: function () {
+
+    on_menu_installpwa: function () {
+
         deferredInstallPrompt.prompt();
         // Hide the install button, it can't be called twice.
-        this.el.setAttribute('hidden', true);
+        this.$('a[data-menu="installpwa"]').addClass('hidden');
         // Log user response to prompt.
         deferredInstallPrompt.userChoice
             .then(function (choice) {

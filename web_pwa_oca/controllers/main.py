@@ -1,17 +1,20 @@
 from odoo.http import request, Controller, route
+from odoo.addons.base.ir.ir_qweb import AssetsBundle
 
 
 class PWA(Controller):
 
-    def get_asset_urls(self, asset_xml_id):
+    def get_asset_urls(self, xml_id):
         qweb = request.env['ir.qweb'].sudo()
-        assets = qweb._get_asset_nodes(asset_xml_id, {}, True, True)
+        files, remains = qweb._get_asset_content(xml_id, {})
+        bundle = AssetsBundle(xml_id, files, remains)
         urls = []
-        for asset in assets:
-            if asset[0] == 'link':
-                urls.append(asset[1]['href'])
-            if asset[0] == 'script':
-                urls.append(asset[1]['src'])
+        if bundle.css():
+            for this in bundle.css():
+                urls.append(this.name)
+        if bundle.js():
+            for this in bundle.js():
+                urls.append(this.name)
         return urls
 
     @route('/service-worker.js', type='http', auth="public")
