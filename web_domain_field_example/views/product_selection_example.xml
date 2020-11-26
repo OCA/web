@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="product_selection_example_tree" model="ir.ui.view">
+        <field name="name">product.selection.example.tree</field>
+        <field name="model">product.selection.example</field>
+        <field name="arch" type="xml">
+            <tree string="Product Selections">
+                <field name="product_category_id" />
+                <field name="product_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="product_selection_example_form" model="ir.ui.view">
+        <field name="name">product.selection.example.form</field>
+        <field name="model">product.selection.example</field>
+        <field name="arch" type="xml">
+            <form string="Product Selections">
+                <field name="product_id_domain"/>
+                <group colspan="6" col="2">
+                    <field name="product_category_id" />
+                    <field name="product_id" domain="product_id_domain" />
+            </group>
+            </form>
+        </field>
+    </record>
+
+</odoo>
