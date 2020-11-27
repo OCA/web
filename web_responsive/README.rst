@@ -62,6 +62,10 @@ Features for mobile:
 
   .. image:: https://user-images.githubusercontent.com/973709/50965168-1d0ec500-14c9-11e9-82a0-dfee82ed0861.gif
 
+* Search panel is hidden on small screens.
+
+  .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/search_panel.gif
+
 Features for computers:
 
 * Keyboard shortcuts for easier navigation, **using ``Alt + Shift + [key]``**
