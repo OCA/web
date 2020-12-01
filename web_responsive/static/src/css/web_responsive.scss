@@ -251,6 +251,17 @@ html .o_web_client .o_main .o_main_content {
             }
         }
     }
+
+    .o_filters_menu {
+        .o_menu_item {
+            @include o-search-options-dropdown-custom-item;
+
+            a {
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
 }
 
 .o_pager_counter {
