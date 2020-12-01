@@ -1,0 +1,227 @@
+.oe_field_one2many_product_picker {
+    &.oe_field_one2many_product_picker_maximized {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 50;
+        .oe_one2many_product_picker_view {
+            max-height: 100%;
+        }
+    }
+    &:hover {
+        button.o_fullscreen {
+            display: inline-block;
+        }
+    }
+
+    > div {
+        width: unset !important;
+    }
+
+    #product_picker_total > h2 {
+        margin: 0;
+        padding: 0.5rem;
+    }
+
+    .o_cp_buttons {
+        width: 100%;
+
+        > div {
+            width: 95%;
+        }
+    }
+
+    button.o_fullscreen {
+        top: 0;
+        right: 0;
+        z-index: 10;
+    }
+
+    .oe_one2many_product_picker_view {
+        max-height: $one2many-product-picker-max-height;
+        overflow: auto;
+
+        > .row {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .oe_flip_card {
+            user-select: none;
+            background-color: transparent;
+            perspective: 1000px;
+            transition: top $one2many-product-picker-transition-3d-time, left $one2many-product-picker-transition-3d-time, width $one2many-product-picker-transition-3d-time, height $one2many-product-picker-transition-3d-time;
+            height: $one2many-product-picker-card-min-height;
+
+            &.disabled {
+                filter: grayscale(100%);
+                opacity: 0.5;
+            }
+
+            &.oe_flip_card_maximized {
+                position: fixed;
+                top: 1% !important;
+                left: 1% !important;
+                height: 98% !important;
+                width: 98% !important;
+                z-index: 50;
+
+                .oe_flip_card_inner {
+                    height: 100% !important;
+                    box-shadow: 0px 0px 15px;
+                    .img-fluid {
+                        transform: translateY(-50%) !important;
+                        top: 50%;
+                        position: relative;
+                    }
+                    .oe_one2many_product_picker_title {
+                        font-size: 1.95rem !important;
+                    }
+
+                    .oe_flip_card_back {
+                        .oe_one2many_product_picker_quick_create {
+                            width: 100%;
+                            padding: 1em;
+                        }
+                    }
+
+                    .o_field_widget, .oe_one2many_product_picker_form_buttons .btn {
+                        transform: scale($one2many-product-picker-zoom-scale);
+                        margin-bottom: 1.3em !important;
+                    }
+                    .o_field_widget, .w-100 {
+                        width: 100% / $one2many-product-picker-zoom-scale !important;
+                    }
+                }
+
+                .badge {
+                    font-size: 2rem !important;
+                }
+            }
+
+            &:not(.oe_flip_card_maximized) {
+                .oe_one2many_product_picker_title {
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    bottom: -1px; /* Workarraound to fix overflow issue on firefox */
+                }
+            }
+
+            &.active {
+                .oe_flip_card_inner {
+                    transform: rotateY(180deg);
+                    height: $one2many-product-picker-card-max-height;
+                }
+                height: $one2many-product-picker-card-max-height;
+            }
+
+            .oe_flip_card_inner {
+                position: relative;
+                width: 100%;
+                height: $one2many-product-picker-card-min-height;
+                transition: transform $one2many-product-picker-transition-3d-time, height $one2many-product-picker-transition-3d-time/2 ease-in-out $one2many-product-picker-transition-3d-time/2;
+                transform-style: preserve-3d;
+
+                .position-absolute {
+                    z-index: 1;
+                }
+
+                .badge {
+                    font-size: 1rem;
+                }
+
+                .badge_price {
+                    top: 50%;
+                    right: -2px;
+                    transform: translateY(-50%);
+                    display: grid;
+                    flex-direction: column;
+
+                    .discount_price {
+                        grid-row: 1;
+                        grid-column: 2;
+                    }
+
+                    .original_price {
+                        text-decoration: line-through;
+                        grid-row: 2;
+                        grid-column: 1;
+                        margin: auto;
+                        margin-right: 0.3rem;
+                    }
+
+                    .price_unit {
+                        grid-row: 2;
+                        grid-column: 2;
+                    }
+                }
+
+                .oe_flip_card_front,
+                .oe_flip_card_back {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    -webkit-backface-visibility: hidden; /* Safari */
+                    backface-visibility: hidden;
+                    border: 1px solid $border-color;
+                    overflow: hidden;
+                    transform: rotateX(0deg);
+
+                    .o_form_view.o_form_nosheet {
+                        padding: $one2many-product-picker-card-form-padding;
+
+                        .o_field_widget .o_input_dropdown > input {
+                            height: unset;
+                        }
+                    }
+                }
+
+                .oe_flip_card_front {
+                    background-color: white;
+                    color: black;
+                }
+
+                .oe_flip_card_back {
+                    background-color: $secondary;
+                    transform: rotateY(180deg);
+
+                    .oe_one2many_product_picker_quick_create {
+                        margin: 0;
+                        position: absolute;
+                        top: 50%;
+                        left: 0;
+                        transform: translateY(-50%);
+                    }
+                }
+
+                .oe_one2many_product_picker_form_view {
+                    background-color: transparent;
+                }
+            }
+            .oe_one2many_product_picker_title {
+                background-color: hsla(0, 0%, 100%, 0.667);
+                font-size: 0.95rem;
+                z-index: 0;
+            }
+        }
+    }
+}
+
+.oe_product_picker_quick_modif_price {
+    width: 80%;
+    max-width: $one2many-product-picker-quick-modif-price-max-width;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid $border-color;
+    z-index: 55;
+
+    .oe_one2many_product_picker_form_buttons {
+        text-align: center;
+    }
+}
