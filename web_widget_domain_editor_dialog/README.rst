@@ -84,7 +84,7 @@ Contributors
 
 * `Tecnativa <https://www.tecnativa.com>`_
 
-  * David Vidal 
+  * David Vidal
   * Jairo Llopis
   * Carlos Roca
 
