@@ -65,6 +65,7 @@ setuptools.setup(
         'odoo12-addon-web_widget_model_viewer',
         'odoo12-addon-web_widget_mpld3_chart',
         'odoo12-addon-web_widget_numeric_step',
+        'odoo12-addon-web_widget_one2many_product_picker',
         'odoo12-addon-web_widget_open_tab',
         'odoo12-addon-web_widget_plotly_chart',
         'odoo12-addon-web_widget_url_advanced',
