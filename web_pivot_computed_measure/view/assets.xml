@@ -10,6 +10,10 @@
                 type="text/javascript"
                 src="/web_pivot_computed_measure/static/src/js/pivot_controller.js"
             />
+            <link
+                rel="stylesheet"
+                href="/web_pivot_computed_measure/static/src/scss/web_pivot_computed_measure.scss"
+            />
         </xpath>
     </template>
 </odoo>
