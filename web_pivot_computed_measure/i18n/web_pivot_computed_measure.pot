@@ -141,7 +141,7 @@ msgstr ""
 
 #. module: web_pivot_computed_measure
 #. openerp-web
-#: code:addons/web_pivot_computed_measure/static/src/js/pivot_model.js:275
+#: code:addons/web_pivot_computed_measure/static/src/js/pivot_model.js:279
 #, python-format
 msgid "This measure is currently used by a 'computed measure'. Please, disable the computed measure first."
 msgstr ""
