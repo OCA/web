@@ -176,7 +176,8 @@ odoo.define("web_pivot_computed_measure.PivotController", function(require) {
             if ($(ev.target).val() === "custom") {
                 this.$buttons_measures_ex
                     .find("#container_computed_measure_operation_custom")
-                    .removeClass("d-none");
+                    .removeClass("d-none")
+                    .addClass("d-table-row");
             } else {
                 const format = $option.data("format");
                 if (format) {
@@ -186,6 +187,7 @@ odoo.define("web_pivot_computed_measure.PivotController", function(require) {
                 }
                 this.$buttons_measures_ex
                     .find("#container_computed_measure_operation_custom")
+                    .removeClass("d-table-row")
                     .addClass("d-none");
             }
         },

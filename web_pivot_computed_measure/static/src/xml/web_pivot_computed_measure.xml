@@ -59,73 +59,98 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                 </span>
             </a>
             <t t-if="isOpen">
-                <div class="dropdown-item-text">
-                    <label for="computed_measure_field_1">Measure 1</label>
-                    <select
-                        class="o_input o_date_field_selector"
-                        id="computed_measure_field_1"
+                <div id="add_computed_measure_wrapper" class="d-table">
+                    <div class="d-table-row">
+                        <div class="d-table-cell">
+                            <label for="computed_measure_field_1">Measure 1</label>
+                        </div>
+                        <div class="d-table-cell">
+                            <select class="o_input" id="computed_measure_field_1">
+                                <t t-foreach="measures" t-as="measure">
+                                    <option t-att-value="measure[0]">
+                                        <t t-esc="measure[1].string" />
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="d-table-row">
+                        <div class="d-table-cell">
+                            <label for="computed_measure_field_2">Measure 2</label>
+                        </div>
+                        <div class="d-table-cell">
+                            <select class="o_input" id="computed_measure_field_2">
+                                <t t-foreach="measures" t-as="measure">
+                                    <option t-att-value="measure[0]">
+                                        <t t-esc="measure[1].string" />
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="d-table-row">
+                        <div class="d-table-cell">
+                            <label for="computed_measure_operation">Operation</label>
+                        </div>
+                        <div class="d-table-cell">
+                            <select class="o_input" id="computed_measure_operation">
+                                <t
+                                    t-call="web_pivot_computed_measure.ComputedMeasureOperations"
+                                />
+                            </select>
+                        </div>
+                    </div>
+                    <div
+                        t-if="debug"
+                        class="d-none"
+                        id="container_computed_measure_operation_custom"
                     >
-                        <t t-foreach="measures" t-as="measure">
-                            <option t-att-value="measure[0]">
-                                <t t-esc="measure[1].string" />
-                            </option>
-                        </t>
-                    </select>
-                </div>
-                <div class="dropdown-item-text">
-                    <label for="computed_measure_field_2">Measure 2</label>
-                    <select
-                        class="o_input o_time_range_selector"
-                        id="computed_measure_field_2"
-                    >
-                        <t t-foreach="measures" t-as="measure">
-                            <option t-att-value="measure[0]">
-                                <t t-esc="measure[1].string" />
-                            </option>
-                        </t>
-                    </select>
-                </div>
-                <div class="dropdown-item-text">
-                    <label for="computed_measure_operation">Operation</label>
-                    <select
-                        class="o_input o_time_range_selector"
-                        id="computed_measure_operation"
-                    >
-                        <t
-                            t-call="web_pivot_computed_measure.ComputedMeasureOperations"
-                        />
-                    </select>
-                </div>
-                <div
-                    t-if="debug"
-                    class="dropdown-item-text d-none"
-                    id="container_computed_measure_operation_custom"
-                >
-                    <label for="computed_measure_operation_custom">Formula</label>
-                    <input type="text" id="computed_measure_operation_custom" />
-                </div>
-                <div class="dropdown-item-text">
-                    <label for="computed_measure_name">Name</label>
-                    <input
-                        placeholder="Can be empty"
-                        type="text"
-                        id="computed_measure_name"
-                    />
-                </div>
-                <div class="dropdown-item-text">
-                    <label for="computed_measure_format">Format</label>
-                    <select
-                        class="o_input o_time_range_selector"
-                        id="computed_measure_format"
-                    >
-                        <t t-call="web_pivot_computed_measure.ComputedMeasureFormats" />
-                    </select>
-                </div>
-                <div class="dropdown-item-text">
-                    <button
-                        class="btn btn-primary o_add_computed_measure"
-                        type="button"
-                    >Add</button>
+                        <div class="d-table-cell">
+                            <label
+                                for="computed_measure_operation_custom"
+                            >Formula</label>
+                        </div>
+                        <div class="d-table-cell">
+                            <input
+                                type="text"
+                                class="o_input"
+                                id="computed_measure_operation_custom"
+                            />
+                        </div>
+                    </div>
+                    <div class="d-table-row">
+                        <div class="d-table-cell">
+                            <label for="computed_measure_name">Name</label>
+                        </div>
+                        <div class="d-table-cell">
+                            <input
+                                placeholder="Can be empty"
+                                type="text"
+                                class="o_input"
+                                id="computed_measure_name"
+                            />
+                        </div>
+                    </div>
+                    <div class="d-table-row">
+                        <div class="d-table-cell">
+                            <label for="computed_measure_format">Format</label>
+                        </div>
+                        <div class="d-table-cell">
+                            <select class="o_input" id="computed_measure_format">
+                                <t
+                                    t-call="web_pivot_computed_measure.ComputedMeasureFormats"
+                                />
+                            </select>
+                        </div>
+                    </div>
+                    <div class="d-table-row">
+                        <div class="d-table-cell">
+                            <button
+                                class="btn btn-primary o_add_computed_measure"
+                                type="button"
+                            >Add</button>
+                        </div>
+                    </div>
                 </div>
             </t>
         </div>
