@@ -1,0 +1,9 @@
+#add_computed_measure_wrapper {
+    padding: 0 20px;
+    min-width: 300px;
+    white-space: nowrap;
+    .d-table-cell {
+        vertical-align: middle;
+        padding: 3px 0;
+    }
+}
