@@ -4,7 +4,7 @@
 {
     'name': "Web Pivot Computed Measure",
     'category': "web",
-    'version': "12.0.1.0.2",
+    'version': "12.0.1.0.3",
     'author': "Tecnativa, "
               "Odoo Community Association (OCA)",
     'license': 'AGPL-3',
