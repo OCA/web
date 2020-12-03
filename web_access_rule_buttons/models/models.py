@@ -1,25 +1,26 @@
 # Copyright 2016 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import models, api, exceptions
+from odoo import api, exceptions, models
 
 
 class Base(models.AbstractModel):
     """ The base model, which is implicitly inherited by all models. """
-    _inherit = 'base'
+
+    _inherit = "base"
 
     @api.multi
     def check_access_rule_all(self, operations=None):
         """Verifies that the operation given by ``operations`` is allowed for
-        the user according to ir.rules.
+         the user according to ir.rules.
 
-        If ``operations`` is empty, it returns the result for all actions.
+         If ``operations`` is empty, it returns the result for all actions.
 
-       :param operation: a list of ``read``, ``create``, ``write``, ``unlink``
-       :return: {operation: access} (access is a boolean)
+        :param operation: a list of ``read``, ``create``, ``write``, ``unlink``
+        :return: {operation: access} (access is a boolean)
         """
         if not operations or not any(operations):
-            operations = ['read', 'create', 'write', 'unlink']
+            operations = ["read", "create", "write", "unlink"]
         result = {}
         for operation in operations:
             if self.is_transient() or not self.ids:
