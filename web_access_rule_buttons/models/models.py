@@ -1,7 +1,7 @@
 # Copyright 2016 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, exceptions, models
+from odoo import exceptions, models
 
 
 class Base(models.AbstractModel):
@@ -9,7 +9,6 @@ class Base(models.AbstractModel):
 
     _inherit = "base"
 
-    @api.multi
     def check_access_rule_all(self, operations=None):
         """Verifies that the operation given by ``operations`` is allowed for
          the user according to ir.rules.
@@ -23,16 +22,19 @@ class Base(models.AbstractModel):
             operations = ["read", "create", "write", "unlink"]
         result = {}
         for operation in operations:
-            if self.is_transient() or not self.ids:
-                # If we call check_access_rule() without id, it will try to
-                # run a SELECT without ID which will crash, so we just blindly
-                # allow the operations
-                result[operation] = True
-                continue
             try:
                 self.check_access_rule(operation)
             except exceptions.AccessError:
                 result[operation] = False
-            else:
+            if (
+                self.is_transient()
+                or self.ids
+                and self.env.user.has_group("base.user_admin")
+            ):
+                # If we call check_access_rule() without id, it will try to
+                # run a SELECT without ID which will crash, so we just blindly
+                # allow the operations
                 result[operation] = True
+            else:
+                result[operation] = False
         return result
