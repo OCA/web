@@ -7,13 +7,13 @@ class TestAccessRuleButtons(TransactionCase):
     def setUp(self):
         super(TestAccessRuleButtons, self).setUp()
 
-        self.curr_obj = self.env['res.currency']
-        self.curr_record = self.env.ref('base.USD')
+        self.curr_obj = self.env["res.currency"]
+        self.curr_record = self.env.ref("base.USD")
 
     def test_check_access_rule_1(self):
-        res = self.curr_obj.check_access_rule_all(['write'])
-        self.assertTrue(res['write'])
+        res = self.curr_obj.check_access_rule_all(["write"])
+        self.assertTrue(res["write"])
 
     def test_check_access_rule_2(self):
-        res = self.curr_record.check_access_rule_all(['write'])
-        self.assertTrue(res['write'])
+        res = self.curr_record.check_access_rule_all(["write"])
+        self.assertTrue(res["write"])
