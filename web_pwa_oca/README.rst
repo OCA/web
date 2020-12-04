@@ -31,6 +31,17 @@ Progressive Web Apps provide an installable, app-like experience on desktop and 
 They're web apps that are fast and reliable. And most importantly, they're web apps that work in any browser.
 If you're building a web app today, you're already on the path towards building a Progressive Web App.
 
+
++ Developers Info.
+
+The service worker is contructed using 'Odoo Class' to have the same class inheritance behaviour that in the 'user pages'. Be noticed
+that 'Odoo Bootstrap' is not supported so, you can't use 'require' here.
+
+All service worker content can be found in 'static/src/js/worker'. The management between 'user pages' and service worker is done in
+'pwa_manager.js'.
+
+The purpose of this module is give a base to make PWA applications.
+
 **Table of contents**
 
 .. contents::
@@ -63,25 +74,66 @@ In case you previously installed `web_pwa`, run the following steps with `odoo s
 Configuration
 =============
 
-The following system parameters con be set to customize the appearance of the application
+This module allows you to set the following parameters under settings to customize the appearance of the application
 
-* pwa.manifest.name (defaults to "Odoo PWA")
-* pwa.manifest.short_name (defaults to "Odoo PWA")
-* pwa.manifest.icon128x128 (defaults to "/web_pwa_oca/static/img/icons/icon-128x128.png")
-* pwa.manifest.icon144x144 (defaults to "/web_pwa_oca/static/img/icons/icon-144x144.png")
-* pwa.manifest.icon152x152 (defaults to "/web_pwa_oca/static/img/icons/icon-152x152.png")
-* pwa.manifest.icon192x192 (defaults to "/web_pwa_oca/static/img/icons/icon-192x192.png")
-* pwa.manifest.icon256x256 (defaults to "/web_pwa_oca/static/img/icons/icon-256x256.png")
-* pwa.manifest.icon512x512 (defaults to "/web_pwa_oca/static/img/icons/icon-512x512.png")
+* PWA Name (defaults to "Odoo PWA")
+* PWA Short Name (defaults to "Odoo PWA")
+* PWA Icon (**SVG**) (defaults to "/web_pwa_oca/static/img/icons/odoo-logo.svg")
+
+To configure your PWA:
+
+#. Go to **Settings > General Settings > Progressive Web App**.
+#. Set the parameters (*Note:* Icon **must be a SVG file**)
+#. **Save**
+
+Usage
+=====
+
+To use your PWA:
+
+#. Open the Odoo web app using a supported browser (like Chrome/Chromium)
+#. Install the PWA
 
 Known issues / Roadmap
 ======================
 
-* Evaluate to extend ``FILES_TO_CACHE``
-* Evaluate to use a normal JS file for service worker and download data from a normal JSON controller
 * Integrate `Notification API <https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification>`_
 * Integrate `Web Share API <https://web.dev/web-share/>`_
 * Create ``portal_pwa`` module, intended to be used by front-end users (customers, suppliers...)
+* Current *John Resig's inheritance* implementation doesn't support ``async``
+  functions because ``this._super`` can't be called inside a promise. So we
+  need to use the following workaround:
+
+  - Natural 'async/await' example (This breaks "_super" call):
+
+    .. code-block:: javascript
+
+        var MyClass = OdooClass.extend({
+            myFunc: async function() {
+                const mydata = await ...do await stuff...
+                return mydata;
+            }
+        });
+
+  - Same code with the workaround:
+
+    .. code-block:: javascript
+
+        var MyClass = OdooClass.extend({
+            myFunc: function() {
+                return new Promise(async (resolve, reject) => {
+                    const mydata = await ...do await stuff...
+                    return resolve(mydata);
+                });
+            }
+        });
+
+* Fix issue when trying to run in localhost with several databases. The browser
+  doesn't send the cookie and web manifest returns 404.
+* Evaluate to support 'require' system.
+* 'Install PWA' menu option disappears even if not installed. This is due to the
+  very nature of service workers, so they are running including when you close
+  the page tabs.
 
 Bug Tracker
 ===========
@@ -100,6 +152,7 @@ Authors
 ~~~~~~~
 
 * TAKOBI
+* Tecnativa
 
 Contributors
 ~~~~~~~~~~~~
@@ -107,6 +160,11 @@ Contributors
 * `TAKOBI <https://takobi.online>`_:
 
   * Lorenzo Battistini
+
+* `Tecnativa <https://tecnativa.com>`_:
+
+  * Alexandre D. Díaz
+  * João Marques
 
 Maintainers
 ~~~~~~~~~~~

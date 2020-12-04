@@ -1,45 +1,40 @@
+/* Copyright 2020 Lorenzo Battistini @ TAKOBI
+   Copyright 2020 Tecnativa - Alexandre D. Díaz
+ * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
+
 odoo.define('web_pwa_oca.systray.install', function (require) {
-"use strict";
+    "use strict";
 
-var core = require('web.core');
-var session = require('web.session');
-var UserMenu = require('web.UserMenu');
+    var UserMenu = require('web.UserMenu');
+    var WebClientObj = require("web.web_client");
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function () {
-    navigator.serviceWorker.register('/service-worker.js')
-        .then(function (reg) {
-          console.log('Service worker registered.', reg);
-        });
-  });
-}
 
-var deferredInstallPrompt = null;
+    UserMenu.include({
 
-UserMenu.include({
-    start: function () {
-        window.addEventListener('beforeinstallprompt', this.saveBeforeInstallPromptEvent);
-        return this._super.apply(this, arguments);
-    },
-    saveBeforeInstallPromptEvent: function(evt) {
-        deferredInstallPrompt = evt;
-        this.$.find('#pwa_install_button')[0].removeAttribute('hidden');
-    },
-    _onMenuInstallpwa: function () {
-        deferredInstallPrompt.prompt();
-        // Hide the install button, it can't be called twice.
-        this.el.setAttribute('hidden', true);
-        // Log user response to prompt.
-        deferredInstallPrompt.userChoice
-            .then(function (choice) {
-              if (choice.outcome === 'accepted') {
-                console.log('User accepted the A2HS prompt', choice);
-              } else {
-                console.log('User dismissed the A2HS prompt', choice);
-              }
-              deferredInstallPrompt = null;
+        /**
+         * We can't control if the UserMenu is loaded berfore PWA manager...
+         * So check if need unhide the user menu options to install the PWA.
+         *
+         * @override
+         */
+        start: function () {
+            var self = this;
+            return this._super.apply(this, arguments).then(function () {
+                if (WebClientObj.pwa_manager.canBeInstalled()) {
+                    self.$el.find('#pwa_install_button')[0]
+                        .removeAttribute('hidden');
+                }
             });
-    },
-});
+        },
+
+        /**
+         * Handle 'Install PWA' user menu option click
+         *
+         * @private
+         */
+        _onMenuInstallpwa: function () {
+            WebClientObj.pwa_manager.install();
+        },
+    });
 
 });
