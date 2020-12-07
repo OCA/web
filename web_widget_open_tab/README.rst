@@ -14,18 +14,20 @@ Widget Open on new Tab
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/12.0/web_widget_open_tab
+    :target: https://github.com/OCA/web/tree/13.0/web_widget_open_tab
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-12-0/web-12-0-web_widget_open_tab
+    :target: https://translation.odoo-community.org/projects/web-13-0/web-13-0-web_widget_open_tab
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/162/12.0
+    :target: https://runbot.odoo-community.org/runbot/162/13.0
     :alt: Try me on Runbot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
-This addon creates a new widget that can be used to open on a new tab a record from a tree.
+This addon introduces a new widget.
+When added to a field in a tree view, the field appears as a button which opens the record in a new tab.
+When clicking on the line (but not on the button), the record is opened in the same window (as in native Odoo).
 
 **Table of contents**
 
@@ -40,7 +42,7 @@ Edit the tree view and add the widget as the first field, usually, we should use
 
     <field name="id" widget="open_tab"/>
 
-Now, we can open when clicking with the mouse wheel over the eye.
+You can open the record in a new tab when clicking with the mouse wheel on the external link icon.
 On a usual click the record will be opened without changes (keeping the breadcrumbs).
 
 Bug Tracker
@@ -49,7 +51,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_widget_open_tab%0Aversion:%2012.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_widget_open_tab%0Aversion:%2013.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -65,6 +67,7 @@ Contributors
 ~~~~~~~~~~~~
 
 * Enric Tobella <etobella@creublanca.es>
+* Raf Ven <raf.ven@dynapps.be>
 
 Maintainers
 ~~~~~~~~~~~
@@ -79,6 +82,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/12.0/web_widget_open_tab>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/13.0/web_widget_open_tab>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
