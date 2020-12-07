@@ -3,5 +3,5 @@ Edit the tree view and add the widget as the first field, usually, we should use
 
     <field name="id" widget="open_tab"/>
 
-Now, we can open when clicking with the mouse wheel over the eye.
+You can open the record in a new tab when clicking with the mouse wheel on the external link icon.
 On a usual click the record will be opened without changes (keeping the breadcrumbs).
