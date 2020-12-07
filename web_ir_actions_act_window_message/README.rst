@@ -23,7 +23,7 @@ Client side message boxes
     :target: https://runbot.odoo-community.org/runbot/162/13.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 This module allows to show a message popup on the client side as result of a button.
 
@@ -113,6 +113,10 @@ Contributors
 * Benjamin Willig (ACSONE SA/NV) <benjamin.willig@acsone.eu>
 * Ioan Galan (Studio73) <ioan@studio73.es>
 * Abraham Anes (Studio73) <abraham@studio73.es>
+* `DynApps NV <https://www.dynapps.be>`_:
+
+  * Koen Loodts
+  * Raf Ven
 
 Maintainers
 ~~~~~~~~~~~
@@ -127,6 +131,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/13.0/web_ir_actions_act_window_message>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/14.0/web_ir_actions_act_window_message>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
