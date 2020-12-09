@@ -259,7 +259,6 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView
                     this._updateButtons();
                 } else {
                     this.update({}, {reload: false}).then(function(){
-                        debugger;
                         self.model.unsetDirty(self.handle);
                         self.trigger_up("restore_flip_card");
                         self._updateButtons();
