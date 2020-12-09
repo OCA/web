@@ -96,7 +96,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
             var prices = [];
             var field_map = this.options.field_map;
             var records = this.parent_controller.model.get(this.state.id).data[this.name].data;
-            if (this.options.show_discounts) {
+            if (this.options.show_discount) {
                 prices = _.map(records, function (line) {
                     return line.data[field_map.product_uom_qty] * tools.priceReduce(line.data[field_map.price_unit], line.data[field_map.discount]);
                 });
