@@ -24,8 +24,5 @@
         "templates/service_worker.xml",
         "views/res_config_settings_views.xml",
     ],
-    'qweb': [
-        'static/src/xml/pwa_install.xml',
-    ],
     'images': ['static/description/pwa.png'],
 }
