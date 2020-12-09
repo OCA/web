@@ -1,12 +1,16 @@
 // Copyright 2020 Tecnativa - Alexandre Díaz
 // License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", function (require) {
+odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", function (
+    require
+) {
     "use strict";
 
     var core = require("web.core");
     var Widget = require("web.Widget");
     var widgetRegistry = require("web.widget_registry");
-    var ProductPickerQuickCreateFormView = require("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView").ProductPickerQuickCreateFormView;
+    var ProductPickerQuickCreateFormView = require(
+        "web_widget_one2many_product_picker.ProductPickerQuickCreateFormView"
+    ).ProductPickerQuickCreateFormView;
 
     var qweb = core.qweb;
 
@@ -42,6 +46,7 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", f
             this.id = this.state && this.state.id;
             this.editContext = {};
         },
+
         /**
          * @override
          */
@@ -65,8 +70,7 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", f
             var refinedContext = _.extend(
                 {},
                 this.main_state.getContext(),
-                this.nodeContext,
-            );
+                this.nodeContext);
             _.extend(refinedContext, this.editContext);
             this.formView = new ProductPickerQuickCreateFormView(fieldsView, {
                 context: refinedContext,
@@ -136,10 +140,10 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", f
                 this.start();
             } else {
                 var self = this;
-                this.getParent()._generateVirtualState({}, this.editContext).then(function(state) {
+                this.getParent()._generateVirtualState({}, this.editContext).then(function (state) {
                     var data = {};
                     data[self.compareKey] = {operation: 'ADD', id: evt.data.compareValue};
-                    self.basicFieldParams.model._applyChange(state.id, data).then(function(){
+                    self.basicFieldParams.model._applyChange(state.id, data).then(function () {
                         self.res_id = state.res_id;
                         self.id = state.id;
                         self.start();

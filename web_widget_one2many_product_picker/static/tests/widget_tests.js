@@ -1,3 +1,4 @@
+/* global QUnit */
 // Copyright 2020 Tecnativa - Alexandre Díaz
 // License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 odoo.define('web_widget_one2many_product_picker.widget_tests', function (require) {
@@ -28,7 +29,7 @@ odoo.define('web_widget_one2many_product_picker.widget_tests', function (require
     console.log(getArch());
 
     QUnit.module('Web Widget One2Many Product Picker', {
-        beforeEach: function() {
+        beforeEach: function () {
             this.data = {
                 foo: {
                     fields: {
@@ -37,8 +38,8 @@ odoo.define('web_widget_one2many_product_picker.widget_tests', function (require
                         display_name: {string: "Display Name", type: "char"},
                     },
                     records: [
-                        {id: 1, line_ids: [1,2], currency_id: 1, display_name: "FT01"},
-                    ]
+                        {id: 1, line_ids: [1, 2], currency_id: 1, display_name: "FT01"},
+                    ],
                 },
                 line: {
                     fields: {
@@ -53,7 +54,7 @@ odoo.define('web_widget_one2many_product_picker.widget_tests', function (require
                     records: [
                         {id: 1, name: "Large Cabinet", product_id: 1, product_uom: 1, product_uom_qty: 3, price_unit: 9.99, price_reduce: 9.00, foo_id: 1},
                         {id: 2, name: "Cabinet with Doors", product_id: 2, product_uom: 1, product_uom_qty: 8, price_unit: 42.99, price_reduce: 40.00, foo_id: 1},
-                    ]
+                    ],
                 },
                 product: {
                     fields: {
@@ -94,9 +95,9 @@ odoo.define('web_widget_one2many_product_picker.widget_tests', function (require
                     ],
                 },
             };
-        }
+        },
     }, function () {
-        QUnit.test('Load widget', function(assert) {
+        QUnit.test('Load widget', function (assert) {
             assert.expect(4);
 
             var form = createView({

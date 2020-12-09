@@ -6,6 +6,7 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function (require) 
     var BasicModel = require("web.BasicModel");
 
     BasicModel.include({
+
         /**
          * @param {Number/String} handle
          * @param {Object} context
@@ -62,7 +63,7 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function (require) 
             var list = this.localData[listID];
             var context = _.extend({}, this._getContext(list), options.context);
 
-            var position = (options && options.position) || 'top';
+            var position = options?options.position:'top';
             var params = {
                 context: context,
                 fields: list.fields,
@@ -74,17 +75,22 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function (require) 
                 doNotSetDirty: true,
             };
 
-            return $.Deferred(function(d){
-                self._makeDefaultRecord(list.model, params).then(function (recordID) {
-                    self.setPureVirtual(recordID, true);
-                    if (options.data) {
-                        self._applyChangeNoWarnings(recordID, options.data, params).then(function(){
+            return $.Deferred(function (d) {
+                self._makeDefaultRecord(list.model, params)
+                    .then(function (recordID) {
+                        self.setPureVirtual(recordID, true);
+                        if (options.data) {
+                            self._applyChangeNoWarnings(
+                                recordID,
+                                options.data,
+                                params
+                            ).then(function () {
+                                d.resolve(self.get(recordID));
+                            });
+                        } else {
                             d.resolve(self.get(recordID));
-                        });
-                    } else {
-                        d.resolve(self.get(recordID));
-                    }
-                });
+                        }
+                    });
             });
         },
 
@@ -92,9 +98,9 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function (require) 
          * Cloned '_applyChange' but without warning messages
          *
          * @private
-         * @param {Object} record
-         * @param {Object} fields
-         * @param {String} viewType
+         * @param {Number} recordID
+         * @param {Object} changes
+         * @param {Object} options
          * @returns {Deferred}
          */
         _applyChangeNoWarnings: function (recordID, changes, options) {
@@ -112,11 +118,16 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function (require) 
                 initialData[elem.id] = $.extend(true, {}, _.pick(elem, 'data', '_changes'));
             });
 
-            // apply changes to local data
+            // Apply changes to local data
             for (var fieldName in changes) {
                 field = record.fields[fieldName];
                 if (field && (field.type === 'one2many' || field.type === 'many2many')) {
-                    defs.push(this._applyX2ManyChange(record, fieldName, changes[fieldName], options.viewType, options.allowWarning));
+                    defs.push(this._applyX2ManyChange(
+                        record,
+                        fieldName,
+                        changes[fieldName],
+                        options.viewType,
+                        options.allowWarning));
                 } else if (field && (field.type === 'many2one' || field.type === 'reference')) {
                     defs.push(this._applyX2OneChange(record, fieldName, changes[fieldName]));
                 } else {
@@ -129,12 +140,25 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function (require) 
             }
 
             return $.when.apply($, defs).then(function () {
-                var onChangeFields = []; // the fields that have changed and that have an on_change
+
+                // The fields that have changed and that have an on_change
+                var onChangeFields = [];
                 for (var fieldName in changes) {
                     field = record.fields[fieldName];
                     if (field && field.onChange) {
-                        var isX2Many = field.type === 'one2many' || field.type === 'many2many';
-                        if (!isX2Many || (self._isX2ManyValid(record._changes[fieldName] || record.data[fieldName]))) {
+                        var isX2Many = (
+                            field.type === 'one2many' ||
+                            field.type === 'many2many'
+                        );
+                        if (
+                            !isX2Many ||
+                            (
+                                self._isX2ManyValid(
+                                    record._changes[fieldName] ||
+                                    record.data[fieldName]
+                                )
+                            )
+                        ) {
                             onChangeFields.push(fieldName);
                         }
                     }
@@ -144,12 +168,15 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function (require) 
                     self._performOnChangeNoWarnings(record, onChangeFields, options.viewType)
                         .then(function (result) {
                             delete record._warning;
-                            onchangeDef.resolve(_.keys(changes).concat(Object.keys(result && result.value || {})));
+                            onchangeDef.resolve(
+                                _.keys(changes).concat(
+                                    Object.keys((result && result.value) || {})));
                         }).fail(function () {
                             self._visitChildren(record, function (elem) {
                                 _.extend(elem, initialData[elem.id]);
                             });
-                            // safe fix for stable version, for opw-2267444
+
+                            // Safe fix for stable version, for opw-2267444
                             if (!options.force_fail) {
                                 onchangeDef.resolve({});
                             } else {
@@ -161,12 +188,16 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function (require) 
                 }
                 return onchangeDef.then(function (fieldNames) {
                     _.each(fieldNames, function (name) {
-                        if (record._changes && record._changes[name] === record.data[name]) {
+                        if (
+                            record._changes &&
+                            record._changes[name] === record.data[name]
+                        ) {
                             delete record._changes[name];
                             record._isDirty = !_.isEmpty(record._changes);
                         }
                     });
                     return self._fetchSpecialData(record).then(function (fieldNames2) {
+
                         // Return the names of the fields that changed (onchange or
                         // associated special data change)
                         return _.union(fieldNames, fieldNames2);
@@ -196,32 +227,33 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function (require) 
             };
             if (fields.length === 1) {
                 fields = fields[0];
-                // if only one field changed, add its context to the RPC context
+
+                // If only one field changed, add its context to the RPC context
                 options.fieldName = fields;
             }
             var context = this._getContext(record, options);
             var currentData = this._generateOnChangeData(record, {changesOnly: false});
 
             return self._rpc({
-                    model: record.model,
-                    method: 'onchange',
-                    args: [idList, currentData, fields, onchangeSpec, context],
-                })
-                .then(function (result) {
-                    if (!record._changes) {
-                        // if the _changes key does not exist anymore, it means that
-                        // it was removed by discarding the changes after the rpc
-                        // to onchange. So, in that case, the proper response is to
-                        // ignore the onchange.
-                        return;
-                    }
-                    if (result.domain) {
-                        record._domains = _.extend(record._domains, result.domain);
-                    }
-                    return self._applyOnChange(result.value, record).then(function () {
-                        return result;
-                    });
+                model: record.model,
+                method: 'onchange',
+                args: [idList, currentData, fields, onchangeSpec, context],
+            }).then(function (result) {
+                if (!record._changes) {
+
+                    // If the _changes key does not exist anymore, it means that
+                    // it was removed by discarding the changes after the rpc
+                    // to onchange. So, in that case, the proper response is to
+                    // ignore the onchange.
+                    return;
+                }
+                if (result.domain) {
+                    record._domains = _.extend(record._domains, result.domain);
+                }
+                return self._applyOnChange(result.value, record).then(function () {
+                    return result;
                 });
+            });
         },
     });
 
