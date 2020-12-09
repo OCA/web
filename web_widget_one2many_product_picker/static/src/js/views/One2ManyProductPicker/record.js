@@ -13,8 +13,6 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
     var tools = require("web_widget_one2many_product_picker.tools");
     var ProductPickerQuickModifPriceForm = require(
         "web_widget_one2many_product_picker.ProductPickerQuickModifPriceForm");
-    var ProductPickerQuickCreateForm = require(
-        "web_widget_one2many_product_picker.ProductPickerQuickCreateForm");
 
     var qweb = core.qweb;
 

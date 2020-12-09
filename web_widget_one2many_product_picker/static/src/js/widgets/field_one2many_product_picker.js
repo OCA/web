@@ -302,6 +302,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
             var soptions = options || {};
             var context = _.extend({
                 'active_search_group_name': this._activeSearchGroup.name,
+                'active_search_involved_fields': this._searchContext.involvedFields,
             },this.state.data[this.name].getContext());
 
             return $.Deferred(function (d) {
@@ -420,6 +421,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
          */
         _getFullSearchDomain: function (domain) {
             var sdomain = _.clone(domain);
+            this._searchContext.involvedFields = [];
             if (!sdomain) {
                 sdomain = _.clone(this._searchContext.domain) || [];
                 if (this._searchContext.text) {
@@ -427,6 +429,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                     if (!(search_domain[0] instanceof Array)) {
                         search_domain = search_domain[this._searchMode].domain;
                     }
+                    var involved_fields = [];
                     // Iterate domain triplets and logic operators
                     for (var index in search_domain) {
                         var domain = _.clone(search_domain[index]);
@@ -435,12 +438,23 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                             // Replace right leaf with the current value of the search input
                             if (domain[2] === "$number_search") {
                                 domain[2] = Number(this._searchContext.text);
+                                involved_fields.push({
+                                    type: 'number',
+                                    field: domain[0],
+                                    oper: domain[1],
+                                });
                             } else if (typeof(domain[2]) === "string" && domain[2].includes("$search")) {
-                                domain[2] = domain[2].replace(/\$search/, this._searchContext.text)
+                                domain[2] = domain[2].replace(/\$search/, this._searchContext.text);
+                                involved_fields.push({
+                                    type: 'text',
+                                    field: domain[0],
+                                    oper: domain[1],
+                                });
                             }
                         }
                         sdomain.push(domain);
                     }
+                    this._searchContext.involvedFields = involved_fields;
                 }
             }
             return sdomain || [];
