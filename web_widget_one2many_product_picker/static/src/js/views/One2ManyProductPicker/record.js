@@ -1,3 +1,4 @@
+/* global py */
 // Copyright 2020 Tecnativa - Alexandre Díaz
 // License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", function (
@@ -9,12 +10,12 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
     var Widget = require("web.Widget");
     var Domain = require("web.Domain");
     var widgetRegistry = require("web.widget_registry");
-    var core = require("web.core");
     var tools = require("web_widget_one2many_product_picker.tools");
     var ProductPickerQuickModifPriceForm = require(
         "web_widget_one2many_product_picker.ProductPickerQuickModifPriceForm");
 
     var qweb = core.qweb;
+    var _t = core._t;
 
     /* This represent a record (a card) */
     var One2ManyProductPickerRecord = Widget.extend({
@@ -74,7 +75,8 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          * @override
          */
         update: function (record) {
-            // detach the widgets because the record will empty its $el, which
+
+            // Detach the widgets because the record will empty its $el, which
             // will remove all event handlers on its descendants, and we want
             // to keep those handlers alive as we will re-use these widgets
             _.invoke(_.pluck(this.subWidgets, "$el"), "detach");
@@ -100,8 +102,9 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          * Generates the URL for the given product using the selected field
          *
          * @private
-         * @param {string} field
-         * @returns {string}
+         * @param {Number} product_id
+         * @param {String} field_name
+         * @returns {String}
          */
         _getImageUrl: function (product_id, field_name) {
             return _.str.sprintf(
@@ -128,8 +131,8 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
 
         /**
          * @private
-         * @param {string} d a stringified domain
-         * @returns {boolean} the domain evaluted with the current values
+         * @param {String} d a stringified domain
+         * @returns {Boolean} the domain evaluted with the current values
          */
         _computeDomain: function (d) {
             return new Domain(d).compute(
@@ -160,6 +163,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          * @returns {Object}
          */
         _getQWebContext: function () {
+
             // Using directly the 'model record' instead of the state because
             // the state it's a parsed version of this record that doesn't
             // contains the '_virtual' attribute.
@@ -186,7 +190,8 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          */
         _getInternalVirtualRecordContext: function () {
             var context = {};
-            context["default_" + this.options.basicFieldParams.relation_field] = this.options.basicFieldParams.state.id || null;
+            context["default_" + this.options.basicFieldParams.relation_field] =
+                this.options.basicFieldParams.state.id || null;
             return context;
         },
 
@@ -199,7 +204,10 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          */
         _getInternalVirtualRecordData: function () {
             var data = {};
-            data[this.options.fieldMap.product] = {operation: 'ADD', id: this.recordSearch.id};
+            data[this.options.fieldMap.product] = {
+                operation: 'ADD',
+                id: this.recordSearch.id,
+            };
             return data;
         },
 
@@ -211,12 +219,14 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          */
         _generateVirtualState: function (data, context) {
             var model = this.options.basicFieldParams.model;
-            var scontext = _.extend({}, this._getInternalVirtualRecordContext(), context);
+            var scontext = _.extend(
+                {}, this._getInternalVirtualRecordContext(), context);
             var sdata = _.extend({}, this._getInternalVirtualRecordData(), data);
-            return model.createVirtualRecord(this.options.basicFieldParams.value.id, {
-                data: sdata,
-                context: scontext,
-            });
+            return model.createVirtualRecord(
+                this.options.basicFieldParams.value.id, {
+                    data: sdata,
+                    context: scontext,
+                });
         },
 
         /**
@@ -225,7 +235,10 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
         _render: function () {
             this.defs = [];
             this._replaceElement(
-                qweb.render("One2ManyProductPicker.FlipCard", this._getQWebContext())
+                qweb.render(
+                    "One2ManyProductPicker.FlipCard",
+                    this._getQWebContext()
+                )
             );
             this.$card = this.$(".oe_flip_card");
             this.$front = this.$(".oe_flip_card_front");
@@ -241,6 +254,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          * any, or directly by the formatted value
          *
          * @private
+         * @param {jQueryElement} $container
          */
         _processWidgetFields: function ($container) {
             var self = this;
@@ -257,13 +271,21 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                 // even if it is not specified in the view.
                 if (field_widget || self.fields[field_name].type === "many2many") {
                     var widget = self.subWidgets[field_name];
-                    if (!widget) {
+                    if (widget) {
+
+                        // a widget already exists for that field, so reset it
+                        // with the new state
+                        widget.reset(self.state);
+                        $field.replaceWith(widget.$el);
+                    } else {
+
                         // the widget doesn't exist yet, so instanciate it
                         var Widget = self.fieldsInfo[field_name].Widget;
                         if (Widget) {
                             widget = self._processWidget($field, field_name, Widget);
                             self.subWidgets[field_name] = widget;
                         } else if (config.debug) {
+
                             // the widget is not implemented
                             $field.replaceWith(
                                 $("<span>", {
@@ -274,11 +296,6 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                                 })
                             );
                         }
-                    } else {
-                        // a widget already exists for that field, so reset it
-                        // with the new state
-                        widget.reset(self.state);
-                        $field.replaceWith(widget.$el);
                     }
                 }
             });
@@ -294,6 +311,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          * @returns {Widget} the widget instance
          */
         _processWidget: function ($field, field_name, Widget) {
+
             // some field's attrs might be record dependent (they start with
             // 't-att-') and should thus be evaluated, which is done by qweb
             // we here replace those attrs in the dict of attrs of the state
@@ -301,7 +319,6 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             // field's widgets point of view
             // that dict being shared between records, we don't modify it
             // in place
-            var self = this;
             var attrs = Object.create(null);
             _.each(this.fieldsInfo[field_name], function (value, key) {
                 if (_.str.startsWith(key, "t-att-")) {
@@ -310,8 +327,14 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                 }
                 attrs[key] = value;
             });
-            var options = _.extend({}, this.options, {attrs: attrs, data: this.state.data});
-            var widget = new Widget(this, field_name, this.getParent().state, options);
+            var options = _.extend({}, this.options, {
+                attrs: attrs,
+                data: this.state.data,
+            });
+            var widget = new Widget(
+                this, field_name,
+                this.getParent().state,
+                options);
             var def = widget.replace($field);
             if (def.state() === "pending") {
                 this.defs.push(def);
@@ -329,8 +352,8 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             var self = this;
             $container.find("widget").each(function () {
                 var $field = $(this);
-                var Widget = widgetRegistry.get($field.attr("name"));
-                var widget = new Widget(self, {
+                var FieldWidget = widgetRegistry.get($field.attr("name"));
+                var widget = new FieldWidget(self, {
                     fieldsInfo: self.fieldsInfo,
                     fields: self.fields,
                     main_state: self.getParent().state,
@@ -346,8 +369,9 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                 self.widgets.push(widget);
 
                 var def = widget
-                    ._widgetRenderAndInsert(function () {})
-                    .then(function () {
+                    ._widgetRenderAndInsert(function () {
+                        // Do nothing
+                    }).then(function () {
                         widget.$el.addClass("o_widget");
                         $field.replaceWith(widget.$el);
                     });
@@ -384,7 +408,9 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
 
             var to_find = [];
             if (!_.isEmpty(fields)) {
-                to_find = _.map(fields, function(field){ return _.str.sprintf("[data-field=%s]", [field]); });
+                to_find = _.map(fields, function (field) {
+                    return _.str.sprintf("[data-field=%s]", [field]);
+                });
             } else {
                 to_find = ["[data-field]"];
             }
@@ -401,11 +427,13 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                 var field_map = this.options.fieldMap;
                 if (state_data) {
                     var has_discount = state_data[field_map.discount] > 0.0;
-                    this.$el.find(".original_price,.discount_price").toggleClass("d-none", !has_discount);
+                    this.$el.find(".original_price,.discount_price")
+                        .toggleClass("d-none", !has_discount);
                     if (has_discount) {
                         this.$el.find(".price_unit").html(this._calcPriceReduced());
                     } else {
-                        this.$el.find(".price_unit").html(this._getMonetaryFieldValue("price_unit"));
+                        this.$el.find(".price_unit").html(
+                            this._getMonetaryFieldValue("price_unit"));
                     }
                 }
             }
@@ -420,7 +448,9 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             var field_map = this.options.fieldMap;
             var state_data = this.state.data;
             if (state_data && state_data[field_map.discount]) {
-                price_reduce = tools.priceReduce(state_data[field_map.price_unit], state_data[field_map.discount]);
+                price_reduce = tools.priceReduce(
+                    state_data[field_map.price_unit],
+                    state_data[field_map.discount]);
             }
             return price_reduce && tools.monetary(
                 price_reduce,
@@ -451,7 +481,8 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                 canEditDiscount: this.options.editDiscount,
                 currencyField: this.options.currencyField,
             });
-            this.$modifPricePopup = $(qweb.render("One2ManyProductPicker.QuickModifPricePopup"));
+            this.$modifPricePopup = $(
+                qweb.render("One2ManyProductPicker.QuickModifPricePopup"));
             this.$modifPricePopup.appendTo($(".o_main_content"));
             modif_price_form.attachTo(this.$modifPricePopup);
         },
@@ -463,12 +494,15 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          * @param {ClickEvent} evt
          */
         _onClickFlipCard: function (evt) {
+
             // Avoid clicks on form elements
-            if (['INPUT','BUTTON', 'A'].indexOf(evt.target.tagName) !== -1) {
+            if (['INPUT', 'BUTTON', 'A'].indexOf(evt.target.tagName) !== -1) {
                 return;
             }
             if (!this._clickFlipCardDelayed) {
-                this._clickFlipCardDelayed = setTimeout(this._onClickDelayedFlipCard.bind(this, evt), this._click_card_delayed_time);
+                this._clickFlipCardDelayed = setTimeout(
+                    this._onClickDelayedFlipCard.bind(this, evt),
+                    this._click_card_delayed_time);
             }
             ++this._clickFlipCardCount;
             if (this._clickFlipCardCount >= 2) {
@@ -481,9 +515,8 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
 
         /**
          * @private
-         * @param {MouseEvent} evt
          */
-        _onClickDelayedFlipCard: function (evt) {
+        _onClickDelayedFlipCard: function () {
             this._clickFlipCardDelayed = false;
             this._clickFlipCardCount = 0;
 
@@ -499,12 +532,12 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                 this._processWidgetFields(this.$back);
                 this._processWidgets(this.$back);
                 this._processDynamicFields();
-                $.when(this.defs).then(function(){
+                $.when(this.defs).then(function () {
                     var $actived_card = self.$el.parent().find(".active");
                     $actived_card.removeClass("active");
                     $actived_card.find('.oe_flip_card_front').removeClass("d-none");
                     self.$card.addClass("active");
-                    setTimeout(() => {
+                    setTimeout(function () {
                         self.$('.oe_flip_card_front').addClass("d-none");
                     }, 200);
                 });
@@ -517,7 +550,10 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          */
         _onDblClickDelayedFlipCard: function (evt) {
             var $target = $(evt.target);
-            if ($target.hasClass('badge_price') || $target.parents('.badge_price').length) {
+            if (
+                $target.hasClass('badge_price') ||
+                $target.parents('.badge_price').length
+            ) {
                 this._openPriceModifier();
             } else {
                 var $currentTarget = $(evt.currentTarget);
@@ -525,7 +561,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                 var cur_img_src = $img.attr("src");
                 if ($currentTarget.hasClass('oe_flip_card_maximized')) {
                     $currentTarget.removeClass('oe_flip_card_maximized');
-                    $currentTarget.on('transitionend', function() {
+                    $currentTarget.on('transitionend', function () {
                         $currentTarget.css({
                             position: "",
                             top: "",
@@ -540,7 +576,8 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                     var $actived_card = this.$el.parent().find(".active");
                     if ($actived_card[0] !== $currentTarget[0]) {
                         $actived_card.removeClass("active");
-                        $actived_card.find('.oe_flip_card_front').removeClass("d-none");
+                        $actived_card.find('.oe_flip_card_front')
+                            .removeClass("d-none");
                     }
                     var offset = $currentTarget.offset();
                     $currentTarget.css({
@@ -551,7 +588,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                         height: $currentTarget.height(),
                         zIndex: 50,
                     });
-                    _.defer(function(){
+                    _.defer(function () {
                         $currentTarget.addClass('oe_flip_card_maximized');
                     });
                 }
@@ -562,9 +599,8 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
 
         /**
          * @private
-         * @param {CustomEvent} evt
          */
-        _onRestoreFlipCard: function (evt) {
+        _onRestoreFlipCard: function () {
             this.$(".oe_flip_card").removeClass("active");
             this.$('.oe_flip_card_front').removeClass("d-none");
         },
@@ -584,8 +620,8 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          * @private
          * @param {CustomEvent} evt
          */
-        _onQuickRecordUpdated: function (ev) {
-            this._processDynamicFields(Object.keys(ev.data.changes));
+        _onQuickRecordUpdated: function (evt) {
+            this._processDynamicFields(Object.keys(evt.data.changes));
             this.trigger_up("update_subtotal");
         },
     });
