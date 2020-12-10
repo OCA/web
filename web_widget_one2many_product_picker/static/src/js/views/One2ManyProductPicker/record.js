@@ -148,6 +148,15 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          * @param {Object} recordSearch
          */
         _setState: function (viewState, recordSearch) {
+
+            // No parent = product_pricker widget destroyed
+            // So this is a 'zombie' record. Destroy it!
+            if (!this.getParent()) {
+                this.on_detach_callback();
+                this.destroy();
+                return;
+            }
+
             this.fields = this.getParent().state.fields;
             this.fieldsInfo = this.getParent().state.fieldsInfo.form;
             this.state = viewState;
