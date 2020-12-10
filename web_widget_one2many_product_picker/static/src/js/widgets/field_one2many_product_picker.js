@@ -83,7 +83,14 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                 domain: this.mode === "readonly" ? this._getLinesDomain() : false,
                 text: false,
                 order: false,
+                activeTest: true,
             };
+            if (this.mode === "readonly") {
+                this._activeSearchGroup = {
+                    'name': 'main_lines',
+                };
+                this._searchContext.activeTest = false;
+            }
             return $.when(this._super.apply(this, arguments), this._getSearchRecords());
         },
 
@@ -124,7 +131,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                 }) || 0;
             total = tools.monetary(
                 total,
-                this.state.data[this.name].fields[this.options.field_map.price_unit],
+                this.value.fields[this.options.field_map.price_unit],
                 this.options.currency_field,
                 this.state.data
             );
@@ -294,12 +301,11 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
          * If merge is true the current records aren't removed.
          *
          * @private
-         * @param {Array} domain
          * @param {Dictionary} options
          * @param {Boolean} merge
          * @returns {Deferred}
          */
-        _getSearchRecords: function (domain, options, merge) {
+        _getSearchRecords: function (options, merge) {
             var self = this;
             var arch = this.view.arch;
             var field_name = this.options.field_map.product;
@@ -308,12 +314,13 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
 
             // Launch the rpc request and ensures that we wait for the reply
             // to continue
-            var sdomain = this._getFullSearchDomain(domain);
+            var domain = this._getFullSearchDomain();
             var soptions = options || {};
             var context = _.extend({
                 'active_search_group_name': this._activeSearchGroup.name,
                 'active_search_involved_fields': this._searchContext.involvedFields,
-            }, this.state.data[this.name].getContext());
+                'active_test': this._searchContext.activeTest,
+            }, this.value.getContext());
 
             return $.Deferred(function (d) {
                 var limit = soptions.limit || self.options.records_per_page;
@@ -322,7 +329,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                     model: model,
                     method: "search_read",
                     fields: self.search_read_fields,
-                    domain: sdomain,
+                    domain: domain,
                     limit: limit,
                     offset: offset,
                     orderBy: self._searchContext.order,
@@ -359,6 +366,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
             this._activeSearchGroup = this.searchGroups[groupIndex];
             this._searchContext.domain = this._activeSearchGroup.domain;
             this._searchContext.order = this._activeSearchGroup.order;
+            this._searchContext.activeTest = true;
             this.doRenderSearchRecords();
             this.$btnLines.removeClass("active");
             $btn.parent().find(".active").removeClass("active");
@@ -428,55 +436,52 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
          * This domain is used to get the records to display.
          *
          * @private
-         * @param {Array} domain
          * @returns {Array}
          */
-        _getFullSearchDomain: function (domain) {
-            var sdomain = _.clone(domain);
+        _getFullSearchDomain: function () {
             this._searchContext.involvedFields = [];
-            if (!sdomain) {
-                sdomain = _.clone(this._searchContext.domain) || [];
-                if (this._searchContext.text) {
-                    var search_domain = this.options.search;
-                    if (!(search_domain[0] instanceof Array)) {
-                        search_domain = search_domain[this._searchMode].domain;
-                    }
-                    var involved_fields = [];
-
-                    // Iterate domain triplets and logic operators
-                    for (var index in search_domain) {
-                        var domain_cloned = _.clone(search_domain[index]);
-
-                        // Is a triplet
-                        if (domain_cloned instanceof Array) {
-
-                            // Replace right leaf with the current value of the search input
-                            if (domain_cloned[2] === "$number_search") {
-                                domain_cloned[2] = Number(this._searchContext.text);
-                                involved_fields.push({
-                                    type: 'number',
-                                    field: domain_cloned[0],
-                                    oper: domain_cloned[1],
-                                });
-                            } else if (
-                                typeof domain_cloned[2] === "string" &&
-                                domain_cloned[2].includes("$search")
-                            ) {
-                                domain_cloned[2] = domain_cloned[2]
-                                    .replace(/\$search/, this._searchContext.text);
-                                involved_fields.push({
-                                    type: 'text',
-                                    field: domain_cloned[0],
-                                    oper: domain_cloned[1],
-                                });
-                            }
-                        }
-                        sdomain.push(domain_cloned);
-                    }
-                    this._searchContext.involvedFields = involved_fields;
+            var domain = _.clone(this._searchContext.domain) || [];
+            if (this._searchContext.text) {
+                var search_domain = this.options.search;
+                if (!(search_domain[0] instanceof Array)) {
+                    search_domain = search_domain[this._searchMode].domain;
                 }
+                var involved_fields = [];
+
+                // Iterate domain triplets and logic operators
+                for (var index in search_domain) {
+                    var domain_cloned = _.clone(search_domain[index]);
+
+                    // Is a triplet
+                    if (domain_cloned instanceof Array) {
+
+                        // Replace right leaf with the current value of the search input
+                        if (domain_cloned[2] === "$number_search") {
+                            domain_cloned[2] = Number(this._searchContext.text);
+                            involved_fields.push({
+                                type: 'number',
+                                field: domain_cloned[0],
+                                oper: domain_cloned[1],
+                            });
+                        } else if (
+                            typeof domain_cloned[2] === "string" &&
+                            domain_cloned[2].includes("$search")
+                        ) {
+                            domain_cloned[2] = domain_cloned[2]
+                                .replace(/\$search/, this._searchContext.text);
+                            involved_fields.push({
+                                type: 'text',
+                                field: domain_cloned[0],
+                                oper: domain_cloned[1],
+                            });
+                        }
+                    }
+                    domain.push(domain_cloned);
+                }
+                this._searchContext.involvedFields = involved_fields;
             }
-            return sdomain || [];
+
+            return domain || [];
         },
 
         /**
@@ -511,6 +516,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
             };
             this._searchContext.domain = this._getLinesDomain();
             this._searchContext.order = false;
+            this._searchContext.activeTest = false;
             this.doRenderSearchRecords();
         },
 
@@ -594,7 +600,6 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
             }
             var self = this;
             this._getSearchRecords(
-                false,
                 {
                     offset: this._searchOffset,
                 },

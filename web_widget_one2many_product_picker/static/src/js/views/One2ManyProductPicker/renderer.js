@@ -39,9 +39,6 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
             this.mode = parent.mode;
             this.search_data = parent._searchRecords;
             this.last_search_data_count = parent._lastSearchRecordsCount;
-            this._lazyOnScrollView = _.debounce(
-                this._onScrollView.bind(this),
-                this.DELAY_GET_RECORDS);
         },
 
         /**
@@ -423,27 +420,6 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                     _.invoke(new_widgets, "on_attach_callback");
                 }
             });
-        },
-
-        /**
-         * Auto-load more records (scroll pagination).
-         *
-         * @private
-         * @param {ScrollEvent} evt
-         */
-        _onScrollView: function (evt) {
-            var cur_pos = evt.target.scrollTop;
-            var max_pos = evt.target.scrollHeight - evt.target.clientHeight;
-            var perc_pos = cur_pos / max_pos;
-            if (perc_pos > this.MIN_PERC_GET_RECORDS) {
-                if (!this._loadMoreWorking) {
-                    this.trigger_up("load_more");
-                    this._loadMoreWorking = true;
-                    this.$btnLoadMore.attr("disabled", true);
-                }
-            } else {
-                this._loadMoreWorking = false;
-            }
         },
 
         /**
