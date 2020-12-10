@@ -19,6 +19,10 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
     var FieldOne2ManyProductPicker = FieldOne2Many.extend({
         className: "oe_field_one2many_product_picker",
 
+        // Workaround: We need know all records,
+        // the widget pagination works with product.product.
+        limit: 9999999,
+
         events: _.extend({}, FieldOne2Many.prototype.events, {
             "click .dropdown-item": "_onClickSearchMode",
             "click .oe_search_erase": "_onClickSearchEraser",
