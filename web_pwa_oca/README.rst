@@ -93,7 +93,7 @@ To use your PWA:
 #. Open the browser options
 #. Click on 'Add to Home screen' (or 'Install' in other browsers)
 
-** Maybe you need refresh the page to load the service worker after use 'add to home screen'.
+** Maybe you need refresh the page to load the service worker after using the option.
 
 Known issues / Roadmap
 ======================
@@ -133,6 +133,7 @@ Known issues / Roadmap
   doesn't send the cookie and web manifest returns 404.
 * Evaluate to support 'require' system.
 * Firefox can't detect 'standalone' mode. See https://bugzilla.mozilla.org/show_bug.cgi?id=1285858
+* Firefox disable service worker in private mode. See https://bugzilla.mozilla.org/show_bug.cgi?id=1601916
 
 Bug Tracker
 ===========

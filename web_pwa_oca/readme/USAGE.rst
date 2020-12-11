@@ -4,4 +4,4 @@ To use your PWA:
 #. Open the browser options
 #. Click on 'Add to Home screen' (or 'Install' in other browsers)
 
-** Maybe you need refresh the page to load the service worker after use 'add to home screen'.
+** Maybe you need refresh the page to load the service worker after using the option.
