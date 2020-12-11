@@ -32,13 +32,6 @@ msgid "Icon"
 msgstr ""
 
 #. module: web_pwa_oca
-#. openerp-web
-#: code:addons/web_pwa_oca/static/src/xml/pwa_install.xml:5
-#, python-format
-msgid "Install PWA"
-msgstr "Instalar PWA"
-
-#. module: web_pwa_oca
 #: model_terms:ir.ui.view,arch_db:web_pwa_oca.res_config_settings_view_form
 msgid "Name"
 msgstr ""
@@ -74,6 +67,15 @@ msgid "Progressive Web App Short Name"
 msgstr ""
 
 #. module: web_pwa_oca
+#. openerp-web
+#: code:addons/web_pwa_oca/static/src/js/pwa_manager.js:21
+#, python-format
+msgid ""
+"Service workers are not supported! Maybe you are not using HTTPS or you work "
+"in private mode."
+msgstr ""
+
+#. module: web_pwa_oca
 #: model_terms:ir.ui.view,arch_db:web_pwa_oca.res_config_settings_view_form
 msgid "Short Name"
 msgstr ""
@@ -104,6 +106,20 @@ msgstr ""
 #: code:addons/web_pwa_oca/models/res_config_settings.py:129
 #, python-format
 msgid "You can't upload a file with more than 2 MB."
+msgstr ""
+
+#. module: web_pwa_oca
+#. openerp-web
+#: code:addons/web_pwa_oca/static/src/js/pwa_manager.js:48
+#, python-format
+msgid "[ServiceWorker] Registered:"
+msgstr ""
+
+#. module: web_pwa_oca
+#. openerp-web
+#: code:addons/web_pwa_oca/static/src/js/pwa_manager.js:37
+#, python-format
+msgid "[ServiceWorker] Registration failed: "
 msgstr ""
 
 #. module: web_pwa_oca
@@ -147,6 +163,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:web_pwa_oca.service_worker
 msgid "self.importScripts(..."
 msgstr ""
+
+#~ msgid "Install PWA"
+#~ msgstr "Instalar PWA"
 
 #~ msgid ""
 #~ "\",\n"
