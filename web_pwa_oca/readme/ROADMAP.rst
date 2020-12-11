@@ -33,3 +33,4 @@
   doesn't send the cookie and web manifest returns 404.
 * Evaluate to support 'require' system.
 * Firefox can't detect 'standalone' mode. See https://bugzilla.mozilla.org/show_bug.cgi?id=1285858
+* Firefox disable service worker in private mode. See https://bugzilla.mozilla.org/show_bug.cgi?id=1601916
