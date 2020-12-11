@@ -4,25 +4,26 @@
 odoo.define("web_pwa_oca.PWAManager", function (require) {
     "use strict";
 
+    var core = require("web.core");
     var Widget = require("web.Widget");
+
+    var _t = core._t;
 
 
     var PWAManager = Widget.extend({
-        _deferredInstallPrompt: null,
-
         /**
          * @override
          */
         init: function () {
             this._super.apply(this, arguments);
             if (!('serviceWorker' in navigator)) {
-                throw new Error(
-                    "This browser is not compatible with service workers");
+                console.error(
+                    _t("Service workers are not supported! Maybe you are not using HTTPS or you work in private mode."));
             }
-            this._service_worker = navigator.serviceWorker;
-            this.registerServiceWorker('/service-worker.js');
-            window.addEventListener(
-                'beforeinstallprompt', this._onBeforeInstallPrompt.bind(this));
+            else {
+                this._service_worker = navigator.serviceWorker;
+                this.registerServiceWorker('/service-worker.js');
+            }
         },
 
         /**
@@ -33,51 +34,8 @@ odoo.define("web_pwa_oca.PWAManager", function (require) {
             return this._service_worker.register(sw_script)
                 .then(this._onRegisterServiceWorker)
                 .catch(function (error) {
-                    console.log('[ServiceWorker] Registration failed: ', error);
+                    console.log(_t('[ServiceWorker] Registration failed: '), error);
                 });
-        },
-
-        install: function () {
-            if (!this._deferredInstallPrompt) {
-                return;
-            }
-            var self = this;
-            var systray_menu = this.getParent().menu.systray_menu;
-            this._deferredInstallPrompt.prompt();
-            // Log user response to prompt.
-            this._deferredInstallPrompt.userChoice
-                .then(function (choice) {
-                    if (choice.outcome === 'accepted') {
-                        // Hide the install button, it can't be called twice.
-                        systray_menu.$el.find('#pwa_install_button')
-                            .attr('hidden', true);
-                        self._deferredInstallPrompt = null;
-                        console.log('User accepted the A2HS prompt', choice);
-                    } else {
-                        console.log('User dismissed the A2HS prompt', choice);
-                    }
-                });
-        },
-
-        canBeInstalled: function () {
-            return !_.isNull(this._deferredInstallPrompt);
-        },
-
-        /**
-         * Handle PWA installation flow
-         *
-         * @private
-         * @param {BeforeInstallPromptEvent} evt
-         */
-        _onBeforeInstallPrompt: function (evt) {
-            evt.preventDefault();
-            this._deferredInstallPrompt = evt;
-            // UserMenu can be loaded after this module
-            var menu = this.getParent().menu;
-            if (menu && menu.systray_menu) {
-                menu.systray_menu.$el.find('#pwa_install_button')[0]
-                    .removeAttribute('hidden');
-            }
         },
 
         /**
@@ -87,7 +45,7 @@ odoo.define("web_pwa_oca.PWAManager", function (require) {
          * @param {ServiceWorkerRegistration} registration
          */
         _onRegisterServiceWorker: function (registration) {
-            console.log('[ServiceWorker] Registered:', registration);
+            console.log(_t('[ServiceWorker] Registered:'), registration);
         },
     });
 

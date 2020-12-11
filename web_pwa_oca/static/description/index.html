@@ -405,7 +405,6 @@ that ‘Odoo Bootstrap’ is not supported so, you can’t use ‘require’ her
 It launches from the same place that other apps launch. It runs in an app without an address bar or other browser UI.
 And like all other installed apps, it’s a top level app in the task switcher.</p>
 <p>In Chrome, a Progressive Web App can either be installed through the three-dot context menu.</p>
-<p>This module also provides a “Install PWA” link in Odoo user menu.</p>
 <p>In case you previously installed <cite>web_pwa</cite>, run the following steps with <cite>odoo shell</cite>, after having installed <cite>openupgradelib</cite>:</p>
 <pre class="doctest-block">
 &gt;&gt;&gt; from openupgradelib import openupgrade
@@ -432,9 +431,11 @@ And like all other installed apps, it’s a top level app in the task switcher.<
 <h1><a class="toc-backref" href="#id3">Usage</a></h1>
 <p>To use your PWA:</p>
 <ol class="arabic simple">
-<li>Open the Odoo web app using a supported browser (like Chrome/Chromium)</li>
-<li>Install the PWA</li>
+<li>Open the Odoo web app using a supported browser (See <a class="reference external" href="https://caniuse.com/?search=A2HS">https://caniuse.com/?search=A2HS</a>)</li>
+<li>Open the browser options</li>
+<li>Click on ‘Add to Home screen’ (or ‘Install’ in other browsers)</li>
 </ol>
+<p>** Maybe you need refresh the page to load the service worker after using the option.</p>
 </div>
 <div class="section" id="known-issues-roadmap">
 <h1><a class="toc-backref" href="#id4">Known issues / Roadmap</a></h1>
@@ -478,9 +479,9 @@ doesn’t send the cookie and web manifest returns 404.</p>
 </li>
 <li><p class="first">Evaluate to support ‘require’ system.</p>
 </li>
-<li><p class="first">‘Install PWA’ menu option disappears even if not installed. This is due to the
-very nature of service workers, so they are running including when you close
-the page tabs.</p>
+<li><p class="first">Firefox can’t detect ‘standalone’ mode. See <a class="reference external" href="https://bugzilla.mozilla.org/show_bug.cgi?id=1285858">https://bugzilla.mozilla.org/show_bug.cgi?id=1285858</a></p>
+</li>
+<li><p class="first">Firefox disable service worker in private mode. See <a class="reference external" href="https://bugzilla.mozilla.org/show_bug.cgi?id=1601916">https://bugzilla.mozilla.org/show_bug.cgi?id=1601916</a></p>
 </li>
 </ul>
 </div>
