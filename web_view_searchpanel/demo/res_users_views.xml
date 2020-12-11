@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+   Copyright 2017-2019 MuK IT GmbH.
+   License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+
+  -->
+
+<odoo>
+
+
+    <record id="view_res_users_kanban" model="ir.ui.view">
+        <field name="name">res.users.kanban</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_res_users_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//templates" position="after">
+                <searchpanel>
+                    <field name="lang" select="multi"/>
+                    <field name="tz" select="multi"/>
+                </searchpanel>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

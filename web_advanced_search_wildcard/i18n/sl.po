@@ -21,6 +21,20 @@ msgstr ""
 
 #. module: web_advanced_search_wildcard
 #. openerp-web
+#: code:addons/web_advanced_search_wildcard/static/src/js/search.js:12
+#, python-format
+msgid "doesn't end with"
+msgstr ""
+
+#. module: web_advanced_search_wildcard
+#. openerp-web
+#: code:addons/web_advanced_search_wildcard/static/src/js/search.js:10
+#, python-format
+msgid "doesn't start with"
+msgstr ""
+
+#. module: web_advanced_search_wildcard
+#. openerp-web
 #: code:addons/web_advanced_search_wildcard/static/src/js/search.js:11
 #, python-format
 msgid "ends with"
@@ -28,14 +42,14 @@ msgstr ""
 
 #. module: web_advanced_search_wildcard
 #. openerp-web
-#: code:addons/web_advanced_search_wildcard/static/src/js/search.js:12
+#: code:addons/web_advanced_search_wildcard/static/src/js/search.js:13
 #, python-format
 msgid "matches"
 msgstr "ujemanj"
 
 #. module: web_advanced_search_wildcard
 #. openerp-web
-#: code:addons/web_advanced_search_wildcard/static/src/js/search.js:10
+#: code:addons/web_advanced_search_wildcard/static/src/js/search.js:9
 #, python-format
 msgid "starts with"
 msgstr ""

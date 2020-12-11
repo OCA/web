@@ -4,12 +4,12 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     'name': '2D matrix for x2many fields',
-    'version': '12.0.2.2.1',
+    'version': '12.0.2.2.2',
     'author': (
         'Therp BV, '
         'Tecnativa, '
         'Camptocamp, '
-        'Brainbean Apps, '
+        'CorporateHub, '
         'Odoo Community Association (OCA)'
     ),
     'website': 'https://github.com/OCA/web',

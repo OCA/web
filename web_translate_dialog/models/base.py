@@ -25,7 +25,7 @@ class BaseModel(models.BaseModel):
             for name in field_names:
 
                 tr_read_res = self.env['ir.translation'].search_read([
-                    ('name', 'like', '%s,%s' % (self._name, field_names)),
+                    ('name', '=', '%s,%s' % (self._name, name)),
                     ('res_id', '=', rec_id),
                     ('lang', '!=', 'en_US')
                 ])

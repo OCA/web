@@ -33,18 +33,19 @@ odoo.define('web_tree_many2one_clickable.many2one_clickable', function (require)
 
             if (!this.noOpen && this.value) {
                 // Replace '<a>' element
-                this.$el.removeClass('o_form_uri');
-                this.$el = $('<span/>', {
+                this.$el.removeClass("o_form_uri");
+                this.$el = $("<span/>", {
                     html: this.$el.html(),
-                    class: this.$el.attr('class') + ' o_field_text',
-                    name: this.$el.attr('name'),
+                    class: this.$el.attr("class") + " o_field_text",
+                    name: this.$el.attr("name"),
                 });
 
                 // Append button
                 var $a = $('<a/>', {
                     href: '#',
                     class: 'o_form_uri btn btn-sm btn-secondary' +
-                           ' fa fa-angle-double-right',
+                           ' fa fa-angle-double-right many2one_clickable',
+                    tabindex: '-1',
                 }).on('click', function (ev) {
                     ev.preventDefault();
                     ev.stopPropagation();
@@ -59,6 +60,13 @@ odoo.define('web_tree_many2one_clickable.many2one_clickable', function (require)
                 });
                 this.$el.append($a);
             }
+        },
+
+        getFocusableElement: function () {
+            if (this.mode === 'readonly') {
+                return $('');
+            }
+            return this._super.apply(this, arguments);
         },
     });
 });

@@ -56,7 +56,7 @@ msgstr ""
 
 #. module: web_translate_dialog
 #. openerp-web
-#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:239
+#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:240
 #, python-format
 msgid "Translate"
 msgstr "Vertalen"
@@ -65,13 +65,11 @@ msgstr "Vertalen"
 #. openerp-web
 #: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:26
 #, fuzzy, python-format
-#| msgid "Translations"
 msgid "Translate fields: /"
 msgstr "Vertalingen"
 
 #. module: web_translate_dialog
 #: model:ir.model.fields,field_description:web_translate_dialog.field_res_lang__tr_sequence
 #, fuzzy
-#| msgid "Translations"
 msgid "Translation sequence"
 msgstr "Vertalingen"

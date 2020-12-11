@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_timeline
+# 	* web_timeline
 #
 msgid ""
 msgstr ""
@@ -31,6 +31,12 @@ msgstr "Está seguro de que quer eliminar este registo?"
 #. module: web_timeline
 #: selection:ir.ui.view,type:0
 msgid "Calendar"
+msgstr "Calendário"
+
+#. module: web_timeline
+#: selection:ir.ui.view,type:0
+#, fuzzy
+msgid "Calendar List"
 msgstr "Calendário"
 
 #. module: web_timeline

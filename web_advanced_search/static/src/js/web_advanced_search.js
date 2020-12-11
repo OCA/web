@@ -16,6 +16,7 @@ odoo.define("web_advanced_search", function (require) {
     var SearchView = require("web.SearchView");
     var Widget = require("web.Widget");
     var Char = core.search_filters_registry.get("char");
+    var config = require("web.config");
 
     var _lt = core._lt;
 
@@ -87,6 +88,20 @@ odoo.define("web_advanced_search", function (require) {
         }),
 
         /**
+         * Handle dropdown hidden event to prevent the menu from closing when using a
+         * relational field
+         *
+         * @override
+         */
+        start: function () {
+            this._super.apply(this, arguments);
+            this.$el.on('hide.bs.dropdown', function() {
+                var $modal = $('.o_technical_modal.show');
+                return !(($modal.length && !$modal.has($(this)).length) || $('body.oe_wait').length);
+            });
+        },
+
+        /**
          * @override
          */
         init: function () {
@@ -105,7 +120,7 @@ odoo.define("web_advanced_search", function (require) {
                 this.dataset.model,
                 "[]",
                 {
-                    debugMode: core.debug,
+                    debugMode: config.debug,
                     readonly: false,
                 }
             );

@@ -12,10 +12,10 @@ odoo.define('web_pivot_computed_measure.PivotController', function (require) {
 
 
     PivotController.include({
-        custom_events: {
-            'add_measure': '_onAddMeasure',
-            'remove_measure': '_onRemoveMeasure',
-        },
+        custom_events: _.extend({}, PivotController.prototype.custom_events, {
+            add_measure: '_onAddMeasure',
+            remove_measure: '_onRemoveMeasure',
+        }),
 
         computed_measures_open: false,
 
@@ -44,7 +44,7 @@ odoo.define('web_pivot_computed_measure.PivotController', function (require) {
 
         /**
          * Handle click event on measures menu to support computed measures sub-menu
-         * 
+         *
          * @override
          */
         _onButtonClick: function (event) {
@@ -105,8 +105,8 @@ odoo.define('web_pivot_computed_measure.PivotController', function (require) {
 
         /**
          * Custom event to add a new measure
-         * 
-         * @param {CustomEvent} ev 
+         *
+         * @param {CustomEvent} ev
          */
         _onAddMeasure: function(ev) {
             this.measures[ev.data.id] = ev.data.def;
@@ -115,8 +115,8 @@ odoo.define('web_pivot_computed_measure.PivotController', function (require) {
 
         /**
          * Custom event to remove a measure
-         * 
-         * @param {CustomEvent} ev 
+         *
+         * @param {CustomEvent} ev
          */
         _onRemoveMeasure: function(ev) {
             delete this.measures[ev.data.id];
@@ -125,7 +125,7 @@ odoo.define('web_pivot_computed_measure.PivotController', function (require) {
 
         /**
          * Set default values related with the selected operation
-         * 
+         *
          * @param {ChangeEvent} ev
          */
         _onChangeComputedMeasureOperation: function(ev) {

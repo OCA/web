@@ -72,7 +72,6 @@ Known issues / Roadmap
 ======================
 
 * ``<field text_field="foo"/>`` is not supported in tree views.
-            
 
 Bug Tracker
 ===========
@@ -96,7 +95,9 @@ Contributors
 ~~~~~~~~~~~~
 
 * Simone Orsi <simone.orsi@camptocamp.com>
-* Alexey Pelykh <alexey.pelykh@brainbeanapps.com>
+* `CorporateHub <https://corporatehub.eu/>`__
+
+  * Alexey Pelykh <alexey.pelykh@corphub.eu>
 
 Maintainers
 ~~~~~~~~~~~

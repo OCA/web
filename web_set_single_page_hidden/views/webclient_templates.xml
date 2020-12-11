@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="Backend Assets (set single page hidden)" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/web_set_single_page_hidden/static/src/js/pager.js"/>
+            <script type="text/javascript" src="/web_set_single_page_hidden/static/src/js/relational_fields.js"/>
+        </xpath>
+    </template>
+</odoo>

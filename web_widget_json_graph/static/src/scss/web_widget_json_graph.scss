@@ -1,0 +1,31 @@
+.oe_form_field_json_graph {
+    th.oe_link {
+        cursor: pointer;
+    }
+
+    .nv-axis path,
+    .nv-axis line {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+    }
+
+    .nv-x.nv-axis path {
+        display: none;
+    }
+
+    .line {
+        fill: none;
+        stroke: steelblue;
+        stroke-width: 1.5px;
+    }
+
+    .oe_list_content>tbody>tr>td.oe_list_field_cell {
+        white-space: normal;
+    }
+
+    svg.nvd3-svg {
+        height: 500px;
+        width: 1000px;
+    }
+}

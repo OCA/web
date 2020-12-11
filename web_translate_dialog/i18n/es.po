@@ -9,19 +9,20 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-28 18:03+0000\n"
-"PO-Revision-Date: 2017-04-28 18:03+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2020-07-09 18:19+0000\n"
+"Last-Translator: claudiagn <claudia.gargallo@qubiq.es>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: web_translate_dialog
 #: model:ir.model,name:web_translate_dialog.model_base
 msgid "Base"
-msgstr ""
+msgstr "Base"
 
 #. module: web_translate_dialog
 #. openerp-web
@@ -33,7 +34,7 @@ msgstr "Cancelar"
 #. module: web_translate_dialog
 #: model:ir.model.fields,help:web_translate_dialog.field_res_lang__tr_sequence
 msgid "Defines the order of language to appear in translation dialog"
-msgstr ""
+msgstr "Define el orden de idioma para aparecer en el diálogo de traducción"
 
 #. module: web_translate_dialog
 #. openerp-web
@@ -45,7 +46,7 @@ msgstr "Campo"
 #. module: web_translate_dialog
 #: model:ir.model,name:web_translate_dialog.model_res_lang
 msgid "Languages"
-msgstr ""
+msgstr "Idiomas"
 
 #. module: web_translate_dialog
 #. openerp-web
@@ -56,7 +57,7 @@ msgstr "Guardar"
 
 #. module: web_translate_dialog
 #. openerp-web
-#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:239
+#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:240
 #, python-format
 msgid "Translate"
 msgstr "Traducir"
@@ -64,14 +65,11 @@ msgstr "Traducir"
 #. module: web_translate_dialog
 #. openerp-web
 #: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:26
-#, fuzzy, python-format
-#| msgid "Translations"
+#, python-format
 msgid "Translate fields: /"
-msgstr "Traducciones"
+msgstr "Traducir campos: /"
 
 #. module: web_translate_dialog
 #: model:ir.model.fields,field_description:web_translate_dialog.field_res_lang__tr_sequence
-#, fuzzy
-#| msgid "Translations"
 msgid "Translation sequence"
-msgstr "Traducciones"
+msgstr "Secuencia de traducción"

@@ -20,3 +20,6 @@ Note that you can stack searching for properties: Simply add another
 advanced search in the selection search window. You can do
 this indefinetely, so it is possible to search for moves belonging
 to a journal which has a user who is member of a certain group etc.
+
+Note also the domain dialog offers an editable preview in debug mode:
+  .. image:: ../static/img/debug_mode.png
