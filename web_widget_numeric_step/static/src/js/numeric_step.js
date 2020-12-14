@@ -124,7 +124,18 @@ odoo.define('web_widget_numeric_step.field', function (require) {
          * @override
          */
         _renderEdit: function () {
+            $("td.o_numeric_step_cell").addClass("numeric_step_editing_cell");
             this._prepareInput(this.$el.find('input.input_numeric_step'));
+        },
+
+        /**
+         * Resets the content to the formated value in readonly mode.
+         *
+         * @override
+         */
+        _renderReadonly: function () {
+            $("td.o_numeric_step_cell").removeClass("numeric_step_editing_cell");
+            this._super.apply(this, arguments);
         },
 
         /**
