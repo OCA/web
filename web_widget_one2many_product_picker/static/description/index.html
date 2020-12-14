@@ -373,17 +373,22 @@ ul.auto-toc {
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><a class="reference internal" href="#installation" id="id1">Installation</a></li>
-<li><a class="reference internal" href="#usage" id="id2">Usage</a><ul>
-<li><a class="reference internal" href="#default-context" id="id3">Default context:</a></li>
-<li><a class="reference internal" href="#preview" id="id4">Preview:</a></li>
+<li><a class="reference internal" href="#configuration" id="id2">Configuration</a><ul>
+<li><a class="reference internal" href="#widget-options" id="id3">Widget options:</a></li>
+<li><a class="reference internal" href="#default-context" id="id4">Default context:</a></li>
+<li><a class="reference internal" href="#examples" id="id5">Examples:</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#known-issues-roadmap" id="id5">Known issues / Roadmap</a></li>
-<li><a class="reference internal" href="#bug-tracker" id="id6">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="id7">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="id8">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="id9">Contributors</a></li>
-<li><a class="reference internal" href="#maintainers" id="id10">Maintainers</a></li>
+<li><a class="reference internal" href="#usage" id="id6">Usage</a><ul>
+<li><a class="reference internal" href="#preview" id="id7">Preview:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#known-issues-roadmap" id="id8">Known issues / Roadmap</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="id9">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="id10">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="id11">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="id12">Contributors</a></li>
+<li><a class="reference internal" href="#maintainers" id="id13">Maintainers</a></li>
 </ul>
 </li>
 </ul>
@@ -392,10 +397,109 @@ ul.auto-toc {
 <h1><a class="toc-backref" href="#id1">Installation</a></h1>
 <p>It’s advisable to install ‘web_widget_numeric_step’ to have a better usability on touch screens.</p>
 </div>
-<div class="section" id="usage">
-<h1><a class="toc-backref" href="#id2">Usage</a></h1>
-<p>You need to define the view fields. The view must be of <tt class="docutils literal">form</tt> type.
-This is an example that uses the ‘sale.order.line’ fields:</p>
+<div class="section" id="configuration">
+<h1><a class="toc-backref" href="#id2">Configuration</a></h1>
+<p>Create or edit a new view and use the new widget called ‘one2many_product_picker’.
+You need to define the view fields. The view must be of <tt class="docutils literal">form</tt> type.</p>
+<div class="section" id="widget-options">
+<h2><a class="toc-backref" href="#id3">Widget options:</a></h2>
+<ul>
+<li><p class="first">product_per_page &gt; Integer -&gt; Used to control the load more behaviour (16 by default)</p>
+</li>
+<li><p class="first">groups &gt; Array of dictionaries -&gt; Declare the groups</p>
+<blockquote>
+<ul>
+<li><p class="first">name -&gt; The group name</p>
+</li>
+<li><p class="first">string -&gt; The text displayed</p>
+</li>
+<li><p class="first">domain -&gt; Forced domain to use</p>
+</li>
+<li><p class="first">order -&gt; The order</p>
+<blockquote>
+<ul class="simple">
+<li>name -&gt; The field name to order</li>
+<li>asc -&gt; Flag to use ‘asc’ order</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+</li>
+<li><p class="first">currency_field &gt; Model field used to format monetary values (‘currency_id’ by default)</p>
+</li>
+<li><p class="first">field_map &gt; Dictionary:</p>
+<blockquote>
+<ul class="simple">
+<li>product -&gt; The field that represent the product (<cite>product_id</cite> by default)</li>
+<li>name -&gt; The field that represent a name (‘name’ by default)</li>
+<li>product_uom -&gt; The field that represent a product_uom (‘product_uom’ by default)</li>
+<li>product_uom_qty -&gt; The field that represent a product_uom_qty (‘product_uom_qty’ by default)</li>
+<li>price_unit -&gt; The field that represent a price_unit (‘price_unit’ by default)</li>
+<li>discount -&gt; The field that represent a discount (‘discount’ by default)</li>
+</ul>
+</blockquote>
+</li>
+<li><p class="first">search &gt; Array of dictionaries or Array of ‘triplets’ ([[field_map.name, ‘ilike’, ‘$search’]] by default)</p>
+<blockquote>
+<ul>
+<li><p class="first">name -&gt; The name to display</p>
+</li>
+<li><p class="first">domain -&gt; The domain to use</p>
+<blockquote>
+<ul class="simple">
+<li>$search -&gt; Replaces it with the current value of the searchbox</li>
+<li>$number_search -&gt; Replaces all the leaf with the current value of the searchbox as a number</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+</li>
+<li><p class="first">edit_discount &gt; Enable/Disable discount edits (False by default)</p>
+</li>
+<li><p class="first">edit_price &gt; Enable/Disable price edits (True by default)</p>
+</li>
+<li><p class="first">show_discount &gt; Enable/Disable display discount (False by default)</p>
+</li>
+<li><p class="first">show_subtotal &gt; Enable/Disable show subtotal (True by default)</p>
+</li>
+</ul>
+<p>All widget options are optional.
+Notice that you can call ‘_’ method to use translations. This only can be used with this widget.</p>
+<p>Example:</p>
+<pre class="code literal-block">
+options=&quot;{'search': [{'name': _('Starts With'), 'domain': [('name', '=like', '$search%')]}], 'groups': [{'name': 'cheap', 'string': _('Cheap'), 'domain': [('list_price', '&lt;', 10.0)], 'field_map': { 'product': 'my_product_id' }}]}&quot;
+</pre>
+</div>
+<div class="section" id="default-context">
+<h2><a class="toc-backref" href="#id4">Default context:</a></h2>
+<p>The widget sends a defaults context with the ‘search_read’ request:</p>
+<blockquote>
+<ul>
+<li><p class="first">active_search_group_name &gt; Contains the name of the active search group</p>
+<blockquote>
+<ul class="simple">
+<li>‘all’ &gt; Is the hard-coded name for the ‘All’ group</li>
+<li>‘main_lines’ &gt; Is the hard-coded name for the ‘Lines’ group</li>
+</ul>
+</blockquote>
+</li>
+<li><p class="first">active_search_involved_fields &gt; Contains an array of dictionaries with the fields used with the searchbox content</p>
+<blockquote>
+<ul class="simple">
+<li>‘type’ &gt; Can be ‘text’ or ‘number’</li>
+<li>‘field’ &gt; The field name</li>
+<li>‘oper’ &gt; The operator used</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="examples">
+<h2><a class="toc-backref" href="#id5">Examples:</a></h2>
+<p>This is an example that uses the ‘sale.order.line’ fields:</p>
 <pre class="code xml literal-block">
 <span class="nt">&lt;field</span>
     <span class="na">name=</span><span class="s">&quot;order_line&quot;</span>
@@ -428,6 +532,7 @@ This is an example that uses the ‘sale.order.line’ fields:</p>
     <span class="nt">&lt;/form&gt;</span>
 <span class="nt">&lt;/field&gt;</span>
 </pre>
+<p>** In this example we don’t use ‘field_map’ option because the default match with the sale.order.line field names.</p>
 <p>Other example for ‘purchase.order.line’ fields:</p>
 <pre class="code xml literal-block">
 <span class="nt">&lt;field</span>
@@ -436,7 +541,7 @@ This is an example that uses the ‘sale.order.line’ fields:</p>
     <span class="na">nolabel=</span><span class="s">&quot;1&quot;</span>
     <span class="na">widget=</span><span class="s">&quot;one2many_product_picker&quot;</span>
     <span class="na">mode=</span><span class="s">&quot;form&quot;</span>
-    <span class="na">options=</span><span class="s">&quot;{'search': [{'name': _('Name'), 'domain': [['name', 'ilike', '$search']]}, {'name': _('Price'), 'domain': [['list_price', '=', $number_search]]}], 'field_map': {'name': 'name', 'product': 'product_id', 'product_uom': 'product_uom', 'price': 'price_unit', 'parent_id': 'order_id', 'product_uom_qty': 'product_qty'}, 'groups': [{'name': _('Desk'), 'domain': [['name', 'ilike', 'desk']], 'order': {'name': 'id', 'asc': true}}, {'name': _('Chairs'), 'domain': [['name', 'ilike', 'chair']]}]}&quot;</span>
+    <span class="na">options=</span><span class="s">&quot;{'search': [{'name': _('Name'), 'domain': [['name', 'ilike', '$search']]}, {'name': _('Price'), 'domain': [['list_price', '=', $number_search]]}], 'field_map': {'product_uom_qty': 'product_qty'}, 'groups': [{'name': _('Desk'), 'domain': [['name', 'ilike', 'desk']], 'order': {'name': 'id', 'asc': true}}, {'name': _('Chairs'), 'domain': [['name', 'ilike', 'chair']]}]}&quot;</span>
 <span class="nt">&gt;</span>
     <span class="nt">&lt;form&gt;</span>
         <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">invisible=</span><span class="s">&quot;1&quot;</span> <span class="nt">/&gt;</span>
@@ -450,39 +555,26 @@ This is an example that uses the ‘sale.order.line’ fields:</p>
     <span class="nt">&lt;/form&gt;</span>
 <span class="nt">&lt;/field&gt;</span>
 </pre>
-<p>** In this example we don’t use ‘field_map’ option because the default match with the sale.order.line field names.</p>
-<div class="section" id="default-context">
-<h2><a class="toc-backref" href="#id3">Default context:</a></h2>
-<p>The widget sends a defaults context with the ‘search_read’ request:</p>
-<blockquote>
-<ul>
-<li><p class="first">active_search_group_name &gt; Contains the name of the active search group</p>
-<blockquote>
-<ul class="simple">
-<li>‘all’ &gt; Is the hard-coded name for the ‘All’ group</li>
-<li>‘main_lines’ &gt; Is the hard-coded name for the ‘Lines’ group</li>
-</ul>
-</blockquote>
-</li>
-</ul>
-</blockquote>
 </div>
+</div>
+<div class="section" id="usage">
+<h1><a class="toc-backref" href="#id6">Usage</a></h1>
 <div class="section" id="preview">
-<h2><a class="toc-backref" href="#id4">Preview:</a></h2>
+<h2><a class="toc-backref" href="#id7">Preview:</a></h2>
 <blockquote>
 <img alt="https://raw.githubusercontent.com/OCA/web/12.0/web_widget_one2many_product_picker/static/img/product_picker.gif" src="https://raw.githubusercontent.com/OCA/web/12.0/web_widget_one2many_product_picker/static/img/product_picker.gif" />
 </blockquote>
 </div>
 </div>
 <div class="section" id="known-issues-roadmap">
-<h1><a class="toc-backref" href="#id5">Known issues / Roadmap</a></h1>
+<h1><a class="toc-backref" href="#id8">Known issues / Roadmap</a></h1>
 <ul class="simple">
 <li>Translations in the xml ‘options’ attribute of the field that use the widget can’t be exported automatically to be translated</li>
-<li>The product card animations can be improved. Currently the card is recreated, so we lost some states to apply correct effects.</li>
+<li>The product card animations can be improved. Currently the card is recreated, so we lost some elements to apply correct effects.</li>
 </ul>
 </div>
 <div class="section" id="bug-tracker">
-<h1><a class="toc-backref" href="#id6">Bug Tracker</a></h1>
+<h1><a class="toc-backref" href="#id9">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/web/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
@@ -490,15 +582,15 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1><a class="toc-backref" href="#id7">Credits</a></h1>
+<h1><a class="toc-backref" href="#id10">Credits</a></h1>
 <div class="section" id="authors">
-<h2><a class="toc-backref" href="#id8">Authors</a></h2>
+<h2><a class="toc-backref" href="#id11">Authors</a></h2>
 <ul class="simple">
 <li>Tecnativa</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h2><a class="toc-backref" href="#id9">Contributors</a></h2>
+<h2><a class="toc-backref" href="#id12">Contributors</a></h2>
 <ul>
 <li><p class="first"><a class="reference external" href="https://www.tecnativa.com">Tecnativa</a>:</p>
 <blockquote>
@@ -512,7 +604,7 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2><a class="toc-backref" href="#id10">Maintainers</a></h2>
+<h2><a class="toc-backref" href="#id13">Maintainers</a></h2>
 <p>This module is maintained by the OCA.</p>
 <a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose

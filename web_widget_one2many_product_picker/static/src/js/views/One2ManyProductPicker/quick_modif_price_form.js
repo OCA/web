@@ -1,11 +1,15 @@
 // Copyright 2020 Tecnativa - Alexandre Díaz
 // License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-odoo.define("web_widget_one2many_product_picker.ProductPickerQuickModifPriceForm", function (require) {
+odoo.define("web_widget_one2many_product_picker.ProductPickerQuickModifPriceForm", function (
+    require
+) {
     "use strict";
 
     var core = require("web.core");
     var Widget = require("web.Widget");
-    var ProductPickerQuickModifPriceFormView = require("web_widget_one2many_product_picker.ProductPickerQuickModifPriceFormView").ProductPickerQuickModifPriceFormView;
+    var ProductPickerQuickModifPriceFormView = require(
+        "web_widget_one2many_product_picker.ProductPickerQuickModifPriceFormView"
+    ).ProductPickerQuickModifPriceFormView;
 
     var qweb = core.qweb;
 
@@ -101,7 +105,8 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickModifPriceForm
          */
         _generateFormArch: function () {
             var wanted_field_states = this._getWantedFieldState();
-            var template = "<templates><t t-name='One2ManyProductPicker.QuickModifPrice.Form'>";
+            var template =
+                "<templates><t t-name='One2ManyProductPicker.QuickModifPrice.Form'>";
             template += this.basicFieldParams.field.views.form.arch;
             template += "</t></templates>";
             qweb.add_template(template);
@@ -115,7 +120,8 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickModifPriceForm
             for (var index in field_names) {
                 var field_name = field_names[index];
                 var $field = $arch.find("field[name='"+field_name+"']");
-                var modifiers = $field.attr("modifiers") ? JSON.parse($field.attr("modifiers")) : {};
+                var modifiers =
+                    $field.attr("modifiers") ? JSON.parse($field.attr("modifiers")) : {};
                 modifiers.invisible = false;
                 modifiers.readonly = wanted_field_states[field_name];
                 $field.attr("modifiers", JSON.stringify(modifiers));
@@ -134,7 +140,7 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickModifPriceForm
          * @private
          * @returns {Object}
          */
-        _getWantedFieldState: function() {
+        _getWantedFieldState: function () {
             var wantedFieldState = {};
             wantedFieldState[this.fieldMap.discount] = !this.canEditDiscount;
             wantedFieldState[this.fieldMap.price_unit] = !this.canEditPrice;

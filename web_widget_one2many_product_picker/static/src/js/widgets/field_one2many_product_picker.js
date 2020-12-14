@@ -8,7 +8,8 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
     var core = require("web.core");
     var field_registry = require("web.field_registry");
     var FieldOne2Many = require("web.relational_fields").FieldOne2Many;
-    var One2ManyProductPickerRenderer = require("web_widget_one2many_product_picker.One2ManyProductPickerRenderer");
+    var One2ManyProductPickerRenderer = require(
+        "web_widget_one2many_product_picker.One2ManyProductPickerRenderer");
     var tools = require("web_widget_one2many_product_picker.tools");
 
     var _t = core._t;
@@ -17,6 +18,10 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
     /* This is the main widget */
     var FieldOne2ManyProductPicker = FieldOne2Many.extend({
         className: "oe_field_one2many_product_picker",
+
+        // Workaround: We need know all records,
+        // the widget pagination works with product.product.
+        limit: 9999999,
 
         events: _.extend({}, FieldOne2Many.prototype.events, {
             "click .dropdown-item": "_onClickSearchMode",
@@ -36,7 +41,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
 
         _auto_search_delay: 450,
 
-        // product.product fields
+        // Model product.product fields
         search_read_fields: [
             "id",
             "display_name",
@@ -45,9 +50,12 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
         /**
          * @override
          */
-        init: function (parent, name, record, options) {
+        init: function (parent, name, record) {
             this._super.apply(this, arguments);
-            this.state = record; // This is the parent state
+
+            // This is the parent state
+            this.state = record;
+
             // Use jquery 'extend' to have a 'deep' merge.
             this.options = $.extend(true, this._getDefaultOptions(), this.attrs.options);
             if (!this.options.search) {
@@ -58,6 +66,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
             if (!(this.options.search[0] instanceof Array)) {
                 this._searchCategoryNames = _.map(this.options.search, "name");
             }
+
             // FIXME: Choose a better way to get the active controller or model objects
             this.parent_controller = parent.getParent();
             if (this.view) {
@@ -72,12 +81,20 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
             if (!this.view) {
                 return $.when();
             }
+
             // Uses to work with searchs, so we can mix properties with the user values.
             this._searchContext = {
                 domain: this.mode === "readonly" ? this._getLinesDomain() : false,
                 text: false,
                 order: false,
+                activeTest: true,
             };
+            if (this.mode === "readonly") {
+                this._activeSearchGroup = {
+                    'name': 'main_lines',
+                };
+                this._searchContext.activeTest = false;
+            }
             return $.when(this._super.apply(this, arguments), this._getSearchRecords());
         },
 
@@ -96,9 +113,13 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
             var prices = [];
             var field_map = this.options.field_map;
             var records = this.parent_controller.model.get(this.state.id).data[this.name].data;
-            if (this.options.show_discounts) {
+            if (this.options.show_discount) {
                 prices = _.map(records, function (line) {
-                    return line.data[field_map.product_uom_qty] * tools.priceReduce(line.data[field_map.price_unit], line.data[field_map.discount]);
+                    return line.data[field_map.product_uom_qty] *
+                        tools.priceReduce(
+                            line.data[field_map.price_unit],
+                            line.data[field_map.discount]
+                        );
                 });
             } else {
                 prices = _.map(records, function (line) {
@@ -114,7 +135,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                 }) || 0;
             total = tools.monetary(
                 total,
-                this.state.data[this.name].fields[this.options.field_map.price_unit],
+                this.value.fields[this.options.field_map.price_unit],
                 this.options.currency_field,
                 this.state.data
             );
@@ -198,26 +219,25 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
          * @override
          */
         _renderButtons: function () {
-            if (!this.isReadonly) {
-                this.$buttons = $(
-                    qweb.render("One2ManyProductPicker.ControlPanelButtons", {
-                        search_category_names: this._searchCategoryNames,
-                        search_mode: this._searchMode,
-                    }
-                ));
-                this.$searchInput = this.$buttons.find(".oe_search_input");
-                this.$groups = $(
-                    qweb.render("One2ManyProductPicker.ControlPanelGroupButtons", {
-                        groups: this.searchGroups,
-                    })
-                );
-                this.$btnLines = this.$groups.find(".oe_btn_lines");
-                this.$badgeLines = this.$btnLines.find(".badge");
-                this.updateBadgeLines();
-                this.$groups.appendTo(this.$buttons);
-            } else {
+            if (this.isReadonly) {
                 return this._super.apply(this, arguments);
             }
+            this.$buttons = $(
+                qweb.render("One2ManyProductPicker.ControlPanelButtons", {
+                    search_category_names: this._searchCategoryNames,
+                    search_mode: this._searchMode,
+                }
+            ));
+            this.$searchInput = this.$buttons.find(".oe_search_input");
+            this.$groups = $(
+                qweb.render("One2ManyProductPicker.ControlPanelGroupButtons", {
+                    groups: this.searchGroups,
+                })
+            );
+            this.$btnLines = this.$groups.find(".oe_btn_lines");
+            this.$badgeLines = this.$btnLines.find(".badge");
+            this.updateBadgeLines();
+            this.$groups.appendTo(this.$buttons);
         },
 
         /**
@@ -226,6 +246,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
         _render: function () {
             var self = this;
             var def = this._super.apply(this, arguments);
+
             // Parent implementation can return 'undefined' :(
             return (
                 def &&
@@ -246,7 +267,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
          */
         doRenderSearchRecords: function () {
             var self = this;
-            return $.Deferred(function(d){
+            return $.Deferred(function (d) {
                 self._getSearchRecords().then(function () {
                     self.renderer.$el.scrollTop(0);
                     self.renderer._renderView().then(d.resolve);
@@ -284,12 +305,11 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
          * If merge is true the current records aren't removed.
          *
          * @private
-         * @param {Array} domain
          * @param {Dictionary} options
          * @param {Boolean} merge
          * @returns {Deferred}
          */
-        _getSearchRecords: function (domain, options, merge) {
+        _getSearchRecords: function (options, merge) {
             var self = this;
             var arch = this.view.arch;
             var field_name = this.options.field_map.product;
@@ -298,11 +318,13 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
 
             // Launch the rpc request and ensures that we wait for the reply
             // to continue
-            var sdomain = this._getFullSearchDomain(domain);
+            var domain = this._getFullSearchDomain();
             var soptions = options || {};
             var context = _.extend({
                 'active_search_group_name': this._activeSearchGroup.name,
-            },this.state.data[this.name].getContext());
+                'active_search_involved_fields': this._searchContext.involvedFields,
+                'active_test': this._searchContext.activeTest,
+            }, this.value.getContext());
 
             return $.Deferred(function (d) {
                 var limit = soptions.limit || self.options.records_per_page;
@@ -311,7 +333,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                     model: model,
                     method: "search_read",
                     fields: self.search_read_fields,
-                    domain: sdomain,
+                    domain: domain,
                     limit: limit,
                     offset: offset,
                     orderBy: self._searchContext.order,
@@ -328,7 +350,10 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                     self._lastSearchRecordsCount = results.length;
                     self._searchOffset = offset + limit;
                     if (self.renderer) {
-                        self.renderer.updateSearchData(self._searchRecords, self._lastSearchRecordsCount);
+                        self.renderer.updateSearchData(
+                            self._searchRecords,
+                            self._lastSearchRecordsCount
+                        );
                     }
                     d.resolve(results);
                 });
@@ -340,12 +365,12 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
          * @param {MouseEvent} evt
          */
         _onClickSearchGroup: function (evt) {
-            var self = this;
             var $btn = $(evt.target);
             var groupIndex = Number($btn.data("group")) || 0;
             this._activeSearchGroup = this.searchGroups[groupIndex];
             this._searchContext.domain = this._activeSearchGroup.domain;
             this._searchContext.order = this._activeSearchGroup.order;
+            this._searchContext.activeTest = true;
             this.doRenderSearchRecords();
             this.$btnLines.removeClass("active");
             $btn.parent().find(".active").removeClass("active");
@@ -382,7 +407,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
             this._searchMode = $target.index();
             $target.parent().children().removeClass('active');
             $target.addClass('active');
-            this.doRenderSearchRecords().then(function(){
+            this.doRenderSearchRecords().then(function () {
                 self.$searchInput.focus();
             });
         },
@@ -415,35 +440,52 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
          * This domain is used to get the records to display.
          *
          * @private
-         * @param {Array} domain
          * @returns {Array}
          */
-        _getFullSearchDomain: function (domain) {
-            var sdomain = _.clone(domain);
-            if (!sdomain) {
-                sdomain = _.clone(this._searchContext.domain) || [];
-                if (this._searchContext.text) {
-                    var search_domain = this.options.search;
-                    if (!(search_domain[0] instanceof Array)) {
-                        search_domain = search_domain[this._searchMode].domain;
-                    }
-                    // Iterate domain triplets and logic operators
-                    for (var index in search_domain) {
-                        var domain = _.clone(search_domain[index]);
-                        // Is a triplet
-                        if (domain instanceof Array) {
-                            // Replace right leaf with the current value of the search input
-                            if (domain[2] === "$number_search") {
-                                domain[2] = Number(this._searchContext.text);
-                            } else if (typeof(domain[2]) === "string" && domain[2].includes("$search")) {
-                                domain[2] = domain[2].replace(/\$search/, this._searchContext.text)
-                            }
-                        }
-                        sdomain.push(domain);
-                    }
+        _getFullSearchDomain: function () {
+            this._searchContext.involvedFields = [];
+            var domain = _.clone(this._searchContext.domain) || [];
+            if (this._searchContext.text) {
+                var search_domain = this.options.search;
+                if (!(search_domain[0] instanceof Array)) {
+                    search_domain = search_domain[this._searchMode].domain;
                 }
+                var involved_fields = [];
+
+                // Iterate domain triplets and logic operators
+                for (var index in search_domain) {
+                    var domain_cloned = _.clone(search_domain[index]);
+
+                    // Is a triplet
+                    if (domain_cloned instanceof Array) {
+
+                        // Replace right leaf with the current value of the search input
+                        if (domain_cloned[2] === "$number_search") {
+                            domain_cloned[2] = Number(this._searchContext.text);
+                            involved_fields.push({
+                                type: 'number',
+                                field: domain_cloned[0],
+                                oper: domain_cloned[1],
+                            });
+                        } else if (
+                            typeof domain_cloned[2] === "string" &&
+                            domain_cloned[2].includes("$search")
+                        ) {
+                            domain_cloned[2] = domain_cloned[2]
+                                .replace(/\$search/, this._searchContext.text);
+                            involved_fields.push({
+                                type: 'text',
+                                field: domain_cloned[0],
+                                oper: domain_cloned[1],
+                            });
+                        }
+                    }
+                    domain.push(domain_cloned);
+                }
+                this._searchContext.involvedFields = involved_fields;
             }
-            return sdomain || [];
+
+            return domain || [];
         },
 
         /**
@@ -457,7 +499,8 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                 return [];
             }
             var field_name = this.options.field_map.product;
-            var lines = this.parent_controller.model.get(this.state.id).data[this.name].data;
+            var lines = this.parent_controller.model.get(this.state.id)
+                .data[this.name].data;
             var ids = _.map(lines, function (line) {
                 return line.data[field_name].data.id;
             });
@@ -469,15 +512,15 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
          * that the search results. Use directy in-memory values.
          */
         showLines: function () {
-            var self = this;
             this._clearSearchInput();
             this.$btnLines.parent().find(".active").removeClass("active");
             this.$btnLines.addClass("active");
             this._activeSearchGroup = {
                 'name': 'main_lines',
-            }
+            };
             this._searchContext.domain = this._getLinesDomain();
             this._searchContext.order = false;
+            this._searchContext.activeTest = false;
             this.doRenderSearchRecords();
         },
 
@@ -493,7 +536,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
             if (evt.keyCode === $.ui.keyCode.ENTER) {
                 var self = this;
                 this._searchContext.text = evt.target.value;
-                this.doRenderSearchRecords().then(function(){
+                this.doRenderSearchRecords().then(function () {
                     self.$searchInput.focus();
                 });
             }
@@ -512,9 +555,13 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
          * @param {DropdownEvent} evt
          */
         _onShowSearchDropdown: function (evt) {
+
             // Workaround: This "ensures" a correct dropdown position
             var offset = $(evt.currentTarget).find(".dropdown-toggle").parent().height();
-            _.defer(function() { $(evt.currentTarget).find(".dropdown-menu").css("transform", "translate3d(0px, " + offset + "px, 0px)"); });
+            _.defer(function () {
+                $(evt.currentTarget).find(".dropdown-menu")
+                    .css("transform", "translate3d(0px, " + offset + "px, 0px)");
+            });
         },
 
         /**
@@ -557,7 +604,6 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
             }
             var self = this;
             this._getSearchRecords(
-                false,
                 {
                     offset: this._searchOffset,
                 },
