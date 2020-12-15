@@ -7,6 +7,10 @@ odoo.define('web_widget_many2many_tags_multi_selection.multiple_tags', function 
     var _t = core._t;
 
     rel_fields.FieldMany2One.include({
+
+        /**
+         * @override
+         */
         _searchCreatePopup: function(view, ids, context) {
             var self = this;
 
@@ -36,6 +40,31 @@ odoo.define('web_widget_many2many_tags_multi_selection.multiple_tags', function 
                     self.activate();
                 }
             })).open();
+        },
+    });
+
+    rel_fields.FieldMany2ManyTags.include({
+
+        /**
+         * Odoo destroy the one2many and all childrens.
+         * So, we need recreate the 'create popup'.
+         *
+         * @override
+         */
+        _renderEdit: function () {
+            var self = this;
+            var need_modal = false;
+            if (this.many2one) {
+                var m2o_childrens = this.many2one.getChildren();
+                need_modal = _.some(m2o_childrens, function (children) {
+                    return 'dialogClass' in children;
+                });
+            }
+            return this._super.apply(this, arguments).then(function () {
+                if (need_modal) {
+                    self.many2one._searchCreatePopup("form", false, self.many2one._createContext(""));
+                }
+            });
         },
     });
 });
