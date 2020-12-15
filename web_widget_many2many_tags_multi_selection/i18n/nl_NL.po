@@ -21,14 +21,14 @@ msgstr ""
 
 #. module: web_widget_many2many_tags_multi_selection
 #. openerp-web
-#: code:addons/web_widget_many2many_tags_multi_selection/static/src/js/view_form.js:26
+#: code:addons/web_widget_many2many_tags_multi_selection/static/src/js/view_form.js:30
 #, python-format
 msgid "Create: "
 msgstr "Aanmaken:"
 
 #. module: web_widget_many2many_tags_multi_selection
 #. openerp-web
-#: code:addons/web_widget_many2many_tags_multi_selection/static/src/js/view_form.js:26
+#: code:addons/web_widget_many2many_tags_multi_selection/static/src/js/view_form.js:30
 #, python-format
 msgid "Search: "
 msgstr "Zoeken:"
