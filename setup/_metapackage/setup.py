@@ -69,6 +69,7 @@ setuptools.setup(
         'odoo12-addon-web_widget_one2many_product_picker',
         'odoo12-addon-web_widget_open_tab',
         'odoo12-addon-web_widget_plotly_chart',
+        'odoo12-addon-web_widget_timepicker',
         'odoo12-addon-web_widget_url_advanced',
         'odoo12-addon-web_widget_url_translatable',
         'odoo12-addon-web_widget_x2many_2d_matrix',
