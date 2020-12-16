@@ -97,6 +97,13 @@ msgid "Search menus..."
 msgstr "Cercar menús..."
 
 #. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/menu.xml:0
+#, python-format
+msgid "Shift"
+msgstr ""
+
+#. module: web_responsive
 #: model:ir.model.fields.selection,name:web_responsive.selection__res_users__chatter_position__sided
 msgid "Sided"
 msgstr "Lateral"
