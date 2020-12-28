@@ -1,0 +1,21 @@
+.o_field_widget {
+    // Flex fields (inline)
+    &.o_field_many2one_simple {
+        display: inline-flex;
+        > span,
+        > button {
+            flex: 0 0 auto;
+        }
+
+        .o_external_button {
+            padding: 0;
+            margin-left: 2px;
+            font-size: 19px;
+            color: #7c7bad;
+            border: none;
+            &:hover {
+                background-color: transparent;
+            }
+        }
+    }
+}
