@@ -154,7 +154,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                             false,
                             true,
                             search_record_index
-                        )
+                        )[0]
                     );
                 }
             }
@@ -233,7 +233,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                 // Need add a new one?
                 if (!exists && search_record_index !== -1) {
                     var new_search_record = _.extend({}, search_record, {__id: state.id});
-                    defs.push(this.appendSearchRecords([new_search_record], false, true, search_record_index));
+                    defs.push(this.appendSearchRecords([new_search_record], false, true, search_record_index)[0]);
                 }
             }
             this.widgets = _.compact(this.widgets);
@@ -254,7 +254,8 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
             this.$extraButtonsContainer = $(qweb.render("One2ManyProductPicker.ExtraButtons"));
             this.$btnLoadMore = this.$extraButtonsContainer.find("#productPickerLoadMore");
             return $.Deferred(function (d) {
-                self.appendSearchRecords(self.search_data, true).then(function () {
+                var defs = self.appendSearchRecords(self.search_data, true);
+                defs[0].then(function () {
                     _.invoke(oldWidgets, "destroy");
                     self.$el.empty();
                     self.$el.append(self.$recordsContainer);
@@ -263,7 +264,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                     if (self._isInDom) {
                         _.invoke(self.widgets, "on_attach_callback");
                     }
-                    d.resolve();
+                    d.resolve(defs[1]);
                 });
             });
         },
@@ -398,7 +399,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
          * @param {Boolean} no_attach_widgets
          * @param {Boolean} no_process_records
          * @param {Number} position
-         * @returns {Deferred}
+         * @returns {Array[Deferred]}
          */
         appendSearchRecords: function (search_records, no_attach_widgets, no_process_records, position) {
             var self = this;
@@ -411,15 +412,17 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
             delete this.defs;
             var defsVirtualState = this.defsVirtualState;
             delete this.defsVirtualState;
-            $.when.apply($, defsVirtualState).then(function () {
-                self.trigger_up("loading_records", {finished:true});
-            });
-            return $.when.apply($, defs).then(function () {
-                if (!no_attach_widgets && self._isInDom) {
-                    var new_widgets = self.widgets.slice(cur_widget_index);
-                    _.invoke(new_widgets, "on_attach_callback");
-                }
-            });
+            return [
+                $.when.apply($, defs).then(function () {
+                    if (!no_attach_widgets && self._isInDom) {
+                        var new_widgets = self.widgets.slice(cur_widget_index);
+                        _.invoke(new_widgets, "on_attach_callback");
+                    }
+                }),
+                $.when.apply($, defsVirtualState).then(function () {
+                    self.trigger_up("loading_records", {finished:true});
+                }),
+            ];
         },
 
         /**
