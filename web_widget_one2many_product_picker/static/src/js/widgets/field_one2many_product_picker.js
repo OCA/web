@@ -270,7 +270,11 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
             return $.Deferred(function (d) {
                 self._getSearchRecords().then(function () {
                     self.renderer.$el.scrollTop(0);
-                    self.renderer._renderView().then(d.resolve);
+                    self.renderer._renderView().then(function (virtualStateDefs) {
+                        virtualStateDefs.then(function () {
+                            d.resolve();
+                        });
+                    });
                 });
             });
         },
@@ -546,8 +550,11 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
          * @private
          */
         _onClickSearchEraser: function () {
+            var self = this;
             this._clearSearchInput();
-            this.doRenderSearchRecords();
+            this.doRenderSearchRecords().then(function () {
+                self.$searchInput.focus();
+            });
         },
 
         /**
