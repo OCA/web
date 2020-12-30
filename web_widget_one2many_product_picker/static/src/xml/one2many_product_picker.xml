@@ -90,11 +90,11 @@
                                 </t>
                             </div>
                             <span data-field="display_name" class="oe_one2many_product_picker_title position-absolute fixed-bottom p-1" data-esc="display_name" />
-                            <img alt="" class="img img-fluid" t-att-src="image(state.data[field_map.product].data.id,'image_medium')" t-att-data-src-alt="image(state.data[field_map.product].data.id,'image')" />
+                            <img alt="" class="img img-fluid" t-att-src="image(state.data[field_map.product].data.id,'image_variant_medium')" t-att-data-src-alt="image(state.data[field_map.product].data.id,'image_variant_big')" />
                         </t>
                         <t t-else="">
                             <span class="oe_one2many_product_picker_title position-absolute fixed-bottom p-1" t-esc="record_search.display_name" />
-                            <img alt="" class="img img-fluid" t-att-src="image(record_search.id,'image_medium')" t-att-data-src-alt="image(record_search.id,'image')" />
+                            <img alt="" class="img img-fluid" t-att-src="image(record_search.id,'image_variant_medium')" t-att-data-src-alt="image(record_search.id,'image_variant_big')" />
                         </t>
                     </div>
                     <div class="oe_flip_card_back">
