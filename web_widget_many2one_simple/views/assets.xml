@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="assets_backend"
+        name="Web Widget Many2One Simple Assets"
+        inherit_id="web.assets_backend"
+    >
+        <xpath expr=".">
+            <link
+                rel="stylesheet"
+                href="/web_widget_many2one_simple/static/src/css/many2one_simple.scss"
+            />
+            <script
+                type="application/javascript"
+                src="/web_widget_many2one_simple/static/src/js/many2one_simple_field.js"
+            />
+        </xpath>
+    </template>
+</odoo>
