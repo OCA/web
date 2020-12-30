@@ -356,7 +356,8 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                     if (self.renderer) {
                         self.renderer.updateSearchData(
                             self._searchRecords,
-                            self._lastSearchRecordsCount
+                            self._lastSearchRecordsCount,
+                            self._activeSearchGroup
                         );
                     }
                     d.resolve(results);

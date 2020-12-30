@@ -38,6 +38,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
             this.options = parent.options;
             this.mode = parent.mode;
             this.search_data = parent._searchRecords;
+            this.search_group = parent._activeSearchGroup;
             this.last_search_data_count = parent._lastSearchRecordsCount;
         },
 
@@ -75,9 +76,10 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
         /**
          * @param {Object} search_data
          */
-        updateSearchData: function (search_data, count) {
+        updateSearchData: function (search_data, count, search_group) {
             this.search_data = search_data;
             this.last_search_data_count = count;
+            this.search_group = search_group;
             this._loadMoreWorking = false;
             this.$btnLoadMore.attr("disabled", false);
         },
@@ -127,6 +129,11 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                 }
             }
             this.widgets = _.compact(this.widgets);
+
+            if (this.search_group.name === "main_lines") {
+                _.invoke(to_destroy, "destroy");
+                return $.when();
+            }
 
             // If doesn't exists other records with the same product, we need
             // create a 'pure virtual' record again.
