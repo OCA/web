@@ -48,7 +48,7 @@ Credits
 Authors
 ~~~~~~~
 
-* Brainbean Apps OU
+* CorporateHub
 
 Maintainers
 ~~~~~~~~~~~

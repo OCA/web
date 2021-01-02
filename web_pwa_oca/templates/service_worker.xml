@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="pwa_init" name="PWA Initialization">
+        const oca_pwa = new PWA(<t t-esc="str(pwa_params)"/>);
+    </template>
+    <template id="pwa_core_events" name="PWA Core Events">
+        <t t-set="evt_install">
+            evt.waitUntil(oca_pwa.installWorker());
+            self.skipWaiting();
+        </t>
+        self.addEventListener('install', evt =&gt; {
+            console.log('[ServiceWorker] Installing...');
+            <t t-raw="evt_install" />
+        });
+
+        <!-- This is necessary to get PWA installable.
+            Other modules can add logic using 'evt_fetch' -->
+        <t t-set="evt_fetch" />
+        self.addEventListener('fetch', evt =&gt; {
+            <t t-raw="evt_fetch" />
+        });
+
+        <t t-set="evt_activate">
+            console.log('[ServiceWorker] Activating...');
+            evt.waitUntil(oca_pwa.activateWorker());
+            self.clients.claim();
+        </t>
+        self.addEventListener('activate', evt =&gt; {
+            <t t-raw="evt_activate" />
+        });
+    </template>
+    <template id="service_worker" name="PWA Service Worker">
+        self.importScripts(...<t t-esc="str(pwa_scripts)" />);
+        <t t-call="web_pwa_oca.pwa_init" />
+        <t t-call="web_pwa_oca.pwa_core_events" />
+    </template>
+
+</odoo>

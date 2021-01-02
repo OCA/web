@@ -21,6 +21,7 @@ odoo.define('web_widget_numeric_step.field', function (require) {
             'keydown .input_numeric_step': '_onKeyDown',
             'change .input_numeric_step': '_onChange',
             'input .input_numeric_step': '_onInput',
+            'onfocusout .widget_numeric_step': '_onFocusOut',
         }),
         supportedFieldTypes: ['float', 'integer'],
 
@@ -32,6 +33,9 @@ odoo.define('web_widget_numeric_step.field', function (require) {
         DELAY_THROTTLE_CHANGE: 200,
 
 
+        /**
+         * @override
+         */
         init: function () {
             this._super.apply(this, arguments);
 
@@ -124,7 +128,20 @@ odoo.define('web_widget_numeric_step.field', function (require) {
          * @override
          */
         _renderEdit: function () {
+            _.defer(function () {
+                this.$el.parents("td.o_numeric_step_cell").addClass("numeric_step_editing_cell");
+            }.bind(this));
             this._prepareInput(this.$el.find('input.input_numeric_step'));
+        },
+
+        /**
+         * Resets the content to the formated value in readonly mode.
+         *
+         * @override
+         */
+        _renderReadonly: function () {
+            this.$el.parents("td.numeric_step_editing_cell").removeClass("numeric_step_editing_cell");
+            this._super.apply(this, arguments);
         },
 
         /**
@@ -155,7 +172,21 @@ odoo.define('web_widget_numeric_step.field', function (require) {
             }
         },
 
+        /**
+         * @private
+         */
+        _clearStepInterval: function () {
+            clearTimeout(this._auto_step_interval);
+            this._auto_step_interval = false;
+            this._click_delay = this.DEF_CLICK_DELAY;
+        },
+
         // Handle Events
+
+        /**
+         * @private
+         * @param {MouseClickEvent} ev
+         */
         _onStepClick: function (ev) {
             if (!this._autoStep) {
                 var mode = ev.target.dataset.mode;
@@ -164,19 +195,38 @@ odoo.define('web_widget_numeric_step.field', function (require) {
             this._autoStep = false;
         },
 
+        /**
+         * @private
+         * @param {MouseClickEvent} ev
+         */
         _onStepMouseDown: function (ev) {
-            if (!this._auto_step_interval) {
+            if (ev.button === 0 && !this._auto_step_interval) {
                 this._auto_step_interval = setTimeout(
                     $.proxy(this, "_whileMouseDown", ev), this._click_delay);
             }
         },
 
-        _onMouseUp: function () {
-            clearTimeout(this._auto_step_interval);
-            this._auto_step_interval = false;
-            this._click_delay = this.DEF_CLICK_DELAY;
+        /**
+         * @private
+         * @param {FocusoutEvent} ev
+         */
+        _onFocusOut: function (evt) {
+            if (this._auto_step_interval) {
+                this._clearStepInterval();
+            }
         },
 
+        /**
+         * @private
+         */
+        _onMouseUp: function () {
+            this._clearStepInterval();
+        },
+
+        /**
+         * @private
+         * @param {MouseClickEvent} ev
+         */
         _whileMouseDown: function (ev) {
             this._autoStep = true;
             var mode = ev.target.dataset.mode;
