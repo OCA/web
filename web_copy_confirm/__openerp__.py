@@ -1,4 +1,3 @@
-# coding: utf-8
 # Copyright (C) 2018 DynApps <http://www.dynapps.be>
 # @author Stefan Rijnhart <stefan@opener.amsterdam>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -10,7 +9,7 @@
     "license": "AGPL-3",
     "category": "Tools",
     "depends": [
-        'web',
+        "web",
     ],
     "data": [
         "views/assets.xml",
