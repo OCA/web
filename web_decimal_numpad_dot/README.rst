@@ -23,7 +23,7 @@ Web - Numpad Dot as decimal separator
     :target: https://runbot.odoo-community.org/runbot/162/12.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 Allows using numpad dot to enter period decimal separator even in localizations
 where comma is used instead of period.
@@ -87,6 +87,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/12.0/web_decimal_numpad_dot>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/14.0/web_decimal_numpad_dot>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
