@@ -4,7 +4,7 @@
 
 {
     "name": "Use AND conditions on omnibar search",
-    "version": "13.0.1.0.0",
+    "version": "14.0.1.0.0",
     "author": "Versada UAB, ACSONE SA/NV, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "category": "web",

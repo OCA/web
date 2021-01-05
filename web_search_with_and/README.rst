@@ -14,7 +14,7 @@ Use AND conditions on omnibar search
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/13.0/web_search_with_and
+    :target: https://github.com/OCA/web/tree/14.0/web_search_with_and
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
     :target: https://translation.odoo-community.org/projects/web-13-0/web-13-0-web_search_with_and
@@ -23,7 +23,7 @@ Use AND conditions on omnibar search
     :target: https://runbot.odoo-community.org/runbot/162/13.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 When searching for records on same field Odoo joins multiple queries with OR.
 For example:
@@ -93,6 +93,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/13.0/web_search_with_and>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/14.0/web_search_with_and>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
