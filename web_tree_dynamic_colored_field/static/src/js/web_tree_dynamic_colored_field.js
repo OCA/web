@@ -13,15 +13,26 @@ odoo.define('web_tree_dynamic_colored_field', function (require) {
         _renderBody: function () {
             if (this.arch.attrs.colors) {
                 var colorAttr = this.arch.attrs.colors.split(';');
-                if (colorAttr.length > 0) {
-                    var colorField = colorAttr[0].split(':')[1].trim();
-                    // validate the presence of that field in tree view
-                    if (this.state.data.length && colorField in this.state.data[0].data) {
-                        this.colorField = colorField;
+                for (var i=0, len=colorAttr.length; i<len; i++) {
+                    var attr = colorAttr[i].split(':')
+                    if (attr.length == 2) {
+                        var attrName = attr[0].trim();
+                        var attrValue = attr[1].trim();
+                        // validate the presence of that field in tree view
+                        if (this.state.data.length && attrValue in this.state.data[0].data) {
+                            if (attrName == 'color_field') {
+                                this.colorField = attrValue;
+                            }
+                            else if (attrName == 'background_color_field') {
+                                this.backgroundColorField = attrValue;
+                            }
+                        } else {
+                            console.warn(
+                                "No field named '" + attrValue + "' present in view."
+                            );
+                        }
                     } else {
-                        console.warn(
-                            "No field named '" + colorField + "' present in view."
-                        );
+                        console.warn("Invalid color attribute:", attr);
                     }
                 }
             }
@@ -50,6 +61,11 @@ odoo.define('web_tree_dynamic_colored_field', function (require) {
             var treeColor = record.data[this.colorField];
             if (treeColor) {
                 $td.css('color', treeColor);
+            }
+            // safely resolve value of `background_color_field` given in <tree>
+            var treeBackgroundColor = record.data[this.backgroundColorField];
+            if (treeBackgroundColor) {
+                $td.css('background-color', treeBackgroundColor);
             }
             // apply <field>'s own `options`
             if (!node.attrs.options) { return; }
