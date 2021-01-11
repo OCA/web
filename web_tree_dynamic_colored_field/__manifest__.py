@@ -11,6 +11,7 @@
     'website': 'https://github.com/OCA/web',
     'demo': [
         "demo/res_users.xml",
+        "demo/ir_translation.xml",
     ],
     'data': [
         'views/web_tree_dynamic_colored_field.xml',
