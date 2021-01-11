@@ -56,6 +56,11 @@ msgid "Price:"
 msgstr ""
 
 #. module: web_widget_one2many_product_picker
+#: model:ir.model,name:web_widget_one2many_product_picker.model_product_product
+msgid "Product"
+msgstr ""
+
+#. module: web_widget_one2many_product_picker
 #. openerp-web
 #: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker_quick_create.xml:13
 #, python-format
@@ -74,6 +79,26 @@ msgstr ""
 #: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker.xml:58
 #, python-format
 msgid "Subtotal:"
+msgstr ""
+
+#. module: web_widget_one2many_product_picker
+#: model:ir.model.fields,help:web_widget_one2many_product_picker.field_product_product__image_variant_medium
+msgid "This field holds the image used as image for the product variantor product image medium, limited to 512x512px."
+msgstr ""
+
+#. module: web_widget_one2many_product_picker
+#: model:ir.model.fields,help:web_widget_one2many_product_picker.field_product_product__image_variant_big
+msgid "This field holds the image used as image for the product variantor product image, limited to 1024x1024px."
+msgstr ""
+
+#. module: web_widget_one2many_product_picker
+#: model:ir.model.fields,field_description:web_widget_one2many_product_picker.field_product_product__image_variant_big
+msgid "Variant Image Big (Computed)"
+msgstr ""
+
+#. module: web_widget_one2many_product_picker
+#: model:ir.model.fields,field_description:web_widget_one2many_product_picker.field_product_product__image_variant_medium
+msgid "Variant Image Medium (Computed)"
 msgstr ""
 
 #. module: web_widget_one2many_product_picker
