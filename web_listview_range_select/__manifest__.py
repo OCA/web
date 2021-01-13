@@ -6,10 +6,10 @@
     "summary": """
         Enables selecting a range of records using the shift key
     """,
-    "version": "13.0.1.0.0",
+    "version": "14.0.1.0.0",
     "category": "Web",
     "author": "Onestein, Odoo Community Association (OCA)",
-    "website": "https://github.com/oca/web",
+    "website": "https://github.com/OCA/web",
     "license": "AGPL-3",
     "depends": ["web"],
     "data": ["templates/assets.xml"],
