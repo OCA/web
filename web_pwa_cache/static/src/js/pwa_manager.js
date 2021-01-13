@@ -19,7 +19,8 @@ odoo.define("web_pwa_cache.PWAManager", function (require) {
         custom_events: {
             change_pwa_mode: "_onChangePWAMode",
         },
-        _show_prefetch_modal_delay: 450,
+        _show_prefetch_modal_delay: 5000,
+        _autoclose_prefetch_modal_delay: 3000,
 
         /**
          * @override
@@ -28,7 +29,7 @@ odoo.define("web_pwa_cache.PWAManager", function (require) {
             this._super.apply(this, arguments);
 
             this._prefetchTasksInfo = {};
-            this._prefetchModelHide = true;
+            this._prefetchModelHidden = true;
 
             this.$modalPrefetchProgress = $(
                 QWeb.render("web_pwa_cache.PrefetchProgress")
@@ -37,6 +38,9 @@ odoo.define("web_pwa_cache.PWAManager", function (require) {
             this.$modalPrefetchProgressContent = this.$modalPrefetchProgress.find(
                 ".modal-body"
             );
+            this.$modalPrefetchProgress.on("shown.bs.modal", () => {
+                this._prefetchModelHidden = true;
+            });
 
             this.modeSelector = new PWAModeSelector({
                 online: () => {
@@ -72,35 +76,45 @@ odoo.define("web_pwa_cache.PWAManager", function (require) {
             });
         },
 
-        /**
-         * Update progressbars of the prefetch dialog
-         */
+        _autoclosePrefetchModalData: function () {
+            if (this._isTasksCompleted()) {
+                this._closePrefetchModalData();
+            }
+            this._checkPrefetchProgressTimer = null;
+        },
+
+        _closePrefetchModalData: function () {
+            this._prefetchModelHidden = true;
+            this.$modalPrefetchProgress.modal("hide");
+            this._prefetchTasksInfo = {};
+        },
+
+        _isTasksCompleted: function (tasks) {
+            var completed = true;
+            for (var index in this._prefetchTasksInfo) {
+                if (!this._prefetchTasksInfo[index].completed) {
+                    completed = false;
+                    break;
+                }
+            }
+
+            return completed;
+        },
+
+        _openPrefetchModalData: function () {
+            if (!_.isEmpty(this._prefetchTasksInfo) && this._prefetchModelHidden) {
+                this.$modalPrefetchProgress.modal("show");
+                this._prefetchModelHidden = false;
+                this._updatePrefetchModalData();
+            }
+        },
+
         _updatePrefetchModalData: function () {
             this.$modalPrefetchProgressContent.empty().append(
                 QWeb.render("web_pwa_cache.PrefetchProgressTasks", {
                     tasks: _.values(this._prefetchTasksInfo),
                 })
             );
-
-            if (this._timerCheckPrefectProgress) {
-                clearTimeout(this._timerCheckPrefectProgress);
-                this._timerCheckPrefectProgress = null;
-            }
-            this._timerCheckPrefectProgress = setTimeout(() => {
-                var need_close = true;
-                for (var index in this._prefetchTasksInfo) {
-                    if (this._prefetchTasksInfo[index].progress < 100.0) {
-                        need_close = false;
-                        break;
-                    }
-                }
-
-                if (need_close) {
-                    this._prefetchModelHide = true;
-                    this.$modalPrefetchProgress.modal("hide");
-                    this._prefetchTasksInfo = {};
-                }
-            }, 600);
         },
 
         /**
@@ -151,33 +165,48 @@ odoo.define("web_pwa_cache.PWAManager", function (require) {
                 /* Prefetching */
                 case "PREFETCH_MODAL_TASK_INFO":
                     {
-                        // Close mode selection if we receive prefeteching results
+                        var progress = (evt.data.count_done/evt.data.count_total || 0) * 100;
+                        this._prefetchTasksInfo[evt.data.id] = {
+                            message: evt.data.message,
+                            progress: Math.round(progress),
+                            total: evt.data.count_total,
+                            done: evt.data.count_done,
+                            error: evt.data.error,
+                            completed: evt.data.completed,
+                        };
+
+                        // Close mode selection if we receive prefetching results
                         if (this.modeSelector.isOpen()) {
                             this.modeSelector.close();
                         }
-                        // Always show the prefetch modal
-                        if (this._prefetchModelHide) {
-                            // Timer to avoid show modal in fast operations
-                            this._prefectModalOpenTimer = setTimeout(() => {
-                                this._prefetchModelHide = false;
-                                this.$modalPrefetchProgress.modal("show");
-                                // This is necessary to hide the modal in fast conditions
-                                // I think that can be removed on modern bootstrap versions
-                                this.$modalPrefetchProgress.on("shown.bs.modal", () => {
-                                    if (this._prefetchModelHide) {
-                                        this.$modalPrefetchProgress.modal("hide");
-                                    }
-                                });
-                                this._prefectModalOpenTimer = false;
-                            }, this._show_prefetch_modal_delay);
+                        // Always show the prefetch info modal
+                        if (this._prefetchModelHidden) {
+                            if (!this._prefetchModalOpenTimer) {
+                                // Timer to avoid show prefetch info modal in fast tasks
+                                this._prefetchModalOpenTimer = setTimeout(() => {
+                                    this._openPrefetchModalData();
+                                    this._prefetchModalOpenTimer = false;
+                                }, evt.data.force_show_modal?0:this._show_prefetch_modal_delay);
+                            }
+                        } else {
+                            this._updatePrefetchModalData();
+                            if (evt.data.completed) {
+                                // Timeout to auto-close tasks info modal
+                                if (this._checkPrefetchProgressTimer) {
+                                    clearTimeout(this._checkPrefetchProgressTimer);
+                                }
+                                this._checkPrefetchProgressTimer = setTimeout(
+                                    this._autoclosePrefetchModalData.bind(this),
+                                    this._autoclose_prefetch_modal_delay
+                                );
+                            }
                         }
 
-                        this._prefetchTasksInfo[evt.data.id] = {
-                            message: evt.data.message,
-                            progress: (evt.data.progress || 0) * 100,
-                            error: evt.data.error,
-                        };
-                        this._updatePrefetchModalData();
+                        // Avoid show prefetch info modal if all tasks are completed
+                        if (this._isTasksCompleted() && this._prefetchModalOpenTimer) {
+                            clearTimeout(this._prefetchModalOpenTimer);
+                            this._prefetchModalOpenTimer = null;
+                        }
                     }
                     break;
                 /* Sync */

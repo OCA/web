@@ -45,6 +45,7 @@ return {"value": {}}"""
             ("onchange_formula", "Onchange with formula"),
             ("post", "Post"),
             ("get", "Get"),
+            ("default_formula", "Default values with formula"),
         ],
         string="Type",
         required=True,
@@ -93,6 +94,8 @@ return {"value": {}}"""
         domain="[['model_id', '=', model_id]]",
     )
     onchange_triggers = fields.Char("Onchange Triggers", help="Fields separated by commas. Can use dotted notation.")
+
+    internal = fields.Boolean("Is an internal record", default=False)
 
     @api.constrains("code")
     def _check_python_code(self):

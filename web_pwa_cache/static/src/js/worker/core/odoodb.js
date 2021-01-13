@@ -352,7 +352,15 @@ const OdooDatabase = OdooClass.extend(ParentedMixin, {
         return new Promise(async (resolve, reject) => {
             try {
                 const model_data = await this.getModelData(xmlid);
-                const record = await this._db.getRecord("webclient", "actions", false, model_data.res_id);
+                let record = {};
+                if (model_data.model.startsWith('ir.actions.')) {
+                    record = await this._db.getRecord("webclient", "actions", false, model_data.res_id);
+                } else {
+                    const records = await this.browse(model_data.model, model_data.res_id);
+                    if (records.length) {
+                        record = records[0];
+                    }
+                }
 
                 if (_.isEmpty(record)) {
                     return reject();
@@ -464,11 +472,34 @@ const OdooDatabase = OdooClass.extend(ParentedMixin, {
      */
     getModelData: function (xmlid) {
         return new Promise(async (resolve, reject) => {
-            const module = xmlid.split(".", 1)[0];
-            const name = xmlid.substr(module.length + 1);
+            const module_name = xmlid.split(".", 1)[0];
+            const name = xmlid.substr(module_name.length + 1);
             try {
-                const record = await this._db.getRecord("webclient", "model_data", "module_name", [module, name]);
+                const record = await this._db.getRecord("webclient", "model_data", "module_name", [module_name, name]);
                 return resolve(record);
+            } catch (err) {
+                return reject(err);
+            }
+        });
+    },
+
+    /**
+     * @params {String} model
+     * @returns {Promise}
+     */
+    getModelDefaults: function (model) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const records = await this._db.getRecords("webclient", "defaults", "model", model);
+                let values = {};
+                const sandbox = new JSSandbox();
+                for (const record of records) {
+                    if (typeof record.formula !== 'undefined') {
+                        sandbox.compile(record.formula);
+                        values = sandbox.run();
+                    }
+                }
+                return resolve(values);
             } catch (err) {
                 return reject(err);
             }

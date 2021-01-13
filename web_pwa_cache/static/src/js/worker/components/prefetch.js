@@ -4,6 +4,8 @@
 
  const ComponentPrefetch = ComponentImporter.extend({
 
+    _search_read_chunk_size: 50,
+
     init: function () {
         this._super.apply(this, arguments);
         this.options.allow_create = true;
@@ -16,13 +18,16 @@
      * @param {Number} progress
      * @param {String} message
      */
-    _sendTaskInfo: function (id, progress, message, error = false) {
+    _sendTaskInfo: function (id, message, count_total, count_done, completed = false, error = false) {
         this.getParent().postClientPageMessage({
             type: "PREFETCH_MODAL_TASK_INFO",
             id: id,
             message: message,
-            progress: progress,
+            count_total: count_total,
+            count_done: count_done,
             error: error,
+            completed: completed,
+            force_show_modal: this.options.force_client_show_modal,
         });
     },
 
@@ -32,7 +37,7 @@
      * @param {String} id
      */
     _sendTaskInfoCompleted: function (id) {
-        this._sendTaskInfo(id, 1, "Completed!");
+        this._sendTaskInfo(id, "Completed!", 0, 0, true);
     },
 
 
@@ -42,7 +47,7 @@
      * @param {String} id
      */
     _sendTaskInfoError: function (id, message) {
-        this._sendTaskInfo(id, -1, `Error: ${message}`, true);
+        this._sendTaskInfo(id, `Error: ${message}`, -1, 0, false, true);
     },
 
     /**
@@ -115,13 +120,13 @@
      */
     prefetchDataPost: function () {
         return new Promise(async (resolve, reject) => {
+            this.options.force_client_show_modal = true;
             try {
                 const model_infos = await this.prefetchModelInfoData();
                 await Promise.all([
                     this.prefetchModelData(),
-                    this.prefetchModelDefaultData(model_infos),
-                    this.prefetchFilterData(),
-                    this.prefetchViewData(),
+                    this.prefetchModelDefaultData(),
+                    this.prefetchViewData(model_infos),
                     this.prefetchActionData(),
                     this.prefetchClientQWebData(),
                     this.prefetchPostData(),
@@ -133,6 +138,7 @@
             } catch (err) {
                 return reject(err);
             }
+            this.options.force_client_show_modal = false;
             return resolve();
         });
     },
@@ -149,19 +155,23 @@
                 for (const index in models) {
                     this._sendTaskInfo(
                         "vacuum_records",
-                        index / num_models,
-                        `Vacuum records of the model '${model_info.model_name}'...`);
-                    const [
-                        response_s,
-                        request_data_s,
-                    ] = await this._rpc.callJSonRpc(model_info.model, "search", [
-                        model_info.domain,
-                    ]);
-                    response_data = await response_s.json();
-                    await this._odoodb.vacuumRecords(
-                        model_info.model,
-                        response_data.result
-                    );
+                        `Vacuum records of the model '${model_info.model_name}'...`,
+                        num_models,
+                        index);
+                    try {
+                        const [
+                            response
+                        ] = await this._rpc.callJSonRpc(model_info.model, "search", [
+                            model_info.domain,
+                        ]);
+                        const response_data = (await response.json()).result;
+                        await this._odoodb.vacuumRecords(
+                            model_info.model,
+                            response_data
+                        );
+                    } catch (err) {
+                        // do nothing
+                    }
                 }
             } catch (err) {
                 // do nothing
@@ -175,11 +185,10 @@
      * @param {Object} model_info_extra
      * @returns {Promise}
      */
-    prefetchModelRecords: function (model_info_extra, proc_records) {
-        const CHUNK_SIZE = 500;
+    prefetchModelRecords: function (model_info_extra, proc_records, avoid_save) {
         return new Promise(async (resolve, reject) => {
             const start_prefetch_date = DateToOdooFormat(new Date());
-            const client_message_id = `model_records_${model_info_extra.model.replaceAll(".", "_")}`;
+            const client_message_id = `model_records_${model_info_extra.model}`;
             let offset = 0;
             let domain_forced = [];
             if (model_info_extra.prefetch_last_update) {
@@ -188,39 +197,59 @@
                 ];
             }
             const domain = _.union(domain_forced, model_info_extra.domain);
-            let fields = Object.keys(_.omit(model_info_extra.fields, model_info_extra.excluded_fields));
-            fields = _.isEmpty(fields)?false:fields;
+            // Using 'false' to get all fields
+            let fields = false;
+            if (model_info_extra.excluded_fields.length) {
+                fields = Object.keys(_.omit(model_info_extra.fields, model_info_extra.excluded_fields));
+            }
+            /* Handle critical data */
+            // Remove "password" info from res.users model
+            if (model_info_extra.model === "res.users") {
+                if (fields === false) {
+                    fields = Object.keys(_.omit(model_info_extra.fields, "password"));
+                } else {
+                    fields = _.omit(fields, "password");
+                }
+            }
+            // Get ids
+            const [
+                response_s
+            ] = await this._rpc.callJSonRpc(model_info_extra.model, "search", [
+                domain,
+            ]);
+            const record_ids = (await response_s.json()).result;
             do {
                 this._sendTaskInfo(
                     client_message_id,
-                    offset / model_info_extra.count,
-                    `Getting records of the model '${model_info_extra.model_name}'...`);
+                    `Getting records of the model '${model_info_extra.model_name}'...`,
+                    model_info_extra.count,
+                    offset);
                 try {
                     // Get current records
-                    const [response, request_data] = await this._rpc.datasetJSonRpc(
-                        "search_read",
+                    const [response, request_data] = await this._rpc.pwaJSonRpc(
+                        "browse_read",
                         {
-                            domain: domain,
+                            ids: record_ids.slice(offset, offset+this._search_read_chunk_size),
                             model: model_info_extra.model,
                             fields: fields,
-                            offset: offset,
-                            limit: CHUNK_SIZE,
                         }
                     );
                     const response_data = await response.json();
-                    if (response_data.result.records.length === 0) {
+                    if (response_data.result.length === 0) {
                         break;
                     }
                     if (proc_records) {
-                        proc_records.push(...response_data.result.records);
+                        proc_records.push(...response_data.result);
                     }
-                    const model = request_data.params.model;
-                    await this.search_read(
-                        model,
-                        response_data.result,
-                        JSON.stringify(request_data.params.domain)
-                    );
-                    offset += response_data.result.records.length;
+                    if (!avoid_save) {
+                        const model = request_data.params.model;
+                        await this.search_read(
+                            model,
+                            response_data.result,
+                            JSON.stringify(request_data.params.domain)
+                        );
+                    }
+                    offset += response_data.result.length;
                 } catch (err) {
                     this._sendTaskInfoError(client_message_id, `Can't get records of the model ${model_info_extra.model_name}`);
                     return reject(err);
@@ -264,12 +293,6 @@
                     const model_info_extra = _.extend({}, model_info, to_search);
                     await this.prefetchModelRecords(model_info_extra);
                 }
-
-                // Prefetch Model Data
-                let model_info = await this._odoodb.getModelInfo("ir.model.data");
-                model_info.count = await this._getModelCount(model_info);
-                await this.saveModelInfo(model_info);
-                await this.prefetchModelRecords(model_info);
             } catch (err) {
                 return reject(err);
             }
@@ -289,7 +312,7 @@
             );
             let model_infos = [];
             try {
-                this._sendTaskInfo("model_info_data", -1, `Getting all model's informations...`);
+                this._sendTaskInfo("model_info_data", `Getting all model's informations...`, -1, 0);
                 const [response] = await this._rpc.sendJSonRpc(
                     "/pwa/prefetch/model_info",
                     {
@@ -298,6 +321,8 @@
                 );
                 let response_data = await response.json();
                 model_infos = response_data.result;
+                console.log("---- MODEL INFO");
+                console.log(model_infos);
                 const tasks = [];
                 for (const model_info of model_infos) {
                     tasks.push(this.saveModelInfo(model_info));
@@ -319,34 +344,34 @@
     /**
      * @returns {Promise}
      */
-    prefetchModelDefaultData: function (model_infos) {
+    prefetchModelDefaultData: function () {
         return new Promise(async (resolve, reject) => {
-            const num_infos = model_infos.length;
             try {
-                for (const index in model_infos) {
-                    const model_info = model_infos[index];
-                    this._sendTaskInfo(
-                        "model_default_data",
-                        index / num_infos,
-                        `Getting default values of the model '${model_info.model_name}'...`);
-                    const [
-                        response,
-                    ] = await this._rpc.sendJSonRpc(
-                        "/pwa/prefetch/model_default",
-                        {
-                            last_update: model_info.prefetch_last_update,
-                            model: model_info.model,
-                        }
-                    );
-                    const response_model_default_data = (await response.json()).result;
-                    if (response_model_default_data) {
-                        await this._odoodb.updateModelInfo(model_info.model, {
-                            defaults: response_model_default_data.defaults,
-                        });
+                const start_prefetch_date = DateToOdooFormat(new Date());
+                const prefetch_last_update = await this.getParent().config.get(
+                    "prefetch_defaults_last_update"
+                );
+                this._sendTaskInfo("model_default_data", `Getting model default values formulas...`, -1, 0);
+                const [
+                    response,
+                ] = await this._rpc.sendJSonRpc(
+                    "/pwa/prefetch/default_formula",
+                    {
+                        last_update: prefetch_last_update,
                     }
+                );
+                const tasks = [];
+                const records = (await response.json()).result;
+                for (const record of records) {
+                    tasks.push(this._db.createOrUpdateRecord("webclient", "defaults", false, record.id, record));
                 }
+                await Promise.all(tasks);
+                await this.getParent().config.set(
+                    "prefetch_defaults_last_update",
+                    start_prefetch_date
+                );
             } catch (err) {
-                this._sendTaskInfoError("model_default_data", "Can't get default values of models");
+                this._sendTaskInfoError("model_default_data", "Can't get default values formulas of models");
                 return reject(err);
             }
             this._sendTaskInfoCompleted("model_default_data");
@@ -357,100 +382,54 @@
     /**
      * @returns {Promise}
      */
-    prefetchFilterData: function () {
+    prefetchViewData: function (model_infos) {
         return new Promise(async (resolve, reject) => {
             try {
-                let model_info = await this._odoodb.getModelInfo("ir.filters");
-                model_info.count = await this._getModelCount(model_info);
-                await this.saveModelInfo(model_info);
-                await this.prefetchModelRecords(model_info);
-            } catch (err) {
-                return reject(err);
-            }
-            return resolve();
-        });
-    },
-
-    /**
-     * @returns {Promise}
-     */
-    prefetchViewData: function () {
-        return new Promise(async (resolve, reject) => {
-            try {
-                let model_info = await this._odoodb.getModelInfo("ir.ui.view");
-                model_info.count = await this._getModelCount(model_info);
-                await this.saveModelInfo(model_info);
-                const proc_records = [];
-                const prefetch_count = await this.prefetchModelRecords(model_info, proc_records);
-                const cmodels = [];
-                for (const index in proc_records) {
-                    const record = proc_records[index];
-                    if (!record.model) {
-                        continue;
-                    }
+                for (const index in model_infos) {
+                    const model_info = model_infos[index];
                     this._sendTaskInfo(
                         "prefetch_view_data",
-                        index / prefetch_count,
-                        `Getting '${record.name}' view information for the model '${record.model}'...`);
-                    if (cmodels.indexOf(record.model) === -1) {
-                        cmodels.push(record.model);
+                        `Getting view's information for the model '${model_info.model}'...`,
+                        model_infos.length,
+                        index);
+
+                    for (const view_type in model_info.view_types) {
+                        const ids = model_info.view_types[view_type];
+                        for (const id of ids) {
+                            try {
+                                const [
+                                    response
+                                ] = await this._rpc.callJSonRpc(model_info.model, "fields_view_get", [
+                                    id,
+                                    view_type,
+                                    view_type !== 'search',
+                                ]);
+                                const fields_view = (await response.json()).result;
+                                if (!fields_view) {
+                                    continue;
+                                }
+                                // Store index need a consistent value type, so we must use zero instead of false
+                                if (!id) {
+                                    fields_view.view_id = 0;
+                                }
+                                await this._db.createOrUpdateRecord(
+                                    "webclient",
+                                    "views",
+                                    false,
+                                    [fields_view.model, fields_view.view_id, fields_view.type],
+                                    fields_view);
+                            } catch (err) {
+                                console.log(`[ServiceWorker] Can't get view info for ${model_info.model} -> ${id}`);
+                            }
+                        }
                     }
-                    const [
-                        response,
-                        request_data,
-                    ] = await this._rpc.callJSonRpc(record.model, "fields_view_get", [
-                        record.id,
-                        record.type,
-                        record.type !== 'search',
-                    ]);
-                    const fields_view = (await response.json()).result;
-                    await this._db.createOrUpdateRecord(
-                        "webclient",
-                        "views",
-                        false,
-                        [fields_view.model, fields_view.view_id, fields_view.type],
-                        fields_view);
                 }
                 this._sendTaskInfoCompleted("prefetch_view_data");
-
-                // Adds generic views
-                const field_infos = await this._odoodb.getModelFieldsInfo("ir.ui.view", ["type"]);
-                const types = _.map(field_infos.type.selection, (item) => item[0]);
-                const extra_views_count = types.length * cmodels.length;
-                let iter_count = 0;
-                for (const model of cmodels) {
-                    for (const type of types) {
-                        this._sendTaskInfo(
-                            "prefetch_view_extra_data",
-                            iter_count / extra_views_count,
-                            `Getting generic '${type}' view information for the model '${model}'...`);
-                        const [
-                            response,
-                            request_data,
-                        ] = await this._rpc.callJSonRpc(model, "fields_view_get", [
-                            false,
-                            type,
-                            true,
-                        ]);
-                        const fields_view = (await response.json()).result;
-                        if (!fields_view) {
-                            continue;
-                        }
-                        fields_view.view_id = 0;
-                        await this._db.createOrUpdateRecord(
-                            "webclient",
-                            "views",
-                            false,
-                            [model, 0, fields_view.type],
-                            fields_view);
-                        ++iter_count;
-                    }
-                }
             } catch (err) {
-                this._sendTaskInfoError("prefetch_view_extra_data", "Can't get views infos");
+                this._sendTaskInfoError("prefetch_view_data", "Can't get views infos");
                 return reject(err);
             }
-            this._sendTaskInfoCompleted("prefetch_view_extra_data");
+            this._sendTaskInfoCompleted("prefetch_view_data");
             return resolve();
         });
     },
@@ -486,8 +465,9 @@
                         const action_id = response_data[index];
                         this._sendTaskInfo(
                             "action_data",
-                            index / num_actions,
-                            `Getting info of the action #${action_id}...`);
+                            `Getting info of the action #${action_id}...`,
+                            num_actions,
+                            index);
                         const [response_s] = await this._rpc.sendJSonRpc(
                             "/web/action/load",
                             {
@@ -538,8 +518,9 @@
                         const post_def = response_data[index];
                         this._sendTaskInfo(
                             "post_data",
-                            index / num_posts,
-                            `Getting post results of the endpoint '${post_def.url}'...`);
+                            `Getting post results of the endpoint '${post_def.url}'...`,
+                            num_posts,
+                            index);
                         const num_params = post_def.params.length;
                         for (let i = 0; i < num_params; ++i) {
                             const [response_s, request_data_s] = await this._rpc.sendJSonRpc(
@@ -596,8 +577,9 @@
                 for (const onchange_info of response_data) {
                     this._sendTaskInfo(
                         "onchange_data",
-                        count_done / onchange_info_count,
-                        `Calculating & Getting '${onchange_info.name}' 'onchange' data (${onchange_info.count} changes)...`);
+                        `Calculating & Getting '${onchange_info.name}' 'onchange' data (${onchange_info.count} changes)...`,
+                        onchange_info_count,
+                        count_done);
                     const [response_s] = await this._rpc.sendJSonRpc('/pwa/prefetch/onchange', {
                         cache_id: onchange_info.id,
                     });
@@ -645,7 +627,7 @@
     prefetchFunctionData: function () {
         return new Promise(async (resolve, reject) => {
             try {
-                this._sendTaskInfo("function_data", -1, `Calculating & Getting 'call function' data...`);
+                this._sendTaskInfo("function_data", `Calculating & Getting 'call function' data...`, -1, 0);
                 // Get prefetching metadata
                 let [response] = await this._rpc.sendJSonRpc("/pwa/prefetch/function");
                 const response_data = (await response.json()).result;
@@ -695,7 +677,7 @@
                     const num_views = response_data.length + 1;
                     for (const index in response_data) {
                         const xml_ref = response_data[index];
-                        this._sendTaskInfo("clientqweb_data", index / num_views, `Getting client template '${xml_ref}'...`);
+                        this._sendTaskInfo("clientqweb_data", `Getting client template '${xml_ref}'...`, num_views, index);
                         const [
                             response_s,
                             request_s_data,
@@ -734,7 +716,7 @@
                 "prefetch_userdata_last_update"
             );
             try {
-                this._sendTaskInfo("user_data_translation", -1, "Getting translations...");
+                this._sendTaskInfo("user_data_translation", "Getting translations...", -1, 0);
                 let [response] = await this._rpc.sendJSonRpc(
                     "/pwa/prefetch/userdata",
                     {
@@ -754,7 +736,7 @@
                     await this.translations(response_s_data);
                 }
                 this._sendTaskInfoCompleted("user_data_translation");
-                this._sendTaskInfo("user_data_menu", -1, "Getting menus...");
+                this._sendTaskInfo("user_data_menu", "Getting menus...", -1, 0);
                 [response] = await this._rpc.callJSonRpc(
                     "ir.ui.menu",
                     "load_menus",

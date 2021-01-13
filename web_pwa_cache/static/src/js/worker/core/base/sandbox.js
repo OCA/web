@@ -46,6 +46,8 @@ class JSSandbox {
         return {
             'round_precision': round_precision,
             'round_decimals': round_decimals,
+            'date2odoo_format': DateToOdooFormat,
+            'Date': Date,
         };
     }
 };

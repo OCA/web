@@ -34,7 +34,7 @@ PWA.include({
                 await this._cache.initCache(this._cache_name);
                 await this._db.initDatabase("webclient", this._onUpgradeWebClientDB);
                 await this._initComponents();
-                this._sendConfigToClient();
+                this.config.sendToClient();
                 this._isLoaded = true;
                 return resolve(true);
             });
@@ -240,7 +240,7 @@ PWA.include({
      */
     _onUpgradeWebClientDB: function (evt) {
         const db = evt.target.result;
-        if (evt.oldVersion < 1) {
+        if (evt.oldVersion < 1) { // New Database
             console.log("[ServiceWorker] Generating DB Schema...");
             db.createObjectStore("views", {keyPath: ["model", "view_id", "type"]});
             db.createObjectStore("actions", {keyPath: "id"});
@@ -264,6 +264,7 @@ PWA.include({
                 keyPath: "id",
                 unique: true,
             });
+            objectStore.createIndex("model", "model", {unique: false});
             objectStore.createIndex("model_field_value", ["model", "field", "field_value"], {unique: false});
             db.createObjectStore("template", {
                 keyPath: "xml_ref",
@@ -273,70 +274,28 @@ PWA.include({
                 keyPath: "model",
                 unique: true,
             });
-            // Table used to accelerate search
+            // Use a separated table instead of 'records' to improve search performance
             objectStore = db.createObjectStore("model_data", {
                 keyPath: "id",
                 unique: true,
             });
             objectStore.createIndex("module_name", ["module", "name"], {unique: true});
-        } else {
-            switch (evt.oldVersion) {
-                case 1: {
-                    console.log("[ServiceWorker] Updating Old DB Schema to v2...");
-                    // Update keyPath of records db
-                    db.deleteObjectStore("records");
-                    db.createObjectStore("records", {
-                        keyPath: "model",
-                        unique: true,
-                    });
-                }
-                case 2: {
-                    console.log("[ServiceWorker] Updating Old DB Schema to v3...");
-                    // Update keyPath of records db
-                    db.deleteObjectStore("records");
-                    let objectStore = db.createObjectStore("records", {
-                        keyPath: ["__model", "id"],
-                        unique: true,
-                    });
-                    objectStore.createIndex("model", "__model", {unique: false});
-                    // Update keyPath of views db
-                    db.deleteObjectStore("views");
-                    db.createObjectStore("views", {keyPath: ["model", "view_id", "type"]});
-                    // Update keyPath of template db
-                    db.deleteObjectStore("template");
-                    db.createObjectStore("template", {
-                        keyPath: "xml_ref",
-                        unique: true,
-                    });
-                    // Update keyPath of onchange db
-                    db.deleteObjectStore("onchange");
-                    objectStore = db.createObjectStore("onchange", {
-                        keyPath: "id",
-                        unique: true,
-                    });
-                    objectStore.createIndex("model_field_value", ["model", "field", "field_value"], {unique: false});
-                    // Update keyPath of sync db
-                    db.deleteObjectStore("sync");
-                    db.createObjectStore("sync", {
-                        keyPath: "model",
-                        unique: false,
-                    });
-                    // Create new model db
-                    db.createObjectStore("model", {
-                        keyPath: "model",
-                        unique: true,
-                    });
-                    // Create new mode data db
-                    objectStore = db.createObjectStore("model_data", {
-                        keyPath: "id",
-                        unique: true,
-                    });
-                    objectStore.createIndex("module_name", ["module", "name"], {unique: true});
-                    // Remove outdated db
-                    db.deleteObjectStore("filters");
-                    db.deleteObjectStore("defaults");
-                }
-            }
+            objectStore = db.createObjectStore("defaults", {
+                keyPath: "id",
+                unique: true,
+            });
+            objectStore.createIndex("module", "module", {unique: false});
+        } else { // Upgrade Database
+            // switch (evt.oldVersion) {
+            //     case 1: {
+            //         console.log("[ServiceWorker] Updating Old DB Schema to v2...");
+            //         ...
+            //     }
+            //     case 2: {
+            //         console.log("[ServiceWorker] Updating Old DB Schema to v3...");
+            //         ...
+            //     }
+            // }
         }
     },
 
@@ -440,30 +399,6 @@ PWA.include({
                 return reject(err);
             }
 
-            return resolve();
-        });
-    },
-
-    /**
-     * Send configuration state to the client pages
-     *
-     * @private
-     * @returns {Promise}
-     */
-    _sendConfigToClient: function () {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const config = await this.config.getAll();
-                const userdata_count = await this._db.countRecords("webclient", "userdata");
-                config.is_db_empty = userdata_count === 0;
-                this.postClientPageMessage({
-                    type: "PWA_INIT_CONFIG",
-                    data: config,
-                });
-                this._components.sync.updateClientCount();
-            } catch (err) {
-                return reject(err);
-            }
             return resolve();
         });
     },

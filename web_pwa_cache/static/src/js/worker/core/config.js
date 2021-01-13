@@ -121,4 +121,28 @@ const Config = OdooClass.extend(ParentedMixin, {
             value: value,
         });
     },
+
+    /**
+     * Send configuration state to the client pages
+     *
+     * @private
+     * @returns {Promise}
+     */
+    sendToClient: function () {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const config = await this.getAll();
+                const userdata_count = await this._db.countRecords("webclient", "userdata");
+                config.is_db_empty = userdata_count === 0;
+                this.getParent().postClientPageMessage({
+                    type: "PWA_INIT_CONFIG",
+                    data: config,
+                });
+                this.getParent()._components.sync.updateClientCount();
+            } catch (err) {
+                return reject(err);
+            }
+            return resolve();
+        });
+    },
 });

@@ -5,7 +5,7 @@
  * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
 
 const DatabaseManager = OdooClass.extend({
-    _db_version: 3,
+    _db_version: 1,
 
     init: function () {
         this._databases = {};
@@ -153,12 +153,24 @@ const DatabaseManager = OdooClass.extend({
         return Promise.reject();
     },
 
-    countRecords: function (db_name, store) {
+    /**
+     * @param {String} db_name
+     * @param {String} store
+     * @param {Array/String} index
+     * @param {IDBKeyRange/String} range
+     * @returns {Promise}
+     */
+    countRecords: function (db_name, store, index, range) {
         return new Promise((resolve, reject) => {
             const [objectStore] = this.getObjectStores(
                 db_name, [store], "readonly");
             if (objectStore) {
-                const query = objectStore.count();
+                let query = null;
+                if (index) {
+                    query = objectStore.index(index).count(range);
+                } else {
+                  query = objectStore.count(range);
+                }
                 query.onsuccess = function (evt) {
                     resolve(evt.target.result);
                 };

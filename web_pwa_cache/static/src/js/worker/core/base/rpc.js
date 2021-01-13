@@ -5,6 +5,16 @@
  * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
 
 const OdooRPC = OdooClass.extend({
+
+    /**
+     * @param {String} method
+     * @param {Object} params
+     * @returns {Promise}
+     */
+    pwaJSonRpc: function (method, params) {
+        return this.sendJSonRpc(`web/pwa/${method}`, params);
+    },
+
     /**
      * @param {String} method
      * @param {Object} params

@@ -70,83 +70,96 @@ const ComponentExporter = SWComponent.extend({
      */
     onchange: function (model, data) {
         return new Promise(async (resolve, reject) => {
-            const record_data = data.args[1];
-            let fields_changed = data.args[2];
-            if (typeof fields_changed === "string") {
-                fields_changed = [fields_changed];
-            }
-            let onchange_found = false;
-            const res = {value: {}};
-            for (const field_name of fields_changed) {
-                try {
-                    let records = await this._db.getRecords(
-                        "webclient", "onchange", "model_field_value", [
-                            model,
-                            field_name,
-                            JSON.stringify(record_data[field_name]),
-                        ]);
-                    records = this._odoodb.filterOnchangeRecordsByParams(
-                        records, field_name, record_data);
-                    if (_.isEmpty(records)) {
-                        const fields_info = await this._odoodb.getModelFieldsInfo(model, [field_name]);
-                        if (
-                            fields_info &&
-                            "relation" in fields_info[field_name]
-                        ) {
-                            const isOfflineRecord = await this._odoodb.isOfflineRecord(
-                                fields_info[field_name].relation,
-                                record_data[field_name]
-                            );
-                            if (isOfflineRecord) {
-                                // If is a offline record fallback to "empty" onchange
-                                onchange_found = true;
-                                res.value[field_name] = record_data[field_name];
+            try {
+                const is_offline_mode = await this.isOfflineMode();
+                // If doesn't exists any onchange record for the current model avoid all the process
+                const onchange_count = await this._db.countRecords("webclient", "onchange", "model", model);
+                if (!onchange_count) {
+                    if (is_offline_mode) {
+                        return resolve({});
+                    }
+                    return reject();
+                }
+
+                const record_data = data.args[1];
+                let fields_changed = data.args[2];
+                if (typeof fields_changed === "string") {
+                    fields_changed = [fields_changed];
+                }
+                let onchange_found = false;
+                const res = {value: {}};
+                for (const field_name of fields_changed) {
+                    try {
+                        let records = await this._db.getRecords(
+                            "webclient", "onchange", "model_field_value", [
+                                model,
+                                field_name,
+                                JSON.stringify(record_data[field_name]),
+                            ]);
+                        records = this._odoodb.filterOnchangeRecordsByParams(
+                            records, field_name, record_data);
+                        if (_.isEmpty(records)) {
+                            const fields_info = await this._odoodb.getModelFieldsInfo(model, [field_name]);
+                            if (
+                                fields_info &&
+                                "relation" in fields_info[field_name]
+                            ) {
+                                const isOfflineRecord = await this._odoodb.isOfflineRecord(
+                                    fields_info[field_name].relation,
+                                    record_data[field_name]
+                                );
+                                if (isOfflineRecord) {
+                                    // If is a offline record fallback to "empty" onchange
+                                    onchange_found = true;
+                                    res.value[field_name] = record_data[field_name];
+                                }
+                            }
+                            continue;
+                        }
+                        onchange_found = true;
+                        const sandbox = new JSSandbox();
+                        for (const record of records) {
+                            let value = false;
+                            let warning = false;
+                            let domain = false;
+                            if (typeof record.changes !== 'undefined') {
+                                value = record.changes.value;
+                                warning = record.changes.warning;
+                                domain = record.changes.domain;
+                            } else if (typeof record.formula !== 'undefined') {
+                                sandbox.compile(record.formula);
+                                const changes = sandbox.run(record_data);
+                                value = changes.value;
+                                warning = changes.warning;
+                                domain = changes.domain;
+                            }
+                            if (value) {
+                                res.value = _.extend({}, res.value, value);
+                            }
+                            if (warning) {
+                                res.warning = _.extend({}, res.warning, warning);
+                            }
+                            if (domain) {
+                                res.domain = _.extend({}, res.domain, domain);
                             }
                         }
-                        continue;
+                    } catch (err) {
+                        console.log(`[ServiceWorker] Can't process the given onchange for the fields '${fields_changed.join()}' on the model '${model}'`);
+                        console.log(err);
                     }
-                    onchange_found = true;
-                    const sandbox = new JSSandbox();
-                    for (const record of records) {
-                        let value = false;
-                        let warning = false;
-                        let domain = false;
-                        if (typeof record.changes !== 'undefined') {
-                            value = record.changes.value;
-                            warning = record.changes.warning;
-                            domain = record.changes.domain;
-                        } else if (typeof record.formula !== 'undefined') {
-                            sandbox.compile(record.formula);
-                            const changes = sandbox.run(record_data);
-                            value = changes.value;
-                            warning = changes.warning;
-                            domain = changes.domain;
-                        }
-                        if (value) {
-                            res.value = _.extend({}, res.value, value);
-                        }
-                        if (warning) {
-                            res.warning = _.extend({}, res.warning, warning);
-                        }
-                        if (domain) {
-                            res.domain = _.extend({}, res.domain, domain);
-                        }
-                    }
-                } catch (err) {
-                    console.log(`[ServiceWorker] Can't process the given onchange for the fields '${fields_changed.join()}' on the model '${model}'`);
-                    console.log(err);
                 }
-            }
 
-            if (onchange_found) {
-                return resolve(res);
-            }
+                if (onchange_found) {
+                    return resolve(res);
+                }
 
-            const is_offline_mode = await this.isOfflineMode();
-            if (is_offline_mode) {
-                // In offline mode we return a valid onchange to avoid warnings for every field.
-                // This onchanges must be handle via "pwa.cache" record.
-                return resolve({});
+                if (is_offline_mode) {
+                    // In offline mode we return a valid onchange to avoid warnings for every field.
+                    // This onchanges must be handle via "pwa.cache" record.
+                    return resolve({});
+                }
+            } catch (err) {
+                return reject(err);
             }
             return reject();
         });
@@ -162,6 +175,10 @@ const ComponentExporter = SWComponent.extend({
             try {
                 const records = await this._odoodb.browse(data.model, data.args[0]);
                 if (records.length === 0) {
+                    const is_offline_mode = await this.isOfflineMode();
+                    if (is_offline_mode) {
+                        return resolve({});
+                    }
                     return reject();
                 }
                 const mapped_records = _.map(records, (item) =>
@@ -207,28 +224,33 @@ const ComponentExporter = SWComponent.extend({
      * @returns {Promise}
      */
     copy: function (model, data) {
-        return new Promise(async (resolve) => {
+        return new Promise(async (resolve, reject) => {
             try {
-                const record_id = data.args[0];
-                const records = await this._odoodb.browse(model, record_id);
-                records[0].id = this._odoodb.genRecordID();
-                const model_info = await this._odoodb.getModelInfo(model);
-                const values = {
-                    args: records,
-                };
-                console.log("---- COPY");
-                console.log(values);
-                console.log(model_info);
-                const c_ids = await this._process_record_create(
-                    model_info,
-                    values
-                );
-                console.log("---- COPY AAA");
-                console.log(c_ids);
-                return resolve(c_ids[0]);
+                const is_offline_mode = await this.isOfflineMode();
+                if (is_offline_mode) {
+                    const record_id = data.args[0];
+                    const records = await this._odoodb.browse(model, record_id);
+                    records[0].id = this._odoodb.genRecordID();
+                    const model_info = await this._odoodb.getModelInfo(model);
+                    const values = {
+                        args: records,
+                    };
+                    console.log("---- COPY");
+                    console.log(values);
+                    console.log(model_info);
+                    const c_ids = await this._process_record_create(
+                        model_info,
+                        values
+                    );
+                    console.log("---- COPY AAA");
+                    console.log(c_ids);
+                    return resolve(c_ids[0]);
+                }
             } catch (err) {
                 return reject(err);
             }
+
+            return reject();
         });
     },
 
@@ -238,7 +260,20 @@ const ComponentExporter = SWComponent.extend({
      * @returns {Promise}
      */
     read_template: function (model, data) {
-        return this._db.getRecord("webclient", "template", false, data.args[0]);
+        return new Promise(async (resolve, reject) => {
+            try {
+                const record = await this._db.getRecord("webclient", "template", false, data.args[0]);
+                if (_.isEmpty(record)) {
+                    const is_offline_mode = await this.isOfflineMode();
+                    if (is_offline_mode) {
+                        return resolve({});
+                    }
+                    return reject();
+                }
+            } catch (err) {
+                return reject(err);
+            }
+        });
     },
 
     /**
@@ -336,6 +371,11 @@ const ComponentExporter = SWComponent.extend({
         return new Promise(async (resolve, reject) => {
             try {
                 const model_info = await this._odoodb.getModelInfo(model);
+                const model_defaults = this._odoodb.getModelDefaults(model_info.model);
+                const is_offline_mode = await this.isOfflineMode();
+                if (_.isEmpty(model_defaults) && !is_offline_mode) {
+                    return reject();
+                }
                 const context_defaults = data.kwargs.context;
                 const default_keys = _.filter(Object.keys(context_defaults), function (
                     item
@@ -347,7 +387,7 @@ const ComponentExporter = SWComponent.extend({
                     const skey = key.substr(8);
                     defaults[skey] = context_defaults[key];
                 }
-                const result = _.extend({}, model_info.defaults, defaults);
+                const result = _.extend({}, model_defaults, defaults);
                 const values = _.pick(result, data.args[0]);
                 for (const key in values) {
                     const value = values[key];
@@ -370,20 +410,30 @@ const ComponentExporter = SWComponent.extend({
      * @returns {Promise}
      */
     get_filters: function (model, data) {
-        return new Promise(async (resolve) => {
-            const uid = await this.getParent().config.getUID();
-            const model = data.args[0];
-            const action_id = data.args[1];
-            const action_domain = [];
-            if (action_id) {
-                action_domain.push(['action_id', 'in', [action_id, false]]);
+        return new Promise(async (resolve, reject) => {
+            try {
+                const uid = await this.getParent().config.getUID();
+                const model = data.args[0];
+                const action_id = data.args[1];
+                const action_domain = [];
+                if (action_id) {
+                    action_domain.push(['action_id', 'in', [action_id, false]]);
+                }
+                const [records] = await this._odoodb.search("ir.filters", _.union(action_domain, [['model_id', '=', model], ['user_id', 'in', [uid, false]]]));
+                if (!records.length) {
+                    const is_offline_mode = await this.isOfflineMode();
+                    if (!is_offline_mode) {
+                        return reject();
+                    }
+                }
+                const filters = [];
+                for (const record of records) {
+                    filters.push(_.pick(record, ['name', 'is_default', 'domain', 'context', 'user_id', 'sort']));
+                }
+                return resolve(filters);
+            } catch (err) {
+                return reject(err);
             }
-            const [records] = await this._odoodb.search("ir.filters", _.union(action_domain, [['model_id', '=', model], ['user_id', 'in', [uid, false]]]));
-            const filters = [];
-            for (const record of records) {
-                filters.push(_.pick(record, ['name', 'is_default', 'domain', 'context', 'user_id', 'sort']));
-            }
-            return resolve(filters);
         });
     },
 
@@ -411,6 +461,13 @@ const ComponentExporter = SWComponent.extend({
                         // If not view found fallback to form view
                         res.fields_views[view_type] = await this._db.getRecord("webclient", "views", false, [model, view_id || 0, "form"]);
                     }
+
+                    if (_.isEmpty(res.fields_views[view_type])) {
+                        const is_offline_mode = await this.isOfflineMode();
+                        if (!is_offline_mode) {
+                            return reject();
+                        }
+                    }
                 }
                 if (!options?.toolbar) {
                     const view_types = Object.keys(res.fields_views);
@@ -437,6 +494,12 @@ const ComponentExporter = SWComponent.extend({
                     false,
                     "menus"
                 );
+                if (_.isEmpty(record)) {
+                    const is_offline_mode = await this.isOfflineMode();
+                    if (!is_offline_mode) {
+                        return reject();
+                    }
+                }
                 return resolve(record.value);
             } catch (err) {
                 return reject(err);
@@ -450,7 +513,14 @@ const ComponentExporter = SWComponent.extend({
      * @returns {Promise}
      */
     check_access_rights: function () {
-        return Promise.resolve(true);
+        return new Promise(async (resolve, reject) => {
+            const is_offline_mode = await this.isOfflineMode();
+            if (is_offline_mode) {
+                return resolve(true);
+            } else {
+                return reject();
+            }
+        });
     },
 
     /**
@@ -459,7 +529,14 @@ const ComponentExporter = SWComponent.extend({
      * @returns {Promise}
      */
     has_group: function () {
-        return Promise.resolve(true);
+        return new Promise(async (resolve, reject) => {
+            const is_offline_mode = await this.isOfflineMode();
+            if (is_offline_mode) {
+                return resolve(true);
+            } else {
+                return reject();
+            }
+        });
     },
 
     /**
@@ -472,6 +549,12 @@ const ComponentExporter = SWComponent.extend({
             const xmlid = data.kwargs.xmlid;
             try {
                 const record = await this._odoodb.ref(xmlid);
+                if (_.isEmpty(record)) {
+                    const is_offline_mode = await this.isOfflineMode();
+                    if (!is_offline_mode) {
+                        return reject();
+                    }
+                }
                 return resolve(record.id);
             } catch (err) {
                 return reject(err);
@@ -492,6 +575,12 @@ const ComponentExporter = SWComponent.extend({
                     action_id = action.id;
                 }
                 const record = await this._db.getRecord("webclient", "actions", false, action_id);
+                if (_.isEmpty(record)) {
+                    const is_offline_mode = await this.isOfflineMode();
+                    if (!is_offline_mode) {
+                        return reject();
+                    }
+                }
                 return resolve(record);
             } catch (err) {
                 return reject(err);
@@ -503,7 +592,20 @@ const ComponentExporter = SWComponent.extend({
      * @returns {Promise[Object]}
      */
     translations: function () {
-        return this._db.getRecord("webclient", "userdata", false, "translations");
+        return new Promise(async (resolve, reject) => {
+            try {
+                const record = await this._db.getRecord("webclient", "userdata", false, "translations");
+                if (_.isEmpty(record)) {
+                    const is_offline_mode = await this.isOfflineMode();
+                    if (!is_offline_mode) {
+                        return reject();
+                    }
+                }
+                return resolve(record);
+            } catch (err) {
+                return reject(err);
+            }
+        });
     },
 
     /**
@@ -576,14 +678,24 @@ const ComponentExporter = SWComponent.extend({
      * @returns {Promise}
      */
     fields_get: function (model, data) {
-        return new Promise(async (resolve) => {
-            const model_info = await this._odoodb.getModelInfo(model);
-            const fields_info = {};
-            for (const key in model_info.fields) {
-                const field_info = model_info.fields[key];
-                fields_info[key] = _.pick(field_info, data.args[1]);
+        return new Promise(async (resolve, reject) => {
+            try {
+                const model_info = await this._odoodb.getModelInfo(model);
+                if (_.isEmpty(model_info)) {
+                    const is_offline_mode = await this.isOfflineMode();
+                    if (!is_offline_mode) {
+                        return reject();
+                    }
+                }
+                const fields_info = {};
+                for (const key in model_info.fields) {
+                    const field_info = model_info.fields[key];
+                    fields_info[key] = _.pick(field_info, data.args[1]);
+                }
+                return resolve(fields_info);
+            } catch (err) {
+                return reject(err);
             }
-            return resolve(fields_info);
         });
     },
 
@@ -595,7 +707,14 @@ const ComponentExporter = SWComponent.extend({
      * @returns {Promise}
      */
     get_formview_id: function (model, data) {
-        return Promise.resolve(false);
+        return new Promise(async (resolve, reject) => {
+            const is_offline_mode = await this.isOfflineMode();
+            if (is_offline_mode) {
+                return resolve(false);
+            } else {
+                return reject();
+            }
+        });
     },
 
     /**
@@ -606,15 +725,22 @@ const ComponentExporter = SWComponent.extend({
      * @returns {Promise}
      */
     get_formview_action: function (model, data) {
-        const record_id = data.args[0][0];
-        return Promise.resolve({
-            'type': 'ir.actions.act_window',
-            'res_model': model,
-            'view_type': 'form',
-            'view_mode': 'form',
-            'views': [[false, 'form']],
-            'target': 'current',
-            'res_id': record_id,
+        return new Promise(async (resolve, reject) => {
+            const is_offline_mode = await this.isOfflineMode();
+            if (is_offline_mode) {
+                const record_id = data.args[0][0];
+                return resolve({
+                    'type': 'ir.actions.act_window',
+                    'res_model': model,
+                    'view_type': 'form',
+                    'view_mode': 'form',
+                    'views': [[false, 'form']],
+                    'target': 'current',
+                    'res_id': record_id,
+                });
+            } else {
+                return reject();
+            }
         });
     },
 
@@ -726,14 +852,15 @@ const ComponentExporter = SWComponent.extend({
         return new Promise(async (resolve) => {
             const records_sync = [];
             for (let index in data.args) {
-                const record = _.extend({}, model_info.defaults, data.args[index]);
+                const model_defaults = this._odoodb.getModelDefaults(model_info.model);
+                const record = _.extend({}, model_defaults, data.args[index]);
                 // Write a temporal name
-                if (record.display_name) {
-                    record.display_name += ` (Offline Record #${record.id})`;
+                if (record.name) {
+                    record.name += ` (Offline Record #${record.id})`;
                 } else {
-                    record.display_name = `Offline Record #${record.id}`;
+                    record.name = `Offline Record #${record.id}`;
                 }
-                //record.display_name = record.name;
+                record.display_name = record.name;
                 const record_fields = Object.keys(record);
                 const processed_fields = [];
                 const records_linked = {};
@@ -759,9 +886,10 @@ const ComponentExporter = SWComponent.extend({
                                     required: true,
                                     relation: model_info.model,
                                 });
+                                const model_defaults = this._odoodb.getModelDefaults(model_info.model);
                                 subrecord = _.extend(
                                     {},
-                                    field_model_info.defaults,
+                                    model_defaults,
                                     subrecord
                                 );
                                 record.display_name = record.name;
@@ -830,6 +958,7 @@ const ComponentExporter = SWComponent.extend({
                     args: [_.omit(record, processed_fields)],
                     date: new Date().getTime(),
                     linked: records_linked,
+                    kwargs: data.kwargs,
                 });
                 await this._db.createRecords("webclient", "sync", records_sync);
             }
@@ -880,9 +1009,10 @@ const ComponentExporter = SWComponent.extend({
                                     required: true,
                                     relation: model_info.model,
                                 });
+                                const model_defaults = this._odoodb.getModelDefaults(field_model_info.model);
                                 subrecord = _.extend(
                                     {},
-                                    field_model_info.defaults,
+                                    model_defaults,
                                     subrecord
                                 );
                                 subrecord[parent_field] = record.id;
@@ -908,6 +1038,7 @@ const ComponentExporter = SWComponent.extend({
                                     args: [subrecord],
                                     date: new Date().getTime(),
                                     linked: link,
+                                    kwargs: data.kwargs,
                                 });
                                 subrecord = await this._process_record_to_merge(
                                     subrecord,
@@ -922,6 +1053,7 @@ const ComponentExporter = SWComponent.extend({
                                     method: "write",
                                     args: [[command[1]], command[2]],
                                     date: new Date().getTime(),
+                                    kwargs: data.kwargs,
                                 });
                                 const ref_records = await this._odoodb.browse(
                                     relation,
@@ -943,6 +1075,7 @@ const ComponentExporter = SWComponent.extend({
                                         method: "unlink",
                                         args: [[[command[1]]]],
                                         date: new Date().getTime(),
+                                        kwargs: data.kwargs,
                                     });
                                     this._odoodb.unlink(relation, [command[1]]);
                                 }
@@ -985,6 +1118,7 @@ const ComponentExporter = SWComponent.extend({
                     method: "write",
                     args: [[record.id], data_to_sync],
                     date: new Date().getTime(),
+                    kwargs: data.kwargs,
                 });
                 await this._db.createRecords("webclient", "sync", records_sync);
                 await this._odoodb.write(model_info.model, [record.id], record);

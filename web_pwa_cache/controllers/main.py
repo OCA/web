@@ -138,54 +138,86 @@ class PWA(PWA):
             ("group_ids", "=", False),
         ]
 
+    def _get_pwa_available_actions(self):
+        ir_ui_menu_obj = request.env['ir.ui.menu']
+        menus = ir_ui_menu_obj.load_menus(False)
+        menu_ids = ir_ui_menu_obj.browse(menus["all_menu_ids"])
+        actions = []
+        for menu_id in menu_ids:
+            if not menu_id.action:
+                continue
+            actions.append("{},{}".format(menu_id.action.type,menu_id.action.id))
+        return actions
+
     def _pwa_prefetch_action(self, last_update, **kwargs):
-        domain = []
+        actions = self._get_pwa_available_actions()
+        action_ids = list(map(lambda x: x.split(',')[1], actions))
+        domain = [
+            ('id', 'in', action_ids),
+        ]
         if last_update:
             domain.append(("write_date", ">=", last_update))
         actions = request.env["ir.actions.actions"].search(domain)
         return actions.ids
 
-    def _pwa_prefetch_model_default(self, last_update, **kwargs):
-        model = kwargs.get("model")
-        model_obj = request.env[model]
-        fields = model_obj._fields
-        values = model_obj.with_context(
-            active_model=model,
-            active_ids=[],
-            active_id=False
-        ).default_get(fields)
-        for field in fields:
-            if field not in values:
-                values[field] = False
-        onchange_spec = model_obj._onchange_spec()
-        try:
-            changes = model_obj.onchange(
-                values, list(values.keys()), onchange_spec
-            )
-            if 'value' in changes:
-                values.update(changes['value'])
-        except Exception as e:
-            _logger.debug("Can't process 'onchange' for \"{}\" fields of the model \"{}\"".format(model, fields))
-            _logger.error(e)
-        return {
-            'model': model,
-            'defaults': values,
-        }
-
-    def _pwa_prefetch_model_info(self, last_update, **kwargs):
-        domain = []
-        if last_update:
-            domain.append(("write_date", ">=", last_update))
-        records = request.env["ir.model"].sudo().search(domain)
+    def _pwa_prefetch_default_formula(self, last_update, **kwargs):
+        records = request.env["pwa.cache"].search(self._get_pwa_cache_domain(["default_formula"]))
         res = []
         for record in records:
-            model_obj = request.env[record.model]
+            res.append({
+                'id': record.id,
+                'model': record.model_id.model,
+                'formula': record.code_js,
+            })
+        return res
+
+    def _pwa_prefetch_model_info(self, last_update, **kwargs):
+        # Get used model names from menus action
+        actions = self._get_pwa_available_actions()
+        model_views = {}
+        actions_id_list = set()
+        for action in actions:
+            (action_model, action_id) = action.split(",")
+            if action_model != "ir.actions.act_window":
+                continue
+            actions_id_list.add(int(action_id))
+        action_ids = request.env[action_model].browse(list(actions_id_list))
+        for action_id in action_ids:
+            model_views.setdefault(action_id.res_model, set())
+            model_views[action_id.res_model] |= set(action_id.view_ids.ids) | {action_id.view_id.id, action_id.search_view_id.id}
+
+        ir_ui_view_obj = request.env["ir.ui.view"]
+        available_types = list(filter(lambda x: x != "qweb", map(lambda x: x[0], ir_ui_view_obj._fields['type'].selection)))
+        model_domain = []
+        if last_update:
+            model_domain.append(("write_date", ">=", last_update))
+        model_ids = request.env['ir.model'].sudo().search(model_domain)
+        res = []
+        for model_id in model_ids:
+            if model_id.model not in request.env:
+                continue
+            view_types = {}
+            for view_type in available_types:
+                # Adds 'False' to get generic view
+                view_types.setdefault(view_type, [False])
+            if model_id.model in model_views:
+                view_domain = [
+                    ("id", "in", list(model_views[model_id.model])),
+                    ('type', '!=', 'qweb'),
+                ]
+                if last_update:
+                    view_domain.append(("write_date", ">=", last_update))
+                view_list = ir_ui_view_obj.search_read(view_domain, ["type"])
+                for view in view_list:
+                    view_types[view["type"]].append(view["id"])
+            model_obj = request.env[model_id.model]
             res.append(
                 {
-                    "model": record.model,
-                    "model_name": record.name,
+                    "model": model_id.model,
+                    "model_name": model_id.name,
                     "orderby": model_obj._order,
                     "fields": model_obj.fields_get(),
+                    "view_types": view_types,
                 }
             )
         return res
@@ -301,7 +333,6 @@ class PWA(PWA):
         onchanges = []
         e_context = record._get_eval_context()
         record_obj = request.env[record.model_id.model]
-        defaults = record_obj.default_get(record_obj._fields)
         params_list = record.run_cache_code(eval_context=e_context)
         onchange_spec = record_obj._onchange_spec()
         for params in params_list:
@@ -309,10 +340,8 @@ class PWA(PWA):
             formula = False
             if record.cache_type == "onchange":
                 resolved_params = self._pwa_resolve_params(params)
-                to_write = defaults.copy()
-                to_write.update(resolved_params)
                 changes = record_obj.onchange(
-                    to_write, record.onchange_field.name, onchange_spec
+                    resolved_params, record.onchange_field.name, onchange_spec
                 )
             elif record.cache_type == "onchange_formula":
                 formula = record.code_js
@@ -371,3 +400,30 @@ class PWA(PWA):
                     del kwargs['last_update']
                 return prefetch_method(last_update=last_update, **kwargs)
         return []
+
+    @http.route('/web/pwa/browse_read', type='json', auth="user")
+    def pwa_browse_read(self, model, ids, fields):
+        records = request.env[model].browse(ids)
+        if not records:
+            return []
+
+        if fields and fields == ['id']:
+            # shortcut read if we only want the ids
+            return [{'id': record.id} for record in records]
+
+        # read() ignores active_test, but it would forward it to any downstream search call
+        # (e.g. for x2m or function fields), and this is not the desired behavior, the flag
+        # was presumably only meant for the main search().
+        # TODO: Move this to read() directly?
+        if 'active_test' in request._context:
+            context = dict(request._context)
+            del context['active_test']
+            records = records.with_context(context)
+
+        result = records.read(fields)
+        if len(result) <= 1:
+            return result
+
+        # reorder read
+        index = {vals['id']: vals for vals in result}
+        return [index[record.id] for record in records if record.id in index]

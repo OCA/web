@@ -71,7 +71,7 @@ PWA.include({
                     break;
                 case "GET_PWA_CONFIG":
                     {
-                        this._sendConfigToClient();
+                        this.config.sendToClient();
                     }
                     break;
                 case "GET_PWA_SYNC_RECORDS":

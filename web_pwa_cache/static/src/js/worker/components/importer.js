@@ -11,6 +11,14 @@
 const ComponentImporter = SWComponent.extend({
 
     /**
+     * Used to know if the records need be stored in a independent store.
+     * This is used to improve search performance using specific indexes.
+     */
+    _search_read_independent_model_infos: {
+        'ir.model.data': "model_data",
+    },
+
+    /**
      * @override
      */
     init: function () {
@@ -165,13 +173,14 @@ const ComponentImporter = SWComponent.extend({
             return Promise.resolve();
         }
         const records = ("records" in data)?data.records:data;
-        // Handle this model to improve performance
-        if (model === "ir.model.data") {
+        // Some models uses an independent store to improve the performance using custom indexes.
+        const independent_model_store = this._search_read_independent_model_infos[model];
+        if (independent_model_store) {
             return new Promise(async (resolve, reject) => {
                 try {
                     const tasks = [];
                     for (const record of records) {
-                        tasks.push(this._db.createOrUpdateRecord("webclient", "model_data", false, record.id, record));
+                        tasks.push(this._db.createOrUpdateRecord("webclient", independent_model_store, false, record.id, record));
                     }
                     await Promise.all(tasks);
                 } catch(err) {

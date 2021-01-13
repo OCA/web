@@ -37,5 +37,21 @@ odoo.define("web_pwa_cache.ActionManager", function (require) {
             }
             this._super(ev);
         },
+
+        /**
+         * This is launched when switch the controller
+         * (for example click on a record in a kanban view).
+         * @override
+         */
+        _switchController: function (action, viewType, viewOptions) {
+            if (WebClientObj.pwa_manager.isPWAStandalone() && viewType === "form") {
+                var formPWAView = _.findWhere(action.views, {
+                    type: "formPWA",
+                });
+                var new_view_type = formPWAView?"formPWA":viewType;
+                return this._super(action, new_view_type, viewOptions);
+            }
+            return this._super.apply(this, arguments);
+        },
     });
 });
