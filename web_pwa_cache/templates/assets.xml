@@ -3,7 +3,6 @@
     <template id="assets_backend" name="Web PWA Cache Backend Assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
             <link rel="stylesheet" type="text/css" href="/web_pwa_cache/static/src/scss/main.scss"/>
-            <script type="text/javascript" src="/web_pwa_cache/static/src/js/views/action_manager_act_window.js"></script>
             <script type="text/javascript" src="/web_pwa_cache/static/src/js/views/datamanager.js"></script>
             <script type="text/javascript" src="/web_pwa_cache/static/src/js/views/web_dialogs.js"></script>
             <script type="text/javascript" src="/web_pwa_cache/static/src/js/views/formPWA/form_pwa_renderer.js"></script>

@@ -12,6 +12,8 @@ odoo.define("web_pwa_cache.view_dialogs", function (require) {
         open: function () {
             if (WebClientObj.pwa_manager.isPWAStandalone()) {
                 this.options.fields_view = this.loadFieldView(this.dataset, false, 'formPWA');
+                this.options.fields_view['form'] = this.options.fields_view['formPWA'];
+                delete this.options.fields_view['formPWA'];
             }
             return this._super.apply(this, arguments);
         },

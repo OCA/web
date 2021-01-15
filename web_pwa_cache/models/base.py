@@ -17,6 +17,21 @@ class BaseModel(models.BaseModel):
             res = super()._fields_view_get(view_id=view_id, view_type='form', toolbar=toolbar, submenu=submenu)
         return res
 
+    @api.model
+    def load_views(self, views, options=None):
+        standalone = options.get('standalone')
+        #import wdb; wdb.set_trace();
+        if standalone:
+            n_views = []
+            for view in views:
+                if view[1] == 'form':
+                    n_views.append([False, 'formPWA'])
+                n_views.append(view)
+        res = super().load_views(n_views, options)
+        if 'formPWA' in res['fields_views']:
+             res['fields_views']['form'] = res['fields_views']['formPWA']
+        return res
+
     # @api.model
     # def _get_default_formPWA_view(self):
     #     """ Generates a default single-line formPWA view using all fields
