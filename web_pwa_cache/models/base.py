@@ -20,13 +20,14 @@ class BaseModel(models.BaseModel):
     @api.model
     def load_views(self, views, options=None):
         standalone = options.get('standalone')
-        #import wdb; wdb.set_trace();
+        n_views = views
         if standalone:
             n_views = []
             for view in views:
                 if view[1] == 'form':
                     n_views.append([False, 'formPWA'])
-                n_views.append(view)
+                else:
+                    n_views.append(view)
         res = super().load_views(n_views, options)
         if 'formPWA' in res['fields_views']:
              res['fields_views']['form'] = res['fields_views']['formPWA']

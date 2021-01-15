@@ -2,7 +2,6 @@ odoo.define("web_pwa_cache.DataManager", function (require) {
     "use strict";
 
     var WebClientObj = require("web.web_client");
-    var rpc = require("web.rpc");
     var DataManager = require("web.DataManager");
 
     /**

@@ -87,7 +87,7 @@ PWA.include({
      * @override
      */
     processRequest: function (request) {
-        return fetch(request);
+        return fetch(request); // FIXME: Bypass cache implementation
         if (_.isEmpty(this._components)) {
             // PWA Not Actually Loaded
             console.warn("[ServiceWorker] The components are not currently loaded... Fallback to default browser behaviour.");

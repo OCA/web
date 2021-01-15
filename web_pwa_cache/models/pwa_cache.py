@@ -26,7 +26,7 @@ class PWACache(models.Model):
 #  - DEFAULT_SERVER_DATETIME_FORMAT, DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_TIME_FORMAT: Odoo date format
 #
 # To return an params, assign: params = [...]\n\n\n\n"""
-    DEFAULT_JS_CODE = """// Formula must be return an 'onhcange' object
+    DEFAULT_JS_CODE = """// Formula must be return an 'onchange' object
 // Here you can use the active record changes fields directly.
 // To return an onchange: return {"value": {"field_a": value_a}, "warning": {"title": "Ooops!", "message": "This is a warning message"}, "domain": {"field_a": []}}\n\n\n\n
 return {"value": {}}"""

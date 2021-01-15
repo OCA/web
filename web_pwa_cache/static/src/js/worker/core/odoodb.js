@@ -280,42 +280,55 @@ const OdooDatabase = OdooClass.extend(ParentedMixin, {
     search: function (
         model,
         domain,
-        limit = -1,
-        offset = 0,
-        orderby = undefined
+        limit,
+        offset,
+        orderby
     ) {
         return new Promise(async (resolve, reject) => {
             try {
-                const model_info = this.getModelInfo(model);
                 let records = await this._db.getRecords("webclient", "records", "model", model);
                 if (_.isEmpty(records)) {
                     return reject();
                 }
                 records = this.query(records, domain);
-                const records_count = records.length;
-                let orders = (orderby || model_info.orderby || "id").split(",");
-                orders.reverse();
-                for (const order of orders) {
-                    const order_parts = order.trim().split(" ");
-                    if (order_parts.length === 1) {
-                        order_parts.push("desc");
-                    }
-                    records = _.sortBy(records, order_parts[0].trim());
-                    if (order_parts[1].trim().toLowerCase() === "desc") {
-                        records.reverse();
-                    }
-                }
-                if (limit !== -1) {
-                    records = records.slice(
-                        offset,
-                        offset + limit
-                    );
-                }
-                return resolve([records, records_count]);
+                const model_info = await this.getModelInfo(model);
+                records = this.applyTransform(records, model_info, limit, offset, orderby);
+                return resolve([records, records.length]);
             } catch (err) {
                 return reject(err);
             }
         });
+    },
+
+    /**
+     * @param {Arrya[Object]} records
+     * @param {Oject} model_info
+     * @param {Number} limit
+     * @param {Number} offset
+     * @param {String} orderby (Example: "name DESC, city, sequence ASC")
+     * @return {Array[Object]}
+     */
+    applyTransform: function (records, model_info, limit = -1, offset = 0, orderby = undefined) {
+        let orders = (orderby || model_info.orderby || "id").split(",");
+        orders.reverse();
+        let n_records = records;
+        for (const order of orders) {
+            const order_parts = order.trim().split(" ");
+            if (order_parts.length === 1) {
+                order_parts.push("desc");
+            }
+            n_records = _.sortBy(n_records, order_parts[0].trim());
+            if (order_parts[1].trim().toLowerCase() === "desc") {
+                n_records.reverse();
+            }
+        }
+        if (limit !== -1) {
+            n_records = n_records.slice(
+                offset,
+                offset + limit
+            );
+        }
+        return n_records;
     },
 
     /**

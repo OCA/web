@@ -630,13 +630,23 @@ const ComponentExporter = SWComponent.extend({
             let records = false,
                 records_count = 0;
             try {
-                [records, records_count] = await this._odoodb.search(
-                    pmodel,
-                    pdomain,
-                    plimit,
-                    poffset,
-                    psort
-                );
+                // Reduce search performance using 'browse' if the domain only contains ids
+                if (pdomain.length === 1 && pdomain[0][0] === "id") {
+                    records = await this._odoodb.browse(
+                        pmodel,
+                        pdomain[0][2]
+                    );
+                    const model_info = await this._odoodb.getModelInfo(model);
+                    records = this._odoodb.applyTransform(records, model_info, plimit, poffset, psort);
+                } else {
+                    [records, records_count] = await this._odoodb.search(
+                        pmodel,
+                        pdomain,
+                        plimit,
+                        poffset,
+                        psort
+                    );
+                }
             } catch (err) {
                 const is_offline_mode = await this.isOfflineMode();
                 // If not offline we need try from odoo server

@@ -31,6 +31,7 @@ PWA.include({
      * @param {BroadcastChannelEvent} evt
      */
     _onReceiveClientMessage: function (evt) {
+        return; // FIXME: Bypass client messages
         if (!evt.isTrusted) {
             return;
         }

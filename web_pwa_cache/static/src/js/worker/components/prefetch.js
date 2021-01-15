@@ -320,9 +320,7 @@
                     }
                 );
                 let response_data = await response.json();
-                model_infos = response_data.result;
-                console.log("---- MODEL INFO");
-                console.log(model_infos);
+                model_infos = response_data.result || [];
                 const tasks = [];
                 for (const model_info of model_infos) {
                     tasks.push(this.saveModelInfo(model_info));
