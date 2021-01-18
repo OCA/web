@@ -4,3 +4,7 @@
         overflow: auto;
     }
 }
+
+.disable-pull-refresh {
+    overscroll-behavior: none;
+}

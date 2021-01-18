@@ -1,6 +1,6 @@
 // Copyright 2020 Tecnativa - Alexandre Díaz
 // License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-odoo.define('web_pwa_json.FormPWAController', function (require) {
+odoo.define('web_pwa_cache.FormPWAController', function (require) {
     "use strict";
 
     var core = require("web.core");

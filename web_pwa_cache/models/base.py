@@ -13,24 +13,26 @@ class BaseModel(models.BaseModel):
             return super()._fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu)
         try:
             res = super()._fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu)
+            # formPWA are only for standalone mode
+            res["standalone"] = True
         except UserError:
             res = super()._fields_view_get(view_id=view_id, view_type='form', toolbar=toolbar, submenu=submenu)
         return res
 
     @api.model
     def load_views(self, views, options=None):
-        standalone = options.get('standalone')
+        standalone = options.get('standalone') if options else False
         n_views = views
         if standalone:
-            n_views = []
-            for view in views:
-                if view[1] == 'form':
-                    n_views.append([False, 'formPWA'])
-                else:
-                    n_views.append(view)
+            # formPWA is always for generic view
+            n_views.append([False, 'formPWA'])
         res = super().load_views(n_views, options)
-        if 'formPWA' in res['fields_views']:
-             res['fields_views']['form'] = res['fields_views']['formPWA']
+        if standalone and 'formPWA' in res['fields_views']:
+            # We found a formPWA, overwrite 'form' with this view.
+            # Need do this because we don't modify any action and
+            # the client expects to obtain a form.
+            # Don't remove 'formPWA' because can be used by "dialog forms"
+            res['fields_views']['form'] = res['fields_views']['formPWA']
         return res
 
     # @api.model
