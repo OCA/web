@@ -7,7 +7,7 @@ odoo.define('web_pwa_cache.FormPWAController', function (require) {
     var Sidebar = require('web.Sidebar');
     var FormController = require('web.FormController');
 
-    _t = core._t;
+    var _t = core._t;
 
 
     var FormPWAController = FormController.extend({
@@ -61,8 +61,8 @@ odoo.define('web_pwa_cache.FormPWAController', function (require) {
             }
         },
         update: function (params, options) {
-            params = _.extend({viewType: 'formPWA', mode: this.mode}, params);
-            return this._super(params, options);
+            var sparams = _.extend({viewType: 'formPWA', mode: this.mode}, params);
+            return this._super(sparams, options);
         },
     });
 

@@ -65,7 +65,7 @@ odoo.define("web_pwa_cache.ActionManager", function (require) {
 
                     $(".o_web_client").toggleClass("disable-pull-refresh", firstView.fieldsView.standalone || false);
                 }
-            })
+            });
         },
     });
 });

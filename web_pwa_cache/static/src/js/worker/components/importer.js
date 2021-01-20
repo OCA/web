@@ -1,259 +1,302 @@
-"use strict";
-/* eslint strict: ["error", "global"] */
-/* eslint-disable no-undef, no-implicit-globals, no-unused-vars */
 /* Copyright 2020 Tecnativa - Alexandre D. Díaz
  * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
 
-/**
- * This class is used to store Odoo replies
- * The name of the functions match with the name of the python implementation.
- */
-const ComponentImporter = SWComponent.extend({
+odoo.define("web_pwa_cache.PWA.components.Importer", function (require) {
+    "use strict";
+
+    const SWComponent = require('web_pwa_cache.PWA.components.SWComponent');
 
     /**
-     * Used to know if the records need be stored in a independent store.
-     * This is used to improve search performance using specific indexes.
+     * This class is used to store Odoo replies
+     * The name of the functions match with the name of the python implementation.
      */
-    _search_read_independent_model_infos: {
-        'ir.model.data': "model_data",
-    },
+    const ComponentImporter = SWComponent.extend({
 
-    /**
-     * @override
-     */
-    init: function () {
-        this._super.apply(this, arguments);
-        this.options = {
-            allow_create: false,
-        }
-    },
-
-    /**
-     * Helper to check if can create new records
-     *
-     * @param {String} store
-     * @param {String} index
-     * @param {IDBKeyRange} range
-     * @param {Object} values
-     */
-    _doCheckCreateOrUpdate: function (store, index, range, values) {
-        return new Promise(async (resolve, reject) => {
-            if (this.options.allow_create) {
-                try {
-                    await this._db.createOrUpdateRecord(
-                        "webclient",
-                        store,
-                        index,
-                        range,
-                        values);
-                } catch (err) {
-                    // Must create or update... if can't something goes wrong!
-                    return reject(err);
-                }
-            } else {
-                try {
-                    await this._db.updateRecords(
-                        "webclient",
-                        store,
-                        index,
-                        range,
-                        values);
-                } catch (err) {
-                    // Update can get an error because the record doesn't exists...
-                    // do nothing
-                }
+        /**
+         * @override
+         */
+        init: function () {
+            this._super.apply(this, arguments);
+            this.options = {
+                allow_create: false,
             }
-            return resolve();
-        });
-    },
+        },
 
-    /**
-     * @param {String} model
-     * @param {Object} data
-     * @returns {Promise}
-     */
-    name_search: function (model, data) {
-        const records = _.map(data, (record) => {
-            return {id: record[0], display_name: record[1]};
-        });
-        const tasks = [];
-        for (const record of records) {
-            tasks.push(this._odoodb.write(model, [record.id], record));
-        }
-        return Promise.all(tasks);
-    },
-
-    /**
-     * @param {String} model
-     * @param {Object} data
-     * @returns {Promise}
-     */
-    name_get: function (model, data) {
-        return this.name_search(model, data);
-    },
-
-    /**
-     * @param {String} model
-     * @param {Object} data
-     * @returns {Promise}
-     */
-    load_views: function (model, data) {
-        const fields_views = data.fields_views;
-        const tasks = [];
-        for (const fields_view of fields_views) {
-            tasks.push(this._doCheckCreateOrUpdate("views", false, [fields_view.model, fields_view.view_id, fields_view.type], fields_view));
-        }
-        return Promise.all(tasks);
-    },
-
-    /**
-     * @param {String} model
-     * @param {Object} data
-     * @returns {Promise}
-     */
-    default_get: function (model, data) {
-        return this._odoodb.updateModelInfo(model, {defaults: data});
-    },
-
-    /**
-     * @param {String} model
-     * @param {Object} data
-     * @returns {Promise}
-     */
-    load_menus: function (model, data) {
-        const values = {
-            param: "menus",
-            value: data,
-        };
-        return this._doCheckCreateOrUpdate("userdata", false, "menus", values);
-    },
-
-    /**
-     * @param {String} model
-     * @param {Object} data
-     * @returns {Promise}
-     */
-    read: function (model, data) {
-        return this._odoodb.write(model, [data.id], data);
-    },
-
-    /**
-     * @param {String} model
-     * @param {Object} data
-     * @param {Object} request_params
-     * @returns {Promise}
-     */
-    read_template: function (model, data, request_params) {
-        const xml_ref = request_params.args[0];
-        const values = {
-            xml_ref: xml_ref,
-            template: data,
-        };
-        return this._doCheckCreateOrUpdate("template", false, xml_ref, values);
-    },
-
-    /**
-     * @param {String} model
-     * @param {Object} data
-     * @param {Object} request_params
-     * @returns {Promise}
-     */
-    get_filters: function (model, data, request_params) {
-        var fmodel = request_params.args[0];
-        return this._odoodb.writeOrCreate(fmodel, data, this.options.allow_create);
-    },
-
-    /**
-     * @param {String} model
-     * @param {Object} data
-     * @param {String} domain
-     */
-    search_read: function (model, data, domain) {
-        if (!data) {
-            return Promise.resolve();
-        }
-        const records = ("records" in data)?data.records:data;
-        // Some models uses an independent store to improve the performance using custom indexes.
-        const independent_model_store = this._search_read_independent_model_infos[model];
-        if (independent_model_store) {
+        /**
+         * Helper to check if can create new records
+         *
+         * @param {String} store
+         * @param {String} index
+         * @param {IDBKeyRange} range
+         * @param {Object} values
+         */
+        _doCheckCreateOrUpdate: function (model_info, values, conflicts) {
             return new Promise(async (resolve, reject) => {
-                try {
-                    const tasks = [];
-                    for (const record of records) {
-                        tasks.push(this._db.createOrUpdateRecord("webclient", independent_model_store, false, record.id, record));
+                if (this.options.allow_create) {
+                    try {
+                        await this._dbmanager.createOrUpdateRecord(model_info, values, conflicts);
+                    } catch (err) {
+                        // Must create or update... if can't something goes wrong!
+                        return reject(err);
                     }
+                } else {
+                    try {
+                        const domain = [];
+                        for (let field of conflicts) {
+                            domain.push([field, "=", values[field]]);
+                        }
+                        const rc_ids = await this._odoodb.search(model_info, domain)
+                        await this._odoodb.write(model_info, rc_ids, values);
+                    } catch (err) {
+                        // Update can get an error because the record doesn't exists...
+                        // do nothing
+                    }
+                }
+                return resolve();
+            });
+        },
+
+        /**
+         * @param {String} model
+         * @param {Object} data
+         * @returns {Promise}
+         */
+        name_search: function (model, data) {
+            const records = _.map(data, (record) => {
+                return {id: record[0], display_name: record[1]};
+            });
+            const tasks = [];
+            for (const record of records) {
+                tasks.push(this._odoodb.write(model, [record.id], record));
+            }
+            return Promise.all(tasks);
+        },
+
+        /**
+         * @param {String} model
+         * @param {Object} data
+         * @returns {Promise}
+         */
+        name_get: function (model, data) {
+            return this.name_search(model, data);
+        },
+
+        /**
+         * @param {String} model
+         * @param {Object} data
+         * @returns {Promise}
+         */
+        load_views: function (model, data) {
+            return new Promise(async (resolve, reject) => {
+                const fields_views = data.fields_views;
+                const tasks = [];
+                for (const fields_view of fields_views) {
+                    tasks.push(this._doCheckCreateOrUpdate(model_info_views, fields_view, ["model", "view_id", "type"]));
+                }
+
+                try {
                     await Promise.all(tasks);
-                } catch(err) {
+                } catch (err) {
                     return reject(err);
                 }
                 return resolve();
             });
-        }
-        return this._odoodb.writeOrCreate(model, records, this.options.allow_create);
-    },
+        },
 
-    /**
-     * @param {Object} data
-     * @returns {Promise}
-     */
-    action_load: function (data) {
-        return this._doCheckCreateOrUpdate("actions", false, data.id, data);
-    },
+        /**
+         * @param {String} model
+         * @param {Object} data
+         * @returns {Promise}
+         */
+        default_get: function (model, data) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const model_info_metadata = await this._dbmanager.getModelInfo("model_metadata", true);
+                    const rc_ids = await this.search(model_info_metadata, [["model", "=", model]]);
+                    await this._dbmanager.updateModelInfo(rc_ids, {defaults: data});
+                } catch (err) {
+                    return reject(err);
+                }
 
-    /**
-     * @param {Object} data
-     * @returns {Promise}
-     */
-    translations: function (data) {
-        const values = {
-            param: "translations",
-            value: data,
-        };
-        return this._doCheckCreateOrUpdate("userdata", false, "translations", values);
-    },
+                return resolve();
+            });
+        },
 
-    /**
-     * Generic handle for post caching response
-     *
-     * @private
-     * @param {String} pathname
-     * @param {Object} params
-     */
-    _generic_post: function (pathname, params, result) {
-        const sparams = JSON.stringify(params);
-        const values = {
-            pathname: pathname,
-            params: sparams,
-            result: result,
-        };
-        return this._doCheckCreateOrUpdate("post", false, [pathname, sparams], values);
-    },
+        /**
+         * @param {String} model
+         * @param {Object} data
+         * @returns {Promise}
+         */
+        load_menus: function (model, data) {
+            return new Promise(async (resolve, reject) => {
+                const values = {
+                    param: "menus",
+                    value: data,
+                };
+                try {
+                    const model_info_userdata = await this._dbmanager.getModelInfo("userdata", true);
+                    await this._doCheckCreateOrUpdate(model_info_userdata, values, ["param"]);
+                } catch (err) {
+                    return reject(err);
+                }
 
-    /**
-     * Generic handle for function calls caching response
-     *
-     * @private
-     * @param {String} pathname
-     * @param {Object} params
-     */
-    _generic_function: function (model, method, result, request_params) {
-        const sparams = JSON.stringify(request_params.args);
-        const values = {
-            model: model,
-            method: method,
-            params: sparams,
-            return: result,
-        };
-        return this._doCheckCreateOrUpdate("function", false, [model, method, sparams], values);
-    },
+                return resolve();
+            });
+        },
 
-    /** HELPERS **/
+        /**
+         * @param {String} model
+         * @param {Object} data
+         * @returns {Promise}
+         */
+        read: function (model, data) {
+            return this._odoodb.write(model, [data.id], data);
+        },
 
-    /**
-     * @param {Object} defaults
-     * @returns {Promise}
-     */
-    saveModelInfo: function (model_info) {
-        return this._db.createOrUpdateRecord("webclient", "model", false, model_info.model, _.omit(model_info, ["count", "domain", "excluded_fields"]));
-    },
+        /**
+         * @param {String} model
+         * @param {Object} data
+         * @param {Object} request_params
+         * @returns {Promise}
+         */
+        read_template: function (model, data, request_params) {
+            return new Promise(async (resolve, reject) => {
+                const xml_ref = request_params.args[0];
+                const values = {
+                    xml_ref: xml_ref,
+                    template: data,
+                };
+
+                try {
+                    const model_info_template = await this._dbmanager.getModelInfo("template", true);
+                    await this._doCheckCreateOrUpdate(model_info_template, values, ["xml_ref"]);
+                } catch (err) {
+                    return reject(err);
+                }
+
+                return resolve();
+            });
+        },
+
+        /**
+         * @param {String} model
+         * @param {Object} data
+         * @param {Object} request_params
+         * @returns {Promise}
+         */
+        get_filters: function (model, data, request_params) {
+            var fmodel = request_params.args[0];
+            return this._odoodb.writeOrCreate(fmodel, data, this.options.allow_create);
+        },
+
+        /**
+         * @param {String} model
+         * @param {Object} data
+         * @param {String} domain
+         */
+        search_read: function (model, data, domain) {
+            if (!data) {
+                return Promise.resolve();
+            }
+            const records = ("records" in data)?data.records:data;
+            console.log("-------------- PASA SEARCH READ");
+            return this._odoodb.writeOrCreate(model, records, this.options.allow_create);
+        },
+
+        /**
+         * @param {Object} data
+         * @returns {Promise}
+         */
+        action_load: function (data) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const model_info_actions = await this._dbmanager.getModelInfo("actions", true);
+                    await this._doCheckCreateOrUpdate(model_info_actions, data, ["id"]);
+                } catch (err) {
+                    return reject(err);
+                }
+
+                return resolve();
+            });
+        },
+
+        /**
+         * @param {Object} data
+         * @returns {Promise}
+         */
+        translations: function (data) {
+            return new Promise(async (resolve, reject) => {
+                const values = {
+                    param: "translations",
+                    value: data,
+                };
+
+                try {
+                    const model_info_userdata = await this._dbmanager.getModelInfo("userdata", true);
+                    await this._doCheckCreateOrUpdate(model_info_userdata, values, ["param"]);
+                } catch (err) {
+                    return reject(err);
+                }
+
+                return resolve();
+            });
+        },
+
+        /**
+         * Generic handle for post caching response
+         *
+         * @private
+         * @param {String} pathname
+         * @param {Object} params
+         */
+        _generic_post: function (pathname, params, result) {
+            return new Promise(async (resolve, reject) => {
+                const values = {
+                    pathname: pathname,
+                    params: params,
+                    result: result,
+                };
+
+                try {
+                    const model_info = await this._dbmanager.getModelInfo("post", true);
+                    await this._doCheckCreateOrUpdate(model_info, values, ["pathname","params"]);
+                } catch (err) {
+                    return reject(err);
+                }
+
+                return resolve();
+            });
+        },
+
+        /**
+         * Generic handle for function calls caching response
+         *
+         * @private
+         * @param {String} pathname
+         * @param {Object} params
+         * @return {Promise}
+         */
+        _generic_function: function (model, method, result, request_params) {
+            return new Promise (async (resolve, reject) => {
+                const values = {
+                    model: model,
+                    method: method,
+                    params: request_params.args,
+                    return: result,
+                };
+
+                try {
+                    const model_info_function = await this._dbmanager.getModelInfo("function", true);
+                    await this._doCheckCreateOrUpdate(model_info_function, values, ["model", "method", "params"]);
+                } catch (err) {
+                    return reject();
+                }
+
+                return resolve();
+            });
+        },
+    });
+
+    return ComponentImporter;
+
 });

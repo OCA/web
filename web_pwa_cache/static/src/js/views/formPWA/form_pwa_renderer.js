@@ -18,9 +18,8 @@ odoo.define('web_pwa_cache.FormPWARenderer', function (require) {
                 this.$el.addClass("o_form_pwa_view");
             }
             return res;
-        }
+        },
     });
-
 
     var FormPWARenderer = FormRenderer.extend({
         className: "o_form_view o_form_pwa_view",

@@ -1,43 +1,52 @@
-"use strict";
-/* eslint strict: ["error", "global"] */
-/* eslint-disable no-undef, no-implicit-globals, no-unused-vars */
 /* Copyright 2020 Tecnativa - Alexandre D. Díaz
  * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
 
+odoo.define("web_pwa_cache.PWA.components.SWComponent", function (require) {
+    "use strict";
 
-const SWComponent = OdooClass.extend(ParentedMixin, {
+    const ParentedMixin = require('web.mixins').ParentedMixin;
+    const OdooClass = require("web.Class");
 
-    /**
-     * @param {OdooClass} parent
-     */
-    init: function (parent) {
-        ParentedMixin.init.call(this);
-        this.setParent(parent);
-    },
 
-    /**
-     * @override
-     */
-    setParent: function (parent) {
-        ParentedMixin.setParent.call(this, parent);
-        this._odoodb = parent._odoodb;
-        this._db = parent._db;
-        this._cache = parent._cache;
-        this._rpc = parent._rpc;
-    },
+    const SWComponent = OdooClass.extend(ParentedMixin, {
 
-    /**
-     * @returns {Promise}
-     */
-    start: function () {
-        return Promise.resolve();
-    },
+        /**
+         * @param {OdooClass} parent
+         */
+        init: function (parent) {
+            ParentedMixin.init.call(this);
+            this.setParent(parent);
+        },
 
-    /**
-     * Wrapper
-     * @returns {Promise}
-     */
-    isOfflineMode: function () {
-        return this.getParent().config.isOfflineMode();
-    },
-});
+        /**
+         * @override
+         */
+        setParent: function (parent) {
+            ParentedMixin.setParent.call(this, parent);
+            this._odoodb = this.getParent()._odoodb;
+            this._db = this.getParent()._db;
+            this._dbmanager = this.getParent()._dbmanager;
+            this._itp = this.getParent()._dbmanager._internal_table_prefix;
+            this._cache = this.getParent()._cachemanager;
+            this._rpc = this.getParent()._rpc;
+        },
+
+        /**
+         * @returns {Promise}
+         */
+        start: function () {
+            return Promise.resolve();
+        },
+
+        /**
+         * Wrapper
+         * @returns {Promise}
+         */
+        isOfflineMode: function () {
+            return this.getParent().config.isOfflineMode();
+        },
+    });
+
+    return SWComponent;
+
+ });

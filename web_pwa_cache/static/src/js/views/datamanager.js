@@ -12,6 +12,6 @@ odoo.define("web_pwa_cache.DataManager", function (require) {
         load_views: function (params, options) {
             options.standalone = WebClientObj.pwa_manager.isPWAStandalone();
             return this._super(params, options);
-        }
+        },
     });
 });

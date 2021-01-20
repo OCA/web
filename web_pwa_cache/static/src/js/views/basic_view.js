@@ -12,7 +12,7 @@ odoo.define("web_pwa_cache.BasicView", function (require) {
         _processField: function (viewType, field, attrs) {
             if (WebClientObj.pwa_manager.isPWAStandalone() && attrs.mode) {
                 var modes = attrs.mode.split(",");
-                if (modes[0] == "tree" && modes.indexOf("kanban") !== -1) {
+                if (modes[0] === "tree" && modes.indexOf("kanban") !== -1) {
                     attrs.mode = "kanban";
                 }
             }

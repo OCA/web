@@ -9,16 +9,17 @@ odoo.define("web_pwa_cache.PWAModeSelector", function (require) {
     var _t = core._t;
 
     var PWAModeSelector = Widget.extend({
+
         /**
          * @override
          */
-        init: function(options) {
+        init: function (options) {
             this._super.apply(this, arguments);
             this.options = options;
             this.shown = false;
         },
 
-        show: function() {
+        show: function () {
             var self = this;
             var $content = $(QWeb.render("web_pwa_cache.PWAModeSelector"));
             this.dialog = new Dialog(this, {

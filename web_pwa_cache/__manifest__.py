@@ -16,7 +16,6 @@
     'data': [
         'security/ir.model.access.csv',
         'templates/assets.xml',
-        'templates/service_worker.xml',
         'views/pwa_cache_views.xml',
         'views/res_partner_views.xml',
         'data/data.xml',
