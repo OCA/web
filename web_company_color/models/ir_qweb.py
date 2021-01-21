@@ -63,7 +63,7 @@ class QWeb(models.AbstractModel):
     _inherit = "ir.qweb"
 
     @api.model
-    def render(self, id_or_xml_id, values=None, **options):
+    def _render(self, id_or_xml_id, values=None, **options):
         """ Adds the active company to the context """
         try:
             active_company_id = int(
@@ -76,7 +76,7 @@ class QWeb(models.AbstractModel):
             or self.env.user.company_id
         )
         self = self.with_context(active_company_id=company_id.id)
-        return super().render(id_or_xml_id, values=values, **options)
+        return super()._render(id_or_xml_id, values=values, **options)
 
     def _get_asset_content(self, xmlid, options):
         """ Handle 'special' web_company_color xmlid """
