@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="web_layout_pwa" name="Web layout PWA" inherit_id="web.layout">
-        <xpath expr="//meta[@name='viewport']" position="after">
+    <template id="web_layout_pwa" name="Web layout PWA" inherit_id="web.webclient_bootstrap">
+        <xpath expr="//t[@t-call-assets='web.assets_common']" position="before">
             <!-- Add link rel manifest -->
             <link rel="manifest" t-attf-href="/web_pwa_oca/manifest.webmanifest"/>
             <!-- Add iOS meta tags and icons -->
