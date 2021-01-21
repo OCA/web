@@ -3,3 +3,4 @@
 * `Druidoo <https://www.druidoo.io>`_:
 
   * Iván Todorovich
+* Shivam Soni <s.soni.serpentcs@gmail.com>
