@@ -19,9 +19,15 @@
         width: unset !important;
     }
 
-    #product_picker_total > h2 {
-        margin: 0;
-        padding: 0.5rem;
+    #product_picker_total {
+        position: sticky;
+        bottom: 0;
+        background-color: $secondary;
+
+        > h2 {
+            margin: 0;
+            padding: 0.5rem;
+        }
     }
 
     .o_cp_buttons {
@@ -39,7 +45,6 @@
     }
 
     .oe_one2many_product_picker_view {
-        max-height: $one2many-product-picker-max-height;
         overflow: auto;
 
         > .row {
