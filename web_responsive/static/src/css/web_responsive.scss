@@ -69,6 +69,7 @@ $chatter_zone_width: 35%;
         .o_menu_sections.show {
             @include full-screen-dropdown();
             background-color: $dropdown-bg;
+            overflow: auto;
 
             .show {
                 display: flex;
