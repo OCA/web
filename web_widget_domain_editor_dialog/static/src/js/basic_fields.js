@@ -16,6 +16,9 @@ odoo.define("web_widget_domain_editor_dialog.basic_fields", function(require) {
             if (this.mode === "readonly") {
                 return this._super.apply(this, arguments);
             }
+            if (!this.value) {
+                this.value = [];
+            }
             const dialog = new DomainEditorDialog(this, {
                 title: _t("Select records..."),
                 res_model: this._domainModel,
