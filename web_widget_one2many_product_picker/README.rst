@@ -80,6 +80,11 @@ Widget options:
 * edit_price > Enable/Disable price edits (True by default)
 * show_discount > Enable/Disable display discount (False by default)
 * show_subtotal > Enable/Disable show subtotal (True by default)
+* auto_save > Enable/Disable auto save (False by default)
+
+  If using auto save feature, you should keep in mind that the "Save" and "Discard" buttons
+  will lose part of its functionality as the document will be saved every time you
+  modify/create a record with the widget.
 
 All widget options are optional.
 Notice that you can call '_' method to use translations. This only can be used with this widget.

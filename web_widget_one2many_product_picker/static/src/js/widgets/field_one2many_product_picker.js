@@ -437,6 +437,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                     price_unit: "price_unit",
                     discount: "discount",
                 },
+                auto_save: false,
             };
         },
 
@@ -581,6 +582,9 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
         _onCreateQuickRecord: function (evt) {
             this.parent_controller.model.setPureVirtual(evt.data.id, false);
             this._setValue({operation: "ADD", id: evt.data.id});
+            if (this.options.auto_save) {
+                this.parent_controller.saveRecord(undefined, {stayInEdit: true});
+            }
         },
 
         /**
@@ -591,6 +595,9 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
          */
         _onUpdateQuickRecord: function (evt) {
             this._setValue({operation: "UPDATE", id: evt.data.id, data: evt.data.data});
+            if (this.options.auto_save) {
+                this.parent_controller.saveRecord(undefined, {stayInEdit: true});
+            }
         },
 
         /**
