@@ -13,7 +13,7 @@
         <field name="inherit_id" ref="base.view_users_form_simple_modif" />
         <field name="arch" type="xml">
             <field name="company_id" position="after">
-                <field name="favorite_company_ids" widget="many2many_tags"/>
+                <field name="favorite_company_ids" widget="many2many_tags" readonly="0"/>
             </field>
         </field>
     </record>
