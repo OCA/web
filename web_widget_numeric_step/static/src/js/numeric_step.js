@@ -5,11 +5,11 @@
 odoo.define("web_widget_numeric_step.field", function(require) {
     "use strict";
 
-    var field_utils = require("web.field_utils");
-    var Registry = require("web.field_registry");
-    var FieldFloat = require("web.basic_fields").FieldFloat;
+    const field_utils = require("web.field_utils");
+    const Registry = require("web.field_registry");
+    const FieldFloat = require("web.basic_fields").FieldFloat;
 
-    var NumericStep = FieldFloat.extend({
+    const NumericStep = FieldFloat.extend({
         template: "web_widget_numeric_step",
         className: "o_field_numeric_step o_field_number",
         events: _.extend({}, _.omit(FieldFloat.prototype.events, ["change", "input"]), {
@@ -38,8 +38,8 @@ odoo.define("web_widget_numeric_step.field", function(require) {
             this._super.apply(this, arguments);
 
             // Widget config
-            var max_val = this.nodeOptions.max;
-            var min_val = this.nodeOptions.min;
+            let max_val = this.nodeOptions.max;
+            let min_val = this.nodeOptions.min;
             if (
                 !_.isUndefined(min_val) &&
                 !_.isUndefined(max_val) &&
@@ -55,10 +55,10 @@ odoo.define("web_widget_numeric_step.field", function(require) {
                 max: Number(max_val),
             };
 
-            var self = this;
-            this._lazyOnChangeTrigger = _.debounce(function() {
-                self.$input.trigger("change");
-            }, this.DELAY_THROTTLE_CHANGE);
+            this._lazyOnChangeTrigger = _.debounce(
+                () => this.$input.trigger("change"),
+                this.DELAY_THROTTLE_CHANGE
+            );
             this._auto_step_interval = false;
         },
 
@@ -68,18 +68,13 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          * @override
          */
         start: function() {
-            var self = this;
             this._click_delay = this.DEF_CLICK_DELAY;
             this._autoStep = false;
-            return this._super.apply(this, arguments).then(function() {
-                document.addEventListener(
-                    "mouseup",
-                    $.proxy(self, "_onMouseUp"),
-                    false
-                );
+            return this._super.apply(this, arguments).then(() => {
+                document.addEventListener("mouseup", this._onMouseUp.bind(this), false);
                 document.addEventListener(
                     "touchend",
-                    $.proxy(self, "_onMouseUp"),
+                    this._onMouseUp.bind(this),
                     false
                 );
             });
@@ -103,7 +98,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          * @override
          */
         _parseValue: function() {
-            var parsedVal = this._super.apply(this, arguments);
+            const parsedVal = this._super.apply(this, arguments);
             if (this.mode === "edit") {
                 return Number(parsedVal) || 0;
             }
@@ -116,7 +111,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          * @override
          */
         _prepareInput: function() {
-            var result = this._super.apply(this, arguments);
+            const result = this._super.apply(this, arguments);
             this.$input.attr(_.pick(this.nodeOptions, ["placeholder"]));
             // InputField hard set the input type to 'text' or 'password',
             // we force it again to be 'tel'.
@@ -136,12 +131,10 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          * @override
          */
         _renderEdit: function() {
-            _.defer(
-                function() {
-                    this.$el
-                        .parents("td.o_numeric_step_cell")
-                        .addClass("numeric_step_editing_cell");
-                }.bind(this)
+            _.defer(() =>
+                this.$el
+                    .parents("td.o_numeric_step_cell")
+                    .addClass("numeric_step_editing_cell")
             );
             this._prepareInput(this.$el.find("input.input_numeric_step"));
         },
@@ -164,11 +157,11 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          * @param {String} mode can be "plus" or "minus"
          */
         _doStep: function(mode) {
-            var cval = 0;
+            let cval = 0;
             try {
-                var field = this.record.fields[this.name];
+                const field = this.record.fields[this.name];
                 cval = field_utils.parse[field.type](this.$input.val());
-            } catch {
+            } catch (e) {
                 cval = this.value;
                 mode = false; // Only set the value in this case
             }
@@ -177,7 +170,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
             } else if (mode === "minus") {
                 cval -= this._config.step;
             }
-            var nval = this._sanitizeNumberValue(cval);
+            const nval = this._sanitizeNumberValue(cval);
             if (nval !== this.lastSetValue || !mode) {
                 this.$input.val(nval);
                 // Every time that user update the value we must trigger an
@@ -203,7 +196,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          */
         _onStepClick: function(ev) {
             if (!this._autoStep) {
-                var mode = ev.target.dataset.mode;
+                const mode = ev.target.dataset.mode;
                 this._doStep(mode);
             }
             this._autoStep = false;
@@ -216,7 +209,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
         _onStepMouseDown: function(ev) {
             if (ev.button === 0 && !this._auto_step_interval) {
                 this._auto_step_interval = setTimeout(
-                    $.proxy(this, "_whileMouseDown", ev),
+                    this._whileMouseDown.bind(this, ev),
                     this._click_delay
                 );
             }
@@ -226,7 +219,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          * @private
          * @param {FocusoutEvent} ev
          */
-        _onFocusOut: function(evt) {
+        _onFocusOut: function() {
             if (this._auto_step_interval) {
                 this._clearStepInterval();
             }
@@ -245,7 +238,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          */
         _whileMouseDown: function(ev) {
             this._autoStep = true;
-            var mode = ev.target.dataset.mode;
+            const mode = ev.target.dataset.mode;
             this._doStep(mode);
             if (this._click_delay > this.MIN_DELAY) {
                 this._click_delay -= this.SUBSTRACT_DELAY_STEP;
@@ -302,7 +295,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          * @returns {Number}
          */
         _sanitizeNumberValue: function(value) {
-            var cval = Number(value);
+            let cval = Number(value);
             if (_.isNaN(cval)) {
                 return value;
             }
@@ -312,14 +305,14 @@ odoo.define("web_widget_numeric_step.field", function(require) {
                 cval = this._config.max;
             }
 
-            var field = this.record.fields[this.name];
-            var formattedValue = field_utils.format[field.type](cval, field, {
+            const field = this.record.fields[this.name];
+            // Formatted value
+            return field_utils.format[field.type](cval, field, {
                 data: this.record.data,
                 escape: true,
                 isPassword: false,
                 digits: field.digits,
             });
-            return formattedValue;
         },
     });
 
