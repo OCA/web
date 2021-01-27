@@ -119,7 +119,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
          * @param {Array[Object]} states
          * @returns {Deferred}
          */
-        _removeRecords: function (states) {
+        _removeRecords: function (states, new_states) {
             var defs = [];
             var to_destroy = [];
             for (var index_state in states) {
@@ -145,6 +145,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                 var widget_product_id = widget_destroyed.state
                     .data[this.options.field_map.product].data.id;
                 var found = false;
+                // If already exists a widget for the product don't try create a new one
                 for (var eb = this.widgets.length-1; eb>=0; --eb) {
                     var widget = this.widgets[eb];
                     if (
@@ -156,9 +157,21 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                         break;
                     }
                 }
+
                 if (!found) {
+                    // Get the new state ID if exists to link it with the new record
+                    var new_state_id = undefined;
+                    for (var eb = new_states.length-1; eb>=0; --eb) {
+                        var state = new_states[eb];
+                        if (
+                            state.data[this.options.field_map.product].data.id === widget_product_id
+                        ) {
+                            new_state_id = state.id;
+                            break;
+                        }
+                    }
                     var search_record = _.find(this.search_data, {id: widget_product_id});
-                    var new_search_record = _.extend({}, search_record, {__id: state.id});
+                    var new_search_record = _.extend({}, search_record, {__id: new_state_id});
                     var search_record_index = widget_destroyed.$el.index();
                     defs.push(
                         this.appendSearchRecords(
@@ -202,8 +215,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                     states_to_destroy.push(old_state);
                 }
             }
-
-            this._removeRecords(states_to_destroy);
+            this._removeRecords(states_to_destroy, this.state.data);
 
             // Records to Update or Create
             var defs = [];
