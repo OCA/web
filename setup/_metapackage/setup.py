@@ -40,6 +40,7 @@ setuptools.setup(
         'odoo13-addon-web_widget_image_download',
         'odoo13-addon-web_widget_many2one_simple',
         'odoo13-addon-web_widget_mpld3_chart',
+        'odoo13-addon-web_widget_numeric_step',
         'odoo13-addon-web_widget_url_advanced',
         'odoo13-addon-web_widget_x2many_2d_matrix',
         'odoo13-addon-web_widget_x2many_2d_matrix_example',
