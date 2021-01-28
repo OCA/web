@@ -98,12 +98,13 @@ odoo.define("web_drop_target", function (require) {
             }).then(function () {
                 // Find the chatter among the children, there should be only
                 // one
-                var res = _.filter(self.getChildren(), "chatter");
-                if (res.length) {
-                    res[0].chatter._reloadAttachmentBox();
-                    res[0].chatter.trigger_up("reload");
-                    res[0].chatter.$(".o_chatter_button_attachment").click();
-                }
+                var chatterContainerComponent = self.getChildren()[1]
+                    ._chatterContainerComponent;
+                var chatter = chatterContainerComponent.__owl__.refs.component.chatter;
+                chatter.thread.refresh();
+                chatter.update({
+                    isAttachmentBoxVisible: !chatter.isAttachmentBoxVisible,
+                });
             });
         },
 

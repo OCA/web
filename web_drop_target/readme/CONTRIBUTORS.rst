@@ -3,3 +3,4 @@
 * Akim Juillerat <akim.juillerat@camptocamp.com>
 * Enric Tobella <etobella@creublanca.es>
 * Lois Rilo <lois.rilo@forgeflow.com>
+* Dhara Solanki <dhara.solanki@initos.com>

@@ -1,4 +1,5 @@
 # Copyright 2018 Therp BV <https://therp.nl>
+# Copyright 2020 InitOS Gmbh
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 {
     "name": "Drop target support",
