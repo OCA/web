@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-extend="web.datepicker">
+        <t t-jquery=".o_datepicker_input" t-operation="attributes">
+            <attribute name="autocomplete">off</attribute>
+        </t>
+    </t>
+</templates>
