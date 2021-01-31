@@ -7,7 +7,7 @@
 
 {
     "name": "Show images in tree views via tooltip",
-    "version": "12.0.1.0.0",
+    "version": "13.0.1.0.0",
     "author": "Therp BV, "
     "MONK Software, "
     "Odoo Community Association (OCA), "
@@ -15,7 +15,7 @@
     "website": "https://github.com/OCA/web",
     "license": "AGPL-3",
     "category": "Web",
-    "depends": ["web",],
-    "data": ["view/assets.xml",],
+    "depends": ["web"],
+    "data": ["view/assets.xml"],
     "installable": True,
 }
