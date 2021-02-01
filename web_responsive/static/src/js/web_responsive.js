@@ -15,6 +15,7 @@ odoo.define('web_responsive', function (require) {
     var RelationalFields = require('web.relational_fields');
     var Chatter = require('mail.Chatter');
     var DocumentViewer = require('mail.DocumentViewer');
+    var ListRenderer = require('web.ListRenderer');
 
 
     /* Hide AppDrawer in desktop and mobile modes.
@@ -542,6 +543,19 @@ odoo.define('web_responsive', function (require) {
         },
         _onClickMinimize: function () {
             this.$el.addClass('o_responsive_document_viewer');
+        },
+    });
+
+    // List Renderer: Big checkboxes
+    ListRenderer.include({
+
+        /**
+         * @override
+         */
+        _renderSelector: function () {
+            var $elm = this._super.apply(this, arguments);
+            $elm.find(".custom-control-label").html('');
+            return $elm;
         },
     });
 });
