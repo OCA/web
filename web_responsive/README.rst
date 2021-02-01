@@ -113,6 +113,10 @@ Features for computers:
 
   .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/document_viewer.gif
 
+* Bigger checkboxes in list view
+
+  .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/big_checkboxes.gif
+
 **Table of contents**
 
 .. contents::
