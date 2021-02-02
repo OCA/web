@@ -48,16 +48,10 @@ class Base(models.AbstractModel):
         if parent_name:
             fields.append(parent_name)
 
-        model_domain = expression.AND([
-            kwargs.get('search_domain', []),
-            kwargs.get('category_domain', []),
-            kwargs.get('filter_domain', []),
-        ])
-
         return {
             'parent_field': parent_name,
             'values': Comodel.with_context(
-                hierarchical_naming=False).search_read(model_domain, fields),
+                hierarchical_naming=False).search_read([], fields),
         }
 
     @api.model
