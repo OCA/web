@@ -9,6 +9,8 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
     var BasicRenderer = require("web.BasicRenderer");
     var One2ManyProductPickerRecord = require(
         "web_widget_one2many_product_picker.One2ManyProductPickerRecord");
+    var ProductPickerQuickCreateForm = require(
+        "web_widget_one2many_product_picker.ProductPickerQuickCreateForm");
 
     var qweb = core.qweb;
 
@@ -18,6 +20,9 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
 
         events: {
             'click #productPickerLoadMore': '_onClickLoadMore',
+        },
+        custom_events: {
+            'record_flip': '_onRecordFlip',
         },
 
         DELAY_GET_RECORDS: 150,
@@ -62,8 +67,9 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
          * @param {Object} widget
          */
         removeWidget: function (widget) {
-            this.widgets.splice(this.widgets.indexOf(widget), 1);
+            var index = this.widgets.indexOf(widget);
             widget.destroy();
+            delete this.widgets[index];
         },
 
         /**
@@ -128,7 +134,6 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                     }
                 }
             }
-            this.widgets = _.compact(this.widgets);
 
             if (this.search_group.name === "main_lines") {
                 _.invoke(to_destroy, "destroy");
@@ -145,6 +150,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                 for (var eb = this.widgets.length-1; eb>=0; --eb) {
                     var widget = this.widgets[eb];
                     if (
+                        widget &&
                         widget.state.data[this.options.field_map.product].data.id === widget_product_id
                     ) {
                         found = true;
@@ -230,7 +236,8 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                     // Remove "pure virtual" records that have the same product that the new record
                     if (
                         widget.is_virtual &&
-                        widget.state.data[this.options.field_map.product].data.id === state.data[this.options.field_map.product].data.id
+                        widget.state.data[this.options.field_map.product].data.id === state.data[this.options.field_map.product].data.id &&
+                        widget.state.data[this.options.compa].data.id === state.data[this.options.field_map.product].data.id
                     ) {
                         to_destroy.push(widget);
                         delete this.widgets[e];
@@ -243,7 +250,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                     defs.push(this.appendSearchRecords([new_search_record], false, true, search_record_index)[0]);
                 }
             }
-            this.widgets = _.compact(this.widgets);
+
             _.invoke(to_destroy, "destroy");
             return $.when(defs);
         },
@@ -360,10 +367,12 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                 no_process_records?search_records:this._processSearchRecords(search_records);
             _.each(processed_records, function (search_record) {
                 var state_data = self._getRecordDataById(search_record.__id);
+                var widget_options = self._getRecordOptions(search_record);
+                widget_options.renderer_widget_index = self.widgets.length;
                 var ProductPickerRecord = new One2ManyProductPickerRecord(
                     self,
                     state_data,
-                    self._getRecordOptions(search_record)
+                    widget_options
                 );
                 self.widgets.push(ProductPickerRecord);
 
@@ -380,12 +389,12 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                 // the search data. Using search data instead of waiting for
                 // simulated state gives a low FCP time.
                 var def = ProductPickerRecord.appendTo(self.$recordsContainer)
-                    .then(function () {
-                        if (typeof position !== "undefined") {
-                            var $elm = self.$el.find("> div > div:nth("+position+")");
-                            ProductPickerRecord.$el.insertAfter($elm);
+                    .then(function (widget, widget_position) {
+                        if (typeof widget_position !== "undefined") {
+                            var $elm = this.$el.find("> div > div:nth("+widget_position+")");
+                            widget.$el.insertAfter($elm);
                         }
-                    });
+                    }.bind(self, ProductPickerRecord, position));
                 if (def.state() === "pending") {
                     self.defs.push(def);
                 }
@@ -440,6 +449,53 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
             this.trigger_up("load_more");
             this._loadMoreWorking = true;
         },
+
+        /**
+         * Do card flip
+         *
+         * @param {Integer} index
+         */
+        doWidgetFlip: function (index) {
+            var widget = this.widgets[index];
+            var $actived_card = this.$el.find(".active");
+            if (widget.$card.hasClass("active")) {
+                widget.$card.removeClass("active");
+                widget.$card.find('.oe_flip_card_front').removeClass("d-none");
+            } else {
+                var self = widget;
+                widget.defs = [];
+                widget._processWidgetFields(widget.$back);
+                widget._processWidgets(widget.$back);
+                widget._processDynamicFields();
+                $.when(widget.defs).then(function () {
+                    $actived_card.removeClass("active");
+                    $actived_card.find('.oe_flip_card_front').removeClass("d-none");
+                    self.$card.addClass("active");
+                    setTimeout(function () {
+                        self.$('.oe_flip_card_front').addClass("d-none");
+                    }, 200);
+                });
+            }
+        },
+
+        /**
+         * Handle card flip.
+         * Used to create/update the record
+         *
+         * @param {CustomEvent} evt
+         */
+        _onRecordFlip: function (evt) {
+            var prev_widget_index = evt.data.prev_widget_index;
+            if (typeof prev_widget_index !== "undefined") {
+                // Only check 'back' widgets so there is where the form was created
+                for (var index in this.widgets[prev_widget_index].widgets.back) {
+                    var widget = this.widgets[prev_widget_index].widgets.back[index];
+                    if (widget instanceof ProductPickerQuickCreateForm) {
+                        widget.controller.auto();
+                    }
+                }
+            }
+        }
 
     });
 

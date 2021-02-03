@@ -38,7 +38,10 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             this.subWidgets = {};
             this._clickFlipCardCount = 0;
             this._setState(state, options.searchRecord);
-            this.widgets = [];
+            this.widgets = {
+                front: [],
+                back: [],
+            };
         },
 
         /**
@@ -74,6 +77,14 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
         /**
          * @override
          */
+        destroy: function () {
+            this.$card.off("")
+            this._super.apply(this, arguments);
+        },
+
+        /**
+         * @override
+         */
         update: function (record) {
 
             // Detach the widgets because the record will empty its $el, which
@@ -94,6 +105,12 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             if (state) {
                 this._setState(state);
             }
+            // Avoid recreate active record
+            if (this.$card.hasClass("active")) {
+                this._processDynamicFields();
+                return $.when();
+            }
+
             this.on_detach_callback();
             return this._render();
         },
@@ -238,10 +255,20 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                 });
         },
 
+        _detachAllWidgets: function () {
+            _.invoke(this.widgets.front, "on_detach_callback");
+            _.invoke(this.widgets.back, "on_detach_callback");
+            this.widgets = {
+                front: [],
+                back: [],
+            };
+        },
+
         /**
          * @override
          */
         _render: function () {
+            this._detachAllWidgets();
             this.defs = [];
             this._replaceElement(
                 qweb.render(
@@ -249,11 +276,12 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                     this._getQWebContext()
                 )
             );
+            this.$el.data("renderer_widget_index", this.options.renderer_widget_index);
             this.$card = this.$(".oe_flip_card");
             this.$front = this.$(".oe_flip_card_front");
             this.$back = this.$(".oe_flip_card_back");
             this._processWidgetFields(this.$front);
-            this._processWidgets(this.$front);
+            this._processWidgets(this.$front, 'front');
             this._processDynamicFields();
             return $.when.apply(this, this.defs);
         },
@@ -265,7 +293,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          * @private
          * @param {jQueryElement} $container
          */
-        _processWidgetFields: function ($container) {
+        _processWidgetFields: function ($container, widget_list) {
             var self = this;
             $container.find("field").each(function () {
                 var $field = $(this);
@@ -357,7 +385,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          * @private
          * @param {jQueryElement} $container
          */
-        _processWidgets: function ($container) {
+        _processWidgets: function ($container, widget_zone) {
             var self = this;
             $container.find("widget").each(function () {
                 var $field = $(this);
@@ -375,7 +403,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                     data: self.state && self.state.data,
                 });
 
-                self.widgets.push(widget);
+                self.widgets[widget_zone].push(widget);
 
                 var def = widget
                     ._widgetRenderAndInsert(function () {
@@ -534,21 +562,28 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             }
             if (this.$card.hasClass("active")) {
                 this.$card.removeClass("active");
-                this.$card.find('.oe_flip_card_front').removeClass("d-none");
+                this.$front.removeClass("d-none");
             } else {
                 var self = this;
                 this.defs = [];
-                this._processWidgetFields(this.$back);
-                this._processWidgets(this.$back);
+                if (!this.widgets.back.length) {
+                    this._processWidgetFields(this.$back);
+                    this._processWidgets(this.$back, 'back');
+                }
                 this._processDynamicFields();
                 $.when(this.defs).then(function () {
                     var $actived_card = self.$el.parent().find(".active");
                     $actived_card.removeClass("active");
                     $actived_card.find('.oe_flip_card_front').removeClass("d-none");
                     self.$card.addClass("active");
-                    setTimeout(function () {
-                        self.$('.oe_flip_card_front').addClass("d-none");
-                    }, 200);
+                    self.$card.on('transitionend', function () {
+                        self.$front.addClass("d-none");
+                        self.$card.off('transitionend');
+                    });
+                    self.trigger_up("record_flip", {
+                        widget_index: self.$el.data("renderer_widget_index"),
+                        prev_widget_index: $actived_card.parent().data("renderer_widget_index"),
+                    });
                 });
             }
         },
@@ -610,8 +645,23 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          * @private
          */
         _onRestoreFlipCard: function () {
-            this.$(".oe_flip_card").removeClass("active");
-            this.$('.oe_flip_card_front').removeClass("d-none");
+            var self = this;
+            this.$card.removeClass("active");
+            this.$front.removeClass("d-none");
+            if (this.$card.hasClass('oe_flip_card_maximized')) {
+                this.$card.removeClass('oe_flip_card_maximized');
+                this.$card.on('transitionend', function () {
+                    self.$card.css({
+                        position: "",
+                        top: "",
+                        left: "",
+                        width: "",
+                        height: "",
+                        zIndex: "",
+                    });
+                    self.$card.off('transitionend');
+                });
+            }
         },
 
         /**
