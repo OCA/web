@@ -2,14 +2,14 @@
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
 .oe_translation_field {
-  width: 95%;
-  margin-top: 5px;
+    width: 95%;
+    margin-top: 5px;
 }
 .oe_translation_field.touched {
-  border: 1px solid green !important;
+    border: 1px solid green !important;
 }
 .modal-xl {
-  max-width: 90%;
+    max-width: 90%;
 }
 
 .oe_form_frame_cell.field_name {

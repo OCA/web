@@ -5,23 +5,14 @@
 {
     "name": "Web Translate Dialog",
     "summary": "Easy-to-use pop-up to translate fields in several languages",
-    "version": "12.0.1.1.3",
+    "version": "13.0.1.0.0",
     "category": "Web",
     "website": "https://github.com/OCA/web",
-    "author": "Camptocamp, "
-              "Tecnativa, "
-              "Odoo Community Association (OCA)",
+    "author": "Camptocamp, " "Tecnativa, " "Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "application": False,
-    'installable': True,
-    "depends": [
-        "web",
-    ],
-    "data": [
-        "views/res_lang.xml",
-        "views/web_translate.xml",
-    ],
-    "qweb": [
-        "static/src/xml/base.xml",
-    ]
+    "installable": True,
+    "depends": ["web"],
+    "data": ["views/res_lang.xml", "views/web_translate.xml"],
+    "qweb": ["static/src/xml/base.xml"],
 }
