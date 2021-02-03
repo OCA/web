@@ -64,11 +64,24 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView
                 },
 
                 /**
-                 * Updates buttons depending on record status
-                 *
-                 * @private
+                 * Automatically create or accept changes
                  */
-                _updateButtons: function () {
+                auto: function () {
+                    var state = this._getRecordState();
+                    if (state === "new") {
+                        this._add();
+                    } else if (state === "dirty") {
+                        this._change();
+                    }
+                },
+
+                /**
+                 * Know the real state of the record
+                 *  - record: Normal
+                 *  - new: Is a new record
+                 *  - dirty: Has changes
+                 */
+                _getRecordState: function () {
                     var record = this.model.get(this.handle);
                     var state = "record";
                     if (this.model.isNew(record.id)) {
@@ -89,12 +102,22 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView
                             }
                         }
                     }
+
+                    return state;
+                },
+
+                /**
+                 * Updates buttons depending on record status
+                 *
+                 * @private
+                 */
+                _updateButtons: function () {
                     this.$el.find(
                         ".oe_one2many_product_picker_form_buttons").remove();
                     this.$el.find(".o_form_view").append(
                         qweb.render(
                             "One2ManyProductPicker.QuickCreate.FormButtons", {
-                                state: state,
+                                state: this._getRecordState(),
                             })
                         );
                 },
@@ -103,7 +126,9 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView
                  * @private
                  */
                 _disableQuickCreate: function () {
-
+                    if (!this.$el) {
+                        return;
+                    }
                     // Ensures that the record won't be created twice
                     this._disabled = true;
                     this.$el.addClass("o_disabled");
@@ -203,6 +228,10 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView
                  * @returns {Deferred}
                  */
                 _add: function () {
+                    this.model.updateRecordContext(this.handle, {
+                        has_changes_confirmed: true,
+                    });
+
                     if (this._disabled) {
 
                         // Don't do anything if we are already creating a record
@@ -223,38 +252,18 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView
                         });
                         self.model.unsetDirty(self.handle);
                         self._updateButtons();
+                        self.trigger_up("restore_flip_card");
                     });
                 },
 
-                /**
-                 * @private
-                 * @param {MouseEvent} ev
-                 */
-                _onClickAdd: function (ev) {
-                    ev.stopPropagation();
-                    this.model.updateRecordContext(this.handle, {
-                        has_changes_confirmed: true,
-                    });
-                    this._add();
-                },
-
-                /**
-                 * @private
-                 * @param {MouseEvent} ev
-                 */
-                _onClickRemove: function (ev) {
-                    ev.stopPropagation();
+                _remove: function () {
+                    this.trigger_up("restore_flip_card");
                     this.trigger_up("list_record_remove", {
                         id: this.renderer.state.id,
                     });
                 },
 
-                /**
-                 * @private
-                 * @param {MouseEvent} ev
-                 */
-                _onClickChange: function (ev) {
-                    ev.stopPropagation();
+                _change: function () {
                     this.model.updateRecordContext(this.handle, {
                         has_changes_confirmed: true,
                     });
@@ -267,13 +276,8 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView
                     this._updateButtons();
                 },
 
-                /**
-                 * @private
-                 * @param {MouseEvent} ev
-                 */
-                _onClickDiscard: function (ev) {
+                _discard: function () {
                     var self = this;
-                    ev.stopPropagation();
                     var record = this.model.get(this.handle);
                     this.model.discardChanges(this.handle, {
                         rollback: true,
@@ -292,6 +296,42 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView
                             self._updateButtons();
                         });
                     }
+                },
+
+                /**
+                 * @private
+                 * @param {MouseEvent} ev
+                 */
+                _onClickAdd: function (ev) {
+                    ev.stopPropagation();
+                    this._add();
+                },
+
+                /**
+                 * @private
+                 * @param {MouseEvent} ev
+                 */
+                _onClickRemove: function (ev) {
+                    ev.stopPropagation();
+                    this._remove();
+                },
+
+                /**
+                 * @private
+                 * @param {MouseEvent} ev
+                 */
+                _onClickChange: function (ev) {
+                    ev.stopPropagation();
+                    this._change();
+                },
+
+                /**
+                 * @private
+                 * @param {MouseEvent} ev
+                 */
+                _onClickDiscard: function (ev) {
+                    ev.stopPropagation();
+                    this._discard();
                 },
             }
         );
