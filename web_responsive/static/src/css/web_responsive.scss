@@ -628,7 +628,7 @@ html .o_web_client .o_main .o_main_content {
             }
         }
     }
-    .o_data_cell {
+    .o_data_cell:not(.o_boolean_toggle_cell) {
         .custom-checkbox .custom-control-label {
             top: -6px;
         }
