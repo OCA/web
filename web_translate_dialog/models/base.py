@@ -1,13 +1,12 @@
 # Copyright 2019 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
-from odoo import api, models
+from odoo import models
 
 
 class BaseModel(models.BaseModel):
 
     _inherit = "base"
 
-    @api.multi
     def get_field_translations(self, field_names):
         """Get only the existing translations for specified field
 

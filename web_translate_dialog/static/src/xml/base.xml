@@ -31,7 +31,7 @@
                 <t t-foreach="widget.translatable_fields" t-as="field_name">
                     <t
                         t-set="field"
-                        t-value="widget.view.searchView.fields[field_name]"
+                        t-value="widget.view.renderer.state.fields[field_name]"
                     />
                     <tr t-att-data-field="field_name">
                         <td
