@@ -39,12 +39,9 @@ odoo.define("web_translate_dialog.translate_dialog", function(require) {
             this.single_field = single_field;
             this.languages = null;
             this.languages_loaded = $.Deferred();
-            this.lang_data = new data.DataSetSearch(
-                this,
-                "res.lang",
-                parent.searchView.dataset.get_context(),
-                [["translatable", "=", "1"]]
-            );
+            this.lang_data = new data.DataSetSearch(this, "res.lang", parent.context, [
+                ["active", "=", "1"],
+            ]);
             this.lang_data.set_sort(["tr_sequence asc", "id asc"]);
             this.lang_data.read_slice(["code", "name"]).then(this.on_languages_loaded);
         },
@@ -206,7 +203,7 @@ odoo.define("web_translate_dialog.translate_dialog", function(require) {
                 kwargs: {
                     field_names: this.translatable_fields,
                 },
-            }).done(function(res) {
+            }).then(function(res) {
                 if (res[self.res_id]) {
                     _.each(res[self.res_id], function(translation, lang) {
                         self.set_fields_values(lang, translation);
@@ -234,7 +231,7 @@ odoo.define("web_translate_dialog.translate_dialog", function(require) {
             });
             _.each(translations, function(text, code) {
                 save_mutex.exec(function() {
-                    var done = new $.Deferred(); // Holds the mutex
+                    var done = new $.Deferred();
 
                     var context = new Context(session.user_context, {lang: code});
                     rpc.query({

@@ -80,6 +80,7 @@ Contributors
 * Serpent Consulting Services Pvt. Ltd. <jay.vora@serpentcs.com>
 * Timon Tschanz <timon.tschanz@camptocamp.ch>
 * Akim Juillerat <akim.juillerat@camptocamp.com>
+* Forma Shah <foram.shah@initos.com>
 
 Maintainers
 ~~~~~~~~~~~

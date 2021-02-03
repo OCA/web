@@ -8,11 +8,14 @@
     "version": "13.0.1.0.0",
     "category": "Web",
     "website": "https://github.com/OCA/web",
-    "author": "Camptocamp, " "Tecnativa, " "Odoo Community Association (OCA)",
+    "author": "Camptocamp, "
+    "Tecnativa, "
+    "Odoo Community Association (OCA), "
+    "InitOS Gmbh",
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "depends": ["web"],
+    "depends": ["web", "product"],
     "data": ["views/res_lang.xml", "views/web_translate.xml"],
     "qweb": ["static/src/xml/base.xml"],
 }
