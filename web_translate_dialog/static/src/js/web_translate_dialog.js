@@ -22,12 +22,22 @@ odoo.define("web_translate_dialog.translate_dialog", function (require) {
         template: "TranslateDialog",
         init: function (parent, options) {
             var title_string = _t("Translate fields: /");
+            var field_names = {};
             var single_field = false;
             if (options.field) {
-                var field_names = [options.field.fieldName];
+                this.record_id = options.field.id;
+                var record = parent.model.get(options.field.id);
+                this.model = record.model;
+                field_names[options.field.fieldName] =
+                    record.fields[options.field.fieldName];
                 single_field = true;
-                title_string = title_string.replace("/", field_names);
+                title_string = title_string.replace(
+                    "/",
+                    record.fields[options.field.fieldName].string
+                );
             } else {
+                this.record_id = parent.handle;
+                this.model = parent.modelName;
                 field_names = this.get_translatable_fields(parent);
             }
             this._super(parent, {title: title_string, size: "x-large"});
@@ -54,7 +64,7 @@ odoo.define("web_translate_dialog.translate_dialog", function (require) {
             });
         },
         get_translatable_fields: function (parent) {
-            var field_list = [];
+            var field_list = {};
             _.each(parent.renderer.state.fields, function (field, name) {
                 var related_readonly =
                     typeof field.related !== "undefined" && field.readonly;
@@ -63,7 +73,7 @@ odoo.define("web_translate_dialog.translate_dialog", function (require) {
                     !related_readonly &&
                     parent.renderer.state.getFieldNames().includes(name)
                 ) {
-                    field_list.push(name);
+                    field_list[name] = field;
                 }
             });
             return field_list;
@@ -120,14 +130,14 @@ odoo.define("web_translate_dialog.translate_dialog", function (require) {
             // Set maxlength if initial field has size attr
             _.each(
                 this.translatable_fields,
-                function (field_name) {
-                    var size = $("[name=" + field_name + "]")[0].maxLength;
+                function (field, name) {
+                    var size = $("[name=" + name + "]")[0].maxLength;
                     if (size > 0) {
                         this.$(
                             'input.oe_translation_field[name$="' +
-                                field_name +
+                                name +
                                 '"], textarea.oe_translation_field[name$="' +
-                                field_name +
+                                name +
                                 '"]'
                         ).attr("maxlength", size);
                     }
@@ -191,15 +201,19 @@ odoo.define("web_translate_dialog.translate_dialog", function (require) {
                 deferred = [];
 
             this.$(".oe_translation_field").val("").removeClass("touched");
+            var translatable_fields = [];
+            _.forEach(this.translatable_fields, function (field, name) {
+                translatable_fields.push(name);
+            });
 
             var def = $.Deferred();
             deferred.push(def);
             rpc.query({
-                model: this.view.modelName,
+                model: this.model,
                 method: "get_field_translations",
                 args: [[this.res_id]],
                 kwargs: {
-                    field_names: this.translatable_fields,
+                    field_names: translatable_fields,
                 },
             }).then(function (res) {
                 if (res[self.res_id]) {
@@ -231,7 +245,7 @@ odoo.define("web_translate_dialog.translate_dialog", function (require) {
 
                     var context = new Context(session.user_context, {lang: code});
                     rpc.query({
-                        model: self.view.modelName,
+                        model: self.model,
                         method: "write",
                         args: [self.res_id, text],
                         kwargs: {context: context.eval()},
@@ -239,13 +253,20 @@ odoo.define("web_translate_dialog.translate_dialog", function (require) {
                         done.resolve();
                     });
                     if (code === self.view_language) {
+                        var changes = {};
                         _.each(text, function (value, key) {
-                            var view_elem = self.view.$(":input[name='" + key + "']");
-                            view_elem.val(value).trigger("change");
+                            changes[key] = value;
+                        });
+                        self.trigger_up("field_changed", {
+                            dataPointID: self.record_id,
+                            changes: changes,
                         });
                     }
                     return done;
                 });
+            });
+            save_mutex.exec(function () {
+                self.view.reload();
             });
             this.close();
         },
@@ -282,10 +303,23 @@ odoo.define("web_translate_dialog.translate_dialog", function (require) {
 
         _onTranslate: function (event) {
             // The image next to the fields opens the translate dialog
-            var res_id = event.target.res_id
-                ? event.target.res_id
-                : event.target.state.res_id;
-            this.open_translate_dialog(event.data, res_id);
+            event.stopPropagation();
+            var self = this;
+            var record = this.model.get(event.data.id, {raw: true});
+            this._rpc({
+                route: "/web/dataset/call_button",
+                params: {
+                    model: "ir.translation",
+                    method: "translate_fields",
+                    args: [record.model, record.res_id, event.data.fieldName],
+                    kwargs: {context: record.getContext()},
+                },
+            }).then(function () {
+                var res_id = event.target.res_id
+                    ? event.target.res_id
+                    : event.target.state.res_id;
+                self.open_translate_dialog(event.data, res_id);
+            });
         },
     });
 

@@ -1,32 +1,28 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * web_translate_dialog
+# 	* web_translate_dialog
 #
-# Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0\n"
+"Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-28 18:03+0000\n"
-"PO-Revision-Date: 2020-07-09 18:19+0000\n"
-"Last-Translator: claudiagn <claudia.gargallo@qubiq.es>\n"
-"Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
-"Language: es\n"
+"POT-Creation-Date: 2022-08-09 11:47+0000\n"
+"PO-Revision-Date: 2022-08-09 11:47+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10\n"
+"Plural-Forms: \n"
 
 #. module: web_translate_dialog
 #: model:ir.model,name:web_translate_dialog.model_base
 msgid "Base"
-msgstr "Base"
+msgstr ""
 
 #. module: web_translate_dialog
 #. openerp-web
-#: code:addons/web_translate_dialog/static/src/xml/base.xml:49
+#: code:addons/web_translate_dialog/static/src/xml/base.xml:0
 #, python-format
 msgid "Cancel"
 msgstr "Cancelar"
@@ -37,11 +33,21 @@ msgid "Defines the order of language to appear in translation dialog"
 msgstr "Define el orden de idioma para aparecer en el diálogo de traducción"
 
 #. module: web_translate_dialog
+#: model:ir.model.fields,field_description:web_translate_dialog.field_res_lang__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: web_translate_dialog
 #. openerp-web
-#: code:addons/web_translate_dialog/static/src/xml/base.xml:14
+#: code:addons/web_translate_dialog/static/src/xml/base.xml:0
 #, python-format
 msgid "Field"
 msgstr "Campo"
+
+#. module: web_translate_dialog
+#: model:ir.model.fields,field_description:web_translate_dialog.field_res_lang__id
+msgid "ID"
+msgstr ""
 
 #. module: web_translate_dialog
 #: model:ir.model,name:web_translate_dialog.model_res_lang
@@ -49,22 +55,27 @@ msgid "Languages"
 msgstr "Idiomas"
 
 #. module: web_translate_dialog
+#: model:ir.model.fields,field_description:web_translate_dialog.field_res_lang____last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: web_translate_dialog
 #. openerp-web
-#: code:addons/web_translate_dialog/static/src/xml/base.xml:46
+#: code:addons/web_translate_dialog/static/src/xml/base.xml:0
 #, python-format
 msgid "Save"
 msgstr "Guardar"
 
 #. module: web_translate_dialog
 #. openerp-web
-#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:240
+#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:0
 #, python-format
 msgid "Translate"
 msgstr "Traducir"
 
 #. module: web_translate_dialog
 #. openerp-web
-#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:26
+#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:0
 #, python-format
 msgid "Translate fields: /"
 msgstr "Traducir campos: /"

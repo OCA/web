@@ -4,3 +4,4 @@
 * Timon Tschanz <timon.tschanz@camptocamp.ch>
 * Akim Juillerat <akim.juillerat@camptocamp.com>
 * Foram Shah <foram.shah@initos.com>
+* Dhara Solanki <dhara.solanki@initos.com>

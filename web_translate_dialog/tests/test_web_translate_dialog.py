@@ -1,4 +1,3 @@
-# Copyright 2021 InitOS Gmbh
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 from odoo.tests.common import TransactionCase
 
@@ -6,36 +5,37 @@ from odoo.tests.common import TransactionCase
 class TestWebTranslateDialog(TransactionCase):
     def setUp(self):
         super(TestWebTranslateDialog, self).setUp()
-        self.product = self.env["product.template"].create({"name": "English Name"})
+        self.env["res.lang"].load_lang("de_DE")
+        self.partner_title = self.env["res.partner.title"].create({"name": "Doctor"})
 
     def test_language_translations(self):
-        self.env["res.lang"].load_lang("de_DE")
         translation = self.env["ir.translation"].create(
             {
                 "type": "model",
-                "name": "product.template,name",
+                "name": "res.partner.title,name",
                 "lang": "de_DE",
-                "res_id": self.product.id,
-                "src": "English Name",
-                "value": "Translated Name",
+                "res_id": self.partner_title.id,
+                "src": "Doctor",
+                "value": "Arzt",
                 "state": "translated",
             }
         )
         translation_value = translation.read(["value"])
-        self.assertEqual(translation_value[0]["value"], "Translated Name")
+        self.assertEqual(translation_value[0]["value"], "Arzt")
 
-    def test_language_translations_01(self):
-        self.env["res.lang"].load_lang("de_DE")
-        translation = self.env["ir.translation"].create(
+    def test_get_field_translations(self):
+        translation_id = self.env["ir.translation"].create(
             {
                 "type": "model",
-                "name": "product.template,name",
+                "name": "res.partner.title,name",
                 "lang": "de_DE",
-                "res_id": self.product.id,
-                "src": "English Name",
-                "value": "Translated Name",
+                "res_id": self.partner_title.id,
+                "src": "Doctor",
+                "value": "Arzt",
                 "state": "translated",
             }
         )
-        translation_value = translation.read(["value"])
-        self.assertNotEqual(translation_value[0]["value"], "German Name")
+        results = self.partner_title.get_field_translations(["name"])
+        res = results[translation_id.res_id][translation_id.lang]
+        if res:
+            self.assertEqual(res.get("name"), "Arzt")
