@@ -45,6 +45,8 @@
     }
 
     .oe_one2many_product_picker_view {
+        @include make-grid-columns($columns: 24, $breakpoints: $one2many-product-picker-grid-breakpoints);
+
         overflow: auto;
 
         > .row {
