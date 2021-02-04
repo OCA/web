@@ -2,7 +2,7 @@
    Copyright 2016 Antonio Espinosa <antonio.espinosa@tecnativa.com>
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
-odoo.define("web_translate_dialog.translate_dialog", function(require) {
+odoo.define("web_translate_dialog.translate_dialog", function (require) {
     "use strict";
 
     var core = require("web.core");
@@ -20,7 +20,7 @@ odoo.define("web_translate_dialog.translate_dialog", function(require) {
 
     var TranslateDialog = Dialog.extend({
         template: "TranslateDialog",
-        init: function(parent, options) {
+        init: function (parent, options) {
             var title_string = _t("Translate fields: /");
             var single_field = false;
             if (options.field) {
@@ -45,17 +45,17 @@ odoo.define("web_translate_dialog.translate_dialog", function(require) {
             this.lang_data.set_sort(["tr_sequence asc", "id asc"]);
             this.lang_data.read_slice(["code", "name"]).then(this.on_languages_loaded);
         },
-        willStart: function() {
+        willStart: function () {
             var self = this;
-            return this._super.apply(this, arguments).then(function() {
+            return this._super.apply(this, arguments).then(function () {
                 if (self.size === "x-large") {
                     self.$modal.find(".modal-dialog").addClass("modal-xl");
                 }
             });
         },
-        get_translatable_fields: function(parent) {
+        get_translatable_fields: function (parent) {
             var field_list = [];
-            _.each(parent.renderer.state.fields, function(field, name) {
+            _.each(parent.renderer.state.fields, function (field, name) {
                 var related_readonly =
                     typeof field.related !== "undefined" && field.readonly;
                 if (
@@ -68,17 +68,17 @@ odoo.define("web_translate_dialog.translate_dialog", function(require) {
             });
             return field_list;
         },
-        on_languages_loaded: function(langs) {
+        on_languages_loaded: function (langs) {
             this.languages = langs;
             this.languages_loaded.resolve();
         },
-        open: function() {
+        open: function () {
             // The template needs the languages
             return $.when(this.languages_loaded).then($.proxy(this._super, this));
         },
-        start: function() {
+        start: function () {
             var self = this;
-            this.$(".oe_translation_field").change(function() {
+            this.$(".oe_translation_field").change(function () {
                 $(this).toggleClass(
                     "touched",
                     $(this).val() !== $(this).attr("data-value")
@@ -87,25 +87,25 @@ odoo.define("web_translate_dialog.translate_dialog", function(require) {
             this.$footer.html(QWeb.render("TranslateDialog.buttons"));
             this.$footer
                 .find(".oe_form_translate_dialog_save_button")
-                .click(function() {
+                .click(function () {
                     self.on_button_save();
                     self.on_button_close();
                 });
             this.$footer
                 .find(".oe_form_translate_dialog_cancel_button")
-                .click(function() {
+                .click(function () {
                     self.on_button_close();
                 });
 
             this.do_load_fields_values();
         },
-        resize_textareas: function() {
+        resize_textareas: function () {
             var textareas = this.$("textarea.oe_translation_field");
             var max_height = 100;
             // Resize textarea either to the max height of its content if it stays
             // in the modal or to the max height available in the modal
             if (textareas.length) {
-                _.each(textareas, function(textarea) {
+                _.each(textareas, function (textarea) {
                     if (textarea.scrollHeight > max_height) {
                         max_height = textarea.scrollHeight;
                     }
@@ -116,11 +116,11 @@ odoo.define("web_translate_dialog.translate_dialog", function(require) {
                 textareas.css({minHeight: new_height});
             }
         },
-        set_maxlength: function() {
+        set_maxlength: function () {
             // Set maxlength if initial field has size attr
             _.each(
                 this.translatable_fields,
-                function(field_name) {
+                function (field_name) {
                     var size = $("[name=" + field_name + "]")[0].maxLength;
                     if (size > 0) {
                         this.$(
@@ -135,11 +135,11 @@ odoo.define("web_translate_dialog.translate_dialog", function(require) {
                 this
             );
         },
-        initialize_html_fields: function(lang) {
+        initialize_html_fields: function (lang) {
             // Initialize summernote if HTML field
             this.$(
                 '.oe_form_field_html .oe_translation_field[name^="' + lang + '-"]'
-            ).each(function() {
+            ).each(function () {
                 var $parent = $(this)
                     .summernote({
                         focus: false,
@@ -158,7 +158,7 @@ odoo.define("web_translate_dialog.translate_dialog", function(require) {
                         styleWithSpan: false,
                         inlinemedia: ["p"],
                         lang: "odoo",
-                        onChange: function(value) {
+                        onChange: function (value) {
                             $(this).toggleClass(
                                 "touched",
                                 value !== $(this).attr("data-value")
@@ -174,10 +174,10 @@ odoo.define("web_translate_dialog.translate_dialog", function(require) {
                 });
             });
         },
-        set_fields_values: function(lang, tr_value) {
+        set_fields_values: function (lang, tr_value) {
             _.each(
                 tr_value,
-                function(translation, field) {
+                function (translation, field) {
                     this.$('.oe_translation_field[name="' + lang + "-" + field + '"]')
                         .val(translation || "")
                         .attr("data-value", translation || "");
@@ -186,13 +186,11 @@ odoo.define("web_translate_dialog.translate_dialog", function(require) {
             );
             this.initialize_html_fields(lang);
         },
-        do_load_fields_values: function() {
+        do_load_fields_values: function () {
             var self = this,
                 deferred = [];
 
-            this.$(".oe_translation_field")
-                .val("")
-                .removeClass("touched");
+            this.$(".oe_translation_field").val("").removeClass("touched");
 
             var def = $.Deferred();
             deferred.push(def);
@@ -203,9 +201,9 @@ odoo.define("web_translate_dialog.translate_dialog", function(require) {
                 kwargs: {
                     field_names: this.translatable_fields,
                 },
-            }).then(function(res) {
+            }).then(function (res) {
                 if (res[self.res_id]) {
-                    _.each(res[self.res_id], function(translation, lang) {
+                    _.each(res[self.res_id], function (translation, lang) {
                         self.set_fields_values(lang, translation);
                     });
                     self.resize_textareas();
@@ -216,21 +214,19 @@ odoo.define("web_translate_dialog.translate_dialog", function(require) {
 
             return deferred;
         },
-        on_button_save: function() {
+        on_button_save: function () {
             var translations = {},
                 self = this,
                 save_mutex = new Mutex();
-            this.$(".oe_translation_field.touched").each(function() {
-                var field = $(this)
-                    .attr("name")
-                    .split("-");
+            this.$(".oe_translation_field.touched").each(function () {
+                var field = $(this).attr("name").split("-");
                 if (!translations[field[0]]) {
                     translations[field[0]] = {};
                 }
                 translations[field[0]][field[1]] = $(this).val();
             });
-            _.each(translations, function(text, code) {
-                save_mutex.exec(function() {
+            _.each(translations, function (text, code) {
+                save_mutex.exec(function () {
                     var done = new $.Deferred();
 
                     var context = new Context(session.user_context, {lang: code});
@@ -239,11 +235,11 @@ odoo.define("web_translate_dialog.translate_dialog", function(require) {
                         method: "write",
                         args: [self.res_id, text],
                         kwargs: {context: context.eval()},
-                    }).then(function() {
+                    }).then(function () {
                         done.resolve();
                     });
                     if (code === self.view_language) {
-                        _.each(text, function(value, key) {
+                        _.each(text, function (value, key) {
                             var view_elem = self.view.$(":input[name='" + key + "']");
                             view_elem.val(value).trigger("change");
                         });
@@ -253,13 +249,13 @@ odoo.define("web_translate_dialog.translate_dialog", function(require) {
             });
             this.close();
         },
-        on_button_close: function() {
+        on_button_close: function () {
             this.close();
         },
     });
 
     FormController.include({
-        renderSidebar: function($node) {
+        renderSidebar: function ($node) {
             this._super($node);
             if (this.sidebar) {
                 var item = this.is_action_enabled("edit") && {
@@ -271,20 +267,20 @@ odoo.define("web_translate_dialog.translate_dialog", function(require) {
                 }
             }
         },
-        on_button_translate: function() {
+        on_button_translate: function () {
             var self = this;
-            $.when(this.has_been_loaded).then(function() {
+            $.when(this.has_been_loaded).then(function () {
                 self.open_translate_dialog(null, self.initialState.res_id);
             });
         },
     });
 
     BasicController.include({
-        open_translate_dialog: function(field, res_id) {
+        open_translate_dialog: function (field, res_id) {
             new TranslateDialog(this, {field: field, res_id: res_id}).open();
         },
 
-        _onTranslate: function(event) {
+        _onTranslate: function (event) {
             // The image next to the fields opens the translate dialog
             var res_id = event.target.res_id
                 ? event.target.res_id
