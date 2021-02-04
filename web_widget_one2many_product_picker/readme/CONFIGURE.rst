@@ -134,3 +134,10 @@ Other example for 'purchase.order.line' fields:
             <field name="product_uom" class="mb-2" options="{'no_open': True, 'no_create': True, 'no_edit': True}" />
         </form>
     </field>
+
+
+Boostrap Modifications:
+~~~~~~~~~~~~~~~~~~~~~~~
+
+The product picker view container have a custom media queries space adding a new screen size called 'xxl' (>= 1440px) and modifies the columns to have 24 instead of 12.
+This means that you can use "col-xxl-" inside the product picker view container.
