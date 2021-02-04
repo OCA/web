@@ -2,3 +2,4 @@
 * Yannick Vaucher <yannick.vaucher@camptocamp.com>
 * Nicolas JEUDY <https://github.com/njeudy>
 * Artem Kostyuk <a.kostyuk@mobilunity.com>
+* Stéphane Mangin <stephane.mangin@camptocamp.com>
