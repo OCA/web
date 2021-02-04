@@ -1,11 +1,11 @@
-odoo.define("web_widget_bokeh_chart", function(require) {
+odoo.define("web_widget_bokeh_chart", function (require) {
     "use strict";
 
     var fieldRegistry = require("web.field_registry");
     var AbstractField = require("web.AbstractField");
 
     var BokehChartWidget = AbstractField.extend({
-        _renderReadonly: function() {
+        _renderReadonly: function () {
             var val = this.value;
             this.$el.html(val);
         },
