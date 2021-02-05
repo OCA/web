@@ -7,7 +7,7 @@
     "version": "13.0.1.0.0",
     "development_status": "Beta",
     "author": "LevelPrime srl, " "Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/web/tree/12.0/"
+    "website": "https://github.com/OCA/web/tree/13.0/"
     "web_ir_actions_close_wizard_refresh_view",
     "license": "AGPL-3",
     "category": "Web",

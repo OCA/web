@@ -15,8 +15,7 @@ odoo.define("web_ir_actions_close_wizard_refresh_view", function(require) {
             this._closeDialog();
 
             var state = this._getControllerState(this.getCurrentController().jsID);
-
-            return $.when(this.loadState(state));
+            return Promise.resolve(this.loadState(state));
         },
     });
 });
