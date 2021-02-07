@@ -1,4 +1,4 @@
-odoo.define("web_tree_dynamic_colored_field", function(require) {
+odoo.define("web_tree_dynamic_colored_field", function (require) {
     "use strict";
 
     var ListRenderer = require("web.ListRenderer");
@@ -11,7 +11,7 @@ odoo.define("web_tree_dynamic_colored_field", function(require) {
          *
          * @override
          */
-        _renderBodyCell: function(record, node) {
+        _renderBodyCell: function (record, node) {
             var $td = this._super.apply(this, arguments);
             var ctx = this.getEvalContext(record);
             this.applyColorize($td, record, node, ctx);
@@ -26,7 +26,7 @@ odoo.define("web_tree_dynamic_colored_field", function(require) {
          * @param {Object} node an XML node (must be a <field>)
          * @param {Object} ctx evaluation context for the record
          */
-        applyColorize: function($td, record, node, ctx) {
+        applyColorize: function ($td, record, node, ctx) {
             if (!node.attrs.options) {
                 return;
             }
@@ -55,7 +55,7 @@ odoo.define("web_tree_dynamic_colored_field", function(require) {
          * @param {String} cssAttribute a real CSS-compatible attribute
          * @param {Object} ctx evaluation context for the record
          */
-        applyColorizeHelper: function(
+        applyColorizeHelper: function (
             $td,
             nodeOptions,
             node,
@@ -90,7 +90,7 @@ odoo.define("web_tree_dynamic_colored_field", function(require) {
          * @returns {Array} undefined or array of color, parsed expression,
          * original expression
          */
-        pairColors: function(pairColor) {
+        pairColors: function (pairColor) {
             if (pairColor !== "") {
                 var pairList = pairColor.split(":"),
                     color = pairList[0],
@@ -108,7 +108,7 @@ odoo.define("web_tree_dynamic_colored_field", function(require) {
          * @param {Object} record a record to build a context from
          * @returns {Object} evaluation context for the record
          */
-        getEvalContext: function(record) {
+        getEvalContext: function (record) {
             var ctx = _.extend({}, record.data, pyUtils.context());
             for (var key in ctx) {
                 var value = ctx[key];
