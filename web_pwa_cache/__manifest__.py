@@ -12,7 +12,6 @@
     'license': 'AGPL-3',
     'depends': [
         'web_pwa_oca',
-        #'web_field_ace_editor_javascript',
     ],
     'data': [
         'security/ir.model.access.csv',

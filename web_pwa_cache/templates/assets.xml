@@ -6,6 +6,7 @@
             <script type="text/javascript" src="/web_pwa_cache/static/src/js/views/datamanager.js"></script>
             <script type="text/javascript" src="/web_pwa_cache/static/src/js/views/web_dialogs.js"></script>
             <script type="text/javascript" src="/web_pwa_cache/static/src/js/views/action_manager_act_window.js"></script>
+            <script type="text/javascript" src="/web_pwa_cache/static/src/js/views/basic_view.js"></script>
             <script type="text/javascript" src="/web_pwa_cache/static/src/js/views/formPWA/form_pwa_renderer.js"></script>
             <script type="text/javascript" src="/web_pwa_cache/static/src/js/views/formPWA/form_pwa_controller.js"></script>
             <script type="text/javascript" src="/web_pwa_cache/static/src/js/views/formPWA/form_pwa_view.js"></script>

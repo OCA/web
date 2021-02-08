@@ -4,7 +4,10 @@ from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.safe_eval import safe_eval, test_python_expr
-from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_TIME_FORMAT
+from odoo.tools import (
+    DEFAULT_SERVER_DATETIME_FORMAT,
+    DEFAULT_SERVER_DATE_FORMAT,
+    DEFAULT_SERVER_TIME_FORMAT)
 
 import base64
 import datetime
@@ -25,11 +28,11 @@ class PWACache(models.Model):
 #  - b64encode, b64decode: To work with base64
 #  - DEFAULT_SERVER_DATETIME_FORMAT, DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_TIME_FORMAT: Odoo date format
 #
-# To return an params, assign: params = [...]\n\n\n\n"""
+# To return an params, assign: params = [...]\n\n\n\n"""  # noqa: E501
     DEFAULT_JS_CODE = """// Formula must be return an 'onchange' object
 // Here you can use the active record changes fields directly.
 // To return an onchange: return {"value": {"field_a": value_a}, "warning": {"title": "Ooops!", "message": "This is a warning message"}, "domain": {"field_a": []}}\n\n\n\n
-return {"value": {}}"""
+return {"value": {}}"""  # noqa: E501
 
     name = fields.Char("Name", required=True, translate=True)
     active = fields.Boolean(
@@ -57,7 +60,12 @@ return {"value": {}}"""
         string="Model Name",
         readonly=True,
     )
-    model_domain = fields.Char("Domain", related="model_domain_raw", readonly=False, store=False)
+    model_domain = fields.Char(
+        "Domain",
+        related="model_domain_raw",
+        readonly=False,
+        store=False,
+    )
     model_domain_raw = fields.Char("Domain (RAW)", default="[]")
     model_field_excluded_ids = fields.Many2many(
         comodel_name="ir.model.fields",
@@ -93,7 +101,10 @@ return {"value": {}}"""
         string="Onchage field",
         domain="[['model_id', '=', model_id]]",
     )
-    onchange_triggers = fields.Char("Onchange Triggers", help="Fields separated by commas. Can use dotted notation.")
+    onchange_triggers = fields.Char(
+        "Onchange Triggers",
+        help="Fields separated by commas. Can use dotted notation.",
+    )
 
     internal = fields.Boolean("Is an internal record", default=False)
 
@@ -116,6 +127,7 @@ return {"value": {}}"""
     def _get_eval_context(self, action=None):
         """ evaluation context to pass to safe_eval """
         self.ensure_one()
+
         def context_today():
             return fields.Date.context_today(self)
 

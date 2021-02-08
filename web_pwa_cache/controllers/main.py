@@ -1,14 +1,13 @@
 # Copyright 2020 Tecnativa - Alexandre D. Díaz
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import ast
-import json
+
 from odoo.http import request, route
 from odoo import http, _
 from odoo.tools import safe_eval
 from odoo.exceptions import ValidationError
 from odoo.addons.web_pwa_oca.controllers.main import PWA
-from odoo.addons.web.controllers.main import Action
+
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -127,7 +126,8 @@ class PWA(PWA):
         # Add 'GET' resources
         pwa_cache_obj = request.env["pwa.cache"]
         records = pwa_cache_obj.search(self._get_pwa_cache_domain(["get"]))
-        res["prefetched_urls"] += pwa_cache_obj._get_text_field_lines(records, "get_urls")
+        res["prefetched_urls"] += pwa_cache_obj._get_text_field_lines(
+            records, "get_urls")
         return res
 
     def _get_pwa_cache_domain(self, cache_types):
@@ -146,7 +146,7 @@ class PWA(PWA):
         for menu_id in menu_ids:
             if not menu_id.action:
                 continue
-            actions.append("{},{}".format(menu_id.action.type,menu_id.action.id))
+            actions.append("{},{}".format(menu_id.action.type, menu_id.action.id))
         return actions
 
     def _pwa_prefetch_action(self, last_update, **kwargs):
@@ -161,7 +161,8 @@ class PWA(PWA):
         return actions.ids
 
     def _pwa_prefetch_default_formula(self, last_update, **kwargs):
-        records = request.env["pwa.cache"].search(self._get_pwa_cache_domain(["default_formula"]))
+        records = request.env["pwa.cache"].search(
+            self._get_pwa_cache_domain(["default_formula"]))
         res = []
         for record in records:
             res.append({
@@ -184,10 +185,17 @@ class PWA(PWA):
         action_ids = request.env[action_model].browse(list(actions_id_list))
         for action_id in action_ids:
             model_views.setdefault(action_id.res_model, set())
-            model_views[action_id.res_model] |= set(action_id.view_ids.ids) | {action_id.view_id.id, action_id.search_view_id.id}
+            model_views[action_id.res_model] |= set(
+                action_id.view_ids.ids) | {
+                    action_id.view_id.id,
+                    action_id.search_view_id.id
+                }
 
         ir_ui_view_obj = request.env["ir.ui.view"]
-        available_types = list(filter(lambda x: x != "qweb", map(lambda x: x[0], ir_ui_view_obj._fields['type'].selection)))
+        available_types = list(
+            filter(
+                lambda x: x != "qweb",
+                map(lambda x: x[0], ir_ui_view_obj._fields['type'].selection)))
         model_domain = []
         if last_update:
             model_domain.append(("write_date", ">=", last_update))
@@ -223,12 +231,15 @@ class PWA(PWA):
         return res
 
     def _pwa_prefetch_model(self, last_update, **kwargs):
-        records = request.env["pwa.cache"].search(self._get_pwa_cache_domain(["model"]))
+        records = request.env["pwa.cache"].search(
+            self._get_pwa_cache_domain(["model"]))
         res = []
         for record in records:
             model = record.model_id.model
             model_obj = request.env[model]
-            evaluated_domain = safe_eval(record.model_domain or "[]", record._get_eval_context())
+            evaluated_domain = safe_eval(
+                record.model_domain or "[]",
+                record._get_eval_context())
             records_count = 0
             if model in last_update:
                 records_count = model_obj.search_count([
@@ -327,7 +338,9 @@ class PWA(PWA):
             return values
 
         record = request.env["pwa.cache"].browse(cache_id)
-        if not record or (record.cache_type != "onchange" and record.cache_type != "onchange_formula"):
+        if not record or (
+                record.cache_type != "onchange" and
+                record.cache_type != "onchange_formula"):
             raise ValidationError(_("Invalid onchange cache id"))
 
         onchanges = []
@@ -346,7 +359,8 @@ class PWA(PWA):
             elif record.cache_type == "onchange_formula":
                 formula = record.code_js
             # Remove 'None' values, so they are only used to trigger the change
-            s_params = self._pwa_construct_params(params, record.onchange_field.name, record.onchange_triggers)
+            s_params = self._pwa_construct_params(
+                params, record.onchange_field.name, record.onchange_triggers)
             onchanges.append(
                 {
                     "model": record.model_id.model,
@@ -355,7 +369,7 @@ class PWA(PWA):
                     "changes": changes,
                     "formula": formula,
                     "triggers": record.onchange_triggers,
-                    "field_value": params[record.onchange_field.name], # This is used for indexing stuff
+                    "field_value": params[record.onchange_field.name],
                 }
             )
         return onchanges
@@ -411,8 +425,9 @@ class PWA(PWA):
             # shortcut read if we only want the ids
             return [{'id': record.id} for record in records]
 
-        # read() ignores active_test, but it would forward it to any downstream search call
-        # (e.g. for x2m or function fields), and this is not the desired behavior, the flag
+        # read() ignores active_test, but it would forward it to any
+        # downstream search call (e.g. for x2m or function fields),
+        # and this is not the desired behavior, the flag
         # was presumably only meant for the main search().
         # TODO: Move this to read() directly?
         if 'active_test' in request._context:

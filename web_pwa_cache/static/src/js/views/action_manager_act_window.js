@@ -1,6 +1,7 @@
 odoo.define("web_pwa_cache.ActionManager", function (require) {
     "use strict";
 
+    var WebClientObj = require("web.web_client");
     var ActionManager = require("web.ActionManager");
     require("web.ActWindowActionManager");
 
@@ -40,8 +41,19 @@ odoo.define("web_pwa_cache.ActionManager", function (require) {
             return this._super.apply(this, arguments);
         },
 
+        /**
+         * @override
+         */
         _executeWindowAction: function (action, options) {
-            return this._super.apply(this, arguments).then(function (result) {
+            // Force "kanban" view mode
+            if (WebClientObj.pwa_manager.isPWAStandalone()) {
+                var modes = action.view_mode.split(",");
+                if (modes.indexOf("kanban") !== -1) {
+                    options.viewType = "kanban";
+                }
+            }
+
+            return this._super(action, options).then(function (result) {
                 if (action.target !== "new") {
                     var views = result.views;
                     // select the first view to display, and optionally the main view
