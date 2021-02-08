@@ -459,14 +459,17 @@ html .o_web_client .o_action_manager .o_action {
         // Support for long title (with ellipsis)
         .oe_title {
             span.o_field_widget {
-                max-width: 100%;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                overflow: hidden;
-                width: initial;
-            }
-            span:active {
-                white-space: normal;
+                &:not(.oe_inline) {
+                    max-width: 100%;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    width: initial;
+
+                    &:active {
+                        white-space: normal;
+                    }
+                }
             }
         }
 
