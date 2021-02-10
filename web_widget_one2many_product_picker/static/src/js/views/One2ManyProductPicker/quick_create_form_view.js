@@ -18,6 +18,8 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView
 
     BasicModel.include({
         _applyOnChange: function (values, record, viewType) {
+            var vt = viewType || record.viewType;
+            // Ignore changes by record context 'ignore_onchanges' fields
             if ('ignore_onchanges' in record.context) {
                 var ignore_changes = record.context.ignore_onchanges;
                 for (var index in ignore_changes) {
@@ -64,9 +66,13 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView
                 },
 
                 /**
-                 * Automatically create or accept changes
+                 * Create or accept changes
                  */
                 auto: function () {
+                    var record = this.model.get(this.handle);
+                    if (record.context.has_changes_confirmed || typeof record.context.has_changes_confirmed === "undefined") {
+                        return;
+                    }
                     var state = this._getRecordState();
                     if (state === "new") {
                         this._add();
@@ -342,6 +348,9 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView
             Controller: ProductPickerQuickCreateFormController,
         }),
 
+        /**
+         * @override
+         */
         init: function (viewInfo, params) {
             this._super.apply(this, arguments);
             this.controllerParams.compareKey = params.compareKey;
