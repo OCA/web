@@ -7,8 +7,9 @@
         <t t-jquery=".o_app" t-operation="attributes">
             <attribute
                 name="t-attf-href"
+                t-translation="off"
             >#menu_id=#{app.menuID}&amp;action_id=#{app.actionID}</attribute>
-            <attribute name="draggable">false</attribute>
+            <attribute name="draggable" t-translation="off">false</attribute>
         </t>
         <!-- App icons should be more than a text -->
         <t t-jquery=".o_app &gt; t" t-operation="replace">
