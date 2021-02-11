@@ -98,40 +98,13 @@
             </t>
         </t>
     </t>
-    <t t-extend="Sidebar">
-        <!-- Replace some common sections by icons in mobile -->
-        <t
-            t-jquery=".o_dropdown_toggler_btn t[t-esc='section.label']"
-            t-operation="replace"
-        >
-            <t t-set="label" t-value="section.label" />
-            <t t-if="section.name == 'files'">
-                <t t-call="web_responsive.icon_button">
-                    <t t-set="icon" t-value="'paperclip'" />
-                </t>
+    <t t-extend="CalendarView.navigation_buttons">
+        <!-- Add responsive icons to buttons -->
+        <t t-jquery=".o_calendar_button_today" t-operation="inner">
+            <t t-call="web_responsive.icon_button">
+                <t t-set="icon" t-value="'calendar-check-o'" />
+                <t t-set="label">Today</t>
             </t>
-            <t t-elif="section.name == 'print'">
-                <t t-call="web_responsive.icon_button">
-                    <t t-set="icon" t-value="'print'" />
-                </t>
-            </t>
-            <t t-elif="section.name == 'other'">
-                <t t-call="web_responsive.icon_button">
-                    <t t-set="icon" t-value="'wrench'" />
-                </t>
-            </t>
-            <t t-else="">
-                <span t-esc="label" />
-            </t>
-        </t>
-    </t>
-    <t t-extend="mail.Chatter">
-        <t t-jquery=".o_chatter_topbar" t-operation="replace">
-            <div class="o_chatter_header_container">
-                <div class="o_chatter_topbar">
-                    <div class="o_topbar_right_area" />
-                </div>
-            </div>
         </t>
     </t>
 </templates>
