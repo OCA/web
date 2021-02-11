@@ -59,6 +59,10 @@
             transition: top $one2many-product-picker-transition-3d-time, left $one2many-product-picker-transition-3d-time, width $one2many-product-picker-transition-3d-time, height $one2many-product-picker-transition-3d-time;
             height: $one2many-product-picker-card-min-height;
 
+            &.blocked {
+                filter: blur(2px);
+            }
+
             &.disabled {
                 filter: grayscale(100%);
                 opacity: 0.5;
@@ -211,6 +215,9 @@
                 font-size: 0.95rem;
                 z-index: 0;
             }
+            .add_product, .product_qty, .price_unit {
+                cursor: pointer;
+            }
         }
     }
 }
@@ -228,5 +235,22 @@
 
     .oe_one2many_product_picker_form_buttons {
         text-align: center;
+    }
+}
+
+.oe_product_picker_catch_attention {
+    position: relative;
+    animation: productPickerCatchAttention 200ms normal forwards;
+}
+
+@keyframes productPickerCatchAttention {
+    0% {
+        transform: scale(1.0);
+    }
+    50% {
+        transform: scale(1.5);
+    }
+    100% {
+        transform: scale(1.0);
     }
 }

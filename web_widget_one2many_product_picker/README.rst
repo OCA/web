@@ -180,6 +180,11 @@ Other example for 'purchase.order.line' fields:
 Usage
 =====
 
+Parts of the widget:
+~~~~~~~~~~~~~~~~~~~~
+
+  .. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_widget_one2many_product_picker/static/img/product_picker_anat.png
+
 Preview:
 ~~~~~~~~
 
