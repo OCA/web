@@ -104,14 +104,12 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
          */
         updateState: function (state, params) {
             var self = this;
+            var sparams = _.extend({}, params, {noRender: true});
             if (_.isEqual(this.state.data, state.data)) {
-                return this._super.apply(this, arguments);
+                return this._super(state, sparams);
             }
             var old_state = _.clone(this.state.data);
-            return this._super(
-                state,
-                _.extend({}, params, {noRender: true})
-            ).then(function () {
+            return this._super(state, sparams).then(function () {
                 self._updateStateRecords(old_state);
             });
         },
@@ -151,6 +149,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                     var widget = this.widgets[eb];
                     if (
                         widget &&
+                        widget.state &&
                         widget.state.data[this.options.field_map.product].data.id === widget_product_id
                     ) {
                         found = true;
@@ -194,7 +193,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                 var found = false;
                 for (var e in this.state.data) {
                     var current_state = this.state.data[e];
-                    if (current_state.id === old_state.id) {
+                    if (current_state.id === old_state.id || (typeof current_state.data.id !== 'undefined' && current_state.data.id === old_state.data.id)) {
                         found = true;
                         break;
                     }
@@ -203,6 +202,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                     states_to_destroy.push(old_state);
                 }
             }
+
             this._removeRecords(states_to_destroy);
 
             // Records to Update or Create
@@ -215,12 +215,12 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                 var search_record = false;
                 for (var e = this.widgets.length-1; e>=0; --e) {
                     var widget = this.widgets[e];
-                    if (!widget) {
+                    if (!widget || !widget.state) {
 
                         // Already processed widget (deleted)
                         continue;
                     }
-                    if (widget.state.id === state.id) {
+                    if (widget.state.id === state.id || (typeof state.data.id !== 'undefined' && widget.state.data.id === state.data.id)) {
                         widget.recreate(state);
                         exists = true;
                         break;
@@ -236,8 +236,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                     // Remove "pure virtual" records that have the same product that the new record
                     if (
                         widget.is_virtual &&
-                        widget.state.data[this.options.field_map.product].data.id === state.data[this.options.field_map.product].data.id &&
-                        widget.state.data[this.options.compa].data.id === state.data[this.options.field_map.product].data.id
+                        widget.state.data[this.options.field_map.product].data.id === state.data[this.options.field_map.product].data.id
                     ) {
                         to_destroy.push(widget);
                         delete this.widgets[e];
@@ -284,7 +283,8 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
         },
 
         /**
-         * Compare search results with current lines
+         * Compare search results with current lines.
+         * Link a current state with the 'search record'.
          *
          * @private
          * @param {Array[Object]} results

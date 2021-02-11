@@ -580,11 +580,20 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
          * @param {CustomEvent} evt
          */
         _onCreateQuickRecord: function (evt) {
+            var self = this;
             this.parent_controller.model.setPureVirtual(evt.data.id, false);
-            this._setValue({operation: "ADD", id: evt.data.id});
-            if (this.options.auto_save) {
-                this.parent_controller.saveRecord(undefined, {stayInEdit: true});
+            if (!self.options.auto_save) {
+                self.parent_controller.model.updateRecordContext(evt.data.id, {
+                    product_picker_modified: true,
+                });
             }
+            this._setValue({operation: "ADD", id: evt.data.id}).then(function () {
+                if (self.options.auto_save) {
+                    self.parent_controller.saveRecord(undefined, {stayInEdit: true}).then(function () {
+                        self.renderer.updateState(self.value);
+                    });
+                }
+            });
         },
 
         /**
@@ -594,10 +603,19 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
          * @param {CustomEevent} evt
          */
         _onUpdateQuickRecord: function (evt) {
-            this._setValue({operation: "UPDATE", id: evt.data.id, data: evt.data.data});
-            if (this.options.auto_save) {
-                this.parent_controller.saveRecord(undefined, {stayInEdit: true});
+            var self = this;
+            if (!self.options.auto_save) {
+                self.parent_controller.model.updateRecordContext(evt.data.id, {
+                    product_picker_modified: true,
+                });
             }
+            this._setValue({operation: "UPDATE", id: evt.data.id, data: evt.data.data}).then(function () {
+                if (self.options.auto_save) {
+                    self.parent_controller.saveRecord(undefined, {stayInEdit: true}).then(function () {
+                        self.renderer.updateState(self.value);
+                    });
+                }
+            });
         },
 
         /**

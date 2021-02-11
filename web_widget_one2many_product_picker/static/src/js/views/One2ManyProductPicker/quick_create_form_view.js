@@ -126,6 +126,10 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView
                                 state: this._getRecordState(),
                             })
                         );
+
+                    if (this._disabled) {
+                        this._disableQuickCreate();
+                    }
                 },
 
                 /**
@@ -138,7 +142,7 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView
                     // Ensures that the record won't be created twice
                     this._disabled = true;
                     this.$el.addClass("o_disabled");
-                    this.$("input:not(:disabled)")
+                    this.$("input:not(:disabled),button:not(:disabled)")
                         .addClass("o_temporarily_disabled")
                         .attr("disabled", "disabled");
                 },
@@ -151,7 +155,7 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView
                     // Allows to create again
                     this._disabled = false;
                     this.$el.removeClass("o_disabled");
-                    this.$("input.o_temporarily_disabled")
+                    this.$("input.o_temporarily_disabled,button.o_temporarily_disabled")
                         .removeClass("o_temporarily_disabled")
                         .attr("disabled", false);
                 },
@@ -234,15 +238,14 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView
                  * @returns {Deferred}
                  */
                 _add: function () {
-                    this.model.updateRecordContext(this.handle, {
-                        has_changes_confirmed: true,
-                    });
-
                     if (this._disabled) {
 
                         // Don't do anything if we are already creating a record
                         return $.Deferred();
                     }
+                    this.model.updateRecordContext(this.handle, {
+                        has_changes_confirmed: true,
+                    });
                     var self = this;
                     this._disableQuickCreate();
                     return this.saveRecord(this.handle, {
@@ -251,39 +254,70 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView
                         savePoint: true,
                         viewType: "form",
                     }).then(function () {
-                        self._enableQuickCreate();
                         var record = self.model.get(self.handle);
-                        self.trigger_up("create_quick_record", {
-                            id: record.id,
+                        self.trigger_up("restore_flip_card", {
+                            success_callback: function () {
+                                self.trigger_up("create_quick_record", {
+                                    id: record.id,
+                                });
+                                self.model.unsetDirty(self.handle);
+                                //self._updateButtons();
+                                self._enableQuickCreate();
+                            },
+                            block: true,
                         });
-                        self.model.unsetDirty(self.handle);
-                        self._updateButtons();
-                        self.trigger_up("restore_flip_card");
                     });
                 },
 
                 _remove: function () {
-                    this.trigger_up("restore_flip_card");
+                    if (this._disabled) {
+
+                        // Don't do anything if we are already creating a record
+                        return $.Deferred();
+                    }
+
+                    this._disableQuickCreate();
+                    this.trigger_up("restore_flip_card", {block: true});
+                    var record = this.model.get(this.handle);
                     this.trigger_up("list_record_remove", {
-                        id: this.renderer.state.id,
+                        id: record.id,
                     });
                 },
 
                 _change: function () {
+                    var self = this;
+                    if (this._disabled) {
+
+                        // Don't do anything if we are already creating a record
+                        return $.Deferred();
+                    }
+                    this._disableQuickCreate();
                     this.model.updateRecordContext(this.handle, {
                         has_changes_confirmed: true,
                     });
                     var record = this.model.get(this.handle);
-                    this.trigger_up("update_quick_record", {
-                        id: record.id,
+
+                    this.trigger_up("restore_flip_card", {
+                        success_callback: function () {
+                            self.trigger_up("update_quick_record", {
+                                id: record.id,
+                            });
+                            self.model.unsetDirty(self.handle);
+                            //self._updateButtons();
+                            self._enableQuickCreate();
+                        },
+                        block: true,
                     });
-                    this.trigger_up("restore_flip_card");
-                    this.model.unsetDirty(this.handle);
-                    this._updateButtons();
                 },
 
                 _discard: function () {
                     var self = this;
+                    if (this._disabled) {
+
+                        // Don't do anything if we are already creating a record
+                        return $.Deferred();
+                    }
+                    this._disableQuickCreate();
                     var record = this.model.get(this.handle);
                     this.model.discardChanges(this.handle, {
                         rollback: true,
@@ -295,11 +329,13 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView
                         this.update({}, {reload: false});
                         this.trigger_up("restore_flip_card");
                         this._updateButtons();
+                        this._enableQuickCreate();
                     } else {
                         this.update({}, {reload: false}).then(function () {
                             self.model.unsetDirty(self.handle);
                             self.trigger_up("restore_flip_card");
                             self._updateButtons();
+                            self._enableQuickCreate();
                         });
                     }
                 },
