@@ -328,37 +328,113 @@ html .o_web_client .o_action_manager .o_action {
     max-width: 100%;
 }
 
-// Control panel (breadcrumbs, search box, buttons...)
-@include media-breakpoint-down(sm) {
-    .o_control_panel {
-        // Arrange buttons to use space better
-        .breadcrumb,
-        .o_cp_buttons,
-        .o_cp_left,
-        .o_cp_right,
-        .o_cp_searchview {
-            flex: 1 1 100%;
-            @include media-breakpoint-up(md) {
-                flex-basis: 50%;
+// Make enough space for search panel filters buttons
+.o_control_panel {
+    // There is no media breakpoint for XL upper bound
+    @include media-breakpoint-up(lg) {
+        @media (max-width: 1360px) {
+            .o_cp_top_left,
+            .o_cp_bottom_left {
+                width: 40%;
+            }
+            .o_cp_top_right,
+            .o_cp_bottom_right {
+                width: 60%;
             }
         }
+    }
+    // For FULL HD devices
+    @media (min-width: 1900px) {
+        .o_cp_top_left,
+        .o_cp_bottom_left {
+            width: 60%;
+        }
+        .o_cp_top_right,
+        .o_cp_bottom_right {
+            width: 40%;
+        }
+    }
+    @include media-breakpoint-only(md) {
+        .o_search_options_hide_labels .o_dropdown_title {
+            display: none;
+        }
+    }
+    .o_cp_bottom_right {
+        height: 30px;
+    }
+}
 
-        .breadcrumb {
+// Mobile Control panel (breadcrumbs, search box, buttons...)
+@include media-breakpoint-down(sm) {
+    .o_control_panel {
+        // Avoid horizontal scrolling of control panel.
+        // It doesn't work on iOS Safari, but it looks similar as
+        // without this patch. With this patch it looks better for
+        // other browsers.
+        position: sticky;
+        left: 0;
+        z-index: 3;
+
+        // Arrange buttons to use space better
+        .o_cp_top_left,
+        .o_cp_top_right {
+            flex: 1 1 100%;
+        }
+
+        .o_cp_top_left {
             flex-basis: 80%;
         }
 
-        .o_cp_searchview,
-        .o_cp_right {
-            flex-basis: 10%;
+        .o_cp_top_right {
+            flex-basis: 20%;
         }
 
-        .o_cp_left {
-            flex-basis: 50%;
-            white-space: nowrap;
+        .o_cp_bottom {
+            position: relative; // Necessary for dropdown menu positioning
+            display: block;
+            margin: 0;
         }
 
+        .o_cp_bottom_left {
+            float: left;
+            margin: 5px 0;
+        }
+
+        .o_cp_bottom_right {
+            float: right;
+            height: 30px;
+            padding-left: 10px;
+            margin: 5px 0;
+        }
+
+        .o_cp_bottom_right,
         .o_cp_pager {
             white-space: nowrap;
+        }
+        .o_cp_pager {
+            margin-bottom: 0;
+        }
+
+        .o_cp_bottom_left > .o_cp_action_menus {
+            padding-right: 0;
+            .o_dropdown_title,
+            .fa-chevron-right,
+            .fa-chevron-down {
+                display: none;
+            }
+            .o_dropdown_toggler_btn {
+                margin: 0px 2px;
+            }
+            @include media-breakpoint-down(xs) {
+                .o_dropdown {
+                    position: static;
+                }
+                .dropdown-menu {
+                    right: 0;
+                    left: 0;
+                    top: 35px;
+                }
+            }
         }
 
         // Hide all but 2 last breadcrumbs, and render 2nd-to-last as arrow
@@ -379,7 +455,7 @@ html .o_web_client .o_action_manager .o_action {
             &:nth-last-of-type(2) {
                 &::before {
                     color: var(--primary);
-                    content: "\f048"; // .fa-step-backward
+                    content: "\f060"; // .fa-arrow-left
                     cursor: pointer;
                     font-family: FontAwesome;
                 }
@@ -396,33 +472,64 @@ html .o_web_client .o_action_manager .o_action {
             text-overflow: ellipsis;
         }
 
-        // Empty sidebar should not break layout
-        .o_cp_sidebar:blank {
-            display: none;
-        }
-
         // In case you install `mail`, there is a mess on BS vs inline styles
         // we need to fix
         .o_cp_buttons .btn.d-block:not(.d-none) {
             display: inline-block !important;
         }
 
-        // Dropdown with buttons to switch the view type
-        .o_cp_switch_buttons.show {
-            .dropdown-menu {
-                align-content: center;
+        .o_searchview {
+            padding: 1px 0px 3px 0px;
+            &.o_searchview_mobile {
+                cursor: pointer;
+            }
+            &.o_searchview_quick {
                 display: flex;
-                flex-direction: row;
-                justify-content: space-around;
-                padding: 0;
-
-                .btn {
-                    border: {
-                        bottom: 0;
-                        radius: 0;
-                        top: 0;
-                    }
+                flex: 1 1 auto;
+                align-items: center;
+                .o_searchview_input_container {
+                    flex: 1 1 auto;
                 }
+            }
+        }
+    }
+    .o_calendar_view .o_calendar_widget {
+        .fc-timeGridDay-view .fc-axis,
+        .fc-timeGridWeek-view .fc-axis {
+            padding-left: 0px;
+        }
+        .fc-dayGridMonth-view {
+            padding-left: 0px;
+            .fc-week-number {
+                display: none;
+            }
+        }
+        .fc-dayGridYear-view {
+            padding-left: 0px;
+            > .fc-month-container > .fc-month {
+                width: 100%;
+            }
+        }
+        .fc-timeGridDay-view .fc-widget-header {
+            margin: 0 4px;
+        }
+        .fc-timeGridWeek-view .fc-widget-header {
+            word-spacing: 4em;
+            white-space: normal;
+            text-align: center;
+        }
+    }
+    .o_base_settings .o_setting_container {
+        display: block;
+        .settings_tab {
+            flex-flow: row nowrap;
+            padding-top: 0px;
+            .tab {
+                padding-right: 16px;
+            }
+            .selected {
+                background-color: #212529;
+                box-shadow: inset 0 -5px #7c7bad;
             }
         }
     }
@@ -440,13 +547,31 @@ html .o_web_client .o_action_manager .o_action {
             overflow-x: auto;
         }
 
-        .oe_chatter {
+        .o_FormRenderer_chatterContainer {
             padding-top: 0;
+            .o_Activity_info {
+                flex-wrap: wrap;
+            }
+            .o_ActivityBox_title {
+                margin-bottom: 0;
+            }
+            .o_MessageList_separatorDate {
+                padding-bottom: 0;
+            }
         }
-
-        .o_chatter_topbar {
-            height: auto;
-            flex-wrap: wrap-reverse;
+        // Sided chatter scrolling behavior
+        .o_Chatter {
+            height: fit-content;
+            .o_Chatter_fixedPanel {
+                position: sticky;
+                top: 0;
+                z-index: 1;
+                background-color: white;
+                padding-bottom: 10px;
+            }
+            .o_Chatter_scrollPanel {
+                overflow: initial;
+            }
         }
 
         // Sticky statusbar
@@ -458,17 +583,14 @@ html .o_web_client .o_action_manager .o_action {
 
         // Support for long title (with ellipsis)
         .oe_title {
-            span.o_field_widget {
-                &:not(.oe_inline) {
-                    max-width: 100%;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    width: initial;
-
-                    &:active {
-                        white-space: normal;
-                    }
+            span.o_field_widget:not(.oe_inline) {
+                max-width: 100%;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                width: initial;
+                &:active {
+                    white-space: normal;
                 }
             }
         }
@@ -520,7 +642,7 @@ html .o_web_client .o_action_manager .o_action {
                 }
                 height: 100%;
             }
-            .o_statusbar_buttons > .btn {
+            .o_statusbar_buttons.dropdown-menu > .btn {
                 border-radius: 0;
                 border: 0;
                 width: 100%;
@@ -541,7 +663,7 @@ html .o_web_client .o_action_manager .o_action {
 
             // Full width in form sheets
             .o_form_sheet,
-            .oe_chatter {
+            .o_FormRenderer_chatterContainer {
                 min-width: auto;
                 max-width: 98%;
             }
@@ -553,7 +675,7 @@ html .o_web_client .o_action_manager .o_action {
                 }
             }
 
-            .o_chatter {
+            .o_FormRenderer_chatterContainer {
                 padding-top: initial;
 
                 // Display send button on small screens
@@ -605,7 +727,7 @@ html .o_web_client .o_action_manager .o_action {
                     }
                 }
 
-                .o_chatter {
+                .o_FormRenderer_chatterContainer {
                     border-left: 1px solid gray("400");
                     flex: 0 0 $chatter_zone_width;
                     max-width: initial;
@@ -645,7 +767,6 @@ html .o_web_client .o_action_manager .o_action {
     .table-responsive {
         .o_list_table {
             // th & td are here for compatibility with chrome
-            thead,
             thead tr:nth-child(1) th {
                 position: sticky;
                 top: 0;
@@ -693,114 +814,105 @@ html .o_web_client .o_action_manager .o_action {
     cursor: progress;
 }
 
-// Document Viewer
-.o_web_client.o_chatter_position_sided {
-    .o_modal_fullscreen.o_document_viewer {
-        // On-top of navbar
-        z-index: 10;
-
-        &.o_responsive_document_viewer {
-            /* Show sided viewer on large screens */
-            @include media-breakpoint-up(lg) {
-                width: $chatter_zone_width;
-                margin-left: auto;
-                right: 0;
-
-                /* Show/Hide control buttons (next, prev, etc..) */
-                &:hover .arrow,
-                &:hover .o_viewer_toolbar {
-                    display: flex;
-                }
-                .arrow,
-                .o_viewer_toolbar {
-                    display: none;
-                }
-
-                .o_viewer_img_wrapper {
-                    position: relative;
-
-                    .o_viewer_pdf {
-                        width: 95%;
-                    }
-                }
-            }
-
-            .o_minimize_btn {
-                display: none;
-            }
+// Attachment Viewer
+.o_web_client.o_chatter_position_sided .o_Dialog_AttachmentViewer {
+    /* Show sided viewer on large screens */
+    @include media-breakpoint-up(lg) {
+        position: static;
+        .o_AttachmentViewer_main {
+            padding-bottom: 20px;
         }
-        &:not(.o_responsive_document_viewer) {
-            .o_maximize_btn {
+        .o_AttachmentViewer {
+            // On-top of navbar
+            z-index: 10;
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin-left: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+
+            .o_AttachmentViewer_name {
+                display: contents;
+            }
+
+            width: $chatter_zone_width;
+            &.o_AttachmentViewer_maximized {
+                width: 100%;
+            }
+
+            /* Show/Hide control buttons (next, prev, etc..) */
+            &:hover .o_AttachmentViewer_buttonNavigation,
+            &:hover .o_AttachmentViewer_toolbar {
+                display: flex;
+            }
+            .o_AttachmentViewer_buttonNavigation,
+            .o_AttachmentViewer_toolbar {
                 display: none;
             }
-        }
-        @include media-breakpoint-down(lg) {
-            .o_minimize_btn,
-            .o_maximize_btn {
-                display: none;
+            .o_AttachmentViewer_viewIframe {
+                width: 95%;
             }
         }
     }
-}
-/* Max/Min buttons only are usefull in sided mode */
-.o_web_client:not(.o_chatter_position_sided) {
-    .o_minimize_btn,
-    .o_maximize_btn {
-        display: none;
-    }
-}
-// Apply improvements for Document Viewer on all modes
-.o_modal_fullscreen .o_viewer_content {
-    .o_viewer-header {
-        .o_image_caption {
-            display: contents;
-        }
-
-        // Now uses a container to have more buttons
-        .o_buttons {
-            min-width: 35px;
-            text-align: right;
-
-            // Now close button ('X') it's a fa-icon
-            > .o_close_btn {
-                top: unset;
-                left: unset;
-                bottom: unset;
-                right: unset;
-                font-size: unset;
-                font-weight: unset;
-            }
-        }
-    }
-}
-
-// Search Panel
-@include media-breakpoint-down(sm) {
-    // Hide search panel
-    .o_controller_with_searchpanel {
-        .o_search_panel {
+    @include media-breakpoint-down(md) {
+        .o_AttachmentViewer_headerItemButtonMinimize,
+        .o_AttachmentViewer_headerItemButtonMaximize {
             display: none;
         }
     }
 }
+/* Attachment Viewer Max/Min buttons only are useful in sided mode */
+.o_web_client:not(.o_chatter_position_sided) {
+    .o_AttachmentViewer_headerItemButtonMinimize,
+    .o_AttachmentViewer_headerItemButtonMaximize {
+        display: none;
+    }
+}
 
 .o_control_panel {
-    // Filter Menu item
-    .o_filters_menu {
+    // Filter Menu
+    // Cut long filters names in the filters menu
+    .o_filter_menu {
         .o_menu_item {
-            @include o-search-options-dropdown-custom-item;
-
+            width: auto;
+            @include media-breakpoint-up(md) {
+                max-width: 250px;
+            }
             a {
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
         }
     }
-
     // Enable scroll on dropdowns
     .o_cp_buttons .dropdown-menu {
         max-height: 70vh;
         overflow-y: auto;
         overflow-x: hidden;
     }
+    // Dropdown with buttons to switch the view type
+    .o_cp_switch_buttons.show {
+        .dropdown-menu {
+            align-content: center;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            padding: 0;
+
+            .btn {
+                border: {
+                    bottom: 0;
+                    radius: 0;
+                    top: 0;
+                }
+                font-size: 1.3em;
+            }
+        }
+    }
+}
+
+// Shortcut table ui improvement
+.o_shortcut_table {
+    width: 100%;
 }

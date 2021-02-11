@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- Copyright 2017-2018 Tecnativa - Jairo Llopis
      License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
-<template>
+<templates>
     <t t-extend="Menu">
         <t t-jquery=".o_menu_apps" t-operation="after">
             <!-- Hamburger button to show submenus in sm screens -->
@@ -14,4 +14,4 @@
             </button>
         </t>
     </t>
-</template>
+</templates>
