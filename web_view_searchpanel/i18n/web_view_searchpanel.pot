@@ -33,9 +33,9 @@ msgid "Filters..."
 msgstr ""
 
 #. module: web_view_searchpanel
-#: code:addons/web_view_searchpanel/models/base.py:112
-#: code:addons/web_view_searchpanel/models/base.py:117
-#: code:addons/web_view_searchpanel/models/base.py:124
+#: code:addons/web_view_searchpanel/models/base.py:106
+#: code:addons/web_view_searchpanel/models/base.py:111
+#: code:addons/web_view_searchpanel/models/base.py:118
 #, python-format
 msgid "Not Set"
 msgstr ""
@@ -47,7 +47,7 @@ msgid "Only types %(supported_types)s are supported for category(found type %(fi
 msgstr ""
 
 #. module: web_view_searchpanel
-#: code:addons/web_view_searchpanel/models/base.py:88
+#: code:addons/web_view_searchpanel/models/base.py:82
 #, python-format
 msgid "Only types %(supported_types)s are supported for filter (found type %(field_type)s)"
 msgstr ""
