@@ -11,3 +11,13 @@ class ResUsers(models.Model):
     favorite_company_ids = fields.Many2many(
         string="Favorite Companies", comodel_name="res.company"
     )
+
+    def __init__(self, pool, cr):
+        """ Override of __init__ to add access rights.
+        Access rights are disabled by default, but allowed on some specific
+        fields defined in self.SELF_WRITEABLE_FIELDS.
+        """
+        super().__init__(pool, cr)
+        # duplicate list to avoid modifying the original reference
+        type(self).SELF_WRITEABLE_FIELDS = list(self.SELF_WRITEABLE_FIELDS)
+        type(self).SELF_WRITEABLE_FIELDS.extend(['favorite_company_ids'])
