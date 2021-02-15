@@ -255,6 +255,8 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             var model = this.options.basicFieldParams.model;
             var scontext = _.extend(
                 {}, this._getInternalVirtualRecordContext(), context);
+            // Force qty to 1.0 to launch correct onchanges
+            scontext[`default_${this.options.fieldMap.product_uom_qty}`] = 1.0;
             var sdata = _.extend({}, this._getInternalVirtualRecordData(), data);
             return model.createVirtualRecord(
                 this.options.basicFieldParams.value.id, {
