@@ -180,6 +180,15 @@ Other example for 'purchase.order.line' fields:
 Usage
 =====
 
+When you change the value of a field and switch to edit another record, the
+changes will be applied to the previous record without having to click on
+accept changes.
+
+Parts of the widget:
+~~~~~~~~~~~~~~~~~~~~
+
+  .. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_widget_one2many_product_picker/static/img/product_picker_anat.png
+
 Preview:
 ~~~~~~~~
 
