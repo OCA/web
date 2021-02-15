@@ -523,6 +523,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                     id: record.id,
                 });
                 model.unsetDirty(self.state.id);
+                self.$card.find('.o_catch_attention').removeClass('o_catch_attention');
             });
         },
 
@@ -536,6 +537,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                 id: record.id,
             });
             model.unsetDirty(this.state.id);
+            this.$card.find('.o_catch_attention').removeClass('o_catch_attention');
         },
 
         /**
@@ -583,10 +585,6 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             var $currentTarget = $(currentTarget);
             var $img = $currentTarget.find(".oe_flip_card_front img");
             $target.addClass('o_catch_attention');
-            $target.on('animationend', function () {
-                $target.removeClass('o_catch_attention');
-                $target.off('animationend');
-            });
             $img.addClass('oe_product_picker_catch_attention');
             $img.on('animationend', function () {
                 $img.removeClass('oe_product_picker_catch_attention');
