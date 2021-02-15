@@ -26,8 +26,6 @@ odoo.define('web_widget_one2many_product_picker.widget_tests', function (require
         '</form>';
     };
 
-    console.log(getArch());
-
     QUnit.module('Web Widget One2Many Product Picker', {
         beforeEach: function () {
             this.data = {
