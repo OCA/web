@@ -271,7 +271,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
          */
         _renderView: function () {
             var self = this;
-            var oldWidgets = this.widgets;
+            var oldWidgets = _.compact(this.widgets);
             this.widgets = [];
             this.$recordsContainer = $("<DIV/>", {
                 class: "w-100 row",
