@@ -15,7 +15,7 @@ class WebFavicon(http.Controller):
         request = http.request
         if "uid" in request.env.context:
             user = request.env["res.users"].browse(request.env.context["uid"])
-            company = user.sudo(user.id).company_id
+            company = request.env.company.with_user(user)
         else:
             company = request.env["res.company"].search([], limit=1)
         favicon = company.favicon_backend
