@@ -69,7 +69,7 @@
     </t>
 
     <t t-name="One2ManyProductPicker.FlipCard">
-        <div class="oe_flip_container p-1 col-4 col-sm-4 col-md-2 col-lg-2 col-xl-1">
+        <div class="oe_flip_container p-1 col-12 col-sm-8 col-md-6 col-lg-4 col-xl-3 col-xxl-2">
             <div t-attf-class="oe_flip_card {{!state &amp;&amp; 'disabled' || ''}}">
                 <div class="oe_flip_card_inner text-center">
                     <div t-attf-class="oe_flip_card_front p-0 {{(modified &amp;&amp; 'border-warning') || (state &amp;&amp; !is_virtual &amp;&amp; 'border-success') || ''}}">

@@ -7,6 +7,12 @@
         </xpath>
     </template>
 
+    <template id="_assets_bootstrap" inherit_id="web._assets_bootstrap">
+        <xpath expr="link[2]">
+          <link type="text/css" rel="stylesheet" href="/web_widget_one2many_product_picker/static/src/scss/main_variables.scss"/>
+        </xpath>
+    </template>
+
     <template id="assets_backend" name="account assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
             <link type="text/css" rel="stylesheet"
