@@ -557,6 +557,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
         _addProduct: function () {
             var self = this;
             var model = this.options.basicFieldParams.model;
+            model.updateRecordContext(this.state.id, {ignore_warning: this.options.ignoreWarning});
             var record = model.get(this.state.id);
             var changes = _.pick(record.data, this.options.fieldMap.product_uom_qty);
             if (changes[this.options.fieldMap.product_uom_qty] === 0) {
@@ -564,7 +565,10 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             }
             var model = this.options.basicFieldParams.model;
             this.$card.addClass("blocked");
-            return model.notifyChanges(record.id, changes).then(function () {
+            return model.notifyChanges(
+                record.id,
+                changes
+            ).then(function () {
                 self._saveRecord();
             });
         },
@@ -577,11 +581,15 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
         _incProductQty: function (amount) {
             var self = this;
             var model = this.options.basicFieldParams.model;
+            model.updateRecordContext(this.state.id, {ignore_warning: this.options.ignoreWarning});
             var record = model.get(this.state.id);
             var changes = _.pick(record.data, this.options.fieldMap.product_uom_qty);
             changes[this.options.fieldMap.product_uom_qty] += amount;
 
-            return model.notifyChanges(record.id, changes).then(function () {
+            return model.notifyChanges(
+                record.id,
+                changes
+            ).then(function () {
                 self._processDynamicFields();
                 self._lazyUpdateRecord();
             });

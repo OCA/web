@@ -300,6 +300,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
             });
             this.$extraButtonsContainer = $(qweb.render("One2ManyProductPicker.ExtraButtons"));
             this.$btnLoadMore = this.$extraButtonsContainer.find("#productPickerLoadMore");
+            this.search_data = this._sort_search_data(this.search_data);
             return $.Deferred(function (d) {
                 var defs = self.appendSearchRecords(self.search_data, true);
                 defs[0].then(function () {
@@ -314,6 +315,31 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                     d.resolve(defs[1]);
                 });
             });
+        },
+
+        /**
+         * @param {Array} datas
+         * @returns {Array}
+         */
+        _sort_search_data: function (datas) {
+            if (this.search_group.name === "main_lines") {
+                var field_name = this.options.field_map.product;
+                for (var index_datas in datas) {
+                    var data = datas[index_datas];
+
+                    for (var index_state in this.state.data) {
+                        var state_data = this.state.data[index_state];
+                        if (state_data.data[field_name].res_id === data.id) {
+                            data._order_value = state_data.res_id;
+                        }
+                    }
+                }
+                var sorted_datas = _.chain(datas).sortBy('_order_value').map(function(item) {
+                    return _.omit(item, '_order_value');
+                }).value().reverse();
+                return sorted_datas;
+            }
+            return datas;
         },
 
         /**
@@ -385,6 +411,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                 editDiscount: this.options.edit_discount,
                 editPrice: this.options.edit_price,
                 autoSave: this.options.auto_save,
+                ignoreWarning: this.options.ignore_warning,
             });
         },
 
