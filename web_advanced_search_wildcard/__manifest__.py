@@ -5,17 +5,14 @@
 {
     "name": "Wildcard in advanced search",
     "summary": "Webmodule to add wildcard operators in advanced search field",
-    "version": "12.0.1.0.0",
+    "version": "14.0.1.0.0",
     "website": "https://github.com/OCA/web",
     "category": "web",
     "license": "AGPL-3",
-    "author": "initOS GmbH & Co. KG, Therp BV, "
-              "Odoo Community Association (OCA)",
+    "author": "initOS GmbH & Co. KG, Therp BV, " "Odoo Community Association (OCA)",
     "application": False,
     "installable": True,
-    "depends": [
-        "web"
-    ],
+    "depends": ["web"],
     "data": [
         "views/template.xml",
     ],

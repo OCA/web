@@ -7,4 +7,3 @@ Example: "Zip" - 'matches' - "1%" gives all zip starting with 1
 
 Also allows insensitive exact search.
 Example "Name" - 'matches' - "john" will find "John" and "john" but not "Johnson".
-
