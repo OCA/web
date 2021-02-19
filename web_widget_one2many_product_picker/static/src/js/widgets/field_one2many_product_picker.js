@@ -439,7 +439,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                     discount: "discount",
                 },
                 auto_save: false,
-                allow_warning: true,
+                ignore_warning: false,
             };
         },
 
@@ -662,7 +662,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                 });
                 // This will trigger an "state" update
                 this._setValue(
-                    {operation: "UPDATE", id: evt.data.id, data: evt.data.data}
+                    {operation: "UPDATE", id: evt.data.id, data: evt.data.data},
                 ).then(function () {
                     if (evt.data.callback) {
                         evt.data.callback();
@@ -746,7 +746,8 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
          *
          * @override
          */
-        _setValue: function () {
+
+        _setValue: function (value, options) {
             var self = this;
             return this._super.apply(this, arguments).then(function () {
                 self.updateBadgeLines();
