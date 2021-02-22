@@ -21,6 +21,7 @@ addon | version | summary
 --- | --- | ---
 [web_dialog_size](web_dialog_size/) | 14.0.1.0.0 | A module that lets the user expand a dialog box to the full screen width.
 [web_environment_ribbon](web_environment_ribbon/) | 14.0.1.0.0 | Web Environment Ribbon
+[web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 14.0.1.0.0 | Show list fields as a matrix
 
 [//]: # (end addons)
 
