@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo14-addon-web_dialog_size',
         'odoo14-addon-web_environment_ribbon',
+        'odoo14-addon-web_widget_x2many_2d_matrix',
     ],
     classifiers=[
         'Programming Language :: Python',
