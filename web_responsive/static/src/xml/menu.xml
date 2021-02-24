@@ -4,8 +4,18 @@
         <t
             t-jquery="table.o_shortcut_table > tbody > tr > td:nth-child(2) > span:first-child"
             t-operation="after"
+        > + <span class="o_key">Shift</span></t>
+        <t
+            t-jquery="table.o_shortcut_table > tbody > tr:nth-child(2) > td > span:last-child"
+            t-operation="replace"
         >
-        + <span class="o_key">Shift</span>
-    </t>
+            <span class="o_key">e</span>
+        </t>
+        <t
+            t-jquery="table.o_shortcut_table > tbody > tr:nth-child(3) > td > span:last-child"
+            t-operation="replace"
+        >
+            <span class="o_key">d</span>
+        </t>
     </div>
 </templates>

@@ -16,6 +16,7 @@ odoo.define("web_responsive", function(require) {
     const Chatter = require("mail.Chatter");
     const ListRenderer = require("web.ListRenderer");
     const DocumentViewer = require("mail.DocumentViewer");
+    const ControlPanelRenderer = require("web.ControlPanelRenderer");
 
     /* Hide AppDrawer in desktop and mobile modes.
      * To avoid delays in pages with a lot of DOM nodes we make
@@ -506,6 +507,16 @@ odoo.define("web_responsive", function(require) {
                     newEvent.key = "Shift";
                 }
             }
+            // Fix to make `Alt + Shift + A` shortcut working on Google Chrome.
+            if (
+                alt &&
+                shift &&
+                newEvent.keyCode == 65 &&
+                this.BrowserDetection.isBrowserChrome()
+            ) {
+                setTimeout(() => $("a.full").click(), 0);
+                newEvent.keyCode = 0;
+            }
             return newEvent;
         },
 
@@ -516,11 +527,40 @@ odoo.define("web_responsive", function(require) {
         _onKeyUp: function(keyUpEvent) {
             return this._super(this._shiftPressed(keyUpEvent));
         },
+
+        // Tune excluded keys for automatic assignment to buttons
+        _getAllUsedAccessKeys: function() {
+            var usedAccessKeys = this._super.apply(this, arguments);
+            usedAccessKeys.push("I"); // 'Alt + Shift + I' isn't supported on Chrome
+            usedAccessKeys.push("T"); // 'Alt + Shift + T' isn't supported on Chrome
+            // Keys 'H' and 'J' no more reserved and can be used
+            // Remove only first occurrence cause extra module can have self accesskey='h' or 'j' defined
+            let index = usedAccessKeys.indexOf("J");
+            if (index > -1) {
+                usedAccessKeys.splice(index, 1);
+            }
+            index = usedAccessKeys.indexOf("H");
+            if (index > -1) {
+                usedAccessKeys.splice(index, 1);
+            }
+            return usedAccessKeys;
+        },
     };
 
     // Include the SHIFT+ALT mixin wherever
     // `KeyboardNavigationMixin` is used upstream
     AbstractWebClient.include(KeyboardNavigationShiftAltMixin);
+
+    // ControlPanelRenderer: Replace breadcrumbs accesskey to 'Q' cause 'Alt + Shift + B' doesn't work on Chrome
+    ControlPanelRenderer.include({
+        _renderBreadcrumbsItem: function() {
+            var $bc = this._super.apply(this, arguments);
+            if ($bc.attr("accessKey")) {
+                $bc.attr("accessKey", "q");
+            }
+            return $bc;
+        },
+    });
 
     // DocumentViewer: Add support to maximize/minimize
     DocumentViewer.include({
