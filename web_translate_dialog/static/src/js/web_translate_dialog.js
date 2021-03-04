@@ -22,12 +22,18 @@ odoo.define("web_translate_dialog.translate_dialog", function(require) {
         template: "TranslateDialog",
         init: function(parent, options) {
             var title_string = _t("Translate fields: /");
+            var field_names = false;
             var single_field = false;
             if (options.field) {
-                var field_names = [options.field.fieldName];
+                this.record_id = options.field.id;
+                var record = parent.model.get(options.field.id);
+                this.model = record.model;
+                field_names = [options.field.fieldName];
                 single_field = true;
                 title_string = title_string.replace("/", field_names);
             } else {
+                this.record_id = parent.handle;
+                this.model = parent.modelName;
                 field_names = this.get_translatable_fields(parent);
             }
             this._super(parent, {title: title_string, size: "x-large"});
@@ -197,7 +203,7 @@ odoo.define("web_translate_dialog.translate_dialog", function(require) {
             var def = $.Deferred();
             deferred.push(def);
             rpc.query({
-                model: this.view.modelName,
+                model: this.model,
                 method: "get_field_translations",
                 args: [[this.res_id]],
                 kwargs: {
@@ -235,7 +241,7 @@ odoo.define("web_translate_dialog.translate_dialog", function(require) {
 
                     var context = new Context(session.user_context, {lang: code});
                     rpc.query({
-                        model: self.view.modelName,
+                        model: self.model,
                         method: "write",
                         args: [self.res_id, text],
                         kwargs: {context: context.eval()},
@@ -243,13 +249,20 @@ odoo.define("web_translate_dialog.translate_dialog", function(require) {
                         done.resolve();
                     });
                     if (code === self.view_language) {
+                        var changes = {};
                         _.each(text, function(value, key) {
-                            var view_elem = self.view.$(":input[name='" + key + "']");
-                            view_elem.val(value).trigger("change");
+                            changes[key] = value;
+                        });
+                        self.trigger_up("field_changed", {
+                            dataPointID: self.record_id,
+                            changes: changes,
                         });
                     }
                     return done;
                 });
+            });
+            save_mutex.exec(function() {
+                self.view.reload();
             });
             this.close();
         },
