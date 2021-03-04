@@ -27,11 +27,16 @@ var TranslateDialog = Dialog.extend({
         var field_names;
         var single_field = false;
         if (options.field){
+            this.record_id = options.field.id;
+            var record = parent.model.get(options.field.id)
+            this.model = record.model;
             field_names = [options.field.fieldName];
             single_field = true;
             title_string = title_string.replace('/', field_names);
         }
         else {
+            this.record_id = parent.handle;
+            this.model = parent.modelName;
             field_names = this.get_translatable_fields(parent);
         }
         this._super(parent,
@@ -168,7 +173,7 @@ var TranslateDialog = Dialog.extend({
         var def = $.Deferred();
         deferred.push(def);
         rpc.query({
-            model: this.view.modelName,
+            model: this.model,
             method: 'get_field_translations',
             args: [
                 [this.res_id],
@@ -207,7 +212,7 @@ var TranslateDialog = Dialog.extend({
 
                 var context = new Context(session.user_context, {lang: code});
                 rpc.query({
-                    model: self.view.modelName,
+                    model: self.model,
                     method: 'write',
                     args: [self.res_id, text],
                     kwargs: {context: context.eval()}
@@ -215,9 +220,13 @@ var TranslateDialog = Dialog.extend({
                     done.resolve();
                 });
                 if (code === self.view_language) {
+                    var changes = {};
                     _.each(text, function(value, key) {
-                        var view_elem = self.view.$( ":input[name='" + key +"']")
-                        view_elem.val(value).trigger('change');
+                        changes[key] = value;
+                    });
+                    self.trigger_up('field_changed', {
+                        dataPointID: self.record_id,
+                        changes: changes,
                     });
                 }
                 return done;
