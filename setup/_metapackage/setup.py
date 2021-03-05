@@ -11,6 +11,7 @@ setuptools.setup(
         'odoo14-addon-web_dialog_size',
         'odoo14-addon-web_environment_ribbon',
         'odoo14-addon-web_m2x_options',
+        'odoo14-addon-web_notify',
         'odoo14-addon-web_widget_x2many_2d_matrix',
     ],
     classifiers=[
