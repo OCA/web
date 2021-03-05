@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="assets_backend"
+        name="web_notify assets"
+        inherit_id="web.assets_backend"
+    >
+        <link
+            rel="stylesheet"
+            type="text/scss"
+            href="/web/static/src/scss/webclient.scss"
+            position="after"
+        >
+            <link
+                rel="stylesheet"
+                type="text/scss"
+                href="/web_notify/static/src/scss/webclient.scss"
+            />
+        </link>
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/web_notify/static/src/js/web_client.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_notify/static/src/js/widgets/notification.js"
+            />
+        </xpath>
+    </template>
+</odoo>
