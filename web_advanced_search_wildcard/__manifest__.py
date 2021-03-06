@@ -14,6 +14,6 @@
     "installable": True,
     "depends": ["web"],
     "data": [
-        # "views/template.xml",
+        "views/template.xml",
     ],
 }

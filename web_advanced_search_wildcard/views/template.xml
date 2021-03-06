@@ -7,10 +7,10 @@
         inherit_id="web.assets_backend"
     >
         <xpath expr="." position="inside">
-            <script
+            <!-- <script
                 type="text/javascript"
                 src="/web_advanced_search_wildcard/static/src/js/search.js"
-            />
+            /> -->
         </xpath>
     </template>
 
