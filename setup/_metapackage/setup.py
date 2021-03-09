@@ -55,6 +55,7 @@ setuptools.setup(
         'odoo12-addon-web_view_searchpanel',
         'odoo12-addon-web_widget_bokeh_chart',
         'odoo12-addon-web_widget_color',
+        'odoo12-addon-web_widget_datepicker_fulloptions',
         'odoo12-addon-web_widget_digitized_signature',
         'odoo12-addon-web_widget_domain_editor_dialog',
         'odoo12-addon-web_widget_dropdown_dynamic',
