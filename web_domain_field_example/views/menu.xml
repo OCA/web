@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_product_selection_example" model="ir.actions.act_window">
+        <field name="name">Product Selection Example</field>
+        <field name="view_mode">tree,form</field>
+        <field name="res_model">product.selection.example</field>
+    </record>
+
+    <menuitem
+        id="menu_product_selection_example"
+        action="action_product_selection_example"
+        name="Product Selection Example"
+        parent="base.next_id_2"
+        sequence="95"
+        />
+
+</odoo>

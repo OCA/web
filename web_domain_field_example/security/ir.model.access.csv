@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_selection_example_system,access.product_selection_example.system,model_product_selection_example,base.group_system,1,1,1,1
+access_product_demonstration_system,access.product_demonstration.system,model_product_demonstration,base.group_system,1,1,1,1

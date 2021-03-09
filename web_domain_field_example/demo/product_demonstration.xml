@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="product_example_entertainment" model="product.demonstration">
+        <field name="name">Entertainment for employees</field>
+        <field name="default_code">ENT001</field>
+        <field name="categ_id" ref="product.cat_expense"/>
+    </record>
+
+    <record id="product_example_education" model="product.demonstration">
+        <field name="name">Education for employees</field>
+        <field name="default_code">EDU0001</field>
+        <field name="categ_id" ref="product.cat_expense"/>
+    </record>
+
+    <record id="product_example_backup" model="product.demonstration">
+        <field name="name">Do back-up for customers</field>
+        <field name="default_code">BCK0001</field>
+        <field name="categ_id" ref="product.product_category_1"/>
+    </record>
+
+    <record id="product_example_program" model="product.demonstration">
+        <field name="name">Do programming for customers</field>
+        <field name="default_code">PRG0001</field>
+        <field name="categ_id" ref="product.product_category_1"/>
+    </record>
+
+</odoo>
