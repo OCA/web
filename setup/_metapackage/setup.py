@@ -42,6 +42,7 @@ setuptools.setup(
         'odoo12-addon-web_searchbar_full_width',
         'odoo12-addon-web_send_message_popup',
         'odoo12-addon-web_set_single_page_hidden',
+        'odoo12-addon-web_sheet_full_width',
         'odoo12-addon-web_switch_context_warning',
         'odoo12-addon-web_timeline',
         'odoo12-addon-web_translate_dialog',
