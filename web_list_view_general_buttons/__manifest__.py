@@ -12,6 +12,6 @@
     "license": "AGPL-3",
     "data": ["views/assets.xml"],
     "qweb": ["static/src/xml/*.xml"],
-    "images": ["static/description/main_screenshot.png"],
     "development_status": "Beta",
+    "maintainers": ["dhongu"],
 }
