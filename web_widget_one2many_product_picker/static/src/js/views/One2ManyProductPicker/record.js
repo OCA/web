@@ -649,6 +649,9 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                     this._incProductQty(1);
                     this._doInteractAnim(evt.target, evt.currentTarget);
                     return;
+                } else if ($target.hasClass('safezone')) {
+                    // Do nothing on safe zones
+                    return;
                 }
             }
             if (!this._clickFlipCardDelayed) {
