@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_widget_one2many_product_picker
+# 	* web_widget_one2many_product_picker
 #
 msgid ""
 msgstr ""
@@ -22,13 +22,6 @@ msgstr ""
 #, python-format
 msgid "Add"
 msgstr "Añadir"
-
-#. module: web_widget_one2many_product_picker
-#. openerp-web
-#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker.xml:84
-#, python-format
-msgid "Add 1"
-msgstr "Añadir 1"
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
@@ -93,14 +86,18 @@ msgstr "Subtotal:"
 
 #. module: web_widget_one2many_product_picker
 #: model:ir.model.fields,help:web_widget_one2many_product_picker.field_product_product__image_variant_medium
-msgid "This field holds the image used as image for the product variantor product image medium, limited to 512x512px."
+msgid ""
+"This field holds the image used as image for the product variantor product "
+"image medium, limited to 512x512px."
 msgstr ""
 "Aquest camp conté la imatge que s'utilitza com a imatge per al mitjà "
 "d'imatge del producte que varia el producte, limitada a 512x512px."
 
 #. module: web_widget_one2many_product_picker
 #: model:ir.model.fields,help:web_widget_one2many_product_picker.field_product_product__image_variant_big
-msgid "This field holds the image used as image for the product variantor product image, limited to 1024x1024px."
+msgid ""
+"This field holds the image used as image for the product variantor product "
+"image, limited to 1024x1024px."
 msgstr ""
 "Aquest camp conté la imatge que s'utilitza com a imatge per al mitjà "
 "d'imatge del producte que varia el producte, limitada a 1024x1024px."
@@ -121,3 +118,6 @@ msgstr "Imagen variante media (calculada)"
 #, python-format
 msgid "[No widget %s]"
 msgstr "[Sin widget %s]"
+
+#~ msgid "Add 1"
+#~ msgstr "Añadir 1"
