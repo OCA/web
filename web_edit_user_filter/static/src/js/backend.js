@@ -27,7 +27,7 @@ odoo.define('web_edit_user_filter', function (require) {
                 json_facet.values = facet.get('values');
 
                 _.each(json_facet.values, function (value, i) {
-                    if (typeof value.value === 'object' &&
+                    if (typeof value.value === 'object' && value.value !== null &&
                         'attrs' in value.value) {
                         json_facet.values[i] = {
                             attrs: value.value.attrs,
