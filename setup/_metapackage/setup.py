@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo14-addon-web_dialog_size',
+        'odoo14-addon-web_domain_field',
         'odoo14-addon-web_environment_ribbon',
         'odoo14-addon-web_m2x_options',
         'odoo14-addon-web_notify',
