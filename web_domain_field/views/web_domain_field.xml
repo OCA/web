@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="assets_backend"
+        name="web_domain_field assets"
+        inherit_id="web.assets_backend"
+    >
+        <xpath expr="script[last()]" position="after">
+            <script
+                type="text/javascript"
+                src="/web_domain_field/static/lib/js/pyeval.js"
+            />
+        </xpath>
+    </template>
+</odoo>
