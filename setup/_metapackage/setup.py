@@ -32,6 +32,7 @@ setuptools.setup(
         'odoo13-addon-web_sheet_full_width',
         'odoo13-addon-web_timeline',
         'odoo13-addon-web_tree_dynamic_colored_field',
+        'odoo13-addon-web_tree_image_tooltip',
         'odoo13-addon-web_tree_many2one_clickable',
         'odoo13-addon-web_widget_bokeh_chart',
         'odoo13-addon-web_widget_domain_editor_dialog',
