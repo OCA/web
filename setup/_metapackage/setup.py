@@ -17,6 +17,8 @@ setuptools.setup(
         'odoo12-addon-web_dialog_size',
         'odoo12-addon-web_disable_browser_autocomplete',
         'odoo12-addon-web_disable_export_group',
+        'odoo12-addon-web_domain_field',
+        'odoo12-addon-web_domain_field_example',
         'odoo12-addon-web_drop_target',
         'odoo12-addon-web_edit_user_filter',
         'odoo12-addon-web_editor_background_color',
