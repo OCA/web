@@ -1,7 +1,3 @@
-"use strict";
-/* eslint strict: ["error", "global"] */
-/* eslint-disable no-undef, no-empty-function, no-implicit-globals,
-no-unused-vars */
 /* Copyright 2020 Tecnativa - Alexandre D. Díaz
  * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
 
@@ -11,25 +7,36 @@ no-unused-vars */
  * When the service worker is called to be installed from the "pwa_manager"
  * this class is instantiated.
  */
-var PWA = OdooClass.extend({
 
-    // eslint-disable-next-line
-    init: function (params) {
-        // To be overridden
-    },
 
-    /**
-     * @returns {Promise}
-     */
-    installWorker: function () {
-        return Promise.resolve();
-    },
+odoo.define("web_pwa_oca.PWA", function (require) {
+    "use strict";
 
-    /**
-     * @returns {Promise}
-     */
-    activateWorker: function () {
-        return Promise.resolve();
-    },
+    const OdooClass = require("web.Class");
 
+    const PWA = OdooClass.extend({
+
+        // eslint-disable-next-line
+        init: function (params) {
+            // To be overridden
+        },
+
+        /**
+         * @returns {Promise}
+         */
+        installWorker: function () {
+            // To be overridden
+            return Promise.resolve();
+        },
+
+        /**
+         * @returns {Promise}
+         */
+        activateWorker: function () {
+            // To be overridden
+            return Promise.resolve();
+        },
+    });
+
+    return PWA;
 });
