@@ -21,7 +21,6 @@
     ],
     "data": [
         "templates/assets.xml",
-        "templates/service_worker.xml",
         "views/res_config_settings_views.xml",
     ],
     'images': ['static/description/pwa.png'],

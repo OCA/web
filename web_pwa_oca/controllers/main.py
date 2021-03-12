@@ -12,7 +12,9 @@ class PWA(Controller):
         """Scripts to be imported in the service worker (Order is important)"""
         return [
             "/web/static/lib/underscore/underscore.js",
-            "/web_pwa_oca/static/src/js/worker/libs/class.js",
+            "/web_pwa_oca/static/src/js/worker/jquery-sw-compat.js",
+            "/web/static/src/js/boot.js",
+            "/web/static/src/js/core/class.js",
             "/web_pwa_oca/static/src/js/worker/pwa.js",
         ]
 
