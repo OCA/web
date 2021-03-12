@@ -28,6 +28,23 @@ List View General Buttons
 Features:
  - This module allows you to add general buttons in list views
 
+.. figure:: https://raw.githubusercontent.com/OCA/web/14.0/web_list_view_general_buttons/static/description/usage.jpg
+    :align: center
+    :alt: Usage
+
+
+
+**Table of contents**
+
+.. contents::
+   :local:
+
+Usage
+=====
+
+
+
+
 
 For use, the general_buttons key must be defined in the context of the action.
 This key contains a list of dictionaries in which each button is defined.
@@ -49,6 +66,7 @@ Example:
   }
 
 
+
 .. code:: python
 
   class StockInventoryLine(models.Model):
@@ -57,10 +75,18 @@ Example:
     def print_pdf()
       ...
 
-**Table of contents**
 
-.. contents::
-   :local:
+Another option is to complete the get_general_buttons method in the general_buttons key.
+In this situation we will call the get_general_buttons method which will return the dictionary list.
+
+.. code:: python
+
+  def get_general_buttons(self):
+    return [{
+      'action': "print_pdf",
+      'name': "Print Preview",
+      'model':'stock.inventory.line'
+    }]
 
 Bug Tracker
 ===========
