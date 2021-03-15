@@ -4,7 +4,7 @@
  * Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
-odoo.define("web_timeline.TimelineView", function(require) {
+odoo.define("web_timeline.TimelineView", function (require) {
     "use strict";
 
     const core = require("web.core");
@@ -35,7 +35,7 @@ odoo.define("web_timeline.TimelineView", function(require) {
         /**
          * @override
          */
-        init: function(viewInfo, params) {
+        init: function (viewInfo, params) {
             this._super.apply(this, arguments);
             this.modelName = this.controllerParams.modelName;
 
@@ -65,8 +65,8 @@ odoo.define("web_timeline.TimelineView", function(require) {
             }
 
             const archFieldNames = _.map(
-                _.filter(this.arch.children, item => item.tag === "field"),
-                item => item.attrs.name
+                _.filter(this.arch.children, (item) => item.tag === "field"),
+                (item) => item.attrs.name
             );
             fieldNames = _.union(fieldNames, archFieldNames);
 
@@ -119,7 +119,7 @@ odoo.define("web_timeline.TimelineView", function(require) {
             this.withSearchPanel = false;
         },
 
-        _preapre_vis_timeline_options: function(attrs) {
+        _preapre_vis_timeline_options: function (attrs) {
             return {
                 groupOrder: this.group_order,
                 orientation: "both",
@@ -140,7 +140,7 @@ odoo.define("web_timeline.TimelineView", function(require) {
          * @param {Object} grp2
          * @returns {Integer}
          */
-        group_order: function(grp1, grp2) {
+        group_order: function (grp1, grp2) {
             // Display non grouped elements first
             if (grp1.id === -1) {
                 return -1;
@@ -158,12 +158,12 @@ odoo.define("web_timeline.TimelineView", function(require) {
          * @private
          * @returns {Array}
          */
-        parse_colors: function() {
+        parse_colors: function () {
             if (this.arch.attrs.colors) {
                 return _(this.arch.attrs.colors.split(";"))
                     .chain()
                     .compact()
-                    .map(color_pair => {
+                    .map((color_pair) => {
                         const pair = color_pair.split(":");
                         const color = pair[0];
                         const expr = pair[1];
