@@ -1,5 +1,5 @@
 /* global vis, py */
-odoo.define("web_timeline.TimelineRenderer", function(require) {
+odoo.define("web_timeline.TimelineRenderer", function (require) {
     "use strict";
 
     const AbstractRenderer = require("web.AbstractRenderer");
@@ -24,7 +24,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
             "click .oe_timeline_button_scale_year": "_onScaleYearClicked",
         }),
 
-        init: function(parent, state, params) {
+        init: function (parent, state, params) {
             this._super.apply(this, arguments);
             this.modelName = params.model;
             this.mode = params.mode;
@@ -45,7 +45,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
         /**
          * @override
          */
-        start: function() {
+        start: function () {
             const attrs = this.arch.attrs;
             this.current_window = {
                 start: new moment(),
@@ -66,7 +66,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
         /**
          * Triggered when the timeline is attached to the DOM.
          */
-        on_attach_callback: function() {
+        on_attach_callback: function () {
             const height =
                 this.$el.parent().height() - this.$(".oe_timeline_buttons").height();
             if (height > this.min_height && this.timeline) {
@@ -79,7 +79,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
         /**
          * @override
          */
-        _render: function() {
+        _render: function () {
             return Promise.resolve().then(() => {
                 // Prevent Double Rendering on Updates
                 if (!this.timeline) {
@@ -94,7 +94,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
          *
          * @private
          */
-        _onTodayClicked: function() {
+        _onTodayClicked: function () {
             this.current_window = {
                 start: new moment(),
                 end: new moment().add(24, "hours"),
@@ -110,7 +110,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
          *
          * @private
          */
-        _onScaleDayClicked: function() {
+        _onScaleDayClicked: function () {
             this._scaleCurrentWindow(24);
         },
 
@@ -119,7 +119,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
          *
          * @private
          */
-        _onScaleWeekClicked: function() {
+        _onScaleWeekClicked: function () {
             this._scaleCurrentWindow(24 * 7);
         },
 
@@ -128,7 +128,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
          *
          * @private
          */
-        _onScaleMonthClicked: function() {
+        _onScaleMonthClicked: function () {
             this._scaleCurrentWindow(
                 24 * moment(this.current_window.start).daysInMonth()
             );
@@ -139,7 +139,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
          *
          * @private
          */
-        _onScaleYearClicked: function() {
+        _onScaleYearClicked: function () {
             this._scaleCurrentWindow(
                 24 * (moment(this.current_window.start).isLeapYear() ? 366 : 365)
             );
@@ -151,7 +151,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
          * @param {Integer} factor The timespan (in hours) the window must be scaled to.
          * @private
          */
-        _scaleCurrentWindow: function(factor) {
+        _scaleCurrentWindow: function (factor) {
             if (this.timeline) {
                 this.current_window = this.timeline.getWindow();
                 this.current_window.end = moment(this.current_window.start).add(
@@ -167,7 +167,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
          *
          * @private
          */
-        _computeMode: function() {
+        _computeMode: function () {
             if (this.mode) {
                 let start = false,
                     end = false;
@@ -200,7 +200,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
          *
          * @private
          */
-        init_timeline: function() {
+        init_timeline: function () {
             this._computeMode();
             this.options.editable = {
                 // Add new items by double tapping
@@ -221,7 +221,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
             this.qweb = new QWeb(session.debug, {_s: session.origin}, false);
             if (this.arch.children.length) {
                 const tmpl = utils.json_node_to_xml(
-                    _.filter(this.arch.children, item => item.tag === "templates")[0]
+                    _.filter(this.arch.children, (item) => item.tag === "templates")[0]
                 );
                 this.qweb.add_template(tmpl);
             }
@@ -249,7 +249,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
          *
          * @private
          */
-        draw_canvas: function() {
+        draw_canvas: function () {
             this.canvas.clear();
             if (this.dependency_arrow) {
                 this.draw_dependencies();
@@ -261,7 +261,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
          *
          * @private
          */
-        draw_dependencies: function() {
+        draw_dependencies: function () {
             const items = this.timeline.itemSet.items;
             const datas = this.timeline.itemsData;
             if (!items || !datas) {
@@ -292,7 +292,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
          * @param {Object} options.line_width The width of the line
          * @private
          */
-        draw_dependency: function(from, to, options) {
+        draw_dependency: function (from, to, options) {
             if (!from.displayed || !to.displayed) {
                 return;
             }
@@ -317,18 +317,18 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
          * @private
          * @returns {jQuery.Deferred}
          */
-        on_data_loaded: function(events, group_bys, adjust_window) {
+        on_data_loaded: function (events, group_bys, adjust_window) {
             const ids = _.pluck(events, "id");
             return this._rpc({
                 model: this.modelName,
                 method: "name_get",
                 args: [ids],
                 context: this.getSession().user_context,
-            }).then(names => {
-                const nevents = _.map(events, event =>
+            }).then((names) => {
+                const nevents = _.map(events, (event) =>
                     _.extend(
                         {
-                            __name: _.detect(names, name => name[0] === event.id)[1],
+                            __name: _.detect(names, (name) => name[0] === event.id)[1],
                         },
                         event
                     )
@@ -345,7 +345,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
          * @param {Boolean} adjust_window
          * @private
          */
-        on_data_loaded_2: function(events, group_bys, adjust_window) {
+        on_data_loaded_2: function (events, group_bys, adjust_window) {
             const data = [];
             this.grouped_by = group_bys;
             for (const evt of events) {
@@ -371,7 +371,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
          * @private
          * @returns {Array}
          */
-        split_groups: function(events, group_bys) {
+        split_groups: function (events, group_bys) {
             if (group_bys.length === 0) {
                 return events;
             }
@@ -383,7 +383,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
                     if (group_name instanceof Array) {
                         const group = _.find(
                             groups,
-                            existing_group => existing_group.id === group_name[0]
+                            (existing_group) => existing_group.id === group_name[0]
                         );
                         if (_.isUndefined(group)) {
                             groups.push({
@@ -403,7 +403,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
          * @param {TransformEvent} evt
          * @returns {Object}
          */
-        _get_event_dates: function(evt) {
+        _get_event_dates: function (evt) {
             let date_start = new moment();
             let date_stop = null;
 
@@ -433,10 +433,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
             }
 
             if (!date_stop && date_delay) {
-                date_stop = date_start
-                    .clone()
-                    .add(date_delay, "hours")
-                    .toDate();
+                date_stop = date_start.clone().add(date_delay, "hours").toDate();
             }
 
             return [date_start, date_stop];
@@ -449,7 +446,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
          * @private
          * @returns {Object}
          */
-        event_data_transform: function(evt) {
+        event_data_transform: function (evt) {
             const [date_start, date_stop] = this._get_event_dates(evt);
             let group = evt[this.last_group_bys[0]];
             if (group && group instanceof Array) {
@@ -493,7 +490,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
          * @private
          * @returns {String} Rendered template
          */
-        render_timeline_item: function(evt) {
+        render_timeline_item: function (evt) {
             if (this.qweb.has_template("timeline-item")) {
                 return this.qweb.render("timeline-item", {
                     record: evt,
@@ -512,7 +509,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
          * @param {ClickEvent} e
          * @private
          */
-        on_group_click: function(e) {
+        on_group_click: function (e) {
             if (e.what === "group-label" && e.group !== -1) {
                 this._trigger(
                     e,
@@ -531,7 +528,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
          * @param {Function} callback
          * @private
          */
-        on_update: function(item, callback) {
+        on_update: function (item, callback) {
             this._trigger(item, callback, "onUpdate");
         },
 
@@ -542,7 +539,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
          * @param {Function} callback
          * @private
          */
-        on_move: function(item, callback) {
+        on_move: function (item, callback) {
             this._trigger(item, callback, "onMove");
         },
 
@@ -553,7 +550,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
          * @param {Function} callback
          * @private
          */
-        on_remove: function(item, callback) {
+        on_remove: function (item, callback) {
             this._trigger(item, callback, "onRemove");
         },
 
@@ -564,7 +561,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
          * @param {Function} callback
          * @private
          */
-        on_add: function(item, callback) {
+        on_add: function (item, callback) {
             this._trigger(item, callback, "onAdd");
         },
 
@@ -576,7 +573,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
          * @param {String} trigger
          * @private
          */
-        _trigger: function(item, callback, trigger) {
+        _trigger: function (item, callback, trigger) {
             this.trigger_up(trigger, {
                 item: item,
                 callback: callback,

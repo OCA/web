@@ -1,14 +1,14 @@
-odoo.define("web_timeline.TimelineModel", function(require) {
+odoo.define("web_timeline.TimelineModel", function (require) {
     "use strict";
 
     const AbstractModel = require("web.AbstractModel");
 
     const TimelineModel = AbstractModel.extend({
-        init: function() {
+        init: function () {
             this._super.apply(this, arguments);
         },
 
-        load: function(params) {
+        load: function (params) {
             this.modelName = params.modelName;
             this.fieldNames = params.fieldNames;
             if (!this.preload_def) {
@@ -51,14 +51,14 @@ odoo.define("web_timeline.TimelineModel", function(require) {
          * @private
          * @returns {jQuery.Deferred}
          */
-        _loadTimeline: function() {
+        _loadTimeline: function () {
             return this._rpc({
                 model: this.modelName,
                 method: "search_read",
                 context: this.data.context,
                 fields: this.fieldNames,
                 domain: this.data.domain,
-            }).then(events => {
+            }).then((events) => {
                 this.data.data = events;
                 this.data.rights = {
                     unlink: this.unlink_right,
