@@ -179,6 +179,7 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickModifPriceForm
                         this.trigger_up("update_quick_record", {
                             id: record.id,
                         });
+                        self.model.unsetDirty(self.handle);
                         this.getParent().destroy();
                     }
                 },

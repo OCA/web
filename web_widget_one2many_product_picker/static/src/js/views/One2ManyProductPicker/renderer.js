@@ -104,14 +104,32 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
          */
         updateState: function (state, params) {
             var self = this;
+            var force_update = params.force;
+            delete params.force;
             var sparams = _.extend({}, params, {noRender: true});
-            if (_.isEqual(this.state.data, state.data)) {
+            if (!force_update && _.isEqual(this.state.data, state.data)) {
                 return this._super(state, sparams);
             }
             var old_state = _.clone(this.state.data);
             return this._super(state, sparams).then(function () {
                 self._updateStateRecords(old_state);
             });
+        },
+
+        /**
+         * Recreate the given widget by the state id
+         *
+         * @param {String} state_id
+         * @param {Object} new_state
+         */
+        updateRecord: function (state_id, new_state) {
+            for (var eb = this.widgets.length-1; eb>=0; --eb) {
+                var widget = this.widgets[eb];
+                if (widget.state.id === state_id) {
+                    widget.recreate(new_state);
+                    break;
+                }
+            }
         },
 
         /**
@@ -206,7 +224,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                 var found = false;
                 for (var e in this.state.data) {
                     var current_state = this.state.data[e];
-                    if (current_state.id === old_state.id || (typeof current_state.data.id !== 'undefined' && current_state.data.id === old_state.data.id)) {
+                    if (current_state.id === old_state.id) {
                         found = true;
                         break;
                     }
@@ -215,6 +233,8 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                     states_to_destroy.push(old_state);
                 }
             }
+
+            this.state.data = _.compact(this.state.data);
             this._removeRecords(states_to_destroy, this.state.data);
 
             // Records to Update or Create
@@ -232,7 +252,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                         // Already processed widget (deleted)
                         continue;
                     }
-                    if (widget.state.id === state.id || (typeof state.data.id !== 'undefined' && widget.state.data.id === state.data.id)) {
+                    if (widget.state.id === state.id) {
                         widget.recreate(state);
                         exists = true;
                         break;
@@ -254,6 +274,8 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                         delete this.widgets[e];
                     }
                 }
+
+                this.state.data = _.compact(this.state.data);
 
                 // Need add a new one?
                 if (!exists && search_record_index !== -1) {
@@ -278,6 +300,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
             });
             this.$extraButtonsContainer = $(qweb.render("One2ManyProductPicker.ExtraButtons"));
             this.$btnLoadMore = this.$extraButtonsContainer.find("#productPickerLoadMore");
+            this.search_data = this._sort_search_data(this.search_data);
             return $.Deferred(function (d) {
                 var defs = self.appendSearchRecords(self.search_data, true);
                 defs[0].then(function () {
@@ -292,6 +315,31 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                     d.resolve(defs[1]);
                 });
             });
+        },
+
+        /**
+         * @param {Array} datas
+         * @returns {Array}
+         */
+        _sort_search_data: function (datas) {
+            if (this.search_group.name === "main_lines") {
+                var field_name = this.options.field_map.product;
+                for (var index_datas in datas) {
+                    var data = datas[index_datas];
+
+                    for (var index_state in this.state.data) {
+                        var state_data = this.state.data[index_state];
+                        if (state_data.data[field_name].res_id === data.id) {
+                            data._order_value = state_data.res_id;
+                        }
+                    }
+                }
+                var sorted_datas = _.chain(datas).sortBy('_order_value').map(function(item) {
+                    return _.omit(item, '_order_value');
+                }).value().reverse();
+                return sorted_datas;
+            }
+            return datas;
         },
 
         /**
@@ -362,6 +410,8 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                 showDiscount: this.options.show_discount,
                 editDiscount: this.options.edit_discount,
                 editPrice: this.options.edit_price,
+                autoSave: this.options.auto_save,
+                ignoreWarning: this.options.ignore_warning,
             });
         },
 

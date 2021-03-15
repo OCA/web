@@ -86,6 +86,8 @@ Widget options:
   will lose part of its functionality as the document will be saved every time you
   modify/create a record with the widget.
 
+* ignore_warning > Enable/Disable display onchange warnings (False by default)
+
 All widget options are optional.
 Notice that you can call '_' method to use translations. This only can be used with this widget.
 

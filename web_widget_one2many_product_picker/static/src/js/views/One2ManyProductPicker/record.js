@@ -213,6 +213,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                 is_virtual: this.is_virtual,
                 modified: record && record.context.product_picker_modified,
                 active_model: '',
+                auto_save: this.options.autoSave,
             };
         },
 
@@ -493,11 +494,12 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
         _calcPriceReduced: function () {
             var price_reduce = 0;
             var field_map = this.options.fieldMap;
-            var state_data = this.state.data;
-            if (state_data && state_data[field_map.discount]) {
+            var model = this.options.basicFieldParams.model;
+            var record = model.get(this.state.id);
+            if (record && record.data[field_map.discount]) {
                 price_reduce = tools.priceReduce(
-                    state_data[field_map.price_unit],
-                    state_data[field_map.discount]);
+                    record.data[field_map.price_unit],
+                    record.data[field_map.discount]);
             }
             return price_reduce && tools.monetary(
                 price_reduce,
@@ -516,28 +518,36 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             var model = this.options.basicFieldParams.model;
             var record = model.get(this.state.id);
             return model.save(record.id, {
+                stayInEdit: true,
+                reload: true,
                 savePoint: true,
+                viewType: "form",
             }).then(function () {
                 var record = model.get(self.state.id);
                 self.trigger_up("create_quick_record", {
                     id: record.id,
+                    callback: function () {
+                        self.$card.find('.o_catch_attention').removeClass('o_catch_attention');
+                    }
                 });
                 model.unsetDirty(self.state.id);
-                self.$card.find('.o_catch_attention').removeClass('o_catch_attention');
             });
         },
 
         /**
          * @private
          */
-        _updateRecord: function (changes) {
+        _updateRecord: function () {
+            var self = this;
             var model = this.options.basicFieldParams.model;
             var record = model.get(this.state.id);
             this.trigger_up("update_quick_record", {
                 id: record.id,
+                callback: function () {
+                    self.$card.find('.o_catch_attention').removeClass('o_catch_attention');
+                }
             });
             model.unsetDirty(this.state.id);
-            this.$card.find('.o_catch_attention').removeClass('o_catch_attention');
         },
 
         /**
@@ -546,13 +556,19 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          */
         _addProduct: function () {
             var self = this;
-            var changes = {};
-            if (this.state.data[this.options.fieldMap.product_uom_qty] === 0) {
+            var model = this.options.basicFieldParams.model;
+            model.updateRecordContext(this.state.id, {ignore_warning: this.options.ignoreWarning});
+            var record = model.get(this.state.id);
+            var changes = _.pick(record.data, this.options.fieldMap.product_uom_qty);
+            if (changes[this.options.fieldMap.product_uom_qty] === 0) {
                 changes[this.options.fieldMap.product_uom_qty] = 1;
             }
             var model = this.options.basicFieldParams.model;
             this.$card.addClass("blocked");
-            return model.notifyChanges(this.state.id, changes).then(function () {
+            return model.notifyChanges(
+                record.id,
+                changes
+            ).then(function () {
                 self._saveRecord();
             });
         },
@@ -564,14 +580,16 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          */
         _incProductQty: function (amount) {
             var self = this;
-            this.state.data[this.options.fieldMap.product_uom_qty] += amount;
             var model = this.options.basicFieldParams.model;
+            model.updateRecordContext(this.state.id, {ignore_warning: this.options.ignoreWarning});
             var record = model.get(this.state.id);
-            var state_data = record.data;
-            state_data[this.options.fieldMap.product_uom_qty] += amount;
-            var changes = _.pick(state_data, this.options.fieldMap.product_uom_qty);
+            var changes = _.pick(record.data, this.options.fieldMap.product_uom_qty);
+            changes[this.options.fieldMap.product_uom_qty] += amount;
 
-            return model.notifyChanges(record.id, changes).then(function () {
+            return model.notifyChanges(
+                record.id,
+                changes
+            ).then(function () {
                 self._processDynamicFields();
                 self._lazyUpdateRecord();
             });
