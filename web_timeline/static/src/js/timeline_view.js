@@ -26,11 +26,11 @@ odoo.define("web_timeline.TimelineView", function (require) {
         icon: "fa-tasks",
         jsLibs: ["/web_timeline/static/lib/vis-timeline/vis-timeline-graph2d.js"],
         cssLibs: ["/web_timeline/static/lib/vis-timeline/vis-timeline-graph2d.css"],
-        config: {
+        config: _.extend({}, AbstractView.prototype.config, {
             Model: TimelineModel,
             Controller: TimelineController,
             Renderer: TimelineRenderer,
-        },
+        }),
 
         /**
          * @override
