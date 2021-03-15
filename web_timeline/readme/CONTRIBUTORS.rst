@@ -6,3 +6,5 @@
 * Dennis Sluijk <d.sluijk@onestein.nl>
 * Thong Nguyen Van <thongnv@trobz.com>
 * Alexandre Díaz <alexandre.diaz@tecnativa.com>
+* Murtaza Mithaiwala <mmithaiwala@opensourceintegrators.com>
+* Ammar Officewala <aofficewala@opensourceintegrators.com>

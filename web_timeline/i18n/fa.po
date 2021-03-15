@@ -6,12 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2021-09-23 07:34+0000\n"
+"Last-Translator: Saeed Raeisi <saeed.raesi2020@gmail.com>\n"
+"Language-Team: none\n"
+"Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: web_timeline
 #. openerp-web
@@ -32,12 +35,12 @@ msgstr ""
 #: code:addons/web_timeline/static/src/xml/web_timeline.xml:0
 #, python-format
 msgid "Day"
-msgstr ""
+msgstr "روز"
 
 #. module: web_timeline
 #: model:ir.model.fields,field_description:web_timeline.field_ir_ui_view__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "نام نمایشی"
 
 #. module: web_timeline
 #: model:ir.model.fields,field_description:web_timeline.field_ir_ui_view__id
