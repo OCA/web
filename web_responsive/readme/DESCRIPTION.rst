@@ -89,3 +89,7 @@ Features for computers:
 * Bigger checkboxes in list view
 
   .. image:: ../static/img/big_checkboxes.gif
+
+* Scrollable dropdowns
+
+  .. image:: ../static/img/dropdown_scroll.gif
