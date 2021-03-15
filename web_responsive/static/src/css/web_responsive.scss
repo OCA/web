@@ -407,6 +407,12 @@ html .o_web_client .o_action_manager .o_action {
             display: inline-block !important;
         }
 
+        // Enable scroll on dropdowns
+        .o_cp_buttons .dropdown-menu {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
         // Dropdown with buttons to switch the view type
         .o_cp_switch_buttons.show {
             .dropdown-menu {

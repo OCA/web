@@ -117,6 +117,10 @@ Features for computers:
 
   .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/big_checkboxes.gif
 
+* Scrollable dropdowns
+
+  .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/dropdown_scroll.gif
+
 **Table of contents**
 
 .. contents::
