@@ -1,7 +1,7 @@
 /* Copyright 2018 Onestein
  * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
 
-odoo.define("web_timeline.TimelineCanvas", function(require) {
+odoo.define("web_timeline.TimelineCanvas", function (require) {
     "use strict";
     const Widget = require("web.Widget");
 
@@ -14,7 +14,7 @@ odoo.define("web_timeline.TimelineCanvas", function(require) {
         /**
          * Clears all drawings (svg elements) from the canvas.
          */
-        clear: function() {
+        clear: function () {
             this.$(" > :not(defs)").remove();
         },
 
@@ -27,7 +27,7 @@ odoo.define("web_timeline.TimelineCanvas", function(require) {
          * @param {Number} breakAt The space between the line turns
          * @returns {Array} Each item represents a coordinate
          */
-        get_polyline_points: function(rectFrom, rectTo, widthMarker, breakAt) {
+        get_polyline_points: function (rectFrom, rectTo, widthMarker, breakAt) {
             let fromX = 0,
                 toX = 0;
             if (rectFrom.x < rectTo.x + rectTo.w) {
@@ -91,7 +91,7 @@ odoo.define("web_timeline.TimelineCanvas", function(require) {
          * @param {Number} width Width of the line
          * @returns {HTMLElement} The created SVG polyline
          */
-        draw_arrow: function(from, to, color, width) {
+        draw_arrow: function (from, to, color, width) {
             return this.draw_line(from, to, color, width, "#arrowhead", 10, 12);
         },
 
@@ -107,7 +107,7 @@ odoo.define("web_timeline.TimelineCanvas", function(require) {
          * @param {Number} breakLineAt The space between the line turns
          * @returns {HTMLElement} The created SVG polyline
          */
-        draw_line: function(
+        draw_line: function (
             from,
             to,
             color,
