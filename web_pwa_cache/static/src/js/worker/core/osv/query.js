@@ -190,7 +190,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Query", function (require) {
                 }
             }
 
-            return [from_clause.join(""), this.where_clause.join(" AND "), _.union(from_params, this.where_clause_params)];
+            return [from_clause.join(""), this.where_clause.join(" AND "), from_params.concat(this.where_clause_params)];
         },
 
         toString: function () {

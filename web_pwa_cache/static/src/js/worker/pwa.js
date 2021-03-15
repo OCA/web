@@ -8,8 +8,8 @@ odoo.define("web_pwa_cache.PWA", function (require) {
     const OdooRPC = require("web_pwa_cache.PWA.core.base.RPC");
     const DatabaseManager = require("web_pwa_cache.PWA.core.DatabaseManager");
     const CacheManager = require("web_pwa_cache.PWA.core.CacheManager");
-    const OdooDatabase = require("web_pwa_cache.PWA.core.OdooDatabase");
     const Config = require("web_pwa_cache.PWA.core.Config");
+    const tools = require("web_pwa_cache.PWA.core.base.Tools");
     const ComponentExporter = require("web_pwa_cache.PWA.components.Exporter");
     const ComponentImporter = require("web_pwa_cache.PWA.components.Importer");
     const ComponentPrefetch = require("web_pwa_cache.PWA.components.Prefetch");
@@ -31,9 +31,9 @@ odoo.define("web_pwa_cache.PWA", function (require) {
             this._cache_name = params.cache_name;
             this._prefetched_urls = params.prefetched_urls;
 
-            this._dbmanager = new DatabaseManager();
             this._rpc = new OdooRPC();
-            this._cachemanager = new CacheManager();
+            this._dbmanager = new DatabaseManager(this);
+            this._cachemanager = new CacheManager(this);
 
             this._whenLoaded();
         },
@@ -43,9 +43,8 @@ odoo.define("web_pwa_cache.PWA", function (require) {
                 this._isLoaded = false;
                 this._loadPromise = new Promise(async resolve => {
                     await this._cachemanager.cleanAll();
-                    await this._cachemanager.initCache(this._cache_name);
-                    this._db = await this._dbmanager.initDatabase(this._onStartWebClientDB.bind(this));
-                    this._odoodb = new OdooDatabase(this);
+                    await this._cachemanager.start(this._cache_name);
+                    await this._dbmanager.start();
                     this.config = new Config(this);
                     await this._initComponents();
                     this.config.sendToClient();
@@ -101,7 +100,6 @@ odoo.define("web_pwa_cache.PWA", function (require) {
          * @override
          */
         processRequest: function (request) {
-            return fetch(request); // FIXME: Bypass cache implementation
             if (_.isEmpty(this._components)) {
                 // PWA Not Actually Loaded
                 console.warn("[ServiceWorker] The components are not currently loaded... Fallback to default browser behaviour.");
@@ -115,7 +113,7 @@ odoo.define("web_pwa_cache.PWA", function (require) {
                         // need redirect '/'?
                         const url = new URL(request.url);
                         if (url.pathname === '/' && (isOffline || isStandalone)) {
-                            return resolve(ResponseRedirect('/web'));
+                            return resolve(tools.ResponseRedirect('/web'));
                         }
                         // Strategy: Cache First
                         const response_cache = await this._cachemanager.get(this._cache_name).match(request);
@@ -151,7 +149,6 @@ odoo.define("web_pwa_cache.PWA", function (require) {
                 return new Promise(async (resolve, reject) => {
                     try {
                         const isStandalone = await this.config.isStandaloneMode();
-                        console.log("IS STANDALONE:", isStandalone);
                         if (isStandalone) {
                             const isOffline = await this.config.isOfflineMode();
                             const request_cloned_cache = request.clone();
@@ -233,279 +230,6 @@ odoo.define("web_pwa_cache.PWA", function (require) {
                 return "--call_button";
             }
             return "";
-        },
-
-        /**
-         * Creates the schema of the used database:
-         *  - views: Store views
-         *  - actions: Store actions
-         *  - sync: Store transactions to synchronize
-         *  - config: Store PWA configurations values
-         *  - functions: Store function calls results
-         *  - post: Store post calls results
-         *  - userdata: Store user data configuration values
-         *  - onchange: Store onchange values
-         *  - template: Store templates
-         *  - model: Store model information
-         *  - name_search: Store records to improve
-         *                search performance
-         *  - binary: Store records to improve
-         *                search performance
-         *
-         * @private
-         * @param {IDBDatabaseEvent} evt
-         */
-        _onStartWebClientDB: function (db) {
-            return new Promise(async (resolve, reject) => {
-                console.log("[ServiceWorker] Generating DB Schema...");
-                try {
-                    const model_info_model_metadata = {
-                        table: this._dbmanager.getInternalTableName('model_metadata'),
-                        model: this._dbmanager.getInternalTableName('model_metadata'),
-                        internal: true,
-                        fields: {
-                            id: {type: 'integer', store: true},
-                            model: {type: 'char', store: true},
-                            name: {type: 'char', store: true},
-                            internal: {type: 'boolean', store: true},
-                            orderby: {type: 'char', store: true},
-                            rec_name: {type: 'char', store: true},
-                            fields: {type: 'json', store: true},
-                            view_types: {type: 'json', store: true},
-                            parent_store: {type: 'char', store: true},
-                            parent_name: {type: 'char', store: true},
-                            inherits: {type: 'json', store: true},
-                            table: {type: 'char', store: true},
-                            prefetch_last_update: {type: 'datetime', store: true},
-                            defaults: {type: 'json', store: true},
-                        }
-                    };
-                    await this._dbmanager.createTable(model_info_model_metadata);
-                    await db.query([`CREATE UNIQUE INDEX IF NOT EXISTS model_metadata_model ON ${this._dbmanager.getInternalTableName('model_metadata')} (model)`]);
-                    await this._dbmanager.createOrUpdateRecord(model_info_model_metadata, model_info_model_metadata, ["model"]);
-
-                    const model_info_views = {
-                        table: this._dbmanager.getInternalTableName('views'),
-                        model: this._dbmanager.getInternalTableName('views'),
-                        internal: true,
-                        fields: {
-                            id: {type: 'integer', store: true},
-                            name: {type: 'char', store: true},
-                            type: {type: 'char', store: true},
-                            model: {type: 'char', store: true},
-                            fields: {type: 'json', store: true},
-                            base_model: {type: 'char', store: true},
-                            field_parent: {type: 'char', store: true},
-                            toolbar: {type: 'char', store: true},
-                            arch: {type: 'char', store: true},
-                            view_id: {type: 'many2one', store: true},
-                            standalone: {type: 'boolean', store: true},
-                        }
-                    };
-                    await this._dbmanager.createTable(model_info_views);
-                    await db.query([`CREATE UNIQUE INDEX IF NOT EXISTS views_model_view_id_type ON ${this._dbmanager.getInternalTableName('views')} (model, view_id, type)`]);
-                    await this._dbmanager.createOrUpdateRecord(model_info_model_metadata, model_info_views, ["model"]);
-
-                    const model_info_actions = {
-                        table: this._dbmanager.getInternalTableName('actions'),
-                        model: this._dbmanager.getInternalTableName('actions'),
-                        internal: true,
-                        fields: {
-                            id: {type: 'integer', store: true},
-                            flags: {type: 'json', store: true},
-                            display_name: {type: 'char', store: true},
-                            create_date: {type: 'datetime', store: true},
-                            view_ids: {type: 'one2many', store: true},
-                            write_uid: {type: 'many2one', store: true},
-                            name: {type: 'char', store: true},
-                            type: {type: 'selection', store: true},
-                            res_model: {type: 'char', store: true},
-                            search_view: {type: 'text', store: true},
-                            create_uid: {type: 'many2one', store: true},
-                            filter: {type: 'char', store: true},
-                            target: {type: 'selection', store: true},
-                            groups_id: {type: 'many2many', store: true},
-                            limit: {type: 'integer', store: true},
-                            view_mode: {type: 'selection', store: true},
-                            views: {type: 'json', store: true},
-                            context: {type: 'json', store: true},
-                            auto_search: {type: 'boolean', store: true},
-                            help: {type: 'html', store: true},
-                            search_view_id: {type: 'many2one', store: true},
-                            res_id: {type: 'integer', store: true},
-                            write_date: {type: 'datetime', store: true},
-                            domain: {type: 'char', store: true},
-                            src_model: {type: 'char', store: true},
-                            view_id: {type: 'many2one', store: true},
-                            binding_type: {type: 'selection', store: true},
-                            xml_id: {type: 'char', store: true},
-                            usage: {type: 'selection', store: true},
-                            binding_model_id: {type: 'many2one', store: true},
-                            multi: {type: 'boolean', store: true},
-                            link_field_id: {type: 'many2one', store: true},
-                            crud_model_id: {type: 'many2one', store: true},
-                            activity_user_id: {type: 'many2one', store: true},
-                            activity_date_deadline_range: {type: 'integer', store: true},
-                            child_ids: {type: 'one2many', store: true},
-                            model_id: {type: 'many2one', store: true},
-                            activity_note: {type: 'html', store: true},
-                            crud_model_name: {type: 'char', store: true},
-                            state: {type: 'selection', store: true},
-                            code: {type: 'char', store: true},
-                            activity_type_id: {type: 'many2one', store: true},
-                            fields_lines: {type: 'one2many', store: true},
-                            partner_ids: {type: 'many2many', store: true},
-                            website_path: {type: 'char', store: true},
-                            channel_ids: {type: 'one2many', store: true},
-                            activity_user_field_name: {type: 'char', store: true},
-                            activity_user_type: {type: 'selection', store: true},
-                            sequence: {type: 'integer', store: true},
-                            activity_summary: {type: 'char', store: true},
-                            website_published: {type: 'boolean', store: true},
-                            website_url: {type: 'char', store: true},
-                            template_id: {type: 'many2one', store: true},
-                            activity_date_deadline_range_type: {type: 'selection', store: true},
-                            model_name: {type: 'char', store: true},
-                            params_store: {type: 'json'},
-                            tag: {type: 'char', store: true},
-                            params: {type: 'json', store: true},
-                            __last_update: {type: 'datetime', store: true},
-                        }
-                    };
-                    await this._dbmanager.createTable(model_info_actions);
-                    await this._dbmanager.createOrUpdateRecord(model_info_model_metadata, model_info_actions, ["model"]);
-
-                    const model_info_sync = {
-                        table: this._dbmanager.getInternalTableName('sync'),
-                        model: this._dbmanager.getInternalTableName('sync'),
-                        internal: true,
-                        fields: {
-                            id: {type: 'integer', store: true},
-                            model: {type: 'char', store: true},
-                            args: {type: 'json', store: true},
-                            date: {type: 'datetime', store: true},
-                            linked: {type: 'json', store: true},
-                            kwargs: {type: 'json', store: true},
-                        }
-                    };
-                    await this._dbmanager.createTable(model_info_sync);
-                    await this._dbmanager.createOrUpdateRecord(model_info_model_metadata, model_info_sync, ["model"]);
-
-                    const model_info_config = {
-                        table: this._dbmanager.getInternalTableName('config'),
-                        model: this._dbmanager.getInternalTableName('config'),
-                        internal: true,
-                        fields: {
-                            id: {type: 'integer', store: true},
-                            param: {type: 'char', store: true},
-                            value: {type: 'json', store: true},
-                        }
-                    };
-                    await this._dbmanager.createTable(model_info_config);
-                    await db.query([`CREATE UNIQUE INDEX IF NOT EXISTS config_param ON ${this._dbmanager.getInternalTableName('config')} (param)`]);
-                    await this._dbmanager.createOrUpdateRecord(model_info_model_metadata, model_info_config, ["model"]);
-
-                    const model_info_function = {
-                        table: this._dbmanager.getInternalTableName('function'),
-                        model: this._dbmanager.getInternalTableName('function'),
-                        internal: true,
-                        fields: {
-                            id: {type: 'integer', store: true},
-                            model: {type: 'char', store: true},
-                            method: {type: 'char', store: true},
-                            params: {type: 'json', store: true},
-                            result: {type: 'json', store: true},
-                        }
-                    };
-                    await this._dbmanager.createTable(model_info_function);
-                    await db.query([`CREATE UNIQUE INDEX IF NOT EXISTS function_model_method_params ON ${this._dbmanager.getInternalTableName('function')} (model, method, params)`]);
-                    await this._dbmanager.createOrUpdateRecord(model_info_model_metadata, model_info_function, ["model"]);
-
-                    const model_info_post = {
-                        table: this._dbmanager.getInternalTableName('post'),
-                        model: this._dbmanager.getInternalTableName('post'),
-                        internal: true,
-                        fields: {
-                            id: {type: 'integer', store: true},
-                            pathname: {type: 'char', store: true},
-                            params: {type: 'json', store: true},
-                            result: {type: 'json', store: true},
-                        }
-                    };
-                    await this._dbmanager.createTable(model_info_post);
-                    await db.query([`CREATE UNIQUE INDEX IF NOT EXISTS post_pathname_params ON ${this._dbmanager.getInternalTableName('post')} (pathname, params)`]);
-                    await this._dbmanager.createOrUpdateRecord(model_info_model_metadata, model_info_post, ["model"]);
-
-                    const model_info_userdata = {
-                        table: this._dbmanager.getInternalTableName('userdata'),
-                        model: this._dbmanager.getInternalTableName('userdata'),
-                        internal: true,
-                        fields: {
-                            id: {type: 'integer', store: true},
-                            param: {type: 'char', store: true},
-                            value: {type: 'json', store: true},
-                        }
-                    };
-                    await this._dbmanager.createTable(model_info_userdata);
-                    await db.query([`CREATE UNIQUE INDEX IF NOT EXISTS userdata_param ON ${this._dbmanager.getInternalTableName('userdata')} (param)`]);
-                    await this._dbmanager.createOrUpdateRecord(model_info_model_metadata, model_info_userdata, ["model"]);
-
-                    const model_info_onchange = {
-                        table: this._dbmanager.getInternalTableName('onchange'),
-                        model: this._dbmanager.getInternalTableName('onchange'),
-                        internal: true,
-                        fields: {
-                            id: {type: 'integer', store: true},
-                            model: {type: 'char', store: true},
-                            field: {type: 'char', store: true},
-                            params: {type: 'json', store: true},
-                            changes: {type: 'json', store: true},
-                            formula: {type: 'text', store: true},
-                            triggers: {type: 'char', store: true},
-                            field_value: {type: 'json', store: true},
-                        }
-                    };
-                    await this._dbmanager.createTable(model_info_onchange);
-                    await db.query([`CREATE INDEX IF NOT EXISTS onchange_model_field_field_value ON ${this._dbmanager.getInternalTableName('onchange')} (model, field, field_value)`]);
-                    await this._dbmanager.createOrUpdateRecord(model_info_model_metadata, model_info_onchange, ["model"]);
-
-                    const model_info_template = {
-                        table: this._dbmanager.getInternalTableName('template'),
-                        model: this._dbmanager.getInternalTableName('template'),
-                        internal: true,
-                        fields: {
-                            id: {type: 'integer', store: true},
-                            xml_ref: {type: 'char', store: true},
-                            template: {type: 'text', store: true},
-                        }
-                    };
-                    await this._dbmanager.createTable(model_info_template);
-                    await db.query([`CREATE UNIQUE INDEX IF NOT EXISTS template_xml_ref ON ${this._dbmanager.getInternalTableName('template')} (xml_ref)`]);
-                    await this._dbmanager.createOrUpdateRecord(model_info_model_metadata, model_info_template, ["model"]);
-
-                    const model_info_defaults = {
-                        table: this._dbmanager.getInternalTableName('defaults'),
-                        model: this._dbmanager.getInternalTableName('defaults'),
-                        internal: true,
-                        fields: {
-                            id: {type: 'integer', store: true},
-                            model: {type: 'char', store: true},
-                            formula: {type: 'text', store: true},
-                        }
-                    };
-                    await this._dbmanager.createTable(model_info_defaults);
-                    await this._dbmanager.createOrUpdateRecord(model_info_model_metadata, model_info_defaults, ["model"]);
-
-                    // db.createObjectStore("binary", {
-                    //     keyPath: ["model", "id"],
-                    //     unique: true,
-                    // });
-                } catch (err) {
-                    return reject(err);
-                }
-
-                return resolve();
-            });
         },
 
         /**

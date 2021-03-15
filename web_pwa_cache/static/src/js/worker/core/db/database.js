@@ -1,21 +1,22 @@
 /* Copyright 2020 Tecnativa - Alexandre D. Díaz
  * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
 
-odoo.define("web_pwa_cache.PWA.components.SWComponent", function (require) {
+odoo.define("web_pwa_cache.PWA.core.db.Database", function (require) {
     "use strict";
 
     const ParentedMixin = require('web.mixins').ParentedMixin;
     const OdooClass = require("web.Class");
 
 
-    const SWComponent = OdooClass.extend(ParentedMixin, {
+    const Database = OdooClass.extend(ParentedMixin, {
 
         /**
          * @param {OdooClass} parent
          */
-        init: function (parent) {
+        init: function (parent, db_name) {
             ParentedMixin.init.call(this);
             this.setParent(parent);
+            this._db_name = db_name;
         },
 
         /**
@@ -23,29 +24,21 @@ odoo.define("web_pwa_cache.PWA.components.SWComponent", function (require) {
          */
         setParent: function (parent) {
             ParentedMixin.setParent.call(this, parent);
-            this._odoodb = this.getParent()._odoodb;
-            this._db = this.getParent()._db;
-            this._dbmanager = this.getParent()._dbmanager;
-            this._cache = this.getParent()._cachemanager;
-            this._rpc = this.getParent()._rpc;
         },
 
         /**
+         * @param {Function} onupgradedb
          * @returns {Promise}
          */
-        start: function () {
+        start: function (onupgradedb) {
             return Promise.resolve();
         },
 
-        /**
-         * Wrapper
-         * @returns {Promise}
-         */
-        isOfflineMode: function () {
-            return this.getParent().config.isOfflineMode();
+        getDB: function () {
+            throw new Error("Not implemented!");
         },
     });
 
-    return SWComponent;
+    return Database;
 
  });

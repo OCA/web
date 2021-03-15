@@ -24,11 +24,13 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
                     const operator = data.kwargs.operator || 'ilike';
                     const search = 'name' in data.kwargs ? data.kwargs.name : data.args[0];
                     let domain = 'args' in data.kwargs ? data.kwargs.args : data.args[1];
-                    const model_info = await this._odoodb.getModelInfo(model);
+                    const model_info = await this._dbmanager.sqlitedb.getModelInfo(model);
                     if (search) {
                         domain = _.union([[model_info.rec_name, operator, search]], domain);
                     }
-                    let [records] = await this.search_read(model, domain);
+                    console.log("--------- SEARCH");
+                    console.log(model, domain);
+                    let records = await this._dbmanager.search_read(model, domain);
                     const filtered_records = records.map((item) =>
                         _.chain(item).pick(["id", "display_name"]).values().value()
                     );
@@ -55,7 +57,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
                     if (typeof record_ids[0] !== "number") {
                         record_ids = record_ids[0];
                     }
-                    const records = await this._odoodb.browse(model, record_ids);
+                    const records = await this._dbmanager.browse(model, record_ids);
                     if (!records.length && !is_offline_mode) {
                         // Only reject if not offline
                         return reject();
@@ -79,8 +81,8 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     // If doesn't exists any onchange record for the current model avoid all the process
-                    const model_info_onchange = await this._dbmanager.getModelInfo("onchange", true);
-                    const onchange_count = await this._odoodb.count(model_info_onchange, [["model", "=", model]]);
+                    const model_info_onchange = await this._dbmanager.sqlitedb.getModelInfo("onchange", true);
+                    const onchange_count = await this._dbmanager.count(model_info_onchange, [["model", "=", model]]);
                     if (!onchange_count) {
                         const is_offline_mode = await this.isOfflineMode();
                         if (is_offline_mode) {
@@ -98,19 +100,19 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
                     const res = {value: {}};
                     for (const field_name of fields_changed) {
                         try {
-                            let [records] = await this._odoodb.search_read(
+                            let records = await this._dbmanager.search_read(
                                 model_info_onchange,
                                 [["model", "=", model], ["field", "=", field], ["field_value", "=", record_data[field_name]]]
                             );
-                            records = this._odoodb.filterOnchangeRecordsByParams(
+                            records = this._dbmanager.filterOnchangeRecordsByParams(
                                 records, field_name, record_data);
                             if (_.isEmpty(records)) {
-                                const fields_info = await this._odoodb.getModelFieldsInfo(model, [field_name]);
+                                const fields_info = await this._dbmanager.getModelFieldsInfo(model, [field_name]);
                                 if (
                                     fields_info &&
                                     "relation" in fields_info[field_name]
                                 ) {
-                                    const isOfflineRecord = await this._odoodb.isOfflineRecord(
+                                    const isOfflineRecord = await this._dbmanager.isOfflineRecord(
                                         fields_info[field_name].relation,
                                         record_data[field_name]
                                     );
@@ -180,7 +182,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
         read: function (model, data) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const records = await this._odoodb.browse(data.model, data.args[0]);
+                    const records = await this._dbmanager.browse(data.model, data.args[0]);
                     if (records.length === 0) {
                         const is_offline_mode = await this.isOfflineMode();
                         if (is_offline_mode) {
@@ -188,25 +190,27 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
                         }
                         return reject();
                     }
-                    const pick_keys = ["id"].concat(data.args[1]);
+                    const pick_keys = _.union(["id"], data.args[1]);
                     const mapped_records = _.map(records, (item) =>
                         _.pick(item, pick_keys)
                     );
                     // Need binary fields?
-                    const binary_field_infos = await this._odoodb.getModelFieldsInfo(data.model, pick_keys, "binary");
+                    const binary_field_infos = await this._dbmanager.getModelFieldsInfo(data.model, pick_keys, "binary");
                     const binary_field_names = Object.keys(binary_field_infos);
                     if (binary_field_names.length && _.difference(pick_keys, binary_field_names).length) {
                         for (let id of data.args[0]) {
-                            const binary_records = await this._odoodb.browseBinary(data.model, id);
-                            if (binary_records.length) {
-                                mapped_records = _.map(mapped_records, (item) =>
-                                    _.extend(item, _.pick(binary_records, binary_field_names))
-                                );
+                            const binary_record = await this._dbmanager.browseBinary(data.model, id);
+                            if (binary_record) {
+                                _.chain(mapped_records).findWhere({id: id}).extend(_.pick(binary_record, binary_field_names));
                             }
                         }
                     }
+                    console.log("--------------------- PASA READ 55");
+                    console.log(records);
+                    console.log(mapped_records);
                     return resolve(mapped_records);
                 } catch (err) {
+                    console.log("THE ERROR", err);
                     return reject(err);
                 }
             });
@@ -250,9 +254,9 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
                     const is_offline_mode = await this.isOfflineMode();
                     if (is_offline_mode) {
                         const record_id = data.args[0];
-                        const records = await this._odoodb.browse(model, record_id);
-                        records[0].id = this._odoodb.genRecordID();
-                        const model_info = await this._dbmanager.getModelInfo(model);
+                        const records = await this._dbmanager.browse(model, record_id);
+                        records[0].id = this._dbmanager.genRecordID();
+                        const model_info = await this._dbmanager.sqlitedb.getModelInfo(model);
                         const values = {
                             args: records,
                         };
@@ -283,7 +287,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
         read_template: function (model, data) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_template = await this._dbmanager.getModelInfo("template", true);
+                    const model_info_template = await this._dbmanager.sqlitedb.getModelInfo("template", true);
                     const record = await this.search_read(model_info_template, [['xml_ref', '=', data.args[0]]], 1);
                     if (_.isEmpty(record)) {
                         const is_offline_mode = await this.isOfflineMode();
@@ -307,7 +311,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
         write: function (model, data) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info = await this._dbmanager.getModelInfo(model);
+                    const model_info = await this._dbmanager.sqlitedb.getModelInfo(model);
                     await this._process_record_write(model_info, data);
                     return resolve(true);
                 } catch (err) {
@@ -324,7 +328,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
         create: function (model, data) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info = await this._dbmanager.getModelInfo(model);
+                    const model_info = await this._dbmanager.sqlitedb.getModelInfo(model);
 
                     // Get context defaults
                     const context_defaults = data.kwargs.context;
@@ -353,7 +357,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
                     }
 
                     data.args = _.map(data.args, (item) =>
-                        _.extend({id: this._odoodb.genRecordID()}, item, defaults)
+                        _.extend({id: this._dbmanager.genRecordID()}, item, defaults)
                     );
                     const c_ids = await this._process_record_create(
                         model_info,
@@ -374,9 +378,9 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
          */
         unlink: function (model, data) {
             return new Promise(async (resolve) => {
-                await this._odoodb.unlink(model, data.args[0]);
-                const model_info_sync = await this._dbmanager.getModelInfo("sync", true);
-                await this._odoodb.create(model_info_sync, {
+                await this._dbmanager.unlink(model, data.args[0]);
+                const model_info_sync = await this._dbmanager.sqlitedb.getModelInfo("sync", true);
+                await this._dbmanager.create(model_info_sync, {
                     model: model,
                     method: "unlink",
                     args: [[data.args[0]]],
@@ -394,7 +398,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
         default_get: function (model, data) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_defaults = await this._odoodb.getModelDefaults(model);
+                    const model_defaults = await this._dbmanager.getModelDefaults(model);
                     const is_offline_mode = await this.isOfflineMode();
                     if (_.isEmpty(model_defaults) && !is_offline_mode) {
                         return reject();
@@ -428,7 +432,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
                     if (action_id) {
                         action_domain.push(['action_id', 'in', [action_id, false]]);
                     }
-                    const [records] = await this._odoodb.search_read("ir.filters", _.union(action_domain, [['model_id', '=', model], ['user_id', 'in', [uid, false]]]));
+                    const records = await this._dbmanager.search_read("ir.filters", _.union(action_domain, [['model_id', '=', model], ['user_id', 'in', [uid, false]]]));
                     if (!records.length) {
                         const is_offline_mode = await this.isOfflineMode();
                         if (!is_offline_mode) {
@@ -453,7 +457,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
         load_views: function (model, data) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info = await this._dbmanager.getModelInfo(model);
+                    const model_info = await this._dbmanager.sqlitedb.getModelInfo(model);
                     const options = data.kwargs.options;
                     const views = data.kwargs.views;
                     const res = {};
@@ -462,12 +466,12 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
                     }
                     res.fields = model_info.fields;
                     res.fields_views = {};
-                    const model_info_views = await this._dbmanager.getModelInfo("views", true);
+                    const model_info_views = await this._dbmanager.sqlitedb.getModelInfo("views", true);
                     for (const [view_id, view_type] of views) {
-                        res.fields_views[view_type] = await this._odoodb.search_read(model_info_views, [["model", "=", model], ["view_id", "=", view_id || 0], ["type", "=", view_type==="list"?"tree":view_type]], 1);
+                        res.fields_views[view_type] = await this._dbmanager.search_read(model_info_views, [["model", "=", model], ["view_id", "=", view_id || 0], ["type", "=", view_type==="list"?"tree":view_type]], 1);
                         if (!res.fields_views[view_type]) {
                             // If not view found fallback to form view
-                            res.fields_views[view_type] = await this._odoodb.search_read(model_info_views, [["model", "=", model], ["view_id", "=", view_id || 0], ["type", "=", "form"]], 1);
+                            res.fields_views[view_type] = await this._dbmanager.search_read(model_info_views, [["model", "=", model], ["view_id", "=", view_id || 0], ["type", "=", "form"]], 1);
                         }
 
                         if (_.isEmpty(res.fields_views[view_type])) {
@@ -496,8 +500,8 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
         load_menus: function () {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_userdata = await this._dbmanager.getModelInfo("userdata", true);
-                    const record = await this._odoodb.search_read(model_info_userdata, [["param", "=", "menus"]], 1);
+                    const model_info_userdata = await this._dbmanager.sqlitedb.getModelInfo("userdata", true);
+                    const record = await this._dbmanager.search_read(model_info_userdata, [["param", "=", "menus"]], 1);
                     if (_.isEmpty(record)) {
                         const is_offline_mode = await this.isOfflineMode();
                         if (!is_offline_mode) {
@@ -552,7 +556,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
             return new Promise(async (resolve, reject) => {
                 const xmlid = data.kwargs.xmlid;
                 try {
-                    const record = await this._odoodb.ref(xmlid);
+                    const record = await this._dbmanager.ref(xmlid);
                     if (_.isEmpty(record)) {
                         const is_offline_mode = await this.isOfflineMode();
                         if (!is_offline_mode) {
@@ -575,11 +579,11 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
                 try {
                     let action_id = data.action_id;
                     if (typeof action_id !== "number") {
-                        const action = await this._odoodb.ref(action_id);
+                        const action = await this._dbmanager.ref(action_id);
                         action_id = action.id;
                     }
-                    const model_info_actions = await this._dbmanager.getModelInfo("actions", true);
-                    const record = await this._odoodb.browse(model_info_actions, action_id);
+                    const model_info_actions = await this._dbmanager.sqlitedb.getModelInfo("actions", true);
+                    const record = await this._dbmanager.browse(model_info_actions, action_id);
                     if (_.isEmpty(record)) {
                         const is_offline_mode = await this.isOfflineMode();
                         if (!is_offline_mode) {
@@ -599,8 +603,8 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
         translations: function () {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_userdata = await this._dbmanager.getModelInfo("userdata", true);
-                    const record = await this._odoodb.search_read(model_info_userdata, [["param", "=", "translations"]], 1);
+                    const model_info_userdata = await this._dbmanager.sqlitedb.getModelInfo("userdata", true);
+                    const record = await this._dbmanager.search_read(model_info_userdata, [["param", "=", "translations"]], 1);
                     if (_.isEmpty(record)) {
                         const is_offline_mode = await this.isOfflineMode();
                         if (!is_offline_mode) {
@@ -636,13 +640,21 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
                 let records = false,
                     records_count = 0;
                 try {
-                    [records, records_count] = await this._odoodb.search_read(
+                    records = await this._dbmanager.search_read(
                         pmodel,
                         pdomain,
                         plimit,
+                        _.union(["id"], pfields),
                         poffset,
                         psort
                     );
+
+                    if (plimit && records.length === plimit) {
+                        records_count = await this._dbmanager.count(pmodel, pdomain);
+                    } else {
+                        records_count = records.length + (poffset || 0)
+                    }
+
                 } catch (err) {
                     const is_offline_mode = await this.isOfflineMode();
                     // If not offline we need try from odoo server
@@ -650,7 +662,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
                         return reject(err);
                     }
                 }
-                records = _.map(records, (item) => _.pick(item, ["id"].concat(pfields)));
+
                 if ("kwargs" in data) {
                     return resolve(records);
                 }
@@ -684,7 +696,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
         fields_get: function (model, data) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info = await this._dbmanager.getModelInfo(model);
+                    const model_info = await this._dbmanager.sqlitedb.getModelInfo(model);
                     if (_.isEmpty(model_info)) {
                         const is_offline_mode = await this.isOfflineMode();
                         if (!is_offline_mode) {
@@ -788,8 +800,8 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
         _generic_post: function (pathname, params) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info = await this._dbmanager.getModelInfo("post", true);
-                    const record = await this._odoodb.search_read(model_info, [["pathname", "=", pathname], ["params", "=", params]], 1);
+                    const model_info = await this._dbmanager.sqlitedb.getModelInfo("post", true);
+                    const record = await this._dbmanager.search_read(model_info, [["pathname", "=", pathname], ["params", "=", params]], 1);
                     return resolve(record.result);
                 } catch (err) {
                     return reject(err);
@@ -809,8 +821,8 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
         _generic_function: function (model, method, params) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info = await this._dbmanager.getModelInfo("function", true);
-                    const record = await this._odoodb.search_read(model_info, [["model", "=", model], ["method", "=", method], ["params", "=", params]], 1);
+                    const model_info = await this._dbmanager.sqlitedb.getModelInfo("function", true);
+                    const record = await this._dbmanager.search_read(model_info, [["model", "=", model], ["method", "=", method], ["params", "=", params]], 1);
                     return resolve(record.result);
                 } catch (err) {
                     return reject(err);
@@ -831,18 +843,18 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
         web_image: function (model, id, field, search_params) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    let records = [];
+                    let record = false;
                     let sfield = field;
                     if (_.isEmpty(search_params)) {
-                        records = await this._odoodb.browseBinary(model, Number(id));
+                        record = await this._dbmanager.browseBinary(model, Number(id));
                     } else {
-                        records = await this._odoodb.browseBinary(search_params.model, Number(search_params.id));
+                        record = await this._dbmanager.browseBinary(search_params.model, Number(search_params.id));
                         sfield = search_params.field;
                     }
-                    if (_.isEmpty(records)) {
+                    if (!record) {
                         return reject();
                     }
-                    return resolve(records[0][sfield]);
+                    return resolve(record[sfield]);
                 } catch (err) {
                     return reject(err);
                 }
@@ -864,9 +876,9 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
         _process_record_create: function (model_info, data) {
             return new Promise(async (resolve) => {
                 const records_sync = [];
-                const model_info_sync = this._dbmanager.getModelInfo("sync", true);
+                const model_info_sync = await this._dbmanager.sqlitedb.getModelInfo("sync", true);
                 for (let index in data.args) {
-                    const model_defaults = this._odoodb.getModelDefaults(model_info.model);
+                    const model_defaults = this._dbmanager.getModelDefaults(model_info.model);
                     const record = _.extend({}, model_defaults, data.args[index]);
                     // Write a temporal name
                     if (record.name) {
@@ -885,7 +897,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
                         const field_def = model_info.fields[field];
                         if (field_def.type === "one2many") {
                             const relation = field_def.relation;
-                            const field_model_info = await this._dbmanager.getModelInfo(relation);
+                            const field_model_info = await this._dbmanager.sqlitedb.getModelInfo(relation);
                             if (!records_linked[relation]) {
                                 records_linked[relation] = [];
                             }
@@ -900,7 +912,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
                                         required: true,
                                         relation: model_info.model,
                                     });
-                                    const model_defaults = this._odoodb.getModelDefaults(model_info.model);
+                                    const model_defaults = this._dbmanager.getModelDefaults(model_info.model);
                                     subrecord = _.extend(
                                         {},
                                         model_defaults,
@@ -908,7 +920,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
                                     );
                                     record.display_name = record.name;
                                     subrecord[parent_field] = record.id;
-                                    subrecord.id = this._odoodb.genRecordID();
+                                    subrecord.id = this._dbmanager.genRecordID();
                                     // Write a temporal name
                                     if (subrecord.name) {
                                         subrecord.name += ` (Offline Record #${subrecord.id})`;
@@ -954,7 +966,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
                             }
                             record[field] = _.uniq(ids_to_add);
                             if (subrecords.length) {
-                                await this._odoodb.writeOrCreate(relation, subrecords, true);
+                                await this._dbmanager.writeOrCreate(relation, subrecords, true);
                                 processed_fields.push(field);
                             }
                         }
@@ -974,10 +986,10 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
                         linked: records_linked,
                         kwargs: data.kwargs,
                     });
-                    await this._odoodb.create(model_info_sync, records_sync);
+                    await this._dbmanager.create(model_info_sync, records_sync);
                 }
 
-                await this._odoodb.writeOrCreate(model_info.model, data.args, true);
+                await this._dbmanager.writeOrCreate(model_info.model, data.args, true);
                 return resolve(_.map(data.args, "id"));
             });
         },
@@ -1000,8 +1012,8 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
                     model_info.fields,
                     false
                 );
-                const model_info_sync = this._dbmanager.getModelInfo("sync", true);
-                const records = await this._odoodb.browse(model_info, modified_records);
+                const model_info_sync = await this._dbmanager.sqlitedb.getModelInfo("sync", true);
+                const records = await this._dbmanager.browse(model_info, modified_records);
                 for (const record of records) {
                     const data_to_sync = {};
                     for (const field of modified_fields) {
@@ -1013,7 +1025,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
                                 data_to_sync[field] = [];
                             }
                             const relation = model_info.fields[field].relation;
-                            const field_model_info = await this._odoodb.getModelInfo(
+                            const field_model_info = await this._dbmanager.getModelInfo(
                                 relation
                             );
                             const subrecords = [];
@@ -1024,14 +1036,14 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
                                         required: true,
                                         relation: model_info.model,
                                     });
-                                    const model_defaults = this._odoodb.getModelDefaults(field_model_info.model);
+                                    const model_defaults = this._dbmanager.getModelDefaults(field_model_info.model);
                                     subrecord = _.extend(
                                         {},
                                         model_defaults,
                                         subrecord
                                     );
                                     subrecord[parent_field] = record.id;
-                                    subrecord.id = this._odoodb.genRecordID();
+                                    subrecord.id = this._dbmanager.genRecordID();
                                     // Write a temporal name
                                     if (subrecord.name) {
                                         subrecord.name += ` (Offline Record #${subrecord.id})`;
@@ -1070,7 +1082,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
                                         date: new Date().getTime(),
                                         kwargs: data.kwargs,
                                     });
-                                    const ref_records = await this._odoodb.browse(
+                                    const ref_records = await this._dbmanager.browse(
                                         relation,
                                         command[1]
                                     );
@@ -1092,7 +1104,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
                                             date: new Date().getTime(),
                                             kwargs: data.kwargs,
                                         });
-                                        this._odoodb.unlink(relation, [command[1]]);
+                                        this._dbmanager.unlink(relation, [command[1]]);
                                     }
                                     record[field] = _.reject(
                                         record[field],
@@ -1116,7 +1128,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
                                 }
                             }
                             if (subrecords.length) {
-                                await this._odoodb.writeOrCreate(relation, subrecords, true);
+                                await this._dbmanager.writeOrCreate(relation, subrecords, true);
                                 data_to_sync[field].push(..._.map(subrecords, "id"));
                             }
                             // Ensure unique values
@@ -1135,8 +1147,8 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
                         date: new Date().getTime(),
                         kwargs: data.kwargs,
                     });
-                    await this._odoodb.create(model_info_sync, records_sync);
-                    await this._odoodb.write(model_info, [record.id], record);
+                    await this._dbmanager.create(model_info_sync, records_sync);
+                    await this._dbmanager.write(model_info, [record.id], record);
                 }
                 return resolve(true);
             });
@@ -1158,7 +1170,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function (require) {
                         if (field in record) {
                             if (fields[field].type === "many2one" && typeof record[field] === "number") {
                                 try {
-                                    const ref_records = await this._odoodb.browse(
+                                    const ref_records = await this._dbmanager.browse(
                                         fields[field].relation,
                                         Number(record[field])
                                     );

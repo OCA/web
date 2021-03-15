@@ -70,7 +70,7 @@ odoo.define("web_pwa_cache.PWA.routes", function (require) {
                 const pathname_parts = url.pathname.split("/");
                 const model = pathname_parts[4];
                 const method_name = pathname_parts[5];
-                console.log("----- CHECK OUYT!");
+                console.log("----- CHECK OUYT!", method_name);
                 if (ComponentExporter.prototype.hasOwnProperty(method_name)) {
                     try {
                         const resp_data = await this._components.exporter[method_name](
@@ -363,7 +363,7 @@ odoo.define("web_pwa_cache.PWA.routes", function (require) {
                 const search_params = this._getURLSearchParams(url.search);
                 try {
                     const data = await this._components.exporter.web_image(model, obj_id, field_name, search_params);
-                    return resolve(ResponseImage(data));
+                    return resolve(tools.ResponseImage(data));
                 } catch (err) {
                     return reject(err);
                 }

@@ -12,10 +12,11 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function (require) {
     const Model = OdooClass.extend(ParentedMixin, {
         regex_order: new RegExp(/^(\s*([a-z0-9:_]+|"[a-z0-9:_]+")(\s+(desc|asc))?\s*(,|$))+(?<!,)$/, 'i'),
 
-        init: function (parent) {
+        init: function (parent, dbmanager) {
             ParentedMixin.init.call(this);
             this.setParent(parent);
-            this._dbmanager = parent._dbmanager;
+            // This is necessary due to a cross dependency because 'expression' can run 'high-level' subqueries.
+            this._dbmanager = dbmanager;
         },
 
         _where_calc: function(model_info, domain) {
@@ -23,7 +24,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function (require) {
                 try {
                     let tables, where_clause, where_params;
                     if (domain) {
-                        const e = new expression.Expression(domain, model_info, this.getParent());
+                        const e = new expression.Expression(domain, model_info, this._dbmanager);
                         await e.parse();
                         tables = e.get_tables();
                         [where_clause, where_params] = e.to_sql();
@@ -93,7 +94,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function (require) {
                     }
 
                     // figure out the applicable order_by for the m2o
-                    const dest_model = await this.getModelInfo(field.comodel_name);
+                    const dest_model = await this._dbmanager.sqlitedb.getModelInfo(field.comodel_name);
                     let m2o_order = dest_model.orderby;
                     if (!m2o_order.match(this.regex_order)) {
                         // _order is complex, can't use it here, so we default to _rec_name
@@ -128,7 +129,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function (require) {
                     let [model, field] = [model_info, model_info.fields[fname]];
                     while (field.inherited) {
                         // retrieve the parent model where field is inherited from
-                        const parent_model = await this.getModelInfo(field.related_field.model_name);
+                        const parent_model = await this._dbmanager.sqlitedb.getModelInfo(field.related_field.model_name);
                         const parent_fname = field.related[0];
                         // JOIN parent_model._table AS parent_alias ON alias.parent_fname = parent_alias.id
                         const [parent_alias] = query.add_join(
@@ -252,10 +253,10 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function (require) {
          *    (not for ir.rules, this is only for ir.model.access)
          * :return: a list of record ids or an integer (if count is True)
          */
-        query: function (model_info, args, offset=0, limit=undefined, order=undefined, lazy=true, count=false) {
+        query: function (model_info, args, offset=0, limit=undefined, order=undefined, field_names=undefined, count=false) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const db = this._dbmanager.getDB();
+                    const db = this.getParent().getDB();
 
                     //self.sudo(access_rights_uid or self._uid).check_access_rights('read')
                     if (expression.is_false(model_info, args)) {
@@ -281,11 +282,21 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function (require) {
 
                     const limit_str = limit && ` limit ${limit}` || '';
                     const offset_str = offset && ` offset ${offset}` || '';
-                    const select_clause = lazy?`"${model_info.table}".id`:"*"
+                    let select_clause = `"${model_info.table}".id`;
+                    if (field_names instanceof Array) {
+                        if (_.isEmpty(field_names)) {
+                            select_clause = "*";
+                        } else {
+                            select_clause = field_names.map(field_name => `"${model_info.table}".${field_name}`).join(",");
+                        }
+                    }
                     const query_str = `SELECT ${select_clause} FROM ` + from_clause + where_str + order_by + limit_str + offset_str
-                    const sql = _.str.sprintf.apply(this, _.union([query_str], where_clause_params));
+                    //console.log("--------------------------- THE SQL");
+                    // console.log(query_str);
+                    const sql = _.str.sprintf.apply(this, [query_str].concat(where_clause_params));
+                    //console.log(sql);
                     const res = await db.all([sql]);
-                    if (lazy) {
+                    if (!field_names) {
                         return resolve(_.chain(res).map("id").unique().value());
                     }
                     return resolve(res);

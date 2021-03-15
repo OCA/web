@@ -43,9 +43,11 @@ class PWA(PWA):
             "/web_pwa_cache/static/src/js/worker/core/osv/expression.js",
             "/web_pwa_cache/static/src/js/worker/core/osv/query.js",
             "/web_pwa_cache/static/src/js/worker/core/osv/model.js",
+            "/web_pwa_cache/static/src/js/worker/core/db/database.js",
+            "/web_pwa_cache/static/src/js/worker/core/db/sqlitedb.js",
+            "/web_pwa_cache/static/src/js/worker/core/db/indexeddb.js",
             "/web_pwa_cache/static/src/js/worker/core/cache_manager.js",
             "/web_pwa_cache/static/src/js/worker/core/database_manager.js",
-            "/web_pwa_cache/static/src/js/worker/core/odoodb.js",
             "/web_pwa_cache/static/src/js/worker/core/config.js",
             "/web_pwa_cache/static/src/js/worker/components/component.js",
             "/web_pwa_cache/static/src/js/worker/components/exporter.js",
@@ -120,6 +122,8 @@ class PWA(PWA):
             "/web/static/lib/nvd3/d3.v3.js",
             "/web/static/lib/nvd3/nv.d3.js",
             "/web/static/lib/nvd3/nv.d3.css",
+            # Mobile resources
+            "/web/static/lib/jquery.touchSwipe/jquery.touchSwipe.js",
         ]
 
     def _get_pwa_params(self):

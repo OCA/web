@@ -120,43 +120,10 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function (require) {
                 } catch (err) {
                     return reject(err);
                 }
+
                 this.options.force_client_show_modal = false;
                 return resolve();
             });
-        },
-
-        _updateDatabaseStores: function (model_names) {
-            const db = this._db.get("webclient_records");
-            let db_ver = 1;
-            if (db) {
-                this._stores_to_create = _.difference(model_names, [...db.objectStoreNames]);
-                db_ver = db.version;
-                if (!_.isEmpty(this._stores_to_create)) {
-                    ++db_ver;
-                }
-            } else {
-                this._stores_to_create = model_names;
-            }
-            this.getParent().config.set("records_db_ver", db_ver);
-            return this._db.initDatabase("webclient_records", db_ver, this._onUpgradeWebClientRecordsDB.bind(this));
-        },
-
-        _onUpgradeWebClientRecordsDB: function (evt) {
-            const db = evt.target.result;
-
-            for (let store_name of this._stores_to_create) {
-                const object_store = db.createObjectStore(store_name, {
-                    keyPath: "id",
-                    unique: true,
-                });
-                this._createStoreIndexes(object_store, store_name);
-            }
-        },
-
-        _createStoreIndexes: function (object_store, store_name) {
-            if (store_name === "ir.model.data") {
-                object_store.createIndex("module_name", ["module", "name"], {unique: true});
-            }
         },
 
         /**
@@ -165,7 +132,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function (require) {
         runVacuumRecords: function () {
             return new Promise(async (resolve) => {
                 try {
-                    const models = await this._dbmanager.getModelInfo();
+                    const models = await this._dbmanager.sqlitedb.getModelInfo();
                     const num_models = models.length;
 
                     for (const index in models) {
@@ -181,7 +148,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function (require) {
                                 model_info.domain,
                             ]);
                             const response_data = (await response.json()).result;
-                            await this._odoodb.vacuumRecords(
+                            await this._dbmanager.vacuumRecords(
                                 model_info.model,
                                 response_data
                             );
@@ -206,7 +173,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function (require) {
         createTables: function (model_infos) {
             var tasks = [];
             for (let model_info of model_infos) {
-                tasks.push(this._dbmanager.createTable(model_info));
+                tasks.push(this._dbmanager.sqlitedb.createTable(model_info));
             }
             return Promise.all(tasks);
         },
@@ -223,7 +190,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function (require) {
                 let domain_forced = [];
                 if (model_info_extra.prefetch_last_update) {
                     domain_forced = [
-                        ["write_date", ">=", tools.DateToOdooFormat(model_info_extra.prefetch_last_update)],
+                        ["write_date", ">=", model_info_extra.prefetch_last_update],
                     ];
                 }
                 const domain = _.union(domain_forced, model_info_extra.domain);
@@ -288,7 +255,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function (require) {
 
                 this._sendTaskInfoCompleted(client_message_id);
 
-                this._dbmanager.updateModelInfo([model_info_extra.id], {
+                this._dbmanager.sqlitedb.updateModelInfo([model_info_extra.id], {
                     prefetch_last_update: start_prefetch_date,
                 });
 
@@ -302,11 +269,11 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function (require) {
         prefetchModelData: function () {
             return new Promise(async (resolve, reject) => {
                 // Get lastest updates
-                let model_infos = await this._dbmanager.getModelInfo();
+                let model_infos = await this._dbmanager.sqlitedb.getModelInfo();
                 const prefetch_last_updates = {};
                 for (const model_info of model_infos) {
                     if (model_info.prefetch_last_update) {
-                        prefetch_last_updates[model_info.model] = tools.DateToOdooFormat(model_info.prefetch_last_update);
+                        prefetch_last_updates[model_info.model] = model_info.prefetch_last_update;
                     }
                 }
 
@@ -320,7 +287,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function (require) {
                     let response_data = await response.json();
                     const to_search_infos = response_data.result;
                     const model_names = _.map(to_search_infos, 'model');
-                    model_infos = await this._dbmanager.getModelInfo(model_names);
+                    model_infos = await this._dbmanager.sqlitedb.getModelInfo(model_names);
                     await this.createTables(model_infos);
                     for (const to_search of to_search_infos) {
                         const model_info = _.findWhere(model_infos, {model: to_search.model});
@@ -599,8 +566,8 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function (require) {
                     const onchange_info_count = _.reduce(_.map(response_data, 'count'), (item, prev) => { return prev+item; });
                     // FIXME: Currently we can't know how invalidate previous data
                     // so remove all.
-                    const model_info_onchange = await this._dbmanager.getModelInfo("onchange", true);
-                    await this._odoodb.unlink(model_info_onchange);
+                    const model_info_onchange = await this._dbmanager.sqlitedb.getModelInfo("onchange", true);
+                    await this._dbmanager.unlink(model_info_onchange);
                     // Request new onchange data
                     let count_done = 0;
                     let key_id_value = 0;
@@ -791,8 +758,8 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function (require) {
         saveModelInfo: function (values) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_metadata = await this._dbmanager.getModelInfo("model_metadata", true);
-                    await this._dbmanager.createOrUpdateRecord(model_info_metadata, _.omit(values, ["count", "domain", "excluded_fields"]), ["model"]);
+                    const model_info_metadata = await this._dbmanager.sqlitedb.getModelInfo("model_metadata", true);
+                    await this._dbmanager.sqlitedb.createOrUpdateRecord(model_info_metadata, _.omit(values, ["count", "domain", "excluded_fields"]), ["model"]);
                 } catch (err) {
                     return reject(err);
                 }
@@ -808,8 +775,8 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function (require) {
         saveModelDefaults: function (values) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_defaults = await this._dbmanager.getModelInfo("defaults", true);
-                    await this._dbmanager.createOrUpdateRecord(model_info_defaults, values, false);
+                    const model_info_defaults = await this._dbmanager.sqlitedb.getModelInfo("defaults", true);
+                    await this._dbmanager.sqlitedb.createOrUpdateRecord(model_info_defaults, values, false);
                 } catch (err) {
                     return reject(err);
                 }
@@ -825,8 +792,8 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function (require) {
         saveViews: function (values) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_views = await this._dbmanager.getModelInfo("views", true);
-                    await this._dbmanager.createOrUpdateRecord(model_info_views, values, ["model", "view_id", "type"]);
+                    const model_info_views = await this._dbmanager.sqlitedb.getModelInfo("views", true);
+                    await this._dbmanager.sqlitedb.createOrUpdateRecord(model_info_views, values, ["model", "view_id", "type"]);
                 } catch (err) {
                     return reject(err);
                 }
@@ -842,8 +809,8 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function (require) {
         saveOnchange: function (values) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_onchange = await this._dbmanager.getModelInfo("onchange", true);
-                    await this._dbmanager.createOrUpdateRecord(model_info_onchange, values, ["id"]);
+                    const model_info_onchange = await this._dbmanager.sqlitedb.getModelInfo("onchange", true);
+                    await this._dbmanager.sqlitedb.createOrUpdateRecord(model_info_onchange, values, ["id"]);
                 } catch (err) {
                     return reject(err);
                 }
@@ -859,8 +826,8 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function (require) {
         saveFunctionData: function (values) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_function = await this._dbmanager.getModelInfo("function", true);
-                    await this._dbmanager.createOrUpdateRecord(model_info_function, values, ["model", "method", "params"]);
+                    const model_info_function = await this._dbmanager.sqlitedb.getModelInfo("function", true);
+                    await this._dbmanager.sqlitedb.createOrUpdateRecord(model_info_function, values, ["model", "method", "params"]);
                 } catch (err) {
                     return reject(err);
                 }

@@ -38,7 +38,6 @@ odoo.define("web_pwa_cache.PWA.bus", function (require) {
          * @param {BroadcastChannelEvent} evt
          */
         _onReceiveClientMessage: function (evt) {
-            return; // FIXME: Bypass client messages
             if (!evt.isTrusted) {
                 return;
             }
@@ -62,8 +61,8 @@ odoo.define("web_pwa_cache.PWA.bus", function (require) {
                             }
                             Promise.all(promises).then(() => {
                                 new Promise(async (resolve) => {
-                                    const model_info_userdata = await this._dbmanager.getModelInfo("userdata", true);
-                                    const userdata_count = await this._odoodb.count(model_info_userdata);
+                                    const model_info_userdata = await this._dbmanager.sqlitedb.getModelInfo("userdata", true);
+                                    const userdata_count = await this._dbmanager.count(model_info_userdata);
                                     this.postClientPageMessage({
                                         type: "PWA_CONFIG_CHANGED",
                                         changes: changes,
@@ -88,7 +87,9 @@ odoo.define("web_pwa_cache.PWA.bus", function (require) {
                     // Received to send pwa config. to the user page.
                     case "GET_PWA_CONFIG":
                         {
-                            this.config.sendToClient();
+                            this.config.sendToClient().catch(() => {
+                                console.log(`[ServiceWorker] Error sending pwa configuration to the user page!`);
+                            });
                         }
                         break;
 

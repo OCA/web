@@ -16,7 +16,17 @@ odoo.define("web_pwa_cache.PWA.components.Sync", function (require) {
          * @returns {Promise}
          */
         getSyncRecords: function() {
-            return this._db.all([`SELECT * FROM ${this._itp}sync`]);
+            return new Promise(async (resolve) => {
+                try {
+                    const model_info_sync = await this._dbmanager.sqlitedb.getModelInfo("sync", true);
+                    const records = await this._dbmanager.search_read(model_info_sync, []);
+                    return resolve(records);
+                } catch (err) {
+                    // do nothing
+                }
+
+                return resolve([]);
+            });
         },
 
         /**
@@ -199,7 +209,7 @@ odoo.define("web_pwa_cache.PWA.components.Sync", function (require) {
                                     const changes = record.linked[model];
                                     for (const change of changes) {
                                         // Update normal records
-                                        const model_records = await this._odoodb.browse(
+                                        const model_records = await this._dbmanager.browse(
                                             model,
                                             change.id
                                         );
@@ -217,8 +227,8 @@ odoo.define("web_pwa_cache.PWA.components.Sync", function (require) {
                                             field = new_id;
                                         }
                                         model_record[change.field] = field;
-                                        await this._odoodb.unlink(model, [change.id]);
-                                        await this._odoodb.create(model, model_record);
+                                        await this._dbmanager.unlink(model, [change.id]);
+                                        await this._dbmanager.create(model, model_record);
 
                                         // Update sync records
                                         for (const def_sync of records) {
@@ -243,13 +253,13 @@ odoo.define("web_pwa_cache.PWA.components.Sync", function (require) {
                                     }
                                 }
 
-                                const old_records = await this._odoodb.browse(
+                                const old_records = await this._dbmanager.browse(
                                     record.model,
                                     old_id
                                 );
                                 old_records[0].id = new_id;
-                                await this._odoodb.unlink(record.model, [old_id]);
-                                await this._odoodb.create(record.model, old_records[0]);
+                                await this._dbmanager.unlink(record.model, [old_id]);
+                                await this._dbmanager.create(record.model, old_records[0]);
                             }
                         }
                         await this.removeSyncRecords([key]);

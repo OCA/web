@@ -5,9 +5,12 @@ odoo.define("web_pwa_cache.PWA.core.CacheManager", function (require) {
     "use strict";
 
     const OdooClass = require("web.Class");
+    const ParentedMixin = require('web.mixins').ParentedMixin;
 
-    const CacheManager = OdooClass.extend({
-        init: function () {
+    const CacheManager = OdooClass.extend(ParentedMixin, {
+        init: function (parent) {
+            ParentedMixin.init.call(this);
+            this.setParent(parent);
             this._cache = caches;
             this._caches = {};
         },
@@ -16,7 +19,7 @@ odoo.define("web_pwa_cache.PWA.core.CacheManager", function (require) {
          * @param {String} cache_name
          * @returns {Promise[CacheStorage]}
          */
-        initCache: function (cache_name) {
+        start: function (cache_name) {
             if (_.has(this._caches, cache_name)) {
                 return Promise.resolve(this._caches[cache_name]);
             }

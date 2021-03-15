@@ -1,5 +1,5 @@
 // Part of Odoo. See LICENSE file for full copyright and licensing details.
-// Port to javascript by Tecnativa - Alexandre D. Díaz
+// Port to javascript and adapted to sqlite client side by Tecnativa - Alexandre D. Díaz
 
 odoo.define("web_pwa_cache.PWA.core.osv.Expression", function (require) {
     "use strict";
@@ -46,6 +46,8 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function (require) {
     const TRUE_DOMAIN = [TRUE_LEAF];
     const FALSE_DOMAIN = [FALSE_LEAF];
 
+    const RELATIONAL_COLUMN_TYPES = ["many2one", "one2many", "many2many"];
+
     function get_records_ids(records) {
         return records.map((x) => x.id);
     }
@@ -78,14 +80,14 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function (require) {
             } else if (value instanceof moment) {
                 return value.valueOf();
             }
-            return value?value:0;
+            return value?value:"NULL";
         }
         else if (field.type === "json") {
             let svalue = '';
             if (typeof value === "string") {
-                svalue = column_string_encode(JSON.stringify(value).replaceAll("\"","\"\"").replaceAll("'", "''"));
+                svalue = column_string_encode(JSON.stringify(value).replaceAll("\"","\"\""));
             } else if (typeof value === "object") {
-                svalue = column_string_encode(JSON.stringify(value).replaceAll("\"","\"\"").replaceAll("'", "''"));
+                svalue = column_string_encode(JSON.stringify(value).replaceAll("\"","\"\""));
             } else if (typeof value === "boolean") {
                 svalue = value?1:0;
             } else {
@@ -94,14 +96,14 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function (require) {
             return string_quoted?`"${svalue}"`:svalue;
         }
         else if (value && (field.type === "char" || field.type === "text")) {
-            const svalue = column_string_encode(String(value).replaceAll("\"","\"\"").replaceAll("'", "''"));
+            const svalue = column_string_encode(String(value).replaceAll("\"","\"\""));
             return string_quoted?`"${svalue}"`:svalue;
         }
         else if (field.type === "html") {
             if (!value) {
                 return "NULL";
             }
-            const svalue = column_string_encode(value.replaceAll("\"","\"\"").replaceAll("'", "''"));
+            const svalue = column_string_encode(value.replaceAll("\"","\"\""));
             return string_quoted?`"${svalue}"`:svalue;
         }
         else if (field.type === "many2one") {
@@ -599,10 +601,10 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function (require) {
          * :attr list expression: the domain expression, that will be normalized
          *    and prepared
          */
-        init: function (domain, model_info, odoodb) {
+        init: function (domain, model_info, dbmanager) {
             this.joins = [];
             this.root_model = model_info;
-            this._odoodb = odoodb;
+            this._dbmanager = dbmanager;
 
             // normalize and prepare the expression for parsing
             this.expression = distribute_not(normalize_domain(domain));
@@ -688,7 +690,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function (require) {
                     if (!_.isEmpty(names)) {
                         const res = [];
                         for (let name of names) {
-                            const records = await this._odoodb.name_search(comodel.model, name, [], 'ilike');
+                            const records = await this._dbmanager.name_search(comodel.model, name, [], 'ilike');
                             res.concat(records.map((x) => x[0]));
                         }
                         return res;
@@ -706,10 +708,10 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function (require) {
                         return [FALSE_LEAF];
                     }
                     if (left_model.parent_store) {
-                        const records = await this._odoodb.browse(left_model.model, ids);
+                        const records = await this._dbmanager.browse(left_model.model, ids);
                         doms = OR(records.map((x) => [['parent_path', '=like', x.parent_path + '%']]));
                         if (prefix) {
-                            const records = await this._odoodb.search(left_model.model, doms);
+                            const records = await this._dbmanager.search(left_model.model, doms);
                             const ids = get_records_ids(records);
                             return [[left, 'in', ids]];
                         }
@@ -719,7 +721,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function (require) {
                         child_ids = _.unique(ids);
                         let records = [];
                         while (!_.isEmpty(ids)) {
-                            records = await this._odoodb.search(left_model.model, [[parent_name, 'in', ids]]);
+                            records = await this._dbmanager.search(left_model.model, [[parent_name, 'in', ids]]);
                             ids = get_records_ids(records);
                             child_ids = child_ids.concat(ids);
                         }
@@ -735,7 +737,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function (require) {
                 const parent_of_domain = async (left, ids, left_model, parent, prefix='') => {
                     if (left_model.parent_store) {
                         const parent_ids = [];
-                        const records = await this._odoodb.browse(left_model.model, ids);
+                        const records = await this._dbmanager.browse(left_model.model, ids);
                         for (let record of records) {
                             let labels = record.parent_path.split('/');
                             labels = labels.slice(0, labels.length - 1);
@@ -807,7 +809,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function (require) {
 
                     const model = leaf.model;
                     const field = model.fields[path[0]];
-                    const comodel = await this._odoodb._dbmanager.getModelInfo(field?.comodel_name);
+                    const comodel = await this._dbmanager.sqlitedb.getModelInfo(field?.comodel_name);
 
                     // ----------------------------------------
                     // SIMPLE CASE
@@ -839,7 +841,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function (require) {
                         // comments about inherits'd fields
                         //  { 'field_name': ('parent_model', 'm2o_field_to_reach_parent',
                         //                    field_column_obj, origina_parent_model), ... }
-                        const parent_model = await this._odoodb._dbmanager.getModelInfo(field.related_field.model_name);
+                        const parent_model = await this._dbmanager.sqlitedb.getModelInfo(field.related_field.model_name);
                         const parent_fname = model.inherits[parent_model.model];
                         leaf.add_join_context(parent_model, parent_fname, 'id', parent_fname);
                         push(leaf);
@@ -855,263 +857,263 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function (require) {
                         }
                     }
 
-                    // ----------------------------------------
-                    // PATH SPOTTED
-                    // -> many2one or one2many with _auto_join:
-                    //    - add a join, then jump into linked column: column.remaining on
-                    //      src_table is replaced by remaining on dst_table, and set for re-evaluation
-                    //    - if a domain is defined on the column, add it into evaluation
-                    //      on the relational table
-                    // -> many2one, many2many, one2many: replace by an equivalent computed
-                    //    domain, given by recursively searching on the remaining of the path
-                    // -> note: hack about columns.property should not be necessary anymore
-                    //    as after transforming the column, it will go through this loop once again
-                    // ----------------------------------------
+                    // // ----------------------------------------
+                    // // PATH SPOTTED
+                    // // -> many2one or one2many with _auto_join:
+                    // //    - add a join, then jump into linked column: column.remaining on
+                    // //      src_table is replaced by remaining on dst_table, and set for re-evaluation
+                    // //    - if a domain is defined on the column, add it into evaluation
+                    // //      on the relational table
+                    // // -> many2one, many2many, one2many: replace by an equivalent computed
+                    // //    domain, given by recursively searching on the remaining of the path
+                    // // -> note: hack about columns.property should not be necessary anymore
+                    // //    as after transforming the column, it will go through this loop once again
+                    // // ----------------------------------------
 
-                    else if (path.length > 1 && field.store && field.type === 'many2one' && field.auto_join) {
-                        // res_partner.state_id = res_partner__state_id.id
-                        leaf.add_join_context(comodel, path[0], 'id', path[0]);
-                        push(create_substitution_leaf(leaf, [path[1], operator, right], comodel));
-                    }
+                    // else if (path.length > 1 && field.store && field.type === 'many2one' && field.auto_join) {
+                    //     // res_partner.state_id = res_partner__state_id.id
+                    //     leaf.add_join_context(comodel, path[0], 'id', path[0]);
+                    //     push(create_substitution_leaf(leaf, [path[1], operator, right], comodel));
+                    // }
 
-                    else if (path.length > 1 && field.store && field.type === 'one2many' && field.auto_join) {
-                        // res_partner.id = res_partner__bank_ids.partner_id
-                        leaf.add_join_context(comodel, 'id', field.inverse_name, path[0])
-                        let domain = isCalleable(field.domain) ? field.domain(model) : field.domain;
-                        push(create_substitution_leaf(leaf, [path[1], operator, right], comodel));
-                        if (!_.isEmpty(domain)) {
-                            domain = normalize_domain(domain).reverse();
-                            for (let elem of domain) {
-                                push(create_substitution_leaf(leaf, elem, comodel));
-                            }
-                            push(create_substitution_leaf(leaf, AND_OPERATOR, comodel));
-                        }
-                    }
+                    // else if (path.length > 1 && field.store && field.type === 'one2many' && field.auto_join) {
+                    //     // res_partner.id = res_partner__bank_ids.partner_id
+                    //     leaf.add_join_context(comodel, 'id', field.inverse_name, path[0])
+                    //     let domain = isCalleable(field.domain) ? field.domain(model) : field.domain;
+                    //     push(create_substitution_leaf(leaf, [path[1], operator, right], comodel));
+                    //     if (!_.isEmpty(domain)) {
+                    //         domain = normalize_domain(domain).reverse();
+                    //         for (let elem of domain) {
+                    //             push(create_substitution_leaf(leaf, elem, comodel));
+                    //         }
+                    //         push(create_substitution_leaf(leaf, AND_OPERATOR, comodel));
+                    //     }
+                    // }
 
-                    else if (path.length > 1 && field.store && field.auto_join) {
-                        throw Error(`auto_join attribute not supported on field ${field}`);
-                    }
+                    // else if (path.length > 1 && field.store && field.auto_join) {
+                    //     throw Error(`auto_join attribute not supported on field ${field}`);
+                    // }
 
-                    else if (path.length > 1 && field.store && field.type == 'many2one') {
-                        // FIXME: Client side allways uses 'active_test' = True
-                        const records = await this._odoodb.search(comodel.model, [[path.slice(1).join('.'), operator, right]]);
-                        const right_ids = get_records_ids(records);
-                        leaf.leaf = (path[0], 'in', right_ids);
-                        push(leaf);
-                    }
+                    // else if (path.length > 1 && field.store && field.type == 'many2one') {
+                    //     // FIXME: Client side allways uses 'active_test' = True
+                    //     const records = await this._dbmanager.search(comodel.model, [[path.slice(1).join('.'), operator, right]]);
+                    //     const right_ids = get_records_ids(records);
+                    //     leaf.leaf = (path[0], 'in', right_ids);
+                    //     push(leaf);
+                    // }
 
-                    // Making search easier when there is a left operand as one2many or many2many
-                    else if (path.length > 1 && field.store && ['many2many', 'one2many'].indexOf(field.type) !== -1) {
-                        const records = await this._odoodb.search(comodel.model, [[path.slice(1).join('.'), operator, right]]);
-                        const right_ids = get_records_ids(records);
-                        leaf.leaf = (path[0], 'in', right_ids);
-                        push(leaf);
-                    }
+                    // // Making search easier when there is a left operand as one2many or many2many
+                    // else if (path.length > 1 && field.store && ['many2many', 'one2many'].indexOf(field.type) !== -1) {
+                    //     const records = await this._dbmanager.search(comodel.model, [[path.slice(1).join('.'), operator, right]]);
+                    //     const right_ids = get_records_ids(records);
+                    //     leaf.leaf = (path[0], 'in', right_ids);
+                    //     push(leaf);
+                    // }
 
-                    else if (!field.store) {
-                        let domain = [];
-                        // Non-stored field should provide an implementation of search.
-                        if (!field.search) {
-                            // field does not support search!
-                            console.error(`Non-stored field ${field} cannot be searched.`);
-                            // Ignore it: generate a dummy leaf.
-                        } else {
-                            // Let the field generate a domain.
-                            if (path.length > 1) {
-                                const records = await this._odoodb.search(comodel.model, [[path.slice(1).join('.'), operator, right]]);
-                                right = get_records_ids(records);
-                                operator = 'in';
-                            }
-                            domain = field.determine_domain(model, operator, right);
-                        }
+                    // else if (!field.store) {
+                    //     let domain = [];
+                    //     // Non-stored field should provide an implementation of search.
+                    //     if (!field.search) {
+                    //         // field does not support search!
+                    //         console.error(`Non-stored field ${field} cannot be searched.`);
+                    //         // Ignore it: generate a dummy leaf.
+                    //     } else {
+                    //         // Let the field generate a domain.
+                    //         if (path.length > 1) {
+                    //             const records = await this._dbmanager.search(comodel.model, [[path.slice(1).join('.'), operator, right]]);
+                    //             right = get_records_ids(records);
+                    //             operator = 'in';
+                    //         }
+                    //         domain = field.determine_domain(model, operator, right);
+                    //     }
 
-                        // replace current leaf by normalized domain
-                        const domains = normalize_domain(domain).reverse();
-                        for (let elem of domains) {
-                            push(create_substitution_leaf(leaf, elem, model, true))
-                        }
-                    }
+                    //     // replace current leaf by normalized domain
+                    //     const domains = normalize_domain(domain).reverse();
+                    //     for (let elem of domains) {
+                    //         push(create_substitution_leaf(leaf, elem, model, true))
+                    //     }
+                    // }
 
-                    // -------------------------------------------------
-                    // RELATIONAL FIELDS
-                    // -------------------------------------------------
+                    // // -------------------------------------------------
+                    // // RELATIONAL FIELDS
+                    // // -------------------------------------------------
 
-                    // Applying recursivity on field(one2many)
-                    else if (field.type === 'one2many' && operator in HIERARCHY_FUNCS) {
-                        const ids2 = to_ids(right, comodel, leaf.leaf);
-                        let dom = [];
-                        if (field.comodel_name !== model.model) {
-                            dom = await HIERARCHY_FUNCS[operator](left, ids2, comodel, undefined, field.comodel_name);
-                        } else {
-                            dom = await HIERARCHY_FUNCS[operator]('id', ids2, model, left);
-                        }
-                        dom.reverse();
-                        for (let dom_leaf of dom) {
-                            push(create_substitution_leaf(leaf, dom_leaf, model));
-                        }
-                    }
+                    // // Applying recursivity on field(one2many)
+                    // else if (field.type === 'one2many' && operator in HIERARCHY_FUNCS) {
+                    //     const ids2 = to_ids(right, comodel, leaf.leaf);
+                    //     let dom = [];
+                    //     if (field.comodel_name !== model.model) {
+                    //         dom = await HIERARCHY_FUNCS[operator](left, ids2, comodel, undefined, field.comodel_name);
+                    //     } else {
+                    //         dom = await HIERARCHY_FUNCS[operator]('id', ids2, model, left);
+                    //     }
+                    //     dom.reverse();
+                    //     for (let dom_leaf of dom) {
+                    //         push(create_substitution_leaf(leaf, dom_leaf, model));
+                    //     }
+                    // }
 
-                    else if (field.type === 'one2many') {
-                        let domain = field.domain;
-                        if (isCalleable(domain)) {
-                            domain = domain(model)
-                        }
-                        const inverse_is_int = comodel.fields[field.inverse_name].type === 'integer';
-                        const unwrap_inverse = (ids) => {
-                            return inverse_is_int ? ids : get_records_ids(ids);
-                        }
+                    // else if (field.type === 'one2many') {
+                    //     let domain = field.domain;
+                    //     if (isCalleable(domain)) {
+                    //         domain = domain(model)
+                    //     }
+                    //     const inverse_is_int = comodel.fields[field.inverse_name].type === 'integer';
+                    //     const unwrap_inverse = (ids) => {
+                    //         return inverse_is_int ? ids : get_records_ids(ids);
+                    //     }
 
-                        if (right !== false) {
-                            let ids2 = [];
-                            // determine ids2 in comodel
-                            if (typeof right === "string") {
-                                const op2 = operator in NEGATIVE_TERM_OPERATORS ? TERM_OPERATORS_NEGATION[operator] : operator;
-                                const records = await this._odoodb.name_search(comodel.model, right, domain || [], op2)
-                                ids2 = records.map((x) => x[0]);
-                            } else if (isIterable(right)) {
-                                ids2 = right;
-                            } else {
-                                ids2 = [right];
-                            }
-                            if (!_.isEmpty(ids2) && inverse_is_int && !_.isEmpty(domain)) {
-                                const records = await this._oddodb.search(comodel.model, [('id', 'in', ids2)].concat(domain));
-                                ids2 = get_records_ids(records);
-                            }
+                    //     if (right !== false) {
+                    //         let ids2 = [];
+                    //         // determine ids2 in comodel
+                    //         if (typeof right === "string") {
+                    //             const op2 = operator in NEGATIVE_TERM_OPERATORS ? TERM_OPERATORS_NEGATION[operator] : operator;
+                    //             const records = await this._dbmanager.name_search(comodel.model, right, domain || [], op2)
+                    //             ids2 = records.map((x) => x[0]);
+                    //         } else if (isIterable(right)) {
+                    //             ids2 = right;
+                    //         } else {
+                    //             ids2 = [right];
+                    //         }
+                    //         if (!_.isEmpty(ids2) && inverse_is_int && !_.isEmpty(domain)) {
+                    //             const records = await this._dbmanager.search(comodel.model, [('id', 'in', ids2)].concat(domain));
+                    //             ids2 = get_records_ids(records);
+                    //         }
 
-                            let ids1 = [];
-                            // determine ids1 in model related to ids2
-                            if (_.isEmpty(ids2)) {
-                                ids1 = [];
-                            } else if (comodel.fields[field.inverse_name].store) {
-                                ids1 = await select_from_where(cr, field.inverse_name, comodel.table, 'id', ids2, operator)
-                            } else {
-                                const recs = await this._odoodb.browse(comodel.model, ids2, {prefetch_fields: false});
-                                ids1 = unwrap_inverse(recs.map((x) => x[field.inverse_name]));
-                            }
+                    //         let ids1 = [];
+                    //         // determine ids1 in model related to ids2
+                    //         if (_.isEmpty(ids2)) {
+                    //             ids1 = [];
+                    //         } else if (comodel.fields[field.inverse_name].store) {
+                    //             ids1 = await select_from_where(cr, field.inverse_name, comodel.table, 'id', ids2, operator)
+                    //         } else {
+                    //             const recs = await this._dbmanager.browse(comodel.model, ids2, {prefetch_fields: false});
+                    //             ids1 = unwrap_inverse(recs.map((x) => x[field.inverse_name]));
+                    //         }
 
-                            // rewrite condition in terms of ids1
-                            const op1 = NEGATIVE_TERM_OPERATORS.indexOf(operator) === -1 ? "in" : "not in";
-                            push(create_substitution_leaf(leaf, ['id', op1, ids1], model));
-                        }
+                    //         // rewrite condition in terms of ids1
+                    //         const op1 = NEGATIVE_TERM_OPERATORS.indexOf(operator) === -1 ? "in" : "not in";
+                    //         push(create_substitution_leaf(leaf, ['id', op1, ids1], model));
+                    //     }
 
-                        else {
-                            let ids1 = [];
-                            // determine ids1 = records with lines
-                            if (comodel.fields[field.inverse_name].store && !(inverse_is_int && !_.isEmpty(domain))) {
-                                ids1 = await select_distinct_from_where_not_null(cr, field.inverse_name, comodel.table)
-                            }
-                            else {
-                                comodel_domain = [[field.inverse_name, '!=', false]];
-                                if (inverse_is_int && !_.isEmpty(domain)) {
-                                    comodel_domain += domain;
-                                }
-                                const recs = await this._oododb.search(comodel.model, comodel_domain, undefined, undefined, undefined, {prefetch_fields: false});
-                                ids1 = unwrap_inverse(recs.map((x) => x[field.inverse_name]));
-                            }
+                    //     else {
+                    //         let ids1 = [];
+                    //         // determine ids1 = records with lines
+                    //         if (comodel.fields[field.inverse_name].store && !(inverse_is_int && !_.isEmpty(domain))) {
+                    //             ids1 = await select_distinct_from_where_not_null(cr, field.inverse_name, comodel.table)
+                    //         }
+                    //         else {
+                    //             comodel_domain = [[field.inverse_name, '!=', false]];
+                    //             if (inverse_is_int && !_.isEmpty(domain)) {
+                    //                 comodel_domain += domain;
+                    //             }
+                    //             const recs = await this._oododb.search(comodel.model, comodel_domain, undefined, undefined, undefined, {prefetch_fields: false});
+                    //             ids1 = unwrap_inverse(recs.map((x) => x[field.inverse_name]));
+                    //         }
 
-                            // rewrite condition to match records with/without lines
-                            const op1 = NEGATIVE_TERM_OPERATORS.indexOf(operator) === -1 ? "not in" : "in";
-                            push(create_substitution_leaf(leaf, ['id', op1, ids1], model));
-                        }
-                    }
+                    //         // rewrite condition to match records with/without lines
+                    //         const op1 = NEGATIVE_TERM_OPERATORS.indexOf(operator) === -1 ? "not in" : "in";
+                    //         push(create_substitution_leaf(leaf, ['id', op1, ids1], model));
+                    //     }
+                    // }
 
-                    else if (field.type === 'many2many') {
-                        const [rel_table, rel_id1, rel_id2] = [field.relation, field.column1, field.column2];
+                    // else if (field.type === 'many2many') {
+                    //     const [rel_table, rel_id1, rel_id2] = [field.relation, field.column1, field.column2];
 
-                        if (operator in HIERARCHY_FUNCS) {
-                            // determine ids2 in comodel
-                            const ids2 = to_ids(right, comodel, leaf.leaf);
-                            const domain = await HIERARCHY_FUNCS[operator]('id', ids2, comodel);
-                            const records = await this._odoodb.search(comodel.model, domain);
-                            ids2 = get_records_ids(records);
+                    //     if (operator in HIERARCHY_FUNCS) {
+                    //         // determine ids2 in comodel
+                    //         const ids2 = to_ids(right, comodel, leaf.leaf);
+                    //         const domain = await HIERARCHY_FUNCS[operator]('id', ids2, comodel);
+                    //         const records = await this._dbmanager.search(comodel.model, domain);
+                    //         ids2 = get_records_ids(records);
 
-                            // rewrite condition in terms of ids2
-                            if (comodel.model === model.model) {
-                                push(create_substitution_leaf(leaf, ['id', 'in', ids2], model));
-                            } else {
-                                const subquery = `SELECT "${rel_id1}" FROM "${rel_table}" WHERE "${rel_id2}" IN (${ids2})`;
-                                push(create_substitution_leaf(leaf, ['id', 'inselect', subquery], undefined, true));
-                            }
-                        }
+                    //         // rewrite condition in terms of ids2
+                    //         if (comodel.model === model.model) {
+                    //             push(create_substitution_leaf(leaf, ['id', 'in', ids2], model));
+                    //         } else {
+                    //             const subquery = `SELECT "${rel_id1}" FROM "${rel_table}" WHERE "${rel_id2}" IN (${ids2})`;
+                    //             push(create_substitution_leaf(leaf, ['id', 'inselect', subquery], undefined, true));
+                    //         }
+                    //     }
 
-                        else if (right !== false) {
-                            let ids2 = [];
-                            // determine ids2 in comodel
-                            if (typeof right === "string") {
-                                let domain = field.domain
-                                if (isCalleable(domain)) {
-                                    domain = domain(model)
-                                }
-                                const op2 = NEGATIVE_TERM_OPERATORS.indexOf(operator) == -1 ? operator : NEGATIVE_TERM_OPERATORS[operator];
-                                const records = await this._odoodb.name_search(comodel.model, right, domain || [], op2);
-                                ids2 = records.map((x) => x[0]);
-                            } else if (isIterable(right)) {
-                                ids2 = right;
-                            } else {
-                                ids2 = [right];
-                            }
+                    //     else if (right !== false) {
+                    //         let ids2 = [];
+                    //         // determine ids2 in comodel
+                    //         if (typeof right === "string") {
+                    //             let domain = field.domain
+                    //             if (isCalleable(domain)) {
+                    //                 domain = domain(model)
+                    //             }
+                    //             const op2 = NEGATIVE_TERM_OPERATORS.indexOf(operator) == -1 ? operator : NEGATIVE_TERM_OPERATORS[operator];
+                    //             const records = await this._dbmanager.name_search(comodel.model, right, domain || [], op2);
+                    //             ids2 = records.map((x) => x[0]);
+                    //         } else if (isIterable(right)) {
+                    //             ids2 = right;
+                    //         } else {
+                    //             ids2 = [right];
+                    //         }
 
-                            // rewrite condition in terms of ids2
-                            const subop = NEGATIVE_TERM_OPERATORS.indexOf(operator) === -1 ? 'inselect' : 'not inselect';
-                            const subquery = `SELECT "${rel_id1}" FROM "${rel_table}" WHERE "${rel_id2}" IN (${ids2})`;
-                            push(create_substitution_leaf(leaf, ['id', subop, subquery], undefined, true));
-                        }
+                    //         // rewrite condition in terms of ids2
+                    //         const subop = NEGATIVE_TERM_OPERATORS.indexOf(operator) === -1 ? 'inselect' : 'not inselect';
+                    //         const subquery = `SELECT "${rel_id1}" FROM "${rel_table}" WHERE "${rel_id2}" IN (${ids2})`;
+                    //         push(create_substitution_leaf(leaf, ['id', subop, subquery], undefined, true));
+                    //     }
 
-                        else {
-                            // determine ids1 = records with relations
-                            const ids1 = await select_distinct_from_where_not_null(cr, rel_id1, rel_table);
+                    //     else {
+                    //         // determine ids1 = records with relations
+                    //         const ids1 = await select_distinct_from_where_not_null(cr, rel_id1, rel_table);
 
-                            // rewrite condition to match records with/without relations
-                            const op1 = NEGATIVE_TERM_OPERATORS.indexOf(operator) === -1 ? 'not in' : 'in';
-                            push(create_substitution_leaf(leaf, ['id', op1, ids1], model));
-                        }
-                    }
+                    //         // rewrite condition to match records with/without relations
+                    //         const op1 = NEGATIVE_TERM_OPERATORS.indexOf(operator) === -1 ? 'not in' : 'in';
+                    //         push(create_substitution_leaf(leaf, ['id', op1, ids1], model));
+                    //     }
+                    // }
 
-                    else if (field.type == 'many2one') {
-                        if (operator in HIERARCHY_FUNCS) {
-                            const ids2 = to_ids(right, comodel, leaf.leaf);
-                            let dom = [];
-                            if (field.comodel_name != model.model) {
-                                dom = await HIERARCHY_FUNCS[operator](left, ids2, comodel, undefined, field.comodel_name);
-                            } else {
-                                dom = await HIERARCHY_FUNCS[operator]('id', ids2, model, left);
-                            }
-                            dom.reverse();
-                            for (let dom_leaf of dom) {
-                                push(create_substitution_leaf(leaf, dom_leaf, model));
-                            }
-                        }
-                        else {
-                            const _get_expression = async (comodel, left, right, operator) => {
-                                // Special treatment to ill-formed domains
-                                operator = (['<', '>', '<=', '>='].indexOf(operator) !== -1) && 'in' || operator;
+                    // else if (field.type == 'many2one') {
+                    //     if (operator in HIERARCHY_FUNCS) {
+                    //         const ids2 = to_ids(right, comodel, leaf.leaf);
+                    //         let dom = [];
+                    //         if (field.comodel_name != model.model) {
+                    //             dom = await HIERARCHY_FUNCS[operator](left, ids2, comodel, undefined, field.comodel_name);
+                    //         } else {
+                    //             dom = await HIERARCHY_FUNCS[operator]('id', ids2, model, left);
+                    //         }
+                    //         dom.reverse();
+                    //         for (let dom_leaf of dom) {
+                    //             push(create_substitution_leaf(leaf, dom_leaf, model));
+                    //         }
+                    //     }
+                    //     else {
+                    //         const _get_expression = async (comodel, left, right, operator) => {
+                    //             // Special treatment to ill-formed domains
+                    //             operator = (['<', '>', '<=', '>='].indexOf(operator) !== -1) && 'in' || operator;
 
-                                const dict_op = {'not in': '!=', 'in': '=', '=': 'in', '!=': 'not in'}
-                                if (!(right instanceof Array) && ['not in', 'in'].indexOf(operator) !== -1) {
-                                    operator = dict_op[operator];
-                                }
-                                else if (right instanceof Array && ['!=', '='].indexOf(operator) !== -1) {  // for domain (FIELD,'=',['value1','value2'])
-                                    operator = dict_op[operator];
-                                }
-                                const records = await this._odoodb.name_search(comodel.model, right, [], operator);
-                                const res_ids = records.map((x) => x[0]);
-                                if (NEGATIVE_TERM_OPERATORS.indexOf(operator) !== -1) {
-                                    res_ids.push(false)  // TODO this should not be appended if False was in 'right'
-                                }
-                                return [left, 'in', res_ids];
-                            }
-                            // resolve string-based m2o criterion into IDs
-                            if (
-                                typeof right === "string" ||
-                                right && right instanceof Array && _.every(right.map((x) => typeof x === 'string'))
-                            ) {
-                                push(create_substitution_leaf(leaf, await _get_expression(comodel, left, right, operator), model));
-                            } else {
-                                // right == [] or right == False and all other cases are handled by __leaf_to_sql()
-                                push_result(leaf);
-                            }
-                        }
-                    }
+                    //             const dict_op = {'not in': '!=', 'in': '=', '=': 'in', '!=': 'not in'}
+                    //             if (!(right instanceof Array) && ['not in', 'in'].indexOf(operator) !== -1) {
+                    //                 operator = dict_op[operator];
+                    //             }
+                    //             else if (right instanceof Array && ['!=', '='].indexOf(operator) !== -1) {  // for domain (FIELD,'=',['value1','value2'])
+                    //                 operator = dict_op[operator];
+                    //             }
+                    //             const records = await this._dbmanager.name_search(comodel.model, right, [], operator);
+                    //             const res_ids = records.map((x) => x[0]);
+                    //             if (NEGATIVE_TERM_OPERATORS.indexOf(operator) !== -1) {
+                    //                 res_ids.push(false)  // TODO this should not be appended if False was in 'right'
+                    //             }
+                    //             return [left, 'in', res_ids];
+                    //         }
+                    //         // resolve string-based m2o criterion into IDs
+                    //         if (
+                    //             typeof right === "string" ||
+                    //             right && right instanceof Array && _.every(right.map((x) => typeof x === 'string'))
+                    //         ) {
+                    //             push(create_substitution_leaf(leaf, await _get_expression(comodel, left, right, operator), model));
+                    //         } else {
+                    //             // right == [] or right == False and all other cases are handled by __leaf_to_sql()
+                    //             push_result(leaf);
+                    //         }
+                    //     }
+                    // }
 
                     // -------------------------------------------------
                     // BINARY FIELDS STORED IN ATTACHMENT
@@ -1231,6 +1233,29 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function (require) {
             } else if (operator === 'not inselect') {
                 query = `(${table_alias}."${left}" not in (${right[0]}))`;
                 params = right[1];
+            } else if (RELATIONAL_COLUMN_TYPES.indexOf(model.fields[left].type) !== -1) {
+                const is_positive_operator = NEGATIVE_TERM_OPERATORS.indexOf(operator) === -1;
+                const cond_operator = is_positive_operator ? "LIKE" : "NOT LIKE";
+                const conds = [];
+                if (right instanceof Array) {
+                    params = [];
+                    for (let right_id of right) {
+                        conds.push(`${table_alias}."${left}" ${cond_operator} "%s"`);
+                        params.push(`%||${right_id}||%`)
+                    }
+                    params = right;
+                } else if (typeof right === "boolean") {
+                    if ((is_positive_operator && right) || (!is_positive_operator && !right)) {
+                        conds.push(`${table_alias}."${left}" IS NOT NULL`);
+                    } else {
+                        conds.push(`${table_alias}."${left}" IS NULL`);
+                    }
+                    params = [];
+                } else {
+                    conds.push(`${table_alias}."${left}" ${cond_operator} "%s"`);
+                    params = [`%||${right}||%`];
+                }
+                query = `(${conds.join(is_positive_operator ? " OR " : " AND ")})`;
             } else if (['in', 'not in'].indexOf(operator) !== -1) {
                 // Two cases: right is a boolean or a list. The boolean case is an
                 // abuse and handled for backward compatibility.
@@ -1302,7 +1327,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function (require) {
             }
 
             else if (left in model.fields && model.fields[left].type === "boolean" && ((operator === '!=' && !right) || (operator === '==' && right))) {
-                query = `(${table_alias}."${left}" IS NOT NULL and ${table_alias}."${left}" != false)`;
+                query = `(${table_alias}."${left}" IS NOT NULL and ${table_alias}."${left}" != 0)`;
                 params = [];
             }
 
@@ -1363,7 +1388,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function (require) {
                 if (leaf.is_leaf(undefined, true)) {
                     const [q, ps] = this.__leaf_to_sql(leaf);
                     stack.push(q);
-                    params = _.union(params, ps.reverse());
+                    params = params.concat(ps.reverse());
                 }
                 else if (leaf.leaf === NOT_OPERATOR) {
                     stack.append(`(NOT (${stack.pop()}))`);

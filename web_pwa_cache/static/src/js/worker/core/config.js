@@ -21,9 +21,8 @@ odoo.define("web_pwa_cache.PWA.core.Config", function (require) {
             ParentedMixin.init.call(this);
             this.setParent(parent);
             this._db = this.getParent()._db;
-            this._itp = this.getParent()._dbmanager._internal_table_prefix;
+            this._itp = this.getParent()._dbmanager.sqlitedb._internal_table_prefix;
             this._dbmanager = this.getParent()._dbmanager;
-            this._odoodb = this.getParent()._odoodb;
         },
 
         /**
@@ -32,9 +31,8 @@ odoo.define("web_pwa_cache.PWA.core.Config", function (require) {
         isOfflineMode: function () {
             return new Promise(async (resolve) => {
                 try {
-                    const model_info_config = await this._dbmanager.getModelInfo("config", true);
-                    const record = await this._odoodb.search_read(model_info_config, [["param", "=", "pwa_mode"]], 1);
-                    console.log("------------------------ OFFLINE MODE", record);
+                    const model_info_config = await this._dbmanager.sqlitedb.getModelInfo("config", true);
+                    const record = await this._dbmanager.search_read(model_info_config, [["param", "=", "pwa_mode"]], 1);
                     const is_offline = record?.value === 'offline';
                     return resolve(is_offline);
                 } catch (err) {
@@ -49,13 +47,10 @@ odoo.define("web_pwa_cache.PWA.core.Config", function (require) {
         isStandaloneMode: function () {
             return new Promise(async (resolve) => {
                 try {
-                    const model_info_config = await this._dbmanager.getModelInfo("config", true);
-                    const record = await this._odoodb.search_read(model_info_config, [["param", "=", "standalone"]], 1);
-                    console.log("----------------- STAND ALONE");
-                    console.log(record);
+                    const model_info_config = await this._dbmanager.sqlitedb.getModelInfo("config", true);
+                    const record = await this._dbmanager.search_read(model_info_config, [["param", "=", "standalone"]], 1);
                     return resolve(record ? record.value : false);
                 } catch (err) {
-                    console.log(err);
                     return resolve(false);
                 }
             });
@@ -67,8 +62,8 @@ odoo.define("web_pwa_cache.PWA.core.Config", function (require) {
         getUID: function () {
             return new Promise(async (resolve) => {
                 try {
-                    const model_info_config = await this._dbmanager.getModelInfo("config", true);
-                    const record = await this._odoodb.search_read(model_info_config, [["param", "=", "uid"]], 1);
+                    const model_info_config = await this._dbmanager.sqlitedb.getModelInfo("config", true);
+                    const record = await this._dbmanager.search_read(model_info_config, [["param", "=", "uid"]], 1);
                     return resolve(record?.value);
                 } catch (err) {
                     return resolve(null);
@@ -82,8 +77,8 @@ odoo.define("web_pwa_cache.PWA.core.Config", function (require) {
         getLang: function () {
             return new Promise(async (resolve) => {
                 try {
-                    const model_info_config = await this._dbmanager.getModelInfo("config", true);
-                    const record = await this._odoodb.search_read(model_info_config, [["param", "=", "lang"]], 1);
+                    const model_info_config = await this._dbmanager.sqlitedb.getModelInfo("config", true);
+                    const record = await this._dbmanager.search_read(model_info_config, [["param", "=", "lang"]], 1);
                     return resolve(record?.value);
                 } catch (err) {
                     return resolve(null);
@@ -98,8 +93,8 @@ odoo.define("web_pwa_cache.PWA.core.Config", function (require) {
         get: function (name, def_value) {
             return new Promise(async resolve => {
                 try {
-                    const model_info_config = await this._dbmanager.getModelInfo("config", true);
-                    const record = await this._odoodb.search_read(model_info_config, [["param", "=", name]], 1);
+                    const model_info_config = await this._dbmanager.sqlitedb.getModelInfo("config", true);
+                    const record = await this._dbmanager.search_read(model_info_config, [["param", "=", name]], 1);
                     const value = record?.value;
                     return resolve(typeof value === 'undefined' ? def_value : value);
                 } catch (err) {
@@ -114,8 +109,8 @@ odoo.define("web_pwa_cache.PWA.core.Config", function (require) {
         getAll: function () {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_config = await this._dbmanager.getModelInfo("config", true);
-                    const [records] = await this._odoodb.search_read(model_info_config, []);
+                    const model_info_config = await this._dbmanager.sqlitedb.getModelInfo("config", true);
+                    const records = await this._dbmanager.search_read(model_info_config, []);
                     const config_records = {}
                     for (const record of records) {
                         config_records[record.param] = record.value;
@@ -135,8 +130,8 @@ odoo.define("web_pwa_cache.PWA.core.Config", function (require) {
         set: function (param, value) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_config = await this._dbmanager.getModelInfo("config", true);
-                    await this._dbmanager.createOrUpdateRecord(model_info_config, {
+                    const model_info_config = await this._dbmanager.sqlitedb.getModelInfo("config", true);
+                    await this._dbmanager.sqlitedb.createOrUpdateRecord(model_info_config, {
                         param: param,
                         value: value,
                     }, ['param']);
@@ -158,8 +153,8 @@ odoo.define("web_pwa_cache.PWA.core.Config", function (require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     const config = await this.getAll();
-                    const model_info_userdata = await this._dbmanager.getModelInfo("userdata", true);
-                    const userdata_count = await this._odoodb.count(model_info_userdata);
+                    const model_info_userdata = await this._dbmanager.sqlitedb.getModelInfo("userdata", true);
+                    const userdata_count = await this._dbmanager.count(model_info_userdata);
                     config.is_db_empty = userdata_count === 0;
                     this.getParent().postClientPageMessage({
                         type: "PWA_INIT_CONFIG",
