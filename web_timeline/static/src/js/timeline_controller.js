@@ -1,4 +1,4 @@
-odoo.define("web_timeline.TimelineController", function(require) {
+odoo.define("web_timeline.TimelineController", function (require) {
     "use strict";
 
     const AbstractController = require("web.AbstractController");
@@ -21,7 +21,7 @@ odoo.define("web_timeline.TimelineController", function(require) {
         /**
          * @override
          */
-        init: function(parent, model, renderer, params) {
+        init: function (parent, model, renderer, params) {
             this._super.apply(this, arguments);
             this.open_popup_action = params.open_popup_action;
             this.date_start = params.date_start;
@@ -35,7 +35,7 @@ odoo.define("web_timeline.TimelineController", function(require) {
         /**
          * @override
          */
-        update: function(params, options) {
+        update: function (params, options) {
             const res = this._super.apply(this, arguments);
             if (_.isEmpty(params)) {
                 return res;
@@ -68,7 +68,7 @@ odoo.define("web_timeline.TimelineController", function(require) {
                         domain: domains,
                     },
                     context: this.getSession().user_context,
-                }).then(data =>
+                }).then((data) =>
                     this.renderer.on_data_loaded(
                         data,
                         n_group_bys,
@@ -86,7 +86,7 @@ odoo.define("web_timeline.TimelineController", function(require) {
          * @param {EventObject} event
          * @returns {jQuery.Deferred}
          */
-        _onGroupClick: function(event) {
+        _onGroupClick: function (event) {
             const groupField = this.renderer.last_group_bys[0];
             return this.do_action({
                 type: "ir.actions.act_window",
@@ -104,7 +104,7 @@ odoo.define("web_timeline.TimelineController", function(require) {
          * @private
          * @param {EventObject} event
          */
-        _onUpdate: function(event) {
+        _onUpdate: function (event) {
             this.renderer = event.data.renderer;
             const rights = event.data.rights;
             const item = event.data.item;
@@ -142,7 +142,7 @@ odoo.define("web_timeline.TimelineController", function(require) {
          * @private
          * @param {EventObject} event
          */
-        _onMove: function(event) {
+        _onMove: function (event) {
             const item = event.data.item;
             const fields = this.renderer.fields;
             const event_start = item.start;
@@ -198,7 +198,7 @@ odoo.define("web_timeline.TimelineController", function(require) {
          *
          * @returns {jQuery.Deferred}
          */
-        internalMove: function() {
+        internalMove: function () {
             const queues = this.moveQueue.slice();
             this.moveQueue = [];
             const defers = [];
@@ -229,7 +229,7 @@ odoo.define("web_timeline.TimelineController", function(require) {
          * @param {EventObject} event
          * @returns {jQuery.Deferred}
          */
-        _onRemove: function(event) {
+        _onRemove: function (event) {
             var def = $.Deferred();
 
             Dialog.confirm(this, _t("Are you sure you want to delete this record?"), {
@@ -250,7 +250,7 @@ odoo.define("web_timeline.TimelineController", function(require) {
          * @param {EventObject} event
          * @returns {dialogs.FormViewDialog}
          */
-        _onAdd: function(event) {
+        _onAdd: function (event) {
             const item = event.data.item;
             // Initialize default values for creation
             const default_context = {};
@@ -278,7 +278,7 @@ odoo.define("web_timeline.TimelineController", function(require) {
                 res_id: null,
                 context: _.extend(default_context, this.context),
                 view_id: Number(this.open_popup_action),
-                on_saved: record => {
+                on_saved: (record) => {
                     this.create_completed([record.res_id]);
                 },
             })
@@ -297,13 +297,13 @@ odoo.define("web_timeline.TimelineController", function(require) {
          * @param {RecordId} id
          * @returns {jQuery.Deferred}
          */
-        create_completed: function(id) {
+        create_completed: function (id) {
             return this._rpc({
                 model: this.model.modelName,
                 method: "read",
                 args: [id, this.model.fieldNames],
                 context: this.context,
-            }).then(records => {
+            }).then((records) => {
                 var new_event = this.renderer.event_data_transform(records[0]);
                 var items = this.renderer.timeline.itemsData;
                 items.add(new_event);
@@ -316,7 +316,7 @@ odoo.define("web_timeline.TimelineController", function(require) {
          * Triggered upon completion of writing a record.
          * @param {ControllerOptions} options
          */
-        write_completed: function(options) {
+        write_completed: function (options) {
             const params = {
                 domain: this.renderer.last_domains,
                 context: this.context,
@@ -330,7 +330,7 @@ odoo.define("web_timeline.TimelineController", function(require) {
          * @param {EventObject} event
          * @returns {jQuery.Deferred}
          */
-        remove_completed: function(event) {
+        remove_completed: function (event) {
             return this._rpc({
                 model: this.modelName,
                 method: "unlink",
