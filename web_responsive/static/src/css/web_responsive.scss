@@ -784,8 +784,8 @@ html .o_web_client .o_action_manager .o_action {
     }
 }
 
-// Filter Menu
 .o_control_panel {
+    // Filter Menu item
     .o_filters_menu {
         .o_menu_item {
             @include o-search-options-dropdown-custom-item;
@@ -795,5 +795,12 @@ html .o_web_client .o_action_manager .o_action {
                 text-overflow: ellipsis;
             }
         }
+    }
+
+    // Enable scroll on dropdowns
+    .o_cp_buttons .dropdown-menu {
+        max-height: 70vh;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
 }
