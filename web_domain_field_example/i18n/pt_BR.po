@@ -1,0 +1,109 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* web_domain_field_example
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+
+#. module: web_domain_field_example
+#: model:ir.model.fields,field_description:web_domain_field_example.field_product_demonstration__categ_id
+msgid "Categ"
+msgstr ""
+
+#. module: web_domain_field_example
+#: model:ir.model.fields,field_description:web_domain_field_example.field_product_demonstration__create_uid
+#: model:ir.model.fields,field_description:web_domain_field_example.field_product_selection_example__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: web_domain_field_example
+#: model:ir.model.fields,field_description:web_domain_field_example.field_product_demonstration__create_date
+#: model:ir.model.fields,field_description:web_domain_field_example.field_product_selection_example__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: web_domain_field_example
+#: model:ir.model.fields,field_description:web_domain_field_example.field_product_demonstration__default_code
+msgid "Default Code"
+msgstr ""
+
+#. module: web_domain_field_example
+#: model:ir.model.fields,field_description:web_domain_field_example.field_product_demonstration__display_name
+#: model:ir.model.fields,field_description:web_domain_field_example.field_product_selection_example__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_domain_field_example
+#: model:ir.model.fields,field_description:web_domain_field_example.field_product_demonstration__id
+#: model:ir.model.fields,field_description:web_domain_field_example.field_product_selection_example__id
+msgid "ID"
+msgstr ""
+
+#. module: web_domain_field_example
+#: model:ir.model.fields,field_description:web_domain_field_example.field_product_demonstration____last_update
+#: model:ir.model.fields,field_description:web_domain_field_example.field_product_selection_example____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: web_domain_field_example
+#: model:ir.model.fields,field_description:web_domain_field_example.field_product_demonstration__write_uid
+#: model:ir.model.fields,field_description:web_domain_field_example.field_product_selection_example__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: web_domain_field_example
+#: model:ir.model.fields,field_description:web_domain_field_example.field_product_demonstration__write_date
+#: model:ir.model.fields,field_description:web_domain_field_example.field_product_selection_example__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: web_domain_field_example
+#: model:ir.model.fields,field_description:web_domain_field_example.field_product_demonstration__name
+msgid "Name"
+msgstr ""
+
+#. module: web_domain_field_example
+#: model:ir.model.fields,field_description:web_domain_field_example.field_product_selection_example__product_id
+msgid "Product"
+msgstr ""
+
+#. module: web_domain_field_example
+#: model:ir.model.fields,field_description:web_domain_field_example.field_product_selection_example__product_category_id
+msgid "Product Category"
+msgstr ""
+
+#. module: web_domain_field_example
+#: model:ir.model.fields,field_description:web_domain_field_example.field_product_selection_example__product_id_domain
+msgid "Product Id Domain"
+msgstr ""
+
+#. module: web_domain_field_example
+#: model:ir.actions.act_window,name:web_domain_field_example.action_product_selection_example
+#: model:ir.ui.menu,name:web_domain_field_example.menu_product_selection_example
+msgid "Product Selection Example"
+msgstr ""
+
+#. module: web_domain_field_example
+#: model_terms:ir.ui.view,arch_db:web_domain_field_example.product_selection_example_form
+#: model_terms:ir.ui.view,arch_db:web_domain_field_example.product_selection_example_tree
+msgid "Product Selections"
+msgstr ""
+
+#. module: web_domain_field_example
+#: model:ir.model,name:web_domain_field_example.model_product_demonstration
+msgid "Products to demonstrate workings of web_domain_field module."
+msgstr ""
+
+#. module: web_domain_field_example
+#: model:ir.model,name:web_domain_field_example.model_product_selection_example
+msgid "Show web_domain_field in action"
+msgstr ""
