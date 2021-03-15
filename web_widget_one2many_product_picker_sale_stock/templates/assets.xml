@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="Web Widget One2Many Product Picker Sale Stock - Backend Assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link type="text/css" rel="stylesheet"
+              href="/web_widget_one2many_product_picker_sale_stock/static/src/scss/one2many_product_picker.scss"/>
+            <script type="text/javascript" src="/web_widget_one2many_product_picker_sale_stock/static/src/js/views/abstract_view.js"></script>
+        </xpath>
+    </template>
+</odoo>
