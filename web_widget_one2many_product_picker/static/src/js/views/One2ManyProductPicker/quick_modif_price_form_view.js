@@ -10,41 +10,24 @@ odoo.define(
          * is used by the RecordQuickCreate in One2ManyProductPicker views.
          */
 
-        var QuickCreateFormView = require("web.QuickCreateFormView");
-        var core = require("web.core");
-        var tools = require("web_widget_one2many_product_picker.tools");
+        const QuickCreateFormView = require("web.QuickCreateFormView");
+        const core = require("web.core");
+        const tools = require("web_widget_one2many_product_picker.tools");
 
-        var qweb = core.qweb;
+        const qweb = core.qweb;
 
-        var ProductPickerQuickModifPriceFormRenderer = QuickCreateFormView.prototype.config.Renderer.extend(
+        const ProductPickerQuickModifPriceFormRenderer = QuickCreateFormView.prototype.config.Renderer.extend(
             {
                 /**
                  * @override
                  */
                 start: function() {
-                    var self = this;
                     this.$el.addClass(
                         "oe_one2many_product_picker_form_view o_xxs_form_view"
                     );
-                    return this._super.apply(this, arguments).then(function() {
-                        self._appendPrice();
-                        self._appendButtons();
+                    return this._super.apply(this, arguments).then(() => {
+                        this._appendPrice();
                     });
-                },
-
-                /**
-                 * @private
-                 */
-                _appendButtons: function() {
-                    this.$el.find(".oe_one2many_product_picker_form_buttons").remove();
-                    this.$el.append(
-                        qweb.render(
-                            "One2ManyProductPicker.QuickModifPrice.FormButtons",
-                            {
-                                mode: this.mode,
-                            }
-                        )
-                    );
                 },
 
                 /**
@@ -59,13 +42,8 @@ odoo.define(
             }
         );
 
-        var ProductPickerQuickModifPriceFormController = QuickCreateFormView.prototype.config.Controller.extend(
+        const ProductPickerQuickModifPriceFormController = QuickCreateFormView.prototype.config.Controller.extend(
             {
-                events: _.extend({}, QuickCreateFormView.prototype.events, {
-                    "click .oe_record_change": "_onClickChange",
-                    "click .oe_record_discard": "_onClickDiscard",
-                }),
-
                 /**
                  * @override
                  */
@@ -81,28 +59,29 @@ odoo.define(
                  * @override
                  */
                 start: function() {
-                    var self = this;
-                    return this._super.apply(this, arguments).then(function() {
-                        self._updatePrice();
+                    return this._super.apply(this, arguments).then(() => {
+                        const record = this.model.get(this.handle);
+                        this._updatePrice(record.data);
                     });
                 },
 
                 /**
                  * @override
                  */
-                _onFieldChanged: function() {
+                _onFieldChanged: function(ev) {
                     this._super.apply(this, arguments);
-                    this._updatePrice();
+                    const record = this.model.get(this.handle);
+                    this._updatePrice(_.extend({}, record.data, ev.data.changes));
                 },
 
                 /**
                  * @private
+                 * @param {Object} values
                  */
-                _updatePrice: function() {
-                    var record = this.model.get(this.handle);
-                    var price_reduce = tools.priceReduce(
-                        record.data[this.fieldMap.price_unit],
-                        record.data[this.fieldMap.discount]
+                _updatePrice: function(values) {
+                    const price_reduce = tools.priceReduce(
+                        values[this.fieldMap.price_unit],
+                        values[this.fieldMap.discount]
                     );
                     this.renderer.$el
                         .find(".oe_price")
@@ -111,98 +90,14 @@ odoo.define(
                                 price_reduce,
                                 this.getParent().state.fields[this.fieldMap.price_unit],
                                 this.currencyField,
-                                record
+                                values
                             )
                         );
-                },
-
-                /**
-                 * @private
-                 */
-                _disableQuickCreate: function() {
-                    // Ensures that the record won't be created twice
-                    this._disabled = true;
-                    this.$el.addClass("o_disabled");
-                    this.$("input:not(:disabled)")
-                        .addClass("o_temporarily_disabled")
-                        .attr("disabled", "disabled");
-                },
-
-                /**
-                 * @private
-                 */
-                _enableQuickCreate: function() {
-                    // Allows to create again
-                    this._disabled = false;
-                    this.$el.removeClass("o_disabled");
-                    this.$("input.o_temporarily_disabled")
-                        .removeClass("o_temporarily_disabled")
-                        .attr("disabled", false);
-                },
-
-                /**
-                 * @private
-                 * @param {MouseEvent} ev
-                 */
-                _onClickChange: function(ev) {
-                    var self = this;
-                    ev.stopPropagation();
-                    this.model.updateRecordContext(this.handle, {
-                        has_changes_confirmed: true,
-                    });
-                    var is_virtual = this.model.isPureVirtual(this.handle);
-
-                    // If is a 'pure virtual' record, save it in the selected list
-                    if (is_virtual) {
-                        if (this.model.isDirty(this.handle)) {
-                            this._disableQuickCreate();
-                            this.saveRecord(this.handle, {
-                                stayInEdit: true,
-                                reload: true,
-                                savePoint: true,
-                                viewType: "form",
-                            }).then(function() {
-                                self._enableQuickCreate();
-                                var record = self.model.get(self.handle);
-                                self.model.unsetDirty(self.handle);
-                                self.trigger_up("create_quick_record", {
-                                    id: record.id,
-                                });
-                                self.getParent().destroy();
-                            });
-                        } else {
-                            this.getParent().destroy();
-                        }
-                    } else {
-                        // If is a "normal" record, update it
-                        var record = this.model.get(this.handle);
-                        this.trigger_up("update_quick_record", {
-                            id: record.id,
-                        });
-                        self.model.unsetDirty(self.handle);
-                        this.getParent().destroy();
-                    }
-                },
-
-                /**
-                 * @private
-                 * @param {MouseEvent} ev
-                 */
-                _onClickDiscard: function(ev) {
-                    ev.stopPropagation();
-                    this.model.discardChanges(this.handle, {
-                        rollback: true,
-                    });
-                    var record = this.model.get(this.handle);
-                    this.trigger_up("update_quick_record", {
-                        id: record.id,
-                    });
-                    this.getParent().destroy();
                 },
             }
         );
 
-        var ProductPickerQuickModifPriceFormView = QuickCreateFormView.extend({
+        const ProductPickerQuickModifPriceFormView = QuickCreateFormView.extend({
             config: _.extend({}, QuickCreateFormView.prototype.config, {
                 Renderer: ProductPickerQuickModifPriceFormRenderer,
                 Controller: ProductPickerQuickModifPriceFormController,

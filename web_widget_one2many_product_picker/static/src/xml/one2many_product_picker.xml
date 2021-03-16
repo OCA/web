@@ -39,14 +39,6 @@
                     aria-label="Search..."
                     aria-describedby="btnGroupAddon2"
                 />
-                <div class="input-group-append">
-                    <button
-                        type="button"
-                        t-attf-class="btn btn-secondary btn-lg input-group-button oe_search_erase"
-                    >
-                        <i class="fa fa-eraser" />
-                    </button>
-                </div>
             </div>
         </div>
     </t>
@@ -97,16 +89,31 @@
     <t t-name="One2ManyProductPicker.FlipCard">
         <div
             class="oe_flip_container p-1 col-12 col-sm-8 col-md-6 col-lg-4 col-xl-3 col-xxl-2"
+            t-att-data-card-id="state &amp;&amp; state.id || record_search.id"
         >
             <div
-                t-attf-class="oe_flip_card {{!state &amp;&amp; 'disabled' || (auto_save &amp;&amp; !is_virtual &amp;&amp; !state.data.id &amp;&amp; 'blocked') || ''}}"
+                t-attf-class="oe_flip_card {{!state &amp;&amp; 'disabled' || (auto_save &amp;&amp; (!is_virtual || is_saving) &amp;&amp; !state.data.id &amp;&amp; 'blocked') || ''}}"
             >
                 <div class="oe_flip_card_inner text-center">
                     <div
-                        t-attf-class="oe_flip_card_front p-0 {{(modified &amp;&amp; 'border-warning') || (state &amp;&amp; !is_virtual &amp;&amp; 'border-success') || ''}}"
+                        t-attf-class="oe_flip_card_front p-0 {{((modified || is_saving) &amp;&amp; 'border-warning') || (state &amp;&amp; !is_virtual &amp;&amp; 'border-success') || ''}}"
                     >
                         <t t-if="state">
-                            <t t-if="!is_virtual">
+                            <t t-if="is_saving || lazy_qty > 0">
+                                <div
+                                    class="safezone position-absolute m-0 pb-2 pr-2 text-left"
+                                >
+                                    <span
+                                        class="badge record_saving badge-warning font-weight-bold rounded-0 mt-0 px-2 py-3 product_qty"
+                                    ><span
+                                            class="lazy_product_qty"
+                                            t-esc="lazy_qty || '1'"
+                                        /> x <t
+                                            t-esc="state.data[field_map.product_uom].data.display_name"
+                                        /></span>
+                                </div>
+                            </t>
+                            <t t-elif="!is_virtual">
                                 <div
                                     class="safezone position-absolute m-0 pb-2 pr-2 text-left"
                                 >
@@ -187,7 +194,34 @@
             </div>
         </div>
     </t>
-    <t t-name="One2ManyProductPicker.QuickModifPricePopup">
-        <div class="oe_product_picker_quick_modif_price shadow" />
+    <t t-name="One2ManyProductPicker.QuickModifPrice.Modal">
+        <div
+            class="oe_product_picker_quick_modif_price modal fade"
+            id="One2ManyProductPickerQuickModifPrice"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="One2ManyProductPickerQuickModifPriceLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body p-0" />
+                    <div class="modal-footer">
+                        <button
+                            class="btn btn-success oe_record_change mr-auto"
+                            data-dismiss="modal"
+                        >
+                            <i class="fa fa-check" />
+                        </button>
+                        <button
+                            class="btn btn-warning oe_record_discard"
+                            data-dismiss="modal"
+                        >
+                            <i class="fa fa-times" />
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </t>
 </template>

@@ -5,21 +5,25 @@ odoo.define(
     function(require) {
         "use strict";
 
-        var core = require("web.core");
-        var Widget = require("web.Widget");
-        var ProductPickerQuickModifPriceFormView = require("web_widget_one2many_product_picker.ProductPickerQuickModifPriceFormView")
+        const core = require("web.core");
+        const Widget = require("web.Widget");
+        const ProductPickerQuickModifPriceFormView = require("web_widget_one2many_product_picker.ProductPickerQuickModifPriceFormView")
             .ProductPickerQuickModifPriceFormView;
 
-        var qweb = core.qweb;
+        const qweb = core.qweb;
 
         /**
          * This widget render a Form. Used by FieldOne2ManyProductPicker
          */
-        var ProductPickerQuickModifPriceForm = Widget.extend({
+        const ProductPickerQuickModifPriceForm = Widget.extend({
             className: "oe_one2many_product_picker_quick_modif_price",
             xmlDependencies: [
                 "/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker_quick_modif_price.xml",
             ],
+            events: {
+                "click .oe_record_change": "_onClickChange",
+                "click .oe_record_discard": "_onClickDiscard",
+            },
 
             /**
              * @override
@@ -47,9 +51,8 @@ odoo.define(
              * @override
              */
             start: function() {
-                var self = this;
-                var def1 = this._super.apply(this, arguments);
-                var fieldsView = {
+                const def1 = this._super.apply(this, arguments);
+                const fieldsView = {
                     arch: this._generateFormArch(),
                     fields: this.fields,
                     viewFields: this.fields,
@@ -78,19 +81,21 @@ odoo.define(
                 if (this.id) {
                     this.basicFieldParams.model.save(this.id, {savePoint: true});
                 }
-                var def2 = this.formView.getController(this).then(function(controller) {
-                    self.controller = controller;
-                    self.$el.empty();
-                    self.controller.appendTo(self.$el);
+                const def2 = this.formView.getController(this).then(controller => {
+                    this.controller = controller;
+                    this.$(".modal-body").empty();
+                    this.controller.appendTo(this.$(".modal-body"));
+                    this.$el.on("hidden.bs.modal", this._onModalHidden.bind(this));
                 });
 
-                return $.when(def1, def2);
+                return Promise.all([def1, def2]);
             },
 
             /**
              * @override
              */
             destroy: function() {
+                this.$el.off("hidden.bs.modal");
                 this._super.apply(this, arguments);
             },
 
@@ -103,31 +108,33 @@ odoo.define(
              * @returns {String}
              */
             _generateFormArch: function() {
-                var wanted_field_states = this._getWantedFieldState();
-                var template =
+                const wanted_field_states = this._getWantedFieldState();
+                let template =
                     "<templates><t t-name='One2ManyProductPicker.QuickModifPrice.Form'>";
                 template += this.basicFieldParams.field.views.form.arch;
                 template += "</t></templates>";
                 qweb.add_template(template);
-                var $arch = $(
+                const $arch = $(
                     qweb.render("One2ManyProductPicker.QuickModifPrice.Form", {
                         field_map: this.fieldMap,
                         record_search: this.searchRecord,
                     })
                 );
 
-                var field_names = Object.keys(wanted_field_states);
-                var gen_arch = "<form><group>";
-                for (var index in field_names) {
-                    var field_name = field_names[index];
-                    var $field = $arch.find("field[name='" + field_name + "']");
-                    var modifiers = $field.attr("modifiers")
+                const field_names = Object.keys(
+                    this.basicFieldParams.field.views.form.fields
+                );
+                let gen_arch = "<form><group>";
+                for (const index in field_names) {
+                    const field_name = field_names[index];
+                    const $field = $arch.find("field[name='" + field_name + "']");
+                    const modifiers = $field.attr("modifiers")
                         ? JSON.parse($field.attr("modifiers"))
                         : {};
-                    modifiers.invisible = false;
+                    modifiers.invisible = !(field_name in wanted_field_states);
                     modifiers.readonly = wanted_field_states[field_name];
                     $field.attr("modifiers", JSON.stringify(modifiers));
-                    $field.attr("invisible", "0");
+                    $field.attr("invisible", modifiers.invisible ? "1" : "0");
                     $field.attr(
                         "readonly",
                         wanted_field_states[field_name] ? "1" : "0"
@@ -146,10 +153,94 @@ odoo.define(
              * @returns {Object}
              */
             _getWantedFieldState: function() {
-                var wantedFieldState = {};
+                const wantedFieldState = {};
                 wantedFieldState[this.fieldMap.discount] = !this.canEditDiscount;
                 wantedFieldState[this.fieldMap.price_unit] = !this.canEditPrice;
                 return wantedFieldState;
+            },
+
+            /**
+             * @private
+             */
+            _onModalHidden: function() {
+                this.destroy();
+            },
+
+            /**
+             * @private
+             * @param {MouseEvent} ev
+             */
+            _onClickChange: function(ev) {
+                ev.stopPropagation();
+                const model = this.basicFieldParams.model;
+                model.updateRecordContext(this.id, {
+                    has_changes_confirmed: true,
+                });
+                const is_virtual = model.isPureVirtual(this.id);
+
+                // If is a 'pure virtual' record, save it in the selected list
+                if (is_virtual) {
+                    if (model.isDirty(this.id)) {
+                        this._disableQuickCreate();
+                        this.controller
+                            .saveRecord(this.id, {
+                                stayInEdit: true,
+                                reload: true,
+                                savePoint: true,
+                                viewType: "form",
+                            })
+                            .then(() => {
+                                this._enableQuickCreate();
+                                model.unsetDirty(this.id);
+                                this.trigger_up("create_quick_record", {
+                                    id: this.id,
+                                });
+                            });
+                    }
+                } else {
+                    // If is a "normal" record, update it
+                    this.trigger_up("update_quick_record", {
+                        id: this.id,
+                    });
+                    model.unsetDirty(this.id);
+                }
+            },
+
+            /**
+             * @private
+             * @param {MouseEvent} ev
+             */
+            _onClickDiscard: function(ev) {
+                ev.stopPropagation();
+                const model = this.basicFieldParams.model;
+                model.discardChanges(this.id, {
+                    rollback: true,
+                });
+                this.trigger_up("update_quick_record", {
+                    id: this.id,
+                });
+            },
+
+            /**
+             * @private
+             */
+            _disableQuickCreate: function() {
+                // Ensures that the record won't be created twice
+                this.$el.addClass("o_disabled");
+                this.$("input:not(:disabled),button:not(:disabled)")
+                    .addClass("o_temporarily_disabled")
+                    .attr("disabled", "disabled");
+            },
+
+            /**
+             * @private
+             */
+            _enableQuickCreate: function() {
+                // Allows to create again
+                this.$el.removeClass("o_disabled");
+                this.$("input.o_temporarily_disabled,button.o_temporarily_disabled")
+                    .removeClass("o_temporarily_disabled")
+                    .attr("disabled", false);
             },
         });
 

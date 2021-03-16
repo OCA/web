@@ -1,3 +1,4 @@
+/* global py */
 // Copyright 2020 Tecnativa - Alexandre Díaz
 // License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", function(
@@ -5,18 +6,18 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", f
 ) {
     "use strict";
 
-    var core = require("web.core");
-    var Widget = require("web.Widget");
-    var widgetRegistry = require("web.widget_registry");
-    var ProductPickerQuickCreateFormView = require("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView")
+    const core = require("web.core");
+    const Widget = require("web.Widget");
+    const widgetRegistry = require("web.widget_registry");
+    const ProductPickerQuickCreateFormView = require("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView")
         .ProductPickerQuickCreateFormView;
 
-    var qweb = core.qweb;
+    const qweb = core.qweb;
 
     /**
      * This widget render a Form. Used by FieldOne2ManyProductPicker
      */
-    var ProductPickerQuickCreateForm = Widget.extend({
+    const ProductPickerQuickCreateForm = Widget.extend({
         className: "oe_one2many_product_picker_quick_create",
         xmlDependencies: [
             "/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker_quick_create.xml",
@@ -50,10 +51,9 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", f
          * @override
          */
         start: function() {
-            var self = this;
-            var def1 = this._super.apply(this, arguments);
-            var form_arch = this._generateFormArch();
-            var fieldsView = {
+            const def1 = this._super.apply(this, arguments);
+            const form_arch = this._generateFormArch();
+            const fieldsView = {
                 arch: form_arch,
                 fields: this.fields,
                 viewFields: this.fields,
@@ -62,11 +62,11 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", f
                 model: this.basicFieldParams.field.relation,
             };
 
-            var node_context = this.node.attr("context") || "{}";
+            const node_context = this.node.attr("context") || "{}";
             this.nodeContext = py.eval(node_context, {
                 active_id: this.res_id || false,
             });
-            var refinedContext = _.extend(
+            const refinedContext = _.extend(
                 {},
                 this.main_state.getContext(),
                 this.nodeContext
@@ -92,13 +92,13 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", f
             // If (this.id) {
             //     this.basicFieldParams.model.save(this.id, {savePoint: true});
             // }
-            var def2 = this.formView.getController(this).then(function(controller) {
-                self.controller = controller;
-                self.$el.empty();
-                self.controller.appendTo(self.$el);
+            const def2 = this.formView.getController(this).then(controller => {
+                this.controller = controller;
+                this.$el.empty();
+                this.controller.appendTo(this.$el);
             });
 
-            return $.when(def1, def2);
+            return Promise.all([def1, def2]);
         },
 
         on_attach_callback: function() {
@@ -112,7 +112,7 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", f
          * @returns {String}
          */
         _generateFormArch: function() {
-            var template =
+            let template =
                 "<templates><t t-name='One2ManyProductPicker.QuickCreateForm'>";
             template += this.basicFieldParams.field.views.form.arch;
             template += "</t></templates>";
@@ -140,21 +140,20 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", f
                 this.id = evt.data.baseRecordID;
                 this.start();
             } else {
-                var self = this;
                 this.getParent()
                     ._generateVirtualState({}, this.editContext)
-                    .then(function(state) {
-                        var data = {};
-                        data[self.compareKey] = {
+                    .then(state => {
+                        const data = {};
+                        data[this.compareKey] = {
                             operation: "ADD",
                             id: evt.data.compareValue,
                         };
-                        self.basicFieldParams.model
+                        this.basicFieldParams.model
                             ._applyChange(state.id, data)
-                            .then(function() {
-                                self.res_id = state.res_id;
-                                self.id = state.id;
-                                self.start();
+                            .then(() => {
+                                this.res_id = state.res_id;
+                                this.id = state.id;
+                                this.start();
                             });
                     });
             }

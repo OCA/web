@@ -3,7 +3,7 @@
 odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
     "use strict";
 
-    var BasicModel = require("web.BasicModel");
+    const BasicModel = require("web.BasicModel");
 
     BasicModel.include({
         /**
@@ -23,7 +23,7 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
          * @returns {Boolean}
          */
         isPureVirtual: function(id) {
-            var data = this.localData[id];
+            const data = this.localData[id];
             return data._virtual || false;
         },
 
@@ -32,7 +32,7 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
          * @param {Boolean} status
          */
         setPureVirtual: function(id, status) {
-            var data = this.localData[id];
+            const data = this.localData[id];
             if (status) {
                 data._virtual = true;
             } else {
@@ -44,9 +44,9 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
          * @param {Number/String} id
          */
         unsetDirty: function(id) {
-            var data = this.localData[id];
+            const data = this.localData[id];
             data._isDirty = false;
-            this._visitChildren(data, function(r) {
+            this._visitChildren(data, r => {
                 r._isDirty = false;
             });
         },
@@ -59,12 +59,11 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
          * @returns {Deferred}
          */
         createVirtualRecord: function(listID, options) {
-            var self = this;
-            var list = this.localData[listID];
-            var context = _.extend({}, this._getContext(list), options.context);
+            const list = this.localData[listID];
+            const context = _.extend({}, this._getContext(list), options.context);
 
-            var position = options ? options.position : "top";
-            var params = {
+            const position = options ? options.position : "top";
+            const params = {
                 context: context,
                 fields: list.fields,
                 fieldsInfo: list.fieldsInfo,
@@ -75,18 +74,16 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
                 doNotSetDirty: true,
             };
 
-            return $.Deferred(function(d) {
-                self._makeDefaultRecord(list.model, params).then(function(recordID) {
-                    self.setPureVirtual(recordID, true);
-                    self.updateRecordContext(recordID, {ignore_warning: true});
+            return new Promise(resolve => {
+                this._makeDefaultRecord(list.model, params).then(recordID => {
+                    this.setPureVirtual(recordID, true);
+                    this.updateRecordContext(recordID, {ignore_warning: true});
                     if (options.data) {
-                        self._applyChange(recordID, options.data, params).then(
-                            function() {
-                                d.resolve(self.get(recordID));
-                            }
-                        );
+                        this._applyChange(recordID, options.data, params).then(() => {
+                            resolve(this.get(recordID));
+                        });
                     } else {
-                        d.resolve(self.get(recordID));
+                        resolve(this.get(recordID));
                     }
                 });
             });
@@ -100,13 +97,14 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
          *
          * @override
          */
-        _performOnChange: function(record, fields, viewType) {
+        _performOnChange: function(record) {
             if (record.context && record.context.ignore_warning) {
-                var this_mp = _.clone(this);
-                var super_call = this.trigger_up;
+                const this_mp = _.clone(this);
+                const super_call = this.trigger_up;
                 this_mp.trigger_up = function(event_name, data) {
                     if (event_name === "warning" && data.type === "dialog") {
-                        return; // Do nothing
+                        // Do nothing
+                        return;
                     }
                     return super_call.apply(this, arguments);
                 }.bind(this);

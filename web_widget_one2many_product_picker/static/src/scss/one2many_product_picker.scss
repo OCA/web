@@ -67,10 +67,6 @@
                 height $one2many-product-picker-transition-3d-time;
             height: $one2many-product-picker-card-min-height;
 
-            &.blocked {
-                filter: blur(2px);
-            }
-
             &.disabled {
                 filter: grayscale(100%);
                 opacity: 0.5;
@@ -233,38 +229,5 @@
                 cursor: pointer;
             }
         }
-    }
-}
-
-.oe_product_picker_quick_modif_price {
-    width: 80%;
-    max-width: $one2many-product-picker-quick-modif-price-max-width;
-    margin: auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border: 1px solid $border-color;
-    z-index: 55;
-
-    .oe_one2many_product_picker_form_buttons {
-        text-align: center;
-    }
-}
-
-.oe_product_picker_catch_attention {
-    position: relative;
-    animation: productPickerCatchAttention 200ms normal forwards;
-}
-
-@keyframes productPickerCatchAttention {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.5);
-    }
-    100% {
-        transform: scale(1);
     }
 }

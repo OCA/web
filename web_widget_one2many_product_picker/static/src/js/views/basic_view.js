@@ -4,15 +4,15 @@
 odoo.define("web_widget_one2many_product_picker.BasicView", function(require) {
     "use strict";
 
-    var core = require("web.core");
-    var pyUtils = require("web.py_utils");
-    var BasicView = require("web.BasicView");
+    const core = require("web.core");
+    const pyUtils = require("web.py_utils");
+    const BasicView = require("web.BasicView");
 
-    var _t = core._t;
+    const _t = core._t;
 
     // Add ref to _() -> _t() call
-    var PY_t = new py.PY_def.fromJSON(function() {
-        var args = py.PY_parseArgs(arguments, ["str"]);
+    const PY_t = new py.PY_def.fromJSON(function() {
+        const args = py.PY_parseArgs(arguments, ["str"]);
         return py.str.fromJSON(_t(args.str.toJSON()));
     });
 

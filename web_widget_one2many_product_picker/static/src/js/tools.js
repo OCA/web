@@ -3,7 +3,7 @@
 odoo.define("web_widget_one2many_product_picker.tools", function(require) {
     "use strict";
 
-    var field_utils = require("web.field_utils");
+    const field_utils = require("web.field_utils");
 
     /**
      * Calculate the price with discount

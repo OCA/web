@@ -107,4 +107,3 @@ msgstr ""
 #, python-format
 msgid "[No widget %s]"
 msgstr ""
-

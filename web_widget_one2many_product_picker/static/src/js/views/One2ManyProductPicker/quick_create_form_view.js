@@ -10,20 +10,19 @@ odoo.define(
          * is used by the RecordQuickCreate in One2ManyProductPicker views.
          */
 
-        var QuickCreateFormView = require("web.QuickCreateFormView");
-        var BasicModel = require("web.BasicModel");
-        var core = require("web.core");
+        const QuickCreateFormView = require("web.QuickCreateFormView");
+        const BasicModel = require("web.BasicModel");
+        const core = require("web.core");
 
-        var qweb = core.qweb;
+        const qweb = core.qweb;
 
         BasicModel.include({
             _applyOnChange: function(values, record, viewType) {
-                var vt = viewType || record.viewType;
                 // Ignore changes by record context 'ignore_onchanges' fields
                 if ("ignore_onchanges" in record.context) {
-                    var ignore_changes = record.context.ignore_onchanges;
-                    for (var index in ignore_changes) {
-                        var field_name = ignore_changes[index];
+                    const ignore_changes = record.context.ignore_onchanges;
+                    for (const index in ignore_changes) {
+                        const field_name = ignore_changes[index];
                         delete values[field_name];
                     }
                     delete record.context.ignore_onchanges;
@@ -32,7 +31,7 @@ odoo.define(
             },
         });
 
-        var ProductPickerQuickCreateFormRenderer = QuickCreateFormView.prototype.config.Renderer.extend(
+        const ProductPickerQuickCreateFormRenderer = QuickCreateFormView.prototype.config.Renderer.extend(
             {
                 /**
                  * @override
@@ -46,7 +45,7 @@ odoo.define(
             }
         );
 
-        var ProductPickerQuickCreateFormController = QuickCreateFormView.prototype.config.Controller.extend(
+        const ProductPickerQuickCreateFormController = QuickCreateFormView.prototype.config.Controller.extend(
             {
                 events: _.extend({}, QuickCreateFormView.prototype.events, {
                     "click .oe_record_add": "_onClickAdd",
@@ -67,14 +66,14 @@ odoo.define(
                  * Create or accept changes
                  */
                 auto: function() {
-                    var record = this.model.get(this.handle);
+                    const record = this.model.get(this.handle);
                     if (
                         record.context.has_changes_confirmed ||
                         typeof record.context.has_changes_confirmed === "undefined"
                     ) {
                         return;
                     }
-                    var state = this._getRecordState();
+                    const state = this._getRecordState();
                     if (state === "new") {
                         this._add();
                     } else if (state === "dirty") {
@@ -87,18 +86,20 @@ odoo.define(
                  *  - record: Normal
                  *  - new: Is a new record
                  *  - dirty: Has changes
+                 *
+                 * @returns {Object}
                  */
                 _getRecordState: function() {
-                    var record = this.model.get(this.handle);
-                    var state = "record";
+                    const record = this.model.get(this.handle);
+                    let state = "record";
                     if (this.model.isNew(record.id)) {
                         state = "new";
                     } else if (record.isDirty()) {
                         state = "dirty";
                     }
                     if (state === "new") {
-                        for (var index in this.mainRecordData.data) {
-                            var recordData = this.mainRecordData.data[index];
+                        for (const index in this.mainRecordData.data) {
+                            const recordData = this.mainRecordData.data[index];
                             if (recordData.ref === record.ref) {
                                 if (record.isDirty()) {
                                     state = "dirty";
@@ -160,12 +161,12 @@ odoo.define(
 
                 /**
                  * @private
-                 * @param {Array[String]} fields_changed
+                 * @param {Array} fields_changed
                  * @returns {Boolean}
                  */
                 _needReloadCard: function(fields_changed) {
-                    for (var index in fields_changed) {
-                        var field = fields_changed[index];
+                    for (const index in fields_changed) {
+                        const field = fields_changed[index];
                         if (field === this.fieldMap[this.compareKey]) {
                             return true;
                         }
@@ -182,33 +183,33 @@ odoo.define(
                  * @param {ChangeEvent} ev
                  */
                 _onFieldChanged: function(ev) {
-                    var fields_changed = Object.keys(ev.data.changes);
+                    const fields_changed = Object.keys(ev.data.changes);
                     if (this._needReloadCard(fields_changed)) {
-                        var field = ev.data.changes[fields_changed[0]];
-                        var new_value = false;
+                        const field = ev.data.changes[fields_changed[0]];
+                        let new_value = false;
                         if (typeof field === "object") {
                             new_value = field.id;
                         } else {
                             new_value = field;
                         }
-                        var reload_values = {
+                        const reload_values = {
                             compareValue: new_value,
                         };
-                        var record = this.model.get(this.handle);
-                        if (!("base_record_id" in record.context)) {
-                            var old_value = record.data[this.compareKey];
+                        const record = this.model.get(this.handle);
+                        if ("base_record_id" in record.context) {
+                            reload_values.baseRecordID = record.context.base_record_id;
+                            reload_values.baseRecordResID =
+                                record.context.base_record_res_id;
+                            reload_values.baseRecordCompareValue =
+                                record.context.base_record_compare_value;
+                        } else {
+                            let old_value = record.data[this.compareKey];
                             if (typeof old_value === "object") {
                                 old_value = old_value.data.id;
                             }
                             reload_values.baseRecordID = record.id;
                             reload_values.baseRecordResID = record.ref;
                             reload_values.baseRecordCompareValue = old_value;
-                        } else {
-                            reload_values.baseRecordID = record.context.base_record_id;
-                            reload_values.baseRecordResID =
-                                record.context.base_record_res_id;
-                            reload_values.baseRecordCompareValue =
-                                record.context.base_record_compare_value;
                         }
                         this.trigger_up("reload_view", reload_values);
 
@@ -237,28 +238,30 @@ odoo.define(
                 _add: function() {
                     if (this._disabled) {
                         // Don't do anything if we are already creating a record
-                        return $.Deferred();
+                        return Promise.resolve();
                     }
                     this.model.updateRecordContext(this.handle, {
                         has_changes_confirmed: true,
                     });
-                    var self = this;
                     this._disableQuickCreate();
                     return this.saveRecord(this.handle, {
                         stayInEdit: true,
                         reload: true,
                         savePoint: true,
                         viewType: "form",
-                    }).then(function() {
-                        var record = self.model.get(self.handle);
-                        self.trigger_up("restore_flip_card", {
-                            success_callback: function() {
-                                self.trigger_up("create_quick_record", {
+                    }).then(() => {
+                        const record = this.model.get(this.handle);
+                        this.model.updateRecordContext(this.handle, {saving: true});
+                        this.trigger_up("restore_flip_card", {
+                            success_callback: () => {
+                                this.trigger_up("create_quick_record", {
                                     id: record.id,
+                                    callback: () => {
+                                        this.model.unsetDirty(this.handle);
+                                        // Self._updateButtons();
+                                        this._enableQuickCreate();
+                                    },
                                 });
-                                self.model.unsetDirty(self.handle);
-                                // Self._updateButtons();
-                                self._enableQuickCreate();
                             },
                             block: true,
                         });
@@ -267,51 +270,51 @@ odoo.define(
 
                 _remove: function() {
                     if (this._disabled) {
-                        // Don't do anything if we are already creating a record
-                        return $.Deferred();
+                        return Promise.resolve();
                     }
 
                     this._disableQuickCreate();
                     this.trigger_up("restore_flip_card", {block: true});
-                    var record = this.model.get(this.handle);
+                    const record = this.model.get(this.handle);
                     this.trigger_up("list_record_remove", {
                         id: record.id,
                     });
                 },
 
                 _change: function() {
-                    var self = this;
+                    const self = this;
                     if (this._disabled) {
                         // Don't do anything if we are already creating a record
-                        return $.Deferred();
+                        return Promise.resolve();
                     }
                     this._disableQuickCreate();
                     this.model.updateRecordContext(this.handle, {
                         has_changes_confirmed: true,
                     });
-                    var record = this.model.get(this.handle);
+                    const record = this.model.get(this.handle);
 
                     this.trigger_up("restore_flip_card", {
                         success_callback: function() {
                             self.trigger_up("update_quick_record", {
                                 id: record.id,
+                                callback: function() {
+                                    self.model.unsetDirty(self.handle);
+                                    // Self._updateButtons();
+                                    self._enableQuickCreate();
+                                },
                             });
-                            self.model.unsetDirty(self.handle);
-                            // Self._updateButtons();
-                            self._enableQuickCreate();
                         },
                         block: true,
                     });
                 },
 
                 _discard: function() {
-                    var self = this;
                     if (this._disabled) {
                         // Don't do anything if we are already creating a record
-                        return $.Deferred();
+                        return Promise.resolve();
                     }
                     this._disableQuickCreate();
-                    var record = this.model.get(this.handle);
+                    const record = this.model.get(this.handle);
                     this.model.discardChanges(this.handle, {
                         rollback: true,
                     });
@@ -324,11 +327,11 @@ odoo.define(
                         this._updateButtons();
                         this._enableQuickCreate();
                     } else {
-                        this.update({}, {reload: false}).then(function() {
-                            self.model.unsetDirty(self.handle);
-                            self.trigger_up("restore_flip_card");
-                            self._updateButtons();
-                            self._enableQuickCreate();
+                        this.update({}, {reload: false}).then(() => {
+                            this.model.unsetDirty(this.handle);
+                            this.trigger_up("restore_flip_card");
+                            this._updateButtons();
+                            this._enableQuickCreate();
                         });
                     }
                 },
@@ -371,7 +374,7 @@ odoo.define(
             }
         );
 
-        var ProductPickerQuickCreateFormView = QuickCreateFormView.extend({
+        const ProductPickerQuickCreateFormView = QuickCreateFormView.extend({
             config: _.extend({}, QuickCreateFormView.prototype.config, {
                 Renderer: ProductPickerQuickCreateFormRenderer,
                 Controller: ProductPickerQuickCreateFormController,
