@@ -1,6 +1,6 @@
 // Copyright 2020 Tecnativa - Alexandre Díaz
 // License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", function (
+odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", function(
     require
 ) {
     "use strict";
@@ -8,9 +8,8 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", f
     var core = require("web.core");
     var Widget = require("web.Widget");
     var widgetRegistry = require("web.widget_registry");
-    var ProductPickerQuickCreateFormView = require(
-        "web_widget_one2many_product_picker.ProductPickerQuickCreateFormView"
-    ).ProductPickerQuickCreateFormView;
+    var ProductPickerQuickCreateFormView = require("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView")
+        .ProductPickerQuickCreateFormView;
 
     var qweb = core.qweb;
 
@@ -30,7 +29,7 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", f
         /**
          * @override
          */
-        init: function (parent, options) {
+        init: function(parent, options) {
             this._super.apply(this, arguments);
             this.state = options.state;
             this.main_state = options.main_state;
@@ -50,7 +49,7 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", f
         /**
          * @override
          */
-        start: function () {
+        start: function() {
             var self = this;
             var def1 = this._super.apply(this, arguments);
             var form_arch = this._generateFormArch();
@@ -70,7 +69,8 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", f
             var refinedContext = _.extend(
                 {},
                 this.main_state.getContext(),
-                this.nodeContext);
+                this.nodeContext
+            );
             _.extend(refinedContext, this.editContext);
             this.formView = new ProductPickerQuickCreateFormView(fieldsView, {
                 context: refinedContext,
@@ -89,10 +89,10 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", f
                 model: this.basicFieldParams.model,
                 mainRecordData: this.getParent().getParent().state,
             });
-            // if (this.id) {
+            // If (this.id) {
             //     this.basicFieldParams.model.save(this.id, {savePoint: true});
             // }
-            var def2 = this.formView.getController(this).then(function (controller) {
+            var def2 = this.formView.getController(this).then(function(controller) {
                 self.controller = controller;
                 self.$el.empty();
                 self.controller.appendTo(self.$el);
@@ -101,7 +101,7 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", f
             return $.when(def1, def2);
         },
 
-        on_attach_callback: function () {
+        on_attach_callback: function() {
             if (this.controller) {
                 this.controller.autofocus();
             }
@@ -111,8 +111,9 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", f
          * @private
          * @returns {String}
          */
-        _generateFormArch: function () {
-            var template = "<templates><t t-name='One2ManyProductPicker.QuickCreateForm'>";
+        _generateFormArch: function() {
+            var template =
+                "<templates><t t-name='One2ManyProductPicker.QuickCreateForm'>";
             template += this.basicFieldParams.field.views.form.arch;
             template += "</t></templates>";
             qweb.add_template(template);
@@ -126,12 +127,12 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", f
          * @private
          * @param {CustomEvent} evt
          */
-        _onReloadView: function (evt) {
+        _onReloadView: function(evt) {
             this.editContext = {
-                'ignore_onchanges': [this.compareKey],
-                'base_record_id': evt.data.baseRecordID || null,
-                'base_record_res_id': evt.data.baseRecordResID || null,
-                'base_record_compare_value': evt.data.baseRecordCompareValue || null,
+                ignore_onchanges: [this.compareKey],
+                base_record_id: evt.data.baseRecordID || null,
+                base_record_res_id: evt.data.baseRecordResID || null,
+                base_record_compare_value: evt.data.baseRecordCompareValue || null,
             };
 
             if (evt.data.baseRecordCompareValue === evt.data.compareValue) {
@@ -140,20 +141,30 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", f
                 this.start();
             } else {
                 var self = this;
-                this.getParent()._generateVirtualState({}, this.editContext).then(function (state) {
-                    var data = {};
-                    data[self.compareKey] = {operation: 'ADD', id: evt.data.compareValue};
-                    self.basicFieldParams.model._applyChange(state.id, data).then(function () {
-                        self.res_id = state.res_id;
-                        self.id = state.id;
-                        self.start();
+                this.getParent()
+                    ._generateVirtualState({}, this.editContext)
+                    .then(function(state) {
+                        var data = {};
+                        data[self.compareKey] = {
+                            operation: "ADD",
+                            id: evt.data.compareValue,
+                        };
+                        self.basicFieldParams.model
+                            ._applyChange(state.id, data)
+                            .then(function() {
+                                self.res_id = state.res_id;
+                                self.id = state.id;
+                                self.start();
+                            });
                     });
-                });
             }
         },
     });
 
-    widgetRegistry.add("product_picker_quick_create_form", ProductPickerQuickCreateForm);
+    widgetRegistry.add(
+        "product_picker_quick_create_form",
+        ProductPickerQuickCreateForm
+    );
 
     return ProductPickerQuickCreateForm;
 });

@@ -45,7 +45,10 @@
     }
 
     .oe_one2many_product_picker_view {
-        @include make-grid-columns($columns: 24, $breakpoints: $one2many-product-picker-grid-breakpoints);
+        @include make-grid-columns(
+            $columns: 24,
+            $breakpoints: $one2many-product-picker-grid-breakpoints
+        );
 
         overflow: auto;
 
@@ -58,7 +61,10 @@
             user-select: none;
             background-color: transparent;
             perspective: 1000px;
-            transition: top $one2many-product-picker-transition-3d-time, left $one2many-product-picker-transition-3d-time, width $one2many-product-picker-transition-3d-time, height $one2many-product-picker-transition-3d-time;
+            transition: top $one2many-product-picker-transition-3d-time,
+                left $one2many-product-picker-transition-3d-time,
+                width $one2many-product-picker-transition-3d-time,
+                height $one2many-product-picker-transition-3d-time;
             height: $one2many-product-picker-card-min-height;
 
             &.blocked {
@@ -97,11 +103,13 @@
                         }
                     }
 
-                    .o_field_widget, .oe_one2many_product_picker_form_buttons .btn {
+                    .o_field_widget,
+                    .oe_one2many_product_picker_form_buttons .btn {
                         transform: scale($one2many-product-picker-zoom-scale);
                         margin-bottom: 1.3em !important;
                     }
-                    .o_field_widget, .w-100 {
+                    .o_field_widget,
+                    .w-100 {
                         width: 100% / $one2many-product-picker-zoom-scale !important;
                     }
                 }
@@ -133,7 +141,9 @@
                 position: relative;
                 width: 100%;
                 height: $one2many-product-picker-card-min-height;
-                transition: transform $one2many-product-picker-transition-3d-time, height $one2many-product-picker-transition-3d-time/2 ease-in-out $one2many-product-picker-transition-3d-time/2;
+                transition: transform $one2many-product-picker-transition-3d-time,
+                    height $one2many-product-picker-transition-3d-time/2 ease-in-out
+                        $one2many-product-picker-transition-3d-time/2;
                 transform-style: preserve-3d;
 
                 .position-absolute {
@@ -217,7 +227,9 @@
                 font-size: 0.95rem;
                 z-index: 0;
             }
-            .add_product, .product_qty, .price_unit {
+            .add_product,
+            .product_qty,
+            .price_unit {
                 cursor: pointer;
             }
         }
@@ -247,12 +259,12 @@
 
 @keyframes productPickerCatchAttention {
     0% {
-        transform: scale(1.0);
+        transform: scale(1);
     }
     50% {
         transform: scale(1.5);
     }
     100% {
-        transform: scale(1.0);
+        transform: scale(1);
     }
 }
