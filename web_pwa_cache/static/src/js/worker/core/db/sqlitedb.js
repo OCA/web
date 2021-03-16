@@ -364,7 +364,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function (require) {
                         case "many2one":
                         {
                             const value = values[field] && _.compact(values[field].split("||"));
-                            values[field] = value && [Number(value[0]), value[1]];
+                            values[field] = value && [Number(value[0]), value[1]] || false;
                         } break;
                         case "one2many":
                         case "many2many":

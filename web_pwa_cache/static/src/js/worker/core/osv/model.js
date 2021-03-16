@@ -291,10 +291,10 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function (require) {
                         }
                     }
                     const query_str = `SELECT ${select_clause} FROM ` + from_clause + where_str + order_by + limit_str + offset_str
-                    //console.log("--------------------------- THE SQL");
+                    // console.log("--------------------------- THE SQL");
                     // console.log(query_str);
                     const sql = _.str.sprintf.apply(this, [query_str].concat(where_clause_params));
-                    //console.log(sql);
+                    // console.log(sql);
                     const res = await db.all([sql]);
                     if (!field_names) {
                         return resolve(_.chain(res).map("id").unique().value());

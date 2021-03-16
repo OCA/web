@@ -320,6 +320,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function (require) {
                             last_update: prefetch_last_update || false,
                         }
                     );
+                    console.log("--------------- MODEL INFO DATA", prefetch_last_update);
                     let response_data = await response.json();
                     model_infos = response_data.result || [];
                     const tasks = [];
@@ -406,10 +407,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function (require) {
                                     const fields_view = (await response.json()).result;
                                     if (!fields_view) {
                                         continue;
-                                    }
-                                    // Store index need a consistent value type, so we must use zero instead of false
-                                    if (!id) {
-                                        fields_view.view_id = 0;
                                     }
                                     this.saveViews(fields_view);
                                 } catch (err) {
@@ -673,7 +670,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function (require) {
                                 request_s_data,
                             ] = await this._rpc.callJSonRpc("ir.ui.view", "read_template", [
                                 xml_ref,
-                                {lang: await this.getParent().config.getLang()},
+                                {lang: this.getParent().config.getLang()},
                             ]);
                             const response_s_data = (await response_s.json()).result;
                             await this.read_template(false, response_s_data, {args: [xml_ref]});

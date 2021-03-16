@@ -494,7 +494,7 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function (require) {
                         if (count) {
                             return resolve(0);
                         }
-                        return reject("No records found!");
+                        return resolve(limit === 1 ? undefined : []);
                     }
                     this.sqlitedb._parseValues(model_info.fields, records);
                     return resolve(limit === 1 ? records[0] : records);
@@ -697,23 +697,32 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function (require) {
         },
 
         /**
-         * @params {String} model
+         * @param {Object/String} model_info
          * @returns {Promise}
          */
-        getModelDefaults: function (model) {
+        getModelDefaults: function (model_info) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info = await this.sqlitedb.getModelInfo("defaults", true);
-                    const records = await this.search_read(model_info, [["model", "=", model]]);
+                    if (typeof model_info === "string") {
+                        model_info = await this.sqlitedb.getModelInfo(model_info);
+                    }
+
+                    let values = model_info.defaults || {};
+                    const model_info_defaults = await this.sqlitedb.getModelInfo("defaults", true);
+                    let records = [];
+                    try {
+                        records = await this.search_read(model_info_defaults, [["model", "=", model]]);
+                    } catch (err) {
+                        // do nothing
+                    }
                     if (_.isEmpty(records)) {
                         return reject();
                     }
-                    let values = {};
                     const sandbox = new JSSandbox();
                     for (const record of records) {
                         if (typeof record.formula !== 'undefined') {
                             sandbox.compile(record.formula);
-                            values = sandbox.run();
+                            _.extend(values, sandbox.run());
                         }
                     }
                     return resolve(values);

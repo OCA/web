@@ -1353,21 +1353,25 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function (require) {
                 const need_wildcard = ['like', 'ilike', 'not like', 'not ilike'].indexOf(operator) !== -1;
                 const sql_operators = {'=like': 'like', '=ilike': 'ilike'};
                 const sql_operator = sql_operators[operator] || operator;
-                const cast = sql_operator.endsWith('like') ? '::text' : '';
+                const cast = sql_operator.endsWith('like') ? 'TEXT' : '';
 
                 if (!(left in model.fields)) {
                     throw Error(`Invalid field ${left} in domain term ${leaf}`);
                 }
                 //const format = need_wildcard ? '%s' : model_fields[left].column_format;
-                const format = '%s';
+                const format =  "%s";
                 const column = `${table_alias}.${tools.s_quote(left)}`;
-                query = `(${column + cast} ${sql_operator} ${format})`;
+                if (cast) {
+                    query = `(CAST(${column} AS ${cast}) ${sql_operator} ${format})`;
+                } else {
+                    query = `(${column} ${sql_operator} ${format})`;
+                }
 
                 if (need_wildcard) {
                     if (typeof right !== "string") {
                         query = `(${query} OR ${table_alias}."${left}" IS NULL)`;
                     }
-                    params = [`%${right}%`];
+                    params = [`"%${right}%"`];
                 }
                 else {
                     const field = model.fields[left];

@@ -23,67 +23,35 @@ odoo.define("web_pwa_cache.PWA.core.Config", function (require) {
             this._db = this.getParent()._db;
             this._itp = this.getParent()._dbmanager.sqlitedb._internal_table_prefix;
             this._dbmanager = this.getParent()._dbmanager;
+            this._cache = {};
         },
 
         /**
          * @returns {Boolean}
          */
         isOfflineMode: function () {
-            return new Promise(async (resolve) => {
-                try {
-                    const model_info_config = await this._dbmanager.sqlitedb.getModelInfo("config", true);
-                    const record = await this._dbmanager.search_read(model_info_config, [["param", "=", "pwa_mode"]], 1);
-                    const is_offline = record?.value === 'offline';
-                    return resolve(is_offline);
-                } catch (err) {
-                    return resolve(false);
-                }
-            });
+            return this._cache.pwa_mode;
         },
 
         /**
          * @returns {Boolean}
          */
         isStandaloneMode: function () {
-            return new Promise(async (resolve) => {
-                try {
-                    const model_info_config = await this._dbmanager.sqlitedb.getModelInfo("config", true);
-                    const record = await this._dbmanager.search_read(model_info_config, [["param", "=", "standalone"]], 1);
-                    return resolve(record ? record.value : false);
-                } catch (err) {
-                    return resolve(false);
-                }
-            });
+            return this._cache.standalone;
         },
 
         /**
          * @returns {Number}
          */
         getUID: function () {
-            return new Promise(async (resolve) => {
-                try {
-                    const model_info_config = await this._dbmanager.sqlitedb.getModelInfo("config", true);
-                    const record = await this._dbmanager.search_read(model_info_config, [["param", "=", "uid"]], 1);
-                    return resolve(record?.value);
-                } catch (err) {
-                    return resolve(null);
-                }
-            });
+            return this._cache.lang;
         },
 
         /**
          * @returns {Number}
          */
         getLang: function () {
-            return new Promise(async (resolve) => {
-                try {
-                    const model_info_config = await this._dbmanager.sqlitedb.getModelInfo("config", true);
-                    const record = await this._dbmanager.search_read(model_info_config, [["param", "=", "lang"]], 1);
-                    return resolve(record?.value);
-                } catch (err) {
-                    return resolve(null);
-                }
-            });
+            return this._cache.lang;
         },
 
         /**
@@ -96,6 +64,7 @@ odoo.define("web_pwa_cache.PWA.core.Config", function (require) {
                     const model_info_config = await this._dbmanager.sqlitedb.getModelInfo("config", true);
                     const record = await this._dbmanager.search_read(model_info_config, [["param", "=", name]], 1);
                     const value = record?.value;
+                    this._cache[record.param] = record?.value;
                     return resolve(typeof value === 'undefined' ? def_value : value);
                 } catch (err) {
                     return resolve(null);
@@ -111,11 +80,11 @@ odoo.define("web_pwa_cache.PWA.core.Config", function (require) {
                 try {
                     const model_info_config = await this._dbmanager.sqlitedb.getModelInfo("config", true);
                     const records = await this._dbmanager.search_read(model_info_config, []);
-                    const config_records = {}
+                    this._cache = {};
                     for (const record of records) {
-                        config_records[record.param] = record.value;
+                        this._cache[record.param] = record.value;
                     }
-                    return resolve(config_records);
+                    return resolve(this._cache);
                 } catch (err) {
                     return reject(err);
                 }
@@ -135,6 +104,7 @@ odoo.define("web_pwa_cache.PWA.core.Config", function (require) {
                         param: param,
                         value: value,
                     }, ['param']);
+                    this._cache[param] = value;
                 } catch (err) {
                     return reject();
                 }

@@ -68,8 +68,8 @@ odoo.define("web_pwa_cache.PWA.bus", function (require) {
                                         changes: changes,
                                     });
                                     const event_online = typeof evt.data.pwa_mode !== 'undefined' && evt.data.pwa_mode === "online"
-                                    const config_offline = await this.config.isOfflineMode();
-                                    const config_standalone = await this.config.isStandaloneMode();
+                                    const config_offline = this.config.isOfflineMode();
+                                    const config_standalone = this.config.isStandaloneMode();
                                     const is_online = event_online || (typeof evt.data.pwa_mode === 'undefined' && !config_offline);
                                     const is_standalone = (typeof evt.data.standalone !== 'undefined' && evt.data.standalone) || (typeof evt.data.standalone === 'undefined' && config_standalone);
                                     if ((is_online && is_standalone && !userdata_count) || (event_online && is_standalone)) {
@@ -136,7 +136,7 @@ odoo.define("web_pwa_cache.PWA.bus", function (require) {
             this._prefetch_promise = new Promise(async (resolve, reject) => {
                 this._prefetch_run = true;
                 try {
-                    const is_offline_mode = await this.config.isOfflineMode();
+                    const is_offline_mode = this.config.isOfflineMode();
                     if (is_offline_mode) {
                         return resolve();
                     }

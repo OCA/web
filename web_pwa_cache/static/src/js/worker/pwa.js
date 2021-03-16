@@ -108,8 +108,8 @@ odoo.define("web_pwa_cache.PWA", function (require) {
             if (request.method === 'GET') {
                 return new Promise(async (resolve, reject) => {
                     try {
-                        const isOffline = await this.config.isOfflineMode();
-                        const isStandalone = await this.config.isStandaloneMode();
+                        const isOffline = this.config.isOfflineMode();
+                        const isStandalone = this.config.isStandaloneMode();
                         // need redirect '/'?
                         const url = new URL(request.url);
                         if (url.pathname === '/' && (isOffline || isStandalone)) {
@@ -148,9 +148,9 @@ odoo.define("web_pwa_cache.PWA", function (require) {
             ) {
                 return new Promise(async (resolve, reject) => {
                     try {
-                        const isStandalone = await this.config.isStandaloneMode();
+                        const isStandalone = this.config.isStandaloneMode();
                         if (isStandalone) {
-                            const isOffline = await this.config.isOfflineMode();
+                            const isOffline = this.config.isOfflineMode();
                             const request_cloned_cache = request.clone();
                             // Try CUD operations
                             // Methodology: Network first
