@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <template
+        id="web_pivot_hide_total_assets_backend"
+        name="web_pivot_hide_total assets"
+        inherit_id="web.assets_backend"
+    >
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/web_pivot_hide_total/static/src/js/views/pivot/pivot_model_hide_total.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_pivot_hide_total/static/src/js/views/pivot/pivot_view_hide_total.js"
+            />
+        </xpath>
+    </template>
+</odoo>
