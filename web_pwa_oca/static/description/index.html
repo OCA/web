@@ -372,17 +372,26 @@ ul.auto-toc {
 <p>Progressive Web Apps provide an installable, app-like experience on desktop and mobile that are built and delivered directly via the web.
 They’re web apps that are fast and reliable. And most importantly, they’re web apps that work in any browser.
 If you’re building a web app today, you’re already on the path towards building a Progressive Web App.</p>
+<ul class="simple">
+<li>Developers Info.</li>
+</ul>
+<p>The service worker is contructed using ‘Odoo Class’ to have the same class inheritance behaviour that in the ‘user pages’. Be noticed
+that ‘Odoo Bootstrap’ is not supported so, you can’t use ‘require’ here.</p>
+<p>All service worker content can be found in ‘static/src/js/worker’. The management between ‘user pages’ and service worker is done in
+‘pwa_manager.js’.</p>
+<p>The purpose of this module is give a base to make PWA applications.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><a class="reference internal" href="#installation" id="id1">Installation</a></li>
 <li><a class="reference internal" href="#configuration" id="id2">Configuration</a></li>
-<li><a class="reference internal" href="#known-issues-roadmap" id="id3">Known issues / Roadmap</a></li>
-<li><a class="reference internal" href="#bug-tracker" id="id4">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="id5">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="id6">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="id7">Contributors</a></li>
-<li><a class="reference internal" href="#maintainers" id="id8">Maintainers</a></li>
+<li><a class="reference internal" href="#usage" id="id3">Usage</a></li>
+<li><a class="reference internal" href="#known-issues-roadmap" id="id4">Known issues / Roadmap</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="id5">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="id6">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="id7">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="id8">Contributors</a></li>
+<li><a class="reference internal" href="#maintainers" id="id9">Maintainers</a></li>
 </ul>
 </li>
 </ul>
@@ -396,34 +405,86 @@ If you’re building a web app today, you’re already on the path towards build
 It launches from the same place that other apps launch. It runs in an app without an address bar or other browser UI.
 And like all other installed apps, it’s a top level app in the task switcher.</p>
 <p>In Chrome, a Progressive Web App can either be installed through the three-dot context menu.</p>
-<p>This module also provides a “Install PWA” link in Odoo user menu.</p>
+<p>In case you previously installed <cite>web_pwa</cite>, run the following steps with <cite>odoo shell</cite>, after having installed <cite>openupgradelib</cite>:</p>
+<pre class="doctest-block">
+&gt;&gt;&gt; from openupgradelib import openupgrade
+&gt;&gt;&gt; openupgrade.update_module_names(env.cr, [('web_pwa', 'web_pwa_oca')], merge_modules=False)
+&gt;&gt;&gt; env.cr.commit()
+</pre>
 </div>
 <div class="section" id="configuration">
 <h1><a class="toc-backref" href="#id2">Configuration</a></h1>
-<p>The following system parameters con be set to customize the appearance of the application</p>
+<p>This module allows you to set the following parameters under settings to customize the appearance of the application</p>
 <ul class="simple">
-<li>pwa.manifest.name (defaults to “Odoo PWA”)</li>
-<li>pwa.manifest.short_name (defaults to “Odoo PWA”)</li>
-<li>pwa.manifest.icon128x128 (defaults to “/web_pwa_oca/static/img/icons/icon-128x128.png”)</li>
-<li>pwa.manifest.icon144x144 (defaults to “/web_pwa_oca/static/img/icons/icon-144x144.png”)</li>
-<li>pwa.manifest.icon152x152 (defaults to “/web_pwa_oca/static/img/icons/icon-152x152.png”)</li>
-<li>pwa.manifest.icon192x192 (defaults to “/web_pwa_oca/static/img/icons/icon-192x192.png”)</li>
-<li>pwa.manifest.icon256x256 (defaults to “/web_pwa_oca/static/img/icons/icon-256x256.png”)</li>
-<li>pwa.manifest.icon512x512 (defaults to “/web_pwa_oca/static/img/icons/icon-512x512.png”)</li>
+<li>PWA Name (defaults to “Odoo PWA”)</li>
+<li>PWA Short Name (defaults to “Odoo PWA”)</li>
+<li>PWA Icon (<strong>SVG</strong>) (defaults to “/web_pwa_oca/static/img/icons/odoo-logo.svg”)</li>
 </ul>
+<p>To configure your PWA:</p>
+<ol class="arabic simple">
+<li>Go to <strong>Settings &gt; General Settings &gt; Progressive Web App</strong>.</li>
+<li>Set the parameters (<em>Note:</em> Icon <strong>must be a SVG file</strong>)</li>
+<li><strong>Save</strong></li>
+</ol>
+</div>
+<div class="section" id="usage">
+<h1><a class="toc-backref" href="#id3">Usage</a></h1>
+<p>To use your PWA:</p>
+<ol class="arabic simple">
+<li>Open the Odoo web app using a supported browser (See <a class="reference external" href="https://caniuse.com/?search=A2HS">https://caniuse.com/?search=A2HS</a>)</li>
+<li>Open the browser options</li>
+<li>Click on ‘Add to Home screen’ (or ‘Install’ in other browsers)</li>
+</ol>
+<p>** Maybe you need refresh the page to load the service worker after using the option.</p>
 </div>
 <div class="section" id="known-issues-roadmap">
-<h1><a class="toc-backref" href="#id3">Known issues / Roadmap</a></h1>
-<ul class="simple">
-<li>Evaluate to extend <tt class="docutils literal">FILES_TO_CACHE</tt></li>
-<li>Evaluate to use a normal JS file for service worker and download data from a normal JSON controller</li>
-<li>Integrate <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification">Notification API</a></li>
-<li>Integrate <a class="reference external" href="https://web.dev/web-share/">Web Share API</a></li>
-<li>Create <tt class="docutils literal">portal_pwa</tt> module, intended to be used by front-end users (customers, suppliers…)</li>
+<h1><a class="toc-backref" href="#id4">Known issues / Roadmap</a></h1>
+<ul>
+<li><p class="first">Integrate <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification">Notification API</a></p>
+</li>
+<li><p class="first">Integrate <a class="reference external" href="https://web.dev/web-share/">Web Share API</a></p>
+</li>
+<li><p class="first">Create <tt class="docutils literal">portal_pwa</tt> module, intended to be used by front-end users (customers, suppliers…)</p>
+</li>
+<li><p class="first">Current <em>John Resig’s inheritance</em> implementation doesn’t support <tt class="docutils literal">async</tt>
+functions because <tt class="docutils literal">this._super</tt> can’t be called inside a promise. So we
+need to use the following workaround:</p>
+<ul>
+<li><p class="first">Natural ‘async/await’ example (This breaks “_super” call):</p>
+<pre class="code javascript literal-block">
+<span class="kd">var</span> <span class="nx">MyClass</span> <span class="o">=</span> <span class="nx">OdooClass</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+    <span class="nx">myFunc</span><span class="o">:</span> <span class="nx">async</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kr">const</span> <span class="nx">mydata</span> <span class="o">=</span> <span class="nx">await</span> <span class="p">...</span><span class="k">do</span> <span class="nx">await</span> <span class="nx">stuff</span><span class="p">...</span>
+        <span class="k">return</span> <span class="nx">mydata</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre>
+</li>
+<li><p class="first">Same code with the workaround:</p>
+<pre class="code javascript literal-block">
+<span class="kd">var</span> <span class="nx">MyClass</span> <span class="o">=</span> <span class="nx">OdooClass</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+    <span class="nx">myFunc</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="nx">async</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+            <span class="kr">const</span> <span class="nx">mydata</span> <span class="o">=</span> <span class="nx">await</span> <span class="p">...</span><span class="k">do</span> <span class="nx">await</span> <span class="nx">stuff</span><span class="p">...</span>
+            <span class="k">return</span> <span class="nx">resolve</span><span class="p">(</span><span class="nx">mydata</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre>
+</li>
+</ul>
+</li>
+<li><p class="first">Fix issue when trying to run in localhost with several databases. The browser
+doesn’t send the cookie and web manifest returns 404.</p>
+</li>
+<li><p class="first">Firefox can’t detect ‘standalone’ mode. See <a class="reference external" href="https://bugzilla.mozilla.org/show_bug.cgi?id=1285858">https://bugzilla.mozilla.org/show_bug.cgi?id=1285858</a></p>
+</li>
+<li><p class="first">Firefox disable service worker in private mode. See <a class="reference external" href="https://bugzilla.mozilla.org/show_bug.cgi?id=1601916">https://bugzilla.mozilla.org/show_bug.cgi?id=1601916</a></p>
+</li>
 </ul>
 </div>
 <div class="section" id="bug-tracker">
-<h1><a class="toc-backref" href="#id4">Bug Tracker</a></h1>
+<h1><a class="toc-backref" href="#id5">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/web/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
@@ -431,24 +492,30 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1><a class="toc-backref" href="#id5">Credits</a></h1>
+<h1><a class="toc-backref" href="#id6">Credits</a></h1>
 <div class="section" id="authors">
-<h2><a class="toc-backref" href="#id6">Authors</a></h2>
+<h2><a class="toc-backref" href="#id7">Authors</a></h2>
 <ul class="simple">
 <li>TAKOBI</li>
+<li>Tecnativa</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h2><a class="toc-backref" href="#id7">Contributors</a></h2>
+<h2><a class="toc-backref" href="#id8">Contributors</a></h2>
 <ul class="simple">
 <li><a class="reference external" href="https://takobi.online">TAKOBI</a>:<ul>
 <li>Lorenzo Battistini</li>
 </ul>
 </li>
+<li><a class="reference external" href="https://tecnativa.com">Tecnativa</a>:<ul>
+<li>Alexandre D. Díaz</li>
+<li>João Marques</li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2><a class="toc-backref" href="#id8">Maintainers</a></h2>
+<h2><a class="toc-backref" href="#id9">Maintainers</a></h2>
 <p>This module is maintained by the OCA.</p>
 <a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose

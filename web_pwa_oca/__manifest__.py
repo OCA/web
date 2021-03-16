@@ -1,4 +1,6 @@
 # Copyright 2020 Lorenzo Battistini @ TAKOBI
+# Copyright 2020 Tecnativa - Alexandre D. Díaz
+# Copyright 2020 Tecnativa - João Marques
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 
 {
@@ -8,13 +10,12 @@
     "development_status": "Beta",
     "category": "Website",
     "website": "https://github.com/OCA/web",
-    "author": "TAKOBI, Odoo Community Association (OCA)",
+    "author": "TAKOBI, Tecnativa, Odoo Community Association (OCA)",
     "maintainers": ["eLBati"],
     "license": "LGPL-3",
     "application": True,
     "installable": True,
     "depends": ["web", "mail"],
-    "data": ["views/webclient_templates.xml"],
-    "qweb": ["static/src/xml/pwa_install.xml"],
+    "data": ["templates/assets.xml", "views/res_config_settings_views.xml"],
     "images": ["static/description/pwa.png"],
 }

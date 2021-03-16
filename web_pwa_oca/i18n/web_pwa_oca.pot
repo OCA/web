@@ -14,157 +14,107 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: web_pwa_oca
-#: model_terms:ir.ui.view,arch_db:web_pwa_oca.manifest
-msgid ""
-"\",\n"
-"      \"sizes\": \"128x128\",\n"
-"      \"type\": \"image/png\"\n"
-"    }, {\n"
-"      \"src\": \""
+#: model:ir.model.fields,field_description:web_pwa_oca.field_res_config_settings__pwa_background_color
+msgid "Background Color"
 msgstr ""
 
 #. module: web_pwa_oca
-#: model_terms:ir.ui.view,arch_db:web_pwa_oca.manifest
-msgid ""
-"\",\n"
-"      \"sizes\": \"144x144\",\n"
-"      \"type\": \"image/png\"\n"
-"    }, {\n"
-"      \"src\": \""
+#: model:ir.model,name:web_pwa_oca.model_res_config_settings
+msgid "Config Settings"
 msgstr ""
 
 #. module: web_pwa_oca
-#: model_terms:ir.ui.view,arch_db:web_pwa_oca.manifest
-msgid ""
-"\",\n"
-"      \"sizes\": \"152x152\",\n"
-"      \"type\": \"image/png\"\n"
-"    }, {\n"
-"      \"src\": \""
+#: model:ir.model.fields,field_description:web_pwa_oca.field_res_config_settings__pwa_icon
+msgid "Icon"
 msgstr ""
 
 #. module: web_pwa_oca
-#: model_terms:ir.ui.view,arch_db:web_pwa_oca.manifest
-msgid ""
-"\",\n"
-"      \"sizes\": \"192x192\",\n"
-"      \"type\": \"image/png\"\n"
-"    }, {\n"
-"      \"src\": \""
+#: model_terms:ir.ui.view,arch_db:web_pwa_oca.res_config_settings_view_form
+msgid "Name"
 msgstr ""
 
 #. module: web_pwa_oca
-#: model_terms:ir.ui.view,arch_db:web_pwa_oca.manifest
-msgid ""
-"\",\n"
-"      \"sizes\": \"256x256\",\n"
-"      \"type\": \"image/png\"\n"
-"    }, {\n"
-"      \"src\": \""
+#: model_terms:ir.ui.view,arch_db:web_pwa_oca.res_config_settings_view_form
+msgid "Name and icon of your PWA"
 msgstr ""
 
 #. module: web_pwa_oca
-#: model_terms:ir.ui.view,arch_db:web_pwa_oca.manifest
-msgid ""
-"\",\n"
-"      \"sizes\": \"512x512\",\n"
-"      \"type\": \"image/png\"\n"
-"    }],\n"
-"  \"start_url\": \"/web\",\n"
-"  \"display\": \"standalone\",\n"
-"  \"background_color\": \""
+#: model:ir.model.fields,help:web_pwa_oca.field_res_config_settings__pwa_name
+msgid "Name of the Progressive Web Application"
 msgstr ""
 
 #. module: web_pwa_oca
-#: model_terms:ir.ui.view,arch_db:web_pwa_oca.manifest
-msgid ""
-"\",\n"
-"  \"icons\": [{\n"
-"    \"src\": \""
+#: model_terms:ir.ui.view,arch_db:web_pwa_oca.res_config_settings_view_form
+msgid "PWA Title"
 msgstr ""
 
 #. module: web_pwa_oca
-#: model_terms:ir.ui.view,arch_db:web_pwa_oca.manifest
-msgid ""
-"\",\n"
-"  \"short_name\": \""
+#: model_terms:ir.ui.view,arch_db:web_pwa_oca.res_config_settings_view_form
+msgid "Progressive Web App"
 msgstr ""
 
 #. module: web_pwa_oca
-#: model_terms:ir.ui.view,arch_db:web_pwa_oca.manifest
-msgid ""
-"\",\n"
-"  \"theme_color\": \""
+#: model:ir.model.fields,field_description:web_pwa_oca.field_res_config_settings__pwa_name
+msgid "Progressive Web App Name"
 msgstr ""
 
 #. module: web_pwa_oca
-#: model_terms:ir.ui.view,arch_db:web_pwa_oca.service_worker
-msgid ""
-"';\n"
-"const FILES_TO_CACHE = ["
-msgstr ""
-
-#. module: web_pwa_oca
-#: model_terms:ir.ui.view,arch_db:web_pwa_oca.service_worker
-msgid ""
-"'use strict';\n"
-"const CACHE_NAME = '"
+#: model:ir.model.fields,field_description:web_pwa_oca.field_res_config_settings__pwa_short_name
+msgid "Progressive Web App Short Name"
 msgstr ""
 
 #. module: web_pwa_oca
 #. openerp-web
-#: code:addons/web_pwa_oca/static/src/xml/pwa_install.xml:0
+#: code:addons/web_pwa_oca/static/src/js/pwa_manager.js:0
 #, python-format
-msgid "Install PWA"
+msgid ""
+"Service workers are not supported! Maybe you are not using HTTPS or you work"
+" in private mode."
 msgstr ""
 
 #. module: web_pwa_oca
-#: model_terms:ir.ui.view,arch_db:web_pwa_oca.service_worker
-msgid ""
-"];\n"
-"self.addEventListener('install', function (evt) {\n"
-"  console.log('[ServiceWorker] Install');\n"
-"  evt.waitUntil(\n"
-"   caches.open(CACHE_NAME).then(function (cache) {\n"
-"       console.log('[ServiceWorker] Pre-caching offline page');\n"
-"       return cache.addAll(FILES_TO_CACHE);\n"
-"   })\n"
-"  );\n"
-"  self.skipWaiting();\n"
-"});\n"
-"self.addEventListener('activate', function(evt) {\n"
-"  console.log('[ServiceWorker] Activate');\n"
-"   evt.waitUntil(\n"
-"       caches.keys().then(function(keyList) {\n"
-"           return Promise.all(keyList.map(function(key) {\n"
-"               if (key !== CACHE_NAME) {\n"
-"                   console.log('[ServiceWorker] Removing old cache', key);\n"
-"                   return caches.delete(key);\n"
-"               }\n"
-"           }));\n"
-"       })\n"
-"   );\n"
-"  self.clients.claim();\n"
-"});\n"
-"self.addEventListener('fetch', function(evt) {\n"
-"  if (evt.request.cache === 'only-if-cached' &amp;&amp; evt.request.mode !== 'same-origin') {\n"
-"    return;\n"
-"  }\n"
-"  console.log('[ServiceWorker] Fetch', evt.request.url);\n"
-"   evt.respondWith(\n"
-"       caches.open(CACHE_NAME).then(function(cache) {\n"
-"           return cache.match(evt.request)\n"
-"               .then(function(response) {\n"
-"                   return response || fetch(evt.request);\n"
-"                });\n"
-"       })\n"
-"   );\n"
-"});"
+#: model_terms:ir.ui.view,arch_db:web_pwa_oca.res_config_settings_view_form
+msgid "Short Name"
 msgstr ""
 
 #. module: web_pwa_oca
-#: model_terms:ir.ui.view,arch_db:web_pwa_oca.manifest
-msgid ""
-"{\n"
-"  \"name\": \""
+#: model:ir.model.fields,help:web_pwa_oca.field_res_config_settings__pwa_short_name
+msgid "Short Name of the Progressive Web Application"
+msgstr ""
+
+#. module: web_pwa_oca
+#: model:ir.model.fields,field_description:web_pwa_oca.field_res_config_settings__pwa_theme_color
+msgid "Theme Color"
+msgstr ""
+
+#. module: web_pwa_oca
+#: code:addons/web_pwa_oca/models/res_config_settings.py:0
+#, python-format
+msgid "You can only upload PNG files bigger than 512x512"
+msgstr ""
+
+#. module: web_pwa_oca
+#: code:addons/web_pwa_oca/models/res_config_settings.py:0
+#, python-format
+msgid "You can only upload SVG or PNG files"
+msgstr ""
+
+#. module: web_pwa_oca
+#: code:addons/web_pwa_oca/models/res_config_settings.py:0
+#, python-format
+msgid "You can't upload a file with more than 2 MB."
+msgstr ""
+
+#. module: web_pwa_oca
+#. openerp-web
+#: code:addons/web_pwa_oca/static/src/js/pwa_manager.js:0
+#, python-format
+msgid "[ServiceWorker] Registered:"
+msgstr ""
+
+#. module: web_pwa_oca
+#. openerp-web
+#: code:addons/web_pwa_oca/static/src/js/pwa_manager.js:0
+#, python-format
+msgid "[ServiceWorker] Registration failed: "
 msgstr ""
