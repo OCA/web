@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="assets_backend"
+        name="Web PWA Cache Backend Assets"
+        inherit_id="web.assets_backend"
+    >
+        <xpath expr="." position="inside">
+            <link
+                rel="stylesheet"
+                type="text/css"
+                href="/web_pwa_cache/static/src/scss/main.scss"
+            />
+            <script
+                type="text/javascript"
+                src="/web_pwa_cache/static/src/js/views/datamanager.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_pwa_cache/static/src/js/views/web_dialogs.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_pwa_cache/static/src/js/views/action_manager_act_window.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_pwa_cache/static/src/js/views/basic_view.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_pwa_cache/static/src/js/views/formPWA/form_pwa_renderer.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_pwa_cache/static/src/js/views/formPWA/form_pwa_controller.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_pwa_cache/static/src/js/views/formPWA/form_pwa_view.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_pwa_cache/static/src/js/mixins/broadcast_sw_mixin.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_pwa_cache/static/src/js/pwa_mode_selector.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_pwa_cache/static/src/js/pwa_sync_modal.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_pwa_cache/static/src/js/pwa_manager.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_pwa_cache/static/src/js/user_menu.js"
+            />
+        </xpath>
+    </template>
+</odoo>

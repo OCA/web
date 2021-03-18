@@ -1,0 +1,10 @@
+#pwaPrefetchProgress {
+    .modal-body {
+        max-height: 500px;
+        overflow: auto;
+    }
+}
+
+.disable-pull-refresh {
+    overscroll-behavior: none;
+}

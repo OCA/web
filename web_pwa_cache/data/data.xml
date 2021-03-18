@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="0">
+        <record id="pwa_cache_model_ir_filters_all" model="pwa.cache">
+            <field name="name">Filters (All)</field>
+            <field name="cache_type">model</field>
+            <field name="model_id" ref="base.model_ir_filters" />
+            <field name="internal">1</field>
+        </record>
+        <record id="pwa_cache_model_ir_model_data_all" model="pwa.cache">
+            <field name="name">Model Data (All)</field>
+            <field name="cache_type">model</field>
+            <field name="model_id" ref="base.model_ir_model_data" />
+            <field
+                name="model_field_excluded_ids"
+                eval="[(6, 0, [ref('base.field_ir_model_data__complete_name'), ref('base.field_ir_model_data__reference')])]"
+            />
+            <field
+                name="model_domain_raw"
+            >['|', ['model', '=ilike', 'ir.actions.%'], ['model', '=', 'res.groups']]</field>
+            <field name="internal">1</field>
+        </record>
+        <!-- POST -->
+        <record id="pwa_cache_post_settings_dashboard" model="pwa.cache">
+            <field name="name">Settings - Post - Dashboard</field>
+            <field name="cache_type">post</field>
+            <field name="post_url">web_settings_dashboard/data</field>
+            <field name="internal">1</field>
+        </record>
+        <!-- Client QWEB -->
+        <record id="pwa_cache_clientqweb_colorpicker_template" model="pwa.cache">
+            <field name="name">Colorpicker Template</field>
+            <field name="cache_type">clientqweb</field>
+            <field name="xml_refs">web_editor.colorpicker</field>
+            <field name="internal">1</field>
+        </record>
+    </data>
+    <data noupdate="1">
+        <!-- MODEL -->
+        <record id="pwa_cache_model_res_partner_all" model="pwa.cache">
+            <field name="name">Partners (All)</field>
+            <field name="cache_type">model</field>
+            <field name="model_id" ref="base.model_res_partner" />
+            <field
+                name="model_field_excluded_ids"
+                eval="[(6, 0, [ref('base.field_res_partner__email_formatted')])]"
+            />
+        </record>
+        <record id="pwa_cache_model_res_partner_category_all" model="pwa.cache">
+            <field name="name">Partners Category (All)</field>
+            <field name="cache_type">model</field>
+            <field name="model_id" ref="base.model_res_partner_category" />
+        </record>
+        <record id="pwa_cache_model_res_partner_bank_all" model="pwa.cache">
+            <field name="name">Partners Bank (All)</field>
+            <field name="cache_type">model</field>
+            <field name="model_id" ref="base.model_res_partner_bank" />
+        </record>
+        <record id="pwa_cache_model_res_currency_all" model="pwa.cache">
+            <field name="name">Currency (All)</field>
+            <field name="cache_type">model</field>
+            <field name="model_id" ref="base.model_res_currency" />
+        </record>
+        <record id="pwa_cache_model_res_country_all" model="pwa.cache">
+            <field name="name">Country (All)</field>
+            <field name="cache_type">model</field>
+            <field name="model_id" ref="base.model_res_country" />
+        </record>
+        <record id="pwa_cache_model_res_country_state_all" model="pwa.cache">
+            <field name="name">Country State (All)</field>
+            <field name="cache_type">model</field>
+            <field name="model_id" ref="base.model_res_country_state" />
+        </record>
+        <record id="pwa_cache_model_res_country_group_all" model="pwa.cache">
+            <field name="name">Country Group (All)</field>
+            <field name="cache_type">model</field>
+            <field name="model_id" ref="base.model_res_country_group" />
+        </record>
+        <record id="pwa_cache_model_res_users_all" model="pwa.cache">
+            <field name="name">Users (Internal)</field>
+            <field name="cache_type">model</field>
+            <field name="model_id" ref="base.model_res_users" />
+            <field name="model_domain_raw">[['share', '=', False]]</field>
+        </record>
+        <record id="pwa_cache_model_res_company_all" model="pwa.cache">
+            <field name="name">Companies (All)</field>
+            <field name="cache_type">model</field>
+            <field name="model_id" ref="base.model_res_company" />
+        </record>
+    </data>
+</odoo>
