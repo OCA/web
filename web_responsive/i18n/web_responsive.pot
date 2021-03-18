@@ -49,6 +49,11 @@ msgid "Discard"
 msgstr ""
 
 #. module: web_responsive
+#: model:ir.model.fields,field_description:web_responsive.field_res_users__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/xml/form_buttons.xml:0
 #, python-format
@@ -61,6 +66,16 @@ msgstr ""
 #: code:addons/web_responsive/static/src/xml/search_panel.xml:0
 #, python-format
 msgid "FILTER"
+msgstr ""
+
+#. module: web_responsive
+#: model:ir.model.fields,field_description:web_responsive.field_res_users__id
+msgid "ID"
+msgstr ""
+
+#. module: web_responsive
+#: model:ir.model.fields,field_description:web_responsive.field_res_users____last_update
+msgid "Last Modified on"
 msgstr ""
 
 #. module: web_responsive
