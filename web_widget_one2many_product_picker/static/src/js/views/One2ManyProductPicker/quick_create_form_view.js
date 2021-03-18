@@ -259,10 +259,11 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView
                             success_callback: function () {
                                 self.trigger_up("create_quick_record", {
                                     id: record.id,
+                                    callback: function () {
+                                        self.model.unsetDirty(self.handle);
+                                        self._enableQuickCreate();
+                                    },
                                 });
-                                self.model.unsetDirty(self.handle);
-                                //self._updateButtons();
-                                self._enableQuickCreate();
                             },
                             block: true,
                         });
@@ -271,8 +272,6 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView
 
                 _remove: function () {
                     if (this._disabled) {
-
-                        // Don't do anything if we are already creating a record
                         return $.Deferred();
                     }
 
@@ -301,10 +300,11 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView
                         success_callback: function () {
                             self.trigger_up("update_quick_record", {
                                 id: record.id,
+                                callback: function () {
+                                    self.model.unsetDirty(self.handle);
+                                    self._enableQuickCreate();
+                                }
                             });
-                            self.model.unsetDirty(self.handle);
-                            //self._updateButtons();
-                            self._enableQuickCreate();
                         },
                         block: true,
                     });
