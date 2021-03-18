@@ -23,7 +23,7 @@ Web Responsive
     :target: https://runbot.odoo-community.org/runbot/162/14.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5|
+|badge1| |badge2| |badge3| |badge4| |badge5| 
 
 This module adds responsiveness to web backend.
 
@@ -64,7 +64,7 @@ Features for mobile:
 
 * Search panel is hidden on small screens.
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/search_panel.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/14.0/web_responsive/static/img/search_panel.gif
 
 Features for computers:
 
@@ -89,37 +89,37 @@ Features for computers:
 
 * Sticky chatter topbar
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/chatter_topbar.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/14.0/web_responsive/static/img/chatter_topbar.gif
 
 * AppMenu waits for action finished to show the view
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/appmenu.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/14.0/web_responsive/static/img/appmenu.gif
 
 * Sticky header & footer in list view
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/listview.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/14.0/web_responsive/static/img/listview.gif
 
 * Sticky statusbar in form view
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/formview.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/14.0/web_responsive/static/img/formview.gif
 
 * Followers and send button is displayed on mobile. Avatar is hidden.
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/chatter.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/14.0/web_responsive/static/img/chatter.gif
 
 * When the chatter is configured on the side part, the document viewer fills that
   part for side-by-side reading instead of full screen. You can still put it on full
   width preview clicking on the new maximize button.
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/document_viewer.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/14.0/web_responsive/static/img/document_viewer.gif
 
 * Bigger checkboxes in list view
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/big_checkboxes.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/14.0/web_responsive/static/img/big_checkboxes.gif
 
 * Scrollable dropdowns
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/dropdown_scroll.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/14.0/web_responsive/static/img/dropdown_scroll.gif
 
 **Table of contents**
 
@@ -142,10 +142,9 @@ Known issues / Roadmap
   device screen size. This means that, if you change the size of your browser,
   you should reload the web client to get the full experience for that
   new size. This is Odoo's own limitation.
-* Kanban mobile/desktop mode switch on screen resize. F.x. when rotating a device
-  to landscape orientation.
 * App navigation with keyboard.
 * Handle long titles on forms in a better way
+* Standard sticky headers seems to not work properly on iOS Safari/Chrome (see #1626).
 
 Bug Tracker
 ===========
@@ -200,7 +199,7 @@ promote its widespread use.
 
 Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-Yajo| |maintainer-Tardo|
+|maintainer-Yajo| |maintainer-Tardo| 
 
 This module is part of the `OCA/web <https://github.com/OCA/web/tree/14.0/web_responsive>`_ project on GitHub.
 
