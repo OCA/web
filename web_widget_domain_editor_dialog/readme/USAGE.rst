@@ -16,6 +16,6 @@ with a user filter:
 
 You can still edit the filter with Odoo's widget after that.
 
-.. figure:: ../static/src/img/behaviour.png
+.. figure:: ../static/src/img/behaviour.gif
     :align: center
     :width: 600 px
