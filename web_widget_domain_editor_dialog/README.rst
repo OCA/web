@@ -57,7 +57,7 @@ with a user filter:
 
 You can still edit the filter with Odoo's widget after that.
 
-.. figure:: https://raw.githubusercontent.com/OCA/web/13.0/web_widget_domain_editor_dialog/static/src/img/behaviour.png
+.. figure:: https://raw.githubusercontent.com/OCA/web/13.0/web_widget_domain_editor_dialog/static/src/img/behaviour.gif
     :align: center
     :width: 600 px
 
