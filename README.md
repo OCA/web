@@ -20,8 +20,7 @@ This project aims to deal with modules related to the webclient of Odoo. You'll 
 
 [//]: # (addons)
 
-Available addons
-----------------
+## Available addons
 addon | version | summary
 --- | --- | ---
 [web_action_conditionable](web_action_conditionable/) | 13.0.1.0.1 | web_action_conditionable
