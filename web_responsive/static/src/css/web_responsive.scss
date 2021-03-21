@@ -142,6 +142,19 @@ $chatter_zone_width: 35%;
     .dropdown-menu.show {
         max-height: calc(100vh - #{$o-navbar-height});
     }
+
+    &.o_app_drawer {
+        &.o_first_app {
+            .o_menu_apps .dropdown > a,
+            .o-menu-toggle {
+                display: none;
+            }
+        }
+        .o_menu_brand,
+        .o_menu_sections {
+            display: none;
+        }
+    }
 }
 // Iconized full screen apps menu
 .o_menu_apps {

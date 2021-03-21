@@ -2,6 +2,12 @@
 <!-- Copyright 2018 Tecnativa - Jairo Llopis
      License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
 <template>
+    <t t-extend="Menu">
+        <!-- Do not show AppsMenu button when page is loading -->
+        <t t-jquery=".o_main_navbar" t-operation="attributes">
+            <attribute name="class" value="o_main_navbar o_first_app o_app_drawer" />
+        </t>
+    </t>
     <t t-extend="AppsMenu">
         <!-- App icons must be clickable -->
         <t t-jquery=".o_app" t-operation="attributes">

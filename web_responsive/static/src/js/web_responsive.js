@@ -1,5 +1,5 @@
 /* Copyright 2018 Tecnativa - Jairo Llopis
- * Copyright 2018 Tecnativa - Sergey Shebanin
+ * Copyright 2021 Sergey Shebanin
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
 odoo.define("web_responsive", function (require) {
@@ -31,19 +31,18 @@ odoo.define("web_responsive", function (require) {
      */
     function closeAppDrawer() {
         _.defer(function () {
-            // Need close AppDrawer?
-            var menu_apps_dropdown = document.querySelector(".o_menu_apps .dropdown");
-            $(menu_apps_dropdown)
-                .has(".dropdown-menu.show")
-                .find("> a")
-                .dropdown("toggle");
-            // Need close Sections Menu?
-            // TODO: Change to 'hide' in modern Bootstrap >4.1
+            // Close AppDrawer if necessary
+            var main_navbar = $(document.querySelector(".o_main_navbar"));
+            main_navbar
+                .removeClass("o_first_app o_app_drawer")
+                .find(".o_menu_apps .dropdown:has(.dropdown-menu.show) > a")
+                .dropdown("hide");
+            // Close Sections Menu if necessary
             var menu_sections = document.querySelector(
                 ".o_menu_sections li.show .dropdown-toggle"
             );
-            $(menu_sections).dropdown("toggle");
-            // Need close Mobile?
+            $(menu_sections).dropdown("hide");
+            // Close Mobile Sections Menu if necessary
             var menu_sections_mobile = document.querySelector(".o_menu_sections.show");
             $(menu_sections_mobile).collapse("hide");
         });
@@ -142,9 +141,22 @@ odoo.define("web_responsive", function (require) {
             this.$search_container = this.$(".search-container");
             this.$search_input = this.$(".search-input input");
             this.$search_results = this.$(".search-results");
+            this.$navbar = this.$el.closest(".o_main_navbar");
             return this._super.apply(this, arguments);
         },
 
+        /**
+         * Show AppDrawer when first app is opened
+         *
+         * @override
+         */
+        openFirstApp: function () {
+            var menu_apps_dropdown = document.querySelector(
+                ".o_menu_apps .dropdown > a"
+            );
+            $(menu_apps_dropdown).dropdown("show");
+            this.$navbar.addClass("o_first_app o_app_drawer");
+        },
         /**
          * Prevent the menu from being opened twice
          *
@@ -183,6 +195,7 @@ odoo.define("web_responsive", function (require) {
                 // This timeout is necessary since the menu has a 100ms fading animation
                 setTimeout(() => this.$search_input.focus(), 100);
             }
+            this.$navbar.addClass("o_app_drawer");
         },
 
         /**
@@ -192,6 +205,7 @@ odoo.define("web_responsive", function (require) {
             this.$search_container.removeClass("has-results");
             this.$search_results.empty();
             this.$search_input.val("");
+            this.$navbar.removeClass("o_first_app o_app_drawer");
         },
 
         /**
@@ -276,6 +290,7 @@ odoo.define("web_responsive", function (require) {
             switch (key) {
                 // Pressing enter is the same as clicking on the active element
                 case "Enter":
+                    this.$search_input.blur();
                     pre_focused.click();
                     break;
                 // Navigate up or down
@@ -310,7 +325,9 @@ odoo.define("web_responsive", function (require) {
          * Control if AppDrawer can be closed
          */
         _hideAppsMenu: function () {
-            return !this.$("input").is(":focus");
+            return (
+                !this.$("input").is(":focus") && !this.$navbar.hasClass("o_first_app")
+            );
         },
     });
 
@@ -368,13 +385,16 @@ odoo.define("web_responsive", function (require) {
         },
 
         /**
-         * No menu brand in mobiles
+         * No menu brand in mobiles.
+         * Removing direct style attributes to let css work.
          *
          * @override
          */
-        _updateMenuBrand: function () {
-            if (!config.device.isMobile) {
-                return this._super.apply(this, arguments);
+        _updateMenuBrand: function (brandName) {
+            this._super.apply(this, arguments);
+            if (brandName) {
+                this.$menu_brand_placeholder.removeAttr("style");
+                this.$section_placeholder.removeAttr("style");
             }
         },
     });
