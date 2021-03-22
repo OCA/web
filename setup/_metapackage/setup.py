@@ -18,6 +18,7 @@ setuptools.setup(
         'odoo13-addon-web_drop_target',
         'odoo13-addon-web_editor_background_color',
         'odoo13-addon-web_environment_ribbon',
+        'odoo13-addon-web_group_expand',
         'odoo13-addon-web_ir_actions_act_multi',
         'odoo13-addon-web_ir_actions_act_view_reload',
         'odoo13-addon-web_ir_actions_act_window_message',
