@@ -25,6 +25,7 @@ addon | version | summary
 [web_m2x_options](web_m2x_options/) | 14.0.1.0.0 | web_m2x_options
 [web_notify](web_notify/) | 14.0.1.0.0 | Send notification messages to user
 [web_responsive](web_responsive/) | 14.0.1.0.0 | Responsive web client, community-supported
+[web_timeline](web_timeline/) | 14.0.1.0.0 | Interactive visualization chart to show events in time
 [web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 14.0.1.0.0 | Show list fields as a matrix
 
 [//]: # (end addons)
