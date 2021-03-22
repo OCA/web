@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+    <t t-extend="One2ManyProductPicker.FlipCard">
+        <t
+            t-jquery="t[t-if='state'] > t[t-elif='!is_virtual'] > div:first-child > span:first-child"
+            t-operation="before"
+        >
+            <t
+                t-if="state.model === 'sale.order.line' &amp;&amp; state.data['secondary_uom_id']"
+            >
+                <span
+                    data-field="secondary_uom_qty"
+                    data-esc="str(secondary_uom_qty) + ' x ' + secondary_uom_id.data.display_name"
+                    class="badge badge-primary font-weight-bold rounded-0 mt-1 p-2"
+                />
+            </t>
+        </t>
+    </t>
+</template>
