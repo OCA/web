@@ -5,7 +5,7 @@ odoo.define("web_widget_one2many_product_picker_sale_stock.AbstractView", functi
 ) {
     "use strict";
 
-    var AbstractView = require("web.AbstractView");
+    const AbstractView = require("web.AbstractView");
 
     /**
      * Helper function to create field view definitions
@@ -40,7 +40,7 @@ odoo.define("web_widget_one2many_product_picker_sale_stock.AbstractView", functi
          */
         init: function(viewInfo, params) {
             if (viewInfo.model === "sale.order") {
-                var widget_name = $(viewInfo.arch)
+                const widget_name = $(viewInfo.arch)
                     .find("field[name='order_line']")
                     .attr("widget");
                 if (widget_name === "one2many_product_picker") {
@@ -56,7 +56,7 @@ odoo.define("web_widget_one2many_product_picker_sale_stock.AbstractView", functi
          * @param {Object} viewInfo
          */
         _injectSaleStockFields: function(viewInfo) {
-            var to_inject = {
+            const to_inject = {
                 product_type: _constructFakeFieldDef({
                     depends: ["product_id.type"],
                     related: ["product_id", "type"],
@@ -149,9 +149,9 @@ odoo.define("web_widget_one2many_product_picker_sale_stock.AbstractView", functi
             );
 
             // Add fields to arch
-            var field_names = Object.keys(to_inject);
-            var $arch = $(viewInfo.viewFields.order_line.views.form.arch);
-            for (var index in field_names) {
+            const field_names = Object.keys(to_inject);
+            const $arch = $(viewInfo.viewFields.order_line.views.form.arch);
+            for (const index in field_names) {
                 var field_name = field_names[index];
                 var $field = $arch.find("field[name='" + field_name + "']");
                 if (!$field.length) {

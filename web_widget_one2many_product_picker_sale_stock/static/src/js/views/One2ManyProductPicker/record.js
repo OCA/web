@@ -5,7 +5,7 @@ odoo.define(
     function(require) {
         "use strict";
 
-        var One2ManyProductPickerRecord = require("web_widget_one2many_product_picker.One2ManyProductPickerRecord");
+        const One2ManyProductPickerRecord = require("web_widget_one2many_product_picker.One2ManyProductPickerRecord");
 
         One2ManyProductPickerRecord.include({
             /**

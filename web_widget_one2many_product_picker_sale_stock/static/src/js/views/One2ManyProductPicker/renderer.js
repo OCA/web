@@ -5,13 +5,13 @@ odoo.define(
     function(require) {
         "use strict";
 
-        var One2ManyProductPickerRenderer = require("web_widget_one2many_product_picker.One2ManyProductPickerRenderer");
+        const One2ManyProductPickerRenderer = require("web_widget_one2many_product_picker.One2ManyProductPickerRenderer");
 
         One2ManyProductPickerRenderer.include({
             /**
              * @override
              */
-            _getRecordOptions: function(search_record) {
+            _getRecordOptions: function() {
                 var options = this._super.apply(this, arguments);
                 options.showSaleStock = this.options.show_sale_stock;
                 return options;

@@ -5,7 +5,7 @@ odoo.define(
     function(require) {
         "use strict";
 
-        var FieldOne2ManyProductPicker = require("web_widget_one2many_product_picker.FieldOne2ManyProductPicker");
+        const FieldOne2ManyProductPicker = require("web_widget_one2many_product_picker.FieldOne2ManyProductPicker");
 
         FieldOne2ManyProductPicker.include({
             /**
