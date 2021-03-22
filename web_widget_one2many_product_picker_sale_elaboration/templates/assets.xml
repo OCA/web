@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="assets_backend"
+        name="Web Widget One2Many Product Picker Sale Elaboration - Backend Assets"
+        inherit_id="web_widget_one2many_product_picker.assets_backend"
+    >
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/web_widget_one2many_product_picker_sale_elaboration/static/src/js/views/abstract_view.js"
+            />
+        </xpath>
+    </template>
+    <template
+        id="_assets_backend_helpers"
+        inherit_id="web_widget_one2many_product_picker._assets_backend_helpers"
+    >
+        <xpath expr="." position="inside">
+            <link
+                type="text/css"
+                rel="stylesheet"
+                href="/web_widget_one2many_product_picker_sale_elaboration/static/src/scss/_variables.scss"
+            />
+        </xpath>
+    </template>
+</odoo>
