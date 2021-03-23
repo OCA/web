@@ -10,9 +10,6 @@ odoo.define("web_pwa_cache.PWAManager", function (require) {
     var PWAModeSelector = require("web_pwa_cache.PWAModeSelector");
     var BroadcastSWMixin = require("web_pwa_cache.BroadcastSWMixin");
     var PWASyncModal = require("web_pwa_cache.PWASyncModal");
-    var config = require("web.config");
-
-    config.device.isMobile = true;
 
     var QWeb = core.qweb;
     var _t = core._t;
