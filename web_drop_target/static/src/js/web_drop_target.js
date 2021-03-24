@@ -2,7 +2,7 @@
 // License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 /* global Uint8Array base64js*/
 
-odoo.define("web_drop_target", function(require) {
+odoo.define("web_drop_target", function (require) {
     "use strict";
 
     var FormController = require("web.FormController");
@@ -18,7 +18,7 @@ odoo.define("web_drop_target", function(require) {
 
         _drop_overlay: null,
 
-        start: function() {
+        start: function () {
             var result = this._super.apply(this, arguments);
             this.$el.on("drop.widget_events", this.proxy("_on_drop"));
             this.$el.on("dragenter.widget_events", this.proxy("_on_dragenter"));
@@ -27,7 +27,7 @@ odoo.define("web_drop_target", function(require) {
             return result;
         },
 
-        _on_drop: function(e) {
+        _on_drop: function (e) {
             if (!this._drop_overlay) {
                 return;
             }
@@ -40,23 +40,23 @@ odoo.define("web_drop_target", function(require) {
             this._handle_drop_items(drop_items, e);
         },
 
-        _on_dragenter: function(e) {
+        _on_dragenter: function (e) {
             e.preventDefault();
             this._add_overlay();
             return false;
         },
 
-        _on_dragleave: function(e) {
+        _on_dragleave: function (e) {
             this._remove_overlay();
             e.preventDefault();
         },
 
-        _get_drop_items: function(e) {
+        _get_drop_items: function (e) {
             if (this._get_record_id()) {
                 var self = this,
                     dataTransfer = e.originalEvent.dataTransfer,
                     drop_items = [];
-                _.each(dataTransfer.files, function(item) {
+                _.each(dataTransfer.files, function (item) {
                     if (
                         _.contains(self._drop_allowed_types, item.type) ||
                         _.isEmpty(self._drop_allowed_types)
@@ -70,13 +70,13 @@ odoo.define("web_drop_target", function(require) {
         },
 
         // eslint-disable-next-line no-unused-vars
-        _handle_drop_items: function(drop_items, e) {
+        _handle_drop_items: function (drop_items, e) {
             // Do something here, for example call the helper function below
             // e is the on_load_end handler for the FileReader above,
             // so e.target.result contains an ArrayBuffer of the data
         },
 
-        _create_attachment: function(file, reader, e, res_model, res_id, extra_data) {
+        _create_attachment: function (file, reader, e, res_model, res_id, extra_data) {
             // Helper to upload an attachment and update the sidebar
             var self = this;
             return this._rpc({
@@ -95,7 +95,7 @@ odoo.define("web_drop_target", function(require) {
                         extra_data || {}
                     ),
                 ],
-            }).then(function() {
+            }).then(function () {
                 // Find the chatter among the children, there should be only
                 // one
                 var res = _.filter(self.getChildren(), "chatter");
@@ -107,11 +107,11 @@ odoo.define("web_drop_target", function(require) {
             });
         },
 
-        _file_reader_error_handler: function(e) {
+        _file_reader_error_handler: function (e) {
             console.error(e);
         },
 
-        _handle_file_drop_attach: function(item, e, res_model, res_id, extra_data) {
+        _handle_file_drop_attach: function (item, e, res_model, res_id, extra_data) {
             var self = this;
             var file = item;
             if (!file || !(file instanceof Blob)) {
@@ -133,13 +133,13 @@ odoo.define("web_drop_target", function(require) {
             reader.readAsArrayBuffer(file);
         },
 
-        _get_record_id: function() {
+        _get_record_id: function () {
             // Implement when including this mixin. Return the record ID.
             console.log("'_get_record_id': Not Implemented");
             return false;
         },
 
-        _add_overlay: function() {
+        _add_overlay: function () {
             var self = this;
             if (!this._drop_overlay) {
                 var o_content = jQuery(".o_content"),
@@ -163,7 +163,7 @@ odoo.define("web_drop_target", function(require) {
             }
         },
 
-        _remove_overlay: function() {
+        _remove_overlay: function () {
             if (this._drop_overlay) {
                 this._drop_overlay.remove();
                 this._drop_overlay = null;
@@ -176,9 +176,9 @@ odoo.define("web_drop_target", function(require) {
     FormController.include(
         _.extend(DropTargetMixin, {
             // eslint-disable-next-line no-unused-vars
-            _handle_drop_items: function(drop_items, e) {
+            _handle_drop_items: function (drop_items, e) {
                 var self = this;
-                _.each(drop_items, function(item, e) {
+                _.each(drop_items, function (item, e) {
                     return self._handle_file_drop_attach(
                         item,
                         e,
@@ -187,7 +187,7 @@ odoo.define("web_drop_target", function(require) {
                     );
                 });
             },
-            _get_record_id: function() {
+            _get_record_id: function () {
                 return this.renderer.state.res_id;
             },
         })
