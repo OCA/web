@@ -604,6 +604,9 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                             }
                         });
                     });
+                    if (evt.data.callback) {
+                        evt.data.callback();
+                    }
                 });
             } else {
                 // This is used to know when need use 'yellow' color
@@ -619,6 +622,45 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
             }
         },
 
+        _doUpdateQuickRecord: function (id, data, callback) {
+            if (this.options.auto_save) {
+                var self = this;
+                // Dont trigger state update
+                this._setValue(
+                    {operation: "UPDATE", id: id, data: data},
+                    {notifyChange: false}
+                ).then(function () {
+                    self.parent_controller.saveRecord(undefined, {stayInEdit: true}).then(function () {
+                        // Workaround to get updated values
+                        self.parent_controller.model.reload(self.value.id).then(function (result) {
+                            var new_data = self.parent_controller.model.get(result);
+                            self.value.data = new_data.data;
+                            self.renderer.updateState(self.value, {force: true});
+                            if (callback) {
+                                callback();
+                            }
+                        });
+                    });
+                    if (callback) {
+                        callback();
+                    }
+                });
+            } else {
+                // This is used to know when need use 'yellow' color
+                this.parent_controller.model.updateRecordContext(id, {
+                    product_picker_modified: true,
+                });
+                // This will trigger an "state" update
+                this._setValue(
+                    {operation: "UPDATE", id: id, data: data},
+                ).then(function () {
+                    if (callback) {
+                        callback();
+                    }
+                });
+            }
+        },
+
         /**
          * Runs the x2many (1,id,values) command.
          *
@@ -627,44 +669,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
          */
         _onUpdateQuickRecord: function (evt) {
             evt.stopPropagation();
-            var self = this;
-
-            if (this.options.auto_save) {
-                // Dont trigger state update
-                this._setValue(
-                    {operation: "UPDATE", id: evt.data.id, data: evt.data.data},
-                    {notifyChange: false}
-                ).then(function () {
-                    if (self.options.auto_save) {
-                        self.parent_controller.saveRecord(undefined, {stayInEdit: true}).then(function () {
-                            // Workaround to get updated values
-                            self.parent_controller.model.reload(self.value.id).then(function (result) {
-                                var new_data = self.parent_controller.model.get(result);
-                                self.value.data = new_data.data;
-                                self.renderer.updateState(self.value, {force: true});
-                                if (evt.data.callback) {
-                                    evt.data.callback();
-                                }
-                            });
-                        });
-                    } else if (evt.data.callback) {
-                        evt.data.callback();
-                    }
-                });
-            } else {
-                // This is used to know when need use 'yellow' color
-                this.parent_controller.model.updateRecordContext(evt.data.id, {
-                    product_picker_modified: true,
-                });
-                // This will trigger an "state" update
-                this._setValue(
-                    {operation: "UPDATE", id: evt.data.id, data: evt.data.data},
-                ).then(function () {
-                    if (evt.data.callback) {
-                        evt.data.callback();
-                    }
-                });
-            }
+            this._doUpdateQuickRecord(evt.data.id, evt.data.data, evt.data.callback);
         },
 
         /**

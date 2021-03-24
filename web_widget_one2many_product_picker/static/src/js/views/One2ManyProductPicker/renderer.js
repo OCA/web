@@ -260,9 +260,14 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                         widget.recordSearch.id === state.data[this.options.field_map.product].data.id
                     ) {
 
-                        // Is a new record
+                        // Is a new record (a replace for pure virtual)
                         search_record_index = widget.$el.index();
                         search_record = widget.recordSearch;
+                        var model = this.getParent().getBasicFieldParams().model;
+                        var record = model.get(widget.state.id);
+                        model.updateRecordContext(state.id, {
+                            lazy_qty: record.context.lazy_qty || 0,
+                        });
                     }
 
                     // Remove "pure virtual" records that have the same product that the new record

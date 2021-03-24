@@ -255,6 +255,7 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView
                         viewType: "form",
                     }).then(function () {
                         var record = self.model.get(self.handle);
+                        self.model.updateRecordContext(self.handle, {saving: true});
                         self.trigger_up("restore_flip_card", {
                             success_callback: function () {
                                 self.trigger_up("create_quick_record", {

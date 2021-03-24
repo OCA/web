@@ -108,11 +108,13 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             if (state) {
                 this._setState(state);
             }
-            this.$card.removeClass("blocked");
-            // Avoid recreate active record
-            if (this.$card.hasClass("active")) {
-                this._processDynamicFields();
-                return $.when();
+            if (this.$card && this.$card.length) {
+                this.$card.removeClass("blocked");
+                // Avoid recreate active record
+                if (this.$card.hasClass("active")) {
+                    this._processDynamicFields();
+                    return $.when();
+                }
             }
 
             this.on_detach_callback();
@@ -187,6 +189,17 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             }
             var model = this.options.basicFieldParams.model;
             this.is_virtual = this.state && model.isPureVirtual(this.state.id) || false;
+
+            // Check if has cached qty
+            if (this.state && this.state.id) {
+                const record = model.get(this.state.id);
+                const lazy_qty = record && record.context.lazy_qty || 0;
+                if (lazy_qty) {
+                    model.updateRecordContext(this.state.id, {lazy_qty: 0});
+                    // Record already has 1
+                    this._incProductQty(lazy_qty - 1);
+                }
+            }
         },
 
         /**
@@ -214,6 +227,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                 modified: record && record.context.product_picker_modified,
                 active_model: '',
                 auto_save: this.options.autoSave,
+                is_saving: record && record.context.saving,
             };
         },
 
@@ -429,6 +443,12 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             });
         },
 
+        _updateLazyQty: function () {
+            var model = this.options.basicFieldParams.model;
+            var record = model.get(this.state.id);
+            this.$el.find(".lazy_product_qty").text(record.context.lazy_qty);
+        },
+
         /**
          * This is a special handle for display the non-fields.
          * Similar 't-esc' behaviour.
@@ -516,6 +536,8 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
         _saveRecord: function () {
             var self = this;
             var model = this.options.basicFieldParams.model;
+            model.updateRecordContext(this.state.id, {saving: true});
+            this.recreate();
             var record = model.get(this.state.id);
             return model.save(record.id, {
                 stayInEdit: true,
@@ -559,6 +581,12 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             var model = this.options.basicFieldParams.model;
             model.updateRecordContext(this.state.id, {ignore_warning: this.options.ignoreWarning});
             var record = model.get(this.state.id);
+
+            // Because we don't hide the 'add' button when the product is added form back form
+            // we check if the record is in "saving" mode to prevent duplicate it.
+            if (record.context.saving) {
+                return Promise.resolve();
+            }
             var changes = _.pick(record.data, this.options.fieldMap.product_uom_qty);
             if (changes[this.options.fieldMap.product_uom_qty] === 0) {
                 changes[this.options.fieldMap.product_uom_qty] = 1;
@@ -583,16 +611,23 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             var model = this.options.basicFieldParams.model;
             model.updateRecordContext(this.state.id, {ignore_warning: this.options.ignoreWarning});
             var record = model.get(this.state.id);
-            var changes = _.pick(record.data, this.options.fieldMap.product_uom_qty);
-            changes[this.options.fieldMap.product_uom_qty] += amount;
 
-            return model.notifyChanges(
-                record.id,
-                changes
-            ).then(function () {
-                self._processDynamicFields();
-                self._lazyUpdateRecord();
-            });
+            if (this.options.autoSave && !this.state.data.id) {
+                let lazy_qty = record.context.lazy_qty || 1;
+                lazy_qty += amount;
+                model.updateRecordContext(this.state.id, {lazy_qty: lazy_qty});
+                self._updateLazyQty();
+            } else {
+                var changes = _.pick(record.data, this.options.fieldMap.product_uom_qty);
+                changes[this.options.fieldMap.product_uom_qty] += amount;
+                return model.notifyChanges(
+                    record.id,
+                    changes
+                ).then(function () {
+                    self._processDynamicFields();
+                    self._lazyUpdateRecord();
+                });
+            }
         },
 
         /**
@@ -603,11 +638,6 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             var $currentTarget = $(currentTarget);
             var $img = $currentTarget.find(".oe_flip_card_front img");
             $target.addClass('o_catch_attention');
-            $img.addClass('oe_product_picker_catch_attention');
-            $img.on('animationend', function () {
-                $img.removeClass('oe_product_picker_catch_attention');
-                $img.off('animationend');
-            });
         },
 
         /**
@@ -645,7 +675,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          */
         _onClickFlipCard: function (evt) {
             // Avoid clicks on form elements
-            if (['INPUT', 'BUTTON', 'A'].indexOf(evt.target.tagName) !== -1 || this.$card.hasClass('blocked')) {
+            if (['INPUT', 'BUTTON', 'A'].indexOf(evt.target.tagName) !== -1) {
                 return;
             }
             var $target = $(evt.target);
@@ -672,6 +702,11 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                     return;
                 }
             }
+
+            if (this.$card.hasClass('blocked')) {
+                return;
+            }
+
             if (!this._clickFlipCardDelayed) {
                 this._clickFlipCardDelayed = setTimeout(
                     this._onClickDelayedFlipCard.bind(this, evt),
