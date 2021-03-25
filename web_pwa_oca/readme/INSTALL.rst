@@ -10,4 +10,9 @@ And like all other installed apps, it's a top level app in the task switcher.
 
 In Chrome, a Progressive Web App can either be installed through the three-dot context menu.
 
-This module also provides a "Install PWA" link in Odoo user menu.
+In case you previously installed `web_pwa`, run the following steps with `odoo shell`, after having installed `openupgradelib`:
+
+
+>>> from openupgradelib import openupgrade
+>>> openupgrade.update_module_names(env.cr, [('web_pwa', 'web_pwa_oca')], merge_modules=False)
+>>> env.cr.commit()
