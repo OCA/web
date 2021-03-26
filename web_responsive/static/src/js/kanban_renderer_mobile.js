@@ -26,6 +26,24 @@
             this._super.apply(this, arguments);
             this.isMobile = true;
         },
+        /**
+         * KanbanRenderer will decide can we close quick create or not
+         * @private
+         * @override
+         */
+        _cancel: function () {
+            this.trigger_up("close_quick_create");
+        },
+        /**
+         * Clear input when showed
+         * @override
+         */
+        toggleFold: function () {
+            this._super.apply(this, arguments);
+            if (!this.folded) {
+                this.$input.val("");
+            }
+        },
     });
 
     KanbanView.include({
@@ -345,6 +363,9 @@
          *   and displayed
          */
         _moveToGroup: function (moveToIndex, animate) {
+            if (this.widgets.length === 0) {
+                return Promise.resolve();
+            }
             var self = this;
             if (moveToIndex >= 0 && moveToIndex < this.widgets.length) {
                 this.activeColumnIndex = moveToIndex;
@@ -477,8 +498,8 @@
             if (event) {
                 event.stopPropagation();
             }
-            this.$(".o_kanban_group").toggle();
             this.quickCreate.toggleFold();
+            this.$(".o_kanban_group").toggle(this.quickCreate.folded);
         },
         /**
          * @private
@@ -489,6 +510,16 @@
                 this.quickCreate.toggleFold();
             }
             this._moveToGroup($(event.currentTarget).index(), true);
+        },
+        /**
+         * @private
+         * @override
+         */
+        _onCloseQuickCreate: function () {
+            if (this.widgets.length && !this.quickCreate.folded) {
+                this.$(".o_kanban_group").toggle(true);
+                this.quickCreate.toggleFold();
+            }
         },
     });
 });
