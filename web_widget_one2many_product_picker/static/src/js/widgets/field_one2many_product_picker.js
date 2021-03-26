@@ -592,22 +592,18 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                     {operation: "ADD", id: evt.data.id},
                     {notifyChange: false}
                 ).then(function () {
-                    if (self.options.auto_save) {
-                        self.parent_controller.saveRecord(undefined, {stayInEdit: true}).then(function (rrr) {
-                            // Because 'create' generates a new state and we can't know these new id we
-                            // need force update the all the current states.
-                            self._setValue(
-                                 {operation: "UPDATE", id: evt.data.id},
-                                 {doNotSetDirty: true}
-                            ).then(function () {
-                                if (evt.data.callback) {
-                                    evt.data.callback();
-                                }
-                            });
+                    self.parent_controller.saveRecord(undefined, {stayInEdit: true}).then(function () {
+                        // Because 'create' generates a new state and we can't know these new id we
+                        // need force update all the current states.
+                        self._setValue(
+                                {operation: "UPDATE", id: evt.data.id},
+                                {doNotSetDirty: true}
+                        ).then(function () {
+                            if (evt.data.callback) {
+                                evt.data.callback();
+                            }
                         });
-                    } else if (evt.data.callback) {
-                        evt.data.callback();
-                    }
+                    });
                 });
             } else {
                 // This is used to know when need use 'yellow' color
