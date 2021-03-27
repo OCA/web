@@ -4,3 +4,4 @@
 * Meet Dholakia <m.dholakia.serpentcs@gmail.com>
 * Nikul Chaudhary <nikul.chaudhary.serpentcs@gmail.com>
 * Phuc Tran Thanh <phuc@trobz.com>
+* Tharathip Chaweewongphan <tharathipc@ecosoft.co.th>
