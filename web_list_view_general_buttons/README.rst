@@ -32,8 +32,6 @@ Features:
     :align: center
     :alt: Usage
 
-
-
 **Table of contents**
 
 .. contents::
