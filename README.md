@@ -19,6 +19,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
+[web_copy_confirm](web_copy_confirm/) | 14.0.1.0.0 | Show confirmation dialogue before copying records
 [web_dialog_size](web_dialog_size/) | 14.0.1.0.0 | A module that lets the user expand a dialog box to the full screen width.
 [web_domain_field](web_domain_field/) | 14.0.1.0.0 | Use computed field as domain
 [web_environment_ribbon](web_environment_ribbon/) | 14.0.1.0.0 | Web Environment Ribbon
