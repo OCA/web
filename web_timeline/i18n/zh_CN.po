@@ -23,7 +23,6 @@ msgstr "活动"
 
 #. module: web_timeline
 #. openerp-web
-#: code:addons/web_timeline/static/src/js/timeline_controller.js:243
 #: code:addons/web_timeline/static/src/js/timeline_controller.js:263
 #, python-format
 msgid "Are you sure you want to delete this record?"
@@ -103,7 +102,6 @@ msgstr "搜索"
 
 #. module: web_timeline
 #. openerp-web
-#: code:addons/web_timeline/static/src/js/timeline_renderer.js:471
 #: code:addons/web_timeline/static/src/js/timeline_renderer.js:511
 #, python-format
 msgid "Template \"timeline-item\" not present in timeline view definition."
@@ -119,7 +117,6 @@ msgstr "时间线"
 
 #. module: web_timeline
 #. openerp-web
-#: code:addons/web_timeline/static/src/js/timeline_renderer.js:63
 #: code:addons/web_timeline/static/src/js/timeline_renderer.js:65
 #, python-format
 msgid "Timeline view has not defined 'date_start' attribute."
@@ -149,7 +146,6 @@ msgstr "查看类型"
 
 #. module: web_timeline
 #. openerp-web
-#: code:addons/web_timeline/static/src/js/timeline_controller.js:246
 #: code:addons/web_timeline/static/src/js/timeline_controller.js:266
 #, python-format
 msgid "Warning"
