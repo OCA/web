@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="assets_backend"
+        name="web_widget_bokeh_chart assets"
+        inherit_id="web.assets_backend"
+    >
+        <xpath expr="." position="inside">
+            <link
+                rel="stylesheet"
+                type="text/css"
+                href="/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-1.1.0.css"
+            />
+            <link
+                rel="stylesheet"
+                type="text/css"
+                href="/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-widgets-1.1.0.css"
+            />
+            <link
+                rel="stylesheet"
+                type="text/scss"
+                href="/web_widget_bokeh_chart/static/src/scss/custom-bokeh.scss"
+            />
+            <script
+                type="text/javascript"
+                src="/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-1.1.0.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-widgets-1.1.0.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-api-1.1.0.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_widget_bokeh_chart/static/src/js/web_widget_bokeh_chart.js"
+            />
+        </xpath>
+    </template>
+</odoo>

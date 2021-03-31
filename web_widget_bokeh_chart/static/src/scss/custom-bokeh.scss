@@ -1,0 +1,19 @@
+/*
+    The following !important sentences are needed to override inline styles hardcoded by the bokeh library.
+    This way the graphs are always displayed inside their defined container in the Qweb views.
+*/
+.bk-root {
+    /* Overriding this styling option Odoo menu is now displayed on top of bokeh graphs */
+    z-index: 0;
+    height: inherit !important;
+}
+.bk-root > .bk {
+    height: inherit !important;
+}
+.bk-root > .bk > .bk {
+    height: inherit !important;
+}
+.bk-root > .bk > .bk > .bk-canvas {
+    height: inherit !important;
+    position: inherit !important;
+}
