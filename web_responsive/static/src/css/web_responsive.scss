@@ -710,6 +710,19 @@ html .o_web_client .o_action_manager .o_action {
         }
     }
 
+    //No content message improvements on mobile
+    @include media-breakpoint-down(md) {
+        .o_view_nocontent {
+            top: 80px;
+        }
+        .o_nocontent_help {
+            box-shadow: none;
+        }
+        .o_sample_data_disabled {
+            display: none;
+        }
+    }
+
     // Sided chatter, if user wants
     .o_chatter_position_sided & {
         @include media-breakpoint-up(lg) {
