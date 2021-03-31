@@ -20,7 +20,8 @@ odoo.define("web_widget_numeric_step.field", function(require) {
             "keydown .input_numeric_step": "_onKeyDown",
             "change .input_numeric_step": "_onChange",
             "input .input_numeric_step": "_onInput",
-            "onfocusout .widget_numeric_step": "_onFocusOut",
+            "focusin .input_numeric_step": "_onFocusIn",
+            "focusout .widget_numeric_step": "_onFocusOut",
         }),
         supportedFieldTypes: ["float", "integer"],
 
@@ -53,6 +54,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
                 step: Number(this.nodeOptions.step) || 1,
                 min: Number(min_val),
                 max: Number(max_val),
+                autoSelect: this.nodeOptions.auto_select,
             };
 
             this._lazyOnChangeTrigger = _.debounce(
@@ -212,6 +214,18 @@ odoo.define("web_widget_numeric_step.field", function(require) {
                     this._whileMouseDown.bind(this, ev),
                     this._click_delay
                 );
+            }
+        },
+
+        /**
+         * Auto select all content when user enters into fields with this
+         * widget.
+         *
+         * @private
+         */
+        _onFocusIn: function() {
+            if (this._config.autoSelect) {
+                this.$input.select();
             }
         },
 
