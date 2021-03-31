@@ -19,3 +19,10 @@ msgstr ""
 #, python-format
 msgid "Are you sure that you would like to copy this record?"
 msgstr ""
+
+#. module: web_copy_confirm
+#. openerp-web
+#: code:addons/web_copy_confirm/static/src/js/web_copy_confirm.js:0
+#, python-format
+msgid "Duplicate"
+msgstr ""
