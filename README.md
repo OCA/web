@@ -27,6 +27,7 @@ addon | version | summary
 [web_notify](web_notify/) | 14.0.1.0.0 | Send notification messages to user
 [web_responsive](web_responsive/) | 14.0.1.0.1 | Responsive web client, community-supported
 [web_timeline](web_timeline/) | 14.0.1.0.0 | Interactive visualization chart to show events in time
+[web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 14.0.1.0.0 | Allows you to dynamically color fields on tree views
 [web_widget_bokeh_chart](web_widget_bokeh_chart/) | 14.0.1.0.0 | This widget allows to display charts using Bokeh library.
 [web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 14.0.1.0.0 | Show list fields as a matrix
 
