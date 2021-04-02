@@ -15,6 +15,7 @@ setuptools.setup(
         'odoo14-addon-web_m2x_options',
         'odoo14-addon-web_notify',
         'odoo14-addon-web_responsive',
+        'odoo14-addon-web_sheet_full_width',
         'odoo14-addon-web_timeline',
         'odoo14-addon-web_tree_dynamic_colored_field',
         'odoo14-addon-web_widget_bokeh_chart',
