@@ -74,10 +74,12 @@ class PWA(PWA):
         )
         return res
 
-    def _get_base_urls(self):
+    def _get_base_urls(self, cache_version):
         from odoo.addons.web.controllers.main import module_boot
 
-        url_qweb_modules = "/web/webclient/qweb?mods={}".format(",".join(module_boot()))
+        url_qweb_modules = "/web/webclient/qweb/{}?mods={}".format(
+            cache_version, ",".join(module_boot())
+        )
         return [
             # Cache main page
             "/web",
@@ -97,14 +99,20 @@ class PWA(PWA):
             "/web_pwa_cache/static/src/xml/base.xml",
             "/web_pwa_cache/static/src/scss/main.scss",
             "/web/static/src/xml/base.xml",
-            "/web/static/src/xml/colorpicker.xml",
+            "/web/static/src/xml/chart.xml",
+            "/web/static/src/xml/colorpicker_dialog.xml",
+            "/web/static/src/xml/crash_manager.xml",
+            "/web/static/src/xml/debug.xml",
+            "/web/static/src/xml/dialog.xml",
             "/web/static/src/xml/kanban.xml",
             "/web/static/src/xml/menu.xml",
-            "/web/static/src/xml/pie_chart.xml",
+            "/web/static/src/xml/name_and_signature.xml",
+            "/web/static/src/xml/notification.xml",
             "/web/static/src/xml/rainbow_man.xml",
             "/web/static/src/xml/report.xml",
+            "/web/static/src/xml/ribbon.xml",
+            "/web/static/src/xml/translation_dialog.xml",
             "/web/static/src/xml/web_calendar.xml",
-            "/web/static/src/xml/dialog.xml",
             "/web/static/src/img/spin.png",
             "/web/static/src/img/smiling_face.svg",
             "/web/static/src/img/placeholder.png",
@@ -119,11 +127,6 @@ class PWA(PWA):
             # Full Calendar assets
             "/web/static/lib/fullcalendar/js/fullcalendar.js",
             "/web/static/lib/fullcalendar/css/fullcalendar.css",
-            # NVD3 (Charts) assets
-            "/web/static/src/js/libs/nvd3.js",
-            "/web/static/lib/nvd3/d3.v3.js",
-            "/web/static/lib/nvd3/nv.d3.js",
-            "/web/static/lib/nvd3/nv.d3.css",
             # Mobile resources
             "/web/static/lib/jquery.touchSwipe/jquery.touchSwipe.js",
         ]
@@ -140,9 +143,9 @@ class PWA(PWA):
         for url in urls:
             version_list.append(url.split("/")[3])
         cache_version = "-".join(version_list)
-        urls.extend(self._get_base_urls())
+        urls.extend(self._get_base_urls(cache_version))
         res["cache_name"] = cache_version
-        res["prefetched_urls"] = urls
+        res["prefetched_urls"] = list(set(urls))
 
         # Add 'GET' resources
         pwa_cache_obj = request.env["pwa.cache"]

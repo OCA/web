@@ -382,6 +382,7 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
                     return reject(err);
                 }
 
+                console.log("[ServiceWorker] SQLite DB Schema generated successfully");
                 return resolve();
             });
         },

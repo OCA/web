@@ -139,7 +139,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
         if (_.isUndefined(svalue) || _.isNull(svalue) || svalue === false) {
             return "NULL";
         }
-        return column_string_encode(svalue, string_quoted);
+        return svalue;
     }
 
     function normalize_domain(domain) {

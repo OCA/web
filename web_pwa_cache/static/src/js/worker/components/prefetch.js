@@ -103,6 +103,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
          */
         prefetchDataGet: function(cache_name, prefetched_urls) {
             // Prefetch URL's
+            console.log(prefetched_urls);
             return this._cache.get(cache_name).addAll(prefetched_urls);
         },
 

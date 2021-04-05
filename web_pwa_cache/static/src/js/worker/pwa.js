@@ -9,7 +9,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
     const DatabaseManager = require("web_pwa_cache.PWA.core.DatabaseManager");
     const CacheManager = require("web_pwa_cache.PWA.core.CacheManager");
     const Config = require("web_pwa_cache.PWA.core.Config");
-    // Const tools = require("web_pwa_cache.PWA.core.base.Tools");
+    const tools = require("web_pwa_cache.PWA.core.base.Tools");
     const ComponentExporter = require("web_pwa_cache.PWA.components.Exporter");
     const ComponentImporter = require("web_pwa_cache.PWA.components.Importer");
     const ComponentPrefetch = require("web_pwa_cache.PWA.components.Prefetch");
@@ -113,126 +113,125 @@ odoo.define("web_pwa_cache.PWA", function(require) {
          * @override
          */
         processRequest: function(request) {
-            return fetch(request); // FIXME: Bypass cache implementation
-            // if (_.isEmpty(this._components)) {
-            //     // PWA Not Actually Loaded
-            //     console.warn(
-            //         "[ServiceWorker] The components are not currently loaded... Fallback to default browser behaviour."
-            //     );
-            //     return fetch(request);
-            // }
-            // if (request.method === "GET") {
-            //     return new Promise(async (resolve, reject) => {
-            //         try {
-            //             const isOffline = this.config.isOfflineMode();
-            //             const isStandalone = this.config.isStandaloneMode();
-            //             // Need redirect '/'?
-            //             const url = new URL(request.url);
-            //             if (url.pathname === "/" && (isOffline || isStandalone)) {
-            //                 return resolve(tools.ResponseRedirect("/web"));
-            //             }
-            //             // Strategy: Cache First
-            //             const response_cache = await this._cachemanager
-            //                 .get(this._cache_name)
-            //                 .match(request);
-            //             if (response_cache) {
-            //                 return resolve(response_cache);
-            //             }
-            //             if (isStandalone && !this._prefetch_run) {
-            //                 // Try from "dynamic" cache
-            //                 try {
-            //                     const request_cloned_cache = request.clone();
-            //                     const response_cache = await this._tryGetFromCache(
-            //                         request_cloned_cache
-            //                     );
-            //                     return resolve(response_cache);
-            //                 } catch (err) {
-            //                     console.log(
-            //                         "[ServiceWorker] Can't process GET request '" +
-            //                             url.pathname +
-            //                             "'. Fallback to browser behaviour..."
-            //                     );
-            //                     console.log(err);
-            //                 }
-            //             }
-            //             // Fallback
-            //             if (!isOffline && request.cache !== "only-if-cached") {
-            //                 return resolve(fetch(request));
-            //             }
-            //             return reject();
-            //         } catch (err) {
-            //             return reject(err);
-            //         }
-            //     });
-            // } else if (
-            //     request.method === "POST" &&
-            //     request.headers.get("Content-Type") === "application/json"
-            // ) {
-            //     return new Promise(async (resolve, reject) => {
-            //         try {
-            //             const isStandalone = this.config.isStandaloneMode();
-            //             if (isStandalone) {
-            //                 const isOffline = this.config.isOfflineMode();
-            //                 const request_cloned_cache = request.clone();
-            //                 // Try CUD operations
-            //                 // Methodology: Network first
-            //                 if (!isOffline) {
-            //                     const request_oper = this._getRequestOperation(request);
-            //                     if (
-            //                         this._special_operations.indexOf(request_oper) !==
-            //                         -1
-            //                     ) {
-            //                         const response_net = await this._tryFromNetwork(
-            //                             request
-            //                         );
-            //                         if (response_net) {
-            //                             return resolve(response_net);
-            //                         }
-            //                     }
-            //                 }
+            if (_.isEmpty(this._components)) {
+                // PWA Not Actually Loaded
+                console.warn(
+                    "[ServiceWorker] The components are not currently loaded... Fallback to default browser behaviour."
+                );
+                return fetch(request);
+            }
+            if (request.method === "GET") {
+                return new Promise(async (resolve, reject) => {
+                    try {
+                        const isOffline = this.config.isOfflineMode();
+                        const isStandalone = this.config.isStandaloneMode();
+                        // Need redirect '/'?
+                        const url = new URL(request.url);
+                        if (url.pathname === "/" && (isOffline || isStandalone)) {
+                            return resolve(tools.ResponseRedirect("/web"));
+                        }
+                        // Strategy: Cache First
+                        const response_cache = await this._cachemanager
+                            .get(this._cache_name)
+                            .match(request);
+                        if (response_cache) {
+                            return resolve(response_cache);
+                        }
+                        if (isStandalone && !this._prefetch_run) {
+                            // Try from "dynamic" cache
+                            try {
+                                const request_cloned_cache = request.clone();
+                                const response_cache = await this._tryGetFromCache(
+                                    request_cloned_cache
+                                );
+                                return resolve(response_cache);
+                            } catch (err) {
+                                console.log(
+                                    "[ServiceWorker] Can't process GET request '" +
+                                        url.pathname +
+                                        "'. Fallback to browser behaviour..."
+                                );
+                                console.log(err);
+                            }
+                        }
+                        // Fallback
+                        if (!isOffline && request.cache !== "only-if-cached") {
+                            return resolve(fetch(request));
+                        }
+                        return reject();
+                    } catch (err) {
+                        return reject(err);
+                    }
+                });
+            } else if (
+                request.method === "POST" &&
+                request.headers.get("Content-Type") === "application/json"
+            ) {
+                return new Promise(async (resolve, reject) => {
+                    try {
+                        const isStandalone = this.config.isStandaloneMode();
+                        if (isStandalone) {
+                            const isOffline = this.config.isOfflineMode();
+                            const request_cloned_cache = request.clone();
+                            // Try CUD operations
+                            // Methodology: Network first
+                            if (!isOffline) {
+                                const request_oper = this._getRequestOperation(request);
+                                if (
+                                    this._special_operations.indexOf(request_oper) !==
+                                    -1
+                                ) {
+                                    const response_net = await this._tryFromNetwork(
+                                        request
+                                    );
+                                    if (response_net) {
+                                        return resolve(response_net);
+                                    }
+                                }
+                            }
 
-            //                 // Don try from cache if a prefetch tasks is running
-            //                 if (!this._prefetch_run) {
-            //                     // Other request (or network fails) go directly from cache
-            //                     try {
-            //                         const response_cache = await this._tryPostFromCache(
-            //                             request_cloned_cache
-            //                         );
-            //                         return resolve(response_cache);
-            //                     } catch (err) {
-            //                         const request_url = new URL(request.url);
-            //                         console.log(
-            //                             `[ServiceWorker] The POST request can't be processed: '${request_url.pathname}' content cached not found! Fallback to default browser behaviour...`
-            //                         );
-            //                         console.log(err);
-            //                         if (isOffline) {
-            //                             const request_url = new URL(request.url);
-            //                             this.postClientPageMessage({
-            //                                 type: "PWA_CACHE_FAIL",
-            //                                 error: err,
-            //                                 url: request_url.pathname,
-            //                             });
-            //                         }
-            //                     }
-            //                 }
+                            // Don try from cache if a prefetch tasks is running
+                            if (!this._prefetch_run) {
+                                // Other request (or network fails) go directly from cache
+                                try {
+                                    const response_cache = await this._tryPostFromCache(
+                                        request_cloned_cache
+                                    );
+                                    return resolve(response_cache);
+                                } catch (err) {
+                                    const request_url = new URL(request.url);
+                                    console.log(
+                                        `[ServiceWorker] The POST request can't be processed: '${request_url.pathname}' content cached not found! Fallback to default browser behaviour...`
+                                    );
+                                    console.log(err);
+                                    if (isOffline) {
+                                        const request_url = new URL(request.url);
+                                        this.postClientPageMessage({
+                                            type: "PWA_CACHE_FAIL",
+                                            error: err,
+                                            url: request_url.pathname,
+                                        });
+                                    }
+                                }
+                            }
 
-            //                 // If all fails fallback to network (excepts in offline mode)
-            //                 if (isOffline) {
-            //                     // Avoid default browser behaviour
-            //                     return reject();
-            //                 }
+                            // If all fails fallback to network (excepts in offline mode)
+                            if (isOffline) {
+                                // Avoid default browser behaviour
+                                return reject();
+                            }
 
-            //                 const response_net = await this._tryFromNetwork(request);
-            //                 return resolve(response_net);
-            //             }
-            //         } catch (err) {
-            //             // Do nothing
-            //         }
+                            const response_net = await this._tryFromNetwork(request);
+                            return resolve(response_net);
+                        }
+                    } catch (err) {
+                        // Do nothing
+                    }
 
-            //         return resolve(fetch(request));
-            //     });
-            // }
-            // return fetch(request);
+                    return resolve(fetch(request));
+                });
+            }
+            return fetch(request);
         },
 
         /**
