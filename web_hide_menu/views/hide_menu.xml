@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_hide_menu_form" model="ir.ui.view">
+        <field name="name">view.hide.menu.form</field>
+        <field name="model">hide.menu</field>
+        <field name="arch" type="xml">
+            <tree editable="top" string="Hide Menu">
+                <field name="menu_id" options="{'no_create': True, 'no_edit': True}" />
+                <field
+                    name="user_id"
+                    options="{'no_create': True, 'no_edit': True}"
+                    readonly="1"
+                />
+            </tree>
+        </field>
+    </record>
+
+    <record id="hide_menu_action" model="ir.actions.act_window">
+        <field name="name">Hide Menu</field>
+        <field name="res_model">hide.menu</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="web_hide_menu.view_hide_menu_form" />
+        <field name="domain">[('user_id', '=', uid)]</field>
+    </record>
+
+    <menuitem
+        id="hide_menu_menu"
+        name="Hide Menu"
+        action="web_hide_menu.hide_menu_action"
+        sequence="10"
+    />
+</odoo>
