@@ -78,7 +78,6 @@ odoo.define("web_drop_target", function (require) {
 
         _create_attachment: function (file, reader, e, res_model, res_id, extra_data) {
             // Helper to upload an attachment and update the sidebar
-            var self = this;
             return this._rpc({
                 model: "ir.attachment",
                 method: "create",
@@ -95,15 +94,6 @@ odoo.define("web_drop_target", function (require) {
                         extra_data || {}
                     ),
                 ],
-            }).then(function () {
-                // Find the chatter among the children, there should be only
-                // one
-                var res = _.filter(self.getChildren(), "chatter");
-                if (res.length) {
-                    res[0].chatter._reloadAttachmentBox();
-                    res[0].chatter.trigger_up("reload");
-                    res[0].chatter.$(".o_chatter_button_attachment").click();
-                }
             });
         },
 
