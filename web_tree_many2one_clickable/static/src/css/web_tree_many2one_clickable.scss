@@ -1,0 +1,10 @@
+td.o_many2one_cell {
+    a {
+        margin-left: 0.5em;
+        visibility: hidden;
+    }
+
+    &:hover a {
+        visibility: visible;
+    }
+}
