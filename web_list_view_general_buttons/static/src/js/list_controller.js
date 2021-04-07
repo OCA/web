@@ -34,7 +34,7 @@ odoo.define("web_list_view_general_buttons.ListController", function(require) {
         renderButtons: function() {
             this._super.apply(this, arguments);
 
-            if (this.headerGeneralButtons) {
+            if (this.headerGeneralButtons.length>0) {
                 this.$generalButtons = $(
                     QWeb.render("ListView.GeneralButtons", {
                         buttons: this.headerGeneralButtons,
