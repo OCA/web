@@ -1,0 +1,31 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_drop_target
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2021-02-04 18:44+0000\n"
+"Last-Translator: Alessandro Fiorino <alessandro.fiorino@digitaldomus.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: web_drop_target
+#. openerp-web
+#: code:addons/web_drop_target/static/src/xml/widgets.xml:0
+#, python-format
+msgid "Drop your files here"
+msgstr "Lascia i tuoi file qui"
+
+#. module: web_drop_target
+#. openerp-web
+#: code:addons/web_drop_target/static/src/xml/widgets.xml:0
+#, python-format
+msgid "Please save the record before dropping a file"
+msgstr "Prego salvare il record prima di lasciare un file"
