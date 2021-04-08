@@ -22,6 +22,7 @@ addon | version | summary
 [web_copy_confirm](web_copy_confirm/) | 14.0.1.0.0 | Show confirmation dialogue before copying records
 [web_dialog_size](web_dialog_size/) | 14.0.1.0.0 | A module that lets the user expand a dialog box to the full screen width.
 [web_domain_field](web_domain_field/) | 14.0.1.0.0 | Use computed field as domain
+[web_drop_target](web_drop_target/) | 14.0.1.0.0 | Allows to drag files into Odoo
 [web_environment_ribbon](web_environment_ribbon/) | 14.0.1.0.0 | Web Environment Ribbon
 [web_m2x_options](web_m2x_options/) | 14.0.1.0.0 | web_m2x_options
 [web_notify](web_notify/) | 14.0.1.0.0 | Send notification messages to user
