@@ -13,7 +13,7 @@ odoo.define("web_widget_one2many_product_picker_sale_stock.FieldOne2ManyProductP
          */
         _getDefaultOptions: function () {
             var defaults = this._super.apply(this, arguments);
-            defaults["show_sale_stock"] = false;
+            defaults["show_sale_stock"] = true;
             return defaults;
         },
     });

@@ -12,7 +12,7 @@ odoo.define("web_widget_one2many_product_picker_sale_stock.One2ManyProductPicker
         _getRecordOptions: function (search_record) {
             var options = this._super.apply(this, arguments);
             options["showSaleStock"] = this.options.show_sale_stock;
-            return options
+            return options;
         },
     });
 });
