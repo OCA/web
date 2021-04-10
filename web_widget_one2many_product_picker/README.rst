@@ -80,6 +80,13 @@ Widget options:
 * edit_price > Enable/Disable price edits (True by default)
 * show_discount > Enable/Disable display discount (False by default)
 * show_subtotal > Enable/Disable show subtotal (True by default)
+* auto_save > Enable/Disable auto save (False by default)
+
+  If using auto save feature, you should keep in mind that the "Save" and "Discard" buttons
+  will lose part of its functionality as the document will be saved every time you
+  modify/create a record with the widget.
+
+* ignore_warning > Enable/Disable display onchange warnings (False by default)
 
 All widget options are optional.
 Notice that you can call '_' method to use translations. This only can be used with this widget.
@@ -172,8 +179,24 @@ Other example for 'purchase.order.line' fields:
         </form>
     </field>
 
+
+Boostrap Modifications:
+~~~~~~~~~~~~~~~~~~~~~~~
+
+The product picker view container have a custom media queries space adding a new screen size called 'xxl' (>= 1440px) and modifies the columns to have 24 instead of 12.
+This means that you can use "col-xxl-" inside the product picker view container.
+
 Usage
 =====
+
+When you change the value of a field and switch to edit another record, the
+changes will be applied to the previous record without having to click on
+accept changes.
+
+Parts of the widget:
+~~~~~~~~~~~~~~~~~~~~
+
+  .. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_widget_one2many_product_picker/static/img/product_picker_anat.png
 
 Preview:
 ~~~~~~~~

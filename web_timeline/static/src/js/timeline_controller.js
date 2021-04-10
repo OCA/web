@@ -16,6 +16,7 @@ odoo.define('web_timeline.TimelineController', function (require) {
             onRemove: '_onRemove',
             onMove: '_onMove',
             onAdd: '_onAdd',
+            onDuplicate: '_onDuplicate'
         }),
 
         /**
@@ -131,6 +132,25 @@ odoo.define('web_timeline.TimelineController', function (require) {
                     model: this.model.modelName,
                 });
             }
+        },
+
+        /**
+         * Gets triggered when a timeline item is duplicated (triggered by the TimelineRenderer).
+         *
+         * @private
+         */
+        _onDuplicate: function (event) {
+            var self = this;
+            return this._rpc({
+                model: this.model.modelName,
+                method: 'copy',
+                args: [event.data.id],
+                context: this.getSession().user_context,
+            })
+            .then(function (res_id) {
+                self.create_completed([res_id]);
+                event.data.callback();
+            });
         },
 
         /**

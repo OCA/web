@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2019-08-06 12:44+0000\n"
-"Last-Translator: Nicolas JEUDY <njeudy@panda-chi.io>\n"
+"PO-Revision-Date: 2021-02-01 12:44+0000\n"
+"Last-Translator: Yann Papouin <y.papouin@dec-industrie.com>\n"
 "Language-Team: none\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.7.1\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: web_responsive
 #. openerp-web
@@ -33,7 +33,7 @@ msgstr "Position du Chatter"
 #: code:addons/web_responsive/static/src/xml/document_viewer.xml:18
 #, python-format
 msgid "Close"
-msgstr ""
+msgstr "Fermer"
 
 #. module: web_responsive
 #. openerp-web
@@ -63,14 +63,14 @@ msgstr "Editer"
 #: code:addons/web_responsive/static/src/xml/document_viewer.xml:16
 #, python-format
 msgid "Maximize"
-msgstr ""
+msgstr "Agrandir"
 
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/xml/document_viewer.xml:17
 #, python-format
 msgid "Minimize"
-msgstr ""
+msgstr "Réduire"
 
 #. module: web_responsive
 #: selection:res.users,chatter_position:0
@@ -104,7 +104,7 @@ msgstr "Rechercher dans les menus..."
 #: code:addons/web_responsive/static/src/xml/menu.xml:6
 #, python-format
 msgid "Shift"
-msgstr ""
+msgstr "Maj."
 
 #. module: web_responsive
 #: selection:res.users,chatter_position:0
@@ -121,11 +121,11 @@ msgstr "Utilisateurs"
 #: code:addons/web_responsive/static/src/xml/document_viewer.xml:9
 #, python-format
 msgid "false"
-msgstr ""
+msgstr "faux"
 
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/xml/document_viewer.xml:8
 #, python-format
 msgid "modal o_modal_fullscreen o_document_viewer o_responsive_document_viewer"
-msgstr ""
+msgstr "modal o_modal_fullscreen o_document_viewer o_responsive_document_viewer"

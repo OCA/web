@@ -23,4 +23,11 @@
           </marker>
       </defs>
   </svg>
+
+  <div t-name="TimelineView.DuplicateButton"
+       t-attf-data-id="#{id}"
+       class="oe_timeline_duplicate_button" title="Duplicate this item">
+      <i class="fa fa-copy" />
+  </div>
+
 </template>

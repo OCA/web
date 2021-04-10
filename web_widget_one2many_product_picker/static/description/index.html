@@ -377,18 +377,20 @@ ul.auto-toc {
 <li><a class="reference internal" href="#widget-options" id="id3">Widget options:</a></li>
 <li><a class="reference internal" href="#default-context" id="id4">Default context:</a></li>
 <li><a class="reference internal" href="#examples" id="id5">Examples:</a></li>
+<li><a class="reference internal" href="#boostrap-modifications" id="id6">Boostrap Modifications:</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#usage" id="id6">Usage</a><ul>
-<li><a class="reference internal" href="#preview" id="id7">Preview:</a></li>
+<li><a class="reference internal" href="#usage" id="id7">Usage</a><ul>
+<li><a class="reference internal" href="#parts-of-the-widget" id="id8">Parts of the widget:</a></li>
+<li><a class="reference internal" href="#preview" id="id9">Preview:</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#known-issues-roadmap" id="id8">Known issues / Roadmap</a></li>
-<li><a class="reference internal" href="#bug-tracker" id="id9">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="id10">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="id11">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="id12">Contributors</a></li>
-<li><a class="reference internal" href="#maintainers" id="id13">Maintainers</a></li>
+<li><a class="reference internal" href="#known-issues-roadmap" id="id10">Known issues / Roadmap</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="id11">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="id12">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="id13">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="id14">Contributors</a></li>
+<li><a class="reference internal" href="#maintainers" id="id15">Maintainers</a></li>
 </ul>
 </li>
 </ul>
@@ -463,6 +465,13 @@ You need to define the view fields. The view must be of <tt class="docutils lite
 <li><p class="first">show_discount &gt; Enable/Disable display discount (False by default)</p>
 </li>
 <li><p class="first">show_subtotal &gt; Enable/Disable show subtotal (True by default)</p>
+</li>
+<li><p class="first">auto_save &gt; Enable/Disable auto save (False by default)</p>
+<p>If using auto save feature, you should keep in mind that the “Save” and “Discard” buttons
+will lose part of its functionality as the document will be saved every time you
+modify/create a record with the widget.</p>
+</li>
+<li><p class="first">ignore_warning &gt; Enable/Disable display onchange warnings (False by default)</p>
 </li>
 </ul>
 <p>All widget options are optional.
@@ -556,25 +565,39 @@ options=&quot;{'search': [{'name': _('Starts With'), 'domain': [('name', '=like'
 <span class="nt">&lt;/field&gt;</span>
 </pre>
 </div>
+<div class="section" id="boostrap-modifications">
+<h2><a class="toc-backref" href="#id6">Boostrap Modifications:</a></h2>
+<p>The product picker view container have a custom media queries space adding a new screen size called ‘xxl’ (&gt;= 1440px) and modifies the columns to have 24 instead of 12.
+This means that you can use “col-xxl-” inside the product picker view container.</p>
+</div>
 </div>
 <div class="section" id="usage">
-<h1><a class="toc-backref" href="#id6">Usage</a></h1>
+<h1><a class="toc-backref" href="#id7">Usage</a></h1>
+<p>When you change the value of a field and switch to edit another record, the
+changes will be applied to the previous record without having to click on
+accept changes.</p>
+<div class="section" id="parts-of-the-widget">
+<h2><a class="toc-backref" href="#id8">Parts of the widget:</a></h2>
+<blockquote>
+<img alt="https://raw.githubusercontent.com/OCA/web/12.0/web_widget_one2many_product_picker/static/img/product_picker_anat.png" src="https://raw.githubusercontent.com/OCA/web/12.0/web_widget_one2many_product_picker/static/img/product_picker_anat.png" />
+</blockquote>
+</div>
 <div class="section" id="preview">
-<h2><a class="toc-backref" href="#id7">Preview:</a></h2>
+<h2><a class="toc-backref" href="#id9">Preview:</a></h2>
 <blockquote>
 <img alt="https://raw.githubusercontent.com/OCA/web/12.0/web_widget_one2many_product_picker/static/img/product_picker.gif" src="https://raw.githubusercontent.com/OCA/web/12.0/web_widget_one2many_product_picker/static/img/product_picker.gif" />
 </blockquote>
 </div>
 </div>
 <div class="section" id="known-issues-roadmap">
-<h1><a class="toc-backref" href="#id8">Known issues / Roadmap</a></h1>
+<h1><a class="toc-backref" href="#id10">Known issues / Roadmap</a></h1>
 <ul class="simple">
 <li>Translations in the xml ‘options’ attribute of the field that use the widget can’t be exported automatically to be translated</li>
 <li>The product card animations can be improved. Currently the card is recreated, so we lost some elements to apply correct effects.</li>
 </ul>
 </div>
 <div class="section" id="bug-tracker">
-<h1><a class="toc-backref" href="#id9">Bug Tracker</a></h1>
+<h1><a class="toc-backref" href="#id11">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/web/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
@@ -582,15 +605,15 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1><a class="toc-backref" href="#id10">Credits</a></h1>
+<h1><a class="toc-backref" href="#id12">Credits</a></h1>
 <div class="section" id="authors">
-<h2><a class="toc-backref" href="#id11">Authors</a></h2>
+<h2><a class="toc-backref" href="#id13">Authors</a></h2>
 <ul class="simple">
 <li>Tecnativa</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h2><a class="toc-backref" href="#id12">Contributors</a></h2>
+<h2><a class="toc-backref" href="#id14">Contributors</a></h2>
 <ul>
 <li><p class="first"><a class="reference external" href="https://www.tecnativa.com">Tecnativa</a>:</p>
 <blockquote>
@@ -604,7 +627,7 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2><a class="toc-backref" href="#id13">Maintainers</a></h2>
+<h2><a class="toc-backref" href="#id15">Maintainers</a></h2>
 <p>This module is maintained by the OCA.</p>
 <a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose

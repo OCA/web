@@ -1,0 +1,72 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_translate_dialog
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2021-02-17 10:45+0000\n"
+"Last-Translator: claudiagn <claudia.gargallo@qubiq.es>\n"
+"Language-Team: none\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: web_translate_dialog
+#: model:ir.model,name:web_translate_dialog.model_base
+msgid "Base"
+msgstr "Base"
+
+#. module: web_translate_dialog
+#. openerp-web
+#: code:addons/web_translate_dialog/static/src/xml/base.xml:49
+#, python-format
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: web_translate_dialog
+#: model:ir.model.fields,help:web_translate_dialog.field_res_lang__tr_sequence
+msgid "Defines the order of language to appear in translation dialog"
+msgstr "Defineix l'ordre del llenguatge que apareixerà al diàleg de traducció"
+
+#. module: web_translate_dialog
+#. openerp-web
+#: code:addons/web_translate_dialog/static/src/xml/base.xml:14
+#, python-format
+msgid "Field"
+msgstr "Campo"
+
+#. module: web_translate_dialog
+#: model:ir.model,name:web_translate_dialog.model_res_lang
+msgid "Languages"
+msgstr "Idiomes"
+
+#. module: web_translate_dialog
+#. openerp-web
+#: code:addons/web_translate_dialog/static/src/xml/base.xml:46
+#, python-format
+msgid "Save"
+msgstr "Guardar"
+
+#. module: web_translate_dialog
+#. openerp-web
+#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:243
+#, python-format
+msgid "Translate"
+msgstr "Traduir"
+
+#. module: web_translate_dialog
+#. openerp-web
+#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:26
+#, python-format
+msgid "Translate fields: /"
+msgstr "Tradueix els camps: /"
+
+#. module: web_translate_dialog
+#: model:ir.model.fields,field_description:web_translate_dialog.field_res_lang__tr_sequence
+msgid "Translation sequence"
+msgstr "Seqüència de traducció"

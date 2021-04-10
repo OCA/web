@@ -1,0 +1,60 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* web_view_searchpanel
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2021-02-17 13:45+0000\n"
+"Last-Translator: claudiagn <claudia.gargallo@qubiq.es>\n"
+"Language-Team: none\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: web_view_searchpanel
+#. openerp-web
+#: code:addons/web_view_searchpanel/static/src/xml/kanban.xml:26
+#, python-format
+msgid "All"
+msgstr "Tot"
+
+#. module: web_view_searchpanel
+#: model:ir.model,name:web_view_searchpanel.model_base
+msgid "Base"
+msgstr "Base"
+
+#. module: web_view_searchpanel
+#. openerp-web
+#: code:addons/web_view_searchpanel/static/src/xml/kanban.xml:118
+#, python-format
+msgid "Filters..."
+msgstr "Filtres..."
+
+#. module: web_view_searchpanel
+#: code:addons/web_view_searchpanel/models/base.py:106
+#: code:addons/web_view_searchpanel/models/base.py:111
+#: code:addons/web_view_searchpanel/models/base.py:118
+#, python-format
+msgid "Not Set"
+msgstr "No fixat"
+
+#. module: web_view_searchpanel
+#: code:addons/web_view_searchpanel/models/base.py:34
+#, python-format
+msgid "Only types %(supported_types)s are supported for category(found type %(field_type)s)"
+msgstr ""
+"Només s'admeten els tipus %(supported_types)s per a la categoria (s'ha "
+"trobat el tipus %(field_type)s)"
+
+#. module: web_view_searchpanel
+#: code:addons/web_view_searchpanel/models/base.py:82
+#, python-format
+msgid "Only types %(supported_types)s are supported for filter (found type %(field_type)s)"
+msgstr ""
+"Només s'admeten els tipus %(supported_types)s per al filtre (s'ha trobat el "
+"tipus %(field_type)s)"

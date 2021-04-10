@@ -397,14 +397,17 @@ html .o_web_client .o_main .o_main_content {
         // Support for long title (with ellipsis)
         .oe_title {
             span.o_field_widget {
-                max-width: 100%;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                overflow: hidden;
-                width: initial;
-            }
-            span:active {
-                white-space: normal;
+                &:not(.oe_inline) {
+                    max-width: 100%;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    width: initial;
+                    
+                    &:active {
+                        white-space: normal;
+                    }
+                }
             }
         }
 
@@ -614,6 +617,39 @@ html .o_web_client .o_main .o_main_content {
         }
         tfoot tr:nth-child(1) td {
             background-color: $o-list-footer-bg-color;
+        }
+    }
+}
+
+// Big checkboxes
+.o_list_view {
+    .o_list_record_selector {
+        .custom-checkbox {
+            margin-right: 10px;
+            .custom-control-label {
+                top: -19px;
+            }
+        }
+    }
+    .o_data_cell:not(.o_boolean_toggle_cell) {
+        .custom-checkbox .custom-control-label {
+            top: -6px;
+        }
+    }
+    .custom-checkbox {
+        margin-right: 10px;
+
+        .custom-control-label {
+            &::after {
+                width: 24px;
+                height: 24px;
+            }
+            &::before {
+                outline: none !important;
+                border: 1px solid #4c4c4c;
+                width: 24px;
+                height: 24px;
+            }
         }
     }
 }

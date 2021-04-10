@@ -12,6 +12,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
 
 
     var _t = core._t;
+    var qweb = core.qweb;
 
     var TimelineRenderer = AbstractRenderer.extend({
         template: "TimelineView",
@@ -22,6 +23,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
             'click .oe_timeline_button_scale_week': '_onScaleWeekClicked',
             'click .oe_timeline_button_scale_month': '_onScaleMonthClicked',
             'click .oe_timeline_button_scale_year': '_onScaleYearClicked',
+            'click .oe_timeline_duplicate_button': '_onDuplicateClicked'
         }),
 
         /**
@@ -158,6 +160,43 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
         },
 
         /**
+         * Triggers when an item is selected or deselected.
+         *
+         * @private
+         */
+        _onSelect: function (ev) {
+            var notSelectedIds = _.difference(
+                this.timeline.itemsData.getIds(),
+                ev.items
+            );
+            _.each(notSelectedIds, function (id) {
+                this.$(_.str.sprintf('.oe_timeline_duplicate_button[data-id="%s"]', id)).remove();
+            }.bind(this));
+
+            _.each(ev.items, function (id) {
+                var $deleteButton = $(this.timeline.itemSet.items[id].dom.deleteButton);
+                var $duplicateButton = $(qweb.render('TimelineView.DuplicateButton', {
+                    id: id
+                }));
+                $deleteButton.after($duplicateButton);
+            }.bind(this));
+        },
+
+        /**
+         * Triggers when the user clicks on the duplicate button.
+         *
+         * @private
+         */
+        _onDuplicateClicked: function (ev) {
+            var $duplicateButton = $(ev.currentTarget);
+            var id = $duplicateButton.data('id');
+            this.trigger_up('onDuplicate', {
+                id: id,
+                callback: function () {}
+            });
+        },
+
+        /**
          * Computes the initial visible window.
          *
          * @private
@@ -228,6 +267,7 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
                 self['on_scale_' + self.mode + '_clicked']();
             }
             this.timeline.on('click', self.on_group_click);
+            this.timeline.on('select', this._onSelect.bind(this));
             var group_bys = this.arch.attrs.default_group_by.split(',');
             this.last_group_bys = group_bys;
             this.last_domains = this.modelClass.data.domain;
@@ -421,11 +461,16 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
             } else {
                 group = -1;
             }
-            _.each(self.colors, function (color) {
-                if (eval("'" + evt[color.field] + "' " + color.opt + " '" + color.value + "'")) {
-                    self.color = color.color;
-                }
-            });
+            var color = null;
+            if (self.arch.attrs.color_field !== undefined) {
+                color = evt[self.arch.attrs.color_field];
+            } else {
+                _.each(self.colors, function (col) {
+                    if (eval("'" + evt[col.field] + "' " + col.opt + " '" + col.value + "'")) {
+                        color = col.color;
+                    }
+                });
+            }
 
             var content = _.isUndefined(evt.__name) ? evt.display_name : evt.__name;
             if (this.arch.children.length) {
@@ -438,13 +483,12 @@ odoo.define('web_timeline.TimelineRenderer', function (require) {
                 'id': evt.id,
                 'group': group,
                 'evt': evt,
-                'style': 'background-color: ' + self.color + ';'
+                'style': 'background-color: ' + color + ';'
             };
             // Check if the event is instantaneous, if so, display it with a point on the timeline (no 'end')
             if (date_stop && !moment(date_start).isSame(date_stop)) {
                 r.end = date_stop;
             }
-            self.color = null;
             return r;
         },
 

@@ -7,7 +7,7 @@
     "name": "Web Actions Multi",
     "summary": "Enables triggering of more than one action on ActionManager",
     "category": "Web",
-    "version": "12.0.1.0.0",
+    "version": "12.0.1.0.1",
     "license": "LGPL-3",
     "author": "Modoolar, "
               "CorporateHub, "

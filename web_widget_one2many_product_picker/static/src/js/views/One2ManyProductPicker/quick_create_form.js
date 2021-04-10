@@ -89,9 +89,9 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", f
                 model: this.basicFieldParams.model,
                 mainRecordData: this.getParent().getParent().state,
             });
-            if (this.id) {
-                this.basicFieldParams.model.save(this.id, {savePoint: true});
-            }
+            // if (this.id) {
+            //     this.basicFieldParams.model.save(this.id, {savePoint: true});
+            // }
             var def2 = this.formView.getController(this).then(function (controller) {
                 self.controller = controller;
                 self.$el.empty();

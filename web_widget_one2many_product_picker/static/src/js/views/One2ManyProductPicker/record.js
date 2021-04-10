@@ -13,6 +13,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
     var tools = require("web_widget_one2many_product_picker.tools");
     var ProductPickerQuickModifPriceForm = require(
         "web_widget_one2many_product_picker.ProductPickerQuickModifPriceForm");
+    var FieldManagerMixin = require('web.FieldManagerMixin');
 
     var qweb = core.qweb;
     var _t = core._t;
@@ -38,7 +39,12 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             this.subWidgets = {};
             this._clickFlipCardCount = 0;
             this._setState(state, options.searchRecord);
-            this.widgets = [];
+            this.widgets = {
+                front: [],
+                back: [],
+            };
+
+            this._lazyUpdateRecord = _.debounce(this._updateRecord.bind(this), 450);
         },
 
         /**
@@ -74,6 +80,14 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
         /**
          * @override
          */
+        destroy: function () {
+            this.$card.off("")
+            this._super.apply(this, arguments);
+        },
+
+        /**
+         * @override
+         */
         update: function (record) {
 
             // Detach the widgets because the record will empty its $el, which
@@ -94,6 +108,15 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             if (state) {
                 this._setState(state);
             }
+            if (this.$card && this.$card.length) {
+                this.$card.removeClass("blocked");
+                // Avoid recreate active record
+                if (this.$card.hasClass("active")) {
+                    this._processDynamicFields();
+                    return $.when();
+                }
+            }
+
             this.on_detach_callback();
             return this._render();
         },
@@ -160,11 +183,23 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             this.fields = this.getParent().state.fields;
             this.fieldsInfo = this.getParent().state.fieldsInfo.form;
             this.state = viewState;
+
             if (recordSearch) {
                 this.recordSearch = recordSearch;
             }
             var model = this.options.basicFieldParams.model;
             this.is_virtual = this.state && model.isPureVirtual(this.state.id) || false;
+
+            // Check if has cached qty
+            if (this.state && this.state.id) {
+                const record = model.get(this.state.id);
+                const lazy_qty = record && record.context.lazy_qty || 0;
+                if (lazy_qty) {
+                    model.updateRecordContext(this.state.id, {lazy_qty: 0});
+                    // Record already has 1
+                    this._incProductQty(lazy_qty - 1);
+                }
+            }
         },
 
         /**
@@ -176,6 +211,8 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             // Using directly the 'model record' instead of the state because
             // the state it's a parsed version of this record that doesn't
             // contains the '_virtual' attribute.
+            var model = this.options.basicFieldParams.model;
+            var record = model.get(this.state.id);
             return {
                 record_search: this.recordSearch,
                 user_context: this.getSession() && this.getSession().user_context || {},
@@ -187,7 +224,10 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                 monetary: this._getMonetaryFieldValue.bind(this),
                 show_discount: this.options.showDiscount,
                 is_virtual: this.is_virtual,
+                modified: record && record.context.product_picker_modified,
                 active_model: '',
+                auto_save: this.options.autoSave,
+                is_saving: record && record.context.saving,
             };
         },
 
@@ -230,6 +270,8 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             var model = this.options.basicFieldParams.model;
             var scontext = _.extend(
                 {}, this._getInternalVirtualRecordContext(), context);
+            // Force qty to 1.0 to launch correct onchanges
+            scontext[`default_${this.options.fieldMap.product_uom_qty}`] = 1.0;
             var sdata = _.extend({}, this._getInternalVirtualRecordData(), data);
             return model.createVirtualRecord(
                 this.options.basicFieldParams.value.id, {
@@ -238,10 +280,20 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                 });
         },
 
+        _detachAllWidgets: function () {
+            _.invoke(this.widgets.front, "on_detach_callback");
+            _.invoke(this.widgets.back, "on_detach_callback");
+            this.widgets = {
+                front: [],
+                back: [],
+            };
+        },
+
         /**
          * @override
          */
         _render: function () {
+            this._detachAllWidgets();
             this.defs = [];
             this._replaceElement(
                 qweb.render(
@@ -249,11 +301,12 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                     this._getQWebContext()
                 )
             );
+            this.$el.data("renderer_widget_index", this.options.renderer_widget_index);
             this.$card = this.$(".oe_flip_card");
             this.$front = this.$(".oe_flip_card_front");
             this.$back = this.$(".oe_flip_card_back");
             this._processWidgetFields(this.$front);
-            this._processWidgets(this.$front);
+            this._processWidgets(this.$front, 'front');
             this._processDynamicFields();
             return $.when.apply(this, this.defs);
         },
@@ -265,7 +318,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          * @private
          * @param {jQueryElement} $container
          */
-        _processWidgetFields: function ($container) {
+        _processWidgetFields: function ($container, widget_list) {
             var self = this;
             $container.find("field").each(function () {
                 var $field = $(this);
@@ -357,7 +410,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          * @private
          * @param {jQueryElement} $container
          */
-        _processWidgets: function ($container) {
+        _processWidgets: function ($container, widget_zone) {
             var self = this;
             $container.find("widget").each(function () {
                 var $field = $(this);
@@ -375,7 +428,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                     data: self.state && self.state.data,
                 });
 
-                self.widgets.push(widget);
+                self.widgets[widget_zone].push(widget);
 
                 var def = widget
                     ._widgetRenderAndInsert(function () {
@@ -388,6 +441,12 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                     self.defs.push(def);
                 }
             });
+        },
+
+        _updateLazyQty: function () {
+            var model = this.options.basicFieldParams.model;
+            var record = model.get(this.state.id);
+            this.$el.find(".lazy_product_qty").text(record.context.lazy_qty);
         },
 
         /**
@@ -455,11 +514,12 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
         _calcPriceReduced: function () {
             var price_reduce = 0;
             var field_map = this.options.fieldMap;
-            var state_data = this.state.data;
-            if (state_data && state_data[field_map.discount]) {
+            var model = this.options.basicFieldParams.model;
+            var record = model.get(this.state.id);
+            if (record && record.data[field_map.discount]) {
                 price_reduce = tools.priceReduce(
-                    state_data[field_map.price_unit],
-                    state_data[field_map.discount]);
+                    record.data[field_map.price_unit],
+                    record.data[field_map.discount]);
             }
             return price_reduce && tools.monetary(
                 price_reduce,
@@ -467,6 +527,117 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                 this.options.currencyField,
                 this.state.data
             );
+        },
+
+        /**
+         * @private
+         * @returns {Promise}
+         */
+        _saveRecord: function () {
+            var self = this;
+            var model = this.options.basicFieldParams.model;
+            model.updateRecordContext(this.state.id, {saving: true});
+            this.recreate();
+            var record = model.get(this.state.id);
+            return model.save(record.id, {
+                stayInEdit: true,
+                reload: true,
+                savePoint: true,
+                viewType: "form",
+            }).then(function () {
+                var record = model.get(self.state.id);
+                self.trigger_up("create_quick_record", {
+                    id: record.id,
+                    callback: function () {
+                        self.$card.find('.o_catch_attention').removeClass('o_catch_attention');
+                    }
+                });
+                model.unsetDirty(self.state.id);
+            });
+        },
+
+        /**
+         * @private
+         */
+        _updateRecord: function () {
+            var self = this;
+            var model = this.options.basicFieldParams.model;
+            var record = model.get(this.state.id);
+            this.trigger_up("update_quick_record", {
+                id: record.id,
+                callback: function () {
+                    self.$card.find('.o_catch_attention').removeClass('o_catch_attention');
+                }
+            });
+            model.unsetDirty(this.state.id);
+        },
+
+        /**
+         * @private
+         * @returns {Promise}
+         */
+        _addProduct: function () {
+            var self = this;
+            var model = this.options.basicFieldParams.model;
+            model.updateRecordContext(this.state.id, {ignore_warning: this.options.ignoreWarning});
+            var record = model.get(this.state.id);
+
+            // Because we don't hide the 'add' button when the product is added form back form
+            // we check if the record is in "saving" mode to prevent duplicate it.
+            if (record.context.saving) {
+                return Promise.resolve();
+            }
+            var changes = _.pick(record.data, this.options.fieldMap.product_uom_qty);
+            if (changes[this.options.fieldMap.product_uom_qty] === 0) {
+                changes[this.options.fieldMap.product_uom_qty] = 1;
+            }
+            var model = this.options.basicFieldParams.model;
+            this.$card.addClass("blocked");
+            return model.notifyChanges(
+                record.id,
+                changes
+            ).then(function () {
+                self._saveRecord();
+            });
+        },
+
+        /**
+         * @private
+         * @param {Number} amount
+         * @returns {Promise}
+         */
+        _incProductQty: function (amount) {
+            var self = this;
+            var model = this.options.basicFieldParams.model;
+            model.updateRecordContext(this.state.id, {ignore_warning: this.options.ignoreWarning});
+            var record = model.get(this.state.id);
+
+            if (this.options.autoSave && !this.state.data.id) {
+                let lazy_qty = record.context.lazy_qty || 1;
+                lazy_qty += amount;
+                model.updateRecordContext(this.state.id, {lazy_qty: lazy_qty});
+                self._updateLazyQty();
+            } else {
+                var changes = _.pick(record.data, this.options.fieldMap.product_uom_qty);
+                changes[this.options.fieldMap.product_uom_qty] += amount;
+                return model.notifyChanges(
+                    record.id,
+                    changes
+                ).then(function () {
+                    self._processDynamicFields();
+                    self._lazyUpdateRecord();
+                });
+            }
+        },
+
+        /**
+         * @private
+         */
+        _doInteractAnim: function (target, currentTarget) {
+            var $target = $(target);
+            var $currentTarget = $(currentTarget);
+            var $img = $currentTarget.find(".oe_flip_card_front img");
+            $target.addClass('o_catch_attention');
         },
 
         /**
@@ -503,11 +674,39 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          * @param {ClickEvent} evt
          */
         _onClickFlipCard: function (evt) {
-
             // Avoid clicks on form elements
             if (['INPUT', 'BUTTON', 'A'].indexOf(evt.target.tagName) !== -1) {
                 return;
             }
+            var $target = $(evt.target);
+            if (!this.options.readOnlyMode) {
+                if (
+                    $target.hasClass('add_product') ||
+                    $target.parents('.add_product').length
+                ) {
+                    if (!this.is_adding_product) {
+                        this.is_adding_product = true;
+                        this._addProduct();
+                        this._doInteractAnim(evt.target, evt.currentTarget);
+                    }
+                    return;
+                } else if (
+                    $target.hasClass('product_qty') ||
+                    $target.parents('.product_qty').length
+                ) {
+                    this._incProductQty(1);
+                    this._doInteractAnim(evt.target, evt.currentTarget);
+                    return;
+                } else if ($target.hasClass('safezone')) {
+                    // Do nothing on safe zones
+                    return;
+                }
+            }
+
+            if (this.$card.hasClass('blocked')) {
+                return;
+            }
+
             if (!this._clickFlipCardDelayed) {
                 this._clickFlipCardDelayed = setTimeout(
                     this._onClickDelayedFlipCard.bind(this, evt),
@@ -534,21 +733,28 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             }
             if (this.$card.hasClass("active")) {
                 this.$card.removeClass("active");
-                this.$card.find('.oe_flip_card_front').removeClass("d-none");
+                this.$front.removeClass("d-none");
             } else {
                 var self = this;
                 this.defs = [];
-                this._processWidgetFields(this.$back);
-                this._processWidgets(this.$back);
+                if (!this.widgets.back.length) {
+                    this._processWidgetFields(this.$back);
+                    this._processWidgets(this.$back, 'back');
+                }
                 this._processDynamicFields();
                 $.when(this.defs).then(function () {
                     var $actived_card = self.$el.parent().find(".active");
                     $actived_card.removeClass("active");
                     $actived_card.find('.oe_flip_card_front').removeClass("d-none");
                     self.$card.addClass("active");
-                    setTimeout(function () {
-                        self.$('.oe_flip_card_front').addClass("d-none");
-                    }, 200);
+                    self.$card.on('transitionend', function () {
+                        self.$front.addClass("d-none");
+                        self.$card.off('transitionend');
+                    });
+                    self.trigger_up("record_flip", {
+                        widget_index: self.$el.data("renderer_widget_index"),
+                        prev_widget_index: $actived_card.parent().data("renderer_widget_index"),
+                    });
                 });
             }
         },
@@ -609,9 +815,33 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
         /**
          * @private
          */
-        _onRestoreFlipCard: function () {
-            this.$(".oe_flip_card").removeClass("active");
-            this.$('.oe_flip_card_front').removeClass("d-none");
+        _onRestoreFlipCard: function (evt) {
+            var self = this;
+            this.$card.removeClass("active");
+            this.$front.removeClass("d-none");
+            if (this.$card.hasClass('oe_flip_card_maximized')) {
+                this.$card.removeClass('oe_flip_card_maximized');
+                this.$card.on('transitionend', function () {
+                    self.$card.css({
+                        position: "",
+                        top: "",
+                        left: "",
+                        width: "",
+                        height: "",
+                        zIndex: "",
+                    });
+                    self.$card.off('transitionend');
+                    if (evt.data.success_callback) {
+                        evt.data.success_callback();
+                    }
+                });
+            } else if (evt.data.success_callback) {
+                evt.data.success_callback();
+            }
+
+            if (evt.data.block) {
+                this.$card.addClass("blocked");
+            }
         },
 
         /**

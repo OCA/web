@@ -223,6 +223,9 @@ var TranslateDialog = Dialog.extend({
                 return done;
             });
         });
+        save_mutex.exec(function() {
+            self.view.reload();
+        });
         this.close();
     },
     on_button_close: function() {
@@ -248,7 +251,7 @@ FormController.include({
     on_button_translate: function() {
         var self = this;
         $.when(this.has_been_loaded).then(function() {
-            self.open_translate_dialog(null, self.initialState.res_id);
+            self.open_translate_dialog(null, self.getSelectedIds()[0]);
         });
     },
 

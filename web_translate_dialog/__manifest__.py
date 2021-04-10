@@ -5,7 +5,7 @@
 {
     "name": "Web Translate Dialog",
     "summary": "Easy-to-use pop-up to translate fields in several languages",
-    "version": "12.0.1.1.3",
+    "version": "12.0.1.1.5",
     "category": "Web",
     "website": "https://github.com/OCA/web",
     "author": "Camptocamp, "
