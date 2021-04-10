@@ -15,10 +15,15 @@
                     name="company_styles"
                     groups="base.group_system"
                 >
-                    <group string="Navbar Colors" name="navbar_colors">
+                    <group string="Colors" name="navbar_colors">
                         <field name="color_navbar_bg" widget="color" />
                         <field name="color_navbar_bg_hover" widget="color" />
                         <field name="color_navbar_text" widget="color" />
+                        <field name="color_button_bg" widget="color" />
+                        <field name="color_button_bg_hover" widget="color" />
+                        <field name="color_button_text" widget="color" />
+                        <field name="color_link_text" widget="color" />
+                        <field name="color_link_text_hover" widget="color" />
                     </group>
                     <button
                         class="btn-primary"
