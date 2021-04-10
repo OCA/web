@@ -67,37 +67,37 @@ msgstr "Oluştur ve düzenle..."
 #: code:addons/web_m2x_options/static/src/js/form.js:51
 #, python-format
 msgid "Create and edit"
-msgstr ""
+msgstr "Oluştur ve düzenle"
 
 #. module: web_m2x_options
 #. openerp-web
 #: code:addons/web_m2x_options/static/src/js/form.js:245
 #, python-format
 msgid "No results to show..."
-msgstr ""
+msgstr "Gösterecek sonuç yok..."
 
 #. module: web_m2x_options
 #. openerp-web
 #: code:addons/web_m2x_options/static/src/js/form.js:308
 #, python-format
 msgid "Open: "
-msgstr ""
+msgstr "Aç: "
 
 #. module: web_m2x_options
 #. openerp-web
 #: code:addons/web_m2x_options/static/src/js/form.js:184
 #, python-format
 msgid "Search More..."
-msgstr "Daha Fazla..."
+msgstr "Daha ara..."
 
 #. module: web_m2x_options
 #: model:ir.model,name:web_m2x_options.model_ir_config_parameter
 msgid "System Parameter"
-msgstr ""
+msgstr "Sistem Değişkeni"
 
 #. module: web_m2x_options
 #. openerp-web
 #: code:addons/web_m2x_options/static/src/js/form.js:67
 #, python-format
 msgid "You are creating a new %s, are you sure it does not exist yet?"
-msgstr ""
+msgstr "Yeni bir %s, oluşturuyorsun halihazırda olmadığından emin misin?"
