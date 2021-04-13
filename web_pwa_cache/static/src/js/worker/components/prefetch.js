@@ -103,7 +103,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
          */
         prefetchDataGet: function(cache_name, prefetched_urls) {
             // Prefetch URL's
-            console.log(prefetched_urls);
             return this._cache.get(cache_name).addAll(prefetched_urls);
         },
 
@@ -125,10 +124,10 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                         this.prefetchClientQWebData(),
                         this.prefetchPostData(),
                         this.prefetchUserData(),
-                        this.prefetchOnchangeData(),
+                        // This.prefetchOnchangeData(),
                         this.prefetchFunctionData(),
                     ]);
-                    await this.runVacuumRecords();
+                    // Await this.runVacuumRecords();
                 } catch (err) {
                     return reject(err);
                 }
@@ -149,9 +148,12 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
 
                     for (const index in models) {
                         const model_info = models[index];
+                        if (model_info.internal) {
+                            continue;
+                        }
                         this._sendTaskInfo(
                             "vacuum_records",
-                            `Vacuum records of the model '${model_info.model_name}'...`,
+                            `Vacuum records of the model '${model_info.model}'...`,
                             num_models,
                             index
                         );
@@ -323,7 +325,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                     model_infos = await this._dbmanager.sqlitedb.getModelInfo(
                         model_names
                     );
-                    await this.createTables(model_infos);
                     for (const to_search of to_search_infos) {
                         const model_info = _.findWhere(model_infos, {
                             model: to_search.model,
@@ -362,10 +363,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                             last_update: prefetch_last_update || false,
                         }
                     );
-                    console.log(
-                        "--------------- MODEL INFO DATA",
-                        prefetch_last_update
-                    );
                     const response_data = await response.json();
                     model_infos = response_data.result || [];
                     const tasks = [];
@@ -373,6 +370,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                         tasks.push(this.saveModelInfo(model_info));
                     }
                     await Promise.all(tasks);
+                    await this.createTables(model_infos);
                     await this.getParent().config.set(
                         "prefetch_modelinfo_last_update",
                         start_prefetch_date
@@ -458,6 +456,14 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                                         [id, view_type, view_type !== "search"]
                                     );
                                     const fields_view = (await response.json()).result;
+                                    if (!id) {
+                                        console.log(
+                                            "------------- FIELDS VIEW",
+                                            model_info.model,
+                                            view_type
+                                        );
+                                        console.log(fields_view);
+                                    }
                                     if (!fields_view) {
                                         continue;
                                     }
@@ -921,7 +927,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                     await this._dbmanager.sqlitedb.createOrUpdateRecord(
                         model_info_views,
                         values,
-                        ["model", "view_id", "type"]
+                        ["model", "view_id", "type", "is_default"]
                     );
                 } catch (err) {
                     return reject(err);

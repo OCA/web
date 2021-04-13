@@ -6,6 +6,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
 
     var core = require("web.core");
     var session = require("web.session");
+    var ajax = require("web.ajax");
     var PWAManager = require("web_pwa_oca.PWAManager");
     var PWAModeSelector = require("web_pwa_cache.PWAModeSelector");
     var BroadcastSWMixin = require("web_pwa_cache.BroadcastSWMixin");
@@ -30,6 +31,8 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
          */
         init: function() {
             this._super.apply(this, arguments);
+
+            console.log("------------------- PASA INIT");
 
             this._prefetchTasksInfo = {};
             this._prefetchModelHidden = true;
@@ -66,6 +69,29 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 config_values.pwa_mode = "online";
             }
             this.postServiceWorkerMessage(config_values);
+        },
+
+        /**
+         * @override
+         */
+        start: function() {
+            console.log("------- PWA MANAGER START!");
+            const def = ajax
+                .jsonRpc("/web_pwa_cache/cache/version", "call", {})
+                .then(cache_ver => {
+                    this.pwa_cache_version = cache_ver;
+                    console.log("------------ SESSION");
+                    console.log(this.pwa_cache_version);
+                });
+
+            return Promise.all([this._super.apply(this, arguments), def]);
+        },
+
+        /**
+         * @returns {String}
+         */
+        getCacheVersion: function() {
+            return this.pwa_cache_version;
         },
 
         /**
@@ -162,6 +188,9 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     break;
                 /* Prefetching */
                 case "PREFETCH_MODAL_TASK_INFO":
+                    if (!this.isPWAStandalone()) {
+                        break;
+                    }
                     var progress =
                         (evt.data.count_done / evt.data.count_total || 0) * 100;
                     this._prefetchTasksInfo[evt.data.id] = {

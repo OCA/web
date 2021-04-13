@@ -75,6 +75,14 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
 
     function convert_to_column(field, value, string_quoted = true) {
         let svalue = value;
+
+        if (
+            field.type !== "boolean" &&
+            (_.isUndefined(svalue) || _.isNull(svalue) || svalue === false)
+        ) {
+            return "NULL";
+        }
+
         switch (field.type) {
             case "boolean":
                 svalue = value ? 1 : 0;
@@ -93,6 +101,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     svalue = value.valueOf();
                 }
                 break;
+            case "binary":
             case "json":
                 svalue = column_string_encode(
                     JSON.stringify(_.isUndefined(value) ? "" : value),
@@ -136,9 +145,6 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                 }
         }
 
-        if (_.isUndefined(svalue) || _.isNull(svalue) || svalue === false) {
-            return "NULL";
-        }
         return svalue;
     }
 
@@ -179,9 +185,9 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                 stack.push(Math.max(stack.pop(), stack.pop()));
             } else if (token === "!") {
                 stack.push(-stack.pop());
-            } else if (token === TRUE_LEAF) {
+            } else if (_.isEqual(token, TRUE_LEAF)) {
                 stack.push(1);
-            } else if (token === FALSE_LEAF) {
+            } else if (_.isEqual(token, FALSE_LEAF)) {
                 stack.push(-1);
             } else if (token[1] === "in" && !token[2]) {
                 stack.push(-1);
@@ -915,7 +921,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     const path = left.split(".", 1);
 
                     const model = leaf.model;
-                    const field = model.fields[path[0]];
+                    const field = path[0] in model.fields && model.fields[path[0]];
                     // eslint-disable-next-line
                     const comodel = await this._dbmanager.sqlitedb.getModelInfo(
                         field && field.comodel_name

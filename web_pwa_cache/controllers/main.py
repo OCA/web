@@ -2,13 +2,17 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import functools
+import hashlib
+import json
 import logging
 import mimetypes
 
 from odoo import http
 from odoo.http import request, route
 from odoo.modules import get_resource_path
+from odoo.tools import ustr
 
+from odoo.addons.web.controllers.main import HomeStaticTemplateHelpers, module_boot
 from odoo.addons.web_pwa_oca.controllers.main import PWA
 
 _logger = logging.getLogger(__name__)
@@ -74,11 +78,9 @@ class PWA(PWA):
         )
         return res
 
-    def _get_base_urls(self, cache_version):
-        from odoo.addons.web.controllers.main import module_boot
-
+    def _get_base_urls(self, cache_hashes):
         url_qweb_modules = "/web/webclient/qweb/{}?mods={}".format(
-            cache_version, ",".join(module_boot())
+            cache_hashes["qweb"], ",".join(module_boot())
         )
         return [
             # Cache main page
@@ -129,7 +131,32 @@ class PWA(PWA):
             "/web/static/lib/fullcalendar/css/fullcalendar.css",
             # Mobile resources
             "/web/static/lib/jquery.touchSwipe/jquery.touchSwipe.js",
+            # Partner
+            "/partner_autocomplete/static/lib/jsvat.js",
         ]
+
+    def _get_pwa_cache_hashes(self):
+        mods = module_boot()
+        qweb_checksum = HomeStaticTemplateHelpers.get_qweb_templates_checksum(
+            addons=mods, debug=request.session.debug
+        )
+        user_context = request.session.get_context() if request.session.uid else {}
+        lang = user_context.get("lang")
+        translation_hash = request.env["ir.translation"].get_web_translations_hash(
+            mods, lang
+        )
+        menu_json_utf8 = json.dumps(
+            request.env["ir.ui.menu"].load_menus(request.session.debug),
+            default=ustr,
+            sort_keys=True,
+        ).encode()
+        hashes = {
+            "load_menus": hashlib.sha1(menu_json_utf8).hexdigest(),
+            "qweb": qweb_checksum,
+            "translations": translation_hash,
+        }
+        hashes["pwa"] = "-".join(list(hashes.values()))
+        return hashes
 
     def _get_pwa_params(self):
         res = super()._get_pwa_params()
@@ -139,12 +166,12 @@ class PWA(PWA):
         urls.extend(self._get_asset_urls("web.assets_backend"))
         urls.extend(self._get_asset_urls("web_editor.summernote"))
         urls.extend(self._get_asset_urls("web_editor.assets_wysiwyg"))
-        version_list = []
-        for url in urls:
-            version_list.append(url.split("/")[3])
-        cache_version = "-".join(version_list)
-        urls.extend(self._get_base_urls(cache_version))
-        res["cache_name"] = cache_version
+        cache_hashes = self._get_pwa_cache_hashes()
+        request.env["ir.config_parameter"].sudo().set_param(
+            "pwa.cache.version", cache_hashes["pwa"]
+        )
+        urls.extend(self._get_base_urls(cache_hashes))
+        res["cache_hashes"] = cache_hashes
         res["prefetched_urls"] = list(set(urls))
 
         # Add 'GET' resources
@@ -156,13 +183,28 @@ class PWA(PWA):
         return res
 
     @route(
-        "/web_pwa_cache/static/src/js/worker/lib/sqlite/dist/sql-wasm.wasm",
+        "/web_pwa_cache/static/src/lib/sqlite/dist/sql-wasm.wasm",
         type="http",
         auth="public",
     )
     def pwa_sql_wasm(self):
         """Force mimetype to application/wasm"""
         placeholder = functools.partial(
-            get_resource_path, "web_pwa_cache", "static", "src", "js", "sqlite", "dist",
+            get_resource_path,
+            "web_pwa_cache",
+            "static",
+            "src",
+            "lib",
+            "sqlite",
+            "dist",
         )
         return http.send_file(placeholder("sql-wasm.wasm"), mimetype="application/wasm")
+
+    @route(
+        "/web_pwa_cache/cache/version", type="json", auth="user",
+    )
+    def pwa_cache_version(self):
+        cache_version = (
+            request.env["ir.config_parameter"].sudo().get_param("pwa.cache.version")
+        )
+        return cache_version

@@ -34,6 +34,10 @@ odoo.define("web_pwa_cache.PWA.core.db.Database", function(require) {
             return Promise.resolve();
         },
 
+        install: function() {
+            return Promise.resolve();
+        },
+
         getDB: function() {
             throw new Error("Not implemented!");
         },

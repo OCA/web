@@ -13,19 +13,24 @@ class BaseModel(models.BaseModel):
     ):
         """If not exists a 'formPWA' view fallback to form view type"""
         if view_type != "formPWA":
-            return super()._fields_view_get(
-                view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu
-            )
-        try:
             res = super()._fields_view_get(
                 view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu
             )
-            # formPWA are only for standalone mode
-            res["standalone"] = True
-        except UserError:
-            res = super()._fields_view_get(
-                view_id=view_id, view_type="form", toolbar=toolbar, submenu=submenu
-            )
+        else:
+            try:
+                res = super()._fields_view_get(
+                    view_id=view_id,
+                    view_type=view_type,
+                    toolbar=toolbar,
+                    submenu=submenu,
+                )
+                # formPWA are only for standalone mode
+                res["standalone"] = True
+            except UserError:
+                res = super()._fields_view_get(
+                    view_id=view_id, view_type="form", toolbar=toolbar, submenu=submenu
+                )
+        res["is_default"] = not view_id
         return res
 
     @api.model

@@ -37,17 +37,20 @@ odoo.define("web_pwa_cache.PWA.core.CacheManager", function(require) {
             return this._caches[cache_name];
         },
 
+        addAll: function(cache_name, prefetched_urls) {
+            return this.get(cache_name).addAll(prefetched_urls);
+        },
+
         /**
          * @returns {Promise}
          */
-        cleanAll: function() {
+        clean: function() {
             return this._cache.keys().then(keyList => {
                 keyList.map(key => {
-                    console.log("[ServiceWorker] Removing cache", key);
-                    if (key in this._caches) {
-                        delete this._caches[key];
+                    if (!(key in this._caches)) {
+                        console.log("[ServiceWorker] Removing cache", key);
+                        this._cache.delete(key);
                     }
-                    this._cache.delete(key);
                 });
             });
         },

@@ -34,32 +34,12 @@ odoo.define("web_pwa_cache.PWA", function(require) {
 
             this._components = {};
 
-            this._cache_name = params.cache_name;
+            this._cache_hashes = params.cache_hashes;
             this._prefetched_urls = params.prefetched_urls;
 
             this._rpc = new OdooRPC();
             this._dbmanager = new DatabaseManager(this);
             this._cachemanager = new CacheManager(this);
-
-            this._whenLoaded();
-        },
-
-        _whenLoaded: function() {
-            if (!this._loadPromise) {
-                this._isLoaded = false;
-                this._loadPromise = new Promise(async resolve => {
-                    await this._cachemanager.cleanAll();
-                    await this._cachemanager.start(this._cache_name);
-                    await this._dbmanager.start();
-                    this.config = new Config(this);
-                    await this._initComponents();
-                    this.config.sendToClient();
-                    this._isLoaded = true;
-                    return resolve(true);
-                });
-            }
-
-            return this._loadPromise;
         },
 
         _initComponents: function() {
@@ -77,28 +57,62 @@ odoo.define("web_pwa_cache.PWA", function(require) {
         },
 
         /**
+         * - Create cache storage
+         * - Get cache resources
+         * - Create sqlite tables
+         * - Do first data import
+         *
          * @override
          */
         installWorker: function() {
-            return Promise.all([
-                this._super.apply(this, arguments),
-                this._whenLoaded(),
-            ]).then(() => {
-                this._components.prefetch.prefetchDataGet(
-                    this._cache_name,
-                    this._prefetched_urls
-                );
+            const task = new Promise(async (resolve, reject) => {
+                this._isLoaded = false;
+                try {
+                    await this._cachemanager.start(this._cache_hashes.pwa);
+                    await this._cachemanager.addAll(
+                        this._cache_hashes.pwa,
+                        this._prefetched_urls
+                    );
+                    await this._dbmanager.install();
+                } catch (err) {
+                    return reject(err);
+                }
+
+                this._isLoaded = true;
+                return resolve();
             });
+            return Promise.all([this._super.apply(this, arguments), task]);
         },
 
         /**
          * @override
          */
         activateWorker: function() {
-            return Promise.all([
-                this._super.apply(this, arguments),
-                this._whenLoaded(),
-            ]);
+            const task = new Promise(async (resolve, reject) => {
+                try {
+                    await this._cachemanager.clean();
+                    await this._dbmanager.start();
+                    this.config = new Config(this);
+                    await this._initComponents();
+                    this.config.sendToClient();
+
+                    console.log("---------------------->>> THE RECORDS");
+                    const model_info_userdata = await this._dbmanager.sqlitedb.getModelInfo(
+                        "views",
+                        true
+                    );
+                    const records = await this._dbmanager.search_read(
+                        model_info_userdata,
+                        [],
+                        10
+                    );
+                    console.log(records);
+                } catch (err) {
+                    return reject(err);
+                }
+                return resolve();
+            });
+            return Promise.all([this._super.apply(this, arguments), task]);
         },
 
         /**
@@ -132,7 +146,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                         }
                         // Strategy: Cache First
                         const response_cache = await this._cachemanager
-                            .get(this._cache_name)
+                            .get(this._cache_hashes.pwa)
                             .match(request);
                         if (response_cache) {
                             return resolve(response_cache);

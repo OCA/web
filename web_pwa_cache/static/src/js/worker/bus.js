@@ -39,105 +39,104 @@ odoo.define("web_pwa_cache.PWA.bus", function(require) {
          */
         // eslint-disable-next-line
         _onReceiveClientMessage: function(evt) {
-            if (!evt.isTrusted) {
+            if (!evt.isTrusted || !this._isLoaded) {
                 return;
             }
-            this._whenLoaded().then(() => {
-                switch (evt.data.type) {
-                    // This message is received when the user page was loaded or the user changes the pwa mode.
-                    // The process can be:
-                    // - User has no 'userdata'. This means that the prefeteching process hasn't been done
-                    //   so we run it the first time.
-                    // - User change the pwa mode to 'online'. This means that we can try to prefetch data.
-                    case "SET_PWA_CONFIG":
-                        const promises = [];
-                        const changes = {};
-                        let keys = Object.keys(evt.data);
-                        keys = _.filter(keys, item => item !== "type");
-                        for (const key of keys) {
-                            changes[key] = evt.data[key];
-                            promises.push(this.config.set(key, changes[key]));
-                        }
-                        Promise.all(promises)
-                            .then(() => {
-                                new Promise(async resolve => {
-                                    const model_info_userdata = await this._dbmanager.sqlitedb.getModelInfo(
-                                        "userdata",
-                                        true
-                                    );
-                                    const userdata_count = await this._dbmanager.count(
-                                        model_info_userdata
-                                    );
-                                    this.postClientPageMessage({
-                                        type: "PWA_CONFIG_CHANGED",
-                                        changes: changes,
-                                    });
-                                    const event_online =
-                                        typeof evt.data.pwa_mode !== "undefined" &&
-                                        evt.data.pwa_mode === "online";
-                                    const config_offline = this.config.isOfflineMode();
-                                    const config_standalone = this.config.isStandaloneMode();
-                                    const is_online =
-                                        event_online ||
-                                        (typeof evt.data.pwa_mode === "undefined" &&
-                                            !config_offline);
-                                    const is_standalone =
-                                        (typeof evt.data.standalone !== "undefined" &&
-                                            evt.data.standalone) ||
-                                        (typeof evt.data.standalone === "undefined" &&
-                                            config_standalone);
-                                    if (
-                                        (is_online &&
-                                            is_standalone &&
-                                            !userdata_count) ||
-                                        (event_online && is_standalone)
-                                    ) {
-                                        this._doPrefetchDataPost();
-                                    }
-                                    return resolve();
+            switch (evt.data.type) {
+                // This message is received when the user page was loaded or the user changes the pwa mode.
+                // The process can be:
+                // - User has no 'userdata'. This means that the prefeteching process hasn't been done
+                //   so we run it the first time.
+                // - User change the pwa mode to 'online'. This means that we can try to prefetch data.
+                case "SET_PWA_CONFIG":
+                    const promises = [];
+                    const changes = {};
+                    let keys = Object.keys(evt.data);
+                    keys = _.filter(keys, item => item !== "type");
+                    for (const key of keys) {
+                        changes[key] = evt.data[key];
+                        promises.push(this.config.set(key, changes[key]));
+                    }
+                    Promise.all(promises)
+                        .then(() => {
+                            new Promise(async resolve => {
+                                const model_info_userdata = await this._dbmanager.sqlitedb.getModelInfo(
+                                    "userdata",
+                                    true
+                                );
+                                const userdata_count = await this._dbmanager.count(
+                                    model_info_userdata,
+                                    []
+                                );
+                                console.log("--------------- THE USER COUNT");
+                                console.log(userdata_count);
+                                this.postClientPageMessage({
+                                    type: "PWA_CONFIG_CHANGED",
+                                    changes: changes,
                                 });
-                            })
-                            .catch(err => {
-                                console.log(
-                                    `[ServiceWorker] Init configuration was failed. The worker its in inconsisten state!`
-                                );
-                                console.log(err);
+                                const event_online =
+                                    typeof evt.data.pwa_mode !== "undefined" &&
+                                    evt.data.pwa_mode === "online";
+                                const config_offline = this.config.isOfflineMode();
+                                const config_standalone = this.config.isStandaloneMode();
+                                const is_online =
+                                    event_online ||
+                                    (typeof evt.data.pwa_mode === "undefined" &&
+                                        !config_offline);
+                                const is_standalone =
+                                    (typeof evt.data.standalone !== "undefined" &&
+                                        evt.data.standalone) ||
+                                    (typeof evt.data.standalone === "undefined" &&
+                                        config_standalone);
+                                if (
+                                    (is_online && is_standalone && !userdata_count) ||
+                                    (event_online && is_standalone)
+                                ) {
+                                    this._doPrefetchDataPost();
+                                }
+                                return resolve();
                             });
-                        break;
-
-                    // Received to send pwa config. to the user page.
-                    case "GET_PWA_CONFIG":
-                        this.config.sendToClient().catch(() => {
+                        })
+                        .catch(err => {
                             console.log(
-                                `[ServiceWorker] Error sending pwa configuration to the user page!`
+                                `[ServiceWorker] Init configuration was failed. The worker its in inconsisten state!`
                             );
+                            console.log(err);
                         });
-                        break;
+                    break;
 
-                    // Received to send pwa sync. records to the user page.
-                    case "GET_PWA_SYNC_RECORDS":
-                        this._components.sync.sendRecordsToClient();
-                        break;
-
-                    // Received to start the sync. process
-                    case "START_SYNCHRONIZATION":
-                        this._components.sync.run().then(
-                            () => this._doPrefetchDataPost(),
-                            err => {
-                                console.log(
-                                    "[ServiceWorker] Error: can't complete the synchronization process."
-                                );
-                                console.log(err);
-                            }
+                // Received to send pwa config. to the user page.
+                case "GET_PWA_CONFIG":
+                    this.config.sendToClient().catch(() => {
+                        console.log(
+                            `[ServiceWorker] Error sending pwa configuration to the user page!`
                         );
-                        break;
+                    });
+                    break;
 
-                    // Received to start the prefetching process
-                    case "START_PREFETCH":
-                        this._doPrefetchDataPost();
-                        break;
-                }
-            });
+                // Received to send pwa sync. records to the user page.
+                case "GET_PWA_SYNC_RECORDS":
+                    this._components.sync.sendRecordsToClient();
+                    break;
+
+                // Received to start the sync. process
+                case "START_SYNCHRONIZATION":
+                    this._components.sync.run().then(
+                        () => this._doPrefetchDataPost(),
+                        err => {
+                            console.log(
+                                "[ServiceWorker] Error: can't complete the synchronization process."
+                            );
+                            console.log(err);
+                        }
+                    );
+                    break;
+
+                // Received to start the prefetching process
+                case "START_PREFETCH":
+                    this._doPrefetchDataPost();
+                    break;
+            }
         },
 
         /**
@@ -174,7 +173,6 @@ odoo.define("web_pwa_cache.PWA.bus", function(require) {
                     });
                 } catch (err) {
                     console.log("[ServiceWorker] Prefetch Data Post failed...");
-                    console.log(err);
                     return reject(err);
                 }
 
@@ -183,6 +181,8 @@ odoo.define("web_pwa_cache.PWA.bus", function(require) {
                 this._prefetch_promise = undefined;
                 this._prefetch_run = false;
             });
+
+            return this._prefetch_promise;
         },
     });
 });

@@ -7,8 +7,6 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
     const PWA = require("web_pwa_oca.PWA");
     require("web_pwa_cache.PWA");
     const tools = require("web_pwa_cache.PWA.core.base.Tools");
-    const ComponentExporter = require("web_pwa_cache.PWA.components.Exporter");
-    const ComponentImporter = require("web_pwa_cache.PWA.components.Importer");
 
     PWA.include({
         _routes: {
@@ -17,6 +15,7 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
                 out: {
                     "/web/webclient/version_info": "_routeOutVersionInfo",
                     "/longpolling/poll": "_routeOutLongPolling",
+                    "/longpolling/im_status": "_routeOutLongIMStatus",
                     "/web/dataset/call_button": "_routeOutDatasetCallButton",
                     "/web/dataset/call_kw/": "_routeOutDatasetCallKW",
                     "/web/dataset/call/": "_routeOutDatasetCallKW",
@@ -69,8 +68,7 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
                 const pathname_parts = url.pathname.split("/");
                 const model = pathname_parts[4];
                 const method_name = pathname_parts[5];
-                console.log("----- CHECK OUYT!", method_name);
-                if (method_name in ComponentExporter) {
+                if (method_name in this._components.exporter) {
                     try {
                         const resp_data = await this._components.exporter[method_name](
                             model,
@@ -110,7 +108,7 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
             return new Promise(async resolve => {
                 const model = request_data.params.model;
                 const method_name = request_data.params.method;
-                if (method_name in ComponentExporter) {
+                if (method_name in this._components.exporter) {
                     try {
                         await this._components.exporter[method_name](
                             model,
@@ -136,6 +134,22 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
             return new Promise(resolve => {
                 setTimeout(() => resolve(tools.ResponseJSONRPC([])), 30000);
             });
+        },
+
+        /**
+         * Reply to Odoo that doesn't exists any.
+         * Wait for the reply is important to be nice with the cpu :)
+         *
+         * @private
+         * @returns {Promise}
+         */
+        _routeOutLongIMStatus: function() {
+            return Promise.resolve(
+                tools.ResponseJSONRPC({
+                    id: this.config.getUID(),
+                    im_status: "offline",
+                })
+            );
         },
 
         /**
@@ -270,7 +284,7 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
             const pathname_parts = url.pathname.split("/");
             const model = pathname_parts[4];
             const method_name = pathname_parts[5];
-            if (method_name in ComponentImporter) {
+            if (method_name in this._components.importer) {
                 this._components.importer[method_name](
                     model,
                     response_data.result,

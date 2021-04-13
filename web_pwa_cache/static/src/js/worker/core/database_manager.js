@@ -25,6 +25,10 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
             this.indexeddb = new IndexedDB(this, this._indexed_db_name);
         },
 
+        install: function() {
+            return Promise.all([this.sqlitedb.install()]);
+        },
+
         /**
          * @returns {Promise}
          */
@@ -105,100 +109,22 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
                             fields: {type: "json", store: true},
                             base_model: {type: "char", store: true},
                             field_parent: {type: "char", store: true},
-                            toolbar: {type: "char", store: true},
+                            toolbar: {type: "json", store: true},
                             arch: {type: "char", store: true},
-                            view_id: {type: "many2one", store: true},
+                            view_id: {type: "integer", store: true},
                             standalone: {type: "boolean", store: true},
+                            is_default: {type: "boolean", store: true},
                         },
                     };
                     await this.sqlitedb.createTable(model_info_views);
                     await db.query([
                         `CREATE UNIQUE INDEX IF NOT EXISTS views_model_view_id_type ON ${this.sqlitedb.getInternalTableName(
                             "views"
-                        )} (model, view_id, type)`,
+                        )} (model, view_id, type, is_default)`,
                     ]);
                     await this.sqlitedb.createOrUpdateRecord(
                         model_info_model_metadata,
                         model_info_views,
-                        ["model"]
-                    );
-
-                    const model_info_actions = {
-                        table: this.sqlitedb.getInternalTableName("actions"),
-                        model: this.sqlitedb.getInternalTableName("actions"),
-                        internal: true,
-                        fields: {
-                            id: {type: "integer", store: true},
-                            flags: {type: "json", store: true},
-                            display_name: {type: "char", store: true},
-                            create_date: {type: "datetime", store: true},
-                            view_ids: {type: "one2many", store: true},
-                            write_uid: {type: "many2one", store: true},
-                            name: {type: "char", store: true},
-                            type: {type: "selection", store: true},
-                            res_model: {type: "char", store: true},
-                            search_view: {type: "text", store: true},
-                            create_uid: {type: "many2one", store: true},
-                            filter: {type: "char", store: true},
-                            target: {type: "selection", store: true},
-                            groups_id: {type: "many2many", store: true},
-                            limit: {type: "integer", store: true},
-                            view_mode: {type: "selection", store: true},
-                            views: {type: "json", store: true},
-                            context: {type: "json", store: true},
-                            auto_search: {type: "boolean", store: true},
-                            help: {type: "html", store: true},
-                            search_view_id: {type: "many2one", store: true},
-                            res_id: {type: "integer", store: true},
-                            write_date: {type: "datetime", store: true},
-                            domain: {type: "char", store: true},
-                            src_model: {type: "char", store: true},
-                            view_id: {type: "many2one", store: true},
-                            binding_type: {type: "selection", store: true},
-                            xml_id: {type: "char", store: true},
-                            usage: {type: "selection", store: true},
-                            binding_model_id: {type: "many2one", store: true},
-                            multi: {type: "boolean", store: true},
-                            link_field_id: {type: "many2one", store: true},
-                            crud_model_id: {type: "many2one", store: true},
-                            activity_user_id: {type: "many2one", store: true},
-                            activity_date_deadline_range: {
-                                type: "integer",
-                                store: true,
-                            },
-                            child_ids: {type: "one2many", store: true},
-                            model_id: {type: "many2one", store: true},
-                            activity_note: {type: "html", store: true},
-                            crud_model_name: {type: "char", store: true},
-                            state: {type: "selection", store: true},
-                            code: {type: "char", store: true},
-                            activity_type_id: {type: "many2one", store: true},
-                            fields_lines: {type: "one2many", store: true},
-                            partner_ids: {type: "many2many", store: true},
-                            website_path: {type: "char", store: true},
-                            channel_ids: {type: "one2many", store: true},
-                            activity_user_field_name: {type: "char", store: true},
-                            activity_user_type: {type: "selection", store: true},
-                            sequence: {type: "integer", store: true},
-                            activity_summary: {type: "char", store: true},
-                            website_published: {type: "boolean", store: true},
-                            website_url: {type: "char", store: true},
-                            template_id: {type: "many2one", store: true},
-                            activity_date_deadline_range_type: {
-                                type: "selection",
-                                store: true,
-                            },
-                            model_name: {type: "char", store: true},
-                            params_store: {type: "json"},
-                            tag: {type: "char", store: true},
-                            params: {type: "json", store: true},
-                            __last_update: {type: "datetime", store: true},
-                        },
-                    };
-                    await this.sqlitedb.createTable(model_info_actions);
-                    await this.sqlitedb.createOrUpdateRecord(
-                        model_info_model_metadata,
-                        model_info_actions,
                         ["model"]
                     );
 
@@ -650,17 +576,17 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
 
                     const records = await this.sqlitedb._osv.query(
                         model_info,
-                        domain,
+                        domain || [],
                         offset,
                         limit,
                         orderby,
                         fields,
                         count
                     );
+                    if (count) {
+                        return resolve(records);
+                    }
                     if (_.isEmpty(records)) {
-                        if (count) {
-                            return resolve(0);
-                        }
                         return resolve(limit === 1 ? undefined : []);
                     }
                     this.sqlitedb._parseValues(model_info.fields, records);
@@ -804,7 +730,7 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
                     if (action_id) {
                         action_domain.push(["action_id", "in", [action_id, false]]);
                     }
-                    const records = await this._dbmanager.search_read(
+                    const records = await this.search_read(
                         "ir.filters",
                         _.union(action_domain, [
                             ["model_id", "=", model_info.model],
@@ -853,7 +779,7 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
                             options.action_id
                         );
                         if (_.isEmpty(res.filters)) {
-                            return resolve({});
+                            res.filters = {};
                         }
                     }
                     res.fields = model_info.fields;
@@ -863,26 +789,41 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
                         true
                     );
                     for (const [view_id, view_type] of views) {
+                        let domain = [
+                            ["model", "=", model_info.model],
+                            ["type", "=", view_type === "list" ? "tree" : view_type],
+                        ];
+                        if (view_id) {
+                            domain = domain.concat([
+                                ["is_default", "=", false],
+                                ["view_id", "=", view_id],
+                            ]);
+                        } else {
+                            domain.push(["is_default", "=", true]);
+                        }
                         res.fields_views[view_type] = await this.search_read(
+                            model_info_views,
+                            domain,
+                            1
+                        );
+                        console.log("----------- THE DOMMAMAMA");
+                        console.log(domain, res.fields_views[view_type]);
+                        const ttt = await this.search_read(
                             model_info_views,
                             [
                                 ["model", "=", model_info.model],
-                                ["view_id", "=", view_id || 0],
-                                [
-                                    "type",
-                                    "=",
-                                    view_type === "list" ? "tree" : view_type,
-                                ],
+                                ["is_default", "=", true],
                             ],
-                            1
+                            20
                         );
-                        if (!res.fields_views[view_type]) {
+                        console.log(ttt);
+                        if (_.isEmpty(res.fields_views[view_type])) {
                             // If not view found fallback to form view
                             res.fields_views[view_type] = await this.search_read(
                                 model_info_views,
                                 [
                                     ["model", "=", model_info.model],
-                                    ["view_id", "=", view_id || 0],
+                                    ["is_default", "=", true],
                                     ["type", "=", "form"],
                                 ],
                                 1
@@ -1144,7 +1085,9 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
                     const records = await this.search_read(model, []);
                     const cur_ids = _.map(records, "id");
                     const ids_to_remove = _.difference(oids, cur_ids);
-                    this.unlink(model, ids_to_remove);
+                    if (!_.isEmpty(ids_to_remove)) {
+                        await this.unlink(model, ids_to_remove);
+                    }
                     return resolve(ids_to_remove);
                 } catch (err) {
                     return reject(err);

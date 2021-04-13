@@ -247,11 +247,22 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
         action_load: function(data) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_actions = await this._dbmanager.sqlitedb.getModelInfo(
-                        "actions",
-                        true
+                    const model_info_base_actions = await this._dbmanager.sqlitedb.getModelInfo(
+                        "ir.actions.actions"
                     );
-                    await this._doCheckCreateOrUpdate(model_info_actions, data, ["id"]);
+                    await this._doCheckCreateOrUpdate(
+                        model_info_base_actions,
+                        _.pick(data, _.keys(model_info_base_actions.fields)),
+                        ["id"]
+                    );
+                    const model_info_actions = await this._dbmanager.sqlitedb.getModelInfo(
+                        data.type
+                    );
+                    await this._doCheckCreateOrUpdate(
+                        model_info_actions,
+                        _.pick(data, _.keys(model_info_actions.fields)),
+                        ["id"]
+                    );
                 } catch (err) {
                     return reject(err);
                 }

@@ -17,8 +17,6 @@ odoo.define("web_pwa_cache.PWA.core.Config", function(require) {
         init: function(parent) {
             ParentedMixin.init.call(this);
             this.setParent(parent);
-            this._db = this.getParent()._db;
-            this._itp = this.getParent()._dbmanager.sqlitedb._internal_table_prefix;
             this._dbmanager = this.getParent()._dbmanager;
             this._cache = {};
         },
@@ -41,7 +39,7 @@ odoo.define("web_pwa_cache.PWA.core.Config", function(require) {
          * @returns {Number}
          */
         getUID: function() {
-            return this._cache.lang;
+            return this._cache.uid;
         },
 
         /**

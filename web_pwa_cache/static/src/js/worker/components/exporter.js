@@ -36,9 +36,6 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                             domain
                         );
                     }
-                    console.log("--------- SEARCH");
-                    console.log(data);
-                    console.log(model, domain);
                     const records = await this._dbmanager.search_read(
                         model,
                         domain,
@@ -50,7 +47,6 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                             .values()
                             .value()
                     );
-                    console.log(filtered_records);
                     return resolve(filtered_records);
                 } catch (err) {
                     return reject(err);
@@ -258,12 +254,8 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                             }
                         }
                     }
-                    console.log("--------------------- PASA READ 55");
-                    console.log(records);
-                    console.log(mapped_records);
                     return resolve(mapped_records);
                 } catch (err) {
-                    console.log("THE ERROR", err);
                     return reject(err);
                 }
             });
@@ -480,8 +472,6 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         const skey = key.substr(8);
                         defaults[skey] = context_defaults[key];
                     }
-                    console.log("-------------------------- MODEL DEFAULTS");
-                    console.log(model_defaults);
                     return resolve(
                         _.chain({})
                             .extend(model_defaults, defaults)
@@ -534,12 +524,20 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                     const options = data.kwargs.options;
                     const views = data.kwargs.views;
                     const uid = this.getParent().config.getUID();
+                    console.log(
+                        "--------------- LOAD VIEWS 111111",
+                        options,
+                        views,
+                        uid
+                    );
                     const res = await this._dbmanager.getFieldsViews(
                         model,
                         uid,
                         views,
                         options
                     );
+                    console.log("--------------- LOAD VIEWS 22222");
+                    console.log(res);
                     if (_.isEmpty(res)) {
                         const is_offline_mode = this.isOfflineMode();
                         if (!is_offline_mode) {
@@ -648,9 +646,15 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         const action = await this._dbmanager.ref(action_id);
                         action_id = action.id;
                     }
+                    const model_info_base_actions = await this._dbmanager.sqlitedb.getModelInfo(
+                        "ir.actions.actions"
+                    );
+                    const base_action = await this._dbmanager.browse(
+                        model_info_base_actions,
+                        action_id
+                    );
                     const model_info_actions = await this._dbmanager.sqlitedb.getModelInfo(
-                        "actions",
-                        true
+                        base_action.type
                     );
                     const record = await this._dbmanager.browse(
                         model_info_actions,
@@ -662,6 +666,19 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                             return reject();
                         }
                     }
+
+                    // Parse values to be used by the client
+                    if ("domain" in record && record.domain) {
+                        record.domain = JSON.parse(record.domain);
+                    }
+                    // If ("context" in record && record.context) {
+                    //     console.log("--- THE CONTEXT", record.context);
+                    //     record.context = JSON.parse(record.context);
+                    // }
+                    // if ("search_view" in record && record.search_view) {
+                    //     record.search_view = JSON.parse(record.search_view);
+                    // }
+
                     return resolve(record);
                 } catch (err) {
                     return reject(err);

@@ -10,7 +10,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
     const Model = require("web_pwa_cache.PWA.core.osv.Model");
 
     const SQLiteDB = Database.extend({
-        _sqlite_dist: "./web_pwa_cache/static/src/lib/sqlite/dist/",
+        _sqlite_dist: "./web_pwa_cache/static/src/lib/sqlite/dist",
         _internal_table_prefix: "i_pwa_",
 
         // See https://www.sqlite.org/datatype3.html 3.1.1
@@ -55,24 +55,29 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
         /**
          * @override
          */
-        start: function(callback) {
+        install: function() {
             return new Promise(async (resolve, reject) => {
-                if (this._db) {
-                    return resolve(this._db);
-                }
                 try {
                     this._db = await self.sqliteWorker({
                         dist: this._sqlite_dist,
                         name: this._db_name,
                     });
-                    if (callback) {
-                        await callback(this._db);
-                    }
                 } catch (err) {
                     return reject(err);
                 }
                 return resolve(this._db);
             });
+        },
+
+        /**
+         * @override
+         */
+        start: function(callback) {
+            if (callback) {
+                return callback(this._db);
+            }
+
+            return Promise.resolve();
         },
 
         decode: function(text) {
@@ -367,6 +372,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
             if (typeof model_fields === "string") {
                 model_fields = JSON.parse(model_fields);
             }
+
             const value_fields = _.keys(values);
             for (const field of value_fields) {
                 values[field] = Expression.convert_to_column(
@@ -384,11 +390,6 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                 const value_fields = _.keys(values);
 
                 for (const field of value_fields) {
-                    if (values[field] === "NULL") {
-                        values[field] = false;
-                        continue;
-                    }
-
                     switch (model_fields[field].type) {
                         case "date":
                             values[field] =
@@ -408,6 +409,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                         case "boolean":
                             values[field] = values[field] === 1;
                             break;
+                        case "binary":
                         case "json":
                             values[field] =
                                 typeof values[field] === "string" &&
@@ -427,6 +429,9 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                                     .compact()
                                     .map(item => Number(item))
                                     .value();
+                            if (_.isEmpty(values[field])) {
+                                values[field] = false;
+                            }
                             break;
                     }
 
