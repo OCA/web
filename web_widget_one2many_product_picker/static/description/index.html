@@ -442,7 +442,7 @@ You need to define the view fields. The view must be of <tt class="docutils lite
 </ul>
 </blockquote>
 </li>
-<li><p class="first">search &gt; Array of dictionaries or Array of ‘triplets’ ([[field_map.name, ‘ilike’, ‘$search’]] by default)</p>
+<li><p class="first">search &gt; Array of dictionaries (defines to use name_search by default)</p>
 <blockquote>
 <ul>
 <li><p class="first">name -&gt; The name to display</p>
@@ -454,6 +454,10 @@ You need to define the view fields. The view must be of <tt class="docutils lite
 <li>$number_search -&gt; Replaces all the leaf with the current value of the searchbox as a number</li>
 </ul>
 </blockquote>
+</li>
+<li><p class="first">name_search_value -&gt; Enables the use of ‘name_search’ instead of ‘search_read’ and defines the value to search (‘$search’ by default)</p>
+</li>
+<li><p class="first">operator -&gt; Operator used in ‘name_search’ (‘ilike’ by default)</p>
 </li>
 </ul>
 </blockquote>

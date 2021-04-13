@@ -26,13 +26,16 @@ Widget options:
     * price_unit -> The field that represent a price_unit ('price_unit' by default)
     * discount -> The field that represent a discount ('discount' by default)
 
-* search > Array of dictionaries or Array of 'triplets' ([[field_map.name, 'ilike', '$search']] by default)
+* search > Array of dictionaries (defines to use name_search by default)
 
     * name -> The name to display
     * domain -> The domain to use
 
         * $search -> Replaces it with the current value of the searchbox
         * $number_search -> Replaces all the leaf with the current value of the searchbox as a number
+
+    * name_search_value -> Enables the use of 'name_search' instead of 'search_read' and defines the value to search ('$search' by default)
+    * operator -> Operator used in 'name_search' ('ilike' by default)
 
 * edit_discount > Enable/Disable discount edits (False by default)
 * edit_price > Enable/Disable price edits (True by default)
