@@ -649,8 +649,8 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
                         model_info,
                         s_rc_ids
                     );
-                    if (typeof records === "undefined") {
-                        return reject();
+                    if (_.isEmpty(records)) {
+                        return resolve(_.isNumber(rc_ids) ? undefined : []);
                     }
                     return resolve(_.isNumber(rc_ids) ? records[0] : records);
                 } catch (err) {
@@ -806,17 +806,6 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
                             domain,
                             1
                         );
-                        console.log("----------- THE DOMMAMAMA");
-                        console.log(domain, res.fields_views[view_type]);
-                        const ttt = await this.search_read(
-                            model_info_views,
-                            [
-                                ["model", "=", model_info.model],
-                                ["is_default", "=", true],
-                            ],
-                            20
-                        );
-                        console.log(ttt);
                         if (_.isEmpty(res.fields_views[view_type])) {
                             // If not view found fallback to form view
                             res.fields_views[view_type] = await this.search_read(
@@ -875,6 +864,58 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
                         }
                     }
                     return resolve(field_infos);
+                } catch (err) {
+                    return reject(err);
+                }
+            });
+        },
+
+        read_subscription_data: function(res_model, follower_id) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const followers = await this._dbmanager.browse("mail.followers", [
+                        follower_id,
+                    ]);
+                    const followers_subtypes = _.chain(followers)
+                        .map("subtype_ids")
+                        .flatten()
+                        .value();
+
+                    // Find current model subtypes, add them to a dictionary
+                    const subtypes = await this._dbmanager.search(
+                        "mail.message.subtype",
+                        [
+                            "&",
+                            ("hidden", "=", false),
+                            "|",
+                            ("res_model", "=", res_model),
+                            ("res_model", "=", false),
+                        ]
+                    );
+                    let subtypes_list = [];
+                    for (const subtype of subtypes) {
+                        const subtype_parent_id = await this._dbmanager.browse(
+                            "res.partner",
+                            [subtype.parent_id[0]]
+                        );
+                        subtypes_list.push({
+                            name: subtype.name,
+                            res_model: subtype.res_model,
+                            sequence: subtype.sequence,
+                            default: subtype.default,
+                            internal: subtype.internal,
+                            followed: subtype.id in followers_subtypes,
+                            parent_model: subtype_parent_id.res_model,
+                            id: subtype.id,
+                        });
+                    }
+                    subtypes_list = _.chain(subtypes_list)
+                        .orderBy("parent_model")
+                        .orderBy("res_model")
+                        .orderBy("internal")
+                        .orderBy("sequence")
+                        .value();
+                    return resolve(subtypes_list);
                 } catch (err) {
                     return reject(err);
                 }

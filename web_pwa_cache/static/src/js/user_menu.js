@@ -32,6 +32,7 @@ odoo.define("web_pwa_cache.UserMenu", function(require) {
         },
 
         _enablePWAMenu: function() {
+            console.log("--------- ENABLE!!!");
             this.$(
                 "[data-menu='pwaMode'],[data-menu='pwaQueueSync'],#pwaSeparator"
             ).removeClass("d-none");

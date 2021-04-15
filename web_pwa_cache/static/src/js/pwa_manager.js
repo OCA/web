@@ -6,7 +6,6 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
 
     var core = require("web.core");
     var session = require("web.session");
-    var ajax = require("web.ajax");
     var PWAManager = require("web_pwa_oca.PWAManager");
     var PWAModeSelector = require("web_pwa_cache.PWAModeSelector");
     var BroadcastSWMixin = require("web_pwa_cache.BroadcastSWMixin");
@@ -31,8 +30,6 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
          */
         init: function() {
             this._super.apply(this, arguments);
-
-            console.log("------------------- PASA INIT");
 
             this._prefetchTasksInfo = {};
             this._prefetchModelHidden = true;
@@ -69,22 +66,6 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 config_values.pwa_mode = "online";
             }
             this.postServiceWorkerMessage(config_values);
-        },
-
-        /**
-         * @override
-         */
-        start: function() {
-            console.log("------- PWA MANAGER START!");
-            const def = ajax
-                .jsonRpc("/web_pwa_cache/cache/version", "call", {})
-                .then(cache_ver => {
-                    this.pwa_cache_version = cache_ver;
-                    console.log("------------ SESSION");
-                    console.log(this.pwa_cache_version);
-                });
-
-            return Promise.all([this._super.apply(this, arguments), def]);
         },
 
         /**
@@ -169,6 +150,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                         type: "SET_PWA_CONFIG",
                         standalone: this.isPWAStandalone(),
                         uid: session.uid,
+                        partner_id: session.partner_id,
                         lang: session.user_context.lang,
                     });
                     break;
@@ -202,16 +184,17 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                         completed: evt.data.completed,
                     };
 
-                    // Close mode selection if we receive prefetching results
-                    if (this.modeSelector.isOpen()) {
-                        this.modeSelector.close();
-                    }
                     // Always show the prefetch info modal
                     if (this._prefetchModelHidden) {
                         if (!this._prefetchModalOpenTimer) {
                             // Timer to avoid show prefetch info modal in fast tasks
                             this._prefetchModalOpenTimer = setTimeout(
                                 () => {
+                                    // Close mode selection if we receive prefetching results
+                                    if (this.modeSelector.isOpen()) {
+                                        this.modeSelector.close();
+                                    }
+
                                     this._openPrefetchModalData();
                                     this._prefetchModalOpenTimer = false;
                                 },

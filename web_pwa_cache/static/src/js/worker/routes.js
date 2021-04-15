@@ -21,20 +21,20 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
                     "/web/dataset/call/": "_routeOutDatasetCallKW",
                     "/web/action/load": "_routeOutActionLoad",
                     "/web/dataset/search_read": "_routeOutDatasetSearchRead",
-                    "/web/webclient/translations": "_routeOutTranslations",
                     "/report/check_wkhtmltopdf": "_routeOutCheckWkhtmlToPdf",
                     "/web/action/run": "_routeOutActionRun",
+                    "/mail/init_messaging": "_routeOutInitMessaging",
+                    "/mail/read_followers": "_routeOutReadFollowers",
                 },
                 // Client <- Odoo (importer)
                 in: {
                     "/web/dataset/call_kw": "_routeInDatasetCallKW",
                     "/web/dataset/search_read": "_routeInDatasetSearchRead",
                     "/web/action/load": "_routeInActionLoad",
-                    "/web/webclient/translations": "_routeInTranslations",
                 },
             },
             // Get requests are only for Client -> Odoo (exporter)
-            // For Client <- Odoo use browser API
+            // For Client <- Odoo use native cache API
             get: {
                 "/web/image": "_routeOutWebImage",
             },
@@ -52,7 +52,10 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
          * @returns {Promise}
          */
         _routeOutVersionInfo: function() {
-            return Promise.resolve(tools.ResponseJSONRPC({}));
+            if (this.config.isOfflineMode()) {
+                return Promise.resolve(tools.ResponseJSONRPC({}));
+            }
+            return Promise.reject();
         },
 
         /**
@@ -131,8 +134,12 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
          * @returns {Promise}
          */
         _routeOutLongPolling: function() {
-            return new Promise(resolve => {
-                setTimeout(() => resolve(tools.ResponseJSONRPC([])), 30000);
+            return new Promise((resolve, reject) => {
+                if (this.config.isOfflineMode()) {
+                    setTimeout(() => resolve(tools.ResponseJSONRPC([])), 30000);
+                } else {
+                    reject();
+                }
             });
         },
 
@@ -144,12 +151,15 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
          * @returns {Promise}
          */
         _routeOutLongIMStatus: function() {
-            return Promise.resolve(
-                tools.ResponseJSONRPC({
-                    id: this.config.getUID(),
-                    im_status: "offline",
-                })
-            );
+            if (this.config.isOfflineMode()) {
+                return Promise.resolve(
+                    tools.ResponseJSONRPC({
+                        id: this.config.getUID(),
+                        im_status: "offline",
+                    })
+                );
+            }
+            return Promise.reject();
         },
 
         /**
@@ -201,21 +211,6 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
          * @private
          * @returns {Promise}
          */
-        _routeOutTranslations: function() {
-            return new Promise(async (resolve, reject) => {
-                try {
-                    const resp_data = await this._components.exporter.translations();
-                    return resolve(tools.ResponseJSONRPC(resp_data.value));
-                } catch (err) {
-                    return reject();
-                }
-            });
-        },
-
-        /**
-         * @private
-         * @returns {Promise}
-         */
         _routeOutCheckWkhtmlToPdf: function() {
             return new Promise(async (resolve, reject) => {
                 try {
@@ -238,6 +233,40 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
                     return resolve(tools.ResponseJSONRPC(resp_data.value));
                 } catch (err) {
                     return reject();
+                }
+            });
+        },
+
+        /**
+         * @private
+         * @returns {Promise}
+         */
+        _routeOutInitMessaging: function() {
+            if (this.config.isOfflineMode()) {
+                return Promise.resolve(
+                    tools.ResponseJSONRPC({
+                        id: this.config.getUID(),
+                        im_status: "offline",
+                    })
+                );
+            }
+            return Promise.reject();
+        },
+
+        _routeOutReadFollowers: function(url, request_data) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    if (this.config.isOfflineMode()) {
+                        console.log("----->>> PASA READ FOLLOERS");
+                        const resp_data = await this._components.exporter.read_followers(
+                            request_data.params.res_model,
+                            request_data.params.follower_ids
+                        );
+                        return resolve(tools.ResponseJSONRPC(resp_data));
+                    }
+                    return reject();
+                } catch (err) {
+                    return reject(err);
                 }
             });
         },
@@ -330,17 +359,6 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
          */
         _routeInActionLoad: function(url, response_data) {
             this._components.importer.action_load(response_data.result);
-            return Promise.resolve();
-        },
-
-        /**
-         * @private
-         * @param {String} url
-         * @param {Object} response_data
-         * @returns {Promise}
-         */
-        _routeInTranslations: function(url, response_data) {
-            this._components.importer.translations(response_data.result);
             return Promise.resolve();
         },
 

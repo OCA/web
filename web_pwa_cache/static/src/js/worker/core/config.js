@@ -19,13 +19,14 @@ odoo.define("web_pwa_cache.PWA.core.Config", function(require) {
             this.setParent(parent);
             this._dbmanager = this.getParent()._dbmanager;
             this._cache = {};
+            this.getAll();
         },
 
         /**
          * @returns {Boolean}
          */
         isOfflineMode: function() {
-            return this._cache.pwa_mode;
+            return this._cache.pwa_mode !== "online";
         },
 
         /**
@@ -40,6 +41,13 @@ odoo.define("web_pwa_cache.PWA.core.Config", function(require) {
          */
         getUID: function() {
             return this._cache.uid;
+        },
+
+        /**
+         * @returns {Number}
+         */
+        getPartnerID: function() {
+            return this._cache.partner_id;
         },
 
         /**

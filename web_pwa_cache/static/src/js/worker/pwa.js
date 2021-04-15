@@ -95,24 +95,39 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                     this.config = new Config(this);
                     await this._initComponents();
                     this.config.sendToClient();
-
-                    console.log("---------------------->>> THE RECORDS");
-                    const model_info_userdata = await this._dbmanager.sqlitedb.getModelInfo(
-                        "views",
-                        true
-                    );
-                    const records = await this._dbmanager.search_read(
-                        model_info_userdata,
-                        [],
-                        10
-                    );
-                    console.log(records);
                 } catch (err) {
                     return reject(err);
                 }
                 return resolve();
             });
             return Promise.all([this._super.apply(this, arguments), task]);
+        },
+
+        /**
+         * @private
+         * @param {URL} url
+         */
+        _getURLInfo: function(url) {
+            const cached_urls = {
+                "/web/webclient/qweb/": "qweb",
+                "/web/webclient/load_menus/": "load_menus",
+            };
+
+            const url_info = {};
+            const keys = _.keys(cached_urls);
+            for (const cached_url of keys) {
+                if (url.pathname.startsWith(cached_url)) {
+                    url_info.cache_hash = url.pathname
+                        .replace(cached_url, "")
+                        .split("/", 1)[0];
+                    url_info.pwa_cache_hash = this._cache_hashes[
+                        cached_urls[cached_url]
+                    ];
+                    break;
+                }
+            }
+
+            return url_info;
         },
 
         /**
@@ -139,10 +154,25 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                     try {
                         const isOffline = this.config.isOfflineMode();
                         const isStandalone = this.config.isStandaloneMode();
+
                         // Need redirect '/'?
                         const url = new URL(request.url);
                         if (url.pathname === "/" && (isOffline || isStandalone)) {
                             return resolve(tools.ResponseRedirect("/web"));
+                        }
+                        // Check cached url's to use generic cache hash
+                        const url_info = this._getURLInfo(url);
+                        if (isOffline && url_info.cache_hash) {
+                            const new_url = request.url.replace(
+                                url_info.cache_hash,
+                                url_info.pwa_cache_hash
+                            );
+                            request = new Request(new_url);
+                            console.log(
+                                "--------------------- USING CACHE HASH REPLACEMENT",
+                                url_info,
+                                new_url
+                            );
                         }
                         // Strategy: Cache First
                         const response_cache = await this._cachemanager

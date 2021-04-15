@@ -6,6 +6,7 @@ import hashlib
 import json
 import logging
 import mimetypes
+import urllib.parse
 
 from odoo import http
 from odoo.http import request, route
@@ -82,7 +83,18 @@ class PWA(PWA):
         url_qweb_modules = "/web/webclient/qweb/{}?mods={}".format(
             cache_hashes["qweb"], ",".join(module_boot())
         )
+        url_load_menus = "/web/webclient/load_menus/{}".format(
+            cache_hashes["load_menus"]
+        )
+        url_translations = "/web/webclient/translations/{}?mods={}&lang={}".format(
+            cache_hashes["translations"],
+            urllib.parse.quote(",".join(module_boot())),
+            request.env.user.lang,
+        )
         return [
+            # Cache base assets
+            "/base/static/img/company_image.png",
+            "/base/static/img/avatar_grey.png",
             # Cache main page
             "/web",
             # Cache favicon
@@ -97,6 +109,8 @@ class PWA(PWA):
             "/web_pwa_oca/static/img/icons/icon-512x512.png",
             # Cache qweb mods
             url_qweb_modules,
+            # Cache menus
+            url_load_menus,
             # Necessary assets
             "/web_pwa_cache/static/src/xml/base.xml",
             "/web_pwa_cache/static/src/scss/main.scss",
@@ -120,8 +134,10 @@ class PWA(PWA):
             "/web/static/src/img/placeholder.png",
             "/web/static/src/img/empty_folder.svg",
             "/web/static/src/img/form_sheetbg.png",
+            "/web/static/src/img/user_menu_avatar.png",
             # Cache locale
             "/web/webclient/locale/{}".format(request.env.user.lang),
+            url_translations,
             # Boostrap assets
             "/web/static/lib/fontawesome/fonts/fontawesome-webfont.woff?v=4.7.0",
             "/web/static/lib/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0",

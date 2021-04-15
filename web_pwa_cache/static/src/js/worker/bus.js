@@ -68,12 +68,11 @@ odoo.define("web_pwa_cache.PWA.bus", function(require) {
                                     model_info_userdata,
                                     []
                                 );
-                                console.log("--------------- THE USER COUNT");
-                                console.log(userdata_count);
                                 this.postClientPageMessage({
                                     type: "PWA_CONFIG_CHANGED",
                                     changes: changes,
                                 });
+                                // Check if need prefetch data
                                 const event_online =
                                     typeof evt.data.pwa_mode !== "undefined" &&
                                     evt.data.pwa_mode === "online";
