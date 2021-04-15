@@ -99,7 +99,7 @@
                         t-attf-class="oe_flip_card_front p-0 {{((modified || is_saving) &amp;&amp; 'border-warning') || (state &amp;&amp; !is_virtual &amp;&amp; 'border-success') || ''}}"
                     >
                         <t t-if="state">
-                            <t t-if="is_saving || lazy_qty > 0">
+                            <t t-if="is_saving &amp;&amp; lazy_qty > 0">
                                 <div
                                     class="safezone position-absolute m-0 pb-2 pr-2 text-left"
                                 >

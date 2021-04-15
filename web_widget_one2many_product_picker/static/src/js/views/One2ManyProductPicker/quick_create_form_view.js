@@ -257,6 +257,9 @@ odoo.define(
                                 this.trigger_up("create_quick_record", {
                                     id: record.id,
                                     callback: () => {
+                                        this.model.updateRecordContext(this.handle, {
+                                            saving: false,
+                                        });
                                         this.model.unsetDirty(this.handle);
                                         // Self._updateButtons();
                                         this._enableQuickCreate();

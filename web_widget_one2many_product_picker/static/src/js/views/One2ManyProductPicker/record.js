@@ -552,6 +552,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                     this.trigger_up("create_quick_record", {
                         id: record.id,
                         callback: () => {
+                            model.updateRecordContext(this.state.id, {saving: false});
                             this.$card
                                 .find(".o_catch_attention")
                                 .removeClass("o_catch_attention");
@@ -625,6 +626,11 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                 // sends a creation with qty 1 but can still add more qty mean while
                 // wait for the Odoo response.
                 const model_record_data = model.localData[this.state.id].data;
+                if (
+                    _.isNull(model_record_data[this.options.fieldMap.product_uom_qty])
+                ) {
+                    model_record_data[this.options.fieldMap.product_uom_qty] = 1;
+                }
                 model_record_data[this.options.fieldMap.product_uom_qty] += amount;
                 return model
                     .notifyChanges(record.id, {
