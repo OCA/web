@@ -28,6 +28,7 @@ setuptools.setup(
         'odoo13-addon-web_notify',
         'odoo13-addon-web_pivot_computed_measure',
         'odoo13-addon-web_pwa_oca',
+        'odoo13-addon-web_refresher',
         'odoo13-addon-web_responsive',
         'odoo13-addon-web_search_with_and',
         'odoo13-addon-web_sheet_full_width',
