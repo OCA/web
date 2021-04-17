@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="page_refresher" name="Refresh button" inherit_id="web.assets_backend">
+        <xpath expr="//script[last()]" position="after">
+            <script
+                src="/web_refresher/static/src/js/refresher.js"
+                type="text/javascript"
+            />
+        </xpath>
+    </template>
+</odoo>
