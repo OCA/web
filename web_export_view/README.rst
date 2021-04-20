@@ -45,6 +45,7 @@ Contributors
  * Lorenzo Battistini <lorenzo.battistini@agilebg.com>
  * Stefan Rijnhart <stefan@therp.nl>
  * Leonardo Pistone <leonardo.pistone@camptocamp.com>
+ * Isaac Gallart <igallart@puntsistemes.es>
 
 Maintainer
 ----------

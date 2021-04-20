@@ -145,7 +145,8 @@ openerp.web_export_view = function (instance) {
                     $.each(view.visible_columns, function() {
                         if(this.tag == 'field'){
                             export_row.push(
-                                this.type != 'integer' && this.type != 'float' ?
+                                this.type != 'integer' && this.type != 'float'
+                                && this.type != 'boolean' ?
                                 jQuery('<div/>').html(this.format(
                                     record.data, {process_modifiers: false}
                                 )).text() : record.data[this.id].value
