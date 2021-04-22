@@ -14,14 +14,15 @@ class PWACacheOnChange(models.Model):
     _name = "pwa.cache.onchange"
     _description = "PWA Cache Onchange"
 
-    model = fields.Char("Model")
-    field = fields.Char("Field")
-    field_value = fields.Char("Field Value")
-    params = fields.Char("Params")
-    changes = fields.Char("Changes")
-    formula = fields.Text("Formula")
-    trigger_ref = fields.Integer("Trigger Ref")
-    triggers = fields.Char("Complete Triggers")
+    model = fields.Char()
+    field = fields.Char()
+    field_value = fields.Char()
+    params = fields.Char()
+    changes = fields.Char()
+    formula = fields.Text()
+    trigger_ref = fields.Integer()
+    triggers = fields.Char(string="Complete Triggers")
+    pwa_cache_id = fields.Many2one(string="PWA Cache ID", comodel_name="pwa.cache")
 
     def update_cache(self):
         _logger.info("Starting cache onchange...")
@@ -73,7 +74,11 @@ class PWACacheOnChange(models.Model):
                         "changes": json.dumps(changes),
                         "formula": formula,
                         "triggers": record.onchange_triggers,
-                        "trigger_ref": trigger_config and trigger_config["trigger_ref"],
+                        # Odoo doesn't work fine with zero value
+                        # (for example with 'in' operator)
+                        "trigger_ref": trigger_config
+                        and trigger_config["trigger_ref"]
+                        or -1,
                     }
                 )
             self.create(onchanges)

@@ -61,6 +61,8 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
             };
             if (!is_standalone) {
                 config_values.pwa_mode = "online";
+            } else {
+                odoo.debug = false;
             }
             this.postServiceWorkerMessage(config_values);
         },
