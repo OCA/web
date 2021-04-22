@@ -27,6 +27,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
             "click .oe_btn_lines": "_onClickLines",
             "click .oe_btn_search_group": "_onClickSearchGroup",
             "search .oe_search_input": "_onSearch",
+            "focusin .oe_search_input": "_onFocusInSearch",
             "show.bs.dropdown .o_cp_buttons": "_onShowSearchDropdown",
         }),
         custom_events: _.extend({}, FieldOne2Many.prototype.custom_events, {
@@ -196,7 +197,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
             this.searchGroups.splice(0, 0, {
                 name: "all",
                 string: _t("All"),
-                domain: [],
+                domain: this.options.all_domain,
                 order: false,
                 active: !hasUserActive,
             });
@@ -545,6 +546,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                 },
                 auto_save: false,
                 ignore_warning: false,
+                all_domain: [],
             };
         },
 
@@ -679,6 +681,16 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
             this.doRenderSearchRecords().then(() => {
                 this.$searchInput.focus();
             });
+        },
+
+        /**
+         * Auto select all content when user enters into fields with this
+         * widget.
+         *
+         * @private
+         */
+        _onFocusInSearch: function() {
+            this.$searchInput.select();
         },
 
         /**
