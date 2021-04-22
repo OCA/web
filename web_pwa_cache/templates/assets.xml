@@ -29,6 +29,14 @@
             />
             <script
                 type="text/javascript"
+                src="/web_pwa_cache/static/src/js/views/form_renderer.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_pwa_cache/static/src/js/views/list_controller.js"
+            />
+            <script
+                type="text/javascript"
                 src="/web_pwa_cache/static/src/js/views/formPWA/form_pwa_renderer.js"
             />
             <script
@@ -58,6 +66,10 @@
             <script
                 type="text/javascript"
                 src="/web_pwa_cache/static/src/js/user_menu.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_pwa_cache/static/src/js/persistent_dialog.js"
             />
         </xpath>
     </template>

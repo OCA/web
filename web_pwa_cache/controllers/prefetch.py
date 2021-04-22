@@ -107,18 +107,24 @@ class PWAPrefetch(PWA):
                 for view in view_list:
                     view_types[view["type"]].append(view["id"])
             model_obj = request.env[model_id.model]
+            model_fields = model_obj.fields_get()
+            try:
+                model_defaults = model_obj.default_get(list(model_fields.keys()))
+            except Exception:
+                model_defaults = False
             res.append(
                 {
                     "model": model_id.model,
                     "name": model_id.name,
                     "orderby": model_obj._order,
                     "rec_name": model_obj._rec_name or "name",
-                    "fields": model_obj.fields_get(),
+                    "fields": model_fields,
                     "view_types": view_types,
                     "parent_store": model_obj._parent_store,
                     "parent_name": model_obj._parent_name,
                     "inherits": model_obj._inherits,
                     "table": model_obj._table,
+                    "defaults": model_defaults,
                 }
             )
         return res
@@ -177,40 +183,6 @@ class PWAPrefetch(PWA):
             "list_modules": module_boot(),
             "lang": request.env.lang,
         }
-
-    def _pwa_resolve_params(self, params):
-        resolved_params = {}
-        for field_name in params:
-            if isinstance(params[field_name], list) and len(params[field_name]) == 3:
-                if params[field_name][0] == "r":
-                    resolved_params[field_name] = params[field_name][1]
-                    continue
-            resolved_params[field_name] = params[field_name]
-        return resolved_params
-
-    def _pwa_construct_params(self, param_values, field_name, triggers):
-        params = {field_name: param_values[field_name]}
-        if triggers:
-            trigger_fields = triggers.split(",")
-            for field in trigger_fields:
-                sfield = field.strip()
-                if "." not in sfield:
-                    params[sfield] = param_values[sfield]
-                    continue
-                levels = sfield.split(".")
-                value = param_values
-                temp_arr_value = params
-                last_level = levels[0]
-                for index in range(len(levels)):
-                    level = levels[index]
-                    if level not in temp_arr_value:
-                        temp_arr_value[level] = {}
-                    if index < len(levels) - 1:
-                        temp_arr_value = temp_arr_value[level]
-                    value = value[level]
-                    last_level = level
-                temp_arr_value[last_level] = value
-        return params
 
     def _pwa_prefetch_onchange(self, **kwargs):
         cache_id = kwargs.get("cache_id")

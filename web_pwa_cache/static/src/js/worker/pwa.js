@@ -40,6 +40,8 @@ odoo.define("web_pwa_cache.PWA", function(require) {
             this._rpc = new OdooRPC();
             this._dbmanager = new DatabaseManager(this);
             this._cachemanager = new CacheManager(this);
+
+            console.log("------ PASA INITs");
         },
 
         _initComponents: function() {
@@ -65,6 +67,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
          * @override
          */
         installWorker: function() {
+            console.log("----- INSTALLL");
             const task = new Promise(async (resolve, reject) => {
                 this._isLoaded = false;
                 try {
@@ -88,6 +91,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
          * @override
          */
         activateWorker: function() {
+            console.log("----- ACTIVATE");
             const task = new Promise(async (resolve, reject) => {
                 try {
                     await this._cachemanager.clean();
@@ -168,11 +172,6 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                                 url_info.pwa_cache_hash
                             );
                             request = new Request(new_url);
-                            console.log(
-                                "--------------------- USING CACHE HASH REPLACEMENT",
-                                url_info,
-                                new_url
-                            );
                         }
                         // Strategy: Cache First
                         const response_cache = await this._cachemanager

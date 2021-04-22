@@ -26,7 +26,10 @@ odoo.define("web_pwa_cache.PWA.core.Config", function(require) {
          * @returns {Boolean}
          */
         isOfflineMode: function() {
-            return this._cache.pwa_mode !== "online";
+            return (
+                typeof this._cache.pwa_mode !== "undefined" &&
+                this._cache.pwa_mode !== "online"
+            );
         },
 
         /**

@@ -31,10 +31,11 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         model
                     );
                     if (search) {
-                        domain = _.union(
-                            [[model_info.rec_name, operator, search]],
-                            domain
-                        );
+                        const name_search =
+                            model_info.rec_name === "name"
+                                ? "display_name"
+                                : model_info.rec_name;
+                        domain = _.union([[name_search, operator, search]], domain);
                     }
                     const records = await this._dbmanager.search_read(
                         model,
@@ -87,6 +88,32 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
             });
         },
 
+        _fillOnchangeTriggerRefs: function(datas, flist, prefix) {
+            const entrs = Object.entries(datas);
+            for (const [prop_name, prop_value] of entrs) {
+                if (!prop_value || prop_value instanceof Array) {
+                    continue;
+                } else if (typeof prop_value === "object") {
+                    this._fillOnchangeTriggerRefs(
+                        prop_value,
+                        flist,
+                        prefix ? `${prefix}.${prop_name}` : prop_name
+                    );
+                } else {
+                    let trigger_ref = prefix
+                        ? `${prefix}.${prop_name}:${prop_value}`
+                        : `${prop_name}:${prop_value}`;
+                    trigger_ref =
+                        trigger_ref.length +
+                        _.reduce(
+                            _.map(trigger_ref, item => item.charCodeAt(0)),
+                            (x, y) => x + y
+                        );
+                    flist.push(trigger_ref);
+                }
+            }
+        },
+
         /**
          * @param {String} model
          * @param {Object} data
@@ -97,96 +124,102 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                 try {
                     // If doesn't exists any onchange record for the current model avoid all the process
                     const model_info_onchange = await this._dbmanager.sqlitedb.getModelInfo(
-                        "onchange",
-                        true
+                        "pwa.cache.onchange"
                     );
-                    const onchange_count = await this._dbmanager.count(
-                        model_info_onchange,
-                        [["model", "=", model]]
-                    );
-                    if (!onchange_count) {
+
+                    const record_data = data.args[1];
+                    const field_changed = data.args[2];
+                    let onchange_found = false;
+                    const res = {value: {}};
+
+                    if (typeof field_changed !== "string") {
+                        // Omit onchange's on multiple fields
                         if (this.isOfflineMode()) {
-                            return resolve({});
+                            return resolve(res);
                         }
                         return reject();
                     }
 
-                    const record_data = data.args[1];
-                    let fields_changed = data.args[2];
-                    if (typeof fields_changed === "string") {
-                        fields_changed = [fields_changed];
-                    }
-                    let onchange_found = false;
-                    const res = {value: {}};
-                    for (const field_name of fields_changed) {
-                        try {
-                            let records = await this._dbmanager.search_read(
-                                model_info_onchange,
-                                [
-                                    ["model", "=", model],
-                                    ["field", "=", field_name],
-                                    ["field_value", "=", record_data[field_name]],
-                                ]
-                            );
-                            records = this._dbmanager.filterOnchangeRecordsByParams(
-                                records,
-                                field_name,
-                                record_data
-                            );
-                            if (_.isEmpty(records)) {
-                                const fields_info = await this._dbmanager.getModelFieldsInfo(
-                                    model,
-                                    [field_name]
-                                );
-                                if (
-                                    fields_info &&
-                                    "relation" in fields_info[field_name]
-                                ) {
-                                    const isOfflineRecord = await this._dbmanager.isOfflineRecord(
-                                        fields_info[field_name].relation,
-                                        record_data[field_name]
-                                    );
-                                    if (isOfflineRecord) {
-                                        // If is a offline record fallback to "empty" onchange
-                                        onchange_found = true;
-                                        res.value[field_name] = record_data[field_name];
-                                    }
-                                }
-                                continue;
+                    try {
+                        const trigger_refs = [false];
+                        this._fillOnchangeTriggerRefs(record_data, trigger_refs);
+                        let records = await this._dbmanager.search_read(
+                            model_info_onchange,
+                            [
+                                ["model", "=", model],
+                                ["field", "=", field_changed],
+                                ["field_value", "=", record_data[field_changed]],
+                                ["trigger_ref", "in", trigger_refs],
+                            ]
+                        );
+                        console.log(
+                            "-------- ONCHANGE RECORDS",
+                            [
+                                ["model", "=", model],
+                                ["field", "=", field_changed],
+                                ["field_value", "=", record_data[field_changed]],
+                                ["trigger_ref", "in", trigger_refs],
+                            ],
+                            records
+                        );
+                        records = this._dbmanager.filterOnchangeRecordsByParams(
+                            records,
+                            [field_changed],
+                            record_data
+                        );
+                        // If (_.isEmpty(records)) {
+                        //     const fields_info = await this._dbmanager.getModelFieldsInfo(
+                        //         model,
+                        //         [field_name]
+                        //     );
+                        //     if (
+                        //         fields_info &&
+                        //         "relation" in fields_info[field_name]
+                        //     ) {
+                        //         const isOfflineRecord = await this._dbmanager.isOfflineRecord(
+                        //             fields_info[field_name].relation,
+                        //             record_data[field_name]
+                        //         );
+                        //         if (isOfflineRecord) {
+                        //             // If is a offline record fallback to "empty" onchange
+                        //             onchange_found = true;
+                        //             res.value[field_name] = record_data[field_name];
+                        //         }
+                        //     }
+                        //     continue;
+                        // }
+                        onchange_found = true;
+                        const sandbox = new JSSandbox();
+                        for (const record of records) {
+                            let value = false;
+                            let warning = false;
+                            let domain = false;
+                            if (typeof record.changes !== "undefined") {
+                                value = record.changes.value;
+                                warning = record.changes.warning;
+                                domain = record.changes.domain;
+                            } else if (typeof record.formula !== "undefined") {
+                                sandbox.compile(record.formula);
+                                const changes = sandbox.run(record_data);
+                                value = changes.value;
+                                warning = changes.warning;
+                                domain = changes.domain;
                             }
-                            onchange_found = true;
-                            const sandbox = new JSSandbox();
-                            for (const record of records) {
-                                let value = false;
-                                let warning = false;
-                                let domain = false;
-                                if (typeof record.changes !== "undefined") {
-                                    value = record.changes.value;
-                                    warning = record.changes.warning;
-                                    domain = record.changes.domain;
-                                } else if (typeof record.formula !== "undefined") {
-                                    sandbox.compile(record.formula);
-                                    const changes = sandbox.run(record_data);
-                                    value = changes.value;
-                                    warning = changes.warning;
-                                    domain = changes.domain;
-                                }
-                                if (value) {
-                                    res.value = _.extend({}, res.value, value);
-                                }
-                                if (warning) {
-                                    res.warning = _.extend({}, res.warning, warning);
-                                }
-                                if (domain) {
-                                    res.domain = _.extend({}, res.domain, domain);
-                                }
+                            if (value) {
+                                res.value = _.extend({}, res.value, value);
                             }
-                        } catch (err) {
-                            console.log(
-                                `[ServiceWorker] Can't process the given onchange for the fields '${fields_changed.join()}' on the model '${model}'`
-                            );
-                            console.log(err);
+                            if (warning) {
+                                res.warning = _.extend({}, res.warning, warning);
+                            }
+                            if (domain) {
+                                res.domain = _.extend({}, res.domain, domain);
+                            }
                         }
+                    } catch (err) {
+                        console.log(
+                            `[ServiceWorker] Can't process the given onchange for the fields '${field_changed}' on the model '${model}'`
+                        );
+                        console.log(err);
                     }
 
                     if (onchange_found) {
@@ -1209,7 +1242,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                                 data_to_sync[field] = [];
                             }
                             const relation = model_info.fields[field].relation;
-                            const field_model_info = await this._dbmanager.getModelInfo(
+                            const field_model_info = await this._dbmanager.sqlitedb.getModelInfo(
                                 relation
                             );
                             const subrecords = [];

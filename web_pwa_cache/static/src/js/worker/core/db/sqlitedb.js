@@ -411,9 +411,14 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                             break;
                         case "binary":
                         case "json":
-                            values[field] =
-                                typeof values[field] === "string" &&
-                                JSON.parse(this.decode(values[field]));
+                            try {
+                                values[field] =
+                                    typeof values[field] === "string" &&
+                                    JSON.parse(this.decode(values[field]));
+                            } catch (err) {
+                                console.log("--- PARESE ERR");
+                                console.log(field, values);
+                            }
                             break;
                         case "many2one":
                             const value =

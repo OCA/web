@@ -19,7 +19,6 @@ odoo.define("web_pwa_cache.PWAModeSelector", function(require) {
         },
 
         show: function() {
-            var self = this;
             var $content = $(QWeb.render("web_pwa_cache.PWAModeSelector"));
             this.dialog = new Dialog(this, {
                 title: _t("Set PWA Mode"),
@@ -27,22 +26,25 @@ odoo.define("web_pwa_cache.PWAModeSelector", function(require) {
                 buttons: [],
                 fullscreen: true,
             });
-            this.dialog.opened().then(function() {
-                self.dialog.$modal.find(".modal-header .close").addClass("d-none");
-                if (self.options.offline) {
+            this.dialog.opened().then(() => {
+                core.bus.off("close_dialogs", this.dialog);
+                this.dialog.$modal.find(".modal-header .close").addClass("d-none");
+                if (this.options.offline) {
                     $content
                         .find("button[data-mode='offline']")
-                        .on("click", self.options.offline);
+                        .on("click", this.options.offline);
                 }
-                if (self.options.online) {
+                if (this.options.online) {
                     $content
                         .find("button[data-mode='online']")
-                        .on("click", self.options.online);
+                        .on("click", this.options.online);
                 }
             });
             this.dialog.open();
-            this.shown = true;
-            this.setElement(this.dialog.$el);
+            this.dialog.opened(() => {
+                this.shown = true;
+                this.setElement(this.dialog.$el);
+            });
         },
 
         isOpen: function() {

@@ -63,6 +63,7 @@
                         attrs="{'required': [('cache_type', 'in', ['onchange', 'onchange_formula'])]}"
                     />
                     <field name="onchange_triggers" />
+                    <field name="onchange_main_trigger" />
                 </group>
                 <group attrs="{'invisible': [('cache_type', '!=', 'clientqweb')]}">
                     <field

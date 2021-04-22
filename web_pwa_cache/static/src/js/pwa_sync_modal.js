@@ -20,7 +20,6 @@ odoo.define("web_pwa_cache.PWASyncModal", function(require) {
         },
 
         show: function() {
-            var self = this;
             var $content = $(
                 QWeb.render("web_pwa_cache.PWASyncModal", {
                     records: this.records,
@@ -39,10 +38,10 @@ odoo.define("web_pwa_cache.PWASyncModal", function(require) {
                         text: _t("Synchronize Now"),
                         classes: "btn-primary",
                         click: function() {
-                            if (self.options.sync) {
-                                self.options.sync.call();
+                            if (this.options.sync) {
+                                this.options.sync.call();
                             }
-                        },
+                        }.bind(this),
                         close: true,
                     });
                 } else {
@@ -59,7 +58,10 @@ odoo.define("web_pwa_cache.PWASyncModal", function(require) {
                 fullscreen: true,
             });
             this.dialog.open();
-            this.setElement(this.dialog.$el);
+            this.dialog.opened(() => {
+                core.bus.off("close_dialogs", this.dialog);
+                this.setElement(this.dialog.$el);
+            });
         },
 
         close: function() {

@@ -118,6 +118,9 @@ return {"value": {}}"""  # noqa: E501
         "Onchange Triggers",
         help="Fields separated by commas. Can use dotted notation.",
     )
+    onchange_main_trigger = fields.Char(
+        "Onchange Main Trigger", help="Main trigger field reference",
+    )
 
     internal = fields.Boolean("Is an internal record", default=False)
 
@@ -165,3 +168,6 @@ return {"value": {}}"""  # noqa: E501
         return list(
             {url for urls in records.mapped(field_name) if urls for url in urls.split()}
         )
+
+    def update_caches(self):
+        self.env["pwa.cache.onchange"].sudo().update_cache()

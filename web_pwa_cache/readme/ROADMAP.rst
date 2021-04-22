@@ -3,3 +3,4 @@
 * Can't use domains with dotted leafs
 * one2many fields inside of one2many field doesn't work
 * Only supports mono-company instances
+* Sqlite doesn't have 'ilike' operator (all are case insensitive by default)

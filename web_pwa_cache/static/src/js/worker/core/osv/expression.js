@@ -51,10 +51,10 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
         "!=": "=",
         in: "not in",
         like: "not like",
-        ilike: "not ilike",
+        ilike: "not like", // Sqlite doesn't have 'ilike'
         "not in": "in",
         "not like": "like",
-        "not ilike": "ilike",
+        "not ilike": "like", // Sqlite doesn't have 'ilike'
     };
 
     const TRUE_LEAF = [1, "=", 1];
@@ -103,10 +103,17 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                 break;
             case "binary":
             case "json":
-                svalue = column_string_encode(
-                    JSON.stringify(_.isUndefined(value) ? "" : value),
-                    string_quoted
-                );
+                if (typeof value === "object") {
+                    svalue = column_string_encode(
+                        JSON.stringify(_.isUndefined(value) ? "" : value),
+                        string_quoted
+                    );
+                } else {
+                    svalue = column_string_encode(
+                        _.isUndefined(value) ? "" : value,
+                        string_quoted
+                    );
+                }
                 break;
             case "char":
             case "text":
@@ -525,7 +532,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
 
         toString: function() {
             return `<osv.ExtendedLeaf: ${this.leaf} on ${
-                this.table
+                this.model.table
             } (ctx: ${this._get_context_debug().join(",")})>`;
         },
 
@@ -1303,13 +1310,16 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                         else {
                             push_result(leaf);
                         }
-                    } else if (field.translate && right) {
+                    } else if (false && field.translate && right) {
                         const need_wildcard =
                             ["like", "ilike", "not like", "not ilike"].indexOf(
                                 operator
                             ) !== -1;
+                        // Sqlite doesn't have 'ilike'
                         let sql_operator =
-                            {"=like": "like", "=ilike": "ilike"}[operator] || operator;
+                            {"=like": "like", "=ilike": "like", ilike: "like"}[
+                                operator
+                            ] || operator;
                         if (need_wildcard) {
                             right = `%${right}%`;
                         }
@@ -1466,7 +1476,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                         } else {
                             const field = model.fields[left];
                             instr = new Array(params.length)
-                                .fill(field.column_format)
+                                .fill(field.column_format || "%s")
                                 .join(",");
                             params = params.map(x => convert_to_column(field, x));
                         }
@@ -1519,7 +1529,12 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
             } else {
                 const need_wildcard =
                     ["like", "ilike", "not like", "not ilike"].indexOf(operator) !== -1;
-                const sql_operators = {"=like": "like", "=ilike": "ilike"};
+                // Sqlite doesn't have 'ilike'
+                const sql_operators = {
+                    "=like": "like",
+                    "=ilike": "like",
+                    ilike: "like",
+                };
                 const sql_operator = sql_operators[operator] || operator;
                 const cast = sql_operator.endsWith("like") ? "TEXT" : "";
 

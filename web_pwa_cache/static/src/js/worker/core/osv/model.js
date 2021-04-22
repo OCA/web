@@ -372,7 +372,6 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
 
                     // Self.sudo(access_rights_uid or self._uid).check_access_rights('read')
                     if (expression.is_false(model_info, args)) {
-                        console.log("---- PASA COMO FALSE!!!!");
                         // Optimization: no need to query, as no record satisfies the domain
                         return resolve(count ? 0 : []);
                     }

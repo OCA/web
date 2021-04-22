@@ -11,9 +11,6 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
     var BroadcastSWMixin = require("web_pwa_cache.BroadcastSWMixin");
     var PWASyncModal = require("web_pwa_cache.PWASyncModal");
 
-    // Var config = require("web.config");
-    // Config.device.isMobile = true;
-
     var QWeb = core.qweb;
     var _t = core._t;
 
@@ -273,6 +270,13 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 document.referrer.includes("android-app://") ||
                 window.matchMedia("(display-mode: standalone)").matches
             );
+        },
+
+        /**
+         * @returns {Boolean}
+         */
+        isOfflineMode: function() {
+            return this._pwaMode !== "online";
         },
     });
 });

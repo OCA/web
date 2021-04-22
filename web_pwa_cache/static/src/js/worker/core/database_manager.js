@@ -135,6 +135,7 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
                         fields: {
                             id: {type: "integer", store: true},
                             model: {type: "char", store: true},
+                            method: {type: "string", store: true},
                             args: {type: "json", store: true},
                             date: {type: "datetime", store: true},
                             linked: {type: "json", store: true},
@@ -782,13 +783,18 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
                             res.filters = {};
                         }
                     }
+
+                    const n_views = views;
+                    if (options.standalone) {
+                        n_views.push([false, "formPWA"]);
+                    }
                     res.fields = model_info.fields;
                     res.fields_views = {};
                     const model_info_views = await this.sqlitedb.getModelInfo(
                         "views",
                         true
                     );
-                    for (const [view_id, view_type] of views) {
+                    for (const [view_id, view_type] of n_views) {
                         let domain = [
                             ["model", "=", model_info.model],
                             ["type", "=", view_type === "list" ? "tree" : view_type],
@@ -834,6 +840,11 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
                             );
                         }
                     }
+
+                    if (options.standalone && "formPWA" in res.fields_views) {
+                        res.fields_views.form = res.fields_views.formPWA;
+                    }
+
                     return resolve(res);
                 } catch (err) {
                     return reject(err);
@@ -934,7 +945,6 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
                     if (typeof model_info === "string") {
                         model_info = await this.sqlitedb.getModelInfo(model_info);
                     }
-
                     const model_info_sync = await this.sqlitedb.getModelInfo(
                         "sync",
                         true
@@ -1019,15 +1029,15 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
                     } catch (err) {
                         // Do nothing
                     }
-                    if (_.isEmpty(records)) {
-                        return reject();
-                    }
                     const sandbox = new JSSandbox();
                     for (const record of records) {
                         if (typeof record.formula !== "undefined") {
                             sandbox.compile(record.formula);
                             _.extend(values, sandbox.run());
                         }
+                    }
+                    if (_.isEmpty(values)) {
+                        return reject();
                     }
                     return resolve(values);
                 } catch (err) {
@@ -1046,34 +1056,40 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
          */
         filterOnchangeRecordsByParams: function(records, onchange_field, record_data) {
             const res = [];
+            var params = _.pick(record_data, onchange_field);
+            const _cached_trigger_params = {};
             for (const record of records) {
-                var params = _.pick(record_data, onchange_field);
-
                 // Construct params using "trigger" fields
                 if (record.triggers) {
-                    const trigger_fields = record.triggers.split(",");
-                    for (const field of trigger_fields) {
-                        const sfield = field.trim();
-                        if (!sfield.includes(".")) {
-                            params[sfield] = record_data[sfield];
-                            continue;
-                        }
-                        const levels = sfield.split(".");
-                        var value = record_data;
-                        var temp_arr_value = params;
-                        var last_level = levels[0];
-                        for (var index = 0; index < levels.length; ++index) {
-                            const level = levels[index];
-                            if (!temp_arr_value[level]) {
-                                temp_arr_value[level] = {};
+                    if (_cached_trigger_params[record.triggers]) {
+                        _.extend(params, _cached_trigger_params[record.triggers]);
+                    } else {
+                        const trigger_fields = record.triggers.split(",");
+                        for (const field of trigger_fields) {
+                            const sfield = field.trim();
+                            if (!sfield.includes(".")) {
+                                params[sfield] = record_data[sfield];
+                                continue;
                             }
-                            if (index < levels.length - 1) {
-                                temp_arr_value = temp_arr_value[level];
+                            const levels = sfield.split(".");
+                            var value = record_data;
+                            var temp_arr_value = params;
+                            var last_level = levels[0];
+                            for (var index = 0; index < levels.length; ++index) {
+                                const level = levels[index];
+                                if (!temp_arr_value[level]) {
+                                    temp_arr_value[level] = {};
+                                }
+                                if (index < levels.length - 1) {
+                                    temp_arr_value = temp_arr_value[level];
+                                }
+                                value = value[level];
+                                last_level = level;
                             }
-                            value = value[level];
-                            last_level = level;
+                            temp_arr_value[last_level] = value;
                         }
-                        temp_arr_value[last_level] = value;
+
+                        _cached_trigger_params[record.triggers] = params;
                     }
                 }
 

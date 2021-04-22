@@ -51,51 +51,54 @@
     </t>
     <t t-name="web_pwa_cache.PrefetchProgressTasks">
         <t t-foreach="tasks" t-as="task">
-            <p class="prefetch-message" t-esc="task.message" />
-            <div class="progress" style="height: 20px;">
-                <t t-if="task.error">
-                    <div
-                        class="progress-bar bg-danger progress-bar-striped"
-                        role="progressbar"
-                        aria-valuenow="100"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                        style="width: 100%"
-                    >Error!</div>
-                </t>
-                <t t-elif="task.total &lt; 0">
-                    <div
-                        class="progress-bar bg-info progress-bar-striped progress-bar-animated"
-                        role="progressbar"
-                        aria-valuenow="100"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                        style="width: 100%"
-                    >Working...</div>
-                </t>
-                <t t-elif="task.completed">
-                    <div
-                        class="progress-bar bg-info"
-                        role="progressbar"
-                        style="width: 100%;"
-                        aria-valuenow="100"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                    >100%</div>
-                </t>
-                <t t-else="">
-                    <div
-                        class="progress-bar bg-info"
-                        role="progressbar"
-                        t-attf-style="width: {{task.progress}}%;"
-                        t-att-aria-valuenow="task.progress"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                    ><t t-esc="task.progress" />% (<t t-esc="task.done" />/<t
-                            t-esc="task.total"
-                        />)</div>
-                </t>
+            <div class="section-progress">
+                <p class="prefetch-message mb-0" t-esc="task.message" />
+                <div class="progress" style="height: 20px;">
+                    <t t-if="task.error">
+                        <div
+                            class="progress-bar bg-danger progress-bar-striped"
+                            role="progressbar"
+                            aria-valuenow="100"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                            style="width: 100%"
+                        >Error!</div>
+                    </t>
+                    <t t-elif="task.total &lt; 0">
+                        <div
+                            class="progress-bar bg-info progress-bar-striped progress-bar-animated"
+                            role="progressbar"
+                            aria-valuenow="100"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                            style="width: 100%"
+                        >Working...</div>
+                    </t>
+                    <t t-elif="task.completed">
+                        <div
+                            class="progress-bar bg-info"
+                            role="progressbar"
+                            style="width: 100%;"
+                            aria-valuenow="100"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                        >100%</div>
+                    </t>
+                    <t t-else="">
+                        <div
+                            class="progress-bar bg-info"
+                            role="progressbar"
+                            t-attf-style="width: {{task.progress}}%;"
+                            t-att-aria-valuenow="task.progress"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                        ><t t-esc="task.progress" />% (<t t-esc="task.done" />/<t
+                                t-esc="task.total"
+                            />)</div>
+                    </t>
+                </div>
             </div>
+            <hr />
         </t>
     </t>
     <t t-name="web_pwa_cache.PWAModeSelector">
@@ -152,5 +155,19 @@
                 <strong class="muted">NO RECORDS QUEUED TO SYNCHRONIZE :)</strong>
             </t>
         </div>
+    </t>
+    <t t-name="web_pwa_cache.update_caches">
+        <button
+            t-if="widget and widget.modelName == 'pwa.cache'"
+            type="button"
+            class="btn btn-secondary o_button_pwa_update_caches"
+        >
+            Update Caches
+        </button>
+    </t>
+    <t t-extend="ListView.buttons">
+        <t t-jquery="button.o_list_button_add" t-operation="after">
+            <t t-call="web_pwa_cache.update_caches" />
+        </t>
     </t>
 </templates>
