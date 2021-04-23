@@ -39,6 +39,14 @@
                     aria-label="Search..."
                     aria-describedby="btnGroupAddon2"
                 />
+                <div class="input-group-append">
+                    <button
+                        id="product_picker_maximize"
+                        class='o_fullscreen btn btn-primary'
+                    >
+                        <i class='fa fa-expand' />
+                    </button>
+                </div>
             </div>
         </div>
     </t>
@@ -61,14 +69,6 @@
                 <span class="ml-1 badge badge-light">0</span>
             </button>
         </div>
-    </t>
-    <t t-name="One2ManyProductPicker.ButtonMaximize">
-        <button
-            if="product_picker_maximize"
-            class='o_fullscreen btn btn-primary position-absolute border border-dark py-1 px-2'
-        >
-            <i class='fa fa-expand' />
-        </button>
     </t>
     <t t-name="One2ManyProductPicker.Total">
         <div id="product_picker_total" class="text-right">
@@ -167,8 +167,8 @@
                             <img
                                 alt=""
                                 class="img img-fluid"
-                                t-att-src="image(state.data[field_map.product].data.id,'image_variant_medium')"
-                                t-att-data-src-alt="image(state.data[field_map.product].data.id,'image_variant_big')"
+                                t-att-src="image(state.data[field_map.product].data.id,'image_512')"
+                                t-att-data-src-alt="image(state.data[field_map.product].data.id,'image_1024')"
                             />
                         </t>
                         <t t-else="">
@@ -179,8 +179,8 @@
                             <img
                                 alt=""
                                 class="img img-fluid"
-                                t-att-src="image(record_search.id,'image_variant_medium')"
-                                t-att-data-src-alt="image(record_search.id,'image_variant_big')"
+                                t-att-src="image(record_search.id,'image_512')"
+                                t-att-data-src-alt="image(record_search.id,'image_1024')"
                             />
                         </t>
                     </div>

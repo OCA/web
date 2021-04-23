@@ -29,6 +29,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
             "search .oe_search_input": "_onSearch",
             "focusin .oe_search_input": "_onFocusInSearch",
             "show.bs.dropdown .o_cp_buttons": "_onShowSearchDropdown",
+            "click #product_picker_maximize": "_onClickMaximize",
         }),
         custom_events: _.extend({}, FieldOne2Many.prototype.custom_events, {
             create_quick_record: "_onCreateQuickRecord",
@@ -261,7 +262,6 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                     ) {
                         this.$el.addClass("position-relative d-flex flex-column");
                     }
-                    this._addMaximizeButton();
                     if (this.options.show_subtotal) {
                         this._addTotalsZone();
                     }
@@ -279,19 +279,6 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                     this.renderer._renderView().then(() => resolve());
                 });
             });
-        },
-
-        /**
-         * Inject the 'maximize' button
-         *
-         * @private
-         */
-        _addMaximizeButton: function() {
-            this.$("#product_picker_maximize").remove();
-            this.$btnMaximize = $(qweb.render("One2ManyProductPicker.ButtonMaximize"));
-            this.$btnMaximize
-                .appendTo(this.$el)
-                .on("click", this._onClickMaximize.bind(this));
         },
 
         /**
@@ -678,9 +665,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
 
         _onSearch: function(evt) {
             this._searchContext.text = evt.target.value;
-            this.doRenderSearchRecords().then(() => {
-                this.$searchInput.focus();
-            });
+            this.doRenderSearchRecords();
         },
 
         /**
@@ -690,7 +675,11 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
          * @private
          */
         _onFocusInSearch: function() {
-            this.$searchInput.select();
+            // Workaround: In some cases the focus it's not properly
+            // assigned due an "event collision".
+            // Use deferred call to ensure dispatch our event in
+            // a new frame.
+            _.defer(() => this.$searchInput.select());
         },
 
         /**
