@@ -7,12 +7,6 @@ odoo.define("web_listview_range_select", function (require) {
     var ListRenderer = require("web.ListRenderer");
 
     ListRenderer.include({
-        /*
-        I extend 'events' because in v13 Odoo catches 'change' event instead
-        of the 'click' event for the selector .o_list_record_selector ",
-        so shift + [click] is not caught.
-        https://github.com/OCA/OCB/blob/13.0/addons/web/static/src/js/views/list/list_renderer.js#L42:L42
-        */
         events: _.extend({}, ListRenderer.prototype.events, {
             "click tbody .o_list_record_selector": "_onClickSelectRecord",
         }),
