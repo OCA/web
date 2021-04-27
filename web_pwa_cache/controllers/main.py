@@ -148,7 +148,7 @@ class PWA(PWA):
             # Mobile resources
             "/web/static/lib/jquery.touchSwipe/jquery.touchSwipe.js",
             # Partner
-            "/partner_autocomplete/static/lib/jsvat.js",
+            # "/partner_autocomplete/static/lib/jsvat.js",
         ]
 
     def _get_pwa_cache_hashes(self):
@@ -166,6 +166,7 @@ class PWA(PWA):
             default=ustr,
             sort_keys=True,
         ).encode()
+
         hashes = {
             "load_menus": hashlib.sha1(menu_json_utf8).hexdigest(),
             "qweb": qweb_checksum,

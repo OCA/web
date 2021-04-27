@@ -23,6 +23,7 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
             this.setParent(parent);
             this.sqlitedb = new SQLiteDB(this, this._sqlite_db_name);
             this.indexeddb = new IndexedDB(this, this._indexed_db_name);
+            this.model_infos = {};
         },
 
         install: function() {
@@ -36,7 +37,45 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
             return Promise.all([
                 this.sqlitedb.start(this._onStartSQLiteDB.bind(this)),
                 this.indexeddb.start(this._onStartIndexedDB.bind(this)),
-            ]);
+            ]).then(() => {
+                this.updateModelInfos();
+            });
+        },
+
+        updateModelInfos: function() {
+            return this.sqlitedb
+                .getModelInfo(false, false, true)
+                .then(model_infos => {
+                    this.model_infos = model_infos;
+                })
+                .catch(() => {
+                    this.model_infos = {};
+                });
+        },
+
+        getModelInfo: function(model_names, internal, grouped) {
+            if (!model_names) {
+                return _.values(this.model_infos);
+            }
+            if (typeof model_names === "string") {
+                model_names = [model_names];
+            }
+            if (internal) {
+                model_names = _.map(model_names, model_name =>
+                    this.sqlitedb.getInternalTableName(model_name)
+                );
+            }
+
+            let records = [];
+            if (grouped) {
+                records = _.pick(this.model_infos, model_names);
+            } else {
+                records = _.chain(this.model_infos)
+                    .pick(model_names)
+                    .values()
+                    .value();
+            }
+            return records.length === 1 ? records[0] : records;
         },
 
         // -------------------
@@ -361,7 +400,7 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
                 try {
                     const tasks = [];
                     if (typeof model_info === "string") {
-                        model_info = await this.sqlitedb.getModelInfo(model_info);
+                        model_info = this.getModelInfo(model_info);
                     }
                     if (!(datas instanceof Array)) {
                         datas = [datas];
@@ -410,7 +449,7 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     if (typeof model_info === "string") {
-                        model_info = await this.sqlitedb.getModelInfo(model_info);
+                        model_info = this.getModelInfo(model_info);
                     }
 
                     const sdata = _.omit(data, "id");
@@ -461,7 +500,7 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
             return new Promise(async resolve => {
                 try {
                     if (typeof model_info === "string") {
-                        model_info = await this.sqlitedb.getModelInfo(model_info);
+                        model_info = this.getModelInfo(model_info);
                     }
 
                     const binary_fields = this._getFieldNamesByType(
@@ -496,6 +535,7 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
                     await Promise.all(tasks);
                 } catch (err) {
                     // Do nothing
+                    console.log("------------ THE ERROR", err);
                 }
 
                 return resolve();
@@ -511,7 +551,7 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     if (typeof model_info === "string") {
-                        model_info = await this.sqlitedb.getModelInfo(model_info);
+                        model_info = this.getModelInfo(model_info);
                     }
 
                     const tasks = [this.sqlitedb.deleteRecords(model_info, rc_ids)];
@@ -569,12 +609,11 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     if (typeof model_info === "string") {
-                        model_info = await this.sqlitedb.getModelInfo(model_info);
+                        model_info = this.getModelInfo(model_info);
                     }
                     if (!model_info) {
                         return reject("Model info not found!");
                     }
-
                     const records = await this.sqlitedb._osv.query(
                         model_info,
                         domain || [],
@@ -611,7 +650,7 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     if (typeof model_info === "string") {
-                        model_info = await this.sqlitedb.getModelInfo(model_info);
+                        model_info = this.getModelInfo(model_info);
                     }
 
                     const records = await this.search(
@@ -638,7 +677,7 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     if (typeof model_info === "string") {
-                        model_info = await this.sqlitedb.getModelInfo(model_info);
+                        model_info = this.getModelInfo(model_info);
                     }
 
                     if (!model_info) {
@@ -688,10 +727,7 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
                     const model_data = await this.getModelData(xmlid);
                     let record = {};
                     if (model_data.model.startsWith("ir.actions.")) {
-                        const model_info = await this.sqlitedb.getModelInfo(
-                            "actions",
-                            true
-                        );
+                        const model_info = this.getModelInfo("actions", true);
                         record = await this.browse(model_info, model_data.res_id);
                     } else {
                         const records = await this.browse(
@@ -724,7 +760,7 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     if (typeof model_info === "string") {
-                        model_info = await this.sqlitedb.getModelInfo(model_info);
+                        model_info = this.getModelInfo(model_info);
                     }
 
                     const action_domain = [];
@@ -769,7 +805,7 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     if (typeof model_info === "string") {
-                        model_info = await this.sqlitedb.getModelInfo(model_info);
+                        model_info = this.getModelInfo(model_info);
                     }
 
                     const res = {};
@@ -790,10 +826,7 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
                     }
                     res.fields = model_info.fields;
                     res.fields_views = {};
-                    const model_info_views = await this.sqlitedb.getModelInfo(
-                        "views",
-                        true
-                    );
+                    const model_info_views = this.getModelInfo("views", true);
                     for (const [view_id, view_type] of n_views) {
                         let domain = [
                             ["model", "=", model_info.model],
@@ -862,7 +895,7 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     if (typeof model_info === "string") {
-                        model_info = await this.sqlitedb.getModelInfo(model_info);
+                        model_info = this.getModelInfo(model_info);
                     }
 
                     if (!fields) {
@@ -943,12 +976,9 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
             return new Promise(async resolve => {
                 try {
                     if (typeof model_info === "string") {
-                        model_info = await this.sqlitedb.getModelInfo(model_info);
+                        model_info = this.getModelInfo(model_info);
                     }
-                    const model_info_sync = await this.sqlitedb.getModelInfo(
-                        "sync",
-                        true
-                    );
+                    const model_info_sync = this.getModelInfo("sync", true);
                     const sync_records = await this.search_read(model_info_sync, [
                         ["model", "=", model_info.model],
                         ["method", "=", "create"],
@@ -1013,14 +1043,11 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     if (typeof model_info === "string") {
-                        model_info = await this.sqlitedb.getModelInfo(model_info);
+                        model_info = this.getModelInfo(model_info);
                     }
 
                     const values = model_info.defaults || {};
-                    const model_info_defaults = await this.sqlitedb.getModelInfo(
-                        "defaults",
-                        true
-                    );
+                    const model_info_defaults = this.getModelInfo("defaults", true);
                     let records = [];
                     try {
                         records = await this.search_read(model_info_defaults, [

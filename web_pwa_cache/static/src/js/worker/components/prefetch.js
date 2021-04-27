@@ -115,7 +115,9 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
             return new Promise(async (resolve, reject) => {
                 this.options.force_client_show_modal = true;
                 try {
+                    this._processedModels = [];
                     const model_infos = await this.prefetchModelInfoData();
+                    await this._dbmanager.updateModelInfos();
                     await Promise.all([
                         this.prefetchModelData(),
                         this.prefetchModelDefaultData(),
@@ -124,7 +126,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                         this.prefetchClientQWebData(),
                         this.prefetchPostData(),
                         this.prefetchUserData(),
-                        this.prefetchOnchangeData(),
                         this.prefetchFunctionData(),
                     ]);
                     await this.runVacuumRecords();
@@ -143,12 +144,15 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         runVacuumRecords: function() {
             return new Promise(async resolve => {
                 try {
-                    const models = await this._dbmanager.sqlitedb.getModelInfo();
+                    const models = this._dbmanager.getModelInfo();
                     const num_models = models.length;
 
                     for (const index in models) {
                         const model_info = models[index];
-                        if (model_info.internal) {
+                        if (
+                            model_info.internal ||
+                            this._processedModels.indexOf(model_info.model) === -1
+                        ) {
                             continue;
                         }
                         this._sendTaskInfo(
@@ -326,7 +330,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         prefetchModelData: function() {
             return new Promise(async (resolve, reject) => {
                 // Get lastest updates
-                let model_infos = await this._dbmanager.sqlitedb.getModelInfo();
+                let model_infos = this._dbmanager.getModelInfo();
                 const prefetch_last_updates = {};
                 for (const model_info of model_infos) {
                     if (model_info.prefetch_last_update) {
@@ -345,9 +349,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                     const response_data = await response.json();
                     const to_search_infos = response_data.result;
                     const model_names = _.map(to_search_infos, "model");
-                    model_infos = await this._dbmanager.sqlitedb.getModelInfo(
-                        model_names
-                    );
+                    model_infos = this._dbmanager.getModelInfo(model_names);
                     for (const to_search of to_search_infos) {
                         const model_info = _.findWhere(model_infos, {
                             model: to_search.model,
@@ -631,26 +633,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         },
 
         /**
-         * Prefetch onchange values
-         *
-         * @private
-         * @returns {Promise}
-         */
-        prefetchOnchangeData: function() {
-            return new Promise(async (resolve, reject) => {
-                try {
-                    const model_info_onchange = await this._dbmanager.sqlitedb.getModelInfo(
-                        "pwa.cache.onchange"
-                    );
-                    await this.prefetchModelRecords(model_info_onchange);
-                } catch (err) {
-                    return reject(err);
-                }
-                return resolve();
-            });
-        },
-
-        /**
          * Prefetch function calls values
          *
          * @private
@@ -768,42 +750,14 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         prefetchUserData: function() {
             return new Promise(async (resolve, reject) => {
                 const start_prefetch_date = tools.DateToOdooFormat(new Date());
-                const prefetch_last_update = await this.getParent().config.get(
-                    "prefetch_userdata_last_update"
-                );
                 try {
-                    this._sendTaskInfo(
-                        "user_data_translation",
-                        "Getting translations...",
-                        -1,
-                        0
-                    );
-                    let [response] = await this._rpc.sendJSonRpc(
-                        "/pwa/prefetch/userdata",
-                        {
-                            last_update: prefetch_last_update || false,
-                        }
-                    );
-                    let response_data = (await response.json()).result;
-                    if (response_data) {
-                        const [response_s] = await this._rpc.sendJSonRpc(
-                            "/web/webclient/translations",
-                            {
-                                mods: response_data.list_modules || null,
-                                lang: response_data.lang || null,
-                            }
-                        );
-                        const response_s_data = (await response_s.json()).result;
-                        await this.translations(response_s_data);
-                    }
-                    this._sendTaskInfoCompleted("user_data_translation");
                     this._sendTaskInfo("user_data_menu", "Getting menus...", -1, 0);
-                    [response] = await this._rpc.callJSonRpc(
+                    const [response] = await this._rpc.callJSonRpc(
                         "ir.ui.menu",
                         "load_menus",
                         ["assets"]
                     );
-                    response_data = (await response.json()).result;
+                    const response_data = (await response.json()).result;
                     await this.load_menus(false, response_data);
                     await this.getParent().config.set(
                         "prefetch_userdata_last_update",
@@ -843,7 +797,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         saveModelInfo: function(values) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_metadata = await this._dbmanager.sqlitedb.getModelInfo(
+                    const model_info_metadata = this._dbmanager.getModelInfo(
                         "model_metadata",
                         true
                     );
@@ -868,7 +822,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         saveModelDefaults: function(values) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_defaults = await this._dbmanager.sqlitedb.getModelInfo(
+                    const model_info_defaults = this._dbmanager.getModelInfo(
                         "defaults",
                         true
                     );
@@ -892,7 +846,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         saveViews: function(values) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_views = await this._dbmanager.sqlitedb.getModelInfo(
+                    const model_info_views = this._dbmanager.getModelInfo(
                         "views",
                         true
                     );
@@ -916,7 +870,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         saveOnchange: function(values) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_onchange = await this._dbmanager.sqlitedb.getModelInfo(
+                    const model_info_onchange = this._dbmanager.getModelInfo(
                         "onchange",
                         true
                     );
@@ -940,7 +894,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         saveFunctionData: function(values) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_function = await this._dbmanager.sqlitedb.getModelInfo(
+                    const model_info_function = this._dbmanager.getModelInfo(
                         "function",
                         true
                     );

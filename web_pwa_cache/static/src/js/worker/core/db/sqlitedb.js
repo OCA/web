@@ -139,7 +139,10 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
         createRecord: function(model_info, values) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const svalues = _.clone(values);
+                    const svalues = _.chain(values)
+                        .clone()
+                        .omit("guardedCatch")
+                        .value();
                     this._formatValues(model_info.fields, svalues);
                     const [sql_columns, sql_values] = await this.getSqlSanitizedValues(
                         model_info,
@@ -163,7 +166,10 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
         updateRecord: function(model_info, rc_ids, values) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const svalues = _.clone(values);
+                    const svalues = _.chain(values)
+                        .clone()
+                        .omit("guardedCatch")
+                        .value();
                     this._formatValues(model_info.fields, svalues);
                     const [, , set_sql_values] = await this.getSqlSanitizedValues(
                         model_info,
@@ -189,7 +195,10 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
         createOrUpdateRecord: function(model_info, values, conflicts) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const svalues = _.clone(values);
+                    const svalues = _.chain(values)
+                        .clone()
+                        .omit("guardedCatch")
+                        .value();
                     this._formatValues(model_info.fields, svalues);
                     const [
                         sql_columns,
@@ -296,7 +305,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
             });
         },
 
-        getModelInfo: function(models, internal) {
+        getModelInfo: function(models, internal, grouped) {
             return new Promise(async (resolve, reject) => {
                 try {
                     let sql = `SELECT * FROM "${this.getInternalTableName(
@@ -338,6 +347,13 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                         );
                     }
                     this._parseValues(model_info_metadata.fields, records);
+                    if (grouped) {
+                        const mapped_records = {};
+                        for (const record of records) {
+                            mapped_records[record.model] = record;
+                        }
+                        return resolve(mapped_records);
+                    }
                     return resolve(records);
                 } catch (err) {
                     return reject(err);
@@ -386,10 +402,20 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
             if (!(datas instanceof Array)) {
                 datas = [datas];
             }
-            for (const values of datas) {
+            const datas_len = datas.length;
+            let values = false;
+            for (let index = datas_len - 1; index >= 0; --index) {
+                values = datas[index];
                 const value_fields = _.keys(values);
 
-                for (const field of value_fields) {
+                const value_fields_len = value_fields.length;
+                let field = false;
+                for (
+                    let index_field = value_fields_len - 1;
+                    index_field >= 0;
+                    --index_field
+                ) {
+                    field = value_fields[index_field];
                     switch (model_fields[field].type) {
                         case "date":
                             values[field] =
@@ -416,8 +442,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                                     typeof values[field] === "string" &&
                                     JSON.parse(this.decode(values[field]));
                             } catch (err) {
-                                console.log("--- PARESE ERR");
-                                console.log(field, values);
+                                // Do nothing
                             }
                             break;
                         case "many2one":

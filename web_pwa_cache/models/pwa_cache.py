@@ -114,6 +114,9 @@ return {"value": {}}"""  # noqa: E501
         string="Onchage field",
         domain="[['model_id', '=', model_id]]",
     )
+    onchange_field_name = fields.Char(
+        related="onchange_field.name", string="Field Name", readonly=True,
+    )
     onchange_triggers = fields.Char(
         "Onchange Triggers",
         help="Fields separated by commas. Can use dotted notation.",

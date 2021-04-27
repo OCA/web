@@ -11,22 +11,6 @@ odoo.define("web_pwa_cache.PWA.core.CacheManager", function(require) {
         init: function(parent) {
             ParentedMixin.init.call(this);
             this.setParent(parent);
-            this._cache = caches;
-            this._caches = {};
-        },
-
-        /**
-         * @param {String} cache_name
-         * @returns {Promise}
-         */
-        start: function(cache_name) {
-            if (_.has(this._caches, cache_name)) {
-                return Promise.resolve(this._caches[cache_name]);
-            }
-            return new Promise(async resolve => {
-                this._caches[cache_name] = await this._cache.open(cache_name);
-                resolve(this._caches[cache_name]);
-            });
         },
 
         /**
@@ -34,22 +18,32 @@ odoo.define("web_pwa_cache.PWA.core.CacheManager", function(require) {
          * @returns {CacheStorage}
          */
         get: function(cache_name) {
-            return this._caches[cache_name];
+            return caches.open(cache_name);
         },
 
         addAll: function(cache_name, prefetched_urls) {
-            return this.get(cache_name).addAll(prefetched_urls);
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const cache = await this.get(cache_name);
+                    for (const pre_url of prefetched_urls) {
+                        await cache.add(pre_url);
+                    }
+                } catch (err) {
+                    return reject(err);
+                }
+                return resolve();
+            });
         },
 
         /**
          * @returns {Promise}
          */
-        clean: function() {
-            return this._cache.keys().then(keyList => {
+        cleanOld: function(exceptions) {
+            return caches.keys().then(keyList => {
                 keyList.map(key => {
-                    if (!(key in this._caches)) {
+                    if (exceptions.indexOf(key) === -1) {
                         console.log("[ServiceWorker] Removing cache", key);
-                        this._cache.delete(key);
+                        caches.delete(key);
                     }
                 });
             });

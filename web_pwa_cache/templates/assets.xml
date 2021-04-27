@@ -67,10 +67,6 @@
                 type="text/javascript"
                 src="/web_pwa_cache/static/src/js/user_menu.js"
             />
-            <script
-                type="text/javascript"
-                src="/web_pwa_cache/static/src/js/persistent_dialog.js"
-            />
         </xpath>
     </template>
 </odoo>

@@ -1,0 +1,729 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_pwa_cache
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-27 11:04+0000\n"
+"PO-Revision-Date: 2021-04-27 11:04+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.pwa_cache_view_form
+msgid ""
+"'params' normally its an array of arrays. You can use an special parameter "
+"to define range of values: '['__r', MIN, MAX]'"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.view_partner_form_pwa
+msgid "<b>Company Address:</b>"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.pwa_cache_view_form
+msgid ""
+"<code style=\"white-space: pre-wrap\">\n"
+"                                        params = [ [10, 'Text'], [30, 'Other Text'], [['__r', 10, 20], 'The Text'] ]\n"
+"                                    </code>"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.pwa_cache_view_form
+msgid ""
+"<code>DEFAULT_SERVER_DATETIME_FORMAT</code>\n"
+"                                        ,\n"
+"                                        <code>DEFAULT_SERVER_DATE_FORMAT</code>\n"
+"                                        ,\n"
+"                                        <code>DEFAULT_SERVER_TIME_FORMAT</code>\n"
+"                                        : Odoo date format"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.pwa_cache_view_form
+msgid ""
+"<code>b64encode</code>\n"
+"                                        ,\n"
+"                                        <code>b64decode</code>\n"
+"                                        : To work with base64"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.pwa_cache_view_form
+msgid ""
+"<code>env</code>\n"
+"                                        : Odoo Environment on which the request is triggered"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.pwa_cache_view_form
+msgid ""
+"<code>record</code>\n"
+"                                        : This record"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.pwa_cache_view_form
+msgid ""
+"<code>time</code>\n"
+"                                        ,\n"
+"                                        <code>datetime</code>\n"
+"                                        ,\n"
+"                                        <code>dateutil</code>\n"
+"                                        ,\n"
+"                                        <code>timezone</code>\n"
+"                                        : useful Python libraries"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.pwa_cache_view_form
+msgid ""
+"<code>user</code>\n"
+"                                        ,\n"
+"                                        <code>uid</code>\n"
+"                                        : The user that trigger the request"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.view_partner_form_pwa
+msgid ""
+"<span class=\"fa fa-plus-square\"/>\n"
+"                                    Create company"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.pwa_cache_view_form
+msgid ""
+"<span>\n"
+"                            <i class=\"fa fa-info\"/>\n"
+"                            Use one line per url.\n"
+"                        </span>"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.pwa_cache_view_form
+msgid ""
+"<span>\n"
+"                            <i class=\"fa fa-info\"/>\n"
+"                            Use one line per view ref.\n"
+"                        </span>"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model,name:web_pwa_cache.model_ir_actions_act_window_view
+msgid "Action Window View"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__active
+msgid "Active"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.view_partner_form_pwa
+msgid "Address"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__group_ids
+msgid "Allowed groups"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,help:web_pwa_cache.field_pwa_cache__group_ids
+msgid "Allowed groups to get this cache. Empty for all."
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model,name:web_pwa_cache.model_base
+msgid "Base"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,help:web_pwa_cache.field_pwa_cache__active
+msgid ""
+"By unchecking the active field, you may hide an CACHE you will not use."
+msgstr ""
+
+#. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/js/pwa_manager.js:0
+#, python-format
+msgid "Can't found any cache to ''"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache_onchange__changes
+msgid "Changes"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.view_partner_form_pwa
+msgid "City"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields.selection,name:web_pwa_cache.selection__pwa_cache__cache_type__clientqweb
+msgid "Client QWeb"
+msgstr ""
+
+#. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/js/pwa_sync_modal.js:0
+#, python-format
+msgid "Close"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:pwa.cache,name:web_pwa_cache.pwa_cache_clientqweb_colorpicker_template
+msgid "Colorpicker Template"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:pwa.cache,name:web_pwa_cache.pwa_cache_model_res_company_all
+msgid "Companies (All)"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.view_partner_form_pwa
+msgid "Company"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache_onchange__triggers
+msgid "Complete Triggers"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.view_partner_form_pwa
+msgid "Country"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:pwa.cache,name:web_pwa_cache.pwa_cache_model_res_country_all
+msgid "Country (All)"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:pwa.cache,name:web_pwa_cache.pwa_cache_model_res_country_group_all
+msgid "Country Group (All)"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:pwa.cache,name:web_pwa_cache.pwa_cache_model_res_country_state_all
+msgid "Country State (All)"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__create_uid
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache_onchange__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__create_date
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache_onchange__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:pwa.cache,name:web_pwa_cache.pwa_cache_model_res_currency_all
+msgid "Currency (All)"
+msgstr ""
+
+#. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/xml/base.xml:0
+#, python-format
+msgid "Date"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields.selection,name:web_pwa_cache.selection__pwa_cache__cache_type__default_formula
+msgid "Default values with formula"
+msgstr ""
+
+#. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/js/views/formPWA/form_pwa_controller.js:0
+#, python-format
+msgid "Delete"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__display_name
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache_onchange__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__model_domain
+msgid "Domain"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__model_domain_raw
+msgid "Domain (RAW)"
+msgstr ""
+
+#. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/js/views/formPWA/form_pwa_controller.js:0
+#, python-format
+msgid "Duplicate"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.pwa_cache_view_form
+msgid "Enter Javascript code here."
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.pwa_cache_view_form
+msgid ""
+"Enter Python code here. Help about Python expression is available in the "
+"help tab of this document."
+msgstr ""
+
+#. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/xml/base.xml:0
+#, python-format
+msgid "Error!"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.pwa_cache_view_form
+msgid "Example of Python code"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__model_field_excluded_ids
+msgid "Excluded fields"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache_onchange__field
+msgid "Field"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache_onchange__field_value
+msgid "Field Value"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,help:web_pwa_cache.field_pwa_cache__onchange_triggers
+msgid "Fields separated by commas. Can use dotted notation."
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:pwa.cache,name:web_pwa_cache.pwa_cache_model_ir_filters_all
+msgid "Filters (All)"
+msgstr ""
+
+#. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/js/views/formPWA/form_pwa_view.js:0
+#: model:ir.model.fields.selection,name:web_pwa_cache.selection__ir_actions_act_window_view__view_mode__formpwa
+#: model:ir.model.fields.selection,name:web_pwa_cache.selection__ir_ui_view__type__formpwa
+#, python-format
+msgid "Form PWA"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache_onchange__formula
+msgid "Formula"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields.selection,name:web_pwa_cache.selection__pwa_cache__cache_type__function
+msgid "Function"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__function_name
+msgid "Function Name"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields.selection,name:web_pwa_cache.selection__pwa_cache__cache_type__get
+msgid "Get"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__get_urls
+msgid "Get URL's"
+msgstr ""
+
+#. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/xml/base.xml:0
+#, python-format
+msgid "Getting server data..."
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.pwa_cache_view_form
+msgid "Help"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.pwa_cache_view_form
+msgid "Help with Python expressions"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__id
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache_onchange__id
+msgid "ID"
+msgstr ""
+
+#. module: web_pwa_cache
+#: code:addons/web_pwa_cache/controllers/prefetch.py:0
+#, python-format
+msgid "Invalid onchange cache id"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__internal
+msgid "Is an internal record"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.pwa_cache_view_form
+msgid "Javascript Code"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__code_js
+msgid "Javascript code"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache____last_update
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache_onchange____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__write_uid
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache_onchange__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__write_date
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache_onchange__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,help:web_pwa_cache.field_pwa_cache__onchange_main_trigger
+msgid "Main trigger field reference"
+msgstr ""
+
+#. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/xml/base.xml:0
+#, python-format
+msgid "Method"
+msgstr ""
+
+#. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/xml/base.xml:0
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__model_id
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache_onchange__model
+#: model:ir.model.fields.selection,name:web_pwa_cache.selection__pwa_cache__cache_type__model
+#, python-format
+msgid "Model"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:pwa.cache,name:web_pwa_cache.pwa_cache_model_ir_model_data_all
+msgid "Model Data (All)"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__model_name
+msgid "Model Name"
+msgstr ""
+
+#. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/xml/base.xml:0
+#, python-format
+msgid "NO RECORDS QUEUED TO SYNCHRONIZE :)"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__name
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.view_partner_form_pwa
+msgid "Name"
+msgstr ""
+
+#. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/xml/base.xml:0
+#, python-format
+msgid "OFFLINE"
+msgstr ""
+
+#. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/xml/base.xml:0
+#, python-format
+msgid "ONLINE"
+msgstr ""
+
+#. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/xml/base.xml:0
+#, python-format
+msgid "Offline Mode"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__onchange_field
+msgid "Onchage field"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields.selection,name:web_pwa_cache.selection__pwa_cache__cache_type__onchange
+msgid "Onchange"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__onchange_main_trigger
+msgid "Onchange Main Trigger"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__onchange_triggers
+msgid "Onchange Triggers"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields.selection,name:web_pwa_cache.selection__pwa_cache__cache_type__onchange_formula
+msgid "Onchange with formula"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.ui.menu,name:web_pwa_cache.menu_pwa
+msgid "PWA"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.actions.act_window,name:web_pwa_cache.action_pwa_cache_form
+#: model:ir.model,name:web_pwa_cache.model_pwa_cache
+#: model:ir.ui.menu,name:web_pwa_cache.menu_action_pwa_cache_form
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.pwa_cache_view_form
+msgid "PWA Cache"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:pwa.cache,name:web_pwa_cache.pwa_cache_model_pwa_cache
+msgid "PWA Cache (All)"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache_onchange__pwa_cache_id
+msgid "PWA Cache ID"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model,name:web_pwa_cache.model_pwa_cache_onchange
+msgid "PWA Cache Onchange"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:pwa.cache,name:web_pwa_cache.pwa_cache_model_pwa_cache_onchange
+msgid "PWA Cache Onchange (All)"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.pwa_cache_view_tree
+msgid "PWA Cache Rules"
+msgstr ""
+
+#. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/js/pwa_sync_modal.js:0
+#, python-format
+msgid "PWA Transactions to Synchronize"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache_onchange__params
+msgid "Params"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.view_partner_form_pwa
+msgid "Partners"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:pwa.cache,name:web_pwa_cache.pwa_cache_model_res_partner_all
+msgid "Partners (All)"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:pwa.cache,name:web_pwa_cache.pwa_cache_model_res_partner_bank_all
+msgid "Partners Bank (All)"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:pwa.cache,name:web_pwa_cache.pwa_cache_model_res_partner_category_all
+msgid "Partners Category (All)"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields.selection,name:web_pwa_cache.selection__pwa_cache__cache_type__post
+msgid "Post"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__post_url
+msgid "Post URL"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.pwa_cache_view_form
+msgid "Python Code"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__code
+msgid "Python code"
+msgstr ""
+
+#. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/xml/base.xml:0
+#, python-format
+msgid "Recods queued to sync."
+msgstr ""
+
+#. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/js/pwa_mode_selector.js:0
+#, python-format
+msgid "Set PWA Mode"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:pwa.cache,name:web_pwa_cache.pwa_cache_post_settings_dashboard
+msgid "Settings - Post - Dashboard"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.view_partner_form_pwa
+msgid "State"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.view_partner_form_pwa
+msgid "Street 2..."
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.view_partner_form_pwa
+msgid "Street..."
+msgstr ""
+
+#. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/js/pwa_sync_modal.js:0
+#, python-format
+msgid "Synchronize Now"
+msgstr ""
+
+#. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/js/pwa_sync_modal.js:0
+#, python-format
+msgid "Synchronizing offline records..."
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.pwa_cache_view_form
+msgid ""
+"To return an params definition, assign:\n"
+"                                        <code>params = [...]</code>"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache_onchange__trigger_ref
+msgid "Trigger Ref"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__cache_type
+msgid "Type"
+msgstr ""
+
+#. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/xml/base.xml:0
+#, python-format
+msgid "Update Caches"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:pwa.cache,name:web_pwa_cache.pwa_cache_model_res_users_all
+msgid "Users (Internal)"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.pwa_cache_view_form
+msgid ""
+"Various fields may use Python code or Python expressions. The following "
+"variables can be used:"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model,name:web_pwa_cache.model_ir_ui_view
+msgid "View"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_ir_actions_act_window_view__view_mode
+#: model:ir.model.fields,field_description:web_pwa_cache.field_ir_ui_view__type
+msgid "View Type"
+msgstr ""
+
+#. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/xml/base.xml:0
+#, python-format
+msgid "Working..."
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__xml_refs
+msgid "XML Ref's"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.view_partner_form_pwa
+msgid "ZIP"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.view_partner_form_pwa
+msgid "e.g. BE0477472701"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model_terms:ir.ui.view,arch_db:web_pwa_cache.view_partner_form_pwa
+msgid "e.g. Sales Director"
+msgstr ""

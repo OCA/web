@@ -39,7 +39,7 @@ odoo.define("web_pwa_cache.PWA.bus", function(require) {
          */
         // eslint-disable-next-line
         _onReceiveClientMessage: function(evt) {
-            if (!evt.isTrusted || !this._isLoaded) {
+            if (!evt.isTrusted || !this.isLoaded()) {
                 return;
             }
             switch (evt.data.type) {
@@ -60,7 +60,7 @@ odoo.define("web_pwa_cache.PWA.bus", function(require) {
                     Promise.all(promises)
                         .then(() => {
                             new Promise(async resolve => {
-                                const model_info_userdata = await this._dbmanager.sqlitedb.getModelInfo(
+                                const model_info_userdata = this._dbmanager.getModelInfo(
                                     "userdata",
                                     true
                                 );
@@ -150,7 +150,7 @@ odoo.define("web_pwa_cache.PWA.bus", function(require) {
             }
 
             this._prefetch_promise = new Promise(async (resolve, reject) => {
-                this._prefetch_run = true;
+                this._prefetch_running = true;
                 try {
                     const is_offline_mode = this.config.isOfflineMode();
                     if (is_offline_mode) {
@@ -159,17 +159,16 @@ odoo.define("web_pwa_cache.PWA.bus", function(require) {
                     // Try sync records first
                     await this._components.sync.run();
                     // Try prefetch data
-                    await this._components.prefetch.prefetchDataPost().then(() => {
-                        // If have transactions to sync. tell it to the user
-                        this._components.sync.getSyncRecords().then(records => {
-                            if (records.length) {
-                                this.postClientPageMessage({
-                                    type: "PWA_SYNC_NEED_ACTION",
-                                    count: records.length,
-                                });
-                            }
+                    await this._components.prefetch.prefetchDataPost();
+                    await this._updateModelInfos();
+                    // If have transactions to sync. tell it to the user
+                    const records = await this._components.sync.getSyncRecords();
+                    if (records.length) {
+                        this.postClientPageMessage({
+                            type: "PWA_SYNC_NEED_ACTION",
+                            count: records.length,
                         });
-                    });
+                    }
                 } catch (err) {
                     console.log("[ServiceWorker] Prefetch Data Post failed...");
                     return reject(err);
@@ -178,7 +177,7 @@ odoo.define("web_pwa_cache.PWA.bus", function(require) {
                 return resolve();
             }).finally(() => {
                 this._prefetch_promise = undefined;
-                this._prefetch_run = false;
+                this._prefetch_running = false;
             });
 
             return this._prefetch_promise;

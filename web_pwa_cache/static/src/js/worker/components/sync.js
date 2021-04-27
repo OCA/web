@@ -16,10 +16,8 @@ odoo.define("web_pwa_cache.PWA.components.Sync", function(require) {
         getSyncRecords: function() {
             return new Promise(async resolve => {
                 try {
-                    const model_info_sync = await this._dbmanager.sqlitedb.getModelInfo(
-                        "sync",
-                        true
-                    );
+                    const model_info_sync = this._dbmanager.getModelInfo("sync", true);
+                    console.log("-------------------->> SYNC!!! ", model_info_sync);
                     const records = await this._dbmanager.search_read(
                         model_info_sync,
                         []
@@ -38,34 +36,20 @@ odoo.define("web_pwa_cache.PWA.components.Sync", function(require) {
          * @param {Object} data
          * @returns {Promise}
          */
-        updateSyncRecord: function(key, data) {
-            return new Promise((resolve, reject) => {
-                const [objectStore] = this._db.getObjectStores(
-                    "webclient",
-                    ["sync"],
-                    "readwrite"
-                );
-                if (objectStore) {
-                    const request = objectStore.openCursor();
-                    request.onsuccess = function(evt) {
-                        const cursor = evt.target.result;
-                        if (cursor) {
-                            if (cursor.key === key) {
-                                cursor.update(_.extend(cursor.value, data));
-                                resolve();
-                            } else {
-                                cursor.continue();
-                            }
-                        } else {
-                            reject();
-                        }
-                    };
-                    request.onerror = function() {
-                        reject();
-                    };
-                } else {
-                    reject();
+        updateSyncRecord: function(id, data) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const model_info_sync = this._dbmanager.getModelInfo("sync", true);
+
+                    await this._dbmanager.writeOrCreate(
+                        model_info_sync,
+                        _.extend({}, data, {id: id})
+                    );
+                } catch (err) {
+                    return reject(err);
                 }
+
+                return resolve();
             });
         },
 
@@ -73,32 +57,16 @@ odoo.define("web_pwa_cache.PWA.components.Sync", function(require) {
          * @param {Array[Number]} keys
          * @returns {Promise}
          */
-        removeSyncRecords: function(keys) {
-            return new Promise((resolve, reject) => {
-                const [objectStore] = this._db.getObjectStores(
-                    "webclient",
-                    ["sync"],
-                    "readwrite"
-                );
-                if (objectStore) {
-                    const request = objectStore.openCursor();
-                    request.onsuccess = function(evt) {
-                        var cursor = evt.target.result;
-                        if (cursor) {
-                            if (keys.indexOf(cursor.key) !== -1) {
-                                cursor.delete();
-                            }
-                            cursor.continue();
-                        } else {
-                            resolve();
-                        }
-                    };
-                    request.onerror = function() {
-                        reject();
-                    };
-                } else {
-                    reject();
+        removeSyncRecords: function(ids) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const model_info_sync = this._dbmanager.getModelInfo("sync", true);
+                    await this._dbmanager.unlink(model_info_sync, ids);
+                } catch (err) {
+                    return reject(err);
                 }
+
+                return resolve();
             });
         },
 
@@ -107,7 +75,7 @@ odoo.define("web_pwa_cache.PWA.components.Sync", function(require) {
             const tasks = [];
             for (const record of records) {
                 // Update values
-                const record_values = record.value.args[0];
+                const record_values = record.args[0];
                 for (const field_name in record_values) {
                     const field_value = record_values[field_name];
                     if (field_value instanceof Array) {
@@ -121,10 +89,10 @@ odoo.define("web_pwa_cache.PWA.components.Sync", function(require) {
                         record_values[field_name] = field_value;
                     }
                 }
-                record.value.args[0] = record_values;
+                record.args[0] = record_values;
                 // Update linked info
-                for (const model in record.value.linked) {
-                    const changes = record.value.linked[model];
+                for (const model in record.linked) {
+                    const changes = record.linked[model];
                     for (const index in changes) {
                         const change = changes[index];
                         if (change.id === old_id) {
@@ -134,10 +102,10 @@ odoo.define("web_pwa_cache.PWA.components.Sync", function(require) {
                             change.change = new_id;
                         }
 
-                        record.value.linked[model][index] = change;
+                        record.linked[model][index] = change;
                     }
                 }
-                tasks.push(this.updateSyncRecord(record.key, record.value));
+                tasks.push(this.updateSyncRecord(record.id, record));
             }
             return Promise.all(tasks);
         },
@@ -157,9 +125,7 @@ odoo.define("web_pwa_cache.PWA.components.Sync", function(require) {
                     if (records.length) {
                         this.sendRecordsToClient(true);
                     }
-                    for (const index in records) {
-                        const key = records[index].key;
-                        const record = records[index].value;
+                    for (const record of records) {
                         let s_args = record.args;
                         // Remove generated client ids to be generated by server side
                         if (record.method === "create") {
@@ -198,7 +164,7 @@ odoo.define("web_pwa_cache.PWA.components.Sync", function(require) {
                             console.log(
                                 "[ServiceWorker] Error: can't synchronize the current record. Aborting!"
                             );
-                            await this.updateSyncRecord(key, {failed: true});
+                            await this.updateSyncRecord(record.id, {failed: true});
                             break;
                         }
                         // Propagate the new id to the rest of the records
@@ -253,8 +219,7 @@ odoo.define("web_pwa_cache.PWA.components.Sync", function(require) {
                                         );
 
                                         // Update sync records
-                                        for (const def_sync of records) {
-                                            const srecord = def_sync.value;
+                                        for (const srecord of records) {
                                             if (srecord.model !== model) {
                                                 continue;
                                             }
@@ -289,9 +254,9 @@ odoo.define("web_pwa_cache.PWA.components.Sync", function(require) {
                                 );
                             }
                         }
-                        await this.removeSyncRecords([key]);
-                        sync_keys_done.push(key);
-                        this._sendRecordOK(index);
+                        await this.removeSyncRecords([record.id]);
+                        sync_keys_done.push(record.id);
+                        this._sendRecordOK(record.id);
                     }
                 } catch (err) {
                     return reject(err);

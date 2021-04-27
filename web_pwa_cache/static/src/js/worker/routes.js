@@ -257,7 +257,6 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     if (this.config.isOfflineMode()) {
-                        console.log("----->>> PASA READ FOLLOERS");
                         const resp_data = await this._components.exporter.read_followers(
                             request_data.params.res_model,
                             request_data.params.follower_ids
@@ -402,6 +401,13 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
                         field_name,
                         search_params
                     );
+                    if (_.isEmpty(data)) {
+                        return resolve(
+                            tools.ResponseRedirect(
+                                "/web/static/src/img/placeholder.png"
+                            )
+                        );
+                    }
                     return resolve(tools.ResponseImage(data));
                 } catch (err) {
                     return reject(err);

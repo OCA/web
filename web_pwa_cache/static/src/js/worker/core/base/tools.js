@@ -261,6 +261,24 @@ odoo.define("web_pwa_cache.PWA.core.base.Tools", function() {
         return to_quote;
     }
 
+    /**
+     *
+     * @param {Array} promises
+     * @returns {Promise}
+     */
+    function promiseAny(promises) {
+        return new Promise((resolve, reject) => {
+            // Make sure promises are all promises
+            // promises = promises.map((p) => Promise.resolve(p));
+            // resolve this promise as soon as one resolves
+            promises.forEach(p => p.then(resolve));
+            // Reject if all promises reject
+            promises
+                .reduce((a, b) => a.catch(() => b))
+                .catch(() => reject(Error("All failed")));
+        });
+    }
+
     return {
         ODOO_DATE_FORMAT: ODOO_DATE_FORMAT,
         ODOO_TIME_FORMAT: ODOO_TIME_FORMAT,
@@ -286,5 +304,7 @@ odoo.define("web_pwa_cache.PWA.core.base.Tools", function() {
         isCalleable: isCalleable,
 
         s_quote: s_quote,
+
+        promiseAny: promiseAny,
     };
 });

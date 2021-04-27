@@ -53,7 +53,7 @@ odoo.define("web_pwa_cache.ActionManager", function(require) {
         _executeWindowAction: function(action, options) {
             // Force "kanban" view mode
             if (WebClientObj.pwa_manager.isPWAStandalone()) {
-                var modes = action.view_mode.split(",");
+                var modes = (action.view_mode && action.view_mode.split(",")) || [];
                 if (modes.indexOf("kanban") !== -1) {
                     options.viewType = "kanban";
                 }

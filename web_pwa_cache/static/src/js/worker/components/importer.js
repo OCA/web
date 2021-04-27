@@ -93,10 +93,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
             return new Promise(async (resolve, reject) => {
                 const fields_views = data.fields_views;
                 const tasks = [];
-                const model_info_views = this._dbmanager.sqlitedb.getModelInfo(
-                    "views",
-                    true
-                );
+                const model_info_views = this._dbmanager.getModelInfo("views", true);
                 for (const fields_view of fields_views) {
                     tasks.push(
                         this._doCheckCreateOrUpdate(model_info_views, fields_view, [
@@ -124,7 +121,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
         default_get: function(model, data) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_metadata = await this._dbmanager.sqlitedb.getModelInfo(
+                    const model_info_metadata = this._dbmanager.getModelInfo(
                         "model_metadata",
                         true
                     );
@@ -154,7 +151,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                     value: data,
                 };
                 try {
-                    const model_info_userdata = await this._dbmanager.sqlitedb.getModelInfo(
+                    const model_info_userdata = this._dbmanager.getModelInfo(
                         "userdata",
                         true
                     );
@@ -193,7 +190,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                 };
 
                 try {
-                    const model_info_template = await this._dbmanager.sqlitedb.getModelInfo(
+                    const model_info_template = this._dbmanager.getModelInfo(
                         "template",
                         true
                     );
@@ -247,7 +244,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
         action_load: function(data) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_base_actions = await this._dbmanager.sqlitedb.getModelInfo(
+                    const model_info_base_actions = this._dbmanager.getModelInfo(
                         "ir.actions.actions"
                     );
                     await this._doCheckCreateOrUpdate(
@@ -255,41 +252,12 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                         _.pick(data, _.keys(model_info_base_actions.fields)),
                         ["id"]
                     );
-                    const model_info_actions = await this._dbmanager.sqlitedb.getModelInfo(
-                        data.type
-                    );
+                    const model_info_actions = this._dbmanager.getModelInfo(data.type);
                     await this._doCheckCreateOrUpdate(
                         model_info_actions,
                         _.pick(data, _.keys(model_info_actions.fields)),
                         ["id"]
                     );
-                } catch (err) {
-                    return reject(err);
-                }
-
-                return resolve();
-            });
-        },
-
-        /**
-         * @param {Object} data
-         * @returns {Promise}
-         */
-        translations: function(data) {
-            return new Promise(async (resolve, reject) => {
-                const values = {
-                    param: "translations",
-                    value: data,
-                };
-
-                try {
-                    const model_info_userdata = await this._dbmanager.sqlitedb.getModelInfo(
-                        "userdata",
-                        true
-                    );
-                    await this._doCheckCreateOrUpdate(model_info_userdata, values, [
-                        "param",
-                    ]);
                 } catch (err) {
                     return reject(err);
                 }
@@ -316,10 +284,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                 };
 
                 try {
-                    const model_info = await this._dbmanager.sqlitedb.getModelInfo(
-                        "post",
-                        true
-                    );
+                    const model_info = this._dbmanager.getModelInfo("post", true);
                     await this._doCheckCreateOrUpdate(model_info, values, [
                         "pathname",
                         "params",
@@ -352,7 +317,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                 };
 
                 try {
-                    const model_info_function = await this._dbmanager.sqlitedb.getModelInfo(
+                    const model_info_function = this._dbmanager.getModelInfo(
                         "function",
                         true
                     );

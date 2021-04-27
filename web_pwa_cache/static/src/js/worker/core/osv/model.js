@@ -367,6 +367,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
             count = false
         ) {
             return new Promise(async (resolve, reject) => {
+                let sql = null;
                 try {
                     const db = this.getParent().getDB();
 
@@ -395,7 +396,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                         // Ignore order, limit and offset when just counting, they don't make sense and could
                         // hurt performance
                         const query_str = `SELECT count(1) as rec_count FROM ${from_clause} ${where_str}`;
-                        const sql = _.str.sprintf(query_str, where_clause_params);
+                        sql = _.str.sprintf(query_str, ...where_clause_params);
                         const res = await db.get([sql]);
                         return resolve(res.rec_count || 0);
                     }
@@ -423,10 +424,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                         offset_str;
                     // Console.log("--------------------------- THE SQL");
                     // console.log(query_str);
-                    const sql = _.str.sprintf.apply(
-                        this,
-                        [query_str].concat(where_clause_params)
-                    );
+                    sql = _.str.sprintf(query_str, ...where_clause_params);
                     // Console.log(sql);
                     const res = await db.all([sql]);
                     if (!field_names) {
@@ -439,6 +437,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                     }
                     return resolve(res);
                 } catch (err) {
+                    console.log(`[ServiceWorker][OSV] SQL ERROR: ${sql}`);
                     return reject(err);
                 }
             });
