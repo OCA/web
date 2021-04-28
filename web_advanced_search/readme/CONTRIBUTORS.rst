@@ -8,3 +8,7 @@
   * Vicent Cubells
   * Jairo Llopis
   * Alexandre Díaz
+
+* `DynApps NV <https://www.dynapps.be>`_:
+
+  * Raf Ven
