@@ -2,7 +2,7 @@
  * Copyright 2020 Tecnativa - Alexandre Díaz
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
-odoo.define("web_advanced_search.human_domain", function() {
+odoo.define("web_advanced_search.human_domain", function () {
     "use strict";
 
     const join_mapping = {
@@ -12,21 +12,21 @@ odoo.define("web_advanced_search.human_domain", function() {
     };
 
     const human_domain_methods = {
-        DomainTree: function() {
+        DomainTree: function () {
             const human_domains = [];
-            _.each(this.children, child => {
+            _.each(this.children, (child) => {
                 human_domains.push(human_domain_methods[child.template].apply(child));
             });
             return `(${human_domains.join(join_mapping[this.operator])})`;
         },
 
-        DomainSelector: function() {
+        DomainSelector: function () {
             const result = human_domain_methods.DomainTree.apply(this, arguments);
             // Remove surrounding parenthesis
             return result.slice(1, -1);
         },
 
-        DomainLeaf: function() {
+        DomainLeaf: function () {
             const chain = [];
             let operator = this.operator_mapping[this.operator],
                 value = `"${this.value}"`;

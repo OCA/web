@@ -3,7 +3,7 @@
  * Copyright 2020 Alexandre Díaz
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
-odoo.define("web_advanced_search", function(require) {
+odoo.define("web_advanced_search", function (require) {
     "use strict";
 
     const config = require("web.config");
@@ -25,7 +25,7 @@ odoo.define("web_advanced_search", function(require) {
         /**
          * @override
          */
-        init: function(parent, model, domain) {
+        init: function (parent, model, domain) {
             this._super(parent);
             this.model = model;
             this.domain = new Domain(domain);
@@ -38,7 +38,7 @@ odoo.define("web_advanced_search", function(require) {
          *
          * @returns {Object} In the format expected by `web.FilterMenu`.
          */
-        get_filter: function() {
+        get_filter: function () {
             return {
                 attrs: {
                     domain: this.domain_array,
@@ -49,7 +49,7 @@ odoo.define("web_advanced_search", function(require) {
             };
         },
 
-        _createDomainSelector: function() {
+        _createDomainSelector: function () {
             this.domain_selector = new DomainSelector(
                 this,
                 this.model,
@@ -59,7 +59,7 @@ odoo.define("web_advanced_search", function(require) {
             return this.domain_selector.appendTo(this.dummy_parent);
         },
 
-        destroy: function() {
+        destroy: function () {
             this.domain_selector.destroy();
             this.dummy_parent.remove();
             return this._super.apply(this, arguments);
@@ -82,9 +82,9 @@ odoo.define("web_advanced_search", function(require) {
          *
          * @override
          */
-        start: function() {
+        start: function () {
             this._super.apply(this, arguments);
-            this.$el.on("hide.bs.dropdown", function() {
+            this.$el.on("hide.bs.dropdown", function () {
                 var $modal = $(".o_technical_modal.show");
                 return !(
                     ($modal.length && !$modal.has($(this)).length) ||
@@ -96,7 +96,7 @@ odoo.define("web_advanced_search", function(require) {
         /**
          * @override
          */
-        init: function() {
+        init: function () {
             this._super.apply(this, arguments);
 
             this._context = this.getParent().context;
@@ -108,7 +108,7 @@ odoo.define("web_advanced_search", function(require) {
          *
          * @returns {$.Deferred} The opening dialog itself.
          */
-        advanced_search_open: function() {
+        advanced_search_open: function () {
             const domain_selector_dialog = new DomainSelectorDialog(
                 this,
                 this._modelName,
@@ -130,7 +130,7 @@ odoo.define("web_advanced_search", function(require) {
          *
          * @param {OdooEvent} event A `domain_selected` event from the dialog.
          */
-        advanced_search_commit: function(event) {
+        advanced_search_commit: function (event) {
             _.invoke(this.propositions, "destroy");
             const proposition = new AdvancedSearchProposition(
                 this,
@@ -140,7 +140,7 @@ odoo.define("web_advanced_search", function(require) {
             // Necessary to ensure that the porposition have the 'fieldSelector'
             // is filled
             _.defer(
-                function() {
+                function () {
                     this.propositions = [proposition];
                     this._commitSearch();
                 }.bind(this)
@@ -166,13 +166,13 @@ odoo.define("web_advanced_search", function(require) {
         /**
          * @override
          */
-        init: function() {
+        init: function () {
             this._super.apply(this, arguments);
             // To make widgets work, we need a model and an empty record
             FieldManagerMixin.init.call(this);
             this.trigger_up("get_dataset");
             // Make equal and not equal appear 1st and 2nd
-            this.operators = _.sortBy(this.operators, op => {
+            this.operators = _.sortBy(this.operators, (op) => {
                 switch (op.value) {
                     case "=":
                         return -2;
@@ -217,7 +217,7 @@ odoo.define("web_advanced_search", function(require) {
         /**
          * @override
          */
-        start: function() {
+        start: function () {
             const result = this._super.apply(this, arguments);
             // Render the initial widget
             result.then($.proxy(this, "show_inputs", $("<input value='='/>")));
@@ -227,7 +227,7 @@ odoo.define("web_advanced_search", function(require) {
         /**
          * @override
          */
-        destroy: function() {
+        destroy: function () {
             if (this._field_widget) {
                 this._field_widget.destroy();
             }
@@ -241,14 +241,14 @@ odoo.define("web_advanced_search", function(require) {
          *
          * @returns {Object}
          */
-        _get_record: function() {
+        _get_record: function () {
             return this.model.get(this.datapoint_id);
         },
 
         /**
          * @override
          */
-        show_inputs: function($operator) {
+        show_inputs: function ($operator) {
             // Get widget class to be used
             switch ($operator.val()) {
                 case "=":
@@ -289,7 +289,7 @@ odoo.define("web_advanced_search", function(require) {
         /**
          * @override
          */
-        _applyChanges: function(dataPointID, changes, event) {
+        _applyChanges: function (dataPointID, changes, event) {
             if (this._field_widget_name === "many2one") {
                 // Make char updates look like valid x2one updates
                 if (_.isNaN(changes[this.field.name].id)) {
@@ -301,7 +301,7 @@ odoo.define("web_advanced_search", function(require) {
                 return FieldManagerMixin._applyChanges.apply(this, arguments);
             }
 
-            return new Promise(resolve => {
+            return new Promise((resolve) => {
                 resolve();
             });
         },
@@ -309,7 +309,7 @@ odoo.define("web_advanced_search", function(require) {
         /**
          * @override
          */
-        _confirmChange: function(id, fields, event) {
+        _confirmChange: function (id, fields, event) {
             this.datapoint_id = id;
             return this._field_widget.reset(this._get_record(), event);
         },
@@ -317,7 +317,7 @@ odoo.define("web_advanced_search", function(require) {
         /**
          * @override
          */
-        get_value: function() {
+        get_value: function () {
             try {
                 switch (this._field_widget_name) {
                     case "many2one":
@@ -337,7 +337,7 @@ odoo.define("web_advanced_search", function(require) {
          *
          * @override
          */
-        toString: function() {
+        toString: function () {
             try {
                 switch (this._field_widget_name) {
                     case "many2one":
