@@ -42,7 +42,6 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                 front: [],
                 back: [],
             };
-
             this._lazyUpdateRecord = _.debounce(this._updateRecord.bind(this), 450);
         },
 
@@ -51,8 +50,10 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          *
          * @returns {Object}
          */
-        generateVirtualState: function() {
-            return this._generateVirtualState().then(this.recreate.bind(this));
+        generateVirtualState: function(simple_mode) {
+            return this._generateVirtualState(undefined, undefined, simple_mode).then(
+                this.recreate.bind(this)
+            );
         },
 
         /**
@@ -80,9 +81,24 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          * @override
          */
         destroy: function() {
+            this.abortTimeouts();
+            if (this.state) {
+                this.options.basicFieldParams.model.removeVirtualRecord(this.state.id);
+            }
             this.$el.remove();
             this.$card.off("");
             this._super.apply(this, arguments);
+        },
+
+        abortTimeouts: function() {
+            if (this._timerOnChange) {
+                clearTimeout(this._timerOnChange);
+                this._timerOnChange = false;
+            }
+            if (this.state) {
+                const model = this.options.basicFieldParams.model;
+                model.updateRecordContext(this.state.id, {aborted: true});
+            }
         },
 
         /**
@@ -105,6 +121,12 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          * @returns {Promise}
          */
         recreate: function(state) {
+            if (!this.getParent()) {
+                // It's a zombie record! ensure kill it!
+                this.destroy();
+                return;
+            }
+
             if (state) {
                 this._setState(state);
             }
@@ -119,6 +141,15 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
 
             this.on_detach_callback();
             return this._render();
+        },
+
+        markToDestroy: function() {
+            this.toDestroy = true;
+            this.$el.hide();
+        },
+
+        isMarkedToDestroy: function() {
+            return this.toDestroy === true;
         },
 
         /**
@@ -151,7 +182,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                 price,
                 this.state.fields[field_name],
                 this.options.currencyField,
-                this.state.data
+                this.options.basicFieldParams.record.data
             );
         },
 
@@ -184,12 +215,15 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
 
             this.fields = this.getParent().state.fields;
             this.fieldsInfo = this.getParent().state.fieldsInfo.form;
+            const model = this.options.basicFieldParams.model;
+            if (this.state && (!viewState || this.state.id !== viewState.id)) {
+                model.removeVirtualRecord(this.state.id);
+            }
             this.state = viewState;
 
             if (recordSearch) {
                 this.recordSearch = recordSearch;
             }
-            const model = this.options.basicFieldParams.model;
             this.is_virtual =
                 (this.state && model.isPureVirtual(this.state.id)) || false;
 
@@ -203,6 +237,16 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                     this._incProductQty(lazy_qty - 1);
                 }
             }
+
+            this._setMasterUomMap();
+        },
+
+        _setMasterUomMap: function() {
+            this.master_uom_map = {
+                field_uom: "product_uom",
+                field_uom_qty: "product_uom_qty",
+                search_field_uom: "uom_id",
+            };
         },
 
         /**
@@ -232,6 +276,9 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                 auto_save: this.options.autoSave,
                 is_saving: record && record.context.saving,
                 lazy_qty: record && record.context.lazy_qty,
+                has_onchange: record && !record.context.not_onchange,
+                field_uom: this.master_uom_map.field_uom,
+                field_uom_qty: this.master_uom_map.field_uom_qty,
             };
         },
 
@@ -243,25 +290,151 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          */
         _getInternalVirtualRecordContext: function() {
             const context = {};
-            context["default_" + this.options.basicFieldParams.relation_field] =
-                this.options.basicFieldParams.state.id || null;
+            context[`default_${this.options.basicFieldParams.relation_field}`] =
+                this.options.basicFieldParams.record.id || null;
+            context[`default_${this.options.fieldMap.product}`] =
+                this.recordSearch.id || null;
+            context[`default_${this.master_uom_map.field_uom_qty}`] = 1.0;
             return context;
         },
 
         /**
          * Forced data used in virtual states.
-         * Be careful with the onchanges sequence. Think as user interaction, not as CRUD operation.
+         * Be careful with the onchanges sequence. Think as user interaction ("ADD", "DELETE", ... commands), not as CRUD operation.
          *
          * @private
          * @returns {Object}
          */
         _getInternalVirtualRecordData: function() {
-            const data = {};
-            data[this.options.fieldMap.product] = {
-                operation: "ADD",
-                id: this.recordSearch.id,
-            };
-            return data;
+            // To be overwritten
+            return {};
+        },
+
+        _generateVirtualStateSimple: function(context, def_values) {
+            const model = this.options.basicFieldParams.model;
+            return new Promise(resolve => {
+                const record_def = model.createVirtualDatapoint(
+                    this.options.basicFieldParams.value.id,
+                    {
+                        context: context,
+                    }
+                );
+                model.applyDefaultValues(record_def.record.id, def_values).then(() => {
+                    const new_state = model.get(record_def.record.id);
+                    const product_uom_id =
+                        new_state.data[
+                            this.options.fieldMap[this.master_uom_map.field_uom]
+                        ].id;
+                    // Apply default values
+                    model
+                        .applyDefaultValues(
+                            product_uom_id,
+                            {
+                                display_name: this.recordSearch[
+                                    this.master_uom_map.search_field_uom
+                                ][1],
+                            },
+                            {
+                                fieldNames: ["display_name"],
+                            }
+                        )
+                        .then(() => {
+                            return model._fetchRelationalData(record_def.record);
+                        })
+                        .then(() => {
+                            return model._postprocess(record_def.record);
+                        })
+                        .then(() => {
+                            this._timerOnChange = setTimeout(
+                                (current_batch_id, record_def) => {
+                                    this._timerOnChange = false;
+                                    if (
+                                        current_batch_id !=
+                                            this.options.basicFieldParams
+                                                .current_batch_id ||
+                                        record_def.record.context.aborted
+                                    ) {
+                                        return;
+                                    }
+                                    model
+                                        ._makeDefaultRecordNoDatapoint(
+                                            record_def.record,
+                                            record_def.params
+                                        )
+                                        .then(() => {
+                                            if (record_def.record.context.aborted) {
+                                                return;
+                                            }
+                                            model.updateRecordContext(
+                                                record_def.record.id,
+                                                {
+                                                    not_onchange: false,
+                                                }
+                                            );
+                                            this.recreate(
+                                                model.get(record_def.record.id)
+                                            );
+                                        });
+                                },
+                                750,
+                                this.options.basicFieldParams.current_batch_id,
+                                record_def
+                            );
+
+                            resolve(model.get(record_def.record.id));
+                        });
+                });
+            });
+        },
+
+        _generateVirtualStateFull: function(data, context, def_values) {
+            const model = this.options.basicFieldParams.model;
+            return new Promise(resolve => {
+                model
+                    .createVirtualRecord(this.options.basicFieldParams.value.id, {
+                        context: context,
+                    })
+                    .then(result => {
+                        // Apply default values
+                        model
+                            .applyDefaultValues(result.record.id, def_values)
+                            .then(() => {
+                                const new_state = model.get(result.record.id);
+                                const product_uom_id =
+                                    new_state.data[
+                                        this.options.fieldMap[
+                                            this.master_uom_map.field_uom
+                                        ]
+                                    ].id;
+                                model
+                                    .applyDefaultValues(
+                                        product_uom_id,
+                                        {
+                                            display_name: this.recordSearch[
+                                                this.master_uom_map.search_field_uom
+                                            ][1],
+                                        },
+                                        {
+                                            fieldNames: ["display_name"],
+                                        }
+                                    )
+                                    .then(() => {
+                                        const sdata = _.extend(
+                                            {},
+                                            this._getInternalVirtualRecordData(),
+                                            data
+                                        );
+                                        this._applyChanges(
+                                            result.record.id,
+                                            sdata,
+                                            result.params
+                                        ).then(() =>
+                                            resolve(model.get(result.record.id))
+                                        );
+                                    });
+                            });
+                    });
+            });
         },
 
         /**
@@ -270,19 +443,39 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          * @param {Object} context
          * @returns {Object}
          */
-        _generateVirtualState: function(data, context) {
-            const model = this.options.basicFieldParams.model;
+        _generateVirtualState: function(data, context, simple_mode) {
             const scontext = _.extend(
                 {},
                 this._getInternalVirtualRecordContext(),
                 context
             );
-            // Force qty to 1.0 to launch correct onchanges
-            scontext[`default_${this.options.fieldMap.product_uom_qty}`] = 1.0;
-            const sdata = _.extend({}, this._getInternalVirtualRecordData(), data);
-            return model.createVirtualRecord(this.options.basicFieldParams.value.id, {
-                data: sdata,
-                context: scontext,
+            // Apply default values
+            const def_values = {
+                [this.options.fieldMap.product]: this.recordSearch.id,
+                [this.options.fieldMap[this.master_uom_map.field_uom_qty]]: 1.0,
+                [this.options.fieldMap[this.master_uom_map.field_uom]]: this
+                    .recordSearch[this.master_uom_map.search_field_uom][0],
+            };
+            if (simple_mode) {
+                return this._generateVirtualStateSimple(scontext, def_values);
+            }
+            return this._generateVirtualStateFull(data, scontext, def_values);
+        },
+
+        /**
+         * Apply changes (with onchange)
+         *
+         * @param {Integer/String} record_id
+         * @param {Object} changes
+         * @param {Object} options
+         */
+        _applyChanges: function(record_id, changes, options) {
+            const model = this.options.basicFieldParams.model;
+            return model._applyChange(record_id, changes, options).then(() => {
+                model.updateRecordContext(record_id, {
+                    not_onchange: false,
+                });
+                this.recreate(model.get(record_id));
             });
         },
 
@@ -482,15 +675,18 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             this.$el.find(to_find.join()).each((key, value) => {
                 const $elm = $(value);
                 const format_out = $elm.data("esc") || $elm.data("field");
-                $elm.html(
-                    py.eval(format_out, _.extend({}, state_data, this.recordSearch))
+                const text_out = py.eval(
+                    format_out,
+                    _.extend({}, state_data, this.recordSearch)
                 );
+                $elm.html(text_out);
+                $elm.attr("title", text_out);
             });
 
             if (this.options.showDiscount) {
                 const field_map = this.options.fieldMap;
                 if (state_data) {
-                    const has_discount = state_data[field_map.discount] > 0.0;
+                    const has_discount = state_data[field_map.discount] !== 0.0;
                     this.$el
                         .find(".original_price,.discount_price")
                         .toggleClass("d-none", !has_discount);
@@ -526,7 +722,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                     price_reduce,
                     this.state.fields[field_map.price_unit],
                     this.options.currencyField,
-                    this.state.data
+                    this.options.basicFieldParams.record.data
                 )
             );
         },
@@ -594,9 +790,14 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             if (record.context.saving) {
                 return Promise.resolve();
             }
-            const changes = _.pick(record.data, this.options.fieldMap.product_uom_qty);
-            if (changes[this.options.fieldMap.product_uom_qty] === 0) {
-                changes[this.options.fieldMap.product_uom_qty] = 1;
+            const changes = _.pick(
+                record.data,
+                this.options.fieldMap[this.master_uom_map.field_uom_qty]
+            );
+            if (
+                changes[this.options.fieldMap[this.master_uom_map.field_uom_qty]] === 0
+            ) {
+                changes[this.options.fieldMap[this.master_uom_map.field_uom_qty]] = 1;
             }
             this.$card.addClass("blocked");
             return model.notifyChanges(record.id, changes).then(() => {
@@ -627,15 +828,25 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                 // wait for the Odoo response.
                 const model_record_data = model.localData[this.state.id].data;
                 if (
-                    _.isNull(model_record_data[this.options.fieldMap.product_uom_qty])
+                    _.isNull(
+                        model_record_data[
+                            this.options.fieldMap[this.master_uom_map.field_uom_qty]
+                        ]
+                    )
                 ) {
-                    model_record_data[this.options.fieldMap.product_uom_qty] = 1;
+                    model_record_data[
+                        this.options.fieldMap[this.master_uom_map.field_uom_qty]
+                    ] = 1;
                 }
-                model_record_data[this.options.fieldMap.product_uom_qty] += amount;
+                model_record_data[
+                    this.options.fieldMap[this.master_uom_map.field_uom_qty]
+                ] += amount;
                 return model
                     .notifyChanges(record.id, {
-                        [this.options.fieldMap.product_uom_qty]:
-                            model_record_data[this.options.fieldMap.product_uom_qty],
+                        [this.options.fieldMap[this.master_uom_map.field_uom_qty]]:
+                            model_record_data[
+                                this.options.fieldMap[this.master_uom_map.field_uom_qty]
+                            ],
                     })
                     .then(() => {
                         this._processDynamicFields();
@@ -836,6 +1047,8 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
         _onRestoreFlipCard: function(evt) {
             this.$card.removeClass("active");
             this.$front.removeClass("d-none");
+            const $img = this.$front.find("img");
+            const cur_img_src = $img.attr("src");
             if (this.$card.hasClass("oe_flip_card_maximized")) {
                 this.$card.removeClass("oe_flip_card_maximized");
                 this.$card.on("transitionend", () => {
@@ -859,6 +1072,8 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             if (evt.data.block) {
                 this.$card.addClass("blocked");
             }
+            $img.attr("src", $img.data("srcAlt"));
+            $img.data("srcAlt", cur_img_src);
         },
 
         /**
@@ -878,6 +1093,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          */
         _onQuickRecordUpdated: function(evt) {
             this._processDynamicFields(Object.keys(evt.data.changes));
+            // This.recreate();
             this.trigger_up("update_subtotal");
         },
     });

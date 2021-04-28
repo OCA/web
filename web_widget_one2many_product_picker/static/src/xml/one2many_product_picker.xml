@@ -86,6 +86,101 @@
             >Load More</button>
         </div>
     </t>
+    <t t-name="One2ManyProductPicker.ActionButton">
+        <div class="safezone d-inline-block float-left m-0 pb-2 pr-2 text-left">
+            <t t-if="is_saving &amp;&amp; lazy_qty > 0">
+                <span
+                    class="badge record_saving badge-warning font-weight-bold rounded-0 mt-0 px-2 py-3 product_qty"
+                ><span class="lazy_product_qty" t-esc="lazy_qty || '1'" /> x <t
+                        t-esc="state.data[field_map[field_uom]].data.display_name"
+                    /></span>
+            </t>
+            <t t-elif="!is_virtual">
+                <span
+                    t-att-data-field="field_map[field_uom_qty]"
+                    t-attf-data-esc="str({{field_map[field_uom_qty]}}) + ' x ' + {{field_map[field_uom]}}.data.display_name"
+                    t-attf-class="badge {{modified &amp;&amp; 'badge-warning' || 'badge-success'}} font-weight-bold rounded-0 mt-0 px-2 py-3 product_qty"
+                />
+            </t>
+            <t t-else="">
+                <span
+                    class="badge badge-primary font-weight-bold rounded-0 mt-0 px-2 py-3 add_product"
+                ><i class="fa fa-plus" /> 1 <t
+                        t-esc="state.data[field_map[field_uom]].data.display_name"
+                    /></span>
+            </t>
+        </div>
+    </t>
+    <t t-name="One2ManyProductPicker.PriceZone">
+        <div class="position-absolute m-0 text-left badge_price">
+            <t t-if="show_discount">
+                <span
+                    t-att-data-field="field_map.discount"
+                    t-attf-data-esc="str({{field_map.discount}} * -1.0) +'%'"
+                    class="badge badge-dark discount_price font-weight-bold rounded-0 mt-1 p-2"
+                />
+                <span
+                    t-att-data-field="field_map.price_unit"
+                    t-attf-data-esc="'{{monetary('price_unit',true)}}'"
+                    class="badge font-weight-bold rounded-0 original_price"
+                />
+                <span
+                    t-if="has_onchange"
+                    class="badge badge-info price_unit font-weight-bold rounded-0 mt-1 p-2"
+                />
+            </t>
+            <t t-else="has_onchange">
+                <span
+                    t-att-data-field="field_map.price_unit"
+                    t-attf-data-esc="'{{monetary('price_unit',true)}}'"
+                    class="badge badge-info price_unit font-weight-bold rounded-0 mt-1 p-2"
+                />
+            </t>
+        </div>
+    </t>
+    <t t-name="One2ManyProductPicker.FlipCard.Front">
+        <div
+            t-attf-class="oe_flip_card_front p-0 {{((modified || is_saving) &amp;&amp; 'border-warning') || (state &amp;&amp; !is_virtual &amp;&amp; 'border-success') || ''}}"
+        >
+            <t t-if="state">
+                <div class="indicator_zones float-left">
+                    <t t-call="One2ManyProductPicker.ActionButton" />
+                    <t t-call="One2ManyProductPicker.PriceZone" />
+                </div>
+                <span
+                    data-field="display_name"
+                    class="oe_one2many_product_picker_title position-absolute fixed-bottom p-1"
+                    data-esc="display_name"
+                />
+                <img
+                    alt=""
+                    class="img img-fluid"
+                    t-att-src="image(state.data[field_map.product].data.id,'image_128')"
+                    t-att-data-src-alt="image(state.data[field_map.product].data.id,'image_1024')"
+                />
+            </t>
+            <t t-else="">
+                <span
+                    class="oe_one2many_product_picker_title position-absolute fixed-bottom p-1"
+                    t-esc="record_search.display_name"
+                />
+                <img
+                    alt=""
+                    class="img img-fluid"
+                    t-att-src="image(record_search.id,'image_128')"
+                    t-att-data-src-alt="image(record_search.id,'image_1024')"
+                />
+            </t>
+        </div>
+    </t>
+    <t t-name="One2ManyProductPicker.FlipCard.Back">
+        <div class="oe_flip_card_back">
+            <widget
+                name="product_picker_quick_create_form"
+                t-att-compare-key="field_map.product_uom"
+            />
+        </div>
+    </t>
     <t t-name="One2ManyProductPicker.FlipCard">
         <div
             class="oe_flip_container p-1 col-12 col-sm-8 col-md-6 col-lg-4 col-xl-3 col-xxl-2"
@@ -95,101 +190,8 @@
                 t-attf-class="oe_flip_card {{!state &amp;&amp; 'disabled' || (auto_save &amp;&amp; (!is_virtual || is_saving) &amp;&amp; !state.data.id &amp;&amp; 'blocked') || ''}}"
             >
                 <div class="oe_flip_card_inner text-center">
-                    <div
-                        t-attf-class="oe_flip_card_front p-0 {{((modified || is_saving) &amp;&amp; 'border-warning') || (state &amp;&amp; !is_virtual &amp;&amp; 'border-success') || ''}}"
-                    >
-                        <t t-if="state">
-                            <t t-if="is_saving &amp;&amp; lazy_qty > 0">
-                                <div
-                                    class="safezone position-absolute m-0 pb-2 pr-2 text-left"
-                                >
-                                    <span
-                                        class="badge record_saving badge-warning font-weight-bold rounded-0 mt-0 px-2 py-3 product_qty"
-                                    ><span
-                                            class="lazy_product_qty"
-                                            t-esc="lazy_qty || '1'"
-                                        /> x <t
-                                            t-esc="state.data[field_map.product_uom].data.display_name"
-                                        /></span>
-                                </div>
-                            </t>
-                            <t t-elif="!is_virtual">
-                                <div
-                                    class="safezone position-absolute m-0 pb-2 pr-2 text-left"
-                                >
-                                    <span
-                                        t-att-data-field="field_map.product_uom_qty"
-                                        t-attf-data-esc="str({{field_map.product_uom_qty}}) + ' x ' + {{field_map.product_uom}}.data.display_name"
-                                        t-attf-class="badge {{modified &amp;&amp; 'badge-warning' || 'badge-success'}} font-weight-bold rounded-0 mt-0 px-2 py-3 product_qty"
-                                    />
-                                </div>
-                            </t>
-                            <t t-else="">
-                                <div
-                                    class="safezone position-absolute m-0 pb-2 pr-2 text-left"
-                                >
-                                    <span
-                                        class="badge badge-primary font-weight-bold rounded-0 mt-0 px-2 py-3 add_product"
-                                    ><i class="fa fa-plus" /> 1 <t
-                                            t-esc="state.data[field_map.product_uom].data.display_name"
-                                        /></span>
-                                </div>
-                            </t>
-                            <div class="position-absolute m-0 text-left badge_price">
-                                <t t-if="show_discount">
-                                    <span
-                                        t-att-data-field="field_map.discount"
-                                        t-attf-data-esc="'-' + str({{field_map.discount}}) +'%'"
-                                        class="badge badge-dark discount_price font-weight-bold rounded-0 mt-1 p-2"
-                                    />
-                                    <span
-                                        t-att-data-field="field_map.price_unit"
-                                        t-attf-data-esc="'{{monetary('price_unit',true)}}'"
-                                        class="badge font-weight-bold rounded-0 original_price"
-                                    />
-                                    <span
-                                        class="badge badge-info price_unit font-weight-bold rounded-0 mt-1 p-2"
-                                    />
-                                </t>
-                                <t t-else="">
-                                    <span
-                                        t-att-data-field="field_map.price_unit"
-                                        t-attf-data-esc="'{{monetary('price_unit',true)}}'"
-                                        class="badge badge-info price_unit font-weight-bold rounded-0 mt-1 p-2"
-                                    />
-                                </t>
-                            </div>
-                            <span
-                                data-field="display_name"
-                                class="oe_one2many_product_picker_title position-absolute fixed-bottom p-1"
-                                data-esc="display_name"
-                            />
-                            <img
-                                alt=""
-                                class="img img-fluid"
-                                t-att-src="image(state.data[field_map.product].data.id,'image_512')"
-                                t-att-data-src-alt="image(state.data[field_map.product].data.id,'image_1024')"
-                            />
-                        </t>
-                        <t t-else="">
-                            <span
-                                class="oe_one2many_product_picker_title position-absolute fixed-bottom p-1"
-                                t-esc="record_search.display_name"
-                            />
-                            <img
-                                alt=""
-                                class="img img-fluid"
-                                t-att-src="image(record_search.id,'image_512')"
-                                t-att-data-src-alt="image(record_search.id,'image_1024')"
-                            />
-                        </t>
-                    </div>
-                    <div class="oe_flip_card_back">
-                        <widget
-                            name="product_picker_quick_create_form"
-                            t-att-compare-key="field_map.product_uom"
-                        />
-                    </div>
+                    <t t-call="One2ManyProductPicker.FlipCard.Front" />
+                    <t t-call="One2ManyProductPicker.FlipCard.Back" />
                 </div>
             </div>
         </div>

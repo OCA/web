@@ -83,11 +83,6 @@
                 .oe_flip_card_inner {
                     height: 100% !important;
                     box-shadow: 0px 0px 15px;
-                    .img-fluid {
-                        transform: translateY(-50%) !important;
-                        top: 50%;
-                        position: relative;
-                    }
                     .oe_one2many_product_picker_title {
                         font-size: 1.95rem !important;
                     }
@@ -142,6 +137,14 @@
                         $one2many-product-picker-transition-3d-time/2;
                 transform-style: preserve-3d;
 
+                .img-fluid {
+                    transform: translate(-50%, -50%);
+                    top: 50%;
+                    left: 50%;
+                    z-index: -1;
+                    position: absolute;
+                }
+
                 .position-absolute {
                     z-index: 1;
                 }
@@ -150,8 +153,19 @@
                     font-size: 1rem;
                 }
 
+                .indicator_zones {
+                    display: inline-flex;
+                    flex-direction: column;
+                    max-width: 50%;
+                    align-items: flex-start;
+
+                    > span.badge {
+                        font-size: 0.8rem;
+                    }
+                }
+
                 .badge_price {
-                    top: 50%;
+                    top: 55%;
                     right: -2px;
                     transform: translateY(-50%);
                     display: grid;
@@ -190,8 +204,17 @@
                     .o_form_view.o_form_nosheet {
                         padding: $one2many-product-picker-card-form-padding;
 
-                        .o_field_widget .o_input_dropdown > input {
-                            height: unset;
+                        .o_field_widget {
+                            &:not(.widget_numeric_step) {
+                                max-width: 95%;
+                            }
+
+                            .o_input_dropdown > input {
+                                height: unset;
+                            }
+                        }
+                        .btn.w-100 {
+                            max-width: 95%;
                         }
                     }
                 }
@@ -211,6 +234,16 @@
                         top: 50%;
                         left: 0;
                         transform: translateY(-50%);
+
+                        .oe_one2many_product_picker_form_buttons {
+                            display: flex;
+                            padding: 0 3px;
+                            justify-content: center;
+
+                            .oe_record_remove {
+                                flex-grow: 1;
+                            }
+                        }
                     }
                 }
 
