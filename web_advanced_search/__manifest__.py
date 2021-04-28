@@ -5,7 +5,7 @@
 
 {
     "name": "Advanced search",
-    "version": "13.0.1.0.3",
+    "version": "14.0.1.0.0",
     "author": "Therp BV, " "Tecnativa, " "Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "category": "Usability",
