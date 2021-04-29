@@ -64,15 +64,6 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
         },
 
         /**
-         * @param {Object} widget
-         */
-        removeWidget: function (widget) {
-            var index = this.widgets.indexOf(widget);
-            widget.destroy();
-            delete this.widgets[index];
-        },
-
-        /**
          * @override
          */
         start: function () {
