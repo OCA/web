@@ -2,19 +2,22 @@
 <!-- Copyright 2017-2018 Jairo Llopis <jairo.llopis@tecnativa.com>
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <templates>
-    <t t-extend="FilterMenuGenerator">
-        <t t-jquery=".o_add_filter_menu" t-operation="after">
-            <div
-                t-if="Object.keys(widget.fields).length !== 0"
-                role="separator"
-                class="dropdown-divider o_generator_menu"
-            />
+    <t t-inherit="web.FilterMenu" t-inherit-mode="extension" owl="1">
+        <xpath expr="//CustomFilterItem" position="after">
+            <li t-if="items.length" class="dropdown-divider" role="separator" />
+            <AdvancedFilterItem fields="props.fields" />
+        </xpath>
+    </t>
+    <t t-name="web_advanced_search.AdvancedFilterItem" owl="1">
+        <div class="o_generator_menu">
             <button
-                t-if="Object.keys(widget.fields).length !== 0"
                 type="button"
-                class="dropdown-item o_generator_menu o_add_advanced_search"
+                class="o_add_advanced_search dropdown-item"
                 aria-expanded="false"
-            >Add Advanced Filter</button>
-        </t>
+                t-on-click="advanced_search_open"
+            >
+                <t>Add Advanced Filter</t>
+            </button>
+        </div>
     </t>
 </templates>
