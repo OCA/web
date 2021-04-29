@@ -13,7 +13,9 @@
     "website": "https://github.com/OCA/web",
     "depends": ["web"],
     "data": ["views/templates.xml"],
-    "qweb": ["static/src/xml/web_advanced_search.xml"],
+    "qweb": [
+        "static/src/xml/web_advanced_search.xml",
+    ],
     "installable": True,
     "application": False,
 }
