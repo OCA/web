@@ -7,6 +7,7 @@ odoo.define("web_disable_export_group", function(require) {
     var core = require("web.core");
     var Sidebar = require("web.Sidebar");
     var session = require("web.session");
+    var ListView = require("web.ListView");
     var _t = core._t;
 
     Sidebar.include({
@@ -21,6 +22,19 @@ odoo.define("web_disable_export_group", function(require) {
                 _items = _.reject(_items, {label: _t("Export")});
             }
             this._super(sectionCode, _items);
+        },
+    });
+
+    ListView.include({
+        init: function() {
+            this._super.apply(this, arguments);
+            this.rendererParams.activeActions = this.controllerParams.activeActions;
+            if (!session.group_export_data) {
+                this.controllerParams.activeActions.export_xlsx = this.arch.attrs
+                    .export_xlsx
+                    ? Boolean(JSON.parse(this.arch.attrs.export_xlsx))
+                    : false;
+            }
         },
     });
 });
