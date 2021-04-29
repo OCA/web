@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2017-2018 Jairo Llopis <jairo.llopis@tecnativa.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <template id="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/web_advanced_search/static/src/js/control_panel/advanced_filter_item.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_advanced_search/static/src/js/control_panel/filter_menu.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_advanced_search/static/src/js/human_domain.js"
+            />
+        </xpath>
+    </template>
+</odoo>

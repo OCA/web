@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2017-2018 Jairo Llopis <jairo.llopis@tecnativa.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<templates>
+    <t t-inherit="web.FilterMenu" t-inherit-mode="extension" owl="1">
+        <xpath expr="//CustomFilterItem" position="after">
+            <li t-if="items.length" class="dropdown-divider" role="separator" />
+            <AdvancedFilterItem fields="props.fields" />
+        </xpath>
+    </t>
+    <t t-name="web_advanced_search.AdvancedFilterItem" owl="1">
+        <div class="o_generator_menu">
+            <button
+                type="button"
+                class="o_add_advanced_search dropdown-item"
+                aria-expanded="false"
+                t-on-click="advanced_search_open"
+            >
+                <t>Add Advanced Filter</t>
+            </button>
+        </div>
+    </t>
+</templates>
