@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-web Odoo addons",
     version=version,
     install_requires=[
+        'odoo14-addon-web_advanced_search',
         'odoo14-addon-web_copy_confirm',
         'odoo14-addon-web_dialog_size',
         'odoo14-addon-web_domain_field',
