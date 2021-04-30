@@ -195,6 +195,8 @@ $chatter_zone_width: 35%;
             background: none;
             transition: 300ms ease;
             transition-property: background-color;
+            white-space: normal;
+            text-align: center;
 
             img {
                 box-shadow: none;
