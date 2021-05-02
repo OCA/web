@@ -1,7 +1,7 @@
 /* Copyright 2016 Onestein
    Copyright 2018 Tecnativa - David Vidal
    License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). */
-odoo.define("web_disable_export_group", function(require) {
+odoo.define("web_disable_export_group", function (require) {
     "use strict";
 
     var core = require("web.core");
@@ -10,7 +10,7 @@ odoo.define("web_disable_export_group", function(require) {
     var _t = core._t;
 
     Sidebar.include({
-        _addItems: function(sectionCode, items) {
+        _addItems: function (sectionCode, items) {
             var _items = items;
             if (
                 !session.is_superuser &&

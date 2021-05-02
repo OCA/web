@@ -1,7 +1,7 @@
 /* Copyright 2020 Tecnativa - João Marques
    License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). */
 
-odoo.define("web_disable_export_group.tour", function(require) {
+odoo.define("web_disable_export_group.tour", function (require) {
     "use strict";
 
     var core = require("web.core");
