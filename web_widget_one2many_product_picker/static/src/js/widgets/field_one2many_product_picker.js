@@ -584,7 +584,8 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
         _onCreateQuickRecord: function (evt) {
             evt.stopPropagation();
             var self = this;
-            this.parent_controller.model.setPureVirtual(evt.data.id, false);
+            var model = this.parent_controller.model;
+            model.setPureVirtual(evt.data.id, false);
 
             if (this.options.auto_save) {
                 // Dont trigger state update
@@ -593,16 +594,10 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                     {notifyChange: false}
                 ).then(function () {
                     self.parent_controller.saveRecord(undefined, {stayInEdit: true}).then(function () {
-                        // Because 'create' generates a new state and we can't know these new id we
-                        // need force update all the current states.
-                        self._setValue(
-                                {operation: "UPDATE", id: evt.data.id},
-                                {doNotSetDirty: true}
-                        ).then(function () {
-                            if (evt.data.callback) {
-                                evt.data.callback();
-                            }
-                        });
+                        self.renderer.updateState(model.get(self.parent_controller.handle).data[self.name], {force: true});
+                        if (evt.data.callback) {
+                            evt.data.callback();
+                        }
                     });
                     if (evt.data.callback) {
                         evt.data.callback();
@@ -631,15 +626,10 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                     {notifyChange: false}
                 ).then(function () {
                     self.parent_controller.saveRecord(undefined, {stayInEdit: true}).then(function () {
-                        // Workaround to get updated values
-                        self.parent_controller.model.reload(self.value.id).then(function (result) {
-                            var new_data = self.parent_controller.model.get(result);
-                            self.value.data = new_data.data;
-                            self.renderer.updateState(self.value, {force: true});
-                            if (callback) {
-                                callback();
-                            }
-                        });
+                        self.renderer.updateState(self.parent_controller.model.get(self.parent_controller.handle).data[self.name], {force: true});
+                        if (callback) {
+                            callback();
+                        }
                     });
                     if (callback) {
                         callback();
