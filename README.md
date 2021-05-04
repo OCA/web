@@ -27,7 +27,7 @@ addon | version | summary
 [web_environment_ribbon](web_environment_ribbon/) | 14.0.1.0.0 | Web Environment Ribbon
 [web_m2x_options](web_m2x_options/) | 14.0.1.0.0 | web_m2x_options
 [web_notify](web_notify/) | 14.0.1.0.0 | Send notification messages to user
-[web_responsive](web_responsive/) | 14.0.1.0.1 | Responsive web client, community-supported
+[web_responsive](web_responsive/) | 14.0.1.0.2 | Responsive web client, community-supported
 [web_sheet_full_width](web_sheet_full_width/) | 14.0.1.0.1 | Use the whole available screen width when displaying sheets
 [web_timeline](web_timeline/) | 14.0.1.0.0 | Interactive visualization chart to show events in time
 [web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 14.0.1.0.0 | Allows you to dynamically color fields on tree views
