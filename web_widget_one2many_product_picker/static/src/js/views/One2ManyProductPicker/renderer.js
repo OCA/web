@@ -142,11 +142,6 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                 }
             }
 
-            if (this.search_group.name === "main_lines") {
-                _.invoke(to_destroy, "destroy");
-                return $.when();
-            }
-
             // If doesn't exists other records with the same product, we need
             // create a 'pure virtual' record again.
             for (var index_destroy in to_destroy) {
