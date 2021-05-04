@@ -108,6 +108,7 @@ msgstr ""
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
+#: code:addons/web_widget_one2many_product_picker/static/src/js/views/One2ManyProductPicker/record.js:361
 #: code:addons/web_widget_one2many_product_picker/static/src/js/views/One2ManyProductPicker/record.js:363
 #, python-format
 msgid "[No widget %s]"
