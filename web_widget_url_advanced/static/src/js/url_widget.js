@@ -14,14 +14,21 @@ odoo.define("web_widget_url_advanced", function(require) {
             this._super.apply(this, arguments);
             // Retrieve customized `<a />` text from a field
             // via `text_field` attribute or `options.text_field`
-            var text_field = this.attrs.text_field || this.attrs.options.text_field;
-            if (text_field) {
-                var field_value = this.recordData[text_field];
+            this.text_field = this.attrs.text_field || this.attrs.options.text_field;
+        },
+        /**
+         * Retrieve anchor text based on options.
+         * @returns {String}
+         */
+        _get_text: function() {
+            if (this.text_field) {
+                var field_value = this.recordData[this.text_field];
                 if (_.isObject(field_value) && _.has(field_value.data)) {
                     field_value = field_value.data.display_name;
                 }
-                this.attrs.text = field_value;
+                return field_value;
             }
+            return this.attrs.text;
         },
         /**
          *
@@ -29,6 +36,8 @@ odoo.define("web_widget_url_advanced", function(require) {
          * @private
          */
         _renderReadonly: function() {
+            // Base widget uses `this.attrs.text` instead of `this.value` when available.
+            this.attrs.text = this._get_text();
             this._super.apply(this, arguments);
             var prefix = this.attrs.prefix_name || this.attrs.options.prefix_name;
             if (prefix) {
