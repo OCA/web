@@ -588,17 +588,24 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
             model.setPureVirtual(evt.data.id, false);
 
             if (this.options.auto_save) {
-                // Dont trigger state update
+                // Don't notifyChange because we already have all the onchange data for 1 qty
                 this._setValue(
                     {operation: "ADD", id: evt.data.id},
                     {notifyChange: false}
                 ).then(function () {
                     self.parent_controller.saveRecord(undefined, {stayInEdit: true}).then(function () {
-                        self.renderer.updateState(model.get(self.parent_controller.handle).data[self.name], {force: true});
-                        if (evt.data.callback) {
-                            evt.data.callback();
-                        }
+                        // When call 'saveRecord' with 'stayInEdit' the changes aren't confirmed so we force it
+                        var parent_record = model.get(self.parent_controller.handle);
+                        self.parent_controller.renderer.confirmChange(parent_record, parent_record.id, [self.name]).then(function() {
+                            // Second call to callback method.
+                            // We call two times because the first is for fast update
+                            // this second is the update after parent changes
+                            if (evt.data.callback) {
+                                evt.data.callback();
+                            }
+                        });
                     });
+                    // First call to callback method
                     if (evt.data.callback) {
                         evt.data.callback();
                     }
@@ -620,17 +627,24 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
         _doUpdateQuickRecord: function (id, data, callback) {
             if (this.options.auto_save) {
                 var self = this;
-                // Dont trigger state update
+                var model = this.parent_controller.model;
                 this._setValue(
                     {operation: "UPDATE", id: id, data: data},
-                    {notifyChange: false}
+                    {notifyChange: true}
                 ).then(function () {
                     self.parent_controller.saveRecord(undefined, {stayInEdit: true}).then(function () {
-                        self.renderer.updateState(self.parent_controller.model.get(self.parent_controller.handle).data[self.name], {force: true});
-                        if (callback) {
-                            callback();
-                        }
+                        // When call 'saveRecord' with 'stayInEdit' the changes aren't confirmed so we force it
+                        var parent_record = model.get(self.parent_controller.handle);
+                        self.parent_controller.renderer.confirmChange(parent_record, parent_record.id, [self.name]).then(function() {
+                            // Second call to callback method.
+                            // We call two times because the first is for fast update
+                            // this second is the update after parent changes
+                            if (callback) {
+                                callback();
+                            }
+                        });
                     });
+                    // First call to callback method
                     if (callback) {
                         callback();
                     }
