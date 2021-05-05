@@ -13,7 +13,7 @@
     "license": "LGPL-3",
     "installable": True,
     "depends": [
-        'web',
+        'web_editor',
         'mail',
     ],
     "data": [

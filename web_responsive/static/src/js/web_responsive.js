@@ -16,7 +16,7 @@ odoo.define('web_responsive', function (require) {
     var Chatter = require('mail.Chatter');
     var DocumentViewer = require('mail.DocumentViewer');
     var ListRenderer = require('web.ListRenderer');
-
+    var web_editor_backend = require("web_editor.backend");
 
     /* Hide AppDrawer in desktop and mobile modes.
      * To avoid delays in pages with a lot of DOM nodes we make
@@ -556,6 +556,15 @@ odoo.define('web_responsive', function (require) {
             var $elm = this._super.apply(this, arguments);
             $elm.find(".custom-control-label").html('');
             return $elm;
+        },
+    });
+    web_editor_backend.FieldTextHtmlSimple.include({
+        _getSummernoteConfig: function() {
+            var result = this._super.apply(this, arguments);
+            if (this.nodeOptions.automatic_summernote_height || config.device.isMobile) {
+                result.height = undefined;
+            }
+            return result;
         },
     });
 });
