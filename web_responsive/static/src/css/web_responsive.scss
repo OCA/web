@@ -697,7 +697,7 @@ html .o_web_client .o_action_manager .o_action {
 .o_web_client.o_chatter_position_sided {
     .o_modal_fullscreen.o_document_viewer {
         // On-top of navbar
-        z-index: 10;
+        z-index: $o-mail-thread-window-zindex + 1;
 
         &.o_responsive_document_viewer {
             /* Show sided viewer on large screens */
