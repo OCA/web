@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo14-addon-web_access_rule_buttons',
         'odoo14-addon-web_advanced_search',
+        'odoo14-addon-web_company_color',
         'odoo14-addon-web_copy_confirm',
         'odoo14-addon-web_dialog_size',
         'odoo14-addon-web_domain_field',
