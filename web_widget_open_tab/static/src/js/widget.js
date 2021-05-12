@@ -1,4 +1,4 @@
-odoo.define("web_widget_open_tab.FieldOpenTab", function(require) {
+odoo.define("web_widget_open_tab.FieldOpenTab", function (require) {
     "use strict";
 
     var AbstractField = require("web.AbstractField");
@@ -16,10 +16,10 @@ odoo.define("web_widget_open_tab.FieldOpenTab", function(require) {
         events: _.extend({}, AbstractField.prototype.events, {
             click: "_onClick",
         }),
-        isSet: function() {
+        isSet: function () {
             return true;
         },
-        _getReference: function() {
+        _getReference: function () {
             var url = window.location.href;
             var searchParams = new URLSearchParams(url.split("#")[1]);
             searchParams.set("view_type", "form");
@@ -33,7 +33,7 @@ odoo.define("web_widget_open_tab.FieldOpenTab", function(require) {
             }
             return url.split("#")[0] + "#" + searchParams.toString();
         },
-        _renderReadonly: function() {
+        _renderReadonly: function () {
             var $content = $("<a/>", {
                 href: this._getReference(),
                 class: "open_tab_widget fa fa-external-link",
@@ -41,7 +41,7 @@ odoo.define("web_widget_open_tab.FieldOpenTab", function(require) {
             var self = this;
             $content.tooltip({
                 delay: {show: 1000, hide: 0},
-                title: function() {
+                title: function () {
                     return qweb.render("WidgetButton.tooltip", {
                         debug: config.debug,
                         state: self.record,
@@ -56,7 +56,7 @@ odoo.define("web_widget_open_tab.FieldOpenTab", function(require) {
             });
             this.$el.append($content);
         },
-        _onClick: function(ev) {
+        _onClick: function (ev) {
             ev.preventDefault();
             ev.stopPropagation();
             var element = $(ev.currentTarget).find("a");
@@ -68,7 +68,7 @@ odoo.define("web_widget_open_tab.FieldOpenTab", function(require) {
     ListRenderer.include({
         // We want to simplify the header of this kind of elements
         // and disallow sorting
-        _renderHeaderCell: function(node) {
+        _renderHeaderCell: function (node) {
             var $th = this._super.apply(this, arguments);
             if (node.attrs.widget === "open_tab") {
                 $th.removeClass("o_column_sortable");
