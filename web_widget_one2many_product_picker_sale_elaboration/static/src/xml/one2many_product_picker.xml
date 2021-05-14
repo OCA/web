@@ -5,9 +5,7 @@
             t-jquery="t[t-call='One2ManyProductPicker.ActionButton']"
             t-operation="after"
         >
-            <t
-                t-if="state.model === 'sale.order.line' &amp;&amp; state.data['elaboration_id']"
-            >
+            <t t-if="state.model === 'sale.order.line'">
                 <span
                     data-field="elaboration_id"
                     data-esc="elaboration_id.data.display_name"

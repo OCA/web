@@ -8,7 +8,7 @@
     "version": "13.0.1.0.0",
     "category": "Website",
     "author": "Tecnativa, " "Odoo Community Association (OCA)",
-    "website": "https://www.tecnativa.com",
+    "website": "https://github.com/OCA/web",
     "license": "AGPL-3",
     "depends": ["web_widget_one2many_product_picker", "sale_elaboration"],
     "data": ["templates/assets.xml"],

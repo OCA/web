@@ -97,8 +97,7 @@ odoo.define(
                         can_create: "true",
                         can_write: "true",
                         class: "mb-1",
-                        attrs:
-                            "{'readonly': [('state', 'in', ('done', 'cancel'))]}",
+                        attrs: "{'readonly': [('state', 'in', ('done', 'cancel'))]}",
                         modifiers:
                             '{"readonly": [["state", "in", ["done", "cancel"]]]}',
                     }).appendTo($arch);
@@ -109,8 +108,7 @@ odoo.define(
                     $("<FIELD/>", {
                         name: "elaboration_note",
                         class: "mb-1",
-                        attrs:
-                            "{'readonly': [('state', 'in', ('done', 'cancel'))]}",
+                        attrs: "{'readonly': [('state', 'in', ('done', 'cancel'))]}",
                         modifiers:
                             '{"readonly": [["state", "in", ["done", "cancel"]]]}',
                     }).appendTo($arch);
