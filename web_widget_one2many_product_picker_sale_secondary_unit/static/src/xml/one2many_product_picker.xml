@@ -3,7 +3,7 @@
     <t t-extend="One2ManyProductPicker.FlipCard">
         <t
             t-jquery="t[t-if='state'] > t[t-elif='!is_virtual'] > div:first-child > span:first-child"
-            t-operation="before"
+            t-operation="after"
         >
             <t
                 t-if="state.model === 'sale.order.line' &amp;&amp; state.data['secondary_uom_id']"
