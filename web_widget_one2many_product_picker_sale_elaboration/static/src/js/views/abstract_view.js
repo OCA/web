@@ -60,10 +60,6 @@ odoo.define(
              */
             _injectSaleElaborationFields: function(viewInfo) {
                 const to_inject = {
-                    is_elaboration: _constructFakeFieldDef({
-                        depends: [],
-                        type: "boolean",
-                    }),
                     elaboration_id: _constructFakeFieldDef({
                         depends: [],
                         relation: "product.elaboration",
@@ -92,18 +88,8 @@ odoo.define(
                 // Add fields to arch
                 const $arch = $(viewInfo.viewFields.order_line.views.form.arch);
 
-                // Add is_elaboration?
-                let $field = $arch.find("field[name='is_elaboration']");
-                if (!$field.length) {
-                    $("<FIELD/>", {
-                        name: "is_elaboration",
-                        invisible: 1,
-                        force_save: 1,
-                        modifiers: '{"invisible": true}',
-                    }).appendTo($arch);
-                }
-                // Add elaboration_id?
-                $field = $arch.find("field[name='elaboration_id']");
+                // Add elaboration_id
+                let $field = $arch.find("field[name='elaboration_id']");
                 if (!$field.length) {
                     $("<FIELD/>", {
                         name: "elaboration_id",
@@ -112,21 +98,21 @@ odoo.define(
                         can_write: "true",
                         class: "mb-1",
                         attrs:
-                            "{'invisible': [['is_elaboration', '!=', True]], 'readonly': [('state', 'in', ('done', 'cancel'))}",
+                            "{'readonly': [('state', 'in', ('done', 'cancel'))]}",
                         modifiers:
-                            '{"invisible": [["is_elaboration", "!=", true]], "readonly": [["state", "in", ["done", "cancel"]]]}',
+                            '{"readonly": [["state", "in", ["done", "cancel"]]]}',
                     }).appendTo($arch);
                 }
-                // Add elaboration_note?
+                // Add elaboration_note
                 $field = $arch.find("field[name='elaboration_note']");
                 if (!$field.length) {
                     $("<FIELD/>", {
                         name: "elaboration_note",
                         class: "mb-1",
                         attrs:
-                            "{'invisible': [['is_elaboration', '!=', True]], 'readonly': [('state', 'in', ('done', 'cancel'))]}",
+                            "{'readonly': [('state', 'in', ('done', 'cancel'))]}",
                         modifiers:
-                            '{"invisible": [["is_elaboration", "!=", true]], "readonly": [["state", "in", ["done", "cancel"]]]}',
+                            '{"readonly": [["state", "in", ["done", "cancel"]]]}',
                     }).appendTo($arch);
                 }
 
