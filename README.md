@@ -21,4 +21,4 @@ This section is related to the activation of the HTTP2 protocol and get the Resp
      
          - Install Odoo OCA Web Responsive module.
          - Activate the HTTP2 protocol in the server block of your Odoo Nginx configuration file's.
-         - Add the Nginx parameter "large_client_header_buffers" with a minimum size of "4 32k" in your Nginx proxy configuration file's to the HTTP block.
+         - Add the Nginx parameter "[large_client_header_buffers](http://nginx.org/en/docs/http/ngx_http_core_module.html#large_client_header_buffers)" with a minimum size of "4 32k" in your Nginx proxy configuration file's to the HTTP block.
