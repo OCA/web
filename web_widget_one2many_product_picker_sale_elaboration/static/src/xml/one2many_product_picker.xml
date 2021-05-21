@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <template>
-    <t t-extend="One2ManyProductPicker.FlipCard">
+    <t t-extend="One2ManyProductPicker.FlipCard.Front">
         <t
-            t-jquery="t[t-if='state'] > t[t-elif='!is_virtual'] > div:first-child span:last-child"
+            t-jquery="t[t-call='One2ManyProductPicker.ActionButton']"
             t-operation="after"
         >
             <t
@@ -11,7 +11,7 @@
                 <span
                     data-field="elaboration_id"
                     data-esc="elaboration_id.data.display_name"
-                    class="badge badge-primary font-weight-bold rounded-0 mt-1 p-2"
+                    class="badge badge-primary mw-100 text-truncate overflow-hidden d-inline-block float-left font-weight-bold rounded-0 m-0 p-2"
                 />
             </t>
         </t>
