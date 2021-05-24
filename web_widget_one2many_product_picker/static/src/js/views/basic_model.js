@@ -313,7 +313,7 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
          * @override
          */
         _performOnChange: function(record) {
-            if (record.context && record.context.ignore_warning) {
+            if (record && record.context && record.context.ignore_warning) {
                 const this_mp = _.clone(this);
                 const super_call = this.trigger_up;
                 this_mp.trigger_up = function(event_name, data) {
@@ -343,10 +343,13 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
             }
             const element = this.localData[id];
             this._visitChildren(element, function(elem) {
-                if (_.isEmpty(elem._changes)) {
-                    if (elem.context.product_picker_modified) {
-                        elem.context.product_picker_modified = false;
-                    }
+                if (
+                    elem &&
+                    elem.context &&
+                    elem.context.product_picker_modified &&
+                    _.isEmpty(elem._changes)
+                ) {
+                    elem.context.product_picker_modified = false;
                 }
             });
         },
