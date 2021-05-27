@@ -9,6 +9,7 @@
   * David Vidal
   * Jairo Llopis
   * Ernesto Tejeda
+  * João Marques
 
 * `C2i Change 2 improve <http://www.c2i.es>`_:
 
