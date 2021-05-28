@@ -1,4 +1,4 @@
-odoo.define("web_widget_dropdown_dynamic.web_widget_dropdown_dynamic_tests", function(
+odoo.define("web_widget_dropdown_dynamic.web_widget_dropdown_dynamic_tests", function (
     require
 ) {
     "use strict";
@@ -8,8 +8,8 @@ odoo.define("web_widget_dropdown_dynamic.web_widget_dropdown_dynamic_tests", fun
     var FormView = require("web.FormView");
     var testUtils = require("web.test_utils");
 
-    QUnit.module("web_widget_dropdown_dynamic", {}, function() {
-        QUnit.test("values are fetched w/o context (char)", async function(assert) {
+    QUnit.module("web_widget_dropdown_dynamic", {}, function () {
+        QUnit.test("values are fetched w/o context (char)", async function (assert) {
             assert.expect(2);
 
             var form = await testUtils.createView({
@@ -27,7 +27,7 @@ odoo.define("web_widget_dropdown_dynamic.web_widget_dropdown_dynamic_tests", fun
                     "<form>" +
                     '<field name="test_field" widget="dynamic_dropdown" values="_get_test_field_values"/>' +
                     "</form>",
-                mockRPC: function(route, args) {
+                mockRPC: function (route, args) {
                     if (args.method === "_get_test_field_values") {
                         return Promise.resolve([["value", "Title"]]);
                     }
@@ -41,7 +41,7 @@ odoo.define("web_widget_dropdown_dynamic.web_widget_dropdown_dynamic_tests", fun
             form.destroy();
         });
 
-        QUnit.test("values are fetched w/o context (integer)", async function(assert) {
+        QUnit.test("values are fetched w/o context (integer)", async function (assert) {
             assert.expect(2);
 
             var form = await testUtils.createView({
@@ -59,7 +59,7 @@ odoo.define("web_widget_dropdown_dynamic.web_widget_dropdown_dynamic_tests", fun
                     "<form>" +
                     '<field name="test_field" widget="dynamic_dropdown" values="_get_test_field_values"/>' +
                     "</form>",
-                mockRPC: function(route, args) {
+                mockRPC: function (route, args) {
                     if (args.method === "_get_test_field_values") {
                         return Promise.resolve([[0, "Title"]]);
                     }
@@ -73,7 +73,7 @@ odoo.define("web_widget_dropdown_dynamic.web_widget_dropdown_dynamic_tests", fun
             form.destroy();
         });
 
-        QUnit.test("values are fetched w/o context (selection)", async function(
+        QUnit.test("values are fetched w/o context (selection)", async function (
             assert
         ) {
             assert.expect(2);
@@ -93,7 +93,7 @@ odoo.define("web_widget_dropdown_dynamic.web_widget_dropdown_dynamic_tests", fun
                     "<form>" +
                     '<field name="test_field" widget="dynamic_dropdown" values="_get_test_field_values"/>' +
                     "</form>",
-                mockRPC: function(route, args) {
+                mockRPC: function (route, args) {
                     if (args.method === "_get_test_field_values") {
                         return Promise.resolve([["value", "Title"]]);
                     }
@@ -107,7 +107,7 @@ odoo.define("web_widget_dropdown_dynamic.web_widget_dropdown_dynamic_tests", fun
             form.destroy();
         });
 
-        QUnit.test("values are fetched with changing context", async function(assert) {
+        QUnit.test("values are fetched with changing context", async function (assert) {
             assert.expect(6);
 
             var form = await testUtils.createView({
@@ -127,7 +127,7 @@ odoo.define("web_widget_dropdown_dynamic.web_widget_dropdown_dynamic_tests", fun
                     '<field name="other_field" />' +
                     '<field name="test_field" widget="dynamic_dropdown" values="_get_test_field_values" context="{\'step\': other_field}"/>' +
                     "</form>",
-                mockRPC: function(route, args) {
+                mockRPC: function (route, args) {
                     if (args.method === "_get_test_field_values") {
                         if (args.kwargs.context.step === "step-1") {
                             return Promise.resolve([["value", "Title"]]);
