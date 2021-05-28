@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo14-addon-web_advanced_search',
         'odoo14-addon-web_company_color',
         'odoo14-addon-web_copy_confirm',
+        'odoo14-addon-web_decimal_numpad_dot',
         'odoo14-addon-web_dialog_size',
         'odoo14-addon-web_domain_field',
         'odoo14-addon-web_drop_target',
