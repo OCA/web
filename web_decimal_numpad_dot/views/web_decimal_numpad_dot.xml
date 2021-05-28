@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="assets_backend"
+        name="numpad_dot assets"
+        inherit_id="web.assets_backend"
+    >
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/web_decimal_numpad_dot/static/src/js/numpad_dot.js"
+            />
+        </xpath>
+    </template>
+</odoo>
