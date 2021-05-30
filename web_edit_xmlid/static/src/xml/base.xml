@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="WebClient.DebugViewLog">
+        <t t-jquery="table tr:nth-child(2) td t" t-operation="after">
+            <t t-if="perm.xmlid">
+                <a class="btn btn-sm btn-secondary" data-action="edit_xmlid">Edit</a>
+            </t>
+            <t t-else="">
+                <a class="btn btn-sm btn-secondary" data-action="create_xmlid">Create</a>
+            </t>
+        </t>
+    </t>
+
+</templates>
