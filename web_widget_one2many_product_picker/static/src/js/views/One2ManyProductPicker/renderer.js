@@ -107,6 +107,14 @@ odoo.define(
                 });
             },
 
+            /**
+             * Because this widget doesn't support comments/sections line types
+             * we need check if the line is valid to be shown.
+             *
+             * @private
+             * @param {Object} state
+             * @returns {Boolean}
+             */
             _isValidLineState: function(state) {
                 return (
                     state.data[this.options.field_map.product] &&
@@ -114,6 +122,12 @@ odoo.define(
                 );
             },
 
+            /**
+             * @private
+             * @param {Object} state_a
+             * @param {Object} state_b
+             * @returns {Boolean}
+             */
             _isEqualState: function(state_a, state_b) {
                 if (state_a.id === state_b.id) {
                     return true;
@@ -133,6 +147,11 @@ odoo.define(
                 );
             },
 
+            /**
+             * @private
+             * @param {Object} state
+             * @returns {Boolean}
+             */
             _existsWidgetWithState: function(state) {
                 for (let eb = this.widgets.length - 1; eb >= 0; --eb) {
                     const widget = this.widgets[eb];
@@ -388,6 +407,7 @@ odoo.define(
             },
 
             /**
+             * @private
              * @param {Array} datas
              * @returns {Array}
              */
@@ -540,8 +560,7 @@ odoo.define(
              *
              * @private
              * @param {Array} search_records
-             * @param {Boolean} no_process_records
-             * @param {Number} position
+             * @param {Object} options
              */
             _appendSearchRecords: function(search_records, options) {
                 const processed_info = options.no_process_records
@@ -569,8 +588,8 @@ odoo.define(
                     }
 
                     // At this point the widget will use the existing state (line) or
-                    // the search data. Using search data instead of waiting for
-                    // simulated state gives a low FCP time.
+                    // a simple state data. Using simple state data instead of waiting for
+                    // complete state (default + onchange) gives a low FCP time.
                     const def = $.Deferred();
                     ProductPickerRecord.appendTo(this.$recordsContainer).then(
                         function(widget, widget_position) {
@@ -622,9 +641,7 @@ odoo.define(
              * Append search records to the view
              *
              * @param {Array} search_records
-             * @param {Boolean} no_attach_widgets
-             * @param {Boolean} no_process_records
-             * @param {Number} position
+             * @param {Object} options
              * @returns {Array}
              */
             appendSearchRecords: function(search_records, options = {}) {
@@ -690,6 +707,7 @@ odoo.define(
              * Handle card flip.
              * Used to create/update the record
              *
+             * @private
              * @param {CustomEvent} evt
              */
             _onRecordFlip: function(evt) {

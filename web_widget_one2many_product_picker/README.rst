@@ -47,7 +47,6 @@ You need to define the view fields. The view must be of ``form`` type.
 Widget options:
 ~~~~~~~~~~~~~~~
 
-* product_per_page > Integer -> Used to control the load more behaviour (16 by default)
 * groups > Array of dictionaries -> Declare the groups
 
     * name -> The group name
@@ -57,6 +56,9 @@ Widget options:
 
         * name -> The field name to order
         * asc -> Flag to use 'asc' order
+
+    * records_per_page > Integer -> Used to control the load more behaviour (16 by default)
+    * active -> Boolean -> Select the default group to use ('false' by default = 'All' group)
 
 * currency_field > Model field used to format monetary values ('currency_id' by default)
 * field_map > Dictionary:

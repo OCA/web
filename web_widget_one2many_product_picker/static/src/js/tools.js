@@ -34,8 +34,15 @@ odoo.define("web_widget_one2many_product_picker.tools", function(require) {
         });
     }
 
+    function float(value, field_info, digits) {
+        return field_utils.format.float(value, field_info, {
+            digits: digits,
+        });
+    }
+
     return {
         monetary: monetary,
+        float: float,
         priceReduce: priceReduce,
     };
 });

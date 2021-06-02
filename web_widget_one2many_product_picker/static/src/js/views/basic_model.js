@@ -74,6 +74,7 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
          * elements so can be removed safesly
          *
          * @param {String} id
+         * @returns {Boolean}
          */
         removeVirtualRecord: function(id) {
             if (!this.isPureVirtual(id)) {
@@ -91,6 +92,7 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
                 this.removeLine(remove_id);
                 delete this.localData[remove_id];
             }
+            return true;
         },
 
         /**
@@ -158,6 +160,10 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
                             return Promise.reject();
                         }
                         var def = new Promise(function(resolve, reject) {
+                            // Interrupt point (used in instant search)
+                            if (!self.exists(record.id)) {
+                                return Promise.reject();
+                            }
                             var always = function() {
                                 if (record._warning) {
                                     if (params.allowWarning) {
@@ -329,28 +335,142 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
         },
 
         /**
-         * This happens when the user discard main document changes (isn't a rollback)
+         * Because records can be removed at any time we
+         * need check if the record still existing.
+         * Necessary for 'instant search' feature.
          *
          * @override
          */
-        discardChanges: function(id, options) {
-            this._super.apply(this, arguments);
-            options = options || {};
-            var isNew = this.isNew(id);
-            var rollback = "rollback" in options ? options.rollback : isNew;
-            if (rollback) {
-                return;
+        _applyOnChange: function(values, record) {
+            if (!this.exists(record.id)) {
+                return Promise.reject();
             }
-            const element = this.localData[id];
-            this._visitChildren(element, function(elem) {
-                if (
-                    elem &&
-                    elem.context &&
-                    elem.context.product_picker_modified &&
-                    _.isEmpty(elem._changes)
-                ) {
-                    elem.context.product_picker_modified = false;
+            return this._super.apply(this, arguments);
+        },
+
+        /**
+         * @param {String} recordID
+         * @returns {Boolean}
+         */
+        hasChanges: function(recordID) {
+            const record = this.localData[recordID];
+            return record && !_.isEmpty(record._changes);
+        },
+
+        /**
+         * @param {Object} model_fields
+         * @param {String} model
+         * @param {String} search_val
+         * @param {Array} domain
+         * @param {Array} fields
+         * @param {Object} orderby
+         * @param {String} operator
+         * @param {Number} limit
+         * @param {Number} offset
+         * @param {Object} context
+         * @returns {Promise}
+         */
+        fetchNameSearchFull: function(
+            model_fields,
+            model,
+            search_val,
+            domain,
+            fields,
+            orderby,
+            operator,
+            limit,
+            offset,
+            context
+        ) {
+            return this._rpc({
+                model: model,
+                method: "name_search",
+                kwargs: {
+                    name: search_val,
+                    args: domain || [],
+                    operator: operator || "ilike",
+                    limit: this.limit,
+                    context: context || {},
+                },
+            }).then(results => {
+                const record_ids = results.map(item => item[0]);
+                return this.fetchGenericRecords(
+                    model_fields,
+                    model,
+                    [["id", "in", record_ids]],
+                    fields,
+                    orderby,
+                    limit,
+                    offset,
+                    context
+                );
+            });
+        },
+
+        /**
+         * @param {Object} model_fields
+         * @param {String} model
+         * @param {Array} domain
+         * @param {Array} fields
+         * @param {Array} orderby
+         * @param {Number} limit
+         * @param {Number} offset
+         * @param {Object} context
+         * @returns {Promise}
+         */
+        fetchGenericRecords: function(
+            model_fields,
+            model,
+            domain,
+            fields,
+            orderby,
+            limit,
+            offset,
+            context
+        ) {
+            return this._rpc({
+                model: model,
+                method: "search_read",
+                fields: fields,
+                domain: domain,
+                limit: limit,
+                offset: offset,
+                orderBy: orderby,
+                kwargs: {context: context},
+            }).then(result => {
+                for (const index in result) {
+                    const record = result[index];
+                    for (const fieldName in record) {
+                        const field = model_fields[fieldName];
+                        if (field.type !== "many2one") {
+                            record[fieldName] = this._parseServerValue(
+                                model_fields[fieldName],
+                                record[fieldName]
+                            );
+                        }
+                    }
                 }
+                return result;
+            });
+        },
+
+        fetchModelFieldsInfo: function(model) {
+            return this._rpc({
+                model: model,
+                method: "fields_get",
+                args: [
+                    false,
+                    [
+                        "store",
+                        "searchable",
+                        "type",
+                        "string",
+                        "relation",
+                        "selection",
+                        "related",
+                    ],
+                ],
+                context: this.getSession().user_context,
             });
         },
     });

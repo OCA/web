@@ -42,7 +42,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
         }),
 
         _auto_search_delay: 450,
-        _input_instant_search_time: 150,
+        _input_instant_search_time: 100,
 
         // Model product.product fields
         search_read_fields: ["id", "display_name", "uom_id"],
@@ -88,14 +88,25 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
         },
 
         willStart: function() {
-            return this._super.apply(this, arguments).then(() => {
-                if (this.isReadonly) {
-                    // Show Lines
-                    this._updateSearchContext(-1);
-                } else {
-                    this._updateSearchContext(0);
-                }
-            });
+            return this._super
+                .apply(this, arguments)
+                .then(() => {
+                    const arch = this.view.arch;
+                    const field_name = this.options.field_map.product;
+                    const field_info = this.view.fieldsInfo[arch.tag][field_name];
+                    const model = this.view.viewFields[field_info.name].relation;
+                    this._modelName = model;
+                    return this.parent_controller.model.fetchModelFieldsInfo(model);
+                })
+                .then(fields_info => {
+                    this._fieldsInfo = fields_info;
+                    if (this.isReadonly) {
+                        // Show Lines
+                        this._updateSearchContext(-1);
+                    } else {
+                        this._updateSearchContext(0);
+                    }
+                });
         },
 
         /**
@@ -170,6 +181,26 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
         },
 
         /**
+         * Because the widget shows "pure virtual" information, we don't have any 'onchange' linked.
+         * This method forces 'refresh' the widget if the selected fields was changed.
+         *
+         * @param {Array} fields
+         * @param {Event} e
+         */
+        onDocumentConfirmChanges: function(fields, e) {
+            const trigger_fields = this.options.trigger_refresh_fields || [];
+            if (_.difference(trigger_fields, fields).length !== trigger_fields.length) {
+                this._reset(
+                    this.parent_controller.model.get(this.parent_controller.handle),
+                    e
+                );
+                // Force re-launch onchanges on 'pure virtual' records
+                this.renderer.clearRecords();
+                this._render();
+            }
+        },
+
+        /**
          * @override
          */
         _getRenderer: function() {
@@ -191,6 +222,9 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                     group_def.active = !hasUserActive;
                     hasUserActive = true;
                 }
+                if (!group_def.records_per_page) {
+                    group_def.records_per_page = 16;
+                }
                 this.searchGroups.push(group_def);
             }
 
@@ -200,6 +234,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                 domain: this.options.all_domain,
                 order: false,
                 active: !hasUserActive,
+                records_per_page: 16,
             });
             this._activeSearchGroup = this.searchGroups[0];
         },
@@ -305,6 +340,16 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
             this.updateSubtotalPrice();
         },
 
+        /**
+         * Replace placeholders for search
+         *   - $number_search -> Is a number
+         *   - $search -> Is a string
+         *
+         * @private
+         * @param {Number/String} value
+         * @param {String} format
+         * @returns {Number/String}
+         */
         _getSearchValue: function(value, format) {
             if (format === "$number_search") {
                 return Number(value);
@@ -320,15 +365,10 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
          *
          * @private
          * @param {Dictionary} options
-         * @param {Boolean} merge
          * @returns {Deferred}
          */
         _getSearchRecords: function(options) {
-            const arch = this.view.arch;
             const search_mode = this.options.search[this._searchMode];
-            const field_name = this.options.field_map.product;
-            const field_info = this.view.fieldsInfo[arch.tag][field_name];
-            const model = this.view.viewFields[field_info.name].relation;
             const orderby = this._searchContext.order;
             const fields = this.search_read_fields;
 
@@ -344,7 +384,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                 },
                 this.value.getContext()
             );
-            const limit = soptions.limit || this.options.records_per_page;
+            const limit = soptions.limit || this._activeSearchGroup.records_per_page;
             const offset = soptions.offset || 0;
 
             return new Promise(resolve => {
@@ -355,8 +395,9 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                         search_mode.name_search_value
                     );
                     const operator = search_mode.operator;
-                    task = this._doSearchRecordsNameSearch(
-                        model,
+                    task = this.parent_controller.model.fetchNameSearchFull(
+                        this._fieldsInfo,
+                        this._modelName,
                         search_val,
                         domain,
                         fields,
@@ -367,8 +408,9 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                         context
                     );
                 } else {
-                    task = this._doSearchRecords(
-                        model,
+                    task = this.parent_controller.model.fetchGenericRecords(
+                        this._fieldsInfo,
+                        this._modelName,
                         domain,
                         fields,
                         orderby,
@@ -383,76 +425,6 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                     this.renderer.showLoadMore(limit && results.length === limit);
                     resolve(results);
                 });
-            });
-        },
-
-        _doSearchRecordsNameSearch: function(
-            model,
-            search_val,
-            domain,
-            fields,
-            orderby,
-            operator,
-            limit,
-            offset,
-            context
-        ) {
-            return new Promise(resolve => {
-                this._rpc({
-                    model: model,
-                    method: "name_search",
-                    kwargs: {
-                        name: search_val,
-                        args: domain || [],
-                        operator: operator || "ilike",
-                        limit: this.limit,
-                        context: context || {},
-                    },
-                }).then(results => {
-                    const record_ids = results.map(item => item[0]);
-                    this._doSearchRecords(
-                        model,
-                        [["id", "in", record_ids]],
-                        fields,
-                        orderby,
-                        limit,
-                        offset,
-                        context
-                    ).then(records => {
-                        resolve(records);
-                    });
-                });
-            });
-        },
-
-        /**
-         * @param {String} model
-         * @param {Array} domain
-         * @param {Array} fields
-         * @param {Array} orderby
-         * @param {Number} limit
-         * @param {Number} offset
-         * @param {Object} context
-         * @returns {Promise}
-         */
-        _doSearchRecords: function(
-            model,
-            domain,
-            fields,
-            orderby,
-            limit,
-            offset,
-            context
-        ) {
-            return this._rpc({
-                model: model,
-                method: "search_read",
-                fields: fields,
-                domain: domain,
-                limit: limit,
-                offset: offset,
-                orderBy: orderby,
-                kwargs: {context: context},
             });
         },
 
@@ -514,7 +486,6 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
         _getDefaultOptions: function() {
             return {
                 currency_field: "currency_id",
-                records_per_page: 16,
                 show_subtotal: true,
                 show_discount: false,
                 edit_discount: false,
@@ -540,7 +511,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
          * This domain is used to get the records to display.
          *
          * @private
-         * @param {Object} active_search
+         * @param {Object} search_mode
          * @returns {Array}
          */
         _getFullSearchDomain: function(search_mode) {
@@ -671,18 +642,24 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
             return this._super.apply(this, arguments);
         },
 
+        /**
+         * @private
+         * @param {SearchEvent} evt
+         */
         _onSearch: function(evt) {
             this._searchContext.text = evt.target.value;
             this.doRenderSearchRecords();
         },
 
+        /**
+         * @private
+         * @param {InputEvent} evt
+         */
         _onInputSearch: function(evt) {
-            if (!this.options.instant_search) {
-                return;
+            if (this.options.instant_search) {
+                this._searchContext.text = evt.target.value;
+                this._lazyRenderSearchRecords();
             }
-            this._searchContext.text = evt.target.value;
-            this._lazyRenderSearchRecords();
-            // This.doRenderSearchRecords()
         },
 
         /**
@@ -751,10 +728,6 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                     }
                 });
             } else {
-                // This is used to know when need use 'yellow' color
-                this.parent_controller.model.updateRecordContext(evt.data.id, {
-                    product_picker_modified: true,
-                });
                 // This will trigger an "state" update
                 this._setValue({operation: "ADD", id: evt.data.id}).then(() => {
                     if (evt.data.callback) {
@@ -764,6 +737,11 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
             }
         },
 
+        /**
+         * @param {Number} id
+         * @param {Object} data
+         * @param {Function} callback
+         */
         _doUpdateQuickRecord: function(id, data, callback) {
             if (this.options.auto_save) {
                 var self = this;
@@ -790,10 +768,6 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                     }
                 });
             } else {
-                // This is used to know when need use 'yellow' color
-                this.parent_controller.model.updateRecordContext(id, {
-                    product_picker_modified: true,
-                });
                 // This will trigger an "state" update
                 this._setValue({operation: "UPDATE", id: id, data: data}).then(
                     function() {

@@ -28,6 +28,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
         },
 
         _click_card_delayed_time: 250,
+        _onchange_delay: 250,
 
         /**
          * @override
@@ -48,6 +49,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
         /**
          * Generates a new virtual state and recreates the product card
          *
+         * @param {Boolean} simple_mode
          * @returns {Object}
          */
         generateVirtualState: function(simple_mode) {
@@ -187,6 +189,19 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
         },
 
         /**
+         * Prints the given field value using the selected format
+         *
+         * @private
+         * @param {String} price_field
+         * @returns {String}
+         */
+        _getFloatFieldValue: function(field) {
+            const field_name = this.options.fieldMap[field];
+            const value = this.state.data[field_name];
+            return tools.float(value, this.state.fields[field_name]);
+        },
+
+        /**
          * @private
          * @param {String} d a stringified domain
          * @returns {Boolean} the domain evaluted with the current values
@@ -241,6 +256,10 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             this._setMasterUomMap();
         },
 
+        /**
+         * Used to know what is the "main" uom
+         * @private
+         */
         _setMasterUomMap: function() {
             this.master_uom_map = {
                 field_uom: "product_uom",
@@ -269,9 +288,13 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                 field_map: this.options.fieldMap,
                 widget: this,
                 monetary: this._getMonetaryFieldValue.bind(this),
+                floatFixed: this._getFloatFieldValue.bind(this),
                 show_discount: this.options.showDiscount,
                 is_virtual: this.is_virtual,
-                modified: record && record.context.product_picker_modified,
+                modified:
+                    record &&
+                    model.hasChanges(record.id) &&
+                    !model.isPureVirtual(record.id),
                 active_model: "",
                 auto_save: this.options.autoSave,
                 is_saving: record && record.context.saving,
@@ -310,6 +333,15 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             return {};
         },
 
+        /**
+         * This generates a virtual record with delayed call to "get_default" & "onchange"
+         * used in "instant search" mode
+         *
+         * @private
+         * @param {Object} context
+         * @param {Object} def_values
+         * @returns {Promise}
+         */
         _generateVirtualStateSimple: function(context, def_values) {
             const model = this.options.basicFieldParams.model;
             return new Promise(resolve => {
@@ -349,7 +381,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                                 (current_batch_id, record_def) => {
                                     this._timerOnChange = false;
                                     if (
-                                        current_batch_id !=
+                                        current_batch_id !==
                                             this.options.basicFieldParams
                                                 .current_batch_id ||
                                         record_def.record.context.aborted
@@ -376,7 +408,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                                             );
                                         });
                                 },
-                                750,
+                                this._onchange_delay,
                                 this.options.basicFieldParams.current_batch_id,
                                 record_def
                             );
@@ -387,6 +419,15 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             });
         },
 
+        /**
+         * Generates a complete virtual record
+         *
+         * @private
+         * @param {Object} data
+         * @param {Object} context
+         * @param {Object} def_values
+         * @returns {Promise}
+         */
         _generateVirtualStateFull: function(data, context, def_values) {
             const model = this.options.basicFieldParams.model;
             return new Promise(resolve => {
@@ -441,6 +482,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          * @private
          * @param {Object} data
          * @param {Object} context
+         * @param {Boolean} simple_mode
          * @returns {Object}
          */
         _generateVirtualState: function(data, context, simple_mode) {
@@ -468,6 +510,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          * @param {Integer/String} record_id
          * @param {Object} changes
          * @param {Object} options
+         * @returns {Promise}
          */
         _applyChanges: function(record_id, changes, options) {
             const model = this.options.basicFieldParams.model;
@@ -479,6 +522,9 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             });
         },
 
+        /**
+         * @private
+         */
         _detachAllWidgets: function() {
             _.invoke(this.widgets.front, "on_detach_callback");
             _.invoke(this.widgets.back, "on_detach_callback");
@@ -633,6 +679,9 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             });
         },
 
+        /**
+         * @private
+         */
         _updateLazyQty: function() {
             var model = this.options.basicFieldParams.model;
             var record = model.get(this.state.id);
@@ -664,12 +713,12 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             const state_data = record.data;
 
             let to_find = [];
-            if (!_.isEmpty(fields)) {
+            if (_.isEmpty(fields)) {
+                to_find = ["[data-field]"];
+            } else {
                 to_find = _.map(fields, field => {
                     return _.str.sprintf("[data-field=%s]", [field]);
                 });
-            } else {
-                to_find = ["[data-field]"];
             }
 
             this.$el.find(to_find.join()).each((key, value) => {
