@@ -26,6 +26,7 @@
             <script type="text/javascript" src="/web_widget_one2many_product_picker/static/src/js/views/One2ManyProductPicker/quick_modif_price_form.js"></script>
             <script type="text/javascript" src="/web_widget_one2many_product_picker/static/src/js/views/basic_view.js"></script>
             <script type="text/javascript" src="/web_widget_one2many_product_picker/static/src/js/views/basic_model.js"></script>
+            <script type="text/javascript" src="/web_widget_one2many_product_picker/static/src/js/views/basic_controller.js"></script>
             <script type="text/javascript" src="/web_widget_one2many_product_picker/static/src/js/widgets/field_one2many_product_picker.js"></script>
         </xpath>
     </template>

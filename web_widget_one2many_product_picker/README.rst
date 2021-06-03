@@ -87,6 +87,7 @@ Widget options:
   modify/create a record with the widget.
 
 * ignore_warning > Enable/Disable display onchange warnings (False by default)
+* trigger_refresh_fields > Fields in the main record that dispatch a widget refresh (["partner_id", "currency_id"] by default)
 
 All widget options are optional.
 Notice that you can call '_' method to use translations. This only can be used with this widget.

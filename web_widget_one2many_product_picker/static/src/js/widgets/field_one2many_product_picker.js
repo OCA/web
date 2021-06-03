@@ -164,6 +164,21 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
         },
 
         /**
+         * Because the widget shows "pure virtual" information, we don't have any 'onchange' linked.
+         * This method forces 'refresh' the widget if the selected fields was changed.
+         *
+         * @param {Array} fields
+         * @param {Event} e
+         */
+        onDocumentConfirmChanges: function(fields, e) {
+            var trigger_fields = this.options.trigger_refresh_fields || [];
+            if (_.difference(trigger_fields, fields).length !== trigger_fields.length) {
+                this._reset(this.parent_controller.model.get(this.parent_controller.handle), e);
+                this.doRenderSearchRecords();
+            }
+        },
+
+        /**
          * @override
          */
         _getRenderer: function () {
@@ -438,6 +453,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                     price_unit: "price_unit",
                     discount: "discount",
                 },
+                trigger_refresh_fields: ["partner_id", "currency_id"],
                 auto_save: false,
                 ignore_warning: false,
             };
