@@ -24,6 +24,7 @@ msgstr ""
 #. module: web_widget_one2many_product_picker
 #. openerp-web
 #: code:addons/web_widget_one2many_product_picker/static/src/js/widgets/field_one2many_product_picker.js:193
+#: code:addons/web_widget_one2many_product_picker/static/src/js/widgets/field_one2many_product_picker.js:208
 #, python-format
 msgid "All"
 msgstr ""
