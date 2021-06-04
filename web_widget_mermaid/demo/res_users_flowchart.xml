@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="res_users_flowchart" model="ir.model.fields">
+        <field name="name">x_flowchart</field>
+        <field name="model_id" ref="base.model_res_users" />
+        <field name="field_description">Demo mermaid flowchart</field>
+        <field name="ttype">char</field>
+    </record>
+    <record id="view_users_form_flowchart" model="ir.ui.view">
+        <field name="inherit_id" ref="base.view_users_form" />
+        <field name="model">res.users</field>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="mermaid_page" string="Mermaid flowchart">
+                    <field name="x_flowchart" widget="mermaid" />
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="base.user_demo" model="res.users">
+        <field name="x_flowchart">graph TD
+A[This is an example flowchart] --> B{{Edit it}}
+B -. save it .-> C(See what happens)</field>
+    </record>
+</odoo>
