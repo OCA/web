@@ -139,6 +139,9 @@ odoo.define(
                         "readonly",
                         wanted_field_states[field_name] ? "1" : "0"
                     );
+                    if (field_name === this.fieldMap.price_unit) {
+                        $field.attr("force_save", "1");
+                    }
                     gen_arch += $field[0].outerHTML;
                 }
                 gen_arch += "</group></form>";

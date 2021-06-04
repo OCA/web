@@ -98,7 +98,7 @@
             <t t-elif="!is_virtual">
                 <span
                     t-att-data-field="field_map[field_uom_qty]"
-                    t-attf-data-esc="str({{floatFixed(field_map[field_uom_qty])}}) + ' x ' + {{field_map[field_uom]}}.data.display_name"
+                    t-attf-data-esc="'{{floatFixed(field_map[field_uom_qty])}}' + ' x ' + {{field_map[field_uom]}}.data.display_name"
                     t-attf-class="badge {{modified &amp;&amp; 'badge-warning' || 'badge-success'}} font-weight-bold rounded-0 mt-0 px-2 py-3 product_qty"
                 />
             </t>
