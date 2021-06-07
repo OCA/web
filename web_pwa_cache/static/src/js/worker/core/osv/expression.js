@@ -60,7 +60,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
     const TRUE_LEAF = [1, "=", 1];
     const FALSE_LEAF = [0, "=", 1];
 
-    const RELATIONAL_COLUMN_TYPES = ["many2one", "one2many", "many2many"];
+    const SERIALIZED_RELATIONAL_COLUMN_TYPES = ["one2many", "many2many"];
 
     function get_records_ids(records) {
         return records.map(x => x.id);
@@ -124,15 +124,10 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                 );
                 break;
             case "many2one":
-                if (value instanceof Array) {
-                    if (_.isEmpty(value)) {
-                        svalue = "";
-                    } else {
-                        svalue = column_string_encode(
-                            `||${value[0]}||||${value[1]}||`,
-                            string_quoted
-                        );
-                    }
+                if (_.isEmpty(value)) {
+                    svalue = false;
+                } else {
+                    svalue = value[0];
                 }
                 break;
             case "one2many":
@@ -362,8 +357,8 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
             operator = "!=";
         }
         if (typeof right === "boolean" && ["in", "not in"].indexOf(operator) !== -1) {
-            console.warning(
-                `The domain term '[${[
+            console.info(
+                `[ServiceWorker][OSV] The domain term '[${[
                     left,
                     original,
                     right,
@@ -372,8 +367,8 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
             operator = operator === "in" ? "=" : "!=";
         }
         if (right instanceof Array && ["=", "!="].indexOf(operator) !== -1) {
-            console.warning(
-                `The domain term '[${[
+            console.info(
+                `[ServiceWorker][OSV] The domain term '[${[
                     left,
                     original,
                     right,
@@ -764,8 +759,8 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                             // Given this nonsensical domain, it is generally cheaper to
                             // interpret False as [], so that "X child_of False" will
                             // match nothing
-                            console.warning(
-                                `Unexpected domain [${leaf}], interpreted as false`
+                            console.warn(
+                                `[ServiceWorker][OSV] Unexpected domain [${leaf}], interpreted as false`
                             );
                             return [];
                         }
@@ -993,26 +988,36 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                         }
                     }
 
-                    // // ----------------------------------------
-                    // // PATH SPOTTED
-                    // // -> many2one or one2many with _auto_join:
-                    // //    - add a join, then jump into linked column: column.remaining on
-                    // //      src_table is replaced by remaining on dst_table, and set for re-evaluation
-                    // //    - if a domain is defined on the column, add it into evaluation
-                    // //      on the relational table
-                    // // -> many2one, many2many, one2many: replace by an equivalent computed
-                    // //    domain, given by recursively searching on the remaining of the path
-                    // // -> note: hack about columns.property should not be necessary anymore
-                    // //    as after transforming the column, it will go through this loop once again
-                    // // ----------------------------------------
+                    // ----------------------------------------
+                    // PATH SPOTTED
+                    // -> many2one or one2many with _auto_join:
+                    //    - add a join, then jump into linked column: column.remaining on
+                    //      src_table is replaced by remaining on dst_table, and set for re-evaluation
+                    //    - if a domain is defined on the column, add it into evaluation
+                    //      on the relational table
+                    // -> many2one, many2many, one2many: replace by an equivalent computed
+                    //    domain, given by recursively searching on the remaining of the path
+                    // -> note: hack about columns.property should not be necessary anymore
+                    //    as after transforming the column, it will go through this loop once again
+                    // ----------------------------------------
+                    else if (
+                        path.length > 1 &&
+                        field.store &&
+                        field.type === "many2one" &&
+                        field.auto_join
+                    ) {
+                        // Res_partner.state_id = res_partner__state_id.id
+                        leaf.add_join_context(comodel, path[0], "id", path[0]);
+                        push(
+                            create_substitution_leaf(
+                                leaf,
+                                [path[1], operator, right],
+                                comodel
+                            )
+                        );
+                    }
 
-                    // else if (path.length > 1 && field.store && field.type === 'many2one' && field.auto_join) {
-                    //     // res_partner.state_id = res_partner__state_id.id
-                    //     leaf.add_join_context(comodel, path[0], 'id', path[0]);
-                    //     push(create_substitution_leaf(leaf, [path[1], operator, right], comodel));
-                    // }
-
-                    // else if (path.length > 1 && field.store && field.type === 'one2many' && field.auto_join) {
+                    // Else if (path.length > 1 && field.store && field.type === 'one2many' && field.auto_join) {
                     //     // res_partner.id = res_partner__bank_ids.partner_id
                     //     leaf.add_join_context(comodel, 'id', field.inverse_name, path[0])
                     //     let domain = isCalleable(field.domain) ? field.domain(model) : field.domain;
@@ -1025,18 +1030,23 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     //         push(create_substitution_leaf(leaf, AND_OPERATOR, comodel));
                     //     }
                     // }
-
-                    // else if (path.length > 1 && field.store && field.auto_join) {
-                    //     throw Error(`auto_join attribute not supported on field ${field}`);
-                    // }
-
-                    // else if (path.length > 1 && field.store && field.type == 'many2one') {
-                    //     // FIXME: Client side allways uses 'active_test' = True
-                    //     const records = await this._dbmanager.search(comodel.model, [[path.slice(1).join('.'), operator, right]]);
-                    //     const right_ids = get_records_ids(records);
-                    //     leaf.leaf = (path[0], 'in', right_ids);
-                    //     push(leaf);
-                    // }
+                    else if (path.length > 1 && field.store && field.auto_join) {
+                        throw Error(
+                            `auto_join attribute not supported on field ${field}`
+                        );
+                    } else if (
+                        path.length > 1 &&
+                        field.store &&
+                        field.type == "many2one"
+                    ) {
+                        // FIXME: Client side allways uses 'active_test' = True
+                        const records = await this._dbmanager.search(comodel.model, [
+                            [path.slice(1).join("."), operator, right],
+                        ]);
+                        const right_ids = get_records_ids(records);
+                        leaf.leaf = (path[0], "in", right_ids);
+                        push(leaf);
+                    }
 
                     // // Making search easier when there is a left operand as one2many or many2many
                     // else if (path.length > 1 && field.store && ['many2many', 'one2many'].indexOf(field.type) !== -1) {
@@ -1046,12 +1056,13 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     //     push(leaf);
                     // }
 
+                    // TODO: Commented part because PWA stores all fields
                     // else if (!field.store) {
                     //     let domain = [];
                     //     // Non-stored field should provide an implementation of search.
                     //     if (!field.search) {
                     //         // field does not support search!
-                    //         console.error(`Non-stored field ${field} cannot be searched.`);
+                    //         console.info(`[ServiceWorker][OSV] Non-stored field ${path[0]} cannot be searched.`);
                     //         // Ignore it: generate a dummy leaf.
                     //     } else {
                     //         // Let the field generate a domain.
@@ -1062,7 +1073,6 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     //         }
                     //         domain = field.determine_domain(model, operator, right);
                     //     }
-
                     //     // replace current leaf by normalized domain
                     //     const domains = normalize_domain(domain).reverse();
                     //     for (let elem of domains) {
@@ -1070,9 +1080,9 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     //     }
                     // }
 
-                    // // -------------------------------------------------
-                    // // RELATIONAL FIELDS
-                    // // -------------------------------------------------
+                    // -------------------------------------------------
+                    // RELATIONAL FIELDS
+                    // -------------------------------------------------
 
                     // // Applying recursivity on field(one2many)
                     // else if (field.type === 'one2many' && operator in HIERARCHY_FUNCS) {
@@ -1204,52 +1214,98 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     //         push(create_substitution_leaf(leaf, ['id', op1, ids1], model));
                     //     }
                     // }
+                    else if (field.type == "many2one") {
+                        if (operator in HIERARCHY_FUNCS) {
+                            const ids2 = to_ids(right, comodel, leaf.leaf);
+                            let dom = [];
+                            if (field.comodel_name != model.model) {
+                                dom = await HIERARCHY_FUNCS[operator](
+                                    left,
+                                    ids2,
+                                    comodel,
+                                    undefined,
+                                    field.comodel_name
+                                );
+                            } else {
+                                dom = await HIERARCHY_FUNCS[operator](
+                                    "id",
+                                    ids2,
+                                    model,
+                                    left
+                                );
+                            }
+                            dom.reverse();
+                            for (const dom_leaf of dom) {
+                                push(create_substitution_leaf(leaf, dom_leaf, model));
+                            }
+                        } else {
+                            const _get_expression = async (
+                                comodel,
+                                left,
+                                right,
+                                operator
+                            ) => {
+                                // Special treatment to ill-formed domains
+                                operator =
+                                    (["<", ">", "<=", ">="].indexOf(operator) !== -1 &&
+                                        "in") ||
+                                    operator;
 
-                    // else if (field.type == 'many2one') {
-                    //     if (operator in HIERARCHY_FUNCS) {
-                    //         const ids2 = to_ids(right, comodel, leaf.leaf);
-                    //         let dom = [];
-                    //         if (field.comodel_name != model.model) {
-                    //             dom = await HIERARCHY_FUNCS[operator](left, ids2, comodel, undefined, field.comodel_name);
-                    //         } else {
-                    //             dom = await HIERARCHY_FUNCS[operator]('id', ids2, model, left);
-                    //         }
-                    //         dom.reverse();
-                    //         for (let dom_leaf of dom) {
-                    //             push(create_substitution_leaf(leaf, dom_leaf, model));
-                    //         }
-                    //     }
-                    //     else {
-                    //         const _get_expression = async (comodel, left, right, operator) => {
-                    //             // Special treatment to ill-formed domains
-                    //             operator = (['<', '>', '<=', '>='].indexOf(operator) !== -1) && 'in' || operator;
-
-                    //             const dict_op = {'not in': '!=', 'in': '=', '=': 'in', '!=': 'not in'}
-                    //             if (!(right instanceof Array) && ['not in', 'in'].indexOf(operator) !== -1) {
-                    //                 operator = dict_op[operator];
-                    //             }
-                    //             else if (right instanceof Array && ['!=', '='].indexOf(operator) !== -1) {  // for domain (FIELD,'=',['value1','value2'])
-                    //                 operator = dict_op[operator];
-                    //             }
-                    //             const records = await this._dbmanager.name_search(comodel.model, right, [], operator);
-                    //             const res_ids = records.map((x) => x[0]);
-                    //             if (NEGATIVE_TERM_OPERATORS.indexOf(operator) !== -1) {
-                    //                 res_ids.push(false)  // TODO this should not be appended if False was in 'right'
-                    //             }
-                    //             return [left, 'in', res_ids];
-                    //         }
-                    //         // resolve string-based m2o criterion into IDs
-                    //         if (
-                    //             typeof right === "string" ||
-                    //             right && right instanceof Array && _.every(right.map((x) => typeof x === 'string'))
-                    //         ) {
-                    //             push(create_substitution_leaf(leaf, await _get_expression(comodel, left, right, operator), model));
-                    //         } else {
-                    //             // right == [] or right == False and all other cases are handled by __leaf_to_sql()
-                    //             push_result(leaf);
-                    //         }
-                    //     }
-                    // }
+                                const dict_op = {
+                                    "not in": "!=",
+                                    in: "=",
+                                    "=": "in",
+                                    "!=": "not in",
+                                };
+                                if (
+                                    !(right instanceof Array) &&
+                                    ["not in", "in"].indexOf(operator) !== -1
+                                ) {
+                                    operator = dict_op[operator];
+                                } else if (
+                                    right instanceof Array &&
+                                    ["!=", "="].indexOf(operator) !== -1
+                                ) {
+                                    // For domain (FIELD,'=',['value1','value2'])
+                                    operator = dict_op[operator];
+                                }
+                                const records = await this._dbmanager.name_search(
+                                    comodel.model,
+                                    right,
+                                    [],
+                                    operator
+                                );
+                                const res_ids = records.map(x => x[0]);
+                                if (NEGATIVE_TERM_OPERATORS.indexOf(operator) !== -1) {
+                                    res_ids.push(false); // TODO this should not be appended if False was in 'right'
+                                }
+                                return [left, "in", res_ids];
+                            };
+                            // Resolve string-based m2o criterion into IDs
+                            if (
+                                typeof right === "string" ||
+                                (right &&
+                                    right instanceof Array &&
+                                    _.every(right.map(x => typeof x === "string")))
+                            ) {
+                                push(
+                                    create_substitution_leaf(
+                                        leaf,
+                                        await _get_expression(
+                                            comodel,
+                                            left,
+                                            right,
+                                            operator
+                                        ),
+                                        model
+                                    )
+                                );
+                            } else {
+                                // Right == [] or right == False and all other cases are handled by __leaf_to_sql()
+                                push_result(leaf);
+                            }
+                        }
+                    }
 
                     // -------------------------------------------------
                     // BINARY FIELDS STORED IN ATTACHMENT
@@ -1271,8 +1327,8 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                                 )
                             );
                         } else {
-                            console.error(
-                                `Binary field '${field.string}' stored in attachment: ignore ${left} ${operator} ${right}`
+                            console.info(
+                                `[ServiceWorker][OSV] Binary field '${field.string}' stored in attachment: ignore ${left} ${operator} ${right}`
                             );
                             leaf.leaf = TRUE_LEAF;
                             push(leaf);
@@ -1402,7 +1458,8 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                 query = `(${table_alias}."${left}" not in (${right[0]}))`;
                 params = right[1];
             } else if (
-                RELATIONAL_COLUMN_TYPES.indexOf(model.fields[left].type) !== -1
+                SERIALIZED_RELATIONAL_COLUMN_TYPES.indexOf(model.fields[left].type) !==
+                -1
             ) {
                 const is_positive_operator =
                     NEGATIVE_TERM_OPERATORS.indexOf(operator) === -1;
@@ -1434,8 +1491,8 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                 // Two cases: right is a boolean or a list. The boolean case is an
                 // abuse and handled for backward compatibility.
                 if (typeof right === "boolean") {
-                    console.warning(
-                        `The domain term '${leaf}' should use the '=' or '!=' operator.`
+                    console.info(
+                        `[ServiceWorker][OSV] The domain term '${leaf}' should use the '=' or '!=' operator.`
                     );
                     if (
                         (operator === "in" && right) ||

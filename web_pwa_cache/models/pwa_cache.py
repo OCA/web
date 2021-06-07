@@ -1,38 +1,16 @@
 # Copyright 2020 Tecnativa - Alexandre D. Díaz
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-import base64
-import datetime
-import time
+# from functools import reduce
 
 from odoo import api, fields, models
-from odoo.exceptions import ValidationError
-from odoo.tools import (
-    DEFAULT_SERVER_DATE_FORMAT,
-    DEFAULT_SERVER_DATETIME_FORMAT,
-    DEFAULT_SERVER_TIME_FORMAT,
-)
-from odoo.tools.safe_eval import safe_eval, test_python_expr
 
-import dateutil
-from dateutil.relativedelta import relativedelta
-from pytz import timezone
+# from odoo.tools.safe_eval import safe_eval
 
 
-class PWACache(models.Model):
+class PwaCache(models.Model):
     _name = "pwa.cache"
     _description = "PWA Cache"
 
-    DEFAULT_PYTHON_CODE = """# Available variables:
-#  - env: Odoo Environment on which the request is triggered
-#  - user, uid: The user that trigger the request
-#  - record: This record
-#  - time, datetime, dateutil, timezone: useful Python libraries
-#  - b64encode, b64decode: To work with base64
-#  - DEFAULT_SERVER_DATETIME_FORMAT,
-#    DEFAULT_SERVER_DATE_FORMAT,
-#    DEFAULT_SERVER_TIME_FORMAT: Odoo date format
-#
-# To return an params, assign: params = [...]\n\n\n\n"""  # noqa: E501
     DEFAULT_JS_CODE = """// Formula must be return an 'onchange' object
 // Here you can use the active record changes fields directly.
 // To return an onchange:
@@ -93,7 +71,6 @@ return {"value": {}}"""  # noqa: E501
 
     xml_refs = fields.Text(string="XML Ref's")
 
-    code = fields.Text(string="Python code", default=DEFAULT_PYTHON_CODE)
     code_js = fields.Text(string="Javascript code", default=DEFAULT_JS_CODE)
 
     post_url = fields.Char(string="Post URL")
@@ -110,62 +87,23 @@ return {"value": {}}"""  # noqa: E501
     )
 
     onchange_field = fields.Many2one(
-        "ir.model.fields",
+        comodel_name="ir.model.fields",
         string="Onchage field",
         domain="[['model_id', '=', model_id]]",
     )
     onchange_field_name = fields.Char(
         related="onchange_field.name", string="Field Name", readonly=True,
     )
-    onchange_triggers = fields.Char(
-        "Onchange Triggers",
-        help="Fields separated by commas. Can use dotted notation.",
+    onchange_selector_ids = fields.One2many(
+        string="Onchange Selectors",
+        comodel_name="pwa.cache.onchange",
+        inverse_name="pwa_cache_id",
     )
-    onchange_main_trigger = fields.Char(
-        "Onchange Main Trigger", help="Main trigger field reference",
+    onchange_selector_count = fields.Integer(
+        compute="_compute_onchange_selector_count", store=False
     )
 
     internal = fields.Boolean("Is an internal record", default=False)
-
-    @api.constrains("code")
-    def _check_python_code(self):
-        for cache in self.filtered("code"):
-            msg = test_python_expr(expr=cache.code.strip(), mode="exec")
-            if msg:
-                raise ValidationError(msg)
-
-    def run_cache_code(self, eval_context=None):
-        self.ensure_one()
-        if self.code:
-            safe_eval(self.code.strip(), eval_context, mode="exec", nocopy=True)
-            if "params" in eval_context:
-                return eval_context["params"] or []
-        return [False]
-
-    def _get_eval_context(self, action=None):
-        """ evaluation context to pass to safe_eval """
-        self.ensure_one()
-
-        def context_today():
-            return fields.Date.context_today(self)
-
-        return {
-            "env": self.env,
-            "uid": self._uid,
-            "user": self.env.user,
-            "record": self,
-            "time": time,
-            "datetime": datetime,
-            "dateutil": dateutil,
-            "timezone": timezone,
-            "b64encode": base64.b64encode,
-            "b64decode": base64.b64decode,
-            "DEFAULT_SERVER_DATETIME_FORMAT": DEFAULT_SERVER_DATETIME_FORMAT,
-            "DEFAULT_SERVER_DATE_FORMAT": DEFAULT_SERVER_DATE_FORMAT,
-            "DEFAULT_SERVER_TIME_FORMAT": DEFAULT_SERVER_TIME_FORMAT,
-            "context_today": context_today,
-            "relativedelta": relativedelta,
-        }
 
     def _get_text_field_lines(self, records, field_name):
         return list(
@@ -174,3 +112,12 @@ return {"value": {}}"""  # noqa: E501
 
     def update_caches(self):
         self.env["pwa.cache.onchange"].sudo().update_cache()
+
+    @api.depends(
+        "onchange_selector_ids",
+        "onchange_selector_ids.comodel_name",
+        "onchange_selector_ids.expression",
+    )
+    def _compute_onchange_selector_count(self):
+        # TODO
+        self.onchange_selector_count = 0

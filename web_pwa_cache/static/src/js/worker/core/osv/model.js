@@ -118,8 +118,8 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                     }
 
                     if (!field.store) {
-                        console.log(
-                            `Many2one function/related fields must be stored to be used as ordering fields! Ignoring sorting for ${model_info.model}.${order_field}`
+                        console.warn(
+                            `[ServiceWorker][OSV] Many2one function/related fields must be stored to be used as ordering fields! Ignoring sorting for ${model_info.model}.${order_field}`
                         );
                         return [];
                     }
@@ -408,11 +408,18 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                         if (_.isEmpty(field_names)) {
                             select_clause = "*";
                         } else {
-                            select_clause = field_names
-                                .map(
-                                    field_name => `"${model_info.table}".${field_name}`
-                                )
-                                .join(",");
+                            const select_clause_fields = [];
+                            for (const field_name of field_names) {
+                                select_clause_fields.push(
+                                    `"${model_info.table}".${field_name}`
+                                );
+                                if (model_info.fields[field_name].type === "many2one") {
+                                    select_clause_fields.push(
+                                        `"${model_info.table}"."display_name__${field_name}"`
+                                    );
+                                }
+                            }
+                            select_clause = select_clause_fields.join(",");
                         }
                     }
                     const query_str =
@@ -437,7 +444,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                     }
                     return resolve(res);
                 } catch (err) {
-                    console.log(`[ServiceWorker][OSV] SQL ERROR: ${sql}`);
+                    console.error(`[ServiceWorker][OSV] SQL ERROR: ${sql}`);
                     return reject(err);
                 }
             });

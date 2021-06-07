@@ -4,33 +4,42 @@
 odoo.define("web_pwa_cache.PWA.bus", function(require) {
     "use strict";
 
+    const BroadcastMixin = require("web_pwa_cache.BroadcastMixin");
     const PWA = require("web_pwa_oca.PWA");
     require("web_pwa_cache.PWA");
 
     /**
      * This class is used to communicate with the user page.
      */
+    PWA.include(BroadcastMixin);
     PWA.include({
+        _broadcast_channel_in_name: "pwa-sw-messages",
+        _broadcast_channel_out_name: "pwa-page-messages",
+
         /**
          * @override
          */
-        init: function() {
+        _onCacheNotFound: function(request, err) {
             this._super.apply(this, arguments);
-            // Messages to the user page
-            this._channel_out = new BroadcastChannel("sw-messages");
-            // Messages from the user page
-            this._channel_in = new BroadcastChannel("cl-messages");
-            this._channel_in.addEventListener(
-                "message",
-                this._onReceiveClientMessage.bind(this)
-            );
+            const isOffline =
+                (this._managers.config && this._managers.config.isOfflineMode()) ||
+                false;
+            if (isOffline) {
+                const request_url = new URL(request.url);
+                this.postBroadcastMessage({
+                    type: "PWA_CACHE_FAIL",
+                    error: err,
+                    url: request_url.pathname,
+                });
+            }
         },
 
         /**
-         * @param {Object} message
+         * @override
          */
-        postClientPageMessage: function(message) {
-            this._channel_out.postMessage(message);
+        start: function() {
+            BroadcastMixin.start.call(this);
+            return this._super.apply(this, arguments);
         },
 
         /**
@@ -38,99 +47,12 @@ odoo.define("web_pwa_cache.PWA.bus", function(require) {
          * @param {BroadcastChannelEvent} evt
          */
         // eslint-disable-next-line
-        _onReceiveClientMessage: function(evt) {
-            if (!evt.isTrusted || !this.isLoaded()) {
+        _onReceiveBroadcastMessage: function(evt) {
+            const res = this._super.apply(this, arguments);
+            if (!res || !this.isLoaded()) {
                 return;
             }
             switch (evt.data.type) {
-                // This message is received when the user page was loaded or the user changes the pwa mode.
-                // The process can be:
-                // - User has no 'userdata'. This means that the prefeteching process hasn't been done
-                //   so we run it the first time.
-                // - User change the pwa mode to 'online'. This means that we can try to prefetch data.
-                case "SET_PWA_CONFIG":
-                    const promises = [];
-                    const changes = {};
-                    let keys = Object.keys(evt.data);
-                    keys = _.filter(keys, item => item !== "type");
-                    for (const key of keys) {
-                        changes[key] = evt.data[key];
-                        promises.push(this.config.set(key, changes[key]));
-                    }
-                    Promise.all(promises)
-                        .then(() => {
-                            new Promise(async resolve => {
-                                const model_info_userdata = this._dbmanager.getModelInfo(
-                                    "userdata",
-                                    true
-                                );
-                                const userdata_count = await this._dbmanager.count(
-                                    model_info_userdata,
-                                    []
-                                );
-                                this.postClientPageMessage({
-                                    type: "PWA_CONFIG_CHANGED",
-                                    changes: changes,
-                                });
-                                // Check if need prefetch data
-                                const event_online =
-                                    typeof evt.data.pwa_mode !== "undefined" &&
-                                    evt.data.pwa_mode === "online";
-                                const config_offline = this.config.isOfflineMode();
-                                const config_standalone = this.config.isStandaloneMode();
-                                const is_online =
-                                    event_online ||
-                                    (typeof evt.data.pwa_mode === "undefined" &&
-                                        !config_offline);
-                                const is_standalone =
-                                    (typeof evt.data.standalone !== "undefined" &&
-                                        evt.data.standalone) ||
-                                    (typeof evt.data.standalone === "undefined" &&
-                                        config_standalone);
-                                if (
-                                    (is_online && is_standalone && !userdata_count) ||
-                                    (event_online && is_standalone)
-                                ) {
-                                    this._doPrefetchDataPost();
-                                }
-                                return resolve();
-                            });
-                        })
-                        .catch(err => {
-                            console.log(
-                                `[ServiceWorker] Init configuration was failed. The worker its in inconsisten state!`
-                            );
-                            console.log(err);
-                        });
-                    break;
-
-                // Received to send pwa config. to the user page.
-                case "GET_PWA_CONFIG":
-                    this.config.sendToClient().catch(() => {
-                        console.log(
-                            `[ServiceWorker] Error sending pwa configuration to the user page!`
-                        );
-                    });
-                    break;
-
-                // Received to send pwa sync. records to the user page.
-                case "GET_PWA_SYNC_RECORDS":
-                    this._components.sync.sendRecordsToClient();
-                    break;
-
-                // Received to start the sync. process
-                case "START_SYNCHRONIZATION":
-                    this._components.sync.run().then(
-                        () => this._doPrefetchDataPost(),
-                        err => {
-                            console.log(
-                                "[ServiceWorker] Error: can't complete the synchronization process."
-                            );
-                            console.log(err);
-                        }
-                    );
-                    break;
-
                 // Received to start the prefetching process
                 case "START_PREFETCH":
                     this._doPrefetchDataPost();
@@ -152,19 +74,18 @@ odoo.define("web_pwa_cache.PWA.bus", function(require) {
             this._prefetch_promise = new Promise(async (resolve, reject) => {
                 this._prefetch_running = true;
                 try {
-                    const is_offline_mode = this.config.isOfflineMode();
+                    const is_offline_mode = this._managers.config.isOfflineMode();
                     if (is_offline_mode) {
                         return resolve();
                     }
                     // Try sync records first
-                    await this._components.sync.run();
+                    await this._managers.sync.run();
                     // Try prefetch data
                     await this._components.prefetch.prefetchDataPost();
-                    await this._updateModelInfos();
                     // If have transactions to sync. tell it to the user
-                    const records = await this._components.sync.getSyncRecords();
+                    const records = await this._managers.sync.getSyncRecords();
                     if (records.length) {
-                        this.postClientPageMessage({
+                        this.postBroadcastMessage({
                             type: "PWA_SYNC_NEED_ACTION",
                             count: records.length,
                         });

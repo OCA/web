@@ -279,6 +279,26 @@ odoo.define("web_pwa_cache.PWA.core.base.Tools", function() {
         });
     }
 
+    function flattenObj(datas, fobj, prefix) {
+        const res = fobj || {};
+        const entrs = Object.entries(datas);
+        for (const [prop_name, prop_value] of entrs) {
+            if (!prop_value || prop_value instanceof Array) {
+                continue;
+            } else if (typeof prop_value === "object") {
+                this.flattenObj(
+                    prop_value,
+                    res,
+                    prefix ? `${prefix}.${prop_name}` : prop_name
+                );
+            } else {
+                const key = prefix ? `${prefix}.${prop_name}` : prop_name;
+                res[key] = prop_value;
+            }
+        }
+        return res;
+    }
+
     return {
         ODOO_DATE_FORMAT: ODOO_DATE_FORMAT,
         ODOO_TIME_FORMAT: ODOO_TIME_FORMAT,
@@ -306,5 +326,7 @@ odoo.define("web_pwa_cache.PWA.core.base.Tools", function() {
         s_quote: s_quote,
 
         promiseAny: promiseAny,
+
+        flattenObj: flattenObj,
     };
 });

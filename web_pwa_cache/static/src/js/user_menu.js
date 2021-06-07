@@ -3,21 +3,32 @@ odoo.define("web_pwa_cache.UserMenu", function(require) {
 
     var UserMenu = require("web.UserMenu");
     var WebClientObj = require("web.web_client");
-    var BroadcastSWMixin = require("web_pwa_cache.BroadcastSWMixin");
+    var BroadcastMixin = require("web_pwa_cache.BroadcastMixin");
     require("web_pwa_cache.PWAManager");
 
-    UserMenu.include(BroadcastSWMixin);
+    UserMenu.include(BroadcastMixin);
     UserMenu.include({
+        _broadcast_channel_in_name: "pwa-page-messages",
+        _broadcast_channel_out_name: "pwa-sw-messages",
+
+        /**
+         * @override
+         */
+        init: function() {
+            this._super.apply(this, arguments);
+        },
+
         /**
          * @override
          * @returns {Deferred}
          */
         start: function() {
-            this._pwaManager = WebClientObj.pwa_manager;
-            if (this._pwaManager.isPWAStandalone()) {
-                this.postServiceWorkerMessage({type: "GET_PWA_CONFIG"});
-            }
-            return this._super.apply(this, arguments);
+            return this._super.apply(this, arguments).then(() => {
+                this._pwaManager = WebClientObj.pwa_manager;
+                if (this._pwaManager.isPWAStandalone()) {
+                    this.postBroadcastMessage({type: "GET_PWA_CONFIG"});
+                }
+            });
         },
 
         _updatePWACheckbox: function(pwa_mode) {
@@ -46,11 +57,14 @@ odoo.define("web_pwa_cache.UserMenu", function(require) {
         },
 
         _onMenuPwaQueueSync: function() {
-            this.postServiceWorkerMessage({type: "GET_PWA_SYNC_RECORDS"});
+            this.postBroadcastMessage({type: "GET_PWA_SYNC_RECORDS"});
         },
 
-        _onReceiveServiceWorkerMessage: function(evt) {
-            this._super.apply(this, arguments);
+        _onReceiveBroadcastMessage: function(evt) {
+            const res = BroadcastMixin._onReceiveBroadcastMessage.call(this, evt);
+            if (!res) {
+                return false;
+            }
             switch (evt.data.type) {
                 case "PWA_INIT_CONFIG":
                     this._enablePWAMenu();

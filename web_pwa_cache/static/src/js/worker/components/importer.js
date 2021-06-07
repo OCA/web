@@ -4,13 +4,13 @@
 odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
     "use strict";
 
-    const SWComponent = require("web_pwa_cache.PWA.components.SWComponent");
+    const SWComponent = require("web_pwa_cache.PWA.components.Component");
 
     /**
      * This class is used to store Odoo replies
      * The name of the functions match with the name of the python implementation.
      */
-    const ComponentImporter = SWComponent.extend({
+    const SWImporterComponent = SWComponent.extend({
         /**
          * @override
          */
@@ -33,7 +33,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
             return new Promise(async (resolve, reject) => {
                 if (this.options.allow_create) {
                     try {
-                        await this._dbmanager.sqlitedb.createOrUpdateRecord(
+                        await this._db.sqlitedb.createOrUpdateRecord(
                             model_info,
                             values,
                             conflicts
@@ -48,8 +48,8 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                         for (const field of conflicts) {
                             domain.push([field, "=", values[field]]);
                         }
-                        const rc_ids = await this._dbmanager.search(model_info, domain);
-                        await this._dbmanager.write(model_info, rc_ids, values);
+                        const rc_ids = await this._db.search(model_info, domain);
+                        await this._db.write(model_info, rc_ids, values);
                     } catch (err) {
                         // Update can get an error because the record doesn't exists...
                         // do nothing
@@ -70,7 +70,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
             });
             const tasks = [];
             for (const record of records) {
-                tasks.push(this._dbmanager.write(model, [record.id], record));
+                tasks.push(this._db.write(model, [record.id], record));
             }
             return Promise.all(tasks);
         },
@@ -93,7 +93,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
             return new Promise(async (resolve, reject) => {
                 const fields_views = data.fields_views;
                 const tasks = [];
-                const model_info_views = this._dbmanager.getModelInfo("views", true);
+                const model_info_views = this._db.getModelInfo("views", true);
                 for (const fields_view of fields_views) {
                     tasks.push(
                         this._doCheckCreateOrUpdate(model_info_views, fields_view, [
@@ -121,14 +121,14 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
         default_get: function(model, data) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_metadata = this._dbmanager.getModelInfo(
+                    const model_info_metadata = this._db.getModelInfo(
                         "model_metadata",
                         true
                     );
                     const rc_ids = await this.search(model_info_metadata, [
                         ["model", "=", model],
                     ]);
-                    await this._dbmanager.sqlitedb.updateModelInfo(rc_ids, {
+                    await this._db.sqlitedb.updateModelInfo(rc_ids, {
                         defaults: data,
                     });
                 } catch (err) {
@@ -151,10 +151,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                     value: data,
                 };
                 try {
-                    const model_info_userdata = this._dbmanager.getModelInfo(
-                        "userdata",
-                        true
-                    );
+                    const model_info_userdata = this._db.getModelInfo("userdata", true);
                     await this._doCheckCreateOrUpdate(model_info_userdata, values, [
                         "param",
                     ]);
@@ -172,7 +169,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
          * @returns {Promise}
          */
         read: function(model, data) {
-            return this._dbmanager.write(model, [data.id], data);
+            return this._db.write(model, [data.id], data);
         },
 
         /**
@@ -190,10 +187,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                 };
 
                 try {
-                    const model_info_template = this._dbmanager.getModelInfo(
-                        "template",
-                        true
-                    );
+                    const model_info_template = this._db.getModelInfo("template", true);
                     await this._doCheckCreateOrUpdate(model_info_template, values, [
                         "xml_ref",
                     ]);
@@ -213,11 +207,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
          */
         get_filters: function(model, data, request_params) {
             var fmodel = request_params.args[0];
-            return this._dbmanager.writeOrCreate(
-                fmodel,
-                data,
-                this.options.allow_create
-            );
+            return this._db.writeOrCreate(fmodel, data, this.options.allow_create);
         },
 
         /**
@@ -230,11 +220,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                 return Promise.resolve();
             }
             const records = "records" in data ? data.records : data;
-            return this._dbmanager.writeOrCreate(
-                model,
-                records,
-                this.options.allow_create
-            );
+            return this._db.writeOrCreate(model, records, this.options.allow_create);
         },
 
         /**
@@ -244,7 +230,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
         action_load: function(data) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_base_actions = this._dbmanager.getModelInfo(
+                    const model_info_base_actions = this._db.getModelInfo(
                         "ir.actions.actions"
                     );
                     await this._doCheckCreateOrUpdate(
@@ -252,7 +238,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                         _.pick(data, _.keys(model_info_base_actions.fields)),
                         ["id"]
                     );
-                    const model_info_actions = this._dbmanager.getModelInfo(data.type);
+                    const model_info_actions = this._db.getModelInfo(data.type);
                     await this._doCheckCreateOrUpdate(
                         model_info_actions,
                         _.pick(data, _.keys(model_info_actions.fields)),
@@ -284,7 +270,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                 };
 
                 try {
-                    const model_info = this._dbmanager.getModelInfo("post", true);
+                    const model_info = this._db.getModelInfo("post", true);
                     await this._doCheckCreateOrUpdate(model_info, values, [
                         "pathname",
                         "params",
@@ -317,10 +303,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                 };
 
                 try {
-                    const model_info_function = this._dbmanager.getModelInfo(
-                        "function",
-                        true
-                    );
+                    const model_info_function = this._db.getModelInfo("function", true);
                     await this._doCheckCreateOrUpdate(model_info_function, values, [
                         "model",
                         "method",
@@ -335,5 +318,5 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
         },
     });
 
-    return ComponentImporter;
+    return SWImporterComponent;
 });

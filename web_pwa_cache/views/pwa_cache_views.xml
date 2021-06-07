@@ -6,18 +6,13 @@
         <field name="arch" type="xml">
             <form string="PWA Cache">
                 <div class="oe_button_box" name="button_box">
-                    <button
-                        name="toggle_active"
-                        type="object"
-                        class="oe_stat_button"
-                        icon="fa-archive"
-                    >
-                        <field
-                            name="active"
-                            widget="boolean_button"
-                            options='{"terminology": "archive"}'
-                        />
-                    </button>
+                    <widget
+                        name="web_ribbon"
+                        text="Archived"
+                        bg_color="bg-danger"
+                        attrs="{'invisible': [('active', '=', True)]}"
+                    />
+                    <field name="active" invisible="1" />
                 </div>
                 <field name="model_name" invisible="1" />
                 <group col="4">
@@ -44,7 +39,6 @@
                     />
                     <field
                         name="model_domain_raw"
-                        options="{'model': 'model_name', 'in_dialog': True}"
                         attrs="{'required': [('cache_type', '=', 'model')]}"
                     />
                     <field name="model_field_excluded_ids" widget="many2many_tags" />
@@ -55,15 +49,33 @@
                         attrs="{'required': [('cache_type', '=', 'function')]}"
                     />
                 </group>
-                <group
-                    attrs="{'invisible': [('cache_type', 'not in', ['onchange', 'onchange_formula'])]}"
-                >
+                <group attrs="{'invisible': [('cache_type', '!=', 'onchange')]}">
                     <field
-                        name="onchange_field"
-                        attrs="{'required': [('cache_type', 'in', ['onchange', 'onchange_formula'])]}"
-                    />
-                    <field name="onchange_triggers" />
-                    <field name="onchange_main_trigger" />
+                        name="onchange_selector_ids"
+                        mode="tree"
+                        attrs="{'invisible': [('model_id', '=', False)]}"
+                    >
+                        <form string="Onchange Selector">
+                            <field name="sequence" />
+                            <field name="comodel_name" invisible="1" />
+                            <field name="pwa_cache_type" invisible="1" />
+                            <field name="field_name" required="1" />
+                            <field name="grouping_field" />
+                            <field name="expression" required="1" />
+                        </form>
+                        <tree string="Onchange Selectors" editable="bottom">
+                            <field name="sequence" widget="handle" />
+                            <field name="pwa_cache_type" invisible="1" />
+                            <field name="field_name" required="1" />
+                            <field name="grouping_field" />
+                            <field name="expression" required="1" />
+                        </tree>
+                    </field>
+                    <div colspan="2" class="text-right">
+                        <field
+                            name="onchange_selector_count"
+                        /> records will be generated
+                    </div>
                 </group>
                 <group attrs="{'invisible': [('cache_type', '!=', 'clientqweb')]}">
                     <field
@@ -109,85 +121,6 @@
                             placeholder="Enter Javascript code here."
                         />
                     </page>
-                    <page
-                        string="Python Code"
-                        name='code'
-                        autofocus="autofocus"
-                        attrs="{'invisible': [('cache_type', 'not in', ['onchange','onchange_formula','function','post'])]}"
-                    >
-                        <field
-                            name="code"
-                            widget="ace"
-                            options="{'mode': 'python'}"
-                            placeholder="Enter Python code here. Help about Python expression is available in the help tab of this document."
-                        />
-                    </page>
-                    <page
-                        string="Help"
-                        attrs="{'invisible': [('cache_type', 'not in', ['onchange','function','post'])]}"
-                    >
-                        <group>
-                            <div style="margin-top: 4px;">
-                                <h3>Help with Python expressions</h3>
-                                <p
-                                >Various fields may use Python code or Python expressions. The following variables can be used:</p>
-                                <ul>
-                                    <li>
-                                        <code>env</code>
-                                        : Odoo Environment on which the request is triggered
-                                    </li>
-                                    <li>
-                                        <code>user</code>
-                                        ,
-                                        <code>uid</code>
-                                        : The user that trigger the request
-                                    </li>
-                                    <li>
-                                        <code>record</code>
-                                        : This record
-                                    </li>
-                                    <li>
-                                        <code>time</code>
-                                        ,
-                                        <code>datetime</code>
-                                        ,
-                                        <code>dateutil</code>
-                                        ,
-                                        <code>timezone</code>
-                                        : useful Python libraries
-                                    </li>
-                                    <li>
-                                        <code>b64encode</code>
-                                        ,
-                                        <code>b64decode</code>
-                                        : To work with base64
-                                    </li>
-                                    <li>
-                                        <code>DEFAULT_SERVER_DATETIME_FORMAT</code>
-                                        ,
-                                        <code>DEFAULT_SERVER_DATE_FORMAT</code>
-                                        ,
-                                        <code>DEFAULT_SERVER_TIME_FORMAT</code>
-                                        : Odoo date format
-                                    </li>
-                                    <li>
-                                        To return an params definition, assign:
-                                        <code>params = [...]</code>
-                                    </li>
-                                </ul>
-                                <div>
-                                    <p
-                                    >'params' normally its an array of arrays. You can use an special parameter to define range of values: '['__r', MIN, MAX]'</p>
-                                </div>
-                                <div>
-                                    <p>Example of Python code</p>
-                                    <code style='white-space: pre-wrap'>
-                                        params = [ [10, 'Text'], [30, 'Other Text'], [['__r', 10, 20], 'The Text'] ]
-                                    </code>
-                                </div>
-                            </div>
-                        </group>
-                    </page>
                 </notebook>
             </form>
         </field>
@@ -216,4 +149,15 @@
         parent="menu_pwa"
         sequence="1"
     />
+    <record id="pwa_cache_onchange_view_tree" model="ir.ui.view">
+        <field name="name">pwa.cache.onchange.tree</field>
+        <field name="model">pwa.cache.onchange</field>
+        <field name="arch" type="xml">
+            <tree string="PWA Cache Onchange Selector">
+                <field name="field_name" />
+                <field name="grouping_field" />
+                <field name="expression" />
+            </tree>
+        </field>
+    </record>
 </odoo>

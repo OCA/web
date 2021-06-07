@@ -6,7 +6,7 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
 
     const PWA = require("web_pwa_oca.PWA");
     require("web_pwa_cache.PWA");
-    const tools = require("web_pwa_cache.PWA.core.base.Tools");
+    const Tools = require("web_pwa_cache.PWA.core.base.Tools");
 
     PWA.include({
         _routes: {
@@ -52,8 +52,8 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
          * @returns {Promise}
          */
         _routeOutVersionInfo: function() {
-            if (this.config.isOfflineMode()) {
-                return Promise.resolve(tools.ResponseJSONRPC({}));
+            if (this._managers.config.isOfflineMode()) {
+                return Promise.resolve(Tools.ResponseJSONRPC({}));
             }
             return Promise.reject();
         },
@@ -77,7 +77,7 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
                             model,
                             request_data.params
                         );
-                        return resolve(tools.ResponseJSONRPC(resp_data));
+                        return resolve(Tools.ResponseJSONRPC(resp_data));
                     } catch (err) {
                         return reject(err);
                     }
@@ -90,7 +90,7 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
                         request_data.params
                     );
                     if (resp_data) {
-                        return resolve(tools.ResponseJSONRPC(resp_data.result));
+                        return resolve(Tools.ResponseJSONRPC(resp_data.result));
                     }
                     return reject();
                 } catch (err) {
@@ -122,7 +122,7 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
                     }
                 }
 
-                return resolve(tools.ResponseJSONRPC(false));
+                return resolve(Tools.ResponseJSONRPC(false));
             });
         },
 
@@ -135,8 +135,8 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
          */
         _routeOutLongPolling: function() {
             return new Promise((resolve, reject) => {
-                if (this.config.isOfflineMode()) {
-                    setTimeout(() => resolve(tools.ResponseJSONRPC([])), 30000);
+                if (this._managers.config.isOfflineMode()) {
+                    setTimeout(() => resolve(Tools.ResponseJSONRPC([])), 30000);
                 } else {
                     reject();
                 }
@@ -151,10 +151,10 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
          * @returns {Promise}
          */
         _routeOutLongIMStatus: function() {
-            if (this.config.isOfflineMode()) {
+            if (this._managers.config.isOfflineMode()) {
                 return Promise.resolve(
-                    tools.ResponseJSONRPC({
-                        id: this.config.getUID(),
+                    Tools.ResponseJSONRPC({
+                        id: this._managers.config.getUID(),
                         im_status: "offline",
                     })
                 );
@@ -178,7 +178,7 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
                         request_data.params
                     );
                     if (resp_data) {
-                        return resolve(tools.ResponseJSONRPC(resp_data));
+                        return resolve(Tools.ResponseJSONRPC(resp_data));
                     }
                 } catch (err) {
                     return reject(err);
@@ -200,7 +200,7 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
                         false,
                         request_data.params
                     );
-                    return resolve(tools.ResponseJSONRPC(resp_data));
+                    return resolve(Tools.ResponseJSONRPC(resp_data));
                 } catch (err) {
                     return reject(err);
                 }
@@ -215,7 +215,7 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     const resp_data = await this._components.exporter.check_wkhtml_to_pdf();
-                    return resolve(tools.ResponseJSONRPC(resp_data.value));
+                    return resolve(Tools.ResponseJSONRPC(resp_data.value));
                 } catch (err) {
                     return reject();
                 }
@@ -230,7 +230,7 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     const resp_data = await this._components.exporter.action_run();
-                    return resolve(tools.ResponseJSONRPC(resp_data.value));
+                    return resolve(Tools.ResponseJSONRPC(resp_data.value));
                 } catch (err) {
                     return reject();
                 }
@@ -242,10 +242,10 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
          * @returns {Promise}
          */
         _routeOutInitMessaging: function() {
-            if (this.config.isOfflineMode()) {
+            if (this._managers.config.isOfflineMode()) {
                 return Promise.resolve(
-                    tools.ResponseJSONRPC({
-                        id: this.config.getUID(),
+                    Tools.ResponseJSONRPC({
+                        id: this._managers.config.getUID(),
                         im_status: "offline",
                     })
                 );
@@ -256,12 +256,12 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
         _routeOutReadFollowers: function(url, request_data) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    if (this.config.isOfflineMode()) {
+                    if (this._managers.config.isOfflineMode()) {
                         const resp_data = await this._components.exporter.read_followers(
                             request_data.params.res_model,
                             request_data.params.follower_ids
                         );
-                        return resolve(tools.ResponseJSONRPC(resp_data));
+                        return resolve(Tools.ResponseJSONRPC(resp_data));
                     }
                     return reject();
                 } catch (err) {
@@ -286,7 +286,7 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
                         request_data.params
                     );
                     if (post_cache) {
-                        return resolve(tools.ResponseJSONRPC(post_cache.result));
+                        return resolve(Tools.ResponseJSONRPC(post_cache.result));
                     }
                     return reject();
                 } catch (err) {
@@ -395,23 +395,31 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
                 const field_name = pathname_parts[5];
                 const search_params = this._getURLSearchParams(url.search);
                 try {
+                    console.time("imagwewb");
                     const data = await this._components.exporter.web_image(
                         model,
                         obj_id,
                         field_name,
                         search_params
                     );
-                    if (_.isEmpty(data)) {
+                    console.timeEnd("imagwewb");
+                    console.log(model, obj_id, field_name, search_params);
+                    if (!_.isEmpty(data)) {
+                        return resolve(Tools.ResponseImage(data));
+                    } else if (this._managers.config.isOfflineMode()) {
                         return resolve(
-                            tools.ResponseRedirect(
+                            Tools.ResponseRedirect(
                                 "/web/static/src/img/placeholder.png"
                             )
                         );
                     }
-                    return resolve(tools.ResponseImage(data));
                 } catch (err) {
                     return reject(err);
                 }
+
+                return reject(
+                    "Cached image not found, fallback to default browser behaviour"
+                );
             });
         },
 

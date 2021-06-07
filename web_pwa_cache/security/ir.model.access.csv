@@ -3,3 +3,5 @@ access_pwa_cache,pwa.cache,model_pwa_cache,base.group_user,1,0,0,0
 access_pwa_cache_manager,pwa.cache,model_pwa_cache,base.group_system,1,1,1,1
 access_pwa_cache_onchange,pwa.cache.onchange,model_pwa_cache_onchange,base.group_user,1,0,0,0
 access_pwa_cache_onchange_manager,pwa.cache.onchange,model_pwa_cache_onchange,base.group_system,1,1,1,1
+access_pwa_cache_onchange_selector,pwa.cache.onchange.selector,model_pwa_cache_onchange_selector,base.group_user,1,0,0,0
+access_pwa_cache_onchange_selector_manager,pwa.cache.onchange.selector,model_pwa_cache_onchange_selector,base.group_system,1,1,1,1

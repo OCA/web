@@ -34,40 +34,46 @@ class PWA(PWA):
                 urls.append(asset[1]["src"])
         return urls
 
+    @staticmethod
+    def _get_static_cache_worker(filepath):
+        return "/web_pwa_cache/static/src{}".format(filepath)
+
     def _get_pwa_scripts(self):
         res = super()._get_pwa_scripts()
-        res.insert(0, "/web_pwa_cache/static/src/lib/sqlite/dist/sw.js")
-        res.insert(0, "/web_pwa_cache/static/src/lib/crc32/crc32.js")
+        res.insert(0, self._get_static_cache_worker("/lib/sqlite/dist/sw.js"))
+        res.insert(0, self._get_static_cache_worker("/lib/crc32/crc32.js"))
         res.insert(0, "/web/static/lib/moment/moment.js")
         to_insert = [
             "/web/static/src/js/core/translation.js",
             "/web/static/src/js/core/utils.js",
             "/web/static/src/js/core/mixins.js",
-            "/web_pwa_cache/static/src/js/worker/core/base/tools.js",
-            "/web_pwa_cache/static/src/js/worker/core/base/sandbox.js",
-            "/web_pwa_cache/static/src/js/worker/core/base/rpc.js",
-            "/web_pwa_cache/static/src/js/worker/core/osv/expression.js",
-            "/web_pwa_cache/static/src/js/worker/core/osv/query.js",
-            "/web_pwa_cache/static/src/js/worker/core/osv/model.js",
-            "/web_pwa_cache/static/src/js/worker/core/db/database.js",
-            "/web_pwa_cache/static/src/js/worker/core/db/sqlitedb.js",
-            "/web_pwa_cache/static/src/js/worker/core/db/indexeddb.js",
-            "/web_pwa_cache/static/src/js/worker/core/cache_manager.js",
-            "/web_pwa_cache/static/src/js/worker/core/database_manager.js",
-            "/web_pwa_cache/static/src/js/worker/core/config.js",
-            "/web_pwa_cache/static/src/js/worker/components/component.js",
-            "/web_pwa_cache/static/src/js/worker/components/exporter.js",
-            "/web_pwa_cache/static/src/js/worker/components/importer.js",
-            "/web_pwa_cache/static/src/js/worker/components/sync.js",
-            "/web_pwa_cache/static/src/js/worker/components/prefetch.js",
+            self._get_static_cache_worker("/js/mixins/broadcast_mixin.js"),
+            self._get_static_cache_worker("/js/worker/core/base/tools.js"),
+            self._get_static_cache_worker("/js/worker/core/base/sandbox.js"),
+            self._get_static_cache_worker("/js/worker/core/base/rpc.js"),
+            self._get_static_cache_worker("/js/worker/core/osv/expression.js"),
+            self._get_static_cache_worker("/js/worker/core/osv/query.js"),
+            self._get_static_cache_worker("/js/worker/core/osv/model.js"),
+            self._get_static_cache_worker("/js/worker/core/db/database.js"),
+            self._get_static_cache_worker("/js/worker/core/db/sqlitedb.js"),
+            self._get_static_cache_worker("/js/worker/core/db/indexeddb.js"),
+            self._get_static_cache_worker("/js/worker/systems/cache.js"),
+            self._get_static_cache_worker("/js/worker/systems/database.js"),
+            self._get_static_cache_worker("/js/worker/managers/manager.js"),
+            self._get_static_cache_worker("/js/worker/managers/config.js"),
+            self._get_static_cache_worker("/js/worker/managers/sync.js"),
+            self._get_static_cache_worker("/js/worker/components/component.js"),
+            self._get_static_cache_worker("/js/worker/components/exporter.js"),
+            self._get_static_cache_worker("/js/worker/components/importer.js"),
+            self._get_static_cache_worker("/js/worker/components/prefetch.js"),
         ]
         insert_pos = res.index("/web/static/src/js/core/class.js") + 1
         for index, url in enumerate(to_insert):
             res.insert(insert_pos + index, url)
         to_insert = [
-            "/web_pwa_cache/static/src/js/worker/pwa.js",
-            "/web_pwa_cache/static/src/js/worker/bus.js",
-            "/web_pwa_cache/static/src/js/worker/routes.js",
+            self._get_static_cache_worker("/js/worker/pwa.js"),
+            self._get_static_cache_worker("/js/worker/bus.js"),
+            self._get_static_cache_worker("/js/worker/routes.js"),
         ]
         insert_pos = res.index("/web_pwa_oca/static/src/js/worker/pwa.js") + 1
         for index, url in enumerate(to_insert):

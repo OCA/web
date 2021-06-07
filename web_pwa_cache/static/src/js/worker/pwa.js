@@ -5,15 +5,14 @@ odoo.define("web_pwa_cache.PWA", function(require) {
     "use strict";
 
     const PWA = require("web_pwa_oca.PWA");
-    const OdooRPC = require("web_pwa_cache.PWA.core.base.RPC");
-    const DatabaseManager = require("web_pwa_cache.PWA.core.DatabaseManager");
-    const CacheManager = require("web_pwa_cache.PWA.core.CacheManager");
-    const Config = require("web_pwa_cache.PWA.core.Config");
-    const tools = require("web_pwa_cache.PWA.core.base.Tools");
-    const ComponentExporter = require("web_pwa_cache.PWA.components.Exporter");
-    const ComponentImporter = require("web_pwa_cache.PWA.components.Importer");
-    const ComponentPrefetch = require("web_pwa_cache.PWA.components.Prefetch");
-    const ComponentSync = require("web_pwa_cache.PWA.components.Sync");
+    const DatabaseSystem = require("web_pwa_cache.PWA.systems.Database");
+    const CacheSystem = require("web_pwa_cache.PWA.systems.Cache");
+    const SWSyncManager = require("web_pwa_cache.PWA.managers.Sync");
+    const SWConfigManager = require("web_pwa_cache.PWA.managers.Config");
+    const SWExporterComponent = require("web_pwa_cache.PWA.components.Exporter");
+    const SWImporterComponent = require("web_pwa_cache.PWA.components.Importer");
+    const SWPrefetchComponent = require("web_pwa_cache.PWA.components.Prefetch");
+    const Tools = require("web_pwa_cache.PWA.core.base.Tools");
 
     PWA.include({
         _special_operations: [
@@ -33,13 +32,13 @@ odoo.define("web_pwa_cache.PWA", function(require) {
 
             this._load_promise = false;
             this._components = {};
+            this._managers = {};
 
             this._cache_hashes = params.cache_hashes;
             this._prefetched_urls = params.prefetched_urls;
 
-            this._rpc = new OdooRPC();
-            this._dbmanager = new DatabaseManager(this);
-            this._cachemanager = new CacheManager(this);
+            this._db = new DatabaseSystem();
+            this._cache = new CacheSystem();
 
             this._doLoad();
         },
@@ -48,9 +47,9 @@ odoo.define("web_pwa_cache.PWA", function(require) {
             this._load_promise = new Promise(async (resolve, reject) => {
                 this._isLoaded = false;
                 try {
-                    await this._dbmanager.install();
-                    await this._dbmanager.start();
-                    this.config = new Config(this);
+                    await this._db.install();
+                    await this._db.start();
+                    await this._initManagers();
                     await this._initComponents();
                     this._isLoaded = true;
                     // This.config.sendToClient();
@@ -61,26 +60,29 @@ odoo.define("web_pwa_cache.PWA", function(require) {
             });
         },
 
+        _initManagers: function() {
+            return Promise.all([
+                this._addManager("config", SWConfigManager),
+                this._addManager("sync", SWSyncManager),
+            ]);
+        },
+
+        _addManager: function(name, Classref) {
+            this._managers[name] = new Classref(this);
+            return this._managers[name].start();
+        },
+
         _initComponents: function() {
             return Promise.all([
-                this._addComponent("importer", ComponentImporter),
-                this._addComponent("exporter", ComponentExporter),
-                this._addComponent("sync", ComponentSync),
-                this._addComponent("prefetch", ComponentPrefetch),
+                this._addComponent("importer", SWImporterComponent),
+                this._addComponent("exporter", SWExporterComponent),
+                this._addComponent("prefetch", SWPrefetchComponent),
             ]);
         },
 
         _addComponent: function(name, Classref) {
             this._components[name] = new Classref(this);
             return this._components[name].start();
-        },
-
-        _updateModelInfos: function() {
-            const tasks = [];
-            for (const component_name in this._components) {
-                tasks.push(this._components[component_name].updateModelInfos());
-            }
-            return Promise.all(tasks);
         },
 
         /**
@@ -95,7 +97,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
             const task = new Promise(async (resolve, reject) => {
                 try {
                     await this._load_promise;
-                    await this._cachemanager.addAll(
+                    await this._cache.addAll(
                         this._cache_hashes.pwa,
                         this._prefetched_urls
                     );
@@ -115,8 +117,9 @@ odoo.define("web_pwa_cache.PWA", function(require) {
             const task = new Promise(async (resolve, reject) => {
                 try {
                     await this._load_promise;
-                    await this._cachemanager.cleanOld([this._cache_hashes.pwa]);
-                    this.config.sendToClient();
+                    await this._cache.cleanOld([this._cache_hashes.pwa]);
+                    this._managers.config.sendToPages();
+                    this._managers.sync.sendCountToPages();
                 } catch (err) {
                     return reject(err);
                 }
@@ -168,30 +171,31 @@ odoo.define("web_pwa_cache.PWA", function(require) {
          * @override
          */
         processRequest: function(request) {
-            if (!this.isLoaded()) {
-                // PWA Not Actually Loaded
-                console.warn(
-                    "[ServiceWorker] The components are not currently loaded... Fallback to default browser behaviour."
-                );
-                return fetch(request);
-            }
-
-            // Service Worker only works in standlone mode
-            console.log("------ MODE STANDL: ", this.config.isStandaloneMode());
-            if (!this.config.isStandaloneMode()) {
-                return fetch(request);
-            }
-
-            const isOffline = this.config.isOfflineMode();
+            const isStandaloneMode =
+                (this._managers.config && this._managers.config.isStandaloneMode()) ||
+                false;
+            const isOffline =
+                (this._managers.config && this._managers.config.isOfflineMode()) ||
+                false;
             console.log("------ MODE OFF: ", isOffline);
+            console.log("------ METHOD: ", request.method);
 
             if (request.method === "GET") {
                 return new Promise(async (resolve, reject) => {
                     try {
+                        // Strategy: Network first in not standlone mode
+                        if (!isStandaloneMode && request.cache !== "only-if-cached") {
+                            const request_cloned_network = request.clone();
+                            const response_net = await fetch(request_cloned_network);
+                            if (response_net) {
+                                return resolve(response_net);
+                            }
+                        }
+
                         // Need redirect '/'?
                         const url = new URL(request.url);
                         if (url.pathname === "/" && isOffline) {
-                            return resolve(tools.ResponseRedirect("/web"));
+                            return resolve(Tools.ResponseRedirect("/web"));
                         }
                         // Check cached url's to use generic cache hash
                         const url_info = this._getURLInfo(url);
@@ -202,10 +206,9 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                             );
                             request = new Request(new_url);
                         }
-                        // Strategy: Cache First
-                        const cache = await this._cachemanager.get(
-                            this._cache_hashes.pwa
-                        );
+
+                        // Try from cache
+                        const cache = await this._cache.get(this._cache_hashes.pwa);
                         const response_cache = await cache.match(request);
                         if (response_cache) {
                             return resolve(response_cache);
@@ -237,6 +240,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                     }
                 });
             } else if (
+                isStandaloneMode &&
                 request.method === "POST" &&
                 request.headers.get("Content-Type") === "application/json"
             ) {
@@ -262,9 +266,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                         }
 
                         // Don try from cache if a prefetch tasks is running
-                        console.log("---- PAPAPA 111");
                         if (!this._prefetch_running) {
-                            console.log("---- PAPAPA 222");
                             // Other request (or network fails) go directly from cache
                             try {
                                 const response_cache = await this._tryPostFromCache(
@@ -277,14 +279,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                                     `[ServiceWorker] The POST request can't be processed: '${request_url.pathname}' content cached not found! Fallback to default browser behaviour...`
                                 );
                                 console.log(err);
-                                if (isOffline) {
-                                    const request_url = new URL(request.url);
-                                    this.postClientPageMessage({
-                                        type: "PWA_CACHE_FAIL",
-                                        error: err,
-                                        url: request_url.pathname,
-                                    });
-                                }
+                                this._onCacheNotFound(request, err);
                             }
                         }
 
@@ -304,6 +299,14 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                 });
             }
             return fetch(request);
+        },
+
+        /**
+         * @param {Request} request
+         * @param {Exception} err
+         */
+        _onCacheNotFound: function() {
+            // To be overrided
         },
 
         /**
@@ -372,7 +375,6 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                     for (const [key, fnct] of route_entries) {
                         if (url.pathname.startsWith(key)) {
                             const result = await this[fnct](url, request_data);
-                            this._components.sync.updateClientCount();
                             return resolve(result);
                         }
                     }
@@ -440,3 +442,5 @@ odoo.define("web_pwa_cache.PWA", function(require) {
         },
     });
 });
+
+console.log("---------------------------------- PWAA 111122222");

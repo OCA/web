@@ -4,10 +4,168 @@
 odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
     "use strict";
 
+    const OdooClass = require("web.Class");
     const Expression = require("web_pwa_cache.PWA.core.osv.Expression");
     const tools = require("web_pwa_cache.PWA.core.base.Tools");
     const Database = require("web_pwa_cache.PWA.core.db.Database");
     const Model = require("web_pwa_cache.PWA.core.osv.Model");
+
+    const SQLiteConverter = OdooClass.extend({
+        _type_parse_methods: {
+            date: "parseDate",
+            datetime: "parseDatetime",
+            boolean: "parseBoolean",
+            binary: "parseJson",
+            json: "parseJson",
+            many2one: "parseMany2one",
+            one2many: "parseOne2many",
+            many2many: "parseOne2many",
+        },
+
+        /**
+         * This is necessary because sqlite recognize '?' as an placeholder
+         *
+         * @param {String} text
+         * @returns {String}
+         */
+        decode: function(text) {
+            if (!text) {
+                return typeof text === "string" ? "" : false;
+            }
+            return text.replaceAll("%3F", "?");
+        },
+
+        /**
+         * This is necessary because sqlite doesn't have a type for date
+         *
+         * @param {Object} values
+         * @param {String} field
+         * @returns {String}
+         */
+        parseDate: function(values, field) {
+            return tools.DateToOdooFormat(tools.SecondsToDate(values[field]), true);
+        },
+
+        /**
+         * This is necessary because sqlite doesn't have a type for datetime
+         *
+         * @param {Object} values
+         * @param {String} field
+         * @returns {String}
+         */
+        parseDatetime: function(values, field) {
+            return tools.DateToOdooFormat(tools.SecondsToDate(values[field]));
+        },
+
+        /**
+         * This is necessary because sqlite doesn't have a type for boolean
+         *
+         * @param {Object} values
+         * @param {String} field
+         * @returns {Boolean}
+         */
+        parseBoolean: function(values, field) {
+            return values[field] === 1;
+        },
+
+        /**
+         * This is necessary because sqlite doesn't have a type for json
+         *
+         * @param {Object} values
+         * @param {String} field
+         * @returns {Object}
+         */
+        parseJson: function(values, field) {
+            try {
+                return JSON.parse(this.decode(values[field]));
+            } catch (err) {
+                // Do nothing
+            }
+            return values[field];
+        },
+
+        /**
+         * This is necessary because pwa uses client side x2x format
+         *
+         * @param {Object} values
+         * @param {String} field
+         * @returns {Array}
+         */
+        parseMany2one: function(values, field) {
+            return (
+                (values[field] && [
+                    Number(values[field]),
+                    this.decode(values[`display_name__${field}`]),
+                ]) ||
+                false
+            );
+        },
+
+        /**
+         * This is necessary because pwa uses client side x2x format
+         *
+         * @param {Object} values
+         * @param {String} field
+         * @returns {Array}
+         */
+        parseOne2many: function(values, field) {
+            const ids = _.chain(values[field].split("||"))
+                .compact()
+                .map(item => Number(item))
+                .value();
+            if (_.isEmpty(ids)) {
+                return false;
+            }
+            return ids;
+        },
+
+        /**
+         * This method operate directly over 'datas' array
+         *
+         * @param {Array} model_fields
+         * @param {Array} datas
+         */
+        toOdoo: function(model_fields, datas) {
+            if (!(datas instanceof Array)) {
+                datas = [datas];
+            }
+            // All datas must be of the same query (model and fields)
+            const value_fields = _.keys(datas[0]);
+            const value_fields_len = value_fields.length;
+            const datas_len = datas.length;
+            let values = false;
+            for (let index = datas_len - 1; index >= 0; --index) {
+                values = datas[index];
+                let field = false;
+                let field_info = false;
+                for (
+                    let index_field = value_fields_len - 1;
+                    index_field >= 0;
+                    --index_field
+                ) {
+                    field = value_fields[index_field];
+                    if (values[field] !== 0 && !values[field]) {
+                        // Odoo doesn't accept "undefined" or "null" values. Ensure boolean usage
+                        values[field] = false;
+                        continue;
+                    }
+                    let value_parsed = false;
+                    field_info = model_fields[field];
+                    if (field_info) {
+                        const parse_method = this._type_parse_methods[field_info.type];
+                        if (parse_method) {
+                            values[field] = this[parse_method](values, field);
+                            value_parsed = true;
+                        }
+                    }
+                    if (!value_parsed && typeof values[field] === "string") {
+                        // Fields like 'display_name__' are 'virtual' fields without specific definition
+                        values[field] = this.decode(values[field]);
+                    }
+                }
+            }
+        },
+    });
 
     const SQLiteDB = Database.extend({
         _sqlite_dist: "./web_pwa_cache/static/src/lib/sqlite/dist",
@@ -25,8 +183,8 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
             binary: "BLOB",
             selection: "TEXT",
             reference: "TEXT",
-            // Store with format:  ||id1||||display_name|| to use 'like' ||id||
-            many2one: "TEXT",
+            // Only store ID of many2one records
+            many2one: "NUMERIC",
             // Store with format:  ||id1||||id2||||id3|| to use 'like' ||id||
             one2many: "TEXT",
             // Store with format:  ||id1||||id2||||id3|| to use 'like' ||id||
@@ -50,6 +208,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
             this._super.apply(this, arguments);
             this._db = undefined;
             this._osv = new Model(this, this.getParent());
+            this.converter = new SQLiteConverter();
         },
 
         /**
@@ -80,13 +239,6 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
             return Promise.resolve();
         },
 
-        decode: function(text) {
-            if (!text) {
-                return typeof text === "string" ? "" : false;
-            }
-            return text.replaceAll("%3F", "?");
-        },
-
         /**
          * @returns {SQL-Tag}
          */
@@ -103,12 +255,14 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
          * @param {Array} rc_ids
          * @returns {Promise}
          */
-        getRecords: function(model_info, rc_ids) {
+        getRecords: function(model_info, rc_ids, fields) {
             return new Promise(async (resolve, reject) => {
                 if (!rc_ids.length) {
                     return resolve(rc_ids.length === 1 ? undefined : []);
                 }
-                let sql = `SELECT * FROM "${model_info.table}"`;
+                let sql = `SELECT ${(fields && fields.join(",")) || "*"} FROM "${
+                    model_info.table
+                }"`;
                 if (rc_ids && rc_ids.length) {
                     sql += ` WHERE "id" IN (${rc_ids.join(",")})`;
                 }
@@ -123,7 +277,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                         res.push(_.findWhere(records, {id: id}));
                     }
 
-                    this._parseValues(model_info.fields, res);
+                    this.converter.toOdoo(model_info.fields, res);
                     return resolve(records);
                 } catch (err) {
                     return reject(err);
@@ -143,7 +297,6 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                         .clone()
                         .omit("guardedCatch")
                         .value();
-                    this._formatValues(model_info.fields, svalues);
                     const [sql_columns, sql_values] = await this.getSqlSanitizedValues(
                         model_info,
                         svalues
@@ -170,7 +323,6 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                         .clone()
                         .omit("guardedCatch")
                         .value();
-                    this._formatValues(model_info.fields, svalues);
                     const [, , set_sql_values] = await this.getSqlSanitizedValues(
                         model_info,
                         svalues
@@ -199,7 +351,6 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                         .clone()
                         .omit("guardedCatch")
                         .value();
-                    this._formatValues(model_info.fields, svalues);
                     const [
                         sql_columns,
                         sql_values,
@@ -232,15 +383,41 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
          * @returns {Array}
          */
         getSqlSanitizedValues: function(model_info, values, omit_set_keys) {
-            let sql_columns = JSON.stringify(_.keys(values));
-            // Remove external quotes
-            sql_columns = sql_columns.substr(1, sql_columns.length - 2);
-            const sql_values = _.values(values).join(",");
-            const set_sql_values = _.map(
-                _.omit(values, omit_set_keys),
-                (value, key) => `"${key}"=${value}`
-            );
-            return [sql_columns, sql_values, set_sql_values];
+            omit_set_keys =
+                omit_set_keys instanceof Array ? omit_set_keys : [omit_set_keys];
+            const sql_columns = [];
+            const sql_values = [];
+            const set_sql_values = [];
+            for (const key in values) {
+                const field = model_info.fields[key];
+                sql_columns.push(`"${key}"`);
+                if (field.type === "many2one") {
+                    const display_name_field = `display_name__${key}`;
+                    const display_name_value = Expression.column_string_encode(
+                        values[key][1] || "",
+                        true
+                    );
+                    sql_columns.push(`"${display_name_field}"`);
+                    sql_values.push(values[key][0] || "NULL");
+                    sql_values.push(display_name_value);
+                    if (omit_set_keys.indexOf(key) === -1) {
+                        set_sql_values.push(`"${key}"=${values[key][0] || "NULL"}`);
+                        set_sql_values.push(
+                            `"${display_name_field}"=${display_name_value}`
+                        );
+                    }
+                } else {
+                    const sql_value = Expression.convert_to_column(
+                        model_info.fields[key],
+                        values[key]
+                    );
+                    sql_values.push(sql_value);
+                    if (omit_set_keys.indexOf(key) === -1) {
+                        set_sql_values.push(`"${key}"=${sql_value}`);
+                    }
+                }
+            }
+            return [sql_columns.join(","), sql_values.join(","), set_sql_values];
         },
 
         /**
@@ -252,7 +429,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
         createTable: function(model_info) {
             let model_fields = model_info.fields;
             if (typeof model_fields === "string") {
-                model_fields = JSON.parse(model_info.fields);
+                model_fields = JSON.toOdoo(model_info.fields);
             }
             const field_names = _.keys(model_fields);
             const table_fields = ["'id' INTEGER PRIMARY KEY"];
@@ -262,13 +439,38 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                     continue;
                 }
                 var field = model_fields[field_name];
-                table_fields.push(
-                    `"${field_name}" ${this._odoo_to_sqlite[field.type]}`
-                );
+                if (field.type === "many2one") {
+                    table_fields.push(
+                        `"${field_name}" ${
+                            this._odoo_to_sqlite[field.type]
+                        } REFERENCES ${field.relation.replaceAll(".", "_")}(id)`
+                    );
+                    table_fields.push(`"display_name__${field_name}" TEXT`);
+                } else {
+                    table_fields.push(
+                        `"${field_name}" ${this._odoo_to_sqlite[field.type]}`
+                    );
+                }
             }
             sql += table_fields.join(",");
             sql += ")";
             return this._db.query([sql]);
+        },
+
+        /**
+         * @param {Object} model_info
+         * @param {String} index_name
+         * @param {Array} index_fields
+         * @returns {Promise}
+         */
+        createIndex: function(model_info, index_name, index_fields, unique = true) {
+            return this._db.query([
+                `CREATE ${
+                    unique ? "UNIQUE" : ""
+                } INDEX IF NOT EXISTS ${index_name} ON ${
+                    model_info.table
+                } (${index_fields.join(",")})`,
+            ]);
         },
 
         /**
@@ -292,12 +494,12 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                 const model_metadata = this.getInternalTableName("model_metadata");
                 try {
                     const record = await this._db.get([
-                        `SELECT * FROM "${model_metadata}" WHERE "model"="${model_metadata}"`,
+                        `SELECT * FROM "${model_metadata}" WHERE "table"="${model_metadata}"`,
                     ]);
                     if (_.isEmpty(record)) {
                         return reject("Main model metadata not found!");
                     }
-                    this._parseValues(JSON.parse(record.fields), record);
+                    this.converter.toOdoo(JSON.parse(record.fields), record);
                     return resolve(record);
                 } catch (err) {
                     return reject(err);
@@ -336,7 +538,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                                     `Can't found model info for ${models[0]}`
                                 );
                             }
-                            this._parseValues(model_info_metadata.fields, record);
+                            this.converter.toOdoo(model_info_metadata.fields, record);
                             return resolve(record);
                         }
                     }
@@ -346,7 +548,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                             `Can't found model info for some or all ${models.join(",")}`
                         );
                     }
-                    this._parseValues(model_info_metadata.fields, records);
+                    this.converter.toOdoo(model_info_metadata.fields, records);
                     if (grouped) {
                         const mapped_records = {};
                         for (const record of records) {
@@ -369,7 +571,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                         true
                     );
                     let record_data = _.clone(data);
-                    this._formatValues(model_info_metadata.fields, record_data);
+                    // This._formatValues(model_info_metadata.fields, record_data);
                     record_data = _.omit(record_data, "id");
                     await this.updateRecord(model_info_metadata, rc_ids, record_data);
                 } catch (err) {
@@ -383,98 +585,24 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
         /**
          * PRIVATE MEMBERS
          */
-        _formatValues: function(model_fields, values) {
-            // When create the record for metadata model, model_info has the field in the correct format
-            if (typeof model_fields === "string") {
-                model_fields = JSON.parse(model_fields);
-            }
+        // _formatValues: function(model_fields, values) {
+        //     // When create the record for metadata model, model_info has the field in the correct format
+        //     if (typeof model_fields === "string") {
+        //         model_fields = JSON.parse(model_fields);
+        //     }
 
-            const value_fields = _.keys(values);
-            for (const field of value_fields) {
-                values[field] = Expression.convert_to_column(
-                    model_fields[field],
-                    values[field]
-                );
-            }
-        },
-
-        _parseValues: function(model_fields, datas) {
-            if (!(datas instanceof Array)) {
-                datas = [datas];
-            }
-            const datas_len = datas.length;
-            let values = false;
-            for (let index = datas_len - 1; index >= 0; --index) {
-                values = datas[index];
-                const value_fields = _.keys(values);
-
-                const value_fields_len = value_fields.length;
-                let field = false;
-                for (
-                    let index_field = value_fields_len - 1;
-                    index_field >= 0;
-                    --index_field
-                ) {
-                    field = value_fields[index_field];
-                    switch (model_fields[field].type) {
-                        case "date":
-                            values[field] =
-                                _.isNumber(values[field]) &&
-                                tools.DateToOdooFormat(
-                                    tools.SecondsToDate(values[field]),
-                                    true
-                                );
-                            break;
-                        case "datetime":
-                            values[field] =
-                                _.isNumber(values[field]) &&
-                                tools.DateToOdooFormat(
-                                    tools.SecondsToDate(values[field])
-                                );
-                            break;
-                        case "boolean":
-                            values[field] = values[field] === 1;
-                            break;
-                        case "binary":
-                        case "json":
-                            try {
-                                values[field] =
-                                    typeof values[field] === "string" &&
-                                    JSON.parse(this.decode(values[field]));
-                            } catch (err) {
-                                // Do nothing
-                            }
-                            break;
-                        case "many2one":
-                            const value =
-                                values[field] && _.compact(values[field].split("||"));
-                            values[field] =
-                                (value && [Number(value[0]), value[1]]) || false;
-                            break;
-                        case "one2many":
-                        case "many2many":
-                            values[field] =
-                                values[field] &&
-                                _.chain(values[field].split("||"))
-                                    .compact()
-                                    .map(item => Number(item))
-                                    .value();
-                            if (_.isEmpty(values[field])) {
-                                values[field] = false;
-                            }
-                            break;
-                    }
-
-                    if (typeof values[field] === "string") {
-                        values[field] = this.decode(values[field]);
-                    } else if (!values[field] && !_.isNumber(values[field])) {
-                        // Odoo doesn't accept "undefined" or "null" values. Ensure boolean usage
-                        values[field] = false;
-                    }
-                }
-            }
-        },
+        //     const value_fields = _.keys(values);
+        //     for (const field of value_fields) {
+        //         values[field] = Expression.convert_to_column(
+        //             model_fields[field],
+        //             values[field]
+        //         );
+        //     }
+        // },
     });
 
-    return SQLiteDB;
+    return {
+        SQLiteDB: SQLiteDB,
+        SQLiteConverter: SQLiteConverter,
+    };
 });

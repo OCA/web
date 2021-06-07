@@ -8,17 +8,19 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
     var session = require("web.session");
     var PWAManager = require("web_pwa_oca.PWAManager");
     var PWAModeSelector = require("web_pwa_cache.PWAModeSelector");
-    var BroadcastSWMixin = require("web_pwa_cache.BroadcastSWMixin");
+    var BroadcastMixin = require("web_pwa_cache.BroadcastMixin");
     var PWASyncModal = require("web_pwa_cache.PWASyncModal");
 
     var QWeb = core.qweb;
     var _t = core._t;
 
-    PWAManager.include(BroadcastSWMixin);
+    PWAManager.include(BroadcastMixin);
     PWAManager.include({
         custom_events: {
             change_pwa_mode: "_onChangePWAMode",
         },
+        _broadcast_channel_in_name: "pwa-page-messages",
+        _broadcast_channel_out_name: "pwa-sw-messages",
         _show_prefetch_modal_delay: 5000,
         _autoclose_prefetch_modal_delay: 3000,
 
@@ -52,19 +54,26 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     this.modeSelector.close();
                 },
             });
+        },
 
-            // Try update service worker mode.
-            var is_standalone = this.isPWAStandalone();
-            var config_values = {
-                type: "SET_PWA_CONFIG",
-                standalone: is_standalone,
-            };
-            if (!is_standalone) {
-                config_values.pwa_mode = "online";
-            } else {
-                odoo.debug = false;
-            }
-            this.postServiceWorkerMessage(config_values);
+        /**
+         * @override
+         */
+        start: function() {
+            return this._super.apply(this, arguments).then(() => {
+                // Try update service worker mode.
+                var is_standalone = this.isPWAStandalone();
+                var config_values = {
+                    type: "SET_PWA_CONFIG",
+                    standalone: is_standalone,
+                };
+                if (!is_standalone) {
+                    config_values.pwa_mode = "online";
+                } else {
+                    odoo.debug = false;
+                }
+                this.postBroadcastMessage(config_values);
+            });
         },
 
         /**
@@ -79,7 +88,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
          */
         setPWAMode: function(mode) {
             this._pwaMode = mode;
-            this.postServiceWorkerMessage({
+            this.postBroadcastMessage({
                 type: "SET_PWA_CONFIG",
                 pwa_mode: this._pwaMode,
             });
@@ -131,8 +140,11 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
          *
          * @param {BroadcastChannelEvent} evt
          */
-        _onReceiveServiceWorkerMessage: function(evt) {
-            this._super.apply(this, arguments);
+        _onReceiveBroadcastMessage: function(evt) {
+            const res = BroadcastMixin._onReceiveBroadcastMessage.call(this, evt);
+            if (!res) {
+                return false;
+            }
             switch (evt.data.type) {
                 /* General */
                 case "PWA_INIT_CONFIG":
@@ -145,7 +157,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     ) {
                         this.modeSelector.show();
                     }
-                    this.postServiceWorkerMessage({
+                    this.postBroadcastMessage({
                         type: "SET_PWA_CONFIG",
                         standalone: this.isPWAStandalone(),
                         uid: session.uid,
@@ -258,7 +270,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
         },
 
         _onSyncNow: function() {
-            this.postServiceWorkerMessage({
+            this.postBroadcastMessage({
                 type: "START_SYNCHRONIZATION",
             });
         },
