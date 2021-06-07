@@ -139,7 +139,11 @@ odoo.define(
                         "readonly",
                         wanted_field_states[field_name] ? "1" : "0"
                     );
-                    if (field_name === this.fieldMap.price_unit) {
+                    if (
+                        [this.fieldMap.price_unit, this.fieldMap.product].indexOf(
+                            field_name
+                        ) !== -1
+                    ) {
                         $field.attr("force_save", "1");
                     }
                     gen_arch += $field[0].outerHTML;
