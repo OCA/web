@@ -9,7 +9,7 @@
     "license": "AGPL-3",
     "summary": "Render mermaid markdown flowcharts",
     "website": "https://github.com/OCA/web",
-    "depends": ['web'],
+    "depends": ["web"],
     "data": [
         "view/web_widget_mermaid_view.xml",
     ],

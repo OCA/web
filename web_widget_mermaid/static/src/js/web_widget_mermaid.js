@@ -1,9 +1,9 @@
-odoo.define('web.web_widget_mermaid', function(require) {
+odoo.define("web.web_widget_mermaid", function (require) {
     "use strict";
 
-    var core = require('web.core');
-    var basic_fields = require('web.basic_fields');
-    var field_registry = require('web.field_registry');
+    var core = require("web.core");
+    var basic_fields = require("web.basic_fields");
+    var field_registry = require("web.field_registry");
 
     // Calling mermaid.initialize() multiple times is ok.
     // But there's a catch: it will keep the config of previous calls unless
@@ -15,15 +15,15 @@ odoo.define('web.web_widget_mermaid', function(require) {
     // Changes to the original default are marked with comments.
 
     var defaultConfig = {
-        theme: null,  // We define a custom Odoo theme in a stylesheet
-        logLevel: 'fatal',
-        securityLevel: 'strict',
-        startOnLoad: false,  // Rendering is initiated manually
+        theme: null, // We define a custom Odoo theme in a stylesheet
+        logLevel: "fatal",
+        securityLevel: "strict",
+        startOnLoad: false, // Rendering is initiated manually
         arrowMarkerAbsolute: false,
 
         flowchart: {
             htmlLabels: true,
-            curve: 'linear',
+            curve: "linear",
         },
 
         sequence: {
@@ -51,29 +51,24 @@ odoo.define('web.web_widget_mermaid', function(require) {
             leftPadding: 75,
             gridLineStartPadding: 35,
             fontSize: 11,
-            fontFamily: '"Lucida Grande", Helvetica, Verdana, Arial, '
-                        + 'sans-serif',  // Match Odoo's font choices
+            fontFamily: '"Lucida Grande", Helvetica, Verdana, Arial, ' + "sans-serif", // Match Odoo's font choices
             numberSectionStyles: 4,
             // Match configured date format
             axisFormat: core._t.database.parameters.date_format,
-        }
+        },
     };
 
     var MermaidField = basic_fields.FieldText.extend({
-        init: function() {
+        init: function () {
             this._super.apply(this, arguments);
-            this.chartId = _.uniqueId('mermaid_chart_');
+            this.chartId = _.uniqueId("mermaid_chart_");
         },
-        className: 'o_form_field_mermaid',
-        _renderReadonly: function() {
+        className: "o_form_field_mermaid",
+        _renderReadonly: function () {
             if (!this.value) {
                 return;
             }
-            var config = _.extend(
-                {},
-                defaultConfig,
-                this.attrs.options
-            );
+            var config = _.extend({}, defaultConfig, this.attrs.options);
             mermaid.mermaidAPI.initialize(config);
             try {
                 mermaid.mermaidAPI.render(
@@ -82,21 +77,21 @@ odoo.define('web.web_widget_mermaid', function(require) {
                     this.$el.html.bind(this.$el)
                 );
             } catch (e) {
-                this.$el.html($('<pre/>').text(e.message || e.str));
+                this.$el.html($("<pre/>").text(e.message || e.str));
             }
             // Mermaid uses a temporary div for rendering. It doesn't remove
             // it if an error occurs, and perhaps in other cases too, so get
             // rid of it if it's still around. The id is based on the chartId.
-            $('#d' + this.chartId).remove();
+            $("#d" + this.chartId).remove();
         },
-        _parseValue: function(value) {
+        _parseValue: function (value) {
             if (this.errorMessage) {
                 this.errorMessage.remove();
             }
             try {
                 mermaid.parse(value);
             } catch (e) {
-                this.errorMessage = $('<pre/>').text(e.message || e.str);
+                this.errorMessage = $("<pre/>").text(e.message || e.str);
                 this.$el.after(this.errorMessage);
                 throw e;
             }
@@ -104,7 +99,7 @@ odoo.define('web.web_widget_mermaid', function(require) {
         },
     });
 
-    field_registry.add('mermaid', MermaidField);
+    field_registry.add("mermaid", MermaidField);
 
     return {
         MermaidField: MermaidField,
