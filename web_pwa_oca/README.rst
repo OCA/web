@@ -23,7 +23,7 @@ Progressive web application
     :target: https://runbot.odoo-community.org/runbot/162/13.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 Make Odoo an installable Progressive Web Application.
 
@@ -184,7 +184,7 @@ promote its widespread use.
 
 Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-eLBati| 
+|maintainer-eLBati|
 
 This module is part of the `OCA/web <https://github.com/OCA/web/tree/13.0/web_pwa_oca>`_ project on GitHub.
 

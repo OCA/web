@@ -22,6 +22,13 @@ odoo.define("web_pwa_oca.PWA", function(require) {
         /**
          * @returns {Promise}
          */
+        start: function() {
+            return Promise.resolve();
+        },
+
+        /**
+         * @returns {Promise}
+         */
         installWorker: function() {
             // To be overridden
             return Promise.resolve();
