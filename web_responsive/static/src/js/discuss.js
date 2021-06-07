@@ -113,6 +113,7 @@ odoo.define("web_responsive.Discuss", function(require) {
         _setThread: function(threadID) {
             const thread = this.call("mail_service", "getThread", threadID);
             this._thread = thread;
+            this._updateButtons(threadID);
             if (thread.getType() !== "mailbox") {
                 this.call("mail_service", "openThreadWindow", threadID);
                 return Promise.resolve();
@@ -158,7 +159,7 @@ odoo.define("web_responsive.Discuss", function(require) {
          * @returns {Promise}
          */
         _updateContent: function(type) {
-            const inMailbox = type === "mailbox_inbox" || type === "mailbox_starred";
+            const inMailbox = type.startsWith("mailbox_");
             if (!inMailbox && this._isInInboxTab()) {
                 // We're leaving the inbox, so store the thread scrolltop
                 this._storeThreadState();
@@ -202,49 +203,50 @@ odoo.define("web_responsive.Discuss", function(require) {
                     this._$mainContent.html($content);
                 }
 
-                // Update control panel
-                this.$buttons
-                    .find("button")
-                    .removeClass("d-block")
-                    .addClass("d-none");
-                this.$buttons
-                    .find(".o_mail_discuss_button_" + type)
-                    .removeClass("d-none")
-                    .addClass("d-block");
-                this.$buttons
-                    .find(".o_mail_discuss_button_mark_all_read")
-                    .toggleClass("d-none", type !== "mailbox_inbox")
-                    .toggleClass("d-block", type === "mailbox_inbox");
-                this.$buttons
-                    .find(".o_mail_discuss_button_unstar_all")
-                    .toggleClass("d-none", type !== "mailbox_starred")
-                    .toggleClass("d-block", type === "mailbox_starred");
-
-                // Update Mailbox page buttons
-                if (inMailbox) {
-                    this.$(".o_mail_discuss_mobile_mailboxes_buttons").removeClass(
-                        "o_hidden"
-                    );
-                    this.$(".o_mailbox_inbox_item")
-                        .removeClass("btn-primary")
-                        .addClass("btn-secondary");
-                    this.$(".o_mailbox_inbox_item[data-type=" + type + "]")
-                        .removeClass("btn-secondary")
-                        .addClass("btn-primary");
-                } else {
-                    this.$(".o_mail_discuss_mobile_mailboxes_buttons").addClass(
-                        "o_hidden"
-                    );
-                }
-
-                // Update bottom buttons
-                this.$(".o_mail_mobile_tab").removeClass("active");
-                // Mailbox_inbox and mailbox_starred share the same tab
-                const type_n = type === "mailbox_starred" ? "mailbox_inbox" : type;
-                this.$(".o_mail_mobile_tab[data-type=" + type_n + "]").addClass(
-                    "active"
-                );
+                this._updateButtons(type);
             });
+        },
+
+        _updateButtons: function(type) {
+            const inMailbox = type.startsWith("mailbox_");
+            // Update control panel
+            this.$buttons
+                .find("button")
+                .removeClass("d-block")
+                .addClass("d-none");
+            this.$buttons
+                .find(".o_mail_discuss_button_" + type)
+                .removeClass("d-none")
+                .addClass("d-block");
+            this.$buttons
+                .find(".o_mail_discuss_button_mark_all_read")
+                .toggleClass("d-none", type !== "mailbox_inbox")
+                .toggleClass("d-block", type === "mailbox_inbox");
+            this.$buttons
+                .find(".o_mail_discuss_button_unstar_all")
+                .toggleClass("d-none", type !== "mailbox_starred")
+                .toggleClass("d-block", type === "mailbox_starred");
+
+            // Update Mailbox page buttons
+            if (inMailbox) {
+                this.$(".o_mail_discuss_mobile_mailboxes_buttons").removeClass(
+                    "o_hidden"
+                );
+                this.$(".o_mailbox_inbox_item")
+                    .removeClass("btn-primary")
+                    .addClass("btn-secondary");
+                this.$(".o_mailbox_inbox_item[data-type=" + type + "]")
+                    .removeClass("btn-secondary")
+                    .addClass("btn-primary");
+            } else {
+                this.$(".o_mail_discuss_mobile_mailboxes_buttons").addClass("o_hidden");
+            }
+
+            // Update bottom buttons
+            this.$(".o_mail_mobile_tab").removeClass("active");
+            // Mailbox_inbox and mailbox_starred share the same tab
+            const type_n = type === "mailbox_starred" ? "mailbox_inbox" : type;
+            this.$(".o_mail_mobile_tab[data-type=" + type_n + "]").addClass("active");
         },
 
         // --------------------------------------------------------------------------
@@ -280,9 +282,8 @@ odoo.define("web_responsive.Discuss", function(require) {
          */
         _onClickMobileTab: function(ev) {
             const type = $(ev.currentTarget).data("type");
-            if (type === "mailbox") {
-                const inbox = this.call("mail_service", "getMailbox", "inbox");
-                this._setThread(inbox);
+            if (type === "mailbox_inbox") {
+                this._setThread("mailbox_inbox");
             }
             this._updateContent(type);
         },
