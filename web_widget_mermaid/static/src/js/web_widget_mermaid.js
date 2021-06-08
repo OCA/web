@@ -62,6 +62,8 @@ odoo.define("web.web_widget_mermaid", function (require) {
         init: function () {
             this._super.apply(this, arguments);
             this.chartId = _.uniqueId("mermaid_chart_");
+
+            this.mermaid = mermaid; // eslint-disable-line
         },
         className: "o_form_field_mermaid",
         _renderReadonly: function () {
@@ -69,9 +71,9 @@ odoo.define("web.web_widget_mermaid", function (require) {
                 return;
             }
             var config = _.extend({}, defaultConfig, this.attrs.options);
-            mermaid.mermaidAPI.initialize(config);
+            this.mermaid.mermaidAPI.initialize(config);
             try {
-                mermaid.mermaidAPI.render(
+                this.mermaid.mermaidAPI.render(
                     this.chartId,
                     this.value,
                     this.$el.html.bind(this.$el)
@@ -89,7 +91,7 @@ odoo.define("web.web_widget_mermaid", function (require) {
                 this.errorMessage.remove();
             }
             try {
-                mermaid.parse(value);
+                this.mermaid.parse(value);
             } catch (e) {
                 this.errorMessage = $("<pre/>").text(e.message || e.str);
                 this.$el.after(this.errorMessage);
