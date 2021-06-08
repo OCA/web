@@ -64,15 +64,6 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
         },
 
         /**
-         * @param {Object} widget
-         */
-        removeWidget: function (widget) {
-            var index = this.widgets.indexOf(widget);
-            widget.destroy();
-            delete this.widgets[index];
-        },
-
-        /**
          * @override
          */
         start: function () {
@@ -149,11 +140,6 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRenderer", 
                         delete this.widgets[e];
                     }
                 }
-            }
-
-            if (this.search_group.name === "main_lines") {
-                _.invoke(to_destroy, "destroy");
-                return $.when();
             }
 
             // If doesn't exists other records with the same product, we need

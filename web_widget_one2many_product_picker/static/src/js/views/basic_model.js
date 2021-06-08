@@ -51,6 +51,24 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function (require) 
             });
         },
 
+        removeVirtualRecord: function (id) {
+            if (!this.isPureVirtual(id)) {
+                return false;
+            }
+
+            const data = this.localData[id];
+            const to_remove = [];
+            this._visitChildren(data, (item) => {
+                to_remove.push(item.id);
+            });
+
+            to_remove.reverse();
+            for (let remove_id of to_remove) {
+                this.removeLine(remove_id);
+                delete this.localData[remove_id];
+            }
+        },
+
         /**
          * Generates a virtual records without link it
          *

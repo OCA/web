@@ -81,7 +81,12 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
          * @override
          */
         destroy: function () {
-            this.$card.off("")
+            this.$el.remove();
+            this.$card.off("");
+            const model = this.options.basicFieldParams.model;
+            if (this.state) {
+                model.removeVirtualRecord(this.state.id);
+            }
             this._super.apply(this, arguments);
         },
 
@@ -182,12 +187,15 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
 
             this.fields = this.getParent().state.fields;
             this.fieldsInfo = this.getParent().state.fieldsInfo.form;
+            var model = this.options.basicFieldParams.model;
+            if (this.state) {
+                model.removeVirtualRecord(this.state.id);
+            }
             this.state = viewState;
 
             if (recordSearch) {
                 this.recordSearch = recordSearch;
             }
-            var model = this.options.basicFieldParams.model;
             this.is_virtual = this.state && model.isPureVirtual(this.state.id) || false;
 
             // Check if has cached qty
@@ -241,23 +249,21 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
             var context = {};
             context["default_" + this.options.basicFieldParams.relation_field] =
                 this.options.basicFieldParams.state.id || null;
+            context["default_" + this.options.fieldMap.product] =
+                this.recordSearch.id || null;
             return context;
         },
 
         /**
          * Forced data used in virtual states.
-         * Be careful with the onchanges sequence. Think as user interaction, not as CRUD operation.
+         * Be careful with the onchanges sequence. Think as user interaction ("ADD", "DELETE", ... commands), not as CRUD operation.
          *
          * @private
          * @returns {Object}
          */
-        _getInternalVirtualRecordData: function () {
-            var data = {};
-            data[this.options.fieldMap.product] = {
-                operation: 'ADD',
-                id: this.recordSearch.id,
-            };
-            return data;
+         _getInternalVirtualRecordData: function() {
+            // To be overwritten
+            return {};
         },
 
         /**
