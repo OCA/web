@@ -33,6 +33,7 @@ setuptools.setup(
         'odoo13-addon-web_search_with_and',
         'odoo13-addon-web_sheet_full_width',
         'odoo13-addon-web_timeline',
+        'odoo13-addon-web_translate_dialog',
         'odoo13-addon-web_tree_dynamic_colored_field',
         'odoo13-addon-web_tree_image_tooltip',
         'odoo13-addon-web_tree_many2one_clickable',
