@@ -17,6 +17,7 @@ setuptools.setup(
         'odoo14-addon-web_domain_field',
         'odoo14-addon-web_drop_target',
         'odoo14-addon-web_environment_ribbon',
+        'odoo14-addon-web_group_expand',
         'odoo14-addon-web_m2x_options',
         'odoo14-addon-web_notify',
         'odoo14-addon-web_refresher',
