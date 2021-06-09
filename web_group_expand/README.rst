@@ -17,13 +17,13 @@ Group Expand Buttons
     :target: https://github.com/OCA/web/tree/14.0/web_group_expand
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-13-0/web-13-0-web_group_expand
+    :target: https://translation.odoo-community.org/projects/web-14-0/web-14-0-web_group_expand
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
     :target: https://runbot.odoo-community.org/runbot/162/14.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5|
+|badge1| |badge2| |badge3| |badge4| |badge5| 
 
 When grouping a list by a field, this module adds two buttons to expand or
 collapse all the groups at once.
@@ -68,6 +68,7 @@ Contributors
 * Jay Vora (SerpentCS) for their alternative implementation
 * Jan Verbeek <jverbeek@therp.nl>
 * Manuel Calero <manuelcalerosolis@gmail.com>
+* Alvaro Estebanez (brain-tec AG) <alvaro.estebanez@bt-group.com>
 
 Maintainers
 ~~~~~~~~~~~
