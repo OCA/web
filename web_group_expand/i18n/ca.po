@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_group_expand
+# 	* web_group_expand
 #
 msgid ""
 msgstr ""
@@ -18,14 +18,14 @@ msgstr ""
 
 #. module: web_group_expand
 #. openerp-web
-#: code:addons/web_group_expand/static/src/xml/expand_buttons.xml:12
+#: code:addons/web_group_expand/static/src/xml/expand_buttons.xml:0
 #, python-format
 msgid "Collapse groups"
 msgstr "Col·lapsar grups"
 
 #. module: web_group_expand
 #. openerp-web
-#: code:addons/web_group_expand/static/src/xml/expand_buttons.xml:8
+#: code:addons/web_group_expand/static/src/xml/expand_buttons.xml:0
 #, python-format
 msgid "Expand groups"
 msgstr "Expandir grups"
