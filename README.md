@@ -30,6 +30,7 @@ addon | version | summary
 [web_environment_ribbon](web_environment_ribbon/) | 14.0.1.0.0 | Web Environment Ribbon
 [web_group_expand](web_group_expand/) | 14.0.1.0.0 | Group Expand Buttons
 [web_m2x_options](web_m2x_options/) | 14.0.1.0.0 | web_m2x_options
+[web_no_bubble](web_no_bubble/) | 14.0.1.0.0 | Remove the bubbles from the web interface
 [web_notify](web_notify/) | 14.0.1.0.0 | Send notification messages to user
 [web_refresher](web_refresher/) | 14.0.1.0.0 | Web Refresher
 [web_responsive](web_responsive/) | 14.0.1.0.2 | Responsive web client, community-supported
