@@ -19,6 +19,7 @@ setuptools.setup(
         'odoo14-addon-web_environment_ribbon',
         'odoo14-addon-web_group_expand',
         'odoo14-addon-web_m2x_options',
+        'odoo14-addon-web_no_bubble',
         'odoo14-addon-web_notify',
         'odoo14-addon-web_refresher',
         'odoo14-addon-web_responsive',
