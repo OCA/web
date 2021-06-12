@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import api, models
 from odoo.exceptions import UserError
+from odoo.tools.safe_eval import safe_eval
 
 
 class BaseModel(models.BaseModel):
@@ -58,3 +59,77 @@ class BaseModel(models.BaseModel):
     #     :rtype: etree._Element
     #     """
     #     return self._get_default_form_view()
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        """Refresh onchange cache values according new record."""
+        res = super().create(vals_list)
+        trigger_obj = self.env["pwa.cache.onchange.trigger"].sudo()
+        triggers = trigger_obj.search(
+            [
+                ("model", "=", self._name),
+                ("trigger_type", "in", ["create", "create_unlink", "complete"]),
+            ]
+        )
+        for trigger in triggers:
+            context = {"env": self.env, "self": res}
+            safe_eval(trigger.selector_expression, context, mode="exec", nocopy=True)
+            trigger.pwa_cache_id.enqueue_onchange_cache(
+                prefilled_selectors={trigger.field_name: context["result"]}
+            )
+        return res
+
+    def unlink(self):
+        """Remove onchange cache entries for unlinked records."""
+        trigger_obj = self.env["pwa.cache.onchange.trigger"].sudo()
+        triggers = trigger_obj.search(
+            [
+                ("model", "=", self._name),
+                ("trigger_type", "in", ["unlink", "create_unlink", "complete"]),
+            ]
+        )
+        value_obj = self.env["pwa.cache.onchange.value"].sudo()
+        for trigger in triggers:
+            pwa_cache = trigger.pwa_cache_id
+            context = {"env": self.env, "self": self}
+            safe_eval(trigger.selector_expression, context, mode="exec", nocopy=True)
+            vals_list = pwa_cache._get_onchange_selectors(
+                prefilled_selectors={trigger.field_name: context["result"]}
+            )
+            for vals in vals_list:
+                # Put ID instead of recordsets reference
+                for key, item in vals.items():
+                    if isinstance(item, models.BaseModel):
+                        vals[key] = item.id
+                vals = pwa_cache._unfold_dict(vals)
+                value_obj.search(
+                    [("pwa_cache_id", "=", pwa_cache.id), ("values", "=", vals)]
+                ).unlink()
+        return super().unlink()
+
+    def write(self, vals):
+        """Launch the recomputation of affected records of the current change
+        according triggers definition.
+        """
+        res = super().write(vals)
+        trigger_obj = self.env["pwa.cache.onchange.trigger"].sudo()
+        triggers = trigger_obj.search(
+            [("model", "=", self._name), ("trigger_type", "in", ["update", "complete"])]
+        )
+        selectors = {}
+        for trigger in triggers:
+            if not trigger.vals_discriminant or any(
+                x.strip() in vals for x in trigger.vals_discriminant.split(",")
+            ):
+                context = {"env": self.env, "self": self}
+                safe_eval(
+                    trigger.selector_expression, context, mode="exec", nocopy=True
+                )
+                key = (trigger.pwa_cache_id, trigger.field_name)
+                if key in selectors:
+                    selectors[key] += context["result"]
+                else:
+                    selectors[key] = context["result"]
+        for key, records in selectors.items():
+            key[0].enqueue_onchange_cache(prefilled_selectors={key[1]: records})
+        return res

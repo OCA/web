@@ -38,10 +38,7 @@
         >
             <field name="name">PWA Cache Onchange Selector Value (All)</field>
             <field name="cache_type">model</field>
-            <field
-                name="model_id"
-                ref="web_pwa_cache.model_pwa_cache_onchange_selector_value"
-            />
+            <field name="model_id" ref="web_pwa_cache.model_pwa_cache_onchange_value" />
             <field name="internal">1</field>
         </record>
         <!-- Client QWEB -->

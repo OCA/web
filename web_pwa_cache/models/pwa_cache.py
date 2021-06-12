@@ -2,31 +2,20 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 # from functools import reduce
 
-from odoo import api, fields, models
+import base64
+import datetime
+import functools
+import itertools
+import json  # We use `dump(vals, separators=(',', ':'))` for mimicking JSON.stringify
+import re
 
-# from odoo.tools.safe_eval import safe_eval
+from odoo import fields, models
+from odoo.tools.safe_eval import safe_eval
 
 
 class PwaCache(models.Model):
     _name = "pwa.cache"
     _description = "PWA Cache"
-
-    DEFAULT_JS_CODE = """// Formula must be return an 'onchange' object
-// Here you can use the active record changes fields directly.
-// To return an onchange:
-// return {
-//        "value": {
-//            "field_a": value_a,
-//        },
-//        "warning": {
-//            "title": "Ooops!",
-//            "message": "This is a warning message",
-//        },
-//        "domain": {
-//            "field_a": [],
-//        }
-//}\n\n\n\n
-return {"value": {}}"""  # noqa: E501
 
     name = fields.Char("Name", required=True, translate=True)
     active = fields.Boolean(
@@ -34,7 +23,6 @@ return {"value": {}}"""  # noqa: E501
         default=True,
         help="By unchecking the active field, you may hide an CACHE you will not use.",
     )
-
     cache_type = fields.Selection(
         [
             ("model", "Model"),
@@ -49,10 +37,9 @@ return {"value": {}}"""  # noqa: E501
         string="Type",
         required=True,
     )
-
     model_id = fields.Many2one("ir.model", string="Model")
     model_name = fields.Char(
-        related="model_id.model", string="Model Name", readonly=True,
+        related="model_id.model", string="Model Name", readonly=True, store=True,
     )
     model_domain = fields.Char(
         "Domain", related="model_domain_raw", readonly=False, store=False,
@@ -66,17 +53,29 @@ return {"value": {}}"""  # noqa: E501
         column2="field_id",
         domain="[['model_id', '=', model_id]]",
     )
-
     function_name = fields.Char("Function Name")
-
     xml_refs = fields.Text(string="XML Ref's")
-
-    code_js = fields.Text(string="Javascript code", default=DEFAULT_JS_CODE)
-
+    code_js = fields.Text(
+        string="Javascript code",
+        default='return {"value": {}}',
+        help="Formula must be return an 'onchange' object\n"
+        "Here you can use the active record changes fields directly.\n"
+        "To return an onchange:\n"
+        "// return {\n"
+        '//        "value": {\n'
+        '//            "field_a": value_a,\n'
+        "//        },\n"
+        '//        "warning": {\n'
+        '//            "title": "Ooops!",\n'
+        '//            "message": "This is a warning message",\n'
+        "//        },\n"
+        '//        "domain": {\n'
+        '//            "field_a": [],\n'
+        "//        }\n"
+        "//}\n",
+    )
     post_url = fields.Char(string="Post URL")
-
     get_urls = fields.Text(string="Get URL's")
-
     group_ids = fields.Many2many(
         comodel_name="res.groups",
         string="Allowed groups",
@@ -85,24 +84,31 @@ return {"value": {}}"""  # noqa: E501
         column2="group_id",
         help="Allowed groups to get this cache. Empty for all.",
     )
-
-    onchange_field = fields.Many2one(
+    onchange_field_id = fields.Many2one(
         comodel_name="ir.model.fields",
         string="Onchage field",
         domain="[['model_id', '=', model_id]]",
+        index=True,
+        ondelete="cascade",
     )
     onchange_field_name = fields.Char(
-        related="onchange_field.name", string="Field Name", readonly=True,
+        related="onchange_field_id.name", string="Field Name", store=True,
     )
     onchange_selector_ids = fields.One2many(
         string="Onchange Selectors",
         comodel_name="pwa.cache.onchange",
         inverse_name="pwa_cache_id",
     )
-    onchange_selector_count = fields.Integer(
-        compute="_compute_onchange_selector_count", store=False
+    onchange_trigger_ids = fields.One2many(
+        string="Update Triggers",
+        comodel_name="pwa.cache.onchange.trigger",
+        inverse_name="pwa_cache_id",
     )
-
+    onchange_value_ids = fields.One2many(
+        string="Onchange Values",
+        comodel_name="pwa.cache.onchange.value",
+        inverse_name="pwa_cache_id",
+    )
     internal = fields.Boolean("Is an internal record", default=False)
 
     def _get_text_field_lines(self, records, field_name):
@@ -110,14 +116,271 @@ return {"value": {}}"""  # noqa: E501
             {url for urls in records.mapped(field_name) if urls for url in urls.split()}
         )
 
-    def update_caches(self):
-        self.env["pwa.cache.onchange"].sudo().update_cache()
+    def enqueue_onchange_cache(self, prefilled_selectors=None):
+        """Enqueue onchange cache update."""
+        self.with_delay().update_onchange_cache(
+            prefilled_selectors=prefilled_selectors, autocommit=True
+        )
 
-    @api.depends(
-        "onchange_selector_ids",
-        "onchange_selector_ids.comodel_name",
-        "onchange_selector_ids.expression",
+    def update_onchange_cache(self, prefilled_selectors=None, autocommit=False):
+        """Refresh combination set and enqueue atomic combinations cache updates."""
+        vals_list, disposable = self._get_onchange_selectors(
+            prefilled_selectors=prefilled_selectors
+        )
+        self._update_onchange_cache(
+            vals_list, disposable, not bool(prefilled_selectors), autocommit=autocommit
+        )
+
+    def _get_onchange_selectors(self, prefilled_selectors=None):
+        """Combine all posible parameter values for the onchange calls."""
+        self.ensure_one()
+        if prefilled_selectors is None:
+            prefilled_selectors = {}
+        combinations = {}
+        mappings = {}
+        disposable = []
+        context = {
+            "env": self.env,
+            "functools": functools,
+            "itertools": itertools,
+        }
+        # Prepare values according specification
+        for selector in self.onchange_selector_ids:
+            field = selector.field_name
+            if selector.disposable:
+                disposable.append(field)
+            if field in prefilled_selectors:
+                combinations[field] = prefilled_selectors[field]
+                continue
+            groups = list(set(re.findall("{{(.*?)}}", selector.expression)))
+            if any(groups):
+                field_mapping = mappings.setdefault(
+                    field, {"groups": groups, "values": {}}
+                )
+                selectors = [combinations[group] for group in groups]
+                # Replace placeholders by improbable variable names
+                idents = {group: "_" + group.replace(".", "_0_") for group in groups}
+                for values in itertools.product(*selectors):
+                    expression = selector.expression
+                    for group in groups:
+                        expression = expression.replace("{{%s}}" % group, idents[group])
+                    ctx = {idents[groups[i]]: value for i, value in enumerate(values)}
+                    ctx2 = context.copy()
+                    ctx2.update(ctx)
+                    result = safe_eval(expression, ctx2)
+                    field_mapping["values"][tuple(ctx.values())] = result
+            else:
+                combinations[field] = safe_eval(selector.expression, context)
+        # Traverse values from both definitions
+        vals_list = []
+        combination_keys = list(combinations.keys())
+        for items in itertools.product(*combinations.values()):
+            vals = {}
+            for selector in self.onchange_selector_ids:
+                field = selector.field_name
+                if field in combination_keys:
+                    vals[field] = items[combination_keys.index(field)]
+                elif field in mappings:
+                    mapping = mappings[field]
+                    groups = mapping["groups"]
+                    vals[field] = mapping["values"][tuple([vals[x] for x in groups])]
+            vals_list.append(vals)
+        return vals_list, disposable
+
+    def _unfold_dict(self, params):
+        """Used to restore flatten dictionaries
+
+        For example:
+            - In:
+                {
+                    "order_id.parent_id": 3,
+                    "order_id.pricelist_id": 4,
+                    "parent_id": 10
+                }
+            - Out:
+                {
+                    "order_id": {
+                        "parent_id": 3,
+                        "pricelist_id": 4
+                    },
+                    "parent_id": 10
+                }
+        """
+        res = {}
+        for key, value in params.items():
+            levels = key.split(".")
+            if len(levels) > 1:
+                parent_level = res
+                for level in levels[0:-1]:
+                    parent_level.setdefault(level, {})
+                    parent_level = parent_level[level]
+                parent_level[levels[-1]] = value
+            else:
+                res[key] = value
+        return res
+
+    def _update_onchange_cache(
+        self, vals_list, disposable, delete_old=False, autocommit=False
+    ):
+        self.ensure_one()
+        model = self.env[self.model_name]
+        obj = self.env["pwa.cache.onchange.value"].sudo()
+        onchange_spec = model._onchange_spec()
+        # Using IDs for performance reason vs recordset operations
+        if delete_old:
+            existing_ids = set(self.sudo().onchange_value_ids.ids)
+            found_ids = set()
+        for vals in vals_list:
+            # Put ID instead of recordsets reference
+            for key, item in vals.items():
+                if isinstance(item, models.BaseModel):
+                    vals[key] = item.id
+            vals_clean = vals.copy()
+            for item in disposable:
+                del vals_clean[item]
+            vals = self._unfold_dict(vals)
+            vals_clean = self._unfold_dict(vals_clean)
+            vals_clean = json.dumps(vals_clean, separators=(",", ":"))
+            if delete_old:
+                record = obj.search(
+                    [("pwa_cache_id", "=", self.id), ("values", "=", vals_clean)]
+                )
+                if record:
+                    found_ids.add(record.id)
+            self.with_delay()._update_onchange_cache_value(
+                vals, vals_clean, onchange_spec
+            )
+            if autocommit:
+                self.env.cr.commit()  # pylint: disable=E8102
+        if delete_old:
+            remaining_ids = existing_ids - found_ids
+            if remaining_ids:
+                obj.browse(remaining_ids).unlink()
+
+    def _update_onchange_cache_value(self, vals, vals_clean, onchange_spec):
+        result = json.dumps(
+            self.env[self.model_name].onchange(
+                vals, self.onchange_field_name, onchange_spec
+            )
+        )
+        vals = json.dumps(vals, separators=(",", ":"))  # JSONify after calling onchange
+        obj = self.env["pwa.cache.onchange.value"].sudo()
+        record = obj.search(
+            [("pwa_cache_id", "=", self.id), ("values", "=", vals_clean)]
+        )
+        if record:
+            # We assume the same order for returned results, and if not, the
+            # worst thing is that the cache value is refreshed
+            if record.result != result:
+                record.write({"result": result})
+        else:
+            obj.create(
+                {"pwa_cache_id": self.id, "values": vals_clean, "result": result}
+            )
+
+    def _get_eval_context(self, action=None):
+        """ evaluation context to pass to safe_eval """
+        self.ensure_one()
+
+        def context_today():
+            return fields.Date.context_today(self)
+
+        return {
+            "env": self.env,
+            "uid": self._uid,
+            "user": self.env.user,
+            "record": self,
+            "time": time,
+            "datetime": datetime,
+            "dateutil": dateutil,
+            "timezone": timezone,
+            "b64encode": base64.b64encode,
+            "b64decode": base64.b64decode,
+            "DEFAULT_SERVER_DATETIME_FORMAT": DEFAULT_SERVER_DATETIME_FORMAT,
+            "DEFAULT_SERVER_DATE_FORMAT": DEFAULT_SERVER_DATE_FORMAT,
+            "DEFAULT_SERVER_TIME_FORMAT": DEFAULT_SERVER_TIME_FORMAT,
+            "context_today": context_today,
+            "relativedelta": relativedelta,
+        }
+
+
+class PwaCacheOnchange(models.Model):
+    _name = "pwa.cache.onchange"
+    _description = "PWA Cache Onchange Selector"
+    _order = "sequence asc, id asc"
+
+    pwa_cache_id = fields.Many2one(
+        comodel_name="pwa.cache",
+        auto_join=True,
+        ondelete="cascade",
+        index=True,
+        required=True,
     )
-    def _compute_onchange_selector_count(self):
-        # TODO
-        self.onchange_selector_count = 0
+    sequence = fields.Integer(default=10)
+    field_name = fields.Char(required=True)
+    grouping_field = fields.Char()
+    expression = fields.Text(required=True)
+    disposable = fields.Boolean()
+
+
+class PwaCacheOnchangeValue(models.Model):
+    _name = "pwa.cache.onchange.value"
+    _description = "PWA Cache Onchange Value"
+
+    pwa_cache_id = fields.Many2one(
+        comodel_name="pwa.cache",
+        auto_join=True,
+        ondelete="cascade",
+        index=True,
+        required=True,
+    )
+    field_name = fields.Char(related="pwa_cache_id.onchange_field_name", store=True)
+    values = fields.Char(required=True)
+    result = fields.Char(required=True)
+
+    _sql_constraints = [
+        (
+            "pwa_cache_onchange_value_uniq",
+            "unique(pwa_cache_id, field_name, values)",
+            "The PWA onchange cache value must be unique.",
+        ),
+    ]
+
+
+class PwaCacheOnchangeTrigger(models.Model):
+    _name = "pwa.cache.onchange.trigger"
+    _description = "Trigger for updating PWA Cache Onchange"
+
+    pwa_cache_id = fields.Many2one(
+        comodel_name="pwa.cache",
+        auto_join=True,
+        ondelete="cascade",
+        index=True,
+        required=True,
+    )
+    trigger_type = fields.Selection(
+        selection=[
+            ("create", "Create"),
+            ("unlink", "Unlink"),
+            ("create_unlink", "Create & Unlink"),
+            ("complete", "Create, Update & Unlink"),
+            ("update", "Update"),
+        ],
+        required=True,
+    )
+    field_name = fields.Char(required=True)
+    model = fields.Char(string="Affected model", required=True)
+    selector_expression = fields.Text(
+        required=True,
+        default="result = self",
+        help="Python expression for returning the records that will be passed as "
+        "selectors for the given field_name that will be recomputed. It should "
+        "be stored in a variable named 'result'.",
+    )
+    vals_discriminant = fields.Char(
+        string="Update values discriminants",
+        help="If filled, it will express the updated fields on the affected model "
+        "split by commas that will launch the recomputation. If an update on "
+        "other fields happens, no recomputation will be launched. Keep it empty "
+        "for launching the recomputation on any update on the affected model.",
+    )

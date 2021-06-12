@@ -9,9 +9,10 @@
     "author": "Tecnativa, " "Odoo Community Association (OCA)",
     "website": "https://www.tecnativa.com",
     "license": "AGPL-3",
-    "depends": ["web_pwa_oca"],
+    "depends": ["web_pwa_oca", "queue_job"],
     "data": [
         "security/ir.model.access.csv",
+        "data/queue_job_function_data.xml",
         "templates/assets.xml",
         "views/pwa_cache_views.xml",
         "views/res_partner_views.xml",
