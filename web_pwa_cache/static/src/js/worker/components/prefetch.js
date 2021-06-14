@@ -13,8 +13,9 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
 
         // This is used to force a field type
         _conversion_model_db_types: {
-            "pwa.cache.onchange.selector": {
+            "pwa.cache.onchange.value": {
                 values: "json",
+                result: "json",
             },
         },
         // This is used to create indexes

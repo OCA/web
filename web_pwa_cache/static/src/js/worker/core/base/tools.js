@@ -279,14 +279,14 @@ odoo.define("web_pwa_cache.PWA.core.base.Tools", function() {
         });
     }
 
-    function flattenObj(datas, fobj, prefix) {
+    function foldObj(datas, fobj, prefix) {
         const res = fobj || {};
         const entrs = Object.entries(datas);
         for (const [prop_name, prop_value] of entrs) {
             if (!prop_value || prop_value instanceof Array) {
                 continue;
             } else if (typeof prop_value === "object") {
-                this.flattenObj(
+                this.foldObj(
                     prop_value,
                     res,
                     prefix ? `${prefix}.${prop_name}` : prop_name
@@ -294,6 +294,26 @@ odoo.define("web_pwa_cache.PWA.core.base.Tools", function() {
             } else {
                 const key = prefix ? `${prefix}.${prop_name}` : prop_name;
                 res[key] = prop_value;
+            }
+        }
+        return res;
+    }
+
+    function unfoldObj(data) {
+        const res = {};
+        for (const key in data) {
+            const value = data[key];
+            const levels = key.split(".");
+            if (levels.length > 1) {
+                let parent_level = res;
+                const slice_levels = levels.slice(0, -1);
+                for (const level of slice_levels) {
+                    parent_level[level] = parent_level[level] || {};
+                    parent_level = parent_level[level];
+                }
+                parent_level[levels[levels.length - 1]] = value;
+            } else {
+                res[key] = value;
             }
         }
         return res;
@@ -327,6 +347,7 @@ odoo.define("web_pwa_cache.PWA.core.base.Tools", function() {
 
         promiseAny: promiseAny,
 
-        flattenObj: flattenObj,
+        foldObj: foldObj,
+        unfoldObj: unfoldObj,
     };
 });

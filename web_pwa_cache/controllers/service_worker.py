@@ -14,6 +14,7 @@ class ServiceWorker(ServiceWorker):
     def _get_js_pwa_core_event_fetch_impl(self):
         res = super()._get_js_pwa_core_event_fetch_impl()
         res += """
+        console.log("FETCH EVENT INTERCEPTER");
             evt.respondWith(oca_pwa.processRequest(evt.request));
         """
         return res

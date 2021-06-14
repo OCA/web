@@ -606,7 +606,9 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
             orderby,
             count = false
         ) {
+            console.log("-------------------------- SEARCH!! 11111111111");
             return new Promise(async (resolve, reject) => {
+                console.log("-------------------------- SEARCH!! 22222222222222");
                 try {
                     if (typeof model_info === "string") {
                         model_info = this.getModelInfo(model_info);
@@ -629,7 +631,7 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
                     if (_.isEmpty(records)) {
                         return resolve(limit === 1 ? undefined : []);
                     }
-                    this.sqlitedb._parseValues(model_info.fields, records);
+                    this.sqlitedb.converter.toOdoo(model_info.fields, records);
                     return resolve(limit === 1 ? records[0] : records);
                 } catch (err) {
                     return reject(err);
@@ -663,6 +665,7 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
                     );
                     return resolve(records);
                 } catch (err) {
+                    console.log("ERRRR: ", err);
                     return reject(err);
                 }
             });
@@ -1071,89 +1074,6 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
                     return reject(err);
                 }
             });
-        },
-
-        /**
-         * Helper function to obtain the associated onchange by the request parameters
-         *
-         * @param {Array} records
-         * @param {String} onchange_field
-         * @param {Object} record_data
-         * @returns {Array}
-         */
-        filterOnchangeRecordsByParams: function(records, onchange_field, record_data) {
-            const res = [];
-            var params = _.pick(record_data, onchange_field);
-            const _cached_trigger_params = {};
-            for (const record of records) {
-                // Construct params using "trigger" fields
-                if (record.triggers) {
-                    if (_cached_trigger_params[record.triggers]) {
-                        _.extend(params, _cached_trigger_params[record.triggers]);
-                    } else {
-                        const trigger_fields = record.triggers.split(",");
-                        for (const field of trigger_fields) {
-                            const sfield = field.trim();
-                            if (!sfield.includes(".")) {
-                                params[sfield] = record_data[sfield];
-                                continue;
-                            }
-                            const levels = sfield.split(".");
-                            var value = record_data;
-                            var temp_arr_value = params;
-                            var last_level = levels[0];
-                            for (var index = 0; index < levels.length; ++index) {
-                                const level = levels[index];
-                                if (!temp_arr_value[level]) {
-                                    temp_arr_value[level] = {};
-                                }
-                                if (index < levels.length - 1) {
-                                    temp_arr_value = temp_arr_value[level];
-                                }
-                                value = value[level];
-                                last_level = level;
-                            }
-                            temp_arr_value[last_level] = value;
-                        }
-
-                        _cached_trigger_params[record.triggers] = params;
-                    }
-                }
-
-                if (_.isEqual(record.params, params)) {
-                    res.push(record);
-                    continue;
-                }
-                let is_full_match = true;
-                for (const field_name in params) {
-                    const record_param_value = record.params[field_name];
-                    if (!record_param_value) {
-                        is_full_match = false;
-                        break;
-                    }
-                    if (
-                        record_param_value instanceof Array &&
-                        record_param_value.length === 3
-                    ) {
-                        // Check 'params commands'
-                        if (
-                            record_param_value[0] === "r" &&
-                            (params[field_name] < record_param_value[1] ||
-                                params[field_name] > record_param_value[2])
-                        ) {
-                            is_full_match = false;
-                            break;
-                        }
-                    } else if (!_.isEqual(record_param_value, params[field_name])) {
-                        is_full_match = false;
-                        break;
-                    }
-                }
-                if (is_full_match) {
-                    res.push(record);
-                }
-            }
-            return res;
         },
 
         /**

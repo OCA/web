@@ -119,6 +119,34 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
             return ids;
         },
 
+        removeNoFields: function(model_fields, datas) {
+            const results = [];
+            // All datas must be of the same query (model and fields)
+            const value_fields = _.keys(datas[0]);
+            const value_fields_len = value_fields.length;
+            const datas_len = datas.length;
+            let values = false;
+            for (let index = datas_len - 1; index >= 0; --index) {
+                values = datas[index];
+                let field = false;
+                let field_info = false;
+                const result_vals = {};
+                for (
+                    let index_field = value_fields_len - 1;
+                    index_field >= 0;
+                    --index_field
+                ) {
+                    field = value_fields[index_field];
+                    field_info = model_fields[field];
+                    if (field_info) {
+                        result_vals[field] = values[field];
+                    }
+                }
+                results.push(result_vals);
+            }
+            return results;
+        },
+
         /**
          * This method operate directly over 'datas' array
          *
@@ -183,7 +211,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
             binary: "BLOB",
             selection: "TEXT",
             reference: "TEXT",
-            // Only store ID of many2one records
+            // Store ID of many2one records and generate a virtual column for the display_name
             many2one: "NUMERIC",
             // Store with format:  ||id1||||id2||||id3|| to use 'like' ||id||
             one2many: "TEXT",
@@ -390,6 +418,10 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
             const set_sql_values = [];
             for (const key in values) {
                 const field = model_info.fields[key];
+                if (!field) {
+                    // Because "display_name__" is a virtual record without field definition
+                    continue;
+                }
                 sql_columns.push(`"${key}"`);
                 if (field.type === "many2one") {
                     const display_name_field = `display_name__${key}`;
@@ -581,24 +613,6 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                 return resolve();
             });
         },
-
-        /**
-         * PRIVATE MEMBERS
-         */
-        // _formatValues: function(model_fields, values) {
-        //     // When create the record for metadata model, model_info has the field in the correct format
-        //     if (typeof model_fields === "string") {
-        //         model_fields = JSON.parse(model_fields);
-        //     }
-
-        //     const value_fields = _.keys(values);
-        //     for (const field of value_fields) {
-        //         values[field] = Expression.convert_to_column(
-        //             model_fields[field],
-        //             values[field]
-        //         );
-        //     }
-        // },
     });
 
     return {

@@ -129,9 +129,41 @@ class PWAPrefetch(PWA):
             )
         return res
 
+    def _pwa_prefetch_model_internal(self, last_update, **kwargs):
+        return [
+            {"model": "ir.filters", "domain": [], "excluded_fields": False},
+            {
+                "model": "ir.model.data",
+                "domain": [
+                    "|",
+                    ["model", "=ilike", "ir.actions.%"],
+                    ["model", "=", "res.groups"],
+                ],
+                "excluded_fields": ["complete_name", "reference"],
+            },
+            {"model": "pwa.cache", "domain": [], "excluded_fields": False},
+            {"model": "pwa.cache.onchange", "domain": [], "excluded_fields": False},
+            {
+                "model": "pwa.cache.onchange.value",
+                "domain": [],
+                "excluded_fields": False,
+            },
+        ]
+
+    def _pwa_calculate_model_info_count(self, model_infos, last_update):
+        for model_info in model_infos:
+            model_obj = request.env[model_info["model"]]
+            model = model_info["model"]
+            if model in last_update:
+                model_info["count"] = model_obj.search_count(
+                    [("write_date", ">=", last_update[model])] + model_info["domain"]
+                )
+            else:
+                model_info["count"] = model_obj.search_count(model_info["domain"])
+
     def _pwa_prefetch_model(self, last_update, **kwargs):
         records = request.env["pwa.cache"].search(self._get_pwa_cache_domain(["model"]))
-        res = []
+        model_infos = []
         for record in records:
             model = record.model_id.model
             model_obj = request.env[model]
@@ -147,7 +179,7 @@ class PWAPrefetch(PWA):
                 records_count = model_obj.search_count(evaluated_domain)
             if records_count == 0:
                 continue
-            res.append(
+            model_infos.append(
                 {
                     "model": model,
                     "domain": evaluated_domain,
@@ -155,13 +187,22 @@ class PWAPrefetch(PWA):
                     "count": records_count,
                 }
             )
-        return res
+        # Add internal models
+        model_infos += self._pwa_prefetch_model_internal(last_update)
+        # Calculate counts
+        self._pwa_calculate_model_info_count(model_infos, last_update)
+        return model_infos
+
+    def _pwa_prefetch_clientqweb_internal(self):
+        return ["web_editor.colorpicker"]
 
     def _pwa_prefetch_clientqweb(self, **kwargs):
         records = request.env["pwa.cache"].search(
             self._get_pwa_cache_domain(["clientqweb"])
         )
-        return request.env["pwa.cache"]._get_text_field_lines(records, "xml_refs")
+        xml_refs = request.env["pwa.cache"]._get_text_field_lines(records, "xml_refs")
+        xml_refs += self._pwa_prefetch_clientqweb_internal()
+        return xml_refs
 
     def _pwa_prefetch_post(self, **kwargs):
         records = request.env["pwa.cache"].search(self._get_pwa_cache_domain(["post"]))

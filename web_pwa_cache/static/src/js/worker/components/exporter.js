@@ -7,6 +7,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
     const SWComponent = require("web_pwa_cache.PWA.components.Component");
     const JSSandbox = require("web_pwa_cache.PWA.core.base.JSSandbox");
     const Tools = require("web_pwa_cache.PWA.core.base.Tools");
+    const Expression = require("web_pwa_cache.PWA.core.osv.Expression");
 
     /**
      * This class is used to get the necessary data to simulate the Odoo replies.
@@ -89,106 +90,90 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                 try {
                     const record_data = data.args[1];
                     let fields_changed = data.args[2];
-                    const res = {value: {}};
+                    const result = {value: {}};
 
                     if (typeof fields_changed === "string") {
                         fields_changed = [fields_changed];
                     }
 
-                    try {
-                        // Generate Onchange Values Virtual Table
-                        const record_data_flatten = Tools.flattenObj(record_data);
-                        const select_values = _.map(
-                            record_data_flatten,
-                            (value, key) =>
-                                `SELECT "${key}" AS field_name, ${JSON.stringify(
-                                    value
-                                )} AS value`
-                        );
-                        const sql_virt_table = `(${select_values.join(" UNION ")})`;
-                        // Search Onchanges
-                        const sql = `
-                            SELECT cu.changes FROM
-                            (
-                                SELECT count(onchange_id) as num, onchange_id, changes FROM
-                                (
-                                    SELECT sv.field_name,sv.value,sv.onchange_id,oc.changes
-                                    FROM pwa_cache_onchange as oc
-                                    INNER JOIN pwa_cache_onchange_selector_value as sv
-                                    ON sv.onchange_id = oc.id
-                                    WHERE oc.model='${model}'
-                                ) as iv
-                                LEFT JOIN ${sql_virt_table} as sv
-                                ON iv.field_name=sv.field_name AND iv.value=sv.value
-                                WHERE sv.value IS NOT NULL
-                                GROUP BY onchange_id
-                            ) as cu
-                            INNER JOIN
-                            (
-                                SELECT COUNT(sv.onchange_id) as num, onchange_id
-                                FROM pwa_cache_onchange as oc
-                                INNER JOIN pwa_cache_onchange_selector_value as sv
-                                ON sv.onchange_id = oc.id
-                                WHERE oc.model='${model}'
-                                GROUP BY onchange_id
-                            ) as cs
-                            on cu.onchange_id=cs.onchange_id
-                            WHERE cu.num=cs.num
-                        `;
+                    // Generate Onchange Values Virtual Table
+                    const sandbox = new JSSandbox();
+                    const record_data_folded = Tools.foldObj(record_data);
+                    const model_info_pwa_cache = this._db.getModelInfo("pwa.cache");
+                    const model_info_pwa_onchange = this._db.getModelInfo(
+                        "pwa.cache.onchange"
+                    );
+                    const model_info_pwa_onchange_value = this._db.getModelInfo(
+                        "pwa.cache.onchange.value"
+                    );
+                    let catch_from_server = true;
 
-                        // Records = `SELECT pcovs.field_name FROM pwa_cache_onchange as pco INNER JOIN pwa_cache_onchange_values_selector as pcovs ON pcovs.onchange_id=pco.id WHERE pco.model='${model}'`
-
-                        // SELECT * FROM pwa_cache_onchange pco
-                        // JOIN pwa_cache_onchange_values_selector pcovs1 ON pcovs1.pwa_cache_onchange_id = pco.id AND pcovs1.field_name = 'order_id.partner_id' AND pcovs1.value = '1'
-                        // JOIN pwa_cache_onchange_values_selector pcovs2 ON pcovs2.pwa_cache_onchange_id = pco.id AND pcovs2.field_name = 'order_id.pricelist_id' AND pcovs2.value = '2'
-                        // JOIN pwa_cache_onchange_values_selector pcovs3 ON pcovs3.pwa_cache_onchange_id = pco.id AND pcovs3.field_name = 'product_id' AND pcovs3.value = '3';
-
-                        const records = await this._db.sqlitedb.getDB().all([sql]);
-                        if (!this.isOfflineMode() && _.isEmpty(records)) {
-                            return reject();
-                        }
-
-                        this._db.sqlitedb.converter.toOdoo(
-                            this._db.getModelInfo("pwa.cache.onchange").fields,
-                            records
-                        );
-                        // Generate changes
-                        const sandbox = new JSSandbox();
-                        for (const record of records) {
+                    for (const field of fields_changed) {
+                        // TODO: Determine onchange execution order through onchange_spec
+                        const sql_pwa_cache = `SELECT id,cache_type,code_js FROM ${model_info_pwa_cache.table} WHERE "onchange_field_name"="${field}" AND "model_name"="${model}" AND "cache_type" IN ("onchange", "onchange_formula")`;
+                        const record = await this._db.sqlitedb
+                            .getDB()
+                            .get([sql_pwa_cache]);
+                        if (!_.isEmpty(record)) {
+                            this._db.sqlitedb.converter.toOdoo(
+                                model_info_pwa_cache.fields,
+                                record
+                            );
+                            catch_from_server = false;
                             let value = false;
                             let warning = false;
                             let domain = false;
-                            if (typeof record.changes !== "undefined") {
-                                value = record.changes.value;
-                                warning = record.changes.warning;
-                                domain = record.changes.domain;
-                            } else if (typeof record.formula !== "undefined") {
-                                sandbox.compile(record.formula);
+                            if (record.cache_type === "onchange_formula") {
+                                sandbox.compile(record.code_js);
                                 const changes = sandbox.run(record_data);
                                 value = changes.value;
                                 warning = changes.warning;
                                 domain = changes.domain;
+                            } else {
+                                const sql_selectors = `SELECT field_name FROM ${model_info_pwa_onchange.table} WHERE "pwa_cache_id"=${record.id} AND NOT disposable`;
+                                const selectors = await this._db.sqlitedb
+                                    .getDB()
+                                    .all([sql_selectors]);
+                                // TODO: Ver el orden
+                                let vals = {};
+                                for (const selector of selectors) {
+                                    vals[selector.field_name] =
+                                        record_data_folded[selector.field_name];
+                                }
+                                vals = Tools.unfoldObj(vals);
+                                let str_vals = Expression.convert_to_column(model_info_pwa_onchange_value.fields.values, vals);
+                                const sql_value = `SELECT result FROM ${model_info_pwa_onchange_value.table} WHERE "pwa_cache_id"=${record.id} AND "field_name"="${field}" AND "values"=${str_vals}`;
+                                const value_record = await this._db.sqlitedb
+                                    .getDB()
+                                    .get([sql_value]);
+                                if (!_.isEmpty(value_record)) {
+                                    const onchange_data = JSON.parse(value_record.result);
+                                    value = onchange_data.value;
+                                    warning = onchange_data.warning;
+                                    domain = onchange_data.domain;
+                                }
                             }
                             if (value) {
-                                res.value = _.extend({}, res.value, value);
+                                result.value = _.extend({}, result.value, value);
                             }
                             if (warning) {
-                                res.warning = _.extend({}, res.warning, warning);
+                                result.warning = _.extend({}, result.warning, warning);
                             }
                             if (domain) {
-                                res.domain = _.extend({}, res.domain, domain);
+                                result.domain = _.extend({}, result.domain, domain);
                             }
                         }
-                    } catch (err) {
+                    }
+                    if (catch_from_server && !this.isOfflineMode()) {
                         console.log(
                             `[ServiceWorker] Can't process the given onchange for the fields '${fields_changed.join(
                                 ","
                             )}' on the model '${model}'`
                         );
-                        console.log(err);
+                        return reject();
                     }
 
-                    return resolve(res);
+                    return resolve(result);
                 } catch (err) {
                     return reject(err);
                 }
@@ -645,7 +630,6 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                 let records = false,
                     records_count = 0;
                 try {
-                    console.log("---- PAS 1");
                     records = await this._db.search_read(
                         pmodel,
                         pdomain,
@@ -654,8 +638,6 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         poffset,
                         psort
                     );
-
-                    console.log("---- PAS 2: ", records);
 
                     if (_.isEmpty(records) && !this.isOfflineMode()) {
                         return reject("No records");
@@ -673,7 +655,12 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                     }
                 }
 
-                console.log("--- PASA 3: ", records, records_count);
+                const model_info = this._db.getModelInfo(pmodel);
+                records = this._db.sqlitedb.converter.removeNoFields(
+                    model_info.fields,
+                    records
+                );
+
                 if ("kwargs" in data) {
                     return resolve(records);
                 }
@@ -823,7 +810,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                             "res.partner",
                             [follower.partner_id[0]]
                         );
-                        const is_uid = partner_id == follower_partner_id.id;
+                        const is_uid = partner_id === follower_partner_id.id;
                         follower_id = is_uid ? follower.id : follower_id;
                         followers.push({
                             id: follower.id,
