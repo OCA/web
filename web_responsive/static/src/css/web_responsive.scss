@@ -800,9 +800,16 @@ html .o_web_client .o_action_manager .o_action {
     }
 
     // Enable scroll on dropdowns
-    .o_cp_buttons .dropdown-menu {
-        max-height: 70vh;
-        overflow-y: auto;
-        overflow-x: hidden;
+    .o_cp_buttons {
+        > div {
+            display: inline-flex;
+            flex-direction: row;
+            gap: 0.5em;
+        }
+        .dropdown-menu {
+            max-height: 70vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
     }
 }
