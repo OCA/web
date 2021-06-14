@@ -31,6 +31,7 @@ setuptools.setup(
         'odoo13-addon-web_refresher',
         'odoo13-addon-web_responsive',
         'odoo13-addon-web_search_with_and',
+        'odoo13-addon-web_send_message_popup',
         'odoo13-addon-web_sheet_full_width',
         'odoo13-addon-web_timeline',
         'odoo13-addon-web_translate_dialog',
