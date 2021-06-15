@@ -195,7 +195,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
 
                         // Need redirect '/'?
                         const url = new URL(request.url);
-                        if (url.pathname === "/" && isOffline) {
+                        if ((url.pathname === "/" || (url.pathname ==="/web" && url.search)) && isOffline) {
                             return resolve(Tools.ResponseRedirect("/web"));
                         }
                         // Check cached url's to use generic cache hash

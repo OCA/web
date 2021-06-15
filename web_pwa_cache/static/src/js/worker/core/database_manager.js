@@ -554,33 +554,34 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
                         model_info = this.getModelInfo(model_info);
                     }
 
-                    const tasks = [this.sqlitedb.deleteRecords(model_info, rc_ids)];
-                    if (_.isEmpty(rc_ids)) {
-                        const records = await this.indexeddb.getRecords(
-                            "binary",
-                            "model",
-                            model_info.model
-                        );
-                        for (const record of records) {
-                            tasks.push(
-                                this.indexeddb.deleteRecord("binary", [
+                    await this.sqlitedb.deleteRecords(model_info, rc_ids);
+                    try {
+                        if (_.isEmpty(rc_ids)) {
+                            const records = await this.indexeddb.getRecords(
+                                "binary",
+                                "model",
+                                model_info.model
+                            );
+                            for (const record of records) {
+                                await this.indexeddb.deleteRecord("binary", [
                                     model_info.model,
                                     record.id,
-                                ])
-                            );
-                        }
-                    } else {
-                        for (const id of rc_ids) {
-                            tasks.push(
-                                this.indexeddb.deleteRecord("binary", [
+                                ]);
+                            }
+                        } else {
+                            for (const id of rc_ids) {
+                                await this.indexeddb.deleteRecord("binary", [
                                     model_info.model,
                                     id,
-                                ])
-                            );
+                                ]);
+                            }
                         }
+                    } catch (err) {
+                        // Do nothing
+                        console.log("---- ERR: ", err);
                     }
-                    await Promise.all(tasks);
                 } catch (err) {
+                    console.log("------- THE ERRRO: ", err);
                     return reject(err);
                 }
                 return resolve();
@@ -606,9 +607,7 @@ odoo.define("web_pwa_cache.PWA.core.DatabaseManager", function(require) {
             orderby,
             count = false
         ) {
-            console.log("-------------------------- SEARCH!! 11111111111");
             return new Promise(async (resolve, reject) => {
-                console.log("-------------------------- SEARCH!! 22222222222222");
                 try {
                     if (typeof model_info === "string") {
                         model_info = this.getModelInfo(model_info);

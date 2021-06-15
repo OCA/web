@@ -1070,6 +1070,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         model_info.fields,
                         true
                     );
+                    debugger;
                     records_sync.splice(0, 0, {
                         model: model_info.model,
                         method: "create",

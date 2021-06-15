@@ -520,7 +520,6 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                     await Promise.all(tasks);
                 } catch (err) {
                     // Do nothing
-                    console.log("------------ THE ERROR", err);
                 }
 
                 return resolve();
@@ -539,32 +538,39 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                         model_info = this.getModelInfo(model_info);
                     }
 
-                    const tasks = [this.sqlitedb.deleteRecords(model_info, rc_ids)];
-                    if (_.isEmpty(rc_ids)) {
-                        const records = await this.indexeddb.getRecords(
-                            "binary",
-                            "model",
-                            model_info.model
-                        );
-                        for (const record of records) {
-                            tasks.push(
-                                this.indexeddb.deleteRecord("binary", [
-                                    model_info.model,
-                                    record.id,
-                                ])
+                    await this.sqlitedb.deleteRecords(model_info, rc_ids);
+                    // Try remove binary... maybe doesn't exists
+                    try {
+                        const tasksbinary = [];
+                        if (_.isEmpty(rc_ids)) {
+                            const records = await this.indexeddb.getRecords(
+                                "binary",
+                                "model",
+                                model_info.model
                             );
+                            for (const record of records) {
+                                tasksbinary.push(
+                                    this.indexeddb.deleteRecord("binary", [
+                                        model_info.model,
+                                        record.id,
+                                    ])
+                                );
+                            }
+                        } else {
+                            for (const id of rc_ids) {
+                                tasksbinary.push(
+                                    this.indexeddb.deleteRecord("binary", [
+                                        model_info.model,
+                                        id,
+                                    ])
+                                );
+                            }
                         }
-                    } else {
-                        for (const id of rc_ids) {
-                            tasks.push(
-                                this.indexeddb.deleteRecord("binary", [
-                                    model_info.model,
-                                    id,
-                                ])
-                            );
-                        }
+
+                        await Promise.all(tasksbinary);
+                    } catch (err) {
+                        // Nothing to do
                     }
-                    await Promise.all(tasks);
                 } catch (err) {
                     return reject(err);
                 }

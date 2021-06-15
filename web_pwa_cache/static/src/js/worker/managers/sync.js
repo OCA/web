@@ -20,7 +20,7 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
          */
         init: function(parent) {
             this._super.apply(this, arguments);
-            this._db = this.options.db || parent._managers.db;
+            this._db = this.options.db || parent._db;
         },
 
         /**
@@ -52,7 +52,7 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
 
                     await this._db.writeOrCreate(
                         model_info_sync,
-                        _.extend({}, data, {id: id})
+                        [_.extend({}, data, {id: id})]
                     );
                 } catch (err) {
                     return reject(err);
@@ -149,7 +149,7 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                                 const values = _.omit(item, ["id", "display_name"]);
                                 if (values.name) {
                                     values.name = values.name.replace(
-                                        /\s?\(Offline Record #\d+\)/,
+                                        /\(?Offline Record #\d+\)?/,
                                         ""
                                     );
                                 }
@@ -199,14 +199,13 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                                     const changes = record.linked[model];
                                     for (const change of changes) {
                                         // Update normal records
-                                        const model_records = await this._db.browse(
+                                        const model_record = await this._db.browse(
                                             model,
                                             change.id
                                         );
-                                        if (_.isEmpty(model_records)) {
+                                        if (_.isEmpty(model_record)) {
                                             continue;
                                         }
-                                        const model_record = model_records[0];
                                         let field = model_record[change.field];
                                         if (typeof field === "object") {
                                             field = _.map(field, item => {
@@ -246,13 +245,13 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                                     }
                                 }
 
-                                const old_records = await this._db.browse(
+                                const old_record = await this._db.browse(
                                     record.model,
                                     old_id
                                 );
-                                old_records[0].id = new_id;
+                                old_record.id = new_id;
                                 await this._db.unlink(record.model, [old_id]);
-                                await this._db.create(record.model, old_records[0]);
+                                await this._db.create(record.model, old_record);
                             }
                         }
                         await this.removeSyncRecords([record.id]);

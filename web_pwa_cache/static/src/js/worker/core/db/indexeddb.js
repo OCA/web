@@ -238,7 +238,7 @@ odoo.define("web_pwa_cache.PWA.core.db.IndexedDB", function(require) {
          * @returns {Promise}
          */
         deleteRecord: function(store, range) {
-            return new Promise(async (resolve, reject) => {
+            return new Promise((resolve, reject) => {
                 const [objectStore] = this.getObjectStores([store], "readwrite");
                 if (objectStore) {
                     const request = objectStore.delete(range);
