@@ -179,11 +179,15 @@ class PWAPrefetch(PWA):
                 records_count = model_obj.search_count(evaluated_domain)
             if records_count == 0:
                 continue
+            excluded_fields = record.model_field_excluded_ids.mapped("name")
+            # Remove sensitive data
+            if model == "res.users":
+                excluded_fields.append("password")
             model_infos.append(
                 {
                     "model": model,
                     "domain": evaluated_domain,
-                    "excluded_fields": record.model_field_excluded_ids.mapped("name"),
+                    "excluded_fields": list(set(excluded_fields)),
                     "count": records_count,
                 }
             )
@@ -208,11 +212,10 @@ class PWAPrefetch(PWA):
         records = request.env["pwa.cache"].search(self._get_pwa_cache_domain(["post"]))
         post_defs = []
         for record in records:
-            e_context = record._get_eval_context()
             post_defs.append(
                 {
                     "url": record.post_url,
-                    "params": record.run_cache_code(eval_context=e_context),
+                    "params": record.post_params,
                 }
             )
         return post_defs
@@ -225,81 +228,24 @@ class PWAPrefetch(PWA):
             "lang": request.env.lang,
         }
 
-    def _pwa_prefetch_onchange(self, **kwargs):
-        cache_id = kwargs.get("cache_id")
-        if not cache_id:
-            values = []
-            records = request.env["pwa.cache"].search(
-                self._get_pwa_cache_domain(["onchange", "onchange_formula"])
-            )
-            for record in records:
-                e_context = record._get_eval_context()
-                params_list = record.run_cache_code(eval_context=e_context)
-                values.append(
-                    {"id": record.id, "name": record.name, "count": len(params_list)}
-                )
-            return values
-
-        record = request.env["pwa.cache"].browse(cache_id)
-        if not record or (
-            record.cache_type != "onchange" and record.cache_type != "onchange_formula"
-        ):
-            raise ValidationError(_("Invalid onchange cache id"))
-
-        onchanges = []
-        e_context = record._get_eval_context()
-        record_obj = request.env[record.model_id.model]
-        params_list = record.run_cache_code(eval_context=e_context)
-        onchange_spec = record_obj._onchange_spec()
-        for params in params_list:
-            changes = False
-            formula = False
-            if record.cache_type == "onchange":
-                resolved_params = self._pwa_resolve_params(params)
-                changes = record_obj.onchange(
-                    resolved_params, record.onchange_field.name, onchange_spec
-                )
-            elif record.cache_type == "onchange_formula":
-                formula = record.code_js
-            # Remove 'None' values, so they are only used to trigger the change
-            s_params = self._pwa_construct_params(
-                params, record.onchange_field.name, record.onchange_triggers
-            )
-            onchanges.append(
-                {
-                    "model": record.model_id.model,
-                    "field": record.onchange_field.name,
-                    "params": s_params,
-                    "changes": changes,
-                    "formula": formula,
-                    "triggers": record.onchange_triggers,
-                    "field_value": params[record.onchange_field.name],
-                }
-            )
-        return onchanges
-
     def _pwa_prefetch_function(self, **kwargs):
         records = request.env["pwa.cache"].search(
             self._get_pwa_cache_domain(["function"])
         )
         functions = []
         for record in records:
-            e_context = record._get_eval_context()
             record_obj = request.env[record.model_id.model]
-            params_list = record.run_cache_code(eval_context=e_context)
-            for params in params_list:
-                params = params or []
-                func_ref = getattr(record_obj, record.function_name)
-                if func_ref:
-                    result = func_ref(*params)
-                    functions.append(
-                        {
-                            "model": record.model_id.model,
-                            "method": record.function_name,
-                            "params": params,
-                            "result": result,
-                        }
-                    )
+            func_ref = getattr(record_obj, record.function_name)
+            if func_ref:
+                result = func_ref(**(record.function_params or {}))
+                functions.append(
+                    {
+                        "model": record.model_id.model,
+                        "method": record.function_name,
+                        "params": record.function_params,
+                        "result": result,
+                    }
+                )
         return functions
 
     @route("/pwa/prefetch/<string:cache_type>", type="json", auth="user")

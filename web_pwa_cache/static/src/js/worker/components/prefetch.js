@@ -257,23 +257,10 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                     model_info_extra.excluded_fields &&
                     model_info_extra.excluded_fields.length
                 ) {
-                    fields = Object.keys(
-                        _.omit(
-                            model_info_extra.fields,
-                            model_info_extra.excluded_fields
-                        )
-                    );
-                }
-                /* Handle critical data */
-                // Remove "password" info from res.users model
-                if (model_info_extra.model === "res.users") {
-                    if (fields === false) {
-                        fields = Object.keys(
-                            _.omit(model_info_extra.fields, "password")
-                        );
-                    } else {
-                        fields = _.omit(fields, "password");
-                    }
+                    fields = Object.keys(_.omit(
+                        model_info_extra.fields,
+                        model_info_extra.excluded_fields
+                    ));
                 }
                 // Get ids
                 const [response_s] = await rpc.callJSonRpc(
@@ -603,22 +590,19 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                                 num_posts,
                                 index
                             );
-                            const num_params = post_def.params.length;
-                            for (let i = 0; i < num_params; ++i) {
-                                const [
-                                    response_s,
-                                    request_data_s,
-                                ] = await rpc.sendJSonRpc(
-                                    post_def.url,
-                                    post_def.params[i] || {}
-                                );
-                                const response_s_data = await response_s.json();
-                                await this._generic_post(
-                                    new URL(response_s.url).pathname,
-                                    request_data_s.params,
-                                    response_s_data.result
-                                );
-                            }
+                            const [
+                                response_s,
+                                request_data_s,
+                            ] = await rpc.sendJSonRpc(
+                                post_def.url,
+                                post_def.params || {}
+                            );
+                            const response_s_data = await response_s.json();
+                            await this._generic_post(
+                                new URL(response_s.url).pathname,
+                                request_data_s.params,
+                                response_s_data.result
+                            );
                         }
                     }
 
@@ -872,27 +856,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                         model_info_views,
                         values,
                         ["model", "view_id", "type", "is_default"]
-                    );
-                } catch (err) {
-                    return reject(err);
-                }
-
-                return resolve();
-            });
-        },
-
-        /**
-         * @param {Object} values
-         * @returns {Promise}
-         */
-        saveOnchange: function(values) {
-            return new Promise(async (resolve, reject) => {
-                try {
-                    const model_info_onchange = this._db.getModelInfo("onchange", true);
-                    await this._db.sqlitedb.createOrUpdateRecord(
-                        model_info_onchange,
-                        values,
-                        ["id"]
                     );
                 } catch (err) {
                     return reject(err);

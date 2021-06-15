@@ -60,6 +60,10 @@
                             name="function_name"
                             attrs="{'required': [('cache_type', '=', 'function')]}"
                         />
+                        <field
+                            name="function_params"
+                            attrs="{'required': [('cache_type', '=', 'function')]}"
+                        />
                     </group>
                     <group attrs="{'invisible': [('cache_type', '!=', 'onchange')]}">
                         <group colspan="4">
@@ -114,6 +118,10 @@
                     <group attrs="{'invisible': [('cache_type', '!=', 'post')]}">
                         <field
                             name="post_url"
+                            attrs="{'required': [('cache_type', '=', 'post')]}"
+                        />
+                        <field
+                            name="post_params"
                             attrs="{'required': [('cache_type', '=', 'post')]}"
                         />
                     </group>

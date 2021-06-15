@@ -28,7 +28,7 @@ class PwaCache(models.Model):
     _name = "pwa.cache"
     _description = "PWA Cache"
 
-    name = fields.Char("Name", required=True, translate=True)
+    name = fields.Char(string="Name", required=True, translate=True)
     active = fields.Boolean(
         "Active",
         default=True,
@@ -48,12 +48,12 @@ class PwaCache(models.Model):
         string="Type",
         required=True,
     )
-    model_id = fields.Many2one("ir.model", string="Model")
+    model_id = fields.Many2one(comodel_name="ir.model", string="Model")
     model_name = fields.Char(
         related="model_id.model", string="Model Name", readonly=True, store=True,
     )
     model_domain = fields.Char(
-        "Domain", related="model_domain_raw", readonly=False, store=False,
+        string="Domain", related="model_domain_raw", readonly=False, store=False,
     )
     model_domain_raw = fields.Char("Domain (RAW)", default="[]")
     model_field_excluded_ids = fields.Many2many(
@@ -64,7 +64,8 @@ class PwaCache(models.Model):
         column2="field_id",
         domain="[['model_id', '=', model_id]]",
     )
-    function_name = fields.Char("Function Name")
+    function_name = fields.Char()
+    function_params = fields.Char()
     xml_refs = fields.Text(string="XML Ref's")
     code_js = fields.Text(
         string="Javascript code",
@@ -86,6 +87,7 @@ class PwaCache(models.Model):
         "//}\n",
     )
     post_url = fields.Char(string="Post URL")
+    post_params = fields.Char()
     get_urls = fields.Text(string="Get URL's")
     group_ids = fields.Many2many(
         comodel_name="res.groups",
@@ -120,7 +122,7 @@ class PwaCache(models.Model):
         comodel_name="pwa.cache.onchange.value",
         inverse_name="pwa_cache_id",
     )
-    internal = fields.Boolean("Is an internal record", default=False)
+    internal = fields.Boolean(string="Is an internal record", default=False)
 
     def _get_text_field_lines(self, records, field_name):
         return list(
