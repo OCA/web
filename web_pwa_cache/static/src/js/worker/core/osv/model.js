@@ -126,7 +126,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
 
                     // Figure out the applicable order_by for the m2o
                     const dest_model = await this._dbmanager.sqlitedb.getModelInfo(
-                        field.comodel_name
+                        field.relation
                     );
                     let m2o_order = dest_model.orderby;
                     if (!m2o_order.match(this.regex_order)) {
@@ -293,7 +293,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                             if (field.store && field.type === "many2one") {
                                 const key = [
                                     field.model_name,
-                                    field.comodel_name,
+                                    field.relation,
                                     order_field,
                                 ];
                                 if (_.findIndex(seen, key) === -1) {
@@ -429,10 +429,11 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                         order_by +
                         limit_str +
                         offset_str;
-                    // Console.log("--------------------------- THE SQL");
-                    // console.log(query_str);
+                    //console.log("--------------------------- THE SQL");
+                    //console.log(query_str);
                     sql = _.str.sprintf(query_str, ...where_clause_params);
-                    // Console.log(sql);
+                    //console.log(sql);
+                    //console.log(args);
                     const res = await db.all([sql]);
                     if (!field_names) {
                         return resolve(

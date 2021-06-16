@@ -141,7 +141,7 @@ class PWAPrefetch(PWA):
                 ],
                 "excluded_fields": ["complete_name", "reference"],
             },
-            {"model": "pwa.cache", "domain": [], "excluded_fields": False},
+            {"model": "pwa.cache", "domain": [], "excluded_fields": ["onchange_value_ids"]},
             {"model": "pwa.cache.onchange", "domain": [], "excluded_fields": False},
             {
                 "model": "pwa.cache.onchange.value",

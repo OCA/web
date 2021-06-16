@@ -124,10 +124,14 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                 );
                 break;
             case "many2one":
-                if (_.isEmpty(value)) {
-                    svalue = false;
+                if (typeof value === "object") {
+                    if (_.isEmpty(value)) {
+                        svalue = false;
+                    } else {
+                        svalue = value[0];
+                    }
                 } else {
-                    svalue = value[0];
+                    svalue = Number(value);
                 }
                 break;
             case "one2many":
@@ -926,7 +930,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     const field = path[0] in model.fields && model.fields[path[0]];
                     // eslint-disable-next-line
                     const comodel = await this._dbmanager.sqlitedb.getModelInfo(
-                        field && field.comodel_name
+                        field && field.relation
                     );
 
                     // ----------------------------------------
@@ -1088,8 +1092,8 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     // else if (field.type === 'one2many' && operator in HIERARCHY_FUNCS) {
                     //     const ids2 = to_ids(right, comodel, leaf.leaf);
                     //     let dom = [];
-                    //     if (field.comodel_name !== model.model) {
-                    //         dom = await HIERARCHY_FUNCS[operator](left, ids2, comodel, undefined, field.comodel_name);
+                    //     if (field.relation !== model.model) {
+                    //         dom = await HIERARCHY_FUNCS[operator](left, ids2, comodel, undefined, field.relation);
                     //     } else {
                     //         dom = await HIERARCHY_FUNCS[operator]('id', ids2, model, left);
                     //     }
@@ -1218,13 +1222,13 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                         if (operator in HIERARCHY_FUNCS) {
                             const ids2 = to_ids(right, comodel, leaf.leaf);
                             let dom = [];
-                            if (field.comodel_name != model.model) {
+                            if (field.relation != model.model) {
                                 dom = await HIERARCHY_FUNCS[operator](
                                     left,
                                     ids2,
                                     comodel,
                                     undefined,
-                                    field.comodel_name
+                                    field.relation
                                 );
                             } else {
                                 dom = await HIERARCHY_FUNCS[operator](

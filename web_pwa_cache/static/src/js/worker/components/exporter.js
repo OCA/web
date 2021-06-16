@@ -583,7 +583,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         action_id
                     );
                     const model_info_actions = this._db.getModelInfo(base_action.type);
-                    const record = await this._db.browse(model_info_actions, action_id);
+                    let record = await this._db.browse(model_info_actions, action_id);
                     if (_.isEmpty(record) && !this.isOfflineMode()) {
                         return reject();
                     }
@@ -600,6 +600,10 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                     //     record.search_view = JSON.parse(record.search_view);
                     // }
 
+                    [record] = this._db.sqlitedb.converter.removeNoFields(
+                        model_info_actions.fields,
+                        [record]
+                    );
                     return resolve(record);
                 } catch (err) {
                     return reject(err);
@@ -1070,7 +1074,6 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         model_info.fields,
                         true
                     );
-                    debugger;
                     records_sync.splice(0, 0, {
                         model: model_info.model,
                         method: "create",
