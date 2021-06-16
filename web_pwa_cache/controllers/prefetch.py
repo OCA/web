@@ -129,27 +129,6 @@ class PWAPrefetch(PWA):
             )
         return res
 
-    def _pwa_prefetch_model_internal(self, last_update, **kwargs):
-        return [
-            {"model": "ir.filters", "domain": [], "excluded_fields": False},
-            {
-                "model": "ir.model.data",
-                "domain": [
-                    "|",
-                    ["model", "=ilike", "ir.actions.%"],
-                    ["model", "=", "res.groups"],
-                ],
-                "excluded_fields": ["complete_name", "reference"],
-            },
-            {"model": "pwa.cache", "domain": [], "excluded_fields": ["onchange_value_ids"]},
-            {"model": "pwa.cache.onchange", "domain": [], "excluded_fields": False},
-            {
-                "model": "pwa.cache.onchange.value",
-                "domain": [],
-                "excluded_fields": False,
-            },
-        ]
-
     def _pwa_calculate_model_info_count(self, model_infos, last_update):
         for model_info in model_infos:
             model_obj = request.env[model_info["model"]]
@@ -191,21 +170,15 @@ class PWAPrefetch(PWA):
                     "count": records_count,
                 }
             )
-        # Add internal models
-        model_infos += self._pwa_prefetch_model_internal(last_update)
         # Calculate counts
         self._pwa_calculate_model_info_count(model_infos, last_update)
         return model_infos
-
-    def _pwa_prefetch_clientqweb_internal(self):
-        return ["web_editor.colorpicker"]
 
     def _pwa_prefetch_clientqweb(self, **kwargs):
         records = request.env["pwa.cache"].search(
             self._get_pwa_cache_domain(["clientqweb"])
         )
         xml_refs = request.env["pwa.cache"]._get_text_field_lines(records, "xml_refs")
-        xml_refs += self._pwa_prefetch_clientqweb_internal()
         return xml_refs
 
     def _pwa_prefetch_post(self, **kwargs):
@@ -213,10 +186,7 @@ class PWAPrefetch(PWA):
         post_defs = []
         for record in records:
             post_defs.append(
-                {
-                    "url": record.post_url,
-                    "params": record.post_params,
-                }
+                {"url": record.post_url, "params": record.post_params,}
             )
         return post_defs
 

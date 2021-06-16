@@ -1,5 +1,55 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+    <data noupdate="0">
+        <record id="pwa_cache_model_ir_filters_all" model="pwa.cache">
+            <field name="name">Filters (All)</field>
+            <field name="cache_type">model</field>
+            <field name="model_id" ref="base.model_ir_filters" />
+            <field name="internal">1</field>
+        </record>
+        <record id="pwa_cache_model_ir_model_data_all" model="pwa.cache">
+            <field name="name">Model Data (All)</field>
+            <field name="cache_type">model</field>
+            <field name="model_id" ref="base.model_ir_model_data" />
+            <field
+                name="model_field_excluded_ids"
+                eval="[(6, 0, [ref('base.field_ir_model_data__complete_name'), ref('base.field_ir_model_data__reference')])]"
+            />
+            <field
+                name="model_domain_raw"
+            >['|', ['model', '=ilike', 'ir.actions.%'], ['model', '=', 'res.groups']]</field>
+            <field name="internal">1</field>
+        </record>
+        <record id="pwa_cache_model_pwa_cache" model="pwa.cache">
+            <field name="name">PWA Cache (All)</field>
+            <field name="cache_type">model</field>
+            <field name="model_id" ref="web_pwa_cache.model_pwa_cache" />
+            <field
+                name="model_field_excluded_ids"
+                eval="[(6, 0, [ref('web_pwa_cache.field_pwa_cache__onchange_value_ids')])]"
+            />
+            <field name="internal">1</field>
+        </record>
+        <record id="pwa_cache_model_pwa_cache_onchange" model="pwa.cache">
+            <field name="name">PWA Cache Onchange (All)</field>
+            <field name="cache_type">model</field>
+            <field name="model_id" ref="web_pwa_cache.model_pwa_cache_onchange" />
+            <field name="internal">1</field>
+        </record>
+        <record id="pwa_cache_model_pwa_cache_onchange_value" model="pwa.cache">
+            <field name="name">PWA Cache Onchange Value (All)</field>
+            <field name="cache_type">model</field>
+            <field name="model_id" ref="web_pwa_cache.model_pwa_cache_onchange_value" />
+            <field name="internal">1</field>
+        </record>
+        <!-- Client QWEB -->
+        <record id="pwa_cache_clientqweb_colorpicker_template" model="pwa.cache">
+            <field name="name">Colorpicker Template</field>
+            <field name="cache_type">clientqweb</field>
+            <field name="xml_refs">web_editor.colorpicker</field>
+            <field name="internal">1</field>
+        </record>
+    </data>
     <data noupdate="1">
         <!-- MODEL -->
         <record id="pwa_cache_model_res_partner_all" model="pwa.cache">
