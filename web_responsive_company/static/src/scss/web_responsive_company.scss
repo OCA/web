@@ -1,0 +1,81 @@
+/*
+    Copyright (C) 2021 - Today: GRAP (http://www.grap.coop)
+    Copyright Tecnativa - Jairo Llopis
+    Copyright Tecnativa - Alexandre Díaz
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
+    Part of the code comes from web_responsive module. (same repository)
+*/
+
+.o_switch_company_menu {
+
+    .dropdown-menu.show {
+        @include full-screen-dropdown();
+
+        // Display apps in a grid
+        align-content: flex-start;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+
+        @include media-breakpoint-up(lg) {
+            padding: {
+                left: 20vw;
+                right: 20vw;
+            }
+        }
+
+        .o-company {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            border-radius: 5px;
+            padding: 5px;
+
+            /*// Size depends on screen*/
+            width: 33.33333333%;
+            @include media-breakpoint-up(sm) {
+                width: 25%;
+            }
+
+            @include media-breakpoint-up(md) {
+                width: 16.6666666%;
+            }
+
+            .o-company-logo-container {
+                height: 100px;
+                width: 100px;
+                text-align: center;
+                line-height:100px;
+                background-color:white;
+                border-radius: 3px;
+            }
+
+            .o-company-logo-img {
+                max-width: 95px;
+            }
+
+        }
+
+        // Hide companies icons when searching
+        .has-results ~ .o-company {
+            display: none;
+        }
+
+        .o-company-selected-yes {
+            background-color:#DDD;
+        }
+
+        .o-company-selected-no {
+            cursor: pointer;
+
+            &:hover {
+                background-color:#EEE;
+            }
+        }
+
+    }
+
+}

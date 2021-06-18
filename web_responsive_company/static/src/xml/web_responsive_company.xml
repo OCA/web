@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2021 - Today: GRAP (http://www.grap.coop)
+    @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<template>
+
+    <t t-extend="SwitchCompanyMenu">
+
+        <!-- Add Access Key -->
+       <t t-jquery="a.dropdown-toggle" t-operation="attributes">
+            <attribute name="accesskey">y</attribute>
+        </t>
+
+        <t t-jquery=".dropdown-menu" t-operation="append">
+
+            <!-- Search part -->
+            <div class="search-container form-row align-items-center mb-4 col-12">
+                <div class="search-input col-md-10 ml-auto mr-auto mb-2">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="fa fa-search"/>
+                            </div>
+                        </div>
+                        <input type="search"
+                               autocomplete="off"
+                               placeholder="Search company..."
+                               class="form-control"/>
+                    </div>
+                </div>
+                <div class="search-results col-md-10 ml-auto mr-auto"/>
+            </div>
+
+            <!-- Kanban companies list -->
+            <t t-foreach="widget.getCompanies()" t-as="company">
+                <t t-call="web_responsive_company.CompanyIcon"/>
+            </t>
+        </t>
+    </t>
+
+    <!-- Separate Company icon template, for easier inheritance -->
+    <t t-name="web_responsive_company.CompanyIcon">
+        <a role="menuitem"
+                data-menu="company" t-att-data-company-id="company.id"
+                t-attf-class="dropdown-item o-company o-company-selected-#{widget.isCurrentCompany(company) ? 'yes' : 'no'}">
+            <div class="o-company-logo-container">
+                <img class="o-company-logo-img"
+                    t-attf-src="/web/image?model=res.company&amp;field=logo_web&amp;id=#{company.id}"/>
+            </div>
+            <div class="o-company-code" t-if="company.code">
+                <t t-esc="company.code"/>
+            </div>
+            <div class="o-company-name">
+                 <t t-esc="company.name"/>
+            </div>
+        </a>
+    </t>
+
+   <!-- A search result -->
+    <t t-name="web_responsive_company.CompanySearchResults">
+        <t t-foreach="results" t-as="result">
+            <t t-set="company" t-value="widget._companyInfo(result.original)"/>
+            <a t-attf-class="o-menu-search-result dropdown-item col-12 ml-auto mr-auto #{result_first ? 'active' : ''}"
+                 t-att-data-company-id="company.id"
+                 t-raw="result.string"/>
+        </t>
+    </t>
+
+   <!-- Add new shortcuts in Shortcuts summary -->
+    <t t-extend="UserMenu.shortcuts">
+        <t t-jquery=".o_shortcut_table tbody" t-operation="append">
+            <tr>
+                <td align="left">Change company</td>
+                <td>
+                    <span class="o_key">Alt</span> + <span class="o_key">Shift</span> + <span class="o_key">y</span>
+                </td>
+                <td>
+                    <span class="o_key">Control</span> + <span class="o_key">Alt</span> + <span class="o_key">y</span>
+                </td>
+            </tr>
+        </t>
+    </t>
+
+</template>
