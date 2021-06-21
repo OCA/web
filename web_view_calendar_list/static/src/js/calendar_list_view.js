@@ -13,11 +13,11 @@ odoo.define("web_view_calendar_list.CalendarListView", function(require) {
     var CalendarListView = CalendarView.extend({
         display_name: _lt("Calendar List"),
         icon: "fa-calendar-check-o",
-        config: {
+        config: _.extend(CalendarView.prototype.config, {
             Model: CalendarListModel,
             Controller: CalendarListController,
             Renderer: CalendarListRenderer,
-        },
+        }),
     });
 
     view_registry.add("calendar_list", CalendarListView);

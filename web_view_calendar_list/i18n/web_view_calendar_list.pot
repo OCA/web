@@ -1,12 +1,12 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_view_calendar_list
+# 	* web_view_calendar_list
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: <>\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,87 +19,19 @@ msgid "Action Window View"
 msgstr ""
 
 #. module: web_view_calendar_list
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
-msgid "Activity"
-msgstr ""
-
-#. module: web_view_calendar_list
 #. openerp-web
-#: code:addons/web_view_calendar_list/static/src/js/calendar_list_renderer.js:63
+#: code:addons/web_view_calendar_list/static/src/js/calendar_list_renderer.js:0
 #, python-format
 msgid "All day"
 msgstr ""
 
 #. module: web_view_calendar_list
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
-msgid "Calendar"
-msgstr ""
-
-#. module: web_view_calendar_list
 #. openerp-web
-#: code:addons/web_view_calendar_list/static/src/js/calendar_list_view.js:16
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
+#: code:addons/web_view_calendar_list/static/src/js/calendar_list_view.js:0
+#: model:ir.model.fields.selection,name:web_view_calendar_list.selection__ir_actions_act_window_view__view_mode__calendar_list
+#: model:ir.model.fields.selection,name:web_view_calendar_list.selection__ir_ui_view__type__calendar_list
 #, python-format
 msgid "Calendar List"
-msgstr ""
-
-#. module: web_view_calendar_list
-#: selection:ir.ui.view,type:0
-msgid "Diagram"
-msgstr ""
-
-#. module: web_view_calendar_list
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
-msgid "Form"
-msgstr ""
-
-#. module: web_view_calendar_list
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
-msgid "Gantt"
-msgstr ""
-
-#. module: web_view_calendar_list
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
-msgid "Graph"
-msgstr ""
-
-#. module: web_view_calendar_list
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
-msgid "Kanban"
-msgstr ""
-
-#. module: web_view_calendar_list
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
-msgid "Pivot"
-msgstr ""
-
-#. module: web_view_calendar_list
-#: selection:ir.ui.view,type:0
-msgid "QWeb"
-msgstr ""
-
-#. module: web_view_calendar_list
-#: selection:ir.ui.view,type:0
-msgid "Search"
-msgstr ""
-
-#. module: web_view_calendar_list
-#: selection:ir.ui.view,type:0
-msgid "Timeline"
-msgstr ""
-
-#. module: web_view_calendar_list
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
-msgid "Tree"
 msgstr ""
 
 #. module: web_view_calendar_list
@@ -115,8 +47,7 @@ msgstr ""
 
 #. module: web_view_calendar_list
 #. openerp-web
-#: code:addons/web_view_calendar_list/static/src/js/calendar_list_renderer.js:77
+#: code:addons/web_view_calendar_list/static/src/js/calendar_list_renderer.js:0
 #, python-format
 msgid "Week "
 msgstr ""
-
