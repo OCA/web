@@ -34,7 +34,7 @@ odoo.define("web_view_calendar_list.CalendarListRenderer", function(require) {
                     self.trigger_up("openEvent", event);
                     self.$calendar.fullCalendar("unselect");
                 },
-                select: function(target_date, end_date, event, _js_event, _view) {
+                select: function(target_date, end_date) {
                     var data = {start: target_date, end: end_date};
                     if (self.state.context.default_name) {
                         data.title = self.state.context.default_name;
@@ -52,9 +52,9 @@ odoo.define("web_view_calendar_list.CalendarListRenderer", function(require) {
                         var start = event.r_start || event.start;
                         var end = event.r_end || event.end;
                         var timeFormat =
-                            _t.database.parameters.time_format.search("%H") != -1
-                                ? "HH:mm"
-                                : "h:mma";
+                            _t.database.parameters.time_format.search("%H") == -1
+                                ? "h:mma"
+                                : "HH:mm";
                         display_hour =
                             start.format(timeFormat) + " - " + end.format(timeFormat);
                         if (display_hour === "00:00 - 00:00") {
@@ -64,8 +64,8 @@ odoo.define("web_view_calendar_list.CalendarListRenderer", function(require) {
                     element.find(".fc-list-item-time").text(display_hour);
                 },
                 // Dirty hack to ensure a correct first render
-                eventAfterAllRender: function() {
-                    $(window).trigger("resize");
+                windowResize: function() {
+                    self._render();
                 },
                 viewRender: function(view) {
                     // Compute mode from view.name which is either 'month',
@@ -88,6 +88,7 @@ odoo.define("web_view_calendar_list.CalendarListRenderer", function(require) {
                 },
                 height: "parent",
                 unselectAuto: false,
+                isRTL: _t.database.parameters.direction === "rtl",
                 locale: locale,
                 /* Reset locale when fullcalendar has already been
                 instanciated before now
@@ -144,14 +145,6 @@ odoo.define("web_view_calendar_list.CalendarListRenderer", function(require) {
             });
 
             $fc_view.scrollLeft(scrollPosition);
-
-            var fullWidth = this.state.fullWidth;
-            this.$(".o_calendar_sidebar_toggler")
-                .toggleClass("fa-close", !fullWidth)
-                .toggleClass("fa-chevron-left", fullWidth)
-                .attr("title", fullWidth ? _("Open Sidebar") : _("Close Sidebar"));
-            this.$sidebar_container.toggleClass("o_sidebar_hidden", fullWidth);
-            this.$sidebar.toggleClass("o_hidden", fullWidth);
 
             this._renderFilters();
             this.$calendar.appendTo("body");
