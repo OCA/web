@@ -1,11 +1,11 @@
 /* Copyright 2020 Tecnativa - Alexandre D. Díaz
  * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
-
 odoo.define("web_pwa_cache.PWAManager", function(require) {
     "use strict";
 
     var core = require("web.core");
     var session = require("web.session");
+    var config = require("web.config");
     var PWAManager = require("web_pwa_oca.PWAManager");
     var PWAModeSelector = require("web_pwa_cache.PWAModeSelector");
     var BroadcastMixin = require("web_pwa_cache.BroadcastMixin");
@@ -13,6 +13,21 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
 
     var QWeb = core.qweb;
     var _t = core._t;
+
+    /**
+     * @returns {Boolean}
+     */
+    function isPWAStandalone() {
+        return (
+            window.navigator.standalone ||
+            document.referrer.includes("android-app://") ||
+            window.matchMedia("(display-mode: standalone)").matches
+        );
+    }
+
+    if (isPWAStandalone()) {
+        config.device.isMobile = true;
+    }
 
     PWAManager.include(BroadcastMixin);
     PWAManager.include({
@@ -23,6 +38,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
         _broadcast_channel_out_name: "pwa-sw-messages",
         _show_prefetch_modal_delay: 5000,
         _autoclose_prefetch_modal_delay: 3000,
+        _show_sw_info_modal_delay: 500,
 
         /**
          * @override
@@ -33,6 +49,25 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
             this._prefetchTasksInfo = {};
             this._prefetchModelHidden = true;
 
+            this.$modalSWInfo = $(
+                QWeb.render("web_pwa_cache.SWInfo")
+            );
+            this._swInfoModalHidden = true;
+            if (this.isPWAStandalone()) {
+                this._swInfoOpenTimer = setTimeout(
+                    () => {
+                        this._swInfoModalHidden = false;
+                        this.$modalSWInfo.modal("show");
+                        this._swInfoOpenTimer = false;
+                    },
+                    this._show_sw_info_modal_delay
+                );
+            }
+            this.$modalSWInfo.on("shown.bs.modal", () => {
+                if (this._swInfoModalHidden) {
+                    this.$modalSWInfo.modal("hide");
+                }
+            });
             this.$modalPrefetchProgress = $(
                 QWeb.render("web_pwa_cache.PrefetchProgress")
             );
@@ -41,7 +76,12 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 ".modal-body"
             );
             this.$modalPrefetchProgress.on("shown.bs.modal", () => {
-                this._prefetchModelHidden = true;
+                this._prefetchModelHidden = false;
+                // Append current data
+                for (let task_info_id in this._prefetchTasksInfo) {
+                    const task_info = this._prefetchTasksInfo[task_info_id];
+                    this._updatePrefetchModalData(task_info_id, task_info);
+                }
             });
 
             this.modeSelector = new PWAModeSelector({
@@ -54,6 +94,19 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     this.modeSelector.close();
                 },
             });
+
+            // reload once when the new Service Worker starts activating
+            this._refreshing = false;
+            navigator.serviceWorker.addEventListener('controllerchange',
+                () => {
+                    if (this.refreshing) {
+                        return;
+                    }
+                    this.refreshing = true;
+                    window.location.reload();
+                }
+            );
+            this._listenForWaitingServiceWorker(window.ServiceWorkerRegistration);
         },
 
         /**
@@ -81,6 +134,37 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
          */
         getCacheVersion: function() {
             return this.pwa_cache_version;
+        },
+
+        /**
+         *
+         * @param {ServiceWorkerRegistration} reg
+         */
+        _promptUserToRefresh: function(reg) {
+            // this is just an example
+            // don't use window.confirm in real life; it's terrible
+            if (window.confirm(_t("New version available! OK to refresh?"))) {
+                reg.waiting.postMessage('skipWaiting');
+            }
+        },
+
+        /**
+         *
+         * @param {ServiceWorkerRegistration} reg
+         * @returns
+         */
+        _listenForWaitingServiceWorker: function(reg) {
+            const awaitStateChange = (ev) => {
+                reg.installing.addEventListener('statechange', () => {
+                    if (ev.state === 'installed') {
+                        this._promptUserToRefresh(reg);
+                    }
+                });
+            };
+            if (!reg) { return; }
+            if (reg.waiting) { return this._promptUserToRefresh(reg); }
+            if (reg.installing) { awaitStateChange(); }
+            reg.onupdatefound = awaitStateChange;
         },
 
         /**
@@ -120,19 +204,63 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
         },
 
         _openPrefetchModalData: function() {
-            if (!_.isEmpty(this._prefetchTasksInfo) && this._prefetchModelHidden) {
+            if (this._prefetchModelHidden) {
                 this.$modalPrefetchProgress.modal("show");
+                this.$modalPrefetchProgressContent.empty();
                 this._prefetchModelHidden = false;
-                this._updatePrefetchModalData();
             }
         },
 
-        _updatePrefetchModalData: function() {
-            this.$modalPrefetchProgressContent.empty().append(
-                QWeb.render("web_pwa_cache.PrefetchProgressTasks", {
-                    tasks: _.values(this._prefetchTasksInfo),
-                })
-            );
+        _updatePrefetchModalData: function(id, data) {
+            if (!(id in this._prefetchTasksInfo)) {
+                this._prefetchTasksInfo[id] = data;
+            } else {
+                _.extend(this._prefetchTasksInfo[id], data);
+            }
+            if (this._prefetchModelHidden) {
+                return;
+            }
+            if (!this._prefetchTasksInfo[id]._shown) {
+                this.$modalPrefetchProgressContent.append(
+                    QWeb.render("web_pwa_cache.PrefetchProgressTasks", {
+                        task: data,
+                        task_id: id,
+                    })
+                );
+                this._prefetchTasksInfo[id]._shown = true;
+            }
+            const $progressbar = this.$modalPrefetchProgressContent.find(`#pwa_task_${id} .progress-bar`);
+            const $message = this.$modalPrefetchProgressContent.find(`#pwa_task_${id} .prefetch-message`);
+            const task_info = this._prefetchTasksInfo[id];
+            if (task_info.error) {
+                $progressbar
+                    .text(`${$progressbar.text()} ${_t("Error!")}`)
+                    .attr("class", "progress-bar bg-danger progress-bar-striped")
+                    .attr("aria-valuenow", "100")
+                    .css("width", "100%");
+                $message.text(`${$message.text()} ${task_info.message}`);
+            } else if (task_info.total < 0) {
+                $progressbar
+                    .text(_t("Working"))
+                    .attr("class", "progress-bar bg-info progress-bar-striped progress-bar-animated")
+                    .attr("aria-valuenow", "100")
+                    .css("width", "100%");
+                    $message.text(`${$message.text()} ${task_info.message}`);
+            } else if (task_info.completed) {
+                $progressbar
+                    .text("100%")
+                    .attr("class", "progress-bar bg-info")
+                    .attr("aria-valuenow", "100")
+                    .css("width", "100%");
+                $message.text(`${$message.text()} ${task_info.message}`);
+            } else {
+                $progressbar
+                    .text(`${task_info.progress}% (${task_info.done} / ${task_info.total})`)
+                    .attr("class", "progress-bar bg-info")
+                    .attr("aria-valuenow", `${task_info.progress}`)
+                    .css("width", `${task_info.progress}%`);
+                $message.text(task_info.message);
+            }
         },
 
         /**
@@ -148,6 +276,12 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
             switch (evt.data.type) {
                 /* General */
                 case "PWA_INIT_CONFIG":
+                    if (this._swInfoOpenTimer) {
+                        clearTimeout(this._swInfoOpenTimer);
+                        this._swInfoOpenTimer = false;
+                    }
+                    this._swInfoModalHidden = true;
+                    this.$modalSWInfo.modal("hide");
                     this._pwaMode = evt.data.data.pwa_mode;
                     if (evt.data.data.is_db_empty) {
                         this.$modalPrefetchProgress.modal("hide");
@@ -173,7 +307,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 case "PWA_CACHE_FAIL":
                     this.call("notification", "notify", {
                         type: "warning",
-                        title: _("PWA Cache Not Found!"),
+                        title: _t("PWA Cache Not Found!"),
                         message: _t("Can't found any cache to '" + evt.data.url + "'"),
                         sticky: false,
                         className: "",
@@ -186,7 +320,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     }
                     var progress =
                         (evt.data.count_done / evt.data.count_total || 0) * 100;
-                    this._prefetchTasksInfo[evt.data.id] = {
+                    const task_info = {
                         message: evt.data.message,
                         progress: Math.round(progress),
                         total: evt.data.count_total,
@@ -194,6 +328,9 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                         error: evt.data.error,
                         completed: evt.data.completed,
                     };
+
+                    this._updatePrefetchModalData(evt.data.id, task_info);
+                    debugger;
 
                     // Always show the prefetch info modal
                     if (this._prefetchModelHidden) {
@@ -214,24 +351,23 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                                     : this._show_prefetch_modal_delay
                             );
                         }
-                    } else {
-                        this._updatePrefetchModalData();
-                        if (evt.data.completed) {
-                            // Timeout to auto-close tasks info modal
-                            if (this._checkPrefetchProgressTimer) {
-                                clearTimeout(this._checkPrefetchProgressTimer);
-                            }
-                            this._checkPrefetchProgressTimer = setTimeout(
-                                this._autoclosePrefetchModalData.bind(this),
-                                this._autoclose_prefetch_modal_delay
-                            );
-                        }
                     }
 
-                    // Avoid show prefetch info modal if all tasks are completed
-                    if (this._isTasksCompleted() && this._prefetchModalOpenTimer) {
-                        clearTimeout(this._prefetchModalOpenTimer);
-                        this._prefetchModalOpenTimer = null;
+                    if (this._isTasksCompleted()) {
+                        // Avoid show prefetch info modal if all tasks are completed
+                        if (this._prefetchModalOpenTimer) {
+                            clearTimeout(this._prefetchModalOpenTimer);
+                            this._prefetchModalOpenTimer = null;
+                        }
+
+                        // Timeout to auto-close tasks info modal
+                        if (this._checkPrefetchProgressTimer) {
+                            clearTimeout(this._checkPrefetchProgressTimer);
+                        }
+                        this._checkPrefetchProgressTimer = setTimeout(
+                            this._autoclosePrefetchModalData.bind(this),
+                            this._autoclose_prefetch_modal_delay
+                        );
                     }
                     break;
                 /* Sync */
@@ -257,7 +393,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 case "PWA_SYNC_NEED_ACTION":
                     this.call("notification", "notify", {
                         type: "info",
-                        title: _("Have transactions to synchronize"),
+                        title: _t("Have transactions to synchronize"),
                         message:
                             "You have '" +
                             evt.data.count +
@@ -279,11 +415,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
          * @returns {Boolean}
          */
         isPWAStandalone: function() {
-            return (
-                window.navigator.standalone ||
-                document.referrer.includes("android-app://") ||
-                window.matchMedia("(display-mode: standalone)").matches
-            );
+            return isPWAStandalone();
         },
 
         /**

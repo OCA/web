@@ -78,7 +78,6 @@ odoo.define("web_pwa_cache.UserMenu", function(require) {
                     }
                     break;
                 case "PWA_SYNC_RECORDS_COUNT": {
-                    console.log("-------------- REVICE COUNT: ", evt.data.count);
                     this._updatePWASyncRecordsCount(evt.data.count);
                 }
             }

@@ -29,7 +29,7 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
         getSyncRecords: function() {
             return new Promise(async resolve => {
                 try {
-                    const model_info_sync = this._db.getModelInfo("sync", true);
+                    const model_info_sync = await this._db.getModelInfo("sync", true);
                     const records = await this._db.search_read(model_info_sync, []);
                     return resolve(records);
                 } catch (err) {
@@ -48,7 +48,7 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
         updateSyncRecord: function(id, data) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_sync = this._db.getModelInfo("sync", true);
+                    const model_info_sync = await this._db.getModelInfo("sync", true);
 
                     await this._db.writeOrCreate(
                         model_info_sync,
@@ -69,7 +69,7 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
         removeSyncRecords: function(ids) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_sync = this._db.getModelInfo("sync", true);
+                    const model_info_sync = await this._db.getModelInfo("sync", true);
                     await this._db.unlink(model_info_sync, ids);
                 } catch (err) {
                     return reject(err);

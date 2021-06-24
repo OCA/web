@@ -74,7 +74,7 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
         get: function(name, def_value) {
             return new Promise(async resolve => {
                 try {
-                    const model_info_config = this._db.getModelInfo("config", true);
+                    const model_info_config = await this._db.getModelInfo("config", true);
                     const record = await this._db.search_read(
                         model_info_config,
                         [["param", "=", name]],
@@ -95,7 +95,7 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
         getAll: function() {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_config = this._db.getModelInfo("config", true);
+                    const model_info_config = await this._db.getModelInfo("config", true);
                     const records = await this._db.search_read(model_info_config, []);
                     this._cache = {};
                     for (const record of records) {
@@ -116,7 +116,7 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
         set: function(param, value) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_config = this._db.getModelInfo("config", true);
+                    const model_info_config = await this._db.getModelInfo("config", true);
                     await this._db.sqlitedb.createOrUpdateRecord(
                         model_info_config,
                         {
@@ -147,7 +147,7 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     const config = await this.getAll();
-                    const model_info_userdata = this._db.getModelInfo("userdata", true);
+                    const model_info_userdata = await this._db.getModelInfo("userdata", true);
                     const userdata_count = await this._db.count(model_info_userdata);
                     config.is_db_empty = userdata_count === 0;
                     this.postBroadcastMessage({
@@ -184,14 +184,6 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
                     Promise.all(promises)
                         .then(() => {
                             new Promise(async resolve => {
-                                const model_info_userdata = this._db.getModelInfo(
-                                    "userdata",
-                                    true
-                                );
-                                const userdata_count = await this._db.count(
-                                    model_info_userdata,
-                                    []
-                                );
                                 this.postBroadcastMessage({
                                     type: "PWA_CONFIG_CHANGED",
                                     changes: changes,
@@ -211,6 +203,15 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
                                         evt.data.standalone) ||
                                     (typeof evt.data.standalone === "undefined" &&
                                         config_standalone);
+                                // Check if need do prefetch (Auto-Prefetch)
+                                const model_info_userdata = await this._db.getModelInfo(
+                                    "userdata",
+                                    true
+                                );
+                                const userdata_count = await this._db.count(
+                                    model_info_userdata,
+                                    []
+                                );
                                 if (
                                     (is_online && is_standalone && !userdata_count) ||
                                     (event_online && is_standalone)

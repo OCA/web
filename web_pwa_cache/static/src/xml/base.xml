@@ -28,6 +28,29 @@
             <div role="separator" id="pwaSeparator" class="dropdown-divider d-none" />
         </t>
     </t>
+    <t t-name="web_pwa_cache.SWInfo">
+        <div
+            class="modal fade"
+            id="pwaSWInfo"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="PWA Info"
+            aria-hidden="true"
+            data-backdrop="static"
+            data-keyboard="false"
+        >
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">PWA Info</h5>
+                    </div>
+                    <div class="modal-body">
+                        <span>Waiting service worker...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
     <t t-name="web_pwa_cache.PrefetchProgress">
         <div
             class="modal fade"
@@ -50,56 +73,18 @@
         </div>
     </t>
     <t t-name="web_pwa_cache.PrefetchProgressTasks">
-        <t t-foreach="tasks" t-as="task">
-            <div class="section-progress">
-                <p class="prefetch-message mb-0" t-esc="task.message" />
-                <div class="progress" style="height: 20px;">
-                    <t t-if="task.error">
-                        <div
-                            class="progress-bar bg-danger progress-bar-striped"
-                            role="progressbar"
-                            aria-valuenow="100"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                            style="width: 100%"
-                        >Error!</div>
-                    </t>
-                    <t t-elif="task.total &lt; 0">
-                        <div
-                            class="progress-bar bg-info progress-bar-striped progress-bar-animated"
-                            role="progressbar"
-                            aria-valuenow="100"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                            style="width: 100%"
-                        >Working...</div>
-                    </t>
-                    <t t-elif="task.completed">
-                        <div
-                            class="progress-bar bg-info"
-                            role="progressbar"
-                            style="width: 100%;"
-                            aria-valuenow="100"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                        >100%</div>
-                    </t>
-                    <t t-else="">
-                        <div
-                            class="progress-bar bg-info"
-                            role="progressbar"
-                            t-attf-style="width: {{task.progress}}%;"
-                            t-att-aria-valuenow="task.progress"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                        ><t t-esc="task.progress" />% (<t t-esc="task.done" />/<t
-                                t-esc="task.total"
-                            />)</div>
-                    </t>
-                </div>
+        <div class="section-progress" t-attf-id="pwa_task_{{task_id}}">
+            <p class="prefetch-message mb-0" />
+            <div class="progress" style="height: 20px;">
+                <div
+                    class="progress-bar"
+                    role="progressbar"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                ></div>
             </div>
-            <hr />
-        </t>
+        </div>
+        <hr />
     </t>
     <t t-name="web_pwa_cache.PWAModeSelector">
         <div class="text-center">

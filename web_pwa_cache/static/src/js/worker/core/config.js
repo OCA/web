@@ -67,7 +67,7 @@ odoo.define("web_pwa_cache.PWA.core.Config", function(require) {
         get: function(name, def_value) {
             return new Promise(async resolve => {
                 try {
-                    const model_info_config = this._dbmanager.getModelInfo(
+                    const model_info_config = await this._dbmanager.getModelInfo(
                         "config",
                         true
                     );
@@ -92,7 +92,7 @@ odoo.define("web_pwa_cache.PWA.core.Config", function(require) {
         getAll: function() {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_config = this._dbmanager.getModelInfo(
+                    const model_info_config = await this._dbmanager.getModelInfo(
                         "config",
                         true
                     );
@@ -119,7 +119,7 @@ odoo.define("web_pwa_cache.PWA.core.Config", function(require) {
         set: function(param, value) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_config = this._dbmanager.getModelInfo(
+                    const model_info_config = await this._dbmanager.getModelInfo(
                         "config",
                         true
                     );
@@ -153,7 +153,7 @@ odoo.define("web_pwa_cache.PWA.core.Config", function(require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     const config = await this.getAll();
-                    const model_info_userdata = this._dbmanager.getModelInfo(
+                    const model_info_userdata = await this._dbmanager.getModelInfo(
                         "userdata",
                         true
                     );

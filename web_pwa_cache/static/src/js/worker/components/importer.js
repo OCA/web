@@ -93,7 +93,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
             return new Promise(async (resolve, reject) => {
                 const fields_views = data.fields_views;
                 const tasks = [];
-                const model_info_views = this._db.getModelInfo("views", true);
+                const model_info_views = await this._db.getModelInfo("views", true);
                 for (const fields_view of fields_views) {
                     tasks.push(
                         this._doCheckCreateOrUpdate(model_info_views, fields_view, [
@@ -121,7 +121,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
         default_get: function(model, data) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_metadata = this._db.getModelInfo(
+                    const model_info_metadata = await this._db.getModelInfo(
                         "model_metadata",
                         true
                     );
@@ -151,7 +151,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                     value: data,
                 };
                 try {
-                    const model_info_userdata = this._db.getModelInfo("userdata", true);
+                    const model_info_userdata = await this._db.getModelInfo("userdata", true);
                     await this._doCheckCreateOrUpdate(model_info_userdata, values, [
                         "param",
                     ]);
@@ -187,7 +187,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                 };
 
                 try {
-                    const model_info_template = this._db.getModelInfo("template", true);
+                    const model_info_template = await this._db.getModelInfo("template", true);
                     await this._doCheckCreateOrUpdate(model_info_template, values, [
                         "xml_ref",
                     ]);
@@ -230,7 +230,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
         action_load: function(data) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_base_actions = this._db.getModelInfo(
+                    const model_info_base_actions = await this._db.getModelInfo(
                         "ir.actions.actions"
                     );
                     await this._doCheckCreateOrUpdate(
@@ -238,7 +238,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                         _.pick(data, _.keys(model_info_base_actions.fields)),
                         ["id"]
                     );
-                    const model_info_actions = this._db.getModelInfo(data.type);
+                    const model_info_actions = await this._db.getModelInfo(data.type);
                     await this._doCheckCreateOrUpdate(
                         model_info_actions,
                         _.pick(data, _.keys(model_info_actions.fields)),
@@ -270,7 +270,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                 };
 
                 try {
-                    const model_info = this._db.getModelInfo("post", true);
+                    const model_info = await this._db.getModelInfo("post", true);
                     await this._doCheckCreateOrUpdate(model_info, values, [
                         "pathname",
                         "params",
@@ -303,7 +303,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                 };
 
                 try {
-                    const model_info_function = this._db.getModelInfo("function", true);
+                    const model_info_function = await this._db.getModelInfo("function", true);
                     await this._doCheckCreateOrUpdate(model_info_function, values, [
                         "model",
                         "method",

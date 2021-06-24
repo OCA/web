@@ -119,6 +119,13 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
             return ids;
         },
 
+        /**
+         * This method removes virtual fields like "display_name__<many2one>"
+         *
+         * @param {Object} model_fields
+         * @param {Array} datas
+         * @returns {Array}
+         */
         removeNoFields: function(model_fields, datas) {
             const results = [];
             // All datas must be of the same query (model and fields)
@@ -321,10 +328,12 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
         createRecord: function(model_info, values) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const svalues = _.chain(values)
-                        .clone()
-                        .omit("guardedCatch")
-                        .value();
+                    let svalues = _.clone(values);
+                    if (_.isEmpty(model_info.valid_fields)) {
+                        svalues = _.omit(svalues, "guardedcatch");
+                    } else {
+                        svalues = _.pick(svalues, model_info.valid_fields);
+                    }
                     const [sql_columns, sql_values] = await this.getSqlSanitizedValues(
                         model_info,
                         svalues
@@ -347,10 +356,12 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
         updateRecord: function(model_info, rc_ids, values) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const svalues = _.chain(values)
-                        .clone()
-                        .omit("guardedCatch")
-                        .value();
+                    let svalues = _.clone(values);
+                    if (_.isEmpty(model_info.valid_fields)) {
+                        svalues = _.omit(svalues, "guardedcatch");
+                    } else {
+                        svalues = _.pick(svalues, model_info.valid_fields);
+                    }
                     const [, , set_sql_values] = await this.getSqlSanitizedValues(
                         model_info,
                         svalues
@@ -375,10 +386,12 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
         createOrUpdateRecord: function(model_info, values, conflicts) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const svalues = _.chain(values)
-                        .clone()
-                        .omit("guardedCatch")
-                        .value();
+                    let svalues = _.clone(values);
+                    if (_.isEmpty(model_info.valid_fields)) {
+                        svalues = _.omit(svalues, "guardedcatch");
+                    } else {
+                        svalues = _.pick(svalues, model_info.valid_fields);
+                    }
                     const [
                         sql_columns,
                         sql_values,
@@ -467,7 +480,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
             const table_fields = ["'id' INTEGER PRIMARY KEY"];
             let sql = `CREATE TABLE IF NOT EXISTS "${model_info.table}" (`;
             for (const field_name of field_names) {
-                if (field_name === "id") {
+                if (field_name === "id" || (!_.isEmpty(model_info.valid_fields) && model_info.valid_fields.indexOf(field_name) === -1)) {
                     continue;
                 }
                 var field = model_fields[field_name];

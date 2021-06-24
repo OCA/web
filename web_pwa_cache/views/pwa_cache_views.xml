@@ -51,7 +51,7 @@
                             attrs="{'required': [('cache_type', '=', 'model')]}"
                         />
                         <field
-                            name="model_field_excluded_ids"
+                            name="model_field_included_ids"
                             widget="many2many_tags"
                         />
                     </group>
@@ -82,6 +82,7 @@
                                     <field name="field_name" />
                                     <field name="expression" />
                                     <field name="disposable" />
+                                    <field name="required" />
                                 </tree>
                             </field>
                         </group>

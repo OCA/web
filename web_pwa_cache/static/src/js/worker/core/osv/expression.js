@@ -798,7 +798,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     parent,
                     prefix = ""
                 ) => {
-                    if (_.isEmty(ids)) {
+                    if (_.isEmpty(ids)) {
                         return [FALSE_LEAF];
                     }
                     if (left_model.parent_store) {

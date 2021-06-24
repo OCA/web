@@ -56,9 +56,9 @@ class PwaCache(models.Model):
         string="Domain", related="model_domain_raw", readonly=False, store=False,
     )
     model_domain_raw = fields.Char("Domain (RAW)", default="[]")
-    model_field_excluded_ids = fields.Many2many(
+    model_field_included_ids = fields.Many2many(
         comodel_name="ir.model.fields",
-        string="Excluded fields",
+        string="Included fields",
         relation="pwa_cache_ir_model_fields_rel",
         column1="pwa_cache_id",
         column2="field_id",
@@ -334,6 +334,7 @@ class PwaCacheOnchange(models.Model):
     grouping_field = fields.Char()
     expression = fields.Text(required=True)
     disposable = fields.Boolean()
+    required = fields.Boolean()
 
 
 class PwaCacheOnchangeValue(models.Model):

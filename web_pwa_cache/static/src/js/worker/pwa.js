@@ -46,13 +46,15 @@ odoo.define("web_pwa_cache.PWA", function(require) {
         _doLoad: function() {
             this._load_promise = new Promise(async (resolve, reject) => {
                 this._isLoaded = false;
+                this._isInitialized = false;
                 try {
                     await this._db.install();
                     await this._db.start();
                     await this._initManagers();
                     await this._initComponents();
-                    this._isLoaded = true;
-                    // This.config.sendToClient();
+                    this._isInitialized = true;
+                    //this._isLoaded = true;
+                    //this._managers.config.sendToClient();
                 } catch (err) {
                     return reject(err);
                 }
@@ -116,6 +118,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
         activateWorker: function() {
             const task = new Promise(async (resolve, reject) => {
                 try {
+                    this._isLoaded = true;
                     await this._load_promise;
                     await this._cache.cleanOld([this._cache_hashes.pwa]);
                     this._managers.config.sendToPages();
@@ -136,6 +139,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
             const cached_urls = {
                 "/web/webclient/qweb/": "qweb",
                 "/web/webclient/load_menus/": "load_menus",
+                "/web/webclient/translations/": "translations",
             };
 
             const url_info = {};
@@ -157,6 +161,9 @@ odoo.define("web_pwa_cache.PWA", function(require) {
 
         isLoaded: function() {
             return this._isLoaded;
+        },
+        isInitialized: function() {
+            return this._isInitialized;
         },
 
         /**
@@ -184,6 +191,15 @@ odoo.define("web_pwa_cache.PWA", function(require) {
             if (request.method === "GET") {
                 return new Promise(async (resolve, reject) => {
                     try {
+                        // Handle service worker updates
+                        if (request.mode === "navigate" &&
+                            ServiceWorkerRegistration.waiting &&
+                            (await clients.matchAll()).length < 2
+                        ) {
+                            ServiceWorkerRegistration.waiting.postMessage('skipWaiting');
+                            return new Response("", {headers: {"Refresh": "0"}});
+                        }
+
                         // Strategy: Network first in not standlone mode
                         if (!isStandaloneMode && request.cache !== "only-if-cached") {
                             const request_cloned_network = request.clone();
@@ -291,6 +307,14 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                         }
 
                         const response_net = await this._tryFromNetwork(request);
+                        // Auto set mode "offline" if not response from network
+                        if (!response_net) {
+                            this.config.set("pwa_mode", "offline");
+                            this.postBroadcastMessage({
+                                type: "PWA_CONFIG_CHANGED",
+                                changes: {pwa_mode: "offline"},
+                            });
+                        }
                         return resolve(response_net);
                     } catch (err) {
                         // Do nothing

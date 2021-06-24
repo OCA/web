@@ -112,6 +112,7 @@ class PWAPrefetch(PWA):
                 model_defaults = model_obj.default_get(list(model_fields.keys()))
             except Exception:
                 model_defaults = False
+
             res.append(
                 {
                     "model": model_id.model,
@@ -119,6 +120,7 @@ class PWAPrefetch(PWA):
                     "orderby": model_obj._order,
                     "rec_name": model_obj._rec_name or "name",
                     "fields": model_fields,
+                    "valid_fields": self._pwa_get_model_fields(model_id.model),
                     "view_types": view_types,
                     "parent_store": model_obj._parent_store,
                     "parent_name": model_obj._parent_name,
@@ -158,15 +160,10 @@ class PWAPrefetch(PWA):
                 records_count = model_obj.search_count(evaluated_domain)
             if records_count == 0:
                 continue
-            excluded_fields = record.model_field_excluded_ids.mapped("name")
-            # Remove sensitive data
-            if model == "res.users":
-                excluded_fields.append("password")
             model_infos.append(
                 {
                     "model": model,
                     "domain": evaluated_domain,
-                    "excluded_fields": list(set(excluded_fields)),
                     "count": records_count,
                 }
             )
@@ -186,7 +183,7 @@ class PWAPrefetch(PWA):
         post_defs = []
         for record in records:
             post_defs.append(
-                {"url": record.post_url, "params": record.post_params,}
+                {"url": record.post_url, "params": record.post_params}
             )
         return post_defs
 
@@ -218,6 +215,44 @@ class PWAPrefetch(PWA):
                 )
         return functions
 
+    def _pwa_is_invalid_field(self, field_name, field_def):
+        is_stored = "store" in field_def and field_def["store"]
+        is_valid_type = field_def["type"] not in ("one2many", "binary")
+        return not is_stored or not is_valid_type
+
+    def _pwa_fill_internal_fields(self, model, fields):
+        if model == "res.users":
+            # Remove sensitive fields
+            try:
+                fields.remove("password")
+            except ValueError:
+                pass
+        elif model == "ir.actions.act_window":
+            fields.append("views")
+        fields.append("display_name")
+
+    def _pwa_get_model_fields(self, model):
+        record = request.env["pwa.cache"].search(self._get_pwa_cache_domain(["model"]) + [("model_name", "=", model)], limit=1)
+        fields = []
+        if record:
+            field_infos = request.env[record.model_name].fields_get()
+            included_fields = record.model_field_included_ids.mapped("name") or []
+            fields += included_fields
+        else:
+            field_infos = request.env[model].fields_get()
+        field_names = list(field_infos.keys())
+        field_values = field_infos.values()
+        for index, val in enumerate(field_values):
+            field_name = field_names[index]
+            if self._pwa_is_invalid_field(field_name, val):
+                continue
+            fields.append(field_name)
+        self._pwa_fill_internal_fields(model, fields)
+        fields = list(set(fields))
+        if not any(fields):
+            fields = False
+        return fields
+
     @route("/pwa/prefetch/<string:cache_type>", type="json", auth="user")
     def pwa_prefetch(self, cache_type, **kwargs):
         # User dynamic defined caches
@@ -240,6 +275,9 @@ class PWAPrefetch(PWA):
         records = request.env[model].browse(ids)
         if not records:
             return []
+
+        if request.context.get("strict_mode", False):
+            fields = self._pwa_get_model_fields(model)
 
         if fields and fields == ["id"]:
             # shortcut read if we only want the ids

@@ -290,7 +290,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                             if (field.inherited) {
                                 field = field.base_field;
                             }
-                            if (field.store && field.type === "many2one") {
+                            if (false && field.store && field.type === "many2one") {
                                 const key = [
                                     field.model_name,
                                     field.relation,
