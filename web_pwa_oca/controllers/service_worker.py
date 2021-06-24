@@ -48,8 +48,10 @@ class ServiceWorker(PWA):
 
     def _get_js_pwa_init(self):
         return """
-            const oca_pwa = new PWA({});
-            const start_promise = oca_pwa.start();
+        if (typeof self.oca_pwa === "undefined") {{
+            self.oca_pwa = new PWA({});
+        }}
+        const start_promise = self.oca_pwa.start();
         """.format(
             self._get_pwa_params()
         )
@@ -59,7 +61,7 @@ class ServiceWorker(PWA):
             const task = new Promise (async (resolve, reject) => {
                 try {
                     await start_promise;
-                    await oca_pwa.installWorker();
+                    await self.oca_pwa.installWorker();
                 } catch (err) {
                     return reject(err);
                 }
@@ -74,14 +76,13 @@ class ServiceWorker(PWA):
             const task = new Promise (async (resolve, reject) => {
                 try {
                     await start_promise;
-                    await oca_pwa.activateWorker();
+                    await self.oca_pwa.activateWorker();
                 } catch (err) {
                     return reject(err);
                 }
                 return resolve();
             });
             evt.waitUntil(task);
-            self.clients.claim();
         """
 
     def _get_js_pwa_core_event_fetch_impl(self):

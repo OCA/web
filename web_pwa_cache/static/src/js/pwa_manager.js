@@ -49,19 +49,14 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
             this._prefetchTasksInfo = {};
             this._prefetchModelHidden = true;
 
-            this.$modalSWInfo = $(
-                QWeb.render("web_pwa_cache.SWInfo")
-            );
+            this.$modalSWInfo = $(QWeb.render("web_pwa_cache.SWInfo"));
             this._swInfoModalHidden = true;
             if (this.isPWAStandalone()) {
-                this._swInfoOpenTimer = setTimeout(
-                    () => {
-                        this._swInfoModalHidden = false;
-                        this.$modalSWInfo.modal("show");
-                        this._swInfoOpenTimer = false;
-                    },
-                    this._show_sw_info_modal_delay
-                );
+                this._swInfoOpenTimer = setTimeout(() => {
+                    this._swInfoModalHidden = false;
+                    this.$modalSWInfo.modal("show");
+                    this._swInfoOpenTimer = false;
+                }, this._show_sw_info_modal_delay);
             }
             this.$modalSWInfo.on("shown.bs.modal", () => {
                 if (this._swInfoModalHidden) {
@@ -78,7 +73,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
             this.$modalPrefetchProgress.on("shown.bs.modal", () => {
                 this._prefetchModelHidden = false;
                 // Append current data
-                for (let task_info_id in this._prefetchTasksInfo) {
+                for (const task_info_id in this._prefetchTasksInfo) {
                     const task_info = this._prefetchTasksInfo[task_info_id];
                     this._updatePrefetchModalData(task_info_id, task_info);
                 }
@@ -95,17 +90,15 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 },
             });
 
-            // reload once when the new Service Worker starts activating
+            // Reload once when the new Service Worker starts activating
             this._refreshing = false;
-            navigator.serviceWorker.addEventListener('controllerchange',
-                () => {
-                    if (this.refreshing) {
-                        return;
-                    }
-                    this.refreshing = true;
-                    window.location.reload();
+            navigator.serviceWorker.addEventListener("controllerchange", () => {
+                if (this.refreshing) {
+                    return;
                 }
-            );
+                this.refreshing = true;
+                window.location.reload();
+            });
             this._listenForWaitingServiceWorker(window.ServiceWorkerRegistration);
         },
 
@@ -141,10 +134,10 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
          * @param {ServiceWorkerRegistration} reg
          */
         _promptUserToRefresh: function(reg) {
-            // this is just an example
+            // This is just an example
             // don't use window.confirm in real life; it's terrible
             if (window.confirm(_t("New version available! OK to refresh?"))) {
-                reg.waiting.postMessage('skipWaiting');
+                reg.waiting.postMessage("skipWaiting");
             }
         },
 
@@ -154,16 +147,22 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
          * @returns
          */
         _listenForWaitingServiceWorker: function(reg) {
-            const awaitStateChange = (ev) => {
-                reg.installing.addEventListener('statechange', () => {
-                    if (ev.state === 'installed') {
+            const awaitStateChange = ev => {
+                reg.installing.addEventListener("statechange", () => {
+                    if (ev.state === "installed") {
                         this._promptUserToRefresh(reg);
                     }
                 });
             };
-            if (!reg) { return; }
-            if (reg.waiting) { return this._promptUserToRefresh(reg); }
-            if (reg.installing) { awaitStateChange(); }
+            if (!reg) {
+                return;
+            }
+            if (reg.waiting) {
+                return this._promptUserToRefresh(reg);
+            }
+            if (reg.installing) {
+                awaitStateChange();
+            }
             reg.onupdatefound = awaitStateChange;
         },
 
@@ -229,8 +228,12 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 );
                 this._prefetchTasksInfo[id]._shown = true;
             }
-            const $progressbar = this.$modalPrefetchProgressContent.find(`#pwa_task_${id} .progress-bar`);
-            const $message = this.$modalPrefetchProgressContent.find(`#pwa_task_${id} .prefetch-message`);
+            const $progressbar = this.$modalPrefetchProgressContent.find(
+                `#pwa_task_${id} .progress-bar`
+            );
+            const $message = this.$modalPrefetchProgressContent.find(
+                `#pwa_task_${id} .prefetch-message`
+            );
             const task_info = this._prefetchTasksInfo[id];
             if (task_info.error) {
                 $progressbar
@@ -242,10 +245,13 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
             } else if (task_info.total < 0) {
                 $progressbar
                     .text(_t("Working"))
-                    .attr("class", "progress-bar bg-info progress-bar-striped progress-bar-animated")
+                    .attr(
+                        "class",
+                        "progress-bar bg-info progress-bar-striped progress-bar-animated"
+                    )
                     .attr("aria-valuenow", "100")
                     .css("width", "100%");
-                    $message.text(`${$message.text()} ${task_info.message}`);
+                $message.text(`${$message.text()} ${task_info.message}`);
             } else if (task_info.completed) {
                 $progressbar
                     .text("100%")
@@ -255,7 +261,9 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 $message.text(`${$message.text()} ${task_info.message}`);
             } else {
                 $progressbar
-                    .text(`${task_info.progress}% (${task_info.done} / ${task_info.total})`)
+                    .text(
+                        `${task_info.progress}% (${task_info.done} / ${task_info.total})`
+                    )
                     .attr("class", "progress-bar bg-info")
                     .attr("aria-valuenow", `${task_info.progress}`)
                     .css("width", `${task_info.progress}%`);
@@ -330,7 +338,6 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     };
 
                     this._updatePrefetchModalData(evt.data.id, task_info);
-                    debugger;
 
                     // Always show the prefetch info modal
                     if (this._prefetchModelHidden) {
