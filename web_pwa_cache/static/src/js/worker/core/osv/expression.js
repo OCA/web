@@ -66,21 +66,25 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
         return records.map(x => x.id);
     }
 
-    function column_string_encode(text, string_quoted) {
-        const res = String(text)
-            .replaceAll("?", "%3F")
-            .replaceAll('"', '""');
+    function column_string_encode(text, string_quoted, string_sanitized) {
+        let res = String(text);
+        if (string_sanitized) {
+            res = res.replace(/\?/g, "%3F").replace(/"/g, '""');
+        }
         return string_quoted ? `"${res}"` : res;
     }
 
-    function convert_to_column(field, value, string_quoted = true) {
+    function convert_to_column(field, value, string_quoted = true, string_sanitized = true) {
         let svalue = value;
 
         if (
             field.type !== "boolean" &&
             (_.isUndefined(svalue) || _.isNull(svalue) || svalue === false)
         ) {
-            return "NULL";
+            if (string_sanitized) {
+                return "NULL";
+            }
+            return null;
         }
 
         switch (field.type) {
@@ -106,12 +110,14 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                 if (typeof value === "object") {
                     svalue = column_string_encode(
                         JSON.stringify(_.isUndefined(value) ? "" : value),
-                        string_quoted
+                        string_quoted,
+                        string_sanitized
                     );
                 } else {
                     svalue = column_string_encode(
                         _.isUndefined(value) ? "" : value,
-                        string_quoted
+                        string_quoted,
+                        string_sanitized
                     );
                 }
                 break;
@@ -120,7 +126,8 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
             case "html":
                 svalue = column_string_encode(
                     _.isUndefined(value) ? "" : value,
-                    string_quoted
+                    string_quoted,
+                    string_sanitized
                 );
                 break;
             case "many2one":
@@ -147,7 +154,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                 break;
             default:
                 if (typeof value === "string") {
-                    svalue = column_string_encode(value, string_quoted);
+                    svalue = column_string_encode(value, string_quoted, string_sanitized);
                 }
         }
 
@@ -337,13 +344,13 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
         const from_splitted = from_query.split(" as ");
         if (from_splitted.length > 1) {
             return [
-                from_splitted[0].replaceAll('"', ""),
-                from_splitted[1].replaceAll('"', ""),
+                from_splitted[0].replace(/"/g, ""),
+                from_splitted[1].replace(/"/g, ""),
             ];
         }
         return [
-            from_splitted[0].replaceAll('"', ""),
-            from_splitted[0].replaceAll('"', ""),
+            from_splitted[0].replace(/"/g, ""),
+            from_splitted[0].replace(/"/g, ""),
         ];
     }
 

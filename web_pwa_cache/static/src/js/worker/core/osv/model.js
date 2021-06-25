@@ -112,7 +112,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                             query
                         );
                         [n_alias, n_order_field] = qualified_field
-                            .replaceAll('"', "")
+                            .replace(/"/g, "")
                             .split(".", 1);
                         field = field.base_field;
                     }

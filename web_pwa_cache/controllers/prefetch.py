@@ -87,7 +87,8 @@ class PWAPrefetch(PWA):
         model_domain = []
         if last_update:
             model_domain.append(("write_date", ">=", last_update))
-        model_ids = request.env["ir.model"].sudo().search(model_domain)
+        model_ids = request.env["ir.model"].sudo().search(model_domain).filtered(lambda x: x.model in request.env and not request.env[x.model]._abstract)
+        model_ids |= request.env["ir.model"].sudo().search(model_domain + [("id", "in", request.env["pwa.cache"].search(self._get_pwa_cache_domain(["model"])).mapped("model_id").ids)])
         res = []
         for model_id in model_ids:
             if model_id.model not in request.env:

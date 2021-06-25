@@ -143,6 +143,14 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         prefetchDataPost: function() {
             return new Promise(async (resolve, reject) => {
                 this.options.force_client_show_modal = true;
+
+                // console.log("---- PWA VIES");
+                // console.log(`SELECT * FROM ${this._db.sqlitedb.getDB().raw`i_pwa_views`} WHERE model="${this._db.sqlitedb.getDB().raw`Mira esto"como es?xD`}"`);
+                // const rrr = await this._db.sqlitedb
+                //     .getDB()
+                //     .all(["SELECT * FROM "," WHERE model=",""], this._db.sqlitedb.getDB().raw`i_pwa_views`, "res.partner");
+                // console.table(rrr);
+
                 try {
                     this._processedModels = [];
                     const model_infos = await this.prefetchModelInfoData();
@@ -160,12 +168,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                 } catch (err) {
                     return reject(err);
                 }
-
-                // const rrr = await this._db.sqlitedb
-                //     .getDB()
-                //     .all([`SELECT * FROM i_pwa_views`]);
-                // console.log("---- PWA VIES");
-                // console.table(rrr);
 
                 this.options.force_client_show_modal = false;
                 return resolve();
@@ -252,7 +254,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         prefetchModelRecords: function(model_info_extra, proc_records, avoid_save) {
             return new Promise(async (resolve, reject) => {
                 const start_prefetch_date = Tools.DateToOdooFormat(new Date());
-                const client_message_id = `model_records_${model_info_extra.model.replaceAll(".","__")}`;
+                const client_message_id = `model_records_${model_info_extra.model.replace(/\./g,"__")}`;
                 let offset = 0;
                 let domain_forced = [];
                 if (model_info_extra.prefetch_last_update) {

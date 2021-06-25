@@ -4,31 +4,46 @@ from odoo.addons.web_pwa_oca.controllers.service_worker import ServiceWorker
 from odoo.http import request
 
 
-class ServiceWorker(ServiceWorker):
-    def _get_js_pwa_init(self):
-        res = """
-            self.addEventListener('message', messageEvent => {
-                if (messageEvent.data === 'skipWaiting') {
-                    return self.skipWaiting();
-                }
-            });
-        """
-        res += super()._get_js_pwa_init()
-        return res
+class SharedWorker(ServiceWorker):
+
+    JS_PWA_SHARED_EVENT_MESSAGE = """
+        onconnect = function(evt_conn) {{
+            const port = evt_conn.ports[0];
+
+            port.onmessage = function(evt_msg) {{
+                {}
+                var workerResult = 'Result: ' + (e.data[0] * e.data[1]);
+                port.postMessage(workerResult);
+            }}
+        }}
+    """
+
+    JS_PWA_SHARED_MAIN = """
+        self.importScripts(...{pwa_shared_scripts});
+
+        odoo.define("web_pwa_oca.SharedWorker", function (require) {{
+            "use strict";
+
+            {pwa_shared_requires}
+
+            {pwa_shared_init}
+            {pwa_shared_event_message}
+        }});
+    """
+
+    def _get_js_pwa_shared_init(self):
+        return """
+            if (typeof self.oca_pwa_shared === "undefined") {{
+                self.oca_pwa_shared = new PWAShared({});
+            }}
+        """.format(
+            self._get_pwa_params()
+        )
 
     def _get_js_pwa_requires(self):
-        res = """
-            require('web_pwa_cache.PWA');
+        return """
+            require('web_pwa_cache.PWAShared');
         """
-        res += super()._get_js_pwa_requires()
-        return res
-
-    def _get_js_pwa_core_event_fetch_impl(self):
-        res = super()._get_js_pwa_core_event_fetch_impl()
-        res += """
-            evt.respondWith(self.oca_pwa.processRequest(evt.request));
-        """
-        return res
 
     @staticmethod
     def _get_static_cache_worker(filepath):

@@ -653,15 +653,8 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                                 response,
                             ] = await rpc.callJSonRpc(
                                 pmodel,
-                                "search_read",
-                                false,
-                                {
-                                    domain: pdomain,
-                                    fields: uncached_fields,
-                                    offset: poffset,
-                                    limit: plimit,
-                                    order: psort,
-                                }
+                                "read",
+                                [data.args[0], uncached_fields],
                             );
                             const server_records = (await response.json()).result;
                             _.each(mapped_records, (record) => _.extend(record, _.findWhere(server_records, {id: record.id})));

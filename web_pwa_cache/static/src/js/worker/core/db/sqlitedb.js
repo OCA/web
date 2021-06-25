@@ -32,7 +32,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
             if (!text) {
                 return typeof text === "string" ? "" : false;
             }
-            return text.replaceAll("%3F", "?");
+            return text;
         },
 
         /**
@@ -338,8 +338,12 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                         model_info,
                         svalues
                     );
-                    const sql = `INSERT INTO "${model_info.table}" (${sql_columns}) VALUES (${sql_values})`;
-                    await this._db.query([sql]);
+                    let sql = [`INSERT INTO "${model_info.table}" (${sql_columns.join(',')}) VALUES (`];
+                    for (let i=sql_values.length - 2; i>=0; --i) {
+                        sql.push(",");
+                    }
+                    sql.push(")");
+                    await this._db.query(sql, ...sql_values);
                 } catch (err) {
                     return reject(err);
                 }
@@ -362,14 +366,20 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                     } else {
                         svalues = _.pick(svalues, model_info.valid_fields);
                     }
-                    const [, , set_sql_values] = await this.getSqlSanitizedValues(
+                    const [, , set_sql_keys, set_sql_values] = await this.getSqlSanitizedValues(
                         model_info,
                         svalues
                     );
-                    const sql = `UPDATE "${model_info.table}" SET ${set_sql_values.join(
-                        ","
-                    )} WHERE "id" IN (${rc_ids.join(",")})`;
-                    await this._db.query([sql]);
+                    let sql = [];
+                    let sql_sn = `UPDATE "${model_info.table}" SET `;
+                    sql_sn += set_sql_keys[0];
+                    sql.push(sql_sn);
+                    const num_sql_keys = set_sql_keys.length;
+                    for (let i=1; i<num_sql_keys; ++i) {
+                        sql.push(` ,${set_sql_keys[i]}`);
+                    }
+                    sql.push(` WHERE "id" IN (${rc_ids.join(",")})`)
+                    await this._db.query(sql, ...set_sql_values);
                 } catch (err) {
                     return reject(err);
                 }
@@ -395,19 +405,32 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                     const [
                         sql_columns,
                         sql_values,
-                        set_sql_values,
+                        set_sql_keys,
+                        set_sql_values
                     ] = await this.getSqlSanitizedValues(
                         model_info,
                         svalues,
                         conflicts
                     );
-                    let sql = `INSERT INTO "${model_info.table}" (${sql_columns}) VALUES (${sql_values})`;
-                    if (conflicts && conflicts.length) {
-                        sql += ` ON CONFLICT(${conflicts.join(
-                            ","
-                        )}) DO UPDATE SET ${set_sql_values.join(",")}`;
+                    let sql = [`INSERT INTO "${model_info.table}" (${sql_columns.join(',')}) VALUES (`];
+                    for (let i=sql_values.length - 2; i>=0; --i) {
+                        sql.push(",");
                     }
-                    await this._db.query([sql]);
+                    if (conflicts && conflicts.length) {
+                        let sql_sn = `) ON CONFLICT(${conflicts.join(
+                            ","
+                        )}) DO UPDATE SET `;
+                        sql_sn += set_sql_keys[0];
+                        sql.push(sql_sn);
+                        const num_sql_keys = set_sql_keys.length;
+                        for (let i=1; i<num_sql_keys; ++i) {
+                            sql.push(` ,${set_sql_keys[i]}`);
+                        }
+                        await this._db.query(sql, ...sql_values, ...set_sql_values);
+                    } else {
+                        sql.push(")");
+                        await this._db.query(sql, ...sql_values);
+                    }
                 } catch (err) {
                     return reject(err);
                 }
@@ -428,7 +451,8 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                 omit_set_keys instanceof Array ? omit_set_keys : [omit_set_keys];
             const sql_columns = [];
             const sql_values = [];
-            const set_sql_values = [];
+            const set_sql_keys = [];
+            const set_sql_values = []
             for (const key in values) {
                 const field = model_info.fields[key];
                 if (!field) {
@@ -440,29 +464,35 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                     const display_name_field = `display_name__${key}`;
                     const display_name_value = Expression.column_string_encode(
                         values[key][1] || "",
-                        true
+                        false,
+                        false
                     );
                     sql_columns.push(`"${display_name_field}"`);
-                    sql_values.push(values[key][0] || "NULL");
+                    sql_values.push(values[key][0] || null);
                     sql_values.push(display_name_value);
                     if (omit_set_keys.indexOf(key) === -1) {
-                        set_sql_values.push(`"${key}"=${values[key][0] || "NULL"}`);
-                        set_sql_values.push(
-                            `"${display_name_field}"=${display_name_value}`
+                        set_sql_values.push(values[key][0] || null);
+                        set_sql_values.push(display_name_value);
+                        set_sql_keys.push(`"${key}"=`);
+                        set_sql_keys.push(
+                            `"${display_name_field}"=`
                         );
                     }
                 } else {
                     const sql_value = Expression.convert_to_column(
                         model_info.fields[key],
-                        values[key]
+                        values[key],
+                        false,
+                        false
                     );
                     sql_values.push(sql_value);
                     if (omit_set_keys.indexOf(key) === -1) {
-                        set_sql_values.push(`"${key}"=${sql_value}`);
+                        set_sql_values.push(sql_value);
+                        set_sql_keys.push(`"${key}"=`);
                     }
                 }
             }
-            return [sql_columns.join(","), sql_values.join(","), set_sql_values];
+            return [sql_columns, sql_values, set_sql_keys, set_sql_values];
         },
 
         /**
@@ -488,7 +518,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                     table_fields.push(
                         `"${field_name}" ${
                             this._odoo_to_sqlite[field.type]
-                        } REFERENCES ${field.relation.replaceAll(".", "_")}(id)`
+                        } REFERENCES ${field.relation.replace(/\./g, "_")}(id)`
                     );
                     table_fields.push(`"display_name__${field_name}" TEXT`);
                 } else {

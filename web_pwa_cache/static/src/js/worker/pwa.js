@@ -307,20 +307,22 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                         }
 
                         const response_net = await this._tryFromNetwork(request);
-                        // Auto set mode "offline" if not response from network
-                        if (!response_net) {
-                            this.config.set("pwa_mode", "offline");
-                            this.postBroadcastMessage({
-                                type: "PWA_CONFIG_CHANGED",
-                                changes: {pwa_mode: "offline"},
-                            });
-                        }
                         return resolve(response_net);
                     } catch (err) {
                         // Do nothing
                     }
 
-                    return resolve(fetch(request));
+                    try {
+                        const response_net = await fetch(request);
+                        return resolve(response_net);
+                    } catch (err) {
+                        this._managers.config.set("pwa_mode", "offline");
+                        this.postBroadcastMessage({
+                            type: "PWA_CONFIG_CHANGED",
+                            changes: {pwa_mode: "offline"},
+                        });
+                        return resolve(new Response("", {headers: {"Refresh": "0"}}));
+                    }
                 });
             }
             return fetch(request);
