@@ -8,33 +8,6 @@ from odoo.http import Controller, request, route
 
 
 class PWA(Controller):
-    def _get_pwa_scripts(self):
-        """Scripts to be imported in the service worker (Order is important)"""
-        return [
-            "/web/static/lib/underscore/underscore.js",
-            "/web_pwa_oca/static/src/js/worker/jquery-sw-compat.js",
-            "/web/static/src/js/promise_extension.js",
-            "/web/static/src/js/boot.js",
-            "/web/static/src/js/core/class.js",
-            "/web_pwa_oca/static/src/js/worker/pwa.js",
-        ]
-
-    @route("/service-worker.js", type="http", auth="public")
-    def render_service_worker(self):
-        """Route to register the service worker in the 'main' scope ('/')"""
-        return request.render(
-            "web_pwa_oca.service_worker",
-            {
-                "pwa_scripts": self._get_pwa_scripts(),
-                "pwa_params": self._get_pwa_params(),
-            },
-            headers=[("Content-Type", "text/javascript;charset=utf-8")],
-        )
-
-    def _get_pwa_params(self):
-        """Get javascript PWA class initialzation params"""
-        return {}
-
     def _get_pwa_manifest_icons(self, pwa_icon):
         icons = []
         if not pwa_icon:

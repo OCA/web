@@ -88,6 +88,21 @@ class ServiceWorker(PWA):
     def _get_js_pwa_core_event_fetch_impl(self):
         return ""
 
+    def _get_pwa_scripts(self):
+        """Scripts to be imported in the service worker (Order is important)"""
+        return [
+            "/web/static/lib/underscore/underscore.js",
+            "/web_pwa_oca/static/src/js/worker/jquery-sw-compat.js",
+            "/web/static/src/js/promise_extension.js",
+            "/web/static/src/js/boot.js",
+            "/web/static/src/js/core/class.js",
+            "/web_pwa_oca/static/src/js/worker/pwa.js",
+        ]
+
+    def _get_pwa_params(self):
+        """Get javascript PWA class initialzation params"""
+        return {}
+
     @route("/service-worker.js", type="http", auth="public")
     def render_service_worker(self):
         """Route to register the service worker in the 'main' scope ('/')"""
