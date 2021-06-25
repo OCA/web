@@ -138,7 +138,7 @@ odoo.define("web_pwa_cache.PWA.core.base.Tools", function() {
         if (!seconds) {
             return null;
         }
-        return new moment().utc(seconds);
+        return new moment(seconds).utc();
     }
 
     /**

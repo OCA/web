@@ -144,8 +144,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
             return new Promise(async (resolve, reject) => {
                 this.options.force_client_show_modal = true;
 
-                // console.log("---- PWA VIES");
-                // console.log(`SELECT * FROM ${this._db.sqlitedb.getDB().raw`i_pwa_views`} WHERE model="${this._db.sqlitedb.getDB().raw`Mira esto"como es?xD`}"`);
+                // console.log("---- PWA TEST");
                 // const rrr = await this._db.sqlitedb
                 //     .getDB()
                 //     .all(["SELECT * FROM "," WHERE model=",""], this._db.sqlitedb.getDB().raw`i_pwa_views`, "res.partner");
@@ -264,14 +263,12 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                 }
                 const domain = _.union(domain_forced, model_info_extra.domain);
                 // Get ids
-                console.time("record_ids");
                 const [response_s] = await rpc.callJSonRpc(
                     model_info_extra.model,
                     "search",
                     [domain]
                 );
                 const record_ids = (await response_s.json()).result;
-                console.timeEnd("record_ids");
                 do {
                     this._sendTaskInfo(
                         client_message_id,
@@ -281,7 +278,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                     );
                     try {
                         // Get current records
-                        console.time("record_ids_read");
                         const [response, request_data] = await rpc.pwaJSonRpc(
                             "browse_read",
                             {
@@ -295,7 +291,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                             },
                         );
                         const response_data = await response.json();
-                        console.timeEnd("record_ids_read");
                         if (response_data.result.length === 0) {
                             break;
                         }
@@ -304,7 +299,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                         }
                         if (!avoid_save) {
                             const model = request_data.params.model;
-                            console.time("record_save");
                             const records = response_data.result;
                             for (let index=response_data.result.length-1; index>=0; --index) {
                                 const record = response_data.result[index];
@@ -320,7 +314,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                                     offset + (records.length - index)
                                 );
                             }
-                            console.timeEnd("record_save");
                         }
                         offset += response_data.result.length;
                     } catch (err) {
@@ -333,7 +326,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                 } while (1);
 
                 this._sendTaskInfoCompleted(client_message_id);
-
                 this._db.sqlitedb.updateModelInfo([model_info_extra.id], {
                     prefetch_last_update: start_prefetch_date,
                 });
@@ -405,16 +397,18 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                     );
                     const response_data = await response.json();
                     model_infos = response_data.result || [];
-                    const tasks = [];
-                    for (const model_info of model_infos) {
-                        tasks.push(this.saveModelInfo(model_info));
+                    if (!_.isEmpty(model_infos)) {
+                        const tasks = [];
+                        for (const model_info of model_infos) {
+                            tasks.push(this.saveModelInfo(model_info));
+                        }
+                        await Promise.all(tasks);
+                        await this.createTables(model_infos);
+                        await this._config.set(
+                            "prefetch_modelinfo_last_update",
+                            start_prefetch_date
+                        );
                     }
-                    await Promise.all(tasks);
-                    await this.createTables(model_infos);
-                    await this._config.set(
-                        "prefetch_modelinfo_last_update",
-                        start_prefetch_date
-                    );
                 } catch (err) {
                     this._sendTaskInfoError("model_info_data", "Can't get model infos");
                     return reject(err);

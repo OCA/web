@@ -43,6 +43,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
          * @returns {String}
          */
         parseDate: function(values, field) {
+            if (!values[field]) { return false; }
             return tools.DateToOdooFormat(tools.SecondsToDate(values[field]), true);
         },
 
@@ -54,6 +55,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
          * @returns {String}
          */
         parseDatetime: function(values, field) {
+            if (!values[field]) { return false; }
             return tools.DateToOdooFormat(tools.SecondsToDate(values[field]));
         },
 

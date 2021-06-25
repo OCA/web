@@ -184,9 +184,9 @@ odoo.define("web_pwa_cache.PWA", function(require) {
             const isOffline =
                 (this._managers.config && this._managers.config.isOfflineMode()) ||
                 false;
-            console.log("------ STANDALONE: ", isStandaloneMode);
-            console.log("------ MODE OFF: ", isOffline);
-            console.log("------ METHOD: ", request.method);
+            // console.log("------ STANDALONE: ", isStandaloneMode);
+            // console.log("------ MODE OFF: ", isOffline);
+            // console.log("------ METHOD: ", request.method);
 
             if (request.method === "GET") {
                 return new Promise(async (resolve, reject) => {
