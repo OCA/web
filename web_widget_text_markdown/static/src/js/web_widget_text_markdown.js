@@ -1,4 +1,4 @@
-/* global marked */
+/* global showdown */
 /* Copyright 2014 Sudokeys <http://www.sudokeys.com>
  * Copyright 2017 Komit - <http:///komit-consulting.com>
  * Copyright 2019 Alexandre Díaz - <dev@redneboa.es>
@@ -12,6 +12,7 @@ odoo.define("web_widget_text_markdown.FieldTextMarkDown", function(require) {
 
     var _t = core._t;
     var LIBS_PATH = "/web_widget_text_markdown/static/src/lib/";
+    var CUST_LIBS_PATH = "/web_widget_text_markdown/static/src/css/";
 
     var FieldTextMarkDown = basic_fields.FieldText.extend({
         className: [
@@ -19,14 +20,57 @@ odoo.define("web_widget_text_markdown.FieldTextMarkDown", function(require) {
             "o_field_text_markdown",
         ].join(" "),
         jsLibs: [
-            LIBS_PATH + "marked.js",
-            LIBS_PATH + "dropzone.js",
             LIBS_PATH + "bootstrap-markdown.js",
+            LIBS_PATH + "showdown.js",
+            LIBS_PATH + "showdown-footnotes.js",
+            LIBS_PATH + "showdown-table.js",
+            LIBS_PATH + "showdown-toc.js",
         ],
-        cssLibs: [LIBS_PATH + "bootstrap-markdown.min.css"],
+        cssLibs: [
+            LIBS_PATH + "bootstrap-markdown.min.css",
+            CUST_LIBS_PATH + "web_widget_text_markdown.css",
+        ],
 
         _getValue: function() {
             return this.$markdown.getContent();
+        },
+
+        start: function() {
+            this._super();
+            this.shw_render_html = new showdown.Converter({
+                extensions: ["table", "footnotes", "toc"],
+                emoji: true,
+                underline: true,
+                tablesHeaderId: true,
+                omitExtraWLInCodeBlocks: true,
+                noHeaderId: true,
+                prefixHeaderId: true,
+                rawPrefixHeaderId: true,
+                ghCompatibleHeaderId: true,
+                rawHeaderId: true,
+                headerLevelStart: false,
+                parseImgDimensions: true,
+                simplifiedAutoLink: true,
+                literalMidWordUnderscores: false,
+                literalMidWordAsterisks: true,
+                strikethrough: true,
+                tables: true,
+                ghCodeBlocks: true,
+                tasklists: true,
+                smoothLivePreview: true,
+                smartIndentationFix: true,
+                disableForced4SpacesIndentedSublists: true,
+                simpleLineBreaks: true,
+                requireSpaceBeforeHeadingText: true,
+                ghMentions: true,
+                ghMentionsLink: "https://github.com/{u}",
+                encodeEmails: true,
+                openLinksInNewWindow: true,
+                backslashEscapesHTMLTags: true,
+                completeHTMLDocument: true,
+                metadata: true,
+                splitAdjacentBlockquotes: true,
+            });
         },
 
         _prepareInput: function() {
@@ -45,116 +89,52 @@ odoo.define("web_widget_text_markdown.FieldTextMarkDown", function(require) {
             );
             return $input;
         },
+        _getHtmlValue: function(value) {
+            return this.shw_render_html.makeHtml(this._formatValue(value));
+        },
 
         _renderReadonly: function() {
-            this.$el.html(marked(this._formatValue(this.value)));
+            this.$el.html(this._getHtmlValue(this.value));
         },
 
         _getMarkdownOptions: function() {
+            var self = this;
             var markdownOpts = {
+                iconlibrary: "fa",
                 autofocus: false,
+                width: "o_field_text_markdown",
                 savable: false,
                 language: this.getSession().user_context.lang,
+                onPreview: function(e) {
+                    var render_val = self._getHtmlValue(e.getContent());
+                    return render_val;
+                },
             };
 
-            // Only can create attachments on non-virtual records
-            if (this.res_id) {
-                var self = this;
-                markdownOpts.dropZoneOptions = {
-                    paramName: "ufile",
-                    url: "/web/binary/upload_attachment",
-                    acceptedFiles: "image/*",
-                    width: "o_field_text_markdown",
-                    params: {
-                        csrf_token: core.csrf_token,
-                        session_id: this.getSession().override_session,
-                        callback: "",
-                        model: this.model,
-                        id: this.res_id,
-                    },
-                    success: function() {
-                        self._markdownDropZoneUploadSuccess(this);
-                    },
-                    error: function() {
-                        self._markdownDropZoneUploadError(this);
-                    },
-                    init: function() {
-                        self._markdownDropZoneInit(this);
-                    },
-                };
-
-                if (_t.database.multi_lang && this.field.translate) {
-                    markdownOpts.additionalButtons = [
-                        [
-                            {
-                                name: "oTranslate",
-                                data: [
-                                    {
-                                        name: "cmdTranslate",
-                                        title: _t("Translate"),
-                                        icon: {glyph: "glyphicon glyphicon-flag"},
-                                        callback: this._markdownTranslate,
-                                    },
-                                ],
-                            },
-                        ],
-                    ];
-                }
+            if (_t.database.multi_lang && this.field.translate) {
+                markdownOpts.additionalButtons = [
+                    [
+                        {
+                            name: "oTranslate",
+                            data: [
+                                {
+                                    name: "cmdTranslate",
+                                    title: _t("Translate"),
+                                    icon: {fa: "fa fa-flag"},
+                                    // eslint-disable-next-line max-len
+                                    callback: this._markdownTranslate.bind(self),
+                                },
+                            ],
+                        },
+                    ],
+                ];
             }
-
             return markdownOpts;
         },
 
-        _getAttachmentId: function(response) {
-            var matchElms = response.match(/"id":\s?(\d+)/);
-            if (matchElms && matchElms.length) {
-                return matchElms[1];
-            }
-            return null;
-        },
-
-        _markdownDropZoneInit: function(markdown) {
-            var self = this;
-            var caretPos = 0;
-            var $textarea = null;
-            markdown.on("drop", function(e) {
-                $textarea = $(e.target);
-                caretPos = $textarea.prop("selectionStart");
-            });
-            markdown.on("success", function(file, response) {
-                var text = $textarea.val();
-                var attachment_id = self._getAttachmentId(response);
-                if (attachment_id) {
-                    var ftext =
-                        text.substring(0, caretPos) +
-                        "\n![" +
-                        _t("description") +
-                        "](/web/image/" +
-                        attachment_id +
-                        ")\n" +
-                        text.substring(caretPos);
-                    $textarea.val(ftext);
-                } else {
-                    self.do_warn(_t("Error"), _t("Can't create the attachment."));
-                }
-            });
-            markdown.on("error", function(file, error) {
-                console.warn(error);
-            });
-        },
-
-        _markdownDropZoneUploadSuccess: function() {
-            this.isDirty = true;
-            this._doDebouncedAction();
-            this.$markdown.$editor.find(".dz-error-mark:last").css("display", "none");
-        },
-
-        _markdownDropZoneUploadError: function() {
-            this.$markdown.$editor.find(".dz-success-mark:last").css("display", "none");
-        },
-
         _markdownTranslate: function() {
-            this._onTranslate();
+            // Event is the click event from callback
+            this._onTranslate(event);
         },
     });
 
