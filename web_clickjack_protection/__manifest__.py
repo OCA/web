@@ -11,5 +11,5 @@
     "depends": ["web"],
     "data": ["views/web_assets.xml"],
     "installable": True,
-    "auto_install": False
+    "auto_install": False,
 }
