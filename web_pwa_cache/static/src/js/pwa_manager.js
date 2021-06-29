@@ -34,8 +34,6 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
         custom_events: {
             change_pwa_mode: "_onChangePWAMode",
         },
-        _broadcast_channel_in_name: "pwa-page-messages",
-        _broadcast_channel_out_name: "pwa-sw-messages",
         _show_prefetch_modal_delay: 5000,
         _autoclose_prefetch_modal_delay: 3000,
         _show_sw_info_modal_delay: 500,
@@ -44,6 +42,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
          * @override
          */
         init: function() {
+            this.init_broadcast("pwa-page-messages", "pwa-sw-messages");
             this._super.apply(this, arguments);
 
             this._prefetchTasksInfo = {};

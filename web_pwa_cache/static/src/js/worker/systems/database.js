@@ -52,7 +52,9 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                             .getModelInfo(false, internal, grouped);
                         return resolve(model_infos);
                     }
+                    let is_one = false;
                     if (typeof model_names === "string") {
+                        is_one = true;
                         model_names = [model_names];
                     }
                     const res = {};
@@ -67,7 +69,7 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                     }
 
                     const records = grouped ? res : Object.values(res);
-                    return resolve((!grouped && model_names.length === 1) ? records[0] : records);
+                    return resolve((!grouped && is_one) ? records[0] : records);
                 } catch (err) {
                     return reject(err);
                 }
@@ -96,6 +98,7 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
          * @returns {Promise}
          */
         _onStartSQLiteDB: function() {
+            debugger;
             return new Promise(async (resolve, reject) => {
                 console.log("[ServiceWorker] Generating SQLite DB Schema...");
                 try {

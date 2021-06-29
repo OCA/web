@@ -16,6 +16,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
             "pwa.cache.onchange.value": {
                 values: "json",
                 result: "json",
+                ref_hash: "integer",
             },
         },
         // This is used to create indexes
@@ -28,10 +29,11 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                 ["onchange_pwa_cache_id", ["pwa_cache_id"], false],
                 //["onchange_model_value_ids", ["model", "value_ids"], true],
             ],
-            "pwa.cache.onchange.selector": [
+            "pwa.cache.onchange.value": [
                 // ["onchange_selector_value_field_name_value", ["field_name", "value"], false],
                 // ["onchange_selector_value_onchange_id", ["onchange_id"], false],
-                ["onchange_value_onchange_id_field_name_values", ["onchange_id", "field_name", "values"], true],
+                ["onchange_value_ref_hash", ["ref_hash"], true],
+                //["onchange_value_onchange_id_field_name_values", ["onchange_id", "field_name", "values"], true],
                 // ["onchange_selector_value_onchange_id_field_name_value", ["onchange_id", "field_name", "value"], true],
             ],
         },
@@ -147,8 +149,18 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                 // console.log("---- PWA TEST");
                 // const rrr = await this._db.sqlitedb
                 //     .getDB()
-                //     .all(["SELECT * FROM "," WHERE model=",""], this._db.sqlitedb.getDB().raw`i_pwa_views`, "res.partner");
+                //     .all(["SELECT * FROM "," LIMIT 10"], this._db.sqlitedb.getDB().raw`pwa_cache_onchange_value`);
                 // console.table(rrr);
+
+                // const rrrd = await this._db.sqlitedb
+                //     .getDB()
+                //     .all(["SELECT * FROM "," WHERE ref_hash="], this._db.sqlitedb.getDB().raw`pwa_cache_onchange_value`, 3646884027832);
+                // console.table(rrrd);
+
+                // const rrrt = await this._db.sqlitedb
+                //     .getDB()
+                //     .all(["EXPLAIN QUERY PLAN SELECT * FROM "," WHERE ref_hash="], this._db.sqlitedb.getDB().raw`pwa_cache_onchange_value`, 3646884027832);
+                // console.table(rrrt);
 
                 try {
                     this._processedModels = [];

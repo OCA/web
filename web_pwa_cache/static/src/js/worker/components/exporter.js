@@ -170,11 +170,12 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                                     return reject();
                                 }
 
-                                vals = Tools.unfoldObj(vals);
+                                //vals = Tools.unfoldObj(vals);
                                 const str_vals = Expression.convert_to_column(model_info_pwa_onchange_value.fields.values, vals);
+                                const ref_hash = Tools.hash(`${record.id}${field}${str_vals}`);
                                 console.timeEnd("pwa_cache_onchange_values_frmt");
                                 console.time("pwa_cache_onchange_values");
-                                const sql_value = `SELECT result FROM ${model_info_pwa_onchange_value.table} WHERE "pwa_cache_id"=${record.id} AND "field_name"="${field}" AND "values"=${str_vals}`;
+                                const sql_value = `SELECT result FROM ${model_info_pwa_onchange_value.table} WHERE "ref_hash"=${ref_hash}`;
                                 const value_record = await this._db.sqlitedb
                                     .getDB()
                                     .get([sql_value]);

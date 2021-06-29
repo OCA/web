@@ -12,13 +12,11 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
      * This class is used to manage sync operations
      */
     const SWSyncManager = SWManager.extend(BroadcastMixin, {
-        _broadcast_channel_in_name: "pwa-sw-messages",
-        _broadcast_channel_out_name: "pwa-page-messages",
-
         /**
          * @override
          */
         init: function(parent) {
+            this.init_broadcast("pwa-sw-messages", "pwa-page-messages");
             this._super.apply(this, arguments);
             this._db = this.options.db || parent._db;
         },

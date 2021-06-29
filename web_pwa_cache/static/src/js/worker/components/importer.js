@@ -5,6 +5,8 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
     "use strict";
 
     const SWComponent = require("web_pwa_cache.PWA.components.Component");
+    const Tools = require("web_pwa_cache.PWA.core.base.Tools");
+    const Expression = require("web_pwa_cache.PWA.core.osv.Expression");
 
     /**
      * This class is used to store Odoo replies
@@ -219,8 +221,23 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
             if (!data) {
                 return Promise.resolve();
             }
-            const records = "records" in data ? data.records : data;
-            return this._db.writeOrCreate(model, records, this.options.allow_create);
+            return new Promise(async (resolve, reject) => {
+                const records = "records" in data ? data.records : data;
+                try {
+                    const model_info = await this._db.getModelInfo(model);
+                    // REMOVE: This is for testing
+                    if (model === "pwa.cache.onchange.value") {
+                        for (const record of records) {
+                            const str_vals = Expression.convert_to_column(model_info.fields.values, Tools.foldObj(JSON.parse(record.values)));
+                            record.ref_hash = Tools.hash(`${record.pwa_cache_id[0]}${record.field_name}${str_vals}`);
+                        }
+                    }
+                    await this._db.writeOrCreate(model, records, this.options.allow_create);
+                } catch (err) {
+                    return reject(err);
+                }
+                return resolve();
+            });
         },
 
         /**

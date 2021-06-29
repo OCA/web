@@ -5,22 +5,17 @@ odoo.define("web_pwa_cache.BroadcastMixin", function() {
     "use strict";
 
     return {
-        // Channel to receive
-        _broadcast_channel_in_name: false,
-        // Channel to send
-        _broadcast_channel_out_name: false,
-
-        start: function() {
-            if (!this._broadcast_channel_in_name || !this._broadcast_channel_out_name) {
-                return Promise.reject("Need define channel names!");
+        init_broadcast: function(channel_in_name, channel_out_name) {
+            if (!channel_in_name || !channel_out_name) {
+                return new Error("Need define channel names!");
             }
-            this._channel_in = new BroadcastChannel(this._broadcast_channel_in_name);
-            this._channel_out = new BroadcastChannel(this._broadcast_channel_out_name);
+            this._channel_in = new BroadcastChannel(channel_in_name);
+            this._channel_out = new BroadcastChannel(channel_out_name);
             this._channel_in.addEventListener(
                 "message",
                 this._onReceiveBroadcastMessage.bind(this)
             );
-            return this._super.apply(this, arguments);
+            console.log("----------- INIT BROADCAST")
         },
 
         postBroadcastMessage: function(message) {

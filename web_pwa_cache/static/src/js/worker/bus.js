@@ -13,8 +13,13 @@ odoo.define("web_pwa_cache.PWA.bus", function(require) {
      */
     PWA.include(BroadcastMixin);
     PWA.include({
-        _broadcast_channel_in_name: "pwa-sw-messages",
-        _broadcast_channel_out_name: "pwa-page-messages",
+        /**
+         * @override
+         */
+        init: function () {
+            this.init_broadcast("pwa-sw-messages", "pwa-page-messages");
+            this._super.apply(this, arguments);
+        },
 
         /**
          * @override
@@ -32,14 +37,6 @@ odoo.define("web_pwa_cache.PWA.bus", function(require) {
                     url: request_url.pathname,
                 });
             }
-        },
-
-        /**
-         * @override
-         */
-        start: function() {
-            BroadcastMixin.start.call(this);
-            return this._super.apply(this, arguments);
         },
 
         /**

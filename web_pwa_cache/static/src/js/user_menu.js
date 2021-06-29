@@ -8,19 +8,16 @@ odoo.define("web_pwa_cache.UserMenu", function(require) {
 
     UserMenu.include(BroadcastMixin);
     UserMenu.include({
-        _broadcast_channel_in_name: "pwa-page-messages",
-        _broadcast_channel_out_name: "pwa-sw-messages",
-
         /**
          * @override
          */
-        init: function() {
+        init: function () {
+            this.init_broadcast("pwa-page-messages", "pwa-sw-messages");
             this._super.apply(this, arguments);
         },
 
         /**
          * @override
-         * @returns {Deferred}
          */
         start: function() {
             return this._super.apply(this, arguments).then(() => {

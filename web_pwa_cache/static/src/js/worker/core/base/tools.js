@@ -319,6 +319,26 @@ odoo.define("web_pwa_cache.PWA.core.base.Tools", function() {
         return res;
     }
 
+    /**
+     * Get an 64bit hash
+     *
+     * @param {String} str_data
+     * @returns {Number}
+     */
+    function hash(str_data) {
+        let i = str_data.length
+        let hash1 = 5381;
+        let hash2 = 52711;
+
+        while (i--) {
+            const char_code = str_data.charCodeAt(i);
+            hash1 = (hash1 * 33) ^ char_code;
+            hash2 = (hash2 * 33) ^ char_code;
+        }
+
+        return (hash1 >> 0) * 4096 + (hash2 >> 0);
+    }
+
     return {
         ODOO_DATE_FORMAT: ODOO_DATE_FORMAT,
         ODOO_TIME_FORMAT: ODOO_TIME_FORMAT,
@@ -344,6 +364,7 @@ odoo.define("web_pwa_cache.PWA.core.base.Tools", function() {
         isCalleable: isCalleable,
 
         s_quote: s_quote,
+        hash: hash,
 
         promiseAny: promiseAny,
 

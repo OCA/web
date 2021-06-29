@@ -5,17 +5,6 @@ from odoo.http import request
 
 
 class ServiceWorker(ServiceWorker):
-    def _get_js_pwa_init(self):
-        res = """
-            self.addEventListener('message', messageEvent => {
-                if (messageEvent.data === 'skipWaiting') {
-                    return self.skipWaiting();
-                }
-            });
-        """
-        res += super()._get_js_pwa_init()
-        return res
-
     def _get_js_pwa_requires(self):
         res = """
             require('web_pwa_cache.PWA');

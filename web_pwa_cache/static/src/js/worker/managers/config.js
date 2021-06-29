@@ -11,13 +11,11 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
      * This class is used to store pwa configuration parameters
      */
     const SWConfigManager = SWManager.extend(BroadcastMixin, {
-        _broadcast_channel_in_name: "pwa-sw-messages",
-        _broadcast_channel_out_name: "pwa-page-messages",
-
         /**
          * @override
          */
         init: function() {
+            this.init_broadcast("pwa-sw-messages", "pwa-page-messages");
             this._super.apply(this, arguments);
             this._cache = {};
         },
