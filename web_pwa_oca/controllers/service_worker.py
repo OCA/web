@@ -48,40 +48,41 @@ class ServiceWorker(PWA):
 
     def _get_js_pwa_init(self):
         return """
-        if (typeof self.oca_pwa === "undefined") {{
-            self.oca_pwa = new PWA({});
-        }}
-        const start_promise = self.oca_pwa.start();
+            let promise_start = Promise.resolve();
+            if (typeof self.oca_pwa === "undefined") {{
+                self.oca_pwa = new PWA({});
+                promise_start = self.oca_pwa.start();
+            }}
         """.format(
             self._get_pwa_params()
         )
 
     def _get_js_pwa_core_event_install_impl(self):
         return """
-            const task = new Promise (async (resolve, reject) => {
-                try {
-                    await start_promise;
+            const task = new Promise (async (resolve, reject) => {{
+                try {{
+                    await promise_start;
                     await self.oca_pwa.installWorker();
-                } catch (err) {
+                }} catch (err) {{
                     return reject(err);
-                }
+                }}
                 return resolve();
-            });
+            }});
             evt.waitUntil(task);
         """
 
     def _get_js_pwa_core_event_activate_impl(self):
         return """
             console.log('[ServiceWorker] Activating...');
-            const task = new Promise (async (resolve, reject) => {
-                try {
-                    await start_promise;
+            const task = new Promise (async (resolve, reject) => {{
+                try {{
+                    await promise_start;
                     await self.oca_pwa.activateWorker();
-                } catch (err) {
+                }} catch (err) {{
                     return reject(err);
-                }
+                }}
                 return resolve();
-            });
+            }});
             evt.waitUntil(task);
         """
 
