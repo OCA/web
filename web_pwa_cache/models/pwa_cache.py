@@ -259,7 +259,7 @@ class PwaCache(models.Model):
             ref_hash = get_hash("{}{}{}".format(self.id, self.onchange_field_name, vals_clean))
             if delete_old:
                 record = obj.search(
-                    [("pwa_cache_id", "=", self.id), ("ref_hash", "=", ref_hash)]
+                    [("ref_hash", "=", ref_hash)]
                 )
                 if record:
                     found_ids.add(record.id)
@@ -282,7 +282,7 @@ class PwaCache(models.Model):
         vals = json.dumps(vals, separators=(",", ":"))  # JSONify after calling onchange
         obj = self.env["pwa.cache.onchange.value"].sudo()
         record = obj.search(
-            [("pwa_cache_id", "=", self.id), ("ref_hash", "=", ref_hash)]
+            [("ref_hash", "=", ref_hash)]
         )
         if record:
             # We assume the same order for returned results, and if not, the

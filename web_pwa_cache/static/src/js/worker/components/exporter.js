@@ -121,12 +121,10 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
 
                     for (const field of fields_changed) {
                         // TODO: Determine onchange execution order through onchange_spec
-                        console.time("pwa_cache");
                         const sql_pwa_cache = `SELECT id,cache_type,code_js FROM ${model_info_pwa_cache.table} WHERE "onchange_field_name"="${field}" AND "model_name"="${model}" AND "cache_type" IN ("onchange", "onchange_formula")`;
                         const record = await this._db.sqlitedb
                             .getDB()
                             .get([sql_pwa_cache]);
-                        console.timeEnd("pwa_cache");
                         if (!_.isEmpty(record)) {
                             this._db.sqlitedb.converter.toOdoo(
                                 model_info_pwa_cache.fields,
@@ -143,14 +141,11 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                                 warning = changes.warning;
                                 domain = changes.domain;
                             } else {
-                                console.time("pwa_cache_onchange");
                                 const sql_selectors = `SELECT "field_name", "required" FROM ${model_info_pwa_onchange.table} WHERE "pwa_cache_id"=${record.id} AND NOT disposable`;
                                 const selectors = await this._db.sqlitedb
                                     .getDB()
                                     .all([sql_selectors]);
-                                console.timeEnd("pwa_cache_onchange");
                                 // TODO: Ver el orden
-                                console.time("pwa_cache_onchange_values_frmt");
                                 let vals = {};
                                 let is_valid = true;
                                 for (const selector of selectors) {
@@ -173,13 +168,10 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                                 //vals = Tools.unfoldObj(vals);
                                 const str_vals = Expression.convert_to_column(model_info_pwa_onchange_value.fields.values, vals);
                                 const ref_hash = Tools.hash(`${record.id}${field}${str_vals}`);
-                                console.timeEnd("pwa_cache_onchange_values_frmt");
-                                console.time("pwa_cache_onchange_values");
                                 const sql_value = `SELECT result FROM ${model_info_pwa_onchange_value.table} WHERE "ref_hash"=${ref_hash}`;
                                 const value_record = await this._db.sqlitedb
                                     .getDB()
                                     .get([sql_value]);
-                                console.timeEnd("pwa_cache_onchange_values");
                                 if (!_.isEmpty(value_record)) {
                                     const onchange_data = JSON.parse(value_record.result);
                                     value = onchange_data.value;
@@ -1017,7 +1009,6 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                 try {
                     let record = false;
                     let sfield = field;
-                    console.time("webimage");
                     if (_.isEmpty(search_params)) {
                         record = await this._db.browseBinary(model, Number(id));
                     } else {
@@ -1027,7 +1018,6 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         );
                         sfield = search_params.field;
                     }
-                    console.timeEnd("webimage");
                     if (!record) {
                         if (this.isOfflineMode()) {
                             return resolve(false);
@@ -1036,7 +1026,6 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                     }
                     return resolve(record[sfield]);
                 } catch (err) {
-                    console.timeEnd("webimage");
                     return reject(err);
                 }
             });

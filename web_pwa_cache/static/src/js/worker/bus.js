@@ -46,7 +46,7 @@ odoo.define("web_pwa_cache.PWA.bus", function(require) {
         // eslint-disable-next-line
         _onReceiveBroadcastMessage: function(evt) {
             const res = this._super.apply(this, arguments);
-            if (!res || !this.isLoaded()) {
+            if (!res || !this.isActivated()) {
                 return;
             }
             switch (evt.data.type) {

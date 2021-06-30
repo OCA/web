@@ -98,7 +98,6 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
          * @returns {Promise}
          */
         _onStartSQLiteDB: function() {
-            debugger;
             return new Promise(async (resolve, reject) => {
                 console.log("[ServiceWorker] Generating SQLite DB Schema...");
                 try {
@@ -481,16 +480,18 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
          * @private
          * @param {Object/String} model_info
          * @param {Array} datas
+         * @param {Object} options
          * @returns {Promise}
          */
-        writeOrCreate: function(model_info, datas) {
+        writeOrCreate: function(model_info, datas, options) {
             return new Promise(async resolve => {
+                const soptions = options || {};
                 try {
                     if (typeof model_info === "string") {
                         model_info = await this.getModelInfo(model_info);
                     }
 
-                    const binary_fields = this._getFieldNamesByType(
+                    const binary_fields = soptions.binary_fields || this._getFieldNamesByType(
                         model_info,
                         "binary"
                     );

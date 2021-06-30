@@ -2,6 +2,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 def get_hash(data):
+    """Same implementation as javascript for 64 bit hash
+    WARNING: Odoo ORM only supports integers of 32 bits
+    """
     hash1 = 5381
     hash2 = 52711
     for i in reversed(range(len(data))):

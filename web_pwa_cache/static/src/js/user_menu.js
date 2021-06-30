@@ -22,9 +22,6 @@ odoo.define("web_pwa_cache.UserMenu", function(require) {
         start: function() {
             return this._super.apply(this, arguments).then(() => {
                 this._pwaManager = WebClientObj.pwa_manager;
-                if (this._pwaManager.isPWAStandalone()) {
-                    this.postBroadcastMessage({type: "GET_PWA_CONFIG"});
-                }
             });
         },
 

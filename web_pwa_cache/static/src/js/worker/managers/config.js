@@ -161,7 +161,7 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
 
         _onReceiveBroadcastMessage: function(evt) {
             const res = BroadcastMixin._onReceiveBroadcastMessage.call(this, evt);
-            if (!res || !this.isLoaded()) {
+            if (!res || !this.isActivated()) {
                 return;
             }
             switch (evt.data.type) {
@@ -186,36 +186,6 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
                                     type: "PWA_CONFIG_CHANGED",
                                     changes: changes,
                                 });
-                                // Check if need prefetch data
-                                const event_online =
-                                    typeof evt.data.pwa_mode !== "undefined" &&
-                                    evt.data.pwa_mode === "online";
-                                const config_offline = this.isOfflineMode();
-                                const config_standalone = this.isStandaloneMode();
-                                const is_online =
-                                    event_online ||
-                                    (typeof evt.data.pwa_mode === "undefined" &&
-                                        !config_offline);
-                                const is_standalone =
-                                    (typeof evt.data.standalone !== "undefined" &&
-                                        evt.data.standalone) ||
-                                    (typeof evt.data.standalone === "undefined" &&
-                                        config_standalone);
-                                // Check if need do prefetch (Auto-Prefetch)
-                                const model_info_userdata = await this._db.getModelInfo(
-                                    "userdata",
-                                    true
-                                );
-                                const userdata_count = await this._db.count(
-                                    model_info_userdata,
-                                    []
-                                );
-                                if (
-                                    (is_online && is_standalone && !userdata_count) ||
-                                    (event_online && is_standalone)
-                                ) {
-                                    this.getParent()._doPrefetchDataPost();
-                                }
                                 return resolve();
                             });
                         })
@@ -229,11 +199,30 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
 
                 // Received to send pwa config. to the user page.
                 case "GET_PWA_CONFIG":
-                    this.sendToPages().catch(() => {
-                        console.log(
-                            `[ServiceWorker] Error sending pwa configuration to the user page!`
-                        );
-                    });
+                    new Promise(async (resolve, reject) => {
+                        try {
+                            await this.sendToPages();
+                            // Check if need do prefetch (Auto-Prefetch)
+                            const model_info_userdata = await this._db.getModelInfo(
+                                "userdata",
+                                true
+                            );
+                            const userdata_count = await this._db.count(
+                                model_info_userdata,
+                                []
+                            );
+                            if (
+                                !this.isOfflineMode() && this.isStandaloneMode() && !userdata_count
+                            ) {
+                                this.getParent()._doPrefetchDataPost();
+                            }
+                        } catch (err) {
+                            console.log("[ServiceWorker] Error sending pwa configuration to the user page! ", err);
+                            return reject(err);
+                        }
+
+                        return resolve();
+                    })
                     break;
             }
         },

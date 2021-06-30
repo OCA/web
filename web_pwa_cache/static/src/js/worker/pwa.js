@@ -30,8 +30,6 @@ odoo.define("web_pwa_cache.PWA", function(require) {
         init: function(params) {
             this._super.apply(this, arguments);
 
-            this._wasActivated = false;
-
             this._components = {};
             this._managers = {};
 
@@ -137,9 +135,6 @@ odoo.define("web_pwa_cache.PWA", function(require) {
         activateWorker: function() {
             const task = new Promise(async (resolve, reject) => {
                 try {
-                    // This flag indicates that the service worker was activated in some point on the life cycle
-                    // can't be use to know if the service worker is stoped
-                    this._wasActivated = true;
                     await this._cache.cleanOld([this._cache_hashes.pwa]);
                     this._managers.config.sendToPages();
                     this._managers.sync.sendCountToPages();
@@ -187,8 +182,8 @@ odoo.define("web_pwa_cache.PWA", function(require) {
          *
          * @returns {Boolean}
          */
-        isLoaded: function() {
-            return this._wasActivated;
+        isActivated: function() {
+            return self.serviceWorker && self.serviceWorker.state === "activated";
         },
 
         /**

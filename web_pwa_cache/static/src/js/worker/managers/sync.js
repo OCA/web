@@ -324,7 +324,7 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
 
         _onReceiveBroadcastMessage: function(evt) {
             const res = BroadcastMixin._onReceiveBroadcastMessage.call(this, evt);
-            if (!res || !this.isLoaded()) {
+            if (!res || !this.isActivated()) {
                 return;
             }
             switch (evt.data.type) {

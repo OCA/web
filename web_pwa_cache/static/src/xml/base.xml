@@ -45,7 +45,7 @@
                         <h5 class="modal-title">PWA Info</h5>
                     </div>
                     <div class="modal-body">
-                        <span>Waiting service worker...</span>
+                        <span id="swinfo_message">Waiting service worker...</span>
                     </div>
                 </div>
             </div>

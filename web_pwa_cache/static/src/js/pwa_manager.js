@@ -52,13 +52,9 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 QWeb.render("web_pwa_cache.SWInfo")
             );
             this._swInfoModalHidden = true;
-            if (this.isPWAStandalone()) {
+            if (this.isPWAStandalone() && !navigator.serviceWorker.controller || ["installing","installed"].indexOf(navigator.serviceWorker.controller.state) !== -1) {
                 this._swInfoOpenTimer = setTimeout(
-                    () => {
-                        this._swInfoModalHidden = false;
-                        this.$modalSWInfo.modal("show");
-                        this._swInfoOpenTimer = false;
-                    },
+                    this._showSWInfo.bind(this),
                     this._show_sw_info_modal_delay
                 );
             }
@@ -86,6 +82,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
             this.modeSelector = new PWAModeSelector({
                 online: () => {
                     this.setPWAMode("online");
+                    this.postBroadcastMessage({type: "START_PREFETCH"});
                     this.modeSelector.close();
                 },
                 offline: () => {
@@ -114,17 +111,9 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
         start: function() {
             return this._super.apply(this, arguments).then(() => {
                 // Try update service worker mode.
-                var is_standalone = this.isPWAStandalone();
-                var config_values = {
-                    type: "SET_PWA_CONFIG",
-                    standalone: is_standalone,
-                };
-                if (!is_standalone) {
-                    config_values.pwa_mode = "online";
-                } else {
-                    odoo.debug = false;
+                if (this.isPWAStandalone() && navigator.serviceWorker.controller && navigator.serviceWorker.controller.state === "activated") {
+                    this.postBroadcastMessage({type: "GET_PWA_CONFIG"});
                 }
-                this.postBroadcastMessage(config_values);
             });
         },
 
@@ -133,6 +122,15 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
          */
         getCacheVersion: function() {
             return this.pwa_cache_version;
+        },
+
+        _showSWInfo: function () {
+            if (navigator.serviceWorker.controller && navigator.serviceWorker.controller.state === "installed") {
+                this.$modalSWInfo.find("#swinfo_message").text(_t("Service worker is installed but not activated, please refresh the page."));
+            }
+            this._swInfoModalHidden = false;
+            this.$modalSWInfo.modal("show");
+            this._swInfoOpenTimer = false;
         },
 
         /**
@@ -279,16 +277,21 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                         clearTimeout(this._swInfoOpenTimer);
                         this._swInfoOpenTimer = false;
                     }
-                    this._swInfoModalHidden = true;
-                    this.$modalSWInfo.modal("hide");
                     this._pwaMode = evt.data.data.pwa_mode;
-                    if (evt.data.data.is_db_empty) {
-                        this.$modalPrefetchProgress.modal("hide");
-                    } else if (
-                        this.isPWAStandalone() &&
-                        !this.modeSelector.wasShown()
-                    ) {
-                        this.modeSelector.show();
+                    this._swInfoModalHidden = true;
+                    if (navigator.serviceWorker.controller) {
+                        this.$modalSWInfo.modal("hide");
+                        if (evt.data.data.is_db_empty) {
+                            this.$modalPrefetchProgress.modal("hide");
+                        } else if (
+                            this.isPWAStandalone() &&
+                            !this.modeSelector.wasShown()
+                        ) {
+                            this.modeSelector.show();
+                        }
+                    } else {
+                        this.$modalSWInfo.find("#swinfo_message").text(_t("Service worker was activated sucessfully! Reloading the page to take the control..."));
+                        location.reload();
                     }
                     this.postBroadcastMessage({
                         type: "SET_PWA_CONFIG",

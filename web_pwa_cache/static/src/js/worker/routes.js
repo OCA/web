@@ -395,15 +395,12 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
                 const field_name = pathname_parts[5];
                 const search_params = this._getURLSearchParams(url.search);
                 try {
-                    console.time("imagwewb");
                     const data = await this._components.exporter.web_image(
                         model,
                         obj_id,
                         field_name,
                         search_params
                     );
-                    console.timeEnd("imagwewb");
-                    console.log(model, obj_id, field_name, search_params);
                     if (!_.isEmpty(data)) {
                         return resolve(Tools.ResponseImage(data));
                     } else if (this._managers.config.isOfflineMode()) {

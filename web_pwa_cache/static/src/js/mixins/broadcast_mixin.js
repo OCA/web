@@ -15,7 +15,6 @@ odoo.define("web_pwa_cache.BroadcastMixin", function() {
                 "message",
                 this._onReceiveBroadcastMessage.bind(this)
             );
-            console.log("----------- INIT BROADCAST")
         },
 
         postBroadcastMessage: function(message) {

@@ -42,8 +42,8 @@ odoo.define("web_pwa_cache.PWA.managers.Manager", function(require) {
         /**
          * @returns {Boolean}
          */
-        isLoaded: function() {
-            return this.getParent().isLoaded();
+        isActivated: function() {
+            return this.getParent().isActivated();
         },
     });
 
