@@ -172,8 +172,11 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                                 const value_record = await this._db.sqlitedb
                                     .getDB()
                                     .get([sql_value]);
+                                // const value_record = await this._db.indexeddb.getRecord("onchange", false, [record.id, ref_hash]);
+                                // console.log("------- THE VAL: ", value_record);
                                 if (!_.isEmpty(value_record)) {
                                     const onchange_data = JSON.parse(value_record.result);
+                                    //const onchange_data = value_record.result;
                                     value = onchange_data.value;
                                     warning = onchange_data.warning;
                                     domain = onchange_data.domain;

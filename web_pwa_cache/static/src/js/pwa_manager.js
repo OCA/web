@@ -52,7 +52,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 QWeb.render("web_pwa_cache.SWInfo")
             );
             this._swInfoModalHidden = true;
-            if (this.isPWAStandalone() && !navigator.serviceWorker.controller || ["installing","installed"].indexOf(navigator.serviceWorker.controller.state) !== -1) {
+            if (this.isPWAStandalone() && !navigator.serviceWorker.controller || (navigator.serviceWorker.controller && ["installing","installed"].indexOf(navigator.serviceWorker.controller.state) !== -1)) {
                 this._swInfoOpenTimer = setTimeout(
                     this._showSWInfo.bind(this),
                     this._show_sw_info_modal_delay
@@ -291,7 +291,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                         }
                     } else {
                         this.$modalSWInfo.find("#swinfo_message").text(_t("Service worker was activated sucessfully! Reloading the page to take the control..."));
-                        location.reload();
+                        setTimeout(location.reload(), 250);
                     }
                     this.postBroadcastMessage({
                         type: "SET_PWA_CONFIG",

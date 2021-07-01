@@ -257,6 +257,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                     this._db = await self.sqliteWorker({
                         dist: this._sqlite_dist,
                         name: this._db_name,
+                        //timeout: 5000,
                     });
                 } catch (err) {
                     return reject(err);

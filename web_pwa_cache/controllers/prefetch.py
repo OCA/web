@@ -216,7 +216,9 @@ class PWAPrefetch(PWA):
                 )
         return functions
 
-    def _pwa_is_invalid_field(self, field_name, field_def):
+    def _pwa_is_invalid_field(self, model, field_name, field_def):
+        if model == "pwa.cache.onchange.value" and field_name in ("display_name", "field_name", "values", "create_uid", "create_date", "write_uid"):
+            return True
         is_stored = "store" in field_def and field_def["store"]
         is_valid_type = field_def["type"] not in ("one2many", "binary")
         return not is_stored or not is_valid_type
@@ -245,7 +247,7 @@ class PWAPrefetch(PWA):
         field_values = field_infos.values()
         for index, val in enumerate(field_values):
             field_name = field_names[index]
-            if self._pwa_is_invalid_field(field_name, val):
+            if self._pwa_is_invalid_field(model, field_name, val):
                 continue
             fields.append(field_name)
         self._pwa_fill_internal_fields(model, fields)

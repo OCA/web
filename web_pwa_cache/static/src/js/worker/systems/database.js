@@ -44,7 +44,7 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
          * @param {Boolean} grouped Control if need output as dict or array
          * @returns {Object/Array}
          */
-        getModelInfo: function(model_names, internal, grouped) {
+        getModelInfo: function(model_names, internal, grouped, avoid_cache) {
             return new Promise(async (resolve, reject) => {
                 try {
                     if (!model_names) {
@@ -64,7 +64,9 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                         } else {
                             res[model_name] = await this.sqlitedb
                                 .getModelInfo(model_name, internal, false);
-                            this.model_infos[model_name] = res[model_name];
+                            if (!avoid_cache) {
+                                this.model_infos[model_name] = res[model_name];
+                            }
                         }
                     }
 
@@ -341,11 +343,15 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
             const db = evt.target.result;
             if (evt.oldVersion < 1) {
                 // New Database
-                const store = db.createObjectStore("binary", {
+                const storeBinary = db.createObjectStore("binary", {
                     keyPath: ["model", "id"],
                     unique: true,
                 });
-                store.createIndex("model", "model", {unique: false});
+                storeBinary.createIndex("model", "model", {unique: false});
+                db.createObjectStore("onchange", {
+                    keyPath: ["pwa_cache_id__id", "ref_hash"],
+                    unique: true,
+                });
             } else {
                 // Upgrade Database
                 // switch (evt.oldVersion) {
@@ -495,32 +501,26 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                         model_info,
                         "binary"
                     );
-                    const tasks = [];
                     for (const values of datas) {
-                        tasks.push(
-                            this.sqlitedb.createOrUpdateRecord(
-                                model_info,
-                                _.chain(values)
-                                    .omit(binary_fields)
-                                    .value(),
-                                ["id"]
-                            )
-                        );
+                        await this.sqlitedb.createOrUpdateRecord(
+                            model_info,
+                            _.chain(values)
+                                .omit(binary_fields)
+                                .value(),
+                            ["id"]
+                        )
                         if (binary_fields.length) {
-                            tasks.push(
-                                this.indexeddb.createOrUpdateRecord(
-                                    "binary",
-                                    false,
-                                    [model_info.model, values.id],
-                                    _.chain(values)
-                                        .pick(_.union(["id"], binary_fields))
-                                        .extend({model: model_info.model})
-                                        .value()
-                                )
-                            );
+                            await this.indexeddb.createOrUpdateRecord(
+                                "binary",
+                                false,
+                                [model_info.model, values.id],
+                                _.chain(values)
+                                    .pick(_.union(["id"], binary_fields))
+                                    .extend({model: model_info.model})
+                                    .value()
+                            )
                         }
                     }
-                    await Promise.all(tasks);
                 } catch (err) {
                     // Do nothing
                 }

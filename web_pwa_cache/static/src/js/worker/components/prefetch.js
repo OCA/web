@@ -15,7 +15,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         // This is used to force a field type
         _conversion_model_db_types: {
             "pwa.cache.onchange.value": {
-                values: "json",
+                pwa_cache_id: "integer",
                 result: "json",
                 ref_hash: "integer",
             },
@@ -188,7 +188,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         runVacuumRecords: function() {
             return new Promise(async resolve => {
                 try {
-                    const models = await this._db.getModelInfo();
+                    const models = await this._db.getModelInfo(false, false, false, true);
                     const num_models = models.length;
 
                     for (const index in models) {
@@ -308,7 +308,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                         }
                         if (!avoid_save) {
                             const model = request_data.params.model;
-                            const model_info = await this._db.getModelInfo(model);
+                            const model_info = await this._db.getModelInfo(model, false, false, true);
                             const records = response_data.result;
                             for (let index=response_data.result.length-1; index>=0; --index) {
                                 const record = response_data.result[index];
@@ -348,7 +348,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         prefetchModelData: function() {
             return new Promise(async (resolve, reject) => {
                 // Get lastest updates
-                let model_infos = await this._db.getModelInfo();
+                let model_infos = await this._db.getModelInfo(false, false, false, true);
                 const prefetch_last_updates = {};
                 for (const model_info of model_infos) {
                     if (model_info.prefetch_last_update) {
@@ -364,7 +364,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                     const response_data = await response.json();
                     const to_search_infos = response_data.result;
                     const model_names = _.map(to_search_infos, "model");
-                    model_infos = await this._db.getModelInfo(model_names);
+                    model_infos = await this._db.getModelInfo(model_names, false, false, true);
                     for (const to_search of to_search_infos) {
                         const model_info = _.findWhere(model_infos, {
                             model: to_search.model,
@@ -829,7 +829,9 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                 try {
                     const model_info_metadata = await this._db.getModelInfo(
                         "model_metadata",
-                        true
+                        true,
+                        false,
+                        true,
                     );
 
                     await this._db.sqlitedb.createOrUpdateRecord(
@@ -852,7 +854,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         saveModelDefaults: function(values) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_defaults = await this._db.getModelInfo("defaults", true);
+                    const model_info_defaults = await this._db.getModelInfo("defaults", true, false, true);
                     await this._db.sqlitedb.createOrUpdateRecord(
                         model_info_defaults,
                         values,
@@ -873,7 +875,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         saveViews: function(values) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_views = await this._db.getModelInfo("views", true);
+                    const model_info_views = await this._db.getModelInfo("views", true, false, true);
                     await this._db.sqlitedb.createOrUpdateRecord(
                         model_info_views,
                         values,
@@ -894,7 +896,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         saveFunctionData: function(values) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_function = await this._db.getModelInfo("function", true);
+                    const model_info_function = await this._db.getModelInfo("function", true, false, true);
                     await this._db.sqlitedb.createOrUpdateRecord(
                         model_info_function,
                         values,
@@ -916,13 +918,15 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         saveModelRecords: function(model_info, records) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    // REMOVE: This is for testing
                     if (model_info.model === "pwa.cache.onchange.value") {
                         for (const record of records) {
-                            const str_vals = Expression.convert_to_column(model_info.fields.values, Tools.foldObj(JSON.parse(record.values)));
-                            record.ref_hash = Tools.hash(`${record.pwa_cache_id[0]}${record.field_name}${str_vals}`);
+                            // const str_vals = Expression.convert_to_column(model_info.fields.values, Tools.foldObj(JSON.parse(record.values)));
+                            // record.ref_hash = Tools.hash(`${record.pwa_cache_id[0]}${record.field_name}${str_vals}`);
+                            record.pwa_cache_id = record.pwa_cache_id[0];
+                            //await this._db.indexeddb.createOrUpdateRecord("onchange", false, [record.pwa_cache_id__id, Number(record.ref_hash)], record);
                         }
                     }
+
                     // writeOrCreate process "binary" fields that are managed in indexeddb
                     await this._db.writeOrCreate(model_info, records);
                 } catch (err) {
@@ -944,7 +948,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                         param: "menus",
                         value: data,
                     };
-                    const model_info_userdata = await this._db.getModelInfo("userdata", true);
+                    const model_info_userdata = await this._db.getModelInfo("userdata", true, false, true);
                     await this._db.sqlitedb.createOrUpdateRecord(model_info_userdata, values, [
                         "param",
                     ]);
@@ -969,7 +973,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                 };
 
                 try {
-                    const model_info_template = await this._db.getModelInfo("template", true);
+                    const model_info_template = await this._db.getModelInfo("template", true, false, true);
                     await this._db.sqlitedb.createOrUpdateRecord(model_info_template, values, [
                         "xml_ref",
                     ]);
@@ -989,14 +993,17 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     const model_info_base_actions = await this._db.getModelInfo(
-                        "ir.actions.actions"
+                        "ir.actions.actions",
+                        false,
+                        false,
+                        true,
                     );
                     await this._db.sqlitedb.createOrUpdateRecord(
                         model_info_base_actions,
                         _.pick(data, _.keys(model_info_base_actions.fields)),
                         ["id"]
                     );
-                    const model_info_actions = await this._db.getModelInfo(data.type);
+                    const model_info_actions = await this._db.getModelInfo(data.type, false, false, true);
                     await this._db.sqlitedb.createOrUpdateRecord(
                         model_info_actions,
                         _.pick(data, _.keys(model_info_actions.fields)),
@@ -1019,7 +1026,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                 };
 
                 try {
-                    const model_info = await this._db.getModelInfo("post", true);
+                    const model_info = await this._db.getModelInfo("post", true, false, true);
                     await this._db.sqlitedb.createOrUpdateRecord(model_info, values, [
                         "pathname",
                         "params",
