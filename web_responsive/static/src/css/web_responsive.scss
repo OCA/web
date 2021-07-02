@@ -674,17 +674,17 @@ html .o_web_client .o_action_manager .o_action {
         margin-right: 10px;
 
         .custom-control-label {
-            top: -6px;
+            top: -2px;
 
             &::after {
-                width: 24px;
-                height: 24px;
+                width: 16px;
+                height: 16px;
             }
             &::before {
                 outline: none !important;
                 border: 1px solid #4c4c4c;
-                width: 24px;
-                height: 24px;
+                width: 16px;
+                height: 16px;
             }
         }
     }
