@@ -5,7 +5,7 @@
 
 {
     "name": "web_m2x_options",
-    "version": "13.0.1.0.2",
+    "version": "13.0.1.0.3",
     "category": "Web",
     "author": "ACSONE SA/NV, "
     "0k.io, "
