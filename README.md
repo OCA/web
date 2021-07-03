@@ -29,6 +29,7 @@ addon | version | summary
 [web_drop_target](web_drop_target/) | 14.0.1.0.0 | Allows to drag files into Odoo
 [web_environment_ribbon](web_environment_ribbon/) | 14.0.1.0.0 | Web Environment Ribbon
 [web_group_expand](web_group_expand/) | 14.0.1.0.0 | Group Expand Buttons
+[web_listview_range_select](web_listview_range_select/) | 14.0.1.0.0 | Enables selecting a range of records using the shift key
 [web_m2x_options](web_m2x_options/) | 14.0.1.0.0 | web_m2x_options
 [web_no_bubble](web_no_bubble/) | 14.0.1.0.0 | Remove the bubbles from the web interface
 [web_notify](web_notify/) | 14.0.1.0.0 | Send notification messages to user
