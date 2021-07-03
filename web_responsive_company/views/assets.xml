@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright (C) 2021 - Today: GRAP (http://www.grap.coop)
+    @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<odoo>
+    <template id="assets_backend" inherit_id="web_responsive.assets_backend">
+        <xpath expr=".">
+            <link rel="stylesheet" href="/web_responsive_company/static/src/scss/web_responsive_company.scss" />
+            <script type="application/javascript" src="/web_responsive_company/static/src/js/web_responsive_company.js"/>
+        </xpath>
+    </template>
+</odoo>
