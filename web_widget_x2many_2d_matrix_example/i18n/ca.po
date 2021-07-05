@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2021-02-17 14:45+0000\n"
-"Last-Translator: claudiagn <claudia.gargallo@qubiq.es>\n"
+"PO-Revision-Date: 2021-07-05 12:48+0000\n"
+"Last-Translator: jabelchi <jabelchi@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -80,13 +80,13 @@ msgstr "Última actualització el"
 #: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo__line_ids
 #: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_matrix_demo_wiz__line_ids
 msgid "Line"
-msgstr ""
+msgstr "Línia"
 
 #. module: web_widget_x2many_2d_matrix_example
 #: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo__name
 #: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__name
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #. module: web_widget_x2many_2d_matrix_example
 #: model_terms:ir.ui.view,arch_db:web_widget_x2many_2d_matrix_example.view_x2m_demo_form
@@ -106,32 +106,32 @@ msgstr ""
 #. module: web_widget_x2many_2d_matrix_example
 #: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__user_id
 msgid "User"
-msgstr ""
+msgstr "Usuari"
 
 #. module: web_widget_x2many_2d_matrix_example
 #: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__value
 msgid "Value"
-msgstr ""
+msgstr "Valor"
 
 #. module: web_widget_x2many_2d_matrix_example
 #: model:ir.model.fields.selection,name:web_widget_x2many_2d_matrix_example.selection__x2m_demo_line__value_selection__val1
 msgid "Value 1"
-msgstr ""
+msgstr "Valor 1"
 
 #. module: web_widget_x2many_2d_matrix_example
 #: model:ir.model.fields.selection,name:web_widget_x2many_2d_matrix_example.selection__x2m_demo_line__value_selection__val2
 msgid "Value 2"
-msgstr ""
+msgstr "Valor 2"
 
 #. module: web_widget_x2many_2d_matrix_example
 #: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__value_many2one
 msgid "Value Many2One"
-msgstr ""
+msgstr "Valor Many2One"
 
 #. module: web_widget_x2many_2d_matrix_example
 #: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__value_selection
 msgid "Value Selection"
-msgstr ""
+msgstr "Selecció de valor"
 
 #. module: web_widget_x2many_2d_matrix_example
 #: model:ir.model,name:web_widget_x2many_2d_matrix_example.model_x2m_demo
