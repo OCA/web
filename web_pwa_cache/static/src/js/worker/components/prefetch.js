@@ -143,22 +143,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
             return new Promise(async (resolve, reject) => {
                 this.options.force_client_show_modal = true;
 
-                // console.log("---- PWA TEST");
-                // const rrr = await this._db.sqlitedb
-                //     .getDB()
-                //     .all(["SELECT * FROM "," LIMIT 10"], this._db.sqlitedb.getDB().raw`pwa_cache_onchange_value`);
-                // console.table(rrr);
-
-                // const rrrd = await this._db.sqlitedb
-                //     .getDB()
-                //     .all(["SELECT * FROM "," WHERE ref_hash="], this._db.sqlitedb.getDB().raw`pwa_cache_onchange_value`, 3646884027832);
-                // console.table(rrrd);
-
-                // const rrrt = await this._db.sqlitedb
-                //     .getDB()
-                //     .all(["EXPLAIN QUERY PLAN SELECT * FROM "," WHERE ref_hash="], this._db.sqlitedb.getDB().raw`pwa_cache_onchange_value`, 3646884027832);
-                // console.table(rrrt);
-
                 try {
                     this._processedModels = [];
                     const model_infos = await this.prefetchModelInfoData();
@@ -176,6 +160,12 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                 } catch (err) {
                     return reject(err);
                 }
+
+                let rrr = await this._db.sqlitedb.get("SELECT COUNT(*) as rec_count FROM pwa_cache_onchange_value");
+                console.log("------ LLLLL 111: ", rrr);
+
+                rrr = await this._db.sqlitedb.get("SELECT COUNT(*) as rec_count FROM product_product");
+                console.log("------ LLLLL 222: ", rrr);
 
                 this.options.force_client_show_modal = false;
                 return resolve();
@@ -393,18 +383,36 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                     );
                     this._sendTaskInfo(
                         "model_info_data",
-                        `Getting all model's informations...`,
+                        `Getting all model's names...`,
                         -1,
                         0
                     );
-                    const [response] = await rpc.sendJSonRpc(
-                        "/pwa/prefetch/model_info",
+                    let [response] = await rpc.sendJSonRpc(
+                        "/pwa/prefetch/model_info_names",
                         {
                             last_update: prefetch_last_update || false,
                         }
                     );
-                    const response_data = await response.json();
-                    model_infos = response_data.result || [];
+                    const model_info_names = (await response.json()).result;
+                    const names_len = model_info_names.length;
+                    for (let index = 0; index < names_len; ++index) {
+                        const model_name = model_info_names[index];
+                        this._sendTaskInfo(
+                            "model_info_data",
+                            `Getting '${model_name}' model metadata...`,
+                            model_info_names.length,
+                            index
+                        );
+                        [response] = await rpc.sendJSonRpc(
+                            "/pwa/prefetch/model_info",
+                            {
+                                last_update: prefetch_last_update || false,
+                                model_name: model_name,
+                            }
+                        );
+                        const response_data = await response.json();
+                        model_infos = model_infos.concat(response_data.result || []);
+                    }
                     if (!_.isEmpty(model_infos)) {
                         const tasks = [];
                         for (const model_info of model_infos) {

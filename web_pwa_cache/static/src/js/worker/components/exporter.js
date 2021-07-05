@@ -121,10 +121,8 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
 
                     for (const field of fields_changed) {
                         // TODO: Determine onchange execution order through onchange_spec
-                        const sql_pwa_cache = `SELECT id,cache_type,code_js FROM ${model_info_pwa_cache.table} WHERE "onchange_field_name"="${field}" AND "model_name"="${model}" AND "cache_type" IN ("onchange", "onchange_formula")`;
-                        const record = await this._db.sqlitedb
-                            .getDB()
-                            .get([sql_pwa_cache]);
+                        const sql_pwa_cache = `SELECT id,cache_type,code_js FROM ${model_info_pwa_cache.table} WHERE "onchange_field_name"=? AND "model_name"=? AND "cache_type" IN ("onchange", "onchange_formula")`;
+                        const record = await this._db.sqlitedb.get(sql_pwa_cache, field, model);
                         if (!_.isEmpty(record)) {
                             this._db.sqlitedb.converter.toOdoo(
                                 model_info_pwa_cache.fields,
@@ -141,10 +139,8 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                                 warning = changes.warning;
                                 domain = changes.domain;
                             } else {
-                                const sql_selectors = `SELECT "field_name", "required" FROM ${model_info_pwa_onchange.table} WHERE "pwa_cache_id"=${record.id} AND NOT disposable`;
-                                const selectors = await this._db.sqlitedb
-                                    .getDB()
-                                    .all([sql_selectors]);
+                                const sql_selectors = `SELECT "field_name", "required" FROM ${model_info_pwa_onchange.table} WHERE "pwa_cache_id"=? AND NOT disposable`;
+                                const selectors = await this._db.sqlitedb.all(sql_selectors, record.id);
                                 // TODO: Ver el orden
                                 let vals = {};
                                 let is_valid = true;
@@ -168,14 +164,12 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                                 //vals = Tools.unfoldObj(vals);
                                 const str_vals = Expression.convert_to_column(model_info_pwa_onchange_value.fields.values, vals);
                                 const ref_hash = Tools.hash(`${record.id}${field}${str_vals}`);
-                                const sql_value = `SELECT result FROM ${model_info_pwa_onchange_value.table} WHERE "ref_hash"=${ref_hash}`;
-                                const value_record = await this._db.sqlitedb
-                                    .getDB()
-                                    .get([sql_value]);
+                                const sql_value = `SELECT result FROM ${model_info_pwa_onchange_value.table} WHERE "ref_hash"=?`;
+                                const value_record = await this._db.sqlitedb.get(sql_value, ref_hash);
                                 // const value_record = await this._db.indexeddb.getRecord("onchange", false, [record.id, ref_hash]);
                                 // console.log("------- THE VAL: ", value_record);
                                 if (!_.isEmpty(value_record)) {
-                                    const onchange_data = JSON.parse(value_record.result);
+                                    const onchange_data = this._db.sqlitedb.converter.parseJson(value_record, "result");
                                     //const onchange_data = value_record.result;
                                     value = onchange_data.value;
                                     warning = onchange_data.warning;

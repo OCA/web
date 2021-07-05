@@ -71,7 +71,6 @@ odoo.define("web_pwa_cache.PWA.core.Config", function(require) {
                         "config",
                         true
                     );
-                    console.log("----- GET COFING ", model_info_config);
                     const record = await this._dbmanager.search_read(
                         model_info_config,
                         [["param", "=", name]],

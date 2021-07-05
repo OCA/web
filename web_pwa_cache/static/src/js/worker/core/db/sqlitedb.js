@@ -23,19 +23,6 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
         },
 
         /**
-         * This is necessary because sqlite recognize '?' as an placeholder
-         *
-         * @param {String} text
-         * @returns {String}
-         */
-        decode: function(text) {
-            if (!text) {
-                return typeof text === "string" ? "" : false;
-            }
-            return text;
-        },
-
-        /**
          * This is necessary because sqlite doesn't have a type for date
          *
          * @param {Object} values
@@ -79,11 +66,11 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
          */
         parseJson: function(values, field) {
             try {
-                return JSON.parse(this.decode(values[field]));
+                return JSON.parse(LZString.decompressFromUint8Array(values[field]));
             } catch (err) {
                 // Do nothing
             }
-            return values[field];
+            return LZString.decompressFromUint8Array(values[field]);
         },
 
         /**
@@ -97,7 +84,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
             return (
                 (values[field] && [
                     Number(values[field]),
-                    this.decode(values[`display_name__${field}`]),
+                    values[`display_name__${field}`],
                 ]) ||
                 false
             );
@@ -197,7 +184,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                     }
                     if (!value_parsed && typeof values[field] === "string") {
                         // Fields like 'display_name__' are 'virtual' fields without specific definition
-                        values[field] = this.decode(values[field]);
+                        values[field] = values[field];
                     }
                 }
             }
@@ -230,7 +217,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
             boolean: "NUMERIC",
 
             // Internal type
-            json: "TEXT",
+            json: "BLOB",
         },
 
         regex_order: new RegExp(
@@ -251,30 +238,22 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
         /**
          * @override
          */
-        install: function() {
-            return new Promise(async (resolve, reject) => {
-                try {
-                    this._db = await self.sqliteWorker({
-                        dist: this._sqlite_dist,
-                        name: this._db_name,
-                        //timeout: 5000,
-                    });
-                } catch (err) {
-                    return reject(err);
-                }
-                return resolve(this._db);
-            });
-        },
-
-        /**
-         * @override
-         */
         start: function(callback) {
-            if (callback) {
-                return callback(this._db);
-            }
+            return new Promise(async (resolve, reject) => {
+                if (!this._sql) {
+                    try {
+                        this._sql = await self.initSqlJs({
+                            locateFile: filename => `${this._sqlite_dist}/${filename}`,
+                        });
+                        this._data = new Uint8Array(0);
+                        this._db = new this._sql.Database(this._data);
+                    } catch (err) {
+                        return reject(err);
+                    }
+                }
 
-            return Promise.resolve();
+                return resolve(callback ? callback(this._db) : this._db);
+            });
         },
 
         /**
@@ -286,6 +265,86 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
 
         getInternalTableName: function(table) {
             return `${this._internal_table_prefix}${table}`;
+        },
+
+        /**
+         *
+         * @param {String} sql
+         * @param {Array} params
+         * @returns {Promise}
+         */
+        query: function(sql, ...params) {
+            return new Promise((resolve, reject) => {
+                try {
+                    const res = this._db.run(sql, _.isEmpty(params) ? false : params);
+                    if (!res) {
+                        reject(`Invalid Query: ${sql}`);
+                        return;
+                    }
+                    resolve(res);
+                } catch (err) {
+                    reject(err);
+                }
+            });
+        },
+
+        /**
+         *
+         * @param {Strings} sql
+         * @param {Array} params
+         * @returns {Promise}
+         */
+        all: function(sql, ...params) {
+            return new Promise((resolve, reject) => {
+                try {
+                    const res = this._db.exec(sql, _.isEmpty(params) ? false : params);
+                    if (!res) {
+                        // Invalid Query
+                        reject(`SQL query error: ${sql}`);
+                        return;
+                    } else if (_.isEmpty(res)) {
+                        // Empty Query
+                        resolve([]);
+                        return;
+                    }
+                    const values = res[0].values;
+                    const columns = res[0].columns;
+                    const num_values = values.length;
+                    const num_columns = columns.length;
+                    const records = [];
+                    for (let i=0; i<num_values; ++i) {
+                        const rec_vals = {};
+                        for (let e=0; e<num_columns; ++e) {
+                            rec_vals[columns[e]] = values[i][e];
+                        }
+                        records.push(rec_vals);
+                    }
+                    resolve(records);
+                } catch (err) {
+                    reject(err);
+                }
+            });
+        },
+
+        /**
+         *
+         * @param {String} sql
+         * @param {Array} params
+         * @returns {Promise}
+         */
+        get: function(sql, ...params) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const records = await this.all(`${sql} LIMIT 1`, ...params);
+                    if (_.isEmpty(records)) {
+                        resolve({});
+                        return;
+                    }
+                    return resolve(records[0]);
+                } catch (err) {
+                    return reject(err);
+                }
+            });
         },
 
         /**
@@ -302,10 +361,10 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                     model_info.table
                 }"`;
                 if (rc_ids && rc_ids.length) {
-                    sql += ` WHERE "id" IN (${rc_ids.join(",")})`;
+                    sql += ` WHERE "id" IN (${new Array(rc_ids.length).fill("?").join(",")})`;
                 }
                 try {
-                    const records = await this._db.all([sql]);
+                    const records = await this.all(sql, ...(rc_ids || []));
                     if (_.isEmpty(records)) {
                         return reject();
                     }
@@ -341,12 +400,8 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                         model_info,
                         svalues
                     );
-                    let sql = [`INSERT INTO "${model_info.table}" (${sql_columns.join(',')}) VALUES (`];
-                    for (let i=sql_values.length - 2; i>=0; --i) {
-                        sql.push(",");
-                    }
-                    sql.push(")");
-                    await this._db.query(sql, ...sql_values);
+                    let sql = `INSERT INTO "${model_info.table}" (${sql_columns.join(',')}) VALUES (${new Array(sql_values.length).fill("?").join(",")})`;
+                    await this.query(sql, ...sql_values);
                 } catch (err) {
                     return reject(err);
                 }
@@ -373,16 +428,8 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                         model_info,
                         svalues
                     );
-                    let sql = [];
-                    let sql_sn = `UPDATE "${model_info.table}" SET `;
-                    sql_sn += set_sql_keys[0];
-                    sql.push(sql_sn);
-                    const num_sql_keys = set_sql_keys.length;
-                    for (let i=1; i<num_sql_keys; ++i) {
-                        sql.push(` ,${set_sql_keys[i]}`);
-                    }
-                    sql.push(` WHERE "id" IN (${rc_ids.join(",")})`)
-                    await this._db.query(sql, ...set_sql_values);
+                    let sql = `UPDATE "${model_info.table}" SET ${set_sql_keys.join(",")} WHERE "id" IN (${new Array(rc_ids.length).fill("?").join(",")})`;
+                    await this.query(sql, ...set_sql_values, ...rc_ids);
                 } catch (err) {
                     return reject(err);
                 }
@@ -415,24 +462,15 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                         svalues,
                         conflicts
                     );
-                    let sql = [`INSERT INTO "${model_info.table}" (${sql_columns.join(',')}) VALUES (`];
-                    for (let i=sql_values.length - 2; i>=0; --i) {
-                        sql.push(",");
-                    }
+                    let sql = `INSERT INTO "${model_info.table}" (${sql_columns.join(',')}) VALUES (${new Array(sql_values.length).fill("?").join(",")})`;
                     if (conflicts && conflicts.length) {
-                        let sql_sn = `) ON CONFLICT(${conflicts.join(
+                        sql += ` ON CONFLICT(${conflicts.join(
                             ","
-                        )}) DO UPDATE SET `;
-                        sql_sn += set_sql_keys[0];
-                        sql.push(sql_sn);
-                        const num_sql_keys = set_sql_keys.length;
-                        for (let i=1; i<num_sql_keys; ++i) {
-                            sql.push(` ,${set_sql_keys[i]}`);
-                        }
-                        await this._db.query(sql, ...sql_values, ...set_sql_values);
+                        )}) DO UPDATE SET ${set_sql_keys.join(",")}`;
+                        await this.query(sql, ...sql_values, ...set_sql_values);
                     } else {
                         sql.push(")");
-                        await this._db.query(sql, ...sql_values);
+                        await this.query(sql, ...sql_values);
                     }
                 } catch (err) {
                     return reject(err);
@@ -465,20 +503,16 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                 sql_columns.push(`"${key}"`);
                 if (field.type === "many2one") {
                     const display_name_field = `display_name__${key}`;
-                    const display_name_value = Expression.column_string_encode(
-                        values[key][1] || "",
-                        false,
-                        false
-                    );
+                    const display_name_value = values[key][1] || "";
                     sql_columns.push(`"${display_name_field}"`);
                     sql_values.push(values[key][0] || null);
                     sql_values.push(display_name_value);
                     if (omit_set_keys.indexOf(key) === -1) {
                         set_sql_values.push(values[key][0] || null);
                         set_sql_values.push(display_name_value);
-                        set_sql_keys.push(`"${key}"=`);
+                        set_sql_keys.push(`"${key}"=?`);
                         set_sql_keys.push(
-                            `"${display_name_field}"=`
+                            `"${display_name_field}"=?`
                         );
                     }
                 } else {
@@ -491,7 +525,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                     sql_values.push(sql_value);
                     if (omit_set_keys.indexOf(key) === -1) {
                         set_sql_values.push(sql_value);
-                        set_sql_keys.push(`"${key}"=`);
+                        set_sql_keys.push(`"${key}"=?`);
                     }
                 }
             }
@@ -511,7 +545,6 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
             }
             const field_names = _.keys(model_fields);
             const table_fields = ["'id' INTEGER PRIMARY KEY"];
-            let sql = `CREATE TABLE IF NOT EXISTS "${model_info.table}" (`;
             for (const field_name of field_names) {
                 if (field_name === "id" || (!_.isEmpty(model_info.valid_fields) && model_info.valid_fields.indexOf(field_name) === -1)) {
                     continue;
@@ -530,9 +563,8 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                     );
                 }
             }
-            sql += table_fields.join(",");
-            sql += ")";
-            return this._db.query([sql]);
+            let sql = `CREATE TABLE IF NOT EXISTS "${model_info.table}" (${table_fields.join(",")})`;
+            return this.query(sql);
         },
 
         /**
@@ -542,13 +574,13 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
          * @returns {Promise}
          */
         createIndex: function(model_info, index_name, index_fields, unique = true) {
-            return this._db.query([
+            return this.query(
                 `CREATE ${
                     unique ? "UNIQUE" : ""
                 } INDEX IF NOT EXISTS ${index_name} ON ${
                     model_info.table
                 } (${index_fields.join(",")})`,
-            ]);
+            );
         },
 
         /**
@@ -559,9 +591,9 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
         deleteRecords: function(model_info, ids) {
             let sql = `DELETE FROM "${model_info.table}"`;
             if (ids && ids.length) {
-                sql += ` WHERE "id" IN (${ids.join(",")})`;
+                sql += ` WHERE "id" IN (${new Array(ids.length).fill("?").join(",")})`;
             }
-            return this._db.query([sql]);
+            return this.query(sql, ...(ids || []));
         },
 
         /** ********
@@ -571,13 +603,14 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
             return new Promise(async (resolve, reject) => {
                 const model_metadata = this.getInternalTableName("model_metadata");
                 try {
-                    const record = await this._db.get([
-                        `SELECT * FROM "${model_metadata}" WHERE "table"="${model_metadata}"`,
-                    ]);
+                    const record = await this.get(
+                        `SELECT * FROM "${model_metadata}" WHERE "table"=?`,
+                        model_metadata
+                    );
                     if (_.isEmpty(record)) {
                         return reject("Main model metadata not found!");
                     }
-                    this.converter.toOdoo(JSON.parse(record.fields), record);
+                    this.converter.toOdoo(this.converter.parseJson(record, "fields"), record);
                     return resolve(record);
                 } catch (err) {
                     return reject(err);
@@ -610,7 +643,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                         sql += where_sql.join(" OR ");
 
                         if (models.length === 1) {
-                            const record = await this._db.get([sql]);
+                            const record = await this.get(sql);
                             if (_.isEmpty(record)) {
                                 return reject(
                                     `Can't found model info for ${models[0]}`
@@ -620,7 +653,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                             return resolve(record);
                         }
                     }
-                    const records = await this._db.all([sql]);
+                    const records = await this.all(sql);
                     if (_.isEmpty(records)) {
                         return reject(
                             `Can't found model info for some or all ${models.join(",")}`

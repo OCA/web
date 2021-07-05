@@ -59,7 +59,16 @@ class PWAPrefetch(PWA):
             )
         return res
 
+    def _pwa_prefetch_model_info_names(self, last_update):
+        model_domain = []
+        if last_update:
+            model_domain.append(("write_date", ">=", last_update))
+        model_ids = request.env["ir.model"].sudo().search(model_domain).filtered(lambda x: x.model in request.env and not request.env[x.model]._abstract)
+        model_ids |= request.env["ir.model"].sudo().search(model_domain + [("id", "in", request.env["pwa.cache"].search(self._get_pwa_cache_domain(["model"])).mapped("model_id").ids)])
+        return model_ids.mapped("model")
+
     def _pwa_prefetch_model_info(self, last_update, **kwargs):
+        model_name = kwargs.get("model_name")
         # Get used model names from menus action
         actions = self._get_pwa_available_actions()
         model_views = {}
@@ -87,12 +96,9 @@ class PWAPrefetch(PWA):
         model_domain = []
         if last_update:
             model_domain.append(("write_date", ">=", last_update))
-        model_ids = request.env["ir.model"].sudo().search(model_domain).filtered(lambda x: x.model in request.env and not request.env[x.model]._abstract)
-        model_ids |= request.env["ir.model"].sudo().search(model_domain + [("id", "in", request.env["pwa.cache"].search(self._get_pwa_cache_domain(["model"])).mapped("model_id").ids)])
+        model_ids = request.env["ir.model"].sudo().search(model_domain + [("model", "=", model_name)]).filtered(lambda x: x.model in request.env and not request.env[x.model]._abstract)
         res = []
         for model_id in model_ids:
-            if model_id.model not in request.env:
-                continue
             view_types = {}
             for view_type in available_types:
                 # Adds 'False' to get generic view
@@ -102,8 +108,8 @@ class PWAPrefetch(PWA):
                     ("id", "in", list(model_views[model_id.model])),
                     ("type", "!=", "qweb"),
                 ]
-                if last_update:
-                    view_domain.append(("write_date", ">=", last_update))
+                # if last_update:
+                #     view_domain.append(("write_date", ">=", last_update))
                 view_list = ir_ui_view_obj.search_read(view_domain, ["type"])
                 for view in view_list:
                     view_types[view["type"]].append(view["id"])
@@ -217,7 +223,9 @@ class PWAPrefetch(PWA):
         return functions
 
     def _pwa_is_invalid_field(self, model, field_name, field_def):
-        if model == "pwa.cache.onchange.value" and field_name in ("display_name", "field_name", "values", "create_uid", "create_date", "write_uid"):
+        if field_name in ("create_uid", "create_date", "write_uid"):
+            return True
+        if model == "pwa.cache.onchange.value" and field_name in ("display_name", "field_name", "values"):
             return True
         is_stored = "store" in field_def and field_def["store"]
         is_valid_type = field_def["type"] not in ("one2many", "binary")
@@ -263,7 +271,7 @@ class PWAPrefetch(PWA):
             opt[0] for opt in request.env["pwa.cache"]._fields["cache_type"].selection
         }
         # Fixed caches
-        available_types |= {"action", "userdata", "model_default", "model_info"}
+        available_types |= {"action", "userdata", "model_default", "model_info", "model_info_names"}
         if cache_type in available_types:
             prefetch_method = getattr(self, "_pwa_prefetch_{}".format(cache_type))
             if prefetch_method:

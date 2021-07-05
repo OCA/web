@@ -125,7 +125,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                     }
 
                     // Figure out the applicable order_by for the m2o
-                    const dest_model = await this._dbmanager.sqlitedb.getModelInfo(
+                    const dest_model = await this._dbmanager.getModelInfo(
                         field.relation
                     );
                     let m2o_order = dest_model.orderby;
@@ -182,7 +182,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                     let [model, field] = [model_info, model_info.fields[fname]];
                     while (field.inherited) {
                         // Retrieve the parent model where field is inherited from
-                        const parent_model = await this._dbmanager.sqlitedb.getModelInfo(
+                        const parent_model = await this._dbmanager.getModelInfo(
                             field.related_field.model_name
                         );
                         const parent_fname = field.related[0];
@@ -369,7 +369,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
             return new Promise(async (resolve, reject) => {
                 let sql = null;
                 try {
-                    const db = this.getParent().getDB();
+                    const db = this._dbmanager.sqlitedb;
 
                     // Self.sudo(access_rights_uid or self._uid).check_access_rights('read')
                     if (expression.is_false(model_info, args)) {
@@ -395,9 +395,8 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                     if (count) {
                         // Ignore order, limit and offset when just counting, they don't make sense and could
                         // hurt performance
-                        const query_str = `SELECT count(1) as rec_count FROM ${from_clause} ${where_str}`;
-                        sql = _.str.sprintf(query_str, ...where_clause_params);
-                        const res = await db.get([sql]);
+                        sql = `SELECT count(1) as rec_count FROM ${from_clause} ${where_str}`;
+                        const res = await db.get(sql, ...where_clause_params);
                         return resolve(res.rec_count || 0);
                     }
 
@@ -422,7 +421,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                             select_clause = select_clause_fields.join(",");
                         }
                     }
-                    const query_str =
+                    sql =
                         `SELECT ${select_clause} FROM ` +
                         from_clause +
                         where_str +
@@ -431,10 +430,9 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                         offset_str;
                     //console.log("--------------------------- THE SQL");
                     //console.log(query_str);
-                    sql = _.str.sprintf(query_str, ...where_clause_params);
                     //console.log(sql);
                     //console.log(args);
-                    const res = await db.all([sql]);
+                    const res = await db.all(sql, ...where_clause_params);
                     if (!field_names) {
                         return resolve(
                             _.chain(res)

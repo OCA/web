@@ -102,6 +102,17 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
         _onStartSQLiteDB: function() {
             return new Promise(async (resolve, reject) => {
                 console.log("[ServiceWorker] Generating SQLite DB Schema...");
+
+                // const rrrd = await this._db.sqlitedb
+                //     .getDB()
+                //     .all(["SELECT * FROM "," WHERE ref_hash="], this._db.sqlitedb.getDB().raw`pwa_cache_onchange_value`, 3646884027832);
+                // console.table(rrrd);
+
+                // const rrrt = await this._db.sqlitedb
+                //     .getDB()
+                //     .all(["EXPLAIN QUERY PLAN SELECT * FROM "," WHERE ref_hash="], this._db.sqlitedb.getDB().raw`pwa_cache_onchange_value`, 3646884027832);
+                // console.table(rrrt);
+
                 try {
                     const model_info_model_metadata = {
                         table: this.sqlitedb.getInternalTableName("model_metadata"),
@@ -321,6 +332,11 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                         model_info_defaults,
                         ["model"]
                     );
+
+
+                    console.log("---- PWA TEST");
+                    const rrr = await this.sqlitedb.get(`SELECT * FROM i_pwa_model_metadata WHERE "table"=?`,"i_pwa_model_metadata");
+                    console.table(rrr);
                 } catch (err) {
                     return reject(err);
                 }

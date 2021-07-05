@@ -66,19 +66,11 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
         return records.map(x => x.id);
     }
 
-    function column_string_encode(text, string_quoted, string_sanitized) {
-        let res = String(text);
-        if (string_sanitized) {
-            res = res.replace(/\?/g, "%3F").replace(/"/g, '""');
-        }
-        return string_quoted ? `"${res}"` : res;
-    }
-
     function convert_to_column(field, value, string_quoted = true, string_sanitized = true) {
         let svalue = value;
 
         if (
-            field.type !== "boolean" &&
+            field.type !== "boolean" && field.type !== "binary" && field.type !== "json" &&
             (_.isUndefined(svalue) || _.isNull(svalue) || svalue === false)
         ) {
             if (string_sanitized) {
@@ -107,28 +99,13 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                 break;
             case "binary":
             case "json":
-                if (typeof value === "object") {
-                    svalue = column_string_encode(
-                        JSON.stringify(_.isUndefined(value) ? "" : value),
-                        string_quoted,
-                        string_sanitized
-                    );
-                } else {
-                    svalue = column_string_encode(
-                        _.isUndefined(value) ? "" : value,
-                        string_quoted,
-                        string_sanitized
-                    );
-                }
+                svalue = JSON.stringify(_.isUndefined(value) ? "" : value);
+                svalue = LZString.compressToUint8Array(svalue);
                 break;
             case "char":
             case "text":
             case "html":
-                svalue = column_string_encode(
-                    _.isUndefined(value) ? "" : value,
-                    string_quoted,
-                    string_sanitized
-                );
+                svalue = _.isUndefined(value) ? "" : value;
                 break;
             case "many2one":
                 if (typeof value === "object") {
@@ -152,10 +129,6 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     svalue = string_quoted ? `"${svalue}"` : svalue;
                 }
                 break;
-            default:
-                if (typeof value === "string") {
-                    svalue = column_string_encode(value, string_quoted, string_sanitized);
-                }
         }
 
         return svalue;
@@ -416,15 +389,16 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                 // TODO where_operator is supposed to be 'in'? It is called with child_of...
                 for (let i = 0; i < where_ids.length && i < IN_MAX; ++i) {
                     const subids = where_ids.slice(i, i + IN_MAX);
-                    const records = await cr.all([
-                        `SELECT DISTINCT "${select_field}" FROM "${from_table}" WHERE "${where_field}" IN (${subids})`,
-                    ]);
+                    const records = await cr.all(
+                        `SELECT DISTINCT "${select_field}" FROM "${from_table}" WHERE "${where_field}" IN (${new Array(subids.length).fill("?").join(",")})`,
+                        ...subids
+                    );
                     res = res.concat(get_records_ids(records));
                 }
             } else {
-                const records = await cr.all([
+                const records = await cr.all(
                     `SELECT DISTINCT "${select_field}" FROM "${from_table}" WHERE "${where_field}" ${where_operator} ${where_ids[0]}`,
-                ]);
+                );
                 res = get_records_ids(records);
             }
         }
@@ -432,9 +406,9 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
     }
 
     async function select_distinct_from_where_not_null(cr, select_field, from_table) {
-        const records = await cr.all([
+        const records = await cr.all(
             `SELECT distinct("${select_field}") FROM "${from_table}" where "${select_field}" is not null`,
-        ]);
+        );
         return get_records_ids(records);
     }
 
@@ -936,7 +910,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     const model = leaf.model;
                     const field = path[0] in model.fields && model.fields[path[0]];
                     // eslint-disable-next-line
-                    const comodel = await this._dbmanager.sqlitedb.getModelInfo(
+                    const comodel = await this._dbmanager.getModelInfo(
                         field && field.relation
                     );
 
@@ -971,7 +945,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                         // Comments about inherits'd fields
                         //  { 'field_name': ('parent_model', 'm2o_field_to_reach_parent',
                         //                    field_column_obj, origina_parent_model), ... }
-                        const parent_model = await this._dbmanager.sqlitedb.getModelInfo(
+                        const parent_model = await this._dbmanager.getModelInfo(
                             field.related_field.model_name
                         );
                         const parent_fname = model.inherits[parent_model.model];
@@ -1479,7 +1453,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                 if (right instanceof Array) {
                     params = [];
                     for (const right_id of right) {
-                        conds.push(`${table_alias}."${left}" ${cond_operator} "%s"`);
+                        conds.push(`${table_alias}."${left}" ${cond_operator} "?"`);
                         params.push(`%||${right_id}||%`);
                     }
                     params = right;
@@ -1494,7 +1468,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     }
                     params = [];
                 } else {
-                    conds.push(`${table_alias}."${left}" ${cond_operator} "%s"`);
+                    conds.push(`${table_alias}."${left}" ${cond_operator} "?"`);
                     params = [`%||${right}||%`];
                 }
                 query = `(${conds.join(is_positive_operator ? " OR " : " AND ")})`;
@@ -1540,11 +1514,11 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     } else {
                         let instr = "";
                         if (left === "id") {
-                            instr = new Array(params.length).fill("%s").join(",");
+                            instr = new Array(params.length).fill("?").join(",");
                         } else {
                             const field = model.fields[left];
                             instr = new Array(params.length)
-                                .fill(field.column_format || "%s")
+                                .fill(field.column_format || "?")
                                 .join(",");
                             params = params.map(x => convert_to_column(field, x));
                         }
@@ -1610,7 +1584,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     throw Error(`Invalid field ${left} in domain term ${leaf}`);
                 }
                 // Const format = need_wildcard ? '%s' : model_fields[left].column_format;
-                const format = "%s";
+                const format = "?";
                 const column = `${table_alias}.${tools.s_quote(left)}`;
                 if (cast) {
                     query = `(CAST(${column} AS ${cast}) ${sql_operator} ${format})`;
@@ -1668,7 +1642,6 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
 
     return {
         get_records_ids: get_records_ids,
-        column_string_encode: column_string_encode,
         convert_to_column: convert_to_column,
         normalize_domain: normalize_domain,
         is_false: is_false,

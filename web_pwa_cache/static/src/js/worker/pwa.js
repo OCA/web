@@ -38,25 +38,8 @@ odoo.define("web_pwa_cache.PWA", function(require) {
 
             this._db = new DatabaseSystem();
             this._cache = new CacheSystem();
-        },
 
-        /**
-         * @override
-         */
-        start: function () {
-            const task = new Promise(async (resolve, reject) => {
-                try {
-                    await this._db.install();
-                    await this._db.start();
-                    await this._initManagers();
-                    await this._initComponents();
-                } catch (err) {
-                    return reject(err);
-                }
-                return resolve();
-            });
-
-            return Promise.all([this._super.apply(this, arguments), task]);
+            this._wasActivated = false;
         },
 
         /**
@@ -110,6 +93,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
         installWorker: function() {
             const task = new Promise(async (resolve, reject) => {
                 try {
+                    await this._db.install();
                     await this._cache.addAll(
                         this._cache_hashes.pwa,
                         this._prefetched_urls
@@ -135,9 +119,15 @@ odoo.define("web_pwa_cache.PWA", function(require) {
         activateWorker: function() {
             const task = new Promise(async (resolve, reject) => {
                 try {
+                    if (!this._wasActivated) {
+                        await this._db.start();
+                        await this._initManagers();
+                        await this._initComponents();
+                    }
                     await this._cache.cleanOld([this._cache_hashes.pwa]);
                     this._managers.config.sendToPages();
                     this._managers.sync.sendCountToPages();
+                    this._wasActivated = true;
                 } catch (err) {
                     return reject(err);
                 }

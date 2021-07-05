@@ -138,7 +138,7 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
                 if (this._managers.config.isOfflineMode()) {
                     setTimeout(() => resolve(Tools.ResponseJSONRPC([])), 30000);
                 } else {
-                    reject();
+                    reject("Not using simulated response in online mode");
                 }
             });
         },
@@ -159,7 +159,7 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
                     })
                 );
             }
-            return Promise.reject();
+            return Promise.reject("Not using simulated response in online mode");
         },
 
         /**
@@ -250,7 +250,7 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
                     })
                 );
             }
-            return Promise.reject();
+            return Promise.reject("Not using simulated response in online mode");
         },
 
         _routeOutReadFollowers: function(url, request_data) {
@@ -263,7 +263,7 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
                         );
                         return resolve(Tools.ResponseJSONRPC(resp_data));
                     }
-                    return reject();
+                    return reject("Not using simulated response in online mode");
                 } catch (err) {
                     return reject(err);
                 }
