@@ -7,3 +7,4 @@
 
   * David Vidal
   * João Marques
+  * Alexandre Díaz

@@ -26,10 +26,10 @@ Web Disable Export Group
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
 In the standard Odoo the UI option 'Export' that is present in the 'Action' menu
-of any list view is always enabled (for every user).
+and the 'Export All' button of any list view is always enabled (for every user).
 
-This module makes the option 'Export' enabled only for the users that belong
-to the Export Data group.
+This module makes the option 'Export' and 'Export All' enabled only for the users
+that belong to the Export Data group.
 
 Admin user can always use the export option.
 
@@ -80,6 +80,7 @@ Contributors
 
   * David Vidal
   * João Marques
+  * Alexandre Díaz
 
 Maintainers
 ~~~~~~~~~~~
