@@ -1,7 +1,7 @@
 /* Copyright 2020 Tecnativa - João Marques
    License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). */
 
-odoo.define("web_disable_export_group.tour", function(require) {
+odoo.define("web_disable_export_group.tour", function (require) {
     "use strict";
 
     var core = require("web.core");
@@ -18,6 +18,10 @@ odoo.define("web_disable_export_group.tour", function(require) {
         },
         [
             {
+                content: "Check if 'Export all' button exists",
+                trigger: ".o_list_buttons:has(.o_list_export_xlsx)",
+            },
+            {
                 content: "Select all records",
                 trigger: ".custom-control-input:first",
             },
@@ -28,7 +32,7 @@ odoo.define("web_disable_export_group.tour", function(require) {
             {
                 content: "Check if Export button exists",
                 trigger:
-                    '.o_control_panel div.o_dropdown_menu a:contains("' +
+                    '.o_cp_action_menus ul.o_dropdown_menu a:contains("' +
                     _t("Export") +
                     '")',
             },
@@ -43,6 +47,10 @@ odoo.define("web_disable_export_group.tour", function(require) {
         },
         [
             {
+                content: "Check if 'Export all' button exists",
+                trigger: ".o_list_buttons:not(:has(.o_list_export_xlsx))",
+            },
+            {
                 content: "Select all records",
                 trigger: ".custom-control-input:first",
             },
@@ -53,7 +61,7 @@ odoo.define("web_disable_export_group.tour", function(require) {
             {
                 content: "Check if Export button does not exist",
                 trigger:
-                    '.o_control_panel div.o_dropdown_menu a:first:not(:contains("' +
+                    '.o_cp_action_menus ul.o_dropdown_menu a:first:not(:contains("' +
                     _t("Export") +
                     '"))',
             },
