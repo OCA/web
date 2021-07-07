@@ -2,7 +2,7 @@
  * Copyright 2020 Tecnativa - Alexandre Díaz
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html) */
 
-odoo.define("web_widget_numeric_step.field", function(require) {
+odoo.define("web_widget_numeric_step.field", function (require) {
     "use strict";
 
     const field_utils = require("web.field_utils");
@@ -35,7 +35,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
         /**
          * @override
          */
-        init: function() {
+        init: function () {
             this._super.apply(this, arguments);
 
             // Widget config
@@ -69,7 +69,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          *
          * @override
          */
-        start: function() {
+        start: function () {
             this._click_delay = this.DEF_CLICK_DELAY;
             this._autoStep = false;
             return this._super.apply(this, arguments).then(() => {
@@ -87,7 +87,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          *
          * @override
          */
-        _formatValue: function(value) {
+        _formatValue: function (value) {
             if (this.mode === "edit") {
                 return this._sanitizeNumberValue(value);
             }
@@ -99,7 +99,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          *
          * @override
          */
-        _parseValue: function() {
+        _parseValue: function () {
             const parsedVal = this._super.apply(this, arguments);
             if (this.mode === "edit") {
                 return Number(parsedVal) || 0;
@@ -112,7 +112,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          *
          * @override
          */
-        _prepareInput: function() {
+        _prepareInput: function () {
             const result = this._super.apply(this, arguments);
             this.$input.attr(_.pick(this.nodeOptions, ["placeholder"]));
             // InputField hard set the input type to 'text' or 'password',
@@ -132,7 +132,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          *
          * @override
          */
-        _renderEdit: function() {
+        _renderEdit: function () {
             _.defer(() =>
                 this.$el
                     .parents("td.o_numeric_step_cell")
@@ -146,7 +146,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          *
          * @override
          */
-        _renderReadonly: function() {
+        _renderReadonly: function () {
             this.$el
                 .parents("td.numeric_step_editing_cell")
                 .removeClass("numeric_step_editing_cell");
@@ -158,7 +158,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          *
          * @param {String} mode can be "plus" or "minus"
          */
-        _doStep: function(mode) {
+        _doStep: function (mode) {
             let cval = 0;
             try {
                 const field = this.record.fields[this.name];
@@ -184,7 +184,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
         /**
          * @private
          */
-        _clearStepInterval: function() {
+        _clearStepInterval: function () {
             clearTimeout(this._auto_step_interval);
             this._auto_step_interval = false;
             this._click_delay = this.DEF_CLICK_DELAY;
@@ -196,7 +196,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          * @private
          * @param {MouseClickEvent} ev
          */
-        _onStepClick: function(ev) {
+        _onStepClick: function (ev) {
             if (!this._autoStep) {
                 const mode = ev.target.dataset.mode;
                 this._doStep(mode);
@@ -208,7 +208,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          * @private
          * @param {MouseClickEvent} ev
          */
-        _onStepMouseDown: function(ev) {
+        _onStepMouseDown: function (ev) {
             if (ev.button === 0 && !this._auto_step_interval) {
                 this._auto_step_interval = setTimeout(
                     this._whileMouseDown.bind(this, ev),
@@ -223,7 +223,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          *
          * @private
          */
-        _onFocusIn: function() {
+        _onFocusIn: function () {
             if (this._config.autoSelect) {
                 this.$input.select();
             }
@@ -233,7 +233,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          * @private
          * @param {FocusoutEvent} ev
          */
-        _onFocusOut: function() {
+        _onFocusOut: function () {
             if (this._auto_step_interval) {
                 this._clearStepInterval();
             }
@@ -242,7 +242,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
         /**
          * @private
          */
-        _onMouseUp: function() {
+        _onMouseUp: function () {
             this._clearStepInterval();
         },
 
@@ -250,7 +250,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          * @private
          * @param {MouseClickEvent} ev
          */
-        _whileMouseDown: function(ev) {
+        _whileMouseDown: function (ev) {
             this._autoStep = true;
             const mode = ev.target.dataset.mode;
             this._doStep(mode);
@@ -267,7 +267,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          *
          * @param {WheelEvent} ev
          */
-        _onWheel: function(ev) {
+        _onWheel: function (ev) {
             ev.preventDefault();
             if (ev.originalEvent.deltaY > 0) {
                 this._doStep("minus");
@@ -281,7 +281,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          *
          * @param {KeyEvent} ev
          */
-        _onKeyDown: function(ev) {
+        _onKeyDown: function (ev) {
             if (ev.keyCode === $.ui.keyCode.UP) {
                 this._doStep("plus");
             } else if (ev.keyCode === $.ui.keyCode.DOWN) {
@@ -294,7 +294,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          *
          * @override
          */
-        _onChange: function(ev) {
+        _onChange: function (ev) {
             ev.target.value = this._sanitizeNumberValue(ev.target.value);
             return this._super.apply(this, arguments);
         },
@@ -308,7 +308,7 @@ odoo.define("web_widget_numeric_step.field", function(require) {
          * @param {Number} value
          * @returns {Number}
          */
-        _sanitizeNumberValue: function(value) {
+        _sanitizeNumberValue: function (value) {
             let cval = Number(value);
             if (_.isNaN(cval)) {
                 return value;
