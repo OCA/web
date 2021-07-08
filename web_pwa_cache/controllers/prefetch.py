@@ -25,12 +25,8 @@ class PWAPrefetch(PWA):
     def _get_pwa_available_actions(self):
         ir_ui_menu_obj = request.env["ir.ui.menu"]
         menus = ir_ui_menu_obj.load_menus(False)
-        menu_ids = ir_ui_menu_obj.browse(menus["all_menu_ids"])
-        actions = []
-        for menu_id in menu_ids:
-            if not menu_id.action:
-                continue
-            actions.append("{},{}".format(menu_id.action.type, menu_id.action.id))
+        menu_ids = ir_ui_menu_obj.browse(menus["all_menu_ids"]).filtered("action")
+        actions = ["{},{}".format(menu_id.action.type, menu_id.action.id) for menu_id in menu_ids]
         return actions
 
     def _pwa_prefetch_action(self, last_update, **kwargs):
@@ -240,7 +236,8 @@ class PWAPrefetch(PWA):
                 pass
         elif model == "ir.actions.act_window":
             fields.append("views")
-        fields.append("display_name")
+        if model != "pwa.cache.onchange.value":
+            fields.append("display_name")
 
     def _pwa_get_model_fields(self, model):
         record = request.env["pwa.cache"].search(self._get_pwa_cache_domain(["model"]) + [("model_name", "=", model)], limit=1)

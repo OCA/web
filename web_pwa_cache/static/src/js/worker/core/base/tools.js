@@ -336,7 +336,7 @@ odoo.define("web_pwa_cache.PWA.core.base.Tools", function() {
             hash2 = (hash2 * 33) ^ char_code;
         }
 
-        return (hash1 >> 0) * 4096 + (hash2 >> 0);
+        return (hash1 >>> 0) * 4096 + (hash2 >>> 0);
     }
 
     return {

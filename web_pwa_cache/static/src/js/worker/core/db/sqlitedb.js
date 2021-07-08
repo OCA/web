@@ -238,15 +238,15 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
         /**
          * @override
          */
-        start: function(callback) {
+        start: function(callback, sqlitefile_data) {
             return new Promise(async (resolve, reject) => {
                 if (!this._sql) {
                     try {
                         this._sql = await self.initSqlJs({
                             locateFile: filename => `${this._sqlite_dist}/${filename}`,
                         });
-                        this._data = new Uint8Array(0);
-                        this._db = new this._sql.Database(this._data);
+                        this._db = new this._sql.Database(sqlitefile_data);
+                        await this.query("PRAGMA cache_size = -1024"); // negative values =  N * 1024 bytes
                     } catch (err) {
                         return reject(err);
                     }
@@ -348,6 +348,20 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
         },
 
         /**
+         * To know: sqlite.js works in MEMFS. Don't use in-memory databases.
+         */
+        setPragmas: function () {
+            // The journal_mode pragma gets or sets the journal mode which controls how the journal file is stored and processed.
+            this.query("PRAGMA journal_mode = OFF");
+            // The synchronous pragma gets or sets the current disk synchronization mode, which controls how aggressively SQLite will write data all the way out to physical storage.
+            this.query("PRAGMA synchronous = OFF");
+            // Query or set the page size of the database. The page size must be a power of two between 512 and 65536 inclusive. (Default is 4096)
+            this.query("PRAGMA page_size = 1024");
+            // Query or change the maximum number of bytes that are set aside for memory-mapped I/O on a single database.
+            this.query("PRAGMA mmap_size = 0");
+        },
+
+        /**
          * @param {Object} model_info
          * @param {Array} rc_ids
          * @returns {Promise}
@@ -369,10 +383,10 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                         return reject();
                     }
                     // Order by array ids
-                    const res = [];
-                    for (const id of rc_ids) {
-                        res.push(_.findWhere(records, {id: id}));
-                    }
+                    // const res = [];
+                    // for (const id of rc_ids) {
+                    //     res.push(_.findWhere(records, {id: id}));
+                    // }
 
                     this.converter.toOdoo(model_info.fields, res);
                     return resolve(records);
@@ -544,6 +558,8 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                 model_fields = JSON.toOdoo(model_info.fields);
             }
             const field_names = _.keys(model_fields);
+            // For sqlite this is an alias for "rowid"
+            // See: https://www.sqlite.org/lang_createtable.html#rowid
             const table_fields = ["'id' INTEGER PRIMARY KEY"];
             for (const field_name of field_names) {
                 if (field_name === "id" || (!_.isEmpty(model_info.valid_fields) && model_info.valid_fields.indexOf(field_name) === -1)) {
@@ -594,6 +610,19 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                 sql += ` WHERE "id" IN (${new Array(ids.length).fill("?").join(",")})`;
             }
             return this.query(sql, ...(ids || []));
+        },
+
+        vacuum: function() {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    await this.query("PRAGMA shrink_memory");
+                    await this.query("VACUUM");
+                } catch (err) {
+                    return reject(err);
+                }
+
+                return resolve();
+            });
         },
 
         /** ********

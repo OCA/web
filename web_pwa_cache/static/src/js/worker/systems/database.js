@@ -12,6 +12,7 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
     const DatabaseSystem = OdooClass.extend({
         _sqlite_db_name: "oca_pwa_sqlite",
         _indexed_db_name: "oca_pwa_indexed",
+        _persist_timeout: 3000,
 
         /**
          * @override
@@ -19,6 +20,8 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
         init: function() {
             this.sqlitedb = new SQLiteDB(this, this._sqlite_db_name);
             this.indexeddb = new IndexedDB(this, this._indexed_db_name);
+            this._timer_persist = false;
+            this._promise_persist = Promise.resolve();
             this.model_infos = {};
         },
 
@@ -30,10 +33,18 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
          * @returns {Promise}
          */
         start: function() {
-            return Promise.all([
-                this.sqlitedb.start(this._onStartSQLiteDB.bind(this)),
-                this.indexeddb.start(this._onStartIndexedDB.bind(this)),
-            ]);
+            return new Promise(async (resolve, reject) => {
+                try {
+                    await this.indexeddb.start(this._onStartIndexedDB.bind(this));
+                    const sqlite_data = await this._loadSqliteData();
+                    await this.sqlitedb.start(this._onStartSQLiteDB.bind(this), sqlite_data);
+                    await this.persistDatabases(true);
+                } catch (err) {
+                    return reject(err);
+                }
+
+                return resolve();
+            });
         },
 
         /**
@@ -114,6 +125,8 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                 // console.table(rrrt);
 
                 try {
+                    this.sqlitedb.setPragmas();
+
                     const model_info_model_metadata = {
                         table: this.sqlitedb.getInternalTableName("model_metadata"),
                         model: this.sqlitedb.getInternalTableName("model_metadata"),
@@ -170,8 +183,8 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                     await this.sqlitedb.createTable(model_info_views);
                     await this.sqlitedb.createIndex(
                         model_info_views,
-                        "views_model_view_id_type",
-                        ["model", "view_id", "type", "is_default"]
+                        "views_model_type_is_default_view_id",
+                        ["model", "type", "is_default", "view_id"]
                     );
                     await this.sqlitedb.createOrUpdateRecord(
                         model_info_model_metadata,
@@ -332,11 +345,6 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                         model_info_defaults,
                         ["model"]
                     );
-
-
-                    console.log("---- PWA TEST");
-                    const rrr = await this.sqlitedb.get(`SELECT * FROM i_pwa_model_metadata WHERE "table"=?`,"i_pwa_model_metadata");
-                    console.table(rrr);
                 } catch (err) {
                     return reject(err);
                 }
@@ -364,8 +372,12 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                     unique: true,
                 });
                 storeBinary.createIndex("model", "model", {unique: false});
-                db.createObjectStore("onchange", {
-                    keyPath: ["pwa_cache_id__id", "ref_hash"],
+                // db.createObjectStore("onchange", {
+                //     keyPath: "ref_hash",
+                //     unique: true,
+                // });
+                db.createObjectStore("sqlitefile", {
+                    keyPath: "section",
                     unique: true,
                 });
             } else {
@@ -381,6 +393,125 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                 //     }
                 // }
             }
+        },
+
+        // -------------------
+        // MANAGEMENT
+        // -------------------
+        _persistSqlChunk: function (data, chunk_index) {
+            return new Promise((resolve, reject) => {
+                const [transaction, objectStore] = this.indexeddb.getTransactionInfo("sqlitefile", "readwrite");
+                if (objectStore) {
+                    const request = objectStore.add({
+                        section: `chunk_${chunk_index}`,
+                        bytes: data,
+                    });
+                    transaction.commit();
+                    request.onsuccess = () => resolve(data.byteLength);
+                    request.onerror = () => reject();
+                } else {
+                    reject();
+                }
+            });
+        },
+
+        _persistSql: function () {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const CHUNK_SIZE = 36700160; // 35MiB
+                    await this.sqlitedb.vacuum();
+                    let sqlitefile = this.sqlitedb.getDB().export();
+                    // Reset pragmas. See: https://github.com/sql-js/sql.js/issues/159
+                    this.sqlitedb.setPragmas();
+                    const size = sqlitefile.byteLength;
+                    await this.indexeddb.deleteAllRecords("sqlitefile");
+                    let chunks = 0;
+                    let offset = 0;
+                    for (; offset < size; ++chunks) {
+                        const wsize = await this._persistSqlChunk(sqlitefile.subarray(0, CHUNK_SIZE), chunks);
+                        if (wsize === 0) {
+                            break;
+                        }
+                        // free memory as soon as possible
+                        sqlitefile = sqlitefile.subarray(wsize);
+                        offset += wsize;
+                    }
+                    // Write last part if needed
+                    if (offset !== size) {
+                        return reject("The amount of bytes written doesn't match with the real size of the sqlite file");
+                    }
+
+                    await this.indexeddb.createRecord("sqlitefile", {
+                        section: "metadata",
+                        data: {
+                            filesize: size,
+                            chunks: chunks
+                        },
+                    });
+
+                    return resolve();
+                } catch (err) {
+                    return reject(err);
+                }
+            });
+        },
+
+        _loadSqliteData: function () {
+            return new Promise(async (resolve, reject) => {
+                let metadata = undefined;
+                try {
+                    metadata = await this.indexeddb.getRecord("sqlitefile", false, "metadata");
+                    metadata = metadata ? metadata.data : false;
+                } catch (err) {
+                    metadata = false;
+                }
+                if (!metadata || !metadata.filesize) {
+                    return resolve(new Uint8Array(0));
+                }
+
+                const buffer = new Uint8Array(metadata.filesize); // Allocate required memory
+                let offset = 0;
+                for (let chunk_index=0; chunk_index < metadata.chunks; ++chunk_index) {
+                    const record = await this.indexeddb.getRecord("sqlitefile", false, `chunk_${chunk_index}`);
+                    if (_.isEmpty(record)) {
+                        return reject("Expected bytes to copy!");
+                    }
+                    buffer.set(record.bytes, offset);
+                    offset += record.bytes.byteLength;
+                }
+
+                if (offset !== metadata.filesize) {
+                    return reject("Copied size doesn't match with the size of the sqlite file!");
+                }
+
+                return resolve(buffer);
+            });
+        },
+
+        /**
+         * This is critical method!
+         * When call "export" we make a copy of the database.
+         * We will need twice the memory required just to host the database.
+         *
+         * @param {Boolean} instant
+         * @returns {Promise}
+         */
+        persistDatabases: function (instant) {
+            return new Promise((resolve) => {
+                // Save sqlitejs
+                if (this._timer_persist) {
+                    clearTimeout(this._timer_persist);
+                    this._timer_persist = false;
+                }
+                const chain_promise = () => {
+                    this._promise_persist = this._promise_persist.then(() => this._persistSql().then(() => resolve()));
+                };
+                if (instant) {
+                    chain_promise();
+                } else {
+                    this._timer_persist = setTimeout(chain_promise, this._persist_timeout);
+                }
+            });
         },
 
         // -------------------
@@ -480,10 +611,8 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                             // Two because we force "id" and "model" fields
                             if (Object.keys(binary_fields_values).length > 2) {
                                 tasks.push(
-                                    this.indexeddb.updateRecords(
+                                    this.indexeddb.createOrUpdateRecord(
                                         "binary",
-                                        false,
-                                        [model_info.model, id],
                                         binary_fields_values
                                     )
                                 );
@@ -528,8 +657,6 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                         if (binary_fields.length) {
                             await this.indexeddb.createOrUpdateRecord(
                                 "binary",
-                                false,
-                                [model_info.model, values.id],
                                 _.chain(values)
                                     .pick(_.union(["id"], binary_fields))
                                     .extend({model: model_info.model})
@@ -898,8 +1025,8 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                                 model_info_views,
                                 [
                                     ["model", "=", model_info.model],
-                                    ["is_default", "=", true],
                                     ["type", "=", view_type],
+                                    ["is_default", "=", true],
                                 ],
                                 1
                             );
@@ -910,8 +1037,8 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                                     model_info_views,
                                     [
                                         ["model", "=", model_info.model],
-                                        ["is_default", "=", true],
                                         ["type", "=", "form"],
+                                        ["is_default", "=", true],
                                     ],
                                     1
                                 );
@@ -1088,6 +1215,9 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                         ],
                         1
                     );
+                    if (_.isEmpty(records)) {
+                        return reject(`No model data found for '${xmlid}'...`);
+                    }
                     return resolve(records[0]);
                 } catch (err) {
                     return reject(err);
@@ -1111,10 +1241,9 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                     let records = [];
                     try {
                         records = await this.sqlitedb
-                            .getDB()
-                            .all([
-                                `SELECT FROM ${model_info_defaults.table} WHERE "model"="${model_info.model}"`,
-                            ]);
+                            .all(
+                                `SELECT FROM ${model_info_defaults.table} WHERE "model"=?`,
+                                model_info.model);
                     } catch (err) {
                         // Do nothing
                     }

@@ -162,12 +162,13 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                                 }
 
                                 //vals = Tools.unfoldObj(vals);
-                                const str_vals = Expression.convert_to_column(model_info_pwa_onchange_value.fields.values, vals);
+                                const str_vals = JSON.stringify(vals);
+                                // const ref_hash = Tools.hash(`${record.id}${field}${str_vals}`);
                                 const ref_hash = Tools.hash(`${record.id}${field}${str_vals}`);
                                 const sql_value = `SELECT result FROM ${model_info_pwa_onchange_value.table} WHERE "ref_hash"=?`;
                                 const value_record = await this._db.sqlitedb.get(sql_value, ref_hash);
-                                // const value_record = await this._db.indexeddb.getRecord("onchange", false, [record.id, ref_hash]);
-                                // console.log("------- THE VAL: ", value_record);
+                                // const value_record = await this._db.indexeddb.getRecord("onchange", false, ref_hash);
+                                console.log("------- THE VAL: ", value_record);
                                 if (!_.isEmpty(value_record)) {
                                     const onchange_data = this._db.sqlitedb.converter.parseJson(value_record, "result");
                                     //const onchange_data = value_record.result;

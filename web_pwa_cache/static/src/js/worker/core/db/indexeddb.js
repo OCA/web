@@ -41,6 +41,11 @@ odoo.define("web_pwa_cache.PWA.core.db.IndexedDB", function(require) {
             });
         },
 
+        close: function () {
+            this._db.close();
+            this._db = undefined;
+        },
+
         /**
          * @returns {IDBDatabase}
          */
@@ -49,17 +54,14 @@ odoo.define("web_pwa_cache.PWA.core.db.IndexedDB", function(require) {
         },
 
         /**
-         * @param {Array} stores
+         * @param {String} store
          * @param {String} mode
          * @returns {IDBObjectStore}
          */
-        getObjectStores: function(stores, mode) {
-            const transaction = this._db.transaction(stores, mode);
-            const res = [];
-            for (const store of stores) {
-                res.push(transaction.objectStore(store));
-            }
-            return res;
+        getTransactionInfo: function(store, mode) {
+            const transaction = this._db.transaction(store, mode);
+            const objectStore = transaction.objectStore(store);
+            return [transaction, objectStore];
         },
 
         /**
@@ -70,18 +72,19 @@ odoo.define("web_pwa_cache.PWA.core.db.IndexedDB", function(require) {
          */
         getRecord: function(store, index, range) {
             return new Promise((resolve, reject) => {
-                const [objectStore] = this.getObjectStores([store], "readonly");
-                if (objectStore) {
-                    let query = null;
+                const [transaction, objectStore] = this.getTransactionInfo(store, "readonly");
+                if (transaction && objectStore) {
+                    let request = false;
                     if (index) {
-                        query = objectStore.index(index).get(range);
+                        request = objectStore.index(index).get(range);
                     } else {
-                        query = objectStore.get(range);
+                        request = objectStore.get(range);
                     }
-                    query.onsuccess = function(evt) {
+                    transaction.commit();
+                    request.onsuccess = (evt) => {
                         resolve(evt.target.result);
-                    };
-                    query.onerror = reject;
+                    }
+                    request.onerror = reject;
                 } else {
                     return reject();
                 }
@@ -96,18 +99,19 @@ odoo.define("web_pwa_cache.PWA.core.db.IndexedDB", function(require) {
          */
         getRecords: function(store, index, range) {
             return new Promise((resolve, reject) => {
-                const [objectStore] = this.getObjectStores([store], "readonly");
+                const [transaction, objectStore] = this.getTransactionInfo(store, "readonly");
                 if (objectStore) {
-                    let query = null;
+                    let request = false;
                     if (index) {
-                        query = objectStore.index(index).getAll(range);
+                        request = objectStore.index(index).getAll(range);
                     } else {
-                        query = objectStore.getAll(range);
+                        request = objectStore.getAll(range);
                     }
-                    query.onsuccess = function(evt) {
+                    transaction.commit();
+                    request.onsuccess = (evt) => {
                         resolve(evt.target.result);
-                    };
-                    query.onerror = reject;
+                    }
+                    request.onerror = reject;
                 } else {
                     return reject();
                 }
@@ -116,7 +120,7 @@ odoo.define("web_pwa_cache.PWA.core.db.IndexedDB", function(require) {
 
         /**
          * @param {String} store
-         * @param {Any} value
+         * @param {Object} value
          * @returns {Promise}
          */
         createRecord: function(store, value) {
@@ -129,21 +133,20 @@ odoo.define("web_pwa_cache.PWA.core.db.IndexedDB", function(require) {
          * @returns {Promise}
          */
         createRecords: function(store, values) {
-            const [objectStore] = this.getObjectStores([store], "readwrite");
-            if (objectStore) {
-                const tasks = [];
-                for (const value of values) {
-                    tasks.push(
-                        new Promise((resolve, reject) => {
-                            const request = objectStore.add(value);
-                            request.onsuccess = resolve;
-                            request.onerror = reject;
-                        })
-                    );
+            return new Promise((resolve, reject) => {
+                const [transaction, objectStore] = this.getTransactionInfo(store, "readwrite");
+                if (objectStore) {
+                    for (const value of values) {
+                        objectStore.add(value);
+                    }
+                    transaction.commit();
+                    transaction.oncomplete = resolve;
+                    transaction.onerror = reject;
+                    transaction.onabort = reject;
+                } else {
+                    return reject();
                 }
-                return Promise.all(tasks);
-            }
-            return Promise.reject();
+            });
         },
 
         /**
@@ -154,18 +157,19 @@ odoo.define("web_pwa_cache.PWA.core.db.IndexedDB", function(require) {
          */
         countRecords: function(store, index, range) {
             return new Promise((resolve, reject) => {
-                const [objectStore] = this.getObjectStores([store], "readonly");
+                const [transaction, objectStore] = this.getTransactionInfo(store, "readonly");
                 if (objectStore) {
-                    let query = null;
+                    let request = false;
                     if (index) {
-                        query = objectStore.index(index).count(range);
+                        request = objectStore.index(index).count(range);
                     } else {
-                        query = objectStore.count(range);
+                        request = objectStore.count(range);
                     }
-                    query.onsuccess = function(evt) {
+                    transaction.commit();
+                    request.onsuccess = (evt) => {
                         resolve(evt.target.result);
-                    };
-                    query.onerror = reject;
+                    }
+                    request.onerror = reject;
                 } else {
                     return reject();
                 }
@@ -174,61 +178,32 @@ odoo.define("web_pwa_cache.PWA.core.db.IndexedDB", function(require) {
 
         /**
          * @param {String} store
-         * @param {String} index
-         * @param {IDBKeyRange/String} range
-         * @param {Number/String/Object} value
+         * @param {Object} value
          * @returns {Promise}
          */
-        updateRecords: function(store, index, range, value) {
-            return new Promise((resolve, reject) => {
-                const [objectStore] = this.getObjectStores([store], "readwrite");
-                if (objectStore) {
-                    let query = null;
-                    if (index) {
-                        query = objectStore.index(index).getAll(range);
-                    } else {
-                        query = objectStore.getAll(range);
-                    }
-                    query.onsuccess = function(evt) {
-                        if (_.isEmpty(evt.target.result)) {
-                            reject();
-                        } else {
-                            for (const record of evt.target.result) {
-                                const nrecord = _.extend(record, value);
-                                objectStore.put(nrecord);
-                            }
-                            resolve();
-                        }
-                    };
-                    query.onerror = reject;
-                } else {
-                    reject();
-                }
-            });
+        createOrUpdateRecord: function(store, value) {
+            return createOrUpdateRecords(sote, [value]);
         },
 
         /**
          * @param {String} store
-         * @param {String} index
-         * @param {IDBKeyRange/String} range
-         * @param {Number/String/Object} value
+         * @param {Array} values
          * @returns {Promise}
          */
-        createOrUpdateRecord: function(store, index, range, value) {
-            return new Promise(async (resolve, reject) => {
-                try {
-                    await this.createRecord(store, value);
-                    return resolve();
-                } catch (err) {
-                    try {
-                        await this.updateRecords(store, index, range, value);
-                        return resolve();
-                    } catch (err) {
-                        // Do nothing
+        createOrUpdateRecords: function(store, values) {
+            return new Promise((resolve, reject) => {
+                const [transaction, objectStore] = this.getTransactionInfo(store, "readwrite");
+                if (objectStore) {
+                    for (let value in values) {
+                        objectStore.put(value);
                     }
+                    transaction.commit();
+                    transaction.oncomplete = resolve;
+                    transaction.onerror = reject;
+                    transaction.onabort = reject;
+                } else {
+                    reject();
                 }
-
-                return reject();
             });
         },
 
@@ -239,11 +214,13 @@ odoo.define("web_pwa_cache.PWA.core.db.IndexedDB", function(require) {
          */
         deleteRecord: function(store, range) {
             return new Promise((resolve, reject) => {
-                const [objectStore] = this.getObjectStores([store], "readwrite");
+                const [transaction, objectStore] = this.getTransactionInfo(store, "readwrite");
                 if (objectStore) {
-                    const request = objectStore.delete(range);
-                    request.onsuccess = resolve;
-                    request.onerror = reject;
+                    objectStore.delete(range);
+                    transaction.commit();
+                    transaction.oncomplete = resolve;
+                    transaction.onerror = reject;
+                    transaction.onabort = reject;
                 } else {
                     reject();
                 }
@@ -252,11 +229,13 @@ odoo.define("web_pwa_cache.PWA.core.db.IndexedDB", function(require) {
 
         deleteAllRecords: function(store) {
             return new Promise((resolve, reject) => {
-                const [objectStore] = this.getObjectStores([store], "readwrite");
+                const [transaction, objectStore]  = this.getTransactionInfo(store, "readwrite");
                 if (objectStore) {
-                    const request = objectStore.clear();
-                    request.onsuccess = resolve;
-                    request.onerror = reject;
+                    objectStore.clear();
+                    transaction.commit();
+                    transaction.oncomplete = resolve;
+                    transaction.onerror = reject;
+                    transaction.onabort = reject;
                 } else {
                     reject();
                 }

@@ -414,7 +414,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                                 );
                                 if (model_info.fields[field_name].type === "many2one") {
                                     select_clause_fields.push(
-                                        `"${model_info.table}"."display_name__${field_name}"`
+                                        `"${model_info.table}".display_name__${field_name}`
                                     );
                                 }
                             }
@@ -428,10 +428,14 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                         order_by +
                         limit_str +
                         offset_str;
-                    //console.log("--------------------------- THE SQL");
+                    // console.log("--------------------------- THE SQL");
                     //console.log(query_str);
-                    //console.log(sql);
+                    // console.log(sql, where_clause_params);
                     //console.log(args);
+                    // EXPLAIN QUERY
+                    // const explain = await db.all(`EXPLAIN QUERY PLAN ${sql}`, ...where_clause_params);
+                    // console.log("---- ESPLAIN QUERY PLAN!");
+                    // console.table(explain);
                     const res = await db.all(sql, ...where_clause_params);
                     if (!field_names) {
                         return resolve(

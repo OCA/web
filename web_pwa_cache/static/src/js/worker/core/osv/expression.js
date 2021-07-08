@@ -1596,7 +1596,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     if (typeof right !== "string") {
                         query = `(${query} OR ${table_alias}."${left}" IS NULL)`;
                     }
-                    params = [`"%${right}%"`];
+                    params = [`%${right}%`];
                 } else {
                     const field = model.fields[left];
                     params = [convert_to_column(field, right)];
