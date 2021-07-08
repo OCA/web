@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <openerp>
     <data noupdate="0">
         <record id="config_parameter_company_name" model="ir.config_parameter">
@@ -15,11 +15,11 @@
         </record>
         <record id="config_parameter_support_email" model="ir.config_parameter">
             <field name="key">support_branding.support_email</field>
-            <field name="value" eval="''"/>
+            <field name="value" eval="''" />
         </record>
         <record id="config_parameter_release" model="ir.config_parameter">
             <field name="key">support_branding.release</field>
-            <field name="value" eval="''"/>
+            <field name="value" eval="''" />
         </record>
     </data>
 </openerp>

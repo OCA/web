@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2012-2015 Therp BV (<http://therp.nl>)
 # Copyright 2016 - Tecnativa - Angel Moya <odoo@tecnativa.com>
 # Copyright 2017 - redO2oo   - Robert Rottermann <robert@redO2oo.ch>
@@ -11,16 +10,16 @@
     "version": "10.0.1.0.0",
     "license": "AGPL-3",
     "author": "Therp BV,Odoo Community Association (OCA)",
-    "website": 'http://therp.nl',
+    "website": "https://github.com/OCA/web",
     "depends": [
-        'web',
+        "web",
     ],
     "qweb": [
-        'static/src/xml/base.xml',
+        "static/src/xml/base.xml",
     ],
     "data": [
         "data/ir_config_parameter.xml",
-        'views/qweb.xml',
+        "views/qweb.xml",
     ],
-    'installable': True,
+    "installable": True,
 }
