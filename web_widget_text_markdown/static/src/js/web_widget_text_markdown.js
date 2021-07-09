@@ -32,6 +32,11 @@ odoo.define("web_widget_text_markdown.FieldTextMarkDown", function(require) {
         ],
 
         _getValue: function() {
+            var $widget = this.attrs.widget;
+            var $type = this.field.type;
+            if ($type === "html" && $widget && $widget === "bootstrap_markdown") {
+                return this._getHtmlValue(this.$input.val());
+            }
             return this.$markdown.getContent();
         },
 
