@@ -41,6 +41,7 @@ addon | version | summary
 [web_tree_image_tooltip](web_tree_image_tooltip/) | 14.0.1.0.0 | Show images in tree views via tooltip
 [web_tree_many2one_clickable](web_tree_many2one_clickable/) | 14.0.1.0.0 | Open the linked resource when clicking on their name
 [web_widget_bokeh_chart](web_widget_bokeh_chart/) | 14.0.2.3.1 | This widget allows to display charts using Bokeh library.
+[web_widget_dropdown_dynamic](web_widget_dropdown_dynamic/) | 14.0.1.0.0 | This module adds support for dynamic dropdown widget
 [web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 14.0.1.0.0 | Show list fields as a matrix
 
 [//]: # (end addons)
