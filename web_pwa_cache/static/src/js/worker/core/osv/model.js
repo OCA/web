@@ -384,6 +384,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                         order,
                         query
                     );
+
                     const [
                         from_clause,
                         where_clause,

@@ -91,7 +91,6 @@ class SharedWorker(ServiceWorker):
             self._get_static_cache_worker("/js/worker/core/osv/model.js"),
             self._get_static_cache_worker("/js/worker/core/db/database.js"),
             self._get_static_cache_worker("/js/worker/core/db/sqlitedb.js"),
-            self._get_static_cache_worker("/js/worker/core/db/indexeddb.js"),
             self._get_static_cache_worker("/js/worker/systems/cache.js"),
             self._get_static_cache_worker("/js/worker/systems/database.js"),
             self._get_static_cache_worker("/js/worker/managers/manager.js"),

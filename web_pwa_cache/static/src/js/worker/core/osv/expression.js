@@ -100,7 +100,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
             case "binary":
             case "json":
                 svalue = JSON.stringify(_.isUndefined(value) ? "" : value);
-                svalue = LZString.compressToUint8Array(svalue);
+                //svalue = LZString.compressToUint8Array(svalue);
                 break;
             case "char":
             case "text":
@@ -910,9 +910,10 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     const model = leaf.model;
                     const field = path[0] in model.fields && model.fields[path[0]];
                     // eslint-disable-next-line
-                    const comodel = await this._dbmanager.getModelInfo(
-                        field && field.relation
-                    );
+                    let comodel = undefined;
+                    if (field && field.relation) {
+                        comodel = await this._dbmanager.getModelInfo(field.relation);
+                    }
 
                     // ----------------------------------------
                     // SIMPLE CASE
@@ -1416,6 +1417,8 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     joins = joins.concat(leaf.get_join_conditions());
                 }
                 this.joins = _.unique(joins);
+
+                debugger;
 
                 return resolve();
             });

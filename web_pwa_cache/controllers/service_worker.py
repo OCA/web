@@ -51,6 +51,7 @@ class ServiceWorker(ServiceWorker):
         res = super()._get_pwa_scripts()
         res.insert(0, self._get_static_cache_worker("/lib/sqlite/dist/sql-wasm.js"))
         # res.insert(0, self._get_static_cache_worker("/lib/sqlite/dist/sw.js"))
+        res.insert(0, self._get_static_cache_worker("/lib/dexie/dexie.min.js"))
         res.insert(0, self._get_static_cache_worker("/lib/crc32/crc32.js"))
         res.insert(0, self._get_static_cache_worker("/lib/lz-string/lz-string.min.js"))
         res.insert(0, "/web/static/lib/moment/moment.js")
@@ -67,7 +68,6 @@ class ServiceWorker(ServiceWorker):
             self._get_static_cache_worker("/js/worker/core/osv/model.js"),
             self._get_static_cache_worker("/js/worker/core/db/database.js"),
             self._get_static_cache_worker("/js/worker/core/db/sqlitedb.js"),
-            self._get_static_cache_worker("/js/worker/core/db/indexeddb.js"),
             self._get_static_cache_worker("/js/worker/systems/cache.js"),
             self._get_static_cache_worker("/js/worker/systems/database.js"),
             self._get_static_cache_worker("/js/worker/managers/manager.js"),

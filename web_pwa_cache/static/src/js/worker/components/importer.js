@@ -44,20 +44,8 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
         load_views: function(model, data) {
             return new Promise(async (resolve, reject) => {
                 const fields_views = data.fields_views;
-                const tasks = [];
-                const model_info_views = await this._db.getModelInfo("views", true);
-                for (const fields_view of fields_views) {
-                    tasks.push(
-                        this._db.sqlite.createOrUpdateRecord(model_info_views, fields_view, [
-                            "model",
-                            "view_id",
-                            "type",
-                        ])
-                    );
-                }
-
                 try {
-                    await Promise.all(tasks);
+                    await this._db.indexeddb.views.bulkPut(fields_views);
                 } catch (err) {
                     return reject(err);
                 }

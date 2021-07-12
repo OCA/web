@@ -161,20 +161,19 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                                     return reject();
                                 }
 
-                                //vals = Tools.unfoldObj(vals);
-                                const str_vals = JSON.stringify(vals);
-                                // const ref_hash = Tools.hash(`${record.id}${field}${str_vals}`);
-                                const ref_hash = Tools.hash(`${record.id}${field}${str_vals}`);
-                                const sql_value = `SELECT result FROM ${model_info_pwa_onchange_value.table} WHERE "ref_hash"=?`;
-                                const value_record = await this._db.sqlitedb.get(sql_value, ref_hash);
-                                // const value_record = await this._db.indexeddb.getRecord("onchange", false, ref_hash);
-                                console.log("------- THE VAL: ", value_record);
+                                const ref_hash = Tools.hash(`${record.id}${field}${JSON.stringify(vals)}`);
+                                //const sql_value = `SELECT result FROM ${model_info_pwa_onchange_value.table} WHERE "ref_hash"=?`;
+                                //const value_record = await this._db.sqlitedb.get(sql_value, ref_hash);
+                                const timer_id = `idb_onchange${Math.random()}`;
+                                console.time(timer_id);
+                                const value_record = await this._db.indexeddb.onchange.where("ref_hash").equals(ref_hash).first();
+                                console.timeEnd(timer_id);
                                 if (!_.isEmpty(value_record)) {
-                                    const onchange_data = this._db.sqlitedb.converter.parseJson(value_record, "result");
+                                    const onchange_result_data = this._db.sqlitedb.converter.parseJson(value_record, "result");
                                     //const onchange_data = value_record.result;
-                                    value = onchange_data.value;
-                                    warning = onchange_data.warning;
-                                    domain = onchange_data.domain;
+                                    value = onchange_result_data.value;
+                                    warning = onchange_result_data.warning;
+                                    domain = onchange_result_data.domain;
                                 }
                             }
                             if (value) {
@@ -684,6 +683,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                     const model_info = await this._db.getModelInfo(pmodel);
                     const req_fields = _.union(["id"], pfields);
                     const cached_fields = _.intersection(req_fields, model_info.valid_fields);
+                    console.time("search_read");
                     records = await this._db.search_read(
                         model_info,
                         pdomain,
@@ -692,6 +692,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         poffset,
                         psort
                     );
+                    console.timeEnd("search_read");
 
                     if (_.isEmpty(records) && !this.isOfflineMode()) {
                         return reject("No records");

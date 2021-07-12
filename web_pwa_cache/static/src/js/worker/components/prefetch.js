@@ -11,6 +11,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
 
     const SWPrefetchComponent = SWComponent.extend({
         _search_read_chunk_size: 500,
+        _search_read_onchange_value_chunk_size: 2000,
 
         // This is used to force a field type
         _conversion_model_db_types: {
@@ -152,7 +153,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                 try {
                     this._processedModels = [];
                     const model_infos = await this.prefetchModelInfoData();
-                    //this._db.persistDatabases();
                     await Promise.all([
                         this.prefetchModelDefaultData(),
                         this.prefetchViewData(model_infos),
@@ -162,16 +162,19 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                         this.prefetchUserData(),
                         this.prefetchFunctionData(),
                     ]);
-                    //this._db.persistDatabases();
                     await this.prefetchModelData();
-                    //this._db.persistDatabases();
                     await this.runVacuumRecords();
                     await this._db.persistDatabases();
                 } catch (err) {
                     return reject(err);
                 }
 
-                let rrr = await this._db.sqlitedb.get("SELECT COUNT(*) as rec_count FROM pwa_cache_onchange_value");
+                console.time("indexeddb_count");
+                let rrr = await this._db.indexeddb.onchange.count();
+                console.timeEnd("indexeddb_count");
+                console.log("------ LLLLL 111: ", rrr);
+
+                rrr = await this._db.sqlitedb.get("SELECT COUNT(*) as rec_count FROM sale_order");
                 console.log("------ LLLLL 222: ", rrr);
 
                 rrr = await this._db.sqlitedb.get("SELECT COUNT(*) as rec_count FROM product_product");
@@ -277,6 +280,8 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                     "search",
                     [domain]
                 );
+                const chunk_size = model_info_extra.model === "pwa.cache.onchange.value" ? this._search_read_onchange_value_chunk_size : this._search_read_chunk_size;
+
                 const record_ids = (await response_s.json()).result;
                 do {
                     this._sendTaskInfo(
@@ -292,7 +297,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                             {
                                 ids: record_ids.slice(
                                     offset,
-                                    offset + this._search_read_chunk_size
+                                    offset + chunk_size
                                 ),
                                 model: model_info_extra.model,
                                 fields: false,
@@ -305,11 +310,10 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                         }
                         const records = response_data.result;
                         const model = request_data.params.model;
-                        const model_info = await this._db.getModelInfo(model, false, false, true);
                         // Save using indexedb, use bulk operations
-                        if (model_info.model === "web.pwa.cache.value") {
+                        if (model_info_extra.model === "pwa.cache.onchange.value") {
                             await this.saveModelRecords(
-                                model_info,
+                                model_info_extra,
                                 records);
                             this._sendTaskInfo(
                                 client_message_id,
@@ -321,7 +325,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                             for (let index=records.length-1; index>=0; --index) {
                                 const record = records[index];
                                 await this.saveModelRecords(
-                                    model_info,
+                                    model_info_extra,
                                     [record]);
                                 this._sendTaskInfo(
                                     client_message_id,
@@ -527,7 +531,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                                     if (!fields_view) {
                                         continue;
                                     }
-                                    this.saveViews(fields_view);
+                                    await this.saveViews(fields_view);
                                 } catch (err) {
                                     console.log(
                                         `[ServiceWorker] Can't get view info for ${model_info.model} -> ${id}`
@@ -899,20 +903,11 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
          * @returns {Promise}
          */
         saveViews: function(values) {
-            return new Promise(async (resolve, reject) => {
-                try {
-                    const model_info_views = await this._db.getModelInfo("views", true, false, true);
-                    await this._db.sqlitedb.createOrUpdateRecord(
-                        model_info_views,
-                        values,
-                        ["model", "view_id", "type", "is_default"]
-                    );
-                } catch (err) {
-                    return reject(err);
-                }
-
-                return resolve();
-            });
+            if (typeof values.view_id === "undefined") {
+                values.view_id = 0;
+            }
+            values.is_default = values.is_default ? 1 : 0;
+            return this._db.indexeddb.views.put(values);
         },
 
         /**
@@ -945,24 +940,27 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     if (model_info.model === "pwa.cache.onchange.value") {
-                        for (const record of records) {
-                            const str_vals = JSON.stringify((new Date()).getTime());
-                            record.ref_hash = Tools.hash(`${record.pwa_cache_id[0]}${str_vals}`);
-                            record.pwa_cache_id = record.pwa_cache_id[0];
-                            // record.result = LZString.compressToUint8Array(record.result);
-                        }
-                        // await this._db.indexeddb.createOrUpdateRecords("onchange", record);
+                        await this.saveModelRecordsOnchangeValue(records);
                     }
-                    // else {
+                    else {
                          // writeOrCreate process "binary" fields that are managed in indexeddb
                          await this._db.writeOrCreate(model_info, records);
-                    // }
+                    }
                 } catch (err) {
                     return reject(err);
                 }
 
                 return resolve();
             });
+        },
+
+        saveModelRecordsOnchangeValue: function(records) {
+            for (const record of records) {
+                record.pwa_cache_id = record.pwa_cache_id[0];
+                record.ref_hash = Number(record.ref_hash);
+                //record.result = LZString.compressToUint8Array(record.result);
+            }
+            return this._db.indexeddb.onchange.bulkPut(records);
         },
 
         /**

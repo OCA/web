@@ -66,11 +66,13 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
          */
         parseJson: function(values, field) {
             try {
-                return JSON.parse(LZString.decompressFromUint8Array(values[field]));
+                //return JSON.parse(LZString.decompressFromUint8Array(values[field]));
+                return JSON.parse(values[field]);
             } catch (err) {
                 // Do nothing
             }
-            return LZString.decompressFromUint8Array(values[field]);
+            //return LZString.decompressFromUint8Array(values[field]);
+            return values[field];
         },
 
         /**
@@ -150,6 +152,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
          * @param {Array} datas
          */
         toOdoo: function(model_fields, datas) {
+            debugger;
             if (!(datas instanceof Array)) {
                 datas = [datas];
             }
@@ -158,6 +161,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
             const value_fields_len = value_fields.length;
             const datas_len = datas.length;
             let values = false;
+            console.log("----- NUM RECs: ", datas_len, value_fields_len, datas_len * value_fields_len);
             for (let index = datas_len - 1; index >= 0; --index) {
                 values = datas[index];
                 let field = false;
@@ -352,13 +356,14 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
          */
         setPragmas: function () {
             // The journal_mode pragma gets or sets the journal mode which controls how the journal file is stored and processed.
-            this.query("PRAGMA journal_mode = OFF");
+            // this.query("PRAGMA journal_mode = OFF");
             // The synchronous pragma gets or sets the current disk synchronization mode, which controls how aggressively SQLite will write data all the way out to physical storage.
-            this.query("PRAGMA synchronous = OFF");
+            // this.query("PRAGMA synchronous = OFF");
             // Query or set the page size of the database. The page size must be a power of two between 512 and 65536 inclusive. (Default is 4096)
-            this.query("PRAGMA page_size = 1024");
+            // this.query("PRAGMA page_size = 1024");
             // Query or change the maximum number of bytes that are set aside for memory-mapped I/O on a single database.
-            this.query("PRAGMA mmap_size = 0");
+            // this.query("PRAGMA mmap_size = 0");
+            return true;
         },
 
         /**
@@ -388,7 +393,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                     //     res.push(_.findWhere(records, {id: id}));
                     // }
 
-                    this.converter.toOdoo(model_info.fields, res);
+                    this.converter.toOdoo(model_info.fields, records);
                     return resolve(records);
                 } catch (err) {
                     return reject(err);
@@ -672,23 +677,31 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                         sql += where_sql.join(" OR ");
 
                         if (models.length === 1) {
+                            console.time("model_info_get");
                             const record = await this.get(sql);
+                            console.timeEnd("model_info_get");
                             if (_.isEmpty(record)) {
                                 return reject(
                                     `Can't found model info for ${models[0]}`
                                 );
                             }
+                            console.time("model_info_converter_get");
                             this.converter.toOdoo(model_info_metadata.fields, record);
+                            console.timeEnd("model_info_converter_get");
                             return resolve(record);
                         }
                     }
+                    console.time("model_info_all");
                     const records = await this.all(sql);
+                    console.timeEnd("model_info_all");
                     if (_.isEmpty(records)) {
                         return reject(
                             `Can't found model info for some or all ${models.join(",")}`
                         );
                     }
+                    console.time("model_info_converter_all");
                     this.converter.toOdoo(model_info_metadata.fields, records);
+                    console.timeEnd("model_info_converter_all");
                     if (grouped) {
                         const mapped_records = {};
                         for (const record of records) {
