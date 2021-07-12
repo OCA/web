@@ -3,7 +3,7 @@
  * Copyright 2017 Komit - <http:///komit-consulting.com>
  * Copyright 2019 Alexandre Díaz - <dev@redneboa.es>
  * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
-odoo.define("web_widget_text_markdown.FieldTextMarkDown", function(require) {
+odoo.define("web_widget_text_markdown.FieldTextMarkDown", function (require) {
     "use strict";
 
     var basic_fields = require("web.basic_fields");
@@ -31,7 +31,7 @@ odoo.define("web_widget_text_markdown.FieldTextMarkDown", function(require) {
             CUST_LIBS_PATH + "web_widget_text_markdown.css",
         ],
 
-        _getValue: function() {
+        _getValue: function () {
             var $widget = this.attrs.widget;
             var $type = this.field.type;
             if ($type === "html" && $widget && $widget === "bootstrap_markdown") {
@@ -40,7 +40,7 @@ odoo.define("web_widget_text_markdown.FieldTextMarkDown", function(require) {
             return this.$markdown.getContent();
         },
 
-        start: function() {
+        start: function () {
             this._super();
             this.shw_render_html = new showdown.Converter({
                 extensions: ["table", "footnotes", "toc"],
@@ -78,10 +78,10 @@ odoo.define("web_widget_text_markdown.FieldTextMarkDown", function(require) {
             });
         },
 
-        _prepareInput: function() {
+        _prepareInput: function () {
             var $input = this._super.apply(this, arguments);
             _.defer(
-                function($elm) {
+                function ($elm) {
                     $input.removeClass(this.className);
                     $input.wrap(
                         _.str.sprintf("<div class='%s'></div>", this.className)
@@ -94,15 +94,15 @@ odoo.define("web_widget_text_markdown.FieldTextMarkDown", function(require) {
             );
             return $input;
         },
-        _getHtmlValue: function(value) {
+        _getHtmlValue: function (value) {
             return this.shw_render_html.makeHtml(this._formatValue(value));
         },
 
-        _renderReadonly: function() {
+        _renderReadonly: function () {
             this.$el.html(this._getHtmlValue(this.value));
         },
 
-        _getMarkdownOptions: function() {
+        _getMarkdownOptions: function () {
             var self = this;
             var markdownOpts = {
                 iconlibrary: "fa",
@@ -110,7 +110,7 @@ odoo.define("web_widget_text_markdown.FieldTextMarkDown", function(require) {
                 width: "o_field_text_markdown",
                 savable: false,
                 language: this.getSession().user_context.lang,
-                onPreview: function(e) {
+                onPreview: function (e) {
                     var render_val = self._getHtmlValue(e.getContent());
                     return render_val;
                 },
@@ -137,7 +137,7 @@ odoo.define("web_widget_text_markdown.FieldTextMarkDown", function(require) {
             return markdownOpts;
         },
 
-        _markdownTranslate: function() {
+        _markdownTranslate: function () {
             // Event is the click event from callback
             this._onTranslate(event);
         },
