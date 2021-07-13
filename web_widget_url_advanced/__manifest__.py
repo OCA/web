@@ -8,7 +8,7 @@
     "version": "13.0.1.1.0",
     "license": "LGPL-3",
     "author": "Camptocamp, Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/web/",
+    "website": "https://github.com/OCA/web",
     "depends": ["web"],
     "data": ["templates/assets.xml"],
     "installable": True,
