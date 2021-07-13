@@ -1,7 +1,7 @@
 /* Copyright 2021 Tecnativa - Jairo Llopis
  * License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). */
 
-odoo.define("web_calendar_slot_duration.CalendarModel", function (require) {
+odoo.define("web_calendar_slot_duration.CalendarModel", function(require) {
     "use strict";
 
     var CalendarModel = require("web.CalendarModel");
@@ -10,7 +10,7 @@ odoo.define("web_calendar_slot_duration.CalendarModel", function (require) {
         /**
          * @override
          */
-        _getFullCalendarOptions: function () {
+        _getFullCalendarOptions: function() {
             var result = this._super.call(this, arguments);
             result.slotDuration =
                 this.data.context.calendar_slot_duration ||
