@@ -4,6 +4,7 @@
     "name": "Client side message boxes",
     "version": "13.0.1.0.0",
     "author": "Therp BV, " "ACSONE SA/NV, " "Odoo Community Association (OCA)",
+    "website": "https://github.com/OCA/web",
     "license": "AGPL-3",
     "category": "Hidden/Dependency",
     "summary": "Show a message box to users",

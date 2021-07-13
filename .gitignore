@@ -1,6 +1,8 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+/.venv
+/.pytest_cache
 
 # C extensions
 *.so
@@ -13,6 +15,7 @@ build/
 develop-eggs/
 dist/
 eggs/
+lib/
 lib64/
 parts/
 sdist/
@@ -40,6 +43,19 @@ coverage.xml
 # Pycharm
 .idea
 
+# Eclipse
+.settings
+
+# Visual Studio cache/options directory
+.vs/
+.vscode
+
+# OSX Files
+.DS_Store
+
+# Django stuff:
+*.log
+
 # Mr Developer
 .mr.developer.cfg
 .project
@@ -54,3 +70,6 @@ docs/_build/
 # Backup files
 *~
 *.swp
+
+# OCA rules
+!static/lib/

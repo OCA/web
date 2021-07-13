@@ -46,8 +46,6 @@ enable=anomalous-backslash-in-string,
     method-inverse,
     method-required-super,
     method-search,
-    missing-import-error,
-    missing-manifest-dependency,
     openerp-exception-warning,
     pointless-statement,
     pointless-string-statement,
@@ -73,6 +71,7 @@ enable=anomalous-backslash-in-string,
     deprecated-module,
     file-not-used,
     invalid-commit,
+    missing-manifest-dependency,
     missing-newline-extrafiles,
     missing-readme,
     no-utf8-coding-comment,
@@ -81,6 +80,7 @@ enable=anomalous-backslash-in-string,
     redefined-builtin,
     too-complex,
     unnecessary-utf8-coding-comment
+
 
 [REPORTS]
 msg-template={path}:{line}: [{msg_id}({symbol}), {obj}] {msg}

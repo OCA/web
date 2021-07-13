@@ -1,0 +1,14 @@
+# Do NOT update manually; changes here will be overwritten by Copier
+_commit: v1.1.4
+_src_path: https://github.com/OCA/oca-addons-repo-template.git
+dependency_installation_mode: OCA
+generate_requirements_txt: true
+include_wkhtmltopdf: false
+odoo_version: 13.0
+rebel_module_groups: []
+repo_description:
+  This project aims to deal with modules related to the webclient of Odoo.
+repo_name: Web addons for Odoo
+repo_slug: web
+travis_apt_packages: []
+travis_apt_sources: []
