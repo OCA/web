@@ -1,1 +1,1 @@
-Shows a warning if current user or database have been switched in another tab or window.
+In Odoo 14 possible to work in different tabs with different companies, now the module only shows a warning when the user or database has been switched.
