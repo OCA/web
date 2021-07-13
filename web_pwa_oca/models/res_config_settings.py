@@ -4,10 +4,10 @@ import base64
 import io
 import sys
 
+from PIL import Image
+
 from odoo import _, api, exceptions, fields, models
 from odoo.tools.mimetypes import guess_mimetype
-
-from PIL import Image
 
 
 class ResConfigSettings(models.TransientModel):
