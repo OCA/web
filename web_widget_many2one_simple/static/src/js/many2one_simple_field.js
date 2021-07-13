@@ -1,4 +1,4 @@
-odoo.define("web_widget_many2one_simple.FieldMany2OneSimple", function(require) {
+odoo.define("web_widget_many2one_simple.FieldMany2OneSimple", function (require) {
     "use strict";
 
     const core = require("web.core");
@@ -28,7 +28,7 @@ odoo.define("web_widget_many2one_simple.FieldMany2OneSimple", function(require) 
         /**
          * @override
          */
-        init: function(parent, name, record, options) {
+        init: function (parent, name, record, options) {
             this._super.apply(this, arguments);
 
             this.can_create =
@@ -57,7 +57,7 @@ odoo.define("web_widget_many2one_simple.FieldMany2OneSimple", function(require) 
         /**
          * @override
          */
-        start: function() {
+        start: function () {
             this.$input = this.$("input");
             this.$external_button = this.$(".o_external_button");
             return this._super.apply(this, arguments);
@@ -67,7 +67,7 @@ odoo.define("web_widget_many2one_simple.FieldMany2OneSimple", function(require) 
          * @param {Object} value (format: {id: ..., display_name: ...})
          * @returns {Promise}
          */
-        reinitialize: function(value) {
+        reinitialize: function (value) {
             this.isDirty = false;
             return this._setValue(value).then(() => {
                 const formatted_value = this._formatValue(this.value);
@@ -78,7 +78,7 @@ odoo.define("web_widget_many2one_simple.FieldMany2OneSimple", function(require) 
         /**
          * @returns {Promise}
          */
-        _search: function() {
+        _search: function () {
             if (!this.isDirty) {
                 return Promise.resolve();
             }
@@ -109,7 +109,7 @@ odoo.define("web_widget_many2one_simple.FieldMany2OneSimple", function(require) 
                 domain: _.union(domain, this._getDomain()),
                 limit: 1,
                 kwargs: {context: context},
-            }).then(results => {
+            }).then((results) => {
                 if (_.isEmpty(results)) {
                     if (this.can_create) {
                         const create_context = _.extend({}, this.attrs.context);
@@ -134,7 +134,7 @@ odoo.define("web_widget_many2one_simple.FieldMany2OneSimple", function(require) 
         /**
          * @private
          */
-        _renderEdit: function() {
+        _renderEdit: function () {
             const value = this._formatValue(this.value);
             this.$input.val(value);
             this._updateExternalButton();
@@ -143,12 +143,12 @@ odoo.define("web_widget_many2one_simple.FieldMany2OneSimple", function(require) 
         /**
          * @private
          */
-        _renderReadonly: function() {
+        _renderReadonly: function () {
             const value = this._formatValue(this.value);
             const escapedValue = _.escape((value || "").trim());
             const mapvalue = escapedValue
                 .split("\n")
-                .map(function(line) {
+                .map(function (line) {
                     return "<span>" + line + "</span>";
                 })
                 .join("<br/>");
@@ -172,7 +172,7 @@ odoo.define("web_widget_many2one_simple.FieldMany2OneSimple", function(require) 
          * @private
          * @param {String} error
          */
-        _showErrorMessage: function(error) {
+        _showErrorMessage: function (error) {
             Dialog.alert(this, error, {
                 title: _t("Many2One Simple"),
             });
@@ -186,7 +186,7 @@ odoo.define("web_widget_many2one_simple.FieldMany2OneSimple", function(require) 
          * @param {Object} context
          * @returns {Object}
          */
-        _getCreatePopupOptions: function(view, context) {
+        _getCreatePopupOptions: function (view, context) {
             return {
                 res_model: this.field.relation,
                 domain: this.record.getDomain({fieldName: this.name}),
@@ -201,7 +201,7 @@ odoo.define("web_widget_many2one_simple.FieldMany2OneSimple", function(require) 
                 disable_multiple_selection: true,
                 no_create: !this.can_create,
                 kanban_view_ref: this.attrs.kanban_view_ref,
-                on_selected: records => this.reinitialize(records[0]),
+                on_selected: (records) => this.reinitialize(records[0]),
                 on_closed: () => this.activate(),
             };
         },
@@ -214,7 +214,7 @@ odoo.define("web_widget_many2one_simple.FieldMany2OneSimple", function(require) 
          * @param {any} context
          * @returns {DialogClass}
          */
-        _createPopup: function(view, context) {
+        _createPopup: function (view, context) {
             const options = this._getCreatePopupOptions(view, context);
             return new dialogs.SelectCreateDialog(
                 this,
@@ -228,7 +228,7 @@ odoo.define("web_widget_many2one_simple.FieldMany2OneSimple", function(require) 
          * @private
          * @returns {Array}
          */
-        _getDomain: function() {
+        _getDomain: function () {
             return [[this.search.field, this.search.oper, this.$input.val()]];
         },
 
@@ -236,14 +236,14 @@ odoo.define("web_widget_many2one_simple.FieldMany2OneSimple", function(require) 
          * @private
          * @param {OdooEvent} event 'field_changed' event
          */
-        _onFieldChanged: function(event) {
+        _onFieldChanged: function (event) {
             this.$input.val(event.data.changes[this.name].display_name);
         },
 
         /**
          * @private
          */
-        _onExternalButtonClick: function() {
+        _onExternalButtonClick: function () {
             if (!this.value) {
                 this.activate();
                 return;
@@ -258,7 +258,7 @@ odoo.define("web_widget_many2one_simple.FieldMany2OneSimple", function(require) 
                 method: "get_formview_id",
                 args: [[this.value.res_id]],
                 context: context,
-            }).then(view_id => {
+            }).then((view_id) => {
                 new dialogs.FormViewDialog(this, {
                     res_model: this.field.relation,
                     res_id: this.value.res_id,
@@ -290,7 +290,7 @@ odoo.define("web_widget_many2one_simple.FieldMany2OneSimple", function(require) 
          * @private
          * @param {MouseEvent} event
          */
-        _onClick: function(event) {
+        _onClick: function (event) {
             if (this.mode === "readonly" && !this.noOpen) {
                 event.preventDefault();
                 event.stopPropagation();
@@ -299,7 +299,7 @@ odoo.define("web_widget_many2one_simple.FieldMany2OneSimple", function(require) 
                     method: "get_formview_action",
                     args: [[this.value.res_id]],
                     context: this.record.getContext(this.recordParams),
-                }).then(action => {
+                }).then((action) => {
                     this.trigger_up("do_action", {action: action});
                 });
             }
@@ -308,7 +308,7 @@ odoo.define("web_widget_many2one_simple.FieldMany2OneSimple", function(require) 
         /**
          * @private
          */
-        _onInputFocusout: function() {
+        _onInputFocusout: function () {
             this._search();
         },
 
@@ -317,7 +317,7 @@ odoo.define("web_widget_many2one_simple.FieldMany2OneSimple", function(require) 
          *
          * @param {OdooEvent} ev
          */
-        _onInputKeyup: function(ev) {
+        _onInputKeyup: function (ev) {
             if (ev.which === $.ui.keyCode.ENTER || ev.which === $.ui.keyCode.TAB) {
                 this._search();
             } else {
@@ -328,7 +328,7 @@ odoo.define("web_widget_many2one_simple.FieldMany2OneSimple", function(require) 
         /**
          * @private
          */
-        _updateExternalButton: function() {
+        _updateExternalButton: function () {
             const has_external_button = !this.noOpen && !this.floating && this.isSet();
             this.$external_button.toggle(has_external_button);
         },
