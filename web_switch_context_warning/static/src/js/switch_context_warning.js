@@ -1,4 +1,4 @@
-odoo.define("web_switch_context_warning.widget", function(require) {
+odoo.define("web_switch_context_warning.widget", function (require) {
     "use strict";
 
     var Widget = require("web.Widget");
@@ -13,13 +13,13 @@ odoo.define("web_switch_context_warning.widget", function(require) {
     }
     var SwitchContextWarningWidget = Widget.extend({
         template: "web_switch_context_warning.warningWidget",
-        init: function() {
+        init: function () {
             this._super();
             var self = this;
             var w = new SharedWorker(
                 "/web_switch_context_warning/static/src/js/switch_context_warning_worker.js"
             );
-            w.port.addEventListener("message", function(msg) {
+            w.port.addEventListener("message", function (msg) {
                 if (msg.data.type !== "newCtx") {
                     return;
                 }
@@ -32,13 +32,13 @@ odoo.define("web_switch_context_warning.widget", function(require) {
             w.port.start();
             w.port.postMessage(this.generateSignature());
         },
-        generateSignature: function() {
+        generateSignature: function () {
             return [session.uid, session.db].join();
         },
     });
 
     UserMenu.include({
-        init: function(parent) {
+        init: function (parent) {
             this._super(parent);
             var switchContextWarning = new SwitchContextWarningWidget();
             switchContextWarning.insertAfter(".o_main_navbar");

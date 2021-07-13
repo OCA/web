@@ -6,17 +6,17 @@ var lastCtx = null;
 
 addEventListener(
     "connect",
-    function(ee) {
+    function (ee) {
         "use strict";
 
         var port = ee.ports[0];
         con.push(port);
 
-        port.onmessage = function(e) {
+        port.onmessage = function (e) {
             var newCtx = e.data;
 
             if (lastCtx && newCtx !== lastCtx) {
-                con.forEach(function(eport) {
+                con.forEach(function (eport) {
                     eport.postMessage({
                         type: "newCtx",
                         newCtx: newCtx,
