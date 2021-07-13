@@ -1,9 +1,11 @@
 [![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/162/13.0.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-web-162)
-[![Build Status](https://travis-ci.org/OCA/web.svg?branch=13.0)](https://travis-ci.org/OCA/web)
-[![Coverage Status](https://coveralls.io/repos/OCA/web/badge.png?branch=13.0)](https://coveralls.io/r/OCA/web?branch=13.0)
+[![Build Status](https://travis-ci.com/OCA/web.svg?branch=13.0)](https://travis-ci.com/OCA/web)
+[![codecov](https://codecov.io/gh/OCA/web/branch/13.0/graph/badge.svg)](https://codecov.io/gh/OCA/web)
+[![Translation Status](https://translation.odoo-community.org/widgets/web-13-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/web-13-0/?utm_source=widget)
 
-Web addons for Odoo
-===================
+<!-- /!\ do not modify above this line -->
+
+# Web addons for Odoo
 
 This project aims to deal with modules related to the webclient of Odoo. You'll find modules that:
 
@@ -11,3 +13,29 @@ This project aims to deal with modules related to the webclient of Odoo. You'll 
 - Add widgets
 - Ease the import/export features
 - Generally add clientside functionality
+
+<!-- /!\ do not modify below this line -->
+
+<!-- prettier-ignore-start -->
+
+[//]: # (addons)
+
+This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
+
+[//]: # (end addons)
+
+<!-- prettier-ignore-end -->
+
+## Licenses
+
+This repository is licensed under [AGPL-3.0](LICENSE).
+
+However, each module can have a totally different license, as long as they adhere to OCA
+policy. Consult each module's `__manifest__.py` file, which contains a `license` key
+that explains its license.
+
+----
+
+OCA, or the [Odoo Community Association](http://odoo-community.org/), is a nonprofit
+organization whose mission is to support the collaborative development of Odoo features
+and promote its widespread use.
