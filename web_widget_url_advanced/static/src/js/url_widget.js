@@ -1,7 +1,7 @@
 /* Copyright 2018 Simone Orsi - Camptocamp SA
 License LGPLv3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.en.html). */
 
-odoo.define("web_widget_url_advanced", function(require) {
+odoo.define("web_widget_url_advanced", function (require) {
     "use strict";
 
     var basic_fields = require("web.basic_fields");
@@ -10,7 +10,7 @@ odoo.define("web_widget_url_advanced", function(require) {
         /**
          * @override
          */
-        init: function() {
+        init: function () {
             this._super.apply(this, arguments);
             // Retrieve customized `<a />` text from a field
             // via `text_field` attribute or `options.text_field`
@@ -20,7 +20,7 @@ odoo.define("web_widget_url_advanced", function(require) {
          * Retrieve anchor text based on options.
          * @returns {String}
          */
-        _get_text: function() {
+        _get_text: function () {
             if (this.text_field) {
                 var field_value = this.recordData[this.text_field];
                 if (_.isObject(field_value) && _.has(field_value.data)) {
@@ -35,7 +35,7 @@ odoo.define("web_widget_url_advanced", function(require) {
          * @override
          * @private
          */
-        _renderReadonly: function() {
+        _renderReadonly: function () {
             // Base widget uses `this.attrs.text` instead of `this.value` when available.
             this.attrs.text = this._get_text();
             this._super.apply(this, arguments);
