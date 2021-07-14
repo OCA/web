@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2021 - Sergey Shebanin
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
+<templates>
+    <t t-name="web_refresh.CustomMenuItem" owl="1">
+        <li class="o_menu_item" role="menuitem" t-on-keydown="_onKeydown">
+            <a
+                class="dropdown-item"
+                t-att-class="{ selected: props.isActive }"
+                t-att-aria-checked="props.isActive ? 'true' : 'false'"
+                role="menuitemcheckbox"
+                href="#"
+                t-on-click.prevent="_selectIfNotEditing"
+            >
+                    Auto refresh every
+                    <t t-if="state.editing">
+                        <input
+                        t-ref="value_input"
+                        type="number"
+                        t-att-min="props.minValue"
+                        t-att-value="props.value"
+                        t-on-input.stop="_onValueChanged"
+                        t-att-class="{error: state.error}"
+                    />
+                        <button
+                        class="btn"
+                        t-on-click.stop.prevent="_onValueChanged"
+                    >Set</button>
+                    </t>
+                    <t t-else="" t-esc="props.value" />
+                    secs
+                <i
+                    t-if="!state.editing and props.isActive"
+                    class="o_icon_right fa fa-cog"
+                    title="Configure"
+                    t-on-click.stop.prevent="state.editing = true"
+                />
+            </a>
+        </li>
+    </t>
+</templates>

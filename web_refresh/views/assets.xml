@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="assets_backend"
+        name="web_refresh assets"
+        inherit_id="web.assets_backend"
+    >
+        <xpath expr="//script" position="before">
+            <script
+                type="text/javascript"
+                src="/web_refresh/static/src/controllers/abstract_controller.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_refresh/static/src/controllers/form_controller.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_refresh/static/src/controllers/list_controller.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_refresh/static/src/controllers/kanban_controller.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_refresh/static/src/controllers/pivot_controller.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_refresh/static/src/components/custom_menuitem.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_refresh/static/src/components/web_refresh.js"
+            />
+        </xpath>
+        <xpath expr="//link[last()]" position="after">
+            <link
+                rel="stylesheet"
+                type="text/scss"
+                href="/web_refresh/static/src/components/web_refresh.scss"
+            />
+        </xpath>
+    </template>
+</odoo>
