@@ -39,7 +39,7 @@ addon | version | summary
 [web_timeline](web_timeline/) | 14.0.1.0.0 | Interactive visualization chart to show events in time
 [web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 14.0.1.0.0 | Allows you to dynamically color fields on tree views
 [web_tree_image_tooltip](web_tree_image_tooltip/) | 14.0.1.0.0 | Show images in tree views via tooltip
-[web_tree_many2one_clickable](web_tree_many2one_clickable/) | 14.0.1.0.0 | Open the linked resource when clicking on their name
+[web_tree_many2one_clickable](web_tree_many2one_clickable/) | 14.0.1.0.1 | Open the linked resource when clicking on their name
 [web_widget_bokeh_chart](web_widget_bokeh_chart/) | 14.0.2.3.1 | This widget allows to display charts using Bokeh library.
 [web_widget_dropdown_dynamic](web_widget_dropdown_dynamic/) | 14.0.1.0.0 | This module adds support for dynamic dropdown widget
 [web_widget_url_advanced](web_widget_url_advanced/) | 14.0.1.0.1 | This module extends URL widget for displaying anchors with custom labels.
