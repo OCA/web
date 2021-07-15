@@ -34,6 +34,7 @@ odoo.define("web_widget_text_markdown.FieldTextMarkDown", function(require) {
         _getValue: function() {
             var $widget = this.attrs.widget;
             var $type = this.field.type;
+
             if ($type === "html" && $widget && $widget === "bootstrap_markdown") {
                 return this._getHtmlValue(this.$input.val());
             }
@@ -42,8 +43,38 @@ odoo.define("web_widget_text_markdown.FieldTextMarkDown", function(require) {
 
         start: function() {
             this._super();
+            // This is custom how to add CSS class and styles
+            // Showdown does not support this out of the box.
+            // eslint-disable-next-line max-len
+            // Ref: https://github.com/showdownjs/showdown/wiki/Add-default-classes-for-each-HTML-element
+            const classMap = {
+                table: "table table-striped",
+            };
+
+            const styleMap = {
+                h1: "font-size: 2.5em;",
+            };
+
+            const clss_bindings = Object.keys(classMap).map(key => ({
+                type: "output",
+                regex: new RegExp(`<${key}(.*)>`, "g"),
+                replace: `<${key} class="${classMap[key]}" $1>`,
+            }));
+
+            const style_bindings = Object.keys(styleMap).map(key => ({
+                type: "output",
+                regex: new RegExp(`<${key}(.*)>`, "g"),
+                replace: `<${key} style="${styleMap[key]}" $1>`,
+            }));
+
             this.shw_render_html = new showdown.Converter({
-                extensions: ["table", "footnotes", "toc"],
+                extensions: [
+                    ...style_bindings,
+                    ...clss_bindings,
+                    "table",
+                    "footnotes",
+                    "toc",
+                ],
                 emoji: true,
                 underline: true,
                 tablesHeaderId: true,
@@ -78,8 +109,26 @@ odoo.define("web_widget_text_markdown.FieldTextMarkDown", function(require) {
             });
         },
 
+        _renderEdit: function() {
+            var self = this;
+            var $widget = this.attrs.widget;
+            var $type = this.field.type;
+            return $.when(this._super()).then(function() {
+                if (
+                    self.mode === "edit" &&
+                    $type === "html" &&
+                    $widget &&
+                    $widget === "bootstrap_markdown" &&
+                    self.value
+                ) {
+                    self.value = self._getMarkdownValue(self.value);
+                }
+            });
+        },
+
         _prepareInput: function() {
             var $input = this._super.apply(this, arguments);
+
             _.defer(
                 function($elm) {
                     $input.removeClass(this.className);
@@ -93,6 +142,9 @@ odoo.define("web_widget_text_markdown.FieldTextMarkDown", function(require) {
                 $input
             );
             return $input;
+        },
+        _getMarkdownValue: function(value) {
+            return this.shw_render_html.makeMarkdown(this._formatValue(value));
         },
         _getHtmlValue: function(value) {
             return this.shw_render_html.makeHtml(this._formatValue(value));

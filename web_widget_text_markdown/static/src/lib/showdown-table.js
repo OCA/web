@@ -70,7 +70,7 @@
         if (line.trim().match(/^[|].*[|]$/)) {
           line = line.trim();
           var tbl = [];
-          tbl.push('<table class="table table-bordered">');
+          tbl.push('<table class="table table-striped">');
           hs = line.substring(1, line.length - 1).split('|');
           tbl.push(tables.thead.apply(this, hs));
           line = lines[++i];
