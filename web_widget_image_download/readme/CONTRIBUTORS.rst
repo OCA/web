@@ -7,3 +7,4 @@
   * Alexandre Díaz
 
 * Kaushal Prajapati <kbprajapati@live.com>
+* Peerapong Supasompob <peerapong.supasompob@gmail.com>
