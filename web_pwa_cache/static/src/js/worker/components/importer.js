@@ -91,10 +91,15 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                     value: data,
                 };
                 try {
-                    const model_info_userdata = await this._db.getModelInfo("userdata", true);
-                    await this._db.sqlite.createOrUpdateRecord(model_info_userdata, values, [
-                        "param",
-                    ]);
+                    const model_info_userdata = await this._db.getModelInfo(
+                        "userdata",
+                        true
+                    );
+                    await this._db.sqlite.createOrUpdateRecord(
+                        model_info_userdata,
+                        values,
+                        ["param"]
+                    );
                 } catch (err) {
                     return reject(err);
                 }
@@ -127,10 +132,15 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                 };
 
                 try {
-                    const model_info_template = await this._db.getModelInfo("template", true);
-                    await this._db.sqlite.createOrUpdateRecord(model_info_template, values, [
-                        "xml_ref",
-                    ]);
+                    const model_info_template = await this._db.getModelInfo(
+                        "template",
+                        true
+                    );
+                    await this._db.sqlite.createOrUpdateRecord(
+                        model_info_template,
+                        values,
+                        ["xml_ref"]
+                    );
                 } catch (err) {
                     return reject(err);
                 }
@@ -163,7 +173,9 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                 const records = "records" in data ? data.records : data;
                 try {
                     const model_info = await this._db.getModelInfo(model);
-                    await this._db.sqlite.createOrUpdateRecord(model_info, records, ["id"]);
+                    await this._db.sqlite.createOrUpdateRecord(model_info, records, [
+                        "id",
+                    ]);
                 } catch (err) {
                     return reject(err);
                 }
@@ -251,14 +263,17 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                 };
 
                 try {
-                    const model_info_function = await this._db.getModelInfo("function", true);
-                    await this._db.sqlite.createOrUpdateRecord(model_info_function, values, [
-                        "model",
-                        "method",
-                        "params",
-                    ]);
+                    const model_info_function = await this._db.getModelInfo(
+                        "function",
+                        true
+                    );
+                    await this._db.sqlite.createOrUpdateRecord(
+                        model_info_function,
+                        values,
+                        ["model", "method", "params"]
+                    );
                 } catch (err) {
-                    return reject();
+                    return reject(err);
                 }
 
                 return resolve();

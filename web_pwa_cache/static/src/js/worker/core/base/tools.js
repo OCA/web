@@ -326,7 +326,7 @@ odoo.define("web_pwa_cache.PWA.core.base.Tools", function() {
      * @returns {Number}
      */
     function hash(str_data) {
-        let i = str_data.length
+        let i = str_data.length;
         let hash1 = 5381;
         let hash2 = 52711;
 

@@ -48,10 +48,9 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                 try {
                     const model_info_sync = await this._db.getModelInfo("sync", true);
 
-                    await this._db.writeOrCreate(
-                        model_info_sync,
-                        [_.extend({}, data, {id: id})]
-                    );
+                    await this._db.writeOrCreate(model_info_sync, [
+                        _.extend({}, data, {id: id}),
+                    ]);
                 } catch (err) {
                     return reject(err);
                 }
@@ -226,18 +225,28 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                                             }
                                             // If (srecord.id)
                                             for (const record_sync of srecord.args) {
-                                                let field = record_sync[change.field];
-                                                if (typeof field === "object") {
-                                                    field = _.map(field, item => {
-                                                        if (item === change.change) {
-                                                            return new_id;
+                                                let values_rec_sync =
+                                                    record_sync[change.field];
+                                                if (
+                                                    typeof values_rec_sync === "object"
+                                                ) {
+                                                    values_rec_sync = _.map(
+                                                        values_rec_sync,
+                                                        item => {
+                                                            if (
+                                                                item === change.change
+                                                            ) {
+                                                                return new_id;
+                                                            }
+                                                            return item;
                                                         }
-                                                        return item;
-                                                    });
+                                                    );
                                                 } else {
-                                                    field = new_id;
+                                                    values_rec_sync = new_id;
                                                 }
-                                                record_sync[change.field] = field;
+                                                record_sync[
+                                                    change.field
+                                                ] = values_rec_sync;
                                             }
                                         }
                                     }

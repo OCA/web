@@ -10,19 +10,19 @@ import json  # We use `dump(vals, separators=(',', ':'))` for mimicking JSON.str
 import re
 import time
 
-from odoo import api, fields, models
-from odoo.exceptions import ValidationError
+from odoo import fields, models
 from odoo.tools import (
     DEFAULT_SERVER_DATE_FORMAT,
     DEFAULT_SERVER_DATETIME_FORMAT,
     DEFAULT_SERVER_TIME_FORMAT,
 )
-from odoo.tools.safe_eval import safe_eval, test_python_expr
-from odoo.addons.web_pwa_cache.tools import get_hash
+from odoo.tools.safe_eval import safe_eval
 
 import dateutil
 from dateutil.relativedelta import relativedelta
 from pytz import timezone
+
+from ..tools import get_hash
 
 
 class PwaCache(models.Model):
@@ -256,11 +256,11 @@ class PwaCache(models.Model):
             # vals_clean = self._unfold_dict(vals_clean)
             vals_clean = json.dumps(vals_clean, separators=(",", ":"))
             # Generate unique hash
-            ref_hash = get_hash("{}{}{}".format(self.id, self.onchange_field_name, vals_clean))
+            ref_hash = get_hash(
+                "{}{}{}".format(self.id, self.onchange_field_name, vals_clean)
+            )
             if delete_old:
-                record = obj.search(
-                    [("ref_hash", "=", ref_hash)]
-                )
+                record = obj.search([("ref_hash", "=", ref_hash)])
                 if record:
                     found_ids.add(record.id)
             self.with_delay()._update_onchange_cache_value(
@@ -281,9 +281,7 @@ class PwaCache(models.Model):
         )
         vals = json.dumps(vals, separators=(",", ":"))  # JSONify after calling onchange
         obj = self.env["pwa.cache.onchange.value"].sudo()
-        record = obj.search(
-            [("ref_hash", "=", ref_hash)]
-        )
+        record = obj.search([("ref_hash", "=", ref_hash)])
         if record:
             # We assume the same order for returned results, and if not, the
             # worst thing is that the cache value is refreshed
@@ -291,7 +289,12 @@ class PwaCache(models.Model):
                 record.write({"result": result})
         else:
             obj.create(
-                {"pwa_cache_id": self.id, "values": values, "ref_hash": ref_hash, "result": result}
+                {
+                    "pwa_cache_id": self.id,
+                    "values": values,
+                    "ref_hash": ref_hash,
+                    "result": result,
+                }
             )
 
     def _get_eval_context(self, action=None):
@@ -343,6 +346,7 @@ class PwaCacheOnchange(models.Model):
 class PwaCacheOnchangeValue(models.Model):
     _name = "pwa.cache.onchange.value"
     _description = "PWA Cache Onchange Value"
+    _order = "ref_hash"
 
     pwa_cache_id = fields.Many2one(
         comodel_name="pwa.cache",
@@ -353,8 +357,10 @@ class PwaCacheOnchangeValue(models.Model):
     )
     field_name = fields.Char(related="pwa_cache_id.onchange_field_name", store=True)
     values = fields.Char(required=True)
-    # The ORM only supports integers of 4 bytes but we use 64bit hashes to avoid as much as possible hash collisions...
-    # We can store the value as string because sqlite will use integers of 8 bytes to store the value
+    # The ORM only supports integers of 4 bytes but we use 64bit hashes
+    # to avoid as much as possible hash collisions...
+    # We can store the value as string because sqlite will use integers
+    # of 8 bytes to store the value
     ref_hash = fields.Char(required=True, index=True)
     result = fields.Char(required=True)
 

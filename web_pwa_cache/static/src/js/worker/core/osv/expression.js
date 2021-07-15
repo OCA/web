@@ -51,10 +51,12 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
         "!=": "=",
         in: "not in",
         like: "not like",
-        ilike: "not like", // Sqlite doesn't have 'ilike'
+        // Sqlite doesn't have 'ilike'
+        ilike: "not like",
         "not in": "in",
         "not like": "like",
-        "not ilike": "like", // Sqlite doesn't have 'ilike'
+        // Sqlite doesn't have 'ilike'
+        "not ilike": "like",
     };
 
     const TRUE_LEAF = [1, "=", 1];
@@ -66,11 +68,18 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
         return records.map(x => x.id);
     }
 
-    function convert_to_column(field, value, string_quoted = true, string_sanitized = true) {
+    function convert_to_column(
+        field,
+        value,
+        string_quoted = true,
+        string_sanitized = true
+    ) {
         let svalue = value;
 
         if (
-            field.type !== "boolean" && field.type !== "binary" && field.type !== "json" &&
+            field.type !== "boolean" &&
+            field.type !== "binary" &&
+            field.type !== "json" &&
             (_.isUndefined(svalue) || _.isNull(svalue) || svalue === false)
         ) {
             if (string_sanitized) {
@@ -100,7 +109,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
             case "binary":
             case "json":
                 svalue = JSON.stringify(_.isUndefined(value) ? "" : value);
-                //svalue = LZString.compressToUint8Array(svalue);
+                // Svalue = LZString.compressToUint8Array(svalue);
                 break;
             case "char":
             case "text":
@@ -321,10 +330,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                 from_splitted[1].replace(/"/g, ""),
             ];
         }
-        return [
-            from_splitted[0].replace(/"/g, ""),
-            from_splitted[0].replace(/"/g, ""),
-        ];
+        return [from_splitted[0].replace(/"/g, ""), from_splitted[0].replace(/"/g, "")];
     }
 
     /**
@@ -390,14 +396,18 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                 for (let i = 0; i < where_ids.length && i < IN_MAX; ++i) {
                     const subids = where_ids.slice(i, i + IN_MAX);
                     const records = await cr.all(
-                        `SELECT DISTINCT "${select_field}" FROM "${from_table}" WHERE "${where_field}" IN (${new Array(subids.length).fill("?").join(",")})`,
+                        `SELECT DISTINCT "${select_field}" FROM "${from_table}" WHERE "${where_field}" IN (${new Array(
+                            subids.length
+                        )
+                            .fill("?")
+                            .join(",")})`,
                         ...subids
                     );
                     res = res.concat(get_records_ids(records));
                 }
             } else {
                 const records = await cr.all(
-                    `SELECT DISTINCT "${select_field}" FROM "${from_table}" WHERE "${where_field}" ${where_operator} ${where_ids[0]}`,
+                    `SELECT DISTINCT "${select_field}" FROM "${from_table}" WHERE "${where_field}" ${where_operator} ${where_ids[0]}`
                 );
                 res = get_records_ids(records);
             }
@@ -407,7 +417,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
 
     async function select_distinct_from_where_not_null(cr, select_field, from_table) {
         const records = await cr.all(
-            `SELECT distinct("${select_field}") FROM "${from_table}" where "${select_field}" is not null`,
+            `SELECT distinct("${select_field}") FROM "${from_table}" where "${select_field}" is not null`
         );
         return get_records_ids(records);
     }
@@ -793,11 +803,11 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                             ])
                         );
                         if (prefix) {
-                            const records = await this._dbmanager.search(
+                            const records_prefix = await this._dbmanager.search(
                                 left_model.model,
                                 doms
                             );
-                            const ids = get_records_ids(records);
+                            const ids = get_records_ids(records_prefix);
                             return [[left, "in", ids]];
                         }
                         return doms;
@@ -806,9 +816,14 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     let child_ids = _.unique(ids);
                     let records = [];
                     while (!_.isEmpty(ids)) {
-                        records = await this._dbmanager.search(left_model.model, [
-                            [parent_name, "in", ids],
-                        ]);
+                        records = await this._dbmanager.search(
+                            left_model.model,
+                            [[parent_name, "in", ids]],
+                            undefined,
+                            undefined,
+                            undefined,
+                            "id"
+                        );
                         ids = get_records_ids(records);
                         child_ids = child_ids.concat(ids);
                     }
@@ -1023,7 +1038,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     } else if (
                         path.length > 1 &&
                         field.store &&
-                        field.type == "many2one"
+                        field.type === "many2one"
                     ) {
                         // FIXME: Client side allways uses 'active_test' = True
                         const records = await this._dbmanager.search(comodel.model, [
@@ -1200,24 +1215,24 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     //         push(create_substitution_leaf(leaf, ['id', op1, ids1], model));
                     //     }
                     // }
-                    else if (field.type == "many2one") {
+                    else if (field.type === "many2one") {
                         if (operator in HIERARCHY_FUNCS) {
                             const ids2 = to_ids(right, comodel, leaf.leaf);
                             let dom = [];
-                            if (field.relation != model.model) {
+                            if (field.relation === model.model) {
+                                dom = await HIERARCHY_FUNCS[operator](
+                                    "id",
+                                    ids2,
+                                    model,
+                                    left
+                                );
+                            } else {
                                 dom = await HIERARCHY_FUNCS[operator](
                                     left,
                                     ids2,
                                     comodel,
                                     undefined,
                                     field.relation
-                                );
-                            } else {
-                                dom = await HIERARCHY_FUNCS[operator](
-                                    "id",
-                                    ids2,
-                                    model,
-                                    left
                                 );
                             }
                             dom.reverse();
@@ -1226,16 +1241,17 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                             }
                         } else {
                             const _get_expression = async (
-                                comodel,
-                                left,
-                                right,
-                                operator
+                                comodel_expr,
+                                left_expr,
+                                right_expr,
+                                operator_expr
                             ) => {
                                 // Special treatment to ill-formed domains
-                                operator =
-                                    (["<", ">", "<=", ">="].indexOf(operator) !== -1 &&
+                                let operator_s =
+                                    (["<", ">", "<=", ">="].indexOf(operator_expr) !==
+                                        -1 &&
                                         "in") ||
-                                    operator;
+                                    operator_expr;
 
                                 const dict_op = {
                                     "not in": "!=",
@@ -1244,28 +1260,31 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                                     "!=": "not in",
                                 };
                                 if (
-                                    !(right instanceof Array) &&
-                                    ["not in", "in"].indexOf(operator) !== -1
+                                    !(right_expr instanceof Array) &&
+                                    ["not in", "in"].indexOf(operator_s) !== -1
                                 ) {
-                                    operator = dict_op[operator];
+                                    operator_s = dict_op[operator_s];
                                 } else if (
-                                    right instanceof Array &&
+                                    right_expr instanceof Array &&
                                     ["!=", "="].indexOf(operator) !== -1
                                 ) {
                                     // For domain (FIELD,'=',['value1','value2'])
-                                    operator = dict_op[operator];
+                                    operator_s = dict_op[operator_s];
                                 }
                                 const records = await this._dbmanager.name_search(
-                                    comodel.model,
-                                    right,
+                                    comodel_expr.model,
+                                    right_expr,
                                     [],
-                                    operator
+                                    operator_s
                                 );
                                 const res_ids = records.map(x => x[0]);
-                                if (NEGATIVE_TERM_OPERATORS.indexOf(operator) !== -1) {
-                                    res_ids.push(false); // TODO this should not be appended if False was in 'right'
+                                if (
+                                    NEGATIVE_TERM_OPERATORS.indexOf(operator_s) !== -1
+                                ) {
+                                    // TODO this should not be appended if False was in 'right'
+                                    res_ids.push(false);
                                 }
-                                return [left, "in", res_ids];
+                                return [left_expr, "in", res_ids];
                             };
                             // Resolve string-based m2o criterion into IDs
                             if (
@@ -1287,7 +1306,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                                     )
                                 );
                             } else {
-                                // Right == [] or right == False and all other cases are handled by __leaf_to_sql()
+                                // Right_expr == [] or right_expr == False and all other cases are handled by __leaf_to_sql()
                                 push_result(leaf);
                             }
                         }
@@ -1353,6 +1372,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                             push_result(leaf);
                         }
                     } else if (false && field.translate && right) {
+                        // TODO: Translations are given from 'search_read'
                         const need_wildcard =
                             ["like", "ilike", "not like", "not ilike"].indexOf(
                                 operator
@@ -1417,8 +1437,6 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     joins = joins.concat(leaf.get_join_conditions());
                 }
                 this.joins = _.unique(joins);
-
-                debugger;
 
                 return resolve();
             });

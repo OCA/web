@@ -34,6 +34,14 @@ odoo.define("web_pwa_oca.PWA", function(require) {
             // To be overridden
             return Promise.resolve();
         },
+
+        /**
+         * @returns {Promise}
+         */
+        processRequest: function() {
+            // To be overridden
+            return Promise.resolve();
+        },
     });
 
     return PWA;

@@ -135,7 +135,7 @@ odoo.define("web_pwa_cache.PWA.core.Config", function(require) {
                     );
                     this._cache[param] = value;
                 } catch (err) {
-                    return reject();
+                    return reject(err);
                 }
 
                 return resolve();

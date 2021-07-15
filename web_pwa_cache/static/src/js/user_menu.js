@@ -11,7 +11,7 @@ odoo.define("web_pwa_cache.UserMenu", function(require) {
         /**
          * @override
          */
-        init: function () {
+        init: function() {
             this.init_broadcast("pwa-page-messages", "pwa-sw-messages");
             this._super.apply(this, arguments);
         },
@@ -22,6 +22,9 @@ odoo.define("web_pwa_cache.UserMenu", function(require) {
         start: function() {
             return this._super.apply(this, arguments).then(() => {
                 this._pwaManager = WebClientObj.pwa_manager;
+                if (this._pwaManager.isPWAStandalone()) {
+                    this._enablePWAMenu();
+                }
             });
         },
 

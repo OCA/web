@@ -52,6 +52,10 @@ class ServiceWorker(PWA):
             if (typeof self.oca_pwa === "undefined") {{
                 self.oca_pwa = new PWA({});
                 promise_start = self.oca_pwa.start();
+                if (self.serviceWorker.state === "activated") {{
+                    promise_start = promise_start.then(
+                        () => self.oca_pwa.activateWorker());
+                }}
             }}
         """.format(
             self._get_pwa_params()
@@ -59,35 +63,20 @@ class ServiceWorker(PWA):
 
     def _get_js_pwa_core_event_install_impl(self):
         return """
-            const task = new Promise (async (resolve, reject) => {{
-                try {{
-                    await promise_start;
-                    await self.oca_pwa.installWorker();
-                }} catch (err) {{
-                    return reject(err);
-                }}
-                return resolve();
-            }});
-            evt.waitUntil(task);
+            evt.waitUntil(promise_start.then(() => self.oca_pwa.installWorker()));
         """
 
     def _get_js_pwa_core_event_activate_impl(self):
         return """
             console.log('[ServiceWorker] Activating...');
-            const task = new Promise (async (resolve, reject) => {{
-                try {{
-                    await promise_start;
-                    await self.oca_pwa.activateWorker();
-                }} catch (err) {{
-                    return reject(err);
-                }}
-                return resolve();
-            }});
-            evt.waitUntil(task);
+            evt.waitUntil(promise_start.then(() => self.oca_pwa.activateWorker()));
         """
 
     def _get_js_pwa_core_event_fetch_impl(self):
-        return ""
+        return """
+            evt.respondWith(promise_start.then(
+                () => self.oca_pwa.processRequest(evt.request)));
+        """
 
     def _get_pwa_scripts(self):
         """Scripts to be imported in the service worker (Order is important)"""

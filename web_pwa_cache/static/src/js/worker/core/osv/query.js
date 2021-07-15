@@ -109,6 +109,13 @@ odoo.define("web_pwa_cache.PWA.core.osv.Query", function(require) {
          *           aliases as "{lhs}" and "{rhs}".
          *
          *       :param extra_params: a list of parameters for the `extra` condition.
+         *
+         * @param {Array} connection
+         * @param {Boolean} implicit
+         * @param {Boolean} outer
+         * @param {String} extra
+         * @param {Array} extra_params
+         * @returns {Array} [alias, alias_statement]
          */
         add_join: function(
             connection,
@@ -153,7 +160,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Query", function(require) {
         },
 
         /**
-         * Returns (query_from, query_where, query_params).
+         * @returns {Array} [query_from, query_where, query_params]
          */
         get_sql: function() {
             let tables_to_process = _.clone(this.tables);

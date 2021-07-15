@@ -93,7 +93,6 @@ odoo.define("web_pwa_cache.PWA", function(require) {
         installWorker: function() {
             const task = new Promise(async (resolve, reject) => {
                 try {
-                    await this._db.install();
                     await this._cache.addAll(
                         this._cache_hashes.pwa,
                         this._prefetched_urls
@@ -142,6 +141,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
          *
          * @private
          * @param {URL} url
+         * @returns {Object}
          */
         _getURLInfo: function(url) {
             const cached_urls = {
@@ -194,7 +194,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
             const isOffline =
                 (this._managers.config && this._managers.config.isOfflineMode()) ||
                 false;
-            // console.log("------ STANDALONE: ", isStandaloneMode);
+            // Console.log("------ STANDALONE: ", isStandaloneMode);
             // console.log("------ MODE OFF: ", isOffline);
             // console.log("------ METHOD: ", request.method);
 
@@ -212,7 +212,11 @@ odoo.define("web_pwa_cache.PWA", function(require) {
 
                         // Need redirect '/'?
                         const url = new URL(request.url);
-                        if ((url.pathname === "/" || (url.pathname ==="/web" && url.search)) && isOffline) {
+                        if (
+                            (url.pathname === "/" ||
+                                (url.pathname === "/web" && url.search)) &&
+                            isOffline
+                        ) {
                             return resolve(Tools.ResponseRedirect("/web"));
                         }
                         // Check cached url's to use generic cache hash
@@ -235,10 +239,10 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                             // Try from "dynamic" cache
                             try {
                                 const request_cloned_cache = request.clone();
-                                const response_cache = await this._tryGetFromCache(
+                                const response_internal_cache = await this._tryGetFromCache(
                                     request_cloned_cache
                                 );
-                                return resolve(response_cache);
+                                return resolve(response_internal_cache);
                             } catch (err) {
                                 console.log(
                                     "[ServiceWorker] Can't process GET request '" +
@@ -322,7 +326,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                             type: "PWA_CONFIG_CHANGED",
                             changes: {pwa_mode: "offline"},
                         });
-                        return resolve(new Response("", {headers: {"Refresh": "0"}}));
+                        return resolve(new Response("", {headers: {Refresh: "0"}}));
                     }
                 });
             }
@@ -392,6 +396,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
 
         /**
          * @private
+         * @param {Object} request_cloned_cache
          * @returns {Promise}
          */
         _tryPostFromCache: function(request_cloned_cache) {
@@ -416,6 +421,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
 
         /**
          * @private
+         * @param {Object} request_cloned_cache
          * @returns {Promise}
          */
         _tryGetFromCache: function(request_cloned_cache) {

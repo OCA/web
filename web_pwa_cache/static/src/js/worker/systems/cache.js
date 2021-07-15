@@ -15,6 +15,12 @@ odoo.define("web_pwa_cache.PWA.systems.Cache", function(require) {
             return caches.open(cache_name);
         },
 
+        /**
+         *
+         * @param {String} cache_name
+         * @param {Array} prefetched_urls
+         * @returns {Promise}
+         */
         addAll: function(cache_name, prefetched_urls) {
             return new Promise(async (resolve, reject) => {
                 try {
@@ -30,16 +36,18 @@ odoo.define("web_pwa_cache.PWA.systems.Cache", function(require) {
         },
 
         /**
+         * @param {Array} exceptions
          * @returns {Promise}
          */
         cleanOld: function(exceptions) {
             return caches.keys().then(keyList => {
-                keyList.map(key => {
+                _.each(keyList, key => {
                     if (exceptions.indexOf(key) === -1) {
                         console.log("[ServiceWorker] Removing cache", key);
                         caches.delete(key);
                     }
                 });
+                return keyList;
             });
         },
     });

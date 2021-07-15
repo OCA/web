@@ -67,12 +67,15 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
 
         /**
          * @param {String} name
-         * @returns {Promise[Any]}
+         * @returns {Promise}
          */
         get: function(name, def_value) {
             return new Promise(async resolve => {
                 try {
-                    const model_info_config = await this._db.getModelInfo("config", true);
+                    const model_info_config = await this._db.getModelInfo(
+                        "config",
+                        true
+                    );
                     const record = await this._db.search_read(
                         model_info_config,
                         [["param", "=", name]],
@@ -88,12 +91,15 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
         },
 
         /**
-         * @returns {Promise[Object]}
+         * @returns {Promise}
          */
         getAll: function() {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_config = await this._db.getModelInfo("config", true);
+                    const model_info_config = await this._db.getModelInfo(
+                        "config",
+                        true
+                    );
                     const records = await this._db.search_read(model_info_config, []);
                     this._cache = {};
                     for (const record of records) {
@@ -114,7 +120,10 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
         set: function(param, value) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_config = await this._db.getModelInfo("config", true);
+                    const model_info_config = await this._db.getModelInfo(
+                        "config",
+                        true
+                    );
                     await this._db.sqlitedb.createOrUpdateRecord(
                         model_info_config,
                         {
@@ -128,7 +137,7 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
                     );
                     this._cache[param] = value;
                 } catch (err) {
-                    return reject();
+                    return reject(err);
                 }
 
                 return resolve();
@@ -145,7 +154,10 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     const config = await this.getAll();
-                    const model_info_userdata = await this._db.getModelInfo("userdata", true);
+                    const model_info_userdata = await this._db.getModelInfo(
+                        "userdata",
+                        true
+                    );
                     const userdata_count = await this._db.count(model_info_userdata);
                     config.is_db_empty = userdata_count === 0;
                     this.postBroadcastMessage({
@@ -212,17 +224,22 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
                                 []
                             );
                             if (
-                                !this.isOfflineMode() && this.isStandaloneMode() && !userdata_count
+                                !this.isOfflineMode() &&
+                                this.isStandaloneMode() &&
+                                !userdata_count
                             ) {
                                 this.getParent()._doPrefetchDataPost();
                             }
                         } catch (err) {
-                            console.log("[ServiceWorker] Error sending pwa configuration to the user page! ", err);
+                            console.log(
+                                "[ServiceWorker] Error sending pwa configuration to the user page! ",
+                                err
+                            );
                             return reject(err);
                         }
 
                         return resolve();
-                    })
+                    });
                     break;
             }
         },

@@ -3,8 +3,7 @@
 
 import logging
 
-from odoo import _, http
-from odoo.exceptions import ValidationError
+from odoo import http
 from odoo.http import request, route
 from odoo.tools import safe_eval
 
@@ -26,7 +25,10 @@ class PWAPrefetch(PWA):
         ir_ui_menu_obj = request.env["ir.ui.menu"]
         menus = ir_ui_menu_obj.load_menus(False)
         menu_ids = ir_ui_menu_obj.browse(menus["all_menu_ids"]).filtered("action")
-        actions = ["{},{}".format(menu_id.action.type, menu_id.action.id) for menu_id in menu_ids]
+        actions = [
+            "{},{}".format(menu_id.action.type, menu_id.action.id)
+            for menu_id in menu_ids
+        ]
         return actions
 
     def _pwa_prefetch_action(self, last_update, **kwargs):
@@ -55,16 +57,7 @@ class PWAPrefetch(PWA):
             )
         return res
 
-    def _pwa_prefetch_model_info_names(self, last_update):
-        model_domain = []
-        if last_update:
-            model_domain.append(("write_date", ">=", last_update))
-        model_ids = request.env["ir.model"].sudo().search(model_domain).filtered(lambda x: x.model in request.env and not request.env[x.model]._abstract)
-        model_ids |= request.env["ir.model"].sudo().search(model_domain + [("id", "in", request.env["pwa.cache"].search(self._get_pwa_cache_domain(["model"])).mapped("model_id").ids)])
-        return model_ids.mapped("model")
-
     def _pwa_prefetch_model_info(self, last_update, **kwargs):
-        model_name = kwargs.get("model_name")
         # Get used model names from menus action
         actions = self._get_pwa_available_actions()
         model_views = {}
@@ -92,7 +85,31 @@ class PWAPrefetch(PWA):
         model_domain = []
         if last_update:
             model_domain.append(("write_date", ">=", last_update))
-        model_ids = request.env["ir.model"].sudo().search(model_domain + [("model", "=", model_name)]).filtered(lambda x: x.model in request.env and not request.env[x.model]._abstract)
+        model_ids = (
+            request.env["ir.model"]
+            .sudo()
+            .search(model_domain)
+            .filtered(
+                lambda x: x.model in request.env and not request.env[x.model]._abstract
+            )
+        )
+        model_ids |= (
+            request.env["ir.model"]
+            .sudo()
+            .search(
+                model_domain
+                + [
+                    (
+                        "id",
+                        "in",
+                        request.env["pwa.cache"]
+                        .search(self._get_pwa_cache_domain(["model"]))
+                        .mapped("model_id")
+                        .ids,
+                    )
+                ]
+            )
+        )
         res = []
         for model_id in model_ids:
             view_types = {}
@@ -164,11 +181,7 @@ class PWAPrefetch(PWA):
             if records_count == 0:
                 continue
             model_infos.append(
-                {
-                    "model": model,
-                    "domain": evaluated_domain,
-                    "count": records_count,
-                }
+                {"model": model, "domain": evaluated_domain, "count": records_count}
             )
         # Calculate counts
         self._pwa_calculate_model_info_count(model_infos, last_update)
@@ -185,9 +198,7 @@ class PWAPrefetch(PWA):
         records = request.env["pwa.cache"].search(self._get_pwa_cache_domain(["post"]))
         post_defs = []
         for record in records:
-            post_defs.append(
-                {"url": record.post_url, "params": record.post_params}
-            )
+            post_defs.append({"url": record.post_url, "params": record.post_params})
         return post_defs
 
     def _pwa_prefetch_userdata(self, **kwargs):
@@ -219,13 +230,18 @@ class PWAPrefetch(PWA):
         return functions
 
     def _pwa_is_invalid_field(self, model, field_name, field_def):
-        if field_name in ("create_uid", "create_date", "write_uid"):
+        if field_name in ("create_uid", "create_date", "write_uid", "write_date"):
             return True
-        if model == "pwa.cache.onchange.value" and field_name in ("display_name", "field_name", "values"):
+        if model == "pwa.cache.onchange.value" and field_name in (
+            "display_name",
+            "field_name",
+            "values",
+        ):
             return True
         is_stored = "store" in field_def and field_def["store"]
+        is_required = "required" in field_def and field_def["required"]
         is_valid_type = field_def["type"] not in ("one2many", "binary")
-        return not is_stored or not is_valid_type
+        return not is_required and (not is_stored or not is_valid_type)
 
     def _pwa_fill_internal_fields(self, model, fields):
         if model == "res.users":
@@ -240,7 +256,10 @@ class PWAPrefetch(PWA):
             fields.append("display_name")
 
     def _pwa_get_model_fields(self, model):
-        record = request.env["pwa.cache"].search(self._get_pwa_cache_domain(["model"]) + [("model_name", "=", model)], limit=1)
+        record = request.env["pwa.cache"].search(
+            self._get_pwa_cache_domain(["model"]) + [("model_name", "=", model)],
+            limit=1,
+        )
         fields = []
         if record:
             field_infos = request.env[record.model_name].fields_get()
@@ -268,7 +287,7 @@ class PWAPrefetch(PWA):
             opt[0] for opt in request.env["pwa.cache"]._fields["cache_type"].selection
         }
         # Fixed caches
-        available_types |= {"action", "userdata", "model_default", "model_info", "model_info_names"}
+        available_types |= {"action", "userdata", "model_default", "model_info"}
         if cache_type in available_types:
             prefetch_method = getattr(self, "_pwa_prefetch_{}".format(cache_type))
             if prefetch_method:

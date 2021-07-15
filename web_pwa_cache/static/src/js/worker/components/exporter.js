@@ -7,7 +7,6 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
     const SWComponent = require("web_pwa_cache.PWA.components.Component");
     const JSSandbox = require("web_pwa_cache.PWA.core.base.JSSandbox");
     const Tools = require("web_pwa_cache.PWA.core.base.Tools");
-    const Expression = require("web_pwa_cache.PWA.core.osv.Expression");
     const rpc = require("web_pwa_cache.PWA.core.base.rpc");
 
     /**
@@ -23,12 +22,12 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
          * @param {Object} record
          * @param {Array} uncached_fields
          */
-        fillUncachedRecordFields: function (model_fields, record, uncached_fields) {
-            for (let index=uncached_fields.length-1; index>=0; --index) {
+        fillUncachedRecordFields: function(model_fields, record, uncached_fields) {
+            for (let index = uncached_fields.length - 1; index >= 0; --index) {
                 const field_name = uncached_fields[index];
-                //const field_type = model_fields[field_name].type;
+                // Const field_type = model_fields[field_name].type;
                 record[field_name] = false;
-                // switch (field_type) {
+                // Switch (field_type) {
                 //     case "one2many":
                 //         record[field_name] = [];
                 //         break;
@@ -53,7 +52,9 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         "args" in data.kwargs ? data.kwargs.args : data.args[1];
                     const limit =
                         "args" in data.kwargs ? data.kwargs.limit : data.args[2];
-                    return resolve(this._db.name_search(model, search, domain, operator, limit))
+                    return resolve(
+                        this._db.name_search(model, search, domain, operator, limit)
+                    );
                 } catch (err) {
                     return reject(err);
                 }
@@ -110,19 +111,22 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                     // Generate Onchange Values Virtual Table
                     const sandbox = new JSSandbox();
                     const record_data_folded = Tools.foldObj(record_data);
-                    const model_info_pwa_cache = await this._db.getModelInfo("pwa.cache");
+                    const model_info_pwa_cache = await this._db.getModelInfo(
+                        "pwa.cache"
+                    );
                     const model_info_pwa_onchange = await this._db.getModelInfo(
                         "pwa.cache.onchange"
-                    );
-                    const model_info_pwa_onchange_value = await this._db.getModelInfo(
-                        "pwa.cache.onchange.value"
                     );
                     let catch_from_server = true;
 
                     for (const field of fields_changed) {
                         // TODO: Determine onchange execution order through onchange_spec
                         const sql_pwa_cache = `SELECT id,cache_type,code_js FROM ${model_info_pwa_cache.table} WHERE "onchange_field_name"=? AND "model_name"=? AND "cache_type" IN ("onchange", "onchange_formula")`;
-                        const record = await this._db.sqlitedb.get(sql_pwa_cache, field, model);
+                        const record = await this._db.sqlitedb.get(
+                            sql_pwa_cache,
+                            field,
+                            model
+                        );
                         if (!_.isEmpty(record)) {
                             this._db.sqlitedb.converter.toOdoo(
                                 model_info_pwa_cache.fields,
@@ -140,12 +144,20 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                                 domain = changes.domain;
                             } else {
                                 const sql_selectors = `SELECT "field_name", "required" FROM ${model_info_pwa_onchange.table} WHERE "pwa_cache_id"=? AND NOT disposable`;
-                                const selectors = await this._db.sqlitedb.all(sql_selectors, record.id);
-                                // TODO: Ver el orden
-                                let vals = {};
+                                const selectors = await this._db.sqlitedb.all(
+                                    sql_selectors,
+                                    record.id
+                                );
+                                const vals = {};
                                 let is_valid = true;
                                 for (const selector of selectors) {
-                                    if (selector.required && typeof record_data_folded[selector.field_name] === "undefined") {
+                                    if (
+                                        selector.required &&
+                                        !Object.prototype.hasOwnProperty.call(
+                                            record_data_folded,
+                                            selector.field_name
+                                        )
+                                    ) {
                                         is_valid = false;
                                         break;
                                     }
@@ -161,19 +173,17 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                                     return reject();
                                 }
 
-                                const ref_hash = Tools.hash(`${record.id}${field}${JSON.stringify(vals)}`);
-                                //const sql_value = `SELECT result FROM ${model_info_pwa_onchange_value.table} WHERE "ref_hash"=?`;
-                                //const value_record = await this._db.sqlitedb.get(sql_value, ref_hash);
-                                const timer_id = `idb_onchange${Math.random()}`;
-                                console.time(timer_id);
-                                const value_record = await this._db.indexeddb.onchange.where("ref_hash").equals(ref_hash).first();
-                                console.timeEnd(timer_id);
+                                const ref_hash = Tools.hash(
+                                    `${record.id}${field}${JSON.stringify(vals)}`
+                                );
+                                const value_record = await this._db.indexeddb.onchange.get(
+                                    ref_hash
+                                );
                                 if (!_.isEmpty(value_record)) {
-                                    const onchange_result_data = this._db.sqlitedb.converter.parseJson(value_record, "result");
-                                    //const onchange_data = value_record.result;
-                                    value = onchange_result_data.value;
-                                    warning = onchange_result_data.warning;
-                                    domain = onchange_result_data.domain;
+                                    const changes = value_record.result;
+                                    value = changes.value;
+                                    warning = changes.warning;
+                                    domain = changes.domain;
                                 }
                             }
                             if (value) {
@@ -255,6 +265,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         console.log("---- COPY AAA");
                         console.log(c_ids);
                         this._sync.sendCountToPages();
+                        this._db.persistDatabases();
                         return resolve(c_ids[0]);
                     }
                 } catch (err) {
@@ -273,7 +284,10 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
         read_template: function(model, data) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_template = await this._db.getModelInfo("template", true);
+                    const model_info_template = await this._db.getModelInfo(
+                        "template",
+                        true
+                    );
                     const record = await this._db.search_read(
                         model_info_template,
                         [["xml_ref", "=", data.args[0]]],
@@ -304,6 +318,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                     const model_info = await this._db.getModelInfo(model);
                     await this._process_record_write(model_info, data);
                     this._sync.sendCountToPages();
+                    this._db.persistDatabases();
                     return resolve(true);
                 } catch (err) {
                     return reject(err);
@@ -352,6 +367,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                     );
                     const c_ids = await this._process_record_create(model_info, data);
                     this._sync.sendCountToPages();
+                    this._db.persistDatabases();
                     return resolve(c_ids.length === 1 ? c_ids[0] : c_ids);
                 } catch (err) {
                     return reject(err);
@@ -376,6 +392,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                     date: new Date().getTime(),
                 });
                 this._sync.sendCountToPages();
+                this._db.persistDatabases();
                 return resolve(true);
             });
         },
@@ -422,10 +439,10 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     const uid = this._config.getUID();
-                    const model = data.args[0];
+                    const model_name = data.args[0];
                     const action_id = data.args[1];
                     const filters = await this._db.getModelFilters(
-                        model,
+                        model_name,
                         uid,
                         action_id
                     );
@@ -472,7 +489,10 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
         load_menus: function() {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_userdata = await this._db.getModelInfo("userdata", true);
+                    const model_info_userdata = await this._db.getModelInfo(
+                        "userdata",
+                        true
+                    );
                     const record = await this._db.search_read(
                         model_info_userdata,
                         [["param", "=", "menus"]],
@@ -558,7 +578,9 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         model_info_base_actions,
                         action_id
                     );
-                    const model_info_actions = await this._db.getModelInfo(base_action.type);
+                    const model_info_actions = await this._db.getModelInfo(
+                        base_action.type
+                    );
                     let record = await this._db.browse(model_info_actions, action_id);
                     if (_.isEmpty(record) && !this.isOfflineMode()) {
                         return reject();
@@ -576,7 +598,9 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                     //     record.search_view = JSON.parse(record.search_view);
                     // }
 
-                    [record] = this._db.sqlitedb.converter.removeNoFields(
+                    [
+                        record,
+                    ] = this._db.sqlitedb.converter.removeNoFields(
                         model_info_actions.fields,
                         [record]
                     );
@@ -605,7 +629,10 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                     }
                     const model_info = await this._db.getModelInfo(pmodel);
                     const req_fields = _.union(["id"], data.args[1]);
-                    const cached_fields = _.intersection(req_fields, model_info.valid_fields);
+                    const cached_fields = _.intersection(
+                        req_fields,
+                        model_info.valid_fields
+                    );
                     const mapped_records = _.map(records, item =>
                         _.pick(item, req_fields)
                     );
@@ -637,17 +664,25 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                     const uncached_fields = _.difference(req_fields, cached_fields);
                     if (!_.isEmpty(uncached_fields)) {
                         if (this.isOfflineMode()) {
-                            _.each(mapped_records, record => this.fillUncachedRecordFields(model_info.fields, record, uncached_fields));
-                        } else {
-                            const [
-                                response,
-                            ] = await rpc.callJSonRpc(
-                                pmodel,
-                                "read",
-                                [data.args[0], uncached_fields],
+                            _.each(mapped_records, record =>
+                                this.fillUncachedRecordFields(
+                                    model_info.fields,
+                                    record,
+                                    uncached_fields
+                                )
                             );
+                        } else {
+                            const [response] = await rpc.callJSonRpc(pmodel, "read", [
+                                data.args[0],
+                                uncached_fields,
+                            ]);
                             const server_records = (await response.json()).result;
-                            _.each(mapped_records, (record) => _.extend(record, _.findWhere(server_records, {id: record.id})));
+                            _.each(mapped_records, record =>
+                                _.extend(
+                                    record,
+                                    _.findWhere(server_records, {id: record.id})
+                                )
+                            );
                         }
                     }
                     return resolve(mapped_records);
@@ -682,8 +717,10 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                 try {
                     const model_info = await this._db.getModelInfo(pmodel);
                     const req_fields = _.union(["id"], pfields);
-                    const cached_fields = _.intersection(req_fields, model_info.valid_fields);
-                    console.time("search_read");
+                    const cached_fields = _.intersection(
+                        req_fields,
+                        model_info.valid_fields
+                    );
                     records = await this._db.search_read(
                         model_info,
                         pdomain,
@@ -692,7 +729,6 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         poffset,
                         psort
                     );
-                    console.timeEnd("search_read");
 
                     if (_.isEmpty(records) && !this.isOfflineMode()) {
                         return reject("No records");
@@ -713,11 +749,15 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                     const uncached_fields = _.difference(req_fields, cached_fields);
                     if (!_.isEmpty(uncached_fields)) {
                         if (this.isOfflineMode()) {
-                            _.each(records, record => this.fillUncachedRecordFields(model_info.fields, record, uncached_fields));
+                            _.each(records, record =>
+                                this.fillUncachedRecordFields(
+                                    model_info.fields,
+                                    record,
+                                    uncached_fields
+                                )
+                            );
                         } else {
-                            const [
-                                response,
-                            ] = await rpc.callJSonRpc(
+                            const [response] = await rpc.callJSonRpc(
                                 pmodel,
                                 "search_read",
                                 false,
@@ -730,7 +770,12 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                                 }
                             );
                             const server_records = (await response.json()).result;
-                            _.each(records, (record) => _.extend(record, _.findWhere(server_records, {id: record.id})));
+                            _.each(records, record =>
+                                _.extend(
+                                    record,
+                                    _.findWhere(server_records, {id: record.id})
+                                )
+                            );
                         }
                     }
                 } catch (err) {
@@ -993,14 +1038,13 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
             });
         },
 
-        /**
-         * GET REQUESTS
-         * /
+        // GET REQUESTS
 
         /**
          * @param {String} model
          * @param {Number/String} id
          * @param {String} field
+         * @param {Object} search_params
          * @returns {Promise}
          */
         web_image: function(model, id, field, search_params) {
@@ -1038,16 +1082,16 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
          * Resolve Many2one
          *
          * @private
-         * @param {String} model
+         * @param {Object} model_info
          * @param {Object} data
-         * @param {Object} defaults
+         * @returns {Promise}
          */
         _process_record_create: function(model_info, data) {
             return new Promise(async resolve => {
                 const records_sync = [];
                 const model_info_sync = await this._db.getModelInfo("sync", true);
+                const model_defaults = await this._db.getModelDefaults(model_info);
                 for (const index in data.args) {
-                    const model_defaults = this._db.getModelDefaults(model_info);
                     const record = _.extend({}, model_defaults, data.args[index]);
                     // Write a temporal name
                     if (record.name) {
@@ -1066,7 +1110,12 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         const field_def = model_info.fields[field];
                         if (field_def.type === "one2many") {
                             const relation = field_def.relation;
-                            const field_model_info = await this._db.getModelInfo(relation);
+                            const field_model_info = await this._db.getModelInfo(
+                                relation
+                            );
+                            const field_model_defaults = await this._db.getModelDefaults(
+                                field_model_info
+                            );
                             if (!records_linked[relation]) {
                                 records_linked[relation] = [];
                             }
@@ -1084,10 +1133,11 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                                             relation: model_info.model,
                                         }
                                     );
-                                    const model_defaults = this._db.getModelDefaults(
-                                        model_info
+                                    subrecord = _.extend(
+                                        {},
+                                        field_model_defaults,
+                                        subrecord
                                     );
-                                    subrecord = _.extend({}, model_defaults, subrecord);
                                     record.display_name = record.name;
                                     subrecord[parent_field] = record.id;
                                     subrecord.id = this._db.genRecordID();
@@ -1196,7 +1246,9 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                                 data_to_sync[field] = [];
                             }
                             const relation = model_info.fields[field].relation;
-                            const field_model_info = await this._db.getModelInfo(relation);
+                            const field_model_info = await this._db.getModelInfo(
+                                relation
+                            );
                             const subrecords = [];
                             for (const command of modifications[field]) {
                                 if (command[0] === 0) {
@@ -1283,10 +1335,10 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                                     record[field] = [];
                                     data_to_sync[field].push([]);
                                 } else if (command[0] === 6) {
-                                    const data = {};
-                                    data[field] = command[2];
+                                    const rec_data = {};
+                                    rec_data[field] = command[2];
                                     const idb_value = await this._process_record_to_merge(
-                                        data,
+                                        rec_data,
                                         field_model_info.fields
                                     );
                                     record[field] = idb_value;

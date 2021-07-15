@@ -429,10 +429,10 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                         order_by +
                         limit_str +
                         offset_str;
-                    // console.log("--------------------------- THE SQL");
-                    //console.log(query_str);
+                    // Console.log("--------------------------- THE SQL");
+                    // console.log(query_str);
                     // console.log(sql, where_clause_params);
-                    //console.log(args);
+                    // console.log(args);
                     // EXPLAIN QUERY
                     // const explain = await db.all(`EXPLAIN QUERY PLAN ${sql}`, ...where_clause_params);
                     // console.log("---- ESPLAIN QUERY PLAN!");

@@ -61,7 +61,7 @@ odoo.define("web_pwa_cache.PWA.core.base.rpc", function() {
      * @param {String} endpoint
      * @param {Object} params
      * @param {String} kw_method
-     * @returns {Promise[Array]}
+     * @returns {Promise}
      */
     function sendJSonRpc(endpoint, params, kw_method = "call") {
         return new Promise(async (resolve, reject) => {

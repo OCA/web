@@ -16,7 +16,7 @@ odoo.define("web_pwa_cache.PWA.bus", function(require) {
         /**
          * @override
          */
-        init: function () {
+        init: function() {
             this.init_broadcast("pwa-sw-messages", "pwa-page-messages");
             this._super.apply(this, arguments);
         },

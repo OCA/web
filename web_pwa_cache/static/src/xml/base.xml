@@ -81,7 +81,7 @@
                     role="progressbar"
                     aria-valuemin="0"
                     aria-valuemax="100"
-                ></div>
+                />
             </div>
         </div>
         <hr />
