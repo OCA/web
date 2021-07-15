@@ -3,7 +3,7 @@
 {
     "name": "Web Widget - Image Download",
     "summary": "Allows to download any image from its widget",
-    "version": "13.0.1.0.0",
+    "version": "14.0.1.0.0",
     "category": "web",
     "website": "https://github.com/OCA/web",
     "author": "Tecnativa, Odoo Community Association (OCA), Kaushal Prajapati",
