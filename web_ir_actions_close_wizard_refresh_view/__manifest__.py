@@ -11,7 +11,7 @@
     "license": "AGPL-3",
     "category": "Web",
     "depends": ["web"],
-    "data": ["templates/assets.xml"],
+    "data": ["security/ir.model.access.csv", "templates/assets.xml"],
     "application": False,
     "installable": True,
 }
