@@ -12,6 +12,7 @@
                     <div class="support-statement oe_form_field_text oe_form_required">
                         <textarea
                             name="description"
+                            autocomplete="off"
                             placeholder="Please fill in how you produced this error..."
                             class="support-desc"
                         />

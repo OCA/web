@@ -72,10 +72,12 @@ odoo.define("support_branding.CrashManager", function (require) {
             var body = error.data.debug;
             var inputs =
                 "" +
-                '<input type="hidden" name="subject" value=' +
+                '<input type="hidden" name="subject" autocomplete="off" ' +
+                "value=" +
                 subject +
                 "/>\n" +
-                '<input type="hidden" class="sp-body" name="body" value=\'' +
+                '<input type="hidden" class="sp-body" name="body" ' +
+                'autocomplete="off" value=\'' +
                 body +
                 "'/>";
             dialog.opened(function () {
@@ -83,6 +85,7 @@ odoo.define("support_branding.CrashManager", function (require) {
                 var $statement = $(".support-statement");
                 var $description = $(".support-desc");
                 var $button = $(".support-btn");
+                var $close_btn = $(".close");
                 var $body = $(".sp-body");
                 var $header = $form.parents(".modal-dialog").find(".modal-header");
                 var $footer = $form.parents(".modal-dialog").find(".modal-footer");
@@ -90,7 +93,7 @@ odoo.define("support_branding.CrashManager", function (require) {
                 $statement.prepend(inputs);
                 if (self.support_cp_email) {
                     if (self.support_cp_name) {
-                        var title = "Support By " + self.support_cp_name;
+                        var title = "Support by " + self.support_cp_name;
                         $('<h3 class="text-primary">' + title + "</h3>").insertBefore(
                             ".support-branding-submit-form"
                         );
@@ -135,13 +138,12 @@ odoo.define("support_branding.CrashManager", function (require) {
                                         model: "mail.mail",
                                         method: "send",
                                         args: [mail_id],
-                                    }).then(function (res) {
-                                        if (res) {
-                                            self.do_notify(
-                                                "Success",
-                                                "Support mail created!"
-                                            );
-                                        }
+                                    }).then(function () {
+                                        self.do_notify(
+                                            "Success",
+                                            "Support mail created!"
+                                        );
+                                        $close_btn.click();
                                     });
                                 }
                             },
@@ -157,6 +159,10 @@ odoo.define("support_branding.CrashManager", function (require) {
                     $button.css({display: "none"});
                 }
                 $form.prependTo($footer);
+                // Hide "Ok" button since we have close on the dialog top
+                // Allow send email btn to close once done.
+                $footer.find("button:eq(1)").css({display: "none"});
+
                 if (self.support_cp_color) {
                     $header.css({background: self.support_cp_color});
                     $footer.css({background: self.support_cp_color});
