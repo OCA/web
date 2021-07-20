@@ -32,10 +32,12 @@ odoo.define("web_widget_text_markdown.FieldTextMarkDown", function(require) {
         ],
 
         _getValue: function() {
-            var $widget = this.attrs.widget;
-            var $type = this.field.type;
-
-            if ($type === "html" && $widget && $widget === "bootstrap_markdown") {
+            if (
+                this.$type === "html" &&
+                this.$widget &&
+                this.$widget === "bootstrap_markdown" &&
+                this.$use_markdown
+            ) {
                 return this._getHtmlValue(this.$input.val());
             }
             return this.$markdown.getContent();
@@ -51,30 +53,16 @@ odoo.define("web_widget_text_markdown.FieldTextMarkDown", function(require) {
                 table: "table table-striped",
             };
 
-            const styleMap = {
-                h1: "font-size: 2.5em;",
-            };
-
             const clss_bindings = Object.keys(classMap).map(key => ({
                 type: "output",
                 regex: new RegExp(`<${key}(.*)>`, "g"),
                 replace: `<${key} class="${classMap[key]}" $1>`,
             }));
-
-            const style_bindings = Object.keys(styleMap).map(key => ({
-                type: "output",
-                regex: new RegExp(`<${key}(.*)>`, "g"),
-                replace: `<${key} style="${styleMap[key]}" $1>`,
-            }));
-
+            this.$use_markdown = this.attrs.options.use_markdown || false;
+            this.$widget = this.attrs.widget;
+            this.$type = this.field.type;
             this.shw_render_html = new showdown.Converter({
-                extensions: [
-                    ...style_bindings,
-                    ...clss_bindings,
-                    "table",
-                    "footnotes",
-                    "toc",
-                ],
+                extensions: [...clss_bindings, "table", "footnotes", "toc"],
                 emoji: true,
                 underline: true,
                 tablesHeaderId: true,
@@ -108,17 +96,14 @@ odoo.define("web_widget_text_markdown.FieldTextMarkDown", function(require) {
                 splitAdjacentBlockquotes: true,
             });
         },
-
         _renderEdit: function() {
             var self = this;
-            var $widget = this.attrs.widget;
-            var $type = this.field.type;
             return $.when(this._super()).then(function() {
                 if (
                     self.mode === "edit" &&
-                    $type === "html" &&
-                    $widget &&
-                    $widget === "bootstrap_markdown" &&
+                    self.$type === "html" &&
+                    self.$widget &&
+                    self.$widget === "bootstrap_markdown" &&
                     self.value
                 ) {
                     self.value = self._getMarkdownValue(self.value);

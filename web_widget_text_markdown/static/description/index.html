@@ -397,6 +397,14 @@ ul.auto-toc {
 &lt;field name=&quot;field_name&quot; widget=&quot;bootstrap_markdown&quot;/&gt;
 ...
 </pre>
+<p>For <strong>Html</strong> defined fields, you can add an option of boolean true:</p>
+<pre class="literal-block">
+...
+&lt;field name=&quot;field_name&quot; widget=&quot;bootstrap_markdown&quot; options=&quot;{'use_markdown': true}&quot;/&gt;
+...
+</pre>
+<p>This will render the Html field as typical html and edit as markdown.
+Otherwise,  use html as odoo provides without the widget.</p>
 </div>
 <div class="section" id="known-issues-roadmap">
 <h1><a class="toc-backref" href="#id2">Known issues / Roadmap</a></h1>
