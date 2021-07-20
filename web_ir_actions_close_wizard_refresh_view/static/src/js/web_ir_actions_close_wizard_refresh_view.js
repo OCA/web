@@ -5,7 +5,7 @@ odoo.define("web_ir_actions_close_wizard_refresh_view", function (require) {
     "use strict";
 
     require("web.ActionManager").include({
-        _handleAction: function (action, options) {
+        _handleAction: function (action) {
             if (action.type === "ir.actions.close_wizard_refresh_view") {
                 return this._executeCloseWizardRefreshViewAction();
             }
