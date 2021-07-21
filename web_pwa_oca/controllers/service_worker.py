@@ -82,6 +82,9 @@ class ServiceWorker(PWA):
         """Scripts to be imported in the service worker (Order is important)"""
         return [
             "/web/static/lib/underscore/underscore.js",
+            # Line break in two lines
+            "/web_pwa_oca/static/src/lib/mixins/"
+            "deep_extend_javascript_objects_underscore_mixin.js",
             "/web_pwa_oca/static/src/js/worker/jquery-sw-compat.js",
             "/web/static/src/js/promise_extension.js",
             "/web/static/src/js/boot.js",
