@@ -23,7 +23,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
             this._dbmanager = dbmanager;
         },
 
-        _where_calc: function(model_info, domain) {
+        _where_calc: function(model_info, domain, context) {
             return new Promise(async (resolve, reject) => {
                 try {
                     let [tables, where_clause, where_params] = [null, null, null];
@@ -31,6 +31,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                         const e = new expression.Expression(
                             domain,
                             model_info,
+                            context,
                             this._dbmanager
                         );
                         await e.parse();
@@ -364,7 +365,8 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
             limit = undefined,
             order = undefined,
             field_names = undefined,
-            count = false
+            count = false,
+            context = false
         ) {
             return new Promise(async (resolve, reject) => {
                 let sql = null;
@@ -377,7 +379,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                         return resolve(count ? 0 : []);
                     }
 
-                    const query = await this._where_calc(model_info, args);
+                    const query = await this._where_calc(model_info, args, context);
                     // Self._apply_ir_rules(query, 'read')
                     const order_by = await this._generate_order_by(
                         model_info,

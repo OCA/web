@@ -44,10 +44,8 @@ class ServiceWorker(ServiceWorker):
     def _get_pwa_scripts(self):
         res = super()._get_pwa_scripts()
         res.insert(0, self._get_static_cache_worker("/lib/sqlite/dist/sql-wasm.js"))
-        # res.insert(0, self._get_static_cache_worker("/lib/sqlite/dist/sw.js"))
         res.insert(0, self._get_static_cache_worker("/lib/dexie/dexie.min.js"))
         res.insert(0, self._get_static_cache_worker("/lib/crc32/crc32.js"))
-        res.insert(0, self._get_static_cache_worker("/lib/lz-string/lz-string.min.js"))
         res.insert(0, "/web/static/lib/moment/moment.js")
         to_insert = [
             "/web/static/src/js/core/translation.js",

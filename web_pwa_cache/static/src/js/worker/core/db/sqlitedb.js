@@ -16,10 +16,10 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
             datetime: "parseDatetime",
             boolean: "parseBoolean",
             binary: "parseJson",
-            json: "parseJson",
             many2one: "parseMany2one",
             one2many: "parseOne2many",
             many2many: "parseOne2many",
+            serialized: "parseJson",
         },
 
         /**
@@ -216,9 +216,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
             many2many: "TEXT",
             id: "INTEGER",
             boolean: "NUMERIC",
-
-            // Internal type
-            json: "BLOB",
+            serialized: "BLOB",
         },
 
         regex_order: new RegExp(

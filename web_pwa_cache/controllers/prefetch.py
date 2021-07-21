@@ -218,12 +218,13 @@ class PWAPrefetch(PWA):
             record_obj = request.env[record.model_id.model]
             func_ref = getattr(record_obj, record.function_name)
             if func_ref:
-                result = func_ref(**(record.function_params or {}))
+                func_params = safe_eval(record.function_params or "{}")
+                result = func_ref(**func_params)
                 functions.append(
                     {
                         "model": record.model_id.model,
                         "method": record.function_name,
-                        "params": record.function_params,
+                        "params": func_params,
                         "result": result,
                     }
                 )
@@ -232,16 +233,24 @@ class PWAPrefetch(PWA):
     def _pwa_is_invalid_field(self, model, field_name, field_def):
         if field_name in ("create_uid", "create_date", "write_uid", "write_date"):
             return True
+        # Handle 'special' fields
         if model == "pwa.cache.onchange.value" and field_name in (
             "display_name",
             "field_name",
             "values",
         ):
             return True
+        if model == "ir.actions.client" and field_name in ("params", "params_store",):
+            return False
+        # Avoid sparse fields
+        model_obj = request.env[model]
+        is_sparse = field_name in model_obj._fields and getattr(
+            model_obj._fields[field_name], "sparse", False
+        )
         is_stored = "store" in field_def and field_def["store"]
         is_required = "required" in field_def and field_def["required"]
-        is_valid_type = field_def["type"] not in ("one2many", "binary")
-        return not is_required and (not is_stored or not is_valid_type)
+        is_invalid_type = field_def["type"] in ("one2many", "binary")
+        return not is_required and (not is_stored or is_invalid_type or is_sparse)
 
     def _pwa_fill_internal_fields(self, model, fields):
         if model == "res.users":

@@ -266,17 +266,18 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                 request.method === "POST" &&
                 request.headers.get("Content-Type") === "application/json"
             ) {
-                return new Promise(async (resolve, reject) => {
+                return new Promise(async resolve => {
                     try {
-                        const request_cloned_cache = request.clone();
                         // Try CUD operations
                         // Methodology: Network first
                         if (!isOffline) {
                             const request_oper = this._getRequestOperation(request);
                             if (this._special_operations.indexOf(request_oper) !== -1) {
+                                const request_cloned_net = request.clone();
                                 try {
                                     const response_net = await this._tryFromNetwork(
-                                        request
+                                        request_cloned_net,
+                                        request_oper
                                     );
                                     if (response_net) {
                                         return resolve(response_net);
@@ -289,6 +290,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
 
                         // Don try from cache if a prefetch tasks is running
                         if (!this._prefetch_running) {
+                            const request_cloned_cache = request.clone();
                             // Other request (or network fails) go directly from cache
                             try {
                                 const response_cache = await this._tryPostFromCache(
@@ -307,8 +309,8 @@ odoo.define("web_pwa_cache.PWA", function(require) {
 
                         // If all fails fallback to network (excepts in offline mode)
                         if (isOffline) {
-                            // Avoid default browser behaviour
-                            return reject();
+                            // Avoid default browser behaviour, response a generic valid value
+                            return resolve(Tools.ResponseJSONRPC([]));
                         }
 
                         const response_net = await this._tryFromNetwork(request);
@@ -338,7 +340,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
          * @param {Exception} err
          */
         _onCacheNotFound: function() {
-            // To be overrided
+            // To be overriden
         },
 
         /**
@@ -366,25 +368,24 @@ odoo.define("web_pwa_cache.PWA", function(require) {
         /**
          * @private
          * @param {Promise} request
+         * @param {String} request_oper
          * @returns {Promise}
          */
-        _tryFromNetwork: function(request) {
+        _tryFromNetwork: function(request, request_oper) {
             return new Promise(async (resolve, reject) => {
-                const request_cloned_net = request.clone();
                 try {
-                    const response_net = await fetch(request_cloned_net);
+                    const request_cloned = request.clone();
+                    const response_net = await fetch(request);
                     if (response_net) {
-                        const request_oper = this._getRequestOperation(
-                            request_cloned_net
-                        );
                         // Handle special operations
-                        if (this._special_operations.indexOf(request_oper) >= 0) {
-                            const request_data = await request_cloned_net.json();
-                            this._processResponse(response_net, request_data);
+                        if (this._special_operations.indexOf(request_oper) === -1) {
+                            const request_data = await request_cloned.json();
+                            await this._processResponse(response_net, request_data);
+                        } else {
+                            // CRUD operation trigger prefetch model data to ensure have
+                            // up to date values
+                            await this._components.prefetch.prefetchModelData();
                         }
-                        // Else {
-                        //     await this._components.prefetch.prefetchModelData();
-                        // }
                         return resolve(response_net);
                     }
                 } catch (err) {
@@ -453,7 +454,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
         _processResponse: function(response, request_data) {
             console.log("[ServiceWorker] Processing Response...");
             if (!response) {
-                return false;
+                return Promise.reject();
             }
             const response_cloned = response.clone();
             return new Promise(async (resolve, reject) => {

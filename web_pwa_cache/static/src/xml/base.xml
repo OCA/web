@@ -8,11 +8,7 @@
                 data-menu="pwaMode"
                 class="dropdown-item d-none"
             >
-                <label class="o_switch mb0">
-                    <input id="oe_pwa_mode" type="checkbox" />
-                    <span />
-                    <span style="margin-right: 8px;">Offline Mode</span>
-                </label>
+                Offline Mode
             </a>
             <a
                 role="menuitem"
@@ -21,10 +17,17 @@
                 class="dropdown-item d-none"
             >
                 <span class="text-info">
-                    <span id='records_count'>0</span>
+                    <span id='pwa_sync_records_count'>0</span>
                     Recods queued to sync.
                 </span>
             </a>
+            <div role="separator" id="pwaSeparator" class="dropdown-divider d-none" />
+        </t>
+        <t t-jquery="a:first" t-operation="before">
+            <h6
+                class="dropdown-header text-center text-uppercase text-black"
+                id="pwa_status"
+            />
             <div role="separator" id="pwaSeparator" class="dropdown-divider d-none" />
         </t>
     </t>
@@ -115,9 +118,10 @@
                         </thead>
                         <tbody>
                             <t t-foreach="records" t-as="record">
-                                <tr t-attf-id="record_sync_{{record_index}}">
+                                <t t-set="rindex" t-value="record_index + 1" />
+                                <tr t-attf-id="record_sync_{{record.id}}">
                                     <th scope="row">
-                                        <t t-esc="record_index" />
+                                        <t t-esc="rindex" />
                                     </th>
                                     <td>
                                         <t t-esc="record.method" />

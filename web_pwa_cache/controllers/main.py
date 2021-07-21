@@ -50,6 +50,7 @@ class PWA(PWA):
             # Cache base assets
             "/base/static/img/company_image.png",
             "/base/static/img/avatar_grey.png",
+            "/base/static/img/truck.png",
             # Cache main page
             "/web",
             # Cache favicon

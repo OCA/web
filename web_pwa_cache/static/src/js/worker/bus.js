@@ -80,6 +80,7 @@ odoo.define("web_pwa_cache.PWA.bus", function(require) {
                     // Try prefetch data
                     await this._components.prefetch.prefetchDataPost();
                     // If have transactions to sync. tell it to the user
+                    // This is only in case of failures
                     const records = await this._managers.sync.getSyncRecords();
                     if (records.length) {
                         this.postBroadcastMessage({

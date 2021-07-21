@@ -90,12 +90,13 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
                         request_data.params
                     );
                     if (resp_data) {
-                        return resolve(Tools.ResponseJSONRPC(resp_data.result));
+                        return resolve(Tools.ResponseJSONRPC(resp_data));
                     }
-                    return reject();
                 } catch (err) {
                     return reject(err);
                 }
+
+                return reject();
             });
         },
 
@@ -286,7 +287,7 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
                         request_data.params
                     );
                     if (post_cache) {
-                        return resolve(Tools.ResponseJSONRPC(post_cache.result));
+                        return resolve(Tools.ResponseJSONRPC(post_cache));
                     }
                     return reject();
                 } catch (err) {

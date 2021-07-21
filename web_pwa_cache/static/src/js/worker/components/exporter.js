@@ -46,6 +46,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     const operator = data.kwargs.operator || "ilike";
+                    const context = data.kwargs.context || {};
                     const search =
                         "name" in data.kwargs ? data.kwargs.name : data.args[0];
                     const domain =
@@ -53,7 +54,14 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                     const limit =
                         "args" in data.kwargs ? data.kwargs.limit : data.args[2];
                     return resolve(
-                        this._db.name_search(model, search, domain, operator, limit)
+                        this._db.name_search(
+                            model,
+                            search,
+                            domain,
+                            operator,
+                            limit,
+                            context
+                        )
                     );
                 } catch (err) {
                     return reject(err);
@@ -388,7 +396,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                 await this._db.create(model_info_sync, {
                     model: model,
                     method: "unlink",
-                    args: [[data.args[0]]],
+                    args: [data.args[0]],
                     date: new Date().getTime(),
                 });
                 this._sync.sendCountToPages();
@@ -571,39 +579,11 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         const action = await this._db.ref(action_id);
                         action_id = action.id;
                     }
-                    const model_info_base_actions = await this._db.getModelInfo(
-                        "ir.actions.actions"
-                    );
-                    const base_action = await this._db.browse(
-                        model_info_base_actions,
-                        action_id
-                    );
-                    const model_info_actions = await this._db.getModelInfo(
-                        base_action.type
-                    );
-                    let record = await this._db.browse(model_info_actions, action_id);
+
+                    const record = this._db.indexeddb.action.get(action_id);
                     if (_.isEmpty(record) && !this.isOfflineMode()) {
                         return reject();
                     }
-
-                    // Parse values to be used by the client
-                    // if ("domain" in record && record.domain) {
-                    //     record.domain = JSON.parse(record.domain);
-                    // }
-                    // If ("context" in record && record.context) {
-                    //     console.log("--- THE CONTEXT", record.context);
-                    //     record.context = JSON.parse(record.context);
-                    // }
-                    // if ("search_view" in record && record.search_view) {
-                    //     record.search_view = JSON.parse(record.search_view);
-                    // }
-
-                    [
-                        record,
-                    ] = this._db.sqlitedb.converter.removeNoFields(
-                        model_info_actions.fields,
-                        [record]
-                    );
                     return resolve(record);
                 } catch (err) {
                     return reject(err);
@@ -705,12 +685,14 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                 let plimit = data.limit;
                 let poffset = data.offset;
                 let psort = data.sort;
+                let pcontext = data.context;
                 if ("kwargs" in data) {
                     pfields = data.kwargs.fields;
                     pdomain = data.kwargs.domain;
                     plimit = data.kwargs.limit;
                     poffset = data.kwargs.offset;
                     psort = data.kwargs.sort;
+                    pcontext = data.kwargs.context;
                 }
                 let records = false,
                     records_count = 0;
@@ -727,7 +709,8 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         plimit,
                         cached_fields,
                         poffset,
-                        psort
+                        psort,
+                        pcontext
                     );
 
                     if (_.isEmpty(records) && !this.isOfflineMode()) {
@@ -979,19 +962,20 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
         _generic_post: function(pathname, params) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info = await this._db.getModelInfo("post", true);
-                    const record = await this._db.search_read(
-                        model_info,
-                        [
-                            ["pathname", "=", pathname],
-                            ["params", "=", params],
-                        ],
-                        1,
-                        ["result"]
-                    );
+                    let record = await this._db.indexeddb.post.get([
+                        pathname,
+                        Tools.hash(JSON.stringify(params)),
+                    ]);
+                    if (_.isEmpty(record)) {
+                        // Try generic way
+                        record = await this._db.indexeddb.post.get([
+                            pathname,
+                            Tools.hash("{}"),
+                        ]);
+                    }
                     if (_.isEmpty(record)) {
                         if (this.isOfflineMode()) {
-                            return resolve(false);
+                            return resolve({});
                         }
                         return reject();
                     }
@@ -1014,17 +998,19 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
         _generic_function: function(model, method, params) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info = await this._db.getModelInfo("function", true);
-                    const record = await this._db.search_read(
-                        model_info,
-                        [
-                            ["model", "=", model],
-                            ["method", "=", method],
-                            ["params", "=", params],
-                        ],
-                        1,
-                        ["result"]
-                    );
+                    let record = await this._db.indexeddb.function.get([
+                        model,
+                        method,
+                        Tools.hash(JSON.stringify(params.kwargs)),
+                    ]);
+                    if (_.isEmpty(record)) {
+                        // Try generic way
+                        record = await this._db.indexeddb.function.get([
+                            model,
+                            method,
+                            Tools.hash("{}"),
+                        ]);
+                    }
                     if (_.isEmpty(record)) {
                         if (this.isOfflineMode()) {
                             return resolve(false);

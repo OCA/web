@@ -5,6 +5,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
     "use strict";
 
     const SWComponent = require("web_pwa_cache.PWA.components.Component");
+    const Tools = require("web_pwa_cache.PWA.core.base.Tools");
 
     /**
      * This class is used to store Odoo replies
@@ -95,7 +96,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                         "userdata",
                         true
                     );
-                    await this._db.sqlite.createOrUpdateRecord(
+                    await this._db.sqlitedb.createOrUpdateRecord(
                         model_info_userdata,
                         values,
                         ["param"]
@@ -136,7 +137,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                         "template",
                         true
                     );
-                    await this._db.sqlite.createOrUpdateRecord(
+                    await this._db.sqlitedb.createOrUpdateRecord(
                         model_info_template,
                         values,
                         ["xml_ref"]
@@ -173,9 +174,17 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                 const records = "records" in data ? data.records : data;
                 try {
                     const model_info = await this._db.getModelInfo(model);
-                    await this._db.sqlite.createOrUpdateRecord(model_info, records, [
-                        "id",
-                    ]);
+                    for (const record of records) {
+                        try {
+                            await this._db.sqlitedb.updateRecord(
+                                model_info,
+                                [record.id],
+                                record
+                            );
+                        } catch (err) {
+                            // Do nothing
+                        }
+                    }
                 } catch (err) {
                     return reject(err);
                 }
@@ -188,28 +197,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
          * @returns {Promise}
          */
         action_load: function(data) {
-            return new Promise(async (resolve, reject) => {
-                try {
-                    const model_info_base_actions = await this._db.getModelInfo(
-                        "ir.actions.actions"
-                    );
-                    await this._db.sqlite.createOrUpdateRecord(
-                        model_info_base_actions,
-                        _.pick(data, _.keys(model_info_base_actions.fields)),
-                        ["id"]
-                    );
-                    const model_info_actions = await this._db.getModelInfo(data.type);
-                    await this._db.sqlite.createOrUpdateRecord(
-                        model_info_actions,
-                        _.pick(data, _.keys(model_info_actions.fields)),
-                        ["id"]
-                    );
-                } catch (err) {
-                    return reject(err);
-                }
-
-                return resolve();
-            });
+            return this._db.indexeddb.action.put(data);
         },
 
         /**
@@ -222,24 +210,10 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
          * @returns {Promise}
          */
         _generic_post: function(pathname, params, result) {
-            return new Promise(async (resolve, reject) => {
-                const values = {
-                    pathname: pathname,
-                    params: params,
-                    result: result,
-                };
-
-                try {
-                    const model_info = await this._db.getModelInfo("post", true);
-                    await this._db.sqlite.createOrUpdateRecord(model_info, values, [
-                        "pathname",
-                        "params",
-                    ]);
-                } catch (err) {
-                    return reject(err);
-                }
-
-                return resolve();
+            return this._db.indexeddb.post.put({
+                pathname: pathname,
+                params: Tools.hash(JSON.stringify(params)),
+                result: result,
             });
         },
 
@@ -254,29 +228,11 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
          * @returns {Promise}
          */
         _generic_function: function(model, method, result, request_params) {
-            return new Promise(async (resolve, reject) => {
-                const values = {
-                    model: model,
-                    method: method,
-                    params: request_params.args,
-                    return: result,
-                };
-
-                try {
-                    const model_info_function = await this._db.getModelInfo(
-                        "function",
-                        true
-                    );
-                    await this._db.sqlite.createOrUpdateRecord(
-                        model_info_function,
-                        values,
-                        ["model", "method", "params"]
-                    );
-                } catch (err) {
-                    return reject(err);
-                }
-
-                return resolve();
+            return this._db.indexeddb.function.put({
+                model: model,
+                method: method,
+                params: Tools.hash(JSON.stringify(request_params.args)),
+                result: result,
             });
         },
     });

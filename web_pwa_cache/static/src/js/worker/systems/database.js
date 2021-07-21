@@ -14,6 +14,9 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
         _indexed_db_name: "oca_pwa_indexed",
         _persist_timeout: 3000,
 
+        // Dictionary used to know when use 'search' feature
+        _searchables: {},
+
         /**
          * @override
          */
@@ -103,14 +106,9 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
 
         /**
          * Creates the schema of the used database:
-         *  - views: Store views
-         *  - actions: Store actions
          *  - sync: Store transactions to synchronize
          *  - config: Store PWA configurations values
-         *  - functions: Store function calls results
-         *  - post: Store post calls results
          *  - userdata: Store user data configuration values
-         *  - onchange: Store onchange values
          *  - template: Store templates
          *  - model_metadata: Store model information
          *
@@ -134,15 +132,15 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                             internal: {type: "boolean", store: true},
                             orderby: {type: "char", store: true},
                             rec_name: {type: "char", store: true},
-                            fields: {type: "json", store: true},
-                            view_types: {type: "json", store: true},
+                            fields: {type: "serialized", store: true},
+                            view_types: {type: "serialized", store: true},
                             parent_store: {type: "char", store: true},
                             parent_name: {type: "char", store: true},
-                            inherits: {type: "json", store: true},
+                            inherits: {type: "serialized", store: true},
                             table: {type: "char", store: true},
                             prefetch_last_update: {type: "datetime", store: true},
-                            defaults: {type: "json", store: true},
-                            valid_fields: {type: "json", store: true},
+                            defaults: {type: "serialized", store: true},
+                            valid_fields: {type: "serialized", store: true},
                         },
                     };
                     await this.sqlitedb.createTable(model_info_model_metadata);
@@ -157,37 +155,6 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                         ["model"]
                     );
 
-                    // Const model_info_views = {
-                    //     table: this.sqlitedb.getInternalTableName("views"),
-                    //     model: this.sqlitedb.getInternalTableName("views"),
-                    //     internal: true,
-                    //     fields: {
-                    //         id: {type: "integer", store: true},
-                    //         name: {type: "char", store: true},
-                    //         type: {type: "char", store: true},
-                    //         model: {type: "char", store: true},
-                    //         fields: {type: "json", store: true},
-                    //         base_model: {type: "char", store: true},
-                    //         field_parent: {type: "char", store: true},
-                    //         toolbar: {type: "json", store: true},
-                    //         arch: {type: "char", store: true},
-                    //         view_id: {type: "integer", store: true},
-                    //         standalone: {type: "boolean", store: true},
-                    //         is_default: {type: "boolean", store: true},
-                    //     },
-                    // };
-                    // await this.sqlitedb.createTable(model_info_views);
-                    // await this.sqlitedb.createIndex(
-                    //     model_info_views,
-                    //     "views_model_type_is_default_view_id",
-                    //     ["model", "type", "is_default", "view_id"]
-                    // );
-                    // await this.sqlitedb.createOrUpdateRecord(
-                    //     model_info_model_metadata,
-                    //     model_info_views,
-                    //     ["model"]
-                    // );
-
                     const model_info_sync = {
                         table: this.sqlitedb.getInternalTableName("sync"),
                         model: this.sqlitedb.getInternalTableName("sync"),
@@ -196,10 +163,10 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                             id: {type: "integer", store: true},
                             model: {type: "char", store: true},
                             method: {type: "string", store: true},
-                            args: {type: "json", store: true},
+                            args: {type: "serialized", store: true},
                             date: {type: "datetime", store: true},
-                            linked: {type: "json", store: true},
-                            kwargs: {type: "json", store: true},
+                            linked: {type: "serialized", store: true},
+                            kwargs: {type: "serialized", store: true},
                         },
                     };
                     await this.sqlitedb.createTable(model_info_sync);
@@ -216,7 +183,7 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                         fields: {
                             id: {type: "integer", store: true},
                             param: {type: "char", store: true},
-                            value: {type: "json", store: true},
+                            value: {type: "serialized", store: true},
                         },
                     };
                     await this.sqlitedb.createTable(model_info_config);
@@ -229,53 +196,6 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                         ["model"]
                     );
 
-                    const model_info_function = {
-                        table: this.sqlitedb.getInternalTableName("function"),
-                        model: this.sqlitedb.getInternalTableName("function"),
-                        internal: true,
-                        fields: {
-                            id: {type: "integer", store: true},
-                            model: {type: "char", store: true},
-                            method: {type: "char", store: true},
-                            params: {type: "json", store: true},
-                            result: {type: "json", store: true},
-                        },
-                    };
-                    await this.sqlitedb.createTable(model_info_function);
-                    await this.sqlitedb.createIndex(
-                        model_info_function,
-                        "function_model_method_params",
-                        ["model", "method", "params"]
-                    );
-                    await this.sqlitedb.createOrUpdateRecord(
-                        model_info_model_metadata,
-                        model_info_function,
-                        ["model"]
-                    );
-
-                    const model_info_post = {
-                        table: this.sqlitedb.getInternalTableName("post"),
-                        model: this.sqlitedb.getInternalTableName("post"),
-                        internal: true,
-                        fields: {
-                            id: {type: "integer", store: true},
-                            pathname: {type: "char", store: true},
-                            params: {type: "json", store: true},
-                            result: {type: "json", store: true},
-                        },
-                    };
-                    await this.sqlitedb.createTable(model_info_post);
-                    await this.sqlitedb.createIndex(
-                        model_info_post,
-                        "post_pathname_params",
-                        ["pathname", "params"]
-                    );
-                    await this.sqlitedb.createOrUpdateRecord(
-                        model_info_model_metadata,
-                        model_info_post,
-                        ["model"]
-                    );
-
                     const model_info_userdata = {
                         table: this.sqlitedb.getInternalTableName("userdata"),
                         model: this.sqlitedb.getInternalTableName("userdata"),
@@ -283,7 +203,7 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                         fields: {
                             id: {type: "integer", store: true},
                             param: {type: "char", store: true},
-                            value: {type: "json", store: true},
+                            value: {type: "serialized", store: true},
                         },
                     };
                     await this.sqlitedb.createTable(model_info_userdata);
@@ -363,6 +283,9 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                 sqlitefile: "section",
                 onchange: "ref_hash",
                 views: "++,[model+type+is_default+view_id],[model+type+is_default]",
+                action: "id",
+                post: "[pathname+params]",
+                function: "[model+method+params]",
             });
         },
 
@@ -720,7 +643,8 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
             fields,
             offset,
             orderby,
-            count = false
+            count = false,
+            context = false
         ) {
             return new Promise(async (resolve, reject) => {
                 try {
@@ -738,7 +662,8 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                         limit,
                         orderby,
                         fields,
-                        count
+                        count,
+                        context
                     );
                     if (count) {
                         return resolve(records);
@@ -761,9 +686,18 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
          * @param {Array} fields
          * @param {Number} offset
          * @param {String} orderby (Example: "name DESC, city, sequence ASC")
+         * @param {Object} context
          * @returns {Promise}
          */
-        search_read: function(model_info, domain, limit, fields, offset, orderby) {
+        search_read: function(
+            model_info,
+            domain,
+            limit,
+            fields,
+            offset,
+            orderby,
+            context
+        ) {
             return new Promise(async (resolve, reject) => {
                 try {
                     if (typeof model_info === "string") {
@@ -776,7 +710,9 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                         limit,
                         fields || [],
                         offset,
-                        orderby
+                        orderby,
+                        false,
+                        context
                     );
                     return resolve(records);
                 } catch (err) {
@@ -799,7 +735,8 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
             search,
             domain,
             operator = "ilike",
-            limit = 0
+            limit = 0,
+            context = false
         ) {
             return new Promise(async (resolve, reject) => {
                 try {
@@ -817,7 +754,10 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                         model_info.model,
                         domain,
                         limit,
-                        ["id", "display_name"]
+                        ["id", "display_name"],
+                        undefined,
+                        undefined,
+                        context
                     );
                     records = records.map(item => _.values(item));
                     return resolve(records);
@@ -891,8 +831,7 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                     const model_data = await this.getModelData(xmlid);
                     let record = {};
                     if (model_data.model.startsWith("ir.actions.")) {
-                        const model_info = await this.getModelInfo("actions", true);
-                        record = await this.browse(model_info, model_data.res_id);
+                        record = await this.indexeddb.action.get(model_data.res_id);
                     } else {
                         const records = await this.browse(
                             model_data.model,
@@ -1169,9 +1108,51 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
             return 90000000 + new Date().getTime();
         },
 
+        /**
+         * @param {String/Object} model_info
+         * @param {String} field_name
+         * @param {String} operator
+         * @param {Any} right
+         * @param {Object} context
+         * @returns {Promise}
+         */
+        determineDomain: function(model_info, field_name, operator, right, context) {
+            return this[this._searchables[model_info.model][field_name]](
+                operator,
+                right,
+                context
+            );
+        },
+
         // -------------------
         // HELPERS
         // -------------------
+
+        ids: function(records, field) {
+            const field_id = field || "id";
+            return _.map(records, record => record[field_id]);
+        },
+
+        /**
+         * @param {String/Object} model_info
+         * @param {String} field_name
+         * @param {Object} field_def
+         * @returns {Boolean}
+         */
+        hasSearchFunction: function(model_info, field_name, field_def) {
+            return (
+                !field_def.store &&
+                field_def.searchable &&
+                Object.prototype.hasOwnProperty.call(
+                    this._searchables,
+                    model_info.model
+                ) &&
+                Object.prototype.hasOwnProperty.call(
+                    this._searchables[model_info.model],
+                    field_name
+                )
+            );
+        },
 
         /**
          * @param {String} xmlid

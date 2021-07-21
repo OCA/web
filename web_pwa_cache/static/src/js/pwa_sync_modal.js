@@ -1,3 +1,5 @@
+/* Copyright 2020 Tecnativa - Alexandre D. Díaz
+ * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
 odoo.define("web_pwa_cache.PWASyncModal", function(require) {
     "use strict";
 
@@ -44,7 +46,8 @@ odoo.define("web_pwa_cache.PWASyncModal", function(require) {
                         }.bind(this),
                         close: true,
                     });
-                } else {
+                }
+                if (_.isEmpty(this.records) || this.options.pwa_mode === "offline") {
                     buttons.push({
                         text: _t("Close"),
                         close: true,
@@ -56,9 +59,8 @@ odoo.define("web_pwa_cache.PWASyncModal", function(require) {
                 $content: $content,
                 buttons: buttons,
                 fullscreen: true,
-            });
-            this.dialog.open();
-            this.dialog.opened(() => {
+            }).open();
+            this.dialog.opened().then(() => {
                 core.bus.off("close_dialogs", this.dialog);
                 this.setElement(this.dialog.$el);
             });
@@ -72,7 +74,11 @@ odoo.define("web_pwa_cache.PWASyncModal", function(require) {
         },
 
         isOpen: function() {
-            return this.dialog && this.dialog.opened();
+            if (!this.dialog || !this.dialog.$modal) {
+                return false;
+            }
+            const modal_data = this.dialog.$modal.data("bs.modal");
+            return modal_data && modal_data._isShown;
         },
     });
 

@@ -47,10 +47,11 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     const model_info_sync = await this._db.getModelInfo("sync", true);
-
-                    await this._db.writeOrCreate(model_info_sync, [
-                        _.extend({}, data, {id: id}),
-                    ]);
+                    await this._db.sqlitedb.updateRecord(
+                        model_info_sync,
+                        [data.id],
+                        _.extend({}, data, {id: id})
+                    );
                 } catch (err) {
                     return reject(err);
                 }
@@ -76,44 +77,74 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
             });
         },
 
-        _updateIds: function(records, old_id, new_id) {
+        _updateIds: function(records, model, old_id, new_id) {
             // Update sync records
-            const tasks = [];
-            for (const record of records) {
-                // Update values
-                const record_values = record.args[0];
-                for (const field_name in record_values) {
-                    const field_value = record_values[field_name];
-                    if (field_value instanceof Array) {
-                        for (const index in field_value) {
-                            if (field_value[index] === old_id) {
-                                field_value[index] = new_id;
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const tasks = [];
+                    for (const record of records) {
+                        // Update ids
+                        if (
+                            record.model === model &&
+                            (record.method === "write" || record.method === "unlink")
+                        ) {
+                            record.args[0] = _.map(record.args[0], id =>
+                                id === old_id ? new_id : id
+                            );
+                        }
+                        // Update values
+                        let values_index = -1;
+                        if (record.method === "create") {
+                            values_index = 0;
+                        } else if (record.method === "write") {
+                            values_index = 1;
+                        }
+                        if (values_index !== -1) {
+                            const model_info = await this._db.getModelInfo(
+                                record.model
+                            );
+                            const record_values = record.args[values_index];
+                            for (const field_name in record_values) {
+                                const field_info = model_info.fields[field_name];
+                                // Only change fields with related model
+                                if (!field_info || field_info.relation !== model) {
+                                    continue;
+                                }
+                                let field_value = record_values[field_name];
+                                if (field_value === old_id) {
+                                    field_value = new_id;
+                                } else if (field_value instanceof Array) {
+                                    field_value = _.map(field_value, value =>
+                                        value === old_id ? new_id : value
+                                    );
+                                }
+                                record_values[field_name] = field_value;
+                            }
+                            record.args[values_index] = record_values;
+                        }
+                        // Update linked info
+                        for (const model in record.linked) {
+                            const changes = record.linked[model];
+                            for (const index in changes) {
+                                const change = changes[index];
+                                if (change.id === old_id) {
+                                    change.id = new_id;
+                                }
+                                if (change.change === old_id) {
+                                    change.change = new_id;
+                                }
+
+                                record.linked[model][index] = change;
                             }
                         }
-                        record_values[field_name] = field_value;
-                    } else if (field_value === old_id) {
-                        record_values[field_name] = field_value;
+                        tasks.push(this.updateSyncRecord(record.id, record));
                     }
+                    await Promise.all(tasks);
+                } catch (err) {
+                    return reject(err);
                 }
-                record.args[0] = record_values;
-                // Update linked info
-                for (const model in record.linked) {
-                    const changes = record.linked[model];
-                    for (const index in changes) {
-                        const change = changes[index];
-                        if (change.id === old_id) {
-                            change.id = new_id;
-                        }
-                        if (change.change === old_id) {
-                            change.change = new_id;
-                        }
-
-                        record.linked[model][index] = change;
-                    }
-                }
-                tasks.push(this.updateSyncRecord(record.id, record));
-            }
-            return Promise.all(tasks);
+                return resolve();
+            });
         },
 
         /**
@@ -146,7 +177,7 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                                 const values = _.omit(item, ["id", "display_name"]);
                                 if (values.name) {
                                     values.name = values.name.replace(
-                                        /\(?Offline Record #\d+\)?/,
+                                        /\s?\(?Offline Record #\d+\)?/,
                                         ""
                                     );
                                 }
@@ -186,7 +217,12 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                                 const old_id = record.args[index_b].id;
                                 // UpdateIds can not found the key... so is normal get fails here
                                 try {
-                                    await this._updateIds(records, old_id, new_id);
+                                    await this._updateIds(
+                                        records,
+                                        record.model,
+                                        old_id,
+                                        new_id
+                                    );
                                 } catch (err) {
                                     // Do nothing
                                 }
@@ -196,11 +232,13 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                                     const changes = record.linked[model];
                                     for (const change of changes) {
                                         // Update normal records
-                                        const model_record = await this._db.browse(
-                                            model,
-                                            change.id
-                                        );
-                                        if (_.isEmpty(model_record)) {
+                                        let model_record = false;
+                                        try {
+                                            model_record = await this._db.browse(
+                                                model,
+                                                change.id
+                                            );
+                                        } catch (err) {
                                             continue;
                                         }
                                         let field = model_record[change.field];
@@ -252,13 +290,18 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                                     }
                                 }
 
-                                const old_record = await this._db.browse(
-                                    record.model,
-                                    old_id
-                                );
-                                old_record.id = new_id;
-                                await this._db.unlink(record.model, [old_id]);
-                                await this._db.create(record.model, old_record);
+                                // Maybe the id has be changed by a linked record... no problem.
+                                try {
+                                    const old_record = await this._db.browse(
+                                        record.model,
+                                        old_id
+                                    );
+                                    old_record.id = new_id;
+                                    await this._db.unlink(record.model, [old_id]);
+                                    await this._db.create(record.model, old_record);
+                                } catch (err) {
+                                    // Do nothing
+                                }
                             }
                         }
                         await this.removeSyncRecords([record.id]);

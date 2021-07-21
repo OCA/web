@@ -60,10 +60,7 @@
                             name="function_name"
                             attrs="{'required': [('cache_type', '=', 'function')]}"
                         />
-                        <field
-                            name="function_params"
-                            attrs="{'required': [('cache_type', '=', 'function')]}"
-                        />
+                        <field name="function_params" />
                     </group>
                     <group attrs="{'invisible': [('cache_type', '!=', 'onchange')]}">
                         <group colspan="4">

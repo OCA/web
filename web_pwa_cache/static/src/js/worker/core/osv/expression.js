@@ -79,7 +79,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
         if (
             field.type !== "boolean" &&
             field.type !== "binary" &&
-            field.type !== "json" &&
+            field.type !== "serialized" &&
             (_.isUndefined(svalue) || _.isNull(svalue) || svalue === false)
         ) {
             if (string_sanitized) {
@@ -107,14 +107,19 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                 }
                 break;
             case "binary":
-            case "json":
+            case "serialized":
                 svalue = JSON.stringify(_.isUndefined(value) ? "" : value);
                 // Svalue = LZString.compressToUint8Array(svalue);
                 break;
             case "char":
             case "text":
             case "html":
-                svalue = _.isUndefined(value) ? "" : value;
+                if (typeof value === "string" || _.isUndefined(value)) {
+                    svalue = _.isUndefined(value) ? "" : value;
+                } else {
+                    // Sparse fields are served as objects by Odoo
+                    svalue = JSON.stringify(value);
+                }
                 break;
             case "many2one":
                 if (typeof value === "object") {
@@ -669,9 +674,10 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
          * :attr list expression: the domain expression, that will be normalized
          *    and prepared
          */
-        init: function(domain, model_info, dbmanager) {
+        init: function(domain, model_info, context, dbmanager) {
             this.joins = [];
             this.root_model = model_info;
+            this._context = context || {};
             this._dbmanager = dbmanager;
 
             // Normalize and prepare the expression for parsing
@@ -923,7 +929,8 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     const path = left.split(".", 1);
 
                     const model = leaf.model;
-                    const field = path[0] in model.fields && model.fields[path[0]];
+                    const field_name = path[0];
+                    const field = model.fields[field_name];
                     // eslint-disable-next-line
                     let comodel = undefined;
                     if (field && field.relation) {
@@ -1049,6 +1056,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                         push(leaf);
                     }
 
+                    // TODO: Commented part because PWA doesn't use exactly the same schema as Odoo
                     // // Making search easier when there is a left operand as one2many or many2many
                     // else if (path.length > 1 && field.store && ['many2many', 'one2many'].indexOf(field.type) !== -1) {
                     //     const records = await this._dbmanager.search(comodel.model, [[path.slice(1).join('.'), operator, right]]);
@@ -1056,6 +1064,31 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     //     leaf.leaf = (path[0], 'in', right_ids);
                     //     push(leaf);
                     // }
+                    else if (
+                        this._dbmanager.hasSearchFunction(model, field_name, field)
+                    ) {
+                        // Let the field generate a domain.
+                        if (path.length > 1) {
+                            const records = await this._dbmanager.search(
+                                comodel.model,
+                                [[path.slice(1).join("."), operator, right]]
+                            );
+                            right = get_records_ids(records);
+                            operator = "in";
+                        }
+                        const domain = await this._dbmanager.determineDomain(
+                            model,
+                            field_name,
+                            operator,
+                            right,
+                            this._context
+                        );
+                        // Replace current leaf by normalized domain
+                        const domains = normalize_domain(domain).reverse();
+                        for (const elem of domains) {
+                            push(create_substitution_leaf(leaf, elem, model, true));
+                        }
+                    }
 
                     // TODO: Commented part because PWA stores all fields
                     // else if (!field.store) {

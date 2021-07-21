@@ -16,7 +16,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         _conversion_model_db_types: {
             "pwa.cache.onchange.value": {
                 pwa_cache_id: "integer",
-                result: "json",
+                result: "serialized",
                 ref_hash: "integer",
             },
         },
@@ -60,6 +60,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
             this.options = {
                 force_client_show_modal: false,
             };
+            this._verbose = false;
         },
 
         /**
@@ -80,6 +81,9 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
             completed = false,
             error = false
         ) {
+            if (!this._verbose) {
+                return;
+            }
             /**
              * FIXME: This cause a dependecy with "bus.js"
              */
@@ -101,6 +105,9 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
          * @param {String} id
          */
         _sendTaskInfoCompleted: function(id) {
+            if (!this._verbose) {
+                return;
+            }
             this._sendTaskInfo(id, "Complete!", 0, 0, true);
         },
 
@@ -111,6 +118,9 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
          * @param {String} message
          */
         _sendTaskInfoError: function(id, message) {
+            if (!this._verbose) {
+                return;
+            }
             this._sendTaskInfo(id, `Error: ${message}`, -1, 0, false, true);
         },
 
@@ -164,6 +174,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         prefetchDataPost: function() {
             return new Promise(async (resolve, reject) => {
                 this.options.force_client_show_modal = true;
+                this._verbose = true;
 
                 try {
                     this._processedModels = [];
@@ -185,6 +196,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                 }
 
                 this.options.force_client_show_modal = false;
+                this._verbose = false;
                 return resolve();
             });
         },
@@ -686,7 +698,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                                     model: func.model,
                                     method: func.method,
                                     params: func.params,
-                                    return: func.result,
+                                    result: func.result,
                                 })
                             );
                         }
@@ -910,25 +922,8 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
          * @returns {Promise}
          */
         saveFunctionData: function(values) {
-            return new Promise(async (resolve, reject) => {
-                try {
-                    const model_info_function = await this._db.getModelInfo(
-                        "function",
-                        true,
-                        false,
-                        true
-                    );
-                    await this._db.sqlitedb.createOrUpdateRecord(
-                        model_info_function,
-                        values,
-                        ["model", "method", "params"]
-                    );
-                } catch (err) {
-                    return reject(err);
-                }
-
-                return resolve();
-            });
+            values.params = Tools.hash(JSON.stringify(values.params));
+            return this._db.indexeddb.function.put(values);
         },
 
         /**
@@ -1035,62 +1030,14 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
          * @returns {Promise}
          */
         saveAction: function(data) {
-            return new Promise(async (resolve, reject) => {
-                try {
-                    const model_info_base_actions = await this._db.getModelInfo(
-                        "ir.actions.actions",
-                        false,
-                        false,
-                        true
-                    );
-                    await this._db.sqlitedb.createOrUpdateRecord(
-                        model_info_base_actions,
-                        _.pick(data, _.keys(model_info_base_actions.fields)),
-                        ["id"]
-                    );
-                    const model_info_actions = await this._db.getModelInfo(
-                        data.type,
-                        false,
-                        false,
-                        true
-                    );
-                    await this._db.sqlitedb.createOrUpdateRecord(
-                        model_info_actions,
-                        _.pick(data, _.keys(model_info_actions.fields)),
-                        ["id"]
-                    );
-                } catch (err) {
-                    return reject(err);
-                }
-
-                return resolve();
-            });
+            return this._db.indexeddb.action.put(data);
         },
 
         saveGenericPost: function(pathname, params, result) {
-            return new Promise(async (resolve, reject) => {
-                const values = {
-                    pathname: pathname,
-                    params: params,
-                    result: result,
-                };
-
-                try {
-                    const model_info = await this._db.getModelInfo(
-                        "post",
-                        true,
-                        false,
-                        true
-                    );
-                    await this._db.sqlitedb.createOrUpdateRecord(model_info, values, [
-                        "pathname",
-                        "params",
-                    ]);
-                } catch (err) {
-                    return reject(err);
-                }
-
-                return resolve();
+            return this._db.indexeddb.post.put({
+                pathname: pathname,
+                params: Tools.hash(JSON.stringify(params)),
+                result: result,
             });
         },
     });

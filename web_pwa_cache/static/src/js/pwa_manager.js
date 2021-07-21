@@ -161,6 +161,11 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
         _autoclosePrefetchModalData: function() {
             if (this._isTasksCompleted()) {
                 this._closePrefetchModalData();
+                core.bus.trigger("action_reload");
+                if (this.isOfflineMode()) {
+                    // Can do prefetch = is online
+                    this.setPWAMode("online");
+                }
             }
             this._checkPrefetchProgressTimer = null;
         },
@@ -373,6 +378,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     this._syncModal = new PWASyncModal(evt.data.records, {
                         sync: this._onSyncNow.bind(this),
                         forced_sync: evt.data.forced_sync,
+                        pwa_mode: this._pwaMode,
                     });
                     this._syncModal.show();
                     break;

@@ -1,4 +1,4 @@
-odoo.define("web_pwa_cache.ActionManager", function(require) {
+odoo.define("web_pwa_cache.ActionManager.ActWindow", function(require) {
     "use strict";
 
     var WebClientObj = require("web.web_client");
