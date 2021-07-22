@@ -1,15 +1,15 @@
-.oe_field_text_markdown {
+.o_field_text_markdown {
     font-size: 15px;
     line-height: 1.7;
     overflow: hidden;
 }
 
-.oe_field_text_markdown pre {
+.o_field_text_markdown pre {
     background-color: #333 !important;
     padding: 10px;
 }
 
-.oe_field_text_markdown .md-editor.md-fullscreen-mode .md-input,
+.o_field_text_markdown .md-editor.md-fullscreen-mode .md-input,
 .md-editor.md-fullscreen-mode .md-preview {
     font-size: 13px !important;
 }
@@ -22,19 +22,19 @@
     top: 70px;
 }
 
-.oe_field_text_markdown > *:first-child {
+.o_field_text_markdown > *:first-child {
     margin-top: 0 !important;
 }
 
-.oe_field_text_markdown > *:last-child {
+.o_field_text_markdown > *:last-child {
     margin-bottom: 0 !important;
 }
 
-.oe_field_text_markdown a.absent {
+.o_field_text_markdown a.absent {
     color: #c00;
 }
 
-.oe_field_text_markdown a.anchor {
+.o_field_text_markdown a.anchor {
     display: block;
     padding-left: 30px;
     margin-left: -30px;
@@ -45,12 +45,12 @@
     bottom: 0;
 }
 
-.oe_field_text_markdown h1,
-.oe_field_text_markdown h2,
-.oe_field_text_markdown h3,
-.oe_field_text_markdown h4,
-.oe_field_text_markdown h5,
-.oe_field_text_markdown h6 {
+.o_field_text_markdown h1,
+.o_field_text_markdown h2,
+.o_field_text_markdown h3,
+.o_field_text_markdown h4,
+.o_field_text_markdown h5,
+.o_field_text_markdown h6 {
     margin: 1em 0 15px;
     padding: 0;
     font-weight: bold;
@@ -59,22 +59,22 @@
     position: relative;
 }
 
-.oe_field_text_markdown h1 .octicon-link,
-.oe_field_text_markdown h2 .octicon-link,
-.oe_field_text_markdown h3 .octicon-link,
-.oe_field_text_markdown h4 .octicon-link,
-.oe_field_text_markdown h5 .octicon-link,
-.oe_field_text_markdown h6 .octicon-link {
+.o_field_text_markdown h1 .octicon-link,
+.o_field_text_markdown h2 .octicon-link,
+.o_field_text_markdown h3 .octicon-link,
+.o_field_text_markdown h4 .octicon-link,
+.o_field_text_markdown h5 .octicon-link,
+.o_field_text_markdown h6 .octicon-link {
     display: none;
     color: #000;
 }
 
-.oe_field_text_markdown h1:hover a.anchor,
-.oe_field_text_markdown h2:hover a.anchor,
-.oe_field_text_markdown h3:hover a.anchor,
-.oe_field_text_markdown h4:hover a.anchor,
-.oe_field_text_markdown h5:hover a.anchor,
-.oe_field_text_markdown h6:hover a.anchor {
+.o_field_text_markdown h1:hover a.anchor,
+.o_field_text_markdown h2:hover a.anchor,
+.o_field_text_markdown h3:hover a.anchor,
+.o_field_text_markdown h4:hover a.anchor,
+.o_field_text_markdown h5:hover a.anchor,
+.o_field_text_markdown h6:hover a.anchor {
     text-decoration: none;
     line-height: 1;
     padding-left: 0;
@@ -82,68 +82,68 @@
     top: 15%;
 }
 
-.oe_field_text_markdown h1:hover a.anchor .octicon-link,
-.oe_field_text_markdown h2:hover a.anchor .octicon-link,
-.oe_field_text_markdown h3:hover a.anchor .octicon-link,
-.oe_field_text_markdown h4:hover a.anchor .octicon-link,
-.oe_field_text_markdown h5:hover a.anchor .octicon-link,
-.oe_field_text_markdown h6:hover a.anchor .octicon-link {
+.o_field_text_markdown h1:hover a.anchor .octicon-link,
+.o_field_text_markdown h2:hover a.anchor .octicon-link,
+.o_field_text_markdown h3:hover a.anchor .octicon-link,
+.o_field_text_markdown h4:hover a.anchor .octicon-link,
+.o_field_text_markdown h5:hover a.anchor .octicon-link,
+.o_field_text_markdown h6:hover a.anchor .octicon-link {
     display: inline-block;
 }
 
-.oe_field_text_markdown h1 tt,
-.oe_field_text_markdown h1 code,
-.oe_field_text_markdown h2 tt,
-.oe_field_text_markdown h2 code,
-.oe_field_text_markdown h3 tt,
-.oe_field_text_markdown h3 code,
-.oe_field_text_markdown h4 tt,
-.oe_field_text_markdown h4 code,
-.oe_field_text_markdown h5 tt,
-.oe_field_text_markdown h5 code,
-.oe_field_text_markdown h6 tt,
-.oe_field_text_markdown h6 code {
+.o_field_text_markdown h1 tt,
+.o_field_text_markdown h1 code,
+.o_field_text_markdown h2 tt,
+.o_field_text_markdown h2 code,
+.o_field_text_markdown h3 tt,
+.o_field_text_markdown h3 code,
+.o_field_text_markdown h4 tt,
+.o_field_text_markdown h4 code,
+.o_field_text_markdown h5 tt,
+.o_field_text_markdown h5 code,
+.o_field_text_markdown h6 tt,
+.o_field_text_markdown h6 code {
     font-size: inherit;
 }
 
-.oe_field_text_markdown h1 {
+.o_field_text_markdown h1 {
     font-size: 2.5em;
     border-bottom: 1px solid #ddd;
 }
 
-.oe_field_text_markdown h2 {
+.o_field_text_markdown h2 {
     font-size: 2em;
     border-bottom: 1px solid #eee;
 }
 
-.oe_field_text_markdown h3 {
+.o_field_text_markdown h3 {
     font-size: 1.5em;
 }
 
-.oe_field_text_markdown h4 {
+.o_field_text_markdown h4 {
     font-size: 1.2em;
 }
 
-.oe_field_text_markdown h5 {
+.o_field_text_markdown h5 {
     font-size: 1em;
 }
 
-.oe_field_text_markdown h6 {
+.o_field_text_markdown h6 {
     color: #777;
     font-size: 1em;
 }
 
-.oe_field_text_markdown p,
-.oe_field_text_markdown blockquote,
-.oe_field_text_markdown ul,
-.oe_field_text_markdown ol,
-.oe_field_text_markdown dl,
-.oe_field_text_markdown table,
-.oe_field_text_markdown pre {
+.o_field_text_markdown p,
+.o_field_text_markdown blockquote,
+.o_field_text_markdown ul,
+.o_field_text_markdown ol,
+.o_field_text_markdown dl,
+.o_field_text_markdown table,
+.o_field_text_markdown pre {
     margin: 15px 0;
 }
 
-.oe_field_text_markdown hr {
+.o_field_text_markdown hr {
     border: 0 none;
     color: #ccc;
     height: 4px;
@@ -151,38 +151,38 @@
     margin: 15px 0;
 }
 
-.oe_field_text_markdown li p.first {
+.o_field_text_markdown li p.first {
     display: inline-block;
 }
 
-.oe_field_text_markdown ul,
-.oe_field_text_markdown ol {
+.o_field_text_markdown ul,
+.o_field_text_markdown ol {
     padding-left: 30px;
 }
 
-.oe_field_text_markdown ul.no-list,
-.oe_field_text_markdown ol.no-list {
+.o_field_text_markdown ul.no-list,
+.o_field_text_markdown ol.no-list {
     list-style-type: none;
     padding: 0;
 }
 
-.oe_field_text_markdown ul ul,
-.oe_field_text_markdown ul ol,
-.oe_field_text_markdown ol ol,
-.oe_field_text_markdown ol ul {
+.o_field_text_markdown ul ul,
+.o_field_text_markdown ul ol,
+.o_field_text_markdown ol ol,
+.o_field_text_markdown ol ul {
     margin-top: 0;
     margin-bottom: 0;
 }
 
-.oe_field_text_markdown dl {
+.o_field_text_markdown dl {
     padding: 0;
 }
 
-.oe_field_text_markdown a.btn {
+.o_field_text_markdown a.btn {
     color: white;
 }
 
-.oe_field_text_markdown dl dt {
+.o_field_text_markdown dl dt {
     font-size: 14px;
     font-weight: bold;
     font-style: italic;
@@ -190,12 +190,12 @@
     margin-top: 15px;
 }
 
-.oe_field_text_markdown dl dd {
+.o_field_text_markdown dl dd {
     margin-bottom: 15px;
     padding: 0 15px;
 }
 
-.oe_field_text_markdown blockquote {
+.o_field_text_markdown blockquote {
     background: #f9f9f9;
     border-left: 10px solid #ccc;
     margin: 1.5em 10px;
