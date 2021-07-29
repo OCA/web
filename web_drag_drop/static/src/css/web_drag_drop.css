@@ -1,0 +1,20 @@
+.openerp .oe_application .oe_drag_drop {
+    background: #fff;
+    height: 300px;
+    overflow-y: scroll;
+}
+.oe_attached {
+    display: none;
+}
+.oe_attached_files .list-group-item {
+    margin: 30px;
+    word-break: break-word;
+}
+.oe_attached_files li:hover {
+    color: deepskyblue;
+    text-decoration: none;
+    background-color: #f8f9fa;
+}
+.oe_attached_files button{
+    margin: 0 0 0 10px;
+}

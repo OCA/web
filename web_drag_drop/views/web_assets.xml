@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="Web Drag Drop Assets"
+                  inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <!-- Dependency libs -->
+                <link rel="stylesheet"
+                      href="/web_drag_drop/static/src/css/lib/dropzone.css"/>
+                <link rel="stylesheet"
+                      href="/web_drag_drop/static/src/css/lib/lightbox.css"/>
+                <script type="text/javascript"
+                        src="/web_drag_drop/static/src/js/lib/dropzone.js"></script>
+                <script type="text/javascript"
+                        src="/web_drag_drop/static/src/js/lib/lightbox.js"></script>
+
+                <!-- custom css/js -->
+                <link rel="stylesheet"
+                      href="/web_drag_drop/static/src/css/web_drag_drop.css"/>
+                <script type="text/javascript"
+                        src="/web_drag_drop/static/src/js/web_drag_drop.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>

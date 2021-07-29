@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+<t t-extend="FormRenderingSheet">
+    <t t-jquery="div.oe_form_sheetbg" t-operation="after">
+         <div class="oe_drag_drop dropzone">
+             <div class="oe_attached panel panel-default">
+                 <div class="panel-heading">
+                     <h4 class="text-center panel-title">
+                         <a data-toggle="collapse" href="#collapse1">Attached Files</a>
+                     </h4>
+                 </div>
+                 <div id="collapse1" class="panel-collapse collapse panel-body">
+                     <div class="panel-body">
+                         <div class="btn btn-info oe_delete_all_attachments">Delete all attachments</div>
+                         <div class="list-group">
+                             <div class="row oe_attached_files"/>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+    </t>
+</t>
+</templates>
