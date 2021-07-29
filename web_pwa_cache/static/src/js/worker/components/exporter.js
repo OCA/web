@@ -292,16 +292,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
         read_template: function(model, data) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_template = await this._db.getModelInfo(
-                        "template",
-                        true
-                    );
-                    const record = await this._db.search_read(
-                        model_info_template,
-                        [["xml_ref", "=", data.args[0]]],
-                        1,
-                        ["template"]
-                    );
+                    const record = await this._db.indexeddb.template.get(data.args[0]);
                     if (_.isEmpty(record)) {
                         if (this.isOfflineMode()) {
                             return resolve({});
@@ -392,8 +383,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
         unlink: function(model, data) {
             return new Promise(async resolve => {
                 await this._db.unlink(model, data.args[0]);
-                const model_info_sync = await this._db.getModelInfo("sync", true);
-                await this._db.create(model_info_sync, {
+                await this._db.indexeddb.sync.put({
                     model: model,
                     method: "unlink",
                     args: [data.args[0]],
@@ -473,13 +463,15 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     const options = data.kwargs.options;
+                    const context = data.kwargs.context || {};
                     const views = data.kwargs.views;
                     const uid = this._config.getUID();
                     const res = await this._db.getFieldsViews(
                         model,
                         uid,
                         views,
-                        options
+                        options,
+                        context
                     );
                     if (_.isEmpty(res) && !this.isOfflineMode()) {
                         return reject();
@@ -497,16 +489,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
         load_menus: function() {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_info_userdata = await this._db.getModelInfo(
-                        "userdata",
-                        true
-                    );
-                    const record = await this._db.search_read(
-                        model_info_userdata,
-                        [["param", "=", "menus"]],
-                        1,
-                        ["value"]
-                    );
+                    const record = await this._db.indexeddb.userdata.get("menus");
                     if (_.isEmpty(record) && !this.isOfflineMode()) {
                         return reject();
                     }
@@ -1075,7 +1058,6 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
         _process_record_create: function(model_info, data) {
             return new Promise(async resolve => {
                 const records_sync = [];
-                const model_info_sync = await this._db.getModelInfo("sync", true);
                 const model_defaults = await this._db.getModelDefaults(model_info);
                 for (const index in data.args) {
                     const record = _.extend({}, model_defaults, data.args[index]);
@@ -1192,7 +1174,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         linked: records_linked,
                         kwargs: data.kwargs,
                     });
-                    await this._db.writeOrCreate(model_info_sync, records_sync);
+                    await this._db.indexeddb.sync.bulkPut(records_sync);
                 }
 
                 await this._db.writeOrCreate(model_info, data.args);
@@ -1219,7 +1201,6 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                     model_info.fields,
                     false
                 );
-                const model_info_sync = await this._db.getModelInfo("sync", true);
                 const records = await this._db.browse(model_info, modified_records);
                 for (const record of records) {
                     const data_to_sync = {};
@@ -1351,7 +1332,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         date: new Date().getTime(),
                         kwargs: data.kwargs,
                     });
-                    await this._db.create(model_info_sync, records_sync);
+                    await this._db.sync.bulkPut(records_sync);
                     await this._db.write(model_info, [record.id], record);
                 }
                 return resolve(true);

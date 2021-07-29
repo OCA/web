@@ -6,6 +6,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
     var core = require("web.core");
     var session = require("web.session");
     var config = require("web.config");
+    var Dialog = require("web.Dialog");
     var PWAManager = require("web_pwa_oca.PWAManager");
     var PWAModeSelector = require("web_pwa_cache.PWAModeSelector");
     var BroadcastMixin = require("web_pwa_cache.BroadcastMixin");
@@ -93,16 +94,6 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     this.setPWAMode("offline");
                     this.modeSelector.close();
                 },
-            });
-
-            // Reload once when the new Service Worker starts activating
-            this._refreshing = false;
-            navigator.serviceWorker.addEventListener("controllerchange", () => {
-                if (this.refreshing) {
-                    return;
-                }
-                this.refreshing = true;
-                window.location.reload();
             });
         },
 
@@ -267,8 +258,9 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
             if (!res) {
                 return;
             }
+
+            // Generic Messages
             switch (evt.data.type) {
-                /* General */
                 case "PWA_INIT_CONFIG":
                     if (this._swInfoOpenTimer) {
                         clearTimeout(this._swInfoOpenTimer);
@@ -276,25 +268,24 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     }
                     this._pwaMode = evt.data.data.pwa_mode;
                     this._swInfoModalHidden = true;
-                    if (navigator.serviceWorker.controller) {
-                        this.$modalSWInfo.modal("hide");
-                        if (evt.data.data.is_db_empty) {
-                            this.$modalPrefetchProgress.modal("hide");
-                        } else if (
-                            this.isPWAStandalone() &&
-                            !this.modeSelector.wasShown()
-                        ) {
-                            this.modeSelector.show();
+                    if (this.isPWAStandalone()) {
+                        if (navigator.serviceWorker.controller) {
+                            this.$modalSWInfo.modal("hide");
+                            if (evt.data.data.is_db_empty) {
+                                this.$modalPrefetchProgress.modal("hide");
+                            } else if (!this.modeSelector.wasShown()) {
+                                this.modeSelector.show();
+                            }
+                        } else {
+                            this.$modalSWInfo
+                                .find("#swinfo_message")
+                                .text(
+                                    _t(
+                                        "Service worker was activated sucessfully! Reloading the page to take the control..."
+                                    )
+                                );
+                            setTimeout(location.reload(), 250);
                         }
-                    } else {
-                        this.$modalSWInfo
-                            .find("#swinfo_message")
-                            .text(
-                                _t(
-                                    "Service worker was activated sucessfully! Reloading the page to take the control..."
-                                )
-                            );
-                        setTimeout(location.reload(), 250);
                     }
                     this.postBroadcastMessage({
                         type: "SET_PWA_CONFIG",
@@ -304,108 +295,137 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                         lang: session.user_context.lang,
                     });
                     break;
-                case "PWA_CONFIG_CHANGED":
-                    if (evt.data.changes.pwa_mode) {
-                        this._pwaMode = evt.data.changes.pwa_mode;
-                    }
-                    break;
-                case "PWA_CACHE_FAIL":
-                    this.call("notification", "notify", {
-                        type: "warning",
-                        title: _t("PWA Cache Not Found!"),
-                        message: _t("Can't found any cache to '" + evt.data.url + "'"),
-                        sticky: false,
-                        className: "",
-                    });
-                    break;
-                /* Prefetching */
-                case "PREFETCH_MODAL_TASK_INFO":
-                    if (!this.isPWAStandalone()) {
+            }
+
+            // Standalone Messages
+            if (this.isPWAStandalone()) {
+                switch (evt.data.type) {
+                    case "PWA_CONFIG_CHANGED":
+                        if (evt.data.changes.pwa_mode) {
+                            this._pwaMode = evt.data.changes.pwa_mode;
+                        }
                         break;
-                    }
-                    var progress =
-                        (evt.data.count_done / evt.data.count_total || 0) * 100;
+                    case "PWA_CACHE_FAIL":
+                        this.call("notification", "notify", {
+                            type: "warning",
+                            title: _t("PWA Cache Not Found!"),
+                            message: _t(
+                                "Can't found any cache to '" + evt.data.url + "'"
+                            ),
+                            sticky: false,
+                            className: "",
+                        });
+                        break;
+                    /* Prefetching */
+                    case "PREFETCH_MODAL_TASK_INFO":
+                        if (!this.isPWAStandalone()) {
+                            break;
+                        }
+                        var progress =
+                            (evt.data.count_done / evt.data.count_total || 0) * 100;
 
-                    this._updatePrefetchModalData(evt.data.id, {
-                        message: evt.data.message,
-                        progress: Math.round(progress),
-                        total: evt.data.count_total,
-                        done: evt.data.count_done,
-                        error: evt.data.error,
-                        completed: evt.data.completed,
-                    });
+                        this._updatePrefetchModalData(evt.data.id, {
+                            message: evt.data.message,
+                            progress: Math.round(progress),
+                            total: evt.data.count_total,
+                            done: evt.data.count_done,
+                            error: evt.data.error,
+                            completed: evt.data.completed,
+                        });
 
-                    // Always show the prefetch info modal
-                    if (this._prefetchModelHidden) {
-                        if (!this._prefetchModalOpenTimer) {
-                            // Timer to avoid show prefetch info modal in fast tasks
-                            this._prefetchModalOpenTimer = setTimeout(
-                                () => {
-                                    // Close mode selection if we receive prefetching results
-                                    if (this.modeSelector.isOpen()) {
-                                        this.modeSelector.close();
-                                    }
+                        // Always show the prefetch info modal
+                        if (this._prefetchModelHidden) {
+                            if (!this._prefetchModalOpenTimer) {
+                                // Timer to avoid show prefetch info modal in fast tasks
+                                this._prefetchModalOpenTimer = setTimeout(
+                                    () => {
+                                        // Close mode selection if we receive prefetching results
+                                        if (this.modeSelector.isOpen()) {
+                                            this.modeSelector.close();
+                                        }
 
-                                    this._openPrefetchModalData();
-                                    this._prefetchModalOpenTimer = false;
-                                },
-                                evt.data.force_show_modal
-                                    ? 0
-                                    : this._show_prefetch_modal_delay
+                                        this._openPrefetchModalData();
+                                        this._prefetchModalOpenTimer = false;
+                                    },
+                                    evt.data.force_show_modal
+                                        ? 0
+                                        : this._show_prefetch_modal_delay
+                                );
+                            }
+                        }
+
+                        if (this._isTasksCompleted()) {
+                            // Avoid show prefetch info modal if all tasks are completed
+                            if (this._prefetchModalOpenTimer) {
+                                clearTimeout(this._prefetchModalOpenTimer);
+                                this._prefetchModalOpenTimer = null;
+                            }
+
+                            // Timeout to auto-close tasks info modal
+                            if (this._checkPrefetchProgressTimer) {
+                                clearTimeout(this._checkPrefetchProgressTimer);
+                            }
+                            this._checkPrefetchProgressTimer = setTimeout(
+                                this._autoclosePrefetchModalData.bind(this),
+                                this._autoclose_prefetch_modal_delay
                             );
                         }
-                    }
-
-                    if (this._isTasksCompleted()) {
-                        // Avoid show prefetch info modal if all tasks are completed
-                        if (this._prefetchModalOpenTimer) {
-                            clearTimeout(this._prefetchModalOpenTimer);
-                            this._prefetchModalOpenTimer = null;
+                        break;
+                    /* Sync */
+                    case "PWA_SYNC_RECORDS":
+                        this._syncModal = new PWASyncModal(evt.data.records, {
+                            sync: this._onSyncNow.bind(this),
+                            forced_sync: evt.data.forced_sync,
+                            pwa_mode: this._pwaMode,
+                        });
+                        this._syncModal.show();
+                        break;
+                    case "PWA_SYNC_RECORD_OK":
+                        if (this._syncModal && this._syncModal.isOpen()) {
+                            this._syncModal.$el
+                                .find("tr#record_sync_" + evt.data.index)
+                                .addClass("bg-success");
                         }
-
-                        // Timeout to auto-close tasks info modal
-                        if (this._checkPrefetchProgressTimer) {
-                            clearTimeout(this._checkPrefetchProgressTimer);
+                        break;
+                    case "PWA_SYNC_ERROR":
+                        if (this._syncModal && this._syncModal.isOpen()) {
+                            this._syncModal.close();
                         }
-                        this._checkPrefetchProgressTimer = setTimeout(
-                            this._autoclosePrefetchModalData.bind(this),
-                            this._autoclose_prefetch_modal_delay
+                        var $content = $(
+                            QWeb.render("web_pwa_cache.PWASyncError", {
+                                errormsg: evt.data.errormsg,
+                            })
                         );
-                    }
-                    break;
-                /* Sync */
-                case "PWA_SYNC_RECORDS":
-                    this._syncModal = new PWASyncModal(evt.data.records, {
-                        sync: this._onSyncNow.bind(this),
-                        forced_sync: evt.data.forced_sync,
-                        pwa_mode: this._pwaMode,
-                    });
-                    this._syncModal.show();
-                    break;
-                case "PWA_SYNC_RECORD_OK":
-                    if (this._syncModal && this._syncModal.isOpen()) {
-                        this._syncModal.$el
-                            .find("tr#record_sync_" + evt.data.index)
-                            .addClass("bg-success");
-                    }
-                    break;
-                case "PWA_SYNC_RECORDS_COMPLETED":
-                    if (this._syncModal && this._syncModal.isOpen()) {
-                        this._syncModal.close();
-                    }
-                    break;
-                case "PWA_SYNC_NEED_ACTION":
-                    this.call("notification", "notify", {
-                        type: "info",
-                        title: _t("Have transactions to synchronize"),
-                        message:
-                            "You have '" +
-                            evt.data.count +
-                            "' transactions to synchronize",
-                        sticky: false,
-                        className: "",
-                    });
-                    break;
+                        new Dialog(this, {
+                            title: _t("Synchronization error!"),
+                            $content: $content,
+                            buttons: [
+                                {
+                                    text: _t("Close"),
+                                    close: true,
+                                },
+                            ],
+                            fullscreen: false,
+                        }).open();
+                        break;
+                    case "PWA_SYNC_RECORDS_COMPLETED":
+                        if (this._syncModal && this._syncModal.isOpen()) {
+                            this._syncModal.close();
+                        }
+                        break;
+                    case "PWA_SYNC_NEED_ACTION":
+                        this.call("notification", "notify", {
+                            type: "info",
+                            title: _t("Have transactions to synchronize"),
+                            message:
+                                "You have '" +
+                                evt.data.count +
+                                "' transactions to synchronize",
+                            sticky: false,
+                            className: "",
+                        });
+                        break;
+                }
             }
         },
 

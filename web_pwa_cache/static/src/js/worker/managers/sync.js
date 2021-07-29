@@ -25,17 +25,7 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
          * @returns {Promise}
          */
         getSyncRecords: function() {
-            return new Promise(async resolve => {
-                try {
-                    const model_info_sync = await this._db.getModelInfo("sync", true);
-                    const records = await this._db.search_read(model_info_sync, []);
-                    return resolve(records);
-                } catch (err) {
-                    // Do nothing
-                }
-
-                return resolve([]);
-            });
+            return this._db.indexeddb.sync.toArray();
         },
 
         /**
@@ -44,20 +34,7 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
          * @returns {Promise}
          */
         updateSyncRecord: function(id, data) {
-            return new Promise(async (resolve, reject) => {
-                try {
-                    const model_info_sync = await this._db.getModelInfo("sync", true);
-                    await this._db.sqlitedb.updateRecord(
-                        model_info_sync,
-                        [data.id],
-                        _.extend({}, data, {id: id})
-                    );
-                } catch (err) {
-                    return reject(err);
-                }
-
-                return resolve();
-            });
+            return this._db.indexeddb.sync.put(_.extend({}, data, {id: id}));
         },
 
         /**
@@ -65,16 +42,10 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
          * @returns {Promise}
          */
         removeSyncRecords: function(ids) {
-            return new Promise(async (resolve, reject) => {
-                try {
-                    const model_info_sync = await this._db.getModelInfo("sync", true);
-                    await this._db.unlink(model_info_sync, ids);
-                } catch (err) {
-                    return reject(err);
-                }
-
-                return resolve();
-            });
+            return this._db.indexeddb.sync
+                .where("id")
+                .anyOf(ids)
+                .delete();
         },
 
         _updateIds: function(records, model, old_id, new_id) {
@@ -304,11 +275,14 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                                 }
                             }
                         }
-                        await this.removeSyncRecords([record.id]);
                         sync_keys_done.push(record.id);
                         this._sendRecordOKToPages(record.id);
                     }
+
+                    await this.removeSyncRecords(sync_keys_done);
                 } catch (err) {
+                    this._sendSyncErrorToPages(err);
+                    this.sendCountToPages();
                     return reject(err);
                 }
 
@@ -364,6 +338,19 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
         },
 
         /**
+         * Send failed sync process to the client pages
+         *
+         * @private
+         * @param {String} errormsg
+         */
+        _sendSyncErrorToPages: function(errormsg) {
+            this.postBroadcastMessage({
+                type: "PWA_SYNC_ERROR",
+                errormsg: errormsg,
+            });
+        },
+
+        /**
          * Send completed sync. tasks
          *
          * @private
@@ -380,6 +367,9 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                 return;
             }
             switch (evt.data.type) {
+                case "GET_PWA_CONFIG":
+                    this.sendCountToPages();
+                    break;
                 // Received to send pwa sync. records to the user page.
                 case "GET_PWA_SYNC_RECORDS":
                     this.sendRecordsToPages();
@@ -387,15 +377,14 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
 
                 // Received to start the sync. process
                 case "START_SYNCHRONIZATION":
-                    this.run().then(
-                        () => this.getParent()._doPrefetchDataPost(),
-                        err => {
+                    this.getParent()
+                        ._doPrefetchDataPost()
+                        .catch(err => {
                             console.log(
                                 "[ServiceWorker] Error: can't complete the synchronization process."
                             );
                             console.log(err);
-                        }
-                    );
+                        });
                     break;
             }
         },

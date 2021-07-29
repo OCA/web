@@ -31,6 +31,107 @@ class PWAPrefetch(PWA):
         ]
         return actions
 
+    def _get_pwa_models(self, last_update):
+        model_domain = []
+        if last_update:
+            model_domain.append(("write_date", ">=", last_update))
+        ir_model_obj = request.env["ir.model"]
+        # Generic models
+        model_ids = (
+            ir_model_obj.sudo()
+            .search(model_domain)
+            .filtered(
+                lambda x: x.model in request.env and not request.env[x.model]._abstract
+            )
+        )
+        # Explicit pwa.cache model
+        pwa_cache_ids = (
+            request.env["pwa.cache"]
+            .search(self._get_pwa_cache_domain(["model"]))
+            .mapped("model_id")
+            .ids
+        )
+        model_ids |= ir_model_obj.sudo().search(
+            model_domain + [("id", "in", pwa_cache_ids,)]
+        )
+        # Only get models that can be almost readed
+        model_ids = model_ids.filtered(
+            lambda x: request.env[x.model].check_access_rights(
+                "read", raise_exception=False
+            )
+        )
+        return model_ids
+
+    def _get_pwa_model_info_count(self, model_infos, last_update):
+        for model_info in model_infos:
+            model_obj = request.env[model_info["model"]]
+            model = model_info["model"]
+            if model in last_update:
+                model_info["count"] = model_obj.search_count(
+                    [("write_date", ">=", last_update[model])] + model_info["domain"]
+                )
+            else:
+                model_info["count"] = model_obj.search_count(model_info["domain"])
+
+    def _pwa_is_invalid_field(self, model, field_name, field_def):
+        if field_name in ("create_uid", "create_date", "write_uid", "write_date"):
+            return True
+        # Handle 'special' fields
+        if model == "pwa.cache.onchange.value" and field_name in (
+            "display_name",
+            "field_name",
+            "values",
+        ):
+            return True
+        if model == "ir.actions.client" and field_name in ("params", "params_store",):
+            return False
+        # Avoid sparse fields
+        model_obj = request.env[model]
+        is_sparse = field_name in model_obj._fields and getattr(
+            model_obj._fields[field_name], "sparse", False
+        )
+        is_stored = "store" in field_def and field_def["store"]
+        is_required = "required" in field_def and field_def["required"]
+        is_invalid_type = field_def["type"] in ("one2many", "binary")
+        return not is_required and (not is_stored or is_invalid_type or is_sparse)
+
+    def _pwa_fill_internal_fields(self, model, fields):
+        if model == "res.users":
+            # Remove sensitive fields
+            try:
+                fields.remove("password")
+            except ValueError:
+                pass
+        elif model == "ir.actions.act_window":
+            fields.append("views")
+        if model != "pwa.cache.onchange.value":
+            fields.append("display_name")
+
+    def _get_pwa_model_fields(self, model):
+        record = request.env["pwa.cache"].search(
+            self._get_pwa_cache_domain(["model"]) + [("model_name", "=", model)],
+            limit=1,
+        )
+        fields = []
+        if record:
+            field_infos = request.env[record.model_name].fields_get()
+            included_fields = record.model_field_included_ids.mapped("name") or []
+            fields += included_fields
+        else:
+            field_infos = request.env[model].fields_get()
+        field_names = list(field_infos.keys())
+        field_values = field_infos.values()
+        for index, val in enumerate(field_values):
+            field_name = field_names[index]
+            if self._pwa_is_invalid_field(model, field_name, val):
+                continue
+            fields.append(field_name)
+        self._pwa_fill_internal_fields(model, fields)
+        fields = list(set(fields))
+        if not any(fields):
+            fields = False
+        return fields
+
     def _pwa_prefetch_action(self, last_update, **kwargs):
         actions = self._get_pwa_available_actions()
         action_ids = list(map(lambda x: x.split(",")[1], actions))
@@ -58,7 +159,35 @@ class PWAPrefetch(PWA):
         return res
 
     def _pwa_prefetch_model_info(self, last_update, **kwargs):
-        # Get used model names from menus action
+        model_ids = self._get_pwa_models(last_update)
+        res = []
+        for model_id in model_ids:
+            model_obj = request.env[model_id.model]
+            valid_fields = self._get_pwa_model_fields(model_id.model)
+            try:
+                model_defaults = model_obj.default_get(valid_fields)
+            except Exception:
+                model_defaults = False
+
+            res.append(
+                {
+                    "model": model_id.model,
+                    "name": model_id.name,
+                    "orderby": model_obj._order,
+                    "rec_name": model_obj._rec_name or "name",
+                    "fields": model_obj.fields_get(),
+                    "valid_fields": valid_fields,
+                    "parent_store": model_obj._parent_store,
+                    "parent_name": model_obj._parent_name,
+                    "inherits": model_obj._inherits,
+                    "table": model_obj._table,
+                    "defaults": model_defaults,
+                }
+            )
+        return res
+
+    def _pwa_prefetch_model_view(self, last_update, **kwargs):
+        # Determine available views from actions
         actions = self._get_pwa_available_actions()
         model_views = {}
         actions_id_list = set()
@@ -74,7 +203,7 @@ class PWAPrefetch(PWA):
                 action_id.view_id.id,
                 action_id.search_view_id.id,
             }
-
+        # Determine available view types
         ir_ui_view_obj = request.env["ir.ui.view"]
         available_types = list(
             filter(
@@ -82,85 +211,54 @@ class PWAPrefetch(PWA):
                 map(lambda x: x[0], ir_ui_view_obj._fields["type"].selection),
             )
         )
-        model_domain = []
+        model_ids = self._get_pwa_models(False)
+        model_names = model_ids.mapped("model")
+        view_types = {}
+        # Get "primary" & "specific" view ids
+        model_view_names = set(model_names) & set(model_views.keys())
+        model_view_ids = set()
+        for model_name in model_view_names:
+            model_view_ids |= model_views[model_name]
+        domain = [
+            "|",
+            "&",
+            ("model", "in", model_names),
+            ("mode", "=", "primary"),
+            ("id", "in", list(model_view_ids)),
+            ("type", "in", available_types),
+        ]
         if last_update:
-            model_domain.append(("write_date", ">=", last_update))
-        model_ids = (
-            request.env["ir.model"]
-            .sudo()
-            .search(model_domain)
-            .filtered(
-                lambda x: x.model in request.env and not request.env[x.model]._abstract
-            )
-        )
-        model_ids |= (
-            request.env["ir.model"]
-            .sudo()
-            .search(
-                model_domain
-                + [
-                    (
-                        "id",
-                        "in",
-                        request.env["pwa.cache"]
-                        .search(self._get_pwa_cache_domain(["model"]))
-                        .mapped("model_id")
-                        .ids,
-                    )
-                ]
-            )
-        )
-        res = []
-        for model_id in model_ids:
-            view_types = {}
+            domain.append(("write_date", ">=", last_update))
+        view_ids = ir_ui_view_obj.search_read(domain, fields=["type", "model", "mode"])
+        for view_id in view_ids:
+            view_types.setdefault(view_id["model"], {})
             for view_type in available_types:
-                # Adds 'False' to get generic view
-                view_types.setdefault(view_type, [False])
-            if model_id.model in model_views:
-                view_domain = [
-                    ("id", "in", list(model_views[model_id.model])),
-                    ("type", "!=", "qweb"),
-                ]
-                # if last_update:
-                #     view_domain.append(("write_date", ">=", last_update))
-                view_list = ir_ui_view_obj.search_read(view_domain, ["type"])
-                for view in view_list:
-                    view_types[view["type"]].append(view["id"])
-            model_obj = request.env[model_id.model]
-            model_fields = model_obj.fields_get()
-            try:
-                model_defaults = model_obj.default_get(list(model_fields.keys()))
-            except Exception:
-                model_defaults = False
-
-            res.append(
-                {
-                    "model": model_id.model,
-                    "name": model_id.name,
-                    "orderby": model_obj._order,
-                    "rec_name": model_obj._rec_name or "name",
-                    "fields": model_fields,
-                    "valid_fields": self._pwa_get_model_fields(model_id.model),
-                    "view_types": view_types,
-                    "parent_store": model_obj._parent_store,
-                    "parent_name": model_obj._parent_name,
-                    "inherits": model_obj._inherits,
-                    "table": model_obj._table,
-                    "defaults": model_defaults,
-                }
+                view_types[view_id["model"]].setdefault(view_type, [])
+            view_types[view_id["model"]][view_id["type"]].append(
+                (view_id["id"], view_id["mode"] == "primary")
             )
+        # Generate views
+        res = []
+        for model_name, view_types in view_types.items():
+            model_obj = request.env[model_name]
+            for view_type, view_specs in view_types.items():
+                for view_spec in view_specs:
+                    view_id, is_primary = view_spec
+                    try:
+                        fields_view = model_obj.fields_view_get(
+                            view_id=view_id,
+                            view_type=view_type,
+                            toolbar=(view_type != "search"),
+                        )
+                        # Indexeddb doesn't allow 'boolean' in indexes,
+                        # so transform it to integer.
+                        fields_view["is_primary"] = 1 if is_primary else 0
+                    except Exception:
+                        fields_view = {}
+                        pass
+                    if any(fields_view.get("fields", [])):
+                        res.append(fields_view)
         return res
-
-    def _pwa_calculate_model_info_count(self, model_infos, last_update):
-        for model_info in model_infos:
-            model_obj = request.env[model_info["model"]]
-            model = model_info["model"]
-            if model in last_update:
-                model_info["count"] = model_obj.search_count(
-                    [("write_date", ">=", last_update[model])] + model_info["domain"]
-                )
-            else:
-                model_info["count"] = model_obj.search_count(model_info["domain"])
 
     def _pwa_prefetch_model(self, last_update, **kwargs):
         records = request.env["pwa.cache"].search(self._get_pwa_cache_domain(["model"]))
@@ -184,7 +282,7 @@ class PWAPrefetch(PWA):
                 {"model": model, "domain": evaluated_domain, "count": records_count}
             )
         # Calculate counts
-        self._pwa_calculate_model_info_count(model_infos, last_update)
+        self._get_pwa_model_info_count(model_infos, last_update)
         return model_infos
 
     def _pwa_prefetch_clientqweb(self, **kwargs):
@@ -230,65 +328,6 @@ class PWAPrefetch(PWA):
                 )
         return functions
 
-    def _pwa_is_invalid_field(self, model, field_name, field_def):
-        if field_name in ("create_uid", "create_date", "write_uid", "write_date"):
-            return True
-        # Handle 'special' fields
-        if model == "pwa.cache.onchange.value" and field_name in (
-            "display_name",
-            "field_name",
-            "values",
-        ):
-            return True
-        if model == "ir.actions.client" and field_name in ("params", "params_store",):
-            return False
-        # Avoid sparse fields
-        model_obj = request.env[model]
-        is_sparse = field_name in model_obj._fields and getattr(
-            model_obj._fields[field_name], "sparse", False
-        )
-        is_stored = "store" in field_def and field_def["store"]
-        is_required = "required" in field_def and field_def["required"]
-        is_invalid_type = field_def["type"] in ("one2many", "binary")
-        return not is_required and (not is_stored or is_invalid_type or is_sparse)
-
-    def _pwa_fill_internal_fields(self, model, fields):
-        if model == "res.users":
-            # Remove sensitive fields
-            try:
-                fields.remove("password")
-            except ValueError:
-                pass
-        elif model == "ir.actions.act_window":
-            fields.append("views")
-        if model != "pwa.cache.onchange.value":
-            fields.append("display_name")
-
-    def _pwa_get_model_fields(self, model):
-        record = request.env["pwa.cache"].search(
-            self._get_pwa_cache_domain(["model"]) + [("model_name", "=", model)],
-            limit=1,
-        )
-        fields = []
-        if record:
-            field_infos = request.env[record.model_name].fields_get()
-            included_fields = record.model_field_included_ids.mapped("name") or []
-            fields += included_fields
-        else:
-            field_infos = request.env[model].fields_get()
-        field_names = list(field_infos.keys())
-        field_values = field_infos.values()
-        for index, val in enumerate(field_values):
-            field_name = field_names[index]
-            if self._pwa_is_invalid_field(model, field_name, val):
-                continue
-            fields.append(field_name)
-        self._pwa_fill_internal_fields(model, fields)
-        fields = list(set(fields))
-        if not any(fields):
-            fields = False
-        return fields
-
     @route("/pwa/prefetch/<string:cache_type>", type="json", auth="user")
     def pwa_prefetch(self, cache_type, **kwargs):
         # User dynamic defined caches
@@ -296,7 +335,13 @@ class PWAPrefetch(PWA):
             opt[0] for opt in request.env["pwa.cache"]._fields["cache_type"].selection
         }
         # Fixed caches
-        available_types |= {"action", "userdata", "model_default", "model_info"}
+        available_types |= {
+            "action",
+            "userdata",
+            "model_default",
+            "model_info",
+            "model_view",
+        }
         if cache_type in available_types:
             prefetch_method = getattr(self, "_pwa_prefetch_{}".format(cache_type))
             if prefetch_method:
@@ -313,7 +358,7 @@ class PWAPrefetch(PWA):
             return []
 
         if request.context.get("strict_mode", False):
-            fields = self._pwa_get_model_fields(model)
+            fields = self._get_pwa_model_fields(model)
 
         if fields and fields == ["id"]:
             # shortcut read if we only want the ids

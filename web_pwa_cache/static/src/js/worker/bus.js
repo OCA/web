@@ -71,10 +71,6 @@ odoo.define("web_pwa_cache.PWA.bus", function(require) {
             this._prefetch_promise = new Promise(async (resolve, reject) => {
                 this._prefetch_running = true;
                 try {
-                    const is_offline_mode = this._managers.config.isOfflineMode();
-                    if (is_offline_mode) {
-                        return resolve();
-                    }
                     // Try sync records first
                     await this._managers.sync.run();
                     // Try prefetch data
@@ -93,10 +89,13 @@ odoo.define("web_pwa_cache.PWA.bus", function(require) {
                     return reject(err);
                 }
 
+                // Here to apply changes before promise resolution
+                this._prefetch_running = false;
                 return resolve();
             }).finally(() => {
-                this._prefetch_promise = undefined;
+                // Here to ensure apply changes in case of failures
                 this._prefetch_running = false;
+                this._prefetch_promise = undefined;
             });
 
             return this._prefetch_promise;

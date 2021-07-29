@@ -86,27 +86,11 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
          * @returns {Promise}
          */
         load_menus: function(model, data) {
-            return new Promise(async (resolve, reject) => {
-                const values = {
-                    param: "menus",
-                    value: data,
-                };
-                try {
-                    const model_info_userdata = await this._db.getModelInfo(
-                        "userdata",
-                        true
-                    );
-                    await this._db.sqlitedb.createOrUpdateRecord(
-                        model_info_userdata,
-                        values,
-                        ["param"]
-                    );
-                } catch (err) {
-                    return reject(err);
-                }
-
-                return resolve();
-            });
+            const values = {
+                param: "menus",
+                value: data,
+            };
+            return this._db.indexeddb.userdata.put(values);
         },
 
         /**
@@ -125,29 +109,13 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
          * @returns {Promise}
          */
         read_template: function(model, data, request_params) {
-            return new Promise(async (resolve, reject) => {
-                const xml_ref = request_params.args[0];
-                const values = {
-                    xml_ref: xml_ref,
-                    template: data,
-                };
+            const xml_ref = request_params.args[0];
+            const values = {
+                xml_ref: xml_ref,
+                template: data,
+            };
 
-                try {
-                    const model_info_template = await this._db.getModelInfo(
-                        "template",
-                        true
-                    );
-                    await this._db.sqlitedb.createOrUpdateRecord(
-                        model_info_template,
-                        values,
-                        ["xml_ref"]
-                    );
-                } catch (err) {
-                    return reject(err);
-                }
-
-                return resolve();
-            });
+            return this._db.indexeddb.template.put(values);
         },
 
         /**

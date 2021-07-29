@@ -47,7 +47,7 @@ odoo.define("web_pwa_cache.PWASyncModal", function(require) {
                         close: true,
                     });
                 }
-                if (_.isEmpty(this.records) || this.options.pwa_mode === "offline") {
+                if (_.isEmpty(this.records)) {
                     buttons.push({
                         text: _t("Close"),
                         close: true,

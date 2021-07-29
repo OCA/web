@@ -6,6 +6,8 @@ odoo.define("web_pwa_cache.ActionManager", function(require) {
     const ActionManager = require("web.ActionManager");
     const core = require("web.core");
 
+    // This is used to reload last action when "prefetching" is done
+    // to ensure display updated records
     ActionManager.include({
         /**
          * @override

@@ -145,6 +145,10 @@
             </t>
         </div>
     </t>
+    <t t-name="web_pwa_cache.PWASyncError">
+        <p>An error ocurred while synchronizing records:</p>
+        <p t-esc="errormsg" />
+    </t>
     <t t-name="web_pwa_cache.update_caches">
         <button
             t-if="widget and widget.modelName == 'pwa.cache'"

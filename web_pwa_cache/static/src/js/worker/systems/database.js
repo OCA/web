@@ -154,113 +154,6 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                         model_info_model_metadata,
                         ["model"]
                     );
-
-                    const model_info_sync = {
-                        table: this.sqlitedb.getInternalTableName("sync"),
-                        model: this.sqlitedb.getInternalTableName("sync"),
-                        internal: true,
-                        fields: {
-                            id: {type: "integer", store: true},
-                            model: {type: "char", store: true},
-                            method: {type: "string", store: true},
-                            args: {type: "serialized", store: true},
-                            date: {type: "datetime", store: true},
-                            linked: {type: "serialized", store: true},
-                            kwargs: {type: "serialized", store: true},
-                        },
-                    };
-                    await this.sqlitedb.createTable(model_info_sync);
-                    await this.sqlitedb.createOrUpdateRecord(
-                        model_info_model_metadata,
-                        model_info_sync,
-                        ["model"]
-                    );
-
-                    const model_info_config = {
-                        table: this.sqlitedb.getInternalTableName("config"),
-                        model: this.sqlitedb.getInternalTableName("config"),
-                        internal: true,
-                        fields: {
-                            id: {type: "integer", store: true},
-                            param: {type: "char", store: true},
-                            value: {type: "serialized", store: true},
-                        },
-                    };
-                    await this.sqlitedb.createTable(model_info_config);
-                    await this.sqlitedb.createIndex(model_info_config, "config_param", [
-                        "param",
-                    ]);
-                    await this.sqlitedb.createOrUpdateRecord(
-                        model_info_model_metadata,
-                        model_info_config,
-                        ["model"]
-                    );
-
-                    const model_info_userdata = {
-                        table: this.sqlitedb.getInternalTableName("userdata"),
-                        model: this.sqlitedb.getInternalTableName("userdata"),
-                        internal: true,
-                        fields: {
-                            id: {type: "integer", store: true},
-                            param: {type: "char", store: true},
-                            value: {type: "serialized", store: true},
-                        },
-                    };
-                    await this.sqlitedb.createTable(model_info_userdata);
-                    await this.sqlitedb.createIndex(
-                        model_info_userdata,
-                        "userdata_param",
-                        ["param"]
-                    );
-                    await this.sqlitedb.createOrUpdateRecord(
-                        model_info_model_metadata,
-                        model_info_userdata,
-                        ["model"]
-                    );
-
-                    const model_info_template = {
-                        table: this.sqlitedb.getInternalTableName("template"),
-                        model: this.sqlitedb.getInternalTableName("template"),
-                        internal: true,
-                        fields: {
-                            id: {type: "integer", store: true},
-                            xml_ref: {type: "char", store: true},
-                            template: {type: "text", store: true},
-                        },
-                    };
-                    await this.sqlitedb.createTable(model_info_template);
-                    await this.sqlitedb.createIndex(
-                        model_info_template,
-                        "template_xml_ref",
-                        ["xml_ref"]
-                    );
-                    await this.sqlitedb.createOrUpdateRecord(
-                        model_info_model_metadata,
-                        model_info_template,
-                        ["model"]
-                    );
-
-                    const model_info_defaults = {
-                        table: this.sqlitedb.getInternalTableName("defaults"),
-                        model: this.sqlitedb.getInternalTableName("defaults"),
-                        internal: true,
-                        fields: {
-                            id: {type: "integer", store: true},
-                            model: {type: "char", store: true},
-                            formula: {type: "text", store: true},
-                        },
-                    };
-                    await this.sqlitedb.createTable(model_info_defaults);
-                    await this.sqlitedb.createIndex(
-                        model_info_defaults,
-                        "defaults_model",
-                        ["model"]
-                    );
-                    await this.sqlitedb.createOrUpdateRecord(
-                        model_info_model_metadata,
-                        model_info_defaults,
-                        ["model"]
-                    );
                 } catch (err) {
                     return reject(err);
                 }
@@ -282,10 +175,15 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                 binary: "[model+id]",
                 sqlitefile: "section",
                 onchange: "ref_hash",
-                views: "++,[model+type+is_default+view_id],[model+type+is_default]",
+                views: "++,[model+type+view_id],[model+type+is_primary]",
                 action: "id",
                 post: "[pathname+params]",
                 function: "[model+method+params]",
+                model_default_formula: "id,model",
+                template: "xml_ref",
+                userdata: "param",
+                config: "param",
+                sync: "++id",
             });
         },
 
@@ -902,9 +800,10 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
          * @param {Number} uid
          * @param {Array} views
          * @param {Object} options
+         * @param {Object} context
          * @returns {Promise}
          */
-        getFieldsViews: function(model_info, uid, views, options) {
+        getFieldsViews: function(model_info, uid, views, options, context) {
             return new Promise(async (resolve, reject) => {
                 try {
                     if (typeof model_info === "string") {
@@ -930,48 +829,82 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                     res.fields = model_info.fields;
                     res.fields_views = {};
                     for (const [view_id, view_type] of n_views) {
-                        res.fields_views[view_type] = await this.indexeddb.views.get({
-                            model: model_info.model,
-                            type: view_type === "list" ? "tree" : view_type,
-                            is_default: view_id ? 0 : 1,
-                            view_id: view_id || 0,
-                        });
-                        if (_.isEmpty(res.fields_views[view_type])) {
-                            // If not view found fallback to near view type
-
-                            res.fields_views[
-                                view_type
-                            ] = await this.indexeddb.views.get({
-                                model: model_info.model,
-                                type: view_type === "list" ? "tree" : view_type,
-                                is_default: 1,
-                            });
-
-                            if (_.isEmpty(res.fields_views[view_type])) {
-                                // If all fails fallback to form view
-                                res.fields_views[
-                                    view_type
-                                ] = await this.indexeddb.views.get({
-                                    model: model_info.model,
-                                    type: "form",
-                                    is_default: 1,
-                                });
+                        const s_view_type = view_type === "list" ? "tree" : view_type;
+                        let views_info = [];
+                        if (view_id) {
+                            views_info = await this.indexeddb.views
+                                .where("[model+type+view_id]")
+                                .equals([model_info.model, s_view_type, view_id])
+                                .toArray();
+                        } else {
+                            // If not view found try reference
+                            const view_ref_key = `${view_type}_view_ref`;
+                            const view_ref = context[view_ref_key];
+                            if (view_ref) {
+                                const model_data = await this.getModelData(view_ref);
+                                if (!_.isEmpty(model_data) && model_data.res_id) {
+                                    views_info = await this.indexeddb.views
+                                        .where("[model+type+view_id]")
+                                        .equals([
+                                            model_info.model,
+                                            s_view_type,
+                                            model_data.res_id,
+                                        ])
+                                        .toArray();
+                                }
                             }
+                        }
+
+                        if (_.isEmpty(views_info)) {
+                            // If all fails fallback to form view
+                            views_info = await this.indexeddb.views
+                                .where("[model+type+is_primary]")
+                                .equals([model_info.model, s_view_type, 1])
+                                .toArray();
                         }
 
                         // If can't get all views definitions, we
                         // return an empty result to trigger the Odoo response
-                        if (_.isEmpty(res.fields_views[view_type])) {
-                            return resolve([]);
+                        // Except for 'formPWA' that is an special view type
+                        if (_.isEmpty(views_info)) {
+                            if (s_view_type === "formPWA") {
+                                views_info = [res.fields_views.form];
+                            } else {
+                                return resolve([]);
+                            }
                         }
-                    }
-                    if (!options || !options.toolbar) {
-                        const view_types = Object.keys(res.fields_views);
-                        for (const view_type of view_types) {
-                            res.fields_views[view_type] = _.omit(
-                                res.fields_views[view_type],
-                                "toolbar"
-                            );
+
+                        // Resolve views 'toolbar'
+                        const require_toolbar = !_.isEmpty(options) && options.toolbar;
+                        if (views_info.length === 1) {
+                            if (require_toolbar) {
+                                res.fields_views[view_type] = views_info[0];
+                            } else {
+                                res.fields_views[view_type] = _.omit(
+                                    views_info[0],
+                                    "toolbar"
+                                );
+                            }
+                        } else {
+                            let selected_view = false;
+                            for (const view_info of views_info) {
+                                const has_toolbar = !_.isEmpty(
+                                    _.chain(view_info.toolbar)
+                                        .values()
+                                        .flatten()
+                                        .value()
+                                );
+                                if (
+                                    (require_toolbar && has_toolbar) ||
+                                    (!require_toolbar && !has_toolbar)
+                                ) {
+                                    selected_view = view_info;
+                                    break;
+                                }
+                            }
+                            res.fields_views[view_type] = selected_view
+                                ? selected_view
+                                : views_info[0];
                         }
                     }
 
@@ -1079,11 +1012,10 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                     if (typeof model_info === "string") {
                         model_info = await this.getModelInfo(model_info);
                     }
-                    const model_info_sync = await this.getModelInfo("sync", true);
-                    const sync_records = await this.search_read(model_info_sync, [
-                        ["model", "=", model_info.model],
-                        ["method", "=", "create"],
-                    ]);
+                    const sync_records = await this.indexeddb.sync
+                        .where("[model+method]")
+                        .equals([model_info.model, "create"])
+                        .toArray();
                     const record = _.findWhere(
                         sync_records,
                         item => item.args[0].id === rec_id
@@ -1193,19 +1125,10 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                     }
 
                     const values = model_info.defaults || {};
-                    const model_info_defaults = await this.getModelInfo(
-                        "defaults",
-                        true
-                    );
-                    let records = [];
-                    try {
-                        records = await this.sqlitedb.all(
-                            `SELECT FROM ${model_info_defaults.table} WHERE "model"=?`,
-                            model_info.model
-                        );
-                    } catch (err) {
-                        // Do nothing
-                    }
+                    const records = await this.indexeddb.model_default_formula
+                        .where("model")
+                        .equals(model_info.model)
+                        .toArray();
                     const sandbox = new JSSandbox();
                     for (const record of records) {
                         if (!record.formula) {

@@ -77,7 +77,7 @@ odoo.define("web_pwa_cache.UserMenu", function(require) {
 
         _onReceiveBroadcastMessage: function(evt) {
             const res = BroadcastMixin._onReceiveBroadcastMessage.call(this, evt);
-            if (!res) {
+            if (!res || !this._pwaManager.isPWAStandalone()) {
                 return false;
             }
             switch (evt.data.type) {
