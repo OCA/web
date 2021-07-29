@@ -38,6 +38,14 @@ odoo.define("web_pwa_oca.PWA", function(require) {
         /**
          * @returns {Promise}
          */
+        wakeUpWorker: function() {
+            // To be overridden
+            return Promise.resolve();
+        },
+
+        /**
+         * @returns {Promise}
+         */
         processRequest: function() {
             // To be overridden
             return Promise.resolve();

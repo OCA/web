@@ -56,6 +56,9 @@ class ServiceWorker(PWA):
                     promise_start = promise_start.then(
                         () => self.oca_pwa.activateWorker());
                 }}
+            }} else if (self.serviceWorker.state === "activated") {{
+                promise_start = promise_start.then(
+                    () => self.oca_pwa.wakeUpWorker());
             }}
         """.format(
             self._get_pwa_params()
