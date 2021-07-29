@@ -1,0 +1,8 @@
+<template>
+    <t t-name="One2ManyProductPicker.QuickModifPrice.Price">
+        <div class="text-left">
+            <strong>Price</strong>
+            <div class="oe_price" />
+        </div>
+    </t>
+</template>

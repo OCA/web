@@ -1,0 +1,229 @@
+<template>
+    <t t-name="One2ManyProductPicker.ControlPanelButtons">
+        <div class="text-center mx-auto">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <t t-if="search_category_names">
+                        <button
+                            class="btn btn-secondary dropdown-toggle"
+                            type="button"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                        >
+                            <i class="fa fa-search" />
+                        </button>
+                        <div class="dropdown-menu">
+                            <t t-foreach="search_category_names" t-as="name">
+                                <a
+                                    t-attf-class="dropdown-item search_mode_option {{name_index == search_mode ? 'active' : ''}}"
+                                    href="#"
+                                    t-esc="name"
+                                />
+                            </t>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <button
+                            type="button"
+                            t-attf-class="btn btn-secondary btn-lg input-group-button"
+                        >
+                            <i class="fa fa-search" />
+                        </button>
+                    </t>
+                </div>
+                <input
+                    type="search"
+                    class="form-control form-control-lg oe_search_input"
+                    placeholder="Search..."
+                    aria-label="Search..."
+                    aria-describedby="btnGroupAddon2"
+                />
+                <div class="input-group-append">
+                    <button
+                        id="product_picker_maximize"
+                        class='o_fullscreen btn btn-primary'
+                    >
+                        <i class='fa fa-expand' />
+                    </button>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="One2ManyProductPicker.ControlPanelGroupButtons">
+        <div class="oe_one2many_product_picker_groups">
+            <div class="btn-group" role="group" aria-label="Groups">
+                <t t-foreach="groups" t-as="group">
+                    <button
+                        type="button"
+                        t-att-name="group.name"
+                        t-attf-class="btn btn-lg btn-secondary rounded-0 border-top-0 {{group.active &amp;&amp; 'active' || ''}} oe_btn_search_group"
+                        t-att-data-group="group_index"
+                    >
+                        <t t-esc="group.string" />
+                    </button>
+                </t>
+            </div>
+            <button type="button" class="btn btn-light btn-lg oe_btn_lines">
+                Lines
+                <span class="ml-1 badge badge-light">0</span>
+            </button>
+        </div>
+    </t>
+    <t t-name="One2ManyProductPicker.Total">
+        <div id="product_picker_total" class="text-right">
+            <h2>
+                Subtotal:
+                <span class="total_price" />
+            </h2>
+        </div>
+    </t>
+    <t t-name="One2ManyProductPicker.ExtraButtons">
+        <div class="w-100 row">
+            <button
+                id="productPickerLoadMore"
+                class="btn btn-lg btn-secondary m-auto d-none"
+            >Load More</button>
+        </div>
+    </t>
+    <t t-name="One2ManyProductPicker.ActionButton">
+        <div class="safezone d-inline-block float-left m-0 pb-2 pr-2 text-left">
+            <t t-if="is_saving &amp;&amp; lazy_qty > 0">
+                <span
+                    class="badge record_saving badge-warning font-weight-bold rounded-0 mt-0 px-2 py-3 product_qty"
+                ><span class="lazy_product_qty" t-esc="lazy_qty || '1'" /> x <t
+                        t-esc="state.data[field_map[field_uom]].data.display_name"
+                    /></span>
+            </t>
+            <t t-elif="!is_virtual">
+                <span
+                    t-att-data-field="field_map[field_uom_qty]"
+                    t-attf-data-esc="'{{floatFixed(field_map[field_uom_qty])}}' + ' x ' + {{field_map[field_uom]}}.data.display_name"
+                    t-attf-class="badge {{modified &amp;&amp; 'badge-warning' || 'badge-success'}} font-weight-bold rounded-0 mt-0 px-2 py-3 product_qty"
+                />
+            </t>
+            <t t-else="">
+                <span
+                    class="badge badge-primary font-weight-bold rounded-0 mt-0 px-2 py-3 add_product"
+                ><i class="fa fa-plus" /> 1 <t
+                        t-esc="state.data[field_map[field_uom]].data.display_name"
+                    /></span>
+            </t>
+        </div>
+    </t>
+    <t t-name="One2ManyProductPicker.PriceZone">
+        <div class="position-absolute m-0 text-left badge_price">
+            <t t-if="show_discount">
+                <span
+                    t-att-data-field="field_map.discount"
+                    t-attf-data-esc="str({{field_map.discount}} * -1.0) +'%'"
+                    class="badge badge-dark discount_price font-weight-bold rounded-0 mt-1 p-2"
+                />
+                <span
+                    t-att-data-field="field_map.price_unit"
+                    t-attf-data-esc="'{{monetary('price_unit',true)}}'"
+                    class="badge font-weight-bold rounded-0 original_price"
+                />
+                <span
+                    t-if="has_onchange"
+                    class="badge badge-info price_unit font-weight-bold rounded-0 mt-1 p-2"
+                />
+            </t>
+            <t t-else="has_onchange">
+                <span
+                    t-att-data-field="field_map.price_unit"
+                    t-attf-data-esc="'{{monetary('price_unit',true)}}'"
+                    class="badge badge-info price_unit font-weight-bold rounded-0 mt-1 p-2"
+                />
+            </t>
+        </div>
+    </t>
+    <t t-name="One2ManyProductPicker.FlipCard.Front">
+        <div
+            t-attf-class="oe_flip_card_front p-0 {{((modified || is_saving) &amp;&amp; 'border-warning') || (state &amp;&amp; !is_virtual &amp;&amp; 'border-success') || ''}}"
+        >
+            <t t-if="state">
+                <div class="indicator_zones float-left">
+                    <t t-call="One2ManyProductPicker.ActionButton" />
+                    <t t-call="One2ManyProductPicker.PriceZone" />
+                </div>
+                <span
+                    data-field="display_name"
+                    class="oe_one2many_product_picker_title position-absolute fixed-bottom p-1"
+                    data-esc="display_name"
+                />
+                <img
+                    alt=""
+                    class="img img-fluid"
+                    t-att-src="image(state.data[field_map.product].data.id,'image_128')"
+                    t-att-data-src-alt="image(state.data[field_map.product].data.id,'image_1024')"
+                />
+            </t>
+            <t t-else="">
+                <span
+                    class="oe_one2many_product_picker_title position-absolute fixed-bottom p-1"
+                    t-esc="record_search.display_name"
+                />
+                <img
+                    alt=""
+                    class="img img-fluid"
+                    t-att-src="image(record_search.id,'image_128')"
+                    t-att-data-src-alt="image(record_search.id,'image_1024')"
+                />
+            </t>
+        </div>
+    </t>
+    <t t-name="One2ManyProductPicker.FlipCard.Back">
+        <div class="oe_flip_card_back">
+            <widget
+                name="product_picker_quick_create_form"
+                t-att-compare-key="field_map.product_uom"
+            />
+        </div>
+    </t>
+    <t t-name="One2ManyProductPicker.FlipCard">
+        <div
+            class="oe_flip_container p-1 col-12 col-sm-8 col-md-6 col-lg-4 col-xl-3 col-xxl-2"
+            t-att-data-card-id="state &amp;&amp; state.id || record_search.id"
+        >
+            <div
+                t-attf-class="oe_flip_card {{!state &amp;&amp; 'disabled' || (auto_save &amp;&amp; (!is_virtual || is_saving) &amp;&amp; !state.data.id &amp;&amp; 'blocked') || ''}}"
+            >
+                <div class="oe_flip_card_inner text-center">
+                    <t t-call="One2ManyProductPicker.FlipCard.Front" />
+                    <t t-call="One2ManyProductPicker.FlipCard.Back" />
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="One2ManyProductPicker.QuickModifPrice.Modal">
+        <div
+            class="oe_product_picker_quick_modif_price modal fade"
+            id="One2ManyProductPickerQuickModifPrice"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="One2ManyProductPickerQuickModifPriceLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body p-0" />
+                    <div class="modal-footer">
+                        <button
+                            class="btn btn-success oe_record_change mr-auto"
+                            data-dismiss="modal"
+                        >
+                            <i class="fa fa-check" />
+                        </button>
+                        <button
+                            class="btn btn-warning oe_record_discard"
+                            data-dismiss="modal"
+                        >
+                            <i class="fa fa-times" />
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>
