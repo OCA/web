@@ -16,10 +16,113 @@
                 t-value="request.env['ir.config_parameter'].sudo().get_param('pwa.manifest.name')"
             />
             <meta name="apple-mobile-web-app-title" t-att-content="pwa_name" />
-            <link
-                rel="apple-touch-icon"
-                href="/web_pwa_oca/static/img/icons/icon-152x152.png"
+
+            <t
+                t-set="pwa_custom_icon"
+                t-value="request.env['ir.config_parameter'].sudo().get_param('pwa.manifest.custom_icon')"
             />
+            <t t-if="pwa_custom_icon">
+                <!-- This icon must be 180x180 -->
+                <link rel="apple-touch-icon" href="/web_pwa_oca/icon180x180.png" />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="57x57"
+                    href="/web_pwa_oca/icon57x57.png"
+                />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="114x114"
+                    href="/web_pwa_oca/icon114x114.png"
+                />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="72x72"
+                    href="/web_pwa_oca/icon72x72.png"
+                />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="144x144"
+                    href="/web_pwa_oca/icon144x144.png"
+                />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="60x60"
+                    href="/web_pwa_oca/icon60x60.png"
+                />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="120x120"
+                    href="/web_pwa_oca/icon120x120.png"
+                />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="76x76"
+                    href="/web_pwa_oca/icon76x76.png"
+                />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="152x152"
+                    href="/web_pwa_oca/icon152x152.png"
+                />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="180x180"
+                    href="/web_pwa_oca/icon180x180.png"
+                />
+            </t>
+            <t t-else="">
+                <!-- This icon must be 180x180 -->
+                <link
+                    rel="apple-touch-icon"
+                    href="/web_pwa_oca/static/img/icons/icon-180x180.png"
+                />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="57x57"
+                    href="/web_pwa_oca/static/img/icons/icon-57x57.png"
+                />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="114x114"
+                    href="/web_pwa_oca/static/img/icons/icon-114x114.png"
+                />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="72x72"
+                    href="/web_pwa_oca/static/img/icons/icon-72x72.png"
+                />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="144x144"
+                    href="/web_pwa_oca/static/img/icons/icon-144x144.png"
+                />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="60x60"
+                    href="/web_pwa_oca/static/img/icons/icon-60x60.png"
+                />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="120x120"
+                    href="/web_pwa_oca/static/img/icons/icon-120x120.png"
+                />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="76x76"
+                    href="/web_pwa_oca/static/img/icons/icon-76x76.png"
+                />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="152x152"
+                    href="/web_pwa_oca/static/img/icons/icon-152x152.png"
+                />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="180x180"
+                    href="/web_pwa_oca/static/img/icons/icon-180x180.png"
+                />
+            </t>
+
             <!-- Add meta theme-color -->
             <t
                 t-set="pwa_theme_color"

@@ -8,6 +8,8 @@ import odoo.tests
 from odoo import exceptions
 from odoo.modules.module import get_resource_path
 
+from ..models.res_config_settings import PWA_ICON_SIZES
+
 
 class TestUi(odoo.tests.HttpCase):
     def setUp(self):
@@ -64,9 +66,11 @@ class TestUi(odoo.tests.HttpCase):
 
         self.assertEquals(manifest_content["icons"][0]["src"], "/web_pwa_oca/icon.svg")
         self.assertTrue(manifest_content["icons"][0]["type"].startswith("image/svg"))
+        icon_sizes = " ".join(
+            map(lambda size: "{}x{}".format(size[0], size[1]), PWA_ICON_SIZES,)
+        )
         self.assertEquals(
-            manifest_content["icons"][0]["sizes"],
-            "128x128 144x144 152x152 192x192 256x256 512x512",
+            manifest_content["icons"][0]["sizes"], icon_sizes,
         )
 
         # Get the icon and compare it
