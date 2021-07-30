@@ -1,0 +1,38 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_widget_one2many_product_picker_sale_secondary_unit
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_widget_one2many_product_picker_sale_secondary_unit
+#: model:ir.model.fields,field_description:web_widget_one2many_product_picker_sale_secondary_unit.field_sale_order_line__has_secondary_uom
+msgid "Has Secondary UoM"
+msgstr ""
+
+#. module: web_widget_one2many_product_picker_sale_secondary_unit
+#: model:ir.model,name:web_widget_one2many_product_picker_sale_secondary_unit.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: web_widget_one2many_product_picker_sale_secondary_unit
+#. openerp-web
+#: code:addons/web_widget_one2many_product_picker_sale_secondary_unit/static/src/js/views/abstract_view.js:0
+#, python-format
+msgid "Secondary Qty"
+msgstr ""
+
+#. module: web_widget_one2many_product_picker_sale_secondary_unit
+#. openerp-web
+#: code:addons/web_widget_one2many_product_picker_sale_secondary_unit/static/src/js/views/abstract_view.js:0
+#, python-format
+msgid "Secondary uom"
+msgstr ""
