@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+    <t t-extend="One2ManyProductPicker.FlipCard.Front">
+        <t
+            t-jquery="t[t-call='One2ManyProductPicker.ActionButton']"
+            t-operation="after"
+        >
+            <t
+                t-if="state.model === 'sale.order.line' &amp;&amp; state.data['secondary_uom_id'] &amp;&amp; (!is_virtual || modified)"
+            >
+                <span
+                    t-att-data-field="field_map[field_uom_qty]"
+                    t-attf-data-esc="'{{floatFixed(field_map.product_uom_qty)}}' + ' x ' + {{field_map.product_uom}}.data.display_name"
+                    class="badge badge-primary mw-100 text-truncate overflow-hidden d-inline-block float-left font-weight-bold rounded-0 m-0 p-2"
+                />
+            </t>
+        </t>
+    </t>
+</template>

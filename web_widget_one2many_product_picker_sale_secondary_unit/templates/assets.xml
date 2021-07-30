@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="assets_backend"
+        name="Web Widget One2Many Product Picker Sale Secondary Unit - Backend Assets"
+        inherit_id="web_widget_one2many_product_picker.assets_backend"
+    >
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/web_widget_one2many_product_picker_sale_secondary_unit/static/src/js/widgets/field_one2many_product_picker.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_widget_one2many_product_picker_sale_secondary_unit/static/src/js/views/One2ManyProductPicker/record.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_widget_one2many_product_picker_sale_secondary_unit/static/src/js/views/One2ManyProductPicker/renderer.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_widget_one2many_product_picker_sale_secondary_unit/static/src/js/views/abstract_view.js"
+            />
+        </xpath>
+    </template>
+    <template
+        id="_assets_backend_helpers"
+        inherit_id="web_widget_one2many_product_picker._assets_backend_helpers"
+    >
+        <xpath expr="." position="inside">
+            <link
+                type="text/css"
+                rel="stylesheet"
+                href="/web_widget_one2many_product_picker_sale_secondary_unit/static/src/scss/_variables.scss"
+            />
+        </xpath>
+    </template>
+</odoo>
