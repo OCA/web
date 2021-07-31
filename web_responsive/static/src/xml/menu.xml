@@ -1,9 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
 
+<t t-extend="UserMenu">
+    <t t-jquery=".dropdown-toggle" t-operation="attributes">
+        <attribute name="accesskey">u</attribute>
+    </t>
+</t>
+
 <div t-extend="UserMenu.shortcuts">
+    <!-- Replace "a" shortcut by "e" (for 'Edit a Record') -->
+    <t t-jquery="table.o_shortcut_table > tbody > tr > td:nth-child(2) > span:nth-child(2).o_key:contains('a')" t-operation="replace">
+        <span class="o_key">e</span>
+    </t>
+    <t t-jquery="table.o_shortcut_table > tbody > tr > td:nth-child(3) > span:nth-child(3).o_key:contains('a')" t-operation="replace">
+        <span class="o_key">e</span>
+    </t>
+
+    <!-- Replace "j" shortcut by "d" (for 'Discard a record modification') -->
+    <t t-jquery="table.o_shortcut_table > tbody > tr > td:nth-child(2) > span:nth-child(2).o_key:contains('j')" t-operation="replace">
+        <span class="o_key">d</span>
+    </t>
+    <t t-jquery="table.o_shortcut_table > tbody > tr > td:nth-child(3) > span:nth-child(3).o_key:contains('j')" t-operation="replace">
+        <span class="o_key">d</span>
+    </t>
+
+    <!-- Add Shift for all windows / linux shortcuts -->
     <t t-jquery="table.o_shortcut_table > tbody > tr > td:nth-child(2) > span:first-child" t-operation="after">
         + <span class="o_key">Shift</span>
+    </t>
+
+    <!-- Add new accesskeys -->
+    <t t-jquery=".o_shortcut_table tbody" t-operation="append">
+        <tr>
+            <td align="left">Select menu</td>
+            <td>
+                <span class="o_key">Alt</span> + <span class="o_key">Shift</span> + <span class="o_key">a</span>
+            </td>
+            <td>
+                <span class="o_key">Control</span> + <span class="o_key">Alt</span> + <span class="o_key">a</span>
+            </td>
+        </tr>
+    </t>
+
+    <t t-jquery=".o_shortcut_table tbody" t-operation="append">
+        <tr>
+            <td align="left">User menu</td>
+            <td>
+                <span class="o_key">Alt</span> + <span class="o_key">Shift</span> + <span class="o_key">u</span>
+            </td>
+            <td>
+                <span class="o_key">Control</span> + <span class="o_key">Alt</span> + <span class="o_key">u</span>
+            </td>
+        </tr>
     </t>
 </div>
 

@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_responsive
+# 	* web_responsive
 #
 msgid ""
 msgstr ""
@@ -24,6 +24,16 @@ msgid "#menu_id=#{app.menuID}&action_id=#{app.actionID}"
 msgstr "#menu_id=#{app.menuID}&action_id=#{app.actionID}"
 
 #. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/menu.xml:37
+#: code:addons/web_responsive/static/src/xml/menu.xml:40
+#: code:addons/web_responsive/static/src/xml/menu.xml:49
+#: code:addons/web_responsive/static/src/xml/menu.xml:52
+#, python-format
+msgid "Alt"
+msgstr ""
+
+#. module: web_responsive
 #: model:ir.model.fields,field_description:web_responsive.field_res_users__chatter_position
 msgid "Chatter Position"
 msgstr "Posizione chat"
@@ -34,6 +44,14 @@ msgstr "Posizione chat"
 #, python-format
 msgid "Close"
 msgstr "Chiudi"
+
+#. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/menu.xml:40
+#: code:addons/web_responsive/static/src/xml/menu.xml:52
+#, python-format
+msgid "Control"
+msgstr ""
 
 #. module: web_responsive
 #. openerp-web
@@ -101,7 +119,16 @@ msgstr "Ricerca menù..."
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/xml/menu.xml:6
+#: code:addons/web_responsive/static/src/xml/menu.xml:35
+#, python-format
+msgid "Select menu"
+msgstr ""
+
+#. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/menu.xml:29
+#: code:addons/web_responsive/static/src/xml/menu.xml:37
+#: code:addons/web_responsive/static/src/xml/menu.xml:49
 #, python-format
 msgid "Shift"
 msgstr ""
@@ -109,6 +136,13 @@ msgstr ""
 #. module: web_responsive
 #: selection:res.users,chatter_position:0
 msgid "Sided"
+msgstr ""
+
+#. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/menu.xml:47
+#, python-format
+msgid "User menu"
 msgstr ""
 
 #. module: web_responsive
@@ -128,4 +162,5 @@ msgstr ""
 #: code:addons/web_responsive/static/src/xml/document_viewer.xml:8
 #, python-format
 msgid "modal o_modal_fullscreen o_document_viewer o_responsive_document_viewer"
-msgstr "modal o_modal_fullscreen o_document_viewer o_responsive_document_viewer"
+msgstr ""
+"modal o_modal_fullscreen o_document_viewer o_responsive_document_viewer"

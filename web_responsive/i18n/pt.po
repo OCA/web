@@ -24,6 +24,16 @@ msgid "#menu_id=#{app.menuID}&action_id=#{app.actionID}"
 msgstr ""
 
 #. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/menu.xml:37
+#: code:addons/web_responsive/static/src/xml/menu.xml:40
+#: code:addons/web_responsive/static/src/xml/menu.xml:49
+#: code:addons/web_responsive/static/src/xml/menu.xml:52
+#, python-format
+msgid "Alt"
+msgstr ""
+
+#. module: web_responsive
 #: model:ir.model.fields,field_description:web_responsive.field_res_users__chatter_position
 msgid "Chatter Position"
 msgstr "Posição do Chatter"
@@ -33,6 +43,14 @@ msgstr "Posição do Chatter"
 #: code:addons/web_responsive/static/src/xml/document_viewer.xml:18
 #, python-format
 msgid "Close"
+msgstr ""
+
+#. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/menu.xml:40
+#: code:addons/web_responsive/static/src/xml/menu.xml:52
+#, python-format
+msgid "Control"
 msgstr ""
 
 #. module: web_responsive
@@ -101,7 +119,16 @@ msgstr "Procurar menus..."
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/xml/menu.xml:6
+#: code:addons/web_responsive/static/src/xml/menu.xml:35
+#, python-format
+msgid "Select menu"
+msgstr ""
+
+#. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/menu.xml:29
+#: code:addons/web_responsive/static/src/xml/menu.xml:37
+#: code:addons/web_responsive/static/src/xml/menu.xml:49
 #, python-format
 msgid "Shift"
 msgstr ""
@@ -110,6 +137,13 @@ msgstr ""
 #: selection:res.users,chatter_position:0
 msgid "Sided"
 msgstr "Lateralizado"
+
+#. module: web_responsive
+#. openerp-web
+#: code:addons/web_responsive/static/src/xml/menu.xml:47
+#, python-format
+msgid "User menu"
+msgstr ""
 
 #. module: web_responsive
 #: model:ir.model,name:web_responsive.model_res_users
