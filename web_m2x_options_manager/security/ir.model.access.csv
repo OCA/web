@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_m2x_create_edit_option_user,access_m2x_create_edit_option_user,model_m2x_create_edit_option,base.group_user,1,0,0,0
+access_m2x_create_edit_option_system,access_m2x_create_edit_option_system,model_m2x_create_edit_option,base.group_system,1,1,1,1
