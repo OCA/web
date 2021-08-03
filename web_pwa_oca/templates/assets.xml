@@ -42,6 +42,10 @@
                 type="text/javascript"
                 src="/web_pwa_oca/static/src/js/webclient.js"
             />
+            <script
+                type="text/javascript"
+                src="/web_pwa_oca/static/src/js/app_menus.js"
+            />
         </xpath>
     </template>
 </odoo>

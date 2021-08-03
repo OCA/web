@@ -24,6 +24,12 @@ class ResConfigSettings(models.TransientModel):
     pwa_icon = fields.Binary("Icon", readonly=False)
     pwa_background_color = fields.Char("Background Color")
     pwa_theme_color = fields.Char("Theme Color")
+    pwa_action_id = fields.Many2one(
+        "ir.actions.actions",
+        string="Home Action",
+        help="If specified, this action will be opened at pwa opened, in addition "
+        "to the standard menu.",
+    )
 
     @api.model
     def get_values(self):
@@ -49,7 +55,19 @@ class ResConfigSettings(models.TransientModel):
         res["pwa_theme_color"] = config_parameter_obj_sudo.get_param(
             "pwa.manifest.theme_color", default="#2E69B5"
         )
+        action_id = config_parameter_obj_sudo.get_param(
+            "pwa.config.action_id", default=False
+        )
+        res["pwa_action_id"] = action_id and int(action_id)
         return res
+
+    @api.model
+    def get_pwa_home_action(self):
+        return (
+            self.env["ir.config_parameter"]
+            .sudo()
+            .get_param("pwa.config.action_id", default=False)
+        )
 
     def _unpack_icon(self, icon):
         # Wrap decoded_icon in BytesIO object
@@ -102,6 +120,9 @@ class ResConfigSettings(models.TransientModel):
         )
         config_parameter_obj_sudo.set_param(
             "pwa.manifest.theme_color", self.pwa_theme_color
+        )
+        config_parameter_obj_sudo.set_param(
+            "pwa.config.action_id", self.pwa_action_id.id
         )
         # Retrieve previous value for pwa_icon from ir_attachment
         pwa_icon_ir_attachments = (
