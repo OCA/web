@@ -108,6 +108,13 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     navigator.serviceWorker.controller &&
                     navigator.serviceWorker.controller.state === "activated"
                 ) {
+                    this.postBroadcastMessage({
+                        type: "SET_PWA_CONFIG",
+                        standalone: this.isPWAStandalone(),
+                        uid: session.uid,
+                        partner_id: session.partner_id,
+                        lang: session.user_context.lang,
+                    });
                     this.postBroadcastMessage({type: "GET_PWA_CONFIG"});
                 }
             });
@@ -287,13 +294,6 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                             setTimeout(location.reload(), 250);
                         }
                     }
-                    this.postBroadcastMessage({
-                        type: "SET_PWA_CONFIG",
-                        standalone: this.isPWAStandalone(),
-                        uid: session.uid,
-                        partner_id: session.partner_id,
-                        lang: session.user_context.lang,
-                    });
                     break;
             }
 

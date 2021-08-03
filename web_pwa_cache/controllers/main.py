@@ -55,6 +55,7 @@ class PWA(PWA):
             "/web",
             # Cache favicon
             "/web/static/src/img/favicon.ico",
+            "/web/image/res.company/1/favicon",
             # Cache manifest
             "/web_pwa_oca/manifest.webmanifest",
             "/web_pwa_oca/static/img/icons/icon-128x128.png",

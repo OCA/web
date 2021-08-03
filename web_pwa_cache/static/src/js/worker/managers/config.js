@@ -192,6 +192,7 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
                             await this.sendToPages();
                             // Check if need do prefetch (Auto-Prefetch)
                             const userdata_count = await this._db.indexeddb.userdata.count();
+                            console.log("----> PSA POR AKII: ", userdata_count);
                             if (
                                 !this.isOfflineMode() &&
                                 this.isStandaloneMode() &&
