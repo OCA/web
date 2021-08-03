@@ -558,8 +558,17 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     let action_id = data.action_id;
-                    if (typeof action_id !== "number") {
+                    if (!action_id) {
+                        return resolve(false);
+                    }
+
+                    try {
+                        action_id = Number(action_id);
+                    } catch (err) {
                         const action = await this._db.ref(action_id);
+                        if (!action) {
+                            return reject();
+                        }
                         action_id = action.id;
                     }
 
