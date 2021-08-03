@@ -16,6 +16,7 @@ odoo.define("web_pwa_cache.AppsMenu", function(require) {
         openFirstApp: function() {
             const is_standalone = WebClientObj.pwa_manager.isPWAStandalone();
             if (is_standalone) {
+                const _sup = this._super;
                 WebClientObj.menu_dp
                     .add(
                         this._rpc({
@@ -33,7 +34,7 @@ odoo.define("web_pwa_cache.AppsMenu", function(require) {
                                 );
                             });
                         }
-                        return this._super(this, arguments);
+                        return _sup(this, arguments);
                     });
             } else {
                 return this._super(this, arguments);

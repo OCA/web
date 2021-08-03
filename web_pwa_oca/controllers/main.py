@@ -53,6 +53,7 @@ class PWA(Controller):
                     "src": pwa_icon.url,
                     "sizes": "128x128 144x144 152x152 192x192 256x256 512x512",
                     "type": pwa_icon.mimetype,
+                    "purpose": "any maskable",
                 }
             ]
         return icons
