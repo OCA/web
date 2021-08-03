@@ -103,20 +103,32 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
         start: function() {
             return this._super.apply(this, arguments).then(() => {
                 // Try update service worker mode.
-                if (
-                    this.isPWAStandalone() &&
-                    navigator.serviceWorker.controller &&
-                    navigator.serviceWorker.controller.state === "activated"
-                ) {
-                    this.postBroadcastMessage({
-                        type: "SET_PWA_CONFIG",
-                        standalone: this.isPWAStandalone(),
-                        uid: session.uid,
-                        partner_id: session.partner_id,
-                        lang: session.user_context.lang,
-                    });
-                    this.postBroadcastMessage({type: "GET_PWA_CONFIG"});
-                }
+                // At this point the service worker can't be fully activated
+                // This is used to ensure a fast configuration when the service
+                // worker is activated.
+                navigator.serviceWorker.ready.then(sw => {
+                    if (sw.active) {
+                        this.sendConfigToSW();
+                        if (this.isPWAStandalone()) {
+                            this.postBroadcastMessage({type: "GET_PWA_CONFIG"});
+                        }
+                    }
+                });
+            });
+        },
+
+        /**
+         * Sends the base config to the service worker
+         * This is important for the worker to know if
+         * is working in standalone mode.
+         */
+        sendConfigToSW: function() {
+            this.postBroadcastMessage({
+                type: "SET_PWA_CONFIG",
+                standalone: this.isPWAStandalone(),
+                uid: session.uid,
+                partner_id: session.partner_id,
+                lang: session.user_context.lang,
             });
         },
 
@@ -275,6 +287,8 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     }
                     this._pwaMode = evt.data.data.pwa_mode;
                     this._swInfoModalHidden = true;
+                    this.$modalSWInfo.modal("hide");
+                    console.log("------------ HIDE SW INFO");
                     if (this.isPWAStandalone()) {
                         if (navigator.serviceWorker.controller) {
                             this.$modalSWInfo.modal("hide");
@@ -294,6 +308,9 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                             setTimeout(location.reload(), 250);
                         }
                     }
+
+                    // Ensures that the worker has updated base config
+                    this.sendConfigToSW();
                     break;
             }
 

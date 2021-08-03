@@ -210,6 +210,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
             // console.log("------ METHOD: ", request.method);
 
             if (request.method === "GET") {
+                const url = new URL(request.url);
                 return new Promise(async (resolve, reject) => {
                     try {
                         // Strategy: Network first in not standlone mode
@@ -222,7 +223,6 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                         }
 
                         // Need redirect '/'?
-                        const url = new URL(request.url);
                         if (
                             (url.pathname === "/" ||
                                 (url.pathname === "/web" && url.search)) &&
@@ -248,29 +248,27 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                         }
                         if (!this._prefetch_running) {
                             // Try from "dynamic" cache
-                            try {
-                                const request_cloned_cache = request.clone();
-                                const response_internal_cache = await this._tryGetFromCache(
-                                    request_cloned_cache
-                                );
-                                return resolve(response_internal_cache);
-                            } catch (err) {
-                                console.log(
-                                    "[ServiceWorker] Can't process GET request '" +
-                                        url.pathname +
-                                        "'. Fallback to browser behaviour..."
-                                );
-                                console.log(err);
-                            }
+                            const request_cloned_cache = request.clone();
+                            const response_internal_cache = await this._tryGetFromCache(
+                                request_cloned_cache
+                            );
+                            return resolve(response_internal_cache);
                         }
-                        // Fallback
-                        if (!isOffline && request.cache !== "only-if-cached") {
-                            return resolve(fetch(request));
-                        }
-                        return reject();
                     } catch (err) {
-                        return reject(err);
+                        console.log(
+                            "[ServiceWorker] Can't process GET request '" +
+                                url.pathname +
+                                "'. Fallback to browser behaviour..."
+                        );
+                        console.log(err);
                     }
+
+                    // Fallback
+                    if (request.cache !== "only-if-cached") {
+                        return resolve(fetch(request));
+                    }
+
+                    return reject();
                 });
             } else if (
                 isStandaloneMode &&
@@ -299,23 +297,20 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                             }
                         }
 
-                        // Don try from cache if a prefetch tasks is running
-                        if (!this._prefetch_running) {
-                            const request_cloned_cache = request.clone();
-                            // Other request (or network fails) go directly from cache
-                            try {
-                                const response_cache = await this._tryPostFromCache(
-                                    request_cloned_cache
-                                );
-                                return resolve(response_cache);
-                            } catch (err) {
-                                const request_url = new URL(request.url);
-                                console.log(
-                                    `[ServiceWorker] The POST request can't be processed: '${request_url.pathname}' content cached not found! Fallback to default browser behaviour...`
-                                );
-                                console.log(err);
-                                this._onCacheNotFound(request, err);
-                            }
+                        const request_cloned_cache = request.clone();
+                        // Other request (or network fails) go directly from cache
+                        try {
+                            const response_cache = await this._tryPostFromCache(
+                                request_cloned_cache
+                            );
+                            return resolve(response_cache);
+                        } catch (err) {
+                            const request_url = new URL(request.url);
+                            console.log(
+                                `[ServiceWorker] The POST request can't be processed: '${request_url.pathname}' content cached not found! Fallback to default browser behaviour...`
+                            );
+                            console.log(err);
+                            this._onCacheNotFound(request, err);
                         }
 
                         // If all fails fallback to network (excepts in offline mode)
