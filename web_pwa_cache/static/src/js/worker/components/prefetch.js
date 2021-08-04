@@ -475,7 +475,14 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                         }
                     );
                     const response_data = await response.json();
-                    model_infos = response_data.result || [];
+                    model_infos = response_data.result;
+                    if (!(model_infos instanceof Array)) {
+                        this._sendTaskInfoError(
+                            "model_info_data",
+                            "Can't get model infos"
+                        );
+                        return reject();
+                    }
                     if (!_.isEmpty(model_infos)) {
                         const tasks = [];
                         for (const model_info of model_infos) {

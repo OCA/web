@@ -114,11 +114,16 @@ class PWAPrefetch(PWA):
         )
         fields = []
         if record:
-            field_infos = request.env[record.model_name].fields_get()
+            model_obj = request.env[record.model_name]
             included_fields = record.model_field_included_ids.mapped("name") or []
             fields += included_fields
         else:
-            field_infos = request.env[model].fields_get()
+            model_obj = request.env[model]
+        try:
+            field_infos = model_obj.fields_get()
+        except Exception:
+            return False
+
         field_names = list(field_infos.keys())
         field_values = field_infos.values()
         for index, val in enumerate(field_values):
@@ -129,8 +134,16 @@ class PWAPrefetch(PWA):
         self._pwa_fill_internal_fields(model, fields)
         fields = list(set(fields))
         if not any(fields):
-            fields = False
-        return fields
+            return False
+        # Check grain field access
+        valid_fields = []
+        for field in fields:
+            field_def = model_obj._fields[field]
+            if not field_def.comodel_name or request.env[
+                field_def.comodel_name
+            ].check_access_rights("read", raise_exception=False):
+                valid_fields.append(field)
+        return valid_fields
 
     def _pwa_prefetch_action(self, last_update, **kwargs):
         actions = self._get_pwa_available_actions()
@@ -164,9 +177,16 @@ class PWAPrefetch(PWA):
         for model_id in model_ids:
             model_obj = request.env[model_id.model]
             valid_fields = self._get_pwa_model_fields(model_id.model)
+            if not valid_fields:
+                continue
             try:
-                model_defaults = model_obj.default_get(valid_fields)
+                model_defaults = model_obj.sudo().default_get(valid_fields)
             except Exception:
+                _logger.error(
+                    "PWA: Can't get default values for model '{}' (user: '{}')".format(
+                        model_obj._name, request.env.uid
+                    )
+                )
                 model_defaults = False
 
             res.append(
@@ -233,7 +253,7 @@ class PWAPrefetch(PWA):
         for view_id in view_ids:
             view_types.setdefault(view_id["model"], {})
             for view_type in available_types:
-                view_types[view_id["model"]].setdefault(view_type, [])
+                view_types[view_id["model"]].setdefault(view_type, [(False, False)])
             view_types[view_id["model"]][view_id["type"]].append(
                 (view_id["id"], view_id["mode"] == "primary")
             )
@@ -252,7 +272,8 @@ class PWAPrefetch(PWA):
                         )
                         # Indexeddb doesn't allow 'boolean' in indexes,
                         # so transform it to integer.
-                        fields_view["is_primary"] = 1 if is_primary else 0
+                        fields_view["is_primary"] = int(is_primary)
+                        fields_view["is_default"] = int(fields_view["is_default"])
                     except Exception:
                         fields_view = {}
                         pass
@@ -353,12 +374,24 @@ class PWAPrefetch(PWA):
 
     @http.route("/web/pwa/browse_read", type="json", auth="user")
     def pwa_browse_read(self, model, ids, fields):
-        records = request.env[model].browse(ids)
+        is_strict_mode = request.context.get("strict_mode", False)
+        is_internal_model = False
+
+        # In strict mode, overwrite fields to use only "valid fields".
+        # In case of request an "internal" model we use "sudo" to ensure
+        # read the records.
+        if is_strict_mode:
+            if request.env["pwa.cache"]._is_internal_model(model):
+                records = request.env[model].sudo().browse(ids)
+                is_internal_model = True
+            else:
+                records = request.env[model].browse(ids)
+            fields = self._get_pwa_model_fields(model)
+        else:
+            records = request.env[model].browse(ids)
+
         if not records:
             return []
-
-        if request.context.get("strict_mode", False):
-            fields = self._get_pwa_model_fields(model)
 
         if fields and fields == ["id"]:
             # shortcut read if we only want the ids
@@ -374,7 +407,10 @@ class PWAPrefetch(PWA):
             del context["active_test"]
             records = records.with_context(context)
 
-        result = records.read(fields)
+        if is_internal_model:
+            result = records.sudo().read(fields)
+        else:
+            result = records.read(fields)
         if len(result) <= 1:
             return result
 

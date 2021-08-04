@@ -10,11 +10,12 @@ import json  # We use `dump(vals, separators=(',', ':'))` for mimicking JSON.str
 import re
 import time
 
-from odoo import fields, models
+from odoo import api, fields, models
 from odoo.tools import (
     DEFAULT_SERVER_DATE_FORMAT,
     DEFAULT_SERVER_DATETIME_FORMAT,
     DEFAULT_SERVER_TIME_FORMAT,
+    ormcache,
 )
 from odoo.tools.safe_eval import safe_eval
 
@@ -296,6 +297,20 @@ class PwaCache(models.Model):
                     "result": result,
                 }
             )
+
+    @api.model
+    @ormcache("model")
+    def _is_internal_model(self, model):
+        return bool(
+            self.search(
+                [
+                    ["cache_type", "=", "model"],
+                    ["model_name", "=", model],
+                    ["internal", "=", True],
+                ],
+                limit=1,
+            )
+        )
 
     def _get_eval_context(self, action=None):
         """ evaluation context to pass to safe_eval """

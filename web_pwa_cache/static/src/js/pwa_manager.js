@@ -231,13 +231,14 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 `#pwa_task_${id} .prefetch-message`
             );
             const task_info = this._prefetchTasksInfo[id];
+            const progress_message = task_info.progress_message || "";
             if (task_info.error) {
                 $progressbar
                     .text(`${$progressbar.text()} ${_t("Error!")}`)
                     .attr("class", "progress-bar bg-danger progress-bar-striped")
                     .attr("aria-valuenow", "100")
                     .css("width", "100%");
-                $message.text(`${$message.text()} ${task_info.message}`);
+                $message.text(`${progress_message} ${task_info.message}`);
             } else if (task_info.total < 0) {
                 $progressbar
                     .text(_t("Working"))
@@ -247,14 +248,15 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     )
                     .attr("aria-valuenow", "100")
                     .css("width", "100%");
-                $message.text(`${$message.text()} ${task_info.message}`);
+                task_info.progress_message = task_info.message;
+                $message.text(task_info.progress_message);
             } else if (task_info.completed) {
                 $progressbar
                     .text("100%")
                     .attr("class", "progress-bar bg-info")
                     .attr("aria-valuenow", "100")
                     .css("width", "100%");
-                $message.text(`${$message.text()} ${task_info.message}`);
+                $message.text(`${progress_message} ${task_info.message}`);
             } else {
                 $progressbar
                     .text(
@@ -263,7 +265,8 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     .attr("class", "progress-bar bg-info")
                     .attr("aria-valuenow", `${task_info.progress}`)
                     .css("width", `${task_info.progress}%`);
-                $message.text(task_info.message);
+                task_info.progress_message = task_info.message;
+                $message.text(task_info.progress_message);
             }
         },
 
@@ -288,7 +291,6 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     this._pwaMode = evt.data.data.pwa_mode;
                     this._swInfoModalHidden = true;
                     this.$modalSWInfo.modal("hide");
-                    console.log("------------ HIDE SW INFO");
                     if (this.isPWAStandalone()) {
                         if (navigator.serviceWorker.controller) {
                             this.$modalSWInfo.modal("hide");

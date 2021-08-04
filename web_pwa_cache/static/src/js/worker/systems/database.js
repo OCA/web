@@ -175,7 +175,8 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                 binary: "[model+id]",
                 sqlitefile: "section",
                 onchange: "ref_hash",
-                views: "++,[model+type+view_id],[model+type+is_primary]",
+                views:
+                    "++,[model+type+view_id],[model+type+is_primary],[model+type+is_default]",
                 action: "id",
                 post: "[pathname+params]",
                 function: "[model+method+params]",
@@ -856,9 +857,17 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                         }
 
                         if (_.isEmpty(views_info)) {
-                            // If all fails fallback to form view
+                            // If all fails, try primary
                             views_info = await this.indexeddb.views
                                 .where("[model+type+is_primary]")
+                                .equals([model_info.model, s_view_type, 1])
+                                .toArray();
+                        }
+
+                        if (_.isEmpty(views_info)) {
+                            // If all fails, fallback to default view
+                            views_info = await this.indexeddb.views
+                                .where("[model+type+is_default]")
                                 .equals([model_info.model, s_view_type, 1])
                                 .toArray();
                         }
@@ -868,10 +877,28 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                         // Except for 'formPWA' that is an special view type
                         if (_.isEmpty(views_info)) {
                             if (s_view_type === "formPWA") {
-                                views_info = [res.fields_views.form];
+                                // If not view found for formPWA, use primary from
+                                // If all fails, try primary
+                                views_info = await this.indexeddb.views
+                                    .where("[model+type+is_primary]")
+                                    .equals([model_info.model, "form", 1])
+                                    .toArray();
+                                // Last try, search for default
+                                if (_.isEmpty(views_info)) {
+                                    views_info = await this.indexeddb.views
+                                        .where("[model+type+is_default]")
+                                        .equals([model_info.model, "form", 1])
+                                        .toArray();
+                                }
                             } else {
                                 return resolve([]);
                             }
+                        }
+
+                        if (_.isEmpty(views_info)) {
+                            return reject(
+                                `View '${s_view_type}' for ${model_info.model} not found!`
+                            );
                         }
 
                         // Resolve views 'toolbar'
