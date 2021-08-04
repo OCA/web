@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="AdvancedFilter">
+        <div role="separator" class="dropdown-divider"/>
+        <button type="button" class="dropdown-item o_advanced_filter o_closed_menu" aria-expanded="false">Search query</button>
+        <div class="dropdown-item-text o_advanced_filter-domain">
+            <button type="button" class="dropdown-item o_advanced_filter-add-new">To new filter</button>
+            <button type="button" class="dropdown-item o_advanced_filter-add-existing">Add to existing filter</button>
+            <button type="button" class="dropdown-item o_advanced_filter-remove">Subtract from existing filter</button>
+        </div>
+        <button type="button" class="dropdown-item o_advanced_filter o_closed_menu" aria-expanded="false">Marked records</button>
+        <div class="dropdown-item-text o_advanced_filter-ids">
+            <button type="button" class="dropdown-item o_advanced_filter-add-new">To new filter</button>
+            <button type="button" class="dropdown-item o_advanced_filter-add-existing">Add to existing filter</button>
+            <button type="button" class="dropdown-item o_advanced_filter-remove">Subtract from existing filter</button>
+        </div>
+    </t>
+</templates>
