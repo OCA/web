@@ -111,6 +111,21 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                         this.sendConfigToSW();
                         if (this.isPWAStandalone()) {
                             this.postBroadcastMessage({type: "GET_PWA_CONFIG"});
+
+                            // Check if service worker has the control of the pages
+                            if (navigator.serviceWorker.controller) {
+                                this._swInfoModalHidden = true;
+                                this.$modalSWInfo.modal("hide");
+                            } else {
+                                this.$modalSWInfo
+                                    .find("#swinfo_message")
+                                    .text(
+                                        _t(
+                                            "Service worker was activated sucessfully! Reloading the page to take the control..."
+                                        )
+                                    );
+                                setTimeout(location.reload(), 250);
+                            }
                         }
                     }
                 });
@@ -289,30 +304,18 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                         this._swInfoOpenTimer = false;
                     }
                     this._pwaMode = evt.data.data.pwa_mode;
-                    this._swInfoModalHidden = true;
-                    this.$modalSWInfo.modal("hide");
                     if (this.isPWAStandalone()) {
                         if (navigator.serviceWorker.controller) {
-                            this.$modalSWInfo.modal("hide");
                             if (evt.data.data.is_db_empty) {
                                 this.$modalPrefetchProgress.modal("hide");
                             } else if (!this.modeSelector.wasShown()) {
                                 this.modeSelector.show();
                             }
-                        } else {
-                            this.$modalSWInfo
-                                .find("#swinfo_message")
-                                .text(
-                                    _t(
-                                        "Service worker was activated sucessfully! Reloading the page to take the control..."
-                                    )
-                                );
-                            setTimeout(location.reload(), 250);
                         }
                     }
 
                     // Ensures that the worker has updated base config
-                    this.sendConfigToSW();
+                    // this.sendConfigToSW();
                     break;
             }
 

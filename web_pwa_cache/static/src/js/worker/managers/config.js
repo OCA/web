@@ -132,18 +132,22 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
          */
         sendToPages: function() {
             return new Promise(async (resolve, reject) => {
+                let config = false;
                 try {
-                    const config = await this.getAll();
+                    config = await this.getAll();
                     const userdata_count = await this._db.indexeddb.userdata.count();
                     config.is_db_empty = userdata_count === 0;
+                } catch (err) {
+                    return reject(err);
+                }
+
+                if (!_.isEmpty(config)) {
                     this.postBroadcastMessage({
                         type: "PWA_INIT_CONFIG",
                         data: config,
                     });
-                } catch (err) {
-                    return reject(err);
                 }
-                return resolve();
+                return resolve(config);
             });
         },
 
@@ -189,13 +193,12 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
                 case "GET_PWA_CONFIG":
                     new Promise(async (resolve, reject) => {
                         try {
-                            await this.sendToPages();
+                            const config = await this.sendToPages();
                             // Check if need do prefetch (Auto-Prefetch)
-                            const userdata_count = await this._db.indexeddb.userdata.count();
                             if (
                                 !this.isOfflineMode() &&
                                 this.isStandaloneMode() &&
-                                !userdata_count
+                                config.is_db_empty
                             ) {
                                 this.getParent()._doPrefetchDataPost();
                             }

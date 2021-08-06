@@ -124,7 +124,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                         await this._initComponents();
                     }
                     await this._cache.cleanOld([this._cache_hashes.pwa]);
-                    this._managers.config.sendToPages();
+                    // This._managers.config.sendToPages();
                     this._managers.sync.sendCountToPages();
                     this._wasActivated = true;
                 } catch (err) {
