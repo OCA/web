@@ -92,6 +92,10 @@
                                     <field name="required" />
                                 </tree>
                             </field>
+                            <field
+                                name="onchange_discriminator_selector_id"
+                                attrs="{'invisible': [('model_id', '=', False)]}"
+                            />
                         </group>
                         <group colspan="4">
                             <field

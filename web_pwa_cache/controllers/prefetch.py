@@ -1,9 +1,11 @@
 # Copyright 2020 Tecnativa - Alexandre D. Díaz
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import functools
+import itertools
 import logging
 
-from odoo import http
+from odoo import api, http
 from odoo.http import request, route
 from odoo.tools import safe_eval
 
@@ -80,6 +82,7 @@ class PWAPrefetch(PWA):
         if model == "pwa.cache.onchange.value" and field_name in (
             "display_name",
             "field_name",
+            "discriminant_id",
             "values",
         ):
             return True
@@ -205,6 +208,35 @@ class PWAPrefetch(PWA):
                 }
             )
         return res
+
+    @api.model
+    def _pwa_prefetch_model_info_onchange(self, last_update, **kwargs):
+        """Special method for getting virtual model infos per onchange cache.
+
+        It's used in the prefetch flow for getting different domain per onchange cache
+        according discriminant.
+        """
+        obj = request.env["pwa.cache.onchange.value"]
+        model_infos = []
+        pwa_caches = request.env["pwa.cache"].search([("cache_type", "=", "onchange")])
+        for pwa_cache in pwa_caches:
+            model_info = {
+                "model": obj._name,
+                "pwa_cache_id": pwa_cache.id,
+                "name": pwa_cache.name,
+                "domain": [("pwa_cache_id", "=", pwa_cache.id)],
+            }
+            selector = pwa_cache.onchange_discriminator_selector_id
+            if selector:
+                context = {
+                    "env": request.env,
+                    "functools": functools,
+                    "itertools": itertools,
+                }
+                result = safe_eval(selector.expression, context)
+                model_info["domain"].append(("discriminant_id", "in", result.ids))
+            model_infos.append(model_info)
+        return model_infos
 
     def _pwa_prefetch_model_view(self, last_update, **kwargs):
         # Determine available views from actions
@@ -362,6 +394,7 @@ class PWAPrefetch(PWA):
             "model_default",
             "model_info",
             "model_view",
+            "model_info_onchange",
         }
         if cache_type in available_types:
             prefetch_method = getattr(self, "_pwa_prefetch_{}".format(cache_type))

@@ -1,4 +1,5 @@
 # Copyright 2020 Tecnativa - Alexandre D. Díaz
+# Copyright 2021 Tecnativa - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 # from functools import reduce
 
@@ -113,6 +114,11 @@ class PwaCache(models.Model):
         string="Onchange Selectors",
         comodel_name="pwa.cache.onchange",
         inverse_name="pwa_cache_id",
+    )
+    onchange_discriminator_selector_id = fields.Many2one(
+        comodel_name="pwa.cache.onchange",
+        domain="[('pwa_cache_id', '=', id)]",
+        string="Selector discriminator",
     )
     onchange_trigger_ids = fields.One2many(
         string="Update Triggers",
@@ -280,7 +286,6 @@ class PwaCache(models.Model):
                 vals, self.onchange_field_name, onchange_spec
             )
         )
-        vals = json.dumps(vals, separators=(",", ":"))  # JSONify after calling onchange
         obj = self.env["pwa.cache.onchange.value"].sudo()
         record = obj.search([("ref_hash", "=", ref_hash)])
         if record:
@@ -289,14 +294,19 @@ class PwaCache(models.Model):
             if record.result != result:
                 record.write({"result": result})
         else:
-            obj.create(
-                {
-                    "pwa_cache_id": self.id,
-                    "values": values,
-                    "ref_hash": ref_hash,
-                    "result": result,
-                }
-            )
+            value_vals = {
+                "pwa_cache_id": self.id,
+                "values": values,
+                "ref_hash": ref_hash,
+                "result": result,
+            }
+            if self.onchange_discriminator_selector_id:
+                fields = self.onchange_discriminator_selector_id.field_name.split(".")
+                discriminant = vals
+                for field in fields:
+                    discriminant = discriminant[field]
+                value_vals["discriminant_id"] = discriminant
+            obj.create(value_vals)
 
     @api.model
     @ormcache("model")
@@ -357,6 +367,14 @@ class PwaCacheOnchange(models.Model):
     disposable = fields.Boolean()
     required = fields.Boolean()
 
+    def name_get(self):
+        result = []
+        for rec in self:
+            result.append(
+                (rec.id, "{} - {}".format(rec.pwa_cache_id.name, rec.field_name))
+            )
+        return result
+
 
 class PwaCacheOnchangeValue(models.Model):
     _name = "pwa.cache.onchange.value"
@@ -378,11 +396,12 @@ class PwaCacheOnchangeValue(models.Model):
     # of 8 bytes to store the value
     ref_hash = fields.Char(required=True, index=True)
     result = fields.Char(required=True)
+    discriminant_id = fields.Integer(index=True)
 
     _sql_constraints = [
         (
             "pwa_cache_onchange_value_uniq",
-            "unique(pwa_cache_id, field_name, values)",
+            "unique(pwa_cache_id, field_name, ref_hash)",
             "The PWA onchange cache value must be unique.",
         ),
     ]

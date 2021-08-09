@@ -420,29 +420,37 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                     const prefetch_last_update = await this._config.get(
                         "prefetch_onchange_last_update"
                     );
-                    const virt_model_info = {
-                        model: "pwa.cache.onchange.value",
-                        name: "PWA Cache Onchange Value",
-                        domain: [],
-                        prefetch_last_update: prefetch_last_update,
-                    };
-                    virt_model_info.count = await this._getModelCount(virt_model_info);
-                    const client_message_id = `model_records_${virt_model_info.model.replace(
-                        /\./g,
-                        "__"
-                    )}`;
-                    this._sendTaskInfo(
-                        client_message_id,
-                        `Getting records of the model '${virt_model_info.name}'...`,
-                        virt_model_info.count,
-                        0
+                    const [response] = await rpc.sendJSonRpc(
+                        "/pwa/prefetch/model_info_onchange",
+                        {
+                            last_update: false,
+                        }
                     );
-                    await this.prefetchModelRecords(virt_model_info, client_message_id);
-                    this._sendTaskInfoCompleted(client_message_id);
+                    const response_data = await response.json();
+                    const model_infos = response_data.result;
+                    const client_message_id =
+                        "model_records_pwa__cache__onchange__value";
+                    for (const virt_model_info of model_infos) {
+                        virt_model_info.prefetch_last_update = prefetch_last_update;
+                        virt_model_info.count = await this._getModelCount(
+                            virt_model_info
+                        );
+                        this._sendTaskInfo(
+                            client_message_id,
+                            `Onchange: '${virt_model_info.name}'...`,
+                            virt_model_info.count,
+                            0
+                        );
+                        await this.prefetchModelRecords(
+                            virt_model_info,
+                            client_message_id
+                        );
+                    }
                     await this._config.set(
                         "prefetch_onchange_last_update",
                         start_prefetch_date
                     );
+                    this._sendTaskInfoCompleted(client_message_id);
                 } catch (err) {
                     return reject(err);
                 }
