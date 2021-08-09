@@ -83,6 +83,7 @@ class PWAPrefetch(PWA):
             "display_name",
             "field_name",
             "discriminant_id",
+            "user_id",
             "values",
         ):
             return True
@@ -235,6 +236,11 @@ class PWAPrefetch(PWA):
                 }
                 result = safe_eval(selector.expression, context)
                 model_info["domain"].append(("discriminant_id", "in", result.ids))
+            user_id = False
+            group = pwa_cache.differentiation_group_id
+            if group and group not in request.env.user.groups_id:
+                user_id = request.env.user.id
+            model_info["domain"].append(("user_id", "=", user_id))
             model_infos.append(model_info)
         return model_infos
 

@@ -30,6 +30,10 @@
                     </group>
                     <group>
                         <field name="group_ids" widget="many2many_tags" />
+                        <field
+                            name="differentiation_group_id"
+                            attrs="{'invisible': [('cache_type', '!=', 'onchange')]}"
+                        />
                     </group>
                     <group
                         attrs="{'invisible': [('cache_type', 'not in', ['model', 'onchange', 'onchange_formula', 'function'])]}"

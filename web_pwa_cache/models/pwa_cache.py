@@ -100,6 +100,15 @@ class PwaCache(models.Model):
         column2="group_id",
         help="Allowed groups to get this cache. Empty for all.",
     )
+    differentiation_group_id = fields.Many2one(
+        comodel_name="res.groups",
+        string="Differentiation group",
+        help="If a user doesn't belong to this group, the onchange values will "
+        "be computed specifically for this user. This is useful when record rules "
+        "makes the result of the onchange different.",
+        index=True,
+    )
+
     onchange_field_id = fields.Many2one(
         comodel_name="ir.model.fields",
         string="Onchage field",
@@ -145,14 +154,31 @@ class PwaCache(models.Model):
 
     def update_onchange_cache(self, prefilled_selectors=None, autocommit=False):
         """Refresh combination set and enqueue atomic combinations cache updates."""
-        vals_list, disposable = self._get_onchange_selectors(
-            prefilled_selectors=prefilled_selectors
-        )
-        self._update_onchange_cache(
-            vals_list, disposable, not bool(prefilled_selectors), autocommit=autocommit
-        )
+        user_ids = [False]
+        if self.differentiation_group_id:
+            user_ids += (
+                self.env["res.users"]
+                .search(
+                    [
+                        ("groups_id", "!=", self.differentiation_group_id.id),
+                        ("share", "=", False),
+                    ],
+                )
+                .ids
+            )
+        for user_id in user_ids:
+            vals_list, disposable = self._get_onchange_selectors(
+                prefilled_selectors=prefilled_selectors, user_id=user_id,
+            )
+            self._update_onchange_cache(
+                vals_list,
+                disposable,
+                delete_old=not bool(prefilled_selectors),
+                autocommit=autocommit,
+                user_id=user_id,
+            )
 
-    def _get_onchange_selectors(self, prefilled_selectors=None):
+    def _get_onchange_selectors(self, prefilled_selectors=None, user_id=False):
         """Combine all posible parameter values for the onchange calls."""
         self.ensure_one()
         if prefilled_selectors is None:
@@ -161,7 +187,7 @@ class PwaCache(models.Model):
         mappings = {}
         disposable = []
         context = {
-            "env": self.env,
+            "env": self.with_user(user_id).env,
             "functools": functools,
             "itertools": itertools,
         }
@@ -241,7 +267,7 @@ class PwaCache(models.Model):
         return res
 
     def _update_onchange_cache(
-        self, vals_list, disposable, delete_old=False, autocommit=False
+        self, vals_list, disposable, delete_old=False, autocommit=False, user_id=False,
     ):
         self.ensure_one()
         model = self.env[self.model_name]
@@ -249,7 +275,11 @@ class PwaCache(models.Model):
         onchange_spec = model._onchange_spec()
         # Using IDs for performance reason vs recordset operations
         if delete_old:
-            existing_ids = set(self.sudo().onchange_value_ids.ids)
+            existing_ids = set(
+                obj.search(
+                    [("pwa_cache_id", "=", self.id), ("user_id", "=", user_id)]
+                ).ids
+            )
             found_ids = set()
         for vals in vals_list:
             # Put ID instead of recordsets reference
@@ -267,11 +297,13 @@ class PwaCache(models.Model):
                 "{}{}{}".format(self.id, self.onchange_field_name, vals_clean)
             )
             if delete_old:
-                record = obj.search([("ref_hash", "=", ref_hash)])
+                record = obj.search(
+                    [("ref_hash", "=", ref_hash), ("user_id", "=", user_id)],
+                )
                 if record:
                     found_ids.add(record.id)
             self.with_delay()._update_onchange_cache_value(
-                vals, vals_clean, ref_hash, onchange_spec
+                vals, vals_clean, ref_hash, onchange_spec, user_id=user_id,
             )
             if autocommit:
                 self.env.cr.commit()  # pylint: disable=E8102
@@ -279,15 +311,18 @@ class PwaCache(models.Model):
             remaining_ids = existing_ids - found_ids
             if remaining_ids:
                 obj.browse(remaining_ids).unlink()
+                if autocommit:
+                    self.env.cr.commit()  # pylint: disable=E8102
 
-    def _update_onchange_cache_value(self, vals, values, ref_hash, onchange_spec):
-        result = json.dumps(
-            self.env[self.model_name].onchange(
-                vals, self.onchange_field_name, onchange_spec
-            )
-        )
+    def _update_onchange_cache_value(
+        self, vals, values, ref_hash, onchange_spec, user_id=False
+    ):
+        obj = self.env[self.model_name]
+        if user_id:
+            obj.with_user(user_id)
+        result = json.dumps(obj.onchange(vals, self.onchange_field_name, onchange_spec))
         obj = self.env["pwa.cache.onchange.value"].sudo()
-        record = obj.search([("ref_hash", "=", ref_hash)])
+        record = obj.search([("ref_hash", "=", ref_hash), ("user_id", "=", user_id)])
         if record:
             # We assume the same order for returned results, and if not, the
             # worst thing is that the cache value is refreshed
@@ -299,6 +334,7 @@ class PwaCache(models.Model):
                 "values": values,
                 "ref_hash": ref_hash,
                 "result": result,
+                "user_id": user_id,
             }
             if self.onchange_discriminator_selector_id:
                 fields = self.onchange_discriminator_selector_id.field_name.split(".")
@@ -379,7 +415,7 @@ class PwaCacheOnchange(models.Model):
 class PwaCacheOnchangeValue(models.Model):
     _name = "pwa.cache.onchange.value"
     _description = "PWA Cache Onchange Value"
-    _order = "ref_hash"
+    _order = "ref_hash, user_id"
 
     pwa_cache_id = fields.Many2one(
         comodel_name="pwa.cache",
@@ -397,11 +433,12 @@ class PwaCacheOnchangeValue(models.Model):
     ref_hash = fields.Char(required=True, index=True)
     result = fields.Char(required=True)
     discriminant_id = fields.Integer(index=True)
+    user_id = fields.Many2one(comodel_name="res.users", index=True)
 
     _sql_constraints = [
         (
             "pwa_cache_onchange_value_uniq",
-            "unique(pwa_cache_id, field_name, ref_hash)",
+            "unique(user_id, ref_hash)",
             "The PWA onchange cache value must be unique.",
         ),
     ]
