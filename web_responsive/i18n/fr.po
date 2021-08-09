@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2021-06-28 14:48+0000\n"
-"Last-Translator: Rémi <remi@le-filament.com>\n"
+"PO-Revision-Date: 2021-08-09 15:49+0000\n"
+"Last-Translator: Pascal GOUHIER <pascal.gouhier@copagex.fr>\n"
 "Language-Team: none\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgstr "#menu_id=#{app.menuID}&action_id=#{app.actionID}"
 #: code:addons/web_responsive/static/src/xml/menu.xml:52
 #, python-format
 msgid "Alt"
-msgstr ""
+msgstr "Alt"
 
 #. module: web_responsive
 #: model:ir.model.fields,field_description:web_responsive.field_res_users__chatter_position
@@ -51,7 +51,7 @@ msgstr "Fermer"
 #: code:addons/web_responsive/static/src/xml/menu.xml:52
 #, python-format
 msgid "Control"
-msgstr ""
+msgstr "Control"
 
 #. module: web_responsive
 #. openerp-web
@@ -122,7 +122,7 @@ msgstr "Rechercher dans les menus..."
 #: code:addons/web_responsive/static/src/xml/menu.xml:35
 #, python-format
 msgid "Select menu"
-msgstr ""
+msgstr "Menu Applications"
 
 #. module: web_responsive
 #. openerp-web
@@ -136,14 +136,14 @@ msgstr "Maj."
 #. module: web_responsive
 #: selection:res.users,chatter_position:0
 msgid "Sided"
-msgstr "À coté"
+msgstr "Sur le côté"
 
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/xml/menu.xml:47
 #, python-format
 msgid "User menu"
-msgstr ""
+msgstr "Menu Utilisateur"
 
 #. module: web_responsive
 #: model:ir.model,name:web_responsive.model_res_users
