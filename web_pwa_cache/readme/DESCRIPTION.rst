@@ -31,6 +31,6 @@ To Developers
 ~~~~~~~~~~~~~
 
 'onchange' prefetching works in a generic way... so, it uses the "main" form view to know the involved fields. If you trigger an onchange than uses a
-field thas is not present in this view, you will don't get any change related with the field.
+field thas is not present in this view, you won't get any change related to the field.
 
 If you want trigger an 'onchange' with

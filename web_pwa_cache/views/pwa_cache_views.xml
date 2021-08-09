@@ -62,6 +62,16 @@
                         />
                         <field name="function_params" />
                     </group>
+                    <group
+                        attrs="{'invisible': [('cache_type', '!=', 'onchange_formula')]}"
+                    >
+                        <group colspan="4">
+                            <field
+                                name="onchange_field_id"
+                                attrs="{'invisible': [('model_id', '=', False)], 'required': [('cache_type', '=', 'onchange_formula')]}"
+                            />
+                        </group>
+                    </group>
                     <group attrs="{'invisible': [('cache_type', '!=', 'onchange')]}">
                         <group colspan="4">
                             <field
