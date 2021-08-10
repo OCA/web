@@ -28,7 +28,6 @@ class ServiceWorker(PWA):
     """
 
     JS_PWA_MAIN = """
-        "{pwa_sw_version}";
         self.importScripts(...{pwa_scripts});
         odoo.define("web_pwa_oca.ServiceWorker", function (require) {{
             "use strict";
@@ -57,9 +56,6 @@ class ServiceWorker(PWA):
                     promise_start = promise_start.then(
                         () => self.oca_pwa.activateWorker());
                 }}
-            }} else if (self.serviceWorker.state === "activated") {{
-                promise_start = promise_start.then(
-                    () => self.oca_pwa.wakeUpWorker());
             }}
         """.format(
             self._get_pwa_params()
@@ -98,7 +94,9 @@ class ServiceWorker(PWA):
 
     def _get_pwa_params(self):
         """Get javascript PWA class initialzation params"""
-        return {}
+        return {
+            "sw_version": self._pwa_sw_version,
+        }
 
     @route("/service-worker.js", type="http", auth="public")
     def render_service_worker(self):
@@ -106,7 +104,6 @@ class ServiceWorker(PWA):
 
         sw_code = self.JS_PWA_MAIN.format(
             **{
-                "pwa_sw_version": self._pwa_sw_version,
                 "pwa_scripts": self._get_pwa_scripts(),
                 "pwa_requires": self._get_js_pwa_requires(),
                 "pwa_init": self._get_js_pwa_init(),

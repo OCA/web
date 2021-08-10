@@ -7,9 +7,8 @@ odoo.define("web_pwa_oca.PWA", function(require) {
     const OdooClass = require("web.Class");
 
     const PWA = OdooClass.extend({
-        // eslint-disable-next-line
         init: function(params) {
-            // To be overridden
+            this._sw_version = params.sw_version;
         },
 
         /**
@@ -31,14 +30,6 @@ odoo.define("web_pwa_oca.PWA", function(require) {
          * @returns {Promise}
          */
         activateWorker: function() {
-            // To be overridden
-            return Promise.resolve();
-        },
-
-        /**
-         * @returns {Promise}
-         */
-        wakeUpWorker: function() {
             // To be overridden
             return Promise.resolve();
         },
