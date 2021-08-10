@@ -1324,7 +1324,9 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                                 typeof right === "string" ||
                                 (right &&
                                     right instanceof Array &&
-                                    _.every(right.map(x => typeof x === "string")))
+                                    !_.isEmpty(
+                                        right.filter(x => typeof x === "string")
+                                    ))
                             ) {
                                 push(
                                     create_substitution_leaf(

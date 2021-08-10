@@ -390,9 +390,10 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                             const request_data = await request_cloned.json();
                             await this._processResponse(response_net, request_data);
                         } else {
-                            // CRUD operation trigger prefetch model data to ensure have
+                            // CUD operation trigger prefetch model data to ensure have
                             // up to date values
                             await this._components.prefetch.prefetchModelData();
+                            this._db.persistDatabases();
                         }
                         return resolve(response_net);
                     }

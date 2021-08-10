@@ -219,11 +219,6 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
             serialized: "BLOB",
         },
 
-        regex_order: new RegExp(
-            '^(s*([a-z0-9:_]+|"[a-z0-9:_]+")(s+(desc|asc))?s*(,|$))+(?<!,)$',
-            "i"
-        ),
-
         /**
          * @override
          */

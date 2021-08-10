@@ -319,13 +319,6 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
                     response_data.result,
                     request_data.params
                 );
-            } else {
-                this._components.importer._generic_function(
-                    model,
-                    method_name,
-                    response_data.result,
-                    request_data.params
-                );
             }
             return Promise.resolve();
         },

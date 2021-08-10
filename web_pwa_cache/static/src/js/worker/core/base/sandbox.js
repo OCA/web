@@ -7,7 +7,7 @@ odoo.define("web_pwa_cache.PWA.core.base.JSSandbox", function(require) {
     "use strict";
 
     const OdooClass = require("web.Class");
-    const tools = require("web_pwa_cache.PWA.core.base.Tools");
+    const Tools = require("web_pwa_cache.PWA.core.base.Tools");
 
     // Original code from NX-Compiler: https://github.com/nx-js/compiler-util
     const JSSandbox = OdooClass.extend({
@@ -30,7 +30,7 @@ odoo.define("web_pwa_cache.PWA.core.base.JSSandbox", function(require) {
 
         compile: function(src) {
             const self = this;
-            const s_src = "with (sandbox) {" + src + "}";
+            const s_src = `with (sandbox) { ${src} }`;
             const code = new Function("sandbox", s_src);
 
             this.compiledExec = function(sandbox) {
@@ -48,9 +48,9 @@ odoo.define("web_pwa_cache.PWA.core.base.JSSandbox", function(require) {
 
         _getContext: function() {
             return {
-                round_precision: tools.round_precision,
-                round_decimals: tools.round_decimals,
-                date2odoo_format: tools.DateToOdooFormat,
+                round_precision: Tools.round_precision,
+                round_decimals: Tools.round_decimals,
+                date2odoo_format: Tools.DateToOdooFormat,
                 Date: Date,
             };
         },
