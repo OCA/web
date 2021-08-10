@@ -68,21 +68,6 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     this.$modalSWInfo.modal("hide");
                 }
             });
-            this.$modalPrefetchProgress = $(
-                QWeb.render("web_pwa_cache.PrefetchProgress")
-            );
-            this.$modalPrefetchProgress.appendTo("body");
-            this.$modalPrefetchProgressContent = this.$modalPrefetchProgress.find(
-                ".modal-body"
-            );
-            this.$modalPrefetchProgress.on("shown.bs.modal", () => {
-                this._prefetchModelHidden = false;
-                // Append current data
-                for (const task_info_id in this._prefetchTasksInfo) {
-                    const task_info = this._prefetchTasksInfo[task_info_id];
-                    this._updatePrefetchModalData(task_info_id, task_info);
-                }
-            });
 
             this.modeSelector = new PWAModeSelector({
                 online: () => {
@@ -306,8 +291,34 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     this._pwaMode = evt.data.data.pwa_mode;
                     if (this.isPWAStandalone()) {
                         if (navigator.serviceWorker.controller) {
+                            // Create prefetching modal
+                            this.$modalPrefetchProgress = $(
+                                QWeb.render("web_pwa_cache.PrefetchProgress", {
+                                    sw_version: evt.data.data.sw_version,
+                                })
+                            );
+                            this.$modalPrefetchProgress.appendTo("body");
+                            this.$modalPrefetchProgressContent = this.$modalPrefetchProgress.find(
+                                ".modal-body"
+                            );
+                            this.$modalPrefetchProgress.on("shown.bs.modal", () => {
+                                this._prefetchModelHidden = false;
+                                // Append current data
+                                for (const task_info_id in this._prefetchTasksInfo) {
+                                    const task_info = this._prefetchTasksInfo[
+                                        task_info_id
+                                    ];
+                                    this._updatePrefetchModalData(
+                                        task_info_id,
+                                        task_info
+                                    );
+                                }
+                            });
+                            //
                             if (evt.data.data.is_db_empty) {
-                                this.$modalPrefetchProgress.modal("hide");
+                                if (this.modeSelector.isOpen()) {
+                                    this.modeSelector.close();
+                                }
                             } else if (!this.modeSelector.wasShown()) {
                                 this.modeSelector.show();
                             }

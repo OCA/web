@@ -15,10 +15,9 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
         /**
          * @override
          */
-        init: function(parent) {
+        init: function() {
             this.init_broadcast("pwa-sw-messages", "pwa-page-messages");
             this._super.apply(this, arguments);
-            this._db = this.options.db || parent._db;
         },
 
         /**

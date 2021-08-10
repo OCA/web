@@ -69,6 +69,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Getting server data...</h5>
+                        <span>SW Ver: <span t-esc="sw_version" /></span>
                     </div>
                     <div class="modal-body" />
                 </div>

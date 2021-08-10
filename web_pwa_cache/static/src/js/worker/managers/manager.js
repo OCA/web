@@ -10,12 +10,10 @@ odoo.define("web_pwa_cache.PWA.managers.Manager", function(require) {
     const SWManager = OdooClass.extend(ParentedMixin, {
         /**
          * @param {OdooClass} parent
-         * @param {Object} options
          */
-        init: function(parent, options) {
+        init: function(parent) {
             this.setParent(parent);
-            this.options = options || {};
-            this._db = this.options.db || parent._db;
+            this._db = parent._db;
         },
 
         /**
@@ -44,6 +42,13 @@ odoo.define("web_pwa_cache.PWA.managers.Manager", function(require) {
          */
         isActivated: function() {
             return this.getParent().isActivated();
+        },
+
+        /**
+         * @returns {Boolean}
+         */
+        getSWVersion: function() {
+            return this.getParent()._sw_version;
         },
     });
 

@@ -137,6 +137,7 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
                     config = await this.getAll();
                     const userdata_count = await this._db.indexeddb.userdata.count();
                     config.is_db_empty = userdata_count === 0;
+                    config.sw_version = this.getSWVersion();
                 } catch (err) {
                     return reject(err);
                 }

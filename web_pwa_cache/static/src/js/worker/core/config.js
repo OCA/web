@@ -141,36 +141,6 @@ odoo.define("web_pwa_cache.PWA.core.Config", function(require) {
                 return resolve();
             });
         },
-
-        /**
-         * Send configuration state to the client pages
-         *
-         * @private
-         * @returns {Promise}
-         */
-        sendToClient: function() {
-            return new Promise(async (resolve, reject) => {
-                try {
-                    const config = await this.getAll();
-                    const model_info_userdata = await this._dbmanager.getModelInfo(
-                        "userdata",
-                        true
-                    );
-                    const userdata_count = await this._dbmanager.count(
-                        model_info_userdata
-                    );
-                    config.is_db_empty = userdata_count === 0;
-                    this.getParent().postClientPageMessage({
-                        type: "PWA_INIT_CONFIG",
-                        data: config,
-                    });
-                    this.getParent()._components.sync.updateClientCount();
-                } catch (err) {
-                    return reject(err);
-                }
-                return resolve();
-            });
-        },
     });
 
     return Config;
