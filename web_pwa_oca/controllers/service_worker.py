@@ -6,6 +6,7 @@ from .main import PWA
 
 
 class ServiceWorker(PWA):
+    _pwa_sw_version = "0.1.0"
 
     JS_PWA_CORE_EVENT_INSTALL = """
         self.addEventListener('install', evt => {{
@@ -27,8 +28,8 @@ class ServiceWorker(PWA):
     """
 
     JS_PWA_MAIN = """
+        "{pwa_sw_version}";
         self.importScripts(...{pwa_scripts});
-
         odoo.define("web_pwa_oca.ServiceWorker", function (require) {{
             "use strict";
 
@@ -105,6 +106,7 @@ class ServiceWorker(PWA):
 
         sw_code = self.JS_PWA_MAIN.format(
             **{
+                "pwa_sw_version": self._pwa_sw_version,
                 "pwa_scripts": self._get_pwa_scripts(),
                 "pwa_requires": self._get_js_pwa_requires(),
                 "pwa_init": self._get_js_pwa_init(),
