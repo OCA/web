@@ -8,7 +8,7 @@
         <xpath expr="." position="inside">
             <script
                 type="text/javascript"
-                src="/web_widget_mermaid/static/lib/mermaid/mermaid.js"
+                src="/web_widget_mermaid/static/src/js/mermaid.js"
             />
             <script
                 type="text/javascript"
