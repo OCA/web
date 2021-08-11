@@ -221,70 +221,76 @@ odoo.define("web_m2x_options.web_m2x_options", function (require) {
                         });
                     }
 
-                    // Search more... if more results that max
-                    var can_search_more =
-                            self.nodeOptions &&
-                            self.is_option_set(self.nodeOptions.search_more),
-                        search_more_undef =
-                            _.isUndefined(self.nodeOptions.search_more) &&
-                            _.isUndefined(
-                                self.ir_options["web_m2x_options.search_more"]
-                            ),
-                        search_more = self.is_option_set(
+                    // Search more...
+                    // Resolution order:
+                    // 1- check if "search_more" is set locally in node's options
+                    // 2- if set locally, apply its value
+                    // 3- if not set locally, check if it's set globally via ir.config_parameter
+                    // 4- if set globally, apply its value
+                    // 5- if not set globally either, check if returned values are more than node's limit
+                    if (!_.isUndefined(self.nodeOptions.search_more)) {
+                        var search_more = self.is_option_set(
+                            self.nodeOptions.search_more
+                        );
+                    } else if (
+                        !_.isUndefined(self.ir_options["web_m2x_options.search_more"])
+                    ) {
+                        var search_more = self.is_option_set(
                             self.ir_options["web_m2x_options.search_more"]
                         );
+                    } else {
+                        var search_more = values.length > self.limit;
+                    }
 
-                    if (values.length > self.limit) {
+                    if (search_more) {
                         values = values.slice(0, self.limit);
-                        if (can_search_more || search_more_undef || search_more) {
-                            values.push({
-                                label: _t("Search More..."),
-                                action: function () {
-                                    var prom = [];
-                                    if (search_val !== "") {
-                                        prom = self._rpc({
-                                            model: self.field.relation,
-                                            method: "name_search",
-                                            kwargs: {
-                                                name: search_val,
-                                                args: domain,
-                                                operator: "ilike",
-                                                limit: self.SEARCH_MORE_LIMIT,
-                                                context: context,
-                                            },
-                                        });
-                                    }
-                                    Promise.resolve(prom).then(function (results) {
-                                        var dynamicFilters = [];
-                                        if (results) {
-                                            var ids = _.map(results, function (x) {
-                                                return x[0];
-                                            });
-                                            if (search_val) {
-                                                dynamicFilters = [
-                                                    {
-                                                        description: _.str.sprintf(
-                                                            _t("Quick search: %s"),
-                                                            search_val
-                                                        ),
-                                                        domain: [["id", "in", ids]],
-                                                    },
-                                                ];
-                                            } else {
-                                                dynamicFilters = [];
-                                            }
-                                        }
-                                        self._searchCreatePopup(
-                                            "search",
-                                            false,
-                                            {},
-                                            dynamicFilters
-                                        );
+                        values.push({
+                            label: _t("Search More..."),
+                            action: function () {
+                                var prom = [];
+                                if (search_val !== "") {
+                                    prom = self._rpc({
+                                        model: self.field.relation,
+                                        method: "name_search",
+                                        kwargs: {
+                                            name: search_val,
+                                            args: domain,
+                                            operator: "ilike",
+                                            limit: self.SEARCH_MORE_LIMIT,
+                                            context: context,
+                                        },
                                     });
-                                },
-                                classname: "o_m2o_dropdown_option",
-                            });
-                        }
+                                }
+                                Promise.resolve(prom).then(function (results) {
+                                    var dynamicFilters = [];
+                                    if (results) {
+                                        var ids = _.map(results, function (x) {
+                                            return x[0];
+                                        });
+                                        if (search_val) {
+                                            dynamicFilters = [
+                                                {
+                                                    description: _.str.sprintf(
+                                                        _t("Quick search: %s"),
+                                                        search_val
+                                                    ),
+                                                    domain: [["id", "in", ids]],
+                                                },
+                                            ];
+                                        } else {
+                                            dynamicFilters = [];
+                                        }
+                                    }
+                                    self._searchCreatePopup(
+                                        "search",
+                                        false,
+                                        {},
+                                        dynamicFilters
+                                    );
+                                });
+                            },
+                            classname: "o_m2o_dropdown_option",
+                        });
                     }
 
                     var create_enabled = self.can_create && !self.nodeOptions.no_create;
