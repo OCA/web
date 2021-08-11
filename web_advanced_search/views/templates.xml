@@ -14,7 +14,15 @@
             />
             <script
                 type="text/javascript"
+                src="/web_advanced_search/static/src/js/control_panel/custom_filter_item.js"
+            />
+            <script
+                type="text/javascript"
                 src="/web_advanced_search/static/src/js/human_domain.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_advanced_search/static/src/js/relational.js"
             />
         </xpath>
     </template>
