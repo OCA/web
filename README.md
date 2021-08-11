@@ -20,7 +20,8 @@ This project aims to deal with modules related to the webclient of Odoo. You'll 
 
 [//]: # (addons)
 
-## Available addons
+Available addons
+----------------
 addon | version | summary
 --- | --- | ---
 [web_access_rule_buttons](web_access_rule_buttons/) | 14.0.1.0.0 | Disable Edit button if access rules prevent this action
