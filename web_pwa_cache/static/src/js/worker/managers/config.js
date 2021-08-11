@@ -23,7 +23,7 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
         /**
          * @override
          */
-        install: function() {
+        start: function() {
             return this.getAll();
         },
 

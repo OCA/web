@@ -21,6 +21,13 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
         },
 
         /**
+         * @override
+         */
+        start: function() {
+            return this.sendCountToPages();
+        },
+
+        /**
          * @returns {Promise}
          */
         getSyncRecords: function() {

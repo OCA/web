@@ -19,13 +19,6 @@ odoo.define("web_pwa_cache.PWA.managers.Manager", function(require) {
         /**
          * @returns {Promise}
          */
-        install: function() {
-            return Promise.resolve();
-        },
-
-        /**
-         * @returns {Promise}
-         */
         start: function() {
             return Promise.resolve();
         },
