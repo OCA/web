@@ -177,7 +177,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                     search_more_undef = _.isUndefined(self.nodeOptions.search_more) && _.isUndefined(ir_options['web_m2x_options.search_more']),
                     search_more = is_option_set(ir_options['web_m2x_options.search_more']);
 
-                if (values.length > self.limit) {
+                if (values.length > self.limit || search_more) {
                     values = values.slice(0, self.limit);
                     if (can_search_more || search_more_undef || search_more) {
                         values.push({
