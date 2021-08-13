@@ -22,34 +22,34 @@ This project aims to deal with modules related to the webclient of Odoo. You'll 
 
 Available addons
 ----------------
-addon | version | summary
---- | --- | ---
-[web_access_rule_buttons](web_access_rule_buttons/) | 14.0.1.0.0 | Disable Edit button if access rules prevent this action
-[web_advanced_search](web_advanced_search/) | 14.0.1.0.0 | Easier and more powerful searching tools
-[web_company_color](web_company_color/) | 14.0.1.0.0 | Web Company Color
-[web_copy_confirm](web_copy_confirm/) | 14.0.1.0.0 | Show confirmation dialogue before copying records
-[web_decimal_numpad_dot](web_decimal_numpad_dot/) | 14.0.1.0.0 | Allows using numpad dot to enter period decimal separator
-[web_dialog_size](web_dialog_size/) | 14.0.1.0.0 | A module that lets the user expand a dialog box to the full screen width.
-[web_domain_field](web_domain_field/) | 14.0.1.0.0 | Use computed field as domain
-[web_drop_target](web_drop_target/) | 14.0.1.0.0 | Allows to drag files into Odoo
-[web_environment_ribbon](web_environment_ribbon/) | 14.0.1.0.0 | Web Environment Ribbon
-[web_group_expand](web_group_expand/) | 14.0.1.0.0 | Group Expand Buttons
-[web_ir_actions_act_view_reload](web_ir_actions_act_view_reload/) | 14.0.1.0.0 | Enables reload of the current view via ActionManager
-[web_listview_range_select](web_listview_range_select/) | 14.0.1.0.0 | Enables selecting a range of records using the shift key
-[web_m2x_options](web_m2x_options/) | 14.0.1.0.0 | web_m2x_options
-[web_no_bubble](web_no_bubble/) | 14.0.1.0.0 | Remove the bubbles from the web interface
-[web_notify](web_notify/) | 14.0.1.0.0 | Send notification messages to user
-[web_refresher](web_refresher/) | 14.0.1.0.0 | Web Refresher
-[web_responsive](web_responsive/) | 14.0.1.0.2 | Responsive web client, community-supported
-[web_sheet_full_width](web_sheet_full_width/) | 14.0.1.0.1 | Use the whole available screen width when displaying sheets
-[web_timeline](web_timeline/) | 14.0.1.0.0 | Interactive visualization chart to show events in time
-[web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 14.0.1.0.0 | Allows you to dynamically color fields on tree views
-[web_tree_image_tooltip](web_tree_image_tooltip/) | 14.0.1.0.0 | Show images in tree views via tooltip
-[web_tree_many2one_clickable](web_tree_many2one_clickable/) | 14.0.1.0.1 | Open the linked resource when clicking on their name
-[web_widget_bokeh_chart](web_widget_bokeh_chart/) | 14.0.2.3.1 | This widget allows to display charts using Bokeh library.
-[web_widget_dropdown_dynamic](web_widget_dropdown_dynamic/) | 14.0.1.0.0 | This module adds support for dynamic dropdown widget
-[web_widget_url_advanced](web_widget_url_advanced/) | 14.0.1.0.1 | This module extends URL widget for displaying anchors with custom labels.
-[web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 14.0.1.0.0 | Show list fields as a matrix
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[web_access_rule_buttons](web_access_rule_buttons/) | 14.0.1.0.0 |  | Disable Edit button if access rules prevent this action
+[web_advanced_search](web_advanced_search/) | 14.0.1.0.0 |  | Easier and more powerful searching tools
+[web_company_color](web_company_color/) | 14.0.1.0.0 |  | Web Company Color
+[web_copy_confirm](web_copy_confirm/) | 14.0.1.0.0 |  | Show confirmation dialogue before copying records
+[web_decimal_numpad_dot](web_decimal_numpad_dot/) | 14.0.1.0.0 |  | Allows using numpad dot to enter period decimal separator
+[web_dialog_size](web_dialog_size/) | 14.0.1.0.0 |  | A module that lets the user expand a dialog box to the full screen width.
+[web_domain_field](web_domain_field/) | 14.0.1.0.0 |  | Use computed field as domain
+[web_drop_target](web_drop_target/) | 14.0.1.0.0 |  | Allows to drag files into Odoo
+[web_environment_ribbon](web_environment_ribbon/) | 14.0.1.0.0 |  | Web Environment Ribbon
+[web_group_expand](web_group_expand/) | 14.0.1.0.0 |  | Group Expand Buttons
+[web_ir_actions_act_view_reload](web_ir_actions_act_view_reload/) | 14.0.1.0.0 |  | Enables reload of the current view via ActionManager
+[web_listview_range_select](web_listview_range_select/) | 14.0.1.0.0 |  | Enables selecting a range of records using the shift key
+[web_m2x_options](web_m2x_options/) | 14.0.1.0.0 |  | web_m2x_options
+[web_no_bubble](web_no_bubble/) | 14.0.1.0.0 |  | Remove the bubbles from the web interface
+[web_notify](web_notify/) | 14.0.1.0.0 |  | Send notification messages to user
+[web_refresher](web_refresher/) | 14.0.1.0.0 |  | Web Refresher
+[web_responsive](web_responsive/) | 14.0.1.0.2 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) [![Tardo](https://github.com/Tardo.png?size=30px)](https://github.com/Tardo) | Responsive web client, community-supported
+[web_sheet_full_width](web_sheet_full_width/) | 14.0.1.0.1 |  | Use the whole available screen width when displaying sheets
+[web_timeline](web_timeline/) | 14.0.1.0.0 | [![tarteo](https://github.com/tarteo.png?size=30px)](https://github.com/tarteo) | Interactive visualization chart to show events in time
+[web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 14.0.1.0.0 |  | Allows you to dynamically color fields on tree views
+[web_tree_image_tooltip](web_tree_image_tooltip/) | 14.0.1.0.0 |  | Show images in tree views via tooltip
+[web_tree_many2one_clickable](web_tree_many2one_clickable/) | 14.0.1.0.1 |  | Open the linked resource when clicking on their name
+[web_widget_bokeh_chart](web_widget_bokeh_chart/) | 14.0.2.3.1 | [![LoisRForgeFlow](https://github.com/LoisRForgeFlow.png?size=30px)](https://github.com/LoisRForgeFlow) | This widget allows to display charts using Bokeh library.
+[web_widget_dropdown_dynamic](web_widget_dropdown_dynamic/) | 14.0.1.0.0 |  | This module adds support for dynamic dropdown widget
+[web_widget_url_advanced](web_widget_url_advanced/) | 14.0.1.0.1 |  | This module extends URL widget for displaying anchors with custom labels.
+[web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 14.0.1.0.0 |  | Show list fields as a matrix
 
 [//]: # (end addons)
 
