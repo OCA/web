@@ -8,15 +8,11 @@
     "depends": ["web", "board", "mail", "web_widget_color"],
     "author": "initOS GmbH & Co. KG, "
     "GRAP, "
+    "Iván Todorovich <ivan.todorovich@gmail.com>, "
     "Odoo Community Association (OCA)",
     "maintainers": ["legalsylvain"],
     "category": "web",
     "license": "AGPL-3",
-    "contributors": [
-        "initOS GmbH & Co. KG",
-        "GRAP",
-        "Iván Todorovich <ivan.todorovich@gmail.com>",
-    ],
     "data": [
         "security/ir.model.access.csv",
         "security/ir_rule.xml",
