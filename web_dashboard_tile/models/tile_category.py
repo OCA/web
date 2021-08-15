@@ -45,11 +45,11 @@ class TileCategory(models.Model):
             'res_model': 'tile.tile',
             'type': 'ir.actions.act_window',
             'view_mode': 'kanban',
-            'domain': "["
-            "('hidden', '=', False),"
-            "'|', ('user_id', '=', False), ('user_id', '=', uid),"
-            "('category_id', '=', %d)"
-            "]" % self.id,
+            'domain': """[
+                ('hidden', '=', False),
+                '|', ('user_id', '=', False), ('user_id', '=', uid),
+                ('category_id', '=', {self.id})
+            ]""".format(self=self),
         }
 
     def _prepare_menu(self):
