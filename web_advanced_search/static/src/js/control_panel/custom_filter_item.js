@@ -6,6 +6,8 @@ odoo.define("web_advanced_search.CustomFilterItem", function (require) {
     const Relational = require("web_advanced_search.RelationalOwl");
     const {FIELD_TYPES} = require("web.searchUtils");
     const {useListener} = require("web.custom_hooks");
+    const Domain = require("web.Domain");
+    const field_utils = require("web.field_utils");
 
     CustomFilterItem.patch("web_advanced_search.CustomFilterItem", (T) => {
         class AdvancedCustomFilterItem extends T {
@@ -71,8 +73,61 @@ odoo.define("web_advanced_search.CustomFilterItem", function (require) {
                 );
                 if (condition.length) {
                     condition[0].value = event.detail.changes.id;
-                    condition[0].value = event.detail.changes.display_name;
+                    condition[0].displayedValue = event.detail.changes.display_name;
                 }
+            }
+            _onApply() {
+                /* Patch onApply to add displayedValue to discriptionArray */
+                const preFilters = this.state.conditions.map((condition) => {
+                    const field = this.fields[condition.field];
+                    const type = this.FIELD_TYPES[field.type];
+                    const operator = this.OPERATORS[type][condition.operator];
+                    const descriptionArray = [field.string, operator.description];
+                    const domainArray = [];
+                    let domainValue = [];
+                    // Field type specifics
+                    if ("value" in operator) {
+                        domainValue = [operator.value];
+                        // No description to push here
+                    } else if (["date", "datetime"].includes(type)) {
+                        domainValue = condition.value.map((val) =>
+                            field_utils.parse[type](val, {type}, {timezone: true})
+                        );
+                        const dateValue = condition.value.map((val) =>
+                            field_utils.format[type](val, {type}, {timezone: false})
+                        );
+                        descriptionArray.push(
+                            `"${dateValue.join(" " + this.env._t("and") + " ")}"`
+                        );
+                    } else {
+                        domainValue = [condition.value];
+                        descriptionArray.push(
+                            `"${condition.displayedValue || condition.value}"`
+                        );
+                    }
+                    // Operator specifics
+                    if (operator.symbol === "between") {
+                        domainArray.push(
+                            [field.name, ">=", domainValue[0]],
+                            [field.name, "<=", domainValue[1]]
+                        );
+                    } else {
+                        domainArray.push([field.name, operator.symbol, domainValue[0]]);
+                    }
+                    const preFilter = {
+                        description: descriptionArray.join(" "),
+                        domain: Domain.prototype.arrayToString(domainArray),
+                        type: "filter",
+                    };
+                    return preFilter;
+                });
+
+                this.model.dispatch("createNewFilters", preFilters);
+
+                // Reset state
+                this.state.open = false;
+                this.state.conditions = [];
+                this._addDefaultCondition();
             }
         }
 
