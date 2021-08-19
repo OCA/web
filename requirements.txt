@@ -1,2 +1,2 @@
 # generated from manifests external_dependencies
-bokeh==2.3.1
+# bokeh==2.3.1 #parece traer problemas con pdfs con codigos de barras en odoo.sh
