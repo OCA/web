@@ -9,22 +9,23 @@ msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-08 21:34+0000\n"
-"PO-Revision-Date: 2015-12-30 22:00+0000\n"
-"Last-Translator: Ahmet Altınışık <aaltinisik@altinkaya.com.tr>\n"
-"Language-Team: Turkish (http://www.transifex.com/oca/OCA-web-8-0/language/"
-"tr/)\n"
+"PO-Revision-Date: 2021-08-24 20:50+0000\n"
+"Last-Translator: Ahmet Altinisik <aaltinisik@altinkaya.com.tr>\n"
+"Language-Team: Turkish (http://www.transifex.com/oca/OCA-web-8-0/language/tr/"
+")\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: web_widget_x2many_2d_matrix
 #. openerp-web
 #: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:65
 #, python-format
 msgid "Sorry no matrix data to display."
-msgstr ""
+msgstr "Göstereck matrix verisi yok."
 
 #. module: web_widget_x2many_2d_matrix
 #. openerp-web
@@ -32,11 +33,11 @@ msgstr ""
 #: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:475
 #, python-format
 msgid "Sum"
-msgstr ""
+msgstr "Toplam"
 
 #. module: web_widget_x2many_2d_matrix
 #. openerp-web
 #: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:394
-#, fuzzy, python-format
+#, python-format
 msgid "Sum Total"
 msgstr "Toplam"
