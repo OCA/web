@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_widget_many2many_tags_multi_selection
+#	* web_domain_field
 #
 msgid ""
 msgstr ""
@@ -16,16 +16,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.3.2\n"
 
-#. module: web_widget_many2many_tags_multi_selection
+#. module: web_domain_field
 #. openerp-web
-#: code:addons/web_widget_many2many_tags_multi_selection/static/src/js/view_form.js:30
+#: code:addons/web_domain_field/static/src/js/pyeval.js:136
 #, python-format
-msgid "Create: "
-msgstr "Oluştur: "
-
-#. module: web_widget_many2many_tags_multi_selection
-#. openerp-web
-#: code:addons/web_widget_many2many_tags_multi_selection/static/src/js/view_form.js:30
-#, python-format
-msgid "Search: "
-msgstr "Ara: "
+msgid "Unknown nonliteral type "
+msgstr "Bilinmeyen nonliteral tipi "

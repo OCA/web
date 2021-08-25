@@ -1,0 +1,263 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* web_advanced_filter
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2021-08-24 20:50+0000\n"
+"Last-Translator: Ahmet Altinisik <aaltinisik@altinkaya.com.tr>\n"
+"Language-Team: none\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters_combine_with_existing__action
+msgid "Action"
+msgstr "Eylem"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters__union_filter_ids
+msgid "Add result of filters"
+msgstr "Filtrelerin sonucunu ekle"
+
+#. module: web_advanced_filter
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.ir_filters_view_form
+msgid "Add the result of following filters"
+msgstr "Filtrelerin sonuçlarını ekle"
+
+#. module: web_advanced_filter
+#. openerp-web
+#: code:addons/web_advanced_filter/static/src/js/web_advanced_filter.js:64
+#: code:addons/web_advanced_filter/static/src/js/web_advanced_filter.js:87
+#: code:addons/web_advanced_filter/static/src/xml/web_advanced_filter.xml:8
+#: code:addons/web_advanced_filter/static/src/xml/web_advanced_filter.xml:14
+#, python-format
+msgid "Add to existing filter"
+msgstr "Şimdiki filtreye eke"
+
+#. module: web_advanced_filter
+#. openerp-web
+#: code:addons/web_advanced_filter/static/src/js/web_advanced_filter.js:45
+#, python-format
+msgid "Advanced filters"
+msgstr "Gelişmş Filtreler"
+
+#. module: web_advanced_filter
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.ir_filters_view_form
+msgid "Are you sure? You can't undo this operation!"
+msgstr "Emin misin? Bu işlemi geri alamazsınız!"
+
+#. module: web_advanced_filter
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.form_ir_filters_combine_with_existing
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.form_ir_filters_save_new
+msgid "Cancel"
+msgstr "İptal"
+
+#. module: web_advanced_filter
+#: model:ir.model,name:web_advanced_filter.model_ir_filters_combine_with_existing
+msgid "Combine a selection with an existing filter"
+msgstr "Seçimi varolan bir filtre ile birleştir"
+
+#. module: web_advanced_filter
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.form_ir_filters_combine_with_existing
+msgid "Combine with existing filter"
+msgstr "Varolan filtre ile birleştir"
+
+#. module: web_advanced_filter
+#: selection:ir.filters.combine.with.existing,action:0
+msgid "Complement"
+msgstr "Tamamlama"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters_combine_with_existing__context
+msgid "Context"
+msgstr "Bağlam"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters_combine_with_existing__create_uid
+msgid "Created by"
+msgstr "Oluşturan"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters_combine_with_existing__create_date
+msgid "Created on"
+msgstr "Oluşturuldu"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters_combine_with_existing__display_name
+msgid "Display Name"
+msgstr "Görünen Ad"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters__domain
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters_combine_with_existing__domain
+msgid "Domain"
+msgstr "Alan"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters__domain_this
+msgid "Domain without helpers"
+msgstr "yardımcılar olmadan alan"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters__evaluate_before_join
+msgid "Evaluate this filter before joining"
+msgstr "Filtreyi birleştirmeden değerlendir"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters__evaluate_before_negate
+msgid "Evaluate this filter before negating"
+msgstr "Bu filtreyi çıkarmadan önce değerlendir"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters_combine_with_existing__filter_id
+msgid "Filter"
+msgstr "Filtre"
+
+#. module: web_advanced_filter
+#: model:ir.model,name:web_advanced_filter.model_ir_filters
+msgid "Filters"
+msgstr "Filtreler"
+
+#. module: web_advanced_filter
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.ir_filters_view_form
+msgid "Freeze filter"
+msgstr "Filtreyi Dondur"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters__is_frozen
+msgid "Frozen"
+msgstr "Dondurulmuş"
+
+#. module: web_advanced_filter
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.ir_filters_view_form
+msgid "Have this filter contain exactly the records it currently contains, with no changes in the future. Be careful, you can't undo this operation!"
+msgstr ""
+"Bu filtrenin ileride değişiklik olmayacak şekilde sadece içerdiği kayıtları "
+"içermesini sağla. Dikkat bu işlemi geri alamazsınız!"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters_combine_with_existing__id
+msgid "ID"
+msgstr "ID"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters_combine_with_existing____last_update
+msgid "Last Modified on"
+msgstr "Son güncelleme"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters_combine_with_existing__write_uid
+msgid "Last Updated by"
+msgstr "Son güncelleyen"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters_combine_with_existing__write_date
+msgid "Last Updated on"
+msgstr "Son güncelleme"
+
+#. module: web_advanced_filter
+#. openerp-web
+#: code:addons/web_advanced_filter/static/src/js/web_advanced_filter.js:78
+#: code:addons/web_advanced_filter/static/src/xml/web_advanced_filter.xml:11
+#, python-format
+msgid "Marked records"
+msgstr "İşaretli kayıtlar"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters_combine_with_existing__model
+msgid "Model"
+msgstr "Model"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters__complement_filter_ids
+msgid "Remove result of filters"
+msgstr "Filtrelerin sonuçlarını kaldır"
+
+#. module: web_advanced_filter
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.ir_filters_view_form
+msgid "Remove the result of following filters"
+msgstr "Aşağıdaki filtrelerin sonuçlarını kaldır"
+
+#. module: web_advanced_filter
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.form_ir_filters_combine_with_existing
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.form_ir_filters_save_new
+msgid "Save"
+msgstr "Sakla"
+
+#. module: web_advanced_filter
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.form_ir_filters_save_new
+msgid "Save filter"
+msgstr "Filtreyi Sakla"
+
+#. module: web_advanced_filter
+#. openerp-web
+#: code:addons/web_advanced_filter/static/src/js/web_advanced_filter.js:55
+#: code:addons/web_advanced_filter/static/src/xml/web_advanced_filter.xml:5
+#, python-format
+msgid "Search query"
+msgstr "Arama sorgusu"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters__save_as_public
+msgid "Share with all users"
+msgstr "Tüm kullanıcılarla paylaş"
+
+#. module: web_advanced_filter
+#. openerp-web
+#: code:addons/web_advanced_filter/static/src/js/web_advanced_filter.js:71
+#: code:addons/web_advanced_filter/static/src/js/web_advanced_filter.js:94
+#: code:addons/web_advanced_filter/static/src/xml/web_advanced_filter.xml:9
+#: code:addons/web_advanced_filter/static/src/xml/web_advanced_filter.xml:15
+#, python-format
+msgid "Subtract from existing filter"
+msgstr "Şimdiki filtreden çıkart"
+
+#. module: web_advanced_filter
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.ir_filters_view_form
+msgid "Test filter"
+msgstr "Filtreyi dene"
+
+#. module: web_advanced_filter
+#: code:addons/web_advanced_filter/models/ir_filters.py:293
+#, python-format
+msgid "Testing %s"
+msgstr "Deneniyor %s"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,help:web_advanced_filter.field_ir_filters__evaluate_before_negate
+msgid "This is necessary if this filter contains positive operatorson x2many fields"
+msgstr ""
+"Eğer filtre x2many alanlar üzerinde operatörler içeriyorsa bu gereklidir"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,help:web_advanced_filter.field_ir_filters__evaluate_before_join
+msgid "This is necessary if this filter contains x2many fields with_auto_join activated"
+msgstr ""
+"Eğer bu filtre oto_birleştirmeli x2many alanlar içeriyorsa bu alan gereklidir"
+
+#. module: web_advanced_filter
+#. openerp-web
+#: code:addons/web_advanced_filter/static/src/js/web_advanced_filter.js:59
+#: code:addons/web_advanced_filter/static/src/js/web_advanced_filter.js:82
+#: code:addons/web_advanced_filter/static/src/xml/web_advanced_filter.xml:7
+#: code:addons/web_advanced_filter/static/src/xml/web_advanced_filter.xml:13
+#, python-format
+msgid "To new filter"
+msgstr "Yeni Filtreye"
+
+#. module: web_advanced_filter
+#: selection:ir.filters.combine.with.existing,action:0
+msgid "Union"
+msgstr "Birleştir"
+
+#. module: web_advanced_filter
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.form_ir_filters_save_new
+msgid "or"
+msgstr "ya da"

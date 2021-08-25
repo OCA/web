@@ -9,14 +9,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-03 03:50+0000\n"
-"PO-Revision-Date: 2018-01-03 03:50+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2021-08-24 20:50+0000\n"
+"Last-Translator: Ahmet Altinisik <aaltinisik@altinkaya.com.tr>\n"
 "Language-Team: Turkish (https://www.transifex.com/oca/teams/23907/tr/)\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: web_m2x_options
 #. openerp-web
@@ -26,6 +27,8 @@ msgid ""
 "!(widget.nodeOptions.no_open || widget.nodeOptions.no_open_edit || widget."
 "noOpen)"
 msgstr ""
+"!(widget.nodeOptions.no_open || widget.nodeOptions.no_open_edit || widget."
+"noOpen)"
 
 #. module: web_m2x_options
 #. openerp-web
@@ -39,7 +42,7 @@ msgstr "İptal"
 #: code:addons/web_m2x_options/static/src/js/form.js:40
 #, python-format
 msgid "Create"
-msgstr ""
+msgstr "Oluştur"
 
 #. module: web_m2x_options
 #. openerp-web
@@ -53,7 +56,7 @@ msgstr "Oluştur \"<strong>%s</strong>\""
 #: code:addons/web_m2x_options/static/src/js/form.js:37
 #, python-format
 msgid "Create a %s"
-msgstr ""
+msgstr "Bir %s oluştur"
 
 #. module: web_m2x_options
 #. openerp-web
@@ -74,7 +77,7 @@ msgstr "Oluştur ve düzenle"
 #: code:addons/web_m2x_options/static/src/js/form.js:245
 #, python-format
 msgid "No results to show..."
-msgstr "Gösterecek sonuç yok..."
+msgstr "Gösterecek Sonuç yok..."
 
 #. module: web_m2x_options
 #. openerp-web
@@ -88,16 +91,16 @@ msgstr "Aç: "
 #: code:addons/web_m2x_options/static/src/js/form.js:184
 #, python-format
 msgid "Search More..."
-msgstr "Daha ara..."
+msgstr "Daha Fazla..."
 
 #. module: web_m2x_options
 #: model:ir.model,name:web_m2x_options.model_ir_config_parameter
 msgid "System Parameter"
-msgstr "Sistem Değişkeni"
+msgstr "Sistem Parametreleri"
 
 #. module: web_m2x_options
 #. openerp-web
 #: code:addons/web_m2x_options/static/src/js/form.js:67
 #, python-format
 msgid "You are creating a new %s, are you sure it does not exist yet?"
-msgstr "Yeni bir %s, oluşturuyorsun halihazırda olmadığından emin misin?"
+msgstr "Yeni bir %s kaydı oluşturuyorsunuz, henüz varolmadığından emin misiniz?"

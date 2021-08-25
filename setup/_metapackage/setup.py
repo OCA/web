@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo12-addon-web_action_conditionable',
+        'odoo12-addon-web_advanced_filter',
         'odoo12-addon-web_advanced_search',
         'odoo12-addon-web_advanced_search_wildcard',
         'odoo12-addon-web_calendar_slot_duration',

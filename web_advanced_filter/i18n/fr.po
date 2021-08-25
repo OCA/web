@@ -1,0 +1,266 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* web_advanced_filter
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2021-08-09 15:49+0000\n"
+"Last-Translator: Pascal GOUHIER <pascal.gouhier@copagex.fr>\n"
+"Language-Team: none\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters_combine_with_existing__action
+msgid "Action"
+msgstr "Action"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters__union_filter_ids
+msgid "Add result of filters"
+msgstr "Ajouter le résultat des filtres"
+
+#. module: web_advanced_filter
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.ir_filters_view_form
+msgid "Add the result of following filters"
+msgstr "Ajouter le résultat des filtres suivants"
+
+#. module: web_advanced_filter
+#. openerp-web
+#: code:addons/web_advanced_filter/static/src/js/web_advanced_filter.js:64
+#: code:addons/web_advanced_filter/static/src/js/web_advanced_filter.js:87
+#: code:addons/web_advanced_filter/static/src/xml/web_advanced_filter.xml:8
+#: code:addons/web_advanced_filter/static/src/xml/web_advanced_filter.xml:14
+#, python-format
+msgid "Add to existing filter"
+msgstr "Ajouter au filtre existant"
+
+#. module: web_advanced_filter
+#. openerp-web
+#: code:addons/web_advanced_filter/static/src/js/web_advanced_filter.js:45
+#, python-format
+msgid "Advanced filters"
+msgstr "Filtres avancés"
+
+#. module: web_advanced_filter
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.ir_filters_view_form
+msgid "Are you sure? You can't undo this operation!"
+msgstr "Es-tu sûr ? Vous ne pouvez pas annuler cette opération !"
+
+#. module: web_advanced_filter
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.form_ir_filters_combine_with_existing
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.form_ir_filters_save_new
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: web_advanced_filter
+#: model:ir.model,name:web_advanced_filter.model_ir_filters_combine_with_existing
+msgid "Combine a selection with an existing filter"
+msgstr "Combiner une sélection avec un filtre existant"
+
+#. module: web_advanced_filter
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.form_ir_filters_combine_with_existing
+msgid "Combine with existing filter"
+msgstr "Combiner avec un filtre existant"
+
+#. module: web_advanced_filter
+#: selection:ir.filters.combine.with.existing,action:0
+msgid "Complement"
+msgstr "Complément"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters_combine_with_existing__context
+msgid "Context"
+msgstr "Contexte"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters_combine_with_existing__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters_combine_with_existing__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters_combine_with_existing__display_name
+msgid "Display Name"
+msgstr "Afficher Nom"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters__domain
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters_combine_with_existing__domain
+msgid "Domain"
+msgstr "Domaine"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters__domain_this
+msgid "Domain without helpers"
+msgstr "Domaine sans assistants"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters__evaluate_before_join
+msgid "Evaluate this filter before joining"
+msgstr "Évaluer ce filtre avant de rejoindre"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters__evaluate_before_negate
+msgid "Evaluate this filter before negating"
+msgstr "Évaluer ce filtre avant de le annuler"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters_combine_with_existing__filter_id
+msgid "Filter"
+msgstr "Filtre"
+
+#. module: web_advanced_filter
+#: model:ir.model,name:web_advanced_filter.model_ir_filters
+msgid "Filters"
+msgstr "Filtres"
+
+#. module: web_advanced_filter
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.ir_filters_view_form
+msgid "Freeze filter"
+msgstr "Fige le filtre"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters__is_frozen
+msgid "Frozen"
+msgstr "Gelé"
+
+#. module: web_advanced_filter
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.ir_filters_view_form
+msgid "Have this filter contain exactly the records it currently contains, with no changes in the future. Be careful, you can't undo this operation!"
+msgstr ""
+"Que ce filtre contienne exactement les enregistrements qu’il contient "
+"actuellement, sans aucune modification à l’avenir. Attention, vous ne pouvez "
+"pas annuler cette opération !"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters_combine_with_existing__id
+msgid "ID"
+msgstr "ID"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters_combine_with_existing____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters_combine_with_existing__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters_combine_with_existing__write_date
+msgid "Last Updated on"
+msgstr "Mis à jour le"
+
+#. module: web_advanced_filter
+#. openerp-web
+#: code:addons/web_advanced_filter/static/src/js/web_advanced_filter.js:78
+#: code:addons/web_advanced_filter/static/src/xml/web_advanced_filter.xml:11
+#, python-format
+msgid "Marked records"
+msgstr "Enregistrements marqués"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters_combine_with_existing__model
+msgid "Model"
+msgstr "Modèle"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters__complement_filter_ids
+msgid "Remove result of filters"
+msgstr "Supprimer le résultat des filtres"
+
+#. module: web_advanced_filter
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.ir_filters_view_form
+msgid "Remove the result of following filters"
+msgstr "Supprimer le résultat des filtres suivants"
+
+#. module: web_advanced_filter
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.form_ir_filters_combine_with_existing
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.form_ir_filters_save_new
+msgid "Save"
+msgstr "Sauvegarder"
+
+#. module: web_advanced_filter
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.form_ir_filters_save_new
+msgid "Save filter"
+msgstr "Enregistrer le filtre"
+
+#. module: web_advanced_filter
+#. openerp-web
+#: code:addons/web_advanced_filter/static/src/js/web_advanced_filter.js:55
+#: code:addons/web_advanced_filter/static/src/xml/web_advanced_filter.xml:5
+#, python-format
+msgid "Search query"
+msgstr "Requête de recherche"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,field_description:web_advanced_filter.field_ir_filters__save_as_public
+msgid "Share with all users"
+msgstr "Partager avec tous les utilisateurs"
+
+#. module: web_advanced_filter
+#. openerp-web
+#: code:addons/web_advanced_filter/static/src/js/web_advanced_filter.js:71
+#: code:addons/web_advanced_filter/static/src/js/web_advanced_filter.js:94
+#: code:addons/web_advanced_filter/static/src/xml/web_advanced_filter.xml:9
+#: code:addons/web_advanced_filter/static/src/xml/web_advanced_filter.xml:15
+#, python-format
+msgid "Subtract from existing filter"
+msgstr "Soustraire du filtre existant"
+
+#. module: web_advanced_filter
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.ir_filters_view_form
+msgid "Test filter"
+msgstr "Filtre de test"
+
+#. module: web_advanced_filter
+#: code:addons/web_advanced_filter/models/ir_filters.py:293
+#, python-format
+msgid "Testing %s"
+msgstr "Essaie %s"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,help:web_advanced_filter.field_ir_filters__evaluate_before_negate
+msgid "This is necessary if this filter contains positive operatorson x2many fields"
+msgstr ""
+"Cela est nécessaire si ce filtre contient des opérateurs positifs sur des "
+"champs x2many"
+
+#. module: web_advanced_filter
+#: model:ir.model.fields,help:web_advanced_filter.field_ir_filters__evaluate_before_join
+msgid "This is necessary if this filter contains x2many fields with_auto_join activated"
+msgstr ""
+"Cela est nécessaire si ce filtre contient des champs x2many avec "
+"with_auto_join activés"
+
+#. module: web_advanced_filter
+#. openerp-web
+#: code:addons/web_advanced_filter/static/src/js/web_advanced_filter.js:59
+#: code:addons/web_advanced_filter/static/src/js/web_advanced_filter.js:82
+#: code:addons/web_advanced_filter/static/src/xml/web_advanced_filter.xml:7
+#: code:addons/web_advanced_filter/static/src/xml/web_advanced_filter.xml:13
+#, python-format
+msgid "To new filter"
+msgstr "Vers un nouveau filtre"
+
+#. module: web_advanced_filter
+#: selection:ir.filters.combine.with.existing,action:0
+msgid "Union"
+msgstr "Union"
+
+#. module: web_advanced_filter
+#: model_terms:ir.ui.view,arch_db:web_advanced_filter.form_ir_filters_save_new
+msgid "or"
+msgstr "ou"
