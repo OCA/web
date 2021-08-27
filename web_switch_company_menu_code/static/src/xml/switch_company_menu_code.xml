@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+
+    <t t-inherit="web.SwitchCompanyMenu" t-inherit-mode="extension">
+
+        <xpath expr="//div[@role='button']" position="replace">
+            <div
+                role="button"
+                t-att-aria-pressed="is_current"
+                aria-label="Switch to this company"
+                tabindex="0"
+                class="d-flex flex-grow-1 align-items-center py-0 log_into pl-3 o_py"
+                t-att-style="is_current ? 'background-color: lightgrey;' : ''"
+            >
+                <t t-if="is_allowed">
+                    <span class='mr-3 company_label'>
+                        <t t-esc="company[2]" />
+                        <t t-esc="company[1]" />
+                    </span>
+                </t>
+                <t t-else="">
+                    <span class='mr-3 company_label text-muted'>
+                        <t t-esc="company[2]" />
+                        <t t-esc="company[1]" />
+                    </span>
+                </t>
+            </div>
+        </xpath>
+    </t>
+
+</templates>
