@@ -1,264 +1,331 @@
-/* Copyright 2019 Onestein
- * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
+/*
+ * Copyright 2019 Onestein
+ * Copyright 2021 Level Prime Srl - Roberto Fichera <roberto.fichera@levelprime.com>
+ * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+ */
 
-odoo.define("web_edit_user_filter", function (require) {
+odoo.define("web_edit_user_filter/static/src/js/backend.js", function (require) {
     "use strict";
 
-    var FavoriteMenu = require("web.FavoriteMenu"),
-        core = require("web.core"),
-        SearchView = require("web.SearchView");
+    var core = require("web.core");
     var qweb = core.qweb;
     var _t = core._t;
+    const {patch} = require("web.utils");
+    const components = {
+        SearchBar: require("web.SearchBar"),
+        CustomFavoriteItem: require("web.CustomFavoriteItem"),
+        ControlPanelModelExtension: require("web/static/src/js/control_panel/control_panel_model_extension.js"),
+    };
 
-    FavoriteMenu.include({
-        /**
-         * Adds the facets data to the filter.
-         *
-         * @override
-         * @private
-         */
-        _createFilter: function (filter) {
-            var facets = [];
+    patch(
+        components.ControlPanelModelExtension,
+        "web_edit_user_filter/static/src/js/backend.js",
+        {
+            _favoriteToIrFilter(favorite) {
+                var irFilter = this._super(...arguments);
+                if ("facet" in favorite) {
+                    irFilter.facet = favorite.facet;
+                }
+                return irFilter;
+            },
 
-            this.query.each(function (facet) {
-                var json_facet = facet.attributes;
-                json_facet.values = facet.get("values");
+            /**
+             * Returns a filter of type 'favorite' starting from an ir_filter comming from db.
+             * @private
+             * @param {Object} irFilter
+             * @returns {Object}
+             */
+            _irFilterToFavorite(irFilter) {
+                var favorite = this._super(...arguments);
+                if (irFilter.facet) {
+                    favorite.facet = irFilter.facet;
+                }
+                return favorite;
+            },
+        }
+    );
 
-                _.each(json_facet.values, function (value, i) {
-                    if (
-                        typeof value.value === "object" &&
-                        value.value !== null &&
-                        "attrs" in value.value
-                    ) {
-                        json_facet.values[i] = {
-                            attrs: value.value.attrs,
-                        };
-                    }
+    patch(
+        components.CustomFavoriteItem,
+        "web_edit_user_filter/static/src/js/backend.js",
+        {
+            // ---------------------------------------------------------------------
+            // Private
+            // ---------------------------------------------------------------------
+
+            /**
+             * @private
+             */
+            _saveFavorite() {
+                if (!this.state.description.length) {
+                    this.env.services.notification.notify({
+                        message: this.env._t(
+                            "A name for your favorite filter is required."
+                        ),
+                        type: "danger",
+                    });
+                    return this.descriptionRef.el.focus();
+                }
+                const favorites = this.model.get(
+                    "filters",
+                    (f) => f.type === "favorite"
+                );
+                if (favorites.some((f) => f.description === this.state.description)) {
+                    this.env.services.notification.notify({
+                        message: this.env._t("Filter with same name already exists."),
+                        type: "danger",
+                    });
+                    return this.descriptionRef.el.focus();
+                }
+                var facets = this.model.get("facets");
+                this.model.dispatch("createNewFavorite", {
+                    type: "favorite",
+                    description: this.state.description,
+                    isDefault: this.state.isDefault,
+                    isShared: this.state.isShared,
+                    facet: JSON.stringify(facets),
                 });
+                // Reset state
+                Object.assign(this.state, {
+                    description: this.env.action.name || "",
+                    isDefault: false,
+                    isShared: false,
+                    open: false,
+                });
+            },
+        }
+    );
 
-                if ("field" in json_facet) {
-                    json_facet.field = {
-                        attrs: json_facet.field.attrs,
-                    };
+    patch(components.SearchBar, "web_edit_user_filter/static/src/js/backend.js", {
+        mounted() {
+            var self = this;
+            this._super(...arguments);
+            $(".o_searchview").on("click", ".o_searchview_facet", function () {
+                $(this).popover("dispose");
+                if ($(this).hasClass("o_facet_remove")) {
+                    return;
                 }
-
-                facets.push(json_facet);
+                var facet_type = $(this).attr("data-type");
+                var facetId = $(this).attr("data-gp");
+                self._process_filters($(this), facet_type, facetId);
             });
 
-            filter.facet = JSON.stringify(facets);
-            return this._super(filter);
+            return this;
         },
 
-        /**
-         * Adds the edit button to the favourite filter menu item.
-         *
-         * @override
-         * @private
-         */
-        append_filter: function (filter) {
+        _process_filters($el, facet_type, facetId) {
             var self = this;
-            var res = this._super(filter);
-            var key = this.key_for(filter);
-            this.$filters[key].append(
-                $("<span>", {
-                    class: "fa fa-pencil o-edit-user-filter",
-                    on: {
-                        click: function (event) {
-                            event.stopImmediatePropagation();
-                            self._unpackFilter(filter);
-                        },
-                    },
-                })
-            );
-            return res;
-        },
-
-        /**
-         * Unpacks a saved filter and updates the search view's facets.
-         *
-         * @private
-         */
-        _unpackFilter: function (filter) {
-            var self = this;
-            var facets = JSON.parse(filter.facet);
-
-            var new_facets = [];
-            this.query.reset([]);
-
-            _.each(facets, function (segment) {
-                if (segment.cat === "groupByCategory") {
-                    _.each(segment.values, function (value) {
-                        var groupBy = _.find(self.searchview.groupbysMapping, function (
-                            mapping
-                        ) {
-                            return (
-                                mapping.groupby.attrs.context === value.attrs.context
-                            );
-                        });
-                        var eventData = {
-                            category: "groupByCategory",
-                            itemId: groupBy.groupbyId,
-                            isActive: true,
-                            groupId: groupBy.groupId,
-                        };
-                        self.trigger_up("menu_item_toggled", eventData);
-                    });
-                } else if (segment.cat === "filterCategory") {
-                    var new_filters = [];
-                    _.each(segment.values, function (value) {
-                        if (value.attrs.name) {
-                            var filterDomain = _.find(
-                                self.searchview.filtersMapping,
-                                function (mapping) {
-                                    return (
-                                        mapping.filter.attrs.name === value.attrs.name
-                                    );
-                                }
-                            );
-                            var eventData = {
-                                category: "filterCategory",
-                                itemId: filterDomain.filterId,
-                                isActive: true,
-                                groupId: filterDomain.groupId,
-                            };
-
-                            self.trigger_up("menu_item_toggled", eventData);
-                        } else {
-                            new_filters.push({
-                                groupId: null,
-                                filter: {
-                                    tag: "filter",
-                                    attrs: value.attrs,
-                                },
-                                itemId: _.uniqueId("__filter__"),
-                            });
-                        }
-                    });
-                    self.trigger_up("new_filters", new_filters);
-                } else {
-                    var search_widget = _.find(self.searchview.search_fields, function (
-                        f
-                    ) {
-                        return f.attrs.name === segment.field.attrs.name;
-                    });
-                    new_facets.push({
-                        category: segment.category,
-                        field: search_widget,
-                        values: segment.values,
+            var selectedFacet = self.model.get("filters").filter(function (facet) {
+                return (
+                    facet.type === facet_type &&
+                    facet.groupId === facetId &&
+                    facet.isActive === true
+                );
+            });
+            if (!selectedFacet.length) {
+                return;
+            }
+            if (facet_type === "favorite") {
+                var FavFacets = [];
+                var currentFacet = self.model.get(
+                    "filters",
+                    (f) => f.type === "favorite" && f.groupId === facetId
+                );
+                if (currentFacet[0].groupBys.length) {
+                    _.each(currentFacet[0].groupBys, function (description) {
+                        FavFacets.push(
+                            self.model.get(
+                                "filters",
+                                (f) =>
+                                    f.type === "groupBy" && f.fieldName === description
+                            )[0]
+                        );
                     });
                 }
-            });
-
-            this.query.add(new_facets);
-        },
-    });
-
-    SearchView.include({
-        /**
-         * Removes a value from a facet.
-         *
-         * @private
-         * @param {Backbone.Model} model
-         * @param {Integer|Object} value The value to remove
-         */
-        _removeValue: function (model, value) {
-            var toRemove = model.values.filter(function (v) {
-                if (typeof v.attributes.value === "object") {
-                    return v.attributes.value.attrs.domain === value;
-                }
-
-                return v.attributes.value.toString() === value;
-            });
-            model.values.remove(toRemove);
-        },
-
-        /**
-         * Renders a popover for a facet.
-         *
-         * @private
-         * @param {jQuery} $facet Element of the facet
-         * @param {Backbone.Model} model
-         */
-        _renderPopover: function ($facet, model) {
-            var self = this;
+            }
+            var $facet = $($el);
             var $content = $(
                 qweb.render("web_edit_user_filter.Popover", {
-                    values: model.get("values"),
+                    values: selectedFacet,
                 })
             );
-            // Cannot use Widget.events here because renderFacets is
-            // triggered apart from renderElement
-            $content.find(".list-group-item").click(function () {
-                self._removeValue(model, $(this).attr("data-value"));
+            $content.find(".list-group-item").on("click", function () {
+                var PopOverContainer = $(".o_searchview");
+                var type = $(this).data("type");
+                var facetIdEl = $(this).data("id");
+                if (type === "filter") {
+                    var FacetSelected = self.model.get(
+                        "filters",
+                        (f) => f.id === facetIdEl && f.type === "filter"
+                    );
+                    if (FacetSelected[0].hasOptions) {
+                        var OptionSelected = FacetSelected[0].options.filter(function (
+                            option
+                        ) {
+                            return option.isActive === true;
+                        });
+                        _.each(OptionSelected, function (option) {
+                            self.model.dispatch(
+                                "toggleFilterWithOptions",
+                                facetIdEl,
+                                option.id
+                            );
+                        });
+                    } else {
+                        self.model.dispatch("toggleFilter", facetIdEl);
+                    }
+                } else if (type === "groupBy") {
+                    self.model.dispatch("toggleFilter", facetIdEl);
+                } else if (type === "favorite") {
+                    event.stopImmediatePropagation();
+                    var facet = self.model.get(
+                        "filters",
+                        (f) => f.type === type && f.groupId === facetIdEl
+                    );
+                    if (facet.length) {
+                        self._unpackFilter(facet[0]);
+                    } else {
+                        self.env.services.notification.notify({
+                            message: self.env._t(
+                                "In order to edit newly added 'Favorite filters, you need to refresh the page first. \n Kindly refresh the page and try again."
+                            ),
+                            type: "warning",
+                        });
+                    }
+                }
+                $(this).remove();
+                $(PopOverContainer).find(".popover").popover("hide");
             });
-
+            var $container = $(".o_searchview");
             $facet.popover({
-                title: _t("Edit Facet"),
+                title: _t(
+                    'Edit Filters <a href="#" class="close" data-dismiss="alert">&times;</a>'
+                ),
                 template: qweb.render("web_edit_user_filter.PopoverTemplate"),
                 content: $content,
-                container: this.$el,
+                container: $container,
                 html: true,
                 trigger: "manual",
                 placement: "bottom",
                 animation: false,
             });
+            var PopOverContainer = $(".o_searchview");
+            $(PopOverContainer).find(".popover").popover("hide");
+            $facet.popover("show");
         },
 
-        /**
-         * Hides all popovers.
-         *
-         * @private
-         */
-        _hidePopovers: function () {
-            this.$el.find(".popover").popover("hide");
-        },
-
-        /**
-         * @override
-         */
-        renderFacets: function () {
+        _unpackFilter(filter) {
             var self = this;
-            var res = this._super.apply(this, arguments);
-
-            this.$el.find(".o-edit-user-filter-popover").remove();
-
-            _.each(this.input_subviews, function (input_subview) {
-                if (
-                    !input_subview.model ||
-                    input_subview.model.attributes.is_custom_filter
-                ) {
-                    return;
+            self.model.dispatch("toggleFilter", filter.id);
+            var facets = JSON.parse(filter.facet);
+            var convFacets = [];
+            _.each(facets, function (facet) {
+                if (facet.type === "filter") {
+                    _.each(facet.values, function (fc) {
+                        var fetchedFilter = self.model.get(
+                            "filters",
+                            (f) => f.description === fc && f.type === "filter"
+                        );
+                        if (fetchedFilter.length) {
+                            convFacets.push(
+                                self.model.get(
+                                    "filters",
+                                    (f) => f.description === fc && f.type === "filter"
+                                )
+                            );
+                        } else {
+                            var tentativeFilter = self.model.get(
+                                "filters",
+                                (f) =>
+                                    f.description === facet.title && f.type === "filter"
+                            );
+                            if (tentativeFilter.length) {
+                                _.each(tentativeFilter, function (f) {
+                                    if (f.hasOptions) {
+                                        var trueOption = "";
+                                        _.each(f.options, function (option) {
+                                            var str = fc
+                                                .split(": ")
+                                                .pop()
+                                                .split(" ")[0];
+                                            if (str === option.description) {
+                                                trueOption = option.id;
+                                            }
+                                        });
+                                        if (trueOption !== "") {
+                                            self.model.dispatch(
+                                                "toggleFilterWithOptions",
+                                                f.id,
+                                                trueOption
+                                            );
+                                        }
+                                    }
+                                });
+                            } else {
+                                const preFilter = {
+                                    description: facet.title,
+                                    domain: filter.domain,
+                                    type: "filter",
+                                };
+                                self.model.dispatch("createNewFilters", [preFilter]);
+                            }
+                        }
+                    });
+                } else if (facet.type === "groupBy") {
+                    _.each(facet.values, function (fc) {
+                        var fetchedGroup = self.model.get(
+                            "filters",
+                            (f) => f.description === fc && f.type === "groupBy"
+                        );
+                        if (fetchedGroup.length) {
+                            convFacets.push(
+                                self.model.get(
+                                    "filters",
+                                    (f) => f.description === fc && f.type === "groupBy"
+                                )
+                            );
+                        } else {
+                            var tentativeFilter = self.model.get(
+                                "filters",
+                                (f) =>
+                                    f.description === facet.title &&
+                                    f.type === "groupBy"
+                            );
+                            if (tentativeFilter.length) {
+                                _.each(tentativeFilter, function (f) {
+                                    if (f.hasOptions) {
+                                        var trueOption = "";
+                                        _.each(f.options, function (option) {
+                                            var str = fc
+                                                .split(": ")
+                                                .pop()
+                                                .split(" ")[0];
+                                            if (str === option.description) {
+                                                trueOption = option.id;
+                                            }
+                                        });
+                                        if (trueOption !== "") {
+                                            self.model.dispatch(
+                                                "toggleFilterWithOptions",
+                                                f.id,
+                                                trueOption
+                                            );
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
                 }
-
-                input_subview.$el.addClass("o-edit-user-filter-editable");
-                self._renderPopover(input_subview.$el, input_subview.model);
-
-                input_subview.$el.click(function () {
-                    self._hidePopovers();
-                    input_subview.$el.popover("show");
-                });
             });
-            return res;
+            if (convFacets.length) {
+                _.each(convFacets, function (facet) {
+                    self.model.dispatch("toggleFilter", facet[0].id);
+                });
+            }
         },
-
-        /**
-         * @override
-         */
-        start: function () {
-            var self = this;
-            var res = this._super.apply(this, arguments);
-            this._proxyHidePopovers = this.proxy("_hidePopovers");
-            $(document).click(this._proxyHidePopovers);
-            return res;
-        },
-
-        /**
-         * @override
-         */
-        destroy: function () {
-            var res = this._super.apply(this, arguments);
-            $(document).unbind("click", this._proxyHidePopovers);
-            return res;
-        },
+    });
+    $(document).on("click", ".popover .close", function () {
+        $(this).parents(".popover").popover("hide");
     });
 });
