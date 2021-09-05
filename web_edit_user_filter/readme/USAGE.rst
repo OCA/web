@@ -3,7 +3,11 @@ Edit a favourite filter:
 #. Go to a list or kanban view;
 #. open the advanced search options;
 #. open the 'Favorites' menu;
+#. Select a filter and click on the star icon of the filter name
 #. click on the pencil icon to start editing the filter.
+
+.. image:: /web_edit_user_filter/static/description/select_facet.png
+   :alt: Select Facet
 
 Edit a facet:
 
