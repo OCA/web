@@ -728,6 +728,9 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     const model_data = await this.getModelData(xmlid);
+                    if (_.isEmpty(model_data)) {
+                        return reject(`Model data not found for '${xmlid}'`);
+                    }
                     let record = {};
                     if (model_data.model.startsWith("ir.actions.")) {
                         record = await this.indexeddb.action.get(model_data.res_id);
@@ -742,7 +745,7 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                     }
 
                     if (_.isEmpty(record)) {
-                        return reject("Record not found for the given reference");
+                        return reject(`Record not found for '${xmlid}'`);
                     }
 
                     return resolve(record);

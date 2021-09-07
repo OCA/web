@@ -35,6 +35,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
 
             this._cache_hashes = params.cache_hashes;
             this._prefetched_urls = params.prefetched_urls;
+            this._isDisabled = params.is_pwa_cache_disabled;
 
             this._db = new DatabaseSystem();
             this._cache = new CacheSystem();
@@ -91,6 +92,9 @@ odoo.define("web_pwa_cache.PWA", function(require) {
          * @override
          */
         installWorker: function() {
+            if (this._isDisabled) {
+                return Promise.resolve();
+            }
             const task = new Promise(async (resolve, reject) => {
                 try {
                     await this._cache.addAll(
@@ -116,6 +120,9 @@ odoo.define("web_pwa_cache.PWA", function(require) {
          * @override
          */
         activateWorker: function() {
+            if (this._isDisabled) {
+                return Promise.resolve();
+            }
             const task = new Promise(async (resolve, reject) => {
                 try {
                     if (!this._wasActivated) {
@@ -171,7 +178,11 @@ odoo.define("web_pwa_cache.PWA", function(require) {
          * @returns {Boolean}
          */
         isActivated: function() {
-            return self.serviceWorker && self.serviceWorker.state === "activated";
+            return (
+                !this._isDisabled &&
+                self.serviceWorker &&
+                self.serviceWorker.state === "activated"
+            );
         },
 
         /**
@@ -186,6 +197,10 @@ odoo.define("web_pwa_cache.PWA", function(require) {
          * @override
          */
         processRequest: function(request) {
+            if (this._isDisabled) {
+                return fetch(request);
+            }
+
             const isStandaloneMode =
                 (this._managers.config && this._managers.config.isStandaloneMode()) ||
                 false;

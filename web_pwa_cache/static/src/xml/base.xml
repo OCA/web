@@ -21,14 +21,14 @@
                     Recods queued to sync.
                 </span>
             </a>
-            <div role="separator" id="pwaSeparator" class="dropdown-divider d-none" />
+            <div role="separator" class="dropdown-divider pwa-separator d-none" />
         </t>
         <t t-jquery="a:first" t-operation="before">
             <h6
-                class="dropdown-header text-center text-uppercase text-black"
+                class="dropdown-header text-center text-uppercase text-black d-none"
                 id="pwa_status"
             />
-            <div role="separator" id="pwaSeparator" class="dropdown-divider d-none" />
+            <div role="separator" class="dropdown-divider pwa-separator d-none" />
         </t>
     </t>
     <t t-name="web_pwa_cache.SWInfo">

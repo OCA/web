@@ -192,6 +192,11 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                     return reject(err);
                 }
 
+                // Const model_info = await this._db.getModelInfo("res.groups");
+                // const records = await this._db.search_read(model_info, []);
+                // console.log("------------------ RECORDS");
+                // console.log(records);
+
                 this.options.force_client_show_modal = false;
                 this._verbose = false;
                 return resolve();

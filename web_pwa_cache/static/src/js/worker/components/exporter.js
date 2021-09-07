@@ -519,12 +519,25 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
          *
          * @returns {Promise}
          */
-        has_group: function() {
+        has_group: function(model, data) {
             return new Promise(async (resolve, reject) => {
-                if (this.isOfflineMode()) {
-                    return resolve(true);
+                const xmlid = data.args[0];
+                try {
+                    // We only import the groups where the user is in
+                    const record = await this._db.ref(xmlid);
+                    if (!_.isEmpty(record)) {
+                        return resolve(true);
+                    }
+                } catch (err) {
+                    // Do nothing
                 }
-                return reject();
+
+                if (!this.isOfflineMode()) {
+                    // To ensure that doesn't have the group we
+                    // redirect the request to the server
+                    return reject();
+                }
+                return resolve(false);
             });
         },
 

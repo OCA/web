@@ -25,15 +25,23 @@ odoo.define("web_pwa_cache.UserMenu", function(require) {
          * @override
          */
         start: function() {
-            return this._super.apply(this, arguments).then(() => {
-                this._pwaManager = WebClientObj.pwa_manager;
-                if (this._pwaManager.isPWAStandalone()) {
-                    this._enablePWAMenu();
-                    this._updatePWAMenuInfo(
-                        this._pwaManager.isOfflineMode() ? "offline" : "online"
-                    );
-                }
-            });
+            return this._super
+                .apply(this, arguments)
+                .then(() => {
+                    this._pwaManager = WebClientObj.pwa_manager;
+                    return this._pwaManager._checkPWACacheStatus();
+                })
+                .then(() => {
+                    if (
+                        this._pwaManager.isPWACacheEnabled() &&
+                        this._pwaManager.isPWAStandalone()
+                    ) {
+                        this._enablePWAMenu();
+                        this._updatePWAMenuInfo(
+                            this._pwaManager.isOfflineMode() ? "offline" : "online"
+                        );
+                    }
+                });
         },
 
         _updatePWAMenuInfo: function(pwa_mode) {
@@ -54,7 +62,7 @@ odoo.define("web_pwa_cache.UserMenu", function(require) {
 
         _enablePWAMenu: function() {
             this.$(
-                "[data-menu='pwaMode'],[data-menu='pwaQueueSync'],#pwaSeparator"
+                "#pwa_status,.pwa-separator,[data-menu='pwaMode'],[data-menu='pwaQueueSync']"
             ).removeClass("d-none");
         },
 
@@ -77,12 +85,15 @@ odoo.define("web_pwa_cache.UserMenu", function(require) {
 
         _onReceiveBroadcastMessage: function(evt) {
             const res = BroadcastMixin._onReceiveBroadcastMessage.call(this, evt);
-            if (!res || !this._pwaManager.isPWAStandalone()) {
+            if (
+                !res ||
+                !this._pwaManager.isPWACacheEnabled() ||
+                !this._pwaManager.isPWAStandalone()
+            ) {
                 return false;
             }
             switch (evt.data.type) {
                 case "PWA_INIT_CONFIG":
-                    this._enablePWAMenu();
                     if (evt.data.data.pwa_mode) {
                         this._updatePWAMenuInfo(evt.data.data.pwa_mode);
                     }

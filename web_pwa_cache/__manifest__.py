@@ -12,6 +12,7 @@
     "license": "AGPL-3",
     "depends": ["web_pwa_oca", "queue_job"],
     "data": [
+        "security/security.xml",
         "security/ir.model.access.csv",
         "data/queue_job_function_data.xml",
         "templates/assets.xml",
