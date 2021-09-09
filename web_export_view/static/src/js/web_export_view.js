@@ -88,7 +88,14 @@ odoo.define('web_export_view', function (require) {
                                         ? _t("True") : _t("False")
                                 );
                             } else {
-                                var text = $cell.text().trim();
+                                var is_m2m = $cell.hasClass('o_many2many_tags_cell');
+                                if (is_m2m) {
+                                    var tags = $cell.find('span.o_badge_text');
+                                    var tags_text_list = tags.map((i, el) => el.innerText.trim()).get();
+                                    var text = tags_text_list.join('\n');
+                                } else {
+                                    var text = $cell.text().trim();
+                                }
                                 var is_number =
                                     $cell.hasClass('o_list_number') &&
                                     !$cell.hasClass('o_float_time_cell');
