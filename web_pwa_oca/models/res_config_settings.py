@@ -10,7 +10,6 @@ from PIL import Image
 from odoo import _, api, exceptions, fields, models
 from odoo.tools.mimetypes import guess_mimetype
 
-
 DEFAULT_ICON_SIZE = 512
 PWA_ICON_SIZES = (
     (512, 512),
