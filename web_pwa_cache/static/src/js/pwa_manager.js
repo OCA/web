@@ -35,6 +35,19 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
         custom_events: {
             change_pwa_mode: "_onChangePWAMode",
         },
+        custom_broadcast_events: {
+            PWA_INIT_CONFIG: "_onPWAInitConfig",
+        },
+        custom_broadcast_standalone_events: {
+            PWA_CONFIG_CHANGED: "_onPWAConfigChanged",
+            PWA_CACHE_FAIL: "_onPWACacheFail",
+            PWA_PREFETCH_MODAL_TASK_INFO: "_onPWAPrefetchModalTaskInfo",
+            PWA_SYNC_RECORDS: "_onPWASyncRecords",
+            PWA_SYNC_RECORD_OK: "_onPWASyncRecordOK",
+            PWA_SYNC_ERROR: "_onPWASyncError",
+            PWA_SYNC_RECORDS_COMPLETED: "_onPWASyncRecordsComplete",
+            PWA_SYNC_NEED_ACTION: "_onPWASyncNeedAction",
+        },
         _show_prefetch_modal_delay: 5000,
         _autoclose_prefetch_modal_delay: 3000,
         _show_sw_info_modal_delay: 500,
@@ -45,6 +58,14 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
         init: function() {
             this.init_broadcast("pwa-page-messages", "pwa-sw-messages");
             this._super.apply(this, arguments);
+
+            this._wakeLockScreen = null;
+            this._isWakeLockSupported = "wakeLock" in navigator;
+            if (!this._isWakeLockSupported) {
+                console.error(
+                    _t("wakeLock API are not supported! Maybe you are not using HTTPS.")
+                );
+            }
 
             this._prefetchTasksInfo = {};
             this._prefetchModelHidden = true;
@@ -194,6 +215,11 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     // Can do prefetch = is online
                     this.setPWAMode("online");
                 }
+
+                if (this._wakeLockScreenPromise && this._wakeLockScreen) {
+                    this.wakeLockScreen(false);
+                    this._wakeLockScreenPromise = null;
+                }
             }
             this._checkPrefetchProgressTimer = null;
         },
@@ -221,6 +247,10 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 this.$modalPrefetchProgress.modal("show");
                 this.$modalPrefetchProgressContent.empty();
                 this._prefetchModelHidden = false;
+
+                if (!this._wakeLockScreenPromise && !this._wakeLockScreen) {
+                    this._wakeLockScreenPromise = this.wakeLockScreen(true);
+                }
             }
         },
 
@@ -299,190 +329,275 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 return;
             }
 
-            // Generic Messages
-            switch (evt.data.type) {
-                case "PWA_INIT_CONFIG":
-                    if (this._swInfoOpenTimer) {
-                        clearTimeout(this._swInfoOpenTimer);
-                        this._swInfoOpenTimer = false;
-                    }
-                    this._pwaMode = evt.data.data.pwa_mode;
-                    if (this.isPWAStandalone()) {
-                        if (navigator.serviceWorker.controller) {
-                            // Create prefetching modal
-                            this.$modalPrefetchProgress = $(
-                                QWeb.render("web_pwa_cache.PrefetchProgress", {
-                                    sw_version: evt.data.data.sw_version,
-                                })
-                            );
-                            this.$modalPrefetchProgress.appendTo("body");
-                            this.$modalPrefetchProgressContent = this.$modalPrefetchProgress.find(
-                                ".modal-body"
-                            );
-                            this.$modalPrefetchProgress.on("shown.bs.modal", () => {
-                                this._prefetchModelHidden = false;
-                                // Append current data
-                                for (const task_info_id in this._prefetchTasksInfo) {
-                                    const task_info = this._prefetchTasksInfo[
-                                        task_info_id
-                                    ];
-                                    this._updatePrefetchModalData(
-                                        task_info_id,
-                                        task_info
-                                    );
-                                }
-                            });
-                            //
-                            if (evt.data.data.is_db_empty) {
-                                if (this.modeSelector.isOpen()) {
-                                    this.modeSelector.close();
-                                }
-                            } else if (!this.modeSelector.wasShown()) {
-                                this.modeSelector.show();
-                            }
-                        }
-                    }
-
-                    // Ensures that the worker has updated base config
-                    // this.sendConfigToSW();
-                    break;
+            let method_name = null;
+            if (
+                Object.prototype.hasOwnProperty.call(
+                    this.custom_broadcast_events,
+                    evt.data.type
+                )
+            ) {
+                method_name = this.custom_broadcast_events[evt.data.type];
+            } else if (
+                this.isPWAStandalone() &&
+                Object.prototype.hasOwnProperty.call(
+                    this.custom_broadcast_standalone_events,
+                    evt.data.type
+                )
+            ) {
+                method_name = this.custom_broadcast_standalone_events[evt.data.type];
             }
+            if (method_name) {
+                this[method_name].call(this, evt.data);
+            }
+        },
 
-            // Standalone Messages
+        /**
+         * Event sent by the SW to share the initial configuration.
+         *
+         * @param {Object} evdata
+         */
+        _onPWAInitConfig: function(evdata) {
+            if (this._swInfoOpenTimer) {
+                clearTimeout(this._swInfoOpenTimer);
+                this._swInfoOpenTimer = false;
+            }
+            this._pwaMode = evdata.data.pwa_mode;
             if (this.isPWAStandalone()) {
-                switch (evt.data.type) {
-                    case "PWA_CONFIG_CHANGED":
-                        if (evt.data.changes.pwa_mode) {
-                            this._pwaMode = evt.data.changes.pwa_mode;
+                if (navigator.serviceWorker.controller) {
+                    // Create prefetching modal
+                    this.$modalPrefetchProgress = $(
+                        QWeb.render("web_pwa_cache.PrefetchProgress", {
+                            sw_version: evdata.data.sw_version,
+                        })
+                    );
+                    this.$modalPrefetchProgress.appendTo("body");
+                    this.$modalPrefetchProgressContent = this.$modalPrefetchProgress.find(
+                        ".modal-body"
+                    );
+                    this.$modalPrefetchProgress.on("shown.bs.modal", () => {
+                        this._prefetchModelHidden = false;
+                        // Append current data
+                        for (const task_info_id in this._prefetchTasksInfo) {
+                            const task_info = this._prefetchTasksInfo[task_info_id];
+                            this._updatePrefetchModalData(task_info_id, task_info);
                         }
-                        break;
-                    case "PWA_CACHE_FAIL":
-                        this.call("notification", "notify", {
-                            type: "warning",
-                            title: _t("PWA Cache Not Found!"),
-                            message: _t(
-                                "Can't found any cache to '" + evt.data.url + "'"
-                            ),
-                            sticky: false,
-                            className: "",
-                        });
-                        break;
-                    /* Prefetching */
-                    case "PREFETCH_MODAL_TASK_INFO":
-                        if (!this.isPWAStandalone()) {
-                            break;
+                    });
+                    //
+                    if (evdata.data.is_db_empty) {
+                        if (this.modeSelector.isOpen()) {
+                            this.modeSelector.close();
                         }
-                        var progress =
-                            (evt.data.count_done / evt.data.count_total || 0) * 100;
-
-                        this._updatePrefetchModalData(evt.data.id, {
-                            message: evt.data.message,
-                            progress: Math.round(progress),
-                            total: evt.data.count_total,
-                            done: evt.data.count_done,
-                            error: evt.data.error,
-                            completed: evt.data.completed,
-                        });
-
-                        // Always show the prefetch info modal
-                        if (this._prefetchModelHidden) {
-                            if (!this._prefetchModalOpenTimer) {
-                                // Timer to avoid show prefetch info modal in fast tasks
-                                this._prefetchModalOpenTimer = setTimeout(
-                                    () => {
-                                        // Close mode selection if we receive prefetching results
-                                        if (this.modeSelector.isOpen()) {
-                                            this.modeSelector.close();
-                                        }
-
-                                        this._openPrefetchModalData();
-                                        this._prefetchModalOpenTimer = false;
-                                    },
-                                    evt.data.force_show_modal
-                                        ? 0
-                                        : this._show_prefetch_modal_delay
-                                );
-                            }
-                        }
-
-                        if (this._isTasksCompleted()) {
-                            // Avoid show prefetch info modal if all tasks are completed
-                            if (this._prefetchModalOpenTimer) {
-                                clearTimeout(this._prefetchModalOpenTimer);
-                                this._prefetchModalOpenTimer = null;
-                            }
-
-                            // Timeout to auto-close tasks info modal
-                            if (this._checkPrefetchProgressTimer) {
-                                clearTimeout(this._checkPrefetchProgressTimer);
-                            }
-                            this._checkPrefetchProgressTimer = setTimeout(
-                                this._autoclosePrefetchModalData.bind(this),
-                                this._autoclose_prefetch_modal_delay
-                            );
-                        }
-                        break;
-                    /* Sync */
-                    case "PWA_SYNC_RECORDS":
-                        this._syncModal = new PWASyncModal(evt.data.records, {
-                            sync: this._onSyncNow.bind(this),
-                            forced_sync: evt.data.forced_sync,
-                            pwa_mode: this._pwaMode,
-                        });
-                        this._syncModal.show();
-                        break;
-                    case "PWA_SYNC_RECORD_OK":
-                        if (this._syncModal && this._syncModal.isOpen()) {
-                            this._syncModal.$el
-                                .find("tr#record_sync_" + evt.data.index)
-                                .addClass("bg-success");
-                        }
-                        break;
-                    case "PWA_SYNC_ERROR":
-                        if (this._syncModal && this._syncModal.isOpen()) {
-                            this._syncModal.close();
-                        }
-                        var $content = $(
-                            QWeb.render("web_pwa_cache.PWASyncError", {
-                                errormsg: evt.data.errormsg,
-                            })
-                        );
-                        new Dialog(this, {
-                            title: _t("Synchronization error!"),
-                            $content: $content,
-                            buttons: [
-                                {
-                                    text: _t("Close"),
-                                    close: true,
-                                },
-                            ],
-                            fullscreen: false,
-                        }).open();
-                        break;
-                    case "PWA_SYNC_RECORDS_COMPLETED":
-                        if (this._syncModal && this._syncModal.isOpen()) {
-                            this._syncModal.close();
-                        }
-                        break;
-                    case "PWA_SYNC_NEED_ACTION":
-                        this.call("notification", "notify", {
-                            type: "info",
-                            title: _t("Have transactions to synchronize"),
-                            message:
-                                "You have '" +
-                                evt.data.count +
-                                "' transactions to synchronize",
-                            sticky: false,
-                            className: "",
-                        });
-                        break;
+                    } else if (!this.modeSelector.wasShown()) {
+                        this.modeSelector.show();
+                    }
                 }
             }
         },
 
+        /**
+         * Event sent by the SW to know a change in the configuration
+         *
+         * @param {Object} evdata
+         */
+        _onPWAConfigChanged: function(evdata) {
+            if (evdata.changes.pwa_mode) {
+                this._pwaMode = evdata.changes.pwa_mode;
+            }
+        },
+
+        /**
+         * Event sent by the SW to when cache missing
+         *
+         * @param {Object} evdata
+         */
+        _onPWACacheFail: function(evdata) {
+            this.call("notification", "notify", {
+                type: "warning",
+                title: _t("PWA Cache Not Found!"),
+                message: _t("Can't found any cache to '" + evdata.url + "'"),
+                sticky: false,
+                className: "",
+            });
+        },
+
+        /**
+         * Event sent by the SW to share sync. records
+         *
+         * @param {Object} evdata
+         */
+        _onPWASyncRecords: function(evdata) {
+            this._syncModal = new PWASyncModal(evdata.records, {
+                sync: this._onSyncNow.bind(this),
+                forced_sync: evdata.forced_sync,
+                pwa_mode: this._pwaMode,
+            });
+            this._syncModal.show();
+        },
+
+        /**
+         * Event sent by the SW to know when a sync. record is complete
+         *
+         * @param {Object} evdata
+         */
+        _onPWASyncRecordOK: function(evdata) {
+            if (this._syncModal && this._syncModal.isOpen()) {
+                this._syncModal.$el
+                    .find("tr#record_sync_" + evdata.index)
+                    .addClass("bg-success");
+            }
+        },
+
+        /**
+         * Event sent by the SW to display sync. errors
+         *
+         * @param {Object} evdata
+         */
+        _onPWASyncError: function(evdata) {
+            if (this._syncModal && this._syncModal.isOpen()) {
+                this._syncModal.close();
+            }
+            var $content = $(
+                QWeb.render("web_pwa_cache.PWASyncError", {
+                    errormsg: evdata.errormsg,
+                })
+            );
+            new Dialog(this, {
+                title: _t("Synchronization error!"),
+                $content: $content,
+                buttons: [
+                    {
+                        text: _t("Close"),
+                        close: true,
+                    },
+                ],
+                fullscreen: false,
+            }).open();
+        },
+
+        /**
+         * Event sent by the SW to share prefetch progress
+         *
+         * @param {Object} evdata
+         */
+        _onPWAPrefetchModalTaskInfo: function(evdata) {
+            const progress = (evdata.count_done / evdata.count_total || 0) * 100;
+
+            this._updatePrefetchModalData(evdata.id, {
+                message: evdata.message,
+                progress: Math.round(progress),
+                total: evdata.count_total,
+                done: evdata.count_done,
+                error: evdata.error,
+                completed: evdata.completed,
+            });
+
+            // Always show the prefetch info modal
+            // this is necessary because the user can
+            // close the window and open again in the middle
+            // of the operation
+            if (this._prefetchModelHidden) {
+                if (!this._prefetchModalOpenTimer) {
+                    // Timer to avoid show prefetch info modal in fast tasks
+                    this._prefetchModalOpenTimer = setTimeout(
+                        () => {
+                            // Close mode selection if we receive prefetching results
+                            if (this.modeSelector.isOpen()) {
+                                this.modeSelector.close();
+                            }
+
+                            this._openPrefetchModalData();
+                            this._prefetchModalOpenTimer = false;
+                        },
+                        evdata.force_show_modal ? 0 : this._show_prefetch_modal_delay
+                    );
+                }
+            }
+
+            if (this._isTasksCompleted()) {
+                // Avoid show prefetch info modal if all tasks are completed
+                if (this._prefetchModalOpenTimer) {
+                    clearTimeout(this._prefetchModalOpenTimer);
+                    this._prefetchModalOpenTimer = null;
+                }
+
+                // Timeout to auto-close tasks info modal
+                if (this._checkPrefetchProgressTimer) {
+                    clearTimeout(this._checkPrefetchProgressTimer);
+                }
+                this._checkPrefetchProgressTimer = setTimeout(
+                    this._autoclosePrefetchModalData.bind(this),
+                    this._autoclose_prefetch_modal_delay
+                );
+            }
+        },
+
+        /**
+         * Event sent by SW to know that all sync. process was complete successfully
+         */
+        _onPWASyncRecordsComplete: function() {
+            if (this._syncModal && this._syncModal.isOpen()) {
+                this._syncModal.close();
+            }
+        },
+
+        /**
+         * Sent by the SW when has sync. records to do
+         *
+         * @param {Object} evdata
+         */
+        _onPWASyncNeedAction: function(evdata) {
+            this.call("notification", "notify", {
+                type: "info",
+                title: _t("Have transactions to synchronize"),
+                message: "You have '" + evdata.count + "' transactions to synchronize",
+                sticky: false,
+                className: "",
+            });
+        },
+
+        /**
+         * Callback to start sync. process.
+         *
+         * @returns
+         */
         _onSyncNow: function() {
+            if (!this.isPWAStandalone()) {
+                return;
+            }
             this.postBroadcastMessage({
                 type: "START_SYNCHRONIZATION",
+            });
+        },
+
+        /**
+         * Lock/Unlock wake
+         * Generally used with 'screen' to prevent screen go off
+         *
+         * @param {Boolean} status
+         * @returns {Promise}
+         */
+        wakeLockScreen: function(status) {
+            if (!this._isWakeLockSupported) {
+                return Promise.resolve();
+            }
+            return new Promise(async (resolve, reject) => {
+                if (status && !this._wakeLockScreen) {
+                    try {
+                        this._wakeLockScreen = await navigator.wakeLock.request(
+                            "screen"
+                        );
+                    } catch (err) {
+                        return reject(err);
+                    }
+                } else if (!status && this._wakeLockScreen) {
+                    try {
+                        await this._wakeLockScreen.release();
+                        this._wakeLockScreen = null;
+                    } catch (err) {
+                        return reject(err);
+                    }
+                }
+                return resolve();
             });
         },
 

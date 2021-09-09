@@ -12,7 +12,7 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
     const DatabaseSystem = OdooClass.extend({
         _sqlite_db_name: "oca_pwa_sqlite",
         _indexed_db_name: "oca_pwa_indexed",
-        _persist_timeout: 3000,
+        _persist_timeout: 1500,
 
         // Dictionary used to know when use 'search' feature
         _searchables: {},

@@ -25,6 +25,7 @@ odoo.define("web_pwa_cache.BroadcastMixin", function() {
             if (!evt.isTrusted) {
                 return false;
             }
+
             return true;
         },
     };

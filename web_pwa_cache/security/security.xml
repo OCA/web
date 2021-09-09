@@ -6,4 +6,14 @@
             <field name="category_id" ref="base.module_category_hidden" />
         </record>
     </data>
+    <data noupdate="1">
+        <record id="pwa_cache_rule" model="ir.rule">
+            <field name="name">PWA Cache</field>
+            <field ref="web_pwa_cache.model_pwa_cache" name="model_id" />
+            <field eval="True" name="perm_unlink" />
+            <field eval="True" name="perm_write" />
+            <field eval="True" name="global" />
+            <field name="domain_force">[('internal', '=', False)]</field>
+        </record>
+    </data>
 </odoo>

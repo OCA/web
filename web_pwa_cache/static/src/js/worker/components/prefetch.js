@@ -85,7 +85,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
              * FIXME: This cause a dependecy with "bus.js"
              */
             this.getParent().postBroadcastMessage({
-                type: "PREFETCH_MODAL_TASK_INFO",
+                type: "PWA_PREFETCH_MODAL_TASK_INFO",
                 id: id,
                 message: message,
                 count_total: count_total,
