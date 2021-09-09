@@ -1,7 +1,8 @@
 # Copyright 2021 Tecnativa - Alexandre D. Díaz
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
-from odoo.addons.web_pwa_oca.controllers.service_worker import ServiceWorker
 from odoo.http import request
+
+from odoo.addons.web_pwa_oca.controllers.service_worker import ServiceWorker
 
 
 class SharedWorker(ServiceWorker):

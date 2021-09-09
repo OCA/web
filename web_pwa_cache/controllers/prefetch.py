@@ -314,7 +314,6 @@ class PWAPrefetch(PWA):
                         fields_view["is_default"] = int(fields_view["is_default"])
                     except Exception:
                         fields_view = {}
-                        pass
                     if any(fields_view.get("fields", [])):
                         res.append(fields_view)
         return res

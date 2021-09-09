@@ -11,6 +11,10 @@ import json  # We use `dump(vals, separators=(',', ':'))` for mimicking JSON.str
 import re
 import time
 
+import dateutil
+from dateutil.relativedelta import relativedelta
+from pytz import timezone
+
 from odoo import api, fields, models
 from odoo.tools import (
     DEFAULT_SERVER_DATE_FORMAT,
@@ -19,10 +23,6 @@ from odoo.tools import (
     ormcache,
 )
 from odoo.tools.safe_eval import safe_eval
-
-import dateutil
-from dateutil.relativedelta import relativedelta
-from pytz import timezone
 
 from ..tools import get_hash
 
