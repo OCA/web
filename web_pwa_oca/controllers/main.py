@@ -6,19 +6,14 @@ import json
 
 from odoo.http import Controller, request, route
 
+from ..models.res_config_settings import PWA_ICON_SIZES
+
 
 class PWA(Controller):
     def _get_pwa_manifest_icons(self, pwa_icon):
         icons = []
         if not pwa_icon:
-            for size in [
-                (128, 128),
-                (144, 144),
-                (152, 152),
-                (192, 192),
-                (256, 256),
-                (512, 512),
-            ]:
+            for size in PWA_ICON_SIZES:
                 icons.append(
                     {
                         "src": "/web_pwa_oca/static/img/icons/icon-%sx%s.png"
@@ -51,7 +46,12 @@ class PWA(Controller):
             icons = [
                 {
                     "src": pwa_icon.url,
-                    "sizes": "128x128 144x144 152x152 192x192 256x256 512x512",
+                    "sizes": " ".join(
+                        map(
+                            lambda size: "{}x{}".format(size[0], size[1]),
+                            PWA_ICON_SIZES,
+                        )
+                    ),
                     "type": pwa_icon.mimetype,
                     "purpose": "any maskable",
                 }

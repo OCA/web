@@ -16,10 +16,31 @@
                 t-value="request.env['ir.config_parameter'].sudo().get_param('pwa.manifest.name')"
             />
             <meta name="apple-mobile-web-app-title" t-att-content="pwa_name" />
-            <link
-                rel="apple-touch-icon"
-                href="/web_pwa_oca/static/img/icons/icon-152x152.png"
+            <t
+                t-set="pwa_custom_icon"
+                t-value="request.env['ir.config_parameter'].sudo().get_param('pwa.manifest.custom_icon')"
             />
+            <t t-if="pwa_custom_icon">
+                <!-- This icon must be 180x180 -->
+                <link rel="apple-touch-icon" href="/web_pwa_oca/icon192x192.png" />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="512x512"
+                    href="/web_pwa_oca/icon512x512.png"
+                />
+            </t>
+            <t t-else="">
+                <!-- This icon must be 180x180 -->
+                <link
+                    rel="apple-touch-icon"
+                    href="/web_pwa_oca/static/img/icons/icon-192x192.png"
+                />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="512x512"
+                    href="/web_pwa_oca/static/img/icons/icon-512x512.png"
+                />
+            </t>
             <!-- Add meta theme-color -->
             <t
                 t-set="pwa_theme_color"
