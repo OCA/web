@@ -6,7 +6,7 @@ from odoo.addons.web_pwa_oca.controllers.service_worker import ServiceWorker
 
 
 class ServiceWorker(ServiceWorker):
-    _pwa_sw_version = "0.1.5"
+    _pwa_sw_version = "0.1.6"
 
     def _get_js_pwa_requires(self):
         res = """

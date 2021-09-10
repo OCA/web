@@ -12,6 +12,8 @@
             <field ref="web_pwa_cache.model_pwa_cache" name="model_id" />
             <field eval="True" name="perm_unlink" />
             <field eval="True" name="perm_write" />
+            <field eval="False" name="perm_read" />
+            <field eval="False" name="perm_create" />
             <field eval="True" name="global" />
             <field name="domain_force">[('internal', '=', False)]</field>
         </record>

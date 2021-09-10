@@ -210,7 +210,6 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
         _autoclosePrefetchModalData: function() {
             if (this._isTasksCompleted()) {
                 this._closePrefetchModalData();
-                core.bus.trigger("action_reload");
                 if (this.isOfflineMode()) {
                     // Can do prefetch = is online
                     this.setPWAMode("online");
@@ -222,6 +221,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 }
             }
             this._checkPrefetchProgressTimer = null;
+            core.bus.trigger("action_reload");
         },
 
         _closePrefetchModalData: function() {

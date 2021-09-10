@@ -274,24 +274,31 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
             return new Promise(async (resolve, reject) => {
                 let error_msg = false;
                 try {
-                    const sync_keys_done = [];
+                    const sync_records_done = [];
                     const sync_records = await this.getSyncRecords();
                     if (sync_records.length) {
                         this.sendRecordsToPages(true);
                     }
                     try {
+                        // Sync. records are processed one by one due to
+                        // 'create' operation generates ids that can be used
+                        // by the rest of the records
+                        // TODO: Implement a 'cleanup' operation, for example,
+                        // to avoid 'create' records thats have an 'unlink'
+                        // operation.
                         for (const record of sync_records) {
                             await this._processRecord(sync_records, record);
-                            sync_keys_done.push(record.id);
+                            sync_records_done.push(record);
                         }
                     } catch (err) {
                         error_msg = err;
                     }
-                    await this.removeSyncRecords(sync_keys_done);
+                    await this.onSynchronizedRecords(
+                        sync_records_done,
+                        error_msg !== false
+                    );
                 } catch (err) {
-                    this.sendCountToPages();
-                    this._sendSyncErrorToPages(err);
-                    return reject(err);
+                    error_msg = err;
                 }
 
                 this.sendCountToPages();
@@ -300,6 +307,23 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                     return reject(error_msg);
                 }
                 this._sendRecordsCompletedToPages();
+                return resolve();
+            });
+        },
+
+        /**
+         * @param {Array} records_done
+         * @param {Boolean} has_errors
+         */
+        // eslint-disable-next-line
+        onSynchronizedRecords: function(records_done, has_errors) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    await this.removeSyncRecords(_.map(records_done, "id"));
+                } catch (err) {
+                    return reject(err);
+                }
+
                 return resolve();
             });
         },
