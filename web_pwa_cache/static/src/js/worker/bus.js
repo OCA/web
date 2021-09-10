@@ -70,9 +70,15 @@ odoo.define("web_pwa_cache.PWA.bus", function(require) {
 
             this._prefetch_promise = new Promise(async (resolve, reject) => {
                 this._prefetch_running = true;
+                // Try sync records first
                 try {
-                    // Try sync records first
                     await this._managers.sync.run();
+                } catch (err) {
+                    console.log(
+                        "[ServiceWorker] Can't finish synchronization process succesfully!"
+                    );
+                }
+                try {
                     // Try prefetch data
                     await this._components.prefetch.prefetchDataPost();
                     // If have transactions to sync. tell it to the user
