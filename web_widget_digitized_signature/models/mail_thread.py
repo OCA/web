@@ -36,4 +36,4 @@ class MailThread(models.AbstractModel):
                 msg_body += message
                 msg_body += '</li>'
             msg_body += '</ul>'
-            self.message_post(body=msg_body, attachments=attachments)
+            self.sudo().message_post(body=msg_body, attachments=attachments)
