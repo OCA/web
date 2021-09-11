@@ -35,3 +35,10 @@ class TestSignatureTracking(common.SavepointCase):
         current_messages = self.message_obj.search([])
         message = current_messages - prev_messages
         self.assertIn('Signature has been deleted.', message.body)
+
+    def test_self_signature_write(self):
+        """Ensure users are able to set its own signature"""
+        user = self.env.ref('base.user_demo')
+        user = user.sudo(user)
+        user.write({"digital_signature": b'TEST'})
+        self.assertEqual(user.digital_signature, b'TEST')
