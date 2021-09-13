@@ -150,9 +150,9 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
 
         _checkPWACacheStatus: function() {
             return session
-                .user_has_group("web_pwa_cache.group_no_pwa_cache")
+                .user_has_group("web_pwa_cache.group_pwa_cache")
                 .then(result => {
-                    this.is_pwa_cache_disabled = result;
+                    this.is_pwa_cache_disabled = !result;
                 });
         },
 

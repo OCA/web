@@ -23,7 +23,7 @@ class ServiceWorker(ServiceWorker):
         res = super()._get_pwa_params()
 
         res["is_pwa_cache_disabled"] = (
-            1 if request.env.user.has_group("web_pwa_cache.group_no_pwa_cache") else 0
+            0 if request.env.user.has_group("web_pwa_cache.group_pwa_cache") else 1
         )
 
         urls = []
