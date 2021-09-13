@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-16 18:49+0000\n"
-"PO-Revision-Date: 2021-03-16 18:49+0000\n"
+"POT-Creation-Date: 2021-09-13 18:49+0000\n"
+"PO-Revision-Date: 2021-09-13 18:49+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,13 +21,21 @@ msgid "Background Color"
 msgstr ""
 
 #. module: web_pwa_oca
-#: model:ir.model,name:web_pwa_oca.model_res_config_settings
-msgid "Config Settings"
+#: model:ir.model.fields,field_description:web_pwa_oca.field_res_config_settings__pwa_action_id
+#: model_terms:ir.ui.view,arch_db:web_pwa_oca.res_config_settings_view_form
+msgid "Home Action"
 msgstr ""
 
 #. module: web_pwa_oca
 #: model:ir.model.fields,field_description:web_pwa_oca.field_res_config_settings__pwa_icon
 msgid "Icon"
+msgstr ""
+
+#. module: web_pwa_oca
+#: model:ir.model.fields,help:web_pwa_oca.field_res_config_settings__pwa_action_id
+msgid ""
+"If specified, this action will be opened at pwa opened, in addition to the "
+"standard menu."
 msgstr ""
 
 #. module: web_pwa_oca
@@ -48,6 +56,11 @@ msgstr ""
 #. module: web_pwa_oca
 #: model_terms:ir.ui.view,arch_db:web_pwa_oca.res_config_settings_view_form
 msgid "PWA Title"
+msgstr ""
+
+#. module: web_pwa_oca
+#: model:ir.model,name:web_pwa_oca.model_res_config_settings
+msgid "Procurement purchase grouping settings"
 msgstr ""
 
 #. module: web_pwa_oca
@@ -92,7 +105,7 @@ msgstr ""
 #. module: web_pwa_oca
 #: code:addons/web_pwa_oca/models/res_config_settings.py:0
 #, python-format
-msgid "You can only upload PNG files bigger than 512x512"
+msgid "You can only upload PNG files bigger than {icon_size}x{icon_size}"
 msgstr ""
 
 #. module: web_pwa_oca
@@ -111,7 +124,7 @@ msgstr ""
 #. openerp-web
 #: code:addons/web_pwa_oca/static/src/js/pwa_manager.js:0
 #, python-format
-msgid "[ServiceWorker] Registered:"
+msgid "[ServiceWorker] Registered: "
 msgstr ""
 
 #. module: web_pwa_oca
