@@ -16,11 +16,6 @@
                 type="text/css"
                 href="/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-widgets-1.1.0.css"
             />
-            <link
-                rel="stylesheet"
-                type="text/scss"
-                href="/web_widget_bokeh_chart/static/src/scss/custom-bokeh.scss"
-            />
             <script
                 type="text/javascript"
                 src="/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-1.1.0.js"
