@@ -12,3 +12,7 @@
 * `DynApps NV <https://www.dynapps.be>`_:
 
   * Raf Ven
+
+* `Therp BV <https://therp.nl>`_:
+
+  * Ronald Portier
