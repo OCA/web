@@ -101,6 +101,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 })
                 .then(() => {
                     if (!this.isPWACacheEnabled()) {
+                        this.setPWAMode("online");
                         return;
                     }
                     // Show SW Info modal
