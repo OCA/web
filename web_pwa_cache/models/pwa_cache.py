@@ -266,6 +266,24 @@ class PwaCache(models.Model):
                 res[key] = value
         return res
 
+    def _prepare_vals_dict(self, vals, disposable):
+        """Prepare properly the vals dictionaries and hash for being stored."""
+        # Put ID instead of recordsets reference
+        for key, item in vals.items():
+            if isinstance(item, models.BaseModel):
+                vals[key] = item.id
+        vals_clean = vals.copy()
+        for item in disposable:
+            del vals_clean[item]
+        vals = self._unfold_dict(vals)
+        # vals_clean = self._unfold_dict(vals_clean)
+        vals_clean = json.dumps(vals_clean, separators=(",", ":"))
+        # Generate unique hash
+        ref_hash = get_hash(
+            "{}{}{}".format(self.id, self.onchange_field_name, vals_clean)
+        )
+        return vals, vals_clean, ref_hash
+
     def _update_onchange_cache(
         self, vals_list, disposable, delete_old=False, autocommit=False, user_id=False,
     ):
@@ -282,20 +300,7 @@ class PwaCache(models.Model):
             )
             found_ids = set()
         for vals in vals_list:
-            # Put ID instead of recordsets reference
-            for key, item in vals.items():
-                if isinstance(item, models.BaseModel):
-                    vals[key] = item.id
-            vals_clean = vals.copy()
-            for item in disposable:
-                del vals_clean[item]
-            vals = self._unfold_dict(vals)
-            # vals_clean = self._unfold_dict(vals_clean)
-            vals_clean = json.dumps(vals_clean, separators=(",", ":"))
-            # Generate unique hash
-            ref_hash = get_hash(
-                "{}{}{}".format(self.id, self.onchange_field_name, vals_clean)
-            )
+            vals, vals_clean, ref_hash = self._prepare_vals_dict(vals, disposable)
             if delete_old:
                 record = obj.search(
                     [("ref_hash", "=", ref_hash), ("user_id", "=", user_id)],

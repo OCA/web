@@ -93,18 +93,12 @@ class BaseModel(models.BaseModel):
             pwa_cache = trigger.pwa_cache_id
             context = {"env": self.env, "self": self}
             safe_eval(trigger.selector_expression, context, mode="exec", nocopy=True)
-            vals_list = pwa_cache._get_onchange_selectors(
+            vals_list, disposable = pwa_cache._get_onchange_selectors(
                 prefilled_selectors={trigger.field_name: context["result"]}
             )
             for vals in vals_list:
-                # Put ID instead of recordsets reference
-                for key, item in vals.items():
-                    if isinstance(item, models.BaseModel):
-                        vals[key] = item.id
-                vals = pwa_cache._unfold_dict(vals)
-                value_obj.search(
-                    [("pwa_cache_id", "=", pwa_cache.id), ("values", "=", vals)]
-                ).unlink()
+                _, _, ref_hash = pwa_cache._prepare_vals_dict(vals, disposable)
+                value_obj.search([("ref_hash", "=", ref_hash)]).unlink()
         return super().unlink()
 
     def write(self, vals):
