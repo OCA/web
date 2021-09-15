@@ -8,7 +8,7 @@ import odoo.tests
 from odoo import exceptions
 from odoo.modules.module import get_resource_path
 
-from ..models.res_config_settings import PWA_ICON_SIZES
+from ..models.res_config_settings import DEFAULT_ICON_SIZE, PWA_ICON_SIZES
 
 
 class TestUi(odoo.tests.HttpCase):
@@ -44,9 +44,14 @@ class TestUi(odoo.tests.HttpCase):
         # icon should remain the default one
         self.assertEquals(
             manifest_content["icons"][0]["src"],
-            "/web_pwa_oca/static/img/icons/icon-128x128.png",
+            "/web_pwa_oca/static/img/icons/icon-{def_size}x{def_size}.png".format(
+                def_size=DEFAULT_ICON_SIZE
+            ),
         )
-        self.assertEquals(manifest_content["icons"][0]["sizes"], "128x128")
+        self.assertEquals(
+            manifest_content["icons"][0]["sizes"],
+            "{def_size}x{def_size}".format(def_size=DEFAULT_ICON_SIZE),
+        )
         self.assertTrue(manifest_content["icons"][0]["type"].startswith("image/png"))
 
     def test_manifest_logo_upload(self):
