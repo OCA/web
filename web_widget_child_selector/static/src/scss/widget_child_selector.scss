@@ -1,0 +1,14 @@
+.o_child_selection_button {
+    cursor: pointer;
+}
+
+.o_child_selection_label {
+    cursor: pointer;
+}
+
+.o_child_selection_clear {
+    opacity: 0.6;
+    &:hover {
+        opacity: 1;
+    }
+}
