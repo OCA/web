@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link
+                rel="stylesheet"
+                href="/web_widget_numeric_step/static/src/css/numeric_step.scss"
+            />
+            <script
+                type="text/javascript"
+                src="/web_widget_numeric_step/static/src/js/numeric_step.js"
+            />
+        </xpath>
+    </template>
+</odoo>
