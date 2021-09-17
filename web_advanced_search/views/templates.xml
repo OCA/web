@@ -11,6 +11,10 @@
             />
             <script
                 type="text/javascript"
+                src="/web_advanced_search/static/src/js/control_panel/advanced_select_list_controller.js"
+            />
+            <script
+                type="text/javascript"
                 src="/web_advanced_search/static/src/js/control_panel/advanced_select_dialog.js"
             />
             <script

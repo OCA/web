@@ -63,6 +63,37 @@ to a journal which has a user who is member of a certain group etc.
 Note also the domain dialog offers an editable preview in debug mode:
   .. image:: https://raw.githubusercontent.com/OCA/web/14.0/web_advanced_search/static/img/debug_mode.png
 
+In Selection operator
+~~~~~~~~~~~~~~~~~~~~~
+
+It is also possible when having selected a relational field to filter on, to
+choose for the 'is in selection' operator. This will result in opening a list view for
+the related model, where it is possible either to select some records, and then use the
+'Select' butto, or to enter filters on the related model, and then click the
+'Use Criteria' button.
+
+Example: select the 'Created By' field to filter Invoices, and then 'is in selection'
+as operator:
+
+.. image:: https://raw.githubusercontent.com/OCA/web/14.0/web_advanced_search/static/img/01-is-in-selection-operator.png
+
+Then select some records and click on the select button:
+
+.. image:: https://raw.githubusercontent.com/OCA/web/14.0/web_advanced_search/static/img/02-select-button.png
+
+Only invoices created by the selected users will be shown:
+
+.. image:: https://raw.githubusercontent.com/OCA/web/14.0/web_advanced_search/static/img/03-select-result.png
+
+Another example would be to filter on the invoice partners:
+
+.. image:: https://raw.githubusercontent.com/OCA/web/14.0/web_advanced_search/static/img/04-use-criteria-button.png
+
+Now only invoices for partners that are companies, and are in a country with 'Swit' in
+the name will be shown:
+
+.. image:: https://raw.githubusercontent.com/OCA/web/14.0/web_advanced_search/static/img/05-use-criteria-result.png
+
 Known issues / Roadmap
 ======================
 
@@ -80,9 +111,21 @@ Improvements to the search view in this addon:
 Issues:
 
 * Grouped totals can show incorrect values. See https://github.com/odoo/odoo/issues/47950
+* DomainSelector Dialog cannot correctly show 'in selection' domains.
 
 Changelog
 =========
+
+14.0.2.0.0 (2021-09-21)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* Restore the 'is in selection' operator.
+
+  The 'is in selection' operator offers a really convenient way to either pick a
+  selection of related records, or specify criteria / filters to define a domain for
+  the related records.
+
+  [NL66278]
 
 11.0.1.0.2 (2018-10-31)
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -94,7 +137,6 @@ Changelog
   the dialog must be already opened.
 
   [simahawk]
-
 
 11.0.1.0.1 (2018-09-18)
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -161,6 +203,10 @@ Contributors
 * `DynApps NV <https://www.dynapps.be>`_:
 
   * Raf Ven
+
+* `Therp BV <https://therp.nl>`_:
+
+  * Ronald Portier
 
 Maintainers
 ~~~~~~~~~~~

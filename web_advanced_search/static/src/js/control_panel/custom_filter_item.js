@@ -1,7 +1,7 @@
 odoo.define("web_advanced_search.CustomFilterItem", function (require) {
     "use strict";
 
-    const { _lt, _t } = require("web.core");
+    const {_lt} = require("web.core");
     const dialogs = require("web_advanced_search.AdvancedSelectDialog");
     const CustomFilterItem = require("web.CustomFilterItem");
     const FieldMany2One = require("web.relational_fields").FieldMany2One;
@@ -18,9 +18,17 @@ odoo.define("web_advanced_search.CustomFilterItem", function (require) {
                 this.state.field = false;
                 this.OPERATORS.relational = this.OPERATORS.char;
                 this.FIELD_TYPES.many2one = "relational";
-                this.OPERATORS.relational.push(
-                    { symbol: "domain", description: _lt("is in selection") }
-                );
+                // Add 'is in selection' operator if not present already.
+                if (
+                    !this.OPERATORS.relational.some(
+                        (operator) => operator.symbol === "domain"
+                    )
+                ) {
+                    this.OPERATORS.relational.push({
+                        symbol: "domain",
+                        description: _lt("is in selection"),
+                    });
+                }
                 useListener("m2xchange", this._onM2xDataChanged);
             }
 
@@ -140,19 +148,35 @@ odoo.define("web_advanced_search.CustomFilterItem", function (require) {
             async action_open_list_view() {
                 const model = this.state.field.relation;
                 const options = {
-                    viewType: 'tree',
+                    viewType: "tree",
                     res_model: model,
                     initial_view: "search",
-                    on_close: () => this.trigger('reload'),
+                    on_close: () => this.trigger("reload"),
                     no_create: true,
                 };
                 const select_dialog = new dialogs.AdvancedSelectDialog(this, options);
-                select_dialog.on("domain_selected", this, function (e) {
-                    const domain = e.data.domain;
-                    domain[0][0] = this.state.field.name;
+                select_dialog.on("domain_selected", this, function (event) {
+                    event.stopPropagation();
+                    const domain = event.data.domain;
+                    const fieldname = this.state.field.name;
+                    let first_term = "";
+                    // Add fieldname to all fields to create qualified name,
+                    // e.g. [['country_id', 'like', 'United']] will become
+                    // [['partner_id.country_id', 'like', 'United']] when Partner must
+                    // be in selection.
+                    domain.forEach(function (part) {
+                        if (part.length === 3) {
+                            // This is a proper tuple
+                            first_term = part[0];
+                            part[0] = fieldname + "." + first_term;
+                        }
+                    });
                     const preFilter = {
-                        description: e.data.names.join(),
-                        domain: Domain.prototype.arrayToString(e.data.domain),
+                        description:
+                            this.state.field.description +
+                            ": " +
+                            event.data.description,
+                        domain: Domain.prototype.arrayToString(domain),
                         type: "filter",
                     };
                     this.model.dispatch("createNewFilters", [preFilter]);
@@ -160,11 +184,11 @@ odoo.define("web_advanced_search.CustomFilterItem", function (require) {
                 return select_dialog.open();
             }
             /**
-            * Mocks _trigger_up to redirect Odoo legacy events to OWL events.
-            *
-            * @private
-            * @param {OdooEvent} ev
-            */
+             * Mocks _trigger_up to redirect Odoo legacy events to OWL events.
+             *
+             * @private
+             * @param {OdooEvent} ev
+             */
             _trigger_up(ev) {
                 const evType = ev.name;
                 const payload = ev.data;
