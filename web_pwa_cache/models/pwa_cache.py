@@ -12,7 +12,9 @@ import re
 import time
 
 import dateutil
+import psycopg2
 from dateutil.relativedelta import relativedelta
+from psycopg2 import sql
 from pytz import timezone
 
 from odoo import api, fields, models
@@ -327,7 +329,8 @@ class PwaCache(models.Model):
             obj.with_user(user_id)
         result = json.dumps(obj.onchange(vals, self.onchange_field_name, onchange_spec))
         obj = self.env["pwa.cache.onchange.value"].sudo()
-        record = obj.search([("ref_hash", "=", ref_hash), ("user_id", "=", user_id)])
+        domain = [("ref_hash", "=", ref_hash), ("user_id", "=", user_id)]
+        record = obj.search(domain)
         if record:
             # We assume the same order for returned results, and if not, the
             # worst thing is that the cache value is refreshed
@@ -347,7 +350,13 @@ class PwaCache(models.Model):
                 for field in fields:
                     discriminant = discriminant[field]
                 value_vals["discriminant_id"] = discriminant
-            obj.create(value_vals)
+            try:
+                obj.create(value_vals)
+            except psycopg2.IntegrityError:
+                # Meanwhile the same record has been written by another job
+                record = obj.search(domain)
+                if record.result != result:
+                    record.write({"result": result})
 
     @api.model
     @ormcache("model")
@@ -440,13 +449,22 @@ class PwaCacheOnchangeValue(models.Model):
     discriminant_id = fields.Integer(index=True)
     user_id = fields.Many2one(comodel_name="res.users", index=True)
 
-    _sql_constraints = [
-        (
-            "pwa_cache_onchange_value_uniq",
-            "unique(user_id, ref_hash)",
-            "The PWA onchange cache value must be unique.",
-        ),
-    ]
+    def init(self):
+        """Create an unique index with COALESCE for avoiding duplicates on the values,
+        as this is the only technique valid with columns with NULL values.
+        """
+        index_name = "pwa_cache_onchange_value_ref_hash_user_unique"
+        cr = self.env.cr
+        cr.execute(
+            "SELECT indexname FROM pg_indexes WHERE indexname = %s", (index_name,)
+        )
+        if not cr.fetchone():
+            cr.execute(
+                sql.SQL(
+                    "CREATE UNIQUE INDEX {} ON pwa_cache_onchange_value "
+                    "(ref_hash, COALESCE(user_id, 0))"
+                ).format(sql.Identifier(index_name)),
+            )
 
 
 class PwaCacheOnchangeTrigger(models.Model):
