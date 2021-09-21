@@ -28,6 +28,7 @@ setuptools.setup(
         'odoo14-addon-web_responsive',
         'odoo14-addon-web_send_message_popup',
         'odoo14-addon-web_sheet_full_width',
+        'odoo14-addon-web_switch_context_warning',
         'odoo14-addon-web_timeline',
         'odoo14-addon-web_tree_dynamic_colored_field',
         'odoo14-addon-web_tree_image_tooltip',
