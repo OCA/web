@@ -34,7 +34,7 @@ odoo.define("web_pwa_cache.AppsMenu", function(require) {
                                 );
                             });
                         }
-                        return _sup(this, arguments);
+                        return _sup.apply(this, arguments);
                     });
             } else {
                 return this._super(this, arguments);

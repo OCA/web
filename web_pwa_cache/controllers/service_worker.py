@@ -22,10 +22,6 @@ class ServiceWorker(ServiceWorker):
     def _get_pwa_params(self):
         res = super()._get_pwa_params()
 
-        res["is_pwa_cache_disabled"] = (
-            0 if request.env.user.has_group("web_pwa_cache.group_pwa_cache") else 1
-        )
-
         urls = []
         urls.extend(self._get_asset_urls("web.assets_common"))
         urls.extend(self._get_asset_urls("web.assets_backend"))
