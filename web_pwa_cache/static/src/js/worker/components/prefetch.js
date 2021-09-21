@@ -51,6 +51,8 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                 ],
             ],
         },
+        // This is used to avoid use "last_update" to get records
+        _special_models: ["res.groups"],
 
         init: function() {
             this._super.apply(this, arguments);
@@ -406,9 +408,13 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                             client_message_id
                         );
                         this._sendTaskInfoCompleted(client_message_id);
-                        this._db.sqlitedb.updateModelInfo([model_info_extra.id], {
-                            prefetch_last_update: start_prefetch_date,
-                        });
+                        if (
+                            this._special_models.indexOf(model_info_extra.model) === -1
+                        ) {
+                            this._db.sqlitedb.updateModelInfo([model_info_extra.id], {
+                                prefetch_last_update: start_prefetch_date,
+                            });
+                        }
                     }
                 } catch (err) {
                     return reject(err);

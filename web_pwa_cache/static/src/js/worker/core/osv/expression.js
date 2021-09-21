@@ -109,7 +109,6 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
             case "binary":
             case "serialized":
                 svalue = JSON.stringify(_.isUndefined(value) ? "" : value);
-                // Svalue = LZString.compressToUint8Array(svalue);
                 break;
             case "char":
             case "text":

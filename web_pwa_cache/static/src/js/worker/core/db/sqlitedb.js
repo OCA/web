@@ -70,12 +70,10 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
          */
         parseJson: function(values, field) {
             try {
-                // Return JSON.parse(LZString.decompressFromUint8Array(values[field]));
                 return JSON.parse(values[field]);
             } catch (err) {
                 // Do nothing
             }
-            // Return LZString.decompressFromUint8Array(values[field]);
             return values[field];
         },
 

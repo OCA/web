@@ -41,6 +41,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
             this._cache = new CacheSystem();
 
             this._wasActivated = false;
+            this._isDisabled = true;
         },
 
         /**
@@ -191,6 +192,9 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                     break;
                 }
             }
+            if (url.search.includes("debug=")) {
+                url_info.has_debug = true;
+            }
 
             return url_info;
         },
@@ -256,13 +260,27 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                             return resolve(Tools.ResponseRedirect("/web"));
                         }
                         // Check cached url's to use generic cache hash
-                        const url_info = this._getURLInfo(url);
-                        if (isOffline && url_info.cache_hash) {
-                            const new_url = request.url.replace(
-                                url_info.cache_hash,
-                                url_info.pwa_cache_hash
-                            );
-                            request = new Request(new_url);
+                        if (isOffline) {
+                            const url_info = this._getURLInfo(url);
+                            let is_url_modified = false;
+                            if (url_info.has_debug) {
+                                const search_part = url.search.replace(
+                                    /\??debug=[\d\w]+&?/,
+                                    ""
+                                );
+                                url.search = search_part;
+                                is_url_modified = true;
+                            }
+                            if (url_info.cache_hash) {
+                                url.pathname = url.pathname.replace(
+                                    url_info.cache_hash,
+                                    url_info.pwa_cache_hash
+                                );
+                                is_url_modified = true;
+                            }
+                            if (is_url_modified) {
+                                request = new Request(url);
+                            }
                         }
 
                         // Try from cache

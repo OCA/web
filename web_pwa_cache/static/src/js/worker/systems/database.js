@@ -735,12 +735,12 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                     if (model_data.model.startsWith("ir.actions.")) {
                         record = await this.indexeddb.action.get(model_data.res_id);
                     } else {
-                        const records = await this.browse(
+                        const b_record = await this.browse(
                             model_data.model,
                             model_data.res_id
                         );
-                        if (records.length) {
-                            record = records[0];
+                        if (!_.isEmpty(b_record)) {
+                            record = b_record;
                         }
                     }
 
@@ -1125,7 +1125,7 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                 const module_name = xmlid.split(".", 1)[0];
                 const name = xmlid.substr(module_name.length + 1);
                 try {
-                    const records = await this.search_read(
+                    const record = await this.search_read(
                         "ir.model.data",
                         [
                             ["module", "=", module_name],
@@ -1133,10 +1133,10 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                         ],
                         1
                     );
-                    if (_.isEmpty(records)) {
+                    if (_.isEmpty(record)) {
                         return reject(`No model data found for '${xmlid}'...`);
                     }
-                    return resolve(records[0]);
+                    return resolve(record);
                 } catch (err) {
                     return reject(err);
                 }
