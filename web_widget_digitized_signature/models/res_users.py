@@ -24,3 +24,12 @@ class ResUsers(models.Model):
     def write(self, vals):
         self._track_signature(vals, 'digital_signature')
         return super(ResUsers, self).write(vals)
+
+    def __init__(self, pool, cr):
+        super(ResUsers, self).__init__(pool, cr)
+        # duplicate list to avoid modifying the original reference
+        type(self).SELF_WRITEABLE_FIELDS = list(self.SELF_WRITEABLE_FIELDS)
+        type(self).SELF_WRITEABLE_FIELDS.extend(['digital_signature'])
+        # duplicate list to avoid modifying the original reference
+        type(self).SELF_READABLE_FIELDS = list(self.SELF_READABLE_FIELDS)
+        type(self).SELF_READABLE_FIELDS.extend(['digital_signature'])
