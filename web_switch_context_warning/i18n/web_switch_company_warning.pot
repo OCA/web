@@ -1,0 +1,36 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* web_switch_company_warning
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_switch_company_warning
+#. openerp-web
+#: code:addons/web_switch_company_warning/static/src/xml/switch_company_warning.xml:6
+#, python-format
+msgid "Reload"
+msgstr ""
+
+#. module: web_switch_company_warning
+#. openerp-web
+#: code:addons/web_switch_company_warning/static/src/xml/switch_company_warning.xml:5
+#, python-format
+msgid "You switched to a different company or database with another tab or window"
+msgstr ""
+
+#. module: web_switch_company_warning
+#. openerp-web
+#: code:addons/web_switch_company_warning/static/src/xml/switch_company_warning.xml:6
+#, python-format
+msgid "to refresh your session"
+msgstr ""
+

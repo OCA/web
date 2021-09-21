@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<template>
+    <t t-name="web_switch_context_warning.warningWidget">
+        <div
+            class="container-fluid bg-warning"
+            style="text-align: center; display:none;padding-top:20px;padding-bottom:5px"
+        >
+            <h3
+            >You switched to a different user or database with another tab or window</h3>
+            <p><button
+                    onclick="location.reload(true);"
+                    class="btn"
+                >Reload</button> to refresh your session</p>
+        </div>
+    </t>
+</template>
