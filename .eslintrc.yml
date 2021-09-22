@@ -1,5 +1,6 @@
 env:
   browser: true
+  es6: true
 
 # See https://github.com/OCA/odoo-community.org/issues/37#issuecomment-470686449
 parserOptions:
@@ -14,7 +15,7 @@ globals:
   moment: readonly
   odoo: readonly
   openerp: readonly
-  Promise: readonly
+  owl: readonly
 
 # Styling is handled by Prettier, so we only need to enable AST rules;
 # see https://github.com/OCA/maintainer-quality-tools/pull/618#issuecomment-558576890
