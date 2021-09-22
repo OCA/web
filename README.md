@@ -25,7 +25,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [web_access_rule_buttons](web_access_rule_buttons/) | 14.0.1.0.0 |  | Disable Edit button if access rules prevent this action
-[web_advanced_search](web_advanced_search/) | 14.0.1.0.0 |  | Easier and more powerful searching tools
+[web_advanced_search](web_advanced_search/) | 14.0.1.0.1 |  | Easier and more powerful searching tools
 [web_company_color](web_company_color/) | 14.0.1.0.0 |  | Web Company Color
 [web_copy_confirm](web_copy_confirm/) | 14.0.1.0.0 |  | Show confirmation dialogue before copying records
 [web_decimal_numpad_dot](web_decimal_numpad_dot/) | 14.0.1.0.0 |  | Allows using numpad dot to enter period decimal separator
