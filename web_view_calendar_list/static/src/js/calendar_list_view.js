@@ -1,6 +1,7 @@
 odoo.define("web_view_calendar_list.CalendarListView", function (require) {
     "use strict";
 
+    var AbstractView = require("web.AbstractView");
     var CalendarView = require("web.CalendarView");
     var core = require("web.core");
     var CalendarListController = require("web_view_calendar_list.CalendarListController");
@@ -19,7 +20,8 @@ odoo.define("web_view_calendar_list.CalendarListView", function (require) {
     var CalendarListView = CalendarView.extend({
         display_name: _lt("Calendar List"),
         icon: "fa-calendar-check-o",
-        config: _.extend(CalendarView.prototype.config, {
+        viewType: "calendar_list",
+        config: _.extend(AbstractView.prototype.config, {
             Model: CalendarListModel,
             Controller: CalendarListController,
             Renderer: CalendarListRenderer,
