@@ -51,6 +51,7 @@ addon | version | maintainers | summary
 [web_tree_many2one_clickable](web_tree_many2one_clickable/) | 14.0.1.0.1 |  | Open the linked resource when clicking on their name
 [web_widget_bokeh_chart](web_widget_bokeh_chart/) | 14.0.2.3.1 | [![LoisRForgeFlow](https://github.com/LoisRForgeFlow.png?size=30px)](https://github.com/LoisRForgeFlow) | This widget allows to display charts using Bokeh library.
 [web_widget_dropdown_dynamic](web_widget_dropdown_dynamic/) | 14.0.1.0.0 |  | This module adds support for dynamic dropdown widget
+[web_widget_many2one_simple](web_widget_many2one_simple/) | 14.0.1.0.0 | [![Tardo](https://github.com/Tardo.png?size=30px)](https://github.com/Tardo) | Simple many2one widget
 [web_widget_mpld3_chart](web_widget_mpld3_chart/) | 14.0.1.0.0 |  | This widget allows to display charts using MPLD3 library.
 [web_widget_numeric_step](web_widget_numeric_step/) | 14.0.1.0.0 |  | Web Widget Numeric Step
 [web_widget_url_advanced](web_widget_url_advanced/) | 14.0.1.0.1 |  | This module extends URL widget for displaying anchors with custom labels.
