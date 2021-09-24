@@ -35,6 +35,7 @@ setuptools.setup(
         'odoo14-addon-web_tree_many2one_clickable',
         'odoo14-addon-web_widget_bokeh_chart',
         'odoo14-addon-web_widget_dropdown_dynamic',
+        'odoo14-addon-web_widget_many2one_simple',
         'odoo14-addon-web_widget_mpld3_chart',
         'odoo14-addon-web_widget_numeric_step',
         'odoo14-addon-web_widget_url_advanced',
