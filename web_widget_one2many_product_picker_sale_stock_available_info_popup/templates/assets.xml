@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="assets_backend"
+        name="Web Widget One2Many Product Picker Sale Stock Availability Info Popup - Backend Assets"
+        inherit_id="web.assets_backend"
+    >
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/web_widget_one2many_product_picker_sale_stock_available_info_popup/static/src/js/views/abstract_view.js"
+            />
+        </xpath>
+    </template>
+</odoo>
