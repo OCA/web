@@ -13,6 +13,7 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           # General settings.
+          ascending: true
           remove-stale-when-updated: true
           # Pull Requests settings.
           # 120+30 day stale policy for PRs
@@ -50,6 +51,7 @@ jobs:
         uses: actions/stale@v4
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+          ascending: true
           only-labels: "needs more information"
           exempt-issue-labels: "no stale"
           days-before-stale: 15
