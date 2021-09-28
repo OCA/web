@@ -1,7 +1,7 @@
 /* Copyright 2019 Tecnativa - David Vidal
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
-odoo.define("web_widget_domain_editor_dialog.basic_fields", function(require) {
+odoo.define("web_widget_domain_editor_dialog.basic_fields", function (require) {
     "use strict";
 
     const core = require("web.core");
@@ -10,7 +10,7 @@ odoo.define("web_widget_domain_editor_dialog.basic_fields", function(require) {
     const _t = core._t;
 
     basic_fields.FieldDomain.include({
-        _onShowSelectionButtonClick: function(event) {
+        _onShowSelectionButtonClick: function (event) {
             event.preventDefault();
             const _this = this;
             if (this.mode === "readonly") {
@@ -26,7 +26,7 @@ odoo.define("web_widget_domain_editor_dialog.basic_fields", function(require) {
                 readonly: false,
                 disable_multiple_selection: false,
                 no_create: true,
-                on_selected: function(selected_ids) {
+                on_selected: function (selected_ids) {
                     _this.domainSelector
                         .setDomain(this.get_domain(selected_ids))
                         .then(_this._replaceContent.bind(_this));

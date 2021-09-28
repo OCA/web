@@ -1,7 +1,7 @@
 /* Copyright 2019 Tecnativa - David Vidal
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
-odoo.define("web_widget_domain_editor_dialog.DomainEditorDialog", function(require) {
+odoo.define("web_widget_domain_editor_dialog.DomainEditorDialog", function (require) {
     "use strict";
 
     const core = require("web.core");
@@ -10,7 +10,7 @@ odoo.define("web_widget_domain_editor_dialog.DomainEditorDialog", function(requi
     const _t = core._t;
 
     const DomainEditorDialog = view_dialogs.SelectCreateDialog.extend({
-        init: function() {
+        init: function () {
             this._super.apply(this, arguments);
             const _this = this;
             this.options = _.defaults(this.options, {
@@ -24,23 +24,23 @@ odoo.define("web_widget_domain_editor_dialog.DomainEditorDialog", function(requi
                 ],
             });
         },
-        get_domain: function(selected_ids) {
+        get_domain: function (selected_ids) {
             let group_domain = [];
             const search_data = this.viewController.renderer.state;
             let domain = search_data.domain;
             if (this.$(".o_list_record_selector input").prop("checked")) {
                 if (search_data.groupedBy.length) {
-                    group_domain = _.filter(search_data.data, x => {
+                    group_domain = _.filter(search_data.data, (x) => {
                         return x.res_ids.length;
-                    }).map(x => {
+                    }).map((x) => {
                         return x.domain;
                     });
                     group_domain = _.flatten(group_domain, true);
                     // Compute domain difference
-                    _.each(domain, d => {
+                    _.each(domain, (d) => {
                         group_domain = _.without(
                             group_domain,
-                            _.filter(group_domain, x => {
+                            _.filter(group_domain, (x) => {
                                 return _.isEqual(x, d);
                             })[0]
                         );
@@ -54,7 +54,7 @@ odoo.define("web_widget_domain_editor_dialog.DomainEditorDialog", function(requi
                     ).concat(group_domain);
                 }
             } else {
-                const ids = selected_ids.map(x => {
+                const ids = selected_ids.map((x) => {
                     return x.id;
                 });
                 domain = domain.concat([["id", "in", ids]]);
