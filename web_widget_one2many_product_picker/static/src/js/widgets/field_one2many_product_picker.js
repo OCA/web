@@ -285,7 +285,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
             this.searchGroups.splice(0, 0, {
                 name: "all",
                 string: _t("All"),
-                domain: [],
+                domain: this.options.all_domain,
                 order: false,
                 active: !hasUserActive,
                 records_per_page: 16,
@@ -582,6 +582,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                 default_group: false,
                 auto_focus: true,
                 auto_save_delay: 1500,
+                all_domain: [],
             };
         },
 

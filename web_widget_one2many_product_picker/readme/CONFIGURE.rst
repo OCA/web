@@ -45,6 +45,7 @@ Widget options:
 * show_subtotal > Enable/Disable show subtotal (True by default)
 * auto_save > Enable/Disable auto save (False by default)
 * auto_save_delay > The time (in milliseconds) to wait after the last interaction before launching the autosave (1500 by default)
+* all_domain > The domain used in 'All' section ([] by default)
 
   If using auto save feature, you should keep in mind that the "Save" and "Discard" buttons
   will lose part of its functionality as the document will be saved every time you
