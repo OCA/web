@@ -85,9 +85,9 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
 
             // Uses to work with searchs, so we can mix properties with the user values.
             this._searchContext = {
-                domain: this.mode === "readonly" ? this._getLinesDomain() : false,
+                domain: this.mode === "readonly" ? this._getLinesDomain() : this._activeSearchGroup.domain,
                 text: false,
-                order: false,
+                order: this.mode === "readonly" ? false : this._activeSearchGroup.order,
                 activeTest: true,
             };
             if (this.mode === "readonly") {
@@ -206,7 +206,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
             this.searchGroups.splice(0, 0, {
                 name: 'all',
                 string: _t("All"),
-                domain: [],
+                domain: this.options.all_domain,
                 order: false,
                 active: !hasUserActive,
             });
@@ -456,6 +456,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                 trigger_refresh_fields: ["partner_id", "currency_id"],
                 auto_save: false,
                 ignore_warning: false,
+                all_domain: [],
             };
         },
 
