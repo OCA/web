@@ -84,8 +84,9 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
             });
             this.modeSelector = new PWAModeSelector({
                 online: () => {
-                    this.setPWAMode("online");
-                    this.postBroadcastMessage({type: "START_PREFETCH"});
+                    this.setPWAMode("online").then(() => {
+                        this.postBroadcastMessage({type: "START_PREFETCH"});
+                    });
                     this.modeSelector.close();
                 },
                 offline: () => {
@@ -101,38 +102,39 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 })
                 .then(() => {
                     if (!this.isPWACacheEnabled()) {
-                        this.setPWAMode("online");
-                        return;
-                    }
-                    // Show SW Info modal
-                    if (
-                        (this.isPWAStandalone() &&
-                            !navigator.serviceWorker.controller) ||
-                        (navigator.serviceWorker.controller &&
-                            ["installing", "installed"].indexOf(
-                                navigator.serviceWorker.controller.state
-                            ) !== -1)
-                    ) {
-                        this._swInfoOpenTimer = setTimeout(
-                            this._showSWInfo.bind(this),
-                            this._show_sw_info_modal_delay
-                        );
+                        return this.setPWAMode("online");
                     }
 
-                    // Try update service worker mode.
-                    // At this point the service worker can't be fully activated
-                    // This is used to ensure a fast configuration when the service
-                    // worker is activated.
-                    navigator.serviceWorker.ready.then(sw => {
-                        if (sw.active) {
-                            this.sendConfigToSW();
-                            if (this.isPWAStandalone()) {
-                                this.postBroadcastMessage({type: "GET_PWA_CONFIG"});
+                    if (this.isPWAStandalone()) {
+                        // Show SW Info modal
+                        if (
+                            !navigator.serviceWorker.controller ||
+                            (navigator.serviceWorker.controller &&
+                                ["installing", "installed"].indexOf(
+                                    navigator.serviceWorker.controller.state
+                                ) !== -1)
+                        ) {
+                            this._swInfoOpenTimer = setTimeout(
+                                this._showSWInfo.bind(this),
+                                this._show_sw_info_modal_delay
+                            );
+                        }
 
+                        // Try update service worker mode.
+                        // At this point the service worker can't be fully activated
+                        // This is used to ensure a fast configuration when the service
+                        // worker is activated.
+                        navigator.serviceWorker.ready.then(sw => {
+                            if (sw.active) {
                                 // Check if service worker has the control of the pages
                                 if (navigator.serviceWorker.controller) {
-                                    this._swInfoModalHidden = true;
-                                    this.$modalSWInfo.modal("hide");
+                                    this.sendConfigToSW().then(() => {
+                                        this.postBroadcastMessage({
+                                            type: "GET_PWA_CONFIG",
+                                        });
+                                        this._swInfoModalHidden = true;
+                                        this.$modalSWInfo.modal("hide");
+                                    });
                                 } else {
                                     this.$modalSWInfo
                                         .find("#swinfo_message")
@@ -144,8 +146,8 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                                     setTimeout(location.reload(), 250);
                                 }
                             }
-                        }
-                    });
+                        });
+                    }
                 });
         },
 
@@ -157,14 +159,27 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 });
         },
 
+        sendJSON: function(url, data) {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: resolve,
+                    error: reject,
+                });
+            });
+        },
+
         /**
          * Sends the base config to the service worker
          * This is important for the worker to know if
          * is working in standalone mode.
          */
         sendConfigToSW: function() {
-            this.postBroadcastMessage({
-                type: "SET_PWA_CONFIG",
+            return this.setPWAConfig({
                 standalone: this.isPWAStandalone(),
                 uid: session.uid,
                 partner_id: session.partner_id,
@@ -202,10 +217,21 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
          */
         setPWAMode: function(mode) {
             this._pwaMode = mode;
-            this.postBroadcastMessage({
-                type: "SET_PWA_CONFIG",
+            return this.setPWAConfig({
                 pwa_mode: this._pwaMode,
             });
+        },
+
+        setPWAConfig: function(config) {
+            return this.sendJSON(
+                "/pwa/sw/config",
+                _.extend(
+                    {
+                        type: "SET_PWA_CONFIG",
+                    },
+                    config
+                )
+            );
         },
 
         _autoclosePrefetchModalData: function() {

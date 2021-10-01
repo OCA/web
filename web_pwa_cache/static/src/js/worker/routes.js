@@ -25,6 +25,7 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
                     "/web/action/run": "_routeOutActionRun",
                     "/mail/init_messaging": "_routeOutInitMessaging",
                     "/mail/read_followers": "_routeOutReadFollowers",
+                    "/pwa/sw/config": "_routeOutPWAConfigMessage",
                 },
                 // Client <- Odoo (importer)
                 in: {
@@ -293,6 +294,18 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
                 } catch (err) {
                     return reject(err);
                 }
+            });
+        },
+
+        _routeOutPWAConfigMessage: function(url, request_data) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    await this._managers.config.onProcessMessage(request_data);
+                } catch (err) {
+                    return reject(err);
+                }
+
+                return resolve(Tools.ResponseJSONRPC({}));
             });
         },
 

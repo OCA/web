@@ -159,69 +159,69 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
             });
         },
 
+        /**
+         * @param {Object} data
+         * @returns {Promise}
+         */
+        onProcessMessage: function(data) {
+            if (data.type === "SET_PWA_CONFIG") {
+                const promises = [];
+                const changes = {};
+                let keys = Object.keys(data);
+                keys = _.filter(keys, item => item !== "type");
+                for (const key of keys) {
+                    changes[key] = data[key];
+                    promises.push(this.set(key, changes[key]));
+                }
+                return Promise.all(promises)
+                    .then(() => {
+                        new Promise(async resolve => {
+                            this.postBroadcastMessage({
+                                type: "PWA_CONFIG_CHANGED",
+                                changes: changes,
+                            });
+                            return resolve();
+                        });
+                    })
+                    .catch(err => {
+                        console.log(
+                            `[ServiceWorker] Init configuration was failed. The worker its in inconsisten state!`
+                        );
+                        console.log(err);
+                    });
+            } else if (data.type === "GET_PWA_CONFIG") {
+                // Received to send pwa config. to the user page.
+                return new Promise(async (resolve, reject) => {
+                    try {
+                        const config = await this.sendToPages();
+                        // Check if need do prefetch (Auto-Prefetch)
+                        if (
+                            !this.isOfflineMode() &&
+                            this.isStandaloneMode() &&
+                            config.is_db_empty
+                        ) {
+                            this.getParent()._doPrefetchDataPost();
+                        }
+                    } catch (err) {
+                        console.log(
+                            "[ServiceWorker] Error sending pwa configuration to the user page! ",
+                            err
+                        );
+                        return reject(err);
+                    }
+
+                    return resolve();
+                });
+            }
+        },
+
         _onReceiveBroadcastMessage: function(evt) {
             const res = BroadcastMixin._onReceiveBroadcastMessage.call(this, evt);
             if (!res || !this.isActivated()) {
                 return;
             }
-            switch (evt.data.type) {
-                // This message is received when the user page was loaded or the user changes the pwa mode.
-                // The process can be:
-                // - User has no 'userdata'. This means that the prefeteching process hasn't been done
-                //   so we run it the first time.
-                // - User change the pwa mode to 'online'. This means that we can try to prefetch data.
-                case "SET_PWA_CONFIG":
-                    const promises = [];
-                    const changes = {};
-                    let keys = Object.keys(evt.data);
-                    keys = _.filter(keys, item => item !== "type");
-                    for (const key of keys) {
-                        changes[key] = evt.data[key];
-                        promises.push(this.set(key, changes[key]));
-                    }
-                    Promise.all(promises)
-                        .then(() => {
-                            new Promise(async resolve => {
-                                this.postBroadcastMessage({
-                                    type: "PWA_CONFIG_CHANGED",
-                                    changes: changes,
-                                });
-                                return resolve();
-                            });
-                        })
-                        .catch(err => {
-                            console.log(
-                                `[ServiceWorker] Init configuration was failed. The worker its in inconsisten state!`
-                            );
-                            console.log(err);
-                        });
-                    break;
 
-                // Received to send pwa config. to the user page.
-                case "GET_PWA_CONFIG":
-                    new Promise(async (resolve, reject) => {
-                        try {
-                            const config = await this.sendToPages();
-                            // Check if need do prefetch (Auto-Prefetch)
-                            if (
-                                !this.isOfflineMode() &&
-                                this.isStandaloneMode() &&
-                                config.is_db_empty
-                            ) {
-                                this.getParent()._doPrefetchDataPost();
-                            }
-                        } catch (err) {
-                            console.log(
-                                "[ServiceWorker] Error sending pwa configuration to the user page! ",
-                                err
-                            );
-                            return reject(err);
-                        }
-
-                        return resolve();
-                    });
-                    break;
-            }
+            this.onProcessMessage(evt.data);
         },
     });
 

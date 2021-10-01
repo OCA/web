@@ -224,6 +224,32 @@ odoo.define("web_pwa_cache.PWA", function(require) {
          * @override
          */
         processRequest: function(request) {
+            // Allways listen for config requests
+            if (
+                request.method === "POST" &&
+                request.headers.get("Content-Type").includes("application/json")
+            ) {
+                const url = new URL(request.url);
+                if (url.pathname === "/pwa/sw/config") {
+                    return new Promise(async resolve => {
+                        const request_cloned_cache = request.clone();
+                        try {
+                            const response_cache = await this._tryPostFromCache(
+                                request_cloned_cache
+                            );
+                            return resolve(response_cache);
+                        } catch (err) {
+                            console.log(
+                                "[ServiceWorker] The configuration requests can be processed..."
+                            );
+                            console.log(err);
+                            // This should allways return a valid response, its an internal route.
+                            resolve(Tools.ResponseJSONRPC({}));
+                        }
+                    });
+                }
+            }
+
             if (this._isDisabled) {
                 return fetch(request);
             }
@@ -237,6 +263,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
             // Console.log("------ STANDALONE: ", isStandaloneMode);
             // console.log("------ MODE OFF: ", isOffline);
             // console.log("------ METHOD: ", request.method);
+            // console.log("------ CONTENT TYPE: ", request.headers.get("Content-Type"));
 
             if (request.method === "GET") {
                 const url = new URL(request.url);
@@ -316,7 +343,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
             } else if (
                 isStandaloneMode &&
                 request.method === "POST" &&
-                request.headers.get("Content-Type") === "application/json"
+                request.headers.get("Content-Type").includes("application/json")
             ) {
                 return new Promise(async resolve => {
                     try {

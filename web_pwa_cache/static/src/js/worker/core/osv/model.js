@@ -310,7 +310,8 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                                         )
                                     );
                                 }
-                            } else if (field.store && field.column_type) {
+                            } else if (field.store) {
+                                // Not using "field.column_type" because all usable fields must have a column in the client.
                                 let qualifield_name = await this._inherits_join_calc(
                                     model_info,
                                     alias,
