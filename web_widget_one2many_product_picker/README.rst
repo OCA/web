@@ -81,6 +81,7 @@ Widget options:
 * show_discount > Enable/Disable display discount (False by default)
 * show_subtotal > Enable/Disable show subtotal (True by default)
 * auto_save > Enable/Disable auto save (False by default)
+* all_domain > The domain used in 'All' section ([] by default)
 
   If using auto save feature, you should keep in mind that the "Save" and "Discard" buttons
   will lose part of its functionality as the document will be saved every time you
@@ -236,6 +237,8 @@ Contributors
     * Alexandre D. Díaz
     * Pedro M. Baeza
     * David Vidal
+
+* Giovanni Serra <giovanni@gslab.it>
 
 Maintainers
 ~~~~~~~~~~~
