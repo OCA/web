@@ -12,7 +12,7 @@
             >
                 <t
                     t-set="collapse_switchview"
-                    t-value="device.size_class &lt;= device.SIZES.LG"
+                    t-value="env.device.size_class &lt;= env.device.SIZES.LG"
                 />
                 <button
                     t-if="collapse_switchview"
@@ -49,9 +49,9 @@
                 t-att-class="state.mobileSearchMode == 'quick' ? 'o_searchview_quick' : 'o_searchview_mobile'"
                 role="search"
                 aria-autocomplete="list"
-                t-on-click.self="state.mobileSearchMode = device.isMobile ? 'quick' : ''"
+                t-on-click.self="state.mobileSearchMode = env.device.isMobile ? 'quick' : ''"
             >
-                <t t-if="!device.isMobile">
+                <t t-if="!env.device.isMobile">
                     <i
                         class="o_searchview_icon fa fa-search"
                         title="Search..."
@@ -60,7 +60,7 @@
                     />
                     <SearchBar fields="fields" />
                 </t>
-                <t t-if="device.isMobile and state.mobileSearchMode == 'quick'">
+                <t t-if="env.device.isMobile and state.mobileSearchMode == 'quick'">
                     <button
                         class="btn btn-link fa fa-arrow-left"
                         t-on-click.stop="state.mobileSearchMode = ''"
@@ -72,10 +72,10 @@
                     />
                 </t>
                 <t
-                    t-if="device.isMobile and state.mobileSearchMode == 'full'"
+                    t-if="env.device.isMobile and state.mobileSearchMode == 'full'"
                     t-call="web_responsive.MobileSearchView"
                 />
-                <t t-if="device.isMobile and state.mobileSearchMode == ''">
+                <t t-if="env.device.isMobile and state.mobileSearchMode == ''">
                     <button
                         class="btn btn-link fa fa-search"
                         t-on-click.stop="state.mobileSearchMode = 'quick'"
@@ -87,14 +87,14 @@
             <attribute
                 name="t-att-class"
                 t-translation="off"
-            >device.isMobile and state.mobileSearchMode == 'quick' ? 'o_hidden' : ''</attribute>
+            >env.device.isMobile and state.mobileSearchMode == 'quick' ? 'o_hidden' : ''</attribute>
         </xpath>
         <xpath expr="//div[hasclass('o_search_options')]" position="attributes">
-            <attribute name="t-if" t-translation="off">!device.isMobile</attribute>
+            <attribute name="t-if" t-translation="off">!env.device.isMobile</attribute>
             <attribute
                 name="t-att-class"
                 t-translation="off"
-            >device.size_class == device.SIZES.MD ? 'o_search_options_hide_labels' : ''</attribute>
+            >env.device.size_class == env.device.SIZES.MD ? 'o_search_options_hide_labels' : ''</attribute>
         </xpath>
     </t>
     <t t-name="web_responsive.MobileSearchView" owl="1">
