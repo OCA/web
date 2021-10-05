@@ -60,6 +60,7 @@ msgstr "Enregistrer"
 #. module: web_translate_dialog
 #. openerp-web
 #: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:243
+#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:245
 #, python-format
 msgid "Translate"
 msgstr "Traduire"
@@ -67,6 +68,7 @@ msgstr "Traduire"
 #. module: web_translate_dialog
 #. openerp-web
 #: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:26
+#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:27
 #, python-format
 msgid "Translate fields: /"
 msgstr "Traduire les champs : /"
