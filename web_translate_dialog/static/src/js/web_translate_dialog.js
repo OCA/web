@@ -23,6 +23,7 @@ var Mutex = concurrency.Mutex;
 var TranslateDialog = Dialog.extend({
     template: "TranslateDialog",
     init: function(parent, options) {
+        this._open_dialog_wait_for = []
         var title_string = _t("Translate fields: /");
         var field_names;
         var single_field = false;
@@ -50,6 +51,7 @@ var TranslateDialog = Dialog.extend({
         );
         this.lang_data.set_sort(['tr_sequence asc','id asc']);
         this.lang_data.read_slice(['code', 'name']).then(this.on_languages_loaded);
+        this._open_dialog_wait_for.push(this.languages_loaded)
     },
     willStart: function () {
         var self = this;
@@ -75,7 +77,7 @@ var TranslateDialog = Dialog.extend({
     },
     open: function() {
         // the template needs the languages
-        return $.when(this.languages_loaded).then($.proxy(this._super, this));
+        return $.when.apply($, this._open_dialog_wait_for).then($.proxy(this._super, this));
     },
     start: function() {
         var self = this;
