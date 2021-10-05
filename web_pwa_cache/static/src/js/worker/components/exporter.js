@@ -606,7 +606,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         action_id = action.id;
                     }
 
-                    const record = this._db.indexeddb.action.get(action_id);
+                    const record = await this._db.indexeddb.action.get(action_id);
                     if (_.isEmpty(record) && !this.isOfflineMode()) {
                         return reject("No records");
                     }

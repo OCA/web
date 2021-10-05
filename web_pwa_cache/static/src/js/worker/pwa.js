@@ -440,7 +440,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
             if (!this.isActivated(false)) {
                 return fetch(request);
             }
-            return new Promise(async resolve => {
+            return new Promise(async (resolve, reject) => {
                 const options = {
                     is_standalone_mode:
                         (this._managers.config &&
@@ -456,25 +456,29 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                 // console.log("------ MODE OFF: ", options.is_offline);
                 // console.log("------ METHOD: ", request.method);
                 // console.log("------ CONTENT TYPE: ", request.headers.get("Content-Type"));
-                const resInternal = await this.processRequestInternal(request, url);
-                if (resInternal !== false) {
-                    return resolve(resInternal);
-                }
+                try {
+                    const resInternal = await this.processRequestInternal(request, url);
+                    if (resInternal !== false) {
+                        return resolve(resInternal);
+                    }
 
-                if (!this.isActivated()) {
+                    if (!this.isActivated()) {
+                        return resolve(fetch(request));
+                    }
+                    const [resGET, resPOST] = await Promise.all([
+                        this.processRequestGET(request, url, options),
+                        this.processRequestPOST(request, url, options),
+                    ]);
+                    if (resGET !== false) {
+                        return resolve(resGET);
+                    } else if (resPOST !== false) {
+                        return resolve(resPOST);
+                    }
+                    // No cached request
                     return resolve(fetch(request));
+                } catch (err) {
+                    return reject(err);
                 }
-                const [resGET, resPOST] = await Promise.all([
-                    this.processRequestGET(request, url, options),
-                    this.processRequestPOST(request, url, options),
-                ]);
-                if (resGET !== false) {
-                    return resolve(resGET);
-                } else if (resPOST !== false) {
-                    return resolve(resPOST);
-                }
-                // No cached request
-                return resolve(fetch(request));
             });
         },
 
