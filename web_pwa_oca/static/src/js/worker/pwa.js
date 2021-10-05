@@ -29,7 +29,8 @@ odoo.define("web_pwa_oca.PWA", function(require) {
         /**
          * @returns {Promise}
          */
-        activateWorker: function() {
+        /* eslint-disable no-unused-vars */
+        activateWorker: function(forced) {
             // To be overridden
             return Promise.resolve();
         },
