@@ -53,16 +53,19 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         "args" in data.kwargs ? data.kwargs.args : data.args[1];
                     const limit =
                         "args" in data.kwargs ? data.kwargs.limit : data.args[2];
-                    return resolve(
-                        this._db.name_search(
-                            model,
-                            search,
-                            domain,
-                            operator,
-                            limit,
-                            context
-                        )
+                    const records = this._db.name_search(
+                        model,
+                        search,
+                        domain,
+                        operator,
+                        limit,
+                        context
                     );
+                    if (!records.length && !this.isOfflineMode()) {
+                        // Only reject if not offline
+                        return reject("No records");
+                    }
+                    return resolve(records);
                 } catch (err) {
                     return reject(err);
                 }
@@ -90,7 +93,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                     ]);
                     if (!records.length && !this.isOfflineMode()) {
                         // Only reject if not offline
-                        return reject();
+                        return reject("No records");
                     }
                     const filtered_records = records.map(item => _.values(item));
                     return resolve(filtered_records);
@@ -115,6 +118,17 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                     if (typeof fields_changed === "string") {
                         fields_changed = [fields_changed];
                     }
+
+                    // Handle request if 'special' fields are requested
+                    // if (!this.isOfflineMode()) {
+                    //     const model_info = await this._db.getModelInfo(model);
+                    //     for (let field of fields_changed) {
+                    //         const field_info = model_info.fields[field];
+                    //         if (!field_info.store) {
+                    //             return reject("Ignore onchange, no-store field involved.");
+                    //         }
+                    //     }
+                    // }
 
                     // Generate Onchange Values Virtual Table
                     const sandbox = new JSSandbox();
@@ -146,7 +160,10 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                             let domain = false;
                             if (record.cache_type === "onchange_formula") {
                                 sandbox.compile(record.code_js);
-                                const changes = sandbox.run(record_data);
+                                const changes = sandbox.run({
+                                    db: this._db,
+                                    obj: record_data,
+                                });
                                 value = changes.value;
                                 warning = changes.warning;
                                 domain = changes.domain;
@@ -241,6 +258,10 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         };
                         res.push(values);
                     }
+                    if (!res.length && !this.isOfflineMode()) {
+                        // Only reject if not offline
+                        return reject("No records");
+                    }
                     return resolve(res);
                 }
                 return reject();
@@ -297,7 +318,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         if (this.isOfflineMode()) {
                             return resolve({});
                         }
-                        return reject();
+                        return reject("No records");
                     }
                     return resolve(record.template);
                 } catch (err) {
@@ -445,7 +466,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         action_id
                     );
                     if (!filters.length && !this.isOfflineMode()) {
-                        return reject();
+                        return reject("No records");
                     }
                     return resolve(filters);
                 } catch (err) {
@@ -474,7 +495,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         context
                     );
                     if (_.isEmpty(res) && !this.isOfflineMode()) {
-                        return reject();
+                        return reject("No records");
                     }
                     return resolve(res);
                 } catch (err) {
@@ -491,7 +512,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                 try {
                     const record = await this._db.indexeddb.userdata.get("menus");
                     if (_.isEmpty(record) && !this.isOfflineMode()) {
-                        return reject();
+                        return reject("No records");
                     }
                     return resolve(record.value);
                 } catch (err) {
@@ -554,7 +575,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                 try {
                     const record = await this._db.ref(xmlid);
                     if (_.isEmpty(record) && !this.isOfflineMode()) {
-                        return reject();
+                        return reject("No records");
                     }
                     return resolve(record.id);
                 } catch (err) {
@@ -587,7 +608,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
 
                     const record = this._db.indexeddb.action.get(action_id);
                     if (_.isEmpty(record) && !this.isOfflineMode()) {
-                        return reject();
+                        return reject("No records");
                     }
                     return resolve(record);
                 } catch (err) {
@@ -610,7 +631,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         if (this.isOfflineMode()) {
                             return resolve({});
                         }
-                        return reject();
+                        return reject("No records");
                     }
                     const model_info = await this._db.getModelInfo(pmodel);
                     const req_fields = _.union(["id"], data.args[1]);
@@ -807,7 +828,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                 try {
                     const model_info = await this._db.getModelInfo(model);
                     if (_.isEmpty(model_info) && !this.isOfflineMode()) {
-                        return reject();
+                        return reject("No records");
                     }
                     const fields_info = {};
                     for (const key in model_info.fields) {
@@ -1056,7 +1077,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         if (this.isOfflineMode()) {
                             return resolve(false);
                         }
-                        return reject();
+                        return reject("No records");
                     }
                     return resolve(record[sfield]);
                 } catch (err) {

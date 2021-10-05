@@ -1169,7 +1169,10 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                             "formula"
                         );
                         sandbox.compile(record.formula);
-                        _.extend(values, sandbox.run());
+                        const sanbox_res = sandbox.run();
+                        if (!_.isEmpty(sanbox_res)) {
+                            _.extend(values, sanbox_res.value);
+                        }
                     }
                     if (
                         _.isEmpty(values) &&

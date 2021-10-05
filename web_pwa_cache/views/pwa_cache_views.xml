@@ -36,11 +36,11 @@
                         />
                     </group>
                     <group
-                        attrs="{'invisible': [('cache_type', 'not in', ['model', 'onchange', 'onchange_formula', 'function'])]}"
+                        attrs="{'invisible': [('cache_type', 'not in', ['model', 'onchange', 'onchange_formula', 'default_formula', 'function'])]}"
                     >
                         <field
                             name="model_id"
-                            attrs="{'required': [('cache_type', 'in', ['model', 'onchange', 'onchange_formula', 'function'])]}"
+                            attrs="{'required': [('cache_type', 'in', ['model', 'onchange', 'onchange_formula', 'default_formula', 'function'])]}"
                         />
                     </group>
                     <group attrs="{'invisible': [('cache_type', '!=', 'model')]}">
@@ -158,7 +158,7 @@
                             string="Javascript Code"
                             name='code'
                             autofocus="autofocus"
-                            attrs="{'invisible': [('cache_type', '!=', 'onchange_formula')]}"
+                            attrs="{'invisible': [('cache_type', 'not in', ['onchange_formula', 'default_formula'])]}"
                         >
                             <field
                                 name="code_js"

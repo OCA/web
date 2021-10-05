@@ -213,6 +213,8 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
                     return resolve();
                 });
             }
+
+            return Promise.resolve();
         },
 
         _onReceiveBroadcastMessage: function(evt) {

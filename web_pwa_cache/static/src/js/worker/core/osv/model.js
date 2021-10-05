@@ -254,14 +254,14 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
             alias,
             order_spec,
             query,
-            reverse_direction = false,
-            seen = []
+            reverse_direction = false
+            // Seen = []
         ) {
             return new Promise(async (resolve, reject) => {
                 try {
                     this._check_qorder(order_spec);
 
-                    let order_by_elements = [];
+                    const order_by_elements = [];
                     const order_spec_splitted = order_spec.split(",");
                     for (const order_part of order_spec_splitted) {
                         const order_split = order_part.trim().split(" ");
@@ -274,13 +274,18 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                             order_direction =
                                 order_direction === "DESC" ? "ASC" : "DESC";
                         }
-                        const do_reverse = order_direction === "DESC";
+                        // Const do_reverse = order_direction === "DESC";
 
                         let field = model_info.fields[order_field];
                         if (!field) {
                             throw Error(
                                 `Sorting field ${order_field} not found on model ${model_info.model}`
                             );
+                        }
+
+                        // Avoid order by "non-valid" fields
+                        if (model_info.valid_fields.indexOf(order_field) === -1) {
+                            continue;
                         }
 
                         if (order_field === "id") {
@@ -291,25 +296,26 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                             if (field.inherited) {
                                 field = field.base_field;
                             }
-                            if (false && field.store && field.type === "many2one") {
-                                const key = [
-                                    field.model_name,
-                                    field.relation,
-                                    order_field,
-                                ];
-                                if (_.findIndex(seen, key) === -1) {
-                                    seen.push(key);
-                                    order_by_elements = order_by_elements.concat(
-                                        await this._generate_m2o_order_by(
-                                            model_info,
-                                            alias,
-                                            order_field,
-                                            query,
-                                            do_reverse,
-                                            seen
-                                        )
-                                    );
-                                }
+                            if (field.store && field.type === "many2one") {
+                                continue;
+                                // Const key = [
+                                //     field.model_name,
+                                //     field.relation,
+                                //     order_field,
+                                // ];
+                                // if (_.findIndex(seen, key) === -1) {
+                                //     seen.push(key);
+                                //     order_by_elements = order_by_elements.concat(
+                                //         await this._generate_m2o_order_by(
+                                //             model_info,
+                                //             alias,
+                                //             order_field,
+                                //             query,
+                                //             do_reverse,
+                                //             seen
+                                //         )
+                                //     );
+                                // }
                             } else if (field.store) {
                                 // Not using "field.column_type" because all usable fields must have a column in the client.
                                 let qualifield_name = await this._inherits_join_calc(

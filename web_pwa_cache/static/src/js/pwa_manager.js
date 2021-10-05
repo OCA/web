@@ -102,9 +102,12 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 })
                 .then(() => {
                     if (!this.isPWACacheEnabled()) {
-                        return this.setPWAMode("online");
+                        navigator.serviceWorker.ready.then(sw => {
+                            if (sw.active && navigator.serviceWorker.controller) {
+                                this.setPWAMode("online");
+                            }
+                        });
                     }
-
                     if (this.isPWAStandalone()) {
                         // Show SW Info modal
                         if (
@@ -352,7 +355,16 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
          */
         _onReceiveBroadcastMessage: function(evt) {
             const res = BroadcastMixin._onReceiveBroadcastMessage.call(this, evt);
-            if (!res || !this.isPWACacheEnabled()) {
+            if (!res) {
+                return;
+            }
+
+            // This is a special message, that always is processed.
+            if (evt.data.type === "PWA_SW_FORCED_INIT") {
+                this._onPWASWForcedInit(evt.data);
+            }
+
+            if (!this.isPWACacheEnabled()) {
                 return;
             }
 
@@ -375,6 +387,12 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
             }
             if (method_name) {
                 this[method_name].call(this, evt.data);
+            }
+        },
+
+        _onPWASWForcedInit: function() {
+            if (!this.isPWACacheEnabled()) {
+                this.setPWAMode("online");
             }
         },
 

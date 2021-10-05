@@ -545,12 +545,8 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                             last_update: prefetch_last_update || false,
                         }
                     );
-                    const tasks = [];
                     const records = (await response.json()).result;
-                    for (const record of records) {
-                        tasks.push(this.saveModelDefaults(record));
-                    }
-                    await Promise.all(tasks);
+                    await this.saveModelDefaults(records);
                     await this._config.set(
                         "prefetch_defaults_last_update",
                         start_prefetch_date

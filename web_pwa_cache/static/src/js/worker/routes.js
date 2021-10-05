@@ -11,6 +11,10 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
     PWA.include({
         _routes: {
             post: {
+                // Always processed requests
+                internal: {
+                    "/pwa/sw/config": "_routeOutPWAConfigMessage",
+                },
                 // Client -> Odoo (exporter)
                 out: {
                     "/web/webclient/version_info": "_routeOutVersionInfo",
@@ -25,7 +29,6 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
                     "/web/action/run": "_routeOutActionRun",
                     "/mail/init_messaging": "_routeOutInitMessaging",
                     "/mail/read_followers": "_routeOutReadFollowers",
-                    "/pwa/sw/config": "_routeOutPWAConfigMessage",
                 },
                 // Client <- Odoo (importer)
                 in: {
@@ -305,6 +308,7 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
                     return reject(err);
                 }
 
+                console.log("[ServiceWorker] Processed internal config message");
                 return resolve(Tools.ResponseJSONRPC({}));
             });
         },
