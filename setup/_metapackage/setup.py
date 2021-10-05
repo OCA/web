@@ -39,6 +39,7 @@ setuptools.setup(
         'odoo14-addon-web_widget_many2one_simple',
         'odoo14-addon-web_widget_mpld3_chart',
         'odoo14-addon-web_widget_numeric_step',
+        'odoo14-addon-web_widget_open_tab',
         'odoo14-addon-web_widget_url_advanced',
         'odoo14-addon-web_widget_x2many_2d_matrix',
     ],
