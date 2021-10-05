@@ -301,9 +301,14 @@ odoo.define("web_pwa_cache.PWA", function(require) {
 
                 // Fallback
                 if (request.cache !== "only-if-cached") {
-                    return resolve(fetch(request));
+                    try {
+                        const fetch_res = await fetch(request);
+                        return resolve(fetch_res);
+                    } catch (err) {
+                        // Do nothing
+                    }
                 }
-                return Promise.resolve(false);
+                return resolve(false);
             });
         },
 
@@ -384,7 +389,12 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                 }
 
                 // Fallback
-                return resolve(fetch(request));
+                try {
+                    const fetch_res = await fetch(request);
+                    return resolve(fetch_res);
+                } catch (err) {
+                    return resolve(false);
+                }
             });
         },
 
@@ -463,7 +473,8 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                     }
 
                     if (!this.isActivated()) {
-                        return resolve(fetch(request));
+                        const fetch_res = await fetch(request);
+                        return resolve(fetch_res);
                     }
                     const [resGET, resPOST] = await Promise.all([
                         this.processRequestGET(request, url, options),
@@ -475,7 +486,8 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                         return resolve(resPOST);
                     }
                     // No cached request
-                    return resolve(fetch(request));
+                    const fetch_res = await fetch(request);
+                    return resolve(fetch_res);
                 } catch (err) {
                     return reject(err);
                 }

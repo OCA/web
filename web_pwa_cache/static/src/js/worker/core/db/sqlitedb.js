@@ -144,7 +144,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                 }
                 results.push(result_vals);
             }
-            return results;
+            return results.reverse();
         },
 
         /**

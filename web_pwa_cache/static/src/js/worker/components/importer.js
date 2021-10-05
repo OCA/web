@@ -66,7 +66,7 @@ odoo.define("web_pwa_cache.PWA.components.Importer", function(require) {
                         "model_metadata",
                         true
                     );
-                    const rc_ids = await this.search(model_info_metadata, [
+                    const rc_ids = await this._db.search(model_info_metadata, [
                         ["model", "=", model],
                     ]);
                     await this._db.sqlitedb.updateModelInfo(rc_ids, {

@@ -141,6 +141,7 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                             prefetch_last_update: {type: "datetime", store: true},
                             defaults: {type: "serialized", store: true},
                             valid_fields: {type: "serialized", store: true},
+                            is_transient: {type: "boolean", store: true},
                         },
                     };
                     await this.sqlitedb.createTable(model_info_model_metadata);

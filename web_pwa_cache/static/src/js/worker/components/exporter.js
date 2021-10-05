@@ -424,9 +424,15 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
         default_get: function(model, data) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const model_defaults = await this._db.getModelDefaults(model);
+                    const model_info = await this._db.getModelInfo(model);
+                    if (model_info.is_transient && !this.isOfflineMode()) {
+                        return reject(
+                            "Ignore transient model defaults cache in online mode"
+                        );
+                    }
+                    const model_defaults = await this._db.getModelDefaults(model_info);
                     if (_.isEmpty(model_defaults) && !this.isOfflineMode()) {
-                        return reject();
+                        return reject("No records");
                     }
                     const context_defaults = data.kwargs.context;
                     const default_keys = Object.keys(context_defaults).filter(item =>

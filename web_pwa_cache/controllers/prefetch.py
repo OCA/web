@@ -5,7 +5,7 @@ import functools
 import itertools
 import logging
 
-from odoo import api, http
+from odoo import api, http, models
 from odoo.http import request, route
 from odoo.tools import safe_eval
 
@@ -76,7 +76,7 @@ class PWAPrefetch(PWA):
                 model_info["count"] = model_obj.search_count(model_info["domain"])
 
     def _pwa_is_invalid_field(self, model, field_name, field_def):
-        if field_name in ("create_uid", "create_date", "write_uid", "write_date"):
+        if field_name in ("create_uid", "write_uid", "write_date"):
             return True
         # Handle 'special' fields
         if model == "pwa.cache.onchange.value" and field_name in (
@@ -206,6 +206,7 @@ class PWAPrefetch(PWA):
                     "inherits": model_obj._inherits,
                     "table": model_obj._table,
                     "defaults": model_defaults,
+                    "is_transient": isinstance(model_obj, models.TransientModel),
                 }
             )
         return res
