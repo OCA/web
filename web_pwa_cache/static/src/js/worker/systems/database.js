@@ -55,7 +55,7 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
          * @param {Array} model_names
          * @param {Boolean} internal
          * @param {Boolean} grouped Control if need output as dict or array
-         * @returns {Object/Array}
+         * @returns {Promise}
          */
         getModelInfo: function(model_names, internal, grouped, avoid_cache) {
             return new Promise(async (resolve, reject) => {
@@ -142,6 +142,8 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                             defaults: {type: "serialized", store: true},
                             valid_fields: {type: "serialized", store: true},
                             is_transient: {type: "boolean", store: true},
+                            has_log_fields: {type: "boolean", store: true},
+                            domain: {type: "serialized", store: true},
                         },
                     };
                     await this.sqlitedb.createTable(model_info_model_metadata);
@@ -756,6 +758,28 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
             });
         },
 
+        getPWAModelInfos: function() {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const records = await this.search_read(
+                        "pwa.cache",
+                        [["cache_type", "=", "model"]],
+                        false,
+                        ["model_name"]
+                    );
+                    if (!records.length) {
+                        return resolve([]);
+                    }
+                    const model_infos = await this.getModelInfo(
+                        _.pluck(records, "model_name")
+                    );
+                    return resolve(model_infos);
+                } catch (err) {
+                    return reject(err);
+                }
+            });
+        },
+
         /**
          * @param {Object/String} model_info
          * @param {Number} uid
@@ -1285,9 +1309,9 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
         vacuumRecords: function(model, oids) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    const records = await this.search_read(model, []);
-                    const cur_ids = _.map(records, "id");
-                    const ids_to_remove = _.difference(oids, cur_ids);
+                    const ids_to_remove = await this.search(model, [
+                        ["id", "not in", oids],
+                    ]);
                     if (!_.isEmpty(ids_to_remove)) {
                         await this.unlink(model, ids_to_remove);
                     }

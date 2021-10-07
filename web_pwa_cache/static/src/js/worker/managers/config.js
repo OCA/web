@@ -52,6 +52,13 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
         },
 
         /**
+         * @returns {Number}
+         */
+        getName: function() {
+            return this._cache.name;
+        },
+
+        /**
          * @returns {Array}
          */
         getUserGroups: function() {

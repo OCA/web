@@ -70,14 +70,22 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                         const sync_model_info = await this._db.getModelInfo(
                             record.model
                         );
+                        let need_update_db = false;
                         // Update sync. record values
+                        if (record.model === model && record.method === "write") {
+                            for (const index in record.args[0]) {
+                                if (record.args[0][index] === old_id) {
+                                    record.args[0][index] = new_id;
+                                    need_update_db = true;
+                                }
+                            }
+                        }
                         const values_index = get_index_init(record.method);
                         if (values_index === -1) {
                             continue;
                         }
                         const values = record.args[values_index];
                         const sync_old_id = values.id;
-                        let need_update_db = false;
                         for (const field in values) {
                             const field_value = values[field];
                             if (
@@ -172,14 +180,14 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
          */
         _prepareRecordValues: function(record) {
             return new Promise(async (resolve, reject) => {
-                const s_values = _.omit(record.args[0], ["id", "display_name"]);
-                if (s_values.name) {
-                    s_values.name = s_values.name.replace(
-                        /\s?\(?Offline Record #\d+\)?/,
-                        ""
-                    );
-                }
                 if (record.method === "create") {
+                    const s_values = _.omit(record.args[0], ["id", "display_name"]);
+                    if (s_values.name) {
+                        s_values.name = s_values.name.replace(
+                            /\s?\(?Offline Record #\d+\)?/,
+                            ""
+                        );
+                    }
                     try {
                         const [response_s] = await rpc.callJSonRpc(
                             record.model,
@@ -198,8 +206,20 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                     } catch (err) {
                         return reject(err);
                     }
+                    return resolve([s_values]);
+                } else if (record.method === "write") {
+                    const s_values = _.omit(record.args[1], ["id", "display_name"]);
+                    if (s_values.name) {
+                        s_values.name = s_values.name.replace(
+                            /\s?\(?Offline Record #\d+\)?/,
+                            ""
+                        );
+                    }
+                    return resolve([record.args[0], s_values]);
+                } else if (record.method === "unlink") {
+                    return resolve(record.args[0]);
                 }
-                return resolve(s_values);
+                return reject();
             });
         },
 
@@ -237,11 +257,31 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                     const [response] = await rpc.callJSonRpc(
                         cur_record.model,
                         cur_record.method,
-                        [values],
+                        values,
                         cur_record.kwargs
                     );
                     const new_id = (await response.json()).result;
-                    if (!_.isNumber(new_id)) {
+                    if (new_id === true || (_.isNumber(new_id) && new_id > 0)) {
+                        if (cur_record.method === "create") {
+                            // Ensure that the record have the correct 'create_date'
+                            await rpc.callJSonRpc(
+                                cur_record.model,
+                                "write",
+                                [
+                                    [new_id],
+                                    {
+                                        create_date: values[0].create_date,
+                                    },
+                                ],
+                                cur_record.kwargs
+                            );
+                            await this._postProcessRecord(
+                                sync_records,
+                                cur_record,
+                                new_id
+                            );
+                        }
+                    } else {
                         await this.updateSyncRecord(
                             cur_record.id,
                             _.extend(cur_record, {failed: true})
@@ -250,7 +290,6 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                             `Can't process the sync. record! (${cur_record.model}, ${cur_record.method})`
                         );
                     }
-                    await this._postProcessRecord(sync_records, cur_record, new_id);
                 } catch (err) {
                     await this.updateSyncRecord(
                         cur_record.id,
@@ -292,6 +331,8 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                         }
                     } catch (err) {
                         error_msg = err;
+                        console.log("[ServiceWorker] Sync. error!");
+                        console.log(err);
                     }
                     await this.onSynchronizedRecords(
                         sync_records_done,
@@ -299,6 +340,8 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                     );
                 } catch (err) {
                     error_msg = err;
+                    console.log("[ServiceWorker] Sync. error!");
+                    console.log(err);
                 }
 
                 this.sendCountToPages();

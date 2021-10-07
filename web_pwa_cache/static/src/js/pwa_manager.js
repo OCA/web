@@ -194,6 +194,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
             return this.setPWAConfig({
                 standalone: this.isPWAStandalone(),
                 uid: session.uid,
+                name: session.name,
                 partner_id: session.partner_id,
                 lang: session.user_context.lang,
             });

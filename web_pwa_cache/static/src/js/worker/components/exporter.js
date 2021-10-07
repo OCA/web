@@ -1108,8 +1108,20 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
             return new Promise(async resolve => {
                 const records_sync = [];
                 const model_defaults = await this._db.getModelDefaults(model_info);
+                let log_access_values = {};
+                if (model_info.has_log_fields) {
+                    log_access_values = {
+                        create_uid: [this._config.getUID(), this._config.getName()],
+                        create_date: Tools.DateToOdooFormat(new Date()),
+                    };
+                }
                 for (const index in data.args) {
-                    const record = _.extend({}, model_defaults, data.args[index]);
+                    const record = _.extend(
+                        {},
+                        model_defaults,
+                        log_access_values,
+                        data.args[index]
+                    );
                     // Write a temporal name
                     if (record.name) {
                         record.name += ` (Offline Record #${record.id})`;
@@ -1153,6 +1165,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                                     subrecord = _.extend(
                                         {},
                                         field_model_defaults,
+                                        log_access_values,
                                         subrecord
                                     );
                                     record.display_name = record.name;
@@ -1252,7 +1265,15 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                 );
                 const records = await this._db.browse(model_info, modified_records);
                 for (const record of records) {
-                    const data_to_sync = {};
+                    let data_to_sync = {};
+                    let log_access_values = {};
+                    if (model_info.has_log_fields) {
+                        log_access_values = {
+                            write_uid: [this._config.getUID(), this._config.getName()],
+                            write_date: Tools.DateToOdooFormat(new Date()),
+                        };
+                        data_to_sync = _.extend({}, log_access_values, data_to_sync);
+                    }
                     for (const field of modified_fields) {
                         if (model_info.fields[field].type === "one2many") {
                             if (!record[field]) {
@@ -1276,10 +1297,23 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                                             relation: model_info.model,
                                         }
                                     );
-                                    const model_defaults = this._db.getModelDefaults(
+                                    const model_defaults = await this._db.getModelDefaults(
                                         field_model_info
                                     );
-                                    subrecord = _.extend({}, model_defaults, subrecord);
+                                    subrecord = _.extend(
+                                        {},
+                                        model_defaults,
+                                        {
+                                            create_uid: [
+                                                this._config.getUID(),
+                                                this._config.getName(),
+                                            ],
+                                            create_date: Tools.DateToOdooFormat(
+                                                new Date()
+                                            ),
+                                        },
+                                        subrecord
+                                    );
                                     subrecord[parent_field] = record.id;
                                     subrecord.id = this._db.genRecordID();
                                     // Write a temporal name
@@ -1313,10 +1347,15 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                                     subrecords.push(subrecord);
                                     record[field].push(subrecord.id);
                                 } else if (command[0] === 1) {
+                                    let subrecord = _.extend(
+                                        {},
+                                        log_access_values,
+                                        command[2]
+                                    );
                                     records_sync.push({
                                         model: relation,
                                         method: "write",
-                                        args: [[command[1]], command[2]],
+                                        args: [[command[1]], subrecord],
                                         date: new Date().getTime(),
                                         kwargs: data.kwargs,
                                     });
@@ -1324,8 +1363,8 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                                         relation,
                                         command[1]
                                     );
-                                    const subrecord = await this._process_record_to_merge(
-                                        command[2],
+                                    subrecord = await this._process_record_to_merge(
+                                        subrecord,
                                         field_model_info.fields
                                     );
                                     subrecords.push(_.extend(ref_record, subrecord));
@@ -1381,7 +1420,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         date: new Date().getTime(),
                         kwargs: data.kwargs,
                     });
-                    await this._db.sync.bulkPut(records_sync);
+                    await this._db.indexeddb.sync.bulkPut(records_sync);
                     await this._db.write(model_info, [record.id], record);
                 }
                 return resolve(true);

@@ -76,15 +76,11 @@ class PWAPrefetch(PWA):
                 model_info["count"] = model_obj.search_count(model_info["domain"])
 
     def _pwa_is_invalid_field(self, model, field_name, field_def):
-        if field_name in ("create_uid", "write_uid", "write_date"):
-            return True
         # Handle 'special' fields
-        if model == "pwa.cache.onchange.value" and field_name in (
-            "display_name",
-            "field_name",
-            "discriminant_id",
-            "user_id",
-            "values",
+        if model == "pwa.cache.onchange.value" and (
+            field_name
+            in ("display_name", "field_name", "discriminant_id", "user_id", "values",)
+            or field_name in models.LOG_ACCESS_COLUMNS
         ):
             return True
         if model == "ir.actions.client" and field_name in ("params", "params_store",):
@@ -179,6 +175,11 @@ class PWAPrefetch(PWA):
         model_ids = self._get_pwa_models(last_update)
         res = []
         for model_id in model_ids:
+            pwa_cache_id = request.env["pwa.cache"].search(
+                self._get_pwa_cache_domain(["model"])
+                + [("model_name", "=", model_id.model)],
+                limit=1,
+            )
             model_obj = request.env[model_id.model]
             valid_fields = self._get_pwa_model_fields(model_id.model)
             if not valid_fields:
@@ -207,6 +208,13 @@ class PWAPrefetch(PWA):
                     "table": model_obj._table,
                     "defaults": model_defaults,
                     "is_transient": isinstance(model_obj, models.TransientModel),
+                    "has_log_fields": model_obj._log_access is not False,
+                    "domain": safe_eval(
+                        pwa_cache_id.model_domain or "[]",
+                        pwa_cache_id._get_eval_context(),
+                    )
+                    if pwa_cache_id
+                    else [],
                 }
             )
         return res

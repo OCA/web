@@ -194,6 +194,8 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                     return reject(err);
                 }
 
+                const model_info = await this._db.getModelInfo();
+                console.log(model_info);
                 // Const model_info = await this._db.getModelInfo("res.groups");
                 // const records = await this._db.search_read(model_info, []);
                 // console.log("------------------ RECORDS");
@@ -212,21 +214,10 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
             return new Promise(async resolve => {
                 try {
                     this._sendTaskInfo("vacuum_records", `Vacuum records...`, -1, 0);
-                    const models = await this._db.getModelInfo(
-                        false,
-                        false,
-                        false,
-                        true
-                    );
+                    const models = await this._db.getPWAModelInfos();
                     const num_models = models.length;
                     for (const index in models) {
                         const model_info = models[index];
-                        if (
-                            model_info.internal ||
-                            this._processedModels.indexOf(model_info.model) === -1
-                        ) {
-                            continue;
-                        }
                         this._sendTaskInfo(
                             "vacuum_records",
                             `Vacuum records of the model '${model_info.model}'...`,
@@ -893,7 +884,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
          */
         _preProcessModelInfo: function(values) {
             // Remove temporal values
-            const n_values = _.omit(values, ["count", "domain", "excluded_fields"]);
+            const n_values = _.omit(values, ["count"]);
             // Change field types if needed
             if (n_values.model in this._conversion_model_db_types) {
                 const model_conv_types = this._conversion_model_db_types[
