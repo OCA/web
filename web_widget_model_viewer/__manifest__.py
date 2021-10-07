@@ -4,7 +4,7 @@
 {
     "name": "Model viewer widget",
     "summary": "Easily display interactive 3D models on the web & in AR",
-    "version": "12.0.2.0.0",
+    "version": "14.0.1.0.0",
     "development_status": "Beta",
     "category": "Web",
     "website": "https://github.com/OCA/web",

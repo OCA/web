@@ -26,23 +26,24 @@ odoo.define("web_widget_model_viewer.FieldBinaryModelViewer", function (require)
             this._super.apply(this, arguments);
             var max_upload_size = this.attrs.max_upload_size;
             if (max_upload_size) {
-                this.max_upload_size = parseInt(max_upload_size) * 1024 * 1024;
+                this.max_upload_size = parseInt(max_upload_size, 10) * 1024 * 1024;
             } else {
-                this.max_upload_size = 250 * 1024 * 1024; // 250M
+                // 250M
+                this.max_upload_size = 250 * 1024 * 1024;
             }
         },
         _render: function () {
             var self = this;
             var url = "";
             if (this.value) {
-                if (!utils.is_bin_size(this.value)) {
-                    url = "data:model/gltf-binary;base64," + this.value;
-                } else {
+                if (utils.is_bin_size(this.value)) {
                     url = session.url("/web/content", {
                         model: this.model,
                         id: JSON.stringify(this.res_id),
                         field: this.name,
                     });
+                } else {
+                    url = "data:model/gltf-binary;base64," + this.value;
                 }
             }
             var $glb = $(
@@ -63,6 +64,7 @@ odoo.define("web_widget_model_viewer.FieldBinaryModelViewer", function (require)
                 );
             });
         },
+        /* eslint-disable complexity */
         fullscreen: function (ev) {
             var isFullscreenAvailable =
                 document.fullscreenEnabled ||
@@ -91,17 +93,17 @@ odoo.define("web_widget_model_viewer.FieldBinaryModelViewer", function (require)
                         document.msExitFullscreen();
                     }
                 } else if (modelViewerElem.requestFullscreen) {
-                        modelViewerElem.requestFullscreen();
-                    } else if (modelViewerElem.mozRequestFullScreen) {
-                        /* Firefox */
-                        modelViewerElem.mozRequestFullScreen();
-                    } else if (modelViewerElem.webkitRequestFullscreen) {
-                        /* Chrome, Safari and Opera */
-                        modelViewerElem.webkitRequestFullscreen();
-                    } else if (modelViewerElem.msRequestFullscreen) {
-                        /* IE/Edge */
-                        modelViewerElem.msRequestFullscreen();
-                    }
+                    modelViewerElem.requestFullscreen();
+                } else if (modelViewerElem.mozRequestFullScreen) {
+                    /* Firefox */
+                    modelViewerElem.mozRequestFullScreen();
+                } else if (modelViewerElem.webkitRequestFullscreen) {
+                    /* Chrome, Safari and Opera */
+                    modelViewerElem.webkitRequestFullscreen();
+                } else if (modelViewerElem.msRequestFullscreen) {
+                    /* IE/Edge */
+                    modelViewerElem.msRequestFullscreen();
+                }
             } else {
                 console.error("ERROR : full screen not supported by web browser");
             }
