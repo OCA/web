@@ -6,7 +6,7 @@
 {
     "name": "Progressive web application",
     "summary": "Make Odoo a PWA",
-    "version": "13.0.1.0.1",
+    "version": "13.0.1.0.2",
     "development_status": "Beta",
     "category": "Website",
     "website": "https://github.com/OCA/web",
