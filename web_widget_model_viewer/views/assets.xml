@@ -5,14 +5,10 @@
         name="Web layout Model viewer"
         inherit_id="web.layout"
     >
-        <xpath expr="//meta[@name='viewport']" position="after">
+        <xpath expr="//head" position="inside">
             <script
                 type="module"
                 src="/web_widget_model_viewer/static/lib/model-viewer.min.js"
-            />
-            <script
-                nomodule="1"
-                src="/web_widget_model_viewer/static/lib/model-viewer-legacy.js"
             />
         </xpath>
     </template>

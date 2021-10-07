@@ -18,7 +18,6 @@
                         title="Clear"
                         aria-label="Clear"
                     />
-
                     <span class="o_form_binary_progress">Uploading...</span>
                     <t t-call="HiddenInputFile">
                         <t t-set="image_only" t-value="true" />
@@ -29,7 +28,7 @@
         </div>
     </t>
     <t t-name="FieldBinaryModelViewer-glb">
-            <model-viewer
+        <model-viewer
             t-att-src='url'
             t-att-border="widget.readonly ? 0 : 1"
             t-att-name="widget.name"
@@ -37,16 +36,16 @@
             auto-rotate="1"
             camera-controls="1"
         >
-                    <div class="text-center mt-2 mb-2 mr-2">
-                        <span
+                <div class="text-center mt-2 mb-2 mr-2">
+                    <span
                     id="model-viewer-fullscreen"
                     title="View fullscreen"
                     role="img"
                     aria-label="Fullscreen"
                 >
-                            <i class="fa fa-arrows-alt fa-2x" />
-                        </span>
-                    </div>
-            </model-viewer>
+                        <i class="fa fa-arrows-alt fa-2x" />
+                    </span>
+                </div>
+        </model-viewer>
     </t>
 </templates>
