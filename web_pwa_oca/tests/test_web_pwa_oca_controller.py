@@ -14,7 +14,7 @@ class TestUi(odoo.tests.HttpCase):
         super().setUp()
         self.user = self.env.ref("base.user_admin")
         self.res_config_settings_obj = (
-            self.env["res.config.settings"].sudo(self.user.id).create({})
+            self.env["res.config.settings"].with_user(self.user).create({})
         )
 
     def test_manifest_valid_json(self):
