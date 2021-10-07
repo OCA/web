@@ -44,7 +44,7 @@ addon | version | maintainers | summary
 [web_no_bubble](web_no_bubble/) | 13.0.1.0.0 |  | Remove the bubbles from the web interface
 [web_notify](web_notify/) | 13.0.1.0.1 |  | Send notification messages to user
 [web_pivot_computed_measure](web_pivot_computed_measure/) | 13.0.1.1.0 |  | Web Pivot Computed Measure
-[web_pwa_oca](web_pwa_oca/) | 13.0.1.0.1 | [![eLBati](https://github.com/eLBati.png?size=30px)](https://github.com/eLBati) | Make Odoo a PWA
+[web_pwa_oca](web_pwa_oca/) | 13.0.1.0.2 | [![eLBati](https://github.com/eLBati.png?size=30px)](https://github.com/eLBati) | Make Odoo a PWA
 [web_refresher](web_refresher/) | 13.0.1.0.0 |  | Web Refresher
 [web_responsive](web_responsive/) | 13.0.2.7.0 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) [![Tardo](https://github.com/Tardo.png?size=30px)](https://github.com/Tardo) | Responsive web client, community-supported
 [web_search_with_and](web_search_with_and/) | 13.0.1.0.0 |  | Use AND conditions on omnibar search
