@@ -52,6 +52,21 @@ odoo.define("web_time_range_menu_custom.ControlPanelModel", function(require) {
                             context.timeRangeMenuData.timeRange
                         );
                     }
+                    if (filter.comparisonTimeRangeId !== "custom_comparison_period") {
+                        context.timeRangeMenuData.comparisonTimeRange = Domain.prototype.constructCustomDomain(
+                            filter.fieldName,
+                            filter.timeRangeId,
+                            filter.fieldType,
+                            filter.comparisonTimeRangeId,
+                            filter.timeRangeCustom,
+                            filter.comparisonTimeRangeCustom
+                        );
+                        if (evaluation) {
+                            context.timeRangeMenuData.comparisonTimeRange = Domain.prototype.stringToArray(
+                                context.timeRangeMenuData.comparisonTimeRange
+                            );
+                        }
+                    }
                 }
                 if (filter.comparisonTimeRangeId === "custom_comparison_period") {
                     context.timeRangeMenuData.comparisonTimeRange = Domain.prototype.constructCustomDomain(
