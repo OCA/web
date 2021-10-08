@@ -1113,6 +1113,8 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                     log_access_values = {
                         create_uid: [this._config.getUID(), this._config.getName()],
                         create_date: Tools.DateToOdooFormat(new Date()),
+                        write_uid: [this._config.getUID(), this._config.getName()],
+                        write_date: Tools.DateToOdooFormat(new Date()),
                     };
                 }
                 for (const index in data.args) {

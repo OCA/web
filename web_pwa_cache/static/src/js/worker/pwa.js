@@ -227,7 +227,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
         },
 
         processRequestGET: function(request, url, options) {
-            if (request.method !== "GET") {
+            if (!options.is_standalone_mode || request.method !== "GET") {
                 return Promise.resolve(false);
             }
             return new Promise(async resolve => {

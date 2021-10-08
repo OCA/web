@@ -439,7 +439,7 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
          * @returns {Promise}
          */
         writeOrCreate: function(model_info, datas, options) {
-            return new Promise(async resolve => {
+            return new Promise(async (resolve, reject) => {
                 const soptions = options || {};
                 try {
                     if (typeof model_info === "string") {
@@ -468,6 +468,7 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                     }
                 } catch (err) {
                     // Do nothing
+                    return reject(err);
                 }
 
                 return resolve();

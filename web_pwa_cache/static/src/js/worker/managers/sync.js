@@ -70,20 +70,32 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                         const sync_model_info = await this._db.getModelInfo(
                             record.model
                         );
-                        let need_update_db = false;
+                        let need_update_sync = false;
                         // Update sync. record values
-                        if (record.model === model && record.method === "write") {
-                            for (const index in record.args[0]) {
-                                if (record.args[0][index] === old_id) {
-                                    record.args[0][index] = new_id;
-                                    need_update_db = true;
-                                }
+                        if (
+                            record.model === model &&
+                            (record.method === "write" || record.method === "unlink")
+                        ) {
+                            // Operations are always unitary
+                            if (
+                                record.method === "write" &&
+                                record.args[0][0] === old_id
+                            ) {
+                                record.args[0][0] = new_id;
+                            } else if (
+                                record.method === "unlink" &&
+                                record.args[0][0][0] === old_id
+                            ) {
+                                record.args[0][0][0] = new_id;
                             }
+                            need_update_sync = true;
                         }
                         const values_index = get_index_init(record.method);
                         if (values_index === -1) {
                             continue;
                         }
+
+                        let need_update_db = false;
                         const values = record.args[values_index];
                         const sync_old_id = values.id;
                         for (const field in values) {
@@ -118,15 +130,26 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                         // Recreate the offline record with the new ids
                         if (need_update_db) {
                             try {
-                                await this._db.unlink(record.model, [sync_old_id]);
-                                await this._db.writeOrCreate(record.model, values);
+                                if (record.method === "create") {
+                                    // Create generates a new id
+                                    await this._db.unlink(record.model, [sync_old_id]);
+                                    await this._db.writeOrCreate(record.model, [
+                                        values,
+                                    ]);
+                                } else if (record.method === "write") {
+                                    // Write can update the current record
+                                    await this._db.write(
+                                        record.model,
+                                        record.args[0],
+                                        values
+                                    );
+                                }
                             } catch (err) {
                                 return reject(err);
                             }
                         }
 
                         // Update linked info
-                        let linked_changed = false;
                         for (const linked_model in record.linked) {
                             const linked_infos = record.linked[linked_model];
                             const linked_model_info = await this._db.getModelInfo(
@@ -138,7 +161,7 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                                     linked_info.change === old_id
                                 ) {
                                     linked_info.change = new_id;
-                                    linked_changed = true;
+                                    need_update_sync = true;
                                 }
                                 if (linked_info.id !== old_id) {
                                     continue;
@@ -152,11 +175,11 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                                     continue;
                                 }
                                 linked_info.id = new_id;
-                                linked_changed = true;
+                                need_update_sync = true;
                             }
                         }
 
-                        if (need_update_db || linked_changed) {
+                        if (need_update_db || need_update_sync) {
                             await this.updateSyncRecord(
                                 record.id,
                                 _.extend(record, {failed: false})
@@ -223,24 +246,43 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
             });
         },
 
-        _postProcessRecord: function(sync_records, cur_record, new_id) {
+        _postProcessCreateRecord: function(sync_records, cur_record, values, new_id) {
             return new Promise(async (resolve, reject) => {
-                // Propagate the new id to the rest of the records
-                if (cur_record.method === "create") {
-                    const old_id = cur_record.args[0].id;
-                    // UpdateIds can not found the key... so is normal get fails here
-                    try {
-                        await this._updateIds(
-                            sync_records,
+                const old_id = cur_record.args[0].id;
+                try {
+                    const model_info = await this._db.getModelInfo(cur_record.model);
+                    // Ensure that the record have the correct 'log_access_fields'
+                    if (model_info.has_log_fields) {
+                        await rpc.callJSonRpc(
                             cur_record.model,
-                            old_id,
-                            new_id
+                            "write",
+                            [
+                                [new_id],
+                                {
+                                    create_date: values[0].create_date,
+                                },
+                            ],
+                            cur_record.kwargs
                         );
-                    } catch (err) {
-                        return reject(err);
                     }
-                }
 
+                    // Update current record ids
+                    await this._updateIds(
+                        [cur_record],
+                        model_info.model,
+                        old_id,
+                        new_id
+                    );
+                    // Propagate the new id to the rest of the records
+                    await this._updateIds(
+                        sync_records,
+                        model_info.model,
+                        old_id,
+                        new_id
+                    );
+                } catch (err) {
+                    return reject(err);
+                }
                 return resolve();
             });
         },
@@ -248,9 +290,8 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
         /**
          * @param {Object} record
          */
-        _processRecord: function(sync_records, cur_record) {
+        _processRecord: function(cur_record, values) {
             return new Promise(async (resolve, reject) => {
-                const values = await this._prepareRecordValues(cur_record);
                 // Send the request to Odoo
                 try {
                     // Sync. operations are allways unitary
@@ -260,45 +301,15 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                         values,
                         cur_record.kwargs
                     );
-                    const new_id = (await response.json()).result;
-                    if (new_id === true || (_.isNumber(new_id) && new_id > 0)) {
-                        if (cur_record.method === "create") {
-                            // Ensure that the record have the correct 'create_date'
-                            await rpc.callJSonRpc(
-                                cur_record.model,
-                                "write",
-                                [
-                                    [new_id],
-                                    {
-                                        create_date: values[0].create_date,
-                                    },
-                                ],
-                                cur_record.kwargs
-                            );
-                            await this._postProcessRecord(
-                                sync_records,
-                                cur_record,
-                                new_id
-                            );
-                        }
-                    } else {
-                        await this.updateSyncRecord(
-                            cur_record.id,
-                            _.extend(cur_record, {failed: true})
-                        );
-                        return reject(
-                            `Can't process the sync. record! (${cur_record.model}, ${cur_record.method})`
-                        );
+                    const result = (await response.json()).result;
+                    if (typeof result === "undefined") {
+                        // Unlink operations doesn't give any "result"
+                        return resolve(true);
                     }
+                    return resolve(result);
                 } catch (err) {
-                    await this.updateSyncRecord(
-                        cur_record.id,
-                        _.extend(cur_record, {failed: true})
-                    );
                     return reject(err);
                 }
-                this._sendRecordOKToPages(cur_record.id);
-                return resolve();
             });
         },
 
@@ -318,35 +329,65 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                     if (sync_records.length) {
                         this.sendRecordsToPages(true);
                     }
-                    try {
-                        // Sync. records are processed one by one due to
-                        // 'create' operation generates ids that can be used
-                        // by the rest of the records
-                        // TODO: Implement a 'cleanup' operation, for example,
-                        // to avoid 'create' records thats have an 'unlink'
-                        // operation.
-                        for (const record of sync_records) {
-                            await this._processRecord(sync_records, record);
-                            sync_records_done.push(record);
+                    // Sync. records are processed one by one due to
+                    // 'create' operation generates ids that can be used
+                    // by the rest of the records
+                    // TODO: Implement a 'cleanup' operation, for example,
+                    // to avoid 'create' records thats have an 'unlink'
+                    // operation.
+                    while (sync_records.length) {
+                        const record = sync_records.shift();
+                        try {
+                            const values = await this._prepareRecordValues(record);
+                            const result = await this._processRecord(record, values);
+                            if (result === true || (_.isNumber(result) && result > 0)) {
+                                sync_records_done.push(record);
+                                this._sendRecordOKToPages(record.id);
+                                if (record.method === "create") {
+                                    await this._postProcessCreateRecord(
+                                        sync_records,
+                                        record,
+                                        values,
+                                        result
+                                    );
+                                }
+                            } else if (
+                                !_.isEmpty(result) &&
+                                Object.prototype.hasOwnProperty.call(result, "error") &&
+                                Object.prototype.hasOwnProperty.call(
+                                    result.error,
+                                    "data"
+                                )
+                            ) {
+                                error_msg = `Unsatisfactory response from server: ${result.error.data.message}`;
+                            } else {
+                                error_msg =
+                                    "Unsatisfactory response from server. No more details given.";
+                            }
+                        } catch (err) {
+                            console.log(err);
+                            error_msg = err;
                         }
-                    } catch (err) {
-                        error_msg = err;
-                        console.log("[ServiceWorker] Sync. error!");
-                        console.log(err);
+                        if (error_msg) {
+                            await this.updateSyncRecord(
+                                record.id,
+                                _.extend(record, {failed: true})
+                            );
+                            sync_records.unshift(record);
+                            this._sendRecordFailToPages(record.id, error_msg);
+                            break;
+                        }
                     }
                     await this.onSynchronizedRecords(
                         sync_records_done,
                         error_msg !== false
                     );
                 } catch (err) {
-                    error_msg = err;
-                    console.log("[ServiceWorker] Sync. error!");
                     console.log(err);
+                    error_msg = err;
                 }
-
                 this.sendCountToPages();
                 if (error_msg) {
-                    this._sendSyncErrorToPages(error_msg);
                     return reject(error_msg);
                 }
                 this._sendRecordsCompletedToPages();
@@ -366,7 +407,6 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
                 } catch (err) {
                     return reject(err);
                 }
-
                 return resolve();
             });
         },
@@ -420,12 +460,13 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
          * Send failed sync process to the client pages
          *
          * @private
-         * @param {String} errormsg
+         * @param {Number} index
          */
-        _sendSyncErrorToPages: function(errormsg) {
+        _sendRecordFailToPages: function(index, errmsg) {
             this.postBroadcastMessage({
-                type: "PWA_SYNC_ERROR",
-                errormsg: errormsg,
+                type: "PWA_SYNC_RECORD_FAIL",
+                index: index,
+                errmsg: errmsg,
             });
         },
 

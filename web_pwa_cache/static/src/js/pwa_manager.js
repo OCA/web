@@ -6,7 +6,6 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
     var core = require("web.core");
     var session = require("web.session");
     var config = require("web.config");
-    var Dialog = require("web.Dialog");
     var PWAManager = require("web_pwa_oca.PWAManager");
     var PWAModeSelector = require("web_pwa_cache.PWAModeSelector");
     var BroadcastMixin = require("web_pwa_cache.BroadcastMixin");
@@ -44,7 +43,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
             PWA_PREFETCH_MODAL_TASK_INFO: "_onPWAPrefetchModalTaskInfo",
             PWA_SYNC_RECORDS: "_onPWASyncRecords",
             PWA_SYNC_RECORD_OK: "_onPWASyncRecordOK",
-            PWA_SYNC_ERROR: "_onPWASyncError",
+            PWA_SYNC_RECORD_FAIL: "_onPWASyncRecordFail",
             PWA_SYNC_RECORDS_COMPLETED: "_onPWASyncRecordsComplete",
             PWA_SYNC_NEED_ACTION: "_onPWASyncNeedAction",
         },
@@ -497,36 +496,26 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
         _onPWASyncRecordOK: function(evdata) {
             if (this._syncModal && this._syncModal.isOpen()) {
                 this._syncModal.$el
-                    .find("tr#record_sync_" + evdata.index)
+                    .find(`tr#record_sync_${evdata.index}`)
                     .addClass("bg-success");
             }
         },
 
         /**
-         * Event sent by the SW to display sync. errors
+         * Event sent by the SW to know when a sync. record is complete
          *
          * @param {Object} evdata
          */
-        _onPWASyncError: function(evdata) {
+        _onPWASyncRecordFail: function(evdata) {
             if (this._syncModal && this._syncModal.isOpen()) {
-                this._syncModal.close();
+                const $tr_sync = this._syncModal.$el.find(
+                    `tr#record_sync_${evdata.index}`
+                );
+                $tr_sync.addClass("bg-danger");
+                $tr_sync.after(
+                    `<tr class="bg-danger"><td class="border-top-0 text-left" colspan="4"><span>- ${evdata.errmsg}</span></td></tr>`
+                );
             }
-            var $content = $(
-                QWeb.render("web_pwa_cache.PWASyncError", {
-                    errormsg: evdata.errormsg,
-                })
-            );
-            new Dialog(this, {
-                title: _t("Synchronization error!"),
-                $content: $content,
-                buttons: [
-                    {
-                        text: _t("Close"),
-                        close: true,
-                    },
-                ],
-                fullscreen: false,
-            }).open();
         },
 
         /**
