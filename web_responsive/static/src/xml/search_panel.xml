@@ -19,7 +19,7 @@
                             t-att-style="filter.color and ('color: ' + filter.color)"
                         />
                         <t
-                            t-esc="filter.values.join(filter.type == 'category' ? ' / ' : ', ')"
+                            t-out="filter.values.join(filter.type == 'category' ? ' / ' : ', ')"
                         />
                     </span>
                     <t t-if="!filters.length">All</t>

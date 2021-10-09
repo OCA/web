@@ -9,7 +9,7 @@
     <!-- Template for buttons that display only the icon in xs -->
     <t t-name="web_responsive.icon_button">
         <i t-attf-class="fa fa-#{icon}" t-att-title="label" />
-        <span class="d-none d-sm-inline" t-esc="label" />
+        <span class="d-none d-sm-inline" t-out="label" />
     </t>
     <t t-name="web_responsive.MenuStatusbarButtons">
         <div class="dropdown">

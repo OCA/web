@@ -47,7 +47,7 @@
             t-attf-src="data:image/png;base64,#{app.web_icon_data}"
         />
         <span class="o-app-name">
-            <t t-esc="app.name" />
+            <t t-out="app.name" />
         </span>
     </t>
     <!-- A search result -->
