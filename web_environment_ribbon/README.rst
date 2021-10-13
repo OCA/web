@@ -23,7 +23,7 @@ Web Environment Ribbon
     :target: https://runbot.odoo-community.org/runbot/162/14.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 Mark a Test Environment with a red ribbon on the top left corner in every page
 
@@ -79,6 +79,7 @@ Contributors
 * Xavier Jiménez <xavier.jimenez@qubiq.es>
 * Dennis Sluijk <d.sluijk@onestein.nl>
 * Eric Lembregts <eric@lembregts.eu>
+* Andreas Perhab <a.perhab@wtioit.at>
 
 Maintainers
 ~~~~~~~~~~~
