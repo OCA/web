@@ -1,5 +1,6 @@
 /* Copyright 2015 Francesco OpenCode Apruzzese <cescoap@gmail.com>
    Copyright 2017 Thomas Binsfeld <thomas.binsfeld@acsone.eu>
+   Copyright 2021 Andreas Perhab <a.perhab@wtioit.at>
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
 .test-ribbon {
@@ -25,4 +26,11 @@
 
 .test-ribbon b {
     font-size: 20px;
+}
+
+header:hover ~ .test-ribbon,
+nav:hover ~ .test-ribbon {
+    /* Ease out ribbon when user is using the navigation in Odoo */
+    opacity: 0;
+    transition: 0.2s ease;
 }
