@@ -6,7 +6,7 @@
 
 {
     "name": "Web Environment Ribbon",
-    "version": "14.0.1.0.0",
+    "version": "15.0.1.0.0",
     "category": "Web",
     "author": "Francesco OpenCode Apruzzese, "
     "Tecnativa, "
@@ -14,7 +14,14 @@
     "website": "https://github.com/OCA/web",
     "license": "AGPL-3",
     "depends": ["web"],
-    "data": ["data/ribbon_data.xml", "view/base_view.xml"],
+    "data": [
+        "data/ribbon_data.xml",
+    ],
     "auto_install": False,
     "installable": True,
+    "assets": {
+        "web.assets_common": [
+            "web_environment_ribbon/static/**/*",
+        ],
+    },
 }

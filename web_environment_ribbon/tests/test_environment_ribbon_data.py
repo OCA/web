@@ -4,7 +4,7 @@
 from odoo.tests import common
 
 
-class TestEnvironmentRibbonData(common.SavepointCase):
+class TestEnvironmentRibbonData(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestEnvironmentRibbonData, cls).setUpClass()
