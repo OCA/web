@@ -5,7 +5,7 @@ You need to define the view fields. The view must be of ``form`` type.
 Widget options:
 ~~~~~~~~~~~~~~~
 
-* product_per_page > Integer -> Used to control the load more behaviour (16 by default)
+* records_per_page > Integer -> Used to control the load more behaviour (16 by default)
 * groups > Array of dictionaries -> Declare the groups
 
     * name -> The group name
