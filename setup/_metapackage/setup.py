@@ -23,6 +23,7 @@ setuptools.setup(
         'odoo14-addon-web_ir_actions_act_view_reload',
         'odoo14-addon-web_listview_range_select',
         'odoo14-addon-web_m2x_options',
+        'odoo14-addon-web_m2x_options_manager',
         'odoo14-addon-web_no_bubble',
         'odoo14-addon-web_notify',
         'odoo14-addon-web_refresher',
