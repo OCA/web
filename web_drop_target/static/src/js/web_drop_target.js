@@ -1,6 +1,6 @@
 //Copyright 2018 Therp BV <https://therp.nl>
 //License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
-/*global Uint8Array base64js*/
+/*global jQuery Uint8Array base64js*/
 
 odoo.define('web_drop_target', function(require) {
     var FormController = require('web.FormController');
@@ -11,22 +11,49 @@ odoo.define('web_drop_target', function(require) {
     // to make some widget a drop target. Read on how to use this yourself
     var DropTargetMixin = {
         // add the mime types you want to support here, leave empty for
-        // all types. For more control, override _get_drop_items in your class
+        // all types. For more control, override _get_drop_items in your class.
+        // Excluded types take precedence over allowed types.
+        // Excluded types can be used to do reverse of allowed. For
+        // example, you want to include all types except one.
+
+        // TODO: might be better to combine all options into object and
+        // expose it via method, for more convenient configuration.
         _drop_allowed_types: [],
+        _drop_allowed_subtypes: [],
+        _drop_excluded_types: [],
+        _drop_excluded_subtypes: [],
 
         _drop_overlay: null,
+        // Used to store attachments if standard attachments relation
+        // is not possible or not intended. Currently only implemented
+        // for FieldMany2ManyBinaryMultiFiles widget.
+        _attachment_fname: null,
+        // Whether to show drag area when dragging a file.
+        _use_drag_events: true,
 
         start: function() {
             var result = this._super.apply(this, arguments);
             this.$el.on('drop.widget_events', this.proxy('_on_drop'));
-            this.$el.on('dragenter.widget_events', this.proxy('_on_dragenter'));
-            this.$el.on('dragover.widget_events', this.proxy('_on_dragenter'));
-            this.$el.on('dragleave.widget_events', this.proxy('_on_dragleave'));
+            // Must be able to disable drag events, if there is already
+            // such event from another functionality.
+            if (this._use_drag_events){
+                this.$el.on('dragenter.widget_events', this.proxy('_on_dragenter'));
+                this.$el.on('dragover.widget_events', this.proxy('_on_dragenter'));
+                this.$el.on('dragleave.widget_events', this.proxy('_on_dragleave'));
+            }
+
             return result;
+        },
+        _find_attachment_fname_widget: function() {
+            var self = this;
+            var field_widgets = this.renderer.allFieldWidgets[this.handle];
+            return _.find(field_widgets, function(field_widget) {
+                return field_widget.name === self._attachment_fname;
+            })
         },
 
         _on_drop: function(e) {
-            if (!this._drop_overlay){
+            if (!this._drop_overlay && this._use_drag_events){
                 return;
             }
             var drop_items = this._get_drop_items(e);
@@ -49,16 +76,35 @@ odoo.define('web_drop_target', function(require) {
             e.preventDefault();
         },
 
+        _is_file_dropped: function(file) {
+            var type = file.type,
+                subtype = file.type.split('/')[0];
+            if (
+                _.contains(this._drop_excluded_types, type) ||
+                _.contains(this._drop_excluded_subtypes, subtype)
+            ){
+                return false;
+            }
+            if (
+                _.contains(this._drop_allowed_types, type) ||
+                _.contains(this._drop_allowed_subtypes, subtype) ||
+                (
+                    _.isEmpty(this._drop_allowed_types) &&
+                    _.isEmpty(this._drop_allowed_subtypes)
+                )
+            ){
+                return true;
+            }
+            return false;
+        },
+
         _get_drop_items: function(e) {
             var self = this,
                 dataTransfer = e.originalEvent.dataTransfer,
                 drop_items = [];
-            _.each(dataTransfer.files, function(item) {
-                if (
-                    _.contains(self._drop_allowed_types, item.type) ||
-                    _.isEmpty(self._drop_allowed_types)
-                ) {
-                    drop_items.push(item);
+            _.each(dataTransfer.files, function(file) {
+                if (self._is_file_dropped(file)){
+                    drop_items.push(file);
                 }
             });
             return drop_items;
@@ -89,15 +135,25 @@ odoo.define('web_drop_target', function(require) {
                     }, extra_data || {})
                 ],
             })
-            .then(function() {
-                // find the chatter among the children, there should be only
-                // one
-                var res = _.filter(self.getChildren(), 'chatter')
-                if (res.length) {
-                    res[0].chatter._reloadAttachmentBox();
-                    res[0].chatter.trigger_up('reload');
-                    res[0].chatter.$('.o_chatter_button_attachment').click();
+            .then(function(attachment_id) {
+                if (self._attachment_fname){
+                    var attachment_field_widget = self._find_attachment_fname_widget();
+                    attachment_field_widget.value.res_ids.push(attachment_id)
+                    attachment_field_widget._setValue({
+                        operation: 'REPLACE_WITH',
+                        ids: attachment_field_widget.value.res_ids,
+                    });
+                } else {
+                    // find the chatter among the children, there should be only
+                    // one
+                    var res = _.filter(self.getChildren(), 'chatter')
+                    if (res.length) {
+                        res[0].chatter._reloadAttachmentBox();
+                        res[0].chatter.trigger_up('reload');
+                        res[0].chatter.$('.o_chatter_button_attachment').click();
+                    }
                 }
+
             });
         },
 
@@ -130,7 +186,7 @@ odoo.define('web_drop_target', function(require) {
                 );
                 var o_content_position = o_content.position();
                 this._drop_overlay.css({
-                    'top': o_content_position.top, 
+                    'top': o_content_position.top,
                     'left': o_content_position.left,
                     'width': view_manager.width(),
                     'height': view_manager.height()
@@ -138,7 +194,7 @@ odoo.define('web_drop_target', function(require) {
                 o_content.append(this._drop_overlay);
             }
         },
-        
+
         _remove_overlay: function() {
             if (this._drop_overlay) {
                 this._drop_overlay.remove();
@@ -150,6 +206,7 @@ odoo.define('web_drop_target', function(require) {
     // and here we apply the mixin to form views, allowing any files and
     // adding them as attachment
     FormController.include(_.extend(DropTargetMixin, {
+        // TODO: this method is never called. Is it really needed?
         _get_drop_file: function() {
             // disable drag&drop when we're on an unsaved record
             if (!this.datarecord.id) {
@@ -159,7 +216,7 @@ odoo.define('web_drop_target', function(require) {
         },
         _handle_drop_items: function(drop_items, e) {
             var self = this;
-            _.each(drop_items, function(item, e) {
+            _.each(drop_items, function(item) {
                 return self._handle_file_drop_attach(
                     item, e, self.renderer.state.model,
                     self.renderer.state.res_id

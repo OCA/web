@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template
+        id="assets_backend"
+        name="web_drop_target_mail assets"
+        inherit_id="web_drop_target.assets_backend"
+    >
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/web_drop_target_mail/static/src/js/web_drop_target_mail.js"
+            />
+        </xpath>
+    </template>
+</odoo>
