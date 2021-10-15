@@ -313,7 +313,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
             // We have to fit a crc32 hash and one underscore
             // into a 63 character alias. The remaining space we can use to add
             // a human readable prefix.
-            const alias_hash = CRC32.buff(encoder.encode(alias)).toString(16);
+            const alias_hash = CRC32.buf(encoder.encode(alias)).toString(16);
             const ALIAS_PREFIX_LENGTH = 63 - alias_hash.length - 1;
             alias = `${alias.substr(0, ALIAS_PREFIX_LENGTH)}_${alias_hash}`;
         }
