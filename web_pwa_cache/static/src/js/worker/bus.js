@@ -40,21 +40,23 @@ odoo.define("web_pwa_cache.PWA.bus", function(require) {
         },
 
         /**
-         * @private
-         * @param {BroadcastChannelEvent} evt
+         * @param {String} type
+         * @param {Object} data
+         * @returns {Promise}
          */
-        // eslint-disable-next-line
-        _onReceiveBroadcastMessage: function(evt) {
-            const res = this._super.apply(this, arguments);
-            if (!res || !this.isActivated()) {
-                return;
+        onProcessBusMessage: function(type, data) {
+            if (type === "START_PREFETCH") {
+                if (this.isActivated()) {
+                    return this._doPrefetchDataPost();
+                }
+                return Promise.resolve();
             }
-            switch (evt.data.type) {
-                // Received to start the prefetching process
-                case "START_PREFETCH":
-                    this._doPrefetchDataPost();
-                    break;
+
+            const tasks = [];
+            for (const manager_name in this._managers) {
+                tasks.push(this._managers[manager_name].onProcessMessage(type, data));
             }
+            return Promise.all(tasks);
         },
 
         /**

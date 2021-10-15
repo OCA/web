@@ -7,10 +7,12 @@ odoo.define("web_pwa_cache.UserMenu", function(require) {
     const UserMenu = require("web.UserMenu");
     const WebClientObj = require("web.web_client");
     const BroadcastMixin = require("web_pwa_cache.BroadcastMixin");
+    const BusMixin = require("web_pwa_cache.BusMixin");
     require("web_pwa_cache.PWAManager");
 
     const _t = core._t;
 
+    UserMenu.include(BusMixin);
     UserMenu.include(BroadcastMixin);
     UserMenu.include({
         /**
@@ -75,12 +77,12 @@ odoo.define("web_pwa_cache.UserMenu", function(require) {
             this._setPWAMode(pwa_mode);
             this._updatePWAMenuInfo(pwa_mode);
             if (pwa_mode === "online") {
-                this.postBroadcastMessage({type: "START_PREFETCH"});
+                this.sendPWABusMessage("START_PREFETCH");
             }
         },
 
         _onMenuPwaQueueSync: function() {
-            this.postBroadcastMessage({type: "GET_PWA_SYNC_RECORDS"});
+            this.sendPWABusMessage("GET_SYNC_RECORDS");
         },
 
         _onReceiveBroadcastMessage: function(evt) {

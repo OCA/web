@@ -481,32 +481,35 @@ odoo.define("web_pwa_cache.PWA.managers.Sync", function(require) {
             });
         },
 
-        _onReceiveBroadcastMessage: function(evt) {
-            const res = BroadcastMixin._onReceiveBroadcastMessage.call(this, evt);
-            if (!res || !this.isActivated()) {
-                return;
+        /**
+         * Messages received from client.
+         * Here we use POST instead of use the Broadcast API to ensure that
+         * the service worker wakeup.
+         *
+         * @param {String} type
+         * @returns {Promise}
+         */
+        onProcessMessage: function(type) {
+            if (type === "GET_CONFIG") {
+                return this.sendCountToPages();
             }
-            switch (evt.data.type) {
-                case "GET_PWA_CONFIG":
-                    this.sendCountToPages();
-                    break;
-                // Received to send pwa sync. records to the user page.
-                case "GET_PWA_SYNC_RECORDS":
-                    this.sendRecordsToPages();
-                    break;
+            if (!this.isActivated()) {
+                return Promise.resolve();
+            }
+            if (type === "GET_SYNC_RECORDS") {
+                return this.sendRecordsToPages();
+            } else if (type === "START_SYNCHRONIZATION") {
+                return this.getParent()
+                    ._doPrefetchDataPost()
+                    .catch(err => {
+                        console.log(
+                            "[ServiceWorker] Error: can't complete the synchronization process."
+                        );
+                        console.log(err);
+                    });
+            }
 
-                // Received to start the sync. process
-                case "START_SYNCHRONIZATION":
-                    this.getParent()
-                        ._doPrefetchDataPost()
-                        .catch(err => {
-                            console.log(
-                                "[ServiceWorker] Error: can't complete the synchronization process."
-                            );
-                            console.log(err);
-                        });
-                    break;
-            }
+            return Promise.resolve();
         },
     });
 

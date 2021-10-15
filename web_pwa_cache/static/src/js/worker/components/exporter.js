@@ -119,17 +119,6 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         fields_changed = [fields_changed];
                     }
 
-                    // Handle request if 'special' fields are requested
-                    // if (!this.isOfflineMode()) {
-                    //     const model_info = await this._db.getModelInfo(model);
-                    //     for (let field of fields_changed) {
-                    //         const field_info = model_info.fields[field];
-                    //         if (!field_info.store) {
-                    //             return reject("Ignore onchange, no-store field involved.");
-                    //         }
-                    //     }
-                    // }
-
                     // Generate Onchange Values Virtual Table
                     const sandbox = new JSSandbox();
                     const record_data_folded = Tools.foldObj(record_data);
@@ -222,6 +211,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                             }
                         }
                     }
+                    // Catch_from_server = _.isEmpty(result.value) && _.isEmpty(result.warning) && _.isEmpty(result.domain);
                     if (catch_from_server && !this.isOfflineMode()) {
                         console.log(
                             `[ServiceWorker] Can't process the given onchange for the fields '${fields_changed.join(
@@ -278,21 +268,47 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                 try {
                     if (this.isOfflineMode()) {
                         const record_id = data.args[0];
-                        const records = await this._db.browse(model, record_id);
-                        records[0].id = this._db.genRecordID();
+                        const record = await this._db.browse(model, record_id);
+                        record.id = this._db.genRecordID();
                         const model_info = await this._db.getModelInfo(model);
+                        // Clone one2many and many2many
+                        for (const field_name in record) {
+                            if (_.isEmpty(record[field_name])) {
+                                continue;
+                            }
+                            const field_info = model_info.fields[field_name];
+                            if (
+                                field_info.type !== "one2many" &&
+                                field_info.type !== "many2many" &&
+                                field_info.type !== "many2one"
+                            ) {
+                                continue;
+                            }
+                            if (field_info.type === "many2one") {
+                                record[field_name] = record[field_name][0];
+                            } else {
+                                const relation_model_info = await this._db.getModelInfo(
+                                    field_info.relation
+                                );
+                                const subrecords = await this._db.browse(
+                                    relation_model_info,
+                                    record[field_name]
+                                );
+                                record[field_name] = [];
+                                for (const subrec of subrecords) {
+                                    delete subrec.id;
+                                    subrec[field_info.relation_field] = false;
+                                    record[field_name].push([0, 0, subrec]);
+                                }
+                            }
+                        }
                         const values = {
-                            args: records,
+                            args: [record],
                         };
-                        console.log("---- COPY");
-                        console.log(values);
-                        console.log(model_info);
                         const c_ids = await this._process_record_create(
                             model_info,
                             values
                         );
-                        console.log("---- COPY AAA");
-                        console.log(c_ids);
                         this._sync.sendCountToPages();
                         this._db.persistDatabases();
                         return resolve(c_ids[0]);
@@ -1200,7 +1216,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                                         field_model_info.fields,
                                         true
                                     );
-                                    // The order is not created yet, so.. ensure write
+                                    // The record is not created yet, so.. ensure write
                                     // their correct values
                                     subrecord[parent_field] = [record.id, record.name];
                                     subrecords.push(subrecord);

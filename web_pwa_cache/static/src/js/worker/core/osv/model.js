@@ -23,9 +23,21 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
             this._dbmanager = dbmanager;
         },
 
-        _where_calc: function(model_info, domain, context) {
+        _where_calc: function(model_info, domain, context = {}) {
             return new Promise(async (resolve, reject) => {
                 try {
+                    // Not necessary beacuse the client allways uses active_test=true
+                    // // if the object has a field named 'active', filter out all inactive
+                    // // records unless they were explicitely asked for
+                    // if ('active' in model_info.fields && _.get(context, 'active_test', True)) {
+                    //     // the item[0] trick below works for domain items and '&'/'|'/'!'
+                    //     // operators too
+                    //     _.some(domain, (triplet) => triplet[0] === 'active')
+                    //     if (!_.some(domain, (triplet) => triplet[0] === 'active')) {
+                    //         domain = [['active', '=', 1]].concat(domain);
+                    //     }
+                    // }
+
                     let [tables, where_clause, where_params] = [null, null, null];
                     if (domain) {
                         const e = new expression.Expression(
@@ -296,27 +308,27 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                             if (field.inherited) {
                                 field = field.base_field;
                             }
-                            if (field.store && field.type === "many2one") {
-                                continue;
-                                // Const key = [
-                                //     field.model_name,
-                                //     field.relation,
-                                //     order_field,
-                                // ];
-                                // if (_.findIndex(seen, key) === -1) {
-                                //     seen.push(key);
-                                //     order_by_elements = order_by_elements.concat(
-                                //         await this._generate_m2o_order_by(
-                                //             model_info,
-                                //             alias,
-                                //             order_field,
-                                //             query,
-                                //             do_reverse,
-                                //             seen
-                                //         )
-                                //     );
-                                // }
-                            } else if (field.store) {
+                            // If (field.store && field.type === "many2one") {
+                            //     const key = [
+                            //         field.model_name,
+                            //         field.relation,
+                            //         order_field,
+                            //     ];
+                            //     if (_.findIndex(seen, key) === -1) {
+                            //         seen.push(key);
+                            //         order_by_elements = order_by_elements.concat(
+                            //             await this._generate_m2o_order_by(
+                            //                 model_info,
+                            //                 alias,
+                            //                 order_field,
+                            //                 query,
+                            //                 do_reverse,
+                            //                 seen
+                            //             )
+                            //         );
+                            //     }
+                            // } else
+                            if (field.store) {
                                 // Not using "field.column_type" because all usable fields must have a column in the client.
                                 let qualifield_name = await this._inherits_join_calc(
                                     model_info,

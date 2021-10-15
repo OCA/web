@@ -186,6 +186,17 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                         }
                     }
                 }
+                // Remove internal fields
+                for (
+                    let index_field = value_fields_len - 1;
+                    index_field >= 0;
+                    --index_field
+                ) {
+                    field = value_fields[index_field];
+                    if (field.startsWith("display_name__")) {
+                        delete values[field];
+                    }
+                }
             }
         },
     });

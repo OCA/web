@@ -116,6 +116,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
          * @override
          */
         installWorker: function() {
+            // Self.skipWaiting();
             if (this._isDisabled) {
                 return Promise.resolve();
             }
@@ -401,6 +402,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
         processRequestInternal: function(request, url) {
             if (
                 request.method !== "POST" ||
+                !url.pathname.startsWith("/pwa/sw/") ||
                 !request.headers
                     .get("Content-Type")
                     .toLowerCase()
@@ -418,7 +420,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                         this._routes.post.internal
                     );
                     for (const [key, fnct] of route_internal_entries) {
-                        if (url.pathname.startsWith(key)) {
+                        if (url.pathname.startsWith(`/pwa/sw/${key}`)) {
                             const result = await this[fnct](url, request_data);
                             return resolve(result);
                         }

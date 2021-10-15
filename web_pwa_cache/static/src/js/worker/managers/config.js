@@ -170,12 +170,11 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
          * @param {Object} data
          * @returns {Promise}
          */
-        onProcessMessage: function(data) {
-            if (data.type === "SET_PWA_CONFIG") {
+        onProcessMessage: function(type, data) {
+            if (type === "SET_CONFIG") {
                 const promises = [];
                 const changes = {};
-                let keys = Object.keys(data);
-                keys = _.filter(keys, item => item !== "type");
+                const keys = Object.keys(data);
                 for (const key of keys) {
                     changes[key] = data[key];
                     promises.push(this.set(key, changes[key]));
@@ -196,7 +195,7 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
                         );
                         console.log(err);
                     });
-            } else if (data.type === "GET_PWA_CONFIG") {
+            } else if (type === "GET_CONFIG") {
                 // Received to send pwa config. to the user page.
                 return new Promise(async (resolve, reject) => {
                     try {
@@ -222,15 +221,6 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
             }
 
             return Promise.resolve();
-        },
-
-        _onReceiveBroadcastMessage: function(evt) {
-            const res = BroadcastMixin._onReceiveBroadcastMessage.call(this, evt);
-            if (!res || !this.isActivated()) {
-                return;
-            }
-
-            this.onProcessMessage(evt.data);
         },
     });
 

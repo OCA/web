@@ -13,7 +13,7 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
             post: {
                 // Always processed requests
                 internal: {
-                    "/pwa/sw/config": "_routeOutPWAConfigMessage",
+                    bus: "_routeOutPWABusMessage",
                 },
                 // Client -> Odoo (exporter)
                 out: {
@@ -300,16 +300,26 @@ odoo.define("web_pwa_cache.PWA.routes", function(require) {
             });
         },
 
-        _routeOutPWAConfigMessage: function(url, request_data) {
+        /**
+         * @param {String} url
+         * @param {Object} request_data
+         * @returns {Promise}
+         */
+        _routeOutPWABusMessage: function(url, request_data) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    await this._managers.config.onProcessMessage(request_data);
+                    await this.onProcessBusMessage(
+                        request_data.type,
+                        _.omit(request_data, "type")
+                    );
                 } catch (err) {
                     return reject(err);
                 }
 
-                console.log("[ServiceWorker] Processed internal config message");
-                return resolve(Tools.ResponseJSONRPC({}));
+                console.log(
+                    `[ServiceWorker] Processed internal bus message ${request_data.type}`
+                );
+                return resolve(Tools.ResponseJSONRPC({result: true}));
             });
         },
 

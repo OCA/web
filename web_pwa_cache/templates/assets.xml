@@ -53,6 +53,10 @@
             />
             <script
                 type="text/javascript"
+                src="/web_pwa_cache/static/src/js/mixins/pwa_bus_mixin.js"
+            />
+            <script
+                type="text/javascript"
                 src="/web_pwa_cache/static/src/js/pwa_mode_selector.js"
             />
             <script
@@ -70,6 +74,10 @@
             <script
                 type="text/javascript"
                 src="/web_pwa_cache/static/src/js/action_manager.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_pwa_cache/static/src/js/utils.js"
             />
         </xpath>
     </template>

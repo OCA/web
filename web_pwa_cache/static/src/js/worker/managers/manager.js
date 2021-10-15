@@ -43,6 +43,10 @@ odoo.define("web_pwa_cache.PWA.managers.Manager", function(require) {
         getSWVersion: function() {
             return this.getParent()._sw_version;
         },
+
+        onProcessMessage: function() {
+            return Promise.resolve();
+        },
     });
 
     return SWManager;
