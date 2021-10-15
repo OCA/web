@@ -438,7 +438,6 @@ class PwaCacheOnchangeValue(models.Model):
         index=True,
         required=True,
     )
-    field_name = fields.Char(related="pwa_cache_id.onchange_field_name", store=True)
     values = fields.Char(required=True)
     # The ORM only supports integers of 4 bytes but we use 64bit hashes
     # to avoid as much as possible hash collisions...

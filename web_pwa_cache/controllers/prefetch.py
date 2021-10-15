@@ -78,8 +78,7 @@ class PWAPrefetch(PWA):
     def _pwa_is_invalid_field(self, model, field_name, field_def):
         # Handle 'special' fields
         if model == "pwa.cache.onchange.value" and (
-            field_name
-            in ("display_name", "field_name", "discriminant_id", "user_id", "values",)
+            field_name in ("display_name", "discriminant_id", "user_id", "values",)
             or field_name in models.LOG_ACCESS_COLUMNS
         ):
             return True
