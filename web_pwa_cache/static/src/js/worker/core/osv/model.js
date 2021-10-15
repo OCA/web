@@ -427,7 +427,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                     let select_clause = `"${model_info.table}".id`;
                     if (field_names instanceof Array) {
                         if (_.isEmpty(field_names)) {
-                            select_clause = "*";
+                            select_clause = `"${model_info.table}".*`;
                         } else {
                             const select_clause_fields = [];
                             for (const field_name of field_names) {
