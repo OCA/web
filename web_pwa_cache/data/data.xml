@@ -71,8 +71,6 @@
             <field name="function_name">get_pwa_home_action</field>
             <field name="internal">1</field>
         </record>
-    </data>
-    <data noupdate="1">
         <!-- MODEL -->
         <record id="pwa_cache_model_res_partner_all" model="pwa.cache">
             <field name="name">Partners (All)</field>
