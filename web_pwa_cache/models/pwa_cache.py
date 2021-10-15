@@ -352,7 +352,7 @@ class PwaCache(models.Model):
                 value_vals["discriminant_id"] = discriminant
             try:
                 obj.create(value_vals)
-            except psycopg2.IntegrityError:
+            except (psycopg2.IntegrityError, psycopg2.InternalError):
                 # Meanwhile the same record has been written by another job
                 record = obj.search(domain)
                 if record.result != result:
