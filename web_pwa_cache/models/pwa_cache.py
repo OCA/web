@@ -484,6 +484,7 @@ class PwaCacheOnchangeTrigger(models.Model):
             ("create_unlink", "Create & Unlink"),
             ("complete", "Create, Update & Unlink"),
             ("update", "Update"),
+            ("create_update", "Create & Update"),
         ],
         required=True,
     )
