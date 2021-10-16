@@ -103,7 +103,7 @@ class BaseModel(models.BaseModel):
                 else:
                     selectors[trigger.field_name] = context["result"]
             pwa_cache = pwa_cache_obj.browse(group["pwa_cache_id"][0])
-            if remove:
+            if remove and selectors:
                 value_obj = self.env["pwa.cache.onchange.value"].sudo()
                 vals_list, disposable = pwa_cache._get_onchange_selectors(
                     prefilled_selectors=selectors
@@ -111,7 +111,7 @@ class BaseModel(models.BaseModel):
                 for vals in vals_list:
                     _, _, ref_hash = pwa_cache._prepare_vals_dict(vals, disposable)
                     value_obj.search([("ref_hash", "=", ref_hash)]).unlink()
-            else:
+            elif selectors:
                 pwa_cache.enqueue_onchange_cache(prefilled_selectors=selectors)
 
     @api.model_create_multi
