@@ -133,20 +133,14 @@ class PWA(PWA):
         return hashes
 
     @route(
-        "/web_pwa_cache/static/src/lib/sqlite/dist/sql-wasm.wasm",
+        "/web_pwa_cache/static/src/lib/sqlite/sql-wasm.wasm",
         type="http",
         auth="public",
     )
     def pwa_sql_wasm(self):
         """Force mimetype to application/wasm"""
         placeholder = functools.partial(
-            get_resource_path,
-            "web_pwa_cache",
-            "static",
-            "src",
-            "lib",
-            "sqlite",
-            "dist",
+            get_resource_path, "web_pwa_cache", "static", "src", "lib", "sqlite",
         )
         return http.send_file(placeholder("sql-wasm.wasm"), mimetype="application/wasm")
 

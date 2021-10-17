@@ -202,7 +202,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
     });
 
     const SQLiteDB = Database.extend({
-        _sqlite_dist: "./web_pwa_cache/static/src/lib/sqlite/dist",
+        _sqlite_dist: "./web_pwa_cache/static/src/lib/sqlite",
         _internal_table_prefix: "i_pwa_",
 
         // See https://www.sqlite.org/datatype3.html 3.1.1

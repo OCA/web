@@ -119,96 +119,110 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         fields_changed = [fields_changed];
                     }
 
-                    // Generate Onchange Values Virtual Table
-                    const sandbox = new JSSandbox();
-                    const record_data_folded = Tools.foldObj(record_data);
                     const model_info_pwa_cache = await this._db.getModelInfo(
                         "pwa.cache"
                     );
+
+                    // Generate Onchange
+                    // TODO: Determine onchange execution order through onchange_spec
+                    const sql_pwa_cache = `SELECT id,cache_type,code_js,onchange_field_name FROM ${
+                        model_info_pwa_cache.table
+                    } WHERE "model_name"=? AND "cache_type" IN ("onchange", "onchange_formula") AND "onchange_field_name" IN (${new Array(
+                        fields_changed.length
+                    )
+                        .fill("?")
+                        .join(",")})`;
+                    const records_pwa_cache = await this._db.sqlitedb.all(
+                        sql_pwa_cache,
+                        model,
+                        ...fields_changed
+                    );
+                    if (_.isEmpty(records_pwa_cache)) {
+                        if (this.isOfflineMode()) {
+                            return resolve(result);
+                        }
+                        return reject();
+                    }
+                    this._db.sqlitedb.converter.toOdoo(
+                        model_info_pwa_cache.fields,
+                        records_pwa_cache
+                    );
+
+                    const sandbox = new JSSandbox();
+                    const record_data_folded = Tools.foldObj(record_data);
                     const model_info_pwa_onchange = await this._db.getModelInfo(
                         "pwa.cache.onchange"
                     );
                     let catch_from_server = true;
 
-                    for (const field of fields_changed) {
-                        // TODO: Determine onchange execution order through onchange_spec
-                        const sql_pwa_cache = `SELECT id,cache_type,code_js FROM ${model_info_pwa_cache.table} WHERE "onchange_field_name"=? AND "model_name"=? AND "cache_type" IN ("onchange", "onchange_formula")`;
-                        const record = await this._db.sqlitedb.get(
-                            sql_pwa_cache,
-                            field,
-                            model
-                        );
-                        if (!_.isEmpty(record)) {
-                            this._db.sqlitedb.converter.toOdoo(
-                                model_info_pwa_cache.fields,
-                                record
+                    for (const record of records_pwa_cache) {
+                        catch_from_server = false;
+                        let value = false;
+                        let warning = false;
+                        let domain = false;
+                        if (record.cache_type === "onchange_formula") {
+                            sandbox.compile(record.code_js);
+                            const changes = sandbox.run({
+                                db: this._db,
+                                obj: record_data,
+                            });
+                            value = changes.value;
+                            warning = changes.warning;
+                            domain = changes.domain;
+                        } else {
+                            const sql_selectors = `SELECT "field_name", "required" FROM ${model_info_pwa_onchange.table} WHERE "pwa_cache_id"=? AND NOT disposable`;
+                            const selectors = await this._db.sqlitedb.all(
+                                sql_selectors,
+                                record.id
                             );
-                            catch_from_server = false;
-                            let value = false;
-                            let warning = false;
-                            let domain = false;
-                            if (record.cache_type === "onchange_formula") {
-                                sandbox.compile(record.code_js);
-                                const changes = sandbox.run({
-                                    db: this._db,
-                                    obj: record_data,
-                                });
+                            const vals = {};
+                            let is_valid = true;
+                            for (const selector of selectors) {
+                                if (
+                                    selector.required &&
+                                    !Object.prototype.hasOwnProperty.call(
+                                        record_data_folded,
+                                        selector.field_name
+                                    )
+                                ) {
+                                    is_valid = false;
+                                    break;
+                                }
+                                vals[selector.field_name] =
+                                    record_data_folded[selector.field_name];
+                            }
+                            // Ignore onchange if not valid values given
+                            // This happens when create new records
+                            if (!is_valid) {
+                                if (this.isOfflineMode()) {
+                                    return resolve(result);
+                                }
+                                return reject();
+                            }
+
+                            const ref_hash = Tools.hash(
+                                `${record.id}${
+                                    record.onchange_field_name
+                                }${JSON.stringify(vals)}`
+                            );
+                            const value_record = await this._db.indexeddb.onchange.get(
+                                ref_hash
+                            );
+                            if (!_.isEmpty(value_record)) {
+                                const changes = value_record.result;
                                 value = changes.value;
                                 warning = changes.warning;
                                 domain = changes.domain;
-                            } else {
-                                const sql_selectors = `SELECT "field_name", "required" FROM ${model_info_pwa_onchange.table} WHERE "pwa_cache_id"=? AND NOT disposable`;
-                                const selectors = await this._db.sqlitedb.all(
-                                    sql_selectors,
-                                    record.id
-                                );
-                                const vals = {};
-                                let is_valid = true;
-                                for (const selector of selectors) {
-                                    if (
-                                        selector.required &&
-                                        !Object.prototype.hasOwnProperty.call(
-                                            record_data_folded,
-                                            selector.field_name
-                                        )
-                                    ) {
-                                        is_valid = false;
-                                        break;
-                                    }
-                                    vals[selector.field_name] =
-                                        record_data_folded[selector.field_name];
-                                }
-                                // Ignore onchange if not valid values given
-                                // This happens when create new records
-                                if (!is_valid) {
-                                    if (this.isOfflineMode()) {
-                                        return resolve(result);
-                                    }
-                                    return reject();
-                                }
-
-                                const ref_hash = Tools.hash(
-                                    `${record.id}${field}${JSON.stringify(vals)}`
-                                );
-                                const value_record = await this._db.indexeddb.onchange.get(
-                                    ref_hash
-                                );
-                                if (!_.isEmpty(value_record)) {
-                                    const changes = value_record.result;
-                                    value = changes.value;
-                                    warning = changes.warning;
-                                    domain = changes.domain;
-                                }
                             }
-                            if (value) {
-                                result.value = _.extend({}, result.value, value);
-                            }
-                            if (warning) {
-                                result.warning = _.extend({}, result.warning, warning);
-                            }
-                            if (domain) {
-                                result.domain = _.extend({}, result.domain, domain);
-                            }
+                        }
+                        if (value) {
+                            _.extend(result.value, value);
+                        }
+                        if (warning) {
+                            _.extend(result.warning, warning);
+                        }
+                        if (domain) {
+                            _.extend(result.domain, domain);
                         }
                     }
                     // Catch_from_server = _.isEmpty(result.value) && _.isEmpty(result.warning) && _.isEmpty(result.domain);

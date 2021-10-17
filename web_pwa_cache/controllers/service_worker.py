@@ -32,6 +32,7 @@ class ServiceWorker(ServiceWorker):
             "pwa.cache.version", cache_hashes["pwa"]
         )
         urls.extend(self._get_base_urls(cache_hashes))
+        urls.append("/web_pwa_cache/static/src/lib/sqlite/sql-wasm.wasm")
         res["cache_hashes"] = cache_hashes
         res["prefetched_urls"] = list(set(urls))
 
@@ -45,7 +46,7 @@ class ServiceWorker(ServiceWorker):
 
     def _get_pwa_scripts(self):
         res = super()._get_pwa_scripts()
-        res.insert(0, self._get_static_cache_worker("/lib/sqlite/dist/sql-wasm.js"))
+        res.insert(0, self._get_static_cache_worker("/lib/sqlite/sql-wasm.js"))
         res.insert(0, self._get_static_cache_worker("/lib/dexie/dexie.min.js"))
         res.insert(0, self._get_static_cache_worker("/lib/crc32/crc32.js"))
         res.insert(0, "/web/static/lib/moment/moment.js")

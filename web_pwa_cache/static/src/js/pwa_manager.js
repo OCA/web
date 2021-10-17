@@ -96,22 +96,24 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 },
             });
 
-            navigator.serviceWorker.ready.then(sw => {
-                if (sw.active) {
-                    // Check if service worker has the control of the pages
-                    if (navigator.serviceWorker.controller) {
-                        if (sw.waiting) {
-                            this._onSWWaiting(
-                                sw.waiting,
-                                navigator.serviceWorker.controller
-                            );
+            if (this.isSWSupported()) {
+                navigator.serviceWorker.ready.then(sw => {
+                    if (sw.active) {
+                        // Check if service worker has the control of the pages
+                        if (navigator.serviceWorker.controller) {
+                            if (sw.waiting) {
+                                this._onSWWaiting(
+                                    sw.waiting,
+                                    navigator.serviceWorker.controller
+                                );
+                            }
+                            this._onSWController(navigator.serviceWorker.controller);
+                        } else {
+                            this._onSWActive(sw.active);
                         }
-                        this._onSWController(navigator.serviceWorker.controller);
-                    } else {
-                        this._onSWActive(sw.active);
                     }
-                }
-            });
+                });
+            }
 
             return this._super
                 .apply(this, arguments)
