@@ -26,6 +26,11 @@ msgid "Add"
 msgstr ""
 
 #. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__option_create_edit_wizard
+msgid "Create & Edit Wizard"
+msgstr ""
+
+#. module: web_m2x_options_manager
 #: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__option_create_edit
 msgid "Create & Edit Option"
 msgstr ""
@@ -48,6 +53,13 @@ msgstr ""
 #. module: web_m2x_options_manager
 #: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__create_date
 msgid "Created on"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model:ir.model.fields,help:web_m2x_options_manager.field_m2x_create_edit_option__option_create_edit_wizard
+msgid ""
+"Defines behaviour for 'Create & Edit' Wizard\n"
+"Set to False to prevent 'Create & Edit' Wizard to pop up"
 msgstr ""
 
 #. module: web_m2x_options_manager
