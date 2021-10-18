@@ -1,5 +1,5 @@
 # Do NOT update manually; changes here will be overwritten by Copier
-_commit: v1.3.2
+_commit: v1.3.3
 _src_path: gh:oca/oca-addons-repo-template
 ci: GitHub
 dependency_installation_mode: PIP
