@@ -77,6 +77,13 @@ class M2xCreateEditOption(models.Model):
         string="Create & Edit Option",
     )
 
+    option_create_edit_wizard = fields.Boolean(
+        default=True,
+        help="Defines behaviour for 'Create & Edit' Wizard\n"
+        "Set to False to prevent 'Create & Edit' Wizard to pop up",
+        string="Create & Edit Wizard",
+    )
+
     _sql_constraints = [
         (
             "model_field_uniqueness",
@@ -142,6 +149,9 @@ class M2xCreateEditOption(models.Model):
             if mode == "force" or k not in options:
                 options[k] = val == "true"
         node.set("options", str(options))
+        if not self.option_create_edit_wizard:
+            node.set("can_create", "false")
+            node.set("can_write", "false")
 
     @api.model
     def get(self, model_name, field_name):

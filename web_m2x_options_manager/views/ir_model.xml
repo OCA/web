@@ -27,6 +27,7 @@
                             />
                             <field name="option_create" />
                             <field name="option_create_edit" />
+                            <field name="option_create_edit_wizard" />
                         </tree>
                     </field>
                 </page>
