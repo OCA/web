@@ -96,18 +96,18 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 },
             });
 
-            if (this.isSWSupported()) {
-                navigator.serviceWorker.ready.then(sw => {
+            if (this._isServiceWorkerSupported) {
+                this._service_worker.ready.then(sw => {
                     if (sw.active) {
                         // Check if service worker has the control of the pages
-                        if (navigator.serviceWorker.controller) {
+                        if (this._service_worker.controller) {
                             if (sw.waiting) {
                                 this._onSWWaiting(
                                     sw.waiting,
-                                    navigator.serviceWorker.controller
+                                    this._service_worker.controller
                                 );
                             }
-                            this._onSWController(navigator.serviceWorker.controller);
+                            this._onSWController(this._service_worker.controller);
                         } else {
                             this._onSWActive(sw.active);
                         }
@@ -121,13 +121,19 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     return this._checkPWACacheStatus();
                 })
                 .then(() => {
+                    if (this.isPWACacheEnabled()) {
+                        return Promise.resolve();
+                    }
+                    return this.setPWAMode("online");
+                })
+                .then(() => {
                     if (this.isPWAStandalone()) {
                         // Show SW Info modal
                         if (
-                            !navigator.serviceWorker.controller ||
-                            (navigator.serviceWorker.controller &&
+                            !this._service_worker.controller ||
+                            (this._service_worker.controller &&
                                 ["installing", "installed"].indexOf(
-                                    navigator.serviceWorker.controller.state
+                                    this._service_worker.controller.state
                                 ) !== -1)
                         ) {
                             this._swInfoOpenTimer = setTimeout(
@@ -171,8 +177,8 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
 
         _showSWInfo: function() {
             if (
-                navigator.serviceWorker.controller &&
-                navigator.serviceWorker.controller.state === "installed"
+                this._service_worker.controller &&
+                this._service_worker.controller.state === "installed"
             ) {
                 this.$modalSWInfo
                     .find("#swinfo_message")
@@ -312,15 +318,15 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
          * New SW is waiting for activate
          */
         _onSWWaiting: function() {
-            if (!this.isOfflineMode() || !this.isPWAStandalone()) {
+            if (!this.isPWACacheEnabled() || !this.isPWAStandalone()) {
                 return;
             }
-            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+            this._service_worker.getRegistrations().then(function(registrations) {
                 const tasks = [];
                 for (const registration of registrations) {
                     tasks.push(registration.unregister());
                 }
-                Promise.all(tasks).then(() => setTimeout(location.reload(), 250));
+                Promise.all(tasks).then(() => setTimeout(location.reload(), 450));
             });
         },
 
@@ -397,7 +403,12 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
         },
 
         _onPWASWForcedInit: function() {
-            this.setPWAMode("online").then(() => this.sendConfigToSW());
+            let task_chain = Promise.resolve();
+            if (!this.isPWACacheEnabled()) {
+                task_chain = task_chain.then(() => this.setPWAMode("online"));
+            }
+            task_chain = task_chain.then(() => this.sendConfigToSW());
+            return task_chain;
         },
 
         /**
@@ -411,34 +422,32 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 this._swInfoOpenTimer = false;
             }
             this._pwaMode = evdata.data.pwa_mode;
-            if (this.isPWAStandalone()) {
-                if (navigator.serviceWorker.controller) {
-                    // Create prefetching modal
-                    this.$modalPrefetchProgress = $(
-                        QWeb.render("web_pwa_cache.PrefetchProgress", {
-                            sw_version: evdata.data.sw_version,
-                        })
-                    );
-                    this.$modalPrefetchProgress.appendTo("body");
-                    this.$modalPrefetchProgressContent = this.$modalPrefetchProgress.find(
-                        ".modal-body"
-                    );
-                    this.$modalPrefetchProgress.on("shown.bs.modal", () => {
-                        this._prefetchModelHidden = false;
-                        // Append current data
-                        for (const task_info_id in this._prefetchTasksInfo) {
-                            const task_info = this._prefetchTasksInfo[task_info_id];
-                            this._updatePrefetchModalData(task_info_id, task_info);
-                        }
-                    });
-                    //
-                    if (evdata.data.is_db_empty) {
-                        if (this.modeSelector.isOpen()) {
-                            this.modeSelector.close();
-                        }
-                    } else if (!this.modeSelector.wasShown()) {
-                        this.modeSelector.show();
+            if (this.isPWAStandalone() && this._service_worker.controller) {
+                // Create prefetching modal
+                this.$modalPrefetchProgress = $(
+                    QWeb.render("web_pwa_cache.PrefetchProgress", {
+                        sw_version: evdata.data.sw_version,
+                    })
+                );
+                this.$modalPrefetchProgress.appendTo("body");
+                this.$modalPrefetchProgressContent = this.$modalPrefetchProgress.find(
+                    ".modal-body"
+                );
+                this.$modalPrefetchProgress.on("shown.bs.modal", () => {
+                    this._prefetchModelHidden = false;
+                    // Append current data
+                    for (const task_info_id in this._prefetchTasksInfo) {
+                        const task_info = this._prefetchTasksInfo[task_info_id];
+                        this._updatePrefetchModalData(task_info_id, task_info);
                     }
+                });
+                //
+                if (evdata.data.is_db_empty) {
+                    if (this.modeSelector.isOpen()) {
+                        this.modeSelector.close();
+                    }
+                } else if (!this.modeSelector.wasShown()) {
+                    this.modeSelector.show();
                 }
             }
         },
