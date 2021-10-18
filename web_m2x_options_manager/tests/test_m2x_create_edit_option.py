@@ -29,6 +29,7 @@ class TestM2xCreateEditOption(SavepointCase):
                 "model_id": self.res_partner_model.id,
                 "option_create": "set_true",
                 "option_create_edit": "set_true",
+                "option_create_edit_wizard": True,
             }
         )
         self.categories_opt = self.env["m2x.create.edit.option"].create(
@@ -37,6 +38,7 @@ class TestM2xCreateEditOption(SavepointCase):
                 "model_id": self.res_partner_model.id,
                 "option_create": "set_true",
                 "option_create_edit": "set_true",
+                "option_create_edit_wizard": True,
             }
         )
         self.company_opt = self.env["m2x.create.edit.option"].create(
@@ -45,6 +47,7 @@ class TestM2xCreateEditOption(SavepointCase):
                 "model_id": self.res_users_model.id,
                 "option_create": "force_true",
                 "option_create_edit": "set_true",
+                "option_create_edit_wizard": False,
             }
         )
 
@@ -82,10 +85,24 @@ class TestM2xCreateEditOption(SavepointCase):
             safe_eval(title_node.attrib.get("options"), nocopy=True),
             {"create": True, "create_edit": True},
         )
+        self.assertEqual(
+            (
+                title_node.attrib.get("can_create"),
+                title_node.attrib.get("can_write"),
+            ),
+            ("true", "true"),
+        )
         categ_node = form_doc.xpath("//field[@name='category_id']")[0]
         self.assertEqual(
             safe_eval(categ_node.attrib.get("options"), nocopy=True),
             {"create": False, "create_edit": True},
+        )
+        self.assertEqual(
+            (
+                categ_node.attrib.get("can_create"),
+                categ_node.attrib.get("can_write"),
+            ),
+            ("true", "true"),
         )
 
         # Check fields on res.users tree view (contained in ``user_ids`` field)
@@ -95,6 +112,13 @@ class TestM2xCreateEditOption(SavepointCase):
         self.assertEqual(
             safe_eval(company_node.attrib.get("options"), nocopy=True),
             {"create": True, "create_edit": True},
+        )
+        self.assertEqual(
+            (
+                company_node.attrib.get("can_create"),
+                company_node.attrib.get("can_write"),
+            ),
+            ("false", "false"),
         )
 
         # Update options, check that node has been updated too
