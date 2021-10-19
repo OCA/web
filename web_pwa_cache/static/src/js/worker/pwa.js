@@ -13,7 +13,6 @@ odoo.define("web_pwa_cache.PWA", function(require) {
     const SWImporterComponent = require("web_pwa_cache.PWA.components.Importer");
     const SWPrefetchComponent = require("web_pwa_cache.PWA.components.Prefetch");
     const Tools = require("web_pwa_cache.PWA.core.base.Tools");
-    const rpc = require("web_pwa_cache.PWA.core.base.rpc");
 
     PWA.include({
         _special_operations: [
@@ -36,35 +35,12 @@ odoo.define("web_pwa_cache.PWA", function(require) {
 
             this._cache_hashes = params.cache_hashes;
             this._prefetched_urls = params.prefetched_urls;
+            this._isDisabled = params.is_disabled;
 
             this._db = new DatabaseSystem();
             this._cache = new CacheSystem();
 
             this._wasActivated = false;
-            this._isDisabled = true;
-        },
-
-        /**
-         * @returns {Promise}
-         */
-        start: function() {
-            const task = new Promise(async (resolve, reject) => {
-                this._isDisabled = true;
-                try {
-                    const [response_s] = await rpc.callJSonRpc(
-                        "res.users",
-                        "has_group",
-                        ["web_pwa_cache.group_pwa_cache"]
-                    );
-                    const response_s_data = (await response_s.json()).result;
-                    this._isDisabled = !response_s_data;
-                } catch (err) {
-                    return reject(err);
-                }
-
-                return resolve();
-            });
-            return Promise.all([this._super.apply(this, arguments), task]);
         },
 
         /**

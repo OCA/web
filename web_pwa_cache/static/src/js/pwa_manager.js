@@ -11,6 +11,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
     const BroadcastMixin = require("web_pwa_cache.BroadcastMixin");
     const BusMixin = require("web_pwa_cache.BusMixin");
     const PWASyncModal = require("web_pwa_cache.PWASyncModal");
+    const Dialog = require("web.Dialog");
 
     const QWeb = core.qweb;
     const _t = core._t;
@@ -321,12 +322,40 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
             if (!this.isPWACacheEnabled() || !this.isPWAStandalone()) {
                 return;
             }
-            this._service_worker.getRegistrations().then(function(registrations) {
-                const tasks = [];
-                for (const registration of registrations) {
-                    tasks.push(registration.unregister());
-                }
-                Promise.all(tasks).then(() => setTimeout(location.reload(), 450));
+            this._service_worker.getRegistrations().then(registrations => {
+                this._updateSWDialog = new Dialog(null, {
+                    size: "large",
+                    fullscreen: true,
+                    title: _t("Service Worker Update"),
+                    $content: `<p>${_t(
+                        "An update is available. Before updating, make sure that you do not have any other windows open at this address."
+                    )}</p>`,
+                    buttons: [
+                        {
+                            text: _t("Update!"),
+                            classes: "btn-primary",
+                            click: function() {
+                                const tasks = [];
+                                for (const registration of registrations) {
+                                    tasks.push(registration.unregister());
+                                }
+                                Promise.all(tasks).then(() =>
+                                    setTimeout(location.reload(), 450)
+                                );
+                            },
+                            close: true,
+                        },
+                        {
+                            text: _t("Cancel"),
+                            click: function() {
+                                this.modeSelector.show();
+                            }.bind(this),
+                            close: true,
+                        },
+                    ],
+                });
+                core.bus.off("close_dialogs", this._updateSWDialog);
+                this._updateSWDialog.open();
             });
         },
 
@@ -446,7 +475,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     if (this.modeSelector.isOpen()) {
                         this.modeSelector.close();
                     }
-                } else if (!this.modeSelector.wasShown()) {
+                } else if (!this.modeSelector.wasShown() && !this._updateSWDialog) {
                     this.modeSelector.show();
                 }
             }

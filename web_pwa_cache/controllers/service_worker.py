@@ -6,7 +6,7 @@ from odoo.addons.web_pwa_oca.controllers.service_worker import ServiceWorker
 
 
 class ServiceWorker(ServiceWorker):
-    _pwa_sw_version = "0.3.0"
+    _pwa_sw_version = "0.3.1"
 
     def _get_js_pwa_requires(self):
         res = """
@@ -35,12 +35,18 @@ class ServiceWorker(ServiceWorker):
         urls.append("/web_pwa_cache/static/src/lib/sqlite/sql-wasm.wasm")
         res["cache_hashes"] = cache_hashes
         res["prefetched_urls"] = list(set(urls))
-
         # Add 'GET' resources
         pwa_cache_obj = request.env["pwa.cache"]
         records = pwa_cache_obj.search(self._get_pwa_cache_domain(["get"]))
         res["prefetched_urls"] += pwa_cache_obj._get_text_field_lines(
             records, "get_urls"
+        )
+        # Flag to know if disabled
+        res["is_disabled"] = (
+            1
+            if not request.env.user
+            or not request.env.user.has_group("web_pwa_cache.group_pwa_cache")
+            else 0
         )
         return res
 
