@@ -37,7 +37,7 @@ odoo.define("web_pwa_oca.PWAManager", function(require) {
         registerServiceWorker: function(sw_script, options) {
             return this._service_worker
                 .register(sw_script, options)
-                .then(this._onRegisterServiceWorker)
+                .then(this._onRegisterServiceWorker.bind(this))
                 .catch(function(error) {
                     console.log(_t("[ServiceWorker] Registration failed: "), error);
                 });
