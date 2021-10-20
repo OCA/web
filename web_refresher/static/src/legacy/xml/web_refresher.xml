@@ -1,18 +1,20 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2021 Tecnativa - João Marques
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
-<template>
+<!-- This is now considered part of the legacy js components and is expected to change in a future release  -->
+<templates id="template" xml:space="preserve">
+
     <t
         t-name="web_refresher.Pager"
         t-inherit="web.Pager"
         t-inherit-mode="extension"
         owl="1"
     >
-        <xpath expr="//span[hasclass('o_pager_counter')]" position="before">
+        <xpath expr="//nav[hasclass('o_pager')]//span[1]" position="after">
             <span class="btn-group" aria-atomic="true">
                 <button
                     type="button"
-                    class="fa fa-refresh btn btn-secondary o_pager_refresh"
+                    class="o_pager_refresh fa fa-refresh btn btn-secondary"
                     aria-label="Refresh"
                     title="Refresh"
                     tabindex="-1"
@@ -22,4 +24,5 @@
             </span>
         </xpath>
     </t>
-</template>
+
+</templates>
