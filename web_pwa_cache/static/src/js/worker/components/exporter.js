@@ -53,7 +53,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         "args" in data.kwargs ? data.kwargs.args : data.args[1];
                     const limit =
                         "args" in data.kwargs ? data.kwargs.limit : data.args[2];
-                    const records = this._db.name_search(
+                    const records = await this._db.name_search(
                         model,
                         search,
                         domain,

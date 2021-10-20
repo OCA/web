@@ -89,7 +89,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                     }
 
                     return resolve(
-                        (order_by_clause && ` ORDER BY ${order_by_clause} `) || ""
+                        (order_by_clause && ` ORDER BY ${order_by_clause}`) || ""
                     );
                 } catch (err) {
                     return reject(err);
@@ -108,6 +108,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
             model_info,
             alias,
             order_field,
+            inherit_field_info,
             query,
             reverse_direction,
             seen
@@ -115,19 +116,21 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
             return new Promise(async (resolve, reject) => {
                 try {
                     let field = model_info.fields[order_field];
-                    let n_alias = alias;
-                    let n_order_field = order_field;
-                    if (field.inherited) {
-                        // Also add missing joins for reaching the table containing the m2o field
-                        const qualified_field = await this._inherits_join_calc(
-                            n_alias,
-                            n_order_field,
-                            query
-                        );
-                        [n_alias, n_order_field] = qualified_field
-                            .replace(/"/g, "")
-                            .split(".", 1);
-                        field = field.base_field;
+                    const n_alias = alias;
+                    const n_order_field = order_field;
+
+                    if (inherit_field_info.is_inherited) {
+                        // INFO: PWA have all inherited fields in the same model
+                        // // Also add missing joins for reaching the table containing the m2o field
+                        // const qualified_field = await this._inherits_join_calc(
+                        //     n_alias,
+                        //     n_order_field,
+                        //     query
+                        // );
+                        // [n_alias, n_order_field] = qualified_field
+                        //     .replace(/"/g, "")
+                        //     .split(".", 1);
+                        field = inherit_field_info.base_field;
                     }
 
                     if (!field.store) {
@@ -147,6 +150,18 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                         m2o_order = dest_model.rec_name;
                     }
 
+                    if (inherit_field_info.is_inherited) {
+                        // INFO: PWA have all inherited fields in the same model
+                        const orders = await this._generate_order_by_inner(
+                            dest_model,
+                            model_info.table,
+                            m2o_order,
+                            query,
+                            reverse_direction,
+                            seen
+                        );
+                        return resolve(orders);
+                    }
                     // Join the dest m2o table if it's not joined yet. We use [LEFT] OUTER join here
                     // as we don't want to exclude results that have NULL values for the m2o
                     const join = [
@@ -191,14 +206,16 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
         ) {
             return new Promise(async (resolve, reject) => {
                 try {
+                    let inherit_field_info = await this._dbmanager.getInheritedFieldInfo(
+                        model_info,
+                        fname
+                    );
                     // INVARIANT: alias is the SQL alias of model._table in query
                     let [model, field] = [model_info, model_info.fields[fname]];
-                    while (field.inherited) {
+                    while (inherit_field_info.is_inherited) {
                         // Retrieve the parent model where field is inherited from
-                        const parent_model = await this._dbmanager.getModelInfo(
-                            field.related_field.model_name
-                        );
-                        const parent_fname = field.related[0];
+                        const parent_model = inherit_field_info.related_model;
+                        const parent_fname = inherit_field_info.related_field.name;
                         // JOIN parent_model._table AS parent_alias ON alias.parent_fname = parent_alias.id
                         const [parent_alias] = query.add_join(
                             [
@@ -214,8 +231,12 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                         [model, alias, field] = [
                             parent_model,
                             parent_alias,
-                            field.related_field,
+                            parent_fname,
                         ];
+                        inherit_field_info = await this._dbmanager.getInheritedFieldInfo(
+                            model,
+                            field
+                        );
                     }
                     // Handle the case where the field is translated
                     if (field.translate) {
@@ -261,6 +282,18 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
             return `"${table_alias}"."${field}"`;
         },
 
+        /**
+         * Generates de order strings.
+         * Using 'NULLS LAST' to match with postgresql behaviour
+         *
+         * @param {Object} model_info
+         * @param {String} alias
+         * @param {String} order_spec
+         * @param {String} query
+         * @param {Boolean} reverse_direction
+         * @param {Array} seen
+         * @returns {Array}
+         */
         _generate_order_by_inner: function(
             model_info,
             alias,
@@ -302,16 +335,20 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
 
                         if (order_field === "id") {
                             order_by_elements.push(
-                                `"${alias}"."${order_field}" ${order_direction}`
+                                `"${alias}"."${order_field}" ${order_direction} NULLS LAST`
                             );
                         } else {
-                            if (field.inherited) {
-                                field = field.base_field;
+                            const inherit_field_info = await this._dbmanager.getInheritedFieldInfo(
+                                model_info,
+                                order_field
+                            );
+                            if (inherit_field_info.is_inherited) {
+                                field = inherit_field_info.base_field;
                             }
-                            // TODO: Verify if the order with null values is the same in sqlite
+
                             if (field.store && field.type === "many2one") {
                                 const key = [
-                                    field.model_name,
+                                    model_info.name,
                                     field.relation,
                                     order_field,
                                 ];
@@ -322,6 +359,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                                             model_info,
                                             alias,
                                             order_field,
+                                            inherit_field_info,
                                             query,
                                             do_reverse,
                                             seen
@@ -342,7 +380,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                                     qualifield_name = `COALESCE(${qualifield_name}, false)`;
                                 }
                                 order_by_elements.push(
-                                    `${qualifield_name} ${order_direction}`
+                                    `${qualifield_name} ${order_direction} NULLS LAST`
                                 );
                             } else {
                                 // Ignore non-readable or "non-joinable" fields

@@ -646,12 +646,24 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                     if (typeof model_info === "string") {
                         model_info = await this.getModelInfo(model_info);
                     }
-                    if (search) {
-                        const name_search =
+                    if (!domain) {
+                        domain = [];
+                    }
+                    if (_.isEmpty(model_info.rec_name)) {
+                        console.warn(
+                            `[ServiceWorker] Cannot execute name_search, no _rec_name defined on ${model_info.name}`
+                        );
+                    } else if (
+                        !(
+                            (search === "" || typeof search === "undefined") &&
+                            operator === "ilike"
+                        )
+                    ) {
+                        const rec_name =
                             model_info.rec_name === "name"
                                 ? "display_name"
                                 : model_info.rec_name;
-                        domain = _.union([[name_search, operator, search]], domain);
+                        domain = domain.concat([[rec_name, operator, search]]);
                     }
                     let records = await this.search_read(
                         model_info.model,
@@ -998,6 +1010,50 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                         }
                     }
                     return resolve(field_infos);
+                } catch (err) {
+                    return reject(err);
+                }
+            });
+        },
+
+        getInheritedFieldInfo: function(model_info, fname) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    if (typeof model_info === "string") {
+                        model_info = await this.getModelInfo(model_info);
+                    }
+                    const field_info = model_info.fields[fname];
+                    if (_.isEmpty(field_info)) {
+                        return resolve({
+                            is_inherited: false,
+                        });
+                    }
+                    let base_field = null;
+                    let related_field = null;
+                    let related_model = null;
+                    let is_inherited = false;
+                    if (
+                        !_.isEmpty(field_info.related) &&
+                        field_info.related instanceof Array
+                    ) {
+                        base_field = model_info.fields[field_info.related[0]];
+                        is_inherited = Object.prototype.hasOwnProperty.call(
+                            model_info.inherits,
+                            base_field.relation
+                        );
+                        if (is_inherited) {
+                            related_model = await this.getModelInfo(
+                                base_field.relation
+                            );
+                            related_field = related_model.fields[field_info.related[1]];
+                        }
+                    }
+                    return resolve({
+                        related_model: related_model,
+                        related_field: related_field,
+                        base_field: base_field,
+                        is_inherited: is_inherited,
+                    });
                 } catch (err) {
                     return reject(err);
                 }

@@ -935,6 +935,10 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     if (field && field.relation) {
                         comodel = await this._dbmanager.getModelInfo(field.relation);
                     }
+                    // Const inherit_field_info = await this._dbmanager.getInheritedFieldInfo(
+                    //     model,
+                    //     field_name
+                    // );
 
                     // ----------------------------------------
                     // SIMPLE CASE
@@ -963,22 +967,24 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     // ----------------------------------------
                     else if (_.isEmpty(field)) {
                         throw Error(`Invalid field ${left} in leaf ${leaf}`);
-                    } else if (field.inherited) {
-                        // Comments about inherits'd fields
-                        //  { 'field_name': ('parent_model', 'm2o_field_to_reach_parent',
-                        //                    field_column_obj, origina_parent_model), ... }
-                        const parent_model = await this._dbmanager.getModelInfo(
-                            field.related_field.model_name
-                        );
-                        const parent_fname = model.inherits[parent_model.model];
-                        leaf.add_join_context(
-                            parent_model,
-                            parent_fname,
-                            "id",
-                            parent_fname
-                        );
-                        push(leaf);
-                    } else if (left === "id" && operator in HIERARCHY_FUNCS) {
+                    }
+
+                    // INFO: PWA have all inherited fields in the same model
+                    // else if (inherit_field_info.is_inherited) {
+                    //     // Comments about inherits'd fields
+                    //     //  { 'field_name': ('parent_model', 'm2o_field_to_reach_parent',
+                    //     //                    field_column_obj, origina_parent_model), ... }
+                    //     const parent_model = inherit_field_info.related_model;
+                    //     const parent_fname = inherit_field_info.related_field.name;
+                    //     leaf.add_join_context(
+                    //         parent_model,
+                    //         parent_fname,
+                    //         "id",
+                    //         parent_fname
+                    //     );
+                    //     push(leaf);
+                    // }
+                    else if (left === "id" && operator in HIERARCHY_FUNCS) {
                         const ids2 = to_ids(right, model, leaf.leaf);
                         const dom = await HIERARCHY_FUNCS[operator](
                             left,
