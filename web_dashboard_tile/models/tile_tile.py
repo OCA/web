@@ -334,23 +334,25 @@ class TileTile(models.Model):
     # Action methods
     @api.multi
     def open_link(self):
-        res = {
-            "name": self.name,
-            "view_type": "form",
-            "view_mode": "tree",
-            "view_id": [False],
-            "res_model": self.model_id.model,
-            "type": "ir.actions.act_window",
-            "context": dict(self.env.context, group_by=False),
-            "nodestroy": True,
-            "target": "current",
-            "domain": self.domain,
-        }
         if self.action_id:
-            res.update(
-                self.action_id.read(["view_type", "view_mode", "type"])[0]
-            )
-        return res
+            action = self.action_id.read()[0]
+        else:
+            action = {
+                "view_type": "form",
+                "view_mode": "tree",
+                "view_id": False,
+                "res_model": self.model_id.model,
+                "type": "ir.actions.act_window",
+                "target": "current",
+                "domain": self.domain,
+            }
+        action.update({
+            "name": self.name,
+            "display_name": self.name,
+            "context": dict(self.env.context, group_by=False),
+            "domain": self.domain,
+        })
+        return action
 
     @api.model
     def add(self, vals):
