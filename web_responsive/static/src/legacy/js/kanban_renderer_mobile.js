@@ -1,4 +1,7 @@
-﻿odoo.define("web_responsive.KanbanRendererMobile", function (require) {
+﻿/* Copyright 2019 Odoo S.A.
+ * Copyright 2021 ITerra - Sergey Shebanin
+ * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
+odoo.define("web_responsive.KanbanRendererMobile", function (require) {
     "use strict";
 
     /**
@@ -8,23 +11,19 @@
      * Moreover, records in columns are lazy-loaded.
      */
 
-    var config = require("web.config");
-    var core = require("web.core");
-    var KanbanRenderer = require("web.KanbanRenderer");
-    var KanbanView = require("web.KanbanView");
-    var KanbanQuickCreate = require("web.kanban_column_quick_create");
+    const config = require("web.config");
+    const core = require("web.core");
+    const KanbanRenderer = require("web.KanbanRenderer");
+    const KanbanView = require("web.KanbanView");
+    const KanbanQuickCreate = require("web.kanban_column_quick_create");
 
-    var _t = core._t;
-    var qweb = core.qweb;
-
-    if (!config.device.isMobile) {
-        return;
-    }
+    const _t = core._t;
+    const qweb = core.qweb;
 
     KanbanQuickCreate.include({
         init() {
             this._super.apply(this, arguments);
-            this.isMobile = true;
+            this.isMobile = config.device.isMobile;
         },
         /**
          * KanbanRenderer will decide can we close quick create or not
@@ -32,7 +31,9 @@
          * @override
          */
         _cancel: function () {
-            this.trigger_up("close_quick_create");
+            if (config.device.isMobile) {
+                this.trigger_up("close_quick_create");
+            }
         },
         /**
          * Clear input when showed
@@ -40,7 +41,7 @@
          */
         toggleFold: function () {
             this._super.apply(this, arguments);
-            if (!this.folded) {
+            if (config.device.isMobile && !this.folded) {
                 this.$input.val("");
             }
         },
@@ -78,17 +79,24 @@
          * @override
          */
         on_attach_callback: function () {
-            if (
-                this._scrollPosition &&
-                this.state.groupedBy.length &&
-                this.widgets.length
-            ) {
-                var $column = this.widgets[this.activeColumnIndex].$el;
-                $column.scrollLeft(this._scrollPosition.left);
-                $column.scrollTop(this._scrollPosition.top);
+            if (config.device.isMobile) {
+                if (
+                    this._scrollPosition &&
+                    this.state.groupedBy.length &&
+                    this.widgets.length
+                ) {
+                    const $column = this.widgets[this.activeColumnIndex].$el;
+                    $column.scrollLeft(this._scrollPosition.left);
+                    $column.scrollTop(this._scrollPosition.top);
+                }
+                this._computeTabPosition();
             }
-            this._computeTabPosition();
             this._super.apply(this, arguments);
+            core.bus.on("UI_CONTEXT:IS_SMALL_CHANGED", this, () => {
+                this.widgets = [];
+                this.columnOptions.recordsDraggable = !config.device.isMobile;
+                this._renderView();
+            });
         },
         /**
          * As this renderer defines its own scrolling area (the column in grouped
@@ -99,7 +107,7 @@
          */
         on_detach_callback: function () {
             if (this.state.groupedBy.length && this.widgets.length) {
-                var $column = this.widgets[this.activeColumnIndex].$el;
+                const $column = this.widgets[this.activeColumnIndex].$el;
                 this._scrollPosition = {
                     left: $column.scrollLeft(),
                     top: $column.scrollTop(),
@@ -107,6 +115,7 @@
             } else {
                 this._scrollPosition = null;
             }
+            core.bus.off("UI_CONTEXT:IS_SMALL_CHANGED", this);
             this._super.apply(this, arguments);
         },
 
@@ -122,10 +131,17 @@
          * @returns {Promise}
          */
         addQuickCreate: function () {
-            if (this._canCreateColumn() && !this.quickCreate.folded) {
-                this._onMobileQuickCreateClicked();
+            if (config.device.isMobile) {
+                if (
+                    this._canCreateColumn() &&
+                    this.quickCreate &&
+                    !this.quickCreate.folded
+                ) {
+                    this._onMobileQuickCreateClicked();
+                }
+                return this.widgets[this.activeColumnIndex].addQuickCreate();
             }
-            return this.widgets[this.activeColumnIndex].addQuickCreate();
+            return this._super.apply(this, arguments);
         },
 
         /**
@@ -135,23 +151,34 @@
          * @override
          */
         updateColumn: function (localID) {
-            var index = _.findIndex(this.widgets, {db_id: localID});
-            var $column = this.widgets[index].$el;
-            var scrollTop = $column.scrollTop();
-            return (
-                this._super
-                    .apply(this, arguments)
-                    .then(() => this._layoutUpdate(false))
-                    // Required when clicking on 'Load More'
-                    .then(() => $column.scrollTop(scrollTop))
-                    .then(() => this._enableSwipe())
-            );
+            if (config.device.isMobile) {
+                const index = _.findIndex(this.widgets, {db_id: localID});
+                const $column = this.widgets[index].$el;
+                const scrollTop = $column.scrollTop();
+                return (
+                    this._super
+                        .apply(this, arguments)
+                        .then(() => this._layoutUpdate(false))
+                        // Required when clicking on 'Load More'
+                        .then(() => $column.scrollTop(scrollTop))
+                        .then(() => this._enableSwipe())
+                );
+            }
+            return this._super.apply(this, arguments);
         },
 
         // --------------------------------------------------------------------------
         // Private
         // --------------------------------------------------------------------------
-
+        /**
+         * Avoid drag'n'drop of kanban records on mobile and let the way to swipe
+         * @private
+         */
+        _setState: function () {
+            const res = this._super.apply(this, arguments);
+            this.columnOptions.recordsDraggable = !config.device.isMobile;
+            return res;
+        },
         /**
          * Check if we use the quick create on mobile
          * @returns {Boolean}
@@ -225,11 +252,11 @@
          */
         _computeCurrentColumn: function () {
             if (this.widgets.length) {
-                var column = this.widgets[this.activeColumnIndex];
+                const column = this.widgets[this.activeColumnIndex];
                 if (!column) {
                     return;
                 }
-                var columnID = column.id || column.db_id;
+                const columnID = column.id || column.db_id;
                 this.$(
                     ".o_kanban_mobile_tab.o_current, .o_kanban_group.o_current"
                 ).removeClass("o_current");
@@ -261,14 +288,14 @@
          */
         _computeTabScrollPosition: function () {
             if (this.widgets.length) {
-                var lastItemIndex = this.widgets.length - 1;
-                var moveToIndex = this.activeColumnIndex;
-                var scrollToLeft = 0;
-                for (var i = 0; i < moveToIndex; i++) {
-                    var columnWidth = this._getTabWidth(this.widgets[i]);
+                const lastItemIndex = this.widgets.length - 1;
+                const moveToIndex = this.activeColumnIndex;
+                let scrollToLeft = 0;
+                for (let i = 0; i < moveToIndex; i++) {
+                    const columnWidth = this._getTabWidth(this.widgets[i]);
                     // Apply
                     if (moveToIndex !== lastItemIndex && i === moveToIndex - 1) {
-                        var partialWidth = 0.75;
+                        const partialWidth = 0.75;
                         scrollToLeft += columnWidth * partialWidth;
                     } else {
                         scrollToLeft += columnWidth;
@@ -287,13 +314,12 @@
          */
         _computeTabJustification: function () {
             if (this.widgets.length) {
-                var self = this;
                 // Use to compute the sum of the width of all tab
-                var widthChilds = this.widgets.reduce(function (total, column) {
-                    return total + self._getTabWidth(column);
+                const widthChilds = this.widgets.reduce((total, column) => {
+                    return total + this._getTabWidth(column);
                 }, 0);
                 // Apply a space around between child if the parent length is higher then the sum of the child width
-                var $tabs = this.$(".o_kanban_mobile_tabs");
+                const $tabs = this.$(".o_kanban_mobile_tabs");
                 $tabs.toggleClass(
                     "justify-content-between",
                     $tabs.outerWidth() >= widthChilds
@@ -307,20 +333,25 @@
          * @private
          */
         _enableSwipe: function () {
-            var self = this;
-            var step = _t.database.parameters.direction === "rtl" ? -1 : 1;
+            const step = _t.database.parameters.direction === "rtl" ? -1 : 1;
             this.$el.swipe({
                 excludedElements: ".o_kanban_mobile_tabs",
-                swipeLeft: function () {
-                    var moveToIndex = self.activeColumnIndex + step;
-                    if (moveToIndex < self.widgets.length) {
-                        self._moveToGroup(moveToIndex, self.ANIMATE);
+                swipeLeft: () => {
+                    if (!config.device.isMobile) {
+                        return;
+                    }
+                    const moveToIndex = this.activeColumnIndex + step;
+                    if (moveToIndex < this.widgets.length) {
+                        this._moveToGroup(moveToIndex, this.ANIMATE);
                     }
                 },
-                swipeRight: function () {
-                    var moveToIndex = self.activeColumnIndex - step;
+                swipeRight: () => {
+                    if (!config.device.isMobile) {
+                        return;
+                    }
+                    const moveToIndex = this.activeColumnIndex - step;
                     if (moveToIndex > -1) {
-                        self._moveToGroup(moveToIndex, self.ANIMATE);
+                        this._moveToGroup(moveToIndex, this.ANIMATE);
                     }
                 },
             });
@@ -334,7 +365,7 @@
          * @private
          */
         _getTabWidth: function (column) {
-            var columnID = column.id || column.db_id;
+            const columnID = column.id || column.db_id;
             return this.$(
                 '.o_kanban_mobile_tab[data-id="' + columnID + '"]'
             ).outerWidth();
@@ -366,16 +397,15 @@
             if (this.widgets.length === 0) {
                 return Promise.resolve();
             }
-            var self = this;
             if (moveToIndex >= 0 && moveToIndex < this.widgets.length) {
                 this.activeColumnIndex = moveToIndex;
             }
-            var column = this.widgets[this.activeColumnIndex];
+            const column = this.widgets[this.activeColumnIndex];
             this._enableSwipe();
             if (!column.data.isOpen) {
                 this.trigger_up("column_toggle_fold", {
                     db_id: column.db_id,
-                    onSuccess: () => self._layoutUpdate(animate),
+                    onSuccess: () => this._layoutUpdate(animate),
                 });
             } else {
                 this._layoutUpdate(animate);
@@ -388,39 +418,45 @@
          */
         _renderExampleBackground: function () {
             // Override to avoid display of example background
+            if (!config.device.isMobile) {
+                this._super.apply(this, arguments);
+            }
         },
         /**
          * @override
          * @private
          */
         _renderGrouped: function (fragment) {
-            var self = this;
-            var newFragment = document.createDocumentFragment();
-            this._super.apply(this, [newFragment]);
-            this.defs.push(
-                Promise.all(this.defs).then(function () {
-                    var data = [];
-                    _.each(self.state.data, function (group) {
-                        if (!group.value) {
-                            group = _.extend({}, group, {value: _t("Undefined")});
-                            data.unshift(group);
-                        } else {
-                            data.push(group);
-                        }
-                    });
+            if (config.device.isMobile) {
+                const newFragment = document.createDocumentFragment();
+                this._super.apply(this, [newFragment]);
+                this.defs.push(
+                    Promise.all(this.defs).then(() => {
+                        const data = [];
+                        _.each(this.state.data, function (group) {
+                            if (!group.value) {
+                                group = _.extend({}, group, {value: _t("Undefined")});
+                                data.unshift(group);
+                            } else {
+                                data.push(group);
+                            }
+                        });
 
-                    var kanbanColumnContainer = document.createElement("div");
-                    kanbanColumnContainer.classList.add("o_kanban_columns_content");
-                    kanbanColumnContainer.appendChild(newFragment);
-                    fragment.appendChild(kanbanColumnContainer);
-                    $(
-                        qweb.render("KanbanView.MobileTabs", {
-                            data: data,
-                            quickCreateEnabled: self._canCreateColumn(),
-                        })
-                    ).prependTo(fragment);
-                })
-            );
+                        const kanbanColumnContainer = document.createElement("div");
+                        kanbanColumnContainer.classList.add("o_kanban_columns_content");
+                        kanbanColumnContainer.appendChild(newFragment);
+                        fragment.appendChild(kanbanColumnContainer);
+                        $(
+                            qweb.render("KanbanView.MobileTabs", {
+                                data: data,
+                                quickCreateEnabled: this._canCreateColumn(),
+                            })
+                        ).prependTo(fragment);
+                    })
+                );
+            } else {
+                this._super.apply(this, arguments);
+            }
         },
 
         /**
@@ -428,14 +464,17 @@
          * @private
          */
         _renderView: function () {
-            var self = this;
-            return this._super.apply(this, arguments).then(function () {
-                if (self.state.groupedBy.length) {
+            const def = this._super.apply(this, arguments);
+            if (!config.device.isMobile) {
+                return def;
+            }
+            return def.then(() => {
+                if (this.state.groupedBy.length) {
                     // Force first column for kanban view, because the groupedBy can be changed
-                    return self._moveToGroup(0);
+                    return this._moveToGroup(0);
                 }
-                if (self._canCreateColumn()) {
-                    self._onMobileQuickCreateClicked();
+                if (this._canCreateColumn()) {
+                    this._onMobileQuickCreateClicked();
                 }
                 return Promise.resolve();
             });
@@ -516,7 +555,7 @@
          * @override
          */
         _onCloseQuickCreate: function () {
-            if (this.widgets.length && !this.quickCreate.folded) {
+            if (this.widgets.length && this.quickCreate && !this.quickCreate.folded) {
                 this.$(".o_kanban_group").toggle(true);
                 this.quickCreate.toggleFold();
             }
