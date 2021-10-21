@@ -1,0 +1,53 @@
+/* Copyright 2018 Tecnativa - Jairo Llopis
+ * Copyright 2021 ITerra - Sergey Shebanin
+ * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
+
+// Main navbar (with systray items: user menu, debug menu...)
+@include media-breakpoint-down(sm) {
+    .o_main_navbar {
+        // Hide big things
+        .o_menu_brand,
+        .oe_topbar_name {
+            display: none;
+        }
+
+        // Collapse sections menu to hamburger
+        .o_menu_sections {
+            width: 46px;
+        }
+        .o_menu_sections_more {
+            .dropdown-toggle {
+                font-size: 17px;
+            }
+            .fa-plus:before {
+                content: "\f0c9";
+            }
+        }
+
+        // User menu paddings
+        .o_usr_menu {
+            margin: 0;
+        }
+
+        // Custom fullscreen layout when showing submenus
+        .dropdown-menu {
+            @include full-screen-dropdown();
+            background-color: $dropdown-bg;
+            overflow: auto;
+
+            // Higher height for dropdown items, for those with sausage fingers
+            .dropdown-item {
+                padding: {
+                    bottom: 0.5rem;
+                    top: 1rem;
+                }
+                font-size: 16px;
+                a {
+                    display: block;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+    }
+}
