@@ -3,14 +3,6 @@
      Copyright 2021 Sergey Shebanin
      License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
 <template>
-    <t t-inherit="mail.Dialog" t-inherit-mode="extension" owl="1">
-        <xpath expr="//div[hasclass('o_Dialog')]" position="attributes">
-            <attribute
-                name="t-attf-class"
-                t-translation="off"
-            >o_Dialog_{{dialog.record['constructor'].name}}</attribute>
-        </xpath>
-    </t>
     <t t-inherit="mail.AttachmentViewer" t-inherit-mode="extension" owl="1">
         <xpath expr="//div[hasclass('o_AttachmentViewer')]" position="attributes">
             <attribute
@@ -19,8 +11,8 @@
             >state.maximized ? 'o_AttachmentViewer_maximized' : ''</attribute>
         </xpath>
         <xpath
-            expr="//div[hasclass('o_AttachmentViewer_header')]/div[hasclass('o-autogrow')]"
-            position="after"
+            expr="//div[hasclass('o_AttachmentViewer_headerItemButtonClose')]"
+            position="before"
         >
             <div
                 t-if="!state.maximized"

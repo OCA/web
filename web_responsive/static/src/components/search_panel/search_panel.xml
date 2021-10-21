@@ -2,10 +2,10 @@
 <!-- Copyright 2021 Sergey Shebanin
      License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
 <templates>
-    <t t-inherit="web.SearchPanel" t-inherit-mode="extension" owl="1">
+    <t t-inherit="web.Legacy.SearchPanel" t-inherit-mode="extension" owl="1">
         <xpath expr="//div[hasclass('o_search_panel')]" position="inside">
             <div
-                t-if="device.isMobile"
+                t-if="ui.isSmall"
                 class="o_search_panel_summary"
                 t-on-click.stop="state.mobileSearch = true"
             >
@@ -27,11 +27,11 @@
             </div>
             <div
                 class="o_search_panel_content"
-                t-att-class="device.isMobile ? (state.mobileSearch ? 'o_mobile_search' : 'd-none'): ''"
+                t-att-class="ui.isSmall ? (state.mobileSearch ? 'o_mobile_search' : 'd-none'): ''"
             />
         </xpath>
         <xpath expr="//div[hasclass('o_search_panel_content')]" position="inside">
-            <div t-if="device.isMobile" class="o_mobile_search_header">
+            <div t-if="ui.isSmall" class="o_mobile_search_header">
                 <span
                     class="o_mobile_search_close float-left mt16 mb16 mr8 ml16"
                     t-on-click.stop="state.mobileSearch = false"
@@ -42,7 +42,7 @@
             </div>
             <xpath expr="//section" position="move" />
             <div
-                t-if="device.isMobile"
+                t-if="ui.isSmall"
                 class="btn btn-primary o_mobile_search_show_result fixed-bottom"
                 t-on-click.stop="state.mobileSearch = false"
             >
