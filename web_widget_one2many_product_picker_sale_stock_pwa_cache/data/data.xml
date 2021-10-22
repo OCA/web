@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="0">
+        <!-- MODEL -->
+        <record
+            id="sale_pwa_cache.pwa_cache_model_sale_order_lines_all"
+            model="pwa.cache"
+        >
+            <field
+                name="model_field_included_ids"
+                eval="[(4, ref('sale_stock.field_sale_order_line__qty_to_deliver'), 0), (4, ref('sale_stock.field_sale_order_line__display_qty_widget'), 0), (4, ref('sale_stock.field_sale_order_line__virtual_available_at_date'), 0), (4, ref('sale_stock.field_sale_order_line__scheduled_date'), 0), (4, ref('sale_stock.field_sale_order_line__free_qty_today'), 0), (4, ref('sale_stock.field_sale_order_line__qty_available_today'), 0), (4, ref('sale_stock.field_sale_order_line__warehouse_id'), 0), (4, ref('sale_stock.field_sale_order_line__is_mto'), 0)]"
+            />
+        </record>
+        <record id="pwa_cache_model_stock_quant_location_internal" model="pwa.cache">
+            <field name="name">Stock Quant (Internal Location)</field>
+            <field name="cache_type">model</field>
+            <field name="model_id" ref="stock.model_stock_quant" />
+            <field
+                name="model_domain_raw"
+            >[["location_id.usage", "=", "internal"], ["quantity", "!=", 0]]</field>
+            <field
+                name="model_field_included_ids"
+                eval="[(4, ref('stock.field_stock_quant__lot_id'), 0)]"
+            />
+        </record>
+        <record id="pwa_cache_model_stock_quant_package_all" model="pwa.cache">
+            <field name="name">Stock Quant Package (All)</field>
+            <field name="cache_type">model</field>
+            <field name="model_id" ref="stock.model_stock_quant_package" />
+            <field name="model_domain_raw">[]</field>
+        </record>
+        <!-- <record id="pwa_cache_model_stock_location_all" model="pwa.cache">
+            <field name="name">Stock Location (All)</field>
+            <field name="cache_type">model</field>
+            <field name="model_id" ref="stock.model_stock_location" />
+            <field name="model_domain_raw">[]</field>
+            <field name="internal" eval="True"/>
+        </record> -->
+        <!-- Some users hasn't acces to stock.production.lot -->
+        <!-- <record id="pwa_cache_model_stock_production_lot_all" model="pwa.cache">
+            <field name="name">Stock Production Lot (All)</field>
+            <field name="cache_type">model</field>
+            <field name="model_id" ref="stock.model_stock_production_lot" />
+            <field name="model_domain_raw">[]</field>
+            <field name="internal" eval="True"/>
+        </record> -->
+        <!-- ONCHANGE FORMULA -->
+        <record
+            id="pwa_cache_onchange_formula_sale_order_line_product_uom_qty_stock"
+            model="pwa.cache"
+        >
+            <field
+                name="name"
+            >Sale Order Line - Onchange Formula - product_uom_qty [Stock]</field>
+            <field name="cache_type">onchange_formula</field>
+            <field name="model_id" ref="sale.model_sale_order_line" />
+            <field name="sequence">18</field>
+            <field
+                name="onchange_field_id"
+                ref="sale.field_sale_order_line__product_uom_qty"
+            />
+            <field
+                name="code_js"
+            ><![CDATA[
+return new Promise(async (resolve, reject) => {
+    try {
+        const value = {
+            is_mto: false,
+        };
+
+        if (!obj.scheduled_date) {
+            let date = false;
+            if (obj.order_id.commitment_date) {
+                date = obj.order_id.commitment_date;
+            } else {
+                order_date = (obj.order_id.date_order && ['sale', 'done'].indexOf(obj.order_id.state) !== -1) ? odoo2date_format(obj.order_id.date_order) : moment();
+                date = date2odoo_format(order_date.add(obj.customer_lead || 0, 'days'));
+            }
+            value.scheduled_date = date || false;
+        }
+
+        if (!obj.warehouse_id) {
+            value.warehouse_id = obj.order_id.warehouse_id || false;
+        }
+
+        value.qty_delivered = 0;
+        if (!obj.is_expense) {
+            // Manual method
+            value.qty_delivered = obj.qty_delivered_manual || 0;
+        }
+        value.qty_to_deliver = obj.product_uom_qty - value.qty_delivered;
+
+        // Client only have stock.quant with location_id.usage = "internal"
+        const quants = await db.search_read("stock.quant", [["product_id", "=", obj.product_id]], undefined, ["lot_id", "package_id", "quantity", "reserved_quantity"]);
+        if (_.isEmpty(quants)) {
+            if (obj.product_type === 'product') {
+                value.display_qty_widget = true;
+                value.virtual_available_at_date = 0;
+            }
+            return resolve({
+                value: value,
+            });
+        }
+        const total_quantity = _.chain(quants).map("quantity").reduce((memo, num) => memo + num, 0).value();
+        const total_reversed_quantity = _.chain(quants).map("reserved_quantity").reduce((memo, num) => memo + num, 0).value();
+
+        const qty_available = round_precision(total_quantity, obj.uom_rounding);
+        const free_qty = round_precision(qty_available - total_reversed_quantity, obj.uom_rounding);
+
+        value.virtual_available_at_date = qty_available;
+        value.free_qty_today = free_qty;
+        value.qty_available_today = qty_available;
+        value.display_qty_widget = (['draft', 'sent', 'sale'].indexOf(obj.state) !== -1 && obj.product_type === 'product' && obj.product_uom && value.qty_to_deliver > 0);
+        return resolve({
+            value: value,
+        });
+    } catch (err) {
+        return reject(err);
+    }
+});
+            ]]></field>
+        </record>
+    </data>
+</odoo>
