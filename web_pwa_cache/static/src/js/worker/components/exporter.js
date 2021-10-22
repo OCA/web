@@ -109,29 +109,43 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
          * @returns {Promise}
          */
         onchange: function(model, data) {
+            const update_result = function(result, changes) {
+                if (changes.value) {
+                    _.extend(result.value, changes.value);
+                }
+                if (changes.warning) {
+                    _.extend(result.warning, changes.warning);
+                }
+                if (changes.domain) {
+                    _.extend(result.domain, changes.domain);
+                }
+            };
             return new Promise(async (resolve, reject) => {
                 try {
+                    const context = data.kwargs.context;
+                    if (
+                        typeof context !== "undefined" &&
+                        context.__pwa_sw_force_online
+                    ) {
+                        return reject("Forced reject from client");
+                    }
                     const record_data = data.args[1];
                     let fields_changed = data.args[2];
-                    const result = {value: {}};
+                    // '__is_pwa_sw_onchange' its a virtual field to identify that the response is from service worker
+                    // the value will be used to set "record."
+                    const result = {value: {__is_pwa_sw_onchange: true}};
 
                     if (typeof fields_changed === "string") {
                         fields_changed = [fields_changed];
                     }
 
-                    const model_info_pwa_cache = await this._db.getModelInfo(
-                        "pwa.cache"
-                    );
-
                     // Generate Onchange
                     // TODO: Determine onchange execution order through onchange_spec
-                    const sql_pwa_cache = `SELECT id,cache_type,code_js,onchange_field_name FROM ${
-                        model_info_pwa_cache.table
-                    } WHERE "model_name"=? AND "cache_type" IN ("onchange", "onchange_formula") AND "onchange_field_name" IN (${new Array(
+                    const sql_pwa_cache = `SELECT id,cache_type,code_js,onchange_field_name FROM pwa_cache WHERE "model_name"=? AND "cache_type" IN ("onchange", "onchange_formula") AND "onchange_field_name" IN (${new Array(
                         fields_changed.length
                     )
                         .fill("?")
-                        .join(",")})`;
+                        .join(",")}) ORDER BY sequence ASC`;
                     const records_pwa_cache = await this._db.sqlitedb.all(
                         sql_pwa_cache,
                         model,
@@ -143,32 +157,29 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         }
                         return reject();
                     }
+                    const model_info_pwa_cache = await this._db.getModelInfo(
+                        "pwa.cache"
+                    );
                     this._db.sqlitedb.converter.toOdoo(
                         model_info_pwa_cache.fields,
                         records_pwa_cache
                     );
 
-                    const sandbox = new JSSandbox();
                     const record_data_folded = Tools.foldObj(record_data);
                     const model_info_pwa_onchange = await this._db.getModelInfo(
                         "pwa.cache.onchange"
                     );
-                    let catch_from_server = true;
+                    const ref_hashes = [];
 
                     for (const record of records_pwa_cache) {
-                        catch_from_server = false;
-                        let value = false;
-                        let warning = false;
-                        let domain = false;
                         if (record.cache_type === "onchange_formula") {
+                            const sandbox = new JSSandbox();
                             sandbox.compile(record.code_js);
                             const changes = sandbox.run({
                                 db: this._db,
                                 obj: record_data,
                             });
-                            value = changes.value;
-                            warning = changes.warning;
-                            domain = changes.domain;
+                            update_result(result, changes);
                         } else {
                             const sql_selectors = `SELECT "field_name", "required" FROM ${model_info_pwa_onchange.table} WHERE "pwa_cache_id"=? AND NOT disposable`;
                             const selectors = await this._db.sqlitedb.all(
@@ -193,7 +204,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                             }
                             // Ignore onchange if not valid values given
                             // This happens when create new records
-                            if (!is_valid) {
+                            if (!is_valid || _.isEmpty(vals)) {
                                 if (this.isOfflineMode()) {
                                     return resolve(result);
                                 }
@@ -205,35 +216,34 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                                     record.onchange_field_name
                                 }${JSON.stringify(vals)}`
                             );
-                            const value_record = await this._db.indexeddb.onchange.get(
-                                ref_hash
-                            );
-                            if (!_.isEmpty(value_record)) {
-                                const changes = value_record.result;
-                                value = changes.value;
-                                warning = changes.warning;
-                                domain = changes.domain;
-                            }
-                        }
-                        if (value) {
-                            _.extend(result.value, value);
-                        }
-                        if (warning) {
-                            _.extend(result.warning, warning);
-                        }
-                        if (domain) {
-                            _.extend(result.domain, domain);
+                            ref_hashes.push(ref_hash);
                         }
                     }
-                    // Catch_from_server = _.isEmpty(result.value) && _.isEmpty(result.warning) && _.isEmpty(result.domain);
-                    if (catch_from_server && !this.isOfflineMode()) {
-                        console.log(
-                            `[ServiceWorker] Can't process the given onchange for the fields '${fields_changed.join(
-                                ","
-                            )}' on the model '${model}'`
+
+                    // Search hashes
+                    if (!_.isEmpty(ref_hashes)) {
+                        const value_records = await this._db.indexeddb.onchange.bulkGet(
+                            ref_hashes
                         );
-                        return reject();
+                        const value_records_count = value_records.length;
+                        for (let i = 0; i < value_records_count; ++i) {
+                            const value_record = value_records[i];
+                            if (_.isEmpty(value_record)) {
+                                continue;
+                            }
+                            update_result(result, value_record.result);
+                        }
                     }
+
+                    // Const catch_from_server = _.isEmpty(result.value) && _.isEmpty(result.warning) && _.isEmpty(result.domain);
+                    // if (catch_from_server && !this.isOfflineMode()) {
+                    //     console.log(
+                    //         `[ServiceWorker] Can't process the given onchange for the fields '${fields_changed.join(
+                    //             ","
+                    //         )}' on the model '${model}'`
+                    //     );
+                    //     return reject();
+                    // }
 
                     return resolve(result);
                 } catch (err) {

@@ -35,6 +35,9 @@
                             attrs="{'invisible': [('cache_type', '!=', 'onchange')]}"
                         />
                     </group>
+                    <group>
+                        <field name="sequence" />
+                    </group>
                     <group
                         attrs="{'invisible': [('cache_type', 'not in', ['model', 'onchange', 'onchange_formula', 'default_formula', 'function'])]}"
                     >

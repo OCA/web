@@ -142,6 +142,7 @@ class PwaCache(models.Model):
         inverse_name="pwa_cache_id",
     )
     internal = fields.Boolean(string="Is an internal record", default=False)
+    sequence = fields.Integer(required=True, default="16")
 
     def _get_text_field_lines(self, records, field_name):
         return list(

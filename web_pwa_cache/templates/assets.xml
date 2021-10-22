@@ -25,6 +25,10 @@
             />
             <script
                 type="text/javascript"
+                src="/web_pwa_cache/static/src/js/views/basic_model.js"
+            />
+            <script
+                type="text/javascript"
                 src="/web_pwa_cache/static/src/js/views/basic_view.js"
             />
             <script

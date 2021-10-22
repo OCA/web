@@ -53,6 +53,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
         _show_prefetch_modal_delay: 5000,
         _autoclose_prefetch_modal_delay: 3000,
         _show_sw_info_modal_delay: 500,
+        _reload_delay: 750,
 
         /**
          * @override
@@ -176,19 +177,8 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
             return this.pwa_cache_version;
         },
 
-        _showSWInfo: function() {
-            if (
-                this._service_worker.controller &&
-                this._service_worker.controller.state === "installed"
-            ) {
-                this.$modalSWInfo
-                    .find("#swinfo_message")
-                    .text(
-                        _t(
-                            "Service worker is installed but not activated, please refresh the page."
-                        )
-                    );
-            }
+        _showSWInfo: function(message) {
+            this.$modalSWInfo.find("#swinfo_message").text(message);
             this._swInfoModalHidden = false;
             this.$modalSWInfo.modal("show");
             this._swInfoOpenTimer = false;
@@ -332,17 +322,20 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     )}</p>`,
                     buttons: [
                         {
-                            text: _t("Update!"),
+                            text: _t("Update Now"),
                             classes: "btn-primary",
                             click: function() {
+                                this._showSWInfo(
+                                    _t("Updating service worker, please wait...")
+                                );
                                 const tasks = [];
                                 for (const registration of registrations) {
                                     tasks.push(registration.unregister());
                                 }
                                 Promise.all(tasks).then(() =>
-                                    setTimeout(location.reload(), 450)
+                                    setTimeout(location.reload(), this._reload_delay)
                                 );
-                            },
+                            }.bind(this),
                             close: true,
                         },
                         {
@@ -363,14 +356,15 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
          * The SW is activate, but don't control the pages
          */
         _onSWActive: function() {
-            this.$modalSWInfo
-                .find("#swinfo_message")
-                .text(
-                    _t(
-                        "Service worker was activated sucessfully! Reloading the page to take the control..."
-                    )
-                );
-            setTimeout(location.reload(), 250);
+            if (!this.isPWACacheEnabled() || !this.isPWAStandalone()) {
+                return;
+            }
+            this._showSWInfo(
+                _t(
+                    "Service worker was activated sucessfully! Reloading the page to take the control..."
+                )
+            );
+            setTimeout(location.reload(), this._reload_delay);
         },
 
         /**
