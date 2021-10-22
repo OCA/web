@@ -1,0 +1,22 @@
+/* Copyright 2021 Tecnativa - Alexandre Díaz
+ * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html) */
+
+.o_list_view {
+    .o_list_table {
+        .o_list_record_clone {
+            width: 1px; // to prevent the column to expand
+        }
+
+        .o_list_record_clone button {
+            padding: 0px;
+            background: none;
+            border-style: none;
+            display: table-cell;
+            cursor: pointer;
+        }
+
+        .o_list_record_clone_header {
+            width: 32px;
+        }
+    }
+}
