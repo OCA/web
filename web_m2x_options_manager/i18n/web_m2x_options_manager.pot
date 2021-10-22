@@ -26,13 +26,13 @@ msgid "Add"
 msgstr ""
 
 #. module: web_m2x_options_manager
-#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__option_create_edit_wizard
-msgid "Create & Edit Wizard"
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__option_create_edit
+msgid "Create & Edit Option"
 msgstr ""
 
 #. module: web_m2x_options_manager
-#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__option_create_edit
-msgid "Create & Edit Option"
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__option_create_edit_wizard
+msgid "Create & Edit Wizard"
 msgstr ""
 
 #. module: web_m2x_options_manager
