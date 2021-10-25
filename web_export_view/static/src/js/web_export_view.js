@@ -81,7 +81,7 @@ odoo.define('web_export_view', function (require) {
                             var $cell = $row.find(
                                 'td.o_data_cell:eq('+this+')');
                             var $cellcheckbox = $cell.find(
-                                '.o_checkbox input:checkbox');
+                                '.custom-checkbox input:checkbox');
                             if ($cellcheckbox.length) {
                                 export_row.push(
                                     $cellcheckbox.is(":checked")
