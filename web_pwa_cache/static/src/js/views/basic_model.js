@@ -12,7 +12,10 @@ odoo.define("web_pwa_cache.BasicModel", function(require) {
          * @override
          */
         _applyOnChange: function(values, record, viewType) {
-            if (Object.prototype.hasOwnProperty.call(values, "__is_pwa_sw_onchange")) {
+            if (
+                !_.isEmpty(values) &&
+                Object.prototype.hasOwnProperty.call(values, "__is_pwa_sw_onchange")
+            ) {
                 delete values.__is_pwa_sw_onchange;
                 record._onchange_from_sw = true;
             } else {
