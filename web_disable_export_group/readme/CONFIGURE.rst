@@ -1,2 +1,2 @@
-Enable the group "Export Data group" to the users who are allowed to
-make use of the option 'Export'.
+Enable the group "Direct Export" to the users who are allowed to
+make use of the option 'Export xlsx'.

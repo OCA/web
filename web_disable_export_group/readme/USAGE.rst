@@ -1,1 +1,1 @@
-Every user without *Export Data* permission won't have the option available.
+Every user without *Direct Export (xlsx)* permission won't have the option available.
