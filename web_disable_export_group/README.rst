@@ -25,11 +25,9 @@ Web Disable Export Group
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
-In the standard Odoo the UI option 'Export' that is present in the 'Action' menu
-and the 'Export All' button of any list view is always enabled (for every user).
+The standard export group prevents both options: 'Direct Export (xlsx)' and 'Export All'.
 
-This module makes the option 'Export' and 'Export All' enabled only for the users
-that belong to the Export Data group.
+This module adds a new group for the 'Direct Export (xlsx)' feature, leaving the standard one for only the 'Export All' feature.
 
 Admin user can always use the export option.
 
@@ -41,13 +39,13 @@ Admin user can always use the export option.
 Configuration
 =============
 
-Enable the group "Export Data group" to the users who are allowed to
-make use of the option 'Export'.
+Enable the group "Direct Export" to the users who are allowed to
+make use of the option 'Export xlsx'.
 
 Usage
 =====
 
-Every user without *Export Data* permission won't have the option available.
+Every user without *Direct Export (xlsx)* permission won't have the option available.
 
 Bug Tracker
 ===========
@@ -81,6 +79,7 @@ Contributors
   * David Vidal
   * João Marques
   * Alexandre Díaz
+  * Víctor Martínez
 
 Maintainers
 ~~~~~~~~~~~
