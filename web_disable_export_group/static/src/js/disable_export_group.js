@@ -1,33 +1,15 @@
 /* Copyright 2016 Onestein
    Copyright 2018 Tecnativa - David Vidal
    Copyright 2021 Tecnativa - Alexandre Díaz
+   Copyright 2022 Tecnativa - Víctor Martínez
    License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). */
-odoo.define("web_disable_export_group", function (require) {
+odoo.define("web_disable_export_group.WebDisableExportGroupController", function (
+    require
+) {
     "use strict";
 
-    const core = require("web.core");
-    const Sidebar = require("web.Sidebar");
     const session = require("web.session");
     const AbstractController = require("web.AbstractController");
-    const _t = core._t;
-
-    Sidebar.include({
-        /**
-         * @override
-         */
-        _addItems: function (sectionCode, items) {
-            let _items = items;
-            if (
-                !session.is_superuser &&
-                sectionCode === "other" &&
-                items.length &&
-                !session.group_export_data
-            ) {
-                _items = _.reject(_items, {label: _t("Export")});
-            }
-            this._super(sectionCode, _items);
-        },
-    });
 
     AbstractController.include({
         /**
@@ -37,8 +19,8 @@ odoo.define("web_disable_export_group", function (require) {
             if (
                 !session.is_superuser &&
                 action &&
-                action.startsWith("export_") &&
-                !session.group_export_data
+                action.startsWith("export_xlsx") &&
+                !session.group_xlsx_export_data
             ) {
                 return false;
             }

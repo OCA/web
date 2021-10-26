@@ -1,16 +1,14 @@
 /* Copyright 2020 Tecnativa - João Marques
+   Copyright 2022 Tecnativa - Víctor Martínez
    License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). */
 
 odoo.define("web_disable_export_group.tour", function (require) {
     "use strict";
 
-    var core = require("web.core");
     var tour = require("web_tour.tour");
 
-    var _t = core._t;
-
     tour.register(
-        "export_tour_admin",
+        "export_tour_xlsx_button_ok",
         {
             test: true,
             url:
@@ -21,25 +19,10 @@ odoo.define("web_disable_export_group.tour", function (require) {
                 content: "Check if 'Export all' button exists",
                 trigger: ".o_list_buttons:has(.o_list_export_xlsx)",
             },
-            {
-                content: "Select all records",
-                trigger: ".custom-control-input:first",
-            },
-            {
-                content: "Open actions",
-                trigger: ".o_dropdown_toggler_btn",
-            },
-            {
-                content: "Check if Export button exists",
-                trigger:
-                    '.o_cp_action_menus ul.o_dropdown_menu a:contains("' +
-                    _t("Export") +
-                    '")',
-            },
         ]
     );
     tour.register(
-        "export_tour_demo",
+        "export_tour_xlsx_button_ko",
         {
             test: true,
             url:
@@ -49,21 +32,6 @@ odoo.define("web_disable_export_group.tour", function (require) {
             {
                 content: "Check if 'Export all' button exists",
                 trigger: ".o_list_buttons:not(:has(.o_list_export_xlsx))",
-            },
-            {
-                content: "Select all records",
-                trigger: ".custom-control-input:first",
-            },
-            {
-                content: "Open actions",
-                trigger: ".o_dropdown_toggler_btn",
-            },
-            {
-                content: "Check if Export button does not exist",
-                trigger:
-                    '.o_cp_action_menus ul.o_dropdown_menu a:first:not(:contains("' +
-                    _t("Export") +
-                    '"))',
             },
         ]
     );

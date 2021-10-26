@@ -17,19 +17,33 @@ msgstr ""
 "X-Generator: Weblate 3.8\n"
 
 #. module: web_disable_export_group
-#. openerp-web
-#: code:addons/web_disable_export_group/static/src/js/disable_export_group.js:0
-#: code:addons/web_disable_export_group/static/src/js/web_disable_export_group_tour.js:0
-#, python-format
-msgid "Export"
-msgstr "导出"
+#: model:res.groups,name:web_disable_export_group.group_export_xlsx_data
+msgid "Direct Export (xlsx)"
+msgstr ""
 
 #. module: web_disable_export_group
-#: model:res.groups,name:web_disable_export_group.group_export_data
-msgid "Export Data"
-msgstr "导出数据"
+#: model:ir.model.fields,field_description:web_disable_export_group.field_ir_http__display_name
+msgid "Display Name"
+msgstr ""
 
 #. module: web_disable_export_group
 #: model:ir.model,name:web_disable_export_group.model_ir_http
 msgid "HTTP Routing"
 msgstr "HTTP路由"
+
+#. module: web_disable_export_group
+#: model:ir.model.fields,field_description:web_disable_export_group.field_ir_http__id
+msgid "ID"
+msgstr ""
+
+#. module: web_disable_export_group
+#: model:ir.model.fields,field_description:web_disable_export_group.field_ir_http____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#, python-format
+#~ msgid "Export"
+#~ msgstr "导出"
+
+#~ msgid "Export Data"
+#~ msgstr "导出数据"

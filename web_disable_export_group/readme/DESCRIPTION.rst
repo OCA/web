@@ -1,7 +1,5 @@
-In the standard Odoo the UI option 'Export' that is present in the 'Action' menu
-and the 'Export All' button of any list view is always enabled (for every user).
+The standard export group prevents both options: 'Direct Export (xlsx)' and 'Export All'.
 
-This module makes the option 'Export' and 'Export All' enabled only for the users
-that belong to the Export Data group.
+This module adds a new group for the 'Direct Export (xlsx)' feature, leaving the standard one for only the 'Export All' feature.
 
 Admin user can always use the export option.
