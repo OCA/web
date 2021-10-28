@@ -57,6 +57,7 @@ addon | version | maintainers | summary
 [web_widget_domain_editor_dialog](web_widget_domain_editor_dialog/) | 14.0.1.0.0 |  | Recovers the Domain Editor Dialog functionality
 [web_widget_dropdown_dynamic](web_widget_dropdown_dynamic/) | 14.0.1.0.0 |  | This module adds support for dynamic dropdown widget
 [web_widget_many2one_simple](web_widget_many2one_simple/) | 14.0.1.0.0 | [![Tardo](https://github.com/Tardo.png?size=30px)](https://github.com/Tardo) | Simple many2one widget
+[web_widget_model_viewer](web_widget_model_viewer/) | 14.0.1.0.0 | [![eLBati](https://github.com/eLBati.png?size=30px)](https://github.com/eLBati) | Easily display interactive 3D models on the web & in AR
 [web_widget_mpld3_chart](web_widget_mpld3_chart/) | 14.0.1.0.0 |  | This widget allows to display charts using MPLD3 library.
 [web_widget_numeric_step](web_widget_numeric_step/) | 14.0.1.0.0 |  | Web Widget Numeric Step
 [web_widget_open_tab](web_widget_open_tab/) | 14.0.1.0.0 |  | Allow to open record from trees on new tab from tree views
