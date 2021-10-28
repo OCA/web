@@ -16,8 +16,8 @@ odoo.define("web_drop_target", function (require) {
         // Add the mime types you want to support here, leave empty for
         // All types. For more control, override _get_drop_items in your class
         _drop_allowed_types: [],
-        // Determine the zone where can drop files
-        _drop_zone_selector: ".o_content",
+        // Determine the zone where can drop files, if not defined, we use the element
+        _drop_zone_selector: undefined,
 
         /**
          * @override
@@ -94,7 +94,9 @@ odoo.define("web_drop_target", function (require) {
          */
         _add_overlay: function () {
             if (!this._drop_overlay || this._drop_overlay.length === 0) {
-                this.$drop_zone = this.$(this._drop_zone_selector).last();
+                if (this._drop_zone_selector)
+                    this.$drop_zone = this.$(this._drop_zone_selector).last();
+                else this.$drop_zone = this.$el;
                 // Element that represents the zone where you can drop files
                 // TODO: This name is preserved for not breaking the compatibility with other modules,
                 // but should be changed in new versions to follow the standard ($name)
@@ -150,7 +152,7 @@ odoo.define("web_drop_target", function (require) {
          */
         _onBodyFileDragover: function (ev) {
             ev.preventDefault();
-            if (!_.isEmpty(this._get_drop_items(ev))) {
+            if (_.isEmpty(this._get_drop_items(ev))) {
                 const drop_zone_offset = this.$drop_zone.offset();
                 const overlay_css = {
                     top: drop_zone_offset.top,
@@ -203,13 +205,12 @@ odoo.define("web_drop_target", function (require) {
             let drop_items = [];
             if (this._get_record_id()) {
                 const dataTransfer = ev.originalEvent.dataTransfer;
-                if (_.isEmpty(this._drop_allowed_types)) {
-                    drop_items = _.clone(dataTransfer.files);
-                } else {
-                    drop_items = _.filter(dataTransfer.files, (item) =>
+                drop_items = _.filter(
+                    dataTransfer.files,
+                    (item) =>
+                        _.isEmpty(this._drop_allowed_types) ||
                         _.contains(this._drop_allowed_types, item.type)
-                    );
-                }
+                );
             }
             return drop_items;
         },
