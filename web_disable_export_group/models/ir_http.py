@@ -15,6 +15,8 @@ class Http(models.AbstractModel):
             {
                 "group_export_data": user
                 and user.has_group("web_disable_export_group.group_export_data"),
+                "group_xlsx_export_data": user
+                and user.has_group("web_disable_export_group.group_export_xlsx_data"),
             }
         )
         return res

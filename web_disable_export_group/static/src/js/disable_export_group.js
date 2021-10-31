@@ -37,6 +37,14 @@ odoo.define("web_disable_export_group", function(require) {
             if (
                 !session.is_superuser &&
                 action &&
+                action.startsWith("export_xlsx") &&
+                !session.group_xlsx_export_data
+            ) {
+                return false;
+            } else if (
+                !session.is_superuser &&
+                action &&
+                !action.startsWith("export_xlsx") &&
                 action.startsWith("export_") &&
                 !session.group_export_data
             ) {
