@@ -18,19 +18,28 @@ msgstr ""
 "X-Generator: Weblate 3.9.1\n"
 
 #. module: web_disable_export_group
+#: model:res.groups,name:web_disable_export_group.group_export_data
+msgid "Advanced Export"
+msgstr ""
+
+#. module: web_disable_export_group
+#: model:res.groups,name:web_disable_export_group.group_export_xlsx_data
+msgid "Direct Export"
+msgstr ""
+
+#. module: web_disable_export_group
 #. openerp-web
 #: code:addons/web_disable_export_group/static/src/js/disable_export_group.js:0
 #: code:addons/web_disable_export_group/static/src/js/web_disable_export_group_tour.js:0
+#: model:ir.module.category,name:web_disable_export_group.category_export_data
 #, python-format
 msgid "Export"
 msgstr "Izvoz"
 
 #. module: web_disable_export_group
-#: model:res.groups,name:web_disable_export_group.group_export_data
-msgid "Export Data"
-msgstr "Izvoz podataka"
-
-#. module: web_disable_export_group
 #: model:ir.model,name:web_disable_export_group.model_ir_http
 msgid "HTTP Routing"
 msgstr "HTTP usmjeravanje"
+
+#~ msgid "Export Data"
+#~ msgstr "Izvoz podataka"
