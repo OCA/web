@@ -51,12 +51,6 @@
     display: block;
 }
 
-/* Favorites menu in control panel */
-.o_add_to_dashboard_tile {
-    /* hidden by default */
-    display: none; 
-}
-
 /* Make dropdown menu button not affect text flow */
 .o_kanban_view .oe_dashboard_tile .o_dropdown_kanban {
     float: none;
