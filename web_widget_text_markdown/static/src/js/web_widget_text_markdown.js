@@ -12,7 +12,6 @@ odoo.define("web_widget_text_markdown.FieldTextMarkDown", function(require) {
 
     var _t = core._t;
     var LIBS_PATH = "/web_widget_text_markdown/static/src/lib/";
-    var CUST_LIBS_PATH = "/web_widget_text_markdown/static/src/css/";
 
     var FieldTextMarkDown = basic_fields.FieldText.extend({
         className: [
@@ -28,7 +27,6 @@ odoo.define("web_widget_text_markdown.FieldTextMarkDown", function(require) {
         ],
         cssLibs: [
             LIBS_PATH + "bootstrap-markdown.min.css",
-            CUST_LIBS_PATH + "web_widget_text_markdown.css",
         ],
 
         _getValue: function() {
