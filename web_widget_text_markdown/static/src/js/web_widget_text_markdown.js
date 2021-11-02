@@ -25,9 +25,7 @@ odoo.define("web_widget_text_markdown.FieldTextMarkDown", function(require) {
             LIBS_PATH + "showdown-table.js",
             LIBS_PATH + "showdown-toc.js",
         ],
-        cssLibs: [
-            LIBS_PATH + "bootstrap-markdown.min.css",
-        ],
+        cssLibs: [LIBS_PATH + "bootstrap-markdown.min.css"],
 
         _getValue: function() {
             if (

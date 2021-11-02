@@ -197,8 +197,6 @@
     .md-editor.md-fullscreen-mode .md-preview {
         font-size: 13px !important;
     }
-
-
 }
 
 .md-editor.md-fullscreen-mode {
@@ -209,8 +207,7 @@
     }
 }
 
-.o_field_widget.o_field_text, .o_field_widget.oe_form_field_text
-.oe_form_text_content {
+.o_field_widget.o_field_text,
+.o_field_widget.oe_form_field_text .oe_form_text_content {
     white-space: normal;
 }
-
