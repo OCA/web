@@ -19,7 +19,6 @@
         "views/menu.xml",
         "views/tile_tile.xml",
         "views/tile_category.xml",
-        "views/templates.xml",
     ],
     "demo": [
         "demo/tile_category.xml",
