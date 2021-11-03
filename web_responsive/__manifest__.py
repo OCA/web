@@ -18,6 +18,10 @@
     "maintainers": ["Yajo", "Tardo", "SplashS"],
     "data": ["views/res_users.xml", "views/web.xml"],
     "assets": {
+        "web.assets_frontend": [
+            "/web_responsive/static/src/legacy/js/website_apps_menu.js",
+            "/web_responsive/static/src/legacy/css/website_apps_menu.scss",
+        ],
         "web.assets_backend": [
             "/web_responsive/static/src/legacy/css/web_responsive.scss",
             "/web_responsive/static/src/legacy/js/web_responsive.js",

@@ -10,9 +10,33 @@ import {useHotkey} from "@web/core/hotkeys/hotkey_hook";
 import {scrollTo} from "@web/core/utils/scrolling";
 import {debounce} from "@web/core/utils/timing";
 import {fuzzyLookup} from "@web/core/utils/search";
+import {WebClient} from "@web/webclient/webclient";
+import {patch} from "web.utils";
 
 const {Component} = owl;
 const {useState, useRef} = owl.hooks;
+
+// Patch WebClient to show AppsMenu instead of default app
+patch(WebClient.prototype, "web_responsive.DefaultAppsMenu", {
+    setup() {
+        this._super();
+        useBus(Dropdown.bus, "state-changed", (payload) => {
+            if (payload.emitter.el.classList.contains("o_navbar_apps_menu")) {
+                this.el.classList.toggle("o_apps_menu_opened", payload.newState.open);
+                this.el.classList.toggle("o_first_app", false);
+            }
+        });
+    },
+    _loadDefaultApp() {
+        var menu_apps_dropdown = document.querySelector(
+            ".o_navbar_apps_menu .dropdown-toggle"
+        );
+        menu_apps_dropdown.click();
+        this.el.classList.toggle("o_apps_menu_opened", true);
+        this.el.classList.toggle("o_first_app", true);
+        return true;
+    },
+});
 
 /**
  * @extends Dropdown
