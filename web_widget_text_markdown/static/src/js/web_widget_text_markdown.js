@@ -48,6 +48,7 @@ odoo.define("web_widget_text_markdown.FieldTextMarkDown", function(require) {
             const classMap = {
                 table: "table table-striped",
             };
+            var cmdItalic = null;
 
             const clss_bindings = Object.keys(classMap).map(key => ({
                 type: "output",
@@ -91,6 +92,43 @@ odoo.define("web_widget_text_markdown.FieldTextMarkDown", function(require) {
                 metadata: true,
                 splitAdjacentBlockquotes: true,
             });
+
+            $.fn.markdown.defaults.buttons[0].forEach(function(group) {
+                group.data.forEach(function(button) {
+                    if (button.name === "cmdItalic") cmdItalic = button;
+                });
+            });
+
+            // Override `cmdItalic` button replace use of __ to favour **;
+            if (cmdItalic) {
+                cmdItalic.callback = function(e) {
+                    // Give/remove * surround the selection
+                    var chunk = null;
+                    var cursor = null;
+                    var selected = e.getSelection();
+                    var content = e.getContent();
+                    if (selected.length === 0) {
+                        // Give extra word
+                        chunk = e.__localize("emphasized text");
+                    } else {
+                        chunk = selected.text;
+                    }
+                    // Transform selection and set the cursor into chunked text
+                    if (
+                        content.substr(selected.start - 1, 1) === "_" &&
+                        content.substr(selected.end, 1) === "_"
+                    ) {
+                        e.setSelection(selected.start - 1, selected.end + 1);
+                        e.replaceSelection(chunk);
+                        cursor = selected.start - 1;
+                    } else {
+                        e.replaceSelection("*" + chunk + "*");
+                        cursor = selected.start + 1;
+                    }
+                    // Set the cursor
+                    e.setSelection(cursor, cursor + chunk.length);
+                };
+            }
         },
         _renderEdit: function() {
             var self = this;
