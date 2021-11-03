@@ -12,6 +12,17 @@
     width: 100vw;
     z-index: 200;
     left: 0 !important;
+    top: $o-navbar-height !important;
+}
+
+.o_first_app .o_navbar_apps_menu .dropdown-toggle {
+    display: none;
+}
+.o_apps_menu_opened .o_main_navbar {
+    .o_menu_brand,
+    .o_menu_sections {
+        display: none;
+    }
 }
 
 // Iconized full screen apps menu
