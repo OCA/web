@@ -4,7 +4,7 @@
 from odoo.tests import common
 
 
-class TestIrConfigParameter(common.SavepointCase):
+class TestIrConfigParameter(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super(TestIrConfigParameter, cls).setUpClass()
