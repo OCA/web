@@ -1,4 +1,21 @@
 .oe_field_one2many_product_picker {
+    /** FIX AUTO-SCROLL ON SAMSUNG DEVICES **/
+    * {
+        overflow-anchor: none !important;
+        scroll-snap-stop: normal !important;
+        overscroll-behavior: unset !important;
+        scroll-behavior: unset !important;
+    }
+
+    .container, header, footer, .container-fluid, body, div, span, section {
+        overflow-anchor: none !important;
+        scroll-snap-stop: normal !important;
+        overscroll-behavior: unset !important;
+        scroll-behavior: unset !important;
+    }
+    /** END FIX **/
+
+
     &.oe_field_one2many_product_picker_maximized {
         position: fixed;
         top: 0;
@@ -11,6 +28,17 @@
     }
     &:hover {
         button.o_fullscreen {
+            display: inline-block;
+        }
+    }
+
+    &.disabled {
+        .badge {
+            filter: opacity(0.6);
+        }
+        pointer-events: none;
+
+        > div.loading {
             display: inline-block;
         }
     }
@@ -30,6 +58,19 @@
         }
     }
 
+    div.loading {
+        position: absolute;
+        background-color: white;
+        padding: 0.5em;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border: 2px solid gray;
+        z-index: 2;
+        box-shadow: 2px 2px 5px;
+        display: none;
+    }
+
     .o_cp_buttons {
         width: 100%;
 
@@ -45,7 +86,10 @@
     }
 
     .oe_one2many_product_picker_view {
-        @include make-grid-columns($columns: 24, $breakpoints: $one2many-product-picker-grid-breakpoints);
+        @include make-grid-columns(
+            $columns: 24,
+            $breakpoints: $one2many-product-picker-grid-breakpoints
+        );
 
         overflow: auto;
 
@@ -54,16 +98,32 @@
             margin-right: 0;
         }
 
+        .o_catch_attention {
+            animation: none;
+            outline: 1px solid fade-in(theme-color("warning"), 0.5);
+        }
+
         .oe_flip_card {
             user-select: none;
             background-color: transparent;
             perspective: 1000px;
-            transition: top $one2many-product-picker-transition-3d-time, left $one2many-product-picker-transition-3d-time, width $one2many-product-picker-transition-3d-time, height $one2many-product-picker-transition-3d-time;
+            transition: top $one2many-product-picker-transition-3d-time,
+                left $one2many-product-picker-transition-3d-time,
+                width $one2many-product-picker-transition-3d-time,
+                height $one2many-product-picker-transition-3d-time;
             height: $one2many-product-picker-card-min-height;
 
+            &.blocked {
+                .badge {
+                    filter: opacity(0.7);
+                }
+                div.loading {
+                    display: inline-block;
+                }
+            }
+
             &.disabled {
-                filter: grayscale(100%);
-                opacity: 0.5;
+                filter: grayscale(1)
             }
 
             &.oe_flip_card_maximized {
@@ -77,11 +137,6 @@
                 .oe_flip_card_inner {
                     height: 100% !important;
                     box-shadow: 0px 0px 15px;
-                    .img-fluid {
-                        transform: translateY(-50%) !important;
-                        top: 50%;
-                        position: relative;
-                    }
                     .oe_one2many_product_picker_title {
                         font-size: 1.95rem !important;
                     }
@@ -93,11 +148,13 @@
                         }
                     }
 
-                    .o_field_widget, .oe_one2many_product_picker_form_buttons .btn {
+                    .o_field_widget,
+                    .oe_one2many_product_picker_form_buttons .btn {
                         transform: scale($one2many-product-picker-zoom-scale);
                         margin-bottom: 1.3em !important;
                     }
-                    .o_field_widget, .w-100 {
+                    .o_field_widget,
+                    .w-100 {
                         width: 100% / $one2many-product-picker-zoom-scale !important;
                     }
                 }
@@ -129,8 +186,18 @@
                 position: relative;
                 width: 100%;
                 height: $one2many-product-picker-card-min-height;
-                transition: transform $one2many-product-picker-transition-3d-time, height $one2many-product-picker-transition-3d-time/2 ease-in-out $one2many-product-picker-transition-3d-time/2;
+                transition: transform $one2many-product-picker-transition-3d-time,
+                    height $one2many-product-picker-transition-3d-time/2 ease-in-out
+                        $one2many-product-picker-transition-3d-time/2;
                 transform-style: preserve-3d;
+
+                .img-fluid {
+                    transform: translate(-50%, -50%) !important;
+                    top: 50%;
+                    left: 50%;
+                    z-index: -1;
+                    position: absolute;
+                }
 
                 .position-absolute {
                     z-index: 1;
@@ -140,8 +207,19 @@
                     font-size: 1rem;
                 }
 
+                .indicator_zones {
+                    display: inline-flex;
+                    flex-direction: column;
+                    max-width: 50%;
+                    align-items: flex-start;
+
+                    > span.badge {
+                        font-size: 0.8rem;
+                    }
+                }
+
                 .badge_price {
-                    top: 50%;
+                    top: 55%;
                     right: -2px;
                     transform: translateY(-50%);
                     display: grid;
@@ -180,8 +258,17 @@
                     .o_form_view.o_form_nosheet {
                         padding: $one2many-product-picker-card-form-padding;
 
-                        .o_field_widget .o_input_dropdown > input {
-                            height: unset;
+                        .o_field_widget {
+                            &:not(.widget_numeric_step) {
+                                max-width: 95%;
+                            }
+
+                            .o_input_dropdown > input {
+                                height: unset;
+                            }
+                        }
+                        .btn.w-100 {
+                            max-width: 95%;
                         }
                     }
                 }
@@ -201,6 +288,17 @@
                         top: 50%;
                         left: 0;
                         transform: translateY(-50%);
+                        width: 100%;
+
+                        .oe_one2many_product_picker_form_buttons {
+                            display: flex;
+                            padding: 0 3px;
+                            justify-content: center;
+
+                            .oe_record_remove {
+                                flex-grow: 1;
+                            }
+                        }
                     }
                 }
 
@@ -213,25 +311,46 @@
                 font-size: 0.95rem;
                 z-index: 0;
             }
-            .add_product, .product_qty, .price_unit {
+            .add_product,
+            .product_qty,
+            .price_unit {
                 cursor: pointer;
             }
         }
     }
-}
 
-.oe_product_picker_quick_modif_price {
-    width: 80%;
-    max-width: $one2many-product-picker-quick-modif-price-max-width;
-    margin: auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border: 1px solid $border-color;
-    z-index: 55;
+    /** Extra tools **/
+    .icon-waiting {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
 
-    .oe_one2many_product_picker_form_buttons {
-        text-align: center;
+    /* clears the 'X' from Internet Explorer */
+    input[type="search"]::-ms-clear {
+        display: none;
+        width: 0;
+        height: 0;
+    }
+    input[type="search"]::-ms-reveal {
+        display: none;
+        width: 0;
+        height: 0;
+    }
+
+    /* clears the 'X' from Chrome */
+    input[type="search"]::-webkit-search-decoration,
+    input[type="search"]::-webkit-search-cancel-button,
+    input[type="search"]::-webkit-search-results-button,
+    input[type="search"]::-webkit-search-results-decoration {
+        display: none;
+    }
+
+    /** Modal Price **/
+    .oe_product_picker_quick_modif_price {
+        .modal-body {
+            min-height: 7em;
+        }
     }
 }
