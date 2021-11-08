@@ -16,10 +16,6 @@
             />
             <script
                 type="text/javascript"
-                src="/web_widget_one2many_product_picker_sale_secondary_unit/static/src/js/views/One2ManyProductPicker/renderer.js"
-            />
-            <script
-                type="text/javascript"
                 src="/web_widget_one2many_product_picker_sale_secondary_unit/static/src/js/views/abstract_view.js"
             />
         </xpath>

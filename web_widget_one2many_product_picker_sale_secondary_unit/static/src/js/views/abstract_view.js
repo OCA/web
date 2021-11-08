@@ -60,9 +60,14 @@ odoo.define(
              */
             _injectSaleSecondaryUnitFields: function(viewInfo) {
                 const to_inject = {
-                    has_secondary_uom: _constructFakeFieldDef({
-                        depends: ["product_id", "product_id.secondary_uom_ids"],
-                        type: "boolean",
+                    product_id_secondary_uom_ids: _constructFakeFieldDef({
+                        context: {},
+                        depends: ["product_id.secondary_uom_ids"],
+                        domain: [],
+                        manual: false,
+                        related: ["product_id", "secondary_uom_ids"],
+                        relation: "product.secondary.unit",
+                        type: "one2many",
                     }),
                     secondary_uom_qty: _constructFakeFieldDef({
                         depends: [],
@@ -70,7 +75,6 @@ odoo.define(
                         group_operator: "sum",
                         digits: [16, 3],
                         store: true,
-                        sortable: false,
                         readonly: false,
                         type: "float",
                     }),
@@ -79,7 +83,6 @@ odoo.define(
                         relation: "product.secondary.unit",
                         string: _t("Secondary uom"),
                         store: true,
-                        sortable: false,
                         readonly: false,
                         type: "many2one",
                     }),
@@ -93,11 +96,11 @@ odoo.define(
                 // Add fields to arch
                 const $arch = $(viewInfo.viewFields.order_line.views.form.arch);
 
-                // Add has_secondary_uom?
-                let $field = $arch.find("field[name='has_secondary_uom']");
+                // Add product_id_secondary_uom_ids?
+                let $field = $arch.find("field[name='product_id_secondary_uom_ids']");
                 if (!$field.length) {
                     $("<FIELD/>", {
-                        name: "has_secondary_uom",
+                        name: "product_id_secondary_uom_ids",
                         invisible: 1,
                         modifiers: '{"invisible": true, "readonly": true}',
                     }).prependTo($arch);
@@ -110,7 +113,7 @@ odoo.define(
                         options:
                             "{'no_open': True, 'no_create': True, 'no_edit': True}",
                         "t-attf-domain":
-                            "[['product_tmpl_id.product_variant_ids', 'in', [{{record_search.id}}]]]",
+                            "[['product_variant_ids', 'in', [{{record_search.id}}]]]",
                         class: "mb-1",
                         on_change: 1,
                         can_create: "true",
@@ -118,8 +121,10 @@ odoo.define(
                         store: true,
                         sortable: false,
                         readonly: false,
-                        attrs: '{"invisible": [["has_secondary_uom", "!=", True]]}',
-                        modifiers: '{"invisible": [["has_secondary_uom", "!=", true]]}',
+                        attrs:
+                            '{"invisible": [["product_id_secondary_uom_ids", "=", False]]}',
+                        modifiers:
+                            '{"invisible": [["product_id_secondary_uom_ids", "=", false]]}',
                     }).prependTo($arch);
                 }
                 // Add secondary_uom_qty?
@@ -130,8 +135,10 @@ odoo.define(
                         on_change: 1,
                         class: "mb-1",
                         widget: "numeric_step",
-                        attrs: '{"invisible": [["has_secondary_uom", "!=", True]]}',
-                        modifiers: '{"invisible": [["has_secondary_uom", "!=", true]]}',
+                        attrs:
+                            '{"invisible": [["product_id_secondary_uom_ids", "=", False]]}',
+                        modifiers:
+                            '{"invisible": [["product_id_secondary_uom_ids", "=", false]]}',
                         store: true,
                         sortable: false,
                         readonly: false,
