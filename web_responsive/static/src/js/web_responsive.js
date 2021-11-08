@@ -598,9 +598,10 @@ odoo.define("web_responsive", function (require) {
                     } else {
                         let values = [];
                         if (filter.groups) {
-                            values = [
-                                ...filter.groups.values().map((g) => g.values),
-                            ].flat();
+                            values = Array.from(
+                                filter.groups.values(),
+                                (g) => g.values
+                            ).flat();
                         }
                         if (filter.values) {
                             values = [...filter.values.values()];
