@@ -202,6 +202,7 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
                         const config = await this.sendToPages();
                         // Check if need do prefetch (Auto-Prefetch)
                         if (
+                            this.isActivated() &&
                             !this.isOfflineMode() &&
                             this.isStandaloneMode() &&
                             config.is_db_empty

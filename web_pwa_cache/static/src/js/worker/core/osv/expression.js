@@ -1514,10 +1514,9 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                 if (right instanceof Array) {
                     params = [];
                     for (const right_id of right) {
-                        conds.push(`${table_alias}."${left}" ${cond_operator} "?"`);
+                        conds.push(`${table_alias}."${left}" ${cond_operator} ?`);
                         params.push(`%||${right_id}||%`);
                     }
-                    params = right;
                 } else if (typeof right === "boolean") {
                     if (
                         (is_positive_operator && right) ||
@@ -1529,7 +1528,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     }
                     params = [];
                 } else {
-                    conds.push(`${table_alias}."${left}" ${cond_operator} "?"`);
+                    conds.push(`${table_alias}."${left}" ${cond_operator} ?`);
                     params = [`%||${right}||%`];
                 }
                 query = `(${conds.join(is_positive_operator ? " OR " : " AND ")})`;

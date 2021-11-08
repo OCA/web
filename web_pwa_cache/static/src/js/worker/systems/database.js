@@ -26,6 +26,7 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
             this._timer_persist = false;
             this._promise_persist = Promise.resolve();
             this.model_infos = {};
+            this.has_modelinfo_changes = false;
         },
 
         /**
@@ -47,6 +48,15 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
 
                 return resolve();
             });
+        },
+
+        /**
+         * @param {String} model_name
+         */
+        invalidateModelInfoCache: function(model_name) {
+            if (Object.prototype.hasOwnProperty.call(this.model_infos, model_name)) {
+                delete this.model_infos[model_name];
+            }
         },
 
         /**
@@ -144,8 +154,15 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                             is_transient: {type: "boolean", store: true},
                             has_log_fields: {type: "boolean", store: true},
                             domain: {type: "serialized", store: true},
+                            has_pwa_cache: {type: "boolean", store: true},
                         },
                     };
+                    model_info_model_metadata.valid_fields = Object.keys(
+                        model_info_model_metadata.fields
+                    );
+                    this.has_modelinfo_changes = await this.sqlitedb.hasTableChanges(
+                        model_info_model_metadata
+                    );
                     await this.sqlitedb.createTable(model_info_model_metadata);
                     await this.sqlitedb.createIndex(
                         model_info_model_metadata,
@@ -267,20 +284,25 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
 
                 const buffer = new Uint8Array(metadata.filesize); // Allocate required memory
                 let offset = 0;
-                for (
-                    let chunk_index = 0;
-                    chunk_index < metadata.chunks;
-                    ++chunk_index
-                ) {
-                    const record = await this.indexeddb.sqlitefile
-                        .where("section")
-                        .equals(`chunk_${chunk_index}`)
-                        .first();
-                    if (_.isEmpty(record)) {
-                        return reject("Expected bytes to copy!");
+
+                try {
+                    for (
+                        let chunk_index = 0;
+                        chunk_index < metadata.chunks;
+                        ++chunk_index
+                    ) {
+                        const record = await this.indexeddb.sqlitefile
+                            .where("section")
+                            .equals(`chunk_${chunk_index}`)
+                            .first();
+                        if (_.isEmpty(record)) {
+                            return reject("Expected bytes to copy!");
+                        }
+                        buffer.set(record.bytes, offset);
+                        offset += record.bytes.byteLength;
                     }
-                    buffer.set(record.bytes, offset);
-                    offset += record.bytes.byteLength;
+                } catch (err) {
+                    return reject(err);
                 }
 
                 if (offset !== metadata.filesize) {

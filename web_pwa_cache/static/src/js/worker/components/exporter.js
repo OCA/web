@@ -175,7 +175,7 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                         if (record.cache_type === "onchange_formula") {
                             const sandbox = new JSSandbox();
                             sandbox.compile(record.code_js);
-                            const changes = sandbox.run({
+                            const changes = await sandbox.run({
                                 db: this._db,
                                 obj: record_data,
                             });
@@ -442,16 +442,20 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
          * @returns {Promise}
          */
         unlink: function(model, data) {
-            return new Promise(async resolve => {
-                await this._db.unlink(model, data.args[0]);
-                await this._db.indexeddb.sync.put({
-                    model: model,
-                    method: "unlink",
-                    args: [data.args[0]],
-                    date: new Date().getTime(),
-                });
-                this._sync.sendCountToPages();
-                this._db.persistDatabases();
+            return new Promise(async (resolve, reject) => {
+                try {
+                    await this._db.unlink(model, data.args[0]);
+                    await this._db.indexeddb.sync.put({
+                        model: model,
+                        method: "unlink",
+                        args: [data.args[0]],
+                        date: new Date().getTime(),
+                    });
+                    this._sync.sendCountToPages();
+                    this._db.persistDatabases();
+                } catch (err) {
+                    return reject(err);
+                }
                 return resolve(true);
             });
         },
@@ -1145,144 +1149,151 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
          * @returns {Promise}
          */
         _process_record_create: function(model_info, data) {
-            return new Promise(async resolve => {
-                const records_sync = [];
-                const model_defaults = await this._db.getModelDefaults(model_info);
-                let log_access_values = {};
-                if (model_info.has_log_fields) {
-                    log_access_values = {
-                        create_uid: [this._config.getUID(), this._config.getName()],
-                        create_date: Tools.DateToOdooFormat(new Date()),
-                        write_uid: [this._config.getUID(), this._config.getName()],
-                        write_date: Tools.DateToOdooFormat(new Date()),
-                    };
-                }
-                for (const index in data.args) {
-                    const record = _.extend(
-                        {},
-                        model_defaults,
-                        log_access_values,
-                        data.args[index]
-                    );
-                    // Write a temporal name
-                    if (record.name) {
-                        record.name += ` (Offline Record #${record.id})`;
-                    } else {
-                        record.name = `Offline Record #${record.id}`;
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const records_sync = [];
+                    const model_defaults = await this._db.getModelDefaults(model_info);
+                    let log_access_values = {};
+                    if (model_info.has_log_fields) {
+                        log_access_values = {
+                            create_uid: [this._config.getUID(), this._config.getName()],
+                            create_date: Tools.DateToOdooFormat(new Date()),
+                            write_uid: [this._config.getUID(), this._config.getName()],
+                            write_date: Tools.DateToOdooFormat(new Date()),
+                        };
                     }
-                    record.display_name = record.name;
-                    const record_fields = Object.keys(record);
-                    const processed_fields = [];
-                    const records_linked = {};
-                    for (const field of record_fields) {
-                        if (!record[field] || !model_info.fields[field]) {
-                            continue;
+                    for (const index in data.args) {
+                        const record = _.extend(
+                            {},
+                            model_defaults,
+                            log_access_values,
+                            data.args[index]
+                        );
+                        // Write a temporal name
+                        if (record.name) {
+                            record.name += ` (Offline Record #${record.id})`;
+                        } else {
+                            record.name = `Offline Record #${record.id}`;
                         }
-                        const field_def = model_info.fields[field];
-                        if (field_def.type === "one2many") {
-                            const relation = field_def.relation;
-                            const field_model_info = await this._db.getModelInfo(
-                                relation
-                            );
-                            const field_model_defaults = await this._db.getModelDefaults(
-                                field_model_info
-                            );
-                            if (!records_linked[relation]) {
-                                records_linked[relation] = [];
+                        record.display_name = record.name;
+                        const record_fields = Object.keys(record);
+                        const processed_fields = [];
+                        const records_linked = {};
+                        for (const field of record_fields) {
+                            if (!record[field] || !model_info.fields[field]) {
+                                continue;
                             }
-                            let ids_to_add = [];
-                            const subrecords = [];
-                            for (const command of record[field]) {
-                                // Create only have 0 command
-                                if (command[0] === 0) {
-                                    let subrecord = command[2];
-                                    // Const subrecord_fields = Object.keys(subrecord);
-                                    const parent_field = _.findKey(
-                                        field_model_info.fields,
-                                        {
-                                            required: true,
-                                            relation: model_info.model,
+                            const field_def = model_info.fields[field];
+                            if (field_def.type === "one2many") {
+                                const relation = field_def.relation;
+                                const field_model_info = await this._db.getModelInfo(
+                                    relation
+                                );
+                                const field_model_defaults = await this._db.getModelDefaults(
+                                    field_model_info
+                                );
+                                if (!records_linked[relation]) {
+                                    records_linked[relation] = [];
+                                }
+                                let ids_to_add = [];
+                                const subrecords = [];
+                                for (const command of record[field]) {
+                                    // Create only have 0 command
+                                    if (command[0] === 0) {
+                                        let subrecord = command[2];
+                                        // Const subrecord_fields = Object.keys(subrecord);
+                                        const parent_field = _.findKey(
+                                            field_model_info.fields,
+                                            {
+                                                required: true,
+                                                relation: model_info.model,
+                                            }
+                                        );
+                                        subrecord = _.extend(
+                                            {},
+                                            field_model_defaults,
+                                            log_access_values,
+                                            subrecord
+                                        );
+                                        record.display_name = record.name;
+                                        subrecord[parent_field] = record.id;
+                                        subrecord.id = this._db.genRecordID();
+                                        // Write a temporal name
+                                        if (subrecord.name) {
+                                            subrecord.name += ` (Offline Record #${subrecord.id})`;
+                                        } else {
+                                            subrecord.name = `Offline Record #${subrecord.id}`;
                                         }
-                                    );
-                                    subrecord = _.extend(
-                                        {},
-                                        field_model_defaults,
-                                        log_access_values,
-                                        subrecord
-                                    );
-                                    record.display_name = record.name;
-                                    subrecord[parent_field] = record.id;
-                                    subrecord.id = this._db.genRecordID();
-                                    // Write a temporal name
-                                    if (subrecord.name) {
-                                        subrecord.name += ` (Offline Record #${subrecord.id})`;
-                                    } else {
-                                        subrecord.name = `Offline Record #${subrecord.id}`;
+                                        subrecord.display_name = subrecord.name;
+                                        const link = {};
+                                        link[model_info.model] = [
+                                            {
+                                                field: field,
+                                                id: record.id,
+                                                change: subrecord.id,
+                                            },
+                                        ];
+                                        records_sync.push({
+                                            model: relation,
+                                            method: "create",
+                                            args: [subrecord],
+                                            date: new Date().getTime(),
+                                            linked: link,
+                                        });
+                                        subrecord = await this._process_record_to_merge(
+                                            subrecord,
+                                            field_model_info.fields,
+                                            true
+                                        );
+                                        // The record is not created yet, so.. ensure write
+                                        // their correct values
+                                        subrecord[parent_field] = [
+                                            record.id,
+                                            record.name,
+                                        ];
+                                        subrecords.push(subrecord);
+                                        ids_to_add.push(subrecord.id);
+                                        records_linked[relation].push({
+                                            field: parent_field,
+                                            id: subrecord.id,
+                                            change: record.id,
+                                        });
+                                    } else if (command[0] === 4) {
+                                        ids_to_add.push(command[1]);
+                                    } else if (command[0] === 5) {
+                                        ids_to_add = command[2];
                                     }
-                                    subrecord.display_name = subrecord.name;
-                                    const link = {};
-                                    link[model_info.model] = [
-                                        {
-                                            field: field,
-                                            id: record.id,
-                                            change: subrecord.id,
-                                        },
-                                    ];
-                                    records_sync.push({
-                                        model: relation,
-                                        method: "create",
-                                        args: [subrecord],
-                                        date: new Date().getTime(),
-                                        linked: link,
-                                    });
-                                    subrecord = await this._process_record_to_merge(
-                                        subrecord,
-                                        field_model_info.fields,
-                                        true
-                                    );
-                                    // The record is not created yet, so.. ensure write
-                                    // their correct values
-                                    subrecord[parent_field] = [record.id, record.name];
-                                    subrecords.push(subrecord);
-                                    ids_to_add.push(subrecord.id);
-                                    records_linked[relation].push({
-                                        field: parent_field,
-                                        id: subrecord.id,
-                                        change: record.id,
-                                    });
-                                } else if (command[0] === 4) {
-                                    ids_to_add.push(command[1]);
-                                } else if (command[0] === 5) {
-                                    ids_to_add = command[2];
+                                }
+                                record[field] = _.uniq(ids_to_add);
+                                if (subrecords.length) {
+                                    await this._db.writeOrCreate(relation, subrecords);
+                                    processed_fields.push(field);
                                 }
                             }
-                            record[field] = _.uniq(ids_to_add);
-                            if (subrecords.length) {
-                                await this._db.writeOrCreate(relation, subrecords);
-                                processed_fields.push(field);
-                            }
                         }
+
+                        // Add main record
+                        data.args[index] = await this._process_record_to_merge(
+                            record,
+                            model_info.fields,
+                            true
+                        );
+                        records_sync.splice(0, 0, {
+                            model: model_info.model,
+                            method: "create",
+                            args: [_.omit(record, processed_fields)],
+                            date: new Date().getTime(),
+                            linked: records_linked,
+                            kwargs: data.kwargs,
+                        });
+                        await this._db.indexeddb.sync.bulkPut(records_sync);
                     }
 
-                    // Add main record
-                    data.args[index] = await this._process_record_to_merge(
-                        record,
-                        model_info.fields,
-                        true
-                    );
-                    records_sync.splice(0, 0, {
-                        model: model_info.model,
-                        method: "create",
-                        args: [_.omit(record, processed_fields)],
-                        date: new Date().getTime(),
-                        linked: records_linked,
-                        kwargs: data.kwargs,
-                    });
-                    await this._db.indexeddb.sync.bulkPut(records_sync);
+                    await this._db.writeOrCreate(model_info, data.args);
+                    return resolve(_.map(data.args, "id"));
+                } catch (err) {
+                    return reject(err);
                 }
-
-                await this._db.writeOrCreate(model_info, data.args);
-                return resolve(_.map(data.args, "id"));
             });
         },
 
@@ -1295,175 +1306,190 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
          * @returns {Promise}
          */
         _process_record_write: function(model_info, data) {
-            return new Promise(async resolve => {
-                const records_sync = [];
-                const modified_records = data.args[0];
-                const modifications = data.args[1];
-                const modified_fields = Object.keys(modifications);
-                const processed_modifs = await this._process_record_to_merge(
-                    modifications,
-                    model_info.fields,
-                    false
-                );
-                const records = await this._db.browse(model_info, modified_records);
-                for (const record of records) {
-                    let data_to_sync = {};
-                    let log_access_values = {};
-                    if (model_info.has_log_fields) {
-                        log_access_values = {
-                            write_uid: [this._config.getUID(), this._config.getName()],
-                            write_date: Tools.DateToOdooFormat(new Date()),
-                        };
-                        data_to_sync = _.extend({}, log_access_values, data_to_sync);
-                    }
-                    for (const field of modified_fields) {
-                        if (model_info.fields[field].type === "one2many") {
-                            if (!record[field]) {
-                                record[field] = [];
-                            }
-                            if (!data_to_sync[field]) {
-                                data_to_sync[field] = [];
-                            }
-                            const relation = model_info.fields[field].relation;
-                            const field_model_info = await this._db.getModelInfo(
-                                relation
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const records_sync = [];
+                    const modified_records = data.args[0];
+                    const modifications = data.args[1];
+                    const modified_fields = Object.keys(modifications);
+                    const processed_modifs = await this._process_record_to_merge(
+                        modifications,
+                        model_info.fields,
+                        false
+                    );
+                    const records = await this._db.browse(model_info, modified_records);
+                    for (const record of records) {
+                        let data_to_sync = {};
+                        let log_access_values = {};
+                        if (model_info.has_log_fields) {
+                            log_access_values = {
+                                write_uid: [
+                                    this._config.getUID(),
+                                    this._config.getName(),
+                                ],
+                                write_date: Tools.DateToOdooFormat(new Date()),
+                            };
+                            data_to_sync = _.extend(
+                                {},
+                                log_access_values,
+                                data_to_sync
                             );
-                            const subrecords = [];
-                            for (const command of modifications[field]) {
-                                if (command[0] === 0) {
-                                    let subrecord = command[2];
-                                    const parent_field = _.findKey(
-                                        field_model_info.fields,
-                                        {
-                                            required: true,
-                                            relation: model_info.model,
+                        }
+                        for (const field of modified_fields) {
+                            if (model_info.fields[field].type === "one2many") {
+                                if (!record[field]) {
+                                    record[field] = [];
+                                }
+                                if (!data_to_sync[field]) {
+                                    data_to_sync[field] = [];
+                                }
+                                const relation = model_info.fields[field].relation;
+                                const field_model_info = await this._db.getModelInfo(
+                                    relation
+                                );
+                                const subrecords = [];
+                                for (const command of modifications[field]) {
+                                    if (command[0] === 0) {
+                                        let subrecord = command[2];
+                                        const parent_field = _.findKey(
+                                            field_model_info.fields,
+                                            {
+                                                required: true,
+                                                relation: model_info.model,
+                                            }
+                                        );
+                                        const model_defaults = await this._db.getModelDefaults(
+                                            field_model_info
+                                        );
+                                        subrecord = _.extend(
+                                            {},
+                                            model_defaults,
+                                            {
+                                                create_uid: [
+                                                    this._config.getUID(),
+                                                    this._config.getName(),
+                                                ],
+                                                create_date: Tools.DateToOdooFormat(
+                                                    new Date()
+                                                ),
+                                            },
+                                            subrecord
+                                        );
+                                        subrecord[parent_field] = record.id;
+                                        subrecord.id = this._db.genRecordID();
+                                        // Write a temporal name
+                                        if (subrecord.name) {
+                                            subrecord.name += ` (Offline Record #${subrecord.id})`;
+                                        } else {
+                                            subrecord.name = `Offline Record #${subrecord.id}`;
                                         }
-                                    );
-                                    const model_defaults = await this._db.getModelDefaults(
-                                        field_model_info
-                                    );
-                                    subrecord = _.extend(
-                                        {},
-                                        model_defaults,
-                                        {
-                                            create_uid: [
-                                                this._config.getUID(),
-                                                this._config.getName(),
-                                            ],
-                                            create_date: Tools.DateToOdooFormat(
-                                                new Date()
-                                            ),
-                                        },
-                                        subrecord
-                                    );
-                                    subrecord[parent_field] = record.id;
-                                    subrecord.id = this._db.genRecordID();
-                                    // Write a temporal name
-                                    if (subrecord.name) {
-                                        subrecord.name += ` (Offline Record #${subrecord.id})`;
-                                    } else {
-                                        subrecord.name = `Offline Record #${subrecord.id}`;
-                                    }
-                                    subrecord.display_name = subrecord.name;
-                                    const link = {};
-                                    link[model_info.model] = [
-                                        {
-                                            field: field,
-                                            id: record.id,
-                                            change: subrecord.id,
-                                        },
-                                    ];
-                                    records_sync.push({
-                                        model: relation,
-                                        method: "create",
-                                        args: [subrecord],
-                                        date: new Date().getTime(),
-                                        linked: link,
-                                        kwargs: data.kwargs,
-                                    });
-                                    subrecord = await this._process_record_to_merge(
-                                        subrecord,
-                                        field_model_info.fields,
-                                        true
-                                    );
-                                    subrecords.push(subrecord);
-                                    record[field].push(subrecord.id);
-                                } else if (command[0] === 1) {
-                                    let subrecord = _.extend(
-                                        {},
-                                        log_access_values,
-                                        command[2]
-                                    );
-                                    records_sync.push({
-                                        model: relation,
-                                        method: "write",
-                                        args: [[command[1]], subrecord],
-                                        date: new Date().getTime(),
-                                        kwargs: data.kwargs,
-                                    });
-                                    const ref_record = await this._db.browse(
-                                        relation,
-                                        command[1]
-                                    );
-                                    subrecord = await this._process_record_to_merge(
-                                        subrecord,
-                                        field_model_info.fields
-                                    );
-                                    subrecords.push(_.extend(ref_record, subrecord));
-                                } else if (command[0] === 2 || command[0] === 3) {
-                                    if (command[0] === 2) {
+                                        subrecord.display_name = subrecord.name;
+                                        const link = {};
+                                        link[model_info.model] = [
+                                            {
+                                                field: field,
+                                                id: record.id,
+                                                change: subrecord.id,
+                                            },
+                                        ];
                                         records_sync.push({
                                             model: relation,
-                                            method: "unlink",
-                                            args: [[[command[1]]]],
+                                            method: "create",
+                                            args: [subrecord],
+                                            date: new Date().getTime(),
+                                            linked: link,
+                                            kwargs: data.kwargs,
+                                        });
+                                        subrecord = await this._process_record_to_merge(
+                                            subrecord,
+                                            field_model_info.fields,
+                                            true
+                                        );
+                                        subrecords.push(subrecord);
+                                        record[field].push(subrecord.id);
+                                    } else if (command[0] === 1) {
+                                        let subrecord = _.extend(
+                                            {},
+                                            log_access_values,
+                                            command[2]
+                                        );
+                                        records_sync.push({
+                                            model: relation,
+                                            method: "write",
+                                            args: [[command[1]], subrecord],
                                             date: new Date().getTime(),
                                             kwargs: data.kwargs,
                                         });
-                                        this._db.unlink(relation, [command[1]]);
+                                        const ref_record = await this._db.browse(
+                                            relation,
+                                            command[1]
+                                        );
+                                        subrecord = await this._process_record_to_merge(
+                                            subrecord,
+                                            field_model_info.fields
+                                        );
+                                        subrecords.push(
+                                            _.extend(ref_record, subrecord)
+                                        );
+                                    } else if (command[0] === 2 || command[0] === 3) {
+                                        if (command[0] === 2) {
+                                            records_sync.push({
+                                                model: relation,
+                                                method: "unlink",
+                                                args: [[[command[1]]]],
+                                                date: new Date().getTime(),
+                                                kwargs: data.kwargs,
+                                            });
+                                            this._db.unlink(relation, [command[1]]);
+                                        }
+                                        record[field] = _.reject(
+                                            record[field],
+                                            item => item === command[1]
+                                        );
+                                    } else if (command[0] === 4) {
+                                        record[field].push(command[1]);
+                                        data_to_sync[field].push(command[1]);
+                                    } else if (command[0] === 5) {
+                                        record[field] = [];
+                                        data_to_sync[field].push([]);
+                                    } else if (command[0] === 6) {
+                                        const rec_data = {};
+                                        rec_data[field] = command[2];
+                                        const idb_value = await this._process_record_to_merge(
+                                            rec_data,
+                                            field_model_info.fields
+                                        );
+                                        record[field] = idb_value;
+                                        data_to_sync[field] = command[2];
                                     }
-                                    record[field] = _.reject(
-                                        record[field],
-                                        item => item === command[1]
-                                    );
-                                } else if (command[0] === 4) {
-                                    record[field].push(command[1]);
-                                    data_to_sync[field].push(command[1]);
-                                } else if (command[0] === 5) {
-                                    record[field] = [];
-                                    data_to_sync[field].push([]);
-                                } else if (command[0] === 6) {
-                                    const rec_data = {};
-                                    rec_data[field] = command[2];
-                                    const idb_value = await this._process_record_to_merge(
-                                        rec_data,
-                                        field_model_info.fields
-                                    );
-                                    record[field] = idb_value;
-                                    data_to_sync[field] = command[2];
                                 }
+                                if (subrecords.length) {
+                                    await this._db.writeOrCreate(relation, subrecords);
+                                    data_to_sync[field].push(
+                                        ..._.map(subrecords, "id")
+                                    );
+                                }
+                                // Ensure unique values
+                                record[field] = _.uniq(record[field]);
+                            } else {
+                                record[field] = processed_modifs[field];
+                                data_to_sync[field] = modifications[field];
                             }
-                            if (subrecords.length) {
-                                await this._db.writeOrCreate(relation, subrecords);
-                                data_to_sync[field].push(..._.map(subrecords, "id"));
-                            }
-                            // Ensure unique values
-                            record[field] = _.uniq(record[field]);
-                        } else {
-                            record[field] = processed_modifs[field];
-                            data_to_sync[field] = modifications[field];
                         }
-                    }
 
-                    // Update main record
-                    records_sync.push({
-                        model: model_info.model,
-                        method: "write",
-                        args: [[record.id], data_to_sync],
-                        date: new Date().getTime(),
-                        kwargs: data.kwargs,
-                    });
-                    await this._db.indexeddb.sync.bulkPut(records_sync);
-                    await this._db.write(model_info, [record.id], record);
+                        // Update main record
+                        records_sync.push({
+                            model: model_info.model,
+                            method: "write",
+                            args: [[record.id], data_to_sync],
+                            date: new Date().getTime(),
+                            kwargs: data.kwargs,
+                        });
+                        await this._db.indexeddb.sync.bulkPut(records_sync);
+                        await this._db.write(model_info, [record.id], record);
+                    }
+                } catch (err) {
+                    return reject(err);
                 }
                 return resolve(true);
             });

@@ -175,6 +175,10 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                 this.options.force_client_show_modal = true;
                 this._verbose = true;
 
+                // Console.log("================== OOOOOOOOO");
+                // const model_info = await this._db.getModelInfo("product.product");
+                // console.log("------ MODEL INFO: PROD: ", model_info);
+
                 try {
                     const model_metadata_promise = this.prefetchModelInfoData();
                     await Promise.all([
@@ -190,14 +194,16 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                     ]);
                     await this.runVacuumRecords();
                     await this._db.persistDatabases();
+
+                    // Console.log("================== OOOOOOOOO");
+                    // const model_info = await this._db.getModelInfo("product.secondary.unit");
+                    // console.log("------ MODEL INFO: PROD: ", model_info);
+                    // const records = await this._db.search_read(model_info, []);
+                    // console.log("------------------ RECORDS");
+                    // console.log(records);
                 } catch (err) {
                     return reject(err);
                 }
-
-                // Const model_info = await this._db.getModelInfo("product.product");
-                // const records = await this._db.search_read(model_info, []);
-                // console.log("------------------ RECORDS");
-                // console.log(records);
 
                 this.options.force_client_show_modal = false;
                 this._verbose = false;
@@ -254,10 +260,16 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         createTables: function(model_infos) {
             var tasks = [];
             for (const model_info of model_infos) {
+                if (!model_info.has_pwa_cache) {
+                    continue;
+                }
                 tasks.push(
                     new Promise(async (resolve, reject) => {
                         try {
-                            await this._db.sqlitedb.createTable(model_info);
+                            const res = await this._db.sqlitedb.createTable(model_info);
+                            if (res.was_dropped) {
+                                model_info.last_update = false;
+                            }
                             await this._postProcessTable(model_info);
                         } catch (err) {
                             return reject(err);
@@ -277,69 +289,79 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
          */
         prefetchModelRecords: function(model_info_extra, client_message_id) {
             return new Promise(async (resolve, reject) => {
-                let offset = 0;
-                let domain_forced = [];
-                if (model_info_extra.prefetch_last_update) {
-                    domain_forced = [
-                        ["write_date", ">=", model_info_extra.prefetch_last_update],
-                    ];
-                }
-                const domain = _.union(domain_forced, model_info_extra.domain);
-                // Get ids
-                const [response_s] = await rpc.callJSonRpc(
-                    model_info_extra.model,
-                    "search",
-                    [domain]
-                );
-                const chunk_size =
-                    model_info_extra.model === "pwa.cache.onchange.value"
-                        ? this._search_read_onchange_value_chunk_size
-                        : this._search_read_chunk_size;
+                try {
+                    let offset = 0;
+                    let domain_forced = [];
+                    if (model_info_extra.prefetch_last_update) {
+                        domain_forced = [
+                            ["write_date", ">=", model_info_extra.prefetch_last_update],
+                        ];
+                    }
+                    const domain = _.union(domain_forced, model_info_extra.domain);
+                    // Get ids
+                    const [response_s] = await rpc.callJSonRpc(
+                        model_info_extra.model,
+                        "search",
+                        [domain]
+                    );
+                    const chunk_size =
+                        model_info_extra.model === "pwa.cache.onchange.value"
+                            ? this._search_read_onchange_value_chunk_size
+                            : this._search_read_chunk_size;
 
-                const record_ids = (await response_s.json()).result;
-                do {
-                    try {
-                        // Get current records
-                        const [response] = await rpc.pwaJSonRpc("browse_read", {
-                            ids: record_ids.slice(offset, offset + chunk_size),
-                            model: model_info_extra.model,
-                            fields: false,
-                            context: {strict_mode: true},
-                        });
-                        const response_data = await response.json();
-                        if (!response_data || response_data.result.length === 0) {
-                            break;
-                        }
-                        const records = response_data.result;
-                        // Save using indexedb, use bulk operations
-                        if (model_info_extra.model === "pwa.cache.onchange.value") {
-                            await this.saveModelRecords(model_info_extra, records);
-                            this._sendTaskInfo(
-                                client_message_id,
-                                `Getting records of the model '${model_info_extra.name}'...`,
-                                model_info_extra.count,
-                                offset + records.length
-                            );
-                        } else {
-                            for (let index = records.length - 1; index >= 0; --index) {
-                                const record = records[index];
-                                await this.saveModelRecords(model_info_extra, [record]);
+                    const record_ids = (await response_s.json()).result;
+                    do {
+                        try {
+                            // Get current records
+                            const [response] = await rpc.pwaJSonRpc("browse_read", {
+                                ids: record_ids.slice(offset, offset + chunk_size),
+                                model: model_info_extra.model,
+                                fields: false,
+                                context: {strict_mode: true},
+                            });
+                            const response_data = await response.json();
+                            if (!response_data || response_data.result.length === 0) {
+                                break;
+                            }
+                            const records = response_data.result;
+                            // Save using indexedb, use bulk operations
+                            if (model_info_extra.model === "pwa.cache.onchange.value") {
+                                await this.saveModelRecords(model_info_extra, records);
                                 this._sendTaskInfo(
                                     client_message_id,
                                     `Getting records of the model '${model_info_extra.name}'...`,
                                     model_info_extra.count,
-                                    offset + (records.length - index)
+                                    offset + records.length
                                 );
+                            } else {
+                                for (
+                                    let index = records.length - 1;
+                                    index >= 0;
+                                    --index
+                                ) {
+                                    const record = records[index];
+                                    await this.saveModelRecords(model_info_extra, [
+                                        record,
+                                    ]);
+                                    this._sendTaskInfo(
+                                        client_message_id,
+                                        `Getting records of the model '${model_info_extra.name}'...`,
+                                        model_info_extra.count,
+                                        offset + (records.length - index)
+                                    );
+                                }
                             }
+                            offset += records.length;
+                        } catch (err) {
+                            this._sendTaskInfoError(client_message_id, err);
+                            return reject(err);
                         }
-                        offset += records.length;
-                    } catch (err) {
-                        this._sendTaskInfoError(client_message_id, err);
-                        return reject(err);
-                    }
-                } while (offset < model_info_extra.count);
+                    } while (offset < model_info_extra.count);
 
-                return resolve(offset);
+                    return resolve(offset);
+                } catch (err) {
+                    return reject(err);
+                }
             });
         },
 
@@ -348,22 +370,22 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
          */
         prefetchModelData: function() {
             return new Promise(async (resolve, reject) => {
-                // Get lastest updates
-                let model_infos = await this._db.getModelInfo(
-                    false,
-                    false,
-                    false,
-                    true
-                );
-                const prefetch_last_updates = {};
-                for (const model_info of model_infos) {
-                    if (model_info.prefetch_last_update) {
-                        prefetch_last_updates[model_info.model] =
-                            model_info.prefetch_last_update;
-                    }
-                }
-
                 try {
+                    // Get lastest updates
+                    let model_infos = await this._db.getModelInfo(
+                        false,
+                        false,
+                        false,
+                        true
+                    );
+                    const prefetch_last_updates = {};
+                    for (const model_info of model_infos) {
+                        if (model_info.prefetch_last_update) {
+                            prefetch_last_updates[model_info.model] =
+                                model_info.prefetch_last_update;
+                        }
+                    }
+
                     const [response] = await rpc.sendJSonRpc("/pwa/prefetch/model", {
                         last_update: prefetch_last_updates,
                     });
@@ -382,6 +404,9 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                             model: to_search.model,
                         });
                         const model_info_extra = _.extend({}, model_info, to_search);
+                        model_info_extra.count = await this._getModelCount(
+                            model_info_extra
+                        );
                         const client_message_id = `model_records_${model_info_extra.model.replace(
                             /\./g,
                             "__"
@@ -605,11 +630,11 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
          */
         prefetchActionData: function() {
             return new Promise(async (resolve, reject) => {
-                const start_prefetch_date = Tools.DateToOdooFormat(new Date());
-                const prefetch_last_update = await this._config.get(
-                    "prefetch_action_last_update"
-                );
                 try {
+                    const start_prefetch_date = Tools.DateToOdooFormat(new Date());
+                    const prefetch_last_update = await this._config.get(
+                        "prefetch_action_last_update"
+                    );
                     this._sendTaskInfo("action_data", `Getting actions...`, -1, 0);
                     // Get prefetching metadata
                     const [response] = await rpc.sendJSonRpc("/pwa/prefetch/action", {
@@ -660,11 +685,11 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
          */
         prefetchPostData: function() {
             return new Promise(async (resolve, reject) => {
-                const start_prefetch_date = Tools.DateToOdooFormat(new Date());
-                const prefetch_last_update = await this._config.get(
-                    "prefetch_post_last_update"
-                );
                 try {
+                    const start_prefetch_date = Tools.DateToOdooFormat(new Date());
+                    const prefetch_last_update = await this._config.get(
+                        "prefetch_post_last_update"
+                    );
                     this._sendTaskInfo("post_data", `Getting post results...`, -1, 0);
                     // Get prefetching metadata
                     const [response] = await rpc.sendJSonRpc("/pwa/prefetch/post", {
@@ -762,11 +787,11 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
          */
         prefetchClientQWebData: function() {
             return new Promise(async (resolve, reject) => {
-                const start_prefetch_date = Tools.DateToOdooFormat(new Date());
-                const prefetch_last_update = await this._config.get(
-                    "prefetch_clientqweb_last_update"
-                );
                 try {
+                    const start_prefetch_date = Tools.DateToOdooFormat(new Date());
+                    const prefetch_last_update = await this._config.get(
+                        "prefetch_clientqweb_last_update"
+                    );
                     this._sendTaskInfo(
                         "clientqweb_data",
                         `Getting client templates...`,
@@ -892,6 +917,8 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                     n_values.fields[field].type = model_conv_types[field];
                 }
             }
+            // Reset last update date
+            n_values.prefetch_last_update = false;
             return n_values;
         },
 
@@ -914,6 +941,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                         this._preProcessModelInfo(values),
                         ["model"]
                     );
+                    this._db.invalidateModelInfoCache(values.model);
                 } catch (err) {
                     return reject(err);
                 }

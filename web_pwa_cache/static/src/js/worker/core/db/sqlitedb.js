@@ -564,6 +564,94 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
         },
 
         /**
+         * @param {Object} model_info
+         * @returns {Promise}
+         */
+        tableExists: function(model_info) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const sql = `SELECT name FROM sqlite_master WHERE type="table" AND name="${model_info.table}"`;
+                    const result = await this.get(sql);
+                    return resolve(!_.isEmpty(result));
+                } catch (err) {
+                    return reject(err);
+                }
+            });
+        },
+
+        /**
+         * Get field names of the column
+         *
+         * @param {Object} model_info
+         * @returns {Promise}
+         */
+        getTableFieldsInfo: function(model_info) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const sql = `pragma table_info("${model_info.table}")`;
+                    const result = await this.all(sql);
+                    return resolve(result);
+                } catch (err) {
+                    return reject(err);
+                }
+            });
+        },
+
+        /**
+         * @param {Object} model_info
+         * @returns {Promise}
+         */
+        hasTableChanges: function(model_info) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const tableExists = await this.tableExists(model_info);
+                    if (tableExists) {
+                        const model_field_names = _.without(
+                            Object.keys(model_info.fields),
+                            "id"
+                        );
+                        const model_valid_field_names = _.without(
+                            model_info.valid_fields,
+                            "id"
+                        );
+                        const table_fields = await this.getTableFieldsInfo(model_info);
+                        const table_field_names = _.filter(
+                            _.map(table_fields, "name"),
+                            item => item !== "id" && !item.startsWith("display_name__")
+                        );
+                        const fields_to_remove = _.difference(
+                            table_field_names,
+                            model_field_names
+                        );
+                        const common_fields = _.intersection(
+                            model_field_names,
+                            table_field_names
+                        );
+                        const fields_to_update = _.filter(common_fields, item => {
+                            const table_field = _.findWhere(table_fields, {name: item});
+                            return (
+                                table_field.type !==
+                                this._odoo_to_sqlite[model_info.fields[item].type]
+                            );
+                        });
+                        return resolve(
+                            (_.isEmpty(model_valid_field_names) &&
+                                common_fields.length !== model_field_names.length) ||
+                                (!_.isEmpty(model_valid_field_names) &&
+                                    table_field_names.length !==
+                                        model_valid_field_names.length) ||
+                                !_.isEmpty(fields_to_remove) ||
+                                !_.isEmpty(fields_to_update)
+                        );
+                    }
+                } catch (err) {
+                    return reject(err);
+                }
+                return resolve(false);
+            });
+        },
+
+        /**
          * Create a table
          *
          * @param {Object} model_info
@@ -574,15 +662,14 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
             if (typeof model_fields === "string") {
                 model_fields = JSON.toOdoo(model_info.fields);
             }
-            const field_names = _.keys(model_fields);
+            const model_field_names = _.without(Object.keys(model_info.fields), "id");
             // For sqlite this is an alias for "rowid"
             // See: https://www.sqlite.org/lang_createtable.html#rowid
             const table_fields = ["'id' INTEGER PRIMARY KEY"];
-            for (const field_name of field_names) {
+            for (const field_name of model_field_names) {
                 if (
-                    field_name === "id" ||
-                    (!_.isEmpty(model_info.valid_fields) &&
-                        model_info.valid_fields.indexOf(field_name) === -1)
+                    !_.isEmpty(model_info.valid_fields) &&
+                    model_info.valid_fields.indexOf(field_name) === -1
                 ) {
                     continue;
                 }
@@ -600,10 +687,25 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                     );
                 }
             }
-            const sql = `CREATE TABLE IF NOT EXISTS "${
-                model_info.table
-            }" (${table_fields.join(",")})`;
-            return this.query(sql);
+            return new Promise(async (resolve, reject) => {
+                try {
+                    // Check if the table exists and need be dropped to apply new changes
+                    // Using this option becasue SQLite has a limited ALTER TABLE support:
+                    // https://www.sqlite.org/omitted.html
+                    const has_table_changes = await this.hasTableChanges(model_info);
+                    if (has_table_changes) {
+                        await this.query(`DROP TABLE IF EXISTS "${model_info.table}"`);
+                    }
+                    // Various model can use the same table (ex. ir.actions)
+                    const sql = `CREATE TABLE IF NOT EXISTS"${
+                        model_info.table
+                    }" (${table_fields.join(",")})`;
+                    const res = await this.query(sql);
+                    return resolve(res);
+                } catch (err) {
+                    return reject(err);
+                }
+            });
         },
 
         /**

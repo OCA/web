@@ -97,8 +97,8 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                 return Promise.resolve();
             }
             return new Promise(async (resolve, reject) => {
-                await this._super.apply(this, arguments);
                 try {
+                    await this._super.apply(this, arguments);
                     await this._cache.addAll(
                         this._cache_hashes.pwa,
                         this._prefetched_urls
@@ -139,6 +139,12 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                         await this._db.start();
                         await this._initManagers();
                         await this._initComponents();
+                        if (this._db.has_modelinfo_changes) {
+                            await this._managers.config.set(
+                                "prefetch_modelinfo_last_update",
+                                false
+                            );
+                        }
                     }
                     await this._cache.cleanOld([this._cache_hashes.pwa]);
                     this._wasActivated = true;
@@ -425,6 +431,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
          * @override
          */
         processRequest: function(request) {
+            // If SW is not ready, fallback to the default browser behaviour
             if (!this.isActivated(false)) {
                 return fetch(request);
             }
@@ -450,6 +457,7 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                         return resolve(resInternal);
                     }
 
+                    // If SW Cache is not activated fallback to default browser behaviour
                     if (!this.isActivated()) {
                         const fetch_res = await fetch(request);
                         return resolve(fetch_res);

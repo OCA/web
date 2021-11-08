@@ -98,31 +98,34 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 },
             });
 
-            if (this._isServiceWorkerSupported) {
-                this._service_worker.ready.then(sw => {
-                    if (sw.active) {
-                        // Check if service worker has the control of the pages
-                        if (this._service_worker.controller) {
-                            if (sw.waiting) {
-                                this._onSWWaiting(
-                                    sw.waiting,
-                                    this._service_worker.controller
-                                );
-                            }
-                            this._onSWController(this._service_worker.controller);
-                        } else {
-                            this._onSWActive(sw.active);
-                        }
-                    }
-                });
-            }
-
             return this._super
                 .apply(this, arguments)
                 .then(() => {
                     return this._checkPWACacheStatus();
                 })
                 .then(() => {
+                    // Here we know if the PWA Cache is enabled
+                    if (this._isServiceWorkerSupported) {
+                        this._service_worker.ready.then(sw => {
+                            if (sw.active) {
+                                // Check if service worker has the control of the pages
+                                if (this._service_worker.controller) {
+                                    if (sw.waiting) {
+                                        this._onSWWaiting(
+                                            sw.waiting,
+                                            this._service_worker.controller
+                                        );
+                                    }
+                                    this._onSWController(
+                                        this._service_worker.controller
+                                    );
+                                } else {
+                                    this._onSWActive(sw.active);
+                                }
+                            }
+                        });
+                    }
+
                     if (this.isPWACacheEnabled()) {
                         return Promise.resolve();
                     }

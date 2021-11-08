@@ -38,10 +38,12 @@ class PWAPrefetch(PWA):
         if last_update:
             model_domain.append(("write_date", ">=", last_update))
         ir_model_obj = request.env["ir.model"]
+        ir_model_fields_obj = request.env["ir.model.fields"]
         # Generic models
         model_ids = (
-            ir_model_obj.sudo()
+            ir_model_fields_obj.sudo()
             .search(model_domain)
+            .mapped(lambda x: x.model_id)
             .filtered(
                 lambda x: x.model in request.env and not request.env[x.model]._abstract
             )
@@ -49,13 +51,11 @@ class PWAPrefetch(PWA):
         # Explicit pwa.cache model
         pwa_cache_ids = (
             request.env["pwa.cache"]
-            .search(self._get_pwa_cache_domain(["model"]))
+            .search(model_domain + self._get_pwa_cache_domain(["model"]))
             .mapped("model_id")
             .ids
         )
-        model_ids |= ir_model_obj.sudo().search(
-            model_domain + [("id", "in", pwa_cache_ids,)]
-        )
+        model_ids |= ir_model_obj.sudo().search([("id", "in", pwa_cache_ids)])
         # Only get models that can be almost readed
         model_ids = model_ids.filtered(
             lambda x: request.env[x.model].check_access_rights(
@@ -207,6 +207,7 @@ class PWAPrefetch(PWA):
                     "table": model_obj._table,
                     "defaults": model_defaults,
                     "is_transient": isinstance(model_obj, models.TransientModel),
+                    "has_pwa_cache": True if pwa_cache_id else False,
                     "has_log_fields": model_obj._log_access is not False,
                     "domain": safe_eval(
                         pwa_cache_id.model_domain or "[]",
@@ -344,9 +345,7 @@ class PWAPrefetch(PWA):
                 records_count = model_obj.search_count(evaluated_domain)
             if records_count == 0:
                 continue
-            model_infos.append(
-                {"model": model, "domain": evaluated_domain, "count": records_count}
-            )
+            model_infos.append({"model": model, "domain": evaluated_domain})
         # Calculate counts
         self._get_pwa_model_info_count(model_infos, last_update)
         return model_infos
