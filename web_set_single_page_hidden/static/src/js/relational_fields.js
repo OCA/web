@@ -10,7 +10,7 @@ odoo.define("web_set_single_page_hidden.relational_fields", function(require) {
             var self = this;
             return this._super.apply(this, arguments).then(function() {
                 if (!_.isUndefined(self.pager)) {
-                    self.pager.set_single_page_hidden(false);
+                    self.pager._setSinglePageHidden(false);
                 }
             });
         },
@@ -21,7 +21,7 @@ odoo.define("web_set_single_page_hidden.relational_fields", function(require) {
             var self = this;
             return this._super.apply(this, arguments).then(function() {
                 if (!_.isUndefined(self.pager)) {
-                    self.pager.set_single_page_hidden(false);
+                    self.pager._setSinglePageHidden(false);
                 }
             });
         },
