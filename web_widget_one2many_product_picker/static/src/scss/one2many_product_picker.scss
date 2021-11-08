@@ -1,4 +1,27 @@
 .oe_field_one2many_product_picker {
+    /** FIX AUTO-SCROLL ON SAMSUNG DEVICES **/
+    * {
+        overflow-anchor: none !important;
+        scroll-snap-stop: normal !important;
+        overscroll-behavior: unset !important;
+        scroll-behavior: unset !important;
+    }
+
+    .container,
+    header,
+    footer,
+    .container-fluid,
+    body,
+    div,
+    span,
+    section {
+        overflow-anchor: none !important;
+        scroll-snap-stop: normal !important;
+        overscroll-behavior: unset !important;
+        scroll-behavior: unset !important;
+    }
+    /** END FIX **/
+
     &.oe_field_one2many_product_picker_maximized {
         position: fixed;
         top: 0;
@@ -11,6 +34,17 @@
     }
     &:hover {
         button.o_fullscreen {
+            display: inline-block;
+        }
+    }
+
+    &.disabled {
+        .badge {
+            filter: opacity(0.6);
+        }
+        pointer-events: none;
+
+        > div.loading {
             display: inline-block;
         }
     }
@@ -28,6 +62,19 @@
             margin: 0;
             padding: 0.5rem;
         }
+    }
+
+    div.loading {
+        position: absolute;
+        background-color: white;
+        padding: 0.5em;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border: 2px solid gray;
+        z-index: 2;
+        box-shadow: 2px 2px 5px;
+        display: none;
     }
 
     .o_cp_buttons {
@@ -57,6 +104,11 @@
             margin-right: 0;
         }
 
+        .o_catch_attention {
+            animation: none;
+            outline: 1px solid fade-in(theme-color("warning"), 0.5);
+        }
+
         .oe_flip_card {
             user-select: none;
             background-color: transparent;
@@ -67,9 +119,17 @@
                 height $one2many-product-picker-transition-3d-time;
             height: $one2many-product-picker-card-min-height;
 
+            &.blocked {
+                .badge {
+                    filter: opacity(0.7);
+                }
+                div.loading {
+                    display: inline-block;
+                }
+            }
+
             &.disabled {
-                filter: grayscale(100%);
-                opacity: 0.5;
+                filter: grayscale(1);
             }
 
             &.oe_flip_card_maximized {
@@ -138,7 +198,7 @@
                 transform-style: preserve-3d;
 
                 .img-fluid {
-                    transform: translate(-50%, -50%);
+                    transform: translate(-50%, -50%) !important;
                     top: 50%;
                     left: 50%;
                     z-index: -1;
@@ -234,6 +294,7 @@
                         top: 50%;
                         left: 0;
                         transform: translateY(-50%);
+                        width: 100%;
 
                         .oe_one2many_product_picker_form_buttons {
                             display: flex;
@@ -261,6 +322,41 @@
             .price_unit {
                 cursor: pointer;
             }
+        }
+    }
+
+    /** Extra tools **/
+    .icon-waiting {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    /* clears the 'X' from Internet Explorer */
+    input[type="search"]::-ms-clear {
+        display: none;
+        width: 0;
+        height: 0;
+    }
+    input[type="search"]::-ms-reveal {
+        display: none;
+        width: 0;
+        height: 0;
+    }
+
+    /* clears the 'X' from Chrome */
+    input[type="search"]::-webkit-search-decoration,
+    input[type="search"]::-webkit-search-cancel-button,
+    input[type="search"]::-webkit-search-results-button,
+    input[type="search"]::-webkit-search-results-decoration {
+        display: none;
+    }
+
+    /** Modal Price **/
+    .oe_product_picker_quick_modif_price {
+        .modal-body {
+            min-height: 7em;
         }
     }
 }

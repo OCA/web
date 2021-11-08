@@ -86,6 +86,7 @@ Widget options:
 * show_discount > Enable/Disable display discount (False by default)
 * show_subtotal > Enable/Disable show subtotal (True by default)
 * auto_save > Enable/Disable auto save (False by default)
+* auto_save_delay > The time (in milliseconds) to wait after the last interaction before launching the autosave (1500 by default)
 * all_domain > The domain used in 'All' section ([] by default)
 
   If using auto save feature, you should keep in mind that the "Save" and "Discard" buttons
@@ -95,6 +96,7 @@ Widget options:
 * ignore_warning > Enable/Disable display onchange warnings (False by default)
 * instant_search > Enable/Disable instant search mode (False by default)
 * trigger_refresh_fields > Fields in the main record that dispatch a widget refresh (["partner_id", "currency_id"] by default)
+* auto_focus > Keep the focus on the search box after performing a search (True by default)
 
 All widget options are optional.
 Notice that you can call '_' method to use translations. This only can be used with this widget.
@@ -215,7 +217,8 @@ Known issues / Roadmap
 ======================
 
 * Translations in the xml 'options' attribute of the field that use the widget can't be exported automatically to be translated
-* The product card animations can be improved. Currently the card is recreated, so we lost some elements to apply correct effects.
+* The product card animations can be improved. Currently the card is recreated, so we lost some elements to apply correct effects
+* sale.order onchanges that affects to "order_line" subfields will be ommitted to increase the performance
 
 Bug Tracker
 ===========
@@ -243,6 +246,8 @@ Contributors
     * Alexandre D. Díaz
     * Pedro M. Baeza
     * David Vidal
+
+* Giovanni Serra <giovanni@gslab.it>
 
 Maintainers
 ~~~~~~~~~~~

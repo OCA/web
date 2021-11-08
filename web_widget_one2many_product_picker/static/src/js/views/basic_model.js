@@ -3,7 +3,8 @@
 odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
     "use strict";
 
-    const BasicModel = require("web.BasicModel");
+    var BasicModel = require("web.BasicModel");
+    var FieldOne2ManyProductPicker = require("web_widget_one2many_product_picker.FieldOne2ManyProductPicker");
 
     BasicModel.include({
         /**
@@ -40,8 +41,17 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
          * @param {String} id
          * @returns {Boolean}
          */
+        isSaving: function(id) {
+            var data = this.localData[id];
+            return data._virtual || false;
+        },
+
+        /**
+         * @param {String} id
+         * @returns {Boolean}
+         */
         isPureVirtual: function(id) {
-            const data = this.localData[id];
+            var data = this.localData[id];
             return data._virtual || false;
         },
 
@@ -50,7 +60,7 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
          * @param {Boolean} status
          */
         setPureVirtual: function(id, status) {
-            const data = this.localData[id];
+            var data = this.localData[id];
             if (status) {
                 data._virtual = true;
             } else {
@@ -62,9 +72,9 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
          * @param {String} id
          */
         unsetDirty: function(id) {
-            const data = this.localData[id];
+            var data = this.localData[id];
             data._isDirty = false;
-            this._visitChildren(data, r => {
+            this._visitChildren(data, function(r) {
                 r._isDirty = false;
             });
         },
@@ -81,14 +91,14 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
                 return false;
             }
 
-            const data = this.localData[id];
-            const to_remove = [];
-            this._visitChildren(data, item => {
+            var data = this.localData[id];
+            var to_remove = [];
+            this._visitChildren(data, function(item) {
                 to_remove.push(item.id);
             });
 
             to_remove.reverse();
-            for (const remove_id of to_remove) {
+            for (var remove_id of to_remove) {
                 this.removeLine(remove_id);
                 delete this.localData[remove_id];
             }
@@ -103,7 +113,7 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
          *
          * @param {Object} record
          * @param {Object} params
-         * @returns {Promise}
+         * @returns {Deferred}
          */
         _makeDefaultRecordNoDatapoint: function(record, params) {
             var self = this;
@@ -128,15 +138,20 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
                 );
             }
 
-            return this._rpc({
-                model: record.model,
-                method: "default_get",
-                args: [fields_key],
-                context: params.context,
-            }).then(function(result) {
+            return this._rpc(
+                {
+                    model: record.model,
+                    method: "default_get",
+                    args: [fields_key],
+                    context: params.context,
+                },
+                {
+                    shadow: true,
+                }
+            ).then(function(result) {
                 // Interrupt point (used in instant search)
                 if (!self.exists(record.id)) {
-                    return Promise.reject();
+                    return $.Deferred().reject();
                 }
 
                 // We want to overwrite the default value of the handle field (if any),
@@ -157,44 +172,43 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
                     .applyDefaultValues(record.id, result, {fieldNames: fieldNames})
                     .then(function() {
                         if (!self.exists(record.id)) {
-                            return Promise.reject();
+                            return $.Deferred().reject();
                         }
-                        var def = new Promise(function(resolve, reject) {
-                            // Interrupt point (used in instant search)
-                            if (!self.exists(record.id)) {
-                                return Promise.reject();
-                            }
-                            var always = function() {
-                                if (record._warning) {
-                                    if (params.allowWarning) {
-                                        delete record._warning;
-                                    } else {
-                                        reject();
-                                    }
+                        var def = $.Deferred();
+                        // Interrupt point (used in instant search)
+                        if (!self.exists(record.id)) {
+                            return $.Deferred().reject();
+                        }
+                        var always = function() {
+                            if (record._warning) {
+                                if (params.allowWarning) {
+                                    delete record._warning;
+                                } else {
+                                    def.reject();
                                 }
-                                resolve();
-                            };
-                            self._performOnChange(record, fields_key)
-                                .then(always)
-                                .guardedCatch(always);
-                        });
+                            }
+                            def.resolve();
+                        };
+                        self._performOnChange(record, fields_key)
+                            .then(always)
+                            .guardedCatch(always);
                         return def;
                     })
                     .then(function() {
                         if (!self.exists(record.id)) {
-                            return Promise.reject();
+                            return $.Deferred().reject();
                         }
                         return self._fetchRelationalData(record);
                     })
                     .then(function() {
                         if (!self.exists(record.id)) {
-                            return Promise.reject();
+                            return $.Deferred().reject();
                         }
                         return self._postprocess(record);
                     })
                     .then(function() {
                         if (!self.exists(record.id)) {
-                            return Promise.reject();
+                            return $.Deferred().reject();
                         }
                         // Save initial changes, so they can be restored later,
                         // if we need to discard.
@@ -215,11 +229,11 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
          * @returns {Object}
          */
         createVirtualDatapoint: function(listID, options) {
-            const list = this.localData[listID];
-            const context = _.extend({}, this._getContext(list), options.context);
+            var list = this.localData[listID];
+            var context = _.extend({}, this._getContext(list), options.context);
 
-            const position = options ? options.position : "top";
-            const params = {
+            var position = options ? options.position : "top";
+            var params = {
                 context: context,
                 fields: list.fields,
                 fieldsInfo: list.fieldsInfo,
@@ -228,6 +242,7 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
                 viewType: list.viewType,
                 allowWarning: true,
                 doNotSetDirty: true,
+                postonchange_values: options.onchange_values,
             };
 
             var targetView = params.viewType;
@@ -251,7 +266,7 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
                 fields = _.defaults({}, fields, parentRecord.fields);
             }
 
-            const record = this._makeDataPoint({
+            var record = this._makeDataPoint({
                 modelName: list.model,
                 fields: fields,
                 fieldsInfo: fieldsInfo,
@@ -263,7 +278,8 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
             this.setPureVirtual(record.id, true);
             this.updateRecordContext(record.id, {
                 ignore_warning: true,
-                not_onchange: true,
+                not_onchange: true, // To know is the record has the initial onchange applied
+                shadow: true, // To avoid show the loading backdrop
             });
 
             return {
@@ -280,11 +296,16 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
          * @returns {Deferred}
          */
         createVirtualRecord: function(listID, options) {
-            const list = this.localData[listID];
-            const context = _.extend({}, this._getContext(list), options.context);
+            var self = this;
+            var list = this.localData[listID];
+            var context = _.extend(
+                {shadow: true},
+                this._getContext(list),
+                options.context
+            );
 
-            const position = options ? options.position : "top";
-            const params = {
+            var position = options ? options.position : "top";
+            var params = {
                 context: context,
                 fields: list.fields,
                 fieldsInfo: list.fieldsInfo,
@@ -295,18 +316,17 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
                 doNotSetDirty: true,
             };
 
-            return new Promise(resolve => {
-                this._makeDefaultRecord(list.model, params).then(recordID => {
-                    this.setPureVirtual(recordID, true);
-                    this.updateRecordContext(recordID, {
-                        ignore_warning: true,
-                        not_onchange: true,
-                    });
-                    resolve({
-                        record: this.get(recordID),
-                        params: params,
-                    });
+            return this._makeDefaultRecord(list.model, params).then(function(recordID) {
+                self.setPureVirtual(recordID, true);
+                self.updateRecordContext(recordID, {
+                    ignore_warning: true,
+                    not_onchange: true,
+                    shadow: true,
                 });
+                return {
+                    record: self.get(recordID),
+                    params: params,
+                };
             });
         },
 
@@ -319,16 +339,29 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
          * @override
          */
         _performOnChange: function(record) {
-            if (record && record.context && record.context.ignore_warning) {
-                const this_mp = _.clone(this);
-                const super_call = this.trigger_up;
-                this_mp.trigger_up = function(event_name, data) {
-                    if (event_name === "warning" && data.type === "dialog") {
-                        // Do nothing
-                        return;
-                    }
-                    return super_call.apply(this, arguments);
-                }.bind(this);
+            if (record && record.context) {
+                record.context.not_onchange = false;
+                var this_mp = _.clone(this);
+                if (record.context.shadow) {
+                    // Force use 'shadow'
+                    var super__rpc_call = this._rpc;
+                    this_mp._rpc = function(params, options) {
+                        options = options || {};
+                        options.shadow = true;
+                        return super__rpc_call.call(this, params, options);
+                    }.bind(this);
+                }
+                if (record.context.ignore_warning) {
+                    var super_trigger_up_call = this.trigger_up;
+                    // Avoid show warnings
+                    this_mp.trigger_up = function(event_name, data) {
+                        if (event_name === "warning" && data.type === "dialog") {
+                            // Do nothing
+                            return;
+                        }
+                        return super_trigger_up_call.apply(this, arguments);
+                    }.bind(this);
+                }
                 return this._super.apply(this_mp, arguments);
             }
             return this._super.apply(this, arguments);
@@ -343,9 +376,86 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
          */
         _applyOnChange: function(values, record) {
             if (!this.exists(record.id)) {
-                return Promise.reject();
+                return $.Deferred().reject();
             }
             return this._super.apply(this, arguments);
+        },
+
+        /**
+         * Allow add multiple records at the same time
+         *
+         * @override
+         */
+        _applyX2ManyChange: function(record, fieldName, command) {
+            if (command.operation === "ADD_MULTIPLE") {
+                var self = this;
+                var localID =
+                    (record._changes && record._changes[fieldName]) ||
+                    record.data[fieldName];
+                var list = this.localData[localID];
+                list._changes = list._changes || [];
+                // For now, we are in the context of a one2many field
+                // the command should look like this:
+                // { operation: 'ADD', ids: [id0,id1,id2,...] }
+                // The corresponding record may contain value for fields that
+                // are unknown in the list (e.g. fields that are in the
+                // subrecord form view but not in the kanban or list view), so
+                // to ensure that onchanges are correctly handled, we extend the
+                // list's fields with those in the created record
+                _.each(command.ids, function(id) {
+                    var newRecord = self.localData[id];
+                    _.defaults(list.fields, newRecord.fields);
+                    _.defaults(list.fieldsInfo, newRecord.fieldsInfo);
+                    newRecord.fields = list.fields;
+                    newRecord.fieldsInfo = list.fieldsInfo;
+                    newRecord.viewType = list.viewType;
+                    list._cache[newRecord.res_id] = newRecord.id;
+                    list._changes.push(command);
+                });
+            }
+            return this._super.apply(this, arguments);
+        },
+
+        /**
+         * This is necessary to avoid calculate onchanges that
+         * affects to order_line.
+         *
+         * @override
+         */
+        _buildOnchangeSpecs: function(record) {
+            var specs = this._super.apply(this, arguments);
+            // This is necessary to improve the performance
+            if (record.model === "sale.order" && specs) {
+                // Its a change from product picker?
+                // WORKAROUND: Done in this way to reutilice odoo methods
+                var need_clean = false;
+                var parent_controller = this.getParent();
+                if (
+                    parent_controller &&
+                    parent_controller.renderer &&
+                    !_.isEmpty(parent_controller.renderer.allFieldWidgets)
+                ) {
+                    var order_line_widget = _.find(
+                        parent_controller.renderer.allFieldWidgets[
+                            parent_controller.handle
+                        ],
+                        {name: "order_line"}
+                    );
+                    need_clean =
+                        order_line_widget instanceof FieldOne2ManyProductPicker &&
+                        !_.isEmpty(this.localData[record.data.order_line]);
+                }
+                if (need_clean) {
+                    var new_specs = _.clone(specs);
+                    for (var key in specs) {
+                        if (key.startsWith("order_line.")) {
+                            delete new_specs[key];
+                        }
+                    }
+                    return new_specs;
+                }
+            }
+            return specs;
         },
 
         /**
@@ -353,7 +463,7 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
          * @returns {Boolean}
          */
         hasChanges: function(recordID) {
-            const record = this.localData[recordID];
+            var record = this.localData[recordID];
             return record && !_.isEmpty(record._changes);
         },
 
@@ -368,7 +478,7 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
          * @param {Number} limit
          * @param {Number} offset
          * @param {Object} context
-         * @returns {Promise}
+         * @returns {Deferred}
          */
         fetchNameSearchFull: function(
             model_fields,
@@ -382,6 +492,7 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
             offset,
             context
         ) {
+            var self = this;
             return this._rpc({
                 model: model,
                 method: "name_search",
@@ -392,9 +503,11 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
                     limit: this.limit,
                     context: context || {},
                 },
-            }).then(results => {
-                const record_ids = results.map(item => item[0]);
-                return this.fetchGenericRecords(
+            }).then(function(results) {
+                var record_ids = results.map(function(item) {
+                    return item[0];
+                });
+                return self.fetchGenericRecords(
                     model_fields,
                     model,
                     [["id", "in", record_ids]],
@@ -416,7 +529,7 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
          * @param {Number} limit
          * @param {Number} offset
          * @param {Object} context
-         * @returns {Promise}
+         * @returns {Deferred}
          */
         fetchGenericRecords: function(
             model_fields,
@@ -428,6 +541,7 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
             offset,
             context
         ) {
+            var self = this;
             return this._rpc({
                 model: model,
                 method: "search_read",
@@ -437,13 +551,13 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
                 offset: offset,
                 orderBy: orderby,
                 kwargs: {context: context},
-            }).then(result => {
-                for (const index in result) {
-                    const record = result[index];
-                    for (const fieldName in record) {
-                        const field = model_fields[fieldName];
+            }).then(function(result) {
+                for (var index in result) {
+                    var record = result[index];
+                    for (var fieldName in record) {
+                        var field = model_fields[fieldName];
                         if (field.type !== "many2one") {
-                            record[fieldName] = this._parseServerValue(
+                            record[fieldName] = self._parseServerValue(
                                 model_fields[fieldName],
                                 record[fieldName]
                             );
