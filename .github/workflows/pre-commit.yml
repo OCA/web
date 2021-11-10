@@ -13,5 +13,8 @@ jobs:
         with:
           # The pylint-odoo version we use here does not support python 3.10
           # https://github.com/OCA/oca-addons-repo-template/issues/80
-          python-version: "3.9"
+          # We also need to pin to an older version of python for older odoo versions
+          # where we are not using black > 21. Older black versions won't work with
+          # Python 3.9.8+, and we can't bump black without reformatting.
+          python-version: "3.9.7"
       - uses: pre-commit/action@v2.0.0
