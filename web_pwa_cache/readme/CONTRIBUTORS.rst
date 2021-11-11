@@ -1,4 +1,4 @@
 * `Tecnativa <https://www.tecnativa.com>`_:
 
-    * Alexandre Díaz
+    * Alexandre D. Díaz
     * Pedro M. Baeza
