@@ -261,8 +261,12 @@ odoo.define("web_pwa_cache.PWA", function(require) {
 
                     // Try from cache
                     const cache = await this._cache.get(this._cache_hashes.pwa);
-                    const response_cache = await cache.match(request);
+                    let response_cache = await cache.match(request);
                     if (response_cache) {
+                        if (response_cache.redirected) {
+                            response_cache = await Tools.CleanResponse(response_cache);
+                            return resolve(response_cache);
+                        }
                         return resolve(response_cache);
                     }
                     if (!this._prefetch_running) {
@@ -475,7 +479,11 @@ odoo.define("web_pwa_cache.PWA", function(require) {
                     const fetch_res = await fetch(request);
                     return resolve(fetch_res);
                 } catch (err) {
-                    return reject(err);
+                    // At this point it may have failed because the client has blocked the request
+                    console.log(
+                        "[ServiceWorker] Can't process the request by unknown reasons. Maybe blocked by client?"
+                    );
+                    return reject();
                 }
             });
         },

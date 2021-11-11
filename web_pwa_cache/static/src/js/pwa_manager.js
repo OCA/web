@@ -59,6 +59,11 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
          * @override
          */
         init: function() {
+            // Not compatible with firefox!
+            if (navigator.userAgent.toLowerCase().indexOf("firefox") > -1) {
+                return;
+            }
+
             this.init_broadcast("pwa-page-messages", "pwa-sw-messages");
             this._super.apply(this, arguments);
 
@@ -129,7 +134,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     if (this.isPWACacheEnabled()) {
                         return Promise.resolve();
                     }
-                    return this.setPWAMode("online");
+                    return this.setPWAMode("online", false);
                 })
                 .then(() => {
                     if (this.isPWAStandalone()) {
@@ -190,11 +195,14 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
         /**
          * @param {String} mode
          */
-        setPWAMode: function(mode) {
+        setPWAMode: function(mode, send = true) {
             this._pwaMode = mode;
-            return this.sendPWABusMessage("SET_CONFIG", {
-                pwa_mode: this._pwaMode,
-            });
+            if (send) {
+                return this.sendPWABusMessage("SET_CONFIG", {
+                    pwa_mode: this._pwaMode,
+                });
+            }
+            return Promise.resolve();
         },
 
         _autoclosePrefetchModalData: function() {
@@ -313,6 +321,8 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
          */
         _onSWWaiting: function() {
             if (!this.isPWACacheEnabled() || !this.isPWAStandalone()) {
+                this._swInfoModalHidden = true;
+                this.$modalSWInfo.modal("hide");
                 return;
             }
             this._service_worker.getRegistrations().then(registrations => {
@@ -360,6 +370,8 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
          */
         _onSWActive: function() {
             if (!this.isPWACacheEnabled() || !this.isPWAStandalone()) {
+                this._swInfoModalHidden = true;
+                this.$modalSWInfo.modal("hide");
                 return;
             }
             this._showSWInfo(
@@ -382,6 +394,10 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                         this._swInfoModalHidden = true;
                         this.$modalSWInfo.modal("hide");
                     });
+            } else if (!this.isPWACacheEnabled() || !this.isPWAStandalone()) {
+                this._swInfoModalHidden = true;
+                this.$modalSWInfo.modal("hide");
+                this.setPWAMode("online");
             }
             return chain_task;
         },

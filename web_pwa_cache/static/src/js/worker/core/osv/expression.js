@@ -1618,7 +1618,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                 query = `${table_alias}."${left}" IS NOT NULL`;
                 params = [];
             } else if (operator === "=?") {
-                if (right) {
+                if (!right) {
                     // '=?' is a short-circuit that makes the term TRUE if right is None or False
                     query = "TRUE";
                     params = [];

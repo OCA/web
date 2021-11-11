@@ -112,6 +112,33 @@ odoo.define("web_pwa_cache.PWA.core.base.Tools", function() {
     }
 
     /**
+     * Clean redirected responses
+     * See: https://stackoverflow.com/a/45440505
+     *
+     * @param {Response} response
+     * @returns {Promise}
+     */
+    function CleanResponse(response) {
+        const clonedResponse = response.clone();
+
+        // Not all browsers support the Response.body stream, so fall back to reading
+        // the entire body into memory as a blob.
+        const bodyPromise =
+            "body" in clonedResponse
+                ? Promise.resolve(clonedResponse.body)
+                : clonedResponse.blob();
+
+        return bodyPromise.then(body => {
+            // New Response() is happy when passed either a stream or a Blob.
+            return new Response(body, {
+                headers: clonedResponse.headers,
+                status: clonedResponse.status,
+                statusText: clonedResponse.statusText,
+            });
+        });
+    }
+
+    /**
      * Helper function to create POST requests
      *
      * @param {String} url
@@ -347,6 +374,7 @@ odoo.define("web_pwa_cache.PWA.core.base.Tools", function() {
         ResponseJSONRPC: ResponseJSONRPC,
         ResponseImage: ResponseImage,
         ResponseRedirect: ResponseRedirect,
+        CleanResponse: CleanResponse,
 
         MakePost: MakePost,
         b64toBlob: b64toBlob,
