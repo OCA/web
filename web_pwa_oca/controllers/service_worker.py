@@ -74,8 +74,10 @@ class ServiceWorker(PWA):
 
     def _get_js_pwa_core_event_fetch_impl(self):
         return """
+        if (evt.request.url.startsWith(self.registration.scope)) {
             evt.respondWith(promise_start.then(
                 () => self.oca_pwa.processRequest(evt.request)));
+        }
         """
 
     def _get_pwa_scripts(self):
