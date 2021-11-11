@@ -44,6 +44,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
             PWA_CONFIG_CHANGED: "_onPWAConfigChanged",
             PWA_CACHE_FAIL: "_onPWACacheFail",
             PWA_PREFETCH_MODAL_TASK_INFO: "_onPWAPrefetchModalTaskInfo",
+            PWA_PREFETCH_FINISHED: "_onPWAPrefetchFinished",
             PWA_SYNC_RECORDS: "_onPWASyncRecords",
             PWA_SYNC_RECORD_OK: "_onPWASyncRecordOK",
             PWA_SYNC_RECORD_FAIL: "_onPWASyncRecordFail",
@@ -77,6 +78,9 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
 
             this._prefetchTasksInfo = {};
             this._prefetchModelHidden = true;
+            this._upgrade_showed = false;
+            this._is_prefetching = false;
+            this._sw_need_upgrade = false;
         },
 
         /**
@@ -155,6 +159,19 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 });
         },
 
+        _onRegisterServiceWorker: function(registration) {
+            this._super.apply(this, arguments);
+            registration.addEventListener("updatefound", () => {
+                registration.installing.addEventListener("statechange", evt => {
+                    if (evt.target.state === "installed") {
+                        if (registration.active) {
+                            this._onSWUpdate(evt.target);
+                        }
+                    }
+                });
+            });
+        },
+
         _checkPWACacheStatus: function() {
             return session
                 .user_has_group("web_pwa_cache.group_pwa_cache")
@@ -217,9 +234,12 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     this.wakeLockScreen(false);
                     this._wakeLockScreenPromise = null;
                 }
+                core.bus.trigger("action_reload");
+
+                if (this._sw_need_upgrade) {
+                    this._openUpgradeDialog();
+                }
             }
-            this._checkPrefetchProgressTimer = null;
-            core.bus.trigger("action_reload");
         },
 
         _closePrefetchModalData: function() {
@@ -317,7 +337,18 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
         },
 
         /**
+         * The SW can be updated
+         */
+        _onSWUpdate: function() {
+            if (!this.isPWACacheEnabled() || !this.isPWAStandalone()) {
+                return;
+            }
+            this._openUpgradeDialog();
+        },
+
+        /**
          * New SW is waiting for activate
+         * This is called
          */
         _onSWWaiting: function() {
             if (!this.isPWACacheEnabled() || !this.isPWAStandalone()) {
@@ -325,44 +356,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 this.$modalSWInfo.modal("hide");
                 return;
             }
-            this._service_worker.getRegistrations().then(registrations => {
-                this._updateSWDialog = new Dialog(null, {
-                    size: "large",
-                    fullscreen: true,
-                    title: _t("Service Worker Update"),
-                    $content: `<p>${_t(
-                        "An update is available. Before updating, make sure that you do not have any other windows open at this address."
-                    )}</p>`,
-                    buttons: [
-                        {
-                            text: _t("Update Now"),
-                            classes: "btn-primary",
-                            click: function() {
-                                this._showSWInfo(
-                                    _t("Updating service worker, please wait...")
-                                );
-                                const tasks = [];
-                                for (const registration of registrations) {
-                                    tasks.push(registration.unregister());
-                                }
-                                Promise.all(tasks).then(() =>
-                                    setTimeout(location.reload(), this._reload_delay)
-                                );
-                            }.bind(this),
-                            close: true,
-                        },
-                        {
-                            text: _t("Cancel"),
-                            click: function() {
-                                this.modeSelector.show();
-                            }.bind(this),
-                            close: true,
-                        },
-                    ],
-                });
-                core.bus.off("close_dialogs", this._updateSWDialog);
-                this._updateSWDialog.open();
-            });
+            this._openUpgradeDialog();
         },
 
         /**
@@ -570,8 +564,8 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
          * @param {Object} evdata
          */
         _onPWAPrefetchModalTaskInfo: function(evdata) {
+            this._is_prefetching = true;
             const progress = (evdata.count_done / evdata.count_total || 0) * 100;
-
             this._updatePrefetchModalData(evdata.id, {
                 message: evdata.message,
                 progress: Math.round(progress),
@@ -602,23 +596,11 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     );
                 }
             }
+        },
 
-            if (this._isTasksCompleted()) {
-                // Avoid show prefetch info modal if all tasks are completed
-                if (this._prefetchModalOpenTimer) {
-                    clearTimeout(this._prefetchModalOpenTimer);
-                    this._prefetchModalOpenTimer = null;
-                }
-
-                // Timeout to auto-close tasks info modal
-                if (this._checkPrefetchProgressTimer) {
-                    clearTimeout(this._checkPrefetchProgressTimer);
-                }
-                this._checkPrefetchProgressTimer = setTimeout(
-                    this._autoclosePrefetchModalData.bind(this),
-                    this._autoclose_prefetch_modal_delay
-                );
-            }
+        _onPWAPrefetchFinished: function() {
+            this._is_prefetching = false;
+            this._autoclosePrefetchModalData();
         },
 
         /**
@@ -655,6 +637,55 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 return;
             }
             this.sendPWABusMessage("START_SYNCHRONIZATION");
+        },
+
+        _openUpgradeDialog: function() {
+            this._sw_need_upgrade = true;
+            if (this._upgrade_showed || this._is_prefetching) {
+                return;
+            }
+            this._upgrade_showed = true;
+            this._service_worker.getRegistrations().then(registrations => {
+                if (this._sw_waiting) {
+                    return;
+                }
+                this._updateSWDialog = new Dialog(null, {
+                    size: "large",
+                    fullscreen: true,
+                    title: _t("Service Worker Update"),
+                    $content: `<p>${_t(
+                        "An update is available. Before updating, make sure that you do not have any other windows open at this address."
+                    )}</p>`,
+                    buttons: [
+                        {
+                            text: _t("Update Now"),
+                            classes: "btn-primary",
+                            click: function() {
+                                this._showSWInfo(
+                                    _t("Updating service worker, please wait...")
+                                );
+                                const tasks = [];
+                                for (const registration of registrations) {
+                                    tasks.push(registration.unregister());
+                                }
+                                Promise.all(tasks).then(() =>
+                                    setTimeout(location.reload(), this._reload_delay)
+                                );
+                            }.bind(this),
+                            close: true,
+                        },
+                        {
+                            text: _t("Cancel"),
+                            click: function() {
+                                this.modeSelector.show();
+                            }.bind(this),
+                            close: true,
+                        },
+                    ],
+                });
+                core.bus.off("close_dialogs", this._updateSWDialog);
+                this._updateSWDialog.open();
+            });
         },
 
         /**

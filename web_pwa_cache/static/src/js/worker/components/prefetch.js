@@ -195,6 +195,11 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                     await this.runVacuumRecords();
                     await this._db.persistDatabases();
 
+                    // Tell to the pages that the process was finished
+                    this.getParent().postBroadcastMessage({
+                        type: "PWA_PREFETCH_FINISHED",
+                    });
+
                     // Console.log("================== OOOOOOOOO");
                     // const model_info = await this._db.getModelInfo("product.secondary.unit");
                     // console.log("------ MODEL INFO: PROD: ", model_info);
