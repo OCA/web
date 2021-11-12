@@ -42,6 +42,9 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function (require) {
             this.x_axis_clickable = this.parse_boolean(node.x_axis_clickable || "1");
             this.y_axis_clickable = this.parse_boolean(node.y_axis_clickable || "1");
             this.field_value = node.field_value || this.field_value;
+            // get modifiers of field_value, so we can later
+            // evaluate and register them for each cell.
+            this.field_value_modifiers = this.view.fieldsInfo[this.view.type][this.field_value].modifiers;
             // TODO: is this really needed? Holger?
             for (var property in node) {
                 if (property.startsWith("field_att_")) {
@@ -149,6 +152,10 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function (require) {
                 attrs: {
                     name: this.field_x_axis,
                     string: x,
+                    // we set the modifiers on the column,
+                    // because it later gets used, to register
+                    // the modifiers on the cell (_renderBodyCell of the renderer).
+                    modifiers: this.field_value_modifiers,
                 },
             };
         },
