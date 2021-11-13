@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2017 Jairo Llopis <jairo.llopis@tecnativa.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<templates xml:space="preserve">
+    <t t-extend="FieldMany2One">
+        <t t-jquery=".o_external_button" t-operation="attributes">
+            <attribute name="t-if">
+                !(widget.nodeOptions.no_open || widget.nodeOptions.no_open_edit)
+            </attribute>
+        </t>
+    </t>
+</templates>

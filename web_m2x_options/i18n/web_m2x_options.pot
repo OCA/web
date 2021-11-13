@@ -1,0 +1,118 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_m2x_options
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_m2x_options
+#. openerp-web
+#: code:addons/web_m2x_options/static/src/xml/base.xml:0
+#, python-format
+msgid "!(widget.nodeOptions.no_open || widget.nodeOptions.no_open_edit)"
+msgstr ""
+
+#. module: web_m2x_options
+#. openerp-web
+#: code:addons/web_m2x_options/static/src/js/form.js:0
+#, python-format
+msgid "Cancel"
+msgstr ""
+
+#. module: web_m2x_options
+#. openerp-web
+#: code:addons/web_m2x_options/static/src/js/form.js:0
+#, python-format
+msgid "Create"
+msgstr ""
+
+#. module: web_m2x_options
+#. openerp-web
+#: code:addons/web_m2x_options/static/src/js/form.js:0
+#, python-format
+msgid "Create \"<strong>%s</strong>\""
+msgstr ""
+
+#. module: web_m2x_options
+#. openerp-web
+#: code:addons/web_m2x_options/static/src/js/form.js:0
+#, python-format
+msgid "Create a %s"
+msgstr ""
+
+#. module: web_m2x_options
+#. openerp-web
+#: code:addons/web_m2x_options/static/src/js/form.js:0
+#, python-format
+msgid "Create and Edit..."
+msgstr ""
+
+#. module: web_m2x_options
+#. openerp-web
+#: code:addons/web_m2x_options/static/src/js/form.js:0
+#, python-format
+msgid "Create and edit"
+msgstr ""
+
+#. module: web_m2x_options
+#: model:ir.model.fields,field_description:web_m2x_options.field_ir_config_parameter__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_m2x_options
+#: model:ir.model.fields,field_description:web_m2x_options.field_ir_config_parameter__id
+msgid "ID"
+msgstr ""
+
+#. module: web_m2x_options
+#: model:ir.model.fields,field_description:web_m2x_options.field_ir_config_parameter____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: web_m2x_options
+#. openerp-web
+#: code:addons/web_m2x_options/static/src/js/form.js:0
+#, python-format
+msgid "No results to show..."
+msgstr ""
+
+#. module: web_m2x_options
+#. openerp-web
+#: code:addons/web_m2x_options/static/src/js/form.js:0
+#, python-format
+msgid "Open: "
+msgstr ""
+
+#. module: web_m2x_options
+#. openerp-web
+#: code:addons/web_m2x_options/static/src/js/form.js:0
+#, python-format
+msgid "Quick search: %s"
+msgstr ""
+
+#. module: web_m2x_options
+#. openerp-web
+#: code:addons/web_m2x_options/static/src/js/form.js:0
+#, python-format
+msgid "Search More..."
+msgstr ""
+
+#. module: web_m2x_options
+#: model:ir.model,name:web_m2x_options.model_ir_config_parameter
+msgid "System Parameter"
+msgstr ""
+
+#. module: web_m2x_options
+#. openerp-web
+#: code:addons/web_m2x_options/static/src/js/form.js:0
+#, python-format
+msgid "You are creating a new %s, are you sure it does not exist yet?"
+msgstr ""
