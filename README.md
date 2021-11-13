@@ -15,7 +15,11 @@ TODO: add repo description.
 
 [//]: # (addons)
 
-This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
+Available addons
+----------------
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[web_m2x_options](web_m2x_options/) | 15.0.1.0.0 |  | web_m2x_options
 
 [//]: # (end addons)
 
