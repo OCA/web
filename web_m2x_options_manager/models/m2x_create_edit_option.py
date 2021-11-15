@@ -36,7 +36,6 @@ class M2xCreateEditOption(models.Model):
         compute="_compute_model_name",
         inverse="_inverse_model_name",
         store=True,
-        string="Model Name",
     )
 
     option_create = fields.Selection(
@@ -125,8 +124,12 @@ class M2xCreateEditOption(models.Model):
     def _check_field_in_model(self):
         for opt in self:
             if opt.field_id.model_id != opt.model_id:
-                msg = _("'%s' is not a valid field for model '%s'!")
-                raise ValidationError(msg % (opt.field_name, opt.model_name))
+                msg = _(
+                    "%(field)s is not a valid field for model %(model)s!",
+                    field=opt.field_name,
+                    model=opt.model_name,
+                )
+                raise ValidationError(msg)
 
     @api.constrains("field_id")
     def _check_field_type(self):
