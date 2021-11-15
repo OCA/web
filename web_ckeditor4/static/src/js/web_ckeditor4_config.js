@@ -20,11 +20,11 @@
 #
 ############################################################################*/
 
-odoo.define('web_ckeditor4.config', function (require) {
+odoo.define("web_ckeditor4.config", function (require) {
     "use strict";
 
     var ckeditor_addFunction_org = CKEDITOR.tools.addFunction;
-    // this is a quite complicated way to kind of monkey patch the private
+    // This is a quite complicated way to kind of monkey patch the private
     // method onDomReady of ckeditor's plugin wysiwigarea, which causes problems
     // when the editor is about to be destroyed but because of OpenERP's
     // architecture updated one last time with its current value
@@ -43,33 +43,39 @@ odoo.define('web_ckeditor4.config', function (require) {
         return ckeditor_addFunction_org(fn, scope);
     };
 
-    CKEDITOR.on('dialogDefinition', function (e) {
+    CKEDITOR.on("dialogDefinition", function (e) {
         _.each(e.data.definition.contents, function (element) {
-            if (!element || element.filebrowser != 'uploadButton') {
-                return
+            if (!element || element.filebrowser != "uploadButton") {
+                return;
             }
             _.each(element.elements, function (element) {
-                if (!element.onClick || element.type != 'fileButton') {
-                    return
+                if (!element.onClick || element.type != "fileButton") {
+                    return;
                 }
                 var onClick_org = element.onClick;
                 element.onClick = function (e1) {
                     onClick_org.apply(this, arguments);
-                    _.each($('#' + this.domId).closest('table')
-                        .find('iframe').contents().find(':file')
-                        .get(0).files,
+                    _.each(
+                        $("#" + this.domId)
+                            .closest("table")
+                            .find("iframe")
+                            .contents()
+                            .find(":file")
+                            .get(0).files,
                         function (file) {
                             var reader = new FileReader();
                             reader.onload = function (load_event) {
                                 CKEDITOR.tools.callFunction(
                                     e.editor._.filebrowserFn,
                                     load_event.target.result,
-                                    '');
-                            }
+                                    ""
+                                );
+                            };
                             reader.readAsDataURL(file);
-                        });
+                        }
+                    );
                     return false;
-                }
+                };
             });
         });
     });
@@ -82,18 +88,17 @@ odoo.define('web_ckeditor4.config', function (require) {
     };
 
     var default_ckeditor_filter = new CKEDITOR.filter({
-        '*':
-        {
-            attributes: 'href,src,style,alt,width,height,dir',
-            styles: '*',
-            classes: '*',
+        "*": {
+            attributes: "href,src,style,alt,width,height,dir",
+            styles: "*",
+            classes: "*",
         },
-        'html head title meta style body p div span a h1 h2 h3 h4 h5 img br hr table tr th td ul ol li dd dt strong pre b i': true,
+        "html head title meta style body p div span a h1 h2 h3 h4 h5 img br hr table tr th td ul ol li dd dt strong pre b i": true,
     });
     var default_ckeditor_writer = new CKEDITOR.htmlParser.basicWriter();
     return {
-        'filter_html': filter_html,
-        'default_ckeditor_filter': default_ckeditor_filter,
-        'default_ckeditor_writer': default_ckeditor_writer
-    }
+        filter_html: filter_html,
+        default_ckeditor_filter: default_ckeditor_filter,
+        default_ckeditor_writer: default_ckeditor_writer,
+    };
 });

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -19,25 +18,26 @@
 #
 ##############################################################################
 import re
+
 from lxml.html import clean
 from openerp import models
 
 
 class CkeditorMonkeypatch(models.AbstractModel):
-    _name = 'ckeditor.monkeypatch'
-    _description = 'Monkeypatches for CKEditor'
+    _name = "ckeditor.monkeypatch"
+    _description = "Monkeypatches for CKEditor"
 
     def _register_hook(self):
-        marker = self._name.replace('.', '_')
+        marker = self._name.replace(".", "_")
         if not hasattr(clean, marker):
             # monkey patch lxml's html cleaner to allow image data urls
-            if hasattr(clean, '_is_javascript_scheme'):
+            if hasattr(clean, "_is_javascript_scheme"):
                 # this is the case in lxml >= 3.3
                 _is_javascript_scheme = clean._is_javascript_scheme
-                _is_image_dataurl = re.compile(
-                    r'^data:image/.+;base64', re.I).search
-                clean._is_javascript_scheme = lambda s:\
-                    None if _is_image_dataurl(s) else _is_javascript_scheme(s)
+                _is_image_dataurl = re.compile(r"^data:image/.+;base64", re.I).search
+                clean._is_javascript_scheme = (
+                    lambda s: None if _is_image_dataurl(s) else _is_javascript_scheme(s)
+                )
             # TODO: do something else for 2.3.1 <= version <= 3.2, before data
             # urls were not cleaned at all
             setattr(clean, marker, True)

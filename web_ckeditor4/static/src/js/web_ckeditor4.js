@@ -20,43 +20,42 @@
 #
 ############################################################################*/
 
-odoo.define('web_ckeditor4', function(require){
+odoo.define("web_ckeditor4", function (require) {
     "use strict";
-    var core = require('web.core');
-    var session = require('web.session');
-    var formats = require('web.formats');
-    var ckconfig = require('web_ckeditor4.config');
+    var core = require("web.core");
+    var session = require("web.session");
+    var formats = require("web.formats");
+    var ckconfig = require("web_ckeditor4.config");
 
-    var FieldCKEditor4 = core.form_widget_registry.get('text').extend({
+    var FieldCKEditor4 = core.form_widget_registry.get("text").extend({
         ckeditor_config: function () {
             return {
                 removePlugins: this._getRemovePlugins(),
                 removeButtons: this._getRemoveButtons(),
-                filebrowserImageUploadUrl: 'dummy',
-                extraPlugins: 'filebrowser',
-                // this is '#39' per default which screws up single quoted text in ${}
-                entities_additional: ''
+                filebrowserImageUploadUrl: "dummy",
+                extraPlugins: "filebrowser",
+                // This is '#39' per default which screws up single quoted text in ${}
+                entities_additional: "",
             };
         },
         ckeditor_filter: ckconfig.default_ckeditor_filter,
         ckeditor_writer: ckconfig.default_ckeditor_writer,
         _getRemovePlugins: function () {
-            return 'iframe,flash,forms,smiley,pagebreak,stylescombo';
+            return "iframe,flash,forms,smiley,pagebreak,stylescombo";
         },
         _getRemoveButtons: function () {
-            return '';
+            return "";
         },
         init: function () {
             this._super.apply(this, arguments);
-            this.editor_lang = session.user_context.lang.split('_')[0];
+            this.editor_lang = session.user_context.lang.split("_")[0];
             this.view.on("load_record", this, this._on_load_record);
         },
-        start: function()
-        {
+        start: function () {
             this._super.apply(this, arguments);
-            CKEDITOR.lang.load(this.editor_lang, 'en', function() {});
+            CKEDITOR.lang.load(this.editor_lang, "en", function () {});
         },
-        _on_load_record: function() {
+        _on_load_record: function () {
             /* Fix widget not re-initialized on form discard.
 
             When you hit "cancel" button or when you navigate away
@@ -75,22 +74,19 @@ odoo.define('web_ckeditor4', function(require){
                 this.initialize_content();
             }
         },
-        initialize_content: function()
-        {
+        initialize_content: function () {
             var self = this;
             this._super.apply(this, arguments);
-            if(!this.$el)
-            {
+            if (!this.$el) {
                 return;
-            } else if (!this.get('effective_readonly') && !this.editor) {
-                this.editor = CKEDITOR.replace(this.$el.get(0),
+            } else if (!this.get("effective_readonly") && !this.editor) {
+                this.editor = CKEDITOR.replace(
+                    this.$el.get(0),
                     _.extend(
                         {
                             language: this.editor_lang,
-                            on:
-                            {
-                                'change': function()
-                                {
+                            on: {
+                                change: function () {
                                     self.store_dom_value();
                                 },
                             },
@@ -100,82 +96,72 @@ odoo.define('web_ckeditor4', function(require){
                 );
             }
         },
-        store_dom_value: function()
-        {
-            this.internal_set_value(this.editor ? this.editor.getData() : formats.parse_value(this.get('value'), this));
+        store_dom_value: function () {
+            this.internal_set_value(
+                this.editor
+                    ? this.editor.getData()
+                    : formats.parse_value(this.get("value"), this)
+            );
         },
-        filter_html: function(value)
-        {
-            return ckconfig.filter_html(value, this.ckeditor_filter, this.ckeditor_writer);
+        filter_html: function (value) {
+            return ckconfig.filter_html(
+                value,
+                this.ckeditor_filter,
+                this.ckeditor_writer
+            );
         },
-        render_value: function()
-        {
-            if(this.get("effective_readonly"))
-            {
-                this.$el.html(this.filter_html(this.get('value')));
-            }
-            else
-            {
-                if(this.editor)
-                {
+        render_value: function () {
+            if (this.get("effective_readonly")) {
+                this.$el.html(this.filter_html(this.get("value")));
+            } else if (this.editor) {
                     var self = this;
-                    if(this.editor.status != 'ready')
-                    {
-                        var instanceReady = function()
-                        {
-                            self.editor.setData(self.get('value') || '');
-                            self.editor.removeListener('instanceReady', instanceReady);
+                    if (this.editor.status != "ready") {
+                        var instanceReady = function () {
+                            self.editor.setData(self.get("value") || "");
+                            self.editor.removeListener("instanceReady", instanceReady);
                         };
-                        this.editor.on('instanceReady', instanceReady);
-                    }
-                    else
-                    {
-                        self.editor.setData(self.get('value') || '');
+                        this.editor.on("instanceReady", instanceReady);
+                    } else {
+                        self.editor.setData(self.get("value") || "");
                     }
                 }
-            }
         },
         destroy_content: function () {
             this._cleanup_editor();
         },
-        undelegateEvents: function()
-        {
+        undelegateEvents: function () {
             this._cleanup_editor();
             return this._super.apply(this, arguments);
         },
-        _cleanup_editor: function()
-        {
-            if(this.editor && this.editor.status == 'ready')
-            {
+        _cleanup_editor: function () {
+            if (this.editor && this.editor.status == "ready") {
                 CKEDITOR.remove(this.editor.name);
-                $('#cke_' + this.editor.name).remove();
+                $("#cke_" + this.editor.name).remove();
                 this.editor.removeAllListeners();
                 this.editor.destroy();
                 this.editor = null;
             }
         },
-        destroy: function()
-        {
+        destroy: function () {
             this.view.off("load_record", this, this._on_load_record);
             this._cleanup_editor();
             this._super();
-        }
+        },
     });
 
     var FieldCKEditor4Raw = FieldCKEditor4.extend({
-        filter_html: function(value)
-        {
+        filter_html: function (value) {
             return value;
-        }
+        },
     });
 
-    core.form_widget_registry.add('text_ckeditor4', FieldCKEditor4);
-    core.form_widget_registry.add('text_ckeditor4_raw', FieldCKEditor4Raw);
-    core.form_widget_registry.add('text_html', FieldCKEditor4);
-    core.form_widget_registry.add('html', FieldCKEditor4);
+    core.form_widget_registry.add("text_ckeditor4", FieldCKEditor4);
+    core.form_widget_registry.add("text_ckeditor4_raw", FieldCKEditor4Raw);
+    core.form_widget_registry.add("text_html", FieldCKEditor4);
+    core.form_widget_registry.add("html", FieldCKEditor4);
 
     return {
-        'FieldCKEditor4': FieldCKEditor4,
-        'FieldCKEditor4Raw': FieldCKEditor4Raw
-    }
+        FieldCKEditor4: FieldCKEditor4,
+        FieldCKEditor4Raw: FieldCKEditor4Raw,
+    };
 });
