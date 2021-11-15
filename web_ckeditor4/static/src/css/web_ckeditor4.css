@@ -1,9 +1,0 @@
-.odoo .oe_form_field_text_ckeditor4.disabled,
-.odoo td.oe_form_field_text_ckeditor4,
-.odoo .oe_form_field_text_ckeditor4_raw.disabled.odoo,
-.odoo td.oe_form_field_text_ckeditor4_raw {
-    /* here we need to reset odoo's styles to
-     * have the HTML display as (probably) intended
-     */
-    white-space: normal;
-}
