@@ -7,10 +7,10 @@ from odoo import models
 class IrUiView(models.Model):
     _inherit = "ir.ui.view"
 
-    def postprocess(self, node, current_node_path, editable, name_manager):
-        res = super().postprocess(node, current_node_path, editable, name_manager)
+    def _postprocess_tag_field(self, node, name_manager, node_info):
+        res = super()._postprocess_tag_field(node, name_manager, node_info)
         if node.tag == "field":
-            mname = name_manager.Model._name
+            mname = name_manager.model._name
             fname = node.attrib["name"]
             field = self.env[mname]._fields.get(fname)
             if field and field.type in ("many2many", "many2one"):

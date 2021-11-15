@@ -4,11 +4,11 @@
 from lxml import etree
 
 from odoo.exceptions import ValidationError
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 from odoo.tools.safe_eval import safe_eval
 
 
-class TestM2xCreateEditOption(SavepointCase):
+class TestM2xCreateEditOption(TransactionCase):
     def setUp(self):
         super(TestM2xCreateEditOption, self).setUp()
         ref = self.env.ref
