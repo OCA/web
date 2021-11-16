@@ -8,7 +8,7 @@ This module adds responsiveness to web backend.
 
 * Quick menu search inside the app menu
 
-  .. image:: https://user-images.githubusercontent.com/973709/48417213-17576600-e74a-11e8-846a-57691e82636b.gif
+  .. image:: ../static/img/appsearch.gif
 
 * Sticky header & footer in list view
 
@@ -20,32 +20,37 @@ This module adds responsiveness to web backend.
 
 * Bigger checkboxes in list view
 
-  .. image:: ../static/img/big_checkboxes.gif
+  .. image:: ../static/img/listview.gif
 
 **Features for mobile**:
 
 * App-specific submenus are shown on full screen when toggling them from the
   "hamburger" menu
 
-  .. image:: https://user-images.githubusercontent.com/973709/48417297-51286c80-e74a-11e8-9a47-22c810b18c43.gif
+  .. image:: ../static/img/hamburger.gif
+
+* User-specific submenus are shown on full screen when toggling them from the
+  "avatar" menu
+
+  .. image:: ../static/img/usermenu.gif
 
 * View type picker dropdown displays comfortably
 
-  .. image:: https://user-images.githubusercontent.com/973709/50964322-e3d55580-14c6-11e9-8249-48db9539600f.gif
+  .. image:: ../static/img/viewtype.gif
 
 * Top app bar is always visible, but the control panel is hidden when
   scrolling down, to save some valuable vertical space
 
-  .. image:: https://user-images.githubusercontent.com/973709/50964496-5cd4ad00-14c7-11e9-9261-fd223a329d02.gif
+  .. image:: ../static/img/navbar.gif
 
 * Form status bar action and status buttons are collapsed in dropdowns.
   Other control panel buttons use icons to save space.
 
-  .. image:: https://user-images.githubusercontent.com/973709/50965446-e08f9900-14c9-11e9-92d6-dda472cb6557.gif
+  .. image:: ../static/img/form_buttons.gif
 
 * Breadcrumbs navigation is collapsed with a "back arrow" button.
 
-  .. image:: https://user-images.githubusercontent.com/973709/50965168-1d0ec500-14c9-11e9-82a0-dfee82ed0861.gif
+  .. image:: ../static/img/breadcrumbs.gif
 
 * Search panel is collapsed to mobile version on small screens.
 
@@ -55,17 +60,21 @@ This module adds responsiveness to web backend.
 
   .. image:: ../static/img/chatter.gif
 
-* Followers and send button is displayed on mobile. Avatar is hidden.
-
-  .. image:: ../static/img/chatter.gif
-
 * Scrollable dropdowns
 
   .. image:: ../static/img/dropdown_scroll.gif
 
+* Kanban interface adopted to mobile
+
+  .. image:: ../static/img/kanban.gif
+
+* Calendar interface adopted to mobile
+
+  .. image:: ../static/img/calendar.gif
+
 * Interface is adapted dynamically on device rotation
 
-  .. image:: ../static/img/rotate.gif
+  .. image:: ../static/img/device_rotation.gif
 
 **Features for desktop computers**:
 
@@ -76,19 +85,19 @@ This module adds responsiveness to web backend.
   accessible by fingers of one hand.
   F.x. `Alt + S` for `Save`
 
-  .. image:: https://user-images.githubusercontent.com/973709/48417578-ff341680-e74a-11e8-8881-017709e912bc.png
+  .. image:: ../static/img/shortcuts.gif
 
 * Autofocus on search menu box when opening the app menu
 
-  .. image:: https://user-images.githubusercontent.com/973709/48417213-17576600-e74a-11e8-846a-57691e82636b.gif
-
-* Set chatter on the side of the screen, optional per user
-
-  .. image:: https://user-images.githubusercontent.com/973709/48417270-41108d00-e74a-11e8-9172-cba825d027ed.gif
+  .. image:: ../static/img/appsearch.gif
 
 * Full width form sheets
 
-  .. image:: https://user-images.githubusercontent.com/973709/48417428-ac5a5f00-e74a-11e8-8839-5bc538c54c1d.png
+  .. image:: ../static/img/formview.gif
+
+* Set chatter on the side of the screen, optional per user
+
+  .. image:: ../static/img/chatter_sided.gif
 
 * Sticky chatter topbar
 
