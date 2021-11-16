@@ -124,8 +124,9 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                 try {
                     const context = data.kwargs.context;
                     if (
+                        !this.isOfflineMode() &&
                         typeof context !== "undefined" &&
-                        context.__pwa_sw_force_online
+                        context.pwa_force_online
                     ) {
                         return reject("Forced reject from client");
                     }

@@ -30,8 +30,7 @@ odoo.define("web_pwa_cache.BasicModel", function(require) {
          * @override
          */
         _rpc: function(params, options) {
-            const force_sw_online =
-                params.context && params.context.__pwa_sw_force_online;
+            const force_sw_online = params.context && params.context.pwa_force_online;
             if (force_sw_online && params.method === "onchange") {
                 options = options || {};
                 options.shadow = true;
