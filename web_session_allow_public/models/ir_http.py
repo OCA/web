@@ -1,17 +1,16 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016 LasLabs Inc.
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-from openerp import models
-from openerp.http import SessionExpiredException
+from odoo import models
+from odoo.http import SessionExpiredException
 
 
-class IrHttp(models.Model):
-
+class IrHttp(models.AbstractModel):
     _inherit = 'ir.http'
 
-    def _auth_method_user(self):
+    @classmethod
+    def _auth_method_user(cls):
         try:
-            return super(IrHttp, self)._auth_method_user()
+            return super(IrHttp, cls)._auth_method_user()
         except SessionExpiredException:
-            return self._auth_method_public()
+            return cls._auth_method_public()
