@@ -602,7 +602,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
          * @returns {Promise}
          */
         hasTableChanges: function(model_info) {
-            return new Promise(async (resolve, reject) => {
+            return new Promise(async resolve => {
                 try {
                     const tableExists = await this.tableExists(model_info);
                     if (tableExists) {
@@ -645,7 +645,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                         );
                     }
                 } catch (err) {
-                    return reject(err);
+                    // Do nothing
                 }
                 return resolve(false);
             });

@@ -29,6 +29,8 @@ Odoo Client Proxy
 
 This module is used to add support to cache POST/GET requests. Can handle Odoo requests and responses to give an offline experience.
 
+We recommend using chrome or chromium based browsers. See Roadmap section.
+
 Cache Types
 ~~~~~~~~~~~
 
@@ -36,9 +38,12 @@ Cache Types
 - Client QWeb -> Gets indepent client views (used by widgets)
 - function -> Cache function calls
 - Onchange -> Cache onchange calls
-- Onchange with formula -> Cache onchange calls using formulas
+- Onchange with formula -> Cache onchange calls using formulas (async)
+- Default with formula -> Cache default values using formulas
 - Post -> Cache indepent POST requests (used by widgets)
 - Get -> Cache indepent GET requests
+
+** THIS SECTION NEEDS MORE INFORMATION **
 
 How Works
 ~~~~~~~~~
@@ -50,9 +55,16 @@ The module handle two modes:
     - Online: All requests except Create, Update and Delete operations goes from cache first, if not found, tries from network.
     - Offline: All requests goes from/to cache
 
-When the user change to offline mode the module will start to prefetch all data and only recent records will be requested (write_date > last_cache_date)
+When the user change to online mode the module will start to prefetch all data and only recent records will be requested (write_date > last_cache_date)
 
 The standalone mode is available only when install the PWA.
+Note that we call 'PWA' to the 'Home Icon'. The ServiceWorker is installed and activated automatically when the user access to the backend.
+The service worker will always listen for all fetch events sent from the controlled page. If the user is not in the 'Enable PWA Cache' group or is not
+in 'standalone' mode, the request will be handled normally (directly to the network without checking for possible cached responses).
+This operation adds an overhead of ~3ms per request. It is not possible to skip this "routing" due to the way the service worker works.
+
+This module uses queue_job to precalculate the onchanges following the rules defined in the pwa.cache model. You can see the records in the 'Technical'
+menu. Always you can force this precalculations using the button available in the pwa.cache record form.
 
 To Developers
 ~~~~~~~~~~~~~
@@ -60,22 +72,32 @@ To Developers
 'onchange' prefetching works in a generic way... so, it uses the "main" form view to know the involved fields. If you trigger an onchange than uses a
 field thas is not present in this view, you won't get any change related to the field.
 
-If you want trigger an 'onchange' with
-
 **Table of contents**
 
 .. contents::
    :local:
 
+Usage
+=====
+
+The 'cache' feature can be enabled per user (by default is disabled for all). To enable it you need add the user to the 'Enable PWA Cache' group.
+
 Known issues / Roadmap
 ======================
 
 * 'create_multi' is splitted in normal 'create' in offline mode
-* Improve 'onchange' and 'function' synchronization
-* Can't use domains with dotted leafs
 * one2many fields inside of one2many field don't work
-* Only supports mono-company instances
+* Only supports mono-database instances
 * Sqlite doesn't have '=like' operator (all are case insensitive by default)
+* Use 'dev=xml' don't update the "write_date" field of the views because usage of computed method... so, can't update views caches when enabled.
+* Improve "grouping" feature... For example in kanban and web_read_group, read_progress_bar
+* Firefox can't detect 'standalone' mode. See https://github.com/mozilla-mobile/android-components/issues/8584
+  Due to this, the service worker can't work properly. So, firefox is not compatible with this module.
+* Some browsers have very restricted storage limits criteria, this can cause problems with indexeddb.
+* Can't use standalone and normal mode at the same time because the ServiceWorker is shared by all the pages in the same domain.
+* If install the PWA in localhost, be carefully when change the instance because you will use the last service worker installed.
+* On the mobile, to ensure a correct prefetching process, before starting the PWA it is necessary to close the main browser. We have an issue open to try handle this in a correct way: https://bugs.chromium.org/p/chromium/issues/detail?id=1262969
+* The WakeLock API is not supported in Safari, Firefox and Internet Explorer: https://caniuse.com/?search=wakelock
 
 Bug Tracker
 ===========
@@ -100,7 +122,7 @@ Contributors
 
 * `Tecnativa <https://www.tecnativa.com>`_:
 
-    * Alexandre Díaz
+    * Alexandre D. Díaz
     * Pedro M. Baeza
 
 Maintainers

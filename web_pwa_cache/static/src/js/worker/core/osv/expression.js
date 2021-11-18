@@ -808,20 +808,18 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                             ])
                         );
                         if (prefix) {
-                            const records_prefix = await this._dbmanager.search(
+                            const ids = await this._dbmanager.search(
                                 left_model.model,
                                 doms
                             );
-                            const ids = get_records_ids(records_prefix);
                             return [[left, "in", ids]];
                         }
                         return doms;
                     }
                     const parent_name = parent || left_model.parent_name;
                     let child_ids = _.unique(ids);
-                    let records = [];
                     while (!_.isEmpty(ids)) {
-                        records = await this._dbmanager.search(
+                        ids = await this._dbmanager.search(
                             left_model.model,
                             [[parent_name, "in", ids]],
                             undefined,
@@ -829,7 +827,6 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                             undefined,
                             "id"
                         );
-                        ids = get_records_ids(records);
                         child_ids = child_ids.concat(ids);
                     }
                     return [[left, "in", _.unique(child_ids)]];
@@ -925,7 +922,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     } else {
                         [left, operator, right] = leaf.leaf;
                     }
-                    const path = left.split(".", 1);
+                    const path = tools.pySplit(left, ".", 1);
 
                     const model = leaf.model;
                     const field_name = path[0];
@@ -1053,11 +1050,10 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                         field.type === "many2one"
                     ) {
                         // FIXME: Client side allways uses 'active_test' = True
-                        const records = await this._dbmanager.search(comodel.model, [
+                        const right_ids = await this._dbmanager.search(comodel.model, [
                             [path.slice(1).join("."), operator, right],
                         ]);
-                        const right_ids = get_records_ids(records);
-                        leaf.leaf = (path[0], "in", right_ids);
+                        leaf.leaf = [path[0], "in", right_ids];
                         push(leaf);
                     }
 
@@ -1074,11 +1070,9 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                     ) {
                         // Let the field generate a domain.
                         if (path.length > 1) {
-                            const records = await this._dbmanager.search(
-                                comodel.model,
-                                [[path.slice(1).join("."), operator, right]]
-                            );
-                            right = get_records_ids(records);
+                            right = await this._dbmanager.search(comodel.model, [
+                                [path.slice(1).join("."), operator, right],
+                            ]);
                             operator = "in";
                         }
                         const domain = await this._dbmanager.determineDomain(
@@ -1486,7 +1480,6 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
             const model = eleaf.model;
             const leaf = eleaf.leaf;
             const [left, operator, right] = leaf;
-
             const table_alias = `"${eleaf.generate_alias()}"`;
 
             let query = null;
@@ -1504,8 +1497,9 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
                 query = `(${table_alias}."${left}" not in (${right[0]}))`;
                 params = right[1];
             } else if (
+                model.fields[left] &&
                 SERIALIZED_RELATIONAL_COLUMN_TYPES.indexOf(model.fields[left].type) !==
-                -1
+                    -1
             ) {
                 const is_positive_operator =
                     NEGATIVE_TERM_OPERATORS.indexOf(operator) === -1;

@@ -366,6 +366,14 @@ odoo.define("web_pwa_cache.PWA.core.base.Tools", function() {
         return (hash1 >>> 0) * 4096 + (hash2 >>> 0);
     }
 
+    function pySplit(str_data, separator, maxsplits) {
+        const parts = str_data.split(separator);
+        if (typeof maxsplits === "undefined" || parts.length <= maxsplits) {
+            return parts;
+        }
+        return parts.slice(0, maxsplits).concat(parts.slice(maxsplits).join(separator));
+    }
+
     return {
         ODOO_DATE_FORMAT: ODOO_DATE_FORMAT,
         ODOO_TIME_FORMAT: ODOO_TIME_FORMAT,
@@ -393,6 +401,7 @@ odoo.define("web_pwa_cache.PWA.core.base.Tools", function() {
 
         s_quote: s_quote,
         hash: hash,
+        pySplit: pySplit,
 
         promiseAny: promiseAny,
 

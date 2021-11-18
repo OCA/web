@@ -1379,29 +1379,6 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
         },
 
         /**
-         * Remove old records
-         *
-         * @param {String} model
-         * @param {Array} oids
-         * @returns {Promise}
-         */
-        vacuumRecords: function(model, oids) {
-            return new Promise(async (resolve, reject) => {
-                try {
-                    const ids_to_remove = await this.search(model, [
-                        ["id", "not in", oids],
-                    ]);
-                    if (!_.isEmpty(ids_to_remove)) {
-                        await this.unlink(model, ids_to_remove);
-                    }
-                    return resolve(ids_to_remove);
-                } catch (err) {
-                    return reject(err);
-                }
-            });
-        },
-
-        /**
          * @private
          * @param {Object} model_info
          * @param {String} field_type
