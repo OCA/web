@@ -641,7 +641,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
 
         _openUpgradeDialog: function() {
             this._sw_need_upgrade = true;
-            if (this._upgrade_showed || this._is_prefetching) {
+            if (this._upgrade_showed || this._is_prefetching || !this.canUpdate()) {
                 return;
             }
             this._upgrade_showed = true;
@@ -741,6 +741,31 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
          */
         isPWACacheEnabled: function() {
             return !this.is_pwa_cache_disabled;
+        },
+
+        /**
+         * Check if can make network requests
+         *
+         * @returns {Boolean}
+         */
+        canUpdate: function() {
+            return new Promise(async resolve => {
+                try {
+                    const version = await session.rpc(
+                        "/web/webclient/version_info",
+                        {}
+                    );
+                    if (
+                        !_.isEmpty(version) &&
+                        Object.prototype.hasOwnProperty(version, "server_version")
+                    ) {
+                        return resolve(true);
+                    }
+                } catch (err) {
+                    // Do nothing
+                }
+                return resolve(false);
+            });
         },
     });
 });

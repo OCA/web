@@ -224,7 +224,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                     const num_models = models.length;
                     for (const index in models) {
                         const model_info = models[index];
-                        const table_exists = await this._db.sqlite.tableExists(
+                        const table_exists = await this._db.sqlitedb.tableExists(
                             model_info
                         );
                         if (!table_exists) {
@@ -243,9 +243,9 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                                 offset <= count_records;
                                 offset += this._vacuum_chunk_size
                             ) {
-                                const client_ids = this._db.search(
+                                const client_ids = await this._db.search(
                                     model_info,
-                                    undefined,
+                                    [],
                                     this._vacuum_chunk_size,
                                     undefined,
                                     offset
