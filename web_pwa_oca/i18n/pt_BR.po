@@ -71,8 +71,8 @@ msgstr "Nome Curto do App Web Progressivo"
 #: code:addons/web_pwa_oca/static/src/js/pwa_manager.js:0
 #, python-format
 msgid ""
-"Service workers are not supported! Maybe you are not using HTTPS or you work"
-" in private mode."
+"Service workers are not supported! Maybe you are not using HTTPS or you work "
+"in private mode."
 msgstr ""
 "Workers de servição não são suportados! Talvez você não esteja utilizando "
 "HTTPS ou esteja trabalhando em modo privado."
@@ -101,8 +101,8 @@ msgstr "Você só pode carregar arquivos PNG até 512x512"
 #. module: web_pwa_oca
 #: code:addons/web_pwa_oca/models/res_config_settings.py:0
 #, python-format
-msgid "You can only upload SVG or PNG files"
-msgstr "Você só pode carregar arquivos PNG ou SVG"
+msgid "You can only upload SVG or PNG files. Found: %s."
+msgstr ""
 
 #. module: web_pwa_oca
 #: code:addons/web_pwa_oca/models/res_config_settings.py:0
@@ -123,3 +123,6 @@ msgstr "[ServiceWorker] Registrado:"
 #, python-format
 msgid "[ServiceWorker] Registration failed: "
 msgstr "[ServiceWorker] Falha no registro: "
+
+#~ msgid "You can only upload SVG or PNG files"
+#~ msgstr "Você só pode carregar arquivos PNG ou SVG"
