@@ -23,7 +23,7 @@ Widget Open on new Tab
     :target: https://runbot.odoo-community.org/runbot/162/14.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 This addon introduces a new widget.
 When added to a field in a tree view, the field appears as a button which opens the record in a new tab.
@@ -68,6 +68,7 @@ Contributors
 
 * Enric Tobella <etobella@creublanca.es>
 * Raf Ven <raf.ven@dynapps.be>
+* Thanakrit Pintana <thanakrit@bigdata.co.th>
 
 Maintainers
 ~~~~~~~~~~~
