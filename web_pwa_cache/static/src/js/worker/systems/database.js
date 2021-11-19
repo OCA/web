@@ -509,6 +509,7 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                         model_info = await this.getModelInfo(model_info);
                     }
 
+                    console.log(`Deleting UNLINK '${model_info.table}'....`, rc_ids);
                     await this.sqlitedb.deleteRecords(model_info, rc_ids);
                     // Try remove binary... maybe doesn't exists
                     try {

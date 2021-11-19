@@ -180,6 +180,8 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                                 db: this._db,
                                 obj: record_data,
                             });
+                            // Update current data to be used by next onchanges
+                            _.extend(record_data, changes.value);
                             update_result(result, changes);
                         } else {
                             const sql_selectors = `SELECT "field_name", "required" FROM ${model_info_pwa_onchange.table} WHERE "pwa_cache_id"=? AND NOT disposable`;

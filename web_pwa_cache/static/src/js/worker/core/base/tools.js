@@ -223,7 +223,7 @@ odoo.define("web_pwa_cache.PWA.core.base.Tools", function() {
          */
         var sign = normalized_value < 0 ? -1.0 : 1.0;
         var rounded_value = sign * Math.round(Math.abs(normalized_value));
-        return rounded_value * precision;
+        return rounded_value * sprecision;
     }
 
     /**

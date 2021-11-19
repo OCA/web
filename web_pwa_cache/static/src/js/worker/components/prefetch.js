@@ -198,9 +198,9 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                     });
 
                     // Console.log("================== OOOOOOOOO");
-                    // const model_info = await this._db.getModelInfo("stock.quant");
+                    // const model_info = await this._db.getModelInfo("sale.order.line");
                     // console.log("------ MODEL INFO: PROD: ", model_info);
-                    // const records = await this._db.search_read(model_info, [['product_id', '=', 18554], ['location_id.usage', '=', 'internal']]);
+                    // const records = await this._db.search_read(model_info, [], 100);
                     // console.log("------------------ RECORDS");
                     // console.log(records);
                 } catch (err) {
@@ -261,7 +261,11 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                                     response_data
                                 );
                                 if (!_.isEmpty(ids_to_remove)) {
-                                    await this.unlink(model_info, ids_to_remove);
+                                    console.log(
+                                        `Deleting INIT '${model_info.table}'....`,
+                                        ids_to_remove
+                                    );
+                                    await this._db.unlink(model_info, ids_to_remove);
                                 }
                             }
                         } catch (err) {
@@ -345,6 +349,16 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                                 context: {strict_mode: true},
                             });
                             const response_data = await response.json();
+                            if (
+                                response_data &&
+                                typeof response_data.error !== "undefined"
+                            ) {
+                                this._sendTaskInfoError(
+                                    client_message_id,
+                                    response_data.error.data.message
+                                );
+                                return reject(response_data.error);
+                            }
                             if (!response_data || response_data.result.length === 0) {
                                 break;
                             }

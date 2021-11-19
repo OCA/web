@@ -735,6 +735,7 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
             if (ids && ids.length) {
                 sql += ` WHERE "id" IN (${new Array(ids.length).fill("?").join(",")})`;
             }
+            console.log(`Deleting '${model_info.table}'....`, ids);
             return this.query(sql, ...(ids || []));
         },
 

@@ -138,9 +138,16 @@ class PWAPrefetch(PWA):
         valid_fields = []
         for field in fields:
             field_def = model_obj._fields[field]
-            if not field_def.comodel_name or request.env[
-                field_def.comodel_name
-            ].check_access_rights("read", raise_exception=False):
+            if (
+                field_def.store
+                or not field_def.comodel_name
+                or (
+                    not field_def.store
+                    and request.env[field_def.comodel_name].check_access_rights(
+                        "read", raise_exception=False
+                    )
+                )
+            ):
                 valid_fields.append(field)
         return valid_fields
 

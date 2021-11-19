@@ -641,9 +641,15 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
 
         _openUpgradeDialog: function() {
             this._sw_need_upgrade = true;
-            if (this._upgrade_showed || this._is_prefetching || !this.canUpdate()) {
-                return;
-            }
+            this.checkIfCanUpdate().then(result => {
+                if (!result || this._upgrade_showed || this._is_prefetching) {
+                    return result;
+                }
+                this._showUpgradeDialog();
+            });
+        },
+
+        _showUpgradeDialog: function() {
             this._upgrade_showed = true;
             this._service_worker.getRegistrations().then(registrations => {
                 if (this._sw_waiting) {
@@ -748,19 +754,17 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
          *
          * @returns {Boolean}
          */
-        canUpdate: function() {
+        checkIfCanUpdate: function() {
             return new Promise(async resolve => {
                 try {
                     const version = await session.rpc(
                         "/web/webclient/version_info",
                         {}
                     );
-                    if (
+                    return resolve(
                         !_.isEmpty(version) &&
-                        Object.prototype.hasOwnProperty(version, "server_version")
-                    ) {
-                        return resolve(true);
-                    }
+                            typeof version.server_version !== "undefined"
+                    );
                 } catch (err) {
                     // Do nothing
                 }

@@ -54,6 +54,7 @@ odoo.define("web_pwa_cache.PWA.core.base.JSSandbox", function(require) {
                 _: _,
                 Date: Date,
                 Promise: Promise,
+                moment: moment,
             };
         },
     });
