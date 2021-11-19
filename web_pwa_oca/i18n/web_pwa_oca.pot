@@ -96,7 +96,7 @@ msgstr ""
 #. module: web_pwa_oca
 #: code:addons/web_pwa_oca/models/res_config_settings.py:0
 #, python-format
-msgid "You can only upload SVG or PNG files"
+msgid "You can only upload SVG or PNG files. Found: %s."
 msgstr ""
 
 #. module: web_pwa_oca
