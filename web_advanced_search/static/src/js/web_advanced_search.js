@@ -162,6 +162,10 @@ odoo.define("web_advanced_search", function(require) {
         tagName: "div",
         className: "x2x_container",
         attributes: {},
+        custom_events: _.extend({}, FieldManagerMixin.custom_events, {
+            load_optional_fields: "_onLoadOptionalFields",
+            save_optional_fields: "_onSaveOptionalFields",
+        }),
 
         /**
          * @override
@@ -312,6 +316,14 @@ odoo.define("web_advanced_search", function(require) {
         _confirmChange: function(id, fields, event) {
             this.datapoint_id = id;
             return this._field_widget.reset(this._get_record(), event);
+        },
+
+        _onLoadOptionalFields: function(ev) {
+            ev.stopPropagation();
+        },
+
+        _onSaveOptionalFields: function(ev) {
+            ev.stopPropagation();
         },
 
         /**
