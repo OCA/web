@@ -98,6 +98,12 @@
             </t>
         </t>
     </t>
+    <t t-extend="SearchView.SearchBar">
+        <!-- Change "Find" input hotkey to "F" -->
+        <t t-jquery=".o_searchview_input" t-operation="attributes">
+            <attribute name="accesskey">f</attribute>
+        </t>
+    </t>
     <t t-extend="Sidebar">
         <!-- Replace some common sections by icons in mobile -->
         <t
