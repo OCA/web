@@ -114,9 +114,9 @@ msgstr "Solo puede cargar archivos PNG de más de 512 x 512"
 
 #. module: web_pwa_oca
 #: code:addons/web_pwa_oca/models/res_config_settings.py:0
-#, fuzzy, python-format
-msgid "You can only upload SVG or PNG files"
-msgstr "Solo puede cargar archivos SVG o PNG"
+#, python-format
+msgid "You can only upload SVG or PNG files. Found: %s."
+msgstr ""
 
 #. module: web_pwa_oca
 #: code:addons/web_pwa_oca/models/res_config_settings.py:0
@@ -137,3 +137,7 @@ msgstr "[ServiceWorker] Registrada:"
 #, python-format
 msgid "[ServiceWorker] Registration failed: "
 msgstr "[ServiceWorker] Error en el registro: "
+
+#, fuzzy
+#~ msgid "You can only upload SVG or PNG files"
+#~ msgstr "Solo puede cargar archivos SVG o PNG"
