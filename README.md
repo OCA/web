@@ -25,7 +25,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [web_action_conditionable](web_action_conditionable/) | 13.0.1.0.1 |  | web_action_conditionable
-[web_advanced_search](web_advanced_search/) | 13.0.1.0.3 |  | Easier and more powerful searching tools
+[web_advanced_search](web_advanced_search/) | 13.0.1.0.4 |  | Easier and more powerful searching tools
 [web_calendar_slot_duration](web_calendar_slot_duration/) | 13.0.1.0.0 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) | Customizable calendar slot durations
 [web_company_color](web_company_color/) | 13.0.1.0.1 |  | Web Company Color
 [web_decimal_numpad_dot](web_decimal_numpad_dot/) | 13.0.1.0.0 |  | Allows using numpad dot to enter period decimal separator
