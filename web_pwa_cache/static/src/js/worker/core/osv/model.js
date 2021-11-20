@@ -39,7 +39,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Model", function(require) {
                     // }
 
                     let [tables, where_clause, where_params] = [null, null, null];
-                    if (domain) {
+                    if (!_.isEmpty(domain)) {
                         const e = new expression.Expression(
                             domain,
                             model_info,

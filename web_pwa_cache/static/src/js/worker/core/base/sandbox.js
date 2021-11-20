@@ -51,6 +51,7 @@ odoo.define("web_pwa_cache.PWA.core.base.JSSandbox", function(require) {
                 round_precision: Tools.round_precision,
                 round_decimals: Tools.round_decimals,
                 date2odoo_format: Tools.DateToOdooFormat,
+                odoo2date_format: Tools.OdooDateToMoment,
                 _: _,
                 Date: Date,
                 Promise: Promise,

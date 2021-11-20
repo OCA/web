@@ -148,9 +148,9 @@ odoo.define("web_pwa_cache.PWA.core.osv.Query", function(require) {
             this.tables.push(alias_statement);
             const join_tuple = [alias, lhs_col, col, (outer && "LEFT JOIN") || "JOIN"];
             if (!(lhs in this.joins) || this.joins[lhs] === null) {
-                this.joins = [];
+                this.joins[lhs] = [];
             }
-            this.joins.push(join_tuple);
+            this.joins[lhs].push(join_tuple);
             if (extra || extra_params) {
                 extra = _.str.sprintf(extra || "", {lhs: lhs, rhs: alias});
                 this.extras[[lhs, join_tuple]] = [extra, extra_params];
@@ -163,7 +163,8 @@ odoo.define("web_pwa_cache.PWA.core.osv.Query", function(require) {
          * @returns {Array} [query_from, query_where, query_params]
          */
         get_sql: function() {
-            let tables_to_process = _.clone(this.tables);
+            const tables_to_process = _.clone(this.tables);
+            const tables_processed = [];
             const alias_mapping = this._get_alias_mapping();
             const from_clause = [];
             const from_params = [];
@@ -171,10 +172,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Query", function(require) {
             const add_joins_for_table = lhs => {
                 const joins = (lhs in this.joins && this.joins[lhs]) || [];
                 for (const [rhs, lhs_col, rhs_col, join] of joins) {
-                    tables_to_process = _.without(
-                        tables_to_process,
-                        alias_mapping[rhs]
-                    );
+                    tables_processed.push(alias_mapping[rhs]);
                     from_clause.push(
                         ` ${join} ${alias_mapping[rhs]} ON ("${lhs}"."${lhs_col}" = "${rhs}"."${rhs_col}"`
                     );
@@ -185,7 +183,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Query", function(require) {
                             from_clause.push(" AND ");
                             from_clause.push(extra[0]);
                         }
-                        if (extra[1]) {
+                        if (!_.isEmpty(extra[1])) {
                             from_params.push(extra[1]);
                         }
                     }
@@ -196,6 +194,9 @@ odoo.define("web_pwa_cache.PWA.core.osv.Query", function(require) {
 
             for (const pos in tables_to_process) {
                 const table = tables_to_process[pos];
+                if (tables_processed.indexOf(table) !== -1) {
+                    continue;
+                }
                 if (pos > 0) {
                     from_clause.push(",");
                 }

@@ -212,7 +212,7 @@ odoo.define("web_pwa_cache.PWA.core.osv.Expression", function(require) {
             if (_.isEqual(domain, zero)) {
                 return zero;
             }
-            if (domain) {
+            if (!_.isEmpty(domain)) {
                 result = _.union(result, normalize_domain(domain));
                 count += 1;
             }
