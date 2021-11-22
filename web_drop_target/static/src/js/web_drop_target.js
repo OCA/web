@@ -5,7 +5,7 @@
 
 odoo.define("web_drop_target", function (require) {
     "use strict";
-
+    const ActionManager = require("web.ActionManager");
     const FormController = require("web.FormController");
     const core = require("web.core");
     const qweb = core.qweb;
@@ -152,7 +152,15 @@ odoo.define("web_drop_target", function (require) {
          */
         _onBodyFileDragover: function (ev) {
             ev.preventDefault();
-            if (_.isEmpty(this._get_drop_items(ev))) {
+            const actionManager = this.findAncestor(function (ancestor) {
+                return ancestor instanceof ActionManager;
+            });
+            const controller = actionManager.currentDialogController;
+            if (
+                _.isEmpty(this._get_drop_items(ev)) &&
+                this._checkDragOver() &&
+                (controller == undefined || controller.jsID === this.controllerID)
+            ) {
                 const drop_zone_offset = this.$drop_zone.offset();
                 const overlay_css = {
                     top: drop_zone_offset.top,
@@ -166,6 +174,10 @@ odoo.define("web_drop_target", function (require) {
                 this._drop_overlay.css(overlay_css);
                 this._drop_overlay.removeClass("d-none");
             }
+        },
+
+        _checkDragOver: function () {
+            return true;
         },
 
         /**
@@ -316,6 +328,9 @@ odoo.define("web_drop_target", function (require) {
             },
             _get_record_id: function () {
                 return this.renderer.state.res_id;
+            },
+            _checkDragOver: function () {
+                return this.renderer._chatterContainerComponent;
             },
         })
     );
