@@ -54,6 +54,8 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         },
         // This is used to avoid use "last_update" to get records
         _special_models: ["res.groups"],
+        // This is used to store the model using indexeddb instead of sqlite
+        _store_in_indexeddb: ["pwa.cache.onchange.value"],
 
         init: function() {
             this._super.apply(this, arguments);
@@ -261,10 +263,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                                     response_data
                                 );
                                 if (!_.isEmpty(ids_to_remove)) {
-                                    console.log(
-                                        `Deleting INIT '${model_info.table}'....`,
-                                        ids_to_remove
-                                    );
                                     await this._db.unlink(model_info, ids_to_remove);
                                 }
                             }
@@ -289,9 +287,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         createTables: function(model_infos) {
             var tasks = [];
             for (const model_info of model_infos) {
-                if (!model_info.has_pwa_cache) {
-                    continue;
-                }
                 tasks.push(
                     new Promise(async (resolve, reject) => {
                         try {
@@ -319,6 +314,16 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         prefetchModelRecords: function(model_info_extra, client_message_id) {
             return new Promise(async (resolve, reject) => {
                 try {
+                    const use_indexeddb =
+                        this._store_in_indexeddb.indexOf(model_info_extra.model) !== -1;
+                    if (!use_indexeddb) {
+                        const tableExists = await this._db.sqlitedb.tableExists(
+                            model_info_extra
+                        );
+                        if (!tableExists) {
+                            await this.createTables([model_info_extra]);
+                        }
+                    }
                     let offset = 0;
                     let domain_forced = [];
                     if (model_info_extra.prefetch_last_update) {
@@ -333,10 +338,9 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                         "search",
                         [domain]
                     );
-                    const chunk_size =
-                        model_info_extra.model === "pwa.cache.onchange.value"
-                            ? this._search_read_onchange_value_chunk_size
-                            : this._search_read_chunk_size;
+                    const chunk_size = use_indexeddb
+                        ? this._search_read_onchange_value_chunk_size
+                        : this._search_read_chunk_size;
 
                     const record_ids = (await response_s.json()).result;
                     do {
@@ -364,7 +368,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                             }
                             const records = response_data.result;
                             // Save using indexedb, use bulk operations
-                            if (model_info_extra.model === "pwa.cache.onchange.value") {
+                            if (use_indexeddb) {
                                 await this.saveModelRecords(model_info_extra, records);
                                 this._sendTaskInfo(
                                     client_message_id,
@@ -561,8 +565,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                             tasks.push(this.saveModelInfo(model_info));
                         }
                         await Promise.all(tasks);
-                        console.log("------------ MODEL INFOS");
-                        console.log(model_infos);
                         await this.createTables(model_infos);
                         await this._config.set(
                             "prefetch_modelinfo_last_update",
@@ -1026,6 +1028,10 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                 try {
                     if (model_info.model === "pwa.cache.onchange.value") {
                         await this.saveModelRecordsOnchangeValue(records);
+                    } else if (
+                        this._store_in_indexeddb.indexOf(model_info.model) !== -1
+                    ) {
+                        this._db.indexeddb.onchange.bulkPut(records);
                     } else {
                         // WriteOrCreate process "binary" fields that are managed in indexeddb
                         await this._db.writeOrCreate(model_info, records);

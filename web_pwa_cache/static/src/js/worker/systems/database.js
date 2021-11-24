@@ -316,9 +316,9 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
         },
 
         /**
-         * This is critical method!
+         * This is a critical method!
          * When call "export" we make a copy of the database.
-         * We will need twice the memory required just to host the database.
+         * We will need the doube of the memory required just to host the database.
          *
          * @param {Boolean} instant
          * @returns {Promise}
