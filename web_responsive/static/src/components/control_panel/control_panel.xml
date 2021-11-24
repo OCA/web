@@ -54,26 +54,29 @@
                     />
                     <SearchBar fields="fields" />
                 </t>
-                <t t-if="ui.isSmall and state.mobileSearchMode == 'quick'">
-                    <button
-                        class="btn btn-link fa fa-arrow-left"
-                        t-on-click.stop="state.mobileSearchMode = ''"
+                <t t-if="ui.isSmall">
+                    <t t-if="state.mobileSearchMode == 'quick'">
+                        <button
+                            t-if="props.withBreadcrumbs"
+                            class="btn btn-link fa fa-arrow-left"
+                            t-on-click.stop="state.mobileSearchMode = ''"
+                        />
+                        <SearchBar fields="fields" />
+                        <button
+                            class="btn fa fa-filter"
+                            t-on-click.stop="state.mobileSearchMode = 'full'"
+                        />
+                    </t>
+                    <t
+                        t-if="state.mobileSearchMode == 'full'"
+                        t-call="web_responsive.LegacyMobileSearchView"
                     />
-                    <SearchBar fields="fields" />
-                    <button
-                        class="btn fa fa-filter"
-                        t-on-click.stop="state.mobileSearchMode = 'full'"
-                    />
-                </t>
-                <t
-                    t-if="ui.isSmall and state.mobileSearchMode == 'full'"
-                    t-call="web_responsive.LegacyMobileSearchView"
-                />
-                <t t-if="ui.isSmall and state.mobileSearchMode == ''">
-                    <button
-                        class="btn btn-link fa fa-search"
-                        t-on-click.stop="state.mobileSearchMode = 'quick'"
-                    />
+                    <t t-if="state.mobileSearchMode == ''">
+                        <button
+                            class="btn btn-link fa fa-search"
+                            t-on-click.stop="state.mobileSearchMode = 'quick'"
+                        />
+                    </t>
                 </t>
             </div>
         </xpath>
@@ -131,7 +134,7 @@
             </div>
             <div
                 class="btn btn-primary o_mobile_search_show_result fixed-bottom"
-                t-on-click.stop="state.mobileSearchMode = ''"
+                t-on-click.stop="state.mobileSearchMode = (props.withBreadcrumbs ? '' : 'quick')"
             >
                 <t>SEE RESULT</t>
             </div>
@@ -219,38 +222,41 @@
     <t t-name="web_responsive.SearchBar" owl="1">
         <div>
             <t t-if="!env.isSmall" t-call="web.SearchBar" />
-            <t t-if="env.isSmall and props.mobileSearchMode == 'quick'">
-                <div class="o_searchview o_searchview_quick">
-                    <button
-                        class="btn btn-link fa fa-arrow-left"
-                        t-on-click.stop="trigger('set-mobile-view', '')"
-                    />
-                    <div class="o_searchview_input_container">
-                        <t t-call="web.SearchBar.Facets" />
-                        <t t-call="web.SearchBar.Input" />
-                        <t t-if="items.length">
-                            <t t-call="web.SearchBar.Items" />
-                        </t>
+            <t t-if="env.isSmall">
+                <t t-if="props.mobileSearchMode == 'quick'">
+                    <div class="o_searchview o_searchview_quick">
+                        <button
+                            t-if="props.withBreadcrumbs"
+                            class="btn btn-link fa fa-arrow-left"
+                            t-on-click.stop="trigger('set-mobile-view', '')"
+                        />
+                        <div class="o_searchview_input_container">
+                            <t t-call="web.SearchBar.Facets" />
+                            <t t-call="web.SearchBar.Input" />
+                            <t t-if="items.length">
+                                <t t-call="web.SearchBar.Items" />
+                            </t>
+                        </div>
+                        <button
+                            class="btn fa fa-filter"
+                            t-on-click.stop="trigger('set-mobile-view', 'full')"
+                        />
                     </div>
-                    <button
-                        class="btn fa fa-filter"
-                        t-on-click.stop="trigger('set-mobile-view', 'full')"
-                    />
-                </div>
-            </t>
-            <t
-                t-if="env.isSmall and props.mobileSearchMode == 'full'"
-                t-call="web_responsive.MobileSearchView"
-            />
-            <t t-if="env.isSmall and props.mobileSearchMode == ''">
-                <div
-                    class="o_searchview o_searchview_mobile"
-                    role="search"
-                    aria-autocomplete="list"
-                    t-on-click.stop="trigger('set-mobile-view', 'quick')"
-                >
-                        <button class="btn btn-link fa fa-search" />
-                </div>
+                </t>
+                <t
+                    t-if="props.mobileSearchMode == 'full'"
+                    t-call="web_responsive.MobileSearchView"
+                />
+                <t t-if="props.mobileSearchMode == ''">
+                    <div
+                        class="o_searchview o_searchview_mobile"
+                        role="search"
+                        aria-autocomplete="list"
+                        t-on-click.stop="trigger('set-mobile-view', 'quick')"
+                    >
+                            <button class="btn btn-link fa fa-search" />
+                    </div>
+                </t>
             </t>
         </div>
     </t>
