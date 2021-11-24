@@ -2,3 +2,5 @@
 * `Tecnativa <https://www.tecnativa.com>`__:
 
   * João Marques
+
+* Thanakrit Pintana
