@@ -18,7 +18,7 @@ patch(LegacyControlPanel.prototype, "web_responsive.LegacyControlPanelMobile", {
     setup() {
         this._super();
         this.state = useState({
-            mobileSearchMode: "",
+            mobileSearchMode: this.props.withBreadcrumbs ? "" : "quick",
         });
         this.ui = useContext(deviceContext);
     },
