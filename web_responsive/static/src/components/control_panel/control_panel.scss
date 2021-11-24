@@ -70,6 +70,7 @@
         .o_cp_bottom_left {
             float: left;
             margin: 5px 0;
+            max-width: 80%;
         }
 
         .o_cp_bottom_right {
@@ -85,6 +86,10 @@
         }
         .o_cp_pager {
             margin-bottom: 0;
+        }
+        .o_list_selection_box {
+            padding-left: 5px !important;
+            padding-right: 5px;
         }
 
         .o_cp_action_menus {
@@ -165,6 +170,7 @@
             align-items: center;
             .o_searchview_input_container {
                 flex: 1 1 auto;
+                margin-left: 5px;
             }
         }
         .o_searchview {

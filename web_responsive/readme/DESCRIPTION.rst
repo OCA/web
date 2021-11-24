@@ -76,6 +76,8 @@ This module adds responsiveness to web backend.
 
   .. image:: ../static/img/device_rotation.gif
 
+* Big inputs on form in edit mode
+
 **Features for desktop computers**:
 
 * Keyboard shortcuts for easier navigation,
