@@ -12,8 +12,9 @@
     >
         <xpath expr=".">
             <link
+                type="text/css"
                 rel="stylesheet"
-                href="/web_responsive/static/src/css/web_responsive.scss"
+                href="/web_responsive/static/src/scss/web_responsive.scss"
             />
             <script
                 type="application/javascript"

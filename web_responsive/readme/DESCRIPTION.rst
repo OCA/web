@@ -10,6 +10,10 @@ Features for all devices:
 
   .. image:: https://user-images.githubusercontent.com/973709/48417213-17576600-e74a-11e8-846a-57691e82636b.gif
 
+* Increase the size of the labels in extra large screens
+
+  .. image:: ../static/img/label_sided.gif
+
 Features for mobile:
 
 * App-specific submenus are shown on full screen when toggling them from the
