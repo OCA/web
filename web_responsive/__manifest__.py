@@ -20,12 +20,12 @@
     "assets": {
         "web.assets_frontend": [
             "/web_responsive/static/src/legacy/js/website_apps_menu.js",
-            "/web_responsive/static/src/legacy/css/website_apps_menu.scss",
+            "/web_responsive/static/src/legacy/scss/website_apps_menu.scss",
         ],
         "web.assets_backend": [
-            "/web_responsive/static/src/legacy/css/web_responsive.scss",
+            "/web_responsive/static/src/legacy/scss/web_responsive.scss",
             "/web_responsive/static/src/legacy/js/web_responsive.js",
-            "/web_responsive/static/src/legacy/css/kanban_view_mobile.scss",
+            "/web_responsive/static/src/legacy/scss/kanban_view_mobile.scss",
             "/web_responsive/static/src/legacy/js/kanban_renderer_mobile.js",
             "/web_responsive/static/src/components/ui_context.esm.js",
             "/web_responsive/static/src/components/apps_menu/apps_menu.scss",
