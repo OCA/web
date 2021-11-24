@@ -8,8 +8,11 @@ odoo.define("web_responsive", function (require) {
     const core = require("web.core");
     const FormRenderer = require("web.FormRenderer");
     const RelationalFields = require("web.relational_fields");
+    const ViewDialogs = require("web.view_dialogs");
     const ListRenderer = require("web.ListRenderer");
     const CalendarRenderer = require("web.CalendarRenderer");
+
+    const _t = core._t;
 
     // Fix for iOS Safari to set correct viewport height
     // https://github.com/Faisal-Manzer/postcss-viewport-height-correction
@@ -107,6 +110,86 @@ odoo.define("web_responsive", function (require) {
             );
             $buttons.addClass("dropdown-menu").appendTo($dropdown);
             return $dropdown;
+        },
+    });
+
+    /**
+     * Directly open popup dialog in mobile for search.
+     */
+    RelationalFields.FieldMany2One.include({
+        start: function () {
+            var superRes = this._super.apply(this, arguments);
+            if (config.device.isMobile) {
+                this.$input.prop("readonly", true);
+            }
+            return superRes;
+        },
+        // --------------------------------------------------------------------------
+        // Private
+        // --------------------------------------------------------------------------
+
+        /**
+         * @private
+         * @override
+         */
+        _bindAutoComplete: function () {
+            if (!config.device.isMobile) {
+                return this._super.apply(this, arguments);
+            }
+        },
+
+        /**
+         * @private
+         * @override
+         */
+        _getSearchCreatePopupOptions: function () {
+            const options = this._super.apply(this, arguments);
+            _.extend(options, {
+                on_clear: () => this.reinitialize(false),
+            });
+            return options;
+        },
+
+        /**
+         * @private
+         * @override
+         */
+        _toggleAutoComplete: function () {
+            if (config.device.isMobile) {
+                this._searchCreatePopup("search");
+            } else {
+                return this._super.apply(this, arguments);
+            }
+        },
+    });
+
+    /**
+     * Support for Clear button in search popup.
+     */
+    ViewDialogs.SelectCreateDialog.include({
+        init: function () {
+            this._super.apply(this, arguments);
+            this.on_clear =
+                this.options.on_clear ||
+                function () {
+                    return undefined;
+                };
+        },
+        /**
+         * @override
+         */
+        _prepareButtons: function () {
+            this._super.apply(this, arguments);
+            if (config.device.isMobile && this.options.disable_multiple_selection) {
+                this.__buttons.push({
+                    text: _t("Clear"),
+                    classes: "btn-secondary o_clear_button",
+                    close: true,
+                    click: function () {
+                        this.on_clear();
+                    },
+                });
+            }
         },
     });
 
