@@ -22,6 +22,12 @@ This module adds responsiveness to web backend.
 
   .. image:: ../static/img/listview.gif
 
+* Increase the size of the labels in extra large screens
+
+  .. image:: ../static/img/label_size_small.png
+
+  .. image:: ../static/img/label_size_large.png
+
 **Features for mobile**:
 
 * App-specific submenus are shown on full screen when toggling them from the
