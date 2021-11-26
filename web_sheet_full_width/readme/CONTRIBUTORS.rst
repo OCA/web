@@ -4,3 +4,4 @@
 * Sylvain LE GAL (https://twitter.com/legalsylvain)
 * Jérôme Thériault <jtheriault@metalsartigan.com>
 * Lois Rilo <lois.rilo@forgeflow.com>
+* Thanakrit Pintana <thanakrit.p39@gmail.com>
