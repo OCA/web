@@ -14,6 +14,7 @@ setuptools.setup(
         'odoo12-addon-web_advanced_search_wildcard',
         'odoo12-addon-web_calendar_slot_duration',
         'odoo12-addon-web_company_color',
+        'odoo12-addon-web_dashboard_tile',
         'odoo12-addon-web_decimal_numpad_dot',
         'odoo12-addon-web_dialog_size',
         'odoo12-addon-web_disable_browser_autocomplete',
