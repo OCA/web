@@ -13,11 +13,17 @@ Overview Dashboard (Tiles)
 .. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
-.. |badge3| image:: https://img.shields.io/badge/github-legalsylvain%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/legalsylvain/web/tree/12.0-mig-web_dashboard_tile/web_dashboard_tile
-    :alt: legalsylvain/web
+.. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
+    :target: https://github.com/OCA/web/tree/12.0/web_dashboard_tile
+    :alt: OCA/web
+.. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
+    :target: https://translation.odoo-community.org/projects/web-12-0/web-12-0-web_dashboard_tile
+    :alt: Translate me on Weblate
+.. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
+    :target: https://runbot.odoo-community.org/runbot/162/12.0
+    :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| 
+|badge1| |badge2| |badge3| |badge4| |badge5| 
 
 Adds a dashboard where you can configure tiles from any view and add them as short cut.
 
@@ -55,7 +61,7 @@ First, you have to create tile categories.
 Odoo menu and action are automatically created.
 You should refresh your browser to see new menu items.
 
-.. image:: https://raw.githubusercontent.com/legalsylvain/web/12.0-mig-web_dashboard_tile/web_dashboard_tile/static/description/tile_category_form.png
+.. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_dashboard_tile/static/description/tile_category_form.png
 
 Then you can create tiles.
 
@@ -67,15 +73,15 @@ Then you can create tiles.
 
 * Setting a user, or a group in "Security" tab will restrict the display of the tile.
 
-.. image:: https://raw.githubusercontent.com/legalsylvain/web/12.0-mig-web_dashboard_tile/web_dashboard_tile/static/description/tile_tile_form.png
+.. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_dashboard_tile/static/description/tile_tile_form.png
 
-You can optionanaly define a secondary value, for that purpose :
+You can optionally define a secondary value, for that purpose :
 
 * Select a field, a function to apply.
 
 * You can define a specific format. (``.format()`` python syntax)
 
-.. image:: https://raw.githubusercontent.com/legalsylvain/web/12.0-mig-web_dashboard_tile/web_dashboard_tile/static/description/tile_tile_form_secondary_value.png
+.. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_dashboard_tile/static/description/tile_tile_form_secondary_value.png
 
 
 Usage
@@ -85,20 +91,19 @@ Usage
 
 * The tile configured is displayed with the up to date count and average values of the selected domain.
 
-.. image:: https://raw.githubusercontent.com/legalsylvain/web/12.0-mig-web_dashboard_tile/web_dashboard_tile/static/description/tile_tile_kanban.png
+.. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_dashboard_tile/static/description/tile_tile_kanban.png
 
 * By clicking on the item, you'll navigate to the tree view of the according model.
 
-.. image:: https://raw.githubusercontent.com/legalsylvain/web/12.0-mig-web_dashboard_tile/web_dashboard_tile/static/description/tile_tile_2_tree_view.png
+.. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_dashboard_tile/static/description/tile_tile_2_tree_view.png
 
 **Note**
 
 When you are in a tree view, with a domain, you can save it in the favorite menu, but the configuration is limited.
 
-.. image:: https://raw.githubusercontent.com/legalsylvain/web/12.0-mig-web_dashboard_tile/web_dashboard_tile/static/description/favorite_menu_create_tile.png
+.. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_dashboard_tile/static/description/favorite_menu_create_tile.png
 
-
-.. image:: https://raw.githubusercontent.com/legalsylvain/web/12.0-mig-web_dashboard_tile/web_dashboard_tile/static/description/favorite_menu_create_tile_result.png
+.. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_dashboard_tile/static/description/favorite_menu_create_tile_result.png
 
 Known issues / Roadmap
 ======================
@@ -122,10 +127,10 @@ Known issues / Roadmap
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/legalsylvain/web/issues>`_.
+Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/legalsylvain/web/issues/new?body=module:%20web_dashboard_tile%0Aversion:%2012.0-mig-web_dashboard_tile%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_dashboard_tile%0Aversion:%2012.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -137,6 +142,7 @@ Authors
 
 * initOS GmbH & Co. KG
 * GRAP
+* Iván Todorovich <ivan.todorovich@gmail.com>
 
 Contributors
 ~~~~~~~~~~~~
@@ -148,14 +154,24 @@ Contributors
 Maintainers
 ~~~~~~~~~~~
 
+This module is maintained by the OCA.
+
+.. image:: https://odoo-community.org/logo.png
+   :alt: Odoo Community Association
+   :target: https://odoo-community.org
+
+OCA, or the Odoo Community Association, is a nonprofit organization whose
+mission is to support the collaborative development of Odoo features and
+promote its widespread use.
+
 .. |maintainer-legalsylvain| image:: https://github.com/legalsylvain.png?size=40px
     :target: https://github.com/legalsylvain
     :alt: legalsylvain
 
-Current maintainer:
+Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-legalsylvain| 
 
-This module is part of the `legalsylvain/web <https://github.com/legalsylvain/web/tree/12.0-mig-web_dashboard_tile/web_dashboard_tile>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/12.0/web_dashboard_tile>`_ project on GitHub.
 
-You are welcome to contribute.
+You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
