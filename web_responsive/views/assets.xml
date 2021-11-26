@@ -12,16 +12,19 @@
     >
         <xpath expr="//link[last()]" position="after">
             <link
+                type="text/css"
                 rel="stylesheet"
-                href="/web_responsive/static/src/css/web_responsive.scss"
+                href="/web_responsive/static/src/scss/web_responsive.scss"
             />
             <link
+                type="text/css"
                 rel="stylesheet"
-                href="/web_responsive/static/src/css/search_view_mobile.scss"
+                href="/web_responsive/static/src/scss/search_view_mobile.scss"
             />
             <link
+                type="text/css"
                 rel="stylesheet"
-                href="/web_responsive/static/src/css/kanban_view_mobile.scss"
+                href="/web_responsive/static/src/scss/kanban_view_mobile.scss"
             />
         </xpath>
         <xpath expr="//script[last()]" position="after">
