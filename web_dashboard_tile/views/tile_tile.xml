@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+   <record id="view_tile_tile_search" model="ir.ui.view">
+        <field name="model">tile.tile</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="model_id"/>
+            </search>
+        </field>
+    </record>
+
+   <record id="view_tile_tile_tree" model="ir.ui.view">
+        <field name="model">tile.tile</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="model_id"/>
+                <field name="primary_function"/>
+                <field name="primary_field_id"/>
+                <field name="secondary_function"/>
+                <field name="secondary_field_id"/>
+                <field name="user_id"/>
+                <field name="group_ids"/>
+                <field name="background_color" widget="color"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_tile_tile_form" model="ir.ui.view">
+        <field name="model">tile.tile</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                    <group>
+                        <field name="category_id"/>
+                        <field name="user_id"/>
+                    </group>
+                    <group col="4">
+                        <separator string="Display" colspan="4"/>
+                        <field name="background_color" widget="color"/>
+                        <field name="font_color" widget="color"/>
+                        <separator string="Technical Informations" colspan="4"/>
+                        <field name="model_id"/>
+                        <field name="action_id"/>
+                        <field name="domain" colspan="4"/>
+                        <field name="model_name" invisible="1"/>
+                        <separator colspan="4"/>
+                        <field name="error" attrs="{'invisible':[('error','=',False)]}"/>
+                    </group>
+                    <notebook>
+                        <page string="Settings">
+                            <group string="Main Value">
+                                <group>
+                                    <field name="primary_function"/>
+                                    <field name="primary_field_id" attrs="{
+                                        'invisible':[('primary_function','in',[False,'count'])],
+                                        'required':[('primary_function','not in',[False,'count'])],
+                                    }"/>
+                                </group>
+                                <group>
+                                    <field name="primary_format"/>
+                                    <field name="hide_if_null"/>
+                                </group>
+                                <group>
+                                    <field name="primary_helper"/>
+                                    <field name="primary_value"/>
+                                    <field name="primary_formated_value" attrs="{'invisible':[('primary_value','=',False)]}"/>
+                                </group>
+                            </group>
+                            <group string="Secondary Value">
+                                <group>
+                                    <field name="secondary_function"/>
+                                    <field name="secondary_field_id" attrs="{
+                                        'invisible':[('secondary_function','in',[False,'count'])],
+                                        'required':[('secondary_function','not in',[False,'count'])],
+                                    }"/>
+                                </group>
+                                <group>
+                                    <field name="secondary_format"/>
+                                </group>
+                                <group>
+                                    <field name="secondary_helper"/>
+                                    <field name="secondary_value"/>
+                                    <field name="secondary_formated_value" attrs="{'invisible':[('secondary_value','=',False)]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Security">
+                            <field name="group_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+   <record id="view_tile_tile_kanban" model="ir.ui.view">
+        <field name="model">tile.tile</field>
+        <field name="arch" type="xml">
+
+            <kanban edit="false" create="false">
+                <field name="name"/>
+                <field name="domain"/>
+                <field name="model_id"/>
+                <field name="action_id"/>
+                <field name="background_color"/>
+                <field name="font_color"/>
+                <field name="primary_function"/>
+                <field name="primary_helper"/>
+                <field name="secondary_function"/>
+                <field name="secondary_helper"/>
+
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_dashboard_tile oe_kanban_global_click" t-attf-style="background-color:#{record.background_color.raw_value}" >
+                            <div class="oe_kanban_content">
+                                <a type="object" name="open_link" args="[]" t-attf-style="color:#{record.font_color.raw_value};">
+                                    <div style="height:100%;" t-att-class="record.secondary_function.raw_value and 'with_secondary' or 'simple'">
+                                        <div class="tile_label">
+                                            <field name="name"/>
+                                        </div>
+                                        <div class="tile_primary_value" t-att-title="record.primary_helper.raw_value">
+                                            <t t-set="l" t-value="record.primary_formated_value.raw_value.length" />
+                                            <t t-set="s" t-value="l>=12 and 35 or l>=10 and 45 or l>=8 and 55 or l>=6 and 75 or l>4 and 85 or 100"/>
+                                            <span t-attf-style="font-size: #{s}%;"><field name="primary_formated_value"/></span>
+                                        </div>
+                                        <div class="tile_secondary_value" t-att-title="record.secondary_helper.raw_value">
+                                            <span><field name="secondary_formated_value"/></span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="oe_clear"></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_tile_tile">
+        <field name="name">Dashboard Items</field>
+        <field name="res_model">tile.tile</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+    <menuitem id="menu_tile_tile"
+        parent="menu_dashboard_tile_settings"
+        action="action_tile_tile" sequence="10"/>
+
+</odoo>
