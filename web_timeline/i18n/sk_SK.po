@@ -6,41 +6,43 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2021-11-28 14:36+0000\n"
+"Last-Translator: Jan Prokop <jprokop@jackie.sk>\n"
 "Language-Team: none\n"
 "Language: sk_SK\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: web_timeline
 #. openerp-web
 #: code:addons/web_timeline/static/src/js/timeline_renderer.js:0
 #, python-format
 msgid "<b>UNASSIGNED</b>"
-msgstr ""
+msgstr "<b>Nepridelené</b>"
 
 #. module: web_timeline
 #. openerp-web
 #: code:addons/web_timeline/static/src/js/timeline_controller.js:0
 #, python-format
 msgid "Are you sure you want to delete this record?"
-msgstr ""
+msgstr "Naozaj chcete zmazať tento záznam?"
 
 #. module: web_timeline
 #. openerp-web
 #: code:addons/web_timeline/static/src/xml/web_timeline.xml:0
 #, python-format
 msgid "Day"
-msgstr ""
+msgstr "Deň"
 
 #. module: web_timeline
 #. openerp-web
 #: code:addons/web_timeline/static/src/xml/web_timeline.xml:0
 #, python-format
 msgid "Month"
-msgstr ""
+msgstr "Mesiac"
 
 #. module: web_timeline
 #. openerp-web
@@ -48,6 +50,7 @@ msgstr ""
 #, python-format
 msgid "Template \"timeline-item\" not present in timeline view definition."
 msgstr ""
+"Šablóna \"položka časovej osi\" nie je k dispozícii v definícii pohľadu."
 
 #. module: web_timeline
 #. openerp-web
@@ -55,49 +58,49 @@ msgstr ""
 #: model:ir.model.fields.selection,name:web_timeline.selection__ir_ui_view__type__timeline
 #, python-format
 msgid "Timeline"
-msgstr ""
+msgstr "Časová os"
 
 #. module: web_timeline
 #. openerp-web
 #: code:addons/web_timeline/static/src/js/timeline_renderer.js:0
 #, python-format
 msgid "Timeline view has not defined 'date_start' attribute."
-msgstr ""
+msgstr "Pohľad časová os nemá definovaný 'dátum štartu'."
 
 #. module: web_timeline
 #. openerp-web
 #: code:addons/web_timeline/static/src/xml/web_timeline.xml:0
 #, python-format
 msgid "Today"
-msgstr ""
+msgstr "Dnes"
 
 #. module: web_timeline
 #: model:ir.model,name:web_timeline.model_ir_ui_view
 msgid "View"
-msgstr ""
+msgstr "Pohľad"
 
 #. module: web_timeline
 #: model:ir.model.fields,field_description:web_timeline.field_ir_ui_view__type
 msgid "View Type"
-msgstr ""
+msgstr "Typ pohľadu"
 
 #. module: web_timeline
 #. openerp-web
 #: code:addons/web_timeline/static/src/js/timeline_controller.js:0
 #, python-format
 msgid "Warning"
-msgstr ""
+msgstr "Upozornenie"
 
 #. module: web_timeline
 #. openerp-web
 #: code:addons/web_timeline/static/src/xml/web_timeline.xml:0
 #, python-format
 msgid "Week"
-msgstr ""
+msgstr "Týždeň"
 
 #. module: web_timeline
 #. openerp-web
 #: code:addons/web_timeline/static/src/xml/web_timeline.xml:0
 #, python-format
 msgid "Year"
-msgstr ""
+msgstr "Rok"
