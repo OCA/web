@@ -12,7 +12,9 @@ Features for all devices:
 
 * Increase the size of the labels in extra large screens
 
-  .. image:: ../static/img/label_sided.gif
+  .. image:: ../static/img/label_size_small.png
+
+  .. image:: ../static/img/label_size_large.png
 
 Features for mobile:
 

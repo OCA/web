@@ -39,7 +39,9 @@ Features for all devices:
 
 * Increase the size of the labels in extra large screens
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/label_sided.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/label_size_small.png
+
+  .. image:: https://raw.githubusercontent.com/OCA/web/13.0/web_responsive/static/img/label_size_large.png
 
 Features for mobile:
 
