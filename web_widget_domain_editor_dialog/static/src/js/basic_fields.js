@@ -25,7 +25,9 @@ odoo.define("web_widget_domain_editor_dialog.basic_fields", function (require) {
                 readonly: false,
                 disable_multiple_selection: false,
                 no_create: true,
+
                 on_selected: function (selected_ids) {
+                    _this.inDomainEditor = true;
                     _this.domainSelector
                         .setDomain(this.get_domain(selected_ids))
                         .then(_this._replaceContent.bind(_this));
@@ -39,6 +41,15 @@ odoo.define("web_widget_domain_editor_dialog.basic_fields", function (require) {
             }).open();
             this.trigger("dialog_opened", dialog);
             return dialog;
+        },
+        _onDomainSelectorValueChange: function () {
+            // This allows the domain editor to work with in dialog mode
+            const inDialog = this.inDialog;
+            if (this.inDomainEditor) {
+                this.inDialog = false;
+            }
+            this._super.apply(this, arguments);
+            this.inDialog = inDialog;
         },
     });
 });
