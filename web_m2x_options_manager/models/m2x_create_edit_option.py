@@ -19,23 +19,14 @@ class M2xCreateEditOption(models.Model):
         string="Field",
     )
 
-    field_name = fields.Char(
-        related="field_id.name",
-        store=True,
-        string="Field Name",
-    )
+    field_name = fields.Char(related="field_id.name", store=True, string="Field Name")
 
     model_id = fields.Many2one(
-        "ir.model",
-        ondelete="cascade",
-        required=True,
-        string="Model",
+        "ir.model", ondelete="cascade", required=True, string="Model"
     )
 
     model_name = fields.Char(
-        compute="_compute_model_name",
-        inverse="_inverse_model_name",
-        store=True,
+        compute="_compute_model_name", inverse="_inverse_model_name", store=True
     )
 
     option_create = fields.Selection(
@@ -88,7 +79,7 @@ class M2xCreateEditOption(models.Model):
             "model_field_uniqueness",
             "unique(field_id,model_id)",
             "Options must be unique for each model/field couple!",
-        ),
+        )
     ]
 
     @api.model_create_multi
@@ -175,9 +166,6 @@ class M2xCreateEditOption(models.Model):
         :param str model_name: technical model name (i.e. "sale.order")
         :param str field_name: technical field name (i.e. "partner_id")
         """
-        dom = [
-            ("model_name", "=", model_name),
-            ("field_name", "=", field_name),
-        ]
+        dom = [("model_name", "=", model_name), ("field_name", "=", field_name)]
         # `_check_field_model_uniqueness()` grants uniqueness if existing
         return self.search(dom, limit=1).id

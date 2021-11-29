@@ -10,13 +10,8 @@
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "category": "Web",
-    "data": [
-        "security/ir.model.access.csv",
-        "views/ir_model.xml",
-    ],
-    "demo": [
-        "demo/res_partner_demo_view.xml",
-    ],
+    "data": ["security/ir.model.access.csv", "views/ir_model.xml"],
+    "demo": ["demo/res_partner_demo_view.xml"],
     "depends": ["base", "web_m2x_options"],
     "website": "https://github.com/OCA/web",
     "installable": True,

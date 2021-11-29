@@ -86,10 +86,7 @@ class TestM2xCreateEditOption(TransactionCase):
             {"create": True, "create_edit": True},
         )
         self.assertEqual(
-            (
-                title_node.attrib.get("can_create"),
-                title_node.attrib.get("can_write"),
-            ),
+            (title_node.attrib.get("can_create"), title_node.attrib.get("can_write")),
             ("true", "true"),
         )
         categ_node = form_doc.xpath("//field[@name='category_id']")[0]
@@ -98,10 +95,7 @@ class TestM2xCreateEditOption(TransactionCase):
             {"create": False, "create_edit": True},
         )
         self.assertEqual(
-            (
-                categ_node.attrib.get("can_create"),
-                categ_node.attrib.get("can_write"),
-            ),
+            (categ_node.attrib.get("can_create"), categ_node.attrib.get("can_write")),
             ("true", "true"),
         )
 

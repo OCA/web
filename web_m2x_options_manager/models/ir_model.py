@@ -7,10 +7,7 @@ from odoo import api, fields, models
 class IrModel(models.Model):
     _inherit = "ir.model"
 
-    m2x_create_edit_option_ids = fields.One2many(
-        "m2x.create.edit.option",
-        "model_id",
-    )
+    m2x_create_edit_option_ids = fields.One2many("m2x.create.edit.option", "model_id")
 
     def button_empty(self):
         for ir_model in self:
