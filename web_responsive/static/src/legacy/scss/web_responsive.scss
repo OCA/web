@@ -84,29 +84,33 @@ html .o_web_client .o_action_manager .o_action {
 // Size of labels
 .o_web_client {
     &.o_chatter_position_sided {
-        .o_content,
-        .modal-content {
-            @include media-breakpoint-up(xl, $o-extra-grid-breakpoints) {
-                .o_inner_group {
-                    .o_td_label {
-                        min-width: 260px !important;
+        .o_action_manager {
+            .o_content,
+            .modal-content {
+                @include media-breakpoint-up(xl, $o-extra-grid-breakpoints) {
+                    .o_inner_group {
+                        .o_td_label {
+                            min-width: 260px !important;
+                        }
                     }
                 }
-            }
-            @include media-breakpoint-between(lg, xl, $o-extra-grid-breakpoints) {
-                .o_group_col_6 {
-                    width: 100% !important;
+                @include media-breakpoint-between(lg, xl, $o-extra-grid-breakpoints) {
+                    .o_group_col_6 {
+                        width: 100% !important;
+                    }
                 }
             }
         }
     }
     &:not(.o_chatter_position_sided) {
         @include media-breakpoint-up(lg, $o-extra-grid-breakpoints) {
-            .o_content,
-            .modal-content {
-                .o_inner_group {
-                    .o_td_label {
-                        min-width: 260px !important;
+            .o_action_manager {
+                .o_content,
+                .modal-content {
+                    .o_inner_group {
+                        .o_td_label {
+                            min-width: 260px !important;
+                        }
                     }
                 }
             }
