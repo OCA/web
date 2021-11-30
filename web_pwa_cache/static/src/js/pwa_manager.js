@@ -45,6 +45,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
             PWA_CACHE_FAIL: "_onPWACacheFail",
             PWA_PREFETCH_MODAL_TASK_INFO: "_onPWAPrefetchModalTaskInfo",
             PWA_PREFETCH_FINISHED: "_onPWAPrefetchFinished",
+            PWA_PREFETCH_ERROR: "_onPWAPrefetchError",
             PWA_SYNC_RECORDS: "_onPWASyncRecords",
             PWA_SYNC_RECORD_OK: "_onPWASyncRecordOK",
             PWA_SYNC_RECORD_FAIL: "_onPWASyncRecordFail",
@@ -466,9 +467,22 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     })
                 );
                 this.$modalPrefetchProgress.appendTo("body");
+                this.$modalPrefetchProgressErrorZone = this.$modalPrefetchProgress.find(
+                    ".modal-error-message"
+                );
                 this.$modalPrefetchProgressContent = this.$modalPrefetchProgress.find(
                     ".modal-body"
                 );
+                this.$modalPrefetchProgressFooter = this.$modalPrefetchProgress.find(
+                    ".modal-footer"
+                );
+                this.$modalPrefetchProgressFooter
+                    .find("#pwa_prefetch_try_again__force_mode")
+                    .on("click", this._onClickPrefetchTryAgain.bind(this, true));
+                this.$modalPrefetchProgressFooter
+                    .find("#pwa_prefetch_try_again")
+                    .on("click", this._onClickPrefetchTryAgain.bind(this, false));
+
                 this.$modalPrefetchProgress.on("shown.bs.modal", () => {
                     this._prefetchModelHidden = false;
                     // Append current data
@@ -601,6 +615,17 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
         _onPWAPrefetchFinished: function() {
             this._is_prefetching = false;
             this._autoclosePrefetchModalData();
+        },
+
+        /**
+         * @param {Object} evdata
+         */
+        _onPWAPrefetchError: function(evdata) {
+            this.$modalPrefetchProgressFooter.removeClass("d-none");
+            this.$modalPrefetchProgressErrorZone.removeClass("d-none");
+            this.$modalPrefetchProgressErrorZone
+                .find("#pwa_prefectch_error_message")
+                .text(evdata.errormsg || _t("No error message has been defined"));
         },
 
         /**
@@ -769,6 +794,16 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     // Do nothing
                 }
                 return resolve(false);
+            });
+        },
+
+        _onClickPrefetchTryAgain: function(force_mode) {
+            this._prefetchTasksInfo = {};
+            this.$modalPrefetchProgressContent.empty();
+            this.$modalPrefetchProgressFooter.addClass("d-none");
+            this.$modalPrefetchProgressErrorZone.addClass("d-none");
+            this.sendPWABusMessage("TRY_AGAIN_PREFETCH", {
+                force_mode: force_mode || false,
             });
         },
     });

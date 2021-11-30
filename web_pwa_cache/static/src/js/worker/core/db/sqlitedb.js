@@ -610,10 +610,6 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                             Object.keys(model_info.fields),
                             "id"
                         );
-                        const model_valid_field_names = _.without(
-                            model_info.valid_fields,
-                            "id"
-                        );
                         const table_fields = await this.getTableFieldsInfo(model_info);
                         const table_field_names = _.filter(
                             _.map(table_fields, "name"),
@@ -622,6 +618,10 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                         const fields_to_remove = _.difference(
                             table_field_names,
                             model_field_names
+                        );
+                        const fields_to_add = _.difference(
+                            model_field_names,
+                            table_field_names
                         );
                         const common_fields = _.intersection(
                             model_field_names,
@@ -635,12 +635,8 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                             );
                         });
                         return resolve(
-                            (_.isEmpty(model_valid_field_names) &&
-                                common_fields.length !== model_field_names.length) ||
-                                (!_.isEmpty(model_valid_field_names) &&
-                                    table_field_names.length !==
-                                        model_valid_field_names.length) ||
-                                !_.isEmpty(fields_to_remove) ||
+                            !_.isEmpty(fields_to_remove) ||
+                                !_.isEmpty(fields_to_add) ||
                                 !_.isEmpty(fields_to_update)
                         );
                     }
@@ -693,14 +689,16 @@ odoo.define("web_pwa_cache.PWA.core.db.SQLiteDB", function(require) {
                     // Using this option becasue SQLite has a limited ALTER TABLE support:
                     // https://www.sqlite.org/omitted.html
                     const has_table_changes = await this.hasTableChanges(model_info);
+                    const res = {};
                     if (has_table_changes) {
                         await this.query(`DROP TABLE IF EXISTS "${model_info.table}"`);
+                        res.was_droppped = true;
                     }
                     // Various model can use the same table (ex. ir.actions)
                     const sql = `CREATE TABLE IF NOT EXISTS"${
                         model_info.table
                     }" (${table_fields.join(",")})`;
-                    const res = await this.query(sql);
+                    res.query_result = await this.query(sql);
                     return resolve(res);
                 } catch (err) {
                     return reject(err);

@@ -466,6 +466,14 @@ class PwaCacheOnchangeValue(models.Model):
                 ).format(sql.Identifier(index_name)),
             )
 
+    @api.model
+    def exists_hash(self, hashes):
+        return (
+            self.env["pwa.cache.onchange.value"]
+            .search([["ref_hash", "in", hashes]])
+            .mapped("ref_hash")
+        )
+
 
 class PwaCacheOnchangeTrigger(models.Model):
     _name = "pwa.cache.onchange.trigger"

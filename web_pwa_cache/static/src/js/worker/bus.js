@@ -50,6 +50,20 @@ odoo.define("web_pwa_cache.PWA.bus", function(require) {
                     return this._doPrefetchDataPost();
                 }
                 return Promise.resolve();
+            } else if (type === "TRY_AGAIN_PREFETCH") {
+                console.log(
+                    "[ServiceWorker] WARNING: Relaunching prefetech data post to repopulate de database!"
+                );
+                let task = Promise.resolve();
+                if (data.force_mode) {
+                    task = this._managers.config.set(
+                        "prefetch_modelinfo_last_update",
+                        false
+                    );
+                }
+                return task.then(() => {
+                    this._doPrefetchDataPost();
+                });
             }
 
             const tasks = [];

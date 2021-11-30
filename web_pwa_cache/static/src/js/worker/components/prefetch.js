@@ -11,7 +11,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
     const SWPrefetchComponent = SWComponent.extend({
         _search_read_chunk_size: 500,
         _search_read_onchange_value_chunk_size: 8000,
-        _vacuum_chunk_size: 10000,
 
         // This is used to force a field type
         _conversion_model_db_types: {
@@ -193,6 +192,8 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                     ]);
                     await this.runVacuumRecords();
                     await this._db.persistDatabases();
+                    // Don't wait for this because need traverse a lot of records
+                    this._db.vacuumOnchanges();
 
                     // Tell to the pages that the process was finished
                     this.getParent().postBroadcastMessage({
@@ -206,6 +207,10 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                     // console.log("------------------ RECORDS");
                     // console.log(records);
                 } catch (err) {
+                    this.getParent().postBroadcastMessage({
+                        type: "PWA_PREFETCH_ERROR",
+                        errormsg: err.stack,
+                    });
                     return reject(err);
                 }
 
@@ -222,54 +227,16 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
             return new Promise(async resolve => {
                 try {
                     this._sendTaskInfo("vacuum_records", `Vacuum records...`, -1, 0);
-                    const models = await this._db.getPWAModelInfos();
-                    const num_models = models.length;
-                    for (const index in models) {
-                        const model_info = models[index];
-                        const table_exists = await this._db.sqlitedb.tableExists(
-                            model_info
-                        );
-                        if (!table_exists) {
-                            continue;
+                    await this._db.vacuumSqliteRecords(
+                        (num_models, index, model_name) => {
+                            this._sendTaskInfo(
+                                "vacuum_records",
+                                `Vacuum records (${model_name})...`,
+                                num_models,
+                                index
+                            );
                         }
-                        this._sendTaskInfo(
-                            "vacuum_records",
-                            `Vacuum records (${model_info.model})...`,
-                            num_models,
-                            index
-                        );
-                        try {
-                            const count_records = await this._db.count(model_info);
-                            for (
-                                let offset = 0;
-                                offset <= count_records;
-                                offset += this._vacuum_chunk_size
-                            ) {
-                                const client_ids = await this._db.search(
-                                    model_info,
-                                    [],
-                                    this._vacuum_chunk_size,
-                                    undefined,
-                                    offset
-                                );
-                                const [
-                                    response,
-                                ] = await rpc.callJSonRpc(model_info.model, "exists", [
-                                    client_ids,
-                                ]);
-                                const response_data = (await response.json()).result;
-                                const ids_to_remove = _.difference(
-                                    client_ids,
-                                    response_data
-                                );
-                                if (!_.isEmpty(ids_to_remove)) {
-                                    await this._db.unlink(model_info, ids_to_remove);
-                                }
-                            }
-                        } catch (err) {
-                            // Do nothing
-                        }
-                    }
+                    );
                 } catch (err) {
                     // Do nothing
                 }
@@ -292,7 +259,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                         try {
                             const res = await this._db.sqlitedb.createTable(model_info);
                             if (res.was_dropped) {
-                                model_info.last_update = false;
+                                model_info.prefetch_last_update = false;
                             }
                             await this._postProcessTable(model_info);
                         } catch (err) {
@@ -396,7 +363,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                             }
                             offset += records.length;
                         } catch (err) {
-                            this._sendTaskInfoError(client_message_id, err);
                             return reject(err);
                         }
                     } while (offset < model_info_extra.count);
@@ -413,6 +379,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
          */
         prefetchModelData: function() {
             return new Promise(async (resolve, reject) => {
+                let client_message_id = false;
                 try {
                     // Get lastest updates
                     let model_infos = await this._db.getModelInfo(
@@ -447,13 +414,13 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                             model: to_search.model,
                         });
                         const model_info_extra = _.extend({}, model_info, to_search);
-                        model_info_extra.count = await this._getModelCount(
-                            model_info_extra
-                        );
-                        const client_message_id = `model_records_${model_info_extra.model.replace(
+                        client_message_id = `model_records_${model_info_extra.model.replace(
                             /\./g,
                             "__"
                         )}`;
+                        model_info_extra.count = await this._getModelCount(
+                            model_info_extra
+                        );
                         this._sendTaskInfo(
                             client_message_id,
                             `Getting records of the model '${model_info_extra.name}'...`,
@@ -474,6 +441,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                         }
                     }
                 } catch (err) {
+                    this._sendTaskInfoError(client_message_id, err);
                     return reject(err);
                 }
 
@@ -483,6 +451,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
 
         prefetchOnchange: function() {
             return new Promise(async (resolve, reject) => {
+                const client_message_id = "model_records_pwa__cache__onchange__value";
                 try {
                     const start_prefetch_date = Tools.DateToOdooFormat(new Date());
                     const prefetch_last_update = await this._config.get(
@@ -496,8 +465,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                     );
                     const response_data = await response.json();
                     const model_infos = response_data.result;
-                    const client_message_id =
-                        "model_records_pwa__cache__onchange__value";
                     for (const virt_model_info of model_infos) {
                         virt_model_info.prefetch_last_update = prefetch_last_update;
                         virt_model_info.count = await this._getModelCount(
@@ -520,6 +487,7 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                     );
                     this._sendTaskInfoCompleted(client_message_id);
                 } catch (err) {
+                    this._sendTaskInfoError(client_message_id, err);
                     return reject(err);
                 }
 
@@ -560,12 +528,12 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                         return reject();
                     }
                     if (!_.isEmpty(model_infos)) {
+                        await this.createTables(model_infos);
                         const tasks = [];
                         for (const model_info of model_infos) {
                             tasks.push(this.saveModelInfo(model_info));
                         }
                         await Promise.all(tasks);
-                        await this.createTables(model_infos);
                         await this._config.set(
                             "prefetch_modelinfo_last_update",
                             start_prefetch_date
@@ -654,7 +622,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                         "Can't get views infos"
                     );
                     console.log(`[ServiceWorker] Can't get view infos`);
-                    console.log(err);
                     return reject(err);
                 }
                 this._sendTaskInfoCompleted("prefetch_view_data");
@@ -960,8 +927,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                     n_values.fields[field].type = model_conv_types[field];
                 }
             }
-            // Reset last update date
-            n_values.prefetch_last_update = false;
             return n_values;
         },
 
@@ -978,6 +943,31 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                         false,
                         true
                     );
+
+                    // Cheeck if need update all records
+                    if ("domain" in values || "valid_fields" in values) {
+                        let prev_model_info = false;
+                        try {
+                            prev_model_info = await this._db.getModelInfo(values.model);
+                        } catch (err) {
+                            // Do nothing
+                        }
+                        if (
+                            _.isEmpty(prev_model_info) ||
+                            ("domain" in values &&
+                                !_.isEqual(values.domain, prev_model_info.domain)) ||
+                            ("valid_fields" in values &&
+                                _.difference(
+                                    values.valid_fields,
+                                    prev_model_info.valid_fields
+                                ).length > 0)
+                        ) {
+                            console.log(
+                                `[ServiceWorker] Detected model '${values.model}' fields changes`
+                            );
+                            values.prefetch_last_update = false;
+                        }
+                    }
 
                     await this._db.sqlitedb.createOrUpdateRecord(
                         model_info_metadata,

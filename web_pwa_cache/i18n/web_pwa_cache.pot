@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-13 17:47+0000\n"
-"PO-Revision-Date: 2021-09-13 17:47+0000\n"
+"POT-Creation-Date: 2021-11-30 16:24+0000\n"
+"PO-Revision-Date: 2021-11-30 16:24+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -101,6 +101,13 @@ msgid "Can't found any cache to ''"
 msgstr ""
 
 #. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/js/pwa_manager.js:0
+#, python-format
+msgid "Cancel"
+msgstr ""
+
+#. module: web_pwa_cache
 #: model_terms:ir.ui.view,arch_db:web_pwa_cache.view_partner_form_pwa
 msgid "City"
 msgstr ""
@@ -112,7 +119,6 @@ msgstr ""
 
 #. module: web_pwa_cache
 #. openerp-web
-#: code:addons/web_pwa_cache/static/src/js/pwa_manager.js:0
 #: code:addons/web_pwa_cache/static/src/js/pwa_sync_modal.js:0
 #, python-format
 msgid "Close"
@@ -161,6 +167,11 @@ msgstr ""
 #. module: web_pwa_cache
 #: model:ir.model.fields.selection,name:web_pwa_cache.selection__pwa_cache_onchange_trigger__trigger_type__create_unlink
 msgid "Create & Unlink"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:ir.model.fields.selection,name:web_pwa_cache.selection__pwa_cache_onchange_trigger__trigger_type__create_update
+msgid "Create & Update"
 msgstr ""
 
 #. module: web_pwa_cache
@@ -272,7 +283,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__onchange_field_name
 #: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache_onchange__field_name
 #: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache_onchange_trigger__field_name
-#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache_onchange_value__field_name
 msgid "Field Name"
 msgstr ""
 
@@ -693,6 +703,7 @@ msgid "Selector discriminator"
 msgstr ""
 
 #. module: web_pwa_cache
+#: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__sequence
 #: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache_onchange__sequence
 msgid "Sequence"
 msgstr ""
@@ -701,8 +712,7 @@ msgstr ""
 #. openerp-web
 #: code:addons/web_pwa_cache/static/src/js/pwa_manager.js:0
 #, python-format
-msgid ""
-"Service worker is installed but not activated, please refresh the page."
+msgid "Service Worker Update"
 msgstr ""
 
 #. module: web_pwa_cache
@@ -752,13 +762,6 @@ msgstr ""
 
 #. module: web_pwa_cache
 #. openerp-web
-#: code:addons/web_pwa_cache/static/src/js/pwa_manager.js:0
-#, python-format
-msgid "Synchronization error!"
-msgstr ""
-
-#. module: web_pwa_cache
-#. openerp-web
 #: code:addons/web_pwa_cache/static/src/js/pwa_sync_modal.js:0
 #, python-format
 msgid "Synchronize Now"
@@ -769,11 +772,6 @@ msgstr ""
 #: code:addons/web_pwa_cache/static/src/js/pwa_sync_modal.js:0
 #, python-format
 msgid "Synchronizing offline records..."
-msgstr ""
-
-#. module: web_pwa_cache
-#: model:ir.model.constraint,message:web_pwa_cache.constraint_pwa_cache_onchange_value_pwa_cache_onchange_value_uniq
-msgid "The PWA onchange cache value must be unique."
 msgstr ""
 
 #. module: web_pwa_cache
@@ -789,6 +787,20 @@ msgstr ""
 #. module: web_pwa_cache
 #: model:ir.model,name:web_pwa_cache.model_pwa_cache_onchange_trigger
 msgid "Trigger for updating PWA Cache Onchange"
+msgstr ""
+
+#. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/xml/base.xml:0
+#, python-format
+msgid "Try Again"
+msgstr ""
+
+#. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/xml/base.xml:0
+#, python-format
+msgid "Try Again (Force Mode)"
 msgstr ""
 
 #. module: web_pwa_cache
@@ -814,6 +826,13 @@ msgid "Update Caches"
 msgstr ""
 
 #. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/js/pwa_manager.js:0
+#, python-format
+msgid "Update Now"
+msgstr ""
+
+#. module: web_pwa_cache
 #: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache__onchange_trigger_ids
 msgid "Update Triggers"
 msgstr ""
@@ -821,6 +840,13 @@ msgstr ""
 #. module: web_pwa_cache
 #: model:ir.model.fields,field_description:web_pwa_cache.field_pwa_cache_onchange_trigger__vals_discriminant
 msgid "Update values discriminants"
+msgstr ""
+
+#. module: web_pwa_cache
+#. openerp-web
+#: code:addons/web_pwa_cache/static/src/js/pwa_manager.js:0
+#, python-format
+msgid "Updating service worker, please wait..."
 msgstr ""
 
 #. module: web_pwa_cache
@@ -854,6 +880,16 @@ msgstr ""
 #: code:addons/web_pwa_cache/static/src/xml/base.xml:0
 #, python-format
 msgid "Waiting service worker..."
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:pwa.cache,name:web_pwa_cache.pwa_cache_function_get_web_dialog_size_config
+msgid "Web Dialog Size - get_web_dialog_size_config"
+msgstr ""
+
+#. module: web_pwa_cache
+#: model:pwa.cache,name:web_pwa_cache.pwa_cache_function_get_web_m2x_options
+msgid "Web m2x Options - get_web_m2x_options"
 msgstr ""
 
 #. module: web_pwa_cache

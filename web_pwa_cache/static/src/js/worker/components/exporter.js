@@ -611,7 +611,9 @@ odoo.define("web_pwa_cache.PWA.components.Exporter", function(require) {
                     // redirect the request to the server
                     return reject();
                 }
-                return resolve(false);
+
+                // If 'web_pwa_cache.group_pwa_cache' always fallback to true
+                return resolve(xmlid === "web_pwa_cache.group_pwa_cache");
             });
         },
 

@@ -8,11 +8,13 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
     const OdooClass = require("web.Class");
     const SQLiteDB = require("web_pwa_cache.PWA.core.db.SQLiteDB").SQLiteDB;
     const JSSandbox = require("web_pwa_cache.PWA.core.base.JSSandbox");
+    const rpc = require("web_pwa_cache.PWA.core.base.rpc");
 
     const DatabaseSystem = OdooClass.extend({
         _sqlite_db_name: "oca_pwa_sqlite",
         _indexed_db_name: "oca_pwa_indexed",
         _persist_timeout: 1500,
+        _vacuum_chunk_size: 10000,
 
         // Dictionary used to know when use 'search' feature
         _searchables: {},
@@ -343,6 +345,101 @@ odoo.define("web_pwa_cache.PWA.systems.Database", function(require) {
                         this._persist_timeout
                     );
                 }
+            });
+        },
+
+        /**
+         * @param {Function} onVacuumModel
+         * @returns {Promise}
+         */
+        vacuumSqliteRecords: function(onVacuumModel) {
+            return new Promise(async resolve => {
+                const models = await this.getPWAModelInfos();
+                const num_models = models.length;
+                for (const index in models) {
+                    const model_info = models[index];
+                    const table_exists = await this.sqlitedb.tableExists(model_info);
+                    if (!table_exists) {
+                        continue;
+                    }
+                    if (onVacuumModel) {
+                        onVacuumModel(num_models, index, model_info.model);
+                    }
+                    try {
+                        const count_records = await this.count(model_info, []);
+                        let ids_to_remove = [];
+                        for (
+                            let offset = 0;
+                            offset <= count_records;
+                            offset += this._vacuum_chunk_size
+                        ) {
+                            const client_ids = await this.search(
+                                model_info,
+                                [],
+                                this._vacuum_chunk_size,
+                                undefined,
+                                offset
+                            );
+                            const [response] = await rpc.callJSonRpc(
+                                model_info.model,
+                                "exists",
+                                [client_ids]
+                            );
+                            const response_data = (await response.json()).result;
+                            ids_to_remove = ids_to_remove.concat(
+                                _.difference(client_ids, response_data)
+                            );
+                        }
+                        if (!_.isEmpty(ids_to_remove)) {
+                            await this.unlink(model_info, ids_to_remove);
+                        }
+                    } catch (err) {
+                        // Do nothing
+                    }
+                }
+                return resolve();
+            });
+        },
+
+        /**
+         * @returns {Promise}
+         */
+        vacuumOnchanges: function() {
+            return new Promise(async resolve => {
+                try {
+                    const count_records = await this.indexeddb.onchange.count();
+                    let ids_to_remove = [];
+                    for (
+                        let offset = 0;
+                        offset <= count_records;
+                        offset += this._vacuum_chunk_size
+                    ) {
+                        const hashes = await this.indexeddb.onchange
+                            .offset(offset)
+                            .limit(this._vacuum_chunk_size)
+                            .primaryKeys();
+                        const [
+                            response,
+                        ] = await rpc.callJSonRpc(
+                            "pwa.cache.onchange.value",
+                            "exists_hash",
+                            [hashes]
+                        );
+                        const response_data = (await response.json()).result;
+                        ids_to_remove = ids_to_remove.concat(
+                            _.difference(
+                                hashes,
+                                _.map(response_data, hash => Number(hash))
+                            )
+                        );
+                    }
+                    if (!_.isEmpty(ids_to_remove)) {
+                        await this.indexeddb.onchange.bulkDelete(ids_to_remove);
+                    }
+                } catch (err) {
+                    // Do nothing
+                }
+                return resolve();
             });
         },
 

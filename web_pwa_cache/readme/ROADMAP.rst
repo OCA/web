@@ -11,3 +11,4 @@
 * If install the PWA in localhost, be carefully when change the instance because you will use the last service worker installed.
 * On the mobile, to ensure a correct prefetching process, before starting the PWA it is necessary to close the main browser. We have an issue open to try handle this in a correct way: https://bugs.chromium.org/p/chromium/issues/detail?id=1262969
 * The WakeLock API is not supported in Safari, Firefox and Internet Explorer: https://caniuse.com/?search=wakelock
+* Use PWA Manifest ID: https://developer.chrome.com/blog/pwa-manifest-id
