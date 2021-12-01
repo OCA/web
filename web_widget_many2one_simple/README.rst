@@ -23,7 +23,7 @@ Simple many2one widget
     :target: https://runbot.odoo-community.org/runbot/162/14.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 This module adds a new widget to many2one fields that allows to link records
 without any extra features (no autocomplete and no partial search).
@@ -99,6 +99,7 @@ Contributors
   * Alexandre D. Díaz
 
 * Foram Shah <foram.shah@initos.com>
+* Thanakrit Pintana <thanakrit.p39@gmail.com>
 
 Maintainers
 ~~~~~~~~~~~
@@ -119,7 +120,7 @@ promote its widespread use.
 
 Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-Tardo| 
+|maintainer-Tardo|
 
 This module is part of the `OCA/web <https://github.com/OCA/web/tree/14.0/web_widget_many2one_simple>`_ project on GitHub.
 
