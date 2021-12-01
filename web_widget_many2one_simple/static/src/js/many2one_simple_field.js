@@ -114,9 +114,8 @@ odoo.define("web_widget_many2one_simple.FieldMany2OneSimple", function (require)
                     if (this.can_create) {
                         const create_context = _.extend({}, this.attrs.context);
                         if (this.search.field !== "id") {
-                            create_context[
-                                "default_" + this.search.field
-                            ] = this.$input.val();
+                            create_context["default_" + this.search.field] =
+                                this.$input.val();
                         }
                         this._createPopup("form", create_context);
                     } else {
