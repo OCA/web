@@ -157,6 +157,36 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
         },
 
         /**
+         *
+         * @returns {Promise}
+         */
+        _checkDatabaseIntegrity: function() {
+            return new Promise(async resolve => {
+                let has_model_metadata = true;
+                try {
+                    const model_info_metadata = await this._db.getModelInfo(
+                        "model_metadata",
+                        true,
+                        false,
+                        true
+                    );
+                    const count = await this._db.count(model_info_metadata, []);
+                    if (!count) {
+                        has_model_metadata = false;
+                    }
+                } catch (err) {
+                    has_model_metadata = false;
+                    return resolve();
+                }
+
+                if (!has_model_metadata) {
+                    this.config.set("prefetch_modelinfo_last_update", false);
+                }
+                return resolve();
+            });
+        },
+
+        /**
          * @private
          * @param {String} cache_name
          * @param {Array} prefetched_urls
@@ -173,25 +203,39 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
          * @returns {Promise}
          */
         prefetchDataPost: function() {
+            this.options.force_client_show_modal = true;
+            this._verbose = true;
             return new Promise(async (resolve, reject) => {
-                this.options.force_client_show_modal = true;
-                this._verbose = true;
-
                 try {
+                    await this._checkDatabaseIntegrity();
+                    const start_prefetch_date = Tools.DateToOdooFormat(new Date());
                     const model_metadata_promise = this.prefetchModelInfoData();
-                    await Promise.all([
-                        model_metadata_promise.then(() => this.prefetchModelData()),
-                        this.prefetchOnchange(),
-                        this.prefetchModelDefaultData(),
-                        this.prefetchActionData(),
-                        this.prefetchClientQWebData(),
-                        this.prefetchPostData(),
-                        this.prefetchUserData(),
-                        this.prefetchFunctionData(),
-                        this.prefetchViewData(),
+                    const results = await Promise.allSettled([
+                        model_metadata_promise.then(() => this.prefetchModelData()), // Data stored in sqlitedb
+                        this.prefetchOnchange(), // Data stored in indexeddb
+                        this.prefetchModelDefaultData(), // Data stored in indexeddb
+                        this.prefetchActionData(), // Data stored in indexeddb
+                        this.prefetchClientQWebData(), // Data stored in indexeddb
+                        this.prefetchPostData(), // Data stored in indexeddb
+                        this.prefetchUserData(), // Data stored in indexeddb
+                        this.prefetchFunctionData(), // Data stored in indexeddb
+                        this.prefetchViewData(), // Data stored in indexeddb
                     ]);
+                    const first_rejected = _.find(results, {status: "rejected"});
+                    if (first_rejected) {
+                        return reject(first_rejected.reason);
+                    }
                     await this.runVacuumRecords();
                     await this._db.persistDatabases();
+                    // Because prefetch date is stored in indexeddb and model data in sqlite
+                    // we ensure that only save the date if the prefetching process ends
+                    // correctly
+                    if (results[0].status === "fulfilled") {
+                        await this._config.set(
+                            "prefetch_modelinfo_last_update",
+                            start_prefetch_date
+                        );
+                    }
                     // Don't wait for this because need traverse a lot of records
                     this._db.vacuumOnchanges();
 
@@ -207,17 +251,21 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                     // console.log("------------------ RECORDS");
                     // console.log(records);
                 } catch (err) {
-                    this.getParent().postBroadcastMessage({
-                        type: "PWA_PREFETCH_ERROR",
-                        errormsg: err.stack,
-                    });
                     return reject(err);
                 }
-
-                this.options.force_client_show_modal = false;
-                this._verbose = false;
                 return resolve();
-            });
+            })
+                .catch(err => {
+                    this.getParent().postBroadcastMessage({
+                        type: "PWA_PREFETCH_ERROR",
+                        errormsg: (err && "stack" in err && err.stack) || err,
+                    });
+                    return err;
+                })
+                .finally(() => {
+                    this.options.force_client_show_modal = false;
+                    this._verbose = false;
+                });
         },
 
         /**
@@ -502,7 +550,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
             return new Promise(async (resolve, reject) => {
                 let model_infos = [];
                 try {
-                    const start_prefetch_date = Tools.DateToOdooFormat(new Date());
                     const prefetch_last_update = await this._config.get(
                         "prefetch_modelinfo_last_update"
                     );
@@ -534,10 +581,6 @@ odoo.define("web_pwa_cache.PWA.components.Prefetch", function(require) {
                             tasks.push(this.saveModelInfo(model_info));
                         }
                         await Promise.all(tasks);
-                        await this._config.set(
-                            "prefetch_modelinfo_last_update",
-                            start_prefetch_date
-                        );
                     }
                 } catch (err) {
                     this._sendTaskInfoError("model_info_data", "Can't get model infos");

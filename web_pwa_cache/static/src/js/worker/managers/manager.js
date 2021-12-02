@@ -33,6 +33,13 @@ odoo.define("web_pwa_cache.PWA.managers.Manager", function(require) {
         /**
          * @returns {Boolean}
          */
+        isPrefetchRunning: function() {
+            return this.getParent()._prefetch_running;
+        },
+
+        /**
+         * @returns {Boolean}
+         */
         isActivated: function() {
             return this.getParent().isActivated();
         },

@@ -142,7 +142,7 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                     return this.setPWAMode("online", false);
                 })
                 .then(() => {
-                    if (this.isPWAStandalone()) {
+                    if (this.isPWACacheEnabled() && this.isPWAStandalone()) {
                         // Show SW Info modal
                         if (
                             !this._service_worker.controller ||
@@ -261,8 +261,45 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
             return completed;
         },
 
+        _createPrefetchModalData: function(sw_ver) {
+            if (!this.$modalPrefetchProgress) {
+                // Create prefetching modal
+                this.$modalPrefetchProgress = $(
+                    QWeb.render("web_pwa_cache.PrefetchProgress", {
+                        sw_version: sw_ver,
+                    })
+                );
+                this.$modalPrefetchProgress.appendTo("body");
+                this.$modalPrefetchProgressErrorZone = this.$modalPrefetchProgress.find(
+                    ".modal-error-message"
+                );
+                this.$modalPrefetchProgressContent = this.$modalPrefetchProgress.find(
+                    ".modal-body"
+                );
+                this.$modalPrefetchProgressFooter = this.$modalPrefetchProgress.find(
+                    ".modal-footer"
+                );
+                this.$modalPrefetchProgressFooter
+                    .find("#pwa_prefetch_try_again__force_mode")
+                    .on("click", this._onClickPrefetchTryAgain.bind(this, true));
+                this.$modalPrefetchProgressFooter
+                    .find("#pwa_prefetch_try_again")
+                    .on("click", this._onClickPrefetchTryAgain.bind(this, false));
+
+                this.$modalPrefetchProgress.on("shown.bs.modal", () => {
+                    this._prefetchModelHidden = false;
+                    // Append current data
+                    for (const task_info_id in this._prefetchTasksInfo) {
+                        const task_info = this._prefetchTasksInfo[task_info_id];
+                        this._updatePrefetchModalData(task_info_id, task_info);
+                    }
+                });
+                //
+            }
+        },
+
         _openPrefetchModalData: function() {
-            if (this._prefetchModelHidden) {
+            if (this._prefetchModelHidden && this.$modalPrefetchProgress) {
                 this.$modalPrefetchProgress.modal("show");
                 this.$modalPrefetchProgressContent.empty();
                 this._prefetchModelHidden = false;
@@ -460,41 +497,13 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
             }
             this._pwaMode = evdata.data.pwa_mode;
             if (this.isPWAStandalone() && this._service_worker.controller) {
-                // Create prefetching modal
-                this.$modalPrefetchProgress = $(
-                    QWeb.render("web_pwa_cache.PrefetchProgress", {
-                        sw_version: evdata.data.sw_version,
-                    })
-                );
-                this.$modalPrefetchProgress.appendTo("body");
-                this.$modalPrefetchProgressErrorZone = this.$modalPrefetchProgress.find(
-                    ".modal-error-message"
-                );
-                this.$modalPrefetchProgressContent = this.$modalPrefetchProgress.find(
-                    ".modal-body"
-                );
-                this.$modalPrefetchProgressFooter = this.$modalPrefetchProgress.find(
-                    ".modal-footer"
-                );
-                this.$modalPrefetchProgressFooter
-                    .find("#pwa_prefetch_try_again__force_mode")
-                    .on("click", this._onClickPrefetchTryAgain.bind(this, true));
-                this.$modalPrefetchProgressFooter
-                    .find("#pwa_prefetch_try_again")
-                    .on("click", this._onClickPrefetchTryAgain.bind(this, false));
-
-                this.$modalPrefetchProgress.on("shown.bs.modal", () => {
-                    this._prefetchModelHidden = false;
-                    // Append current data
-                    for (const task_info_id in this._prefetchTasksInfo) {
-                        const task_info = this._prefetchTasksInfo[task_info_id];
-                        this._updatePrefetchModalData(task_info_id, task_info);
-                    }
-                });
-                //
-                if (evdata.data.is_db_empty) {
+                this._createPrefetchModalData(evdata.data.sw_version);
+                if (evdata.data.is_db_empty || evdata.data.is_prefetch_running) {
                     if (this.modeSelector.isOpen()) {
                         this.modeSelector.close();
+                    }
+                    if (evdata.data.is_prefetch_running) {
+                        this._openPrefetchModalData();
                     }
                 } else if (!this.modeSelector.wasShown() && !this._updateSWDialog) {
                     this.modeSelector.show();

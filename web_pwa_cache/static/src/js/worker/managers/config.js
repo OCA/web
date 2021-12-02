@@ -152,6 +152,7 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
                     const userdata_count = await this._db.indexeddb.userdata.count();
                     config.is_db_empty = userdata_count === 0;
                     config.sw_version = this.getSWVersion();
+                    config.is_prefetch_running = this.isPrefetchRunning();
                 } catch (err) {
                     return reject(err);
                 }
@@ -176,6 +177,17 @@ odoo.define("web_pwa_cache.PWA.managers.Config", function(require) {
                 const changes = {};
                 const keys = Object.keys(data);
                 for (const key of keys) {
+                    // Cannot be put in offline mode while data is being fetched
+                    if (
+                        key === "pwa_mode" &&
+                        data[key] !== "online" &&
+                        this.isPrefetchRunning()
+                    ) {
+                        console.log(
+                            "[ServiceWorker] Can't be put in offline mode while data is being fetched"
+                        );
+                        continue;
+                    }
                     changes[key] = data[key];
                     promises.push(this.set(key, changes[key]));
                 }
