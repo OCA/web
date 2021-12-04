@@ -38,6 +38,9 @@
     </field>
     ...
 
+* You can also use ``colors="bg_color_field: my_color"`` to defined the field name that will be used
+  for the background color of the line.
+
 * If you want to use more than one color, you can split the attributes using ';':
 
 .. code::
