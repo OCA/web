@@ -23,6 +23,7 @@ setuptools.setup(
         'odoo14-addon-web_group_expand',
         'odoo14-addon-web_ir_actions_act_multi',
         'odoo14-addon-web_ir_actions_act_view_reload',
+        'odoo14-addon-web_ir_actions_act_window_message',
         'odoo14-addon-web_listview_range_select',
         'odoo14-addon-web_m2x_options',
         'odoo14-addon-web_m2x_options_manager',
