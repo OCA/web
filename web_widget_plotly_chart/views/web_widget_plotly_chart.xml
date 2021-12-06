@@ -3,10 +3,16 @@
         <xpath expr="//script[last()]" position="after">
 
             <!-- Library -->
-            <script type="text/javascript" src="/web_widget_plotly_chart/static/lib/plotly/plotly-latest.min.js"></script>
+            <script
+                type="text/javascript"
+                src="/web_widget_plotly_chart/static/lib/plotly/plotly-latest.min.js"
+            />
 
             <!-- Widget -->
-            <script type="text/javascript" src="/web_widget_plotly_chart/static/src/js/widget_plotly.js"></script>
+            <script
+                type="text/javascript"
+                src="/web_widget_plotly_chart/static/src/js/widget_plotly.js"
+            />
 
         </xpath>
     </template>
