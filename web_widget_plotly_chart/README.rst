@@ -125,6 +125,14 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
+.. |maintainer-robyf70| image:: https://github.com/robyf70.png?size=40px
+    :target: https://github.com/robyf70
+    :alt: robyf70
+
+Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+
+|maintainer-robyf70| 
+
 This module is part of the `OCA/web <https://github.com/OCA/web/tree/14.0/web_widget_plotly_chart>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
