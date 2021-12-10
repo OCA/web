@@ -7,7 +7,6 @@
 
 odoo.define("web_environment_ribbon.ribbon", function (require) {
     "use strict";
-
     var rpc = require("web.rpc");
     var core = require("web.core");
 
