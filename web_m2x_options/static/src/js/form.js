@@ -3,7 +3,6 @@
 
 odoo.define("web_m2x_options.web_m2x_options", function (require) {
     "use strict";
-
     var core = require("web.core"),
         data = require("web.data"),
         Dialog = require("web.Dialog"),
