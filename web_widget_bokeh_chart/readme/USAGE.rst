@@ -16,7 +16,7 @@ To insert a Bokeh chart in a view proceed as follows:
             line = p.line([0, 2], [1, 8], line_width=5)
             # (...)
             # fill the record field with both markup and the script of a chart.
-            script, div = components(p)
+            script, div = components(p, wrap_script=False)
             rec.bokeh_chart = '%s%s' % (div, script)
 
 #. In the view, add something like this wherever you want to display your

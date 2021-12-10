@@ -23,7 +23,7 @@ Web Widget Bokeh Chart
     :target: https://runbot.odoo-community.org/runbot/162/14.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 This module add the possibility to insert Bokeh charts into Odoo standard views.
 
@@ -52,7 +52,7 @@ Installation
 
 You need to install the python bokeh library::
 
-    pip3 install bokeh==2.3.1
+    pip3 install bokeh==2.4.2
 
 Usage
 =====
@@ -75,7 +75,7 @@ To insert a Bokeh chart in a view proceed as follows:
             line = p.line([0, 2], [1, 8], line_width=5)
             # (...)
             # fill the record field with both markup and the script of a chart.
-            script, div = components(p)
+            script, div = components(p, wrap_script=False)
             rec.bokeh_chart = '%s%s' % (div, script)
 
 #. In the view, add something like this wherever you want to display your
@@ -109,6 +109,7 @@ Contributors
 * Jordi Ballester Alomar <jordi.ballester@forgeflow.com>
 * Lois Rilo Antelo <lois.rilo@forgeflow.com>
 * Artem Kostyuk <a.kostyuk@mobilunity.com>
+* Christopher ormaza <chris.ormaza@forgeflow.com>
 
 Other credits
 ~~~~~~~~~~~~~
@@ -134,11 +135,15 @@ promote its widespread use.
 .. |maintainer-LoisRForgeFlow| image:: https://github.com/LoisRForgeFlow.png?size=40px
     :target: https://github.com/LoisRForgeFlow
     :alt: LoisRForgeFlow
+.. |maintainer-ChrisOForgeFlow| image:: https://github.com/ChrisOForgeFlow.png?size=40px
+    :target: https://github.com/ChrisOForgeFlow
+    :alt: ChrisOForgeFlow
 
 Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-LoisRForgeFlow| 
+|maintainer-LoisRForgeFlow|
+|maintainer-ChrisOForgeFlow|
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/14.0/web_widget_bokeh_chart>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/15.0/web_widget_bokeh_chart>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
