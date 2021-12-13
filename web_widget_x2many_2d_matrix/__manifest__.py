@@ -5,7 +5,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "2D matrix for x2many fields",
-    "version": "14.0.1.0.1",
+    "version": "15.0.1.0.0",
     "author": (
         "Therp BV, "
         "Tecnativa, "
@@ -18,6 +18,15 @@
     "category": "Hidden/Dependency",
     "summary": "Show list fields as a matrix",
     "depends": ["web"],
-    "data": ["views/assets.xml"],
+    "data": [],
     "installable": True,
+    "assets": {
+        "web.assets_backend": [
+            "web_widget_x2many_2d_matrix/static/src/scss/web_widget_x2many_2d_matrix.scss",
+            "web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js",
+            "web_widget_x2many_2d_matrix/static/src/js/2d_matrix_view.js",
+            "web_widget_x2many_2d_matrix/static/src/js/abstract_view_matrix_limit_extend.js",
+            "web_widget_x2many_2d_matrix/static/src/js/widget_x2many_2d_matrix.js",
+        ],
+    },
 }

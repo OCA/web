@@ -23,7 +23,7 @@
     :target: https://runbot.odoo-community.org/runbot/162/14.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 This module allows to show an x2many field with 3-tuples
 ($x_value, $y_value, $value) in a table
@@ -221,6 +221,7 @@ Contributors
   * Alexey Pelykh <alexey.pelykh@corphub.eu>
 
 * Adrià Gil Sorribes <adria.gil@forgeflow.com>
+* Christopher Ormaza <chris.ormaza@forgeflow.com>
 
 Maintainers
 ~~~~~~~~~~~
