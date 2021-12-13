@@ -138,8 +138,8 @@ odoo.define("web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer", function (requ
             }
             var description = null;
             if (node.attrs.widget) {
-                description = this.state.fieldsInfo.list[name].Widget.prototype
-                    .description;
+                description =
+                    this.state.fieldsInfo.list[name].Widget.prototype.description;
             }
             if (_.isNull(description)) {
                 description = node.attrs.string || field.string;
