@@ -16,6 +16,7 @@
     "data": [
         "security/ir.model.access.csv",
         "security/ir_rule.xml",
+        "views/templates.xml",
         "views/menu.xml",
         "views/tile_tile.xml",
         "views/tile_category.xml",
@@ -24,5 +25,4 @@
         "demo/tile_category.xml",
         "demo/tile_tile.xml",
     ],
-    "qweb": ["static/src/xml/web_dashboard_tile.xml"],
 }
