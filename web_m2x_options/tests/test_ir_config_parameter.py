@@ -16,15 +16,13 @@ class TestIrConfigParameter(common.TransactionCase):
 
     def test_web_m2x_options_key(self):
         web_m2x_options = self.env["ir.config_parameter"].get_web_m2x_options()
-        options = {opt["key"]: opt["value"] for opt in web_m2x_options}
-        self.assertIn("web_m2x_options.limit", options)
-        self.assertNotIn("web_m2x_options.m2o_dialog_test", options)
+        self.assertIn("web_m2x_options.limit", web_m2x_options)
+        self.assertNotIn("web_m2x_options.m2o_dialog_test", web_m2x_options)
 
     def test_web_m2x_options_value(self):
         web_m2x_options = self.env["ir.config_parameter"].get_web_m2x_options()
-        options = {opt["key"]: opt["value"] for opt in web_m2x_options}
-        self.assertEqual(options["web_m2x_options.limit"], "10")
-        self.assertTrue(bool(options["web_m2x_options.create_edit"]))
-        self.assertTrue(bool(options["web_m2x_options.create"]))
-        self.assertEqual(options["web_m2x_options.search_more"], "False")
-        self.assertTrue(bool(options["web_m2x_options.m2o_dialog"]))
+        self.assertEqual(web_m2x_options["web_m2x_options.limit"], "10")
+        self.assertTrue(bool(web_m2x_options["web_m2x_options.create_edit"]))
+        self.assertTrue(bool(web_m2x_options["web_m2x_options.create"]))
+        self.assertEqual(web_m2x_options["web_m2x_options.search_more"], "False")
+        self.assertTrue(bool(web_m2x_options["web_m2x_options.m2o_dialog"]))
