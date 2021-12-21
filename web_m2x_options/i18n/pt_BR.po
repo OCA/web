@@ -25,8 +25,10 @@ msgstr ""
 #. openerp-web
 #: code:addons/web_m2x_options/static/src/xml/base.xml:0
 #, python-format
-msgid "!(widget.nodeOptions.no_open || widget.nodeOptions.no_open_edit)"
-msgstr "!(widget.options.no_open || widget.nodeOptions.no_open_edit)"
+msgid ""
+"!(widget.nodeOptions.no_open || widget.nodeOptions.no_open_edit || widget."
+"noOpen)"
+msgstr ""
 
 #. module: web_m2x_options
 #. openerp-web
@@ -110,3 +112,6 @@ msgstr "Parâmetros do Sistema"
 msgid "You are creating a new %s, are you sure it does not exist yet?"
 msgstr ""
 "Você está criando um novo %s, você tem certeza de que ainda não existe?"
+
+#~ msgid "!(widget.nodeOptions.no_open || widget.nodeOptions.no_open_edit)"
+#~ msgstr "!(widget.options.no_open || widget.nodeOptions.no_open_edit)"
