@@ -23,9 +23,11 @@ msgstr ""
 #. module: web_m2x_options
 #. openerp-web
 #: code:addons/web_m2x_options/static/src/xml/base.xml:0
-#, fuzzy, python-format
-msgid "!(widget.nodeOptions.no_open || widget.nodeOptions.no_open_edit)"
-msgstr "!(opcije isključuju otvaranje ili uređivanje)"
+#, python-format
+msgid ""
+"!(widget.nodeOptions.no_open || widget.nodeOptions.no_open_edit || widget."
+"noOpen)"
+msgstr ""
 
 #. module: web_m2x_options
 #. openerp-web
@@ -108,3 +110,7 @@ msgstr ""
 #, python-format
 msgid "You are creating a new %s, are you sure it does not exist yet?"
 msgstr "Želite kreirati novi %s, jeste li sigurni da već ne postoji?"
+
+#, fuzzy
+#~ msgid "!(widget.nodeOptions.no_open || widget.nodeOptions.no_open_edit)"
+#~ msgstr "!(opcije isključuju otvaranje ili uređivanje)"
