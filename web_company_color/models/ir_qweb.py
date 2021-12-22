@@ -64,7 +64,7 @@ class QWeb(models.AbstractModel):
 
     @api.model
     def _render(self, id_or_xml_id, values=None, **options):
-        """ Adds the active company to the context """
+        """Adds the active company to the context"""
         try:
             active_company_id = int(
                 request.httprequest.cookies.get("cids", "").split(",")[0]
@@ -79,7 +79,7 @@ class QWeb(models.AbstractModel):
         return super()._render(id_or_xml_id, values=values, **options)
 
     def _get_asset_content(self, xmlid, options):
-        """ Handle 'special' web_company_color xmlid """
+        """Handle 'special' web_company_color xmlid"""
         if xmlid == "web_company_color.company_color_assets":
             asset = AssetsBundleCompanyColor(xmlid, [], env=self.env)
             return ([], [asset.get_company_color_asset_node()])
