@@ -5,7 +5,7 @@ from odoo.addons.base.models.assetsbundle import AssetsBundle, ScssStylesheetAss
 
 class AssetsBundleCompanyColor(AssetsBundle):
     def get_company_color_asset_node(self):
-        """ Process the user active company scss and returns the node to inject """
+        """Process the user active company scss and returns the node to inject"""
         company_id = self.env["res.company"].browse(
             self.env.context.get("active_company_id", 0)
         )
