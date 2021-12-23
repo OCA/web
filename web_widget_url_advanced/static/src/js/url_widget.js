@@ -3,7 +3,6 @@ License LGPLv3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.en.html). */
 
 odoo.define("web_widget_url_advanced", function (require) {
     "use strict";
-
     var basic_fields = require("web.basic_fields");
 
     basic_fields.UrlWidget.include({
@@ -37,11 +36,14 @@ odoo.define("web_widget_url_advanced", function (require) {
          */
         _renderReadonly: function () {
             // Base widget uses `this.attrs.text` instead of `this.value` when available.
+            // TODO: To check better way for update link
             this.attrs.text = this._get_text();
             this._super.apply(this, arguments);
             var prefix = this.attrs.prefix_name || this.attrs.options.prefix_name;
             if (prefix) {
-                this.$el.attr("href", prefix + ":" + this.value);
+                this.$el.html(
+                    $(this.$el.html()).attr("href", prefix + ":" + this.value)
+                );
             }
         },
     });
