@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo14-addon-web_action_conditionable',
         'odoo14-addon-web_advanced_search',
         'odoo14-addon-web_calendar_color_field',
+        'odoo14-addon-web_calendar_slot_duration',
         'odoo14-addon-web_company_color',
         'odoo14-addon-web_copy_confirm',
         'odoo14-addon-web_decimal_numpad_dot',
