@@ -37,14 +37,14 @@ class TestUi(odoo.tests.HttpCase):
         manifest_content_str = manifest_data.content.decode("utf-8")
         manifest_content = json.loads(manifest_content_str)
 
-        self.assertEquals(manifest_content["name"], "Test PWA")
-        self.assertEquals(manifest_content["short_name"], "Test")
+        self.assertEqual(manifest_content["name"], "Test PWA")
+        self.assertEqual(manifest_content["short_name"], "Test")
         # icon should remain the default one
-        self.assertEquals(
+        self.assertEqual(
             manifest_content["icons"][0]["src"],
             "/web_pwa_oca/static/img/icons/icon-128x128.png",
         )
-        self.assertEquals(manifest_content["icons"][0]["sizes"], "128x128")
+        self.assertEqual(manifest_content["icons"][0]["sizes"], "128x128")
         self.assertTrue(manifest_content["icons"][0]["type"].startswith("image/png"))
 
     def test_manifest_logo_upload(self):
@@ -62,9 +62,9 @@ class TestUi(odoo.tests.HttpCase):
         manifest_content_str = manifest_data.content.decode("utf-8")
         manifest_content = json.loads(manifest_content_str)
 
-        self.assertEquals(manifest_content["icons"][0]["src"], "/web_pwa_oca/icon.svg")
+        self.assertEqual(manifest_content["icons"][0]["src"], "/web_pwa_oca/icon.svg")
         self.assertTrue(manifest_content["icons"][0]["type"].startswith("image/svg"))
-        self.assertEquals(
+        self.assertEqual(
             manifest_content["icons"][0]["sizes"],
             "128x128 144x144 152x152 192x192 256x256 512x512",
         )
@@ -72,7 +72,7 @@ class TestUi(odoo.tests.HttpCase):
         # Get the icon and compare it
         icon_data = self.url_open("/web_pwa_oca/icon.svg")
         icon_data_bytes = base64.b64encode(icon_data.content)
-        self.assertEquals(icon_data_bytes, icon_to_send)
+        self.assertEqual(icon_data_bytes, icon_to_send)
 
     def test_png_logo_upload(self):
         with open(
