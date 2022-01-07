@@ -68,7 +68,10 @@ class ResConfigSettings(models.TransientModel):
             resized_image.save(icon_bytes_output, format=extension.lstrip(".").upper())
             icon = base64.b64encode(icon_bytes_output.getvalue())
             url = "{}{}x{}{}".format(
-                self._pwa_icon_url_base, str(size[0]), str(size[1]), extension,
+                self._pwa_icon_url_base,
+                str(size[0]),
+                str(size[1]),
+                extension,
             )
         # Retreive existing attachment
         existing_attachment = (

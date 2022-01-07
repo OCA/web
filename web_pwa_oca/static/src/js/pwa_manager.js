@@ -1,7 +1,7 @@
 /* Copyright 2020 Tecnativa - Alexandre D. Díaz
  * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
 
-odoo.define("web_pwa_oca.PWAManager", function(require) {
+odoo.define("web_pwa_oca.PWAManager", function (require) {
     "use strict";
 
     var core = require("web.core");
@@ -13,7 +13,7 @@ odoo.define("web_pwa_oca.PWAManager", function(require) {
         /**
          * @override
          */
-        init: function() {
+        init: function () {
             this._super.apply(this, arguments);
             if (!("serviceWorker" in navigator)) {
                 console.error(
@@ -31,11 +31,11 @@ odoo.define("web_pwa_oca.PWAManager", function(require) {
          * @param {String} sw_script
          * @returns {Promise}
          */
-        registerServiceWorker: function(sw_script) {
+        registerServiceWorker: function (sw_script) {
             return this._service_worker
                 .register(sw_script)
                 .then(this._onRegisterServiceWorker)
-                .catch(function(error) {
+                .catch(function (error) {
                     console.log(_t("[ServiceWorker] Registration failed: "), error);
                 });
         },
@@ -46,7 +46,7 @@ odoo.define("web_pwa_oca.PWAManager", function(require) {
          * @private
          * @param {ServiceWorkerRegistration} registration
          */
-        _onRegisterServiceWorker: function(registration) {
+        _onRegisterServiceWorker: function (registration) {
             console.log(_t("[ServiceWorker] Registered:"), registration);
         },
     });
