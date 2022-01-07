@@ -6,11 +6,18 @@
     "category": "Hidden",
     "summary": "This widget allows to display charts using MPLD3 library.",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
-    "version": "14.0.1.0.0",
+    "version": "15.0.1.0.0",
     "website": "https://github.com/OCA/web",
     "depends": ["web"],
-    "data": ["views/web_widget_mpld3_chart.xml"],
-    "external_dependencies": {"python": ["mpld3"]},
+    "data": [],
+    "external_dependencies": {"python": ["mpld3", "beautifulsoup4"]},
     "auto_install": False,
+    "development_status": "Beta",
+    "maintainers": ["JordiBForgeFlow", "ChrisOForgeFlow"],
     "license": "LGPL-3",
+    "assets": {
+        "web.assets_backend": [
+            "web_widget_mpld3_chart/static/src/js/web_widget_mpld3_chart.esm.js",
+        ],
+    },
 }
