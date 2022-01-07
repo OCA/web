@@ -1,4 +1,4 @@
-odoo.define("web_view_calendar_list.CalendarListRenderer", function(require) {
+odoo.define("web_view_calendar_list.CalendarListRenderer", function (require) {
     "use strict";
 
     var CalendarRenderer = require("web.CalendarRenderer");
@@ -12,7 +12,7 @@ odoo.define("web_view_calendar_list.CalendarListRenderer", function(require) {
     };
 
     var AppointmentRenderer = CalendarRenderer.extend({
-        _initCalendar: function() {
+        _initCalendar: function () {
             var self = this;
 
             this.$calendar = this.$(".o_calendar_widget");
@@ -24,17 +24,17 @@ odoo.define("web_view_calendar_list.CalendarListRenderer", function(require) {
 
             // Documentation here : http://arshaw.com/fullcalendar/docs/
             var fc_options = $.extend({}, this.state.fc_options, {
-                eventDrop: function(event) {
+                eventDrop: function (event) {
                     self.trigger_up("dropRecord", event);
                 },
-                eventResize: function(event) {
+                eventResize: function (event) {
                     self.trigger_up("updateRecord", event);
                 },
-                eventClick: function(event) {
+                eventClick: function (event) {
                     self.trigger_up("openEvent", event);
                     self.$calendar.fullCalendar("unselect");
                 },
-                select: function(target_date, end_date) {
+                select: function (target_date, end_date) {
                     var data = {start: target_date, end: end_date};
                     if (self.state.context.default_name) {
                         data.title = self.state.context.default_name;
@@ -42,7 +42,7 @@ odoo.define("web_view_calendar_list.CalendarListRenderer", function(require) {
                     self.trigger_up("openCreate", data);
                     self.$calendar.fullCalendar("unselect");
                 },
-                eventRender: function(event, element) {
+                eventRender: function (event, element) {
                     var $render = $(self._eventRender(event));
                     event.title = $render.find(".o_field_type_char:first").text();
                     element.find(".fc-list-item-title").html($render.html());
@@ -64,10 +64,10 @@ odoo.define("web_view_calendar_list.CalendarListRenderer", function(require) {
                     element.find(".fc-list-item-time").text(display_hour);
                 },
                 // Dirty hack to ensure a correct first render
-                windowResize: function() {
+                windowResize: function () {
                     self._render();
                 },
-                viewRender: function(view) {
+                viewRender: function (view) {
                     // Compute mode from view.name which is either 'month',
                     // 'agendaWeek' or 'agendaDay'
                     var mode =
@@ -102,7 +102,7 @@ odoo.define("web_view_calendar_list.CalendarListRenderer", function(require) {
         that is not dependant on the class, so we cannot modify it without
         overwriting all the class
         */
-        _render: function() {
+        _render: function () {
             var $calendar = this.$calendar;
             var $fc_view = $calendar.find(".fc-view");
             var scrollPosition = $fc_view.scrollLeft();
@@ -140,7 +140,7 @@ odoo.define("web_view_calendar_list.CalendarListRenderer", function(require) {
                     break;
             }
             $a.addClass("o_selected_range");
-            setTimeout(function() {
+            setTimeout(function () {
                 $a.not(".ui-state-active").addClass("o_color");
             });
 

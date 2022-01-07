@@ -1,4 +1,4 @@
-odoo.define("web_view_calendar_list.CalendarListView", function(require) {
+odoo.define("web_view_calendar_list.CalendarListView", function (require) {
     "use strict";
 
     var CalendarView = require("web.CalendarView");

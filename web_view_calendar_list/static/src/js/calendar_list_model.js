@@ -1,10 +1,10 @@
-odoo.define("web_view_calendar_list.CalendarListModel", function(require) {
+odoo.define("web_view_calendar_list.CalendarListModel", function (require) {
     "use strict";
 
     var CalendarModel = require("web.CalendarModel");
 
     var AppointmentModel = CalendarModel.extend({
-        _recordToCalendarEvent: function(evt) {
+        _recordToCalendarEvent: function (evt) {
             var date_start = false;
             var date_stop = false;
             var date_delay = evt[this.mapping.date_delay] || 1.0,
