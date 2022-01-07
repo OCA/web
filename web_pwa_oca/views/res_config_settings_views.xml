@@ -12,7 +12,10 @@
                         <div class="col-12 col-lg-6 o_setting_box" id="domain_setting">
                             <div class="o_setting_right_pane">
                                 <label for="pwa_name" string="PWA Title" />
-                                <span class="fa fa-lg fa-globe" />
+                                <span
+                                    class="fa fa-lg fa-globe"
+                                    title="Icon next to name"
+                                />
                                 <div class="text-muted">
                                     Name and icon of your PWA
                                 </div>
