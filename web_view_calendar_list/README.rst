@@ -23,7 +23,7 @@ Web View Calendar List
     :target: https://runbot.odoo-community.org/runbot/162/13.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 This module adds a new view type that can be used to show calendars as lists.
 
@@ -38,9 +38,10 @@ Usage
 Create a new view using the calendar_list tag.
 It has the same options than calendar::
 
-    <calendar_list date_start="schedule_date" date_delay="duration" color="partner_id">
-        <field name="display_name"/>
-        <field name="partner_id"/>
+    <calendar_list date_start="schedule_date" date_delay="duration" color="user_id" event_limit="5">
+        <field name="user_id" filters="1"/>
+        <field name="priority"/>
+        <field name="maintenance_type"/>
     </calendar_list>
 
 Bug Tracker

@@ -7,4 +7,7 @@ from odoo import fields, models
 class IrUiView(models.Model):
     _inherit = "ir.ui.view"
 
-    type = fields.Selection(selection_add=[("calendar_list", "Calendar List")])
+    type = fields.Selection(
+        selection_add=[("calendar_list", "Calendar List")],
+        ondelete={"calendar_list": "cascade"},
+    )

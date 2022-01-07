@@ -23,6 +23,11 @@
                 type="text/javascript"
                 src="/web_view_calendar_list/static/src/js/calendar_list_view.js"
             />
+            <link
+                rel="stylesheet"
+                type="text/scss"
+                href="/web_view_calendar_list/static/src/scss/web_calendar_list.scss"
+            />
         </xpath>
     </template>
 </odoo>

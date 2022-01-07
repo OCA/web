@@ -9,6 +9,12 @@ odoo.define("web_view_calendar_list.CalendarListView", function (require) {
     var view_registry = require("web.view_registry");
 
     var _lt = core._lt;
+    const scalesInfo = {
+        day: "listDay",
+        week: "listWeek",
+        month: "listMonth",
+    };
+    const allowedScales = Object.keys(scalesInfo);
 
     var CalendarListView = CalendarView.extend({
         display_name: _lt("Calendar List"),
@@ -18,6 +24,19 @@ odoo.define("web_view_calendar_list.CalendarListView", function (require) {
             Controller: CalendarListController,
             Renderer: CalendarListRenderer,
         }),
+        init: function () {
+            this._super.apply(this, arguments);
+            var scales = allowedScales;
+            if (this.arch.attrs.scales) {
+                scales = this.arch.attrs.scales
+                    .split(",")
+                    .filter((x) => allowedScales.includes(x));
+            }
+            this.controllerParams.scales = scales;
+            this.rendererParams.scalesInfo = scalesInfo;
+            this.loadParams.scales = scales;
+            this.loadParams.scalesInfo = scalesInfo;
+        },
     });
 
     view_registry.add("calendar_list", CalendarListView);
