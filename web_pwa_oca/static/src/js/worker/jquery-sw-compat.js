@@ -5,20 +5,20 @@
 // This is a hack, not a complete implementation!
 // only expected to be used by boot.js
 
-(function() {
+(function () {
     "use strict";
     function JQuery(selector, context) {
         return new JQuery.prototype.init(selector, context);
     }
 
     JQuery.prototype = {
-        init: function(selector) {
+        init: function (selector) {
             if (typeof selector === "function") {
                 selector();
             }
         },
 
-        deparam: function(data) {
+        deparam: function (data) {
             const params = data.split(",");
             const res = [];
             for (const param of params) {
@@ -28,14 +28,14 @@
         },
 
         param: {
-            querystring: function() {
+            querystring: function () {
                 return "debug=1";
             },
         },
 
-        when: function(tasks) {
+        when: function (tasks) {
             return Promise.all(tasks instanceof Array ? tasks : [tasks]).then(
-                results => {
+                (results) => {
                     return results.length === 1 ? results[0] : results;
                 }
             );
