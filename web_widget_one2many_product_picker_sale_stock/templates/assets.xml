@@ -6,6 +6,7 @@
               href="/web_widget_one2many_product_picker_sale_stock/static/src/scss/one2many_product_picker.scss"/>
             <script type="text/javascript" src="/web_widget_one2many_product_picker_sale_stock/static/src/js/views/abstract_view.js"></script>
             <script type="text/javascript" src="/web_widget_one2many_product_picker_sale_stock/static/src/js/widgets/field_one2many_product_picker.js"></script>
+            <script type="text/javascript" src="/web_widget_one2many_product_picker_sale_stock/static/src/js/widgets/qty_at_date_widget.js"></script>
             <script type="text/javascript" src="/web_widget_one2many_product_picker_sale_stock/static/src/js/views/One2ManyProductPicker/record.js"></script>
             <script type="text/javascript" src="/web_widget_one2many_product_picker_sale_stock/static/src/js/views/One2ManyProductPicker/renderer.js"></script>
         </xpath>
