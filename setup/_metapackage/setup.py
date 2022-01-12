@@ -13,6 +13,7 @@ setuptools.setup(
         'odoo-addon-web_m2x_options>=15.0dev,<15.1dev',
         'odoo-addon-web_m2x_options_manager>=15.0dev,<15.1dev',
         'odoo-addon-web_refresher>=15.0dev,<15.1dev',
+        'odoo-addon-web_widget_bokeh_chart>=15.0dev,<15.1dev',
     ],
     classifiers=[
         'Programming Language :: Python',
