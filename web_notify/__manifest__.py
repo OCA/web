@@ -9,6 +9,7 @@
     "version": "14.0.1.0.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV," "AdaptiveCity," "Odoo Community Association (OCA)",
+    "development_status": "Production/Stable",
     "website": "https://github.com/OCA/web",
     "depends": ["web", "bus", "base"],
     "data": ["views/web_notify.xml"],
