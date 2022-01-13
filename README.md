@@ -42,7 +42,7 @@ addon | version | maintainers | summary
 [web_listview_range_select](web_listview_range_select/) | 13.0.1.0.0 |  | Enables selecting a range of records using the shift key
 [web_m2x_options](web_m2x_options/) | 13.0.1.0.3 |  | web_m2x_options
 [web_no_bubble](web_no_bubble/) | 13.0.1.0.0 |  | Remove the bubbles from the web interface
-[web_notify](web_notify/) | 13.0.1.0.1 |  | Send notification messages to user
+[web_notify](web_notify/) | 13.0.1.0.2 |  | Send notification messages to user
 [web_pivot_computed_measure](web_pivot_computed_measure/) | 13.0.1.1.0 |  | Web Pivot Computed Measure
 [web_pwa_oca](web_pwa_oca/) | 13.0.1.0.2 | [![eLBati](https://github.com/eLBati.png?size=30px)](https://github.com/eLBati) | Make Odoo a PWA
 [web_refresher](web_refresher/) | 13.0.1.0.0 |  | Web Refresher
