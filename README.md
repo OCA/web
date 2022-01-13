@@ -24,6 +24,7 @@ addon | version | maintainers | summary
 [web_m2x_options](web_m2x_options/) | 15.0.1.0.0 |  | web_m2x_options
 [web_m2x_options_manager](web_m2x_options_manager/) | 15.0.1.0.0 |  | Adds an interface to manage the "Create" and "Create and Edit" options for specific models and fields.
 [web_refresher](web_refresher/) | 15.0.1.0.0 |  | Web Refresher
+[web_widget_bokeh_chart](web_widget_bokeh_chart/) | 15.0.1.0.0 | [![LoisRForgeFlow](https://github.com/LoisRForgeFlow.png?size=30px)](https://github.com/LoisRForgeFlow) [![ChrisOForgeFlow](https://github.com/ChrisOForgeFlow.png?size=30px)](https://github.com/ChrisOForgeFlow) | This widget allows to display charts using Bokeh library.
 
 [//]: # (end addons)
 
