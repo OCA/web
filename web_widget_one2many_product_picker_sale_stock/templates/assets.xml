@@ -15,6 +15,10 @@
                 type="text/javascript"
                 src="/web_widget_one2many_product_picker_sale_stock/static/src/js/views/abstract_view.js"
             />
+            <script
+                type="text/javascript"
+                src="/web_widget_one2many_product_picker_sale_stock/static/src/js/widgets/qty_at_date_widget.js"
+            />
         </xpath>
     </template>
 </odoo>

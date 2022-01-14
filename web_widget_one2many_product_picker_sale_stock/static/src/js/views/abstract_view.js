@@ -40,11 +40,10 @@ odoo.define("web_widget_one2many_product_picker_sale_stock.AbstractView", functi
          */
         init: function(viewInfo, params) {
             if (viewInfo.model === "sale.order") {
-                const $fields = $(viewInfo.arch).find("field[name='order_line']");
-                const has_product_picker = _.some($fields, function(elm) {
-                    return $(elm).attr("widget") === "one2many_product_picker";
-                });
-                if (has_product_picker) {
+                const widget_name = $(viewInfo.arch)
+                    .find("field[name='order_line']")
+                    .attr("widget");
+                if (widget_name === "one2many_product_picker") {
                     this._injectSaleStockFields(viewInfo);
                 }
                 return this._super(viewInfo, params);
