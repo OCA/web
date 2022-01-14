@@ -23,7 +23,7 @@ Use AND conditions on omnibar search
     :target: https://runbot.odoo-community.org/runbot/162/13.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 When searching for records on same field Odoo joins multiple queries with OR.
 For example:
@@ -79,6 +79,7 @@ Contributors
 * Francesco Apruzzese <f.apruzzese@apuliasoftware.it>
 * Numigi (tm) and all its contributors (https://bit.ly/numigiens)
 * Souheil Bejaoui <souheil.bejaoui@acsone.eu>
+* Pedro Guirao <pedro@serincloud.com>
 
 Maintainers
 ~~~~~~~~~~~
