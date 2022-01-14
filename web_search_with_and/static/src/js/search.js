@@ -1,4 +1,4 @@
-odoo.define("web_search_with_and", function(require) {
+odoo.define("web_search_with_and", function (require) {
     "use strict";
 
     var searchBarAutocompleteRegistry = require("web.search_bar_autocomplete_sources_registry");
@@ -6,7 +6,7 @@ odoo.define("web_search_with_and", function(require) {
 
     SearchBar.include({
         // Override the base method to detect a "shift" event
-        _onAutoCompleteSelected: function(e, ui) {
+        _onAutoCompleteSelected: function (e, ui) {
             var values = ui.item.facet.values;
             if (
                 e.shiftKey &&
