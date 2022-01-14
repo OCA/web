@@ -9,7 +9,9 @@ odoo.define("web_widget_one2many_product_picker_sale_stock.QtyAtDateWidget", fun
 
     QtyAtDateWidget.include({
         on_detach_callback: function() {
-            this.$el.popover("dispose");
+            if (this.$el) {
+                this.$el.popover("dispose");
+            }
         },
     });
 });
