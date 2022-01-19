@@ -5,7 +5,6 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
 
     const core = require("web.core");
     const session = require("web.session");
-    const config = require("web.config");
     const PWAManager = require("web_pwa_oca.PWAManager");
     const PWAModeSelector = require("web_pwa_cache.PWAModeSelector");
     const BroadcastMixin = require("web_pwa_cache.BroadcastMixin");
@@ -15,21 +14,6 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
 
     const QWeb = core.qweb;
     const _t = core._t;
-
-    /**
-     * @returns {Boolean}
-     */
-    function isPWAStandalone() {
-        return (
-            window.navigator.standalone ||
-            document.referrer.includes("android-app://") ||
-            window.matchMedia("(display-mode: standalone)").matches
-        );
-    }
-
-    if (isPWAStandalone()) {
-        config.device.isMobile = true;
-    }
 
     PWAManager.include(BusMixin);
     PWAManager.include(BroadcastMixin);
@@ -758,13 +742,6 @@ odoo.define("web_pwa_cache.PWAManager", function(require) {
                 }
                 return resolve();
             });
-        },
-
-        /**
-         * @returns {Boolean}
-         */
-        isPWAStandalone: function() {
-            return isPWAStandalone();
         },
 
         /**
