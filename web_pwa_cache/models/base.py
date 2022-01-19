@@ -42,7 +42,9 @@ class BaseModel(models.BaseModel):
             # formPWA is always for generic view
             n_views.append([False, "formPWA"])
         res = super().load_views(n_views, options)
-        if standalone and "formPWA" in res["fields_views"]:
+        has_form_id = [view[0] is not False for view in views if view[1] == "form"]
+        has_form_id = has_form_id and has_form_id[0]
+        if standalone and "formPWA" in res["fields_views"] and not has_form_id:
             # We found a formPWA, overwrite 'form' with this view.
             # Need do this because we don't modify any action and
             # the client expects to obtain a form.
