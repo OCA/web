@@ -30,9 +30,10 @@
 
     ...
     <field name="arch" type="xml">
-        <tree string="View name" colors="color_field: my_color" >
+        <tree string="View name" colors="color_field: my_color; bg_color_field: my_background_color" >
             ...
             <field name="my_color" invisible="1"/>
+            <field name="my_background_color" invisible="1"/>
             ...
         </tree>
     </field>
