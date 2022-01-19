@@ -6,104 +6,107 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2022-01-19 13:10+0000\n"
+"Last-Translator: Yann Papouin <y.papouin@dec-industrie.com>\n"
 "Language-Team: none\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: web_domain_field_example
 #: model:ir.model.fields,field_description:web_domain_field_example.field_product_demonstration__categ_id
 msgid "Categ"
-msgstr ""
+msgstr "Catég"
 
 #. module: web_domain_field_example
 #: model:ir.model.fields,field_description:web_domain_field_example.field_product_demonstration__create_uid
 #: model:ir.model.fields,field_description:web_domain_field_example.field_product_selection_example__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Créé par"
 
 #. module: web_domain_field_example
 #: model:ir.model.fields,field_description:web_domain_field_example.field_product_demonstration__create_date
 #: model:ir.model.fields,field_description:web_domain_field_example.field_product_selection_example__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Créé le"
 
 #. module: web_domain_field_example
 #: model:ir.model.fields,field_description:web_domain_field_example.field_product_demonstration__default_code
 msgid "Default Code"
-msgstr ""
+msgstr "Référence"
 
 #. module: web_domain_field_example
 #: model:ir.model.fields,field_description:web_domain_field_example.field_product_demonstration__display_name
 #: model:ir.model.fields,field_description:web_domain_field_example.field_product_selection_example__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom d'affichage"
 
 #. module: web_domain_field_example
 #: model:ir.model.fields,field_description:web_domain_field_example.field_product_demonstration__id
 #: model:ir.model.fields,field_description:web_domain_field_example.field_product_selection_example__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: web_domain_field_example
 #: model:ir.model.fields,field_description:web_domain_field_example.field_product_demonstration____last_update
 #: model:ir.model.fields,field_description:web_domain_field_example.field_product_selection_example____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Dernière modification le"
 
 #. module: web_domain_field_example
 #: model:ir.model.fields,field_description:web_domain_field_example.field_product_demonstration__write_uid
 #: model:ir.model.fields,field_description:web_domain_field_example.field_product_selection_example__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Dernière mise à jour par"
 
 #. module: web_domain_field_example
 #: model:ir.model.fields,field_description:web_domain_field_example.field_product_demonstration__write_date
 #: model:ir.model.fields,field_description:web_domain_field_example.field_product_selection_example__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Mis à jour le"
 
 #. module: web_domain_field_example
 #: model:ir.model.fields,field_description:web_domain_field_example.field_product_demonstration__name
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #. module: web_domain_field_example
 #: model:ir.model.fields,field_description:web_domain_field_example.field_product_selection_example__product_id
 msgid "Product"
-msgstr ""
+msgstr "Article"
 
 #. module: web_domain_field_example
 #: model:ir.model.fields,field_description:web_domain_field_example.field_product_selection_example__product_category_id
 msgid "Product Category"
-msgstr ""
+msgstr "Catégorie d'articles"
 
 #. module: web_domain_field_example
 #: model:ir.model.fields,field_description:web_domain_field_example.field_product_selection_example__product_id_domain
 msgid "Product Id Domain"
-msgstr ""
+msgstr "Domaine de l'article"
 
 #. module: web_domain_field_example
 #: model:ir.actions.act_window,name:web_domain_field_example.action_product_selection_example
 #: model:ir.ui.menu,name:web_domain_field_example.menu_product_selection_example
 msgid "Product Selection Example"
-msgstr ""
+msgstr "Exemple de sélection d'articles"
 
 #. module: web_domain_field_example
 #: model_terms:ir.ui.view,arch_db:web_domain_field_example.product_selection_example_form
 #: model_terms:ir.ui.view,arch_db:web_domain_field_example.product_selection_example_tree
 msgid "Product Selections"
-msgstr ""
+msgstr "Sélection d'articles"
 
 #. module: web_domain_field_example
 #: model:ir.model,name:web_domain_field_example.model_product_demonstration
 msgid "Products to demonstrate workings of web_domain_field module."
 msgstr ""
+"Produits pour démontrer le fonctionnement du module « web_domain_field »."
 
 #. module: web_domain_field_example
 #: model:ir.model,name:web_domain_field_example.model_product_selection_example
 msgid "Show web_domain_field in action"
-msgstr ""
+msgstr "Montre « web_domain_field » en action"
