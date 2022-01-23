@@ -48,6 +48,9 @@
             "/web_responsive/static/src/components/attachment_viewer/attachment_viewer.xml",
             "/web_responsive/static/src/components/hotkey/hotkey.xml",
         ],
+        "web.assets_tests": [
+            "/web_responsive/static/tests/test_patch.js",
+        ],
     },
     "sequence": 1,
 }
