@@ -15,8 +15,10 @@
     top: $o-navbar-height !important;
 }
 
+// We can't use display: none here because of tests
 .o_first_app .o_navbar_apps_menu .dropdown-toggle {
-    display: none;
+    z-index: -1;
+    cursor: default;
 }
 .o_apps_menu_opened .o_main_navbar {
     .o_menu_brand,
