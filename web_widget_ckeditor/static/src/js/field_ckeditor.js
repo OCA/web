@@ -195,7 +195,10 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
              */
             _getCKEditorConfig: async function () {
                 const res = {
-                    toolbar: {items: await this._getCKEditorToolbarItems()},
+                    toolbar: {
+                        items: await this._getCKEditorToolbarItems(),
+                        shouldNotGroupWhenFull: true,
+                    },
                     language: CKEditorLanguageCode,
                     image: {
                         toolbar: [
