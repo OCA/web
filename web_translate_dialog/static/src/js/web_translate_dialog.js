@@ -25,14 +25,19 @@ var TranslateDialog = Dialog.extend({
     init: function(parent, options) {
         this._open_dialog_wait_for = []
         var title_string = _t("Translate fields: /");
-        var field_names;
+        var field_names = {};
         var single_field = false;
         if (options.field){
-            field_names = [options.field.fieldName];
+            this.record_id = options.field.id;
+            var record = parent.model.get(options.field.id)
+            this.model = record.model;
+            field_names[options.field.fieldName] = record.fields[options.field.fieldName];
             single_field = true;
-            title_string = title_string.replace('/', field_names);
+            title_string = title_string.replace('/', record.fields[options.field.fieldName].string);
         }
         else {
+            this.record_id = parent.handle;
+            this.model = parent.modelName;
             field_names = this.get_translatable_fields(parent);
         }
         this._super(parent,
@@ -62,11 +67,11 @@ var TranslateDialog = Dialog.extend({
         });
     },
     get_translatable_fields: function(parent) {
-        var field_list = [];
+        var field_list = {};
         _.each(parent.renderer.state.fields, function(field, name){
             var related_readonly = typeof field.related !== 'undefined' && field.readonly;
             if (field.translate == true && !related_readonly && parent.renderer.state.getFieldNames().includes(name)){
-                field_list.push(name);
+                field_list[name] = field;
             }
         });
         return field_list;
@@ -113,10 +118,10 @@ var TranslateDialog = Dialog.extend({
     },
     set_maxlength: function(){
         // set maxlength if initial field has size attr
-        _.each(this.translatable_fields, function(field_name){
-            var size = $('[name='+field_name+']')[0].maxLength;
+        _.each(this.translatable_fields, function(field, name){
+            var size = $('[name='+name+']')[0].maxLength;
             if (size > 0){
-                this.$('input.oe_translation_field[name$="'+field_name+'"], textarea.oe_translation_field[name$="'+field_name+'"]').attr('maxlength', size);
+                this.$('input.oe_translation_field[name$="'+field_name+'"], textarea.oe_translation_field[name$="'+name+'"]').attr('maxlength', size);
             }
         }, this);
     },
@@ -166,17 +171,20 @@ var TranslateDialog = Dialog.extend({
             deferred = [];
 
         this.$('.oe_translation_field').val('').removeClass('touched');
-
+        var translatable_fields = []
+        _.forEach(this.translatable_fields, function(field, name) {
+            translatable_fields.push(name)
+        });
         var def = $.Deferred();
         deferred.push(def);
         rpc.query({
-            model: this.view.modelName,
+            model: this.model,
             method: 'get_field_translations',
             args: [
                 [this.res_id],
             ],
             kwargs: {
-                field_names: this.translatable_fields,
+                field_names: translatable_fields,
             },
         }).done(
             function (res) {
@@ -209,7 +217,7 @@ var TranslateDialog = Dialog.extend({
 
                 var context = new Context(session.user_context, {lang: code});
                 rpc.query({
-                    model: self.view.modelName,
+                    model: self.model,
                     method: 'write',
                     args: [self.res_id, text],
                     kwargs: {context: context.eval()}
@@ -217,9 +225,13 @@ var TranslateDialog = Dialog.extend({
                     done.resolve();
                 });
                 if (code === self.view_language) {
+                    var changes = {};
                     _.each(text, function(value, key) {
-                        var view_elem = self.view.$( ":input[name='" + key +"']")
-                        view_elem.val(value).trigger('change');
+                        changes[key] = value;
+                    });
+                    self.trigger_up('field_changed', {
+                        dataPointID: self.record_id,
+                        changes: changes,
                     });
                 }
                 return done;
@@ -252,6 +264,7 @@ FormController.include({
     },
     on_button_translate: function() {
         var self = this;
+        var record = self.model.get(this.handle)
         $.when(this.has_been_loaded).then(function() {
             self.open_translate_dialog(null, self.getSelectedIds()[0]);
         });
@@ -266,8 +279,20 @@ BasicController.include({
 
     _onTranslate: function(event) {
         // the image next to the fields opens the translate dialog
-        var res_id = event.target.res_id ? event.target.res_id : event.target.state.res_id;
-        this.open_translate_dialog(event.data, res_id);
+        event.stopPropagation();
+        var self = this;
+        var record = this.model.get(event.data.id, {raw: true});
+        this._rpc({
+            route: '/web/dataset/call_button',
+            params: {
+                model: 'ir.translation',
+                method: 'translate_fields',
+                args: [record.model, record.res_id, event.data.fieldName, record.getContext()],
+            }
+        }).then(function () {
+            var res_id = event.target.res_id ? event.target.res_id : event.target.state.res_id;
+            self.open_translate_dialog(event.data, res_id);
+        })
     },
 });
 
