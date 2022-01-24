@@ -9,5 +9,15 @@
         .ck-editor__editable {
             min-height: 330px;
         }
+
+        .ck-toolbar {
+            .ck-button {
+                font-size: 0.9rem;
+
+                .ck-icon {
+                    will-change: auto;
+                }
+            }
+        }
     }
 }
