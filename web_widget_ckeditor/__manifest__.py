@@ -6,7 +6,7 @@
 {
     "name": "CKEditor Widget",
     "summary": "Provides a widget for editing HTML fields using CKEditor",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "author": "Therp BV, Camptocamp SA, Odoo Community Association (OCA)",
     "maintainers": ["ivantodorovich"],
     "website": "https://github.com/OCA/web",
