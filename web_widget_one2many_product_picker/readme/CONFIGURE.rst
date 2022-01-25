@@ -5,7 +5,7 @@ You need to define the view fields. The view must be of ``form`` type.
 Widget options:
 ~~~~~~~~~~~~~~~
 
-* product_per_page > Integer -> Used to control the load more behaviour (16 by default)
+* records_per_page > Integer -> Used to control the load more behaviour (16 by default)
 * groups > Array of dictionaries -> Declare the groups
 
     * name -> The group name
@@ -39,6 +39,7 @@ Widget options:
 * show_discount > Enable/Disable display discount (False by default)
 * show_subtotal > Enable/Disable show subtotal (True by default)
 * auto_save > Enable/Disable auto save (False by default)
+* all_domain > The domain used in 'All' section ([] by default)
 
   If using auto save feature, you should keep in mind that the "Save" and "Discard" buttons
   will lose part of its functionality as the document will be saved every time you

@@ -56,14 +56,14 @@ msgstr "Salva"
 
 #. module: web_translate_dialog
 #. openerp-web
-#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:243
+#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:257
 #, python-format
 msgid "Translate"
 msgstr "Traduci"
 
 #. module: web_translate_dialog
 #. openerp-web
-#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:26
+#: code:addons/web_translate_dialog/static/src/js/web_translate_dialog.js:27
 #, fuzzy, python-format
 msgid "Translate fields: /"
 msgstr "Traduzioni"
