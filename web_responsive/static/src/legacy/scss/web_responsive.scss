@@ -1,0 +1,461 @@
+/* Copyright 2018 Tecnativa - Jairo Llopis
+ * Copyright 2021 ITerra - Sergey Shebanin
+ * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
+
+$chatter_zone_width: 35%;
+
+// Support for long titles
+@include media-breakpoint-up(md) {
+    .o_form_view .oe_button_box + .oe_title,
+    .o_form_view .oe_button_box + .oe_avatar + .oe_title {
+        /* Button-box has a hardcoded width of 132px per button and have three columns */
+        width: calc(100% - 450px);
+    }
+}
+
+// Scroll all but top bar
+html .o_web_client .o_action_manager .o_action {
+    @include media-breakpoint-down(sm) {
+        overflow: auto;
+
+        .o_content {
+            overflow: visible;
+        }
+    }
+
+    max-width: 100%;
+}
+
+@include media-breakpoint-down(sm) {
+    .ui-menu .ui-menu-item {
+        height: 35px;
+        font-size: 15px;
+    }
+    .o_calendar_view .o_calendar_widget {
+        .fc-timeGridDay-view .fc-axis,
+        .fc-timeGridWeek-view .fc-axis {
+            padding-left: 0px;
+        }
+        .fc-dayGridMonth-view {
+            padding-left: 0px;
+            .fc-week-number {
+                display: none;
+            }
+        }
+        .fc-dayGridYear-view {
+            padding-left: 0px;
+            > .fc-month-container {
+                width: 95%;
+            }
+        }
+        .fc-timeGridDay-view {
+            .fc-week-number {
+                padding: 0 4px;
+                width: 1em;
+                white-space: normal;
+                text-align: center;
+            }
+            .fc-day-header {
+                vertical-align: middle;
+            }
+        }
+        .fc-timeGridWeek-view .fc-widget-header {
+            word-spacing: 4em;
+            white-space: normal;
+            text-align: center;
+        }
+    }
+    .o_base_settings .o_setting_container {
+        display: block;
+        .settings_tab {
+            flex-flow: row nowrap;
+            padding-top: 0px;
+            .tab {
+                padding-right: 16px;
+            }
+            .selected {
+                background-color: #212529;
+                box-shadow: inset 0 -5px #7c7bad;
+            }
+        }
+    }
+}
+
+// Size of labels
+.o_web_client {
+    &.o_chatter_position_sided {
+        .o_action_manager {
+            .o_content,
+            .modal-content {
+                @include media-breakpoint-up(xl, $o-extra-grid-breakpoints) {
+                    .o_inner_group {
+                        .o_td_label {
+                            min-width: 260px !important;
+                        }
+                    }
+                }
+                @include media-breakpoint-between(lg, xl, $o-extra-grid-breakpoints) {
+                    .o_group_col_6 {
+                        width: 100% !important;
+                    }
+                }
+            }
+        }
+    }
+    &:not(.o_chatter_position_sided) {
+        @include media-breakpoint-up(lg, $o-extra-grid-breakpoints) {
+            .o_action_manager {
+                .o_content,
+                .modal-content {
+                    .o_inner_group {
+                        .o_td_label {
+                            min-width: 260px !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Normal views
+.o_content,
+.modal-content {
+    max-width: 100%;
+
+    // Form views
+    .o_form_view {
+        .o_form_sheet {
+            max-width: calc(100% - 32px);
+            overflow-x: auto;
+        }
+
+        .o_td_label .o_form_label:not(.o_status):not(.o_calendar_invitation) {
+            min-height: 23px;
+            @include media-breakpoint-up(md) {
+                margin-bottom: 10px;
+            }
+        }
+        .o_horizontal_separator {
+            font-size: 14px;
+        }
+        // Some UX improvements for form in edit mode
+        @include media-breakpoint-down(sm) {
+            .o_field_widget {
+                vertical-align: middle;
+            }
+            &.o_form_editable .o_field_widget {
+                &:not(.o_stat_info):not(.o_readonly_modifier):not(.oe_form_field_html):not(.o_field_image) {
+                    min-height: 35px;
+                }
+                .o_x2m_control_panel {
+                    margin-bottom: 10px;
+                }
+                &.o_field_float_percentage,
+                &.o_field_monetary,
+                &.o_field_many2manytags,
+                .o_field_many2one_selection {
+                    align-items: center;
+                }
+                .o_field_many2one_selection .o_input_dropdown,
+                &.o_datepicker,
+                &.o_field_partner_autocomplete {
+                    input {
+                        min-height: 35px;
+                    }
+                }
+                .o_external_button {
+                    margin-left: 10px;
+                }
+                .o_dropdown_button,
+                .o_datepicker_button {
+                    top: 8px;
+                    right: 6px;
+                    bottom: auto;
+                }
+            }
+        }
+
+        .o_FormRenderer_chatterContainer {
+            padding-top: 0;
+            .o_Activity_info {
+                flex-wrap: wrap;
+            }
+            .o_ActivityBox_title {
+                margin-bottom: 0;
+            }
+            .o_MessageList_separatorDate {
+                padding-bottom: 0;
+            }
+        }
+        // Sided chatter scrolling behavior
+        .o_Chatter {
+            height: fit-content;
+            .o_Chatter_fixedPanel {
+                position: sticky;
+                top: 0;
+                z-index: 1;
+                background-color: white;
+                padding-bottom: 10px;
+            }
+            .o_Chatter_scrollPanel {
+                overflow: initial;
+            }
+        }
+
+        // Sticky statusbar
+        .o_form_statusbar {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+
+        // Support for long title (with ellipsis)
+        .oe_title {
+            span.o_field_widget:not(.oe_inline) {
+                max-width: 100%;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                width: initial;
+                &:active {
+                    white-space: normal;
+                }
+            }
+        }
+
+        @include media-breakpoint-down(sm) {
+            min-width: auto;
+
+            // More buttons border
+            .oe_button_box {
+                .o_dropdown_more {
+                    button:last-child {
+                        border-right: 1px solid gray("400");
+                    }
+                }
+            }
+
+            // Avoid overflow on forms with title and/or button box
+            .oe_title {
+                max-width: 100%;
+            }
+
+            .oe_button_box + .oe_title,
+            .oe_button_box + .oe_avatar + .oe_title {
+                width: 100%;
+            }
+
+            // Avoid overflow on modals
+            .o_form_sheet {
+                min-width: auto;
+            }
+
+            // Render website inputs properly in phones
+            .o_group .o_field_widget.o_text_overflow {
+                // Overrides another !important
+                width: auto !important;
+            }
+
+            // Make all input groups vertical
+            .o_group_col_6,
+            .o_group_col_8 {
+                width: 100%;
+            }
+
+            // Statusbar buttons dropdown for mobiles
+            .o_statusbar_buttons_dropdown {
+                border: {
+                    bottom: 0;
+                    radius: 0;
+                    top: 0;
+                }
+                height: 100%;
+            }
+            .o_statusbar_buttons.dropdown-menu {
+                .btn {
+                    border-radius: 0;
+                    border: 0;
+                    width: 100%;
+                    margin-bottom: 0.2rem;
+                    white-space: nowrap;
+                    @include media-breakpoint-down(xs) {
+                        max-width: 80vw;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+
+            .o_statusbar_status {
+                // Arrow from rightmost button exceeds allowed width
+                .o_arrow_button:first-child::before {
+                    content: none;
+                    display: none;
+                }
+            }
+
+            // Full width in form sheets
+            .o_form_sheet,
+            .o_FormRenderer_chatterContainer {
+                min-width: auto;
+                max-width: 98%;
+            }
+
+            // Settings pages
+            .app_settings_block {
+                .row {
+                    margin: 0;
+                }
+            }
+
+            .o_FormRenderer_chatterContainer {
+                padding-top: initial;
+
+                // Display send button on small screens
+                .o_Chatter_composer {
+                    &.o-has-current-partner-avatar {
+                        grid-template-columns: 0px 1fr;
+                        padding: 1rem 1rem 1.5rem 1rem;
+                    }
+
+                    .o_Composer_sidebarMain {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+
+    //No content message improvements on mobile
+    @include media-breakpoint-down(md) {
+        .o_view_nocontent {
+            top: 80px;
+        }
+        .o_nocontent_help {
+            box-shadow: none;
+        }
+        .o_sample_data_disabled {
+            display: none;
+        }
+    }
+
+    // Sided chatter, if user wants
+    .o_chatter_position_sided & {
+        @include media-breakpoint-up(lg) {
+            .o_form_view:not(.o_form_nosheet) {
+                display: flex;
+                flex-flow: row nowrap;
+                height: 100%;
+
+                .o_form_sheet_bg {
+                    flex: 1 1 auto;
+                    overflow: auto;
+
+                    > .o_form_sheet {
+                        min-width: unset;
+                    }
+                }
+
+                .o_FormRenderer_chatterContainer {
+                    border-left: 1px solid gray("400");
+                    flex: 0 0 $chatter_zone_width;
+                    max-width: initial;
+                    min-width: initial;
+                    overflow: auto;
+
+                    .o_chatter_header_container {
+                        padding-top: $grid-gutter-width * 0.5;
+                        top: 0;
+                        position: sticky;
+                        background-color: $o-view-background-color;
+                        z-index: 1;
+
+                        // Scrollable input text to avoid hide conversation & buttons
+                        .o_composer_text_field {
+                            max-height: 120px;
+                            overflow-y: auto !important; /* Forced because Odoo uses inline style */
+                        }
+                        .o_attachments_list {
+                            overflow: auto;
+                            max-height: $o-mail-attachment-image-size * 3;
+                            margin-top: 0.4em;
+                        }
+                        .o_attachments_previews {
+                            overflow: auto;
+                            max-height: $o-mail-attachment-image-size * 6;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Sticky Header & Footer in List View
+.o_list_view {
+    .table-responsive {
+        .o_list_table {
+            // th & td are here for compatibility with chrome
+            thead tr:nth-child(1) th {
+                position: sticky;
+                top: 0;
+                z-index: 1;
+            }
+            thead tr:nth-child(1) th {
+                background-color: $o-list-footer-bg-color;
+            }
+            tfoot,
+            tfoot tr:nth-child(1) td {
+                position: sticky;
+                bottom: 0;
+            }
+            tfoot tr:nth-child(1) td {
+                background-color: $o-list-footer-bg-color;
+            }
+        }
+    }
+}
+
+// Big checkboxes
+.o_list_view,
+.o_settings_container .o_setting_box {
+    .o_setting_right_pane {
+        margin-left: 34px;
+    }
+    .custom-checkbox:not(.o_boolean_toggle) {
+        margin-right: 10px;
+
+        .custom-control-label {
+            &::after {
+                width: 24px;
+                height: 24px;
+            }
+            &::before {
+                outline: none !important;
+                border: 1px solid #4c4c4c;
+                width: 24px;
+                height: 24px;
+            }
+        }
+    }
+}
+.o_list_view {
+    .custom-checkbox:not(.o_boolean_toggle) {
+        top: -6px;
+    }
+}
+@include media-breakpoint-down(sm) {
+    .o_base_settings
+        .o_setting_container
+        .settings
+        > .app_settings_block
+        .o_settings_container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
