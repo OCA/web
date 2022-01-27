@@ -4,12 +4,11 @@
 odoo.define("web_widget_domain_editor_dialog.basic_fields", function (require) {
     "use strict";
 
-    const core = require("web.core");
-    const basic_fields = require("web.basic_fields");
+    const {_t} = require("web.core");
+    const {FieldDomain} = require("web.basic_fields");
     const DomainEditorDialog = require("web_widget_domain_editor_dialog.DomainEditorDialog");
-    const _t = core._t;
 
-    basic_fields.FieldDomain.include({
+    FieldDomain.include({
         _onShowSelectionButtonClick: function (event) {
             event.preventDefault();
             const _this = this;
@@ -30,9 +29,11 @@ odoo.define("web_widget_domain_editor_dialog.basic_fields", function (require) {
                     _this.domainSelector
                         .setDomain(this.get_domain(selected_ids))
                         .then(_this._replaceContent.bind(_this));
-                    _this.trigger_up("domain_changed", {
+                    // Trigger from domainSelector instead of _this
+                    // for execute https://github.com/odoo/odoo/blob/15.0/addons/web/static/src/legacy/js/widgets/domain_selector.js#L623
+                    _this.domainSelector.trigger_up("domain_changed", {
                         child: _this,
-                        alreadyRedrawn: true,
+                        noRedraw: true,
                     });
                 },
             }).open();
