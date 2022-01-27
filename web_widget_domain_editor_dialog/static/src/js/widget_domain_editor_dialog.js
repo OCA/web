@@ -4,21 +4,19 @@
 odoo.define("web_widget_domain_editor_dialog.DomainEditorDialog", function (require) {
     "use strict";
 
-    const core = require("web.core");
-    const view_dialogs = require("web.view_dialogs");
+    const {_t} = require("web.core");
+    const {SelectCreateDialog} = require("web.view_dialogs");
     const Domain = require("web.Domain");
-    const _t = core._t;
 
-    const DomainEditorDialog = view_dialogs.SelectCreateDialog.extend({
+    const DomainEditorDialog = SelectCreateDialog.extend({
         init: function () {
             this._super.apply(this, arguments);
-            const _this = this;
             this.options = _.defaults(this.options, {
                 dynamicFilters: [
                     {
-                        description: _.str.sprintf(_t("Selected domain")),
+                        description: _t("Selected domain"),
                         domain: Domain.prototype.stringToArray(
-                            _this.options.default_domain
+                            this.options.default_domain
                         ),
                     },
                 ],
@@ -62,7 +60,7 @@ odoo.define("web_widget_domain_editor_dialog.DomainEditorDialog", function (requ
             return domain.concat(group_domain);
         },
 
-        on_view_list_loaded: () => {
+        on_view_list_loaded: function () {
             this.$(".o_list_record_selector input").prop("checked", true);
             this.$footer
                 .find(".o_selectcreatepopup_search_select")
