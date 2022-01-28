@@ -23,6 +23,7 @@ msgstr ""
 #. module: web_widget_domain_editor_dialog
 #. openerp-web
 #: code:addons/web_widget_domain_editor_dialog/static/src/js/widget_domain_editor_dialog.js:0
+#: code:addons/web_widget_domain_editor_dialog/static/src/js/widget_domain_editor_dialog.js:0
 #, python-format
 msgid "Selected domain"
 msgstr ""
