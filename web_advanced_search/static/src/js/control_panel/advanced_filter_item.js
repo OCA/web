@@ -3,18 +3,18 @@ odoo.define("web_advanced_search.AdvancedFilterItem", function (require) {
 
     const config = require("web.config");
     const DropdownMenuItem = require("web.DropdownMenuItem");
-    const patchMixin = require("web.patchMixin");
+    const {patch} = require("web.utils");
     const DomainSelectorDialog = require("web.DomainSelectorDialog");
     const Domain = require("web.Domain");
     const human_domain = require("web_advanced_search.human_domain");
-    const {useModel} = require("web/static/src/js/model.js");
+    const {useModel} = require("web.Model");
 
-    class AdvancedFilterItem extends DropdownMenuItem {
-        constructor() {
-            super(...arguments);
+    patch(DropdownMenuItem.prototype, "web_advanced_search.AdvancedFilterItem", {
+        setup() {
+            this._super(...arguments);
             this.model = useModel("searchModel");
             this._modelName = this.model.config.modelName;
-        }
+        },
         /**
          * Open advanced search dialog
          *
@@ -45,7 +45,7 @@ odoo.define("web_advanced_search.AdvancedFilterItem", function (require) {
                 this.model.dispatch("createNewFilters", [preFilter]);
             });
             return domain_selector_dialog.open();
-        }
+        },
         /**
          * Mocks _trigger_up to redirect Odoo legacy events to OWL events.
          *
@@ -57,10 +57,10 @@ odoo.define("web_advanced_search.AdvancedFilterItem", function (require) {
             const payload = ev.data;
             payload.__targetWidget = ev.target;
             this.trigger(evType.replace(/_/g, "-"), payload);
-        }
-    }
+        },
+    });
 
-    AdvancedFilterItem.template = "web_advanced_search.AdvancedFilterItem";
-
-    return patchMixin(AdvancedFilterItem);
+    patch(DropdownMenuItem, "web_advanced_search.AdvancedFilterItem", {
+        template: "web_advanced_search.AdvancedFilterItem",
+    });
 });
