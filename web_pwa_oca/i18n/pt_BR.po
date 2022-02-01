@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2021-03-30 20:46+0000\n"
-"Last-Translator: Eder Brito <britoederr@gmail.com>\n"
+"PO-Revision-Date: 2022-02-01 20:33+0000\n"
+"Last-Translator: Rodrigo Macedo <rmsolucoeseminformatica@protonmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -102,7 +102,7 @@ msgstr "Você só pode carregar arquivos PNG até 512x512"
 #: code:addons/web_pwa_oca/models/res_config_settings.py:0
 #, python-format
 msgid "You can only upload SVG or PNG files. Found: %s."
-msgstr ""
+msgstr "Você só pode fazer upload de arquivos SVG ou PNG. Encontrado: %s."
 
 #. module: web_pwa_oca
 #: code:addons/web_pwa_oca/models/res_config_settings.py:0
