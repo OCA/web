@@ -7,13 +7,13 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
     "use strict";
 
     var core = require("web.core");
+    var utils = require("web.utils");
     var Widget = require("web.Widget");
     var Domain = require("web.Domain");
     var widgetRegistry = require("web.widget_registry");
     var tools = require("web_widget_one2many_product_picker.tools");
     var ProductPickerQuickModifPriceForm = require(
         "web_widget_one2many_product_picker.ProductPickerQuickModifPriceForm");
-    var FieldManagerMixin = require('web.FieldManagerMixin');
 
     var qweb = core.qweb;
     var _t = core._t;
@@ -150,6 +150,7 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
         _getMonetaryFieldValue: function (price_field) {
             var field_name = this.options.fieldMap[price_field];
             var price = this.state.data[field_name];
+            price = utils.round_precision(price, this._getCurrencyRounding());
             return tools.monetary(
                 price,
                 this.state.fields[field_name],
@@ -527,12 +528,27 @@ odoo.define("web_widget_one2many_product_picker.One2ManyProductPickerRecord", fu
                     record.data[field_map.price_unit],
                     record.data[field_map.discount]);
             }
+            price_reduce = utils.round_precision(
+                price_reduce,
+                this._getCurrencyRounding());
             return price_reduce && tools.monetary(
                 price_reduce,
                 this.state.fields[field_map.price_unit],
                 this.options.currencyField,
                 this.state.data
             );
+        },
+
+        /**
+         * @returns {Number}
+         */
+        _getCurrencyRounding: function () {
+            var basic_params = this.options.basicFieldParams;
+            var currency_id = this.state.data[this.options.currencyField].res_id;
+            if (!currency_id) {
+                return 0.0;
+            }
+            return basic_params.currencies_rounding[currency_id].rounding;
         },
 
         /**

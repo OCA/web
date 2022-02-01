@@ -79,6 +79,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
          * @override
          */
         willStart: function () {
+            var self = this;
             if (!this.view) {
                 return $.when();
             }
@@ -96,7 +97,28 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                 };
                 this._searchContext.activeTest = false;
             }
-            return $.when(this._super.apply(this, arguments), this._getSearchRecords());
+
+            this.currencies_rounding = {};
+            var def = $.Deferred(function (d) {
+                self._rpc({
+                    model: 'res.currency',
+                    method: "search_read",
+                    fields: ['rounding'],
+                    domain: [],
+                }).then(function (results) {
+                    for (var index in results) {
+                        var result = results[index];
+                        self.currencies_rounding[result.id] = {
+                            'rounding': result.rounding,
+                        };
+                    }
+                    self._getSearchRecords().then(function () {
+                        d.resolve();
+                    })
+                });
+            });
+
+            return $.when(this._super.apply(this, arguments), def);
         },
 
         /**
@@ -160,6 +182,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                 recordData: this.recordData,
                 value: this.value,
                 relation_field: this.state.fields[this.name].relation_field,
+                currencies_rounding: this.currencies_rounding,
             };
         },
 
