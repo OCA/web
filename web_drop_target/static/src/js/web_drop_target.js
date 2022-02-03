@@ -5,7 +5,7 @@
 
 odoo.define("web_drop_target", function (require) {
     "use strict";
-    const ActionManager = require("web.ActionManager");
+    const AbstractAction = require("web.AbstractAction");
     const FormController = require("web.FormController");
     const core = require("web.core");
     const qweb = core.qweb;
@@ -152,10 +152,10 @@ odoo.define("web_drop_target", function (require) {
          */
         _onBodyFileDragover: function (ev) {
             ev.preventDefault();
-            const actionManager = this.findAncestor(function (ancestor) {
-                return ancestor instanceof ActionManager;
+            const abstractAction = this.findAncestor(function (ancestor) {
+                return ancestor instanceof AbstractAction;
             });
-            const controller = actionManager.currentDialogController;
+            const controller = abstractAction.currentDialogController;
             if (
                 _.isEmpty(this._get_drop_items(ev)) &&
                 this._checkDragOver() &&
