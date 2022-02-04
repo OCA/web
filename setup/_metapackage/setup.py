@@ -16,6 +16,7 @@ setuptools.setup(
         'odoo-addon-web_refresher>=15.0dev,<15.1dev',
         'odoo-addon-web_responsive>=15.0dev,<15.1dev',
         'odoo-addon-web_widget_bokeh_chart>=15.0dev,<15.1dev',
+        'odoo-addon-web_widget_domain_editor_dialog>=15.0dev,<15.1dev',
     ],
     classifiers=[
         'Programming Language :: Python',
