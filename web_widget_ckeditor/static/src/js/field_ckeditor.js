@@ -17,22 +17,21 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
     const TranslatableFieldMixin = basic_fields.TranslatableFieldMixin;
 
     // Load configuration for the editor
-    const defaultCKEditorToolbarPromise = rpc.query({
+    const getCKEditorConfigPromise = rpc.query({
         model: "ir.config_parameter",
-        method: "get_param",
-        args: ["web_widget_ckeditor.toolbar"],
+        method: "get_web_widget_ckeditor_config",
     });
 
     // Load CKEditor localization files
     async function loadCKEditorLanguageSource(languageCode) {
-        if (languageCode == "en") {
+        if (languageCode === "en") {
             return;
         }
         const languageURL = `/web_widget_ckeditor/static/lib/ckeditor/build/translations/${languageCode}.js`;
         try {
             ajax.loadJS(languageURL);
         } catch (error) {
-            console.warning("Unable to load CKEditor language: ", languageCode);
+            console.warn("Unable to load CKEditor language: ", languageCode);
         }
     }
     const CKEditorLanguageCode = session.user_context.lang.split("_")[0];
@@ -87,9 +86,10 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
              * @override
              */
             isSet: function () {
-                var value =
+                // Removing spaces & html spaces
+                const value =
                     this.value &&
-                    this.value.split("&nbsp;").join("").replace(/\s/g, ""); // Removing spaces & html spaces
+                    this.value.split("&nbsp;").join("").replace(/\s/g, "");
                 return (
                     value &&
                     value !== "<p></p>" &&
@@ -143,19 +143,19 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
              */
             _getCKEditorToolbarItems: async function () {
                 try {
-                    const toolbarConfig = await defaultCKEditorToolbarPromise;
-                    if (toolbarConfig) {
-                        return toolbarConfig.split(/[\s,]+/).filter((item) => item);
+                    const ckconfig = await getCKEditorConfigPromise;
+                    if (ckconfig.toolbar) {
+                        return ckconfig.toolbar.split(/[\s,]+/).filter((item) => item);
                     }
                 } catch (error) {
-                    console.warning(
+                    console.warn(
                         "Unable to use CKEditor toolbar configuration: ",
                         error
                     );
-                    console.warning(
+                    console.warn(
                         "Please check the value for ir.config_parameter 'web_widget_ckeditor.toolbar' is correct"
                     );
-                    console.warning("Using default toolbar configuration");
+                    console.warn("Using default toolbar configuration");
                 }
                 return [
                     "heading",
