@@ -16,6 +16,9 @@ odoo.define("web.web_action_conditionable", function (require) {
                 if (arch) {
                     ["create", "delete"].forEach(function (item) {
                         if (!_.has(arch.attrs, item)) {
+                            self.activeActions[item] = arch.attrs[item]
+                                ? Boolean(JSON.parse(arch.attrs[item]))
+                                : true;
                             return;
                         }
                         var expr = arch.attrs[item];
@@ -32,7 +35,11 @@ odoo.define("web.web_action_conditionable", function (require) {
                         }
                     });
                     this.editable = arch.attrs.editable;
+                    this._canQuickEdit = arch.tag === "tree";
+                } else {
+                    this._canQuickEdit = false;
                 }
+                this._computeAvailableActions(self.record);
                 if (this.attrs.columnInvisibleFields) {
                     this._processColumnInvisibleFields();
                 }
