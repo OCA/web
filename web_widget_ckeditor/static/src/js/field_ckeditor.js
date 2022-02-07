@@ -32,7 +32,7 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
         try {
             ajax.loadJS(languageURL);
         } catch (error) {
-            console.warning("Unable to load CKEditor language: ", languageCode);
+            console.warn("Unable to load CKEditor language: ", languageCode);
         }
     }
     const CKEditorLanguageCode = session.user_context.lang.split("_")[0];
@@ -148,14 +148,14 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
                         return toolbarConfig.split(/[\s,]+/).filter((item) => item);
                     }
                 } catch (error) {
-                    console.warning(
+                    console.warn(
                         "Unable to use CKEditor toolbar configuration: ",
                         error
                     );
-                    console.warning(
+                    console.warn(
                         "Please check the value for ir.config_parameter 'web_widget_ckeditor.toolbar' is correct"
                     );
-                    console.warning("Using default toolbar configuration");
+                    console.warn("Using default toolbar configuration");
                 }
                 return [
                     "heading",
