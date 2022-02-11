@@ -13,12 +13,15 @@ odoo.define("web_tree_dynamic_colored_field", function (require) {
          */
         _renderBody: function () {
             if (this.arch.attrs.colors) {
-                var colorAttr = this.arch.attrs.colors.split(';');
+                var colorAttr = this.arch.attrs.colors.split(";");
                 if (colorAttr.length > 0) {
-                    var colorType = colorAttr[0].split(':')[0].trim()
-                    var colorField = colorAttr[0].split(':')[1].trim();
-                    // validate the presence of that field in tree view
-                    if (this.state.data.length && colorField in this.state.data[0].data) {
+                    var colorType = colorAttr[0].split(":")[0].trim();
+                    var colorField = colorAttr[0].split(":")[1].trim();
+                    // Validate the presence of that field in tree view
+                    if (
+                        this.state.data.length &&
+                        colorField in this.state.data[0].data
+                    ) {
                         if (colorType === "color_field") {
                             this.colorField = colorField;
                         } else if (colorType === "bg_color_field") {
@@ -62,11 +65,15 @@ odoo.define("web_tree_dynamic_colored_field", function (require) {
             }
             var treeBgColor = record.data[this.bgColorField];
             if (treeBgColor) {
-                $td.css('background-color', treeBgColor);
+                $td.css("background-color", treeBgColor);
             }
-            // apply <field>'s own `options`
-            if (!node.attrs.options) { return; }
-            if (node.tag !== 'field') { return; }
+            // Apply <field>'s own `options`
+            if (!node.attrs.options) {
+                return;
+            }
+            if (node.tag !== "field") {
+                return;
+            }
             var nodeOptions = node.attrs.options;
             if (!_.isObject(nodeOptions)) {
                 nodeOptions = pyUtils.py_eval(nodeOptions);
