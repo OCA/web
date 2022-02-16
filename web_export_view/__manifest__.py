@@ -8,7 +8,7 @@
 
 {
     'name': 'Web Export Current View',
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.0.1',
     'category': 'Web',
     'author': 'Henry Zhou, Agile Business Group, \
             Odoo Community Association (OCA)',
