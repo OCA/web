@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    License LGPLv3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.en.html).
+-->
+<templates xml:space="preserve">
+
+    <t t-name="mail.ListActivity" t-extend="mail.KanbanActivity">
+        <t t-jquery=".o_mail_activity" t-operation="append">
+            <span class="o_activity_summary"/>
+        </t>
+    </t>
+
+</templates>
