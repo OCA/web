@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+  <record model="ir.model.access" id="web_dashboard_action_access_all">
+    <field name="name">web.dashboard.action access all</field>
+    <field name="model_id" ref="model_web_dashboard_action" />
+    <field name="group_id" ref="base.group_user" />
+    <field name="perm_read" eval="1" />
+    <field name="perm_create" eval="0" />
+    <field name="perm_write" eval="0" />
+    <field name="perm_unlink" eval="0" />
+  </record>
+  <record model="ir.model.access" id="web_dashboard_action_access_config">
+    <field name="name">web.dashboard.action access config</field>
+    <field name="model_id" ref="model_web_dashboard_action" />
+    <field name="group_id" ref="base.group_system" />
+    <field name="perm_read" eval="1" />
+    <field name="perm_create" eval="1" />
+    <field name="perm_write" eval="1" />
+    <field name="perm_unlink" eval="1" />
+  </record>
+  <record id="web_dashboard_action_access_rule_all" model="ir.rule">
+    <field name="name">Can see his own dashboard actions</field>
+    <field name="model_id" ref="model_web_dashboard_action" />
+    <field
+            name="domain_force"
+        >['|', ('user_id', '=', user.id), ('user_id', '=', False)]</field>
+    <field name="groups" eval="[(4, ref('base.group_user'))]" />
+  </record>
+  <record id="web_dashboard_action_access_rule_config" model="ir.rule">
+    <field name="name">Can see all dashboard actions</field>
+    <field name="model_id" ref="model_web_dashboard_action" />
+    <field name="domain_force">[(1, '=', 1)]</field>
+    <field name="groups" eval="[(4, ref('base.group_system'))]" />
+  </record>
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+  <record model="ir.ui.view" id="web_dashboard_action_form_view">
+    <field name="model">web.dashboard.action</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group>
+            <field name="name" />
+            <field name="dashboard_id" />
+            <field name="act_window_id" />
+            <field name="specific_model_action" />
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record model="ir.ui.view" id="web_dashboard_action_tree_view">
+    <field name="model">web.dashboard.action</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="name" />
+        <field name="dashboard_id" />
+        <field name="act_window_id" />
+        <field name="specific_model_action" />
+      </tree>
+    </field>
+  </record>
+</odoo>

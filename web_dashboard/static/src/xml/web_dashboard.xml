@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<templates id="template" xml:space="preserve">
+  <t t-name="KanbanDashboardAction">
+    <div t-foreach="elements" t-as="el">
+      <a
+                t-if="el.visibility"
+                data-type="object"
+                role="button"
+                data-name="open_action"
+                href="#"
+                class="o_web_dashboard oe_kanban_action oe_kanban_action_a"
+                t-att-data-context="'{\'dashboard_action_id\':' + el.id + '}'"
+            >
+        <span t-esc="el.display_name" />
+        <t t-if="!el.specific_model_action">
+          (<span t-esc="el.related_records_count" />)
+        </t>
+      </a>
+    </div>
+  </t>
+</templates>

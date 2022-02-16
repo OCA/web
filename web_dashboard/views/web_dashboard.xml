@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+  <record model="ir.ui.view" id="web_dashboard_form_view">
+    <field name="model">web.dashboard</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group>
+            <field name="name" />
+            <field name="act_window_id" />
+            <field name="category" />
+            <field name="user_id" />
+            <field name="action_ids">
+              <tree editable="bottom">
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="act_window_id" />
+                <field name="specific_model_action" />
+              </tree>
+              <form>
+                <sheet>
+                  <group>
+                    <field name="name" />
+                    <field name="act_window_id" />
+                    <field name="specific_model_action" />
+                  </group>
+                </sheet>
+              </form>
+            </field>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record model="ir.ui.view" id="web_dashboard_tree_view">
+    <field name="model">web.dashboard</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="name" />
+        <field name="category" />
+        <field name="user_id" />
+      </tree>
+    </field>
+  </record>
+  <record model="ir.ui.view" id="web_dashboard_kanban_view">
+    <field name="model">web.dashboard</field>
+    <field name="arch" type="xml">
+      <kanban>
+        <field name="name" />
+        <field name="action_ids" />
+        <field name="visibility" />
+        <field name="related_records_count" />
+        <field name="color" />
+        <templates>
+          <t t-name="kanban-box">
+            <div
+                            t-attf-class="#{!selection_mode ? kanban_color(record.color.raw_value) : ''}"
+                        >
+              <div class="o_dropdown_kanban dropdown">
+                <a
+                                    class="dropdown-toggle o-no-caret btn"
+                                    role="button"
+                                    data-toggle="dropdown"
+                                    data-display="static"
+                                    href="#"
+                                    aria-label="Dropdown menu"
+                                    title="Dropdown menu"
+                                >
+                  <span class="fa fa-ellipsis-v" />
+                </a>
+                <div class="dropdown-menu" role="menu">
+                  <ul class="oe_kanban_colorpicker" data-field="color" />
+                </div>
+              </div>
+              <div class="oe_kanban_content">
+                <div>
+                  <strong class="o_kanban_record_title">
+                    <a
+                                            t-if="record.visibility.raw_value"
+                                            type="object"
+                                            name="open_action"
+                                        >
+                      <field name="name" /> (<field name="related_records_count" />)
+                    </a>
+                  </strong>
+                </div>
+                <field name="action_ids" widget="dashboard_action" />
+                <div class="o_kanban_record_bottom">
+                  <div class="oe_kanban_bottom_left">
+
+                                    </div>
+                  <div class="oe_kanban_bottom_right">
+
+                                    </div>
+                </div>
+              </div>
+              <div class="oe_clear" />
+            </div>
+          </t>
+        </templates>
+      </kanban>
+    </field>
+  </record>
+  <record id="web_dashboard_search_view" model="ir.ui.view">
+    <field name="model">web.dashboard</field>
+    <field name="arch" type="xml">
+      <search string="Dashboard">
+        <group string="Group By" name="groupby">
+          <filter
+                        name="group_by_category"
+                        string="Category"
+                        context="{'group_by': 'category'}"
+                    />
+        </group>
+      </search>
+    </field>
+  </record>
+  <!-- Settings -->
+  <record model="ir.actions.act_window" id="web_dashboard_configuration_act_window">
+    <field name="name">Dashboards</field>
+    <field name="res_model">web.dashboard</field>
+    <field name="view_mode">tree,form</field>
+    <field name="domain">[]</field>
+    <field name="context">{}</field>
+  </record>
+  <record model="ir.ui.menu" id="web_dashboard_configuration_menu">
+    <field name="name">Dashboards</field>
+    <field name="parent_id" ref="web_dashboard.web_dashboard_setting_menu" />
+    <field name="action" ref="web_dashboard_configuration_act_window" />
+    <field name="sequence" eval="16" />
+  </record>
+  <!-- Dashboard -->
+  <record model="ir.actions.act_window" id="web_dashboard_act_window">
+    <field name="name">Dashboards</field>
+    <field name="res_model">web.dashboard</field>
+    <field name="view_mode">kanban</field>
+    <field name="domain">[('model_id', '=', False)]</field>
+    <field name="context">{'search_default_group_by_category': True}</field>
+  </record>
+  <record model="ir.ui.menu" id="web_dashboard_menu">
+    <field name="name">Dashboards</field>
+    <field name="parent_id" ref="base.menu_board_root" />
+    <field name="action" ref="web_dashboard_act_window" />
+    <field name="sequence" eval="1" />
+  </record>
+</odoo>
