@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    License LGPLv3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.en.html).
+-->
+<odoo>
+    <template id="web_widget_remaining_days_backend" name="web_widget_remaining_days" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/web_widget_remaining_days/static/src/js/web_widget_remaining_days.js"/>
+        </xpath>
+    </template>
+</odoo>
