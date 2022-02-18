@@ -28,6 +28,7 @@ addon | version | maintainers | summary
 [web_responsive](web_responsive/) | 15.0.1.0.0 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) [![Tardo](https://github.com/Tardo.png?size=30px)](https://github.com/Tardo) [![SplashS](https://github.com/SplashS.png?size=30px)](https://github.com/SplashS) | Responsive web client, community-supported
 [web_widget_bokeh_chart](web_widget_bokeh_chart/) | 15.0.1.0.0 | [![LoisRForgeFlow](https://github.com/LoisRForgeFlow.png?size=30px)](https://github.com/LoisRForgeFlow) [![ChrisOForgeFlow](https://github.com/ChrisOForgeFlow.png?size=30px)](https://github.com/ChrisOForgeFlow) | This widget allows to display charts using Bokeh library.
 [web_widget_domain_editor_dialog](web_widget_domain_editor_dialog/) | 15.0.1.0.0 |  | Recovers the Domain Editor Dialog functionality
+[web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 15.0.1.0.0 |  | Show list fields as a matrix
 
 [//]: # (end addons)
 
