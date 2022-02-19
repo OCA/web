@@ -16,6 +16,7 @@
     "depends": ["web", "mail"],
     "development_status": "Production/Stable",
     "maintainers": ["Yajo", "Tardo", "SplashS"],
+    "excludes": ["web_enterprise"],
     "data": ["views/res_users.xml", "views/web.xml"],
     "assets": {
         "web.assets_frontend": [
