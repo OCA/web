@@ -1,0 +1,140 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_pwa_oca
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_pwa_oca
+#: model_terms:ir.ui.view,arch_db:web_pwa_oca.res_config_settings_view_form
+msgid "<span class=\"fa fa-lg fa-globe\" title=\"Icon next to name\"/>"
+msgstr ""
+
+#. module: web_pwa_oca
+#: model:ir.model.fields,field_description:web_pwa_oca.field_res_config_settings__pwa_background_color
+msgid "Background Color"
+msgstr ""
+
+#. module: web_pwa_oca
+#: model:ir.model,name:web_pwa_oca.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: web_pwa_oca
+#: model:ir.model.fields,field_description:web_pwa_oca.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_pwa_oca
+#: model:ir.model.fields,field_description:web_pwa_oca.field_res_config_settings__id
+msgid "ID"
+msgstr ""
+
+#. module: web_pwa_oca
+#: model:ir.model.fields,field_description:web_pwa_oca.field_res_config_settings__pwa_icon
+msgid "Icon"
+msgstr ""
+
+#. module: web_pwa_oca
+#: model:ir.model.fields,field_description:web_pwa_oca.field_res_config_settings____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: web_pwa_oca
+#: model_terms:ir.ui.view,arch_db:web_pwa_oca.res_config_settings_view_form
+msgid "Name"
+msgstr ""
+
+#. module: web_pwa_oca
+#: model_terms:ir.ui.view,arch_db:web_pwa_oca.res_config_settings_view_form
+msgid "Name and icon of your PWA"
+msgstr ""
+
+#. module: web_pwa_oca
+#: model:ir.model.fields,help:web_pwa_oca.field_res_config_settings__pwa_name
+msgid "Name of the Progressive Web Application"
+msgstr ""
+
+#. module: web_pwa_oca
+#: model_terms:ir.ui.view,arch_db:web_pwa_oca.res_config_settings_view_form
+msgid "PWA Title"
+msgstr ""
+
+#. module: web_pwa_oca
+#: model_terms:ir.ui.view,arch_db:web_pwa_oca.res_config_settings_view_form
+msgid "Progressive Web App"
+msgstr ""
+
+#. module: web_pwa_oca
+#: model:ir.model.fields,field_description:web_pwa_oca.field_res_config_settings__pwa_name
+msgid "Progressive Web App Name"
+msgstr ""
+
+#. module: web_pwa_oca
+#: model:ir.model.fields,field_description:web_pwa_oca.field_res_config_settings__pwa_short_name
+msgid "Progressive Web App Short Name"
+msgstr ""
+
+#. module: web_pwa_oca
+#. openerp-web
+#: code:addons/web_pwa_oca/static/src/js/pwa_manager.js:0
+#, python-format
+msgid ""
+"Service workers are not supported! Maybe you are not using HTTPS or you work"
+" in private mode."
+msgstr ""
+
+#. module: web_pwa_oca
+#: model_terms:ir.ui.view,arch_db:web_pwa_oca.res_config_settings_view_form
+msgid "Short Name"
+msgstr ""
+
+#. module: web_pwa_oca
+#: model:ir.model.fields,help:web_pwa_oca.field_res_config_settings__pwa_short_name
+msgid "Short Name of the Progressive Web Application"
+msgstr ""
+
+#. module: web_pwa_oca
+#: model:ir.model.fields,field_description:web_pwa_oca.field_res_config_settings__pwa_theme_color
+msgid "Theme Color"
+msgstr ""
+
+#. module: web_pwa_oca
+#: code:addons/web_pwa_oca/models/res_config_settings.py:0
+#, python-format
+msgid "You can only upload PNG files bigger than 512x512"
+msgstr ""
+
+#. module: web_pwa_oca
+#: code:addons/web_pwa_oca/models/res_config_settings.py:0
+#, python-format
+msgid "You can only upload SVG or PNG files. Found: %s."
+msgstr ""
+
+#. module: web_pwa_oca
+#: code:addons/web_pwa_oca/models/res_config_settings.py:0
+#, python-format
+msgid "You can't upload a file with more than 2 MB."
+msgstr ""
+
+#. module: web_pwa_oca
+#. openerp-web
+#: code:addons/web_pwa_oca/static/src/js/pwa_manager.js:0
+#, python-format
+msgid "[ServiceWorker] Registered:"
+msgstr ""
+
+#. module: web_pwa_oca
+#. openerp-web
+#: code:addons/web_pwa_oca/static/src/js/pwa_manager.js:0
+#, python-format
+msgid "[ServiceWorker] Registration failed: "
+msgstr ""
