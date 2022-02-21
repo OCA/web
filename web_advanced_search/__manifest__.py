@@ -5,17 +5,20 @@
 
 {
     "name": "Advanced search",
-    "version": "14.0.1.0.1",
-    "author": "Therp BV, " "Tecnativa, " "Odoo Community Association (OCA)",
+    "summary": "Easier and more powerful searching tools",
+    "version": "15.0.1.0.0",
+    "author": "Therp BV, Tecnativa, Camptocamp, Odoo Community Association (OCA)",
+    "website": "https://github.com/OCA/web",
+    "maintainers": ["ivantodorovich"],
     "license": "AGPL-3",
     "category": "Usability",
-    "summary": "Easier and more powerful searching tools",
-    "website": "https://github.com/OCA/web",
     "depends": ["web"],
-    "data": ["views/templates.xml"],
-    "qweb": [
-        "static/src/xml/web_advanced_search.xml",
-    ],
-    "installable": True,
-    "application": False,
+    "assets": {
+        "web.assets_backend": [
+            "web_advanced_search/static/src/js/**/*.js",
+        ],
+        "web.assets_qweb": [
+            "web_advanced_search/static/src/xml/**/*.xml",
+        ],
+    },
 }
