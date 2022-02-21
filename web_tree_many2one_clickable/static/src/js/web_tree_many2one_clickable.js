@@ -58,7 +58,9 @@ odoo.define("web_tree_many2one_clickable.many2one_clickable", function (require)
                         res_id: self.value.res_id,
                         views: [[false, "form"]],
                         target: "target",
-                        context: self.attrs.context || {},
+                        context: self.record.getContext({
+                            additionalContext: self.attrs.context || {},
+                        }),
                     });
                 });
                 this.$el.append($a);
