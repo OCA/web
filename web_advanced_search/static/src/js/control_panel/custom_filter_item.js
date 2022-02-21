@@ -21,9 +21,8 @@ odoo.define("web_advanced_search.CustomFilterItem", function (require) {
 
             _addDefaultCondition() {
                 super._addDefaultCondition(...arguments);
-                const condition = this.state.conditions[
-                    this.state.conditions.length - 1
-                ];
+                const condition =
+                    this.state.conditions[this.state.conditions.length - 1];
                 condition.index = _.uniqueId("condition_");
             }
 
