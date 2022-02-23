@@ -158,6 +158,10 @@ odoo.define('web_edit_user_filter', function (require) {
          */
         _removeValue: function (model, value) {
             var toRemove = model.values.filter(function (v) {
+                if (v.attributes.value == null) {
+                    // Use label if value is not set (eg: pivot time range)
+                    return v.attributes.label === value;
+                }
                 if (typeof v.attributes.value === 'object') {
                     return v.attributes.value.attrs.domain === value;
                 }
