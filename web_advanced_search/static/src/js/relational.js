@@ -7,44 +7,37 @@ odoo.define("web_advanced_search.RelationalOwl", function (require) {
     const relationalFields = require("web.relational_fields");
     const FieldMany2One = relationalFields.FieldMany2One;
     const FieldManagerMixin = require("web.FieldManagerMixin");
-    const {useListener} = require("web.custom_hooks");
     /* global owl */
     const {Component} = owl;
     const {xml} = owl.tags;
 
-    const AdvancedSearchWidget = FieldMany2One.extend(FieldManagerMixin, {
+    const FakeMany2oneFieldWidget = FieldMany2One.extend(FieldManagerMixin, {
         init: function (parent) {
-            const field = parent.__owl__.parent.field;
-            const model = new BasicModel(field.relation);
-            // Create dummy record with only the field the user is searching
+            this.componentAdapter = parent;
+            const options = this.componentAdapter.props.attrs;
+            // Create a dummy record with only a dummy m2o field to search on
+            const model = new BasicModel("dummy");
             const params = {
-                fieldNames: [field.name],
-                modelName: field.relation,
-                context: field.context,
+                fieldNames: ["dummy"],
+                modelName: "dummy",
+                context: {},
                 type: "record",
                 viewType: "default",
-                fieldsInfo: {
-                    default: {},
-                },
+                fieldsInfo: {default: {dummy: {}}},
                 fields: {
-                    [field.name]: _.omit(
-                        field,
-                        // User needs all records, to actually produce a new domain
-                        "domain",
-                        // Onchanges make no sense in this context, there's no record
-                        "onChange"
-                    ),
+                    dummy: {
+                        string: options.string,
+                        relation: options.model,
+                        context: options.context,
+                        domain: options.domain,
+                        type: "many2one",
+                    },
                 },
             };
-            if (field.type.endsWith("2many")) {
-                // X2many fields behave like m2o in the search context
-                params.fields[field.name].type = "many2one";
-            }
-            params.fieldsInfo.default[field.name] = {};
             // Emulate `model.load()`, without RPC-calling `default_get()`
             this.dataPointID = model._makeDataPoint(params).id;
             model.generateDefaultValues(this.dataPointID, {});
-            this._super(parent, field.name, this._get_record(model), {
+            this._super(parent, "dummy", this._get_record(model), {
                 mode: "edit",
                 attrs: {
                     options: {
@@ -64,15 +57,21 @@ odoo.define("web_advanced_search.RelationalOwl", function (require) {
          * @override
          */
         _confirmChange: function (id, fields, event) {
-            this.trigger_up("m2xchange", {
-                data: event.data,
-                changes: event.data.changes[fields[0]],
-                field: fields[0],
-            });
+            this.componentAdapter.trigger("change", event.data.changes[fields[0]]);
             this.dataPointID = id;
             return this.reset(this._get_record(this.model), event);
         },
     });
+
+    class FakeMany2oneFieldWidgetAdapter extends ComponentAdapter {
+        async updateWidget() {
+            /* eslint-disable no-empty-function */
+        }
+        async renderWidget() {
+            /* eslint-disable no-empty-function */
+        }
+    }
+
     /**
      * A search field for relational fields.
      *
@@ -83,29 +82,26 @@ odoo.define("web_advanced_search.RelationalOwl", function (require) {
      * model implementation, which can only hold fake data, given a search view
      * has no data on it by definition.
      */
-    class Relational extends Component {
-        // eslint-disable-next-line no-unused-vars
-        constructor(parent, component, props) {
-            super(...arguments);
-            this.field = parent.state.field;
-            this.operator = parent.state.operator;
-            this.FieldWidget = false;
-            this.set_widget();
-            useListener("operatorChange", this.set_widget);
-        }
-
-        /**
-         * @override
-         */
-        set_widget() {
-            this.FieldWidget = AdvancedSearchWidget;
+    class RecordPicker extends Component {
+        setup() {
+            this.attrs = {
+                string: this.props.string,
+                model: this.props.model,
+                domain: this.props.domain,
+                context: this.props.context,
+            };
+            this.FakeMany2oneFieldWidget = FakeMany2oneFieldWidget;
         }
     }
 
-    Relational.template = xml`
+    RecordPicker.template = xml`
         <div>
-            <ComponentAdapter Component="FieldWidget" />
+            <FakeMany2oneFieldWidgetAdapter
+                Component="FakeMany2oneFieldWidget"
+                class="d-block"
+                attrs="attrs"
+            />
         </div>`;
-    Relational.components = {ComponentAdapter};
-    return patchMixin(Relational);
+    RecordPicker.components = {FakeMany2oneFieldWidgetAdapter};
+    return patchMixin(RecordPicker);
 });

@@ -14,7 +14,12 @@
                 <t
                     t-if="selectedOperator.symbol === '=' || selectedOperator.symbol === '!='"
                 >
-                    <Relational />
+                    <RecordPicker
+                        model="fields[condition.field].relation"
+                        string="fields[condition.field].string"
+                        context="fields[condition.field].context"
+                        t-on-change="_onRelationalChanged(condition)"
+                    />
                 </t>
                 <input
                     t-else=""
