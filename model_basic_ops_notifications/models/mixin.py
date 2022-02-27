@@ -14,7 +14,7 @@ _logger = logging.getLogger(__name__)
 
 class BasicModelOpsNotification(models.AbstractModel):
     _name = BASIC_MODEL_OPS_NOTIFICATION_MIXIN_MODEL_NAME
-    _description = "Mixin para notificaciones."
+    _description = "Notifications Mixin."
 
     _model_male_repr = True
     _model_successfull_single_repr = "The record"
