@@ -49,7 +49,6 @@ Go to form and attach widget boolean_button to your boolean field (i.e. in butto
               }}"/>
   </button>
 
-
 Known issues / Roadmap
 ======================
 
