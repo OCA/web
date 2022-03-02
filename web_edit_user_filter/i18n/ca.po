@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_edit_user_filter
+# 	* web_edit_user_filter
 #
 msgid ""
 msgstr ""
@@ -18,7 +18,7 @@ msgstr ""
 
 #. module: web_edit_user_filter
 #. openerp-web
-#: code:addons/web_edit_user_filter/static/src/js/backend.js:189
+#: code:addons/web_edit_user_filter/static/src/js/backend.js:193
 #, python-format
 msgid "Edit Facet"
 msgstr "Edita la faceta"
