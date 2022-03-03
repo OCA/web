@@ -6,21 +6,23 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2021-02-17 14:45+0000\n"
+"POT-Creation-Date: 2022-03-02 15:55+0000\n"
+"PO-Revision-Date: 2022-03-02 16:56+0100\n"
 "Last-Translator: claudiagn <claudia.gargallo@qubiq.es>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2\n"
+"X-Generator: Poedit 2.3\n"
 
 #. module: web_company_color
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
 msgid ""
 "<span class=\"fa fa-info fa-2x\"/>\n"
-"                        In order for the changes to take effect, please refresh\n"
+"                        In order for the changes to take effect, please "
+"refresh\n"
 "                        the page."
 msgstr ""
 "<span class = \"fa fa-info fa-2x\" />\n"
@@ -41,6 +43,11 @@ msgstr "Colores de la compañía"
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
 msgid "Company Styles"
 msgstr "Estilos de compañía"
+
+#. module: web_company_color
+#: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
+msgid "Compute colors from logo"
+msgstr "Calcular colores a partir del logo"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_bg
