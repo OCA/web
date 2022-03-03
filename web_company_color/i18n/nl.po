@@ -20,7 +20,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
 msgid ""
 "<span class=\"fa fa-info fa-2x\"/>\n"
-"                        In order for the changes to take effect, please refresh\n"
+"                        In order for the changes to take effect, please "
+"refresh\n"
 "                        the page."
 msgstr ""
 "<span class=\"fa fa-info fa-2x\"/>\n"
@@ -40,6 +41,29 @@ msgstr "Bedrijfskleuren"
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
 msgid "Company Styles"
 msgstr "Bedrijfsstijlen"
+
+#. module: web_company_color
+#: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
+msgid "Compute colors from logo"
+msgstr ""
+
+#. module: web_company_color
+#: model:ir.model.fields,field_description:web_company_color.field_ir_qweb__display_name
+#: model:ir.model.fields,field_description:web_company_color.field_res_company__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_company_color
+#: model:ir.model.fields,field_description:web_company_color.field_ir_qweb__id
+#: model:ir.model.fields,field_description:web_company_color.field_res_company__id
+msgid "ID"
+msgstr ""
+
+#. module: web_company_color
+#: model:ir.model.fields,field_description:web_company_color.field_ir_qweb____last_update
+#: model:ir.model.fields,field_description:web_company_color.field_res_company____last_update
+msgid "Last Modified on"
+msgstr ""
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_bg

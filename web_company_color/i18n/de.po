@@ -20,7 +20,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
 msgid ""
 "<span class=\"fa fa-info fa-2x\"/>\n"
-"                        In order for the changes to take effect, please refresh\n"
+"                        In order for the changes to take effect, please "
+"refresh\n"
 "                        the page."
 msgstr ""
 "<span class=\"fa fa-info fa-2x\"/>\n"
@@ -42,6 +43,11 @@ msgstr "Unternehmensfarben"
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
 msgid "Company Styles"
 msgstr "Unternehmensstile"
+
+#. module: web_company_color
+#: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
+msgid "Compute colors from logo"
+msgstr ""
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_ir_qweb__display_name
