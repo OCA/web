@@ -25,6 +25,7 @@ class TestResCompany(common.TransactionCase):
         )
         self._test_scss_attachment()
         company_id.sudo().write({"logo": self.IMG_GREEN})
+        company_id.button_compute_color()
         self.assertEqual(
             company_id.color_navbar_bg, "#00ff00", "Invalid Navbar Background Color"
         )
@@ -36,6 +37,7 @@ class TestResCompany(common.TransactionCase):
     def test_change_logo(self):
         company_id = self.env["res.company"].search([], limit=1)
         company_id.sudo().write({"logo": self.IMG_GREEN})
+        company_id.button_compute_color()
         self.assertEqual(
             company_id.color_navbar_bg, "#00ff00", "Invalid Navbar Background Color"
         )
