@@ -74,33 +74,35 @@ class ResCompany(models.Model):
                 "color_navbar_bg_hover",
                 "color_navbar_text",
             )
-            if "logo" in values:
-                if values["logo"]:
-                    _r, _g, _b = image_to_rgb(convert_to_image(values["logo"]))
-                    # Make color 10% darker
-                    _h, _l, _s = rgb_to_hls(_r, _g, _b)
-                    _l = max(0, _l - 0.1)
-                    _rd, _gd, _bd = hls_to_rgb(_h, _l, _s)
-                    # Calc. optimal text color (b/w)
-                    # Grayscale human vision perception (Rec. 709 values)
-                    _a = 1 - (0.2126 * _r + 0.7152 * _g + 0.0722 * _b)
-                    values.update(
-                        {
-                            "color_navbar_bg": n_rgb_to_hex(_r, _g, _b),
-                            "color_navbar_bg_hover": n_rgb_to_hex(_rd, _gd, _bd),
-                            "color_navbar_text": "#000" if _a < 0.5 else "#fff",
-                        }
-                    )
-                else:
-                    values.update(self.default_get(fields_to_check))
-
             result = super().write(values)
-
             if any([field in values for field in fields_to_check]):
                 self.scss_create_or_update_attachment()
         else:
             result = super().write(values)
         return result
+
+    def button_compute_color(self):
+        self.ensure_one()
+        values = self.default_get(
+            ["color_navbar_bg", "color_navbar_bg_hover", "color_navbar_text"]
+        )
+        if self.logo:
+            _r, _g, _b = image_to_rgb(convert_to_image(self.logo))
+            # Make color 10% darker
+            _h, _l, _s = rgb_to_hls(_r, _g, _b)
+            _l = max(0, _l - 0.1)
+            _rd, _gd, _bd = hls_to_rgb(_h, _l, _s)
+            # Calc. optimal text color (b/w)
+            # Grayscale human vision perception (Rec. 709 values)
+            _a = 1 - (0.2126 * _r + 0.7152 * _g + 0.0722 * _b)
+            values.update(
+                {
+                    "color_navbar_bg": n_rgb_to_hex(_r, _g, _b),
+                    "color_navbar_bg_hover": n_rgb_to_hex(_rd, _gd, _bd),
+                    "color_navbar_text": "#000" if _a < 0.5 else "#fff",
+                }
+            )
+        self.write(values)
 
     def _scss_get_sanitized_values(self):
         self.ensure_one()
