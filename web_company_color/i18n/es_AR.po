@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-02-25 23:17+0000\n"
+"PO-Revision-Date: 2022-03-06 07:17+0000\n"
 "Last-Translator: Ignacio Buioli <ibuioli@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es_AR\n"
@@ -47,7 +47,7 @@ msgstr "Estilos de la Compañía"
 #. module: web_company_color
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
 msgid "Compute colors from logo"
-msgstr ""
+msgstr "Computar colores a partir del logo"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_ir_qweb__display_name
