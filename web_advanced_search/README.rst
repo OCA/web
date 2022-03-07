@@ -14,13 +14,13 @@ Advanced search
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/14.0/web_advanced_search
+    :target: https://github.com/OCA/web/tree/15.0/web_advanced_search
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-14-0/web-14-0-web_advanced_search
+    :target: https://translation.odoo-community.org/projects/web-15-0/web-15-0-web_advanced_search
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/162/14.0
+    :target: https://runbot.odoo-community.org/runbot/162/15.0
     :alt: Try me on Runbot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
@@ -58,7 +58,7 @@ this indefinetely, so it is possible to search for moves belonging
 to a journal which has a user who is member of a certain group etc.
 
 Note also the domain dialog offers an editable preview in debug mode:
-  .. image:: https://raw.githubusercontent.com/OCA/web/14.0/web_advanced_search/static/img/debug_mode.png
+  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_advanced_search/static/img/debug_mode.png
 
 Known issues / Roadmap
 ======================
@@ -128,7 +128,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_advanced_search%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_advanced_search%0Aversion:%2015.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -140,6 +140,7 @@ Authors
 
 * Therp BV
 * Tecnativa
+* Camptocamp
 
 Contributors
 ~~~~~~~~~~~~
@@ -159,6 +160,10 @@ Contributors
 
   * Raf Ven
 
+* `Camptocamp <https://www.camptocamp.com>`_
+
+    * Iván Todorovich <ivan.todorovich@camptocamp.com>
+
 Maintainers
 ~~~~~~~~~~~
 
@@ -172,6 +177,14 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/14.0/web_advanced_search>`_ project on GitHub.
+.. |maintainer-ivantodorovich| image:: https://github.com/ivantodorovich.png?size=40px
+    :target: https://github.com/ivantodorovich
+    :alt: ivantodorovich
+
+Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+
+|maintainer-ivantodorovich| 
+
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/15.0/web_advanced_search>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
