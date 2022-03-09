@@ -5,7 +5,6 @@ You need to define the view fields. The view must be of ``form`` type.
 Widget options:
 ~~~~~~~~~~~~~~~
 
-* records_per_page > Integer -> Used to control the load more behaviour (16 by default)
 * groups > Array of dictionaries -> Declare the groups
 
     * name -> The group name
@@ -15,6 +14,9 @@ Widget options:
 
         * name -> The field name to order
         * asc -> Flag to use 'asc' order
+
+    * records_per_page > Integer -> Used to control the load more behaviour (16 by default)
+    * active -> Boolean -> Select the default group to use ('false' by default = 'All' group)
 
 * currency_field > Model field used to format monetary values ('currency_id' by default)
 * field_map > Dictionary:
@@ -26,7 +28,7 @@ Widget options:
     * price_unit -> The field that represent a price_unit ('price_unit' by default)
     * discount -> The field that represent a discount ('discount' by default)
 
-* search > Array of dictionaries or Array of 'triplets' ([[field_map.name, 'ilike', '$search']] by default)
+* search > Array of dictionaries (defines to use name_search by default)
 
     * name -> The name to display
     * domain -> The domain to use
@@ -34,11 +36,15 @@ Widget options:
         * $search -> Replaces it with the current value of the searchbox
         * $number_search -> Replaces all the leaf with the current value of the searchbox as a number
 
+    * name_search_value -> Enables the use of 'name_search' instead of 'search_read' and defines the value to search ('$search' by default)
+    * operator -> Operator used in 'name_search' ('ilike' by default)
+
 * edit_discount > Enable/Disable discount edits (False by default)
 * edit_price > Enable/Disable price edits (True by default)
 * show_discount > Enable/Disable display discount (False by default)
 * show_subtotal > Enable/Disable show subtotal (True by default)
 * auto_save > Enable/Disable auto save (False by default)
+* auto_save_delay > The time (in milliseconds) to wait after the last interaction before launching the autosave (1500 by default)
 * all_domain > The domain used in 'All' section ([] by default)
 
   If using auto save feature, you should keep in mind that the "Save" and "Discard" buttons
@@ -46,7 +52,9 @@ Widget options:
   modify/create a record with the widget.
 
 * ignore_warning > Enable/Disable display onchange warnings (False by default)
+* instant_search > Enable/Disable instant search mode (False by default)
 * trigger_refresh_fields > Fields in the main record that dispatch a widget refresh (["partner_id", "currency_id"] by default)
+* auto_focus > Keep the focus on the search box after performing a search (True by default)
 
 All widget options are optional.
 Notice that you can call '_' method to use translations. This only can be used with this widget.
