@@ -27,14 +27,12 @@ msgstr "Aceptar"
 #. module: web_widget_one2many_product_picker
 #. openerp-web
 #: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker_quick_create.xml:5
-#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker_quick_create.xml:6
 #, python-format
 msgid "Add"
 msgstr "Añadir"
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
-#: code:addons/web_widget_one2many_product_picker/static/src/js/widgets/field_one2many_product_picker.js:208
 #: code:addons/web_widget_one2many_product_picker/static/src/js/widgets/field_one2many_product_picker.js:287
 #, python-format
 msgid "All"
@@ -80,7 +78,6 @@ msgstr "Descartar"
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
-#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker.xml:35
 #: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker.xml:61
 #, python-format
 msgid "Groups"
@@ -95,7 +92,6 @@ msgstr "CARGANDO..."
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
-#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker.xml:43
 #: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker.xml:73
 #, python-format
 msgid "Lines"
@@ -103,7 +99,6 @@ msgstr "Líneas"
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
-#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker.xml:67
 #: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker.xml:92
 #, python-format
 msgid "Load More"
@@ -118,14 +113,6 @@ msgstr "Precio"
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
-#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker_quick_modif_price.xml:11
-#, python-format
-msgid "Price:"
-msgstr ""
-
-#. module: web_widget_one2many_product_picker
-#. openerp-web
-#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker_quick_create.xml:13
 #: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker_quick_create.xml:18
 #, python-format
 msgid "Remove"
@@ -133,7 +120,6 @@ msgstr "Eliminar"
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
-#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker.xml:23
 #: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker.xml:41
 #, python-format
 msgid "Search..."
@@ -141,7 +127,6 @@ msgstr "Buscar..."
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
-#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker.xml:58
 #: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker.xml:81
 #, python-format
 msgid "Subtotal:"
@@ -149,7 +134,6 @@ msgstr "Subtotal:"
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
-#: code:addons/web_widget_one2many_product_picker/static/src/js/views/One2ManyProductPicker/record.js:361
 #: code:addons/web_widget_one2many_product_picker/static/src/js/views/One2ManyProductPicker/record.js:605
 #, python-format
 msgid "[No widget %s]"
