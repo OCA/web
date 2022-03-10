@@ -5,3 +5,4 @@
 * Nikul Chaudhary <nikul.chaudhary.serpentcs@gmail.com>
 * Phuc Tran Thanh <phuc@trobz.com>
 * Tharathip Chaweewongphan <tharathipc@ecosoft.co.th>
+* Sylvain LE GAL (https://www.twitter.com/legalsylvain)

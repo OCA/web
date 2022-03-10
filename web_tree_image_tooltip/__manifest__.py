@@ -17,6 +17,9 @@
     "category": "Web",
     "depends": ["web"],
     "data": [],
+    "demo": [
+        "demo/view_res_users.xml",
+    ],
     "assets": {
         "web.assets_backend": [
             "web_tree_image_tooltip/static/src/scss/common.scss",
