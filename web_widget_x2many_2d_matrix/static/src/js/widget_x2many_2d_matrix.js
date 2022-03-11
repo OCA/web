@@ -88,8 +88,8 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function (require) {
             _.each(
                 records,
                 function (record) {
-                    var x = record.data[this.field_x_axis],
-                        y = record.data[this.field_y_axis];
+                    var x = record.data[this.field_label_x_axis],
+                        y = record.data[this.field_label_y_axis];
                     if (x.type === "record") {
                         // We have a related record
                         x = x.data.display_name;
@@ -127,6 +127,8 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function (require) {
                 field_value: this.field_value,
                 field_x_axis: this.field_x_axis,
                 field_y_axis: this.field_y_axis,
+                field_label_x_axis: this.field_label_x_axis,
+                field_label_y_axis: this.field_label_y_axis,
                 columns: this.columns,
                 rows: this.rows,
                 show_row_totals: this.show_row_totals,
