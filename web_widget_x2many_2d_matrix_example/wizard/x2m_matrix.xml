@@ -8,10 +8,12 @@
         <field name="arch" type="xml">
             <form>
                 <field name="line_ids" widget="x2many_2d_matrix"
-                       field_x_axis="demo_id" field_y_axis="user_id" field_value="value">
+                       field_x_axis="demo_id" field_y_axis="user_id" field_value="value" field_label_x_axis="demo_display_name" field_label_y_axis="user_display_name">
                     <tree>
                         <field name="demo_id"/>
+                        <field name="demo_display_name"/>
                         <field name="user_id"/>
+                        <field name="user_display_name"/>
                         <field name="value"/>
                     </tree>
                 </field>
@@ -26,10 +28,12 @@
         <field name="arch" type="xml">
             <form>
                 <field name="line_ids" widget="x2many_2d_matrix"
-                       field_x_axis="demo_id" field_y_axis="user_id" field_value="value_selection">
+                       field_x_axis="demo_id" field_y_axis="user_id" field_value="value_selection" field_label_x_axis="demo_display_name" field_label_y_axis="user_display_name">
                     <tree>
                         <field name="demo_id"/>
+                        <field name="demo_display_name"/>
                         <field name="user_id"/>
+                        <field name="user_display_name"/>
                         <field name="value_selection"/>
                     </tree>
                 </field>
@@ -44,10 +48,12 @@
         <field name="arch" type="xml">
             <form>
                 <field name="line_ids" widget="x2many_2d_matrix"
-                       field_x_axis="demo_id" field_y_axis="user_id" field_value="value_many2one">
+                       field_x_axis="demo_id" field_y_axis="user_id" field_value="value_many2one" field_label_x_axis="demo_display_name" field_label_y_axis="user_display_name">
                     <tree>
                         <field name="demo_id"/>
+                        <field name="demo_display_name"/>
                         <field name="user_id"/>
+                        <field name="user_display_name"/>
                         <field name="value_many2one" domain="[('users', '=', user_id)]"/>
                     </tree>
                 </field>
