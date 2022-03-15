@@ -18,7 +18,13 @@ class IrFiltersCombineWithExisting(models.TransientModel):
     domain = fields.Char('Domain', required=True)
     context = fields.Char('Context', required=True, default='{}')
     model = fields.Char('Model', required=True)
-    filter_id = fields.Many2one('ir.filters', 'Filter', required=True)
+    filter_id = fields.Many2one(
+        comodel_name='ir.filters',
+        string='Filter',
+        ondelete='cascade',
+        index=True,
+        required=True
+    )
 
     @api.multi
     def button_save(self):
