@@ -1,24 +1,20 @@
 /* Copyright 2021 Tecnativa - Alexandre Díaz
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html) */
 
-odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(require) {
+odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function (require) {
     "use strict";
 
     const BasicModel = require("web.BasicModel");
 
     function dateToServer(date) {
-        return date
-            .clone()
-            .utc()
-            .locale("en")
-            .format("YYYY-MM-DD HH:mm:ss");
+        return date.clone().utc().locale("en").format("YYYY-MM-DD HH:mm:ss");
     }
 
     BasicModel.include({
         /**
          * @override
          */
-        _applyChange: function(recordID, changes) {
+        _applyChange: function (recordID, changes) {
             // The normal way is to have only one change with the 'CLONE' operation
             // but to ensure that "omitOnchange" is used we check that almost one change
             // is a 'CLONE' operation.
@@ -39,7 +35,7 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
          *
          * @override
          */
-        _applyX2ManyChange: function(record, fieldName, command) {
+        _applyX2ManyChange: function (record, fieldName, command) {
             if (command.operation === "CLONE") {
                 return this._applyX2ManyChangeOmitOnchange.apply(this, arguments);
             }
@@ -55,7 +51,7 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
          * @param {Object} options
          * @returns {Promise}
          */
-        _applyX2ManyChangeOmitOnchange: function(record, fieldName, command, options) {
+        _applyX2ManyChangeOmitOnchange: function (record, fieldName, command, options) {
             var localID =
                 (record._changes && record._changes[fieldName]) ||
                 record.data[fieldName];
@@ -85,7 +81,7 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
             const record_state = this.get(command.id);
             const clone_values = this._getValuesToClone(record_state);
             return this._makeDefaultRecordOmitOnchange(list.model, params, clone_values)
-                .then(id => {
+                .then((id) => {
                     var ids = [id];
                     list._changes = list._changes || [];
                     list._changes.push({
@@ -104,7 +100,7 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
                     }
                     return ids;
                 })
-                .then(ids => {
+                .then((ids) => {
                     this._readUngroupedList(list).then(() => {
                         var x2ManysDef = this._fetchX2ManysBatched(list);
                         var referencesDef = this._fetchReferencesBatched(list);
@@ -122,7 +118,7 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
          * @param {Object} options
          * @returns {Promise}
          */
-        _applyChangeOmitOnchange: function(recordID, changes, options) {
+        _applyChangeOmitOnchange: function (recordID, changes, options) {
             var record = this.localData[recordID];
             var field = false;
             var defs = [];
@@ -169,7 +165,7 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
          * @param {Object} values
          * @returns {Promise}
          */
-        _makeDefaultRecordOmitOnchange: function(modelName, params, values) {
+        _makeDefaultRecordOmitOnchange: function (modelName, params, values) {
             const targetView = params.viewType;
             let fields = params.fields;
             const fieldsInfo = params.fieldsInfo;
@@ -238,7 +234,7 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
          * @param {Object} line_state
          * @returns {Object}
          */
-        _getValuesToClone: function(line_state) {
+        _getValuesToClone: function (line_state) {
             const values_to_clone = {};
             const line_data = line_state.data;
             for (const field_name in line_data) {
@@ -259,7 +255,7 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
                     field_info.type === "many2many" ||
                     field_info.type === "one2many"
                 ) {
-                    values_to_clone[field_name] = _.map(value.data || [], item => {
+                    values_to_clone[field_name] = _.map(value.data || [], (item) => {
                         return item.data.id;
                     });
                 } else if (
