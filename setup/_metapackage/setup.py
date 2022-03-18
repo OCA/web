@@ -33,6 +33,7 @@ setuptools.setup(
         'odoo14-addon-web_pwa_oca',
         'odoo14-addon-web_refresher',
         'odoo14-addon-web_responsive',
+        'odoo14-addon-web_search_with_and',
         'odoo14-addon-web_send_message_popup',
         'odoo14-addon-web_sheet_full_width',
         'odoo14-addon-web_switch_context_warning',
