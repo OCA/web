@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<templates id="template" xml:space="preserve">
+<templates xml:space="preserve">
+    <!-- This is for old Dialog template.
+    Because Odoo haven't done every template to OWL. -->
     <t t-extend="Dialog">
         <t t-jquery="button.close" t-operation="inner">
             <i class="fa fa-close" />
@@ -12,5 +14,17 @@
                 <i class="fa fa-compress" />
             </button>
         </t>
+    </t>
+
+    <t t-inherit="web.ActionDialog" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('modal-content')]" position="before">
+            <DialogDraggable />
+        </xpath>
+        <DialogDraggable position="inside">
+            <xpath expr="//div[hasclass('modal-content')]" position="move" />
+        </DialogDraggable>
+        <xpath expr="//button[hasclass('close')]" position="before">
+            <ExpandButton getsize="getSize" setsize="setSize" />
+        </xpath>
     </t>
 </templates>
