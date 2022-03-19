@@ -82,7 +82,6 @@ The field used as domain must provide the domain as a JSON encoded string.
        store=False,
    )
 
-   @api.multi
    @api.depends('name')
    def _compute_product_id_domain(self):
        for rec in self:
