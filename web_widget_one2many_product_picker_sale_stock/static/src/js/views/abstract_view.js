@@ -1,6 +1,8 @@
 // Copyright 2020 Tecnativa - Alexandre Díaz
 // License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-odoo.define("web_widget_one2many_product_picker_sale_stock.AbstractView", function (require) {
+odoo.define("web_widget_one2many_product_picker_sale_stock.AbstractView", function(
+    require
+) {
     "use strict";
 
     var AbstractView = require("web.AbstractView");
@@ -13,17 +15,20 @@ odoo.define("web_widget_one2many_product_picker_sale_stock.AbstractView", functi
      * @returns {Object}
      */
     function _constructFakeFieldDef(params) {
-        return _.extend({
-            change_default: false,
-            company_dependent: false,
-            manual: false,
-            views: {},
-            searchable: true,
-            store: false,
-            readonly: true,
-            required: false,
-            sortable: false,
-        }, params);
+        return _.extend(
+            {
+                change_default: false,
+                company_dependent: false,
+                manual: false,
+                views: {},
+                searchable: true,
+                store: false,
+                readonly: true,
+                required: false,
+                sortable: false,
+            },
+            params
+        );
     }
 
     /**
@@ -33,10 +38,12 @@ odoo.define("web_widget_one2many_product_picker_sale_stock.AbstractView", functi
         /**
          * @override
          */
-        init: function (viewInfo, params) {
-            if (viewInfo.model === 'sale.order') {
-                var widget_name = $(viewInfo.arch).find("field[name='order_line']").attr("widget");
-                if (widget_name === "one2many_product_picker") {
+        init: function(viewInfo, params) {
+            if (viewInfo.model === "sale.order") {
+                var $fields = $(viewInfo.arch)
+                    .find("field[name='order_line']");
+                var has_product_picker = _.some($fields, function(elm) { return $(elm).attr("widget") === "one2many_product_picker"; });
+                if (has_product_picker) {
                     this._injectSaleStockFields(viewInfo);
                 }
                 return this._super(viewInfo, params);
@@ -48,7 +55,7 @@ odoo.define("web_widget_one2many_product_picker_sale_stock.AbstractView", functi
          * @private
          * @param {Object} viewInfo
          */
-        _injectSaleStockFields: function (viewInfo) {
+        _injectSaleStockFields: function(viewInfo) {
             var to_inject = {
                 product_type: _constructFakeFieldDef({
                     depends: ["product_id.type"],
@@ -61,7 +68,7 @@ odoo.define("web_widget_one2many_product_picker_sale_stock.AbstractView", functi
                         "customer_lead",
                         "product_uom_qty",
                         "order_id.warehouse_id",
-                        "order_id.commitment_date"
+                        "order_id.commitment_date",
                     ],
                     type: "float",
                 }),
@@ -71,7 +78,7 @@ odoo.define("web_widget_one2many_product_picker_sale_stock.AbstractView", functi
                         "customer_lead",
                         "product_uom_qty",
                         "order_id.warehouse_id",
-                        "order_id.commitment_date"
+                        "order_id.commitment_date",
                     ],
                     type: "float",
                 }),
@@ -81,7 +88,7 @@ odoo.define("web_widget_one2many_product_picker_sale_stock.AbstractView", functi
                         "customer_lead",
                         "product_uom_qty",
                         "order_id.warehouse_id",
-                        "order_id.commitment_date"
+                        "order_id.commitment_date",
                     ],
                     type: "float",
                 }),
@@ -91,7 +98,7 @@ odoo.define("web_widget_one2many_product_picker_sale_stock.AbstractView", functi
                         "customer_lead",
                         "product_uom_qty",
                         "order_id.warehouse_id",
-                        "order_id.commitment_date"
+                        "order_id.commitment_date",
                     ],
                     type: "datetime",
                 }),
@@ -100,7 +107,7 @@ odoo.define("web_widget_one2many_product_picker_sale_stock.AbstractView", functi
                         "product_id",
                         "product_uom_qty",
                         "qty_delivered",
-                        "state"
+                        "state",
                     ],
                     relation: "stock.warehouse",
                     type: "many2one",
@@ -111,7 +118,7 @@ odoo.define("web_widget_one2many_product_picker_sale_stock.AbstractView", functi
                         "customer_lead",
                         "product_uom_qty",
                         "order_id.warehouse_id",
-                        "order_id.commitment_date"
+                        "order_id.commitment_date",
                     ],
                     group_operator: "sum",
                     type: "float",
@@ -121,7 +128,7 @@ odoo.define("web_widget_one2many_product_picker_sale_stock.AbstractView", functi
                         "product_id",
                         "route_id",
                         "order_id.warehouse_id",
-                        "product_id.route_ids"
+                        "product_id.route_ids",
                     ],
                     type: "boolean",
                 }),
@@ -130,30 +137,32 @@ odoo.define("web_widget_one2many_product_picker_sale_stock.AbstractView", functi
                         "product_id",
                         "product_uom_qty",
                         "qty_delivered",
-                        "state"
+                        "state",
                     ],
                     type: "boolean",
                 }),
             };
-            viewInfo.viewFields.order_line.views.form.fields =
-                _.extend({}, to_inject, viewInfo.viewFields.order_line.views.form.fields);
+            viewInfo.viewFields.order_line.views.form.fields = _.extend(
+                {},
+                to_inject,
+                viewInfo.viewFields.order_line.views.form.fields
+            );
 
             // Add fields to arch
             var field_names = Object.keys(to_inject);
             var $arch = $(viewInfo.viewFields.order_line.views.form.arch);
             for (var index in field_names) {
                 var field_name = field_names[index];
-                var $field = $arch.find("field[name='"+field_name+"']");
+                var $field = $arch.find("field[name='" + field_name + "']");
                 if (!$field.length) {
                     $("<FIELD/>", {
                         name: field_name,
                         invisible: 1,
-                        modifiers: "{\"invisible\": true}",
+                        modifiers: '{"invisible": true}',
                     }).appendTo($arch);
                 }
             }
             viewInfo.viewFields.order_line.views.form.arch = $arch[0].outerHTML;
-        }
+        },
     });
-
 });

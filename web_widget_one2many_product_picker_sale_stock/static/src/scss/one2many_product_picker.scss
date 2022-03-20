@@ -21,20 +21,18 @@
 
             .oe_flip_card_inner {
                 .stock_info {
-                    top: 50%;
-                    left: 5px;
-                    transform: translateY(-50%);
+                    top: 5px;
+                    right: 8px;
 
                     > .o_widget {
                         > div {
                             background-color: white;
                             border-radius: 50%;
-                            width: 2.5em;
-                            height: 2.5em;
+                            width: 2em;
+                            height: 2em;
 
                             .fa {
-                                margin-top: -3px;
-                                font-size: 3em;
+                                font-size: 2.5em;
                             }
                         }
                     }

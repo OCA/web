@@ -16,99 +16,122 @@ msgstr ""
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
-#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker_quick_create.xml:6
+#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker_quick_create.xml:9
+#, python-format
+msgid "Accept"
+msgstr ""
+
+#. module: web_widget_one2many_product_picker
+#. openerp-web
+#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker_quick_create.xml:5
 #, python-format
 msgid "Add"
 msgstr ""
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
-#: code:addons/web_widget_one2many_product_picker/static/src/js/widgets/field_one2many_product_picker.js:208
+#: code:addons/web_widget_one2many_product_picker/static/src/js/widgets/field_one2many_product_picker.js:287
 #, python-format
 msgid "All"
 msgstr ""
 
 #. module: web_widget_one2many_product_picker
+#: model:ir.model,name:web_widget_one2many_product_picker.model_base
+msgid "Base"
+msgstr ""
+
+#. module: web_widget_one2many_product_picker
 #. openerp-web
-#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker.xml:35
+#: code:addons/web_widget_one2many_product_picker/static/src/js/widgets/field_one2many_product_picker.js:72
+#, python-format
+msgid "By Name"
+msgstr ""
+
+#. module: web_widget_one2many_product_picker
+#: code:addons/web_widget_one2many_product_picker/models/base.py:42
+#, python-format
+msgid "Can't create the %s: Duplicated product! (Already in database)"
+msgstr ""
+
+#. module: web_widget_one2many_product_picker
+#: code:addons/web_widget_one2many_product_picker/models/base.py:22
+#, python-format
+msgid "Can't create the %s: Duplicated product! (Inside query)"
+msgstr ""
+
+#. module: web_widget_one2many_product_picker
+#: code:addons/web_widget_one2many_product_picker/models/base.py:73
+#, python-format
+msgid "Can't write the %s: Duplicated product! (Already in database)"
+msgstr ""
+
+#. module: web_widget_one2many_product_picker
+#. openerp-web
+#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker_quick_create.xml:12
+#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker_quick_create.xml:20
+#, python-format
+msgid "Discard"
+msgstr ""
+
+#. module: web_widget_one2many_product_picker
+#. openerp-web
+#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker.xml:61
 #, python-format
 msgid "Groups"
 msgstr ""
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
-#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker.xml:43
+#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker.xml:207
+#, python-format
+msgid "LOADING..."
+msgstr ""
+
+#. module: web_widget_one2many_product_picker
+#. openerp-web
+#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker.xml:73
 #, python-format
 msgid "Lines"
 msgstr ""
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
-#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker.xml:67
+#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker.xml:92
 #, python-format
 msgid "Load More"
 msgstr ""
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
-#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker_quick_modif_price.xml:11
+#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker_quick_modif_price.xml:4
 #, python-format
-msgid "Price:"
-msgstr ""
-
-#. module: web_widget_one2many_product_picker
-#: model:ir.model,name:web_widget_one2many_product_picker.model_product_product
-msgid "Product"
+msgid "Price"
 msgstr ""
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
-#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker_quick_create.xml:13
+#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker_quick_create.xml:18
 #, python-format
 msgid "Remove"
 msgstr ""
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
-#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker.xml:23
+#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker.xml:41
 #, python-format
 msgid "Search..."
 msgstr ""
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
-#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker.xml:58
+#: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker.xml:81
 #, python-format
 msgid "Subtotal:"
 msgstr ""
 
 #. module: web_widget_one2many_product_picker
-#: model:ir.model.fields,help:web_widget_one2many_product_picker.field_product_product__image_variant_medium
-msgid ""
-"This field holds the image used as image for the product variantor product "
-"image medium, limited to 512x512px."
-msgstr ""
-
-#. module: web_widget_one2many_product_picker
-#: model:ir.model.fields,help:web_widget_one2many_product_picker.field_product_product__image_variant_big
-msgid ""
-"This field holds the image used as image for the product variantor product "
-"image, limited to 1024x1024px."
-msgstr ""
-
-#. module: web_widget_one2many_product_picker
-#: model:ir.model.fields,field_description:web_widget_one2many_product_picker.field_product_product__image_variant_big
-msgid "Variant Image Big (Computed)"
-msgstr ""
-
-#. module: web_widget_one2many_product_picker
-#: model:ir.model.fields,field_description:web_widget_one2many_product_picker.field_product_product__image_variant_medium
-msgid "Variant Image Medium (Computed)"
-msgstr ""
-
-#. module: web_widget_one2many_product_picker
 #. openerp-web
-#: code:addons/web_widget_one2many_product_picker/static/src/js/views/One2ManyProductPicker/record.js:361
+#: code:addons/web_widget_one2many_product_picker/static/src/js/views/One2ManyProductPicker/record.js:605
 #, python-format
 msgid "[No widget %s]"
 msgstr ""
