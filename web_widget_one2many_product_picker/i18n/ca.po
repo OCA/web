@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2021-02-17 13:45+0000\n"
-"Last-Translator: claudiagn <claudia.gargallo@qubiq.es>\n"
+"PO-Revision-Date: 2022-03-21 12:17+0000\n"
+"Last-Translator: Noel estudillo <noelestudilloviera@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker_quick_create.xml:9
 #, python-format
 msgid "Accept"
-msgstr ""
+msgstr "Acceptar"
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
@@ -40,32 +40,32 @@ msgstr "Tot"
 #. module: web_widget_one2many_product_picker
 #: model:ir.model,name:web_widget_one2many_product_picker.model_base
 msgid "Base"
-msgstr ""
+msgstr "Base"
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
 #: code:addons/web_widget_one2many_product_picker/static/src/js/widgets/field_one2many_product_picker.js:72
 #, python-format
 msgid "By Name"
-msgstr ""
+msgstr "Per Nom"
 
 #. module: web_widget_one2many_product_picker
 #: code:addons/web_widget_one2many_product_picker/models/base.py:42
 #, python-format
 msgid "Can't create the %s: Duplicated product! (Already in database)"
-msgstr ""
+msgstr "No es pot crear el %s: producte duplicat! (Ja a la base de dades)"
 
 #. module: web_widget_one2many_product_picker
 #: code:addons/web_widget_one2many_product_picker/models/base.py:22
 #, python-format
 msgid "Can't create the %s: Duplicated product! (Inside query)"
-msgstr ""
+msgstr "No es pot crear el %s: producte duplicat! (Consulta interna)"
 
 #. module: web_widget_one2many_product_picker
 #: code:addons/web_widget_one2many_product_picker/models/base.py:73
 #, python-format
 msgid "Can't write the %s: Duplicated product! (Already in database)"
-msgstr ""
+msgstr "No es pot escriure el %s: producte duplicat! (Ja a la base de dades)"
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
@@ -73,7 +73,7 @@ msgstr ""
 #: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker_quick_create.xml:20
 #, python-format
 msgid "Discard"
-msgstr ""
+msgstr "Descartar"
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
@@ -87,7 +87,7 @@ msgstr "Grups"
 #: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker.xml:207
 #, python-format
 msgid "LOADING..."
-msgstr ""
+msgstr "CARREGANT..."
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
@@ -108,7 +108,7 @@ msgstr "Carrega més"
 #: code:addons/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker_quick_modif_price.xml:4
 #, python-format
 msgid "Price"
-msgstr ""
+msgstr "Preu"
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
