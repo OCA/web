@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2021-07-05 12:48+0000\n"
-"Last-Translator: jabelchi <jabelchi@gmail.com>\n"
+"PO-Revision-Date: 2022-03-21 12:17+0000\n"
+"Last-Translator: Noel estudillo <noelestudilloviera@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -91,17 +91,17 @@ msgstr "Nom"
 #. module: web_widget_x2many_2d_matrix_example
 #: model_terms:ir.ui.view,arch_db:web_widget_x2many_2d_matrix_example.view_x2m_demo_form
 msgid "Try x2m 2d matrix"
-msgstr ""
+msgstr "Proveu la matriu 2D de x2m"
 
 #. module: web_widget_x2many_2d_matrix_example
 #: model_terms:ir.ui.view,arch_db:web_widget_x2many_2d_matrix_example.view_x2m_demo_form
 msgid "Try x2m 2d matrix (many2one)"
-msgstr ""
+msgstr "Prova la matriu x2m 2d (many2one)"
 
 #. module: web_widget_x2many_2d_matrix_example
 #: model_terms:ir.ui.view,arch_db:web_widget_x2many_2d_matrix_example.view_x2m_demo_form
 msgid "Try x2m 2d matrix (selection)"
-msgstr ""
+msgstr "Proveu la matriu 2D de x2m (selecció)"
 
 #. module: web_widget_x2many_2d_matrix_example
 #: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__user_id
@@ -136,14 +136,14 @@ msgstr "Selecció de valor"
 #. module: web_widget_x2many_2d_matrix_example
 #: model:ir.model,name:web_widget_x2many_2d_matrix_example.model_x2m_demo
 msgid "X2Many Demo"
-msgstr ""
+msgstr "Demostració de X2Many"
 
 #. module: web_widget_x2many_2d_matrix_example
 #: model:ir.model,name:web_widget_x2many_2d_matrix_example.model_x2m_demo_line
 msgid "X2Many Demo Line"
-msgstr ""
+msgstr "Línia de demostració X2Many"
 
 #. module: web_widget_x2many_2d_matrix_example
 #: model:ir.model,name:web_widget_x2many_2d_matrix_example.model_x2m_matrix_demo_wiz
 msgid "X2Many Matrix Demo Wizard"
-msgstr ""
+msgstr "Assistent de demostració de X2Many Matrix"
