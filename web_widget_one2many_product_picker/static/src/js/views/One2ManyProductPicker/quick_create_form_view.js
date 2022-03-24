@@ -10,19 +10,19 @@ odoo.define(
          * is used by the RecordQuickCreate in One2ManyProductPicker views.
          */
 
-        const QuickCreateFormView = require("web.QuickCreateFormView");
-        const BasicModel = require("web.BasicModel");
-        const core = require("web.core");
+        var QuickCreateFormView = require("web.QuickCreateFormView");
+        var BasicModel = require("web.BasicModel");
+        var core = require("web.core");
 
-        const qweb = core.qweb;
+        var qweb = core.qweb;
 
         BasicModel.include({
             _applyOnChange: function(values, record, viewType) {
                 // Ignore changes by record context 'ignore_onchanges' fields
                 if ("ignore_onchanges" in record.context) {
-                    const ignore_changes = record.context.ignore_onchanges;
-                    for (const index in ignore_changes) {
-                        const field_name = ignore_changes[index];
+                    var ignore_changes = record.context.ignore_onchanges;
+                    for (var index in ignore_changes) {
+                        var field_name = ignore_changes[index];
                         delete values[field_name];
                     }
                     delete record.context.ignore_onchanges;
@@ -31,7 +31,7 @@ odoo.define(
             },
         });
 
-        const ProductPickerQuickCreateFormRenderer = QuickCreateFormView.prototype.config.Renderer.extend(
+        var ProductPickerQuickCreateFormRenderer = QuickCreateFormView.prototype.config.Renderer.extend(
             {
                 /**
                  * @override
@@ -45,7 +45,7 @@ odoo.define(
             }
         );
 
-        const ProductPickerQuickCreateFormController = QuickCreateFormView.prototype.config.Controller.extend(
+        var ProductPickerQuickCreateFormController = QuickCreateFormView.prototype.config.Controller.extend(
             {
                 events: _.extend({}, QuickCreateFormView.prototype.events, {
                     "click .oe_record_add": "_onClickAdd",
@@ -66,8 +66,9 @@ odoo.define(
                  * @override
                  */
                 _applyChanges: function() {
-                    return this._super.apply(this, arguments).then(() => {
-                        this._updateButtons();
+                    var self = this;
+                    return this._super.apply(this, arguments).then(function() {
+                        self._updateButtons();
                     });
                 },
 
@@ -75,17 +76,13 @@ odoo.define(
                  * Create or accept changes
                  */
                 auto: function() {
-                    const record = this.model.get(this.handle);
-                    if (
-                        record.context.has_changes_confirmed ||
-                        typeof record.context.has_changes_confirmed === "undefined"
-                    ) {
+                    var record = this.model.get(this.handle);
+                    if (!record.context.has_changes_unconfirmed) {
                         return;
                     }
-                    const state = this._getRecordState();
-                    if (state === "new") {
+                    if (this.model.isNew(record.id)) {
                         this._add();
-                    } else if (state === "dirty") {
+                    } else if (this.model.isDirty(record.id)) {
                         this._change();
                     }
                 },
@@ -99,16 +96,19 @@ odoo.define(
                  * @returns {Object}
                  */
                 _getRecordState: function() {
-                    const record = this.model.get(this.handle);
-                    let state = "record";
-                    if (this.model.isNew(record.id)) {
+                    var record = this.model.get(this.handle);
+                    var state = "record";
+                    if (
+                        this.model.isNew(record.id) &&
+                        this.model.isPureVirtual(record.id)
+                    ) {
                         state = "new";
-                    } else if (record.isDirty()) {
+                    } else if (record.context.has_changes_unconfirmed) {
                         state = "dirty";
                     }
                     if (state === "new") {
-                        for (const index in this.mainRecordData.data) {
-                            const recordData = this.mainRecordData.data[index];
+                        for (var index in this.mainRecordData.data) {
+                            var recordData = this.mainRecordData.data[index];
                             if (recordData.ref === record.ref) {
                                 if (record.isDirty()) {
                                     state = "dirty";
@@ -174,8 +174,8 @@ odoo.define(
                  * @returns {Boolean}
                  */
                 _needReloadCard: function(fields_changed) {
-                    for (const index in fields_changed) {
-                        const field = fields_changed[index];
+                    for (var index in fields_changed) {
+                        var field = fields_changed[index];
                         if (field === this.fieldMap[this.compareKey]) {
                             return true;
                         }
@@ -192,51 +192,18 @@ odoo.define(
                  * @param {ChangeEvent} ev
                  */
                 _onFieldChanged: function(ev) {
-                    const fields_changed = Object.keys(ev.data.changes);
-                    if (this._needReloadCard(fields_changed)) {
-                        const field = ev.data.changes[fields_changed[0]];
-                        let new_value = false;
-                        if (typeof field === "object") {
-                            new_value = field.id;
-                        } else {
-                            new_value = field;
+                    this._super.apply(this, arguments);
+                    if (!_.isEmpty(ev.data.changes)) {
+                        if (this.model.isPureVirtual(this.handle)) {
+                            this.model.unsetDirty(this.handle);
                         }
-                        const reload_values = {
-                            compareValue: new_value,
-                        };
-                        const record = this.model.get(this.handle);
-                        if ("base_record_id" in record.context) {
-                            reload_values.baseRecordID = record.context.base_record_id;
-                            reload_values.baseRecordResID =
-                                record.context.base_record_res_id;
-                            reload_values.baseRecordCompareValue =
-                                record.context.base_record_compare_value;
-                        } else {
-                            let old_value = record.data[this.compareKey];
-                            if (typeof old_value === "object") {
-                                old_value = old_value.data.id;
-                            }
-                            reload_values.baseRecordID = record.id;
-                            reload_values.baseRecordResID = record.ref;
-                            reload_values.baseRecordCompareValue = old_value;
-                        }
-                        this.trigger_up("reload_view", reload_values);
-
-                        // Discard current change
-                        ev.data.changes = {};
-                    } else {
-                        this._super.apply(this, arguments);
-                        if (!_.isEmpty(ev.data.changes)) {
-                            if (this.model.isPureVirtual(this.handle)) {
-                                this.model.unsetDirty(this.handle);
-                            }
-                            this.model.updateRecordContext(this.handle, {
-                                has_changes_confirmed: false,
-                            });
-                            this.trigger_up("quick_record_updated", {
-                                changes: ev.data.changes,
-                            });
-                        }
+                        this.model.updateRecordContext(this.handle, {
+                            has_changes_unconfirmed: true,
+                        });
+                        this.trigger_up("quick_record_updated", {
+                            changes: ev.data.changes,
+                            highlight: {qty: true},
+                        });
                     }
                 },
 
@@ -244,12 +211,14 @@ odoo.define(
                  * @returns {Deferred}
                  */
                 _add: function() {
+                    var self = this;
                     if (this._disabled) {
                         // Don't do anything if we are already creating a record
-                        return Promise.resolve();
+                        return $.Deferred().resolve();
                     }
                     this.model.updateRecordContext(this.handle, {
-                        has_changes_confirmed: true,
+                        need_notify: true,
+                        modified: true,
                     });
                     this._disableQuickCreate();
                     return this.saveRecord(this.handle, {
@@ -257,105 +226,145 @@ odoo.define(
                         reload: true,
                         savePoint: true,
                         viewType: "form",
-                    }).then(() => {
-                        const record = this.model.get(this.handle);
-                        this.model.updateRecordContext(this.handle, {saving: true});
-                        this.trigger_up("restore_flip_card", {
-                            success_callback: () => {
-                                this.trigger_up("create_quick_record", {
+                    }).then(function() {
+                        var record = self.model.get(self.handle);
+                        self.model.updateRecordContext(record.id, {
+                            has_changes_unconfirmed: false,
+                            lazy_qty: record.data[self.fieldMap.product_uom_qty],
+                        });
+                        self.trigger_up("block_card", {status: true});
+                        self.trigger_up("modify_quick_record", {
+                            id: record.id,
+                        });
+                        self.trigger_up("restore_flip_card", {
+                            success_callback: function() {
+                                self.trigger_up("create_quick_record", {
                                     id: record.id,
-                                    callback: () => {
-                                        this.model.updateRecordContext(this.handle, {
-                                            saving: false,
-                                        });
-                                        this.model.unsetDirty(this.handle);
-                                        this._enableQuickCreate();
+                                    on_onchange: function() {
+                                        self.trigger_up("block_card", {status: false});
+                                        self._enableQuickCreate();
                                     },
                                 });
                             },
-                            block: true,
                         });
                     });
                 },
 
                 _remove: function() {
+                    var self = this;
                     if (this._disabled) {
-                        return Promise.resolve();
+                        return $.Deferred().resolve();
                     }
 
+                    this.model.updateRecordContext(this.handle, {
+                        need_notify: true,
+                        modified: true,
+                    });
                     this._disableQuickCreate();
-                    this.trigger_up("restore_flip_card", {block: true});
-                    const record = this.model.get(this.handle);
-                    this.trigger_up("list_record_remove", {
+                    var record = this.model.get(this.handle);
+                    this.trigger_up("block_card", {status: true});
+                    this.trigger_up("modify_quick_record", {
                         id: record.id,
+                    });
+                    this.trigger_up("restore_flip_card", {
+                        success_callback: function() {
+                            self.trigger_up("list_record_remove", {
+                                id: record.id,
+                                on_onchange: function() {
+                                    self.trigger_up("block_card", {status: false});
+                                    self._enableQuickCreate();
+                                },
+                            });
+                        },
                     });
                 },
 
                 _change: function() {
-                    const self = this;
+                    var self = this;
                     if (this._disabled) {
                         // Don't do anything if we are already creating a record
-                        return Promise.resolve();
+                        return $.Deferred().resolve();
                     }
-                    this._disableQuickCreate();
-                    this.model.updateRecordContext(this.handle, {
-                        has_changes_confirmed: true,
-                    });
-                    const record = this.model.get(this.handle);
+                    var record = self.model.get(self.handle);
+                    if (
+                        !this.model.isDirty(this.handle) ||
+                        !record.context.has_changes_unconfirmed
+                    ) {
+                        this.trigger_up("restore_flip_card");
+                        return $.Deferred().resolve();
+                    }
 
-                    this.trigger_up("restore_flip_card", {
-                        success_callback: function() {
-                            // Qty are handled in a special way because can be modified without
-                            // wait for server response
-                            self.model.localData[record.id].data[
-                                self.fieldMap.product_uom_qty
-                            ] = record.data[self.fieldMap.product_uom_qty];
-                            // SaveRecord used to make a save point.
-                            self.saveRecord(self.handle, {
-                                stayInEdit: true,
-                                reload: true,
-                                savePoint: true,
-                                viewType: "form",
-                            }).then(() => {
+                    this.model.updateRecordContext(this.handle, {
+                        need_notify: true,
+                        modified: true,
+                    });
+
+                    this._disableQuickCreate();
+                    // SaveRecord used to make a save point.
+                    return this.saveRecord(this.handle, {
+                        stayInEdit: true,
+                        reload: true,
+                        savePoint: true,
+                        viewType: "form",
+                    }).then(function() {
+                        record = self.model.get(self.handle);
+                        self.model.updateRecordContext(record.id, {
+                            has_changes_unconfirmed: false,
+                            lazy_qty: record.data[self.fieldMap.product_uom_qty],
+                        });
+                        self.trigger_up("block_card", {status: true});
+                        self.trigger_up("modify_quick_record", {
+                            id: record.id,
+                        });
+                        self.trigger_up("restore_flip_card", {
+                            success_callback: function() {
                                 self.trigger_up("update_quick_record", {
                                     id: record.id,
-                                    callback: function() {
-                                        self.model.unsetDirty(self.handle);
+                                    on_onchange: function() {
+                                        self.trigger_up("block_card", {status: false});
                                         self._enableQuickCreate();
                                     },
                                 });
-                            });
-                        },
-                        block: true,
+                            },
+                        });
                     });
                 },
 
                 _discard: function() {
+                    var self = this;
                     if (this._disabled) {
                         // Don't do anything if we are already creating a record
-                        return;
+                        return $.Deferred().resolve();
                     }
 
-                    this._disableQuickCreate();
+                    var record = self.model.get(self.handle);
+                    if (
+                        !this.model.isDirty(this.handle) ||
+                        !record.context.has_changes_unconfirmed
+                    ) {
+                        this.trigger_up("restore_flip_card");
+                        return $.Deferred().resolve();
+                    }
+
                     this.model.updateRecordContext(this.handle, {
-                        has_changes_confirmed: true,
+                        has_changes_unconfirmed: false,
                     });
+                    this._disableQuickCreate();
                     // Rollback to restore the save point
                     this.model.discardChanges(this.handle, {
                         rollback: true,
                     });
-                    const record = this.model.get(this.handle);
-                    this.trigger_up("quick_record_updated", {
-                        changes: record.data,
-                    });
-
-                    this.update({}, {reload: false}).then(() => {
-                        if (!this.model.isNew(record.id)) {
-                            this.model.unsetDirty(this.handle);
-                        }
-                        this.trigger_up("restore_flip_card");
-                        this._updateButtons();
-                        this._enableQuickCreate();
+                    return this.update({}, {reload: false}).then(function() {
+                        record = self.model.get(self.handle);
+                        self.trigger_up("quick_record_updated", {
+                            changes: record.data,
+                        });
+                        self.trigger_up("restore_flip_card", {
+                            success_callback: function() {
+                                self._updateButtons();
+                                self._enableQuickCreate();
+                            },
+                        });
                     });
                 },
 
@@ -397,7 +406,7 @@ odoo.define(
             }
         );
 
-        const ProductPickerQuickCreateFormView = QuickCreateFormView.extend({
+        var ProductPickerQuickCreateFormView = QuickCreateFormView.extend({
             config: _.extend({}, QuickCreateFormView.prototype.config, {
                 Renderer: ProductPickerQuickCreateFormRenderer,
                 Controller: ProductPickerQuickCreateFormController,

@@ -6,26 +6,22 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", f
 ) {
     "use strict";
 
-    const core = require("web.core");
-    const Widget = require("web.Widget");
-    const widgetRegistry = require("web.widget_registry");
-    const ProductPickerQuickCreateFormView = require("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView")
+    var core = require("web.core");
+    var Widget = require("web.Widget");
+    var widgetRegistry = require("web.widget_registry");
+    var ProductPickerQuickCreateFormView = require("web_widget_one2many_product_picker.ProductPickerQuickCreateFormView")
         .ProductPickerQuickCreateFormView;
 
-    const qweb = core.qweb;
+    var qweb = core.qweb;
 
     /**
      * This widget render a Form. Used by FieldOne2ManyProductPicker
      */
-    const ProductPickerQuickCreateForm = Widget.extend({
+    var ProductPickerQuickCreateForm = Widget.extend({
         className: "oe_one2many_product_picker_quick_create",
         xmlDependencies: [
             "/web_widget_one2many_product_picker/static/src/xml/one2many_product_picker_quick_create.xml",
         ],
-
-        custom_events: {
-            reload_view: "_onReloadView",
-        },
 
         /**
          * @override
@@ -51,54 +47,53 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", f
          * @override
          */
         start: function() {
-            const def1 = this._super.apply(this, arguments);
-            const form_arch = this._generateFormArch();
-            const fieldsView = {
-                arch: form_arch,
-                fields: this.fields,
-                viewFields: this.fields,
-                base_model: this.basicFieldParams.field.relation,
-                type: "form",
-                model: this.basicFieldParams.field.relation,
-            };
+            var self = this;
+            return this._super.apply(this, arguments).then(function() {
+                var form_arch = self._generateFormArch();
+                var fieldsView = {
+                    arch: form_arch,
+                    fields: self.fields,
+                    viewFields: self.fields,
+                    base_model: self.basicFieldParams.field.relation,
+                    type: "form",
+                    model: self.basicFieldParams.field.relation,
+                };
 
-            const node_context = this.node.attr("context") || "{}";
-            this.nodeContext = py.eval(node_context, {
-                active_id: this.res_id || false,
+                var node_context = self.node.attr("context") || "{}";
+                self.nodeContext = py.eval(node_context, {
+                    active_id: self.res_id || false,
+                });
+                var refinedContext = _.extend(
+                    {},
+                    self.main_state.getContext(),
+                    self.nodeContext
+                );
+                _.extend(refinedContext, self.editContext);
+                self.formView = new ProductPickerQuickCreateFormView(fieldsView, {
+                    context: refinedContext,
+                    compareKey: self.compareKey,
+                    fieldMap: self.fieldMap,
+                    modelName: self.basicFieldParams.field.relation,
+                    userContext: self.getSession().user_context,
+                    ids: self.res_id ? [self.res_id] : [],
+                    currentId: self.res_id || undefined,
+                    mode: self.res_id && self.readonly ? "readonly" : "edit",
+                    recordID: self.id,
+                    index: 0,
+                    parentID: self.basicFieldParams.parentID,
+                    default_buttons: false,
+                    withControlPanel: false,
+                    model: self.basicFieldParams.model,
+                    mainRecordData: self.getParent().getParent().state,
+                });
+                return self.formView.getController(self).then(function(controller) {
+                    self.controller = controller;
+                    self.$el.empty();
+                    self.controller.appendTo(self.$el);
+                    self.trigger_up("back_form_loaded");
+                    return controller;
+                });
             });
-            const refinedContext = _.extend(
-                {},
-                this.main_state.getContext(),
-                this.nodeContext
-            );
-            _.extend(refinedContext, this.editContext);
-            this.formView = new ProductPickerQuickCreateFormView(fieldsView, {
-                context: refinedContext,
-                compareKey: this.compareKey,
-                fieldMap: this.fieldMap,
-                modelName: this.basicFieldParams.field.relation,
-                userContext: this.getSession().user_context,
-                ids: this.res_id ? [this.res_id] : [],
-                currentId: this.res_id || undefined,
-                mode: this.res_id && this.readonly ? "readonly" : "edit",
-                recordID: this.id,
-                index: 0,
-                parentID: this.basicFieldParams.parentID,
-                default_buttons: false,
-                withControlPanel: false,
-                model: this.basicFieldParams.model,
-                mainRecordData: this.getParent().getParent().state,
-            });
-            // If (this.id) {
-            //     this.basicFieldParams.model.save(this.id, {savePoint: true});
-            // }
-            const def2 = this.formView.getController(this).then(controller => {
-                this.controller = controller;
-                this.$el.empty();
-                this.controller.appendTo(this.$el);
-            });
-
-            return Promise.all([def1, def2]);
         },
 
         on_attach_callback: function() {
@@ -112,7 +107,7 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", f
          * @returns {String}
          */
         _generateFormArch: function() {
-            let template =
+            var template =
                 "<templates><t t-name='One2ManyProductPicker.QuickCreateForm'>";
             template += this.basicFieldParams.field.views.form.arch;
             template += "</t></templates>";
@@ -121,42 +116,6 @@ odoo.define("web_widget_one2many_product_picker.ProductPickerQuickCreateForm", f
                 field_map: this.fieldMap,
                 record_search: this.searchRecord,
             });
-        },
-
-        /**
-         * @private
-         * @param {CustomEvent} evt
-         */
-        _onReloadView: function(evt) {
-            this.editContext = {
-                ignore_onchanges: [this.compareKey],
-                base_record_id: evt.data.baseRecordID || null,
-                base_record_res_id: evt.data.baseRecordResID || null,
-                base_record_compare_value: evt.data.baseRecordCompareValue || null,
-            };
-
-            if (evt.data.baseRecordCompareValue === evt.data.compareValue) {
-                this.res_id = evt.data.baseRecordResID;
-                this.id = evt.data.baseRecordID;
-                this.start();
-            } else {
-                this.getParent()
-                    ._generateVirtualState({}, this.editContext)
-                    .then(state => {
-                        const data = {};
-                        data[this.compareKey] = {
-                            operation: "ADD",
-                            id: evt.data.compareValue,
-                        };
-                        this.basicFieldParams.model
-                            ._applyChange(state.id, data)
-                            .then(() => {
-                                this.res_id = state.res_id;
-                                this.id = state.id;
-                                this.start();
-                            });
-                    });
-            }
         },
     });
 

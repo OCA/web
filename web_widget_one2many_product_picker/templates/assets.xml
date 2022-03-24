@@ -55,15 +55,19 @@
             />
             <script
                 type="text/javascript"
-                src="/web_widget_one2many_product_picker/static/src/js/views/basic_view.js"
-            />
-            <script
-                type="text/javascript"
                 src="/web_widget_one2many_product_picker/static/src/js/views/basic_model.js"
             />
             <script
                 type="text/javascript"
-                src="/web_widget_one2many_product_picker/static/src/js/views/basic_controller.js"
+                src="/web_widget_one2many_product_picker/static/src/js/views/form_view.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_widget_one2many_product_picker/static/src/js/views/form_controller.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_widget_one2many_product_picker/static/src/js/views/form_renderer.js"
             />
             <script
                 type="text/javascript"
