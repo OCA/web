@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-04 18:46+0000\n"
-"PO-Revision-Date: 2022-03-04 19:49+0100\n"
+"POT-Creation-Date: 2022-03-24 13:16+0000\n"
+"PO-Revision-Date: 2022-03-24 14:17+0100\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
@@ -54,19 +54,15 @@ msgstr "Por Nombre"
 #: code:addons/web_widget_one2many_product_picker/models/base.py:0
 #, python-format
 msgid "Can't create the %s: Duplicated product! (Already in database)"
-msgstr "No se puede crear el %s: Producto duplicado! (Actualmente en la base de datos)"
+msgstr ""
+"No se puede crear el %s: Producto duplicado! (Actualmente en la base de "
+"datos)"
 
 #. module: web_widget_one2many_product_picker
 #: code:addons/web_widget_one2many_product_picker/models/base.py:0
 #, python-format
 msgid "Can't create the %s: Duplicated product! (Inside query)"
 msgstr "No se puede crear el %s: Producto duplicado! (En la petición)"
-
-#. module: web_widget_one2many_product_picker
-#: code:addons/web_widget_one2many_product_picker/models/base.py:0
-#, python-format
-msgid "Can't write the %s: Duplicated product! (Already in database)"
-msgstr "No se puede escribir el %s: Producto duplicado! (Actualmente en la base de datos)"
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
@@ -137,12 +133,3 @@ msgstr "Subtotal:"
 #, python-format
 msgid "[No widget %s]"
 msgstr "[Sin widget %s]"
-
-#~ msgid "HTTP Routing"
-#~ msgstr "Ruta HTTP"
-
-#~ msgid "Pricelist Item"
-#~ msgstr "Item de Lista de precios"
-
-#~ msgid "Product"
-#~ msgstr "Producto"
