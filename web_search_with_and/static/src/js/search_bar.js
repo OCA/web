@@ -6,7 +6,8 @@ odoo.define("web_search_with_and/static/src/js/search_bar.js", function (require
         SearchBar: require("web.SearchBar"),
     };
 
-    patch(components.SearchBar, "web_search_with_and/static/src/js/search_bar.js", {
+    const patchObject = components.SearchBar.prototype;
+    patch(patchObject, "web_search_with_and/static/src/js/search_bar.js", {
         /**
          * @private
          * @param {Object} source

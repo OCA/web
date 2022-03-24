@@ -8,8 +8,9 @@ odoo.define(
             ControlPanelModelExtension: require("web/static/src/js/control_panel/control_panel_model_extension.js"),
         };
 
+        const patchObject = components.ControlPanelModelExtension.prototype;
         patch(
-            components.ControlPanelModelExtension,
+            patchObject,
             "web_search_with_and/static/src/js/control_panel_model_extension.js",
             {
                 addAutoCompletionValues({
