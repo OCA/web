@@ -8,7 +8,9 @@ setuptools.setup(
     description="Meta package for oca-web Odoo addons",
     version=version,
     install_requires=[
+        'odoo-addon-web_advanced_search>=15.0dev,<15.1dev',
         'odoo-addon-web_company_color>=15.0dev,<15.1dev',
+        'odoo-addon-web_domain_field>=15.0dev,<15.1dev',
         'odoo-addon-web_environment_ribbon>=15.0dev,<15.1dev',
         'odoo-addon-web_ir_actions_act_multi>=15.0dev,<15.1dev',
         'odoo-addon-web_m2x_options>=15.0dev,<15.1dev',
@@ -19,6 +21,7 @@ setuptools.setup(
         'odoo-addon-web_sheet_full_width>=15.0dev,<15.1dev',
         'odoo-addon-web_widget_bokeh_chart>=15.0dev,<15.1dev',
         'odoo-addon-web_widget_domain_editor_dialog>=15.0dev,<15.1dev',
+        'odoo-addon-web_widget_url_advanced>=15.0dev,<15.1dev',
         'odoo-addon-web_widget_x2many_2d_matrix>=15.0dev,<15.1dev',
     ],
     classifiers=[
