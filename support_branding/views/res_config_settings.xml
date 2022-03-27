@@ -83,7 +83,23 @@
                                                 <field name="support_release" />
                                             </div>
                                         </div>
+                                        <br /> <br />
+                                        <div class="text-muted">
+                                            The below button generates a
+                                            division by zero python error which
+                                            allows a user to test the modules
+                                            functionality.
+                                        </div>
                                         <br />
+                                        <button
+                                            name="test_support_branding_error"
+                                            string="Test Support Branding"
+                                            class="oe_highlight"
+                                            type="object"
+                                            data-toggle="tooltip"
+                                            title="Creates an error (i.e ZeroDivisionError) to test support branding"
+                                        />
+                                        <br /> <br />
                                     </div>
                                 </div>
                             </div>

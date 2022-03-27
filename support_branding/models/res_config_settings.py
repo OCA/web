@@ -34,3 +34,6 @@ class ResConfigSettings(models.TransientModel):
     support_branding_color = fields.Char(string="Branding color")
     support_email = fields.Char(string="Support email")
     support_release = fields.Char(string="Support release")
+
+    def test_support_branding_error(self):
+        return 9 / 0
