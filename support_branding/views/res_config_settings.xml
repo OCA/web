@@ -11,7 +11,7 @@
                     class="app_settings_block"
                     data-string="Support Settings"
                     string="Support Settings"
-                    data-key="support_company"
+                    data-key="support_branding"
                 >
                     <h2>Support Company Settings</h2>
                     <div
