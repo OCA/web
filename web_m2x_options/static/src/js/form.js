@@ -134,7 +134,7 @@ odoo.define("web_m2x_options.web_m2x_options", function (require) {
                 if (blacklisted_ids.length > 0) {
                     domain.push(["id", "not in", blacklisted_ids]);
                 }
-
+                /* eslint-disable complexity */
                 self._rpc({
                     model: self.field.relation,
                     method: "name_search",
@@ -201,16 +201,15 @@ odoo.define("web_m2x_options.web_m2x_options", function (require) {
                     // 3- if not set locally, check if it's set globally via ir.config_parameter
                     // 4- if set globally, apply its value
                     // 5- if not set globally either, check if returned values are more than node's limit
+                    var search_more = values.length > self.limit;
                     if (!_.isUndefined(self.nodeOptions.search_more)) {
-                        var search_more = is_option_set(self.nodeOptions.search_more);
+                        search_more = is_option_set(self.nodeOptions.search_more);
                     } else if (
                         !_.isUndefined(ir_options["web_m2x_options.search_more"])
                     ) {
-                        var search_more = is_option_set(
+                        search_more = is_option_set(
                             ir_options["web_m2x_options.search_more"]
                         );
-                    } else {
-                        var search_more = values.length > self.limit;
                     }
 
                     if (search_more) {
@@ -349,6 +348,7 @@ odoo.define("web_m2x_options.web_m2x_options", function (require) {
                         resolve(values);
                     }
                 });
+                /* eslint-enable complexity */
             });
             this.orderer.add(def);
 
@@ -483,7 +483,7 @@ odoo.define("web_m2x_options.web_m2x_options", function (require) {
             this._super(attrs);
             var limit = ir_options["web_m2x_options.field_limit_entries"];
             if (!_.isUndefined(limit)) {
-                attrs.limit = parseInt(limit);
+                attrs.limit = parseInt(limit, 10);
             }
         },
     });

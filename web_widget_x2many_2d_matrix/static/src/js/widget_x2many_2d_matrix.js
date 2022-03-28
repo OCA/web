@@ -176,6 +176,9 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function (require) {
 
         /**
          * Determine if a field represented by field_def can be aggregated
+         *
+         * @param {Object} field_def: field def
+         * @returns {Boolean} if field def is aggregatable
          */
         is_aggregatable: function (field_def) {
             return field_def.type in {float: 1, monetary: 1, integer: 1};
