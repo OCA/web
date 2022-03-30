@@ -101,7 +101,6 @@ odoo.define("support_branding.CrashManager", function (require) {
                             _.str.sprintf(_t("Email to %s"), self.support_cp_name)
                         );
                     }
-                    $form.attr("action", "mailto:" + self.support_cp_email);
                     $form
                         .parents(".modal")
                         .find(".modal-body")
