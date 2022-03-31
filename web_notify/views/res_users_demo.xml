@@ -42,14 +42,6 @@
                                 class="oe_highlight"
                             />
                         </group>
-                        <group>
-                            <button
-                                name="notify_default"
-                                type="object"
-                                string="Test default notification"
-                                class="oe_highlight"
-                            />
-                        </group>
                     </group>
                 </page>
             </xpath>

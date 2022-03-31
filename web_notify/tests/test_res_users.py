@@ -9,7 +9,7 @@ from odoo.tests import common
 
 from odoo.addons.bus.models.bus import json_dump
 
-from ..models.res_users import DANGER, DEFAULT, INFO, SUCCESS, WARNING
+from ..models.res_users import DANGER, INFO, SUCCESS, WARNING
 
 
 class TestResUsers(common.TransactionCase):
@@ -59,19 +59,6 @@ class TestResUsers(common.TransactionCase):
         news = bus_bus.search(domain) - existing
         self.assertEqual(1, len(news))
         test_msg.update({"type": INFO})
-        self.assertDictEqual(test_msg, json.loads(news.message))
-
-    def test_notify_default(self):
-        bus_bus = self.env["bus.bus"]
-        domain = [
-            ("channel", "=", json_dump(self.env.user.notify_default_channel_name))
-        ]
-        existing = bus_bus.search(domain)
-        test_msg = {"message": "message", "title": "title", "sticky": True}
-        self.env.user.notify_default(**test_msg)
-        news = bus_bus.search(domain) - existing
-        self.assertEqual(1, len(news))
-        test_msg.update({"type": DEFAULT})
         self.assertDictEqual(test_msg, json.loads(news.message))
 
     def test_notify_many(self):
