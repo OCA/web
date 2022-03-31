@@ -5,7 +5,7 @@ from odoo import exceptions, models
 
 
 class Base(models.AbstractModel):
-    """ The base model, which is implicitly inherited by all models. """
+    """The base model, which is implicitly inherited by all models."""
 
     _inherit = "base"
 

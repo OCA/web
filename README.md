@@ -1,4 +1,5 @@
-[![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/162/14.0.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-web-162)
+
+[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=14.0)
 [![Build Status](https://travis-ci.com/OCA/web.svg?branch=14.0)](https://travis-ci.com/OCA/web)
 [![codecov](https://codecov.io/gh/OCA/web/branch/14.0/graph/badge.svg)](https://codecov.io/gh/OCA/web)
 [![Translation Status](https://translation.odoo-community.org/widgets/web-14-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/web-14-0/?utm_source=widget)
@@ -82,7 +83,7 @@ addon | version | maintainers | summary
 ## Licenses
 This repository is licensed under [AGPL-3.0](LICENSE).
 
-However, each module can have a totally different license, as long as they adhere to OCA
+However, each module can have a totally different license, as long as they adhere to Odoo Community Association (OCA)
 policy. Consult each module's `__manifest__.py` file, which contains a `license` key
 that explains its license.
 
