@@ -6,13 +6,17 @@
     "summary": """
         Enables selecting a range of records using the shift key
     """,
-    "version": "14.0.1.0.0",
+    "version": "15.0.1.0.0",
     "category": "Web",
     "author": "Onestein, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "license": "AGPL-3",
     "depends": ["web"],
-    "data": ["templates/assets.xml"],
     "installable": True,
     "application": False,
+    "assets": {
+        "web.assets_backend": [
+            "/web_listview_range_select/static/src/js/web_listview_range_select.js"
+        ],
+    },
 }
