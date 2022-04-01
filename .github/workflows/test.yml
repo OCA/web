@@ -1,4 +1,4 @@
-name: test Odoo addons
+name: tests
 
 on:
   pull_request:
@@ -6,19 +6,40 @@ on:
       - "15.0*"
   push:
     branches:
-      - "15.0*"
+      - "15.0"
+      - "15.0-ocabot-*"
 
 jobs:
+  unreleased-deps:
+    runs-on: ubuntu-latest
+    name: Detect unreleased dependencies
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          for reqfile in requirements.txt test-requirements.txt ; do
+              if [ -f ${reqfile} ] ; then
+                  result=0
+                  # reject non-comment lines that contain a / (i.e. URLs, relative paths)
+                  grep "^[^#].*/" ${reqfile} || result=$?
+                  if [ $result -eq 0 ] ; then
+                      echo "Unreleased dependencies found in ${reqfile}."
+                      exit 1
+                  fi
+              fi
+          done
   test:
     runs-on: ubuntu-latest
     container: ${{ matrix.container }}
+    name: ${{ matrix.name }}
     strategy:
       fail-fast: false
       matrix:
         include:
           - container: ghcr.io/oca/oca-ci/py3.8-odoo15.0:latest
             makepot: "true"
+            name: test with Odoo
           - container: ghcr.io/oca/oca-ci/py3.8-ocb15.0:latest
+            name: test with OCB
     services:
       postgres:
         image: postgres:9.6
