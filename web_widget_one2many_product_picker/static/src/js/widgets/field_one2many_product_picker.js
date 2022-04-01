@@ -810,6 +810,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
         _saveDocument: function(ids_to_update) {
             var widgets = this.renderer.getWidgetsWithoutOnchange();
             if (
+                widgets === false ||
                 !_.isEmpty(this._ids_to_wait) ||
                 _.isEmpty(ids_to_update) ||
                 !_.isEmpty(widgets)
@@ -1140,6 +1141,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
         _onResumeAutoSave: function() {
             // Check if can resume
             if (
+                !this._is_auto_save_paused ||
                 this.$(".oe_product_picker_quick_modif_price").is(":visible") ||
                 this.$(".oe_search_input").is(":focus") ||
                 this.$(".oe_flip_card.active").length
@@ -1148,6 +1150,9 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
             }
 
             if (this._need_resume_auto_save) {
+                if (this._auto_save_timeout) {
+                    clearTimeout(this._auto_save_timeout);
+                }
                 this._auto_save_timeout = setTimeout(
                     this._saveDocument.bind(this),
                     this.options.auto_save_delay,

@@ -98,6 +98,9 @@ odoo.define(
             },
 
             canBeUpdated: function() {
+                if (!this.getParent()) {
+                    return false;
+                }
                 var model = this.getParent().getBasicFieldParams().model;
                 for (var widget of this.widgets) {
                     if (!widget.state) {
@@ -149,6 +152,9 @@ odoo.define(
             },
 
             getWidgetsWithoutOnchange: function() {
+                if (!this.getParent()) {
+                    return false;
+                }
                 var model = this.getParent().getBasicFieldParams().model;
                 return _.filter(this.widgets, function(item) {
                     return (
