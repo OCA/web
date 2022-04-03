@@ -1,0 +1,52 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* web_widget_uom_view_precision
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-04-03 17:57+0000\n"
+"PO-Revision-Date: 2022-04-03 17:57+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_widget_uom_view_precision
+#: model:ir.model.fields,field_description:web_widget_uom_view_precision.field_uom_view_precision_backend__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_widget_uom_view_precision
+#: model:ir.model.fields,field_description:web_widget_uom_view_precision.field_uom_view_precision_backend__id
+msgid "ID"
+msgstr ""
+
+#. module: web_widget_uom_view_precision
+#: model:ir.model.fields,field_description:web_widget_uom_view_precision.field_uom_view_precision_backend____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: web_widget_uom_view_precision
+#: model:ir.model.fields,help:web_widget_uom_view_precision.field_uom_uom__view_precision
+msgid "Number of digits after the decimal separator when displaying the value for this unit of measure. Default is 3."
+msgstr ""
+
+#. module: web_widget_uom_view_precision
+#: model:ir.model,name:web_widget_uom_view_precision.model_uom_uom
+msgid "Product Unit of Measure"
+msgstr ""
+
+#. module: web_widget_uom_view_precision
+#: model:ir.model,name:web_widget_uom_view_precision.model_uom_view_precision_backend
+msgid "Uom View Precision Backend"
+msgstr ""
+
+#. module: web_widget_uom_view_precision
+#: model:ir.model.fields,field_description:web_widget_uom_view_precision.field_uom_uom__view_precision
+msgid "View Precision"
+msgstr ""
+
