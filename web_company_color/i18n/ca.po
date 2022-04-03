@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2021-01-20 21:44+0000\n"
-"Last-Translator: claudiagn <claudia.gargallo@qubiq.es>\n"
+"PO-Revision-Date: 2022-03-21 12:17+0000\n"
+"Last-Translator: Noel estudillo <noelestudilloviera@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -32,22 +32,22 @@ msgstr ""
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_button_bg
 msgid "Button Background Color"
-msgstr ""
+msgstr "Color de fons del botó"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_button_bg_hover
 msgid "Button Background Color Hover"
-msgstr ""
+msgstr "Color de fons del botó Passa el cursor"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_button_text
 msgid "Button Text Color"
-msgstr ""
+msgstr "Color del text del botó"
 
 #. module: web_company_color
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
 msgid "Colors"
-msgstr ""
+msgstr "Colors"
 
 #. module: web_company_color
 #: model:ir.model,name:web_company_color.model_res_company
@@ -67,12 +67,12 @@ msgstr "Estils de l'empresa"
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_link_text
 msgid "Link Text Color"
-msgstr ""
+msgstr "Color del text de l'enllaç"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_link_text_hover
 msgid "Link Text Color Hover"
-msgstr ""
+msgstr "Enllaçar el color del text"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_bg
