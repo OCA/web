@@ -15,7 +15,7 @@
     'website': "https://github.com/oca/web",
 
     'category': 'Web',
-    'version': '12.0.0.1',
+    'version': '12.0.1.0.0',
 
     'depends': ['base', 'stock'],
 
