@@ -50,3 +50,8 @@ msgstr ""
 msgid "View Precision"
 msgstr "Ondalık Görünüm"
 
+#. module: web_widget_uom_view_precision
+#: sql_constraint:uom.uom:0
+msgid "View precision must be bigger or equal than zero"
+msgstr "Görünüm ondalık basamak sayısı sıfırdan büyük veya eşit olmalıdır"
+

@@ -7,3 +7,8 @@ class UomUom(models.Model):
                                     default=3,
                                     help="Number of digits after the decimal separator when displaying the value"
                                          " for this unit of measure. Default is 3.")
+
+    _sql_constraints = [
+        ('uom_view_precision_positive', 'CHECK(view_precision >= 0)',
+         'View precision must be bigger or equal than zero'),
+    ]
