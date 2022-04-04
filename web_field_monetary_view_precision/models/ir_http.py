@@ -16,4 +16,3 @@ class Http(models.AbstractModel):
         return {c['id']: {'symbol': c['symbol'],
                           'position': c['position'],
                           'digits': [69, c['view_precision']]} for c in currencies}
-
