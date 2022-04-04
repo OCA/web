@@ -27,6 +27,10 @@ UOM View Precision Widget
 
 This module provides a widget for quantity fields. It formats the value according to the UOM of the product.
 
+.. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_widget_uom_view_precision/static/description/example.png
+   :alt: Product list with formatted quantity
+   :width: 600 px
+
 **Table of contents**
 
 .. contents::
