@@ -24,8 +24,6 @@ odoo.define('web_widget_precisions.uom_widget', function (require) {
         init: function () {
             this._super.apply(this, arguments);
 
-            this._setUom();
-
             if (this.mode === 'edit') {
                 this.tagName = 'div';
                 this.className += ' o_input';
@@ -41,29 +39,21 @@ odoo.define('web_widget_precisions.uom_widget', function (require) {
          * @override
          * @private
          */
-        _formatValue: function (value, field, options) {
-            if (value === false) {
+        _formatValue: function () {
+            if (this.value === false) {
                 return "";
             }
-            options = options || {};
-
-            var uom = options.uom;
-            if (uom === undefined) {
-                var uom_id = options.uom_id;
-                if (!uom_id && options.data) {
-                    var uom_field = options.uom_field || field.uom_field || 'uom_id';
-                    uom_id = options.data[uom_field] && options.data[uom_field].res_id;
-                }
-                uom = uom_precisions[uom_id];
+            var UomField = this.nodeOptions.uom_field || 'uom_id';
+            var UomID = this.record.data[UomField] && this.record.data[UomField].res_id;
+            var UomPrecision = uom_precisions[UomID];
+            var digits = [16, 3]; // default precision
+            if (UomPrecision !== undefined) {
+                digits = [16, UomPrecision];
+            } else {
+                digits = this.field.digits || digits;
             }
-
-            var digits = [16, (uom)] || options.digits;
-
-            if (options.field_digits === true) {
-                digits = field.digits || digits;
-            }
-            return field_utils.format.float(value, field,
-                _.extend({}, options, {digits: digits})
+            return field_utils.format.float(this.value, this.field,
+                _.extend({}, this.formatOptions, {digits: digits})
             );
         },
 
@@ -75,20 +65,11 @@ odoo.define('web_widget_precisions.uom_widget', function (require) {
         },
 
         _renderReadonly: function () {
-            this.$el.empty().text(this._formatValue(this.value, this.field, this.formatOptions));
+            this.$el.empty().text(this._formatValue());
         },
 
         _reset: function () {
             this._super.apply(this, arguments);
-            this._setUom();
-        },
-
-        _setUom: function () {
-            var UomField = this.nodeOptions.uom_field || this.field.uom_field || 'uom_id';
-            var UomID = this.record.data[UomField] && this.record.data[UomField].res_id;
-            this.formatOptions.uom = uom_precisions[UomID]; // _formatValue() uses formatOptions
-            this.formatOptions.uom_field = UomField;
-            this.formatOptions.digits = [16, 3];
         },
     });
 

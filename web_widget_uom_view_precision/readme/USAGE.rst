@@ -13,10 +13,10 @@ In the form view declaration, put widget='uom' attribute in the field tag::
     ...
 
 
-You can also specify the uom field with::
+You can also specify the uom field with (default is "uom_id")::
 
     ...
-    <field name="mytimefieldname" widget="uom" uom_field="myUOMfield"/>
+    <field name="mytimefieldname" widget="uom" options="{'uom_field': 'myUOMfield'}"/>
     ...
 
 
