@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="currency_form_view_precision" model="ir.ui.view">
+        <field name="name">Currency view precision</field>
+        <field name="model">res.currency</field>
+        <field name="inherit_id" ref="base.view_currency_form"/>
+        <field name="arch" type="xml">
+
+            <field name="decimal_places" position="after">
+                <field name="view_precision"/>
+
+            </field>
+
+        </field>
+    </record>
+</odoo>
