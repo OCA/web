@@ -10,17 +10,20 @@ UOM View Precision Widget
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
+    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
+    :alt: License: AGPL-3
+.. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
     :target: https://github.com/OCA/web/tree/12.0/web_widget_uom_view_precision
     :alt: OCA/web
-.. |badge3| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
+.. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
     :target: https://translation.odoo-community.org/projects/web-12-0/web-12-0-web_widget_uom_view_precision
     :alt: Translate me on Weblate
-.. |badge4| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
+.. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
     :target: https://runbot.odoo-community.org/runbot/162/12.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| 
+|badge1| |badge2| |badge3| |badge4| |badge5| 
 
 This module provides a widget for quantity fields. It formats the value according to the UOM of the product.
 
@@ -47,10 +50,10 @@ In the form view declaration, put widget='uom' attribute in the field tag::
     ...
 
 
-You can also specify the uom field with::
+You can also specify the uom field with (default is "uom_id")::
 
     ...
-    <field name="mytimefieldname" widget="uom" uom_field="myUOMfield"/>
+    <field name="mytimefieldname" widget="uom" options="{'uom_field': 'myUOMfield'}"/>
     ...
 
 
