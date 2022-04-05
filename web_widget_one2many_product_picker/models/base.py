@@ -31,21 +31,14 @@ class BaseModel(models.BaseModel):
             field_obj = self[relation_field]
             if field_obj:
                 relation_id = relation_id.id
-        has_product = (
-            self.search(
-                [
-                    (relation_field, "=", relation_id),
-                    (product_field, "in", product_ids),
-                ],
-                count=True,
-                limit=1,
-            )
-            != 0
+        db_sol = self.search(
+            [(relation_field, "=", relation_id), (product_field, "in", product_ids)],
+            limit=1,
         )
-        if has_product:
+        if db_sol:
             raise ValidationError(
-                _("Can't create the %s: Duplicated product! (Already in database)")
-                % relation
+                _("Can't create the %s: Duplicated product (%s)! (Already in database)")
+                % (relation, db_sol[product_field].display_name)
             )
 
     @api.model_create_multi
