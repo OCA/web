@@ -1140,16 +1140,12 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
 
         _onResumeAutoSave: function() {
             // Check if can resume
-<<<<<<< HEAD
-            if (this.$('.oe_product_picker_quick_modif_price').is(':visible') || this.$('.oe_search_input').is(':focus') || this.$('.oe_flip_card.active').length) {
-=======
             if (
                 !this._is_auto_save_paused ||
                 this.$(".oe_product_picker_quick_modif_price").is(":visible") ||
                 this.$(".oe_search_input").is(":focus") ||
                 this.$(".oe_flip_card.active").length
             ) {
->>>>>>> aca8ae42 ([FIX] web_widget_one2many_product_picker: Don't save in 'refresh' time)
                 return;
             }
 
