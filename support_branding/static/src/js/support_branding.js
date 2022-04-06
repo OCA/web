@@ -10,6 +10,7 @@ odoo.define("support_branding.CrashManager", function (require) {
     var CrashManager = require("web.CrashManager").CrashManager;
     var session = require("web.session");
     var core = require("web.core");
+    var Wysiwyg = require('web_editor.wysiwyg.root');
 
     var _t = core._t;
 
@@ -60,7 +61,7 @@ odoo.define("support_branding.CrashManager", function (require) {
         },
         show_error: function (error) {
             var self = this;
-            var dialog = this._super.apply(this, arguments);
+            this.wysiwyg = new Wysiwyg(self, {});
             var subject =
                 session.username +
                 "@" +
@@ -80,15 +81,17 @@ odoo.define("support_branding.CrashManager", function (require) {
                 'autocomplete="off" value=\'' +
                 body +
                 "'/>";
-            dialog.opened(function () {
+            return this._super.apply(this, arguments).opened(function () {
                 var $form = $(".support-branding-submit-form");
                 var $statement = $(".support-statement");
                 var $description = $(".support-desc");
                 var $button = $(".support-btn");
+                var $use_html_ck = $('#use_html_checker');
                 var $close_btn = $(".close");
                 var $body = $(".sp-body");
                 var $header = $form.parents(".modal-dialog").find(".modal-header");
                 var $footer = $form.parents(".modal-dialog").find(".modal-footer");
+                // self.wysiwyg.attachTo($description);
 
                 $statement.prepend(inputs);
                 if (self.support_cp_email) {
@@ -105,6 +108,23 @@ odoo.define("support_branding.CrashManager", function (require) {
                         .parents(".modal")
                         .find(".modal-body")
                         .css("max-height", "70vh");
+                    $use_html_ck.on('change', function (){
+                        if (this.checked) {
+                            if (!self.wysiwyg.isDestroyed())
+                                self.wysiwyg.attachTo($description);
+                            else {
+                                self.wysiwyg = new Wysiwyg(self, {});
+                                self.wysiwyg.attachTo($description);
+                            }
+                        }
+                        else {
+                            self.wysiwyg.destroy();
+                            $('.support-statement').append($description);
+                            if ($description.is(':hidden'))
+                                $description.css({'display': 'block'});
+                        }
+                    });
+
                     $button.on("click", function (ev) {
                         var $btn = $(this);
                         if (!$description.val()) {
@@ -113,18 +133,19 @@ odoo.define("support_branding.CrashManager", function (require) {
                             return;
                         }
                         ev.preventDefault();
-                        var desc = $description.val();
+                        var error_code = '';
+                        var desc =  self.wysiwyg.$editor &&
+                        self.wysiwyg.$editor.length ?
+                            self.wysiwyg.getValue() : $description.val();
+                        desc = jQuery("<div/>").text(desc);
+                        error_code = jQuery("<pre/>").text(body);
                         var params = {
                             state: "outgoing",
                             auto_delete: true,
                             email_to: self.support_cp_email,
                             subject: subject,
-                            body_html: jQuery("<div/>")
-                                .append(
-                                    jQuery("<div/>").text(desc),
-                                    jQuery("<pre/>").text(body)
-                                )
-                                .html(),
+                            body_html: jQuery("<div/>").append(
+                                desc, error_code.html()).text(),
                         };
                         self._rpc({
                             model: "mail.mail",
@@ -147,7 +168,7 @@ odoo.define("support_branding.CrashManager", function (require) {
                                 }
                             },
                             function () {
-                                $body.val(desc + "\n" + $body.val());
+                                $body.val(desc + "\n\n" + $body.val());
                                 $btn.unbind("click");
                                 $btn.click();
                             }
