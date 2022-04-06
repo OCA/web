@@ -131,20 +131,20 @@ odoo.define("support_branding.CrashManager", function (require) {
                         }
                         ev.preventDefault();
                         var error_code = "";
+                        var body_html = "";
                         var desc =
                             self.wysiwyg.$editor && self.wysiwyg.$editor.length
                                 ? self.wysiwyg.getValue()
                                 : $description.val();
-                        desc = jQuery("<div/>").text(desc);
-                        error_code = jQuery("<pre/>").text(body);
+                        desc = `<div>${desc}</div>`;
+                        error_code = `<pre>${body}</pre>`;
+                        body_html = `<div>${desc}<br/>${error_code}</div>`;
                         var params = {
                             state: "outgoing",
                             auto_delete: true,
                             email_to: self.support_cp_email,
                             subject: subject,
-                            body_html: jQuery("<div/>")
-                                .append(desc, error_code.html())
-                                .text(),
+                            body_html: body_html,
                         };
                         self._rpc({
                             model: "mail.mail",
