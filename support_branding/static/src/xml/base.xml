@@ -9,14 +9,17 @@
                     method="get"
                 >
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox"
-                               name="use_html_checker" id="use_html_checker"/>
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name="use_html_checker"
+                            id="use_html_checker"
+                        />
                         <label class="form-check-label" for="use_html_checker">
                              Use HTML Editor
                         </label>
                     </div>
-                    <div
-                        class="support-statement oe_form_field_text oe_form_required">
+                    <div class="support-statement oe_form_field_text oe_form_required">
                         <textarea
                             name="description"
                             autocomplete="off"
@@ -41,7 +44,7 @@
                         <div class="user-heading">
                             <h3>
                                 Technical Support By
-                                <t t-esc="widget.support_cp_name"/>
+                                <t t-esc="widget.support_cp_name" />
                             </h3>
                         </div>
                         <div class="tab-content">
@@ -64,7 +67,7 @@
                                         t-attr-href="mailto:{{widget.support_cp_email}}"
                                         style="text-decoration: underline;"
                                     >
-                                        <t t-esc="widget.support_cp_email"/>
+                                        <t t-esc="widget.support_cp_email" />
                                     </a>
                                 </small>
                             </div>
