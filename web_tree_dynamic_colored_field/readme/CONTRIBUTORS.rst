@@ -3,3 +3,4 @@
 * Artem Kostyuk <a.kostyuk@mobilunity.com>
 * Guewen Baconnier <guewen.baconnier@camptocamp.com>
 * Phuc Tran Thanh <phuc@trobz.com>
+* Herkus M. Laiconas <herkus.laiconas@girteka.eu>
