@@ -1,5 +1,5 @@
 # Do NOT update manually; changes here will be overwritten by Copier
-_commit: v1.5.2
+_commit: v1.6.1
 _src_path: https://github.com/OCA/oca-addons-repo-template.git
 ci: Travis
 dependency_installation_mode: OCA
