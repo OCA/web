@@ -5,6 +5,7 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
     "use strict";
 
     const BasicModel = require("web.BasicModel");
+    const rpc = require("web.rpc");
 
     function dateToServer(date) {
         return date
@@ -41,7 +42,8 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
          */
         _applyX2ManyChange: function(record, fieldName, command) {
             if (command.operation === "CLONE") {
-                return this._applyX2ManyChangeOmitOnchange.apply(this, arguments);
+                // Return this._applyX2ManyChangeOmitOnchange.apply(this, arguments);
+                return this._cloneX2Many.apply(this, arguments);
             }
             return this._super.apply(this, arguments);
         },
@@ -55,62 +57,81 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
          * @param {Object} options
          * @returns {Promise}
          */
-        _applyX2ManyChangeOmitOnchange: function(record, fieldName, command, options) {
-            var localID =
+        _cloneX2Many: function(record, fieldName, command, options) {
+            const localID =
                 (record._changes && record._changes[fieldName]) ||
                 record.data[fieldName];
-            var list = this.localData[localID];
-            var position = (command && command.position) || "top";
-            var viewType = (options && options.viewType) || record.viewType;
-            var fieldInfo = record.fieldsInfo[viewType][fieldName];
-            var view = fieldInfo.views && fieldInfo.views[fieldInfo.mode];
-            var params = {
+            const list = this.localData[localID];
+            const position = (command && command.position) || "bottom";
+            const viewType = (options && options.viewType) || record.viewType;
+            const fieldInfo = record.fieldsInfo[viewType][fieldName];
+            const record_command = this.get(command.id);
+
+            const params = {
                 fields: list.fields,
                 fieldsInfo: list.fieldsInfo,
                 parentID: list.id,
                 position: position,
-                viewType: view ? view.type : fieldInfo.viewType,
                 allowWarning: options && options.allowWarning,
+                viewType: viewType,
+                views: fieldInfo.views,
+                clone_parent_record_id: command.id,
             };
 
-            if (
-                command.position === "bottom" &&
-                list.orderedResIDs &&
-                list.orderedResIDs.length >= list.limit
-            ) {
-                list.tempLimitIncrement = (list.tempLimitIncrement || 0) + 1;
-                list.limit += 1;
+            let read_data = Promise.resolve();
+            if (this.isNew(command.id)) {
+                // We need the 'copy_data' of the original parent record
+                if (!_.isEmpty(record_command.clone_data)) {
+                    params.clone_copy_data = record_command.clone_copy_data;
+                }
+            } else {
+                // Record state only has loaded data and only for the fields defined in the views.
+                // For this reason we need ensure copy all the model fields.
+                read_data = rpc.query({
+                    model: list.model,
+                    method: "copy_data",
+                    args: [record_command.res_id],
+                    kwargs: {context: record.getContext()},
+                });
             }
 
-            const record_state = this.get(command.id);
-            const clone_values = this._getValuesToClone(record_state);
-            return this._makeDefaultRecordOmitOnchange(list.model, params, clone_values)
-                .then(id => {
-                    var ids = [id];
-                    list._changes = list._changes || [];
-                    list._changes.push({
-                        operation: "ADD",
-                        id: id,
-                        position: position,
-                        isNew: true,
+            return read_data.then(result => {
+                const clone_values = _.defaults(
+                    {},
+                    this._getValuesToClone(record_command, params),
+                    result
+                );
+                return this._makeCloneRecord(list.model, params, clone_values)
+                    .then(id => {
+                        const ids = [id];
+                        list._changes = list._changes || [];
+                        list._changes.push({
+                            operation: "ADD",
+                            id: id,
+                            position: position,
+                            isNew: true,
+                        });
+                        const record = this.localData[id];
+                        list._cache[record.res_id] = id;
+                        if (list.orderedResIDs) {
+                            const index =
+                                list.offset + (position !== "top" ? list.limit : 0);
+                            list.orderedResIDs.splice(index, 0, record.res_id);
+                            // List could be a copy of the original one
+                            this.localData[list.id].orderedResIDs = list.orderedResIDs;
+                        }
+                        return ids;
+                    })
+                    .then(ids => {
+                        this._readUngroupedList(list).then(() => {
+                            const x2ManysDef = this._fetchX2ManysBatched(list);
+                            const referencesDef = this._fetchReferencesBatched(list);
+                            return Promise.all([x2ManysDef, referencesDef]).then(
+                                () => ids
+                            );
+                        });
                     });
-                    var record = this.localData[id];
-                    list._cache[record.res_id] = id;
-                    if (list.orderedResIDs) {
-                        var index = list.offset + (position !== "top" ? list.limit : 0);
-                        list.orderedResIDs.splice(index, 0, record.res_id);
-                        // List could be a copy of the original one
-                        this.localData[list.id].orderedResIDs = list.orderedResIDs;
-                    }
-                    return ids;
-                })
-                .then(ids => {
-                    this._readUngroupedList(list).then(() => {
-                        var x2ManysDef = this._fetchX2ManysBatched(list);
-                        var referencesDef = this._fetchReferencesBatched(list);
-                        return Promise.all([x2ManysDef, referencesDef]).then(() => ids);
-                    });
-                });
+            });
         },
 
         /**
@@ -160,20 +181,18 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
             return Promise.all(defs).then(() => _.keys(changes));
         },
 
-        /**
-         * Modified implementation of '_makeDefaultRecord' to allow create
-         * without trigger onchanges/default values
-         *
-         * @param {String} modelName
-         * @param {Object} params
-         * @param {Object} values
-         * @returns {Promise}
-         */
-        _makeDefaultRecordOmitOnchange: function(modelName, params, values) {
+        _makeCloneRecord: function(modelName, params, values) {
             const targetView = params.viewType;
             let fields = params.fields;
             const fieldsInfo = params.fieldsInfo;
-            let fieldNames = Object.keys(fieldsInfo[targetView]);
+
+            // Get available fields
+            for (const view_type in params.views) {
+                fields = _.defaults({}, fields, params.views[view_type].fields);
+            }
+
+            let fieldNames = Object.keys(fields);
+
             // Fields that are present in the originating view, that need to be initialized
             // Hence preventing their value to crash when getting back to the originating view
             const parentRecord =
@@ -202,6 +221,11 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
                 res_ids: params.res_ids,
                 viewType: targetView,
             });
+            // Extend dataPoint with clone info
+            record.clone_data = {
+                record_parent_id: params.clone_parent_record_id,
+                copy_data: params.clone_copy_data || values,
+            };
 
             // We want to overwrite the default value of the handle field (if any),
             // in order for new lines to be added at the correct position.
@@ -236,9 +260,10 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
          * Get the values formatted to clone
          *
          * @param {Object} line_state
+         * @param {Object} params
          * @returns {Object}
          */
-        _getValuesToClone: function(line_state) {
+        _getValuesToClone: function(line_state, params) {
             const values_to_clone = {};
             const line_data = line_state.data;
             for (const field_name in line_data) {
@@ -246,7 +271,7 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
                     continue;
                 }
                 const value = line_data[field_name];
-                const field_info = line_state.fields[field_name];
+                const field_info = params.fields[field_name];
                 if (!field_info) {
                     continue;
                 }
@@ -255,12 +280,23 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
                 } else if (field_info.type === "many2one") {
                     const rec_id = value.data && value.data.id;
                     values_to_clone[field_name] = rec_id || false;
-                } else if (
-                    field_info.type === "many2many" ||
-                    field_info.type === "one2many"
-                ) {
+                } else if (field_info.type === "many2many") {
+                    values_to_clone[field_name] = [
+                        [
+                            6,
+                            0,
+                            _.map(value.data || [], item => {
+                                return item.data.id;
+                            }),
+                        ],
+                    ];
+                } else if (field_info.type === "one2many") {
                     values_to_clone[field_name] = _.map(value.data || [], item => {
-                        return item.data.id;
+                        return [
+                            0,
+                            0,
+                            this._getValuesToClone(item, {fields: value.fields}),
+                        ];
                     });
                 } else if (
                     field_info.type === "date" ||
@@ -272,6 +308,15 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
                 }
             }
             return values_to_clone;
+        },
+
+        _generateChanges: function(record) {
+            let res = this._super.apply(this, arguments);
+            if (!_.isEmpty(record.clone_data)) {
+                // If a cloned record, ensure that all fields are written (and not only the view fields)
+                res = _.extend({}, record.clone_data.copy_data, res);
+            }
+            return res;
         },
     });
 });
