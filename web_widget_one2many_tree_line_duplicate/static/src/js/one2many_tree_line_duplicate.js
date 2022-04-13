@@ -130,7 +130,7 @@ odoo.define(
                     this._setValue(
                         {
                             operation: "CLONE", // This operation is a special case implemented only in this module
-                            position: this.editable || data.forceEditable,
+                            position: "bottom",
                             context: data.context,
                             id: ev.data.id,
                         },
