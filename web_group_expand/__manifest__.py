@@ -1,7 +1,7 @@
 {
     "name": "Group Expand Buttons",
     "category": "Web",
-    "version": "14.0.1.0.0",
+    "version": "15.0.1.0.0",
     "license": "AGPL-3",
     "author": "OpenERP SA, "
     "AvanzOSC, "
@@ -11,6 +11,12 @@
     "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "depends": ["web"],
-    "qweb": ["static/src/xml/expand_buttons.xml"],
-    "data": ["views/templates.xml"],
+    "assets": {
+        "web.assets_backend": [
+            "/web_group_expand/static/src/js/web_group_expand.esm.js",
+        ],
+        "web.assets_qweb": [
+            "/web_group_expand/static/src/xml/expand_buttons.xml",
+        ],
+    },
 }
