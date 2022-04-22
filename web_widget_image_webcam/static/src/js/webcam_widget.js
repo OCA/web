@@ -2,7 +2,7 @@
     Copyright 2016 Siddharth Bhalgami <siddharth.bhalgami@gmail.com>
     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 */
-odoo.define("web_widget_image_webcam.webcam_widget", function(require) {
+odoo.define("web_widget_image_webcam.webcam_widget", function (require) {
     "use strict";
 
     var core = require("web.core");
@@ -14,7 +14,7 @@ odoo.define("web_widget_image_webcam.webcam_widget", function(require) {
     var QWeb = core.qweb;
 
     FieldBinaryImage.include({
-        _render: function() {
+        _render: function () {
             this._super();
 
             var self = this,
@@ -38,7 +38,7 @@ odoo.define("web_widget_image_webcam.webcam_widget", function(require) {
             rpc.query({
                 model: "ir.config_parameter",
                 method: "get_webcam_flash_fallback_mode_config",
-            }).then(function(default_flash_fallback_mode) {
+            }).then(function (default_flash_fallback_mode) {
                 if (default_flash_fallback_mode == 1) {
                     Webcam.set({
                         /*
@@ -53,7 +53,7 @@ odoo.define("web_widget_image_webcam.webcam_widget", function(require) {
             self.$el
                 .find(".o_form_binary_file_web_cam")
                 .off()
-                .on("click", function() {
+                .on("click", function () {
                     // Init Webcam
                     var dialog = new Dialog(self, {
                         size: "large",
@@ -64,8 +64,8 @@ odoo.define("web_widget_image_webcam.webcam_widget", function(require) {
                             {
                                 text: _t("Take Snapshot"),
                                 classes: "btn-primary take_snap_btn",
-                                click: function() {
-                                    Webcam.snap(function(data) {
+                                click: function () {
+                                    Webcam.snap(function (data) {
                                         img_data = data;
                                         // Display Snap besides Live WebCam Preview
                                         WebCamDialog.find("#webcam_result").html(
@@ -82,7 +82,7 @@ odoo.define("web_widget_image_webcam.webcam_widget", function(require) {
                                 text: _t("Save & Close"),
                                 classes: "btn-primary save_close_btn",
                                 close: true,
-                                click: function() {
+                                click: function () {
                                     var img_data_base64 = img_data.split(",")[1];
 
                                     /*
@@ -119,7 +119,7 @@ odoo.define("web_widget_image_webcam.webcam_widget", function(require) {
                         ],
                     }).open();
 
-                    dialog.opened().then(function() {
+                    dialog.opened().then(function () {
                         Webcam.attach("#live_webcam");
 
                         // At time of Init "Save & Close" button is disabled
@@ -135,7 +135,7 @@ odoo.define("web_widget_image_webcam.webcam_widget", function(require) {
     });
 
     Dialog.include({
-        destroy: function() {
+        destroy: function () {
             // Shut Down the Live Camera Preview | Reset the System
             Webcam.reset();
             this._super.apply(this, arguments);
