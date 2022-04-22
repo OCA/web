@@ -4,7 +4,7 @@
 {
     "name": "Web Widget - Image WebCam",
     "summary": "Allows to take image with WebCam",
-    "version": "13.0.1.0.0",
+    "version": "14.0.1.0.0",
     "category": "web",
     "website": "https://github.com/OCA/web",
     "author": "Tech Receptives, "
