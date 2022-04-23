@@ -10,6 +10,11 @@
     "license": "AGPL-3",
     "website": "https://github.com/OCA/web",
     "demo": ["demo/res_users.xml"],
-    "data": ["views/web_tree_dynamic_colored_field.xml"],
+    # "data": ["views/web_tree_dynamic_colored_field.xml"],
     "installable": True,
+    "assets": {
+        "web.assets_backend": [
+            "web_tree_dynamic_colored_field/static/**/*",
+        ],
+    },
 }
