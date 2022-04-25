@@ -1,8 +1,8 @@
 # Do NOT update manually; changes here will be overwritten by Copier
 _commit: v1.6.1
 _src_path: https://github.com/OCA/oca-addons-repo-template.git
-ci: Travis
-dependency_installation_mode: OCA
+ci: GitHub
+dependency_installation_mode: PIP
 generate_requirements_txt: true
 include_wkhtmltopdf: false
 odoo_version: 13.0
