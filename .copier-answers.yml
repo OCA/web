@@ -8,7 +8,8 @@ include_wkhtmltopdf: false
 odoo_version: 14.0
 org_name: Odoo Community Association (OCA)
 org_slug: OCA
-rebel_module_groups: []
+rebel_module_groups:
+- web_widget_model_viewer
 repo_description: "This project aims to deal with modules related to the webclient\
   \ of Odoo. You'll find modules that:\n\n - Add facilities to the UI\n - Add widgets\n\
   \ - Ease the import/export features\n - Generally add clientside functionality"
