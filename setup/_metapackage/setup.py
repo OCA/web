@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-web Odoo addons",
     version=version,
     install_requires=[
+        'odoo-addon-web_action_conditionable>=15.0dev,<15.1dev',
         'odoo-addon-web_advanced_search>=15.0dev,<15.1dev',
         'odoo-addon-web_company_color>=15.0dev,<15.1dev',
         'odoo-addon-web_domain_field>=15.0dev,<15.1dev',
