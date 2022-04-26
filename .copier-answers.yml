@@ -1,14 +1,15 @@
 # Do NOT update manually; changes here will be overwritten by Copier
-_commit: v1.5.2
+_commit: v1.6.1
 _src_path: gh:oca/oca-addons-repo-template
-ci: Travis
+ci: GitHub
 dependency_installation_mode: PIP
 generate_requirements_txt: true
 include_wkhtmltopdf: false
 odoo_version: 14.0
 org_name: Odoo Community Association (OCA)
 org_slug: OCA
-rebel_module_groups: []
+rebel_module_groups:
+- web_widget_model_viewer
 repo_description: "This project aims to deal with modules related to the webclient\
   \ of Odoo. You'll find modules that:\n\n - Add facilities to the UI\n - Add widgets\n\
   \ - Ease the import/export features\n - Generally add clientside functionality"
