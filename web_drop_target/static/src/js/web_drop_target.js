@@ -1,7 +1,7 @@
 /* global Uint8Array, base64js */
 // Copyright 2018 Therp BV <https://therp.nl>
 // Copyright 2021 Tecnativa - Alexandre D. Díaz
-// License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+// License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 odoo.define("web_drop_target", function (require) {
     "use strict";
