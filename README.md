@@ -34,7 +34,7 @@ addon | version | maintainers | summary
 [web_refresher](web_refresher/) | 15.0.1.0.0 |  | Web Refresher
 [web_responsive](web_responsive/) | 15.0.1.0.0 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) [![Tardo](https://github.com/Tardo.png?size=30px)](https://github.com/Tardo) [![SplashS](https://github.com/SplashS.png?size=30px)](https://github.com/SplashS) | Responsive web client, community-supported
 [web_sheet_full_width](web_sheet_full_width/) | 15.0.1.0.1 |  | Use the whole available screen width when displaying sheets
-[web_widget_bokeh_chart](web_widget_bokeh_chart/) | 15.0.1.1.0 | [![LoisRForgeFlow](https://github.com/LoisRForgeFlow.png?size=30px)](https://github.com/LoisRForgeFlow) [![ChrisOForgeFlow](https://github.com/ChrisOForgeFlow.png?size=30px)](https://github.com/ChrisOForgeFlow) | This widget allows to display charts using Bokeh library.
+[web_widget_bokeh_chart](web_widget_bokeh_chart/) | 15.0.1.1.1 | [![LoisRForgeFlow](https://github.com/LoisRForgeFlow.png?size=30px)](https://github.com/LoisRForgeFlow) [![ChrisOForgeFlow](https://github.com/ChrisOForgeFlow.png?size=30px)](https://github.com/ChrisOForgeFlow) | This widget allows to display charts using Bokeh library.
 [web_widget_domain_editor_dialog](web_widget_domain_editor_dialog/) | 15.0.1.0.0 |  | Recovers the Domain Editor Dialog functionality
 [web_widget_dropdown_dynamic](web_widget_dropdown_dynamic/) | 15.0.1.0.0 |  | This module adds support for dynamic dropdown widget
 [web_widget_url_advanced](web_widget_url_advanced/) | 15.0.1.0.0 |  | This module extends URL widget for displaying anchors with custom labels.
