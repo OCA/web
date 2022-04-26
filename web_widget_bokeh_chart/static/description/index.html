@@ -412,17 +412,24 @@ bokeh_chart = fields.Text(
 )
 </pre>
 </li>
+<li><p class="first">At the top of the module add the following imports:</p>
+<pre class="literal-block">
+from bokeh.plotting import figure
+from bokeh.embed import components
+import json
+</pre>
+</li>
 <li><p class="first">In its computed method do:</p>
 <pre class="literal-block">
 def _compute_bokeh_chart(self):
     for rec in self:
         # Design your bokeh figure:
-        p = figure()  # import that as `from bokeh.plotting import figure`
+        p = figure()
         line = p.line([0, 2], [1, 8], line_width=5)
         # (...)
         # fill the record field with both markup and the script of a chart.
         script, div = components(p, wrap_script=False)
-        rec.bokeh_chart = '%s%s' % (div, script)
+        rec.bokeh_chart = json.dumps({&quot;div&quot;: div, &quot;script&quot;: script})
 </pre>
 </li>
 <li><p class="first">In the view, add something like this wherever you want to display your
