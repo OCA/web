@@ -1,11 +1,11 @@
 # Copyright 2018 Therp BV <https://therp.nl>
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 {
     "name": "Drop target support",
-    "version": "14.0.1.0.1",
+    "version": "14.0.1.1.0",
     "author": "Therp BV,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
-    "license": "AGPL-3",
+    "license": "LGPL-3",
     "category": "Usability",
     "summary": "Allows to drag files into Odoo",
     "depends": ["web"],
