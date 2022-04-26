@@ -35,7 +35,7 @@ addon | version | maintainers | summary
 [web_dialog_size](web_dialog_size/) | 13.0.1.0.0 |  | A module that lets the user expand a dialog box to the full screen width.
 [web_disable_export_group](web_disable_export_group/) | 13.0.2.1.0 |  | Web Disable Export Group
 [web_domain_field](web_domain_field/) | 13.0.1.0.0 |  | Use computed field as domain
-[web_drop_target](web_drop_target/) | 13.0.1.1.4 |  | Allows to drag files into Odoo
+[web_drop_target](web_drop_target/) | 13.0.1.2.0 |  | Allows to drag files into Odoo
 [web_editor_background_color](web_editor_background_color/) | 13.0.1.0.0 |  | Set any background color for web editor snippets
 [web_environment_ribbon](web_environment_ribbon/) | 13.0.1.0.0 |  | Web Environment Ribbon
 [web_group_expand](web_group_expand/) | 13.0.1.0.0 |  | Group Expand Buttons
