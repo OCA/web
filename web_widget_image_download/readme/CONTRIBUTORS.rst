@@ -8,3 +8,4 @@
 
 * Kaushal Prajapati <kbprajapati@live.com>
 * Peerapong Supasompob <peerapong.supasompob@gmail.com>
+* Manuel Regidor <manuel.regidor@sygel.es>
