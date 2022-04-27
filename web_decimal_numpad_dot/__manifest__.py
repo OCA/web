@@ -7,7 +7,7 @@
 
 {
     "name": "Web - Numpad Dot as decimal separator",
-    "version": "14.0.1.0.0",
+    "version": "15.0.1.0.0",
     "license": "AGPL-3",
     "summary": "Allows using numpad dot to enter period decimal separator",
     "depends": ["web"],
@@ -17,6 +17,10 @@
     "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "category": "Web",
-    "data": ["views/web_decimal_numpad_dot.xml"],
     "installable": True,
+    "assets": {
+        "web.assets_backend": [
+            "web_decimal_numpad_dot/static/src/js/numpad_dot.js",
+        ]
+    },
 }
