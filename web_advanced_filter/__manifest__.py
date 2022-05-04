@@ -4,6 +4,7 @@
     "name": "Advanced filters",
     "version": "12.0.1.0.0",
     "author": "Therp BV,Odoo Community Association (OCA)",
+    "website": "https://github.com/OCA/web",
     "license": "AGPL-3",
     "complexity": "normal",
     "summary": "Set operations on filter results",

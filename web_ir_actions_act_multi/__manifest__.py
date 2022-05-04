@@ -12,7 +12,7 @@
     "author": "Modoolar, "
               "CorporateHub, "
               "Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/web/",
+    "website": "https://github.com/OCA/web",
     "depends": [
         "web"
     ],

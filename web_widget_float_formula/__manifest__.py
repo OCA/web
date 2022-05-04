@@ -14,7 +14,7 @@
         'LasLabs, '
         'CorporateHub, '
         'Odoo Community Association (OCA)',
-    'website': 'https://github.com/OCA/web/',
+    'website': 'https://github.com/OCA/web',
     'license': 'AGPL-3',
     'depends': [
         'web',
