@@ -4,7 +4,7 @@
 {
     'name': 'Web Widget One2Many Product Picker Sale Stock',
     'summary': 'Adds support for stock in the one2many product picker widget',
-    'version': '12.0.2.0.0',
+    'version': '12.0.2.0.1',
     'category': 'Website',
     'author': "Tecnativa, "
               "Odoo Community Association (OCA)",
