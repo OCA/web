@@ -7,7 +7,7 @@
     "summary": "This widget allows to display charts using Bokeh library.",
     "author": "Eficent, "
               "Odoo Community Association (OCA)",
-    "version": "12.0.1.0.1",
+    "version": "12.0.1.0.2",
     "maintainers": ["lreficent"],
     "development_status": "Production/Stable",
     "website": "https://github.com/OCA/web",
