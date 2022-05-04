@@ -4,7 +4,7 @@
 {
     "name": "Overview Dashboard (Tiles)",
     "summary": "Add Overview Dashboards with Tiles",
-    "version": "12.0.1.0.1",
+    "version": "12.0.1.0.2",
     "depends": ["web", "board", "mail", "web_widget_color"],
     "author": "initOS GmbH & Co. KG, "
     "GRAP, "
