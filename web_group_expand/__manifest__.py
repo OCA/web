@@ -8,6 +8,7 @@
               "Serv. Tecnol. Avanzados - Pedro M. Baeza, "
               "Therp BV, "
               "Odoo Community Association (OCA)",
+    "website": "https://github.com/OCA/web",
     "depends": [
         "web",
     ],

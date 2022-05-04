@@ -11,6 +11,7 @@
     "Iván Todorovich <ivan.todorovich@gmail.com>, "
     "Odoo Community Association (OCA)",
     "maintainers": ["legalsylvain"],
+    "website": "https://github.com/OCA/web",
     "category": "web",
     "license": "AGPL-3",
     "data": [
