@@ -7,7 +7,7 @@
 {
     'name': 'Web Widget - Formulas in Float Fields',
     'summary': 'Allow use of simple formulas in float fields',
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.0.1',
     'category': 'Web',
     'author':
         'GRAP, '
