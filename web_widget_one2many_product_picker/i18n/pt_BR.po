@@ -50,7 +50,7 @@ msgstr ""
 #. module: web_widget_one2many_product_picker
 #: code:addons/web_widget_one2many_product_picker/models/base.py:0
 #, python-format
-msgid "Can't create the %s: Duplicated product! (Already in database)"
+msgid "Can't create the %s: Duplicated product (%s)! (Already in database)"
 msgstr ""
 
 #. module: web_widget_one2many_product_picker
