@@ -4,7 +4,7 @@
 {
     'name': "Close Wizard Refresh View",
     'summary': """Allow to refresh view data without reload the page.""",
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.0.1',
     'development_status': 'Beta',
     'author': "LevelPrime srl, "
               "Odoo Community Association (OCA)",
