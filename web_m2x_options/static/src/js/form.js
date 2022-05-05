@@ -1,28 +1,34 @@
 /* Copyright 2016 0k.io,ACSONE SA/NV
- *  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
+ * Copyright 2022 Tecnativa - Alexandre D. Díaz
+ * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
 odoo.define("web_m2x_options.web_m2x_options", function(require) {
     "use strict";
 
-    var core = require("web.core"),
+    const core = require("web.core"),
         data = require("web.data"),
         Dialog = require("web.Dialog"),
         view_dialogs = require("web.view_dialogs"),
         relational_fields = require("web.relational_fields"),
         rpc = require("web.rpc");
 
-    var _t = core._t,
+    const _t = core._t,
         FieldMany2ManyTags = relational_fields.FieldMany2ManyTags,
         FieldMany2One = relational_fields.FieldMany2One,
         FormFieldMany2ManyTags = relational_fields.FormFieldMany2ManyTags;
 
-    var web_m2x_options = rpc.query({
+    // Launch the query ASAP
+    const web_m2x_options = rpc.query({
         model: "ir.config_parameter",
         method: "get_web_m2x_options",
     });
 
-    var M2ODialog = Dialog.extend({
+    /**
+     * Cloned from web/static/src/js/fields/relational_fields.js
+     */
+    const M2ODialog = Dialog.extend({
         template: "M2ODialog",
+
         init: function(parent, name, value) {
             this.name = name;
             this.value = value;
@@ -62,6 +68,7 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
                 ],
             });
         },
+
         start: function() {
             this.$("p").text(
                 _.str.sprintf(
@@ -93,36 +100,53 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
     });
 
     FieldMany2One.include({
-        start: function() {
-            this._super.apply(this, arguments);
-            return this.get_options();
+        /**
+         * @override
+         */
+        init: function() {
+            this.ir_options = {};
+            return this._super.apply(this, arguments);
         },
 
+        /**
+         * @override
+         */
+        start: function() {
+            return this._super.apply(this, arguments).then(() => this.get_options());
+        },
+
+        /**
+         * @returns {Promise}
+         */
         get_options: function() {
-            var self = this;
-            if (_.isUndefined(this.ir_options_loaded)) {
-                this.ir_options_loaded = $.Deferred();
-                this.ir_options = {};
-                web_m2x_options.then(function(records) {
-                    _(records).each(function(record) {
-                        self.ir_options[record.key] = record.value;
-                    });
-                    self.ir_options_loaded.resolve();
+            if (_.isEmpty(this.ir_options)) {
+                return web_m2x_options.then(records => {
+                    for (const record of records) {
+                        this.ir_options[record.key] = record.value;
+                    }
                 });
             }
-            return $.when();
+            return Promise.resolve();
         },
 
+        /**
+         * @param {String/Boolean/Undefined} option
+         * @returns {Boolean}
+         */
         is_option_set: function(option) {
-            if (_.isUndefined(option)) return false;
-            if (typeof option === "string")
-                return option === "true" || option === "True";
-            if (typeof option === "boolean") return option;
+            if (typeof option === "string") {
+                return option.toLowerCase() === "true";
+            } else if (typeof option === "boolean") {
+                return option;
+            }
             return false;
         },
 
+        /**
+         * @override
+         */
         _onInputFocusout: function() {
-            var m2o_dialog_opt =
+            const m2o_dialog_opt =
                 this.is_option_set(this.nodeOptions.m2o_dialog) ||
                 (_.isUndefined(this.nodeOptions.m2o_dialog) &&
                     this.is_option_set(
@@ -135,48 +159,50 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
             }
         },
 
+        /**
+         * @override
+         */
         _search: function(search_val) {
-            var self = this;
-            if (search_val === undefined) {
+            if (!search_val) {
                 return this._super.apply(this, arguments);
             }
-            var def = new Promise(resolve => {
+            const def = new Promise(resolve => {
                 // Add options limit used to change number of selections record
                 // returned.
-                if (!_.isUndefined(self.ir_options["web_m2x_options.limit"])) {
-                    this.limit = parseInt(self.ir_options["web_m2x_options.limit"], 10);
+                if (!_.isUndefined(this.ir_options["web_m2x_options.limit"])) {
+                    this.limit = parseInt(this.ir_options["web_m2x_options.limit"], 10);
                 }
 
-                if (typeof self.nodeOptions.limit === "number") {
-                    self.limit = self.nodeOptions.limit;
+                if (typeof this.nodeOptions.limit === "number") {
+                    this.limit = this.nodeOptions.limit;
                 }
 
                 // Add options field_color and colors to color item(s) depending on field_color value
-                self.field_color = self.nodeOptions.field_color;
-                self.colors = self.nodeOptions.colors;
+                this.field_color = this.nodeOptions.field_color;
+                this.colors = this.nodeOptions.colors;
 
-                var context = self.record.getContext(self.recordParams);
-                var domain = self.record.getDomain(self.recordParams);
+                const context = this.record.getContext(this.recordParams);
+                const domain = this.record.getDomain(this.recordParams);
 
-                var blacklisted_ids = self._getSearchBlacklist();
+                const blacklisted_ids = this._getSearchBlacklist();
                 if (blacklisted_ids.length > 0) {
                     domain.push(["id", "not in", blacklisted_ids]);
                 }
 
-                self._rpc({
-                    model: self.field.relation,
+                this._rpc({
+                    model: this.field.relation,
                     method: "name_search",
                     kwargs: {
                         name: search_val,
                         args: domain,
                         operator: "ilike",
-                        limit: self.limit + 1,
+                        limit: this.limit + 1,
                         context: context,
                     },
                 }).then(result => {
                     // Possible selections for the m2o
-                    var values = _.map(result, x => {
-                        x[1] = self._getDisplayName(x[1]);
+                    let values = _.map(result, x => {
+                        x[1] = this._getDisplayName(x[1]);
                         return {
                             label:
                                 _.str.escapeHTML(x[1].trim()) || data.noDisplayContent,
@@ -187,26 +213,23 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
                     });
 
                     // Search result value colors
-                    if (self.colors && self.field_color) {
-                        var value_ids = [];
-                        for (var val_index in values) {
-                            value_ids.push(values[val_index].id);
-                        }
-                        self._rpc({
-                            model: self.field.relation,
+                    if (this.colors && this.field_color) {
+                        const value_ids = _.map(values, value => value.id);
+                        this._rpc({
+                            model: this.field.relation,
                             method: "search_read",
-                            fields: [self.field_color],
+                            fields: [this.field_color],
                             domain: [["id", "in", value_ids]],
                         }).then(objects => {
-                            for (var index in objects) {
-                                for (var index_value in values) {
+                            for (const index in objects) {
+                                for (const index_value in values) {
                                     if (values[index_value].id === objects[index].id) {
                                         // Find value in values by comparing ids
-                                        var value = values[index_value];
+                                        const value = values[index_value];
                                         // Find color with field value as key
-                                        var color =
-                                            self.colors[
-                                                objects[index][self.field_color]
+                                        const color =
+                                            this.colors[
+                                                objects[index][this.field_color]
                                             ] || "black";
                                         value.label =
                                             '<span style="color:' +
@@ -223,47 +246,45 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
                     }
 
                     // Search more... if more results that max
-                    var can_search_more =
-                            self.nodeOptions &&
-                            self.is_option_set(self.nodeOptions.search_more),
+                    const can_search_more =
+                            this.nodeOptions &&
+                            this.is_option_set(this.nodeOptions.search_more),
                         search_more_undef =
-                            _.isUndefined(self.nodeOptions.search_more) &&
+                            _.isUndefined(this.nodeOptions.search_more) &&
                             _.isUndefined(
-                                self.ir_options["web_m2x_options.search_more"]
+                                this.ir_options["web_m2x_options.search_more"]
                             ),
-                        search_more = self.is_option_set(
-                            self.ir_options["web_m2x_options.search_more"]
+                        search_more = this.is_option_set(
+                            this.ir_options["web_m2x_options.search_more"]
                         );
 
                     if (
-                        (values.length > self.limit &&
+                        (values.length > this.limit &&
                             (can_search_more || search_more_undef)) ||
                         search_more
                     ) {
-                        values = values.slice(0, self.limit);
+                        values = values.slice(0, this.limit);
                         values.push({
                             label: _t("Search More..."),
-                            action: function() {
-                                var prom = [];
-                                if (search_val !== "") {
-                                    prom = self._rpc({
-                                        model: self.field.relation,
+                            action: () => {
+                                let prom = Promise.resolve();
+                                if (search_val) {
+                                    prom = this._rpc({
+                                        model: this.field.relation,
                                         method: "name_search",
                                         kwargs: {
                                             name: search_val,
                                             args: domain,
                                             operator: "ilike",
-                                            limit: self.SEARCH_MORE_LIMIT,
+                                            limit: this.SEARCH_MORE_LIMIT,
                                             context: context,
                                         },
                                     });
                                 }
-                                Promise.resolve(prom).then(function(results) {
-                                    var dynamicFilters = [];
+                                prom.then(results => {
+                                    let dynamicFilters = [];
                                     if (results) {
-                                        var ids = _.map(results, function(x) {
-                                            return x[0];
-                                        });
+                                        const ids = _.map(results, x => x[0]);
                                         if (search_val) {
                                             dynamicFilters = [
                                                 {
@@ -274,11 +295,9 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
                                                     domain: [["id", "in", ids]],
                                                 },
                                             ];
-                                        } else {
-                                            dynamicFilters = [];
                                         }
                                     }
-                                    self._searchCreatePopup(
+                                    this._searchCreatePopup(
                                         "search",
                                         false,
                                         {},
@@ -290,28 +309,27 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
                         });
                     }
 
-                    var create_enabled = self.can_create && !self.nodeOptions.no_create;
+                    const create_enabled =
+                        this.can_create && !this.nodeOptions.no_create;
                     // Quick create
-                    var raw_result = _.map(result, function(x) {
-                        return x[1];
-                    });
-                    var quick_create = self.is_option_set(self.nodeOptions.create),
-                        quick_create_undef = _.isUndefined(self.nodeOptions.create),
+                    const raw_result = _.map(result, x => x[1]);
+                    const quick_create = this.is_option_set(this.nodeOptions.create),
+                        quick_create_undef = _.isUndefined(this.nodeOptions.create),
                         m2x_create_undef = _.isUndefined(
-                            self.ir_options["web_m2x_options.create"]
+                            this.ir_options["web_m2x_options.create"]
                         ),
-                        m2x_create = self.is_option_set(
-                            self.ir_options["web_m2x_options.create"]
+                        m2x_create = this.is_option_set(
+                            this.ir_options["web_m2x_options.create"]
                         );
-                    var show_create =
-                        (!self.nodeOptions && (m2x_create_undef || m2x_create)) ||
-                        (self.nodeOptions &&
+                    const show_create =
+                        (!this.nodeOptions && (m2x_create_undef || m2x_create)) ||
+                        (this.nodeOptions &&
                             (quick_create ||
                                 (quick_create_undef &&
                                     (m2x_create_undef || m2x_create))));
                     if (
                         create_enabled &&
-                        !self.nodeOptions.no_quick_create &&
+                        !this.nodeOptions.no_quick_create &&
                         search_val.length > 0 &&
                         !_.contains(raw_result, search_val) &&
                         show_create
@@ -323,48 +341,47 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
                                     .text(search_val)
                                     .html()
                             ),
-                            action: self._quickCreate.bind(self, search_val),
+                            action: this._quickCreate.bind(this, search_val),
                             classname: "o_m2o_dropdown_option",
                         });
                     }
                     // Create and edit ...
 
-                    var create_edit =
-                            self.is_option_set(self.nodeOptions.create) ||
-                            self.is_option_set(self.nodeOptions.create_edit),
+                    const create_edit =
+                            this.is_option_set(this.nodeOptions.create) ||
+                            this.is_option_set(this.nodeOptions.create_edit),
                         create_edit_undef =
-                            _.isUndefined(self.nodeOptions.create) &&
-                            _.isUndefined(self.nodeOptions.create_edit),
+                            _.isUndefined(this.nodeOptions.create) &&
+                            _.isUndefined(this.nodeOptions.create_edit),
                         m2x_create_edit_undef = _.isUndefined(
-                            self.ir_options["web_m2x_options.create_edit"]
+                            this.ir_options["web_m2x_options.create_edit"]
                         ),
-                        m2x_create_edit = self.is_option_set(
-                            self.ir_options["web_m2x_options.create_edit"]
+                        m2x_create_edit = this.is_option_set(
+                            this.ir_options["web_m2x_options.create_edit"]
                         );
-                    var show_create_edit =
-                        (!self.nodeOptions &&
+                    const show_create_edit =
+                        (!this.nodeOptions &&
                             (m2x_create_edit_undef || m2x_create_edit)) ||
-                        (self.nodeOptions &&
+                        (this.nodeOptions &&
                             (create_edit ||
                                 (create_edit_undef &&
                                     (m2x_create_edit_undef || m2x_create_edit))));
                     if (
                         create_enabled &&
-                        !self.nodeOptions.no_create_edit &&
+                        !this.nodeOptions.no_create_edit &&
                         show_create_edit
                     ) {
-                        var createAndEditAction = function() {
-                            // Clear the value in case the user clicks on discard
-                            self.$("input").val("");
-                            return self._searchCreatePopup(
-                                "form",
-                                false,
-                                self._createContext(search_val)
-                            );
-                        };
                         values.push({
                             label: _t("Create and Edit..."),
-                            action: createAndEditAction,
+                            action: () => {
+                                // Clear the value in case the user clicks on discard
+                                this.$("input").val("");
+                                return this._searchCreatePopup(
+                                    "form",
+                                    false,
+                                    this._createContext(search_val)
+                                );
+                            },
                             classname: "o_m2o_dropdown_option",
                         });
                     } else if (values.length === 0) {
@@ -373,7 +390,7 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
                         });
                     }
                     // Check if colors specified to wait for RPC
-                    if (!(self.field_color && self.colors)) {
+                    if (!(this.field_color && this.colors)) {
                         resolve(values);
                     }
                 });
@@ -388,69 +405,77 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
             "click .badge": "_onOpenBadge",
         }),
 
+        /**
+         * @override
+         */
         _onDeleteTag: function(event) {
-            var result = this._super.apply(this, arguments);
+            const result = this._super.apply(this, arguments);
             event.stopPropagation();
             return result;
         },
 
+        /**
+         * @param {String/Boolean/Undefined} option
+         * @returns {Boolean}
+         */
         is_option_set: function(option) {
-            if (_.isUndefined(option)) return false;
-            if (typeof option === "string")
-                return option === "true" || option === "True";
-            if (typeof option === "boolean") return option;
+            if (typeof option === "string") {
+                return option.toLowerCase() === "true";
+            }
+            if (typeof option === "boolean") {
+                return option;
+            }
             return false;
         },
 
         _onOpenBadge: function(event) {
-            var self = this;
-            var open = self.nodeOptions && self.is_option_set(self.nodeOptions.open);
+            const open = this.nodeOptions && this.is_option_set(this.nodeOptions.open);
             if (open) {
-                var context = self.record.getContext(self.recordParams);
-                var id = parseInt($(event.currentTarget).data("id"), 10);
+                const context = this.record.getContext(this.recordParams);
+                const id = Number($(event.currentTarget).data("id"));
 
-                if (self.mode === "readonly") {
+                if (this.mode === "readonly") {
                     event.preventDefault();
                     event.stopPropagation();
-                    self._rpc({
-                        model: self.field.relation,
+                    this._rpc({
+                        model: this.field.relation,
                         method: "get_formview_action",
                         args: [[id]],
                         context: context,
-                    }).then(function(action) {
-                        self.trigger_up("do_action", {action: action});
+                    }).then(action => {
+                        this.trigger_up("do_action", {action: action});
                     });
                 } else {
-                    $.when(
-                        self._rpc({
-                            model: self.field.relation,
+                    Promise.all([
+                        this._rpc({
+                            model: this.field.relation,
                             method: "get_formview_id",
                             args: [[id]],
                             context: context,
                         }),
-                        self._rpc({
-                            model: self.field.relation,
+                        this._rpc({
+                            model: this.field.relation,
                             method: "check_access_rights",
                             kwargs: {operation: "write", raise_exception: false},
-                        })
-                    ).then(function(view_id, write_access) {
-                        var can_write =
-                            "can_write" in self.attrs
-                                ? JSON.parse(self.attrs.can_write)
+                        }),
+                    ]).then((view_id, write_access) => {
+                        const can_write =
+                            "can_write" in this.attrs
+                                ? JSON.parse(this.attrs.can_write)
                                 : true;
-                        new view_dialogs.FormViewDialog(self, {
-                            res_model: self.field.relation,
+                        new view_dialogs.FormViewDialog(this, {
+                            res_model: this.field.relation,
                             res_id: id,
                             context: context,
-                            title: _t("Open: ") + self.string,
+                            title: _t("Open: ") + this.string,
                             view_id: view_id,
                             readonly: !can_write || !write_access,
-                            on_saved: function(record, changed) {
+                            on_saved: (record, changed) => {
                                 if (changed) {
-                                    self._setValue(self.value.data, {
+                                    this._setValue(this.value.data, {
                                         forceChange: true,
                                     });
-                                    self.trigger_up("reload", {db_id: self.value.id});
+                                    this.trigger_up("reload", {db_id: this.value.id});
                                 }
                             },
                         }).open();
@@ -466,9 +491,10 @@ odoo.define("web_m2x_options.web_m2x_options", function(require) {
         }),
 
         _onOpenBadge: function(event) {
-            var open = this.is_option_set(this.nodeOptions.open);
-            var no_color_picker = this.is_option_set(this.nodeOptions.no_color_picker);
-            this._super.apply(this, arguments);
+            const open = this.is_option_set(this.nodeOptions.open);
+            const no_color_picker = this.is_option_set(
+                this.nodeOptions.no_color_picker
+            );
             if (!open && !no_color_picker) {
                 this._onOpenColorPicker(event);
             } else {
