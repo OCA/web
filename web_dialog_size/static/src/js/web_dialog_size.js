@@ -57,6 +57,8 @@ odoo.define("web_dialog_size.web_dialog_size", function(require) {
             dialog.addClass("dialog_full_screen");
             dialog.find(".dialog_button_extend").hide();
             dialog.find(".dialog_button_restore").show();
+            // Recompute o2m columns width if needed
+            this.trigger_up("resize");
         },
 
         _restore: function() {
@@ -64,6 +66,8 @@ odoo.define("web_dialog_size.web_dialog_size", function(require) {
             dialog.removeClass("dialog_full_screen");
             dialog.find(".dialog_button_restore").hide();
             dialog.find(".dialog_button_extend").show();
+            // Recompute o2m columns width if needed
+            this.trigger_up("resize");
         },
     });
 });
