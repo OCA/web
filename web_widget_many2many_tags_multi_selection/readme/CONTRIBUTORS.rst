@@ -3,3 +3,5 @@
 * Maxence Groine <mgroine@fiefmanage.ch>
 * Anand Kansagra <kansagraanand@hotmail.com>
 * Alexandre D. Díaz <alexandre.diaz@tecnativa.com>
+* Juany Davila <juany.davila@forgeflow.com>
+

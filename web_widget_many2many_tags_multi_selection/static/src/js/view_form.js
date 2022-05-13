@@ -3,22 +3,22 @@ odoo.define("web_widget_many2many_tags_multi_selection.multiple_tags", function 
 ) {
     "use strict";
 
-    var rel_fields = require("web.relational_fields");
-    var dialogs = require("web.view_dialogs");
-    var core = require("web.core");
-    var _t = core._t;
+    let rel_fields = require("web.relational_fields");
+    let dialogs = require("web.view_dialogs");
+    let core = require("web.core");
+    let _t = core._t;
 
     rel_fields.FieldMany2One.include({
         /**
          * @override
          */
         _searchCreatePopup: function (view, ids, context) {
-            var self = this;
+            let self = this;
 
             // Don't include already selected instances in the search domain
-            var domain = self.record.getDomain({fieldName: self.name});
+            let domain = self.record.getDomain({fieldName: self.name});
             if (self.field.type === "many2many") {
-                var selected_ids = self._getSearchBlacklist();
+                let selected_ids = self._getSearchBlacklist();
                 if (selected_ids.length > 0) {
                     domain.push(["id", "not in", selected_ids]);
                 }
@@ -65,10 +65,10 @@ odoo.define("web_widget_many2many_tags_multi_selection.multiple_tags", function 
          * @override
          */
         _renderEdit: function () {
-            var self = this;
-            var need_modal = false;
+            let self = this;
+            let need_modal = false;
             if (this.many2one) {
-                var m2o_childrens = this.many2one.getChildren();
+                let m2o_childrens = this.many2one.getChildren();
                 need_modal = _.some(m2o_childrens, function (children) {
                     return "dialogClass" in children;
                 });
