@@ -25,6 +25,7 @@ addon | version | maintainers | summary
 [web_advanced_search](web_advanced_search/) | 15.0.1.0.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Easier and more powerful searching tools
 [web_company_color](web_company_color/) | 15.0.1.1.0 |  | Web Company Color
 [web_domain_field](web_domain_field/) | 15.0.1.0.0 |  | Use computed field as domain
+[web_drop_target](web_drop_target/) | 15.0.1.0.1 |  | Allows to drag files into Odoo
 [web_environment_ribbon](web_environment_ribbon/) | 15.0.1.0.0 |  | Web Environment Ribbon
 [web_group_expand](web_group_expand/) | 15.0.1.0.0 |  | Group Expand Buttons
 [web_ir_actions_act_multi](web_ir_actions_act_multi/) | 15.0.1.0.0 |  | Enables triggering of more than one action on ActionManager
