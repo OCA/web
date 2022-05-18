@@ -169,6 +169,9 @@ odoo.define("web_responsive", function (require) {
     ViewDialogs.SelectCreateDialog.include({
         init: function () {
             this._super.apply(this, arguments);
+            if (config.device.isMobile) {
+                this.viewType = "kanban";
+            }
             this.on_clear =
                 this.options.on_clear ||
                 function () {

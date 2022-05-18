@@ -2,6 +2,9 @@
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
 @include media-breakpoint-down(sm) {
+    .o_kanban_view {
+        width: 100%;
+    }
     .o_kanban_view.o_kanban_grouped {
         display: block;
         position: relative;
