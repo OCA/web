@@ -8,60 +8,56 @@ For example::
 
 The JSON needs to be like::
 
-    fields = ['field1', 'field2', 'field3', ...]
-    field_x = 'field_x'
-    dictionary = self.value_ids.sorted(field_x).read(fields)
-    color = {
-        'field1': HEXCOLOR1,
-        'field2': '#FFBB78',
-        'field3': '#1F77B4',
-        ...
-    }
-    dictionary = self.value_ids.sorted(field_x).read(fields)
-    content = {}
-    data = []
-    for field in fields:
-        if field != field_x:
-            content[field] = []
-            for rec in dictionary:
-                content[field].append({'x': rec[field_x], 'y': rec[field]})
-            if field in color:
-                data.append({'values': content[field], 'key': field,
-                    'color': color[field]})
-                continue
-            data.append({'values': content[field], 'key': field})
     info = {
-        'label_x': 'X Label',
-        'label_y': 'Y label',
-        'data': data
+        "type": "line",
+        "data": {"datasets": [], "labels": []},
+        "options": {
+            "scales": {
+                "yAxes": [
+                    {
+                        "ticks": {"beginAtZero": True, "stacked": False},
+                        "scaleLabel": {"display": True, "labelString": "Quantity"},
+                    }
+                ],
+                "xAxes": [
+                    {
+                        "scaleLabel": {"display": True, "labelString": "Date"},
+                    }
+                ],
+            },
+            "elements": {"point": {"radius": 3}},
+            "legend": {"labels": {"usePointStyle": True}},
+            "tooltips": {"intersect": False, "axis": "xy", "mode": "index"},
+        },
     }
     self.field_text_json = json.dumps(info)
 
 For example::
 
-    fields = ['sequence', 'value', 'sma', 'cma']
-    field_x = 'sequence'
-    dictionary = self.value_ids.sorted(field_x).read(fields)
-    color = {
-        'value': '#2CA02C',
-        'sma': '#FFBB78'
-    }
-    dictionary = self.value_ids.sorted(field_x).read(fields)
-    content = {}
-    data = []
-    for field in fields:
-        if field != field_x:
-            content[field] = []
-            for rec in dictionary:
-                content[field].append({'x': rec[field_x], 'y': rec[field]})
-            if field in color:
-                data.append({'values': content[field], 'key': field,
-                    'color': color[field]})
-                continue
-            data.append({'values': content[field], 'key': field})
+    plot_dataset = [1, 2, 3, 4, 3, 2]
+    labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]
     info = {
-        'label_x': 'Sequence',
-        'label_y': '',
-        'data': data
+        "type": "line",
+        "data": {"datasets": plot_dataset, "labels": labels},
+        "options": {
+            "scales": {
+                "yAxes": [
+                    {
+                        "ticks": {"beginAtZero": True, "stacked": False},
+                        "scaleLabel": {"display": True, "labelString": "Quantity"},
+                    }
+                ],
+                "xAxes": [
+                    {
+                        "scaleLabel": {"display": True, "labelString": "Date"},
+                    }
+                ],
+            },
+            "elements": {"point": {"radius": 3}},
+            "legend": {"labels": {"usePointStyle": True}},
+            "tooltips": {"intersect": False, "axis": "xy", "mode": "index"},
+        },
     }
     self.values_data = json.dumps(info)
+
+For more information, please see `Chart Js Documentation <https://www.chartjs.org/docs/2.9.4/>`.
