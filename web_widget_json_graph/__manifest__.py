@@ -1,22 +1,28 @@
 {
     "name": "Web Widget JSON Graph",
-    "version": "12.0.1.0.0",
+    "version": "15.0.1.0.0",
     "author": "Vauxoo, Odoo Community Association (OCA)",
     "license": "LGPL-3",
     "category": "Hidden/Dependency",
     "website": "https://github.com/OCA/web",
-    "maintainers": ["luisg123v"],
+    "maintainers": [
+        "luisg123v",
+        "frahikLV",
+    ],
     "summary": "Draw json fields with graphs.",
     "depends": [
         "web",
     ],
-    "data": [
-        "views/assets.xml",
-    ],
-    "qweb": [
-        "static/src/xml/web_widget_json_graph.xml",
-    ],
-    "installable": True,
+    "data": [],
+    "assets": {
+        "web.assets_backend": [
+            "web_widget_json_graph/static/src/js/web_widget_json_graph.js",
+        ],
+        "web.assets_qweb": [
+            "web_widget_json_graph/static/src/xml/web_widget_json_graph.xml",
+        ],
+    },
     "auto_install": False,
+    "installable": True,
     "application": False,
 }
