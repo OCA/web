@@ -4,13 +4,14 @@
 {
     "name": "Overview Dashboard (Tiles)",
     "summary": "Add Overview Dashboards with Tiles",
-    "version": "12.0.1.0.1",
+    "version": "12.0.1.0.2",
     "depends": ["web", "board", "mail", "web_widget_color"],
     "author": "initOS GmbH & Co. KG, "
     "GRAP, "
     "Iván Todorovich <ivan.todorovich@gmail.com>, "
     "Odoo Community Association (OCA)",
     "maintainers": ["legalsylvain"],
+    "website": "https://github.com/OCA/web",
     "category": "web",
     "license": "AGPL-3",
     "data": [
