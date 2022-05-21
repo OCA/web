@@ -26,6 +26,7 @@ setuptools.setup(
         'odoo-addon-web_widget_domain_editor_dialog>=15.0dev,<15.1dev',
         'odoo-addon-web_widget_dropdown_dynamic>=15.0dev,<15.1dev',
         'odoo-addon-web_widget_image_download>=15.0dev,<15.1dev',
+        'odoo-addon-web_widget_json_graph>=15.0dev,<15.1dev',
         'odoo-addon-web_widget_open_tab>=15.0dev,<15.1dev',
         'odoo-addon-web_widget_url_advanced>=15.0dev,<15.1dev',
         'odoo-addon-web_widget_x2many_2d_matrix>=15.0dev,<15.1dev',
