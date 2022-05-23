@@ -1,0 +1,11 @@
+.widget_numeric_step {
+    display: inline-flex;
+}
+
+.numeric_step_editing_cell {
+    min-width: 120px;
+
+    .input_numeric_step {
+        height: auto;
+    }
+}
