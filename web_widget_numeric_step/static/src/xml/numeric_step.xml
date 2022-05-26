@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright 2019 GRAP - Quentin DUPONT
+Copyright 2020 Tecnativa - Alexandre Díaz
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<templates>
+    <t t-name="web_widget_numeric_step">
+        <t t-if="widget.mode != 'readonly'">
+            <div class="input-group widget_numeric_step">
+                <div class="input-group-prepend">
+                    <button
+                        class="fa fa-minus btn btn-default btn_numeric_step"
+                        aria-label="Minus"
+                        title="Minus"
+                        type="button"
+                        data-mode="minus"
+                    />
+                </div>
+                <input
+                    type="tel"
+                    class="form-control input_numeric_step"
+                    aria-label="Value"
+                />
+                <div class="input-group-append">
+                    <button
+                        class="fa fa-plus btn btn-default btn_numeric_step"
+                        aria-label="Plus"
+                        title="Plus"
+                        type="button"
+                        data-mode="plus"
+                    />
+                </div>
+            </div>
+        </t>
+        <t t-else="">
+            <field />
+        </t>
+    </t>
+</templates>
