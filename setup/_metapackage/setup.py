@@ -57,6 +57,7 @@ setuptools.setup(
         'odoo13-addon-web_widget_one2many_product_picker_sale_stock',
         'odoo13-addon-web_widget_one2many_tree_line_duplicate',
         'odoo13-addon-web_widget_open_tab',
+        'odoo13-addon-web_widget_text_markdown',
         'odoo13-addon-web_widget_url_advanced',
         'odoo13-addon-web_widget_x2many_2d_matrix',
         'odoo13-addon-web_widget_x2many_2d_matrix_example',
