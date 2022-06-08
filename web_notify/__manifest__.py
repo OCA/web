@@ -8,7 +8,7 @@
         Send notification messages to user""",
     "version": "15.0.1.0.1",
     "license": "AGPL-3",
-    "author": "ACSONE SA/NV","AdaptiveCity","Cozybizs","Odoo Community Association (OCA)",
+    "author": "ACSONE SA/NV, AdaptiveCity, Cozybizs, Odoo Community Association (OCA)",
     "development_status": "Production/Stable",
     "website": "https://github.com/OCA/web",
     "depends": ["web", "bus", "base"],
