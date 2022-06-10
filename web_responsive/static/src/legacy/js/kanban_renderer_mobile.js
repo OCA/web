@@ -94,7 +94,7 @@ odoo.define("web_responsive.KanbanRendererMobile", function (require) {
             this._super.apply(this, arguments);
             core.bus.on("UI_CONTEXT:IS_SMALL_CHANGED", this, () => {
                 this.widgets = [];
-                this.columnOptions.recordsDraggable = !config.device.isMobile;
+                this.columnOptions.recordsDraggable = config.device.isMobile ? false : this.columnOptions.recordsDraggable;
                 this._renderView();
             });
         },
@@ -176,7 +176,7 @@ odoo.define("web_responsive.KanbanRendererMobile", function (require) {
          */
         _setState: function () {
             const res = this._super.apply(this, arguments);
-            this.columnOptions.recordsDraggable = !config.device.isMobile;
+            this.columnOptions.recordsDraggable = config.device.isMobile ? false : this.columnOptions.recordsDraggable;
             return res;
         },
         /**
