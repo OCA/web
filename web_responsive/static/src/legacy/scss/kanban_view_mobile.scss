@@ -2,6 +2,9 @@
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
 @include media-breakpoint-down(sm) {
+    .o_kanban_view {
+        width: 100%;
+    }
     .o_kanban_view.o_kanban_grouped {
         display: block;
         position: relative;
@@ -106,11 +109,5 @@
         .o_quick_create_unfolded {
             width: 100%;
         }
-    }
-}
-.o_kanban_view.o_kanban_ungrouped {
-    .o_kanban_record {
-        padding-left: 16px !important;
-        padding-right: 16px !important;
     }
 }
