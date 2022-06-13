@@ -6,6 +6,7 @@ from .main import PWA
 
 
 class ServiceWorker(PWA):
+    _pwa_sw_version = "0.1.0"
 
     JS_PWA_CORE_EVENT_INSTALL = """
         self.addEventListener('install', evt => {{
@@ -48,26 +49,54 @@ class ServiceWorker(PWA):
 
     def _get_js_pwa_init(self):
         return """
-            const oca_pwa = new PWA({});
+            let promise_start = Promise.resolve();
+            if (typeof self.oca_pwa === "undefined") {{
+                self.oca_pwa = new PWA({});
+                promise_start = self.oca_pwa.start();
+                if (self.serviceWorker.state === "activated") {{
+                    promise_start = promise_start.then(
+                        () => self.oca_pwa.activateWorker(true));
+                }}
+            }}
         """.format(
             self._get_pwa_params()
         )
 
     def _get_js_pwa_core_event_install_impl(self):
         return """
-            evt.waitUntil(oca_pwa.installWorker());
-            self.skipWaiting();
+            evt.waitUntil(promise_start.then(() => self.oca_pwa.installWorker()));
         """
 
     def _get_js_pwa_core_event_activate_impl(self):
         return """
             console.log('[ServiceWorker] Activating...');
-            evt.waitUntil(oca_pwa.activateWorker());
-            self.clients.claim();
+            evt.waitUntil(promise_start.then(() => self.oca_pwa.activateWorker()));
         """
 
     def _get_js_pwa_core_event_fetch_impl(self):
-        return ""
+        return """
+        if (evt.request.url.startsWith(self.registration.scope)) {
+            evt.respondWith(promise_start.then(
+                () => self.oca_pwa.processRequest(evt.request)));
+        }
+        """
+
+    def _get_pwa_scripts(self):
+        """Scripts to be imported in the service worker (Order is important)"""
+        return [
+            "/web/static/lib/underscore/underscore.js",
+            "/web_pwa_oca/static/src/js/worker/jquery-sw-compat.js",
+            "/web/static/src/js/promise_extension.js",
+            "/web/static/src/js/boot.js",
+            "/web/static/src/js/core/class.js",
+            "/web_pwa_oca/static/src/js/worker/pwa.js",
+        ]
+
+    def _get_pwa_params(self):
+        """Get javascript PWA class initialzation params"""
+        return {
+            "sw_version": self._pwa_sw_version,
+        }
 
     @route("/service-worker.js", type="http", auth="public")
     def render_service_worker(self):

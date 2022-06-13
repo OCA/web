@@ -15,10 +15,31 @@
                 t-set="pwa_name"
                 t-value="request.env['ir.config_parameter'].sudo().get_param('pwa.manifest.name')"
             />
+            <t t-if="pwa_custom_icon">
+                <!-- This icon must be 180x180 -->
+                <link rel="apple-touch-icon" href="/web_pwa_oca/icon192x192.png" />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="512x512"
+                    href="/web_pwa_oca/icon512x512.png"
+                />
+            </t>
+            <t t-else="">
+                <!-- This icon must be 180x180 -->
+                <link
+                    rel="apple-touch-icon"
+                    href="/web_pwa_oca/static/img/icons/icon-192x192.png"
+                />
+                <link
+                    rel="apple-touch-icon"
+                    sizes="512x512"
+                    href="/web_pwa_oca/static/img/icons/icon-512x512.png"
+                />
+            </t>
             <meta name="apple-mobile-web-app-title" t-att-content="pwa_name" />
-            <link
-                rel="apple-touch-icon"
-                href="/web_pwa_oca/static/img/icons/icon-152x152.png"
+            <t
+                t-set="pwa_custom_icon"
+                t-value="request.env['ir.config_parameter'].sudo().get_param('pwa.manifest.custom_icon')"
             />
             <!-- Add meta theme-color -->
             <t
@@ -34,6 +55,8 @@
         inherit_id="web.assets_backend"
     >
         <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/web_pwa_oca/static/src/scss/main.scss" />
+
             <script
                 type="text/javascript"
                 src="/web_pwa_oca/static/src/js/pwa_manager.js"
@@ -41,6 +64,34 @@
             <script
                 type="text/javascript"
                 src="/web_pwa_oca/static/src/js/webclient.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_pwa_oca/static/src/js/app_menus.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_pwa_oca/static/src/js/views/action_manager_act_window.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_pwa_oca/static/src/js/views/abstract_view.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_pwa_oca/static/src/js/views/basic_view.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_pwa_oca/static/src/js/views/basic_renderer.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_pwa_oca/static/src/js/views/form_renderer.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_pwa_oca/static/src/js/views/data_manager.js"
             />
         </xpath>
     </template>

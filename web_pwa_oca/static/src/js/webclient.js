@@ -13,7 +13,8 @@ odoo.define("web_pwa_oca.webclient", function(require) {
          */
         show_application: function() {
             this.pwa_manager = new PWAManager(this);
-            return this._super.apply(this, arguments);
+            const def = this.pwa_manager.start();
+            return Promise.all([this._super.apply(this, arguments), def]);
         },
     });
 });
