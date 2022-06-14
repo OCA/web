@@ -29,6 +29,7 @@ addon | version | maintainers | summary
 [web_environment_ribbon](web_environment_ribbon/) | 15.0.1.0.0 |  | Web Environment Ribbon
 [web_group_expand](web_group_expand/) | 15.0.1.0.0 |  | Group Expand Buttons
 [web_ir_actions_act_multi](web_ir_actions_act_multi/) | 15.0.1.0.0 |  | Enables triggering of more than one action on ActionManager
+[web_listview_range_select](web_listview_range_select/) | 15.0.1.0.0 |  | Enables selecting a range of records using the shift key
 [web_m2x_options](web_m2x_options/) | 15.0.1.0.0 |  | web_m2x_options
 [web_m2x_options_manager](web_m2x_options_manager/) | 15.0.1.0.0 |  | Adds an interface to manage the "Create" and "Create and Edit" options for specific models and fields.
 [web_no_bubble](web_no_bubble/) | 15.0.1.0.0 |  | Remove the bubbles from the web interface
