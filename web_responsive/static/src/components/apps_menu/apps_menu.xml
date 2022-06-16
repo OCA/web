@@ -62,7 +62,7 @@
                     <a
                         t-attf-class="search-result {{result_index == state.offset ? 'highlight' : ''}}"
                         t-att-style="menu.webIconData ? &quot;background-image:url('data:image/png;base64,&quot; + menu.webIconData + &quot;')&quot; : ''"
-                        t-attf-href="#menu_id={{menu.id}}&amp;action_id={{menu.actionID}}"
+                        t-attf-href="#menu_id={{menu.id}}&amp;action={{menu.actionID}}"
                         t-att-data-menu-id="menu.id"
                         t-att-data-action-id="menu.actionID"
                         draggable="false"
