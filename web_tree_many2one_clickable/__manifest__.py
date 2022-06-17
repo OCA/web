@@ -7,7 +7,7 @@
 {
     "name": "Clickable many2one fields for tree views",
     "summary": "Open the linked resource when clicking on their name",
-    "version": "14.0.1.0.2",
+    "version": "15.0.1.0.0",
     "category": "Hidden",
     "website": "https://github.com/OCA/web",
     "author": "Therp BV, "
@@ -17,5 +17,13 @@
     "license": "AGPL-3",
     "installable": True,
     "depends": ["web"],
-    "data": ["views/assets.xml"],
+    "data": [],
+    "assets": {
+        "web.assets_backend": [
+            "web_tree_many2one_clickable/static/src/js/*.js",
+        ],
+        "web.assets_common": [
+            "web_tree_many2one_clickable/static/src/css/web_tree_many2one_clickable.scss",
+        ],
+    },
 }
