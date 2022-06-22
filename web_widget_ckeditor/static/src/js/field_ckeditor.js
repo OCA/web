@@ -34,7 +34,9 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
             console.warn("Unable to load CKEditor language: ", languageCode);
         }
     }
-    const CKEditorLanguageCode = session.user_context.lang.split("_")[0];
+    const CKEditorLanguageCode = session.user_context.lang
+        ? session.user_context.lang.split("_")[0]
+        : "en";
     const loadCKEditorLanguagePromise = loadCKEditorLanguageSource(
         CKEditorLanguageCode
     );
