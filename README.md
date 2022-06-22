@@ -60,7 +60,7 @@ addon | version | maintainers | summary
 [web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 13.0.1.0.0 |  | Allows you to dynamically color fields on tree views
 [web_tree_image_tooltip](web_tree_image_tooltip/) | 13.0.1.0.0 |  | Show images in tree views via tooltip
 [web_tree_many2one_clickable](web_tree_many2one_clickable/) | 13.0.1.0.0 |  | Open the linked resource when clicking on their name
-[web_view_calendar_list](web_view_calendar_list/) | 13.0.1.0.0 |  | Show calendars as a List
+[web_view_calendar_list](web_view_calendar_list/) | 13.0.1.0.1 |  | Show calendars as a List
 [web_widget_bokeh_chart](web_widget_bokeh_chart/) | 13.0.1.1.0 | [![LoisRForgeFlow](https://github.com/LoisRForgeFlow.png?size=30px)](https://github.com/LoisRForgeFlow) | This widget allows to display charts using Bokeh library.
 [web_widget_child_selector](web_widget_child_selector/) | 13.0.1.0.0 |  | Widget used for navigation on hierarchy fields
 [web_widget_domain_editor_dialog](web_widget_domain_editor_dialog/) | 13.0.1.0.3 |  | Recovers the Domain Editor Dialog functionality
