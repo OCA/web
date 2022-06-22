@@ -1,0 +1,11 @@
+// Variables
+// ===============  Generate color classes ===============
+@for $i from 1 through length($o-colors-complete) {
+    $color: nth($o-colors-complete, $i);
+
+    .o_calendar_view .fc-view {
+        .fc-event-dot.o_calendar_color_#{$i - 1} {
+            background-color: $color;
+        }
+    }
+}
