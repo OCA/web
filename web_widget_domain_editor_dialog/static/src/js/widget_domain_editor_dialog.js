@@ -13,13 +13,24 @@ odoo.define("web_widget_domain_editor_dialog.DomainEditorDialog", function (requ
         init: function () {
             this._super.apply(this, arguments);
             const _this = this;
+            let domain = Domain.prototype.stringToArray(_this.options.default_domain);
+            // HACK: dynamicFilters don't work fine with booleans as they pass through
+            // pyeval as a jason domain. This way, they're full compatible and we avoid
+            // making an _rpc call.
+            domain = domain.map((tuple) => {
+                if (tuple[2] === true) {
+                    tuple[2] = 1;
+                }
+                if (tuple[2] === false) {
+                    tuple[2] = 0;
+                }
+                return tuple;
+            });
             this.options = _.defaults(this.options, {
                 dynamicFilters: [
                     {
                         description: _.str.sprintf(_t("Selected domain")),
-                        domain: Domain.prototype.stringToArray(
-                            _this.options.default_domain
-                        ),
+                        domain: domain,
                     },
                 ],
             });
