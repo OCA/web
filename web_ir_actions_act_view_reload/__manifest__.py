@@ -13,6 +13,9 @@
     "author": "ItoInvest, Modoolar, CorporateHub, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "depends": ["web"],
-    "data": ["security/ir.model.access.csv", "views/web_ir_actions_act_view_reload.xml"],
+    "data": [
+        "security/ir.model.access.csv", 
+        "views/web_ir_actions_act_view_reload.xml"
+    ],
     "installable": True,
 }
