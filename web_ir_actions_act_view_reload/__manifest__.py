@@ -12,6 +12,11 @@
     "author": "Modoolar, CorporateHub, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "depends": ["web"],
-    "data": ["views/web_ir_actions_act_view_reload.xml"],
+    "data": [],
+    "assets": {
+        "web.assets_backend": [
+            "web_ir_actions_act_view_reload/static/src/**/*.esm.js",
+        ]
+    },
     "installable": True,
 }

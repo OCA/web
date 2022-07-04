@@ -2,3 +2,4 @@
 * `CorporateHub <https://corporatehub.eu/>`__
 
   * Alexey Pelykh <alexey.pelykh@corphub.eu>
+  * Carmen Rondon Regalado <crondon@archeti.com>
