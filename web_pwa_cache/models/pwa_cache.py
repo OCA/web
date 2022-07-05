@@ -447,7 +447,7 @@ class PwaCacheOnchangeValue(models.Model):
     ref_hash = fields.Char(required=True, index=True)
     result = fields.Char(required=True)
     discriminant_id = fields.Integer(index=True)
-    user_id = fields.Many2one(comodel_name="res.users", index=True)
+    user_id = fields.Many2one(comodel_name="res.users", index=True, ondelete="cascade")
 
     def init(self):
         """Create an unique index with COALESCE for avoiding duplicates on the values,
