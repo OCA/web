@@ -55,13 +55,13 @@ class ResCompany(models.Model):
           color: %(color_link_text_hover)s !important;
         }
         .btn-primary:not(.disabled),
-        .ui-autocomplete .ui-menu-item.ui-state-focus a {
+        .ui-autocomplete .ui-menu-item > a.ui-state-active {
           color: %(color_button_text)s !important;
           background-color: %(color_button_bg)s !important;
           border-color: %(color_button_bg)s !important;
         }
         .btn-primary:hover:not(.disabled),
-        .ui-autocomplete .ui-menu-item.ui-state-focus a:hover {
+        .ui-autocomplete .ui-menu-item > a.ui-state-active:hover {
           color: %(color_button_text)s !important;
           background-color: %(color_button_bg_hover)s !important;
           border-color: %(color_button_bg_hover)s !important;
