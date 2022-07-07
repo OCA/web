@@ -1,23 +1,22 @@
 .o_control_panel {
-
-    >div:first-of-type {
+    > div:first-of-type {
         display: block;
     }
 
-	.breadcrumb {
-		width: 100%;
-		margin-bottom: 5px;
-	}
+    .breadcrumb {
+        width: 100%;
+        margin-bottom: 5px;
+    }
 
-	.o_cp_searchview {
-    	width: 100%;
-	}
+    .o_cp_searchview {
+        width: 100%;
+    }
 
-	.o_cp_left {
-    	width: 45%;
+    .o_cp_left {
+        width: 45%;
     }
 
     .o_cp_right {
-    	width: 55%;
+        width: 55%;
     }
 }

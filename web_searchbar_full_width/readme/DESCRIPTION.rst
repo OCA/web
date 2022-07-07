@@ -9,4 +9,3 @@ The result looks like this:
 
 .. image:: /web_searchbar_full_width/static/description/preview.png
     :alt: Searchbar over full screen width
-
