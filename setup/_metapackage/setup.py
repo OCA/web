@@ -43,6 +43,7 @@ setuptools.setup(
         'odoo14-addon-web_tree_many2one_clickable',
         'odoo14-addon-web_widget_bokeh_chart',
         'odoo14-addon-web_widget_char_size',
+        'odoo14-addon-web_widget_child_selector',
         'odoo14-addon-web_widget_ckeditor',
         'odoo14-addon-web_widget_domain_editor_dialog',
         'odoo14-addon-web_widget_dropdown_dynamic',
