@@ -41,6 +41,7 @@ setuptools.setup(
         'odoo14-addon-web_tree_dynamic_colored_field',
         'odoo14-addon-web_tree_image_tooltip',
         'odoo14-addon-web_tree_many2one_clickable',
+        'odoo14-addon-web_view_calendar_list',
         'odoo14-addon-web_widget_bokeh_chart',
         'odoo14-addon-web_widget_char_size',
         'odoo14-addon-web_widget_child_selector',
