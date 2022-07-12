@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <t t-name="FieldChildSelector">
+
+        <!--<div class="o_element"/>-->
+        <t t-if="widget.mode === 'readonly'">
+            <a
+                t-if="!widget.nodeOptions.no_open"
+                t-att-tabindex="widget.attrs.tabindex"
+                class="o_form_uri"
+                href="#"
+            />
+            <span t-if="widget.nodeOptions.no_open" />
+        </t>
+        <div t-if="widget.mode === 'edit'" class="o_field_widget">
+            <span class="o_input_value" />
+            <div class="o_input_dropdown" />
+        </div>
+    </t>
+    <t t-name="FieldChildSelectorChild">
+        <div class="row">
+            <div t-foreach="childs" t-as="key" class="col-xl-12">
+                <t
+                    t-set="id_for_label"
+                    t-value="'o_child_hierarchy_selector_' + _.uniqueId()"
+                />
+                <input
+                    type="radio"
+                    t-att-data-id="childs[key][0]"
+                    t-att-data-index="key"
+                    t-att-id="id_for_label"
+                    data-type="child"
+                    class="o_child_selection_button"
+                />
+                <label
+                    class="o_form_label o_child_selection_label"
+                    t-att-for="id_for_label"
+                >
+                    <t t-esc="childs[key][1]" />
+                </label>
+            </div>
+        </div>
+    </t>
+    <t t-name="FieldChildSelectorParent">
+        <span>
+            <t t-foreach="parents" t-as="key">
+                <t t-if="key > 0"> / </t>
+                <a
+                    t-att-data-id="parents[key][0]"
+                    t-att-data-index="key"
+                    data-type="parent"
+                    class="o_child_selection_button"
+                >
+                    <t t-esc="parents[key][1]" />
+                </a>
+            </t>
+        <t t-if="Object.keys(parents).length > 0">
+            <i
+                    class="fa fa-times o_child_selection_button o_child_selection_clear"
+                    aria-hidden="false"
+                    data-type="clear"
+                />
+        </t>
+        </span>
+    </t>
+</templates>
