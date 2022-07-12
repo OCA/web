@@ -16,6 +16,7 @@
     "assets": {
         "web.assets_backend": [
             "web_advanced_search/static/src/js/**/*.js",
+            "web_advanced_search/static/src/legacy/**/*.js",
         ],
         "web.assets_qweb": [
             "web_advanced_search/static/src/xml/**/*.xml",
