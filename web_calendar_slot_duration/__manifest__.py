@@ -3,7 +3,7 @@
 {
     "name": "Calendar slot duration",
     "summary": "Customizable calendar slot durations",
-    "version": "14.0.1.0.0",
+    "version": "15.0.1.0.0",
     "development_status": "Production/Stable",
     "category": "Extra Tools",
     "website": "https://github.com/OCA/web",
@@ -12,6 +12,10 @@
     "license": "LGPL-3",
     "application": False,
     "installable": True,
+    "assets": {
+        "web.assets_backend": [
+            "web_calendar_slot_duration/static/src/js/calendar_model.esm.js"
+        ]
+    },
     "depends": ["web"],
-    "data": ["templates/assets.xml"],
 }
