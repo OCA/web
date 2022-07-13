@@ -2,8 +2,6 @@
  * License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). */
 
 odoo.define("web_calendar_slot_duration.CalendarModel", function (require) {
-    "use strict";
-
     var CalendarModel = require("web.CalendarModel");
 
     CalendarModel.include({
