@@ -1,0 +1,44 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_advanced_search
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e-20220203\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-02-22 12:59+0000\n"
+"PO-Revision-Date: 2022-02-22 12:59+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_advanced_search
+#. openerp-web
+#: code:addons/web_advanced_search/static/src/js/utils.esm.js:0
+#, python-format
+msgid " and "
+msgstr "ve"
+
+#. module: web_advanced_search
+#. openerp-web
+#: code:addons/web_advanced_search/static/src/js/utils.esm.js:0
+#, python-format
+msgid " is not "
+msgstr " içermez"
+
+#. module: web_advanced_search
+#. openerp-web
+#: code:addons/web_advanced_search/static/src/js/utils.esm.js:0
+#, python-format
+msgid " or "
+msgstr "veya"
+
+#. module: web_advanced_search
+#. openerp-web
+#: code:addons/web_advanced_search/static/src/xml/AdvancedFilterItem.xml:0
+#, python-format
+msgid "Add Advanced Filter"
+msgstr "Gelişmiş Filtre Ekle"
