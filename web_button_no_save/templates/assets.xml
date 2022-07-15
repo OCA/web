@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2022 Simone Rubino - TAKOBI
+  ~ License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+  -->
+
+<odoo>
+    <template id="assets_backend" name="web_button_no_save" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/web_button_no_save/static/src/js/web_button_no_save.js"/>
+        </xpath>
+    </template>
+</odoo>
