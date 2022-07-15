@@ -51,6 +51,7 @@ Authors
 ~~~~~~~
 
 * Compassion Switzerland
+* Tecnativa
 
 Contributors
 ~~~~~~~~~~~~
@@ -59,6 +60,7 @@ Contributors
 * `Tecnativa <https://www.tecnativa.com>`__:
 
   * João Marques
+  * Alexandre D. Díaz
 
 Maintainers
 ~~~~~~~~~~~
