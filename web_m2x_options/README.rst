@@ -23,7 +23,7 @@ web_m2x_options
     :target: https://runbot.odoo-community.org/runbot/162/15.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 This modules modifies "many2one" and "many2manytags" form widgets so as to add some new display
 control options.
@@ -115,6 +115,10 @@ If you disable one option, you can enable it for particular field by setting "cr
 
   Whether the field should always show "Search more..." entry or not.
 
+``web_m2x_options.field_limit_entries`` *int*
+
+  Number of displayed lines on all One2many fields
+
 To add these parameters go to Configuration -> Technical -> Parameters -> System Parameters and add new parameters like:
 
 - web_m2x_options.create: False
@@ -122,6 +126,7 @@ To add these parameters go to Configuration -> Technical -> Parameters -> System
 - web_m2x_options.m2o_dialog: False
 - web_m2x_options.limit: 10
 - web_m2x_options.search_more: True
+- web_m2x_options.field_limit_entries: 5
 
 
 Example
@@ -178,6 +183,7 @@ Contributors
   * Jairo Llopis <jairo.llopis@tecnativa.com>
   * David Vidal <david.vidal@tecnativa.com>
   * Ernesto Tejeda <ernesto.tejeda87@gmail.com>
+  * Carlos Roca
 * Bhavesh Odedra <bodedra@opensourceintegrators.com>
 * Dhara Solanki <dhara.solanki@initos.com> (http://www.initos.com)
 
