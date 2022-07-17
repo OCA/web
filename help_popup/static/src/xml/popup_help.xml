@@ -7,7 +7,7 @@
 
         <t t-jquery="ol.breadcrumb" t-operation="before">
             <button
-                class="btn btn-primary btn-sm o_list_button_add view_help button_view_help">?</button>
+                class="btn btn-primary btn-sm o_list_button_add view_help button_view_help_oca fa fa-info"></button>
         </t>
     </t>
 </templates>

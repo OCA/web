@@ -7,7 +7,7 @@ odoo.define('help_popup.help_button', function(require) {
         start : function() {
             var self = this;
             var res = self._super();
-            $('button.view_help').each(function() {
+            $('button.button_view_help_oca').each(function() {
                 var $elem = $(this);
                 var advanced_help = self.action.advanced_help;
                 var enduser_help = self.action.enduser_help;
@@ -15,13 +15,13 @@ odoo.define('help_popup.help_button', function(require) {
                         (advanced_help.length === 0 || 
                                 typeof advanced_help.length === "undefined" 
                                     && $(enduser_help).text().length === 0)) {
-                    $('button.view_help').hide();
+                    $('button.button_view_help_oca').hide();
                     $('ol.breadcrumb').addClass('breadcrumb_hide').removeClass('breadcrumb_show');
                 } else {
-                    $('button.view_help').show()
+                    $('button.button_view_help_oca').show()
                     $('ol.breadcrumb').addClass('breadcrumb_show').removeClass('breadcrumb_hide');
                 }
-                $elem.on('click', function(e) {
+                $elem.on('click', function (event) {
                     var params = 'height=650, width=800, location=no, ';
                     params += 'resizable=yes, menubar=yes';
                     var path = self.action.id;
