@@ -44,8 +44,8 @@ odoo.define("web_timeline.TimelineController", function(require) {
                 adjust_window: true,
             });
             const domains = params.domain;
-            const contexts = params.context;
-            const group_bys = params.groupBy;
+            const contexts = params.context || [];
+            const group_bys = params.groupBy || [];
             this.last_domains = domains;
             this.last_contexts = contexts;
             // Select the group by
