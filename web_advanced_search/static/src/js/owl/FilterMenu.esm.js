@@ -2,7 +2,7 @@
 
 import {patch} from "@web/core/utils/patch";
 import {FilterMenu} from "@web/search/filter_menu/filter_menu";
-import AdvancedFilterItem from "../AdvancedFilterItem.esm";
+import AdvancedFilterItem from "./AdvancedFilterItem.esm";
 
 /**
  * Patches the FilterMenu for owl widgets.
