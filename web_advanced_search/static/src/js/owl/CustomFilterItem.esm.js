@@ -1,34 +1,30 @@
 /** @odoo-module **/
 
 import {patch} from "@web/core/utils/patch";
-import CustomFilterItem from "web.CustomFilterItem";
+import {CustomFilterItem} from "@web/search/filter_menu/custom_filter_item";
 import {RecordPicker} from "../RecordPicker.esm";
 
 /**
- * Patches the CustomFilterItem for legacy widgets.
+ * Patches the CustomFilterItem for owl widgets.
  *
- * Tree views still use this old legacy widget, so we need to patch it.
- * This is likely to dissapear in 16.0
+ * Pivot and Graph views use this new owl widget, so we need to patch it.
+ * Other views like Tree use the old legacy widget that will probably dissapear
+ * in 16.0. Until then, we need to patch both.
  */
-patch(CustomFilterItem.prototype, "web_advanced_search.legacy.CustomFilterItem", {
+patch(CustomFilterItem.prototype, "web_advanced_search.CustomFilterItem", {
     /**
-     * Ideally we'd want this in setup, but CustomFilterItem does its initialization
-     * in the constructor, which can't be patched.
-     *
-     * Doing it here works just as well.
-     *
      * @override
      */
-    async willStart() {
+    setup() {
+        this._super.apply(this, arguments);
         this.OPERATORS.relational = this.OPERATORS.char;
         this.FIELD_TYPES.many2one = "relational";
-        return this._super(...arguments);
     },
     /**
      * @override
      */
-    _setDefaultValue(condition) {
-        const res = this._super(...arguments);
+    setDefaultValue(condition) {
+        const res = this._super.apply(this, arguments);
         const fieldType = this.fields[condition.field].type;
         const genericType = this.FIELD_TYPES[fieldType];
         if (genericType === "relational") {
@@ -65,7 +61,7 @@ patch(CustomFilterItem.prototype, "web_advanced_search.legacy.CustomFilterItem",
             }
             return preFilters;
         };
-        const res = this._super(...arguments);
+        const res = this._super.apply(this, arguments);
         // Restore original map()
         this.conditions.map = originalMapFn;
         return res;
@@ -81,7 +77,7 @@ patch(CustomFilterItem.prototype, "web_advanced_search.legacy.CustomFilterItem",
     },
 });
 
-patch(CustomFilterItem, "web_advanced_search.legacy.CustomFilterItem", {
+patch(CustomFilterItem, "web_advanced_search.CustomFilterItem", {
     components: {
         ...CustomFilterItem.components,
         RecordPicker,
