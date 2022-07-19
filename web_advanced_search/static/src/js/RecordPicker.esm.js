@@ -105,6 +105,9 @@ export const FakeMany2oneFieldWidget = FieldMany2One.extend(FieldManagerMixin, {
 });
 
 export class FakeMany2oneFieldWidgetAdapter extends ComponentAdapter {
+    setup() {
+        this.env = owl.Component.env;
+    }
     async updateWidget() {
         /* eslint-disable no-empty-function */
     }
