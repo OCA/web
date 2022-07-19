@@ -1,6 +1,6 @@
 /** @odoo-module **/
 
-import {getHumanDomain} from "./utils.esm";
+import {getHumanDomain} from "../utils.esm";
 
 import config from "web.config";
 import DomainSelectorDialog from "web.DomainSelectorDialog";

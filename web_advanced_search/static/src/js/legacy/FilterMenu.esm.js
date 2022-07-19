@@ -2,7 +2,7 @@
 
 import {patch} from "@web/core/utils/patch";
 import FilterMenu from "web.FilterMenu";
-import AdvancedFilterItem from "../AdvancedFilterItem.esm";
+import AdvancedFilterItem from "./AdvancedFilterItem.esm";
 
 /**
  * Patches the FilterMenu for legacy widgets.
