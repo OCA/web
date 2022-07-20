@@ -2,9 +2,15 @@
 
 import {patch} from "@web/core/utils/patch";
 import CustomFilterItem from "web.CustomFilterItem";
-import {RecordPicker} from "./RecordPicker.esm";
+import {RecordPicker} from "../RecordPicker.esm";
 
-patch(CustomFilterItem.prototype, "web_advanced_search.CustomFilterItem", {
+/**
+ * Patches the CustomFilterItem for legacy widgets.
+ *
+ * Tree views still use this old legacy widget, so we need to patch it.
+ * This is likely to dissapear in 16.0
+ */
+patch(CustomFilterItem.prototype, "web_advanced_search.legacy.CustomFilterItem", {
     /**
      * Ideally we'd want this in setup, but CustomFilterItem does its initialization
      * in the constructor, which can't be patched.
@@ -75,7 +81,7 @@ patch(CustomFilterItem.prototype, "web_advanced_search.CustomFilterItem", {
     },
 });
 
-patch(CustomFilterItem, "web_advanced_search.CustomFilterItem", {
+patch(CustomFilterItem, "web_advanced_search.legacy.CustomFilterItem", {
     components: {
         ...CustomFilterItem.components,
         RecordPicker,
