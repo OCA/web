@@ -1,0 +1,52 @@
+// Attachment Viewer
+.o_web_client.o_chatter_position_sided .o_DialogManager_dialog {
+    /* Show sided viewer on large screens */
+    @include media-breakpoint-up(lg) {
+        position: static;
+        .o_AttachmentViewer_main {
+            padding-bottom: 20px;
+        }
+        .o_AttachmentViewer {
+            // On-top of navbar
+            z-index: 10;
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin-left: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+
+            width: $chatter_zone_width;
+            &.o_AttachmentViewer_maximized {
+                width: 100%;
+            }
+
+            /* Show/Hide control buttons (next, prev, etc..) */
+            &:hover .o_AttachmentViewer_buttonNavigation,
+            &:hover .o_AttachmentViewer_toolbar {
+                display: flex;
+            }
+            .o_AttachmentViewer_buttonNavigation,
+            .o_AttachmentViewer_toolbar {
+                display: none;
+            }
+            .o_AttachmentViewer_viewIframe {
+                width: 95%;
+            }
+        }
+    }
+    @include media-breakpoint-down(md) {
+        .o_AttachmentViewer_headerItemButtonMinimize,
+        .o_AttachmentViewer_headerItemButtonMaximize {
+            display: none;
+        }
+    }
+}
+
+/* Attachment Viewer Max/Min buttons only are useful in sided mode */
+.o_web_client:not(.o_chatter_position_sided) {
+    .o_AttachmentViewer_headerItemButtonMinimize,
+    .o_AttachmentViewer_headerItemButtonMaximize {
+        display: none;
+    }
+}
