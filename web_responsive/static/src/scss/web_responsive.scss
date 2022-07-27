@@ -317,6 +317,18 @@ $chatter_zone_width: 35%;
     }
 }
 
+// Put mentions dialog below the chatter to avoid overlapping it with other elements
+.o_thread_composer {
+    .o_composer_mention_dropdown {
+        position: absolute;
+        top: 100%;
+        .dropdown-menu {
+            top: 100%;
+            bottom: auto;
+        }
+    }
+}
+
 // Scroll all but top bar
 html .o_web_client .o_action_manager .o_action {
     @include media-breakpoint-down(sm) {
