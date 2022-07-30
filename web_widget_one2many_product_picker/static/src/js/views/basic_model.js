@@ -500,7 +500,9 @@ odoo.define("web_widget_one2many_product_picker.BasicModel", function(require) {
                     name: search_val,
                     args: domain || [],
                     operator: operator || "ilike",
-                    limit: this.limit,
+                    // The limit will be applied later on the read
+                    // TODO: Look to replace this with a direct search_read in one step
+                    limit: 999999,
                     context: context || {},
                 },
             }).then(function(results) {
