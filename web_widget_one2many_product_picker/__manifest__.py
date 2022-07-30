@@ -4,7 +4,7 @@
 {
     "name": "Web Widget One2Many Product Picker",
     "summary": "Widget to select products on one2many fields",
-    "version": "13.0.2.0.1",
+    "version": "13.0.2.0.2",
     "category": "Website",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
