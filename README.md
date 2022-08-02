@@ -55,7 +55,7 @@ addon | version | maintainers | summary
 [web_set_single_page_hidden](web_set_single_page_hidden/) | 13.0.1.0.0 |  | Set single_page_hidden to false in Pager widget options
 [web_sheet_full_width](web_sheet_full_width/) | 13.0.1.0.0 |  | Use the whole available screen width when displaying sheets
 [web_time_range_menu_custom](web_time_range_menu_custom/) | 13.0.1.0.1 |  | Web Time Range Menu Custom
-[web_timeline](web_timeline/) | 13.0.1.1.1 | [![tarteo](https://github.com/tarteo.png?size=30px)](https://github.com/tarteo) | Interactive visualization chart to show events in time
+[web_timeline](web_timeline/) | 13.0.1.1.2 | [![tarteo](https://github.com/tarteo.png?size=30px)](https://github.com/tarteo) | Interactive visualization chart to show events in time
 [web_translate_dialog](web_translate_dialog/) | 13.0.1.1.0 |  | Easy-to-use pop-up to translate fields in several languages
 [web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 13.0.1.0.0 |  | Allows you to dynamically color fields on tree views
 [web_tree_image_tooltip](web_tree_image_tooltip/) | 13.0.1.0.0 |  | Show images in tree views via tooltip
