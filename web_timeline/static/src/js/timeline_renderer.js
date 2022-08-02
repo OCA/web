@@ -495,7 +495,7 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
         event_data_transform: function (evt) {
             const [date_start, date_stop] = this._get_event_dates(evt);
             let group = evt[this.last_group_bys[0]];
-            if (group && group instanceof Array) {
+            if (group && group instanceof Array && group.length > 0) {
                 group = _.first(group);
             } else {
                 group = -1;
