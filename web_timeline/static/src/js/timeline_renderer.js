@@ -35,6 +35,7 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
             this.date_delay = params.date_delay;
             this.colors = params.colors;
             this.fieldNames = params.fieldNames;
+            this.default_group_by = params.default_group_by;
             this.dependency_arrow = params.dependency_arrow;
             this.modelClass = params.view.model;
             this.fields = params.fields;
@@ -377,7 +378,8 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
                 return events;
             }
             const groups = [];
-            groups.push({id: -1, content: _t("<b>UNASSIGNED</b>")});
+            groups.push({id: -1, content: _t("<b>UNASSIGNED</b>"), order: -1});
+            var seq = 1;
             for (const evt of events) {
                 const grouped_field = _.first(group_bys);
                 const group_name = evt[grouped_field];
@@ -411,6 +413,8 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
                                             }
                                         }
                                         if (!is_inside) {
+                                            vals.order = seq;
+                                            seq += 1;
                                             groups.push(vals);
                                         }
                                     }
@@ -418,7 +422,9 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
                                     groups.push({
                                         id: group_name[0],
                                         content: group_name[1],
+                                        order: seq,
                                     });
+                                    seq += 1;
                                 }
                             });
                         }
@@ -516,6 +522,7 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
                 start: date_start,
                 content: content,
                 id: evt.id,
+                order: evt.order,
                 group: group,
                 evt: evt,
                 style: `background-color: ${this.color};`,
