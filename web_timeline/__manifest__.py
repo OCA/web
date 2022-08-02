@@ -16,7 +16,6 @@
     "license": "AGPL-3",
     "website": "https://github.com/OCA/web",
     "depends": ["web"],
-    "qweb": ["static/src/xml/web_timeline.xml"],
     "data": [],
     "maintainers": ["tarteo"],
     "application": False,
@@ -29,6 +28,9 @@
             "web_timeline/static/src/js/timeline_controller.js",
             "web_timeline/static/src/js/timeline_model.js",
             "web_timeline/static/src/js/timeline_canvas.js",
-        ]
+        ],
+        "web.assets_qweb": [
+            "web_timeline/static/src/xml/web_timeline.xml",
+        ],
     },
 }
