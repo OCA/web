@@ -175,20 +175,29 @@ odoo.define("web_timeline.TimelineController", function (require) {
                 );
                 data[this.date_delay] = diff_seconds / 3600;
             }
-            if (
-                this.renderer.last_group_bys &&
-                this.renderer.last_group_bys instanceof Array
-            ) {
-                data[this.renderer.last_group_bys[0]] = group;
-            }
+            const grouped_field = this.renderer.last_group_bys[0];
+            this._rpc({
+                model: this.modelName,
+                method: "fields_get",
+                args: [grouped_field],
+                context: this.getSession().user_context,
+            }).then(async (fields_processed) => {
+                if (
+                    this.renderer.last_group_bys &&
+                    this.renderer.last_group_bys instanceof Array &&
+                    fields_processed[grouped_field].type !== "many2many"
+                ) {
+                    data[this.renderer.last_group_bys[0]] = group;
+                }
 
-            this.moveQueue.push({
-                id: event.data.item.id,
-                data: data,
-                event: event,
+                this.moveQueue.push({
+                    id: event.data.item.id,
+                    data: data,
+                    event: event,
+                });
+
+                this.debouncedInternalMove();
             });
-
-            this.debouncedInternalMove();
         },
 
         /**
