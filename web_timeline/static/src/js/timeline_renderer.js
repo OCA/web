@@ -353,14 +353,15 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
                     data.push(this.event_data_transform(evt));
                 }
             }
-            const groups = this.split_groups(events, group_bys);
-            this.timeline.setGroups(groups);
-            this.timeline.setItems(data);
-            const mode = !this.mode || this.mode === "fit";
-            const adjust = _.isUndefined(adjust_window) || adjust_window;
-            if (mode && adjust) {
-                this.timeline.fit();
-            }
+            this.split_groups(events, group_bys).then((groups) => {
+                this.timeline.setGroups(groups);
+                this.timeline.setItems(data);
+                const mode = !this.mode || this.mode === "fit";
+                const adjust = _.isUndefined(adjust_window) || adjust_window;
+                if (mode && adjust) {
+                    this.timeline.fit();
+                }
+            });
         },
 
         /**
@@ -371,14 +372,15 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
          * @private
          * @returns {Array}
          */
-        split_groups: function (events, group_bys) {
+        split_groups: async function (events, group_bys) {
             if (group_bys.length === 0) {
                 return events;
             }
             const groups = [];
             groups.push({id: -1, content: _t("<b>UNASSIGNED</b>")});
             for (const evt of events) {
-                const group_name = evt[_.first(group_bys)];
+                const grouped_field = _.first(group_bys);
+                const group_name = evt[grouped_field];
                 if (group_name) {
                     if (group_name instanceof Array) {
                         const group = _.find(
@@ -386,13 +388,57 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
                             (existing_group) => existing_group.id === group_name[0]
                         );
                         if (_.isUndefined(group)) {
-                            groups.push({
-                                id: group_name[0],
-                                content: group_name[1],
+                            // Check if group is m2m in this case add id -> value of all
+                            // found entries.
+                            await this._rpc({
+                                model: this.modelName,
+                                method: "fields_get",
+                                args: [grouped_field],
+                                context: this.getSession().user_context,
+                            }).then(async (fields) => {
+                                if (fields[grouped_field].type === "many2many") {
+                                    const list_values =
+                                        await this.get_m2m_grouping_datas(
+                                            fields[grouped_field].relation,
+                                            group_name
+                                        );
+                                    for (const vals of list_values) {
+                                        let is_inside = false;
+                                        for (const gr of groups) {
+                                            if (vals.id === gr.id) {
+                                                is_inside = true;
+                                                break;
+                                            }
+                                        }
+                                        if (!is_inside) {
+                                            groups.push(vals);
+                                        }
+                                    }
+                                } else {
+                                    groups.push({
+                                        id: group_name[0],
+                                        content: group_name[1],
+                                    });
+                                }
                             });
                         }
                     }
                 }
+            }
+            return groups;
+        },
+
+        get_m2m_grouping_datas: async function (model, group_name) {
+            const groups = [];
+            for (const gr of group_name) {
+                await this._rpc({
+                    model: model,
+                    method: "name_get",
+                    args: [gr],
+                    context: this.getSession().user_context,
+                }).then((name) => {
+                    groups.push({id: name[0][0], content: name[0][1]});
+                });
             }
             return groups;
         },

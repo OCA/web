@@ -31,6 +31,7 @@ odoo.define("web_timeline.TimelineView", function (require) {
             Controller: TimelineController,
             Renderer: TimelineRenderer,
         }),
+        viewType: "timeline",
 
         /**
          * @override
