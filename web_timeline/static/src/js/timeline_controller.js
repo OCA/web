@@ -66,6 +66,7 @@ odoo.define("web_timeline.TimelineController", function (require) {
                     kwargs: {
                         fields: fields,
                         domain: domains,
+                        order: [{name: this.renderer.arch.attrs.default_group_by}],
                     },
                     context: this.getSession().user_context,
                 }).then((data) =>
