@@ -66,6 +66,30 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
             const viewType = (options && options.viewType) || record.viewType;
             const fieldInfo = record.fieldsInfo[viewType][fieldName];
             const record_command = this.get(command.id);
+            // Trigger addFieldsInfo on every possible view in the field to avoid
+            // errors when loading such views from the cloned line
+            const loaded_views = Object.keys(list.fieldsInfo);
+            const field_views = Object.keys(fieldInfo.views);
+            const to_load_views = field_views.filter(
+                value => !loaded_views.includes(value)
+            );
+            _.each(to_load_views, name => {
+                this.addFieldsInfo(localID, {
+                    fields: fieldInfo.views[name].fields,
+                    fieldInfo: fieldInfo.views[name].fieldsInfo[name],
+                    viewType: name,
+                });
+            });
+            // Only load fields available in the views. Otherwise we could get into
+            // problems when some process try to get their states.
+            var whitelisted_fields = [];
+            _.each(_.allKeys(record_command.fieldsInfo), function(view) {
+                _.each(_.allKeys(record_command.fieldsInfo[view]), function(field) {
+                    if (!whitelisted_fields.includes(field)) {
+                        whitelisted_fields.push(field);
+                    }
+                });
+            });
 
             const params = {
                 fields: list.fields,
@@ -99,7 +123,7 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
                 const clone_values = _.defaults(
                     {},
                     this._getValuesToClone(record_command, params),
-                    result
+                    _.pick(result, whitelisted_fields)
                 );
                 return this._makeCloneRecord(list.model, params, clone_values)
                     .then(id => {
