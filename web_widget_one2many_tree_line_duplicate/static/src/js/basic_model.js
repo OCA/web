@@ -62,12 +62,38 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
                 (record._changes && record._changes[fieldName]) ||
                 record.data[fieldName];
             const list = this.localData[localID];
+            const context = _.extend({}, this._getContext(list));
             const position = (command && command.position) || "bottom";
             const viewType = (options && options.viewType) || record.viewType;
             const fieldInfo = record.fieldsInfo[viewType][fieldName];
             const record_command = this.get(command.id);
+            // Trigger addFieldsInfo on every possible view in the field to avoid
+            // errors when loading such views from the cloned line
+            const loaded_views = Object.keys(list.fieldsInfo);
+            const field_views = Object.keys(fieldInfo.views);
+            const to_load_views = field_views.filter(
+                value => !loaded_views.includes(value)
+            );
+            _.each(to_load_views, name => {
+                this.addFieldsInfo(localID, {
+                    fields: fieldInfo.views[name].fields,
+                    fieldInfo: fieldInfo.views[name].fieldsInfo[name],
+                    viewType: name,
+                });
+            });
+            // Only load fields available in the views. Otherwise we could get into
+            // problems when some process try to get their states.
+            var whitelisted_fields = [];
+            _.each(_.allKeys(record_command.fieldsInfo), function(view) {
+                _.each(_.allKeys(record_command.fieldsInfo[view]), function(field) {
+                    if (!whitelisted_fields.includes(field)) {
+                        whitelisted_fields.push(field);
+                    }
+                });
+            });
 
             const params = {
+                context: context,
                 fields: list.fields,
                 fieldsInfo: list.fieldsInfo,
                 parentID: list.id,
@@ -99,7 +125,7 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
                 const clone_values = _.defaults(
                     {},
                     this._getValuesToClone(record_command, params),
-                    result
+                    _.pick(result, whitelisted_fields)
                 );
                 return this._makeCloneRecord(list.model, params, clone_values)
                     .then(id => {
@@ -111,12 +137,12 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
                             position: position,
                             isNew: true,
                         });
-                        const record = this.localData[id];
-                        list._cache[record.res_id] = id;
+                        const local_record = this.localData[id];
+                        list._cache[local_record.res_id] = id;
                         if (list.orderedResIDs) {
                             const index =
                                 list.offset + (position !== "top" ? list.limit : 0);
-                            list.orderedResIDs.splice(index, 0, record.res_id);
+                            list.orderedResIDs.splice(index, 0, local_record.res_id);
                             // List could be a copy of the original one
                             this.localData[list.id].orderedResIDs = list.orderedResIDs;
                         }
@@ -181,6 +207,62 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
             return Promise.all(defs).then(() => _.keys(changes));
         },
 
+        /**
+         * Modified implementation of '_performOnChange' to properly unfold the cloned
+         * record properties son we can interact with it as if we'd created it. We
+         * don't really do an onchange and the only fields that we're getting are those
+         * relational.
+         *
+         * @param {Object} record
+         * @param {String} [viewType] current viewType. If not set, we will assume
+         *   main viewType from the record
+         * @returns {Promise}
+         */
+        _pseudoOnChange: function(record, viewType) {
+            var self = this;
+            var onchangeSpec = this._buildOnchangeSpecs(record, viewType);
+            if (!onchangeSpec) {
+                return Promise.resolve();
+            }
+            var idList = record.data.id ? [record.data.id] : [];
+            var options = {
+                full: true,
+            };
+            var context = this._getContext(record, options);
+            var currentData = this._generateOnChangeData(record, {changesOnly: false});
+
+            return self
+                ._rpc({
+                    model: record.model,
+                    method: "onchange",
+                    args: [idList, currentData, [], onchangeSpec],
+                    context: context,
+                })
+                .then(function(result) {
+                    if (!record._changes) {
+                        // If the _changes key does not exist anymore, it means that
+                        // it was removed by discarding the changes after the rpc
+                        // to onchange. So, in that case, the proper response is to
+                        // ignore the onchange.
+                        return;
+                    }
+                    if (result.warning) {
+                        self.trigger_up("warning", result.warning);
+                        record._warning = true;
+                    }
+                    if (result.domain) {
+                        record._domains = _.extend(record._domains, result.domain);
+                    }
+                    // We're only interested in relational fields
+                    const values = _.pick(result.value, v => {
+                        return typeof v === "object";
+                    });
+                    return self._applyOnChange(values, record).then(function() {
+                        return result;
+                    });
+                });
+        },
+
         _makeCloneRecord: function(modelName, params, values) {
             const targetView = params.viewType;
             let fields = params.fields;
@@ -190,9 +272,7 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
             for (const view_type in params.views) {
                 fields = _.defaults({}, fields, params.views[view_type].fields);
             }
-
             let fieldNames = Object.keys(fields);
-
             // Fields that are present in the originating view, that need to be initialized
             // Hence preventing their value to crash when getting back to the originating view
             const parentRecord =
@@ -240,20 +320,42 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function(requi
             if (overrideDefaultFields) {
                 values[overrideDefaultFields.field] = overrideDefaultFields.value;
             }
-
-            return this.applyDefaultValues(record.id, values, {fieldNames: fieldNames})
-                .then(() => {
-                    return this._fetchRelationalData(record);
-                })
-                .then(() => {
-                    return this._postprocess(record);
-                })
-                .then(() => {
-                    // Save initial changes, so they can be restored later,
-                    // if we need to discard.
-                    this.save(record.id, {savePoint: true});
-                    return record.id;
-                });
+            const _this = this;
+            return (
+                this.applyDefaultValues(record.id, values, {fieldNames: fieldNames})
+                    // This will ensure we refresh the proper properties
+                    .then(() => {
+                        var def = new Promise(function(resolve, reject) {
+                            var always = function() {
+                                if (record._warning) {
+                                    if (params.allowWarning) {
+                                        delete record._warning;
+                                    } else {
+                                        reject();
+                                    }
+                                }
+                                resolve();
+                            };
+                            _this
+                                ._pseudoOnChange(record, targetView)
+                                .then(always)
+                                .guardedCatch(always);
+                        });
+                        return def;
+                    })
+                    .then(() => {
+                        return this._fetchRelationalData(record);
+                    })
+                    .then(() => {
+                        return this._postprocess(record);
+                    })
+                    .then(() => {
+                        // Save initial changes, so they can be restored later,
+                        // if we need to discard.
+                        this.save(record.id, {savePoint: true});
+                        return record.id;
+                    })
+            );
         },
 
         /**
