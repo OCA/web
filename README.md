@@ -37,6 +37,7 @@ addon | version | maintainers | summary
 [web_responsive](web_responsive/) | 15.0.1.1.1 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) [![Tardo](https://github.com/Tardo.png?size=30px)](https://github.com/Tardo) [![SplashS](https://github.com/SplashS.png?size=30px)](https://github.com/SplashS) | Responsive web client, community-supported
 [web_search_with_and](web_search_with_and/) | 15.0.1.0.0 |  | Use AND conditions on omnibar search
 [web_sheet_full_width](web_sheet_full_width/) | 15.0.1.0.1 |  | Use the whole available screen width when displaying sheets
+[web_timeline](web_timeline/) | 15.0.1.0.0 | [![tarteo](https://github.com/tarteo.png?size=30px)](https://github.com/tarteo) | Interactive visualization chart to show events in time
 [web_view_calendar_list](web_view_calendar_list/) | 15.0.1.0.0 |  | Show calendars as a List
 [web_widget_bokeh_chart](web_widget_bokeh_chart/) | 15.0.1.1.1 | [![LoisRForgeFlow](https://github.com/LoisRForgeFlow.png?size=30px)](https://github.com/LoisRForgeFlow) [![ChrisOForgeFlow](https://github.com/ChrisOForgeFlow.png?size=30px)](https://github.com/ChrisOForgeFlow) | This widget allows to display charts using Bokeh library.
 [web_widget_child_selector](web_widget_child_selector/) | 15.0.1.0.0 |  | Widget used for navigation on hierarchy fields
