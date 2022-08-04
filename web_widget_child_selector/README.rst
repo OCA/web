@@ -31,7 +31,7 @@ Now, you can navigate easily between the hierarchy.
 When we are using readonly, the behaviour is similar than Many2one, but on edition
 we are able to select the parents and childs in order to navigate properly.
 
-.. image:: https://raw.githubusercontent.com/web_widget_child_selector/static/description/edit_mode.png
+.. image:: https://raw.githubusercontent.com/OCA/web/14.0/web_widget_child_selector/static/description/edit_mode.png
     :alt: Edition Screenshot
 
 **Table of contents**
