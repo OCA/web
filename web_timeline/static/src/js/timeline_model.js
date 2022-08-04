@@ -11,6 +11,7 @@ odoo.define("web_timeline.TimelineModel", function (require) {
         load: function (params) {
             this.modelName = params.modelName;
             this.fieldNames = params.fieldNames;
+            this.default_group_by = params.default_group_by;
             if (!this.preload_def) {
                 this.preload_def = $.Deferred();
                 $.when(
@@ -55,9 +56,12 @@ odoo.define("web_timeline.TimelineModel", function (require) {
             return this._rpc({
                 model: this.modelName,
                 method: "search_read",
-                context: this.data.context,
-                fields: this.fieldNames,
-                domain: this.data.domain,
+                kwargs: {
+                    fields: this.fieldNames,
+                    domain: this.data.domain,
+                    order: [{name: this.default_group_by}],
+                    context: this.data.context,
+                },
             }).then((events) => {
                 this.data.data = events;
                 this.data.rights = {

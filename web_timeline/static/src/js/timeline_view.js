@@ -72,7 +72,9 @@ odoo.define("web_timeline.TimelineView", function (require) {
 
             const colors = this.parse_colors();
             for (const color of colors) {
-                fieldNames.push(color.field);
+                if (!fieldNames.includes(color.field)) {
+                    fieldNames.push(color.field);
+                }
             }
 
             if (dependency_arrow) {
@@ -106,11 +108,13 @@ odoo.define("web_timeline.TimelineView", function (require) {
             this.rendererParams.date_delay = date_delay;
             this.rendererParams.colors = colors;
             this.rendererParams.fieldNames = fieldNames;
+            this.rendererParams.default_group_by = attrs.default_group_by;
             this.rendererParams.min_height = min_height;
             this.rendererParams.dependency_arrow = dependency_arrow;
             this.rendererParams.fields = fields;
             this.loadParams.modelName = this.modelName;
             this.loadParams.fieldNames = fieldNames;
+            this.loadParams.default_group_by = attrs.default_group_by;
             this.controllerParams.open_popup_action = open_popup_action;
             this.controllerParams.date_start = date_start;
             this.controllerParams.date_stop = date_stop;
@@ -121,7 +125,7 @@ odoo.define("web_timeline.TimelineView", function (require) {
 
         _preapre_vis_timeline_options: function (attrs) {
             return {
-                groupOrder: this.group_order,
+                groupOrder: "order",
                 orientation: "both",
                 selectable: true,
                 multiselect: true,
@@ -132,24 +136,6 @@ odoo.define("web_timeline.TimelineView", function (require) {
                 margin: attrs.margin ? JSON.parse(attrs.margin) : {item: 2},
                 zoomKey: attrs.zoomKey || "ctrlKey",
             };
-        },
-
-        /**
-         * Order function for groups.
-         * @param {Object} grp1
-         * @param {Object} grp2
-         * @returns {Integer}
-         */
-        group_order: function (grp1, grp2) {
-            // Display non grouped elements first
-            if (grp1.id === -1) {
-                return -1;
-            }
-            if (grp2.id === -1) {
-                return 1;
-            }
-
-            return grp1.content.localeCompare(grp2.content);
         },
 
         /**
