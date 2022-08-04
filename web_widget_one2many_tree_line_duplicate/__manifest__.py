@@ -4,7 +4,7 @@
 {
     "name": "Web Widget One2many Tree Line Duplicate",
     "category": "web",
-    "version": "13.0.1.0.1",
+    "version": "13.0.1.0.2",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "website": "https://github.com/OCA/web",
