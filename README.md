@@ -71,7 +71,7 @@ addon | version | maintainers | summary
 [web_translate_dialog](web_translate_dialog/) | 12.0.1.2.1 |  | Easy-to-use pop-up to translate fields in several languages
 [web_tree_duplicate](web_tree_duplicate/) | 12.0.1.0.0 | [![tarteo](https://github.com/tarteo.png?size=30px)](https://github.com/tarteo) | Duplicate records directly from the tree view.
 [web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 12.0.1.1.0 |  | Allows you to dynamically color fields on tree views
-[web_tree_image_tooltip](web_tree_image_tooltip/) | 12.0.1.0.0 |  | Show images in tree views via tooltip
+[web_tree_image_tooltip](web_tree_image_tooltip/) | 12.0.1.0.1 |  | Show images in tree views via tooltip
 [web_tree_many2one_clickable](web_tree_many2one_clickable/) | 12.0.1.0.3 |  | Open the linked resource when clicking on their name
 [web_tree_resize_column](web_tree_resize_column/) | 12.0.1.0.0 |  | Resize columns in tree views
 [web_view_calendar_column](web_view_calendar_column/) | 12.0.1.0.0 |  | Allow to define columns on calendars
