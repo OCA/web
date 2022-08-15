@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="web.UserMenu" t-inherit-mode="extension">
+        <xpath expr="//t[@t-if='!element.hide']" position="attributes">
+            <attribute
+                name="t-if"
+            >!element.hide and !['documentation', 'support', 'shortcuts', 'account'].includes(element.id)</attribute>
+        </xpath>
+    </t>
+</templates>
