@@ -9,48 +9,52 @@
         <field name="arch" type="xml">
             <xpath expr="//notebook/page[1]" position="after">
                 <page string="Test web notify" name="test_web_notify">
+                <group>
                     <group>
-                        <group>
-                            <button
+                    <button
                                 name="notify_success"
                                 type="object"
                                 string="Test success notification"
                                 class="oe_highlight"
                             />
-                        </group>
-                        <group>
-                            <button
+                    </group>
+                    <group>
+                    <button
                                 name="notify_danger"
                                 type="object"
                                 string="Test danger notification"
                                 class="oe_highlight"
                             />
-                        </group>
-                        <group>
-                            <button
+                    </group>
+                </group>
+                <group>
+                    <group>
+                    <button
                                 name="notify_warning"
                                 type="object"
                                 string="Test warning notification"
                                 class="oe_highlight"
                             />
-                        </group>
-                        <group>
-                            <button
+                    </group>
+                    <group>
+                    <button
                                 name="notify_info"
                                 type="object"
                                 string="Test info notification"
                                 class="oe_highlight"
                             />
-                        </group>
-                        <group>
-                            <button
+                    </group>
+                </group>
+                <group>
+                    <group>
+                    <button
                                 name="notify_default"
                                 type="object"
                                 string="Test default notification"
                                 class="oe_highlight"
                             />
-                        </group>
                     </group>
+                </group>
                 </page>
             </xpath>
         </field>
