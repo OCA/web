@@ -1,4 +1,5 @@
-(function($) {
+(function ($) {
+  "use strict"
     $.fn.resizableColumns = function() {
       var isColResizing = false;
       var resizingPosX = 0;
@@ -10,10 +11,9 @@
         if ($(this).is(':not(:last-child)')) $(this).append("<div class='resizer' style='position:absolute;top:0px;right:-3px;bottom:0px;width:6px;z-index:999;background:transparent;cursor:col-resize'></div>");
       })
 
-      $(document).mouseup(function(e) {
+      $(document).mouseup(function() {
         _thead.find('th').removeClass('resizing');
         isColResizing = false;
-        e.stopPropagation();
       })
 
       _table.find('.resizer').mousedown(function(e) {
