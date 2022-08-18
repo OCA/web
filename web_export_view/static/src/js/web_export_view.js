@@ -4,7 +4,6 @@ odoo.define("web_export_view", function(require) {
     var core = require("web.core");
     var Sidebar = require("web.Sidebar");
     var session = require("web.session");
-    var crash_manager = require("web.crash_manager");
 
     var QWeb = core.qweb;
 
@@ -41,7 +40,6 @@ odoo.define("web_export_view", function(require) {
             // or assume the main view is a list view and use that
             var view = this.getParent(),
                 children = view.getChildren();
-            var c = crash_manager;
 
             if (children) {
                 children.every(function(child) {
@@ -67,7 +65,7 @@ odoo.define("web_export_view", function(require) {
                 ) {
                     export_columns_keys.push(column_index);
                     column_header_selector =
-                        ".o_list_view > thead > tr> " +
+                        "thead > tr> " +
                         'th:not([class*="o_list_record_selector"]):eq(' +
                         column_index +
                         ")";
@@ -83,7 +81,7 @@ odoo.define("web_export_view", function(require) {
                 // Find only rows with data
                 view.$el
                     .find(
-                        ".o_list_view > tbody > tr.o_data_row:" +
+                        "tbody > tr.o_data_row:" +
                             "has(.o_list_record_selector input:checkbox:checked)"
                     )
                     .each(function() {
@@ -102,14 +100,15 @@ odoo.define("web_export_view", function(require) {
                                 );
                             } else {
                                 var is_m2m = $cell.hasClass("o_many2many_tags_cell");
+                                var text = "";
                                 if (is_m2m) {
                                     var tags = $cell.find("span.o_badge_text");
                                     var tags_text_list = tags
                                         .map((i, el) => el.innerText.trim())
                                         .get();
-                                    var text = tags_text_list.join("\n");
+                                    text = tags_text_list.join("\n");
                                 } else {
-                                    var text = $cell.text().trim();
+                                    text = $cell.text().trim();
                                 }
                                 var is_number =
                                     $cell.hasClass("o_list_number") &&
@@ -138,7 +137,7 @@ odoo.define("web_export_view", function(require) {
                     });
             }
 
-            session.get_file({
+            this.getSession().get_file({
                 url: "/web/export/xls_view",
                 data: {
                     data: JSON.stringify({
@@ -148,7 +147,7 @@ odoo.define("web_export_view", function(require) {
                     }),
                 },
                 complete: $.unblockUI,
-                error: c.rpc_error.bind(c),
+                error: error => this.call("crash_manager", "rpc_error", error),
             });
         },
     });

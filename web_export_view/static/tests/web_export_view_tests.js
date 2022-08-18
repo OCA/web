@@ -6,6 +6,7 @@ odoo.define("web_export_view.data_export_tests", function(require) {
 
     var createView = testUtils.createView;
 
+    /* eslint-disable */
     QUnit.module(
         "web_export_view",
         {
@@ -122,4 +123,5 @@ odoo.define("web_export_view.data_export_tests", function(require) {
             });
         }
     );
+    /* eslint-enable */
 });
