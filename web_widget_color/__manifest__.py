@@ -8,7 +8,7 @@
 {
     "name": "Web Widget Color",
     "category": "web",
-    "version": "12.0.1.0.1",
+    "version": "13.0.1.0.0",
     "author": "Savoir-faire Linux, "
     "Anybox, "
     "Taktik SA, "
@@ -18,7 +18,7 @@
     "website": "https://github.com/OCA/web",
     "depends": ["web"],
     "data": ["view/web_widget_color_view.xml"],
-    "qweb": ["static/src/xml/widget.xml",],
+    "qweb": ["static/src/xml/widget.xml"],
     "license": "AGPL-3",
     "auto_install": False,
     "installable": True,
