@@ -13,6 +13,7 @@ setuptools.setup(
         'odoo13-addon-web_boolean_button',
         'odoo13-addon-web_calendar_slot_duration',
         'odoo13-addon-web_company_color',
+        'odoo13-addon-web_confirm_duplicate',
         'odoo13-addon-web_decimal_numpad_dot',
         'odoo13-addon-web_dialog_size',
         'odoo13-addon-web_disable_export_group',
