@@ -3,7 +3,7 @@
 {
     "name": "Web Confirm Duplicate",
     "summary": "Adds a confirmation dialog when duplicating a record.",
-    "version": "13.0.1.0.0",
+    "version": "13.0.1.0.1",
     "depends": ["web"],
     "data": ["templates/assets.xml"],
     "author": "ForgeFlow, Odoo Community Association (OCA)",
