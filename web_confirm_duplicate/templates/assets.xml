@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="assets_backend"
+        name="action conditionable assets"
+        inherit_id="web.assets_backend"
+    >
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/web_confirm_duplicate/static/src/js/form_controller.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_confirm_duplicate/static/src/js/basic_view.js"
+            />
+        </xpath>
+    </template>
+</odoo>
