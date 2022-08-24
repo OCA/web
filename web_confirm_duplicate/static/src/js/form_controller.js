@@ -15,10 +15,10 @@ odoo.define("web_confirm_duplicate", function (require) {
 
         _onDuplicateRecord: function () {
             var self = this;
-            function doIt() {
+            async function doIt() {
                 self.model.duplicateRecord(self.handle).then(function (handle) {
                     self.handle = handle;
-                    self._updateEnv();
+                    self._updateControlPanel();
                     self._setMode("edit");
                 });
             }
