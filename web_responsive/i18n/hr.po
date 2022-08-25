@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-28 18:03+0000\n"
-"PO-Revision-Date: 2017-04-28 18:03+0000\n"
-"Last-Translator: Bole <bole@dajmi5.com>, 2017\n"
+"PO-Revision-Date: 2022-08-25 13:07+0000\n"
+"Last-Translator: Bole <bole@dajmi5.com>\n"
 "Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
@@ -18,6 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: web_responsive
 #. openerp-web
@@ -29,92 +30,92 @@ msgstr ""
 #. module: web_responsive
 #: model:ir.model.fields,field_description:web_responsive.field_res_users__chatter_position
 msgid "Chatter Position"
-msgstr ""
+msgstr "Pozicija poruka"
 
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/xml/document_viewer.xml:0
 #, python-format
 msgid "Close"
-msgstr ""
+msgstr "Zatvori"
 
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/xml/form_view.xml:0
 #, python-format
 msgid "Create"
-msgstr ""
+msgstr "Kreiraj"
 
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/xml/form_view.xml:0
 #, python-format
 msgid "Discard"
-msgstr ""
+msgstr "Odbaci"
 
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/xml/form_view.xml:0
 #, python-format
 msgid "Edit"
-msgstr ""
+msgstr "Uredi"
 
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/xml/document_viewer.xml:0
 #, python-format
 msgid "Maximize"
-msgstr ""
+msgstr "Povećaj"
 
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/xml/document_viewer.xml:0
 #, python-format
 msgid "Minimize"
-msgstr ""
+msgstr "Smanji"
 
 #. module: web_responsive
 #: model:ir.model.fields.selection,name:web_responsive.selection__res_users__chatter_position__normal
 msgid "Normal"
-msgstr ""
+msgstr "Normalno"
 
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/xml/form_view.xml:0
 #, python-format
 msgid "Quick actions"
-msgstr ""
+msgstr "Brze radnje"
 
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/xml/form_view.xml:0
 #, python-format
 msgid "Save"
-msgstr ""
+msgstr "Spremi"
 
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/xml/apps.xml:0
 #, python-format
 msgid "Search menus..."
-msgstr ""
+msgstr "Pretraži izbornike..."
 
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/xml/menu.xml:0
 #, python-format
 msgid "Shift"
-msgstr ""
+msgstr "Pomakni"
 
 #. module: web_responsive
 #: model:ir.model.fields.selection,name:web_responsive.selection__res_users__chatter_position__sided
 msgid "Sided"
-msgstr ""
+msgstr "Sastrane"
 
 #. module: web_responsive
 #: model:ir.model,name:web_responsive.model_res_users
 msgid "Users"
-msgstr ""
+msgstr "Korisnici"
 
 #. module: web_responsive
 #. openerp-web
