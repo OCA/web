@@ -54,7 +54,7 @@ Contributors
 ~~~~~~~~~~~~
 
 * Francisco Javier Luna Vázquez <fluna@vauxoo.com>
-* Tomás Alvárez <tomas@vauxoo.com>
+* Tomás Álvarez <tomas@vauxoo.com>
 
 Other credits
 ~~~~~~~~~~~~~
