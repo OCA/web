@@ -23,6 +23,7 @@ setuptools.setup(
         'odoo-addon-web_m2x_options_manager>=15.0dev,<15.1dev',
         'odoo-addon-web_no_bubble>=15.0dev,<15.1dev',
         'odoo-addon-web_refresher>=15.0dev,<15.1dev',
+        'odoo-addon-web_remember_tree_column_width>=15.0dev,<15.1dev',
         'odoo-addon-web_responsive>=15.0dev,<15.1dev',
         'odoo-addon-web_search_with_and>=15.0dev,<15.1dev',
         'odoo-addon-web_sheet_full_width>=15.0dev,<15.1dev',
