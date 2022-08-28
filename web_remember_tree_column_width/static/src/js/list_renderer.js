@@ -1,4 +1,4 @@
-odoo.define("remember_tree_column_width.ListRenderer", function (require) {
+odoo.define("web_remember_tree_column_width.ListRenderer", function (require) {
     "use strict";
 
     const ListRenderer = require("web.ListRenderer");
