@@ -5,7 +5,7 @@
     "website": "https://github.com/OCA/web",
     "license": "LGPL-3",
     "category": "Extra Tools",
-    "version": "15.0.1.0.0",
+    "version": "15.0.1.0.1",
     "maintainers": [
         "frahikLV",
         "luisg123v",
@@ -16,8 +16,8 @@
     "data": [],
     "assets": {
         "web.assets_backend": [
-            "remember_tree_column_width/static/src/js/list_renderer.js",
-            "remember_tree_column_width/static/src/scss/main.scss",
+            "web_remember_tree_column_width/static/src/js/list_renderer.js",
+            "web_remember_tree_column_width/static/src/scss/main.scss",
         ],
     },
     "installable": True,
