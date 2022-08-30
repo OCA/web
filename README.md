@@ -26,6 +26,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
+[support_branding](support_branding/) | 14.0.1.0.0 |  | Adds your branding to an Odoo instance
 [web_access_rule_buttons](web_access_rule_buttons/) | 14.0.1.0.0 |  | Disable Edit button if access rules prevent this action
 [web_action_conditionable](web_action_conditionable/) | 14.0.1.0.1 |  | web_action_conditionable
 [web_advanced_search](web_advanced_search/) | 14.0.1.0.1 |  | Easier and more powerful searching tools
