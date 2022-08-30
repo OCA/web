@@ -36,6 +36,8 @@ odoo.define("web_search_with_and/static/src/js/search_bar.js", function (require
             this._closeAutoComplete();
         },
 
+        /* eslint-disable complexity */
+
         /**
          * @private
          * @param {KeyboardEvent} ev
@@ -100,7 +102,7 @@ odoo.define("web_search_with_and/static/src/js/search_bar.js", function (require
                         }
                     }
                     break;
-                case "ArrowUp":
+                case "ArrowUp": {
                     ev.preventDefault();
                     let previousIndex = this.state.focusedItem - 1;
                     if (previousIndex < 0) {
@@ -108,6 +110,7 @@ odoo.define("web_search_with_and/static/src/js/search_bar.js", function (require
                     }
                     this.state.focusedItem = previousIndex;
                     break;
+                }
                 case "Backspace":
                     if (!this.state.inputValue.length) {
                         const facets = this.model.get("facets");
@@ -124,7 +127,8 @@ odoo.define("web_search_with_and/static/src/js/search_bar.js", function (require
                 /* Falls through */
                 case "Tab":
                     if (this.state.inputValue.length) {
-                        ev.preventDefault(); // Keep the focus inside the search bar
+                        // Keep the focus inside the search bar
+                        ev.preventDefault();
                         this._selectSource(currentItem);
                     }
                     break;
@@ -135,5 +139,6 @@ odoo.define("web_search_with_and/static/src/js/search_bar.js", function (require
                     break;
             }
         },
+        /* eslint-enable complexity */
     });
 });

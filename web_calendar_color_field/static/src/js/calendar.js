@@ -15,6 +15,10 @@ odoo.define("web_calendar_color_field.CalendarModel", function (require) {
          *
          * If the field is also added to filters, and a color field is defined,
          * we use that color field as colorIndex.
+         *
+         * @param {Object} element: ''
+         * @param {Array} events: ''
+         * @returns {Promise}
          */
         _loadColors: function (element, events) {
             var self = this;

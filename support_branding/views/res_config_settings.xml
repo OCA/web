@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="support_res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">support.res.config.settings.view.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="10" />
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div
+                    class="app_settings_block"
+                    data-string="Support Settings"
+                    string="Support Settings"
+                    data-key="support_branding"
+                >
+                    <h2>Support Company Settings</h2>
+                    <div
+                        class="row mt16 o_settings_container"
+                        id="support_company_settings"
+                    >
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <div class="o_setting_right_pane">
+                                        <!-- Support Details -->
+
+                                        <!-- Name -->
+                                        <label for="support_company" />
+                                        <div class="text-muted">
+                                            Add the support company name
+                                            e.g Odoo Community Association (OCA)
+                                        </div>
+                                        <div class="content-group">
+                                            <div class="mt16">
+                                                <field name="support_company" />
+                                            </div>
+                                        </div>
+                                        <br />
+
+                                        <!-- URL -->
+                                        <label for="support_company_url" />
+                                        <div class="text-muted">
+                                            Add the support company URL
+                                            e.g https://odoo-community.org
+                                        </div>
+                                        <div class="content-group">
+                                            <div class="mt16">
+                                                <field name="support_company_url" />
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <!-- Branding Color -->
+                                        <label for="support_branding_color" />
+                                        <div class="text-muted">
+                                            Add a branding color
+                                            e.g #b163a3
+                                        </div>
+                                        <div class="content-group">
+                                            <div class="mt16">
+                                                <field name="support_branding_color" />
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <!-- Email -->
+                                        <label for="support_email" />
+                                        <div class="text-muted">
+                                            Add the support email to send issues
+                                            e.g info@helpdesksupport.com
+                                        </div>
+                                        <div class="content-group">
+                                            <div class="mt16">
+                                                <field name="support_email" />
+                                            </div>
+                                        </div>
+                                        <br />
+                                         <!-- Release -->
+                                        <label for="support_release" />
+                                        <div class="text-muted">
+                                            Add the support release
+                                        </div>
+                                        <div class="content-group">
+                                            <div class="mt16">
+                                                <field name="support_release" />
+                                            </div>
+                                        </div>
+                                        <br /> <br />
+                                        <div class="text-muted">
+                                            The below button generates a
+                                            division by zero python error which
+                                            allows a user to test the modules
+                                            functionality.
+                                        </div>
+                                        <br />
+                                        <button
+                                            name="test_support_branding_error"
+                                            string="Test Support Branding"
+                                            class="oe_highlight"
+                                            type="object"
+                                            data-toggle="tooltip"
+                                            title="Creates an error (i.e ZeroDivisionError) to test support branding"
+                                        />
+                                        <br /> <br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -11,7 +11,7 @@ odoo.define("web_calendar_slot_duration.CalendarModel", function (require) {
          * @override
          */
         _getFullCalendarOptions: function () {
-            var result = this._super.call(this, arguments);
+            var result = this._super.apply(this, arguments);
             result.slotDuration =
                 this.data.context.calendar_slot_duration ||
                 result.slotDuration ||
