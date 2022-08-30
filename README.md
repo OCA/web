@@ -30,6 +30,7 @@ addon | version | maintainers | summary
 [web_advanced_filter](web_advanced_filter/) | 12.0.1.0.1 |  | Set operations on filter results
 [web_advanced_search](web_advanced_search/) | 12.0.1.1.3 |  | Easier and more powerful searching tools
 [web_advanced_search_wildcard](web_advanced_search_wildcard/) | 12.0.1.0.0 |  | Webmodule to add wildcard operators in advanced search field
+[web_button_no_save](web_button_no_save/) | 12.0.1.0.0 |  | define buttons that do not require saving the form
 [web_calendar_slot_duration](web_calendar_slot_duration/) | 12.0.1.0.0 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) | Customizable calendar slot durations
 [web_company_color](web_company_color/) | 12.0.1.2.0 |  | Web Company Color
 [web_dashboard_tile](web_dashboard_tile/) | 12.0.1.0.2 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Add Overview Dashboards with Tiles
