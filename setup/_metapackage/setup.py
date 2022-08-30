@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-web Odoo addons",
     version=version,
     install_requires=[
+        'odoo14-addon-support_branding',
         'odoo14-addon-web_access_rule_buttons',
         'odoo14-addon-web_action_conditionable',
         'odoo14-addon-web_advanced_search',
