@@ -13,6 +13,13 @@
                     class="oe_edit_only"
                 />
                 <h2>
+                    <button
+                        class="oe_right oe_edit_only fa fa-trash-o fa-lg float-right o_clear_file_button"
+                        type="object"
+                        name="clear_digital_signature"
+                        title="Clear"
+                        aria-label="Clear"
+                    />
                     <field name="digital_signature" widget="signature" />
                 </h2>
             </xpath>
@@ -31,6 +38,13 @@
                     class="oe_edit_only"
                 />
                 <h2>
+                    <button
+                        class="oe_right oe_edit_only fa fa-trash-o fa-lg float-right o_clear_file_button"
+                        type="object"
+                        name="clear_digital_signature"
+                        title="Clear"
+                        aria-label="Clear"
+                    />
                     <field name="digital_signature" widget="signature" readonly="0" />
                 </h2>
             </xpath>

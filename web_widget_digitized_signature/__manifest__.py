@@ -6,7 +6,7 @@
 
 {
     "name": "Web Widget Digitized Signature",
-    "version": "12.0.2.0.0",
+    "version": "15.0.1.0.0",
     "author": "Serpent Consulting Services Pvt. Ltd., "
     "Agile Business Group, "
     "Tecnativa, "
@@ -19,11 +19,7 @@
         "mail",
     ],
     "data": [
-        "views/web_digital_sign_view.xml",
         "views/res_users_view.xml",
-    ],
-    "qweb": [
-        "static/src/xml/digital_sign.xml",
     ],
     "installable": True,
     "development_status": "Production/Stable",

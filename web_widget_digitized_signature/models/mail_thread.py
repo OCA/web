@@ -26,10 +26,10 @@ class MailThread(models.AbstractModel):
                 content = base64.b64decode(values.get(field))
                 attachments = [("signature", content)]
                 messages.append(_("Signature has been created."))
-                messages.append(_("Signature date: %s" % fields.Datetime.now()))
+                messages.append(_("Signature date: %s") % fields.Datetime.now())
             else:
                 messages.append(_("Signature has been deleted."))
-                messages.append(_("Deletion date: %s" % fields.Datetime.now()))
+                messages.append(_("Deletion date: %s") % fields.Datetime.now())
             msg_body = "<ul>"
             for message in messages:
                 msg_body += "<li>"

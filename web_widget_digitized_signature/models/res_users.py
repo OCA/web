@@ -3,6 +3,7 @@
 # Copyright 2017 Tecnativa - Vicent Cubells
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+
 from odoo import api, fields, models
 
 
@@ -10,8 +11,12 @@ class ResUsers(models.Model):
     _name = "res.users"
     _inherit = ["res.users", "mail.thread"]
 
-    digital_signature = fields.Binary(
-        string="Digital Signature", oldname="signature_image", attachment=True
+    digital_signature = fields.Image(
+        oldname="signature_image",
+        copy=False,
+        attachment=True,
+        max_width=1024,
+        max_height=1024,
     )
 
     @api.model
@@ -20,16 +25,17 @@ class ResUsers(models.Model):
         res._track_signature(vals, "digital_signature")
         return res
 
-    @api.multi
     def write(self, vals):
         self._track_signature(vals, "digital_signature")
         return super(ResUsers, self).write(vals)
 
-    def __init__(self, pool, cr):
-        super(ResUsers, self).__init__(pool, cr)
-        # duplicate list to avoid modifying the original reference
-        type(self).SELF_WRITEABLE_FIELDS = list(self.SELF_WRITEABLE_FIELDS)
-        type(self).SELF_WRITEABLE_FIELDS.extend(["digital_signature"])
-        # duplicate list to avoid modifying the original reference
-        type(self).SELF_READABLE_FIELDS = list(self.SELF_READABLE_FIELDS)
-        type(self).SELF_READABLE_FIELDS.extend(["digital_signature"])
+    def clear_digital_signature(self):
+        self.digital_signature = False
+
+    @property
+    def SELF_READABLE_FIELDS(self):
+        return super().SELF_READABLE_FIELDS + ["digital_signature"]
+
+    @property
+    def SELF_WRITEABLE_FIELDS(self):
+        return super().SELF_WRITEABLE_FIELDS + ["digital_signature"]
