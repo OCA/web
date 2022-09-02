@@ -5,27 +5,27 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
-    'name': 'Web Widget Digitized Signature',
-    'version': '12.0.2.0.0',
-    'author': 'Serpent Consulting Services Pvt. Ltd., '
-              'Agile Business Group, '
-              'Tecnativa, '
-              'Odoo Community Association (OCA)',
-    'website': 'https://github.com/OCA/web',
-    'license': 'AGPL-3',
-    'category': 'Web',
-    'depends': [
-        'web',
-        'mail',
+    "name": "Web Widget Digitized Signature",
+    "version": "12.0.2.0.0",
+    "author": "Serpent Consulting Services Pvt. Ltd., "
+    "Agile Business Group, "
+    "Tecnativa, "
+    "Odoo Community Association (OCA)",
+    "website": "https://github.com/OCA/web",
+    "license": "AGPL-3",
+    "category": "Web",
+    "depends": [
+        "web",
+        "mail",
     ],
-    'data': [
-        'views/web_digital_sign_view.xml',
-        'views/res_users_view.xml',
+    "data": [
+        "views/web_digital_sign_view.xml",
+        "views/res_users_view.xml",
     ],
-    'qweb': [
-        'static/src/xml/digital_sign.xml',
+    "qweb": [
+        "static/src/xml/digital_sign.xml",
     ],
-    'installable': True,
-    'development_status': 'Production/Stable',
-    'maintainers': ['mgosai'],
+    "installable": True,
+    "development_status": "Production/Stable",
+    "maintainers": ["mgosai"],
 }
