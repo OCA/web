@@ -1,0 +1,1 @@
+- `confirm` attribute in the `no_save` buttons is ignored.
