@@ -50,7 +50,7 @@ odoo.define('web_export_view', function (require) {
             $.blockUI();
             if (children) {
                 // find only rows with data
-                view.$el.find('.o_list_view > tbody > tr[data-id]:has(.o_list_record_selector input:checkbox:checked)')
+                view.$el.find('.o_list_view > tbody > tr[data-id]:has(.o_list_record_selector input[type=checkbox]:checked)')
                 .each(function () {
                     var $row = $(this);
                     var export_row = [];
