@@ -44,7 +44,7 @@ addon | version | maintainers | summary
 [web_edit_user_filter](web_edit_user_filter/) | 12.0.1.1.0 |  | Edit User Filters
 [web_editor_background_color](web_editor_background_color/) | 12.0.1.0.0 |  | Set any background color for web editor snippets
 [web_environment_ribbon](web_environment_ribbon/) | 12.0.1.0.0 |  | Web Environment Ribbon
-[web_export_view](web_export_view/) | 12.0.1.0.1 |  | Web Export Current View
+[web_export_view](web_export_view/) | 12.0.1.0.2 |  | Web Export Current View
 [web_favicon](web_favicon/) | 12.0.1.0.0 |  | Allows to set a custom shortcut icon (aka favicon)
 [web_group_by_percentage](web_group_by_percentage/) | 12.0.1.0.0 |  | Show the percentage of the total sum in group by rows
 [web_group_expand](web_group_expand/) | 12.0.1.0.1 |  | Group Expand Buttons
