@@ -5,12 +5,12 @@
     'name': 'Dynamic Dropdown Widget: Example',
     'summary': 'Demonstration of web_widget_dropdown_dynamic',
     'category': 'Web',
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.0.1',
     'license': 'AGPL-3',
     'author':
         'CorporateHub, '
         'Odoo Community Association (OCA)',
-    'website': 'https://github.com/OCA/web/',
+    'website': 'https://github.com/OCA/web',
     'depends': [
         'web_widget_dropdown_dynamic',
     ],

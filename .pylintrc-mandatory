@@ -1,0 +1,68 @@
+[MASTER]
+load-plugins=pylint_odoo
+score=n
+
+[ODOOLINT]
+readme_template_url="https://github.com/OCA/maintainer-tools/blob/master/template/module/README.rst"
+manifest_required_authors=Odoo Community Association (OCA)
+manifest_required_keys=license
+manifest_deprecated_keys=description,active
+license_allowed=AGPL-3,GPL-2,GPL-2 or any later version,GPL-3,GPL-3 or any later version,LGPL-3
+valid_odoo_versions=12.0
+
+[MESSAGES CONTROL]
+disable=all
+
+# Enable message and code:
+#   anomalous-backslash-in-string - W1401
+#   assignment-from-none - W1111
+#   dangerous-default-value - W0102
+#   duplicate-key - W0109
+#   missing-import-error - W7935
+#   missing-manifest-dependency - W7936
+#   pointless-statement - W0104
+#   pointless-string-statement - W0105
+#   print-statement - E1601
+#   redundant-keyword-arg - E1124
+#   reimported - W0404
+#   relative-import - W0403
+#   return-in-init - E0101
+#   rst-syntax-error - E7901
+#   too-few-format-args - E1306
+#   unreachable - W0101
+
+
+
+enable=anomalous-backslash-in-string,
+    assignment-from-none,
+    dangerous-default-value,
+    development-status-allowed,
+    duplicate-key,
+    duplicate-po-message-definition,
+    missing-import-error,
+    missing-manifest-dependency,
+    po-msgstr-variables,
+    po-syntax-error,
+    pointless-statement,
+    pointless-string-statement,
+    print-used,
+    redundant-keyword-arg,
+    reimported,
+    relative-import,
+    return-in-init,
+    rst-syntax-error,
+    too-few-format-args,
+    unreachable,
+    eval-used,
+    eval-referenced,
+    license-allowed,
+    manifest-author-string,
+    manifest-required-author,
+    manifest-required-key,
+    manifest-version-format
+
+[REPORTS]
+msg-template={path}:{line}: [{msg_id}({symbol}), {obj}] {msg}
+output-format=colorized
+reports=no
+

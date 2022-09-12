@@ -5,7 +5,7 @@
               "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     'category': 'Web',
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.0.1',
     'depends': ['web'],
     'data': [
         'views/web_widget_plotly_chart.xml',

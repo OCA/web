@@ -12,3 +12,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: web_tree_image_tooltip
+#: model_terms:ir.ui.view,arch_db:web_tree_image_tooltip.view_users_tree
+msgid "Image"
+msgstr ""

@@ -28,6 +28,7 @@ Show images in tree views via tooltip
 This module defines a images and icons in tree view via Tooltip.
 Additionally, Default width with 30px.
 
+.. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_tree_image_tooltip/static/description/tree_view_image.png
 
 **Table of contents**
 
@@ -39,11 +40,25 @@ Configuration
 
 Insert `widget='image'` in your field view definition in any image field
 
+.. code:: xml
+
+    <field name="image_field" widget="image"/>
+
+
+If the model has different fields of the same image with different size
+(as ``product.product`` for instance with ``image``, ``image_medium``, ``image_small``),
+you can write the following code to reduce the load duration of the tree view.
+
+.. code:: xml
+
+    <field name="image_small" widget="image" options="{'tooltip_image': 'image'}"/>
+
 Usage
 =====
 
 Mouse Hover in tree view image that time Tooltip effect.
 
+.. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_tree_image_tooltip/static/description/tree_view_image_tooltip.png
 
 Bug Tracker
 ===========
@@ -73,6 +88,8 @@ Contributors
 * Jay Vora <jay.vora@serpentcs.com>
 * Meet Dholakia <m.dholakia.serpentcs@gmail.com>
 * Nikul Chaudhary <nikul.chaudhary.serpentcs@gmail.com>
+* Sylvain LE GAL (https://www.twitter.com/legalsylvain)
+
 
 
 Other credits
