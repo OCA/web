@@ -5,10 +5,10 @@
     "summary": "This module extends URL widget "
                "for displaying anchors with custom labels.",
     "category": "Web",
-    "version": "12.0.1.0.0",
+    "version": "12.0.1.0.1",
     "license": "LGPL-3",
     "author": "Camptocamp, Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/web/",
+    "website": "https://github.com/OCA/web",
     "depends": ["web"],
     "data": [
         "templates/assets.xml",

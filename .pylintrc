@@ -1,0 +1,156 @@
+[MASTER]
+load-plugins=pylint_odoo
+score=n
+
+[ODOOLINT]
+readme_template_url="https://github.com/OCA/maintainer-tools/blob/master/template/module/README.rst"
+manifest_required_authors=Odoo Community Association (OCA)
+manifest_required_keys=license
+manifest_deprecated_keys=description,active
+license_allowed=AGPL-3,GPL-2,GPL-2 or any later version,GPL-3,GPL-3 or any later version,LGPL-3
+valid_odoo_versions=12.0
+
+[MESSAGES CONTROL]
+disable=all
+
+# Enable message and code:
+#   anomalous-backslash-in-string - W1401
+#   assignment-from-none - W1111
+#   dangerous-default-value - W0102
+#   duplicate-key - W0109
+#   missing-import-error - W7935
+#   missing-manifest-dependency - W7936
+#   pointless-statement - W0104
+#   pointless-string-statement - W0105
+#   print-statement - E1601
+#   redundant-keyword-arg - E1124
+#   reimported - W0404
+#   relative-import - W0403
+#   return-in-init - E0101
+#   rst-syntax-error - E7901
+#   too-few-format-args - E1306
+#   unreachable - W0101
+
+
+# This .pylintrc contains optional AND mandatory checks and is meant to be
+# loaded in an IDE to have it check everything, in the hope this will make
+# optional checks more visible to contributors who otherwise never look at a
+# green travis to see optional checks that failed.
+# .pylintrc-mandatory containing only mandatory checks is used the pre-commit
+# config as a blocking check.
+
+# Beta message and code:
+#   api-one-deprecated - W8104
+#   api-one-multi-together - W8101
+#   attribute-deprecated - W8105
+#   class-camelcase - C8104
+#   create-user-wo-reset-password - W7905
+#   consider-merging-classes-inherited - R7980
+#   copy-wo-api-one - W8102
+#   dangerous-filter-wo-user - W7901
+#   dangerous-view-replace-wo-priority - W7940
+#   deprecated-module - W0402
+#   duplicate-id-csv - W7906
+#   duplicate-xml-fields - W7907
+#   duplicate-xml-record-id - W7902
+#   file-not-used - W7930
+#   incoherent-interpreter-exec-perm - W8201
+#   invalid-commit - E8102
+#   javascript-lint - W7903
+#   manifest-deprecated-key - C8103
+#   method-compute - C8108
+#   method-inverse - C8110
+#   method-required-super - W8106
+#   method-search - C8109
+#   missing-newline-extrafiles - W7908
+#   missing-readme - C7902
+#   no-utf8-coding-comment - C8201
+#   unnecessary-utf8-coding-comment - C8202
+#   odoo-addons-relative-import - W7950
+#   old-api7-method-defined - R8110
+#   openerp-exception-warning - R8101
+#   redundant-modulename-xml - W7909
+#   sql-injection - E8103
+#   too-complex - C0901
+#   translation-field - W8103
+#   translation-required - C8107
+#   use-vim-comment - W8202
+#   wrong-tabs-instead-of-spaces - W7910
+#   xml-syntax-error - E7902
+
+
+enable=anomalous-backslash-in-string,
+    assignment-from-none,
+    dangerous-default-value,
+    development-status-allowed,
+    duplicate-key,
+    duplicate-po-message-definition,
+    missing-import-error,
+    missing-manifest-dependency,
+    po-msgstr-variables,
+    po-syntax-error,
+    pointless-statement,
+    pointless-string-statement,
+    print-used,
+    redundant-keyword-arg,
+    reimported,
+    relative-import,
+    return-in-init,
+    rst-syntax-error,
+    too-few-format-args,
+    unreachable,
+    eval-used,
+    eval-referenced,
+    license-allowed,
+    manifest-author-string,
+    manifest-required-author,
+    manifest-required-key,
+    manifest-version-format,
+    api-one-deprecated,
+    api-one-multi-together,
+    attribute-deprecated,
+    class-camelcase,
+    create-user-wo-reset-password,
+    consider-merging-classes-inherited,
+    copy-wo-api-one,
+    dangerous-filter-wo-user,
+    dangerous-view-replace-wo-priority,
+    deprecated-module,
+    duplicate-id-csv,
+    duplicate-po-message-definition,
+    duplicate-xml-fields,
+    duplicate-xml-record-id,
+    file-not-used,
+    incoherent-interpreter-exec-perm,
+    invalid-commit,
+    javascript-lint,
+    manifest-deprecated-key,
+    method-compute,
+    method-inverse,
+    method-required-super,
+    method-search,
+    missing-newline-extrafiles,
+    missing-readme,
+    po-msgstr-variables,
+    po-syntax-error,
+    no-utf8-coding-comment,
+    unnecessary-utf8-coding-comment,
+    odoo-addons-relative-import,
+    old-api7-method-defined,
+    openerp-exception-warning,
+    redefined-builtin,
+    redundant-modulename-xml,
+    sql-injection,
+    too-complex,
+    translation-field,
+    translation-required,
+    use-vim-comment,
+    wrong-tabs-instead-of-spaces,
+    xml-syntax-error,
+
+
+[REPORTS]
+msg-template={path}:{line}: [{msg_id}({symbol}), {obj}] {msg}
+output-format=colorized
+reports=no
+

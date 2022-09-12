@@ -1,0 +1,11 @@
+[flake8]
+# E123,E133,E226,E241,E242 are ignored by default by pep8 and flake8
+# F811 is legal in odoo 8 when we implement 2 interfaces for a method
+# F601 pylint support this case with expected tests
+# W503 changed by W504 and OCA prefers allow both
+# E203: whitespace before ':' (black behaviour and not pep8 compliant)
+ignore = E123,E133,E226,E241,E242,F811,F601,W503,W504,E203
+max-line-length = 88
+per-file-ignores=
+    __init__.py:F401
+

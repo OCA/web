@@ -7,7 +7,7 @@
 
 {
     'name': 'Show images in tree views via tooltip',
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.0.1',
     'author': "Therp BV, "
               "MONK Software, "
               "Odoo Community Association (OCA), "
@@ -20,6 +20,9 @@
     ],
     'data': [
         'view/assets.xml',
+    ],
+    'demo': [
+        'demo/view_res_users.xml',
     ],
     'installable': True,
 }

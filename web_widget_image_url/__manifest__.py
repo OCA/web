@@ -4,10 +4,10 @@
     "name": "Web Image URL",
     "summary": "This module provides web widget for displaying image from URL",
     "category": "Web",
-    "version": "12.0.1.0.0",
+    "version": "12.0.1.0.1",
     "license": "LGPL-3",
     "author": "Modoolar, Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/web/",
+    "website": "https://github.com/OCA/web",
     "depends": ["web"],
     "data": [
         "views/web_widget_image_url.xml",
