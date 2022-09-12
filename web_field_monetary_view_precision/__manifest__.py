@@ -9,7 +9,7 @@
 
     "author": "Yiğit Budak, "
               "Odoo Community Association (OCA)",
-    'website': "https://github.com/oca/web",
+    'website': "https://github.com/oca/web/",
 
     "license": "AGPL-3",
     "category": "Web",
