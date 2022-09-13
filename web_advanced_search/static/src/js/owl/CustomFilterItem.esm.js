@@ -72,8 +72,10 @@ patch(CustomFilterItem.prototype, "web_advanced_search.CustomFilterItem", {
      * @param {OwlEvent} ev
      */
     onRelationalChanged(condition, ev) {
-        condition.value = ev.detail.id;
-        condition.displayedValue = ev.detail.display_name;
+        if (ev.detail) {
+            condition.value = ev.detail.id;
+            condition.displayedValue = ev.detail.display_name;
+        }
     },
 });
 
