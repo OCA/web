@@ -22,7 +22,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [web_action_conditionable](web_action_conditionable/) | 15.0.1.0.0 |  | web_action_conditionable
-[web_advanced_search](web_advanced_search/) | 15.0.1.1.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Easier and more powerful searching tools
+[web_advanced_search](web_advanced_search/) | 15.0.1.1.1 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Easier and more powerful searching tools
 [web_chatter_position](web_chatter_position/) | 15.0.1.0.0 |  | Add an option to change the chatter position
 [web_company_color](web_company_color/) | 15.0.1.1.0 |  | Web Company Color
 [web_copy_confirm](web_copy_confirm/) | 15.0.1.0.0 |  | Show confirmation dialogue before copying records
