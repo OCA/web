@@ -60,7 +60,7 @@ addon | version | maintainers | summary
 [web_pivot_computed_measure](web_pivot_computed_measure/) | 12.0.1.0.3 |  | Web Pivot Computed Measure
 [web_pwa_oca](web_pwa_oca/) | 12.0.3.2.0 | [![eLBati](https://github.com/eLBati.png?size=30px)](https://github.com/eLBati) | Make Odoo a PWA
 [web_refresher](web_refresher/) | 12.0.1.0.0 |  | Web Refresher
-[web_responsive](web_responsive/) | 12.0.2.4.0 |  | Responsive web client, community-supported
+[web_responsive](web_responsive/) | 12.0.2.4.1 |  | Responsive web client, community-supported
 [web_responsive_company](web_responsive_company/) | 12.0.1.0.0 |  | Improve the diplay of the list of the companies
 [web_search_with_and](web_search_with_and/) | 12.0.1.0.0 |  | Use AND conditions on omnibar search
 [web_searchbar_full_width](web_searchbar_full_width/) | 12.0.1.0.1 |  | Show search bar in full screen width
