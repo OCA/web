@@ -12,7 +12,7 @@ $chatter_zone_width: 35%;
     max-height: calc(100vh - #{$o-navbar-height});
     position: fixed;
     width: 100vw;
-    z-index: 100;
+    z-index: 1000;
     // Inline style will override our `top`, so we need !important here
     top: $o-navbar-height !important;
     transform: none !important;
