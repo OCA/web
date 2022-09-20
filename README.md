@@ -104,8 +104,8 @@ addon | version | maintainers | summary
 [web_widget_timepicker](web_widget_timepicker/) | 12.0.1.0.1 |  | Web Timepicker Widget
 [web_widget_url_advanced](web_widget_url_advanced/) | 12.0.1.0.1 |  | This module extends URL widget for displaying anchors with custom labels.
 [web_widget_url_translatable](web_widget_url_translatable/) | 12.0.1.0.0 |  | Enable to set translation on fields using URL widget
-[web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 12.0.2.2.2 |  | Show list fields as a matrix
-[web_widget_x2many_2d_matrix_example](web_widget_x2many_2d_matrix_example/) | 12.0.1.1.0 |  | A small example on how to use `web_widget_x2many_2d_matrix`.
+[web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 12.0.2.2.3 |  | Show list fields as a matrix
+[web_widget_x2many_2d_matrix_example](web_widget_x2many_2d_matrix_example/) | 12.0.1.1.1 |  | A small example on how to use `web_widget_x2many_2d_matrix`.
 
 [//]: # (end addons)
 
