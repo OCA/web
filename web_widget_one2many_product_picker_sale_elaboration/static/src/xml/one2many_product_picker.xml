@@ -10,7 +10,7 @@
             >
                 <span
                     data-field="elaboration_id"
-                    data-esc="elaboration_id.data.display_name"
+                    t-attf-data-esc="obj.{{field_map.elaboration}}.data.display_name"
                     class="badge badge-primary mw-100 text-truncate overflow-hidden d-inline-block float-left font-weight-bold rounded-0 m-0 p-2"
                 />
             </t>
