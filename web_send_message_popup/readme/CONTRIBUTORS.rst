@@ -5,3 +5,4 @@
 * Stéphane Mangin <stephane.mangin@camptocamp.com>
 * Helly kapatel <helly.kapatel@initos.com>
 * Abir Mokaddem <amokaddem@archeti.com>
+* Cécile Jallais <cjallais@archeti.com>

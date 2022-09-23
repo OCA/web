@@ -3,7 +3,7 @@
 {
     "name": "Web Send Message as Popup",
     "version": "15.0.1.0.0",
-    "author": "Camptocamp, Odoo Community Association (OCA)",
+    "author": "Camptocamp, Odoo Community Association (OCA), ArcheTI",
     "maintainer": "Camptocamp",
     "license": "AGPL-3",
     "category": "Hidden",
@@ -13,9 +13,6 @@
     'assets': {
         'web.assets_backend': [
             '/web_send_message_popup/static/src/js/chatter.js',
-        ],
-        'web.assets_qweb': [
-            'web_send_message_popup/static/src/xml/chatter_topbar.xml',
         ],
     }
 }

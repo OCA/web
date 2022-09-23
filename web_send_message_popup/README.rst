@@ -23,7 +23,7 @@ Web Send Message as Popup
     :target: https://runbot.odoo-community.org/runbot/162/14.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 In the email/notes threads below the form views, the link 'Send a
 message' unfold a text field. From there, a button allows to open the
@@ -67,6 +67,7 @@ Contributors
 * Stéphane Mangin <stephane.mangin@camptocamp.com>
 * Helly kapatel <helly.kapatel@initos.com>
 * Abir Mokaddem <amokaddem@archeti.com>
+* Cécile Jallais <cjallais@archeti.com>
 
 
 Maintainers
