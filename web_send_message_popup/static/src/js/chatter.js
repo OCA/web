@@ -1,27 +1,48 @@
-/* Copyright 2019-2021 Camptocamp SA
- * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
-odoo.define("web_send_message_popup/static/src/js/chatter.js", function (require) {
-    "use strict";
-
-    const components = {
-        Composer: require("mail/static/src/components/chatter_topbar/chatter_topbar.js"),
-    };
-    const {patch} = require("web.utils");
-
-    patch(components.Composer, "web_send_message_popup/static/src/js/chatter.js", {
-        /**
-         * Overwrite to always launch full composer instead of quick messages
-         */
-        _onClickSendMessage() {
-            this._super.apply(this, arguments);
-            if (
-                this.chatter.composer &&
-                this.chatter.isComposerVisible &&
-                !this.chatter.composer.isLog
-            ) {
-                this.chatter.update({isComposerVisible: false});
-                this.chatter.composer.openFullComposer();
-            }
-        },
-    });
-});
+// /** @odoo-module **/
+// 
+//    const AbstractRendererOwl = require("web.AbstractRendererOwl");
+//    const QWeb = require("web.QWeb");
+//    const session = require("web.session");
+//    
+//    import { Chatter } from "@mail/models/Chatter";
+// 
+//    const { MyChatter } = require("@mail/models/Chatter");
+// 
+//    const components = { Chatter };
+//    export class MyChatter2 extends Chatter {
+//         onClickSendMessage() {
+//             console.info("********************function *****onClickSendMessage**********************");
+//             this._super.apply(this, arguments);
+//             if (this.chatter.composerView.composer && !this.chatter.composerView.composer.isLog) {
+//                 this.chatter.composerView.composer.update({isLog: true});
+//                 this.chatter.composerView.composer.openFullComposer();
+//                 ////                 this.chatter.isComposerVisible &&
+// 
+//             }
+//         }
+// }
+// odoo.define("web_send_message_popup/static/src/js/chatter.js", function (require) {
+//     "use strict";
+// 
+//     const components = {
+//         Composer: require("mail.chatter"),
+//     };
+//     const {patch} = require("web.utils");
+//     console.info("*************************JS**********************");
+// 
+//     patch(components.Composer.prototype, "web_send_message_popup/static/src/js/chatter.js", {
+//         /**
+//          * Overwrite to always launch full composer instead of quick messages
+//          */
+//         onClickSendMessage() {
+//             console.info("********************function *****onClickSendMessage**********************");
+//             this._super.apply(this, arguments);
+//             if (this.chatter.composerView.composer && !this.chatter.composerView.composer.isLog) {
+//                 this.chatter.composerView.composer.update({isLog: true});
+//                 this.chatter.composerView.composer.openFullComposer();
+//                 ////                 this.chatter.isComposerVisible &&
+// 
+//             }
+//         },
+//     });
+// });

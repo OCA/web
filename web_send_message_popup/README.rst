@@ -66,6 +66,8 @@ Contributors
 * Artem Kostyuk <a.kostyuk@mobilunity.com>
 * Stéphane Mangin <stephane.mangin@camptocamp.com>
 * Helly kapatel <helly.kapatel@initos.com>
+* Abir Mokaddem <amokaddem@archeti.com>
+
 
 Maintainers
 ~~~~~~~~~~~
@@ -80,6 +82,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/14.0/web_send_message_popup>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/15.0/web_send_message_popup>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
