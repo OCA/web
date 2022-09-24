@@ -21,7 +21,6 @@ odoo.define("web_responsive", function (require) {
     const PatchableAttachmentViewer = patchMixin(AttachmentViewer);
     const ControlPanel = require("web.ControlPanel");
     const SearchPanel = require("web/static/src/js/views/search_panel.js");
-    /* global owl */
     const {QWeb, Context} = owl;
     const {useState, useContext} = owl.hooks;
 

@@ -159,21 +159,23 @@ odoo.define("web_widget_numeric_step.field", function (require) {
          * @param {String} mode can be "plus" or "minus"
          */
         _doStep: function (mode) {
+            let mode_val = mode;
             let cval = 0;
             try {
                 const field = this.record.fields[this.name];
                 cval = field_utils.parse[field.type](this.$input.val());
             } catch (e) {
                 cval = this.value;
-                mode = false; // Only set the value in this case
+                // Only set the value in this case
+                mode_val = false;
             }
-            if (mode === "plus") {
+            if (mode_val === "plus") {
                 cval += this._config.step;
-            } else if (mode === "minus") {
+            } else if (mode_val === "minus") {
                 cval -= this._config.step;
             }
             const nval = this._sanitizeNumberValue(cval);
-            if (nval !== this.lastSetValue || !mode) {
+            if (nval !== this.lastSetValue || !mode_val) {
                 this.$input.val(nval);
                 // Every time that user update the value we must trigger an
                 // onchange method.

@@ -1,4 +1,4 @@
-/* global Uint8Array, base64js */
+/* global base64js */
 // Copyright 2018 Therp BV <https://therp.nl>
 // Copyright 2021 Tecnativa - Alexandre D. Díaz
 // License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
@@ -24,7 +24,8 @@ odoo.define("web_drop_target", function (require) {
          */
         start: function () {
             const $body = $("body");
-            this._dropZoneNS = _.uniqueId("o_dz_"); // For event namespace used when multiple chat window is open
+            // For event namespace used when multiple chat window is open
+            this._dropZoneNS = _.uniqueId("o_dz_");
             $body.on(
                 "dragleave." + this._dropZoneNS,
                 this._onBodyFileDragLeave.bind(this)
@@ -159,7 +160,7 @@ odoo.define("web_drop_target", function (require) {
             if (
                 _.isEmpty(this._get_drop_items(ev)) &&
                 this._checkDragOver() &&
-                (controller == undefined || controller.jsID === this.controllerID)
+                (controller === undefined || controller.jsID === this.controllerID)
             ) {
                 const drop_zone_offset = this.$drop_zone.offset();
                 const overlay_css = {
@@ -212,6 +213,7 @@ odoo.define("web_drop_target", function (require) {
          *
          * @private
          * @param {MouseEvent} ev
+         * @returns {Object} drop items
          */
         _get_drop_items: function (ev) {
             let drop_items = [];
@@ -250,6 +252,7 @@ odoo.define("web_drop_target", function (require) {
          * @param {String} res_model
          * @param {Number} res_id
          * @param {Object} extra_data
+         * @returns {Void}
          */
         _create_attachment: function (file, reader, res_model, res_id, extra_data) {
             // Helper to upload an attachment and update the sidebar

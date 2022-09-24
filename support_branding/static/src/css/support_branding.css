@@ -1,0 +1,20 @@
+.support-branding-submit-form {
+    display: inline;
+    margin: 0;
+    width: 100%;
+}
+
+.support-statement {
+    margin: 10px 0 10px 0;
+}
+
+.support-statement .note-editor {
+    height: 230px;
+    overflow: scroll;
+}
+
+.support-desc {
+    resize: block;
+    max-height: 139px;
+    box-sizing: border-box;
+}

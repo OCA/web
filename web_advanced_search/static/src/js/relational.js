@@ -8,7 +8,6 @@ odoo.define("web_advanced_search.RelationalOwl", function (require) {
     const FieldMany2One = relationalFields.FieldMany2One;
     const FieldManagerMixin = require("web.FieldManagerMixin");
     const {useListener} = require("web.custom_hooks");
-    /* global owl */
     const {Component} = owl;
     const {xml} = owl.tags;
 

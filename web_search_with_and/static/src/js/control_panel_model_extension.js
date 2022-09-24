@@ -20,32 +20,32 @@ odoo.define(
                     isShiftKey,
                 }) {
                     const queryElem = this.state.query.find(
-                        (queryElem) =>
-                            queryElem.filterId === filterId &&
-                            queryElem.value === value &&
-                            queryElem.operator === operator
+                        (queryElem_val) =>
+                            queryElem_val.filterId === filterId &&
+                            queryElem_val.value === value &&
+                            queryElem_val.operator === operator
                     );
                     if (!queryElem) {
+                        const {groupId} = this.state.filters[filterId];
+                        this.state.query.push({
+                            filterId,
+                            groupId,
+                            label,
+                            value,
+                            operator,
+                        });
                         if (isShiftKey) {
-                            const groupId = Math.random();
+                            const group_id = Math.random();
                             this.state.query.push({
                                 filterId,
-                                groupId,
-                                label,
-                                value,
-                                operator,
-                            });
-                        } else {
-                            const {groupId} = this.state.filters[filterId];
-                            this.state.query.push({
-                                filterId,
-                                groupId,
+                                group_id,
                                 label,
                                 value,
                                 operator,
                             });
                         }
-                    } else {
+                    }
+                    if (queryElem) {
                         queryElem.label = label;
                     }
                 },

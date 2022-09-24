@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-extend="CrashManager.error">
+        <t t-jquery="div.o_error_detail" t-operation="after">
+            <div class="container">
+                <form
+                    class="support-branding-submit-form oe_form"
+                    enctype="text/plain"
+                    method="get"
+                >
+                    <div class="form-check">
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name="use_html_checker"
+                            id="use_html_checker"
+                        />
+                        <label class="form-check-label" for="use_html_checker">
+                             Use HTML Editor
+                        </label>
+                    </div>
+                    <div class="support-statement oe_form_field_text oe_form_required">
+                        <textarea
+                            name="description"
+                            autocomplete="off"
+                            placeholder="Please fill in how you produced this error..."
+                            class="support-desc"
+                        />
+                    </div>
+                    <button class="support-btn btn btn-primary">Email to support
+                        company
+                    </button>
+                </form>
+            </div>
+        </t>
+    </t>
+    <t t-extend="res_config_edition">
+        <t t-jquery="div#edition" t-operation="after">
+            <t
+                t-if="widget.support_cp_name and widget.support_cp_url and widget.support_cp_email"
+            >
+                <div class="col-12 o_setting_box" id="edition">
+                    <div class="o_setting_right_pane">
+                        <div class="user-heading">
+                            <h3>
+                                Technical Support By
+                                <t t-esc="widget.support_cp_name" />
+                            </h3>
+                        </div>
+                        <div class="tab-content">
+                            <div
+                                role="tabpanel"
+                                id="settings"
+                                class="tab-pane active text-muted o_web_settings_compact_subtitle"
+                            >
+                                <small>For Support visit our
+                                    <a
+                                        target="_blank"
+                                        t-attr-href="{{widget.support_cp_url}}"
+                                        style="text-decoration: underline;"
+                                    >
+                                        website
+                                    </a>
+                                    or mail us at
+                                    <a
+                                        target="_blank"
+                                        t-attr-href="mailto:{{widget.support_cp_email}}"
+                                        style="text-decoration: underline;"
+                                    >
+                                        <t t-esc="widget.support_cp_email" />
+                                    </a>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </t>
+</templates>
