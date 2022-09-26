@@ -60,6 +60,7 @@ Contributors
 
   * João Marques
   * Alexandre D. Díaz
+  * Sergio Teruel
 
 Maintainers
 ~~~~~~~~~~~

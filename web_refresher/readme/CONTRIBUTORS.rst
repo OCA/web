@@ -3,3 +3,4 @@
 
   * João Marques
   * Alexandre D. Díaz
+  * Sergio Teruel
