@@ -41,6 +41,6 @@ class TestSignatureTracking(common.SavepointCase):
     def test_self_signature_write(self):
         """Ensure users are able to set its own signature"""
         user = self.env.ref("base.user_demo")
-        user = user.sudo(user)
+        user = user.with_user(user)
         user.write({"digital_signature": b"TEST"})
         self.assertEqual(user.digital_signature, b"TEST")

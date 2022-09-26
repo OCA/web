@@ -20,7 +20,6 @@ class ResUsers(models.Model):
         res._track_signature(vals, "digital_signature")
         return res
 
-    @api.multi
     def write(self, vals):
         self._track_signature(vals, "digital_signature")
         return super(ResUsers, self).write(vals)

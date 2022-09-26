@@ -113,7 +113,7 @@ odoo.define("web_widget_digitized_signature.web_digital_sign", function (require
                         model: this.model,
                         method: "read",
                         args: [this.res_id, [field_name]],
-                    }).done(function (data) {
+                    }).then(function (data) {
                         if (data) {
                             var field_desc = _.values(_.pick(data[0], field_name));
                             self.$(".signature").jSignature("clear");
