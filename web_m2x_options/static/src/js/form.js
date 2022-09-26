@@ -29,40 +29,43 @@ odoo.define("web_m2x_options.web_m2x_options", function (require) {
         init: function (parent, name, value) {
             this.name = name;
             this.value = value;
+
+            const buttons = [];
+
+            if (parent._canCreate() && parent._canShowQuickCreate()) {
+                buttons.push({
+                    text: _t("Create"),
+                    classes: "btn-primary",
+                    close: true,
+                    click: function () {
+                        this.trigger_up("quick_create", {value: this.value});
+                    },
+                });
+            }
+
+            if (parent._canCreate() && parent._canShowCreateAndEdit()) {
+                buttons.push({
+                    text: _t("Create and edit"),
+                    classes: "btn-primary",
+                    close: true,
+                    click: function () {
+                        this.trigger_up("search_create_popup", {
+                            view_type: "form",
+                            value: this.value,
+                        });
+                    },
+                });
+            }
+
+            buttons.push({
+                text: _t("Cancel"),
+                close: true,
+            });
+
             this._super(parent, {
                 title: _.str.sprintf(_t("Create a %s"), this.name),
                 size: "medium",
-                buttons: [
-                    {
-                        text: _t("Create"),
-                        classes: "btn-primary",
-                        click: function () {
-                            if (this.$("input").val()) {
-                                this.trigger_up("quick_create", {
-                                    value: this.$("input").val(),
-                                });
-                                this.close(true);
-                            } else {
-                                this.$("input").focus();
-                            }
-                        },
-                    },
-                    {
-                        text: _t("Create and edit"),
-                        classes: "btn-primary",
-                        close: true,
-                        click: function () {
-                            this.trigger_up("search_create_popup", {
-                                view_type: "form",
-                                value: this.$("input").val(),
-                            });
-                        },
-                    },
-                    {
-                        text: _t("Cancel"),
-                        close: true,
-                    },
-                ],
+                buttons: buttons,
             });
         },
         start: function () {
@@ -96,6 +99,66 @@ odoo.define("web_m2x_options.web_m2x_options", function (require) {
     });
 
     FieldMany2One.include({
+        custom_events: _.extend({}, FieldMany2One.prototype.custom_events, {
+            search_create_popup: "_onSearchCreatePopup",
+        }),
+
+        _canCreate: function () {
+            const self = this;
+            return self.can_create && !self.nodeOptions.no_create;
+        },
+
+        _canShowQuickCreate: function () {
+            const self = this;
+
+            var quick_create = is_option_set(self.nodeOptions.create),
+                quick_create_undef = _.isUndefined(self.nodeOptions.create),
+                m2x_create_undef = _.isUndefined(ir_options["web_m2x_options.create"]),
+                m2x_create = is_option_set(ir_options["web_m2x_options.create"]);
+            var show_create =
+                (!self.nodeOptions && (m2x_create_undef || m2x_create)) ||
+                (self.nodeOptions &&
+                    (quick_create ||
+                        (quick_create_undef && (m2x_create_undef || m2x_create))));
+
+            return !self.nodeOptions.no_quick_create && show_create;
+        },
+
+        _canShowCreateAndEdit: function () {
+            const self = this;
+
+            var create_edit =
+                    is_option_set(self.nodeOptions.create) ||
+                    is_option_set(self.nodeOptions.create_edit),
+                create_edit_undef =
+                    _.isUndefined(self.nodeOptions.create) &&
+                    _.isUndefined(self.nodeOptions.create_edit),
+                m2x_create_edit_undef = _.isUndefined(
+                    ir_options["web_m2x_options.create_edit"]
+                ),
+                m2x_create_edit = is_option_set(
+                    ir_options["web_m2x_options.create_edit"]
+                );
+            var show_create_edit =
+                (!self.nodeOptions && (m2x_create_edit_undef || m2x_create_edit)) ||
+                (self.nodeOptions &&
+                    (create_edit ||
+                        (create_edit_undef &&
+                            (m2x_create_edit_undef || m2x_create_edit))));
+
+            return !self.nodeOptions.no_create_edit && show_create_edit;
+        },
+
+        /**
+         * @private
+         * @param {OdooEvent} event
+         */
+        _onSearchCreatePopup: function (event) {
+            const valueContext = this._createContext(event.data.value);
+            this.el.querySelector(":scope input").value = "";
+            return this._searchCreatePopup("form", false, valueContext);
+        },
+
         _onInputFocusout: function () {
             var m2o_dialog_opt =
                 is_option_set(this.nodeOptions.m2o_dialog) ||
@@ -103,7 +166,18 @@ odoo.define("web_m2x_options.web_m2x_options", function (require) {
                     is_option_set(ir_options["web_m2x_options.m2o_dialog"])) ||
                 (_.isUndefined(this.nodeOptions.m2o_dialog) &&
                     _.isUndefined(ir_options["web_m2x_options.m2o_dialog"]));
-            if (this.can_create && this.floating && m2o_dialog_opt) {
+            if (this.floating && m2o_dialog_opt) {
+                if (
+                    !this._canCreate() ||
+                    (!this._canShowQuickCreate() && !this._canShowCreateAndEdit())
+                ) {
+                    // If we cannot carry out either create or create and edit
+                    // actions then we should not show the dialog and we should zero
+                    // out the input
+                    this.el.querySelector(":scope input").value = "";
+                    return;
+                }
+
                 new M2ODialog(this, this.string, this.$input.val()).open();
             }
         },
@@ -263,28 +337,16 @@ odoo.define("web_m2x_options.web_m2x_options", function (require) {
                         });
                     }
 
-                    var create_enabled = self.can_create && !self.nodeOptions.no_create;
+                    var create_enabled = self._canCreate();
                     // Quick create
                     var raw_result = _.map(result, function (x) {
                         return x[1];
                     });
-                    var quick_create = is_option_set(self.nodeOptions.create),
-                        quick_create_undef = _.isUndefined(self.nodeOptions.create),
-                        m2x_create_undef = _.isUndefined(
-                            ir_options["web_m2x_options.create"]
-                        ),
-                        m2x_create = is_option_set(
-                            ir_options["web_m2x_options.create"]
-                        );
-                    var show_create =
-                        (!self.nodeOptions && (m2x_create_undef || m2x_create)) ||
-                        (self.nodeOptions &&
-                            (quick_create ||
-                                (quick_create_undef &&
-                                    (m2x_create_undef || m2x_create))));
+
+                    var show_create = self._canShowQuickCreate();
+
                     if (
                         create_enabled &&
-                        !self.nodeOptions.no_quick_create &&
                         search_val.length > 0 &&
                         !_.contains(raw_result, search_val) &&
                         show_create
@@ -299,31 +361,10 @@ odoo.define("web_m2x_options.web_m2x_options", function (require) {
                         });
                     }
                     // Create and edit ...
+                    //
+                    const show_create_edit = self._canShowCreateAndEdit();
 
-                    var create_edit =
-                            is_option_set(self.nodeOptions.create) ||
-                            is_option_set(self.nodeOptions.create_edit),
-                        create_edit_undef =
-                            _.isUndefined(self.nodeOptions.create) &&
-                            _.isUndefined(self.nodeOptions.create_edit),
-                        m2x_create_edit_undef = _.isUndefined(
-                            ir_options["web_m2x_options.create_edit"]
-                        ),
-                        m2x_create_edit = is_option_set(
-                            ir_options["web_m2x_options.create_edit"]
-                        );
-                    var show_create_edit =
-                        (!self.nodeOptions &&
-                            (m2x_create_edit_undef || m2x_create_edit)) ||
-                        (self.nodeOptions &&
-                            (create_edit ||
-                                (create_edit_undef &&
-                                    (m2x_create_edit_undef || m2x_create_edit))));
-                    if (
-                        create_enabled &&
-                        !self.nodeOptions.no_create_edit &&
-                        show_create_edit
-                    ) {
+                    if (create_enabled && show_create_edit) {
                         var createAndEditAction = function () {
                             // Clear the value in case the user clicks on discard
                             self.$("input").val("");
