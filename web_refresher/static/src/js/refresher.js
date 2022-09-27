@@ -7,7 +7,6 @@ odoo.define("refresher.Refresher", function(require) {
     const AbstractController = require("web.AbstractController");
     const BasicController = require("web.BasicController");
     const ControlPanelRenderer = require("web.ControlPanelRenderer");
-    const FieldX2Many = require("web.relational_fields").FieldX2Many;
 
     const Refresher = Widget.extend({
         template: "web_refresher.Button",
@@ -61,44 +60,6 @@ odoo.define("refresher.Refresher", function(require) {
                 }
             });
             return this.refresher.appendTo($node);
-        },
-    });
-
-    FieldX2Many.include({
-        /**
-         * @override
-         */
-        _renderControlPanel: function() {
-            if (!this.view) {
-                return this._super.apply(this, arguments);
-            }
-            this.refresher = new Refresher(this);
-            this.refresher.on("pager_refresh", this, () => {
-                if (this.pager) {
-                    this.pager.trigger("pager_changed", {
-                        current_min: this.value.offset + 1,
-                        limit: this.value.limit,
-                        size: this.value.count,
-                    });
-                }
-            });
-            return this._super
-                .apply(this, arguments)
-                .then(() => {
-                    return this.refresher.appendTo($("<div>"));
-                })
-                .then(() => {
-                    this._controlPanel.updateContents(
-                        {
-                            cp_content: {
-                                $refresher: this.refresher.$el,
-                            },
-                        },
-                        {
-                            clear: false,
-                        }
-                    );
-                });
         },
     });
 

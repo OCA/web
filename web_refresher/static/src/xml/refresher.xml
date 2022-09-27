@@ -19,9 +19,4 @@
         </t>
     </t>
 
-    <t t-extend="X2ManyControlPanel">
-        <t t-jquery=".o_x2m_control_panel nav.o_cp_pager" t-operation="before">
-            <nav class="oe_cp_refresher" />
-        </t>
-    </t>
 </template>
