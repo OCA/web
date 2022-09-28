@@ -16,7 +16,18 @@ odoo.define('web.web_widget_mermaid', function(require) {
 
     const defaultConfig = {
         // Theme according Odoo colors (https://www.odoo.com/de_DE/page/brand-assets)
-        theme: null,
+        // Mermaid site-wide theme config: 
+        // https://mermaid-js.github.io/mermaid/#/./theming?id=site-wide-themes
+        theme: 'base',
+        themeVariables: {
+            primaryColor: '#714B67',
+            primaryTextColor: '#FFFFFF',
+            primaryBorderColor: '#8F8F8F',
+            lineColor: '#8F8F8F',
+            textColor: '#8F8F8F',
+            darkMode: false,
+            fontSize: '20px',
+        },
         logLevel: 'fatal',
         securityLevel: 'strict',
         // Rendering is initiated manually
