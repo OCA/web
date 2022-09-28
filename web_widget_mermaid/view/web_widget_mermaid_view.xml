@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="assets_backend" name="web_widget_mermaid assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/web_widget_mermaid/static/lib/mermaid/mermaid.js"></script>
+            <script type="text/javascript" src="/web_widget_mermaid/static/src/js/web_widget_mermaid.js"></script>
+            <link rel="stylesheet" type="text/scss" href="/web_widget_mermaid/static/src/scss/web_widget_mermaid_default_theme.scss"/>
+        </xpath>
+    </template>
+</odoo>
