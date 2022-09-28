@@ -1,0 +1,408 @@
+.o_form_field_mermaid .label {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  text-align: inherit;
+  color: inherit;
+}
+
+.o_form_field_mermaid .node .label {
+  font-family: "Lucida Grande", Helvetica, Verdana, Arial, sans-serif;
+  color: $o-tooltip-color; }
+
+.o_form_field_mermaid .cluster .label {
+  font-family: "Lucida Grande", Helvetica, Verdana, Arial, sans-serif;
+  color: $o-main-text-color; }
+
+.o_form_field_mermaid .label text {
+  fill: $o-main-text-color; }
+
+.o_form_field_mermaid .node rect,
+.o_form_field_mermaid .node circle,
+.o_form_field_mermaid .node ellipse,
+.o_form_field_mermaid .node polygon {
+  fill: $o-brand-primary;
+  stroke: $o-brand-primary;
+  stroke-width: 1px; }
+
+.o_form_field_mermaid .node.clickable {
+  cursor: pointer; }
+
+.o_form_field_mermaid .arrowheadPath {
+  fill: $o-main-text-color; }
+
+.o_form_field_mermaid .edgePath .path {
+  stroke: $o-main-text-color;
+  stroke-width: 1.5px; }
+
+.o_form_field_mermaid .edgeLabel {
+  background-color: #e8e8e8; }
+
+.o_form_field_mermaid .cluster rect {
+  fill: $o-brand-secondary;
+  stroke: $o-main-color-muted;
+  stroke-width: 1px; }
+
+.o_form_field_mermaid .cluster text {
+  fill: $o-main-text-color; }
+
+.o_form_field_mermaid div.mermaidTooltip {
+  position: absolute;
+  text-align: center;
+  max-width: 200px;
+  padding: 2px;
+  font-family: "Lucida Grande", Helvetica, Verdana, Arial, sans-serif;
+  font-size: 12px;
+  background: $o-brand-secondary;
+  border: 1px solid $o-main-color-muted;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 100; }
+
+.o_form_field_mermaid .actor {
+  stroke: $o-brand-primary;
+  fill: $o-brand-primary; }
+
+.o_form_field_mermaid text.actor {
+  fill: white;
+  stroke: none; }
+
+.o_form_field_mermaid .actor-line {
+  stroke: grey; }
+
+.o_form_field_mermaid .messageLine0 {
+  stroke-width: 1.5;
+  stroke-dasharray: '2 2';
+  stroke: $o-main-text-color; }
+
+.o_form_field_mermaid .messageLine1 {
+  stroke-width: 1.5;
+  stroke-dasharray: '2 2';
+  stroke: $o-main-text-color; }
+
+.o_form_field_mermaid #arrowhead {
+  fill: $o-main-text-color; }
+
+.o_form_field_mermaid .sequenceNumber {
+  fill: white; }
+
+.o_form_field_mermaid #sequencenumber {
+  fill: $o-main-text-color; }
+
+.o_form_field_mermaid #crosshead path {
+  fill: $o-main-text-color !important;
+  stroke: $o-main-text-color !important; }
+
+.o_form_field_mermaid .messageText {
+  fill: $o-main-text-color;
+  stroke: none; }
+
+.o_form_field_mermaid .labelBox {
+  stroke: $o-brand-primary;
+  fill: $o-brand-primary; }
+
+.o_form_field_mermaid .labelText {
+  fill: white;
+  stroke: none; }
+
+.o_form_field_mermaid .loopText {
+  fill: white;
+  stroke: none; }
+
+.o_form_field_mermaid .loopLine {
+  stroke-width: 2;
+  stroke-dasharray: '2 2';
+  stroke: $o-brand-primary; }
+
+.o_form_field_mermaid .note {
+  stroke: $o-main-color-muted;
+  fill: #fff5ad; }
+
+.o_form_field_mermaid .noteText {
+  fill: black;
+  stroke: none;
+  font-family: "Lucida Grande", Helvetica, Verdana, Arial, sans-serif;
+  font-size: 14px; }
+
+.o_form_field_mermaid .activation0 {
+  fill: #f4f4f4;
+  stroke: #666; }
+
+.o_form_field_mermaid .activation1 {
+  fill: #f4f4f4;
+  stroke: #666; }
+
+.o_form_field_mermaid .activation2 {
+  fill: #f4f4f4;
+  stroke: #666; }
+
+/** Section styling */
+.o_form_field_mermaid .section {
+  stroke: none;
+  opacity: 0.2; }
+
+.o_form_field_mermaid .section0 {
+  fill: rgba(102, 102, 255, 0.49); }
+
+.o_form_field_mermaid .section2 {
+  fill: #fff400; }
+
+.o_form_field_mermaid .section1,
+.o_form_field_mermaid .section3 {
+  fill: white;
+  opacity: 0.2; }
+
+.o_form_field_mermaid .sectionTitle0 {
+  fill: $o-main-text-color; }
+
+.o_form_field_mermaid .sectionTitle1 {
+  fill: $o-main-text-color; }
+
+.o_form_field_mermaid .sectionTitle2 {
+  fill: $o-main-text-color; }
+
+.o_form_field_mermaid .sectionTitle3 {
+  fill: $o-main-text-color; }
+
+.o_form_field_mermaid .sectionTitle {
+  text-anchor: start;
+  font-size: 11px;
+  text-height: 14px; }
+
+/* Grid and axis */
+.o_form_field_mermaid .grid .tick {
+  stroke: lightgrey;
+  opacity: 0.3;
+  shape-rendering: crispEdges; }
+
+.o_form_field_mermaid .grid path {
+  stroke-width: 0; }
+
+/* Today line */
+.o_form_field_mermaid .today {
+  fill: none;
+  stroke: red;
+  stroke-width: 2px; }
+
+/* Task styling */
+/* Default task */
+.o_form_field_mermaid .task {
+  stroke-width: 2; }
+
+.o_form_field_mermaid .taskText {
+  text-anchor: middle;
+  font-size: 11px; }
+
+.o_form_field_mermaid .taskTextOutsideRight {
+  fill: $o-main-text-color;
+  text-anchor: start;
+  font-size: 11px; }
+
+.o_form_field_mermaid .taskTextOutsideLeft {
+  fill: $o-main-text-color;
+  text-anchor: end;
+  font-size: 11px; }
+
+/* Special case clickable */
+.o_form_field_mermaid .task.clickable {
+  cursor: pointer; }
+
+.o_form_field_mermaid .taskText.clickable {
+  cursor: pointer;
+  fill: #003163 !important;
+  font-weight: bold; }
+
+.o_form_field_mermaid .taskTextOutsideLeft.clickable {
+  cursor: pointer;
+  fill: #003163 !important;
+  font-weight: bold; }
+
+.o_form_field_mermaid .taskTextOutsideRight.clickable {
+  cursor: pointer;
+  fill: #003163 !important;
+  font-weight: bold; }
+
+/* Specific task settings for the sections*/
+.o_form_field_mermaid .taskText0,
+.o_form_field_mermaid .taskText1,
+.o_form_field_mermaid .taskText2,
+.o_form_field_mermaid .taskText3 {
+  fill: white; }
+
+.o_form_field_mermaid .task0,
+.o_form_field_mermaid .task1,
+.o_form_field_mermaid .task2,
+.o_form_field_mermaid .task3 {
+  fill: $o-brand-primary;
+  stroke: $o-brand-primary; }
+
+.o_form_field_mermaid .taskTextOutside0,
+.o_form_field_mermaid .taskTextOutside2 {
+  fill: $o-main-text-color; }
+
+.o_form_field_mermaid .taskTextOutside1,
+.o_form_field_mermaid .taskTextOutside3 {
+  fill: $o-main-text-color; }
+
+/* Active task */
+.o_form_field_mermaid .active0,
+.o_form_field_mermaid .active1,
+.o_form_field_mermaid .active2,
+.o_form_field_mermaid .active3 {
+  fill: #bfc7ff;
+  stroke: $o-brand-primary; }
+
+.o_form_field_mermaid .activeText0,
+.o_form_field_mermaid .activeText1,
+.o_form_field_mermaid .activeText2,
+.o_form_field_mermaid .activeText3 {
+  fill: $o-main-text-color !important; }
+
+/* Completed task */
+.o_form_field_mermaid .done0,
+.o_form_field_mermaid .done1,
+.o_form_field_mermaid .done2,
+.o_form_field_mermaid .done3 {
+  stroke: grey;
+  fill: lightgrey;
+  stroke-width: 2; }
+
+.o_form_field_mermaid .doneText0,
+.o_form_field_mermaid .doneText1,
+.o_form_field_mermaid .doneText2,
+.o_form_field_mermaid .doneText3 {
+  fill: $o-main-text-color !important; }
+
+/* Tasks on the critical line */
+.o_form_field_mermaid .crit0,
+.o_form_field_mermaid .crit1,
+.o_form_field_mermaid .crit2,
+.o_form_field_mermaid .crit3 {
+  stroke: #ff8888;
+  fill: red;
+  stroke-width: 2; }
+
+.o_form_field_mermaid .activeCrit0,
+.o_form_field_mermaid .activeCrit1,
+.o_form_field_mermaid .activeCrit2,
+.o_form_field_mermaid .activeCrit3 {
+  stroke: #ff8888;
+  fill: #bfc7ff;
+  stroke-width: 2; }
+
+.o_form_field_mermaid .doneCrit0,
+.o_form_field_mermaid .doneCrit1,
+.o_form_field_mermaid .doneCrit2,
+.o_form_field_mermaid .doneCrit3 {
+  stroke: #ff8888;
+  fill: lightgrey;
+  stroke-width: 2;
+  cursor: pointer;
+  shape-rendering: crispEdges; }
+
+.o_form_field_mermaid .milestone {
+  transform: rotate(45deg) scale(0.8, 0.8); }
+
+.o_form_field_mermaid .milestoneText {
+  font-style: italic; }
+
+.o_form_field_mermaid .doneCritText0,
+.o_form_field_mermaid .doneCritText1,
+.o_form_field_mermaid .doneCritText2,
+.o_form_field_mermaid .doneCritText3 {
+  fill: $o-main-text-color !important; }
+
+.o_form_field_mermaid .activeCritText0,
+.o_form_field_mermaid .activeCritText1,
+.o_form_field_mermaid .activeCritText2,
+.o_form_field_mermaid .activeCritText3 {
+  fill: $o-main-text-color !important; }
+
+.o_form_field_mermaid .titleText {
+  text-anchor: middle;
+  font-size: 18px;
+  fill: $o-main-text-color; }
+
+.o_form_field_mermaid g.classGroup text {
+  fill: white;
+  stroke: none;
+  font-family: "Lucida Grande", Helvetica, Verdana, Arial, sans-serif;
+  font-size: 10px; }
+
+.o_form_field_mermaid g.classGroup rect {
+  fill: $o-brand-primary;
+  stroke: $o-main-text-color; }
+
+.o_form_field_mermaid g.classGroup line {
+  stroke: $o-main-text-color;
+  stroke-width: 1; }
+
+.o_form_field_mermaid .classLabel .box {
+  stroke: none;
+  stroke-width: 0;
+  fill: $o-brand-primary;
+  opacity: 0.5; }
+
+.o_form_field_mermaid .classLabel .label {
+  fill: $o-main-text-color;
+  font-size: 10px;
+  font-weight: normal; }
+
+.o_form_field_mermaid .relation {
+  stroke: $o-main-text-color;
+  stroke-width: 1;
+  fill: none; }
+
+.o_form_field_mermaid #compositionStart {
+  fill: $o-main-text-color;
+  stroke: $o-main-text-color;
+  stroke-width: 1; }
+
+.o_form_field_mermaid #compositionEnd {
+  fill: $o-main-text-color;
+  stroke: $o-main-text-color;
+  stroke-width: 1; }
+
+.o_form_field_mermaid #aggregationStart {
+  fill: $o-brand-primary;
+  stroke: $o-main-text-color;
+  stroke-width: 1; }
+
+.o_form_field_mermaid #aggregationEnd {
+  fill: $o-brand-primary;
+  stroke: $o-main-text-color;
+  stroke-width: 1; }
+
+.o_form_field_mermaid #dependencyStart {
+  fill: $o-main-text-color;
+  stroke: $o-main-text-color;
+  stroke-width: 1; }
+
+.o_form_field_mermaid #dependencyEnd {
+  fill: $o-main-text-color;
+  stroke: $o-main-text-color;
+  stroke-width: 1; }
+
+.o_form_field_mermaid #extensionStart {
+  fill: $o-main-text-color;
+  stroke: $o-main-text-color;
+  stroke-width: 1; }
+
+.o_form_field_mermaid #extensionEnd {
+  fill: $o-main-text-color;
+  stroke: $o-main-text-color;
+  stroke-width: 1; }
+
+.o_form_field_mermaid .commit-id,
+.o_form_field_mermaid .commit-msg,
+.o_form_field_mermaid .branch-label {
+  fill: lightgrey;
+  color: $o-main-text-color; }
+
+.o_form_field_mermaid .node-label p {
+  margin-top: 9px; }
+
+.o_form_field_mermaid .pieTitleText {
+  text-anchor: middle;
+  font-size: 25px;
+  fill: $o-main-text-color; }
