@@ -1,9 +1,9 @@
 odoo.define('web.web_widget_mermaid', function(require) {
     "use strict";
 
-    var core = require('web.core');
-    var basic_fields = require('web.basic_fields');
-    var field_registry = require('web.field_registry');
+    const core = require('web.core');
+    const basic_fields = require('web.basic_fields');
+    const field_registry = require('web.field_registry');
 
     // Calling mermaid.initialize() multiple times is ok.
     // But there's a catch: it will keep the config of previous calls unless
@@ -14,11 +14,13 @@ odoo.define('web.web_widget_mermaid', function(require) {
     // with new options/defaults.
     // Changes to the original default are marked with comments.
 
-    var defaultConfig = {
-        theme: null,  // We define a custom Odoo theme in a stylesheet
+    const defaultConfig = {
+        // Theme according Odoo colors (https://www.odoo.com/de_DE/page/brand-assets)
+        theme: null,
         logLevel: 'fatal',
         securityLevel: 'strict',
-        startOnLoad: false,  // Rendering is initiated manually
+        // Rendering is initiated manually
+        startOnLoad: false,
         arrowMarkerAbsolute: false,
 
         flowchart: {
@@ -51,32 +53,34 @@ odoo.define('web.web_widget_mermaid', function(require) {
             leftPadding: 75,
             gridLineStartPadding: 35,
             fontSize: 11,
+            // Match Odoo's font choices
             fontFamily: '"Lucida Grande", Helvetica, Verdana, Arial, '
-                        + 'sans-serif',  // Match Odoo's font choices
+                        + 'sans-serif',
             numberSectionStyles: 4,
             // Match configured date format
             axisFormat: core._t.database.parameters.date_format,
         }
     };
 
-    var MermaidField = basic_fields.FieldText.extend({
+    const MermaidField = basic_fields.FieldText.extend({
         init: function() {
             this._super.apply(this, arguments);
             this.chartId = _.uniqueId('mermaid_chart_');
+            this.mermaid = mermaid; // eslint-disable-line no-undef
         },
         className: 'o_form_field_mermaid',
         _renderReadonly: function() {
             if (!this.value) {
                 return;
             }
-            var config = _.extend(
+            const config = _.extend(
                 {},
                 defaultConfig,
                 this.attrs.options
             );
-            mermaid.mermaidAPI.initialize(config);
+            this.mermaid.mermaidAPI.initialize(config);
             try {
-                mermaid.mermaidAPI.render(
+                this.mermaid.mermaidAPI.render(
                     this.chartId,
                     this.value,
                     this.$el.html.bind(this.$el)
@@ -94,7 +98,7 @@ odoo.define('web.web_widget_mermaid', function(require) {
                 this.errorMessage.remove();
             }
             try {
-                mermaid.parse(value);
+                this.mermaid.parse(value);
             } catch (e) {
                 this.errorMessage = $('<pre/>').text(e.message || e.str);
                 this.$el.after(this.errorMessage);
