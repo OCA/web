@@ -5,15 +5,18 @@
     "name": "Mermaid flowchart widget",
     "category": "Web",
     "author": "Therp BV,Odoo Community Association (OCA)",
-    "version": "12.0.8.4.0",
+    "version": "15.0.1.0.0",
     "license": "AGPL-3",
     "summary": "Render mermaid markdown flowcharts",
     "website": "https://github.com/OCA/web",
-    "depends": ['web'],
-    "data": [
-        "view/web_widget_mermaid_view.xml",
-    ],
+    "depends": ["web"],
     "demo": [
         "demo/res_users_flowchart.xml",
     ],
+    "assets": {
+        "web.assets_common": [
+            "https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js",
+            "web_widget_mermaid/static/src/js/web_widget_mermaid.js",
+        ],
+    },
 }
