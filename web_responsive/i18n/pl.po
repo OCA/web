@@ -27,7 +27,6 @@ msgstr "Wszystkie"
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
-#: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
 #, python-format
 msgid "CLEAR"
 msgstr "WYCZYŚĆ"
@@ -47,14 +46,12 @@ msgstr "Wyczyść"
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
-#: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #, python-format
 msgid "Create"
 msgstr "Utwórz"
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #, python-format
 msgid "Discard"
@@ -70,7 +67,6 @@ msgstr "Edytuj"
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
-#: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
 #: code:addons/web_responsive/static/src/components/search_panel/search_panel.xml:0
 #, python-format
 msgid "FILTER"
@@ -78,7 +74,13 @@ msgstr "FILTRUJ"
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/components/attachment_viewer/attachment_viewer.xml:0
+#: code:addons/web_responsive/static/src/components/apps_menu/apps_menu.xml:0
+#, python-format
+msgid "Home Menu"
+msgstr ""
+
+#. module: web_responsive
+#. openerp-web
 #: code:addons/web_responsive/static/src/components/attachment_viewer/attachment_viewer.xml:0
 #, python-format
 msgid "Maximize"
@@ -86,7 +88,6 @@ msgstr "Zmaksymalizuj"
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/components/attachment_viewer/attachment_viewer.xml:0
 #: code:addons/web_responsive/static/src/components/attachment_viewer/attachment_viewer.xml:0
 #, python-format
 msgid "Minimize"
@@ -107,7 +108,6 @@ msgstr "Szybkie akcje"
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
-#: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
 #: code:addons/web_responsive/static/src/components/search_panel/search_panel.xml:0
 #, python-format
 msgid "SEE RESULT"
@@ -115,7 +115,6 @@ msgstr "ZOBACZ WYNIK"
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #, python-format
 msgid "Save"
@@ -130,7 +129,6 @@ msgstr "Przeszukaj menu..."
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
 #: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
 #, python-format
 msgid "Search..."
@@ -169,13 +167,6 @@ msgstr "Przełącznik widoku"
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/components/apps_menu/apps_menu.xml:0
-#, python-format
-msgid "fade"
-msgstr "wygasanie"
-
-#. module: web_responsive
-#. openerp-web
 #: code:addons/web_responsive/static/src/components/hotkey/hotkey.xml:0
 #, python-format
 msgid "props.withAccessKey ? 'x' : false"
@@ -187,3 +178,6 @@ msgstr ""
 #, python-format
 msgid "props.withAccessKey ? 'z' : false"
 msgstr ""
+
+#~ msgid "fade"
+#~ msgstr "wygasanie"
