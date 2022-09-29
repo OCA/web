@@ -24,7 +24,6 @@ msgstr ""
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
-#: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
 #, python-format
 msgid "CLEAR"
 msgstr ""
@@ -44,14 +43,12 @@ msgstr ""
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
-#: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #, python-format
 msgid "Create"
 msgstr ""
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #, python-format
 msgid "Discard"
@@ -67,7 +64,6 @@ msgstr ""
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
-#: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
 #: code:addons/web_responsive/static/src/components/search_panel/search_panel.xml:0
 #, python-format
 msgid "FILTER"
@@ -75,7 +71,13 @@ msgstr ""
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/components/attachment_viewer/attachment_viewer.xml:0
+#: code:addons/web_responsive/static/src/components/apps_menu/apps_menu.xml:0
+#, python-format
+msgid "Home Menu"
+msgstr ""
+
+#. module: web_responsive
+#. openerp-web
 #: code:addons/web_responsive/static/src/components/attachment_viewer/attachment_viewer.xml:0
 #, python-format
 msgid "Maximize"
@@ -83,7 +85,6 @@ msgstr ""
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/components/attachment_viewer/attachment_viewer.xml:0
 #: code:addons/web_responsive/static/src/components/attachment_viewer/attachment_viewer.xml:0
 #, python-format
 msgid "Minimize"
@@ -104,7 +105,6 @@ msgstr ""
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
-#: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
 #: code:addons/web_responsive/static/src/components/search_panel/search_panel.xml:0
 #, python-format
 msgid "SEE RESULT"
@@ -112,7 +112,6 @@ msgstr ""
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #, python-format
 msgid "Save"
@@ -127,7 +126,6 @@ msgstr ""
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
 #: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
 #, python-format
 msgid "Search..."
@@ -162,13 +160,6 @@ msgstr ""
 #: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
 #, python-format
 msgid "View switcher"
-msgstr ""
-
-#. module: web_responsive
-#. openerp-web
-#: code:addons/web_responsive/static/src/components/apps_menu/apps_menu.xml:0
-#, python-format
-msgid "fade"
 msgstr ""
 
 #. module: web_responsive
