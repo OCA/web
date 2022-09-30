@@ -2,7 +2,7 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 {
     "name": "Drop target support",
-    "version": "14.0.1.1.0",
+    "version": "14.0.1.1.1",
     "author": "Therp BV,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "license": "LGPL-3",
