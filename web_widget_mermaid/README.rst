@@ -14,13 +14,13 @@ Mermaid flowchart widget
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/12.0/web_widget_mermaid
+    :target: https://github.com/OCA/web/tree/15.0/web_widget_mermaid
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-12-0/web-12-0-web_widget_mermaid
+    :target: https://translation.odoo-community.org/projects/web-15-0/web-15-0-web_widget_mermaid
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/162/12.0
+    :target: https://runbot.odoo-community.org/runbot/162/15.0
     :alt: Try me on Runbot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
@@ -60,7 +60,7 @@ As an example, this text::
 
 Produces this flowchart:
 
-.. image:: https://raw.githubusercontent.com/OCA/web/12.0/web_widget_mermaid/static/description/flowchart_example.png
+.. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_widget_mermaid/static/description/flowchart_example.png
     :alt: Flowchart
 
 Demonstration
@@ -68,40 +68,13 @@ Demonstration
 
 In demo mode, the addon adds a flowchart field to users so you can try it. This shows up in Runbot instances.
 
-Upgrading Mermaid
-=================
-
-This information is only relevant for the development of this addon, not for users.
-
-This addon uses a slightly tweaked build of Mermaid that works in older browsers. To reproduce it, take the following steps:
-
-- Clone ``https://github.com/knsv/mermaid/``
-- Checkout the version you want to upgrade to (e.g. ``git checkout 8.4.0``)
-- In ``webpack.config.base.js``, in ``const jsRule = ...``, remove the ``include`` key (so all dependencies are transpiled)
-- In ``babel.config.js``, in ``targets``, add some browsers besides ``node: 'current'``. I arbitrarily went with this::
-
-    targets: {
-      node: 'current',
-      ie: '11',
-      edge: '20',
-      firefox: '35',
-      chrome: '45',
-      safari: '9',
-    }
-
-- Run ``yarn install``
-- Run ``yarn build``
-- The completed file is now in ``dist/mermaid.js``. Try running ``grep 'let ' dist/mermaid.js`` to make sure everything was transpiled. The only output should be from comments.
-- Copy ``dist/mermaid.js`` to ``web_widget_mermaid/static/lib/mermaid/mermaid.js``.
-- Bump the version number in ``__manifest__.py`` to match the Mermaid version.
-
 Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_widget_mermaid%0Aversion:%2012.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_widget_mermaid%0Aversion:%2015.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -117,6 +90,7 @@ Contributors
 ~~~~~~~~~~~~
 
 * Jan Verbeek <jverbeek@therp.nl>
+* RoboHeart <heart4robots@gmail.com>
 
 Maintainers
 ~~~~~~~~~~~
@@ -131,6 +105,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/12.0/web_widget_mermaid>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/15.0/web_widget_mermaid>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
