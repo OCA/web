@@ -13,9 +13,9 @@ class PWA(Controller):
         return [
             "/web/static/lib/underscore/underscore.js",
             "/web_pwa_oca/static/src/js/worker/jquery-sw-compat.js",
-            "/web/static/src/js/promise_extension.js",
-            "/web/static/src/js/boot.js",
-            "/web/static/src/js/core/class.js",
+            "/web/static/src/legacy/js/promise_extension.js",
+            "/web/static/src/boot.js",
+            "/web/static/src/legacy/js/core/class.js",
             "/web_pwa_oca/static/src/js/worker/pwa.js",
         ]
 
@@ -52,6 +52,7 @@ class PWA(Controller):
                         % (str(size[0]), str(size[1])),
                         "sizes": "{}x{}".format(str(size[0]), str(size[1])),
                         "type": "image/png",
+                        "purpose": "any maskable",
                     }
                 )
         elif not pwa_icon.mimetype.startswith("image/svg"):

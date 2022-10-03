@@ -17,6 +17,14 @@ odoo.define("web_pwa_oca.PWA", function (require) {
         // eslint-disable-next-line
         init: function (params) {
             // To be overridden
+            this._sw_version = params.sw_version;
+        },
+
+        /**
+         * @returns {Promise}
+         */
+        start: function () {
+            return Promise.resolve();
         },
 
         /**
@@ -30,9 +38,18 @@ odoo.define("web_pwa_oca.PWA", function (require) {
         /**
          * @returns {Promise}
          */
-        activateWorker: function () {
+        /* eslint-disable no-unused-vars */
+        activateWorker: function (forced) {
             // To be overridden
             return Promise.resolve();
+        },
+
+        /**
+         * @returns {Promise}
+         */
+        processRequest: function (request) {
+            // To be overridden
+            return fetch(request);
         },
     });
 
