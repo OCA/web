@@ -28,20 +28,5 @@
             <meta name="theme-color" t-att-content="pwa_theme_color" />
         </xpath>
     </template>
-    <template
-        id="assets_backend"
-        name="web service worker assets"
-        inherit_id="web.assets_backend"
-    >
-        <xpath expr="." position="inside">
-            <script
-                type="text/javascript"
-                src="/web_pwa_oca/static/src/js/pwa_manager.js"
-            />
-            <script
-                type="text/javascript"
-                src="/web_pwa_oca/static/src/js/webclient.js"
-            />
-        </xpath>
-    </template>
+
 </odoo>

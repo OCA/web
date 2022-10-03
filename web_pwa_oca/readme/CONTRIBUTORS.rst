@@ -6,3 +6,4 @@
 
   * Alexandre D. Díaz
   * João Marques
+  * Sergio Teruel
