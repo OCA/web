@@ -48,7 +48,15 @@ class ServiceWorker(PWA):
 
     def _get_js_pwa_init(self):
         return """
-            const oca_pwa = new PWA({});
+            let promise_start = Promise.resolve();
+            if (typeof self.oca_pwa === "undefined") {{
+                self.oca_pwa = new PWA({});
+                promise_start = self.oca_pwa.start();
+                if (self.serviceWorker.state === "activated") {{
+                    promise_start = promise_start.then(
+                        () => self.oca_pwa.activateWorker(true));
+                }}
+            }}
         """.format(
             self._get_pwa_params()
         )
