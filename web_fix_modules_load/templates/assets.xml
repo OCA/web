@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template id="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr="//t[@t-raw='get_modules_order()']/.." position="after">
+            <script type="text/javascript" charset="utf-8">
+                odoo._modules_info = <t
+                    t-raw="request.env['ir.module.module']._session_modules_info()"
+                />;
+            </script>
+        </xpath>
+    </template>
+
+    <template id="assets_common" inherit_id="web.assets_common">
+        <xpath expr="//script[last()]" position="after">
+            <script src="/web_fix_modules_load/static/src/js/session.js" />
+        </xpath>
+    </template>
+
+</odoo>
