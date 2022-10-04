@@ -15,16 +15,21 @@
                     name="company_styles"
                     groups="base.group_system"
                 >
-                    <group string="Navbar Colors" name="navbar_colors">
-                        <field name="color_navbar_bg" widget="color" />
-                        <field name="color_navbar_bg_hover" widget="color" />
-                        <field name="color_navbar_text" widget="color" />
+                    <group string="Colors" name="navbar_colors">
                         <button
                             class="btn-primary"
                             name="button_compute_color"
                             type="object"
                             string="Compute colors from logo"
                         />
+                        <field name="color_navbar_bg" widget="color" />
+                        <field name="color_navbar_bg_hover" widget="color" />
+                        <field name="color_navbar_text" widget="color" />
+                        <field name="color_button_bg" widget="color" />
+                        <field name="color_button_bg_hover" widget="color" />
+                        <field name="color_button_text" widget="color" />
+                        <field name="color_link_text" widget="color" />
+                        <field name="color_link_text_hover" widget="color" />
                     </group>
                     <div class="alert alert-info info_icon" role="alert">
                         <span class="fa fa-info fa-2x" />
