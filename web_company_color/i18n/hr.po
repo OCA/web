@@ -30,6 +30,26 @@ msgstr ""
 "                        učitajte ponovo ovu stranicu."
 
 #. module: web_company_color
+#: model:ir.model.fields,field_description:web_company_color.field_res_company__color_button_bg
+msgid "Button Background Color"
+msgstr ""
+
+#. module: web_company_color
+#: model:ir.model.fields,field_description:web_company_color.field_res_company__color_button_bg_hover
+msgid "Button Background Color Hover"
+msgstr ""
+
+#. module: web_company_color
+#: model:ir.model.fields,field_description:web_company_color.field_res_company__color_button_text
+msgid "Button Text Color"
+msgstr ""
+
+#. module: web_company_color
+#: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
+msgid "Colors"
+msgstr ""
+
+#. module: web_company_color
 #: model:ir.model,name:web_company_color.model_res_company
 msgid "Companies"
 msgstr "Tvrtke"
@@ -68,6 +88,16 @@ msgid "Last Modified on"
 msgstr ""
 
 #. module: web_company_color
+#: model:ir.model.fields,field_description:web_company_color.field_res_company__color_link_text
+msgid "Link Text Color"
+msgstr ""
+
+#. module: web_company_color
+#: model:ir.model.fields,field_description:web_company_color.field_res_company__color_link_text_hover
+msgid "Link Text Color Hover"
+msgstr ""
+
+#. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_bg
 msgid "Navbar Background Color"
 msgstr "Boja pozadine Navigacijske trake"
@@ -76,11 +106,6 @@ msgstr "Boja pozadine Navigacijske trake"
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_bg_hover
 msgid "Navbar Background Color Hover"
 msgstr "Poja pozadine navigacijske trake (hoover)"
-
-#. module: web_company_color
-#: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
-msgid "Navbar Colors"
-msgstr "Boje navigacijske trake"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_text
@@ -92,5 +117,10 @@ msgstr "Boja teksta navigacijske trake"
 msgid "Qweb"
 msgstr ""
 
-#~ msgid "SCSS Modif. Timestamp"
-#~ msgstr "SCSS Modif. Vremenski žig"
+#. module: web_company_color
+#: model:ir.model.fields,field_description:web_company_color.field_res_company__scss_modif_timestamp
+msgid "SCSS Modif. Timestamp"
+msgstr "SCSS Modif. Vremenski žig"
+
+#~ msgid "Navbar Colors"
+#~ msgstr "Boje navigacijske trake"

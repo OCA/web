@@ -20,13 +20,34 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
 msgid ""
 "<span class=\"fa fa-info fa-2x\"/>\n"
-"                        In order for the changes to take effect, please refresh\n"
+"                        In order for the changes to take effect, please "
+"refresh\n"
 "                        the page."
 msgstr ""
 "<span class=\"fa fa-info fa-2x\"/>\n"
 "                        Pour que les modifications prennent effet, veuillez "
 "recharger\n"
 "                        la page."
+
+#. module: web_company_color
+#: model:ir.model.fields,field_description:web_company_color.field_res_company__color_button_bg
+msgid "Button Background Color"
+msgstr ""
+
+#. module: web_company_color
+#: model:ir.model.fields,field_description:web_company_color.field_res_company__color_button_bg_hover
+msgid "Button Background Color Hover"
+msgstr ""
+
+#. module: web_company_color
+#: model:ir.model.fields,field_description:web_company_color.field_res_company__color_button_text
+msgid "Button Text Color"
+msgstr ""
+
+#. module: web_company_color
+#: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
+msgid "Colors"
+msgstr ""
 
 #. module: web_company_color
 #: model:ir.model,name:web_company_color.model_res_company
@@ -67,6 +88,16 @@ msgid "Last Modified on"
 msgstr "Dernière modification le"
 
 #. module: web_company_color
+#: model:ir.model.fields,field_description:web_company_color.field_res_company__color_link_text
+msgid "Link Text Color"
+msgstr ""
+
+#. module: web_company_color
+#: model:ir.model.fields,field_description:web_company_color.field_res_company__color_link_text_hover
+msgid "Link Text Color Hover"
+msgstr ""
+
+#. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_bg
 msgid "Navbar Background Color"
 msgstr "Couleur de l’arrière-plan de la barre de navigation"
@@ -77,11 +108,6 @@ msgid "Navbar Background Color Hover"
 msgstr "Couleur d'arrière-plan de la barre de navigation au survol"
 
 #. module: web_company_color
-#: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
-msgid "Navbar Colors"
-msgstr "Couleurs de la barre de navigation"
-
-#. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_text
 msgid "Navbar Text Color"
 msgstr "Couleur du texte de la barre de navigation"
@@ -90,3 +116,11 @@ msgstr "Couleur du texte de la barre de navigation"
 #: model:ir.model,name:web_company_color.model_ir_qweb
 msgid "Qweb"
 msgstr "Qweb"
+
+#. module: web_company_color
+#: model:ir.model.fields,field_description:web_company_color.field_res_company__scss_modif_timestamp
+msgid "SCSS Modif. Timestamp"
+msgstr ""
+
+#~ msgid "Navbar Colors"
+#~ msgstr "Couleurs de la barre de navigation"
