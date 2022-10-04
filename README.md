@@ -32,7 +32,7 @@ addon | version | maintainers | summary
 [web_advanced_search](web_advanced_search/) | 14.0.1.0.1 |  | Easier and more powerful searching tools
 [web_calendar_color_field](web_calendar_color_field/) | 14.0.1.0.0 |  | Calendar Color Field
 [web_calendar_slot_duration](web_calendar_slot_duration/) | 14.0.1.0.0 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) | Customizable calendar slot durations
-[web_company_color](web_company_color/) | 14.0.1.1.0 |  | Web Company Color
+[web_company_color](web_company_color/) | 14.0.1.2.0 |  | Web Company Color
 [web_copy_confirm](web_copy_confirm/) | 14.0.1.0.0 |  | Show confirmation dialogue before copying records
 [web_decimal_numpad_dot](web_decimal_numpad_dot/) | 14.0.1.0.0 |  | Allows using numpad dot to enter period decimal separator
 [web_dialog_size](web_dialog_size/) | 14.0.1.0.0 |  | A module that lets the user expand a dialog box to the full screen width.
