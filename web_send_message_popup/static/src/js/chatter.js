@@ -7,7 +7,7 @@ import {
 
 registerInstancePatchModel(
     "mail.chatter",
-    "mail/static/src/models/chatter/chatter.js",
+    "web_send_message_popup/static/src/js/chatter.js",
     {
         /**
          * Handles click on "send message" button.
