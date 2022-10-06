@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-03-06 07:17+0000\n"
+"PO-Revision-Date: 2022-10-06 16:36+0000\n"
 "Last-Translator: Ignacio Buioli <ibuioli@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es_AR\n"
@@ -32,22 +32,22 @@ msgstr ""
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_button_bg
 msgid "Button Background Color"
-msgstr ""
+msgstr "Color de Fondo del Botón"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_button_bg_hover
 msgid "Button Background Color Hover"
-msgstr ""
+msgstr "Color de Fondo del Botón por Encima"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_button_text
 msgid "Button Text Color"
-msgstr ""
+msgstr "Color del Texto del Botón"
 
 #. module: web_company_color
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
 msgid "Colors"
-msgstr ""
+msgstr "Colores"
 
 #. module: web_company_color
 #: model:ir.model,name:web_company_color.model_res_company
@@ -90,12 +90,12 @@ msgstr "Última Modificación el"
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_link_text
 msgid "Link Text Color"
-msgstr ""
+msgstr "Color del Texto del Vínculo"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_link_text_hover
 msgid "Link Text Color Hover"
-msgstr ""
+msgstr "Color del Texto del Vínculo por Encima"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_bg
@@ -120,7 +120,7 @@ msgstr "Qweb"
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__scss_modif_timestamp
 msgid "SCSS Modif. Timestamp"
-msgstr ""
+msgstr "SCSS Huella de Tiempo de Modificación"
 
 #~ msgid "Navbar Colors"
 #~ msgstr "Colores de la Barra de Navegación"
