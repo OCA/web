@@ -17,7 +17,7 @@ Calendar slot duration
     :target: https://github.com/OCA/web/tree/15.0/web_calendar_slot_duration
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-14-0/web-14-0-web_calendar_slot_duration
+    :target: https://translation.odoo-community.org/projects/web-15-0/web-15-0-web_calendar_slot_duration
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
     :target: https://runbot.odoo-community.org/runbot/162/15.0
