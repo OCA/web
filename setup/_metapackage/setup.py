@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo-addon-web_action_conditionable>=15.0dev,<15.1dev',
         'odoo-addon-web_advanced_search>=15.0dev,<15.1dev',
+        'odoo-addon-web_calendar_slot_duration>=15.0dev,<15.1dev',
         'odoo-addon-web_chatter_position>=15.0dev,<15.1dev',
         'odoo-addon-web_company_color>=15.0dev,<15.1dev',
         'odoo-addon-web_copy_confirm>=15.0dev,<15.1dev',
