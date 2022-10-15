@@ -7,9 +7,9 @@ Web Notify
    !! changes will be overwritten.                   !!
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
+.. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Production/Stable
+    :alt: Beta
 .. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
@@ -23,7 +23,7 @@ Web Notify
     :target: https://runbot.odoo-community.org/runbot/162/14.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 Send instant notification messages to the user in live.
 
@@ -87,7 +87,7 @@ or
 You can test the behaviour of the notifications by installing this module in a demo database.
 Access the users form through Settings -> Users & Companies. You'll see a tab called "Test web notify", here you'll find two buttons that'll allow you test the module.
 
-.. figure:: https://raw.githubusercontent.com/OCA/web/14.0/web_notify/static/description/test_notifications_demo.png
+.. figure:: https://raw.githubusercontent.com/OCA/web/15.0/web_notify/static/description/test_notifications_demo.png
    :scale: 80 %
    :alt: Sample notifications
 
@@ -118,6 +118,7 @@ Contributors
 * Aitor Bouzas <aitor.bouzas@adaptivecity.com>
 * Shepilov Vladislav <shepilov.v@protonmail.com>
 * Kevin Khao <kevin.khao@akretion.com>
+* Aswanth Babu <aswanthx@gmail.com>
 
 Maintainers
 ~~~~~~~~~~~
