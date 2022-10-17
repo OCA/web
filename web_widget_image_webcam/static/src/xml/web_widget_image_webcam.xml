@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2016 Siddharth Bhalgami <siddharth.bhalgami@gmail.com>
+     Copyright 2019-Today: Druidoo (<https://www.druidoo.io>)
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
+<template id="template" xml:space="preserve">
+    <t t-extend="FieldBinaryImage">
+        <t t-jquery=".o_select_file_button" t-operation="after">
+            <span class="fa fa-eye o_form_binary_file_web_cam" title="WebCam" />
+        </t>
+    </t>
+    <div t-name="WebCamDialog" id="WebCamModal">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-5 live_webcam_outer_div">
+                    <div id="live_webcam" />
+                </div>
+                <div class="col-md-2 mt64 direction_icon fa fa-angle-right fa-8x" />
+                <div class="col-md-5 webcam_result_outer_div">
+                    <div id="webcam_result" />
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
