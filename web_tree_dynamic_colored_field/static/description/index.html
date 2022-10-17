@@ -411,6 +411,22 @@ With this example, column which renders 'name' field will have its background co
 With this example, column which renders 'name' field will have its text colored in white on a customer records.
 </pre>
 </li>
+<li><p class="first">In the tree view declaration, use <tt class="docutils literal"><span class="pre">options='&quot;color_field&quot;:</span> &quot;my_color&quot;'</tt> attribute in the <tt class="docutils literal">tree</tt> tag:</p>
+<pre class="literal-block">
+...
+&lt;field name=&quot;arch&quot; type=&quot;xml&quot;&gt;
+    &lt;tree string=&quot;View name&quot; colors=&quot;color_field: my_color&quot; &gt;
+        ...
+        &lt;field name=&quot;my_color&quot; invisible=&quot;1&quot;/&gt;
+        ...
+    &lt;/tree&gt;
+&lt;/field&gt;
+...
+</pre>
+</li>
+<li><p class="first">You can also use <tt class="docutils literal"><span class="pre">colors=&quot;bg_color_field:</span> my_color&quot;</tt> to defined the field name that will be used
+for the background color of the line.</p>
+</li>
 <li><p class="first">If you want to use more than one color, you can split the attributes using ‘;’:</p>
 </li>
 </ul>
@@ -472,6 +488,7 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 <li>Artem Kostyuk &lt;<a class="reference external" href="mailto:a.kostyuk&#64;mobilunity.com">a.kostyuk&#64;mobilunity.com</a>&gt;</li>
 <li>Guewen Baconnier &lt;<a class="reference external" href="mailto:guewen.baconnier&#64;camptocamp.com">guewen.baconnier&#64;camptocamp.com</a>&gt;</li>
 <li>Phuc Tran Thanh &lt;<a class="reference external" href="mailto:phuc&#64;trobz.com">phuc&#64;trobz.com</a>&gt;</li>
+<li>Sylvain LE GAL &lt;<a class="reference external" href="https://twitter.com/legalsylvain">https://twitter.com/legalsylvain</a>&gt;</li>
 </ul>
 </div>
 <div class="section" id="other-credits">
