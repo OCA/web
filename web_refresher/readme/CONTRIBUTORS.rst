@@ -4,3 +4,6 @@
   * João Marques
 
 * Thanakrit Pintana
+* `Factorlibre <https://www.factorlibre.com>`__:
+
+  * Hugo Santos
