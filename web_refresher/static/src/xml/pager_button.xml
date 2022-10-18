@@ -16,7 +16,7 @@
                     aria-label="Refresh"
                     title="Refresh"
                     tabindex="-1"
-                    t-on-click="_changeSelection(0)"
+                    t-on-click.stop="() => this.navigate(0)"
                     style="margin-right: 5px;"
                 />
             </span>
