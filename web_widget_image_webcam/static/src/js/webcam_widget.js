@@ -33,7 +33,7 @@ odoo.define("web_widget_image_webcam.webcam_widget", function (require) {
                 jpeg_quality: 90,
                 force_flash: false,
                 fps: 45,
-                swfURL: "/web_widget_image_webcam/static/src/js/webcam.swf",
+                swfURL: "/web_widget_image_webcam/static/src/lib/webcam.swf",
             });
 
             rpc.query({
