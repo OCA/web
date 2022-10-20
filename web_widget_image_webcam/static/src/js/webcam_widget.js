@@ -1,3 +1,4 @@
+/* global Webcam */
 /*
     Copyright 2016 Siddharth Bhalgami <siddharth.bhalgami@gmail.com>
     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
@@ -39,7 +40,7 @@ odoo.define("web_widget_image_webcam.webcam_widget", function (require) {
                 model: "ir.config_parameter",
                 method: "get_webcam_flash_fallback_mode_config",
             }).then(function (default_flash_fallback_mode) {
-                if (default_flash_fallback_mode == 1) {
+                if (default_flash_fallback_mode === 1) {
                     Webcam.set({
                         /*
                             :: Important Note about Chrome 47+ :: < https://github.com/jhuckaby/webcamjs#important-note-for-chrome-47 >
