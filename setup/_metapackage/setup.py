@@ -50,6 +50,7 @@ setuptools.setup(
         'odoo14-addon-web_widget_domain_editor_dialog',
         'odoo14-addon-web_widget_dropdown_dynamic',
         'odoo14-addon-web_widget_image_download',
+        'odoo14-addon-web_widget_image_webcam',
         'odoo14-addon-web_widget_many2one_simple',
         'odoo14-addon-web_widget_model_viewer',
         'odoo14-addon-web_widget_mpld3_chart',
