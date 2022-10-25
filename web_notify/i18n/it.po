@@ -6,30 +6,32 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2022-10-25 11:43+0000\n"
+"Last-Translator: Riccardo Bellanova <bellanova@webmonks.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. module: web_notify
 #: code:addons/web_notify/models/res_users.py:0
 #, python-format
 msgid "Danger"
-msgstr ""
+msgstr "Pericolo"
 
 #. module: web_notify
 #: code:addons/web_notify/models/res_users.py:0
 #, python-format
 msgid "Default"
-msgstr ""
+msgstr "Predefinito"
 
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users__id
@@ -40,12 +42,12 @@ msgstr ""
 #: code:addons/web_notify/models/res_users.py:0
 #, python-format
 msgid "Information"
-msgstr ""
+msgstr "Informazioni"
 
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima Modifica il"
 
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users__notify_danger_channel_name
@@ -76,48 +78,48 @@ msgstr ""
 #: code:addons/web_notify/models/res_users.py:0
 #, python-format
 msgid "Sending a notification to another user is forbidden."
-msgstr ""
+msgstr "È vietato inviare una notifica a un altro utente."
 
 #. module: web_notify
 #: code:addons/web_notify/models/res_users.py:0
 #, python-format
 msgid "Success"
-msgstr ""
+msgstr "Successo"
 
 #. module: web_notify
 #: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
 msgid "Test danger notification"
-msgstr ""
+msgstr "Test notifica di pericolo"
 
 #. module: web_notify
 #: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
 msgid "Test default notification"
-msgstr ""
+msgstr "Test notifica default"
 
 #. module: web_notify
 #: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
 msgid "Test info notification"
-msgstr ""
+msgstr "Test notifica di info"
 
 #. module: web_notify
 #: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
 msgid "Test success notification"
-msgstr ""
+msgstr "Test notifica successo"
 
 #. module: web_notify
 #: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
 msgid "Test warning notification"
-msgstr ""
+msgstr "Test notifica warning"
 
 #. module: web_notify
 #: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
 msgid "Test web notify"
-msgstr ""
+msgstr "Test notifica web"
 
 #. module: web_notify
 #: model:ir.model,name:web_notify.model_res_users
 msgid "Users"
-msgstr ""
+msgstr "Utenti"
 
 #. module: web_notify
 #: code:addons/web_notify/models/res_users.py:0
