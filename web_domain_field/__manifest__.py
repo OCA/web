@@ -15,6 +15,9 @@
         "web.assets_backend": [
             "/web_domain_field/static/lib/js/*.js",
         ],
+        "web.qunit_suite_tests": [
+            "/web_domain_field/static/tests/**/*.js",
+        ],
     },
     "installable": True,
 }
