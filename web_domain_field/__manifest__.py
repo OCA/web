@@ -5,7 +5,7 @@
     "name": "Web Domain Field",
     "summary": """
         Use computed field as domain""",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "development_status": "Production/Stable",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
