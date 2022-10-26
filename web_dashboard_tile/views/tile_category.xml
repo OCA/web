@@ -4,7 +4,6 @@
     <record id="action_category_2_tile" model="ir.actions.act_window">
         <field name="name">Dashboard Items</field>
         <field name="res_model">tile.tile</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="context">{'search_default_category_id': active_id}</field>
     </record>
@@ -16,18 +15,6 @@
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <button
-                            name="toggle_active"
-                            type="object"
-                            class="oe_stat_button"
-                            icon="fa-archive"
-                        >
-                            <field
-                                name="active"
-                                widget="boolean_button"
-                                options="{&quot;terminology&quot;: &quot;archive&quot;}"
-                            />
-                        </button>
-                        <button
                             class="oe_stat_button"
                             type="action"
                             name="%(web_dashboard_tile.action_category_2_tile)d"
@@ -37,11 +24,18 @@
                             <field string="Items" name="tile_qty" widget="statinfo" />
                         </button>
                     </div>
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        attrs="{'invisible': [('active', '=', True)]}"
+                    />
                     <div class="oe_title">
                         <label for="name" class="oe_edit_only" />
                         <h1><field name="name" required="1" /></h1>
                     </div>
                     <group string="Technical Informations">
+                        <field name="active" invisible="1" />
                         <field name="menu_id" />
                         <field name="action_id" />
                     </group>
@@ -65,16 +59,15 @@
     <record model="ir.actions.act_window" id="action_tile_category">
         <field name="name">Dashboard Categories</field>
         <field name="res_model">tile.category</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,kanban,form</field>
         <field name="context">{'active_test': False}</field>
     </record>
 
     <menuitem
         id="menu_tile_category"
-        parent="menu_dashboard_tile_settings"
+        parent="menu_tile_configuration"
         action="action_tile_category"
-        sequence="50"
+        sequence="160"
     />
 
 </odoo>

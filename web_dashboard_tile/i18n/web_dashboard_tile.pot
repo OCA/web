@@ -1,12 +1,14 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_dashboard_tile
+#   * web_dashboard_tile
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2022-10-26 21:53+0000\n"
+"PO-Revision-Date: 2022-10-26 21:53+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,13 +27,18 @@ msgid "Active"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: selection:tile.tile,primary_function:0
-#: selection:tile.tile,secondary_function:0
+#: model_terms:ir.ui.view,arch_db:web_dashboard_tile.view_tile_category_form
+msgid "Archived"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: model:ir.model.fields.selection,name:web_dashboard_tile.selection__tile_tile__primary_function__avg
+#: model:ir.model.fields.selection,name:web_dashboard_tile.selection__tile_tile__secondary_function__avg
 msgid "Average"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/models/tile_tile.py:53
+#: code:addons/web_dashboard_tile/models/tile_tile.py:0
 #, python-format
 msgid "Average value of '%s'"
 msgstr ""
@@ -47,8 +54,8 @@ msgid "Category"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: selection:tile.tile,primary_function:0
-#: selection:tile.tile,secondary_function:0
+#: model:ir.model.fields.selection,name:web_dashboard_tile.selection__tile_tile__primary_function__count
+#: model:ir.model.fields.selection,name:web_dashboard_tile.selection__tile_tile__secondary_function__count
 msgid "Count"
 msgstr ""
 
@@ -104,15 +111,16 @@ msgid "Domain"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/models/tile_tile.py:202
-#: code:addons/web_dashboard_tile/models/tile_tile.py:240
+#: code:addons/web_dashboard_tile/models/tile_tile.py:0
+#: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile__domain_error
 #, python-format
-msgid "Error"
+msgid "Domain Error"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile__error
-msgid "Error Details"
+#: code:addons/web_dashboard_tile/models/tile_tile.py:0
+#, python-format
+msgid "Error"
 msgstr ""
 
 #. module: web_dashboard_tile
@@ -148,7 +156,10 @@ msgstr ""
 
 #. module: web_dashboard_tile
 #: model:ir.model.fields,help:web_dashboard_tile.field_tile_tile__group_ids
-msgid "If this field is set, only users of this group can view this tile. Please note that it will only work for global tiles (that is, when User field is left empty)"
+msgid ""
+"If this field is set, only users of this group can view this tile. Please "
+"note that it will only work for global tiles (that is, when User field is "
+"left empty)"
 msgstr ""
 
 #. module: web_dashboard_tile
@@ -185,37 +196,37 @@ msgid "Main Value"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: selection:tile.tile,primary_function:0
-#: selection:tile.tile,secondary_function:0
+#: model:ir.model.fields.selection,name:web_dashboard_tile.selection__tile_tile__primary_function__max
+#: model:ir.model.fields.selection,name:web_dashboard_tile.selection__tile_tile__secondary_function__max
 msgid "Maximum"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/models/tile_tile.py:41
+#: code:addons/web_dashboard_tile/models/tile_tile.py:0
 #, python-format
 msgid "Maximum value of '%s'"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: selection:tile.tile,primary_function:0
-#: selection:tile.tile,secondary_function:0
+#: model:ir.model.fields.selection,name:web_dashboard_tile.selection__tile_tile__primary_function__median
+#: model:ir.model.fields.selection,name:web_dashboard_tile.selection__tile_tile__secondary_function__median
 msgid "Median"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/models/tile_tile.py:61
+#: code:addons/web_dashboard_tile/models/tile_tile.py:0
 #, python-format
 msgid "Median value of '%s'"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: selection:tile.tile,primary_function:0
-#: selection:tile.tile,secondary_function:0
+#: model:ir.model.fields.selection,name:web_dashboard_tile.selection__tile_tile__primary_function__min
+#: model:ir.model.fields.selection,name:web_dashboard_tile.selection__tile_tile__secondary_function__min
 msgid "Minimum"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/models/tile_tile.py:33
+#: code:addons/web_dashboard_tile/models/tile_tile.py:0
 #, python-format
 msgid "Minimum value of '%s'"
 msgstr ""
@@ -237,7 +248,7 @@ msgid "Name"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/models/tile_tile.py:25
+#: code:addons/web_dashboard_tile/models/tile_tile.py:0
 #, python-format
 msgid "Number of records"
 msgstr ""
@@ -258,9 +269,19 @@ msgid "Overview"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/models/tile_tile.py:317
+#: model:ir.ui.menu,name:web_dashboard_tile.menu_tile_configuration
+msgid "Overview Settings"
+msgstr ""
+
+#. module: web_dashboard_tile
+#: code:addons/web_dashboard_tile/models/tile_tile.py:0
 #, python-format
 msgid "Please select a field from the selected model."
+msgstr ""
+
+#. module: web_dashboard_tile
+#: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile__primary_error
+msgid "Primary Error"
 msgstr ""
 
 #. module: web_dashboard_tile
@@ -296,8 +317,14 @@ msgstr ""
 #. module: web_dashboard_tile
 #: model:ir.model.fields,help:web_dashboard_tile.field_tile_tile__primary_format
 #: model:ir.model.fields,help:web_dashboard_tile.field_tile_tile__secondary_format
-msgid "Python Format String valid with str.format()\n"
+msgid ""
+"Python Format String valid with str.format()\n"
 "ie: '{:,} Kgs' will output '1,000 Kgs' if value is 1000."
+msgstr ""
+
+#. module: web_dashboard_tile
+#: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile__secondary_error
+msgid "Secondary Error"
 msgstr ""
 
 #. module: web_dashboard_tile
@@ -343,14 +370,13 @@ msgid "Sequence"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: model:ir.ui.menu,name:web_dashboard_tile.menu_dashboard_tile_settings
 #: model_terms:ir.ui.view,arch_db:web_dashboard_tile.view_tile_tile_form
 msgid "Settings"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: selection:tile.tile,primary_function:0
-#: selection:tile.tile,secondary_function:0
+#: model:ir.model.fields.selection,name:web_dashboard_tile.selection__tile_tile__primary_function__sum
+#: model:ir.model.fields.selection,name:web_dashboard_tile.selection__tile_tile__secondary_function__sum
 msgid "Sum"
 msgstr ""
 
@@ -371,13 +397,13 @@ msgid "Tiles Quantity"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/models/tile_tile.py:46
+#: code:addons/web_dashboard_tile/models/tile_tile.py:0
 #, python-format
 msgid "Total value of '%s'"
 msgstr ""
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/models/tile_tile.py:288
+#: code:addons/web_dashboard_tile/models/tile_tile.py:0
 #, python-format
 msgid "Unimplemented Feature. Search on Active field disabled."
 msgstr ""
@@ -386,4 +412,3 @@ msgstr ""
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile__user_id
 msgid "User"
 msgstr ""
-

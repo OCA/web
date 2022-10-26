@@ -113,7 +113,7 @@ Known issues / Roadmap
 * Can not edit color from dashboard
 * Original context is ignored.
 * Original domain and filter are not restored.
-* To preserve a relative date domain, you have to manually edit the tile's domain from "Configuration > User Interface > Dashboard Tile". You can use the same variables available in filters (``uid``, ``context_today()``, ``current_date``, ``time``, ``datetime``, `relativedelta`).
+* To preserve a relative date domain, you have to manually edit the tile's domain from "Configuration > User Interface > Dashboard Tile". You can use the same variables available in filters (``uid``, ``context_today()``, ``current_date``, ``relativedelta``).
 
 **Roadmap**
 

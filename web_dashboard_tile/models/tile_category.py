@@ -82,12 +82,11 @@ class TileCategory(models.Model):
             if category.action_id:
                 category.action_id.unlink()
 
-    @api.model
-    def create(self, vals):
-        category = super().create(vals)
-        if category.active:
-            category._create_ui()
-        return category
+    @api.model_create_multi
+    def create(self, vals_list):
+        categories = super().create(vals_list)
+        categories.filtered(lambda x: x.active)._create_ui()
+        return categories
 
     def write(self, vals):
         res = super().write(vals)
@@ -105,4 +104,4 @@ class TileCategory(models.Model):
 
     def unlink(self):
         self._delete_ui()
-        super().unlink()
+        return super().unlink()

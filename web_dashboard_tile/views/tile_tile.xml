@@ -35,27 +35,30 @@
         <field name="model">tile.tile</field>
         <field name="arch" type="xml">
             <form>
+                <field name="model_name" invisible="1" />
                 <sheet>
                     <h1>
                         <field name="name" />
                     </h1>
-                    <group>
-                        <field name="category_id" />
-                        <field name="user_id" />
-                    </group>
-                    <group col="4">
-                        <separator string="Display" colspan="4" />
+                    <group col="4" string="Display">
+                        <field name="category_id" colspan="4" />
                         <field name="background_color" widget="color" />
                         <field name="font_color" widget="color" />
-                        <separator string="Technical Informations" colspan="4" />
+                    </group>
+                    <group col="4" string="Technical Informations">
                         <field name="model_id" />
                         <field name="action_id" />
-                        <field name="domain" colspan="4" />
-                        <field name="model_name" invisible="1" />
-                        <separator colspan="4" />
                         <field
-                            name="error"
-                            attrs="{'invisible':[('error','=',False)]}"
+                            name="domain"
+                            colspan="4"
+                            widget="ace"
+                            option="{'mode': 'python'}"
+                        />
+                        <field
+                            name="domain_error"
+                            attrs="{'invisible':[('domain_error','=',False)]}"
+                            nolabel="1"
+                            colspan="4"
                         />
                     </group>
                     <notebook>
@@ -83,6 +86,12 @@
                                         attrs="{'invisible':[('primary_value','=',False)]}"
                                     />
                                 </group>
+                                <group>
+                                    <field
+                                        name="primary_error"
+                                        attrs="{'invisible': [('primary_error', '=', False)]}"
+                                    />
+                                </group>
                             </group>
                             <group string="Secondary Value">
                                 <group>
@@ -106,10 +115,17 @@
                                         attrs="{'invisible':[('secondary_value','=',False)]}"
                                     />
                                 </group>
+                                <group>
+                                    <field
+                                        name="secondary_error"
+                                        attrs="{'invisible': [('secondary_error', '=', False)]}"
+                                    />
+                                </group>
                             </group>
                         </page>
                         <page string="Security">
                             <field name="group_ids" />
+                            <field name="user_id" />
                         </page>
                     </notebook>
                 </sheet>
@@ -193,15 +209,23 @@
     <record model="ir.actions.act_window" id="action_tile_tile">
         <field name="name">Dashboard Items</field>
         <field name="res_model">tile.tile</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form,kanban</field>
     </record>
 
     <menuitem
         id="menu_tile_tile"
-        parent="menu_dashboard_tile_settings"
+        parent="menu_tile_configuration"
         action="action_tile_tile"
-        sequence="10"
+        sequence="161"
+    />
+
+    <!-- Root menu item that will contains all the sub menu entries
+    that contains tiles -->
+    <menuitem
+        id="menu_dashboard_tile"
+        parent="spreadsheet_dashboard.spreadsheet_dashboard_menu_root"
+        name="Overview"
+        sequence="0"
     />
 
 </odoo>

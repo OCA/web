@@ -1,12 +1,8 @@
 /* custom kanban style */
 .o_kanban_view .oe_dashboard_tile {
-    height: 150px;
+    height: 150px !important;
 }
 
-/* Fix bug where draggin a tile results in the element losing its style */
-.o_kanban_view .oe_dashboard_tile {
-    padding: 0px !important;
-}
 .o_kanban_view .oe_dashboard_tile .tile_background {
     padding: 8px;
     height: 100%;
@@ -26,7 +22,6 @@
 
 .o_kanban_view .oe_dashboard_tile .tile_primary_value {
     font-size: 54px;
-    position: absolute;
     left: 5px;
     right: 5px;
     bottom: 5px;
@@ -36,7 +31,6 @@
     display: none;
     font-size: 18px;
     font-style: italic;
-    position: absolute;
     left: 5px;
     right: 5px;
     bottom: 5px;
@@ -49,11 +43,4 @@
 
 .o_kanban_view .oe_dashboard_tile .with_secondary .tile_secondary_value {
     display: block;
-}
-
-/* Make dropdown menu button not affect text flow */
-.o_kanban_view .oe_dashboard_tile .o_dropdown_kanban {
-    float: none;
-    position: absolute;
-    right: 8px;
 }

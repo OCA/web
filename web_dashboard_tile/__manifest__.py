@@ -4,8 +4,11 @@
 {
     "name": "Overview Dashboard (Tiles)",
     "summary": "Add Overview Dashboards with Tiles",
-    "version": "12.0.1.0.2",
-    "depends": ["web", "board", "mail", "web_widget_color"],
+    "version": "16.0.1.0.2",
+    "depends": [
+        "web",
+        "spreadsheet_dashboard",
+    ],
     "author": "initOS GmbH & Co. KG, "
     "GRAP, "
     "Iván Todorovich <ivan.todorovich@gmail.com>, "
@@ -17,11 +20,15 @@
     "data": [
         "security/ir.model.access.csv",
         "security/ir_rule.xml",
-        "views/templates.xml",
         "views/menu.xml",
         "views/tile_tile.xml",
         "views/tile_category.xml",
     ],
+    "assets": {
+        "web.assets_common": [
+            "web_dashboard_tile/static/src/css/web_dashboard_tile.css",
+        ],
+    },
     "demo": [
         "demo/tile_category.xml",
         "demo/tile_tile.xml",

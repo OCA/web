@@ -1,23 +1,21 @@
 First, you have to create tile categories.
 
-* Go to "Dashboards > Settings > Dashboard Categories"
+* Go to "Dashboards > Configuration > Overview Settings > Dashboard Categories"
 
-* Click on Create
+* Create categories
 
-* Set a name, and save.
-
-Odoo menu and action are automatically created.
+Odoo menu and action are automatically created in the "Dashboard > Overview" menu
 You should refresh your browser to see new menu items.
 
 .. image:: ../static/description/tile_category_form.png
 
 Then you can create tiles.
 
-* go to "Dashboards > Settings > Dashboard Tiles"
+* Go to "Dashboards > Configuration > Overview Settings > Dashboard Items"
 
 * create a new tile, set a name, a category and a model.
 
-* You can optionally define colors, domain a specific action to use.
+* You can optionally define colors, domain and a specific action to use.
 
 * Setting a user, or a group in "Security" tab will restrict the display of the tile.
 

@@ -1,4 +1,4 @@
-Adds a dashboard where you can configure tiles from any view and add them as short cut.
+This module extends the web module to add new dashboard overview system.
 
 By default, the tile displays items count of a given model restricted to a given domain.
 
