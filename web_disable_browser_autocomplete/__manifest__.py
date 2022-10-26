@@ -11,7 +11,7 @@
     'version': '12.0.1.0.1',
     'depends': ['web'],
     'qweb': [
-        'static/src/web/base.xml',
+        'static/src/xml/base.xml',
     ],
     'installable': True,
 }
