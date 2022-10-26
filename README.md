@@ -36,7 +36,7 @@ addon | version | maintainers | summary
 [web_dashboard_tile](web_dashboard_tile/) | 12.0.1.0.2 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Add Overview Dashboards with Tiles
 [web_decimal_numpad_dot](web_decimal_numpad_dot/) | 12.0.1.0.0 |  | Allows using numpad dot to enter period decimal separator
 [web_dialog_size](web_dialog_size/) | 12.0.1.0.1 |  | A module that lets the user expand a dialog box to the full screen width.
-[web_disable_browser_autocomplete](web_disable_browser_autocomplete/) | 12.0.1.0.1 |  | Allow disable browser autocomplete.
+[web_disable_browser_autocomplete](web_disable_browser_autocomplete/) | 12.0.1.0.2 |  | Allow disable browser autocomplete.
 [web_disable_export_group](web_disable_export_group/) | 12.0.1.0.0 |  | Web Disable Export Group
 [web_domain_field](web_domain_field/) | 12.0.1.0.0 |  | Use computed field as domain
 [web_domain_field_example](web_domain_field_example/) | 12.0.1.0.0 |  | Show and test web_domain_field module
