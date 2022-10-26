@@ -8,7 +8,7 @@
     'license': 'AGPL-3',
     'author': 'Akretion, Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/web',
-    'version': '12.0.1.0.1',
+    'version': '12.0.1.0.2',
     'depends': ['web'],
     'qweb': [
         'static/src/xml/base.xml',
