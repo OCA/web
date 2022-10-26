@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
     <record id="action_category_2_tile" model="ir.actions.act_window">
@@ -15,21 +15,35 @@
             <form>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
-                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
-                            <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+                        <button
+                            name="toggle_active"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-archive"
+                        >
+                            <field
+                                name="active"
+                                widget="boolean_button"
+                                options="{&quot;terminology&quot;: &quot;archive&quot;}"
+                            />
                         </button>
-                        <button class="oe_stat_button" type="action" name="%(web_dashboard_tile.action_category_2_tile)d"
-                            attrs="{'invisible': [('tile_qty', '=', 0)]}" icon="fa-list">
-                            <field string="Items" name="tile_qty" widget="statinfo"/>
+                        <button
+                            class="oe_stat_button"
+                            type="action"
+                            name="%(web_dashboard_tile.action_category_2_tile)d"
+                            attrs="{'invisible': [('tile_qty', '=', 0)]}"
+                            icon="fa-list"
+                        >
+                            <field string="Items" name="tile_qty" widget="statinfo" />
                         </button>
                     </div>
                     <div class="oe_title">
-                        <label for="name" class="oe_edit_only"/>
-                        <h1><field name="name" required="1"/></h1>
+                        <label for="name" class="oe_edit_only" />
+                        <h1><field name="name" required="1" /></h1>
                     </div>
                     <group string="Technical Informations">
-                        <field name="menu_id"/>
-                        <field name="action_id"/>
+                        <field name="menu_id" />
+                        <field name="action_id" />
                     </group>
                 </sheet>
             </form>
@@ -40,10 +54,10 @@
         <field name="model">tile.category</field>
         <field name="arch" type="xml">
             <tree decoration-muted="(active == False)">
-                <field name="sequence" widget="handle"/>
-                <field name="name"/>
-                <field name="tile_qty"/>
-                <field name="active"/>
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="tile_qty" />
+                <field name="active" />
             </tree>
         </field>
     </record>
@@ -56,8 +70,11 @@
         <field name="context">{'active_test': False}</field>
     </record>
 
-    <menuitem id="menu_tile_category"
+    <menuitem
+        id="menu_tile_category"
         parent="menu_dashboard_tile_settings"
-        action="action_tile_category" sequence="50"/>
+        action="action_tile_category"
+        sequence="50"
+    />
 
 </odoo>

@@ -13,17 +13,15 @@ def migrate(cr, version):
 
         # categories was optional in previous versions
         # affecting all tiles without categories
-        tiles_without_category = env["tile.tile"].search(
-            [('category_id', '=', False)])
+        tiles_without_category = env["tile.tile"].search([("category_id", "=", False)])
         if tiles_without_category:
-            default_category = env["tile.category"].create({
-                "name": "Default Category",
-                })
-            tiles_without_category.write({
-                'category_id': default_category.id
-            })
+            default_category = env["tile.category"].create(
+                {
+                    "name": "Default Category",
+                }
+            )
+            tiles_without_category.write({"category_id": default_category.id})
 
         # Enable all categories, to generate actions and menus
-        categories = env['tile.category'].with_context(
-            active_test=False).search([])
-        categories.write({'active': True})
+        categories = env["tile.category"].with_context(active_test=False).search([])
+        categories.write({"active": True})

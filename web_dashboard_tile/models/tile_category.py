@@ -17,23 +17,24 @@ class TileCategory(models.Model):
     active = fields.Boolean(default=True)
 
     action_id = fields.Many2one(
-        string='Odoo Action', comodel_name='ir.actions.act_window',
-        readonly=True)
+        string="Odoo Action", comodel_name="ir.actions.act_window", readonly=True
+    )
 
     menu_id = fields.Many2one(
-        string='Odoo Menu', comodel_name='ir.ui.menu', readonly=True)
+        string="Odoo Menu", comodel_name="ir.ui.menu", readonly=True
+    )
 
     tile_ids = fields.One2many(
-        string='Tiles', comodel_name='tile.tile',
-        inverse_name='category_id')
+        string="Tiles", comodel_name="tile.tile", inverse_name="category_id"
+    )
 
     tile_qty = fields.Integer(
-        string='Tiles Quantity',
-        compute='_compute_tile_qty',
+        string="Tiles Quantity",
+        compute="_compute_tile_qty",
         store=True,
     )
 
-    @api.depends('tile_ids')
+    @api.depends("tile_ids")
     def _compute_tile_qty(self):
         for category in self:
             category.tile_qty = len(category.tile_ids)
@@ -41,34 +42,36 @@ class TileCategory(models.Model):
     def _prepare_action(self):
         self.ensure_one()
         return {
-            'name': self.name,
-            'res_model': 'tile.tile',
-            'type': 'ir.actions.act_window',
-            'view_mode': 'kanban',
-            'domain': """[
+            "name": self.name,
+            "res_model": "tile.tile",
+            "type": "ir.actions.act_window",
+            "view_mode": "kanban",
+            "domain": """[
                 ('hidden', '=', False),
                 '|', ('user_id', '=', False), ('user_id', '=', uid),
                 ('category_id', '=', {self.id})
-            ]""".format(self=self),
+            ]""".format(
+                self=self
+            ),
         }
 
     def _prepare_menu(self):
         self.ensure_one()
         return {
-            'name': self.name,
-            'parent_id': self.env.ref(
-                'web_dashboard_tile.menu_dashboard_tile').id,
-            'action': 'ir.actions.act_window,%d' % self.action_id.id,
-            'sequence': self.sequence,
+            "name": self.name,
+            "parent_id": self.env.ref("web_dashboard_tile.menu_dashboard_tile").id,
+            "action": "ir.actions.act_window,%d" % self.action_id.id,
+            "sequence": self.sequence,
         }
 
     def _create_ui(self):
-        IrUiMenu = self.env['ir.ui.menu']
-        IrActionsActWindows = self.env['ir.actions.act_window']
+        IrUiMenu = self.env["ir.ui.menu"]
+        IrActionsActWindows = self.env["ir.actions.act_window"]
         for category in self:
             if not category.action_id:
                 category.action_id = IrActionsActWindows.create(
-                    category._prepare_action())
+                    category._prepare_action()
+                )
             if not category.menu_id:
                 category.menu_id = IrUiMenu.create(category._prepare_menu())
 
@@ -88,16 +91,16 @@ class TileCategory(models.Model):
 
     def write(self, vals):
         res = super().write(vals)
-        if 'active' in vals.keys():
-            if vals.get('active'):
+        if "active" in vals.keys():
+            if vals.get("active"):
                 self._create_ui()
             else:
                 self._delete_ui()
-        if 'sequence' in vals.keys():
-            self.mapped('menu_id').write({'sequence': vals['sequence']})
-        if 'name' in vals.keys():
-            self.mapped('menu_id').write({'name': vals['name']})
-            self.mapped('action_id').write({'name': vals['name']})
+        if "sequence" in vals.keys():
+            self.mapped("menu_id").write({"sequence": vals["sequence"]})
+        if "name" in vals.keys():
+            self.mapped("menu_id").write({"name": vals["name"]})
+            self.mapped("action_id").write({"name": vals["name"]})
         return res
 
     def unlink(self):

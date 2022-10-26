@@ -12,4 +12,3 @@
 * Restore original Domain + Filter when an action is set.
 * Posibility to hide the tile based on a field expression.
 * Posibility to set the background color based on a field expression.
-

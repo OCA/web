@@ -30,4 +30,3 @@ You can optionally define a secondary value, for that purpose :
 * You can define a specific format. (``.format()`` python syntax)
 
 .. image:: ../static/description/tile_tile_form_secondary_value.png
-

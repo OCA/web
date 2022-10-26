@@ -5,15 +5,15 @@
 
 import datetime
 import time
-from statistics import median
-from dateutil.relativedelta import relativedelta
 from collections import OrderedDict
+from statistics import median
+
+from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models
+from odoo.exceptions import ValidationError, except_orm
 from odoo.tools.safe_eval import safe_eval as eval
 from odoo.tools.translate import _
-from odoo.exceptions import ValidationError, except_orm
-
 
 FIELD_FUNCTIONS = OrderedDict(
     [
@@ -81,8 +81,11 @@ class TileTile(models.Model):
     sequence = fields.Integer(default=0, required=True)
 
     category_id = fields.Many2one(
-        string="Category", comodel_name="tile.category", required=True,
-        ondelete="CASCADE")
+        string="Category",
+        comodel_name="tile.category",
+        required=True,
+        ondelete="CASCADE",
+    )
 
     user_id = fields.Many2one(string="User", comodel_name="res.users")
 
@@ -98,9 +101,7 @@ class TileTile(models.Model):
         "(that is, when User field is left empty)",
     )
 
-    model_id = fields.Many2one(
-        comodel_name="ir.model", string="Model", required=True
-    )
+    model_id = fields.Many2one(comodel_name="ir.model", string="Model", required=True)
 
     model_name = fields.Char(string="Model name", related="model_id.model")
 
@@ -108,26 +109,30 @@ class TileTile(models.Model):
 
     action_id = fields.Many2one(
         comodel_name="ir.actions.act_window",
-        string="Action", help="Let empty to use the default action related to"
-        " the selected model.",
-        domain="[('res_model', '=', model_name)]")
+        string="Action",
+        help="Let empty to use the default action related to" " the selected model.",
+        domain="[('res_model', '=', model_name)]",
+    )
 
     active = fields.Boolean(
         compute="_compute_active", search="_search_active", readonly=True
     )
 
     hide_if_null = fields.Boolean(
-        string="Hide if null", help="If checked, the item will be hidden"
-        " if the primary value is null.")
+        string="Hide if null",
+        help="If checked, the item will be hidden" " if the primary value is null.",
+    )
 
     hidden = fields.Boolean(
-        string="Hidden", compute="_compute_data",
-        search="_search_hidden")
+        string="Hidden", compute="_compute_data", search="_search_hidden"
+    )
 
     # Primary Value
     primary_function = fields.Selection(
-        string="Primary Function", required=True,
-        selection=FIELD_FUNCTION_SELECTION,  default="count",
+        string="Primary Function",
+        required=True,
+        selection=FIELD_FUNCTION_SELECTION,
+        default="count",
     )
 
     primary_field_id = fields.Many2one(
@@ -143,19 +148,20 @@ class TileTile(models.Model):
         "ie: '{:,} Kgs' will output '1,000 Kgs' if value is 1000.",
     )
 
-    primary_value = fields.Float(
-        string="Primary Value", compute="_compute_data")
+    primary_value = fields.Float(string="Primary Value", compute="_compute_data")
 
     primary_formated_value = fields.Char(
-        string="Primary Formated Value", compute="_compute_data")
+        string="Primary Formated Value", compute="_compute_data"
+    )
 
     primary_helper = fields.Char(
-        string="Primary Helper", compute="_compute_helper",
-        store=True)
+        string="Primary Helper", compute="_compute_helper", store=True
+    )
 
     # Secondary Value
     secondary_function = fields.Selection(
-        string="Secondary Function", selection=FIELD_FUNCTION_SELECTION,
+        string="Secondary Function",
+        selection=FIELD_FUNCTION_SELECTION,
     )
 
     secondary_field_id = fields.Many2one(
@@ -171,16 +177,14 @@ class TileTile(models.Model):
         "ie: '{:,} Kgs' will output '1,000 Kgs' if value is 1000.",
     )
 
-    secondary_value = fields.Float(
-        string="Secondary Value", compute="_compute_data")
+    secondary_value = fields.Float(string="Secondary Value", compute="_compute_data")
 
     secondary_formated_value = fields.Char(
         string="Secondary Formated Value", compute="_compute_data"
     )
 
     secondary_helper = fields.Char(
-        string="Secondary Helper", compute="_compute_helper",
-        store=True
+        string="Secondary Helper", compute="_compute_helper", store=True
     )
 
     error = fields.Char(string="Error Details", compute="_compute_data")
@@ -198,19 +202,14 @@ class TileTile(models.Model):
                 count = model.search_count(eval(domain, eval_context))
             except Exception as e:
                 tile.primary_value = 0.0
-                tile.primary_formated_value =\
-                    tile.secondary_formated_value = _("Error")
+                tile.primary_formated_value = tile.secondary_formated_value = _("Error")
                 tile.error = str(e)
                 return
             fields = [
-                f.name
-                for f in [tile.primary_field_id, tile.secondary_field_id]
-                if f
+                f.name for f in [tile.primary_field_id, tile.secondary_field_id] if f
             ]
             read_vals = (
-                fields
-                and model.search_read(eval(domain, eval_context), fields)
-                or []
+                fields and model.search_read(eval(domain, eval_context), fields) or []
             )
             for f in ["primary_", "secondary_"]:
                 f_function = f + "function"
@@ -231,8 +230,9 @@ class TileTile(models.Model):
                         value = func(vals or [0.0])
                     try:
                         tile[f_value] = value
-                        tile[f_formated_value] = (
-                            tile[f_format] or "{:,}").format(value)
+                        tile[f_formated_value] = (tile[f_format] or "{:,}").format(
+                            value
+                        )
                         if tile.hide_if_null and not value:
                             tile.hidden = True
                     except ValueError as e:
@@ -274,8 +274,9 @@ class TileTile(models.Model):
     def _search_hidden(self, operator, operand):
         items = self.search([])
         hidden_tile_ids = [x.id for x in items if x.hidden]
-        if (operator == "=" and operand is False) or\
-                (operator == "!=" and operand is True):
+        if (operator == "=" and operand is False) or (
+            operator == "!=" and operand is True
+        ):
             domain = [("id", "not in", hidden_tile_ids)]
         else:
             domain = [("id", "in", hidden_tile_ids)]
@@ -346,12 +347,14 @@ class TileTile(models.Model):
                 "target": "current",
                 "domain": self.domain,
             }
-        action.update({
-            "name": self.name,
-            "display_name": self.name,
-            "context": dict(self.env.context, group_by=False),
-            "domain": self.domain,
-        })
+        action.update(
+            {
+                "name": self.name,
+                "display_name": self.name,
+                "context": dict(self.env.context, group_by=False),
+                "domain": self.domain,
+            }
+        )
         return action
 
     @api.model
@@ -359,9 +362,7 @@ class TileTile(models.Model):
         if "model_id" in vals and not vals["model_id"].isdigit():
             # need to replace model_name with its id
             vals["model_id"] = (
-                self.env["ir.model"]
-                .search([("model", "=", vals["model_id"])])
-                .id
+                self.env["ir.model"].search([("model", "=", vals["model_id"])]).id
             )
         self.create(vals)
 
