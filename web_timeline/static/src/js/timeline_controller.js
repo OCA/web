@@ -58,7 +58,7 @@ odoo.define("web_timeline.TimelineController", function (require) {
 
             let fields = this.renderer.fieldNames;
             fields = _.uniq(fields.concat(n_group_bys));
-            return $.when(
+            $.when(
                 res,
                 this._rpc({
                     model: this.model.modelName,
@@ -77,6 +77,7 @@ odoo.define("web_timeline.TimelineController", function (require) {
                     )
                 )
             );
+            return res;
         },
 
         /**
