@@ -58,7 +58,7 @@ odoo.define("web_timeline.TimelineController", function (require) {
 
             let fields = this.renderer.fieldNames;
             fields = _.uniq(fields.concat(n_group_bys));
-            return $.when(
+            $.when(
                 res,
                 this._rpc({
                     model: this.model.modelName,
@@ -77,6 +77,7 @@ odoo.define("web_timeline.TimelineController", function (require) {
                     )
                 )
             );
+            return res;
         },
 
         /**
@@ -270,12 +271,12 @@ odoo.define("web_timeline.TimelineController", function (require) {
             }
             if (this.date_start) {
                 default_context["default_".concat(this.date_start)] = moment(item.start)
-                    .add(1, "hours")
+                    .utc()
                     .format("YYYY-MM-DD HH:mm:ss");
             }
             if (this.date_stop && item.end) {
                 default_context["default_".concat(this.date_stop)] = moment(item.end)
-                    .add(1, "hours")
+                    .utc()
                     .format("YYYY-MM-DD HH:mm:ss");
             }
             if (item.group > 0) {
@@ -317,8 +318,6 @@ odoo.define("web_timeline.TimelineController", function (require) {
                 var new_event = this.renderer.event_data_transform(records[0]);
                 var items = this.renderer.timeline.itemsData;
                 items.add(new_event);
-                this.renderer.timeline.setItems(items);
-                this.reload();
             });
         },
 
