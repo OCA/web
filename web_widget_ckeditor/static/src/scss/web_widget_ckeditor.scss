@@ -6,6 +6,10 @@
 
 .o_field_widget {
     &.oe_form_field_html_ckeditor {
+        :root {
+            --ck-todo-list-checkmark-size: 16px;
+        }
+
         .ck-editor__editable {
             min-height: 330px;
         }
@@ -18,6 +22,65 @@
                     will-change: auto;
                 }
             }
+        }
+
+        .todo-list {
+            list-style: none;
+        }
+        .todo-list li {
+            margin-bottom: 5px;
+        }
+        .todo-list li .todo-list {
+            margin-top: 5px;
+        }
+        .todo-list .todo-list__label > input {
+            -webkit-appearance: none;
+            display: inline-block;
+            position: relative;
+            width: var(--ck-todo-list-checkmark-size);
+            height: var(--ck-todo-list-checkmark-size);
+            vertical-align: middle;
+            border: 0;
+            left: -25px;
+            margin-right: -15px;
+            right: 0;
+            margin-left: 0;
+        }
+        .todo-list .todo-list__label > input::before {
+            display: block;
+            position: absolute;
+            box-sizing: border-box;
+            content: '';
+            width: 100%;
+            height: 100%;
+            border: 1px solid hsl(0, 0%, 20%);
+            border-radius: 2px;
+            transition: 250ms ease-in-out box-shadow, 250ms ease-in-out background, 250ms ease-in-out border;
+        }
+        .todo-list .todo-list__label > input::after {
+            display: block;
+            position: absolute;
+            box-sizing: content-box;
+            pointer-events: none;
+            content: '';
+            left: calc( var(--ck-todo-list-checkmark-size) / 3 );
+            top: calc( var(--ck-todo-list-checkmark-size) / 5.3 );
+            width: calc( var(--ck-todo-list-checkmark-size) / 5.3 );
+            height: calc( var(--ck-todo-list-checkmark-size) / 2.6 );
+            border-style: solid;
+            border-color: transparent;
+            border-width: 0 calc( var(--ck-todo-list-checkmark-size) / 8 ) calc( var(--ck-todo-list-checkmark-size) / 8 ) 0;
+            transform: rotate(45deg);
+        }
+        .todo-list .todo-list__label > input[checked]::before {
+            background: hsl(126, 64%, 41%);
+            border-color: hsl(126, 64%, 41%);
+        }
+        .todo-list .todo-list__label > input[checked]::after {
+            border-color: hsl(0, 0%, 100%);
+        }
+        .todo-list .todo-list__label .todo-list__label__description {
+            vertical-align: middle;
         }
     }
 }

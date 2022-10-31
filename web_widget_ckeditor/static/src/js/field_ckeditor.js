@@ -138,6 +138,16 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
                 return this.$target.val();
             },
             /**
+             * @override
+             */
+            _setValue: function (value, options) {
+                let $obj = $('<div>').html(value)
+                if ($obj.find("ul.todo-list").length) {
+                    value = this._todoListCKEditor2Odoo($obj);
+                }
+                return this._super(value, options);
+            },
+            /**
              * Gets the CKEditor toolbar items configuration.
              * If not found, returns the default configuration.
              */
@@ -171,6 +181,7 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
                     "|",
                     "bulletedList",
                     "numberedList",
+                    "todoList",
                     "alignment",
                     "|",
                     "outdent",
@@ -264,6 +275,55 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
                 this.$content.appendTo(this.$el);
             },
             /**
+             * This function converts the TodoList schema from Odoo to CKEditor.
+             *
+             * @private
+             * @param {Object} $obj
+             * @returns {String} the $obj converted to html
+             */
+            _todoListOdoo2CKEditor: function ($obj) {
+              $obj.find('ul.o_checklist').each(function(index) {
+                $(this).removeClass('o_checklist').addClass('todo-list');
+                $(this).find("li").each(function(index) {
+                  let checked = '';
+                  let text = $(this).children('p').html();
+                  if ($(this).hasClass('o_checked')) {
+                    $(this).removeClass('o_checked');
+                    checked = 'checked="checked"';
+                  };
+                  if(typeof text !== 'undefined') {
+                    $(this).prepend('<label class="todo-list__label" contenteditable="false"><input type="checkbox" tabindex="-1"' + checked + '></label><span class="todo-list__label__description">' + text + '</span>')
+                  }
+                  $(this).children('p').remove();
+                });
+              });
+              return $obj.html()
+            },
+            /**
+             * This function converts the TodoList schema from CKEditor to Odoo.
+             *
+             * @private
+             * @param {Object} $obj
+             * @returns {String} the $obj converted to html
+             */
+            _todoListCKEditor2Odoo: function ($obj) {
+              $obj.find('ul.todo-list').each(function(index) {
+                $(this).removeClass('todo-list').addClass('o_checklist');
+                $(this).find("li").each(function(index) {
+                  let text = $(this).children('.todo-list__label').children('.todo-list__label__description').html();
+                  if ($(this).children('label').find('input[checked="checked"]').length) {
+                    $(this).addClass('o_checked');
+                  };
+                  if(typeof text !== 'undefined') {
+                    $(this).prepend('<p>' + text + '</p>')
+                  }
+                  $(this).children('.todo-list__label').remove();
+                  $(this).children('.todo-list__label__description').remove();
+                });
+              });
+              return $obj.html()
+            },
+            /**
              * This function is similar to the one found in core's web_editor.FieldHtml.
              *
              * @private
@@ -272,6 +332,10 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
              */
             _textToHtml: function (text) {
                 let value = text || "";
+                let $obj = $('<div>').html(value)
+                if ($obj.find("ul.o_checklist").length) {
+                    value = this._todoListOdoo2CKEditor($obj);
+                }
                 try {
                     // Crashes if text isn't html
                     $(text)[0].innerHTML; // eslint-disable-line
