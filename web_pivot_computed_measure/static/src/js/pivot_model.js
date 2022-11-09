@@ -1,7 +1,7 @@
 /* Copyright 2020 Tecnativa - Alexandre Díaz
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html) */
 
-odoo.define("web_pivot_computed_measure.PivotModel", function(require) {
+odoo.define("web_pivot_computed_measure.PivotModel", function (require) {
     "use strict";
 
     const core = require("web.core");
@@ -23,8 +23,8 @@ odoo.define("web_pivot_computed_measure.PivotModel", function(require) {
          * @param {String} format
          * @returns a promise
          */
-        createComputedMeasure: function(id, field1, field2, operation, name, format) {
-            const measure = _.find(this._computed_measures, item => {
+        createComputedMeasure: function (id, field1, field2, operation, name, format) {
+            const measure = _.find(this._computed_measures, (item) => {
                 return (
                     item.field1 === field1 &&
                     item.field2 === field2 &&
@@ -67,7 +67,7 @@ odoo.define("web_pivot_computed_measure.PivotModel", function(require) {
          * @param {List} fields *Optional*
          * @returns a promise
          */
-        _createVirtualMeasure: function(cmDef, fields) {
+        _createVirtualMeasure: function (cmDef, fields) {
             const arrFields = fields || this.fields;
             // This is a minimal 'fake' field info
             arrFields[cmDef.id] = {
@@ -89,7 +89,7 @@ odoo.define("web_pivot_computed_measure.PivotModel", function(require) {
          * @private
          * @param {List of Strings} fields
          */
-        _activeMeasures: function(fields) {
+        _activeMeasures: function (fields) {
             let needLoad = false;
             for (const field of fields) {
                 if (!this._isMeasureEnabled(field)) {
@@ -107,7 +107,7 @@ odoo.define("web_pivot_computed_measure.PivotModel", function(require) {
          * @private
          * @param {String} field
          */
-        _isMeasureEnabled: function(field) {
+        _isMeasureEnabled: function (field) {
             return _.contains(this.data.measures, field);
         },
 
@@ -117,7 +117,7 @@ odoo.define("web_pivot_computed_measure.PivotModel", function(require) {
          * @private
          * @param {Object} subGroupData
          */
-        _fillComputedMeasuresData: function(subGroupData) {
+        _fillComputedMeasuresData: function (subGroupData) {
             for (const cm of this._computed_measures) {
                 if (!this._isMeasureEnabled(cm.id)) return;
                 if (subGroupData.__count === 0) {
@@ -134,7 +134,7 @@ odoo.define("web_pivot_computed_measure.PivotModel", function(require) {
          *
          * @override
          */
-        _prepareData: function(group, groupSubdivisions) {
+        _prepareData: function (group, groupSubdivisions) {
             for (const groupSubdivision of groupSubdivisions) {
                 for (const subGroup of groupSubdivision.subGroups) {
                     this._fillComputedMeasuresData(subGroup);
@@ -152,7 +152,7 @@ odoo.define("web_pivot_computed_measure.PivotModel", function(require) {
          *
          * @override
          */
-        _getGroupSubdivision: function() {
+        _getGroupSubdivision: function () {
             const computed_measures = [];
             for (let i = 0; i < this.data.measures.length; i++)
                 if (this.data.measures[i].startsWith("__computed_")) {
@@ -170,7 +170,7 @@ odoo.define("web_pivot_computed_measure.PivotModel", function(require) {
          *
          * @override
          */
-        load: function(params) {
+        load: function (params) {
             this._computed_measures =
                 params.context.pivot_computed_measures ||
                 params.computed_measures ||
@@ -202,7 +202,7 @@ odoo.define("web_pivot_computed_measure.PivotModel", function(require) {
          *
          * @override
          */
-        reload: function(handle, params) {
+        reload: function (handle, params) {
             if ("context" in params) {
                 this._computed_measures =
                     params.context.pivot_computed_measures ||
@@ -236,7 +236,7 @@ odoo.define("web_pivot_computed_measure.PivotModel", function(require) {
          *
          * @override
          */
-        get: function() {
+        get: function () {
             const res = this._super.apply(this, arguments);
             res.computed_measures = this._computed_measures;
             return res;
@@ -248,10 +248,10 @@ odoo.define("web_pivot_computed_measure.PivotModel", function(require) {
          *
          * @override
          */
-        toggleMeasure: function(field) {
+        toggleMeasure: function (field) {
             if (this._isMeasureEnabled(field)) {
                 // Measure is disabled
-                const umeasures = _.filter(this._computed_measures, item => {
+                const umeasures = _.filter(this._computed_measures, (item) => {
                     return item.field1 === field || item.field2 === field;
                 });
                 if (umeasures.length && this._isMeasureEnabled(umeasures[0].id)) {
