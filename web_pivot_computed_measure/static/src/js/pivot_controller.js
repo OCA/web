@@ -1,7 +1,7 @@
 /* Copyright 2020 Tecnativa - Alexandre Díaz
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html) */
 
-odoo.define("web_pivot_computed_measure.PivotController", function(require) {
+odoo.define("web_pivot_computed_measure.PivotController", function (require) {
     "use strict";
 
     const core = require("web.core");
@@ -24,7 +24,7 @@ odoo.define("web_pivot_computed_measure.PivotController", function(require) {
          *
          * @override
          */
-        getOwnedQueryParams: function() {
+        getOwnedQueryParams: function () {
             const res = this._super.apply(this, arguments);
             const state = this.model.get({raw: true});
             res.context.pivot_computed_measures = state.computed_measures;
@@ -34,7 +34,7 @@ odoo.define("web_pivot_computed_measure.PivotController", function(require) {
         /**
          * @override
          */
-        renderButtons: function($node) {
+        renderButtons: function ($node) {
             this._super.apply(this, arguments);
             if ($node) {
                 this._renderComputedMeasures();
@@ -46,7 +46,7 @@ odoo.define("web_pivot_computed_measure.PivotController", function(require) {
          *
          * @override
          */
-        _onButtonClick: function(event) {
+        _onButtonClick: function (event) {
             const $target = $(event.target);
             if ($target.parents("div[data-id='__computed__']").length) {
                 let hideMenu = false;
@@ -108,23 +108,26 @@ odoo.define("web_pivot_computed_measure.PivotController", function(require) {
          *
          * @private
          */
-        _renderComputedMeasures: function() {
+        _renderComputedMeasures: function () {
             if (this.$buttons_measures_ex && this.$buttons_measures_ex.length) {
                 this.$buttons_measures_ex.remove();
             }
-            const measures = _.sortBy(_.pairs(_.omit(this.measures, "__count")), x => {
-                return x[1].string.toLowerCase();
-            });
+            const measures = _.sortBy(
+                _.pairs(_.omit(this.measures, "__count")),
+                (x) => {
+                    return x[1].string.toLowerCase();
+                }
+            );
             this.$buttons_measures_ex = $(
                 QWeb.render("web_pivot_computed_measure.ExtendedMenu", {
                     isOpen: this.computed_measures_open,
                     debug: config.isDebug(),
                     measures: measures,
                     computed_measures: _.map(
-                        _.reject(measures, item => {
+                        _.reject(measures, (item) => {
                             return !item[1].__computed_id;
                         }),
-                        item => {
+                        (item) => {
                             item[1].active = _.contains(
                                 this.model.data.measures,
                                 item[0]
@@ -149,7 +152,7 @@ odoo.define("web_pivot_computed_measure.PivotController", function(require) {
          * @private
          * @param {CustomEvent} ev
          */
-        _onAddMeasure: function(ev) {
+        _onAddMeasure: function (ev) {
             this.measures[ev.data.id] = ev.data.def;
             this._renderComputedMeasures();
         },
@@ -160,7 +163,7 @@ odoo.define("web_pivot_computed_measure.PivotController", function(require) {
          * @private
          * @param {CustomEvent} ev
          */
-        _onRemoveMeasure: function(ev) {
+        _onRemoveMeasure: function (ev) {
             delete this.measures[ev.data.id];
             this._renderComputedMeasures();
         },
@@ -171,7 +174,7 @@ odoo.define("web_pivot_computed_measure.PivotController", function(require) {
          * @private
          * @param {ChangeEvent} ev
          */
-        _onChangeComputedMeasureOperation: function(ev) {
+        _onChangeComputedMeasureOperation: function (ev) {
             const $option = $(ev.target.options[ev.target.selectedIndex]);
             if ($(ev.target).val() === "custom") {
                 this.$buttons_measures_ex
