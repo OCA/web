@@ -59,17 +59,13 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function (require) {
                     )
                 );
             }
-            this.show_row_totals = this.parse_boolean(
-                node.show_row_totals ||
+            this.show_row_totals = Boolean(
+                this.parse_boolean(node.show_row_totals || "1") &&
                     this.is_aggregatable(field_defs[this.field_value])
-                    ? "1"
-                    : ""
             );
-            this.show_column_totals = this.parse_boolean(
-                node.show_column_totals ||
+            this.show_column_totals = Boolean(
+                this.parse_boolean(node.show_column_totals || "1") &&
                     this.is_aggregatable(field_defs[this.field_value])
-                    ? "1"
-                    : ""
             );
         },
 
@@ -176,6 +172,9 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function (require) {
 
         /**
          * Determine if a field represented by field_def can be aggregated
+         *
+         * @param {Object} field_def: field def
+         * @returns {Boolean} if field def is aggregatable
          */
         is_aggregatable: function (field_def) {
             return field_def.type in {float: 1, monetary: 1, integer: 1};

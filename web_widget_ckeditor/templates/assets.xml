@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    Copyright 2021 Camptocamp SA (https://www.camptocamp.com).
+    @author Iván Todorovich <ivan.todorovich@camptocamp.com>
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+    <template id="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr="//script[last()]" position="after">
+            <script
+                type="text/javascript"
+                src="/web_widget_ckeditor/static/lib/ckeditor/build/ckeditor.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_widget_ckeditor/static/src/js/field_ckeditor.js"
+            />
+        </xpath>
+        <xpath expr="//link[last()]" position="after">
+            <link
+                rel="stylesheet"
+                href="/web_widget_ckeditor/static/src/scss/web_widget_ckeditor.scss"
+            />
+        </xpath>
+    </template>
+
+    <data noupdate="1">
+        <!--
+            This view will override the default html wysiwyg editor with CKEditor.
+            Disable or remove it if you only want to use CKEditor explicitly.
+        -->
+        <template
+            id="assets_backend_field_html_override"
+            name="Override HTML field with CKEditor"
+            inherit_id="assets_backend"
+        >
+            <xpath expr="//script[last()]" position="after">
+                <script
+                    type="text/javascript"
+                    src="/web_widget_ckeditor/static/src/js/field_html_override.js"
+                />
+            </xpath>
+        </template>
+    </data>
+
+</odoo>

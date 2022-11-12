@@ -1,0 +1,179 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* support_branding
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: support_branding
+#: model_terms:ir.ui.view,arch_db:support_branding.support_res_config_settings_view_form
+msgid ""
+"Add a branding color\n"
+"                                            e.g #b163a3"
+msgstr ""
+
+#. module: support_branding
+#: model_terms:ir.ui.view,arch_db:support_branding.support_res_config_settings_view_form
+msgid ""
+"Add the support company URL\n"
+"                                            e.g https://odoo-community.org"
+msgstr ""
+
+#. module: support_branding
+#: model_terms:ir.ui.view,arch_db:support_branding.support_res_config_settings_view_form
+msgid ""
+"Add the support company name\n"
+"                                            e.g Odoo Community Association (OCA)"
+msgstr ""
+
+#. module: support_branding
+#: model_terms:ir.ui.view,arch_db:support_branding.support_res_config_settings_view_form
+msgid ""
+"Add the support email to send issues\n"
+"                                            e.g info@helpdesksupport.com"
+msgstr ""
+
+#. module: support_branding
+#: model_terms:ir.ui.view,arch_db:support_branding.support_res_config_settings_view_form
+msgid "Add the support release"
+msgstr ""
+
+#. module: support_branding
+#: model:ir.model.fields,field_description:support_branding.field_res_config_settings__support_branding_color
+msgid "Branding color"
+msgstr ""
+
+#. module: support_branding
+#: model:ir.model.fields,field_description:support_branding.field_res_config_settings__support_company
+msgid "Company Name"
+msgstr ""
+
+#. module: support_branding
+#: model:ir.model.fields,field_description:support_branding.field_res_config_settings__support_company_url
+msgid "Company URL"
+msgstr ""
+
+#. module: support_branding
+#: model:ir.model,name:support_branding.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: support_branding
+#: model_terms:ir.ui.view,arch_db:support_branding.support_res_config_settings_view_form
+msgid "Creates an error (i.e ZeroDivisionError) to test support branding"
+msgstr ""
+
+#. module: support_branding
+#: model:ir.model.fields,field_description:support_branding.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: support_branding
+#. openerp-web
+#: code:addons/support_branding/static/src/js/support_branding.js:0
+#, python-format
+msgid "Email to %s"
+msgstr ""
+
+#. module: support_branding
+#. openerp-web
+#: code:addons/support_branding/static/src/xml/base.xml:0
+#, python-format
+msgid ""
+"Email to support\n"
+"                        company"
+msgstr ""
+
+#. module: support_branding
+#. openerp-web
+#: code:addons/support_branding/static/src/xml/base.xml:0
+#, python-format
+msgid "For Support visit our"
+msgstr ""
+
+#. module: support_branding
+#: model:ir.model.fields,field_description:support_branding.field_res_config_settings__id
+msgid "ID"
+msgstr ""
+
+#. module: support_branding
+#: model:ir.model.fields,field_description:support_branding.field_res_config_settings____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: support_branding
+#. openerp-web
+#: code:addons/support_branding/static/src/xml/base.xml:0
+#, python-format
+msgid "Please fill in how you produced this error..."
+msgstr ""
+
+#. module: support_branding
+#: model_terms:ir.ui.view,arch_db:support_branding.support_res_config_settings_view_form
+msgid "Support Company Settings"
+msgstr ""
+
+#. module: support_branding
+#: model_terms:ir.ui.view,arch_db:support_branding.support_res_config_settings_view_form
+msgid "Support Settings"
+msgstr ""
+
+#. module: support_branding
+#: model:ir.model.fields,field_description:support_branding.field_res_config_settings__support_email
+msgid "Support email"
+msgstr ""
+
+#. module: support_branding
+#: model:ir.model.fields,field_description:support_branding.field_res_config_settings__support_release
+msgid "Support release"
+msgstr ""
+
+#. module: support_branding
+#. openerp-web
+#: code:addons/support_branding/static/src/xml/base.xml:0
+#, python-format
+msgid "Technical Support By"
+msgstr ""
+
+#. module: support_branding
+#: model_terms:ir.ui.view,arch_db:support_branding.support_res_config_settings_view_form
+msgid "Test Support Branding"
+msgstr ""
+
+#. module: support_branding
+#: model_terms:ir.ui.view,arch_db:support_branding.support_res_config_settings_view_form
+msgid ""
+"The below button generates a\n"
+"                                            division by zero python error which\n"
+"                                            allows a user to test the modules\n"
+"                                            functionality."
+msgstr ""
+
+#. module: support_branding
+#. openerp-web
+#: code:addons/support_branding/static/src/xml/base.xml:0
+#, python-format
+msgid "Use HTML Editor"
+msgstr ""
+
+#. module: support_branding
+#. openerp-web
+#: code:addons/support_branding/static/src/xml/base.xml:0
+#, python-format
+msgid "or mail us at"
+msgstr ""
+
+#. module: support_branding
+#. openerp-web
+#: code:addons/support_branding/static/src/xml/base.xml:0
+#, python-format
+msgid "website"
+msgstr ""

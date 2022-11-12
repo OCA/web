@@ -4,7 +4,13 @@ env:
 
 # See https://github.com/OCA/odoo-community.org/issues/37#issuecomment-470686449
 parserOptions:
-  ecmaVersion: 2017
+  ecmaVersion: 2019
+
+overrides:
+  - files:
+      - "**/*.esm.js"
+    parserOptions:
+      sourceType: module
 
 # Globals available in Odoo that shouldn't produce errorings
 globals:

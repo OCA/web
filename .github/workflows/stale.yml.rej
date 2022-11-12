@@ -1,0 +1,9 @@
+diff a/.github/workflows/stale.yml b/.github/workflows/stale.yml	(rejected hunks)
+@@ -15,2 +15,3 @@ jobs:
+           # General settings.
++          ascending: true
+           remove-stale-when-updated: true
+@@ -52,2 +53,3 @@ jobs:
+           repo-token: ${{ secrets.GITHUB_TOKEN }}
++          ascending: true
+           only-labels: "needs more information"

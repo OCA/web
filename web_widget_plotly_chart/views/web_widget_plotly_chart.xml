@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="assets_backend"
+        name="web_widget_plotly_chart assets"
+        inherit_id="web.assets_backend"
+    >
+        <xpath expr="." position="inside">
+            <!-- Library -->
+            <script
+                type="text/javascript"
+                src="/web_widget_plotly_chart/static/src/lib/plotly/plotly-2.7.0.min.js"
+            />
+
+            <!-- Widget -->
+            <script
+                type="text/javascript"
+                src="/web_widget_plotly_chart/static/src/js/widget_plotly.js"
+            />
+        </xpath>
+    </template>
+</odoo>

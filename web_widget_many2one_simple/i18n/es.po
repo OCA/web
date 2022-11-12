@@ -1,0 +1,66 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_widget_many2one_simple
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2021-02-17 14:45+0000\n"
+"Last-Translator: claudiagn <claudia.gargallo@qubiq.es>\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: web_widget_many2one_simple
+#. openerp-web
+#: code:addons/web_widget_many2one_simple/static/src/js/many2one_simple_field.js:0
+#, python-format
+msgid "Can't found any record with the given criteria."
+msgstr "No se pudo encontrar ningún registro con los criterios dados."
+
+#. module: web_widget_many2one_simple
+#. openerp-web
+#: code:addons/web_widget_many2one_simple/static/src/js/many2one_simple_field.js:0
+#, python-format
+msgid "Create: "
+msgstr "Crear: "
+
+#. module: web_widget_many2one_simple
+#. openerp-web
+#: code:addons/web_widget_many2one_simple/static/src/xml/many2one_simple.xml:0
+#, python-format
+msgid "External link"
+msgstr "Link externo"
+
+#. module: web_widget_many2one_simple
+#. openerp-web
+#: code:addons/web_widget_many2one_simple/static/src/js/many2one_simple_field.js:0
+#, python-format
+msgid "Many2One Simple"
+msgstr "Many2One Simple"
+
+#. module: web_widget_many2one_simple
+#. openerp-web
+#: code:addons/web_widget_many2one_simple/static/src/js/many2one_simple_field.js:0
+#, python-format
+msgid "Many2one Simple"
+msgstr "Many2one Simple"
+
+#. module: web_widget_many2one_simple
+#. openerp-web
+#: code:addons/web_widget_many2one_simple/static/src/js/many2one_simple_field.js:0
+#, python-format
+msgid "Open: "
+msgstr "Abrir: "
+
+#. module: web_widget_many2one_simple
+#. openerp-web
+#: code:addons/web_widget_many2one_simple/static/src/js/many2one_simple_field.js:0
+#, python-format
+msgid "The given search criteria is not valid."
+msgstr "Los criterios de búsqueda dados no son válidos."

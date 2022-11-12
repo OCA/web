@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="0">
+        <record id="demo_config_parameter_company_name" model="ir.config_parameter">
+            <field name="key">support_company</field>
+            <field name="value">Odoo Community Association</field>
+        </record>
+        <record id="demo_config_parameter_company_url" model="ir.config_parameter">
+            <field name="key">support_company_url</field>
+            <field name="value">https://odoo-community.org</field>
+        </record>
+        <record id="demo_config_parameter_company_color" model="ir.config_parameter">
+            <field name="key">support_branding_color</field>
+            <field name="value">#fff</field>
+        </record>
+        <record id="demo_config_parameter_support_email" model="ir.config_parameter">
+            <field name="key">support_email</field>
+            <field name="value">oca@example.com</field>
+        </record>
+        <record id="demo_config_parameter_release" model="ir.config_parameter">
+            <field name="key">support_release</field>
+            <field name="value">14.0</field>
+        </record>
+    </data>
+</odoo>

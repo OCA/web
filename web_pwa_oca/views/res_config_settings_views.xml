@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.pwa</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="base_setup.res_config_settings_view_form" />
+            <field name="arch" type="xml">
+                <div id="emails" position='after'>
+                    <h2>Progressive Web App</h2>
+                    <div class="row mt16 o_settings_container" id="pwa_settings">
+                        <div class="col-12 col-lg-6 o_setting_box" id="domain_setting">
+                            <div class="o_setting_right_pane">
+                                <label for="pwa_name" string="PWA Title" />
+                                <span
+                                    class="fa fa-lg fa-globe"
+                                    title="Icon next to name"
+                                />
+                                <div class="text-muted">
+                                    Name and icon of your PWA
+                                </div>
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <label
+                                            class="col-lg-3 o_light_label"
+                                            string="Name"
+                                            for="pwa_name"
+                                        />
+                                        <field name="pwa_name" />
+                                    </div>
+                                    <div class="row mt16">
+                                        <label
+                                            class="col-lg-3 o_light_label"
+                                            string="Short Name"
+                                            for="pwa_short_name"
+                                        />
+                                        <field name="pwa_short_name" />
+                                    </div>
+                                    <div class="row">
+                                        <label
+                                            class="col-lg-3 o_light_label"
+                                            for="pwa_background_color"
+                                        />
+                                        <field name="pwa_background_color" />
+                                    </div>
+                                    <div class="row">
+                                        <label
+                                            class="col-lg-3 o_light_label"
+                                            for="pwa_theme_color"
+                                        />
+                                        <field name="pwa_theme_color" />
+                                    </div>
+                                    <div class="row">
+                                        <label
+                                            class="col-lg-3 o_light_label"
+                                            for="pwa_icon"
+                                        />
+                                        <field
+                                            name="pwa_icon"
+                                            widget="image"
+                                            class="float-left oe_avatar"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

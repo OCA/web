@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="page_refresher" name="Refresh button" inherit_id="web.assets_backend">
+        <xpath expr=".">
+            <link
+                type="text/css"
+                rel="stylesheet"
+                href="/web_refresher/static/src/scss/refresher.scss"
+            />
+            <script
+                src="/web_refresher/static/src/js/refresher.js"
+                type="text/javascript"
+            />
+        </xpath>
+    </template>
+</odoo>

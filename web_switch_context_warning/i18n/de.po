@@ -1,0 +1,41 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_switch_context_warning
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2021-10-13 20:46+0000\n"
+"Last-Translator: Corneliuus <cornelius@clk-it.de>\n"
+"Language-Team: none\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: web_switch_context_warning
+#. openerp-web
+#: code:addons/web_switch_context_warning/static/src/xml/switch_context_warning.xml:0
+#, python-format
+msgid "Reload"
+msgstr "Neu laden"
+
+#. module: web_switch_context_warning
+#. openerp-web
+#: code:addons/web_switch_context_warning/static/src/xml/switch_context_warning.xml:0
+#, python-format
+msgid ""
+"You switched to a different user or database with another tab or window"
+msgstr ""
+"Sie haben in einem anderen Tab oder Fenster zu einem anderen Benutzer oder "
+"einer anderen Datenbank gewechselt"
+
+#. module: web_switch_context_warning
+#. openerp-web
+#: code:addons/web_switch_context_warning/static/src/xml/switch_context_warning.xml:0
+#, python-format
+msgid "to refresh your session"
+msgstr "um Ihre Sitzung zu aktualisieren"

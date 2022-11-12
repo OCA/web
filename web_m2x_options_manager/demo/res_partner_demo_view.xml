@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="res_partner_demo_form_view" model="ir.ui.view">
+        <field name="name">res.partner.demo.form.view</field>
+        <field name="model">res.partner</field>
+        <field name="priority">1000</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <!-- Many2one -->
+                        <field name="title" />
+                        <!-- Many2many -->
+                        <field name="category_id" options="{'create': False}" />
+                        <!-- One2many -->
+                        <field name="user_ids">
+                            <tree>
+                                <!-- Many2one within tree -->
+                                <field name="company_id" options="{'create': False}" />
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

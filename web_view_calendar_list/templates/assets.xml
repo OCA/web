@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template
+        id="assets_backend"
+        name="Backend Assets (used in backend interface)"
+        inherit_id="web.assets_backend"
+    >
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/web_view_calendar_list/static/src/js/calendar_list_renderer.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_view_calendar_list/static/src/js/calendar_list_model.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_view_calendar_list/static/src/js/calendar_list_controller.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_view_calendar_list/static/src/js/calendar_list_view.js"
+            />
+            <link
+                rel="stylesheet"
+                type="text/scss"
+                href="/web_view_calendar_list/static/src/scss/web_calendar_list.scss"
+            />
+        </xpath>
+    </template>
+</odoo>
