@@ -1,9 +1,14 @@
 # Do NOT update manually; changes here will be overwritten by Copier
-_commit: v1.6.1
+_commit: v1.11.0
 _src_path: gh:oca/oca-addons-repo-template
 ci: GitHub
 dependency_installation_mode: PIP
 generate_requirements_txt: true
+github_check_license: true
+github_enable_codecov: true
+github_enable_makepot: true
+github_enable_stale_action: true
+github_enforce_dev_status_compatibility: true
 include_wkhtmltopdf: false
 odoo_version: 14.0
 org_name: Odoo Community Association (OCA)
@@ -11,10 +16,11 @@ org_slug: OCA
 rebel_module_groups:
 - web_widget_model_viewer
 repo_description: "This project aims to deal with modules related to the webclient\
-  \ of Odoo. You'll find modules that:\n\n - Add facilities to the UI\n - Add widgets\n\
-  \ - Ease the import/export features\n - Generally add clientside functionality"
+    \ of Odoo. You'll find modules that:\n\n - Add facilities to the UI\n - Add widgets\n\
+    \ - Ease the import/export features\n - Generally add clientside functionality"
 repo_name: Web addons for Odoo
 repo_slug: web
 repo_website: https://github.com/OCA/web
 travis_apt_packages: []
 travis_apt_sources: []
+
