@@ -4,7 +4,7 @@
 {
     "name": "Web Access Rules Buttons",
     "summary": "Disable Edit button if access rules prevent this action",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "author": "Camptocamp, Onestein, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "category": "Web",

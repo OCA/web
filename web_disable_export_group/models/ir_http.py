@@ -13,8 +13,8 @@ class Http(models.AbstractModel):
         user = request.env.user
         res.update(
             {
-                "group_export_data": user
-                and user.has_group("web_disable_export_group.group_export_data"),
+                "group_xlsx_export_data": user
+                and user.has_group("web_disable_export_group.group_export_xlsx_data"),
             }
         )
         return res

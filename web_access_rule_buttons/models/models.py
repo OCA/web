@@ -22,19 +22,16 @@ class Base(models.AbstractModel):
             operations = ["read", "create", "write", "unlink"]
         result = {}
         for operation in operations:
-            try:
-                self.check_access_rule(operation)
-            except exceptions.AccessError:
-                result[operation] = False
-            if (
-                self.is_transient()
-                or self.ids
-                and self.env.user.has_group("base.user_admin")
-            ):
+            if self.is_transient() or not self.ids:
                 # If we call check_access_rule() without id, it will try to
                 # run a SELECT without ID which will crash, so we just blindly
                 # allow the operations
                 result[operation] = True
-            else:
+                continue
+            try:
+                self.check_access_rule(operation)
+            except exceptions.AccessError:
                 result[operation] = False
+            else:
+                result[operation] = True
         return result
