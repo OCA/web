@@ -26,14 +26,14 @@ class TestAccessRuleButtons(common.TransactionCase):
             .browse(self.curr_record.id)
             .check_access_rule_all(["write"])
         )
-        self.assertFalse(res["write"])
+        self.assertTrue(res["write"])
 
     @users("admin", "test-user")
     def test_check_access_rule_3(self):
         res = (
             self.env["res.currency"].browse(self.curr_record.id).check_access_rule_all()
         )
-        self.assertFalse(res["read"])
-        self.assertFalse(res["create"])
-        self.assertFalse(res["write"])
-        self.assertFalse(res["unlink"])
+        self.assertTrue(res["read"])
+        self.assertTrue(res["create"])
+        self.assertTrue(res["write"])
+        self.assertTrue(res["unlink"])
