@@ -6,7 +6,7 @@
     "name": "Web Disable Export Group",
     "version": "14.0.2.0.0",
     "license": "AGPL-3",
-    "author": "Onestein, " "Tecnativa, " "Odoo Community Association (OCA)",
+    "author": "Onestein, Tecnativa, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "category": "Web",
     "depends": ["web"],
