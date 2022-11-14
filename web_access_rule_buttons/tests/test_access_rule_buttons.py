@@ -21,6 +21,6 @@ class TestAccessRuleButtons(TransactionCase):
     def test_check_access_rule_3(self):
         res = self.curr_record.check_access_rule_all()
         self.assertFalse(res["read"])
-        self.assertTrue(res["create"])
-        self.assertTrue(res["write"])
-        self.assertTrue(res["unlink"])
+        self.assertFalse(res["create"])
+        self.assertFalse(res["write"])
+        self.assertFalse(res["unlink"])
