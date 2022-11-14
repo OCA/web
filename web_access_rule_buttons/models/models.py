@@ -10,7 +10,7 @@ class Base(models.AbstractModel):
     _inherit = "base"
 
     def check_access_rule_all(self, operations=None):
-        """Verifies that the operation given by ``operations`` is allowed for
+        """ Verifies that the operation given by ``operations`` is allowed for
          the user according to ir.rules.
 
          If ``operations`` is empty, it returns the result for all actions.
