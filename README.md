@@ -36,7 +36,7 @@ addon | version | maintainers | summary
 [web_copy_confirm](web_copy_confirm/) | 14.0.1.0.0 |  | Show confirmation dialogue before copying records
 [web_decimal_numpad_dot](web_decimal_numpad_dot/) | 14.0.1.0.0 |  | Allows using numpad dot to enter period decimal separator
 [web_dialog_size](web_dialog_size/) | 14.0.1.0.0 |  | A module that lets the user expand a dialog box to the full screen width.
-[web_disable_export_group](web_disable_export_group/) | 14.0.1.1.0 |  | Web Disable Export Group
+[web_disable_export_group](web_disable_export_group/) | 14.0.2.0.0 |  | Web Disable Export Group
 [web_domain_field](web_domain_field/) | 14.0.1.0.2 |  | Use computed field as domain
 [web_drop_target](web_drop_target/) | 14.0.1.1.1 |  | Allows to drag files into Odoo
 [web_environment_ribbon](web_environment_ribbon/) | 14.0.1.0.0 |  | Web Environment Ribbon
