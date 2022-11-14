@@ -52,6 +52,7 @@ setuptools.setup(
         'odoo14-addon-web_widget_image_download',
         'odoo14-addon-web_widget_image_webcam',
         'odoo14-addon-web_widget_many2one_simple',
+        'odoo14-addon-web_widget_mermaid',
         'odoo14-addon-web_widget_model_viewer',
         'odoo14-addon-web_widget_mpld3_chart',
         'odoo14-addon-web_widget_numeric_step',
