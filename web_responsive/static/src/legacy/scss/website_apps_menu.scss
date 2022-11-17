@@ -3,7 +3,7 @@
 
 // Website main navbar and his AppsMenu button
 #oe_main_menu_navbar {
-    .dropdown-toggle::after {
+    #oe_applications .dropdown-toggle::after {
         display: none;
     }
     a.full {
