@@ -50,36 +50,38 @@
             display: block;
             position: absolute;
             box-sizing: border-box;
-            content: '';
+            content: "";
             width: 100%;
             height: 100%;
             border: 1px solid hsl(0, 0%, 20%);
             border-radius: 2px;
-            transition: 250ms ease-in-out box-shadow, 250ms ease-in-out background, 250ms ease-in-out border;
+            transition: 250ms ease-in-out box-shadow, 250ms ease-in-out background,
+                250ms ease-in-out border;
         }
         .todo-list .todo-list__label > input::after {
             display: block;
             position: absolute;
             box-sizing: content-box;
             pointer-events: none;
-            content: '';
-            left: calc( var(--ck-todo-list-checkmark-size) / 3 );
-            top: calc( var(--ck-todo-list-checkmark-size) / 5.3 );
-            width: calc( var(--ck-todo-list-checkmark-size) / 5.3 );
-            height: calc( var(--ck-todo-list-checkmark-size) / 2.6 );
+            content: "";
+            left: calc(var(--ck-todo-list-checkmark-size) / 3);
+            top: calc(var(--ck-todo-list-checkmark-size) / 5.3);
+            width: calc(var(--ck-todo-list-checkmark-size) / 5.3);
+            height: calc(var(--ck-todo-list-checkmark-size) / 2.6);
             border-style: solid;
             border-color: transparent;
-            border-width: 0 calc( var(--ck-todo-list-checkmark-size) / 8 ) calc( var(--ck-todo-list-checkmark-size) / 8 ) 0;
+            border-width: 0 calc(var(--ck-todo-list-checkmark-size) / 8)
+                calc(var(--ck-todo-list-checkmark-size) / 8) 0;
             transform: rotate(45deg);
         }
         .todo-list .todo-list__label > input[checked]::before {
-            background: hsl(126, 64%, 41%);
-            border-color: hsl(126, 64%, 41%);
+            background: hsl(0, 0%, 30%);
+            border-color: hsl(0, 0%, 15%);
         }
         .todo-list .todo-list__label > input[checked]::after {
             border-color: hsl(0, 0%, 100%);
         }
-        .todo-list .todo-list__label .todo-list__label__description {
+        .todo-list .todo-list__label__description {
             vertical-align: middle;
         }
     }
