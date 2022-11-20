@@ -141,7 +141,7 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
              * @override
              */
             _setValue: function (value, options) {
-                const $obj = $('<div>').html(value);
+                const $obj = $("<div>").html(value);
                 if ($obj.find("ul.todo-list").length) {
                     value = this._todoListCKEditor2Odoo($obj);
                 }
@@ -349,7 +349,7 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
              */
             _textToHtml: function (text) {
                 let value = text || "";
-                const $obj = $('<div>').html(value);
+                const $obj = $("<div>").html(value);
                 if ($obj.find("ul.o_checklist").length) {
                     value = this._todoListOdoo2CKEditor($obj);
                 }
