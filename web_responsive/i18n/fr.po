@@ -6,41 +6,41 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2020-07-22 12:19+0000\n"
-"Last-Translator: c2cdidier <didier.donze@camptocamp.com>\n"
+"PO-Revision-Date: 2022-11-17 08:47+0000\n"
+"Last-Translator: Vincent Hatakeyama <vincent+github@hatakeyama.fr>\n"
 "Language-Team: none\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.10\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/components/search_panel/search_panel.xml:0
 #, python-format
 msgid "All"
-msgstr ""
+msgstr "Tout"
 
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
 #, python-format
 msgid "CLEAR"
-msgstr ""
+msgstr "NETTOYER"
 
 #. module: web_responsive
 #: model:ir.model.fields,field_description:web_responsive.field_res_users__chatter_position
 msgid "Chatter Position"
-msgstr "Position du Chatter"
+msgstr "Position de la messagerie"
 
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/legacy/js/web_responsive.js:0
 #, python-format
 msgid "Clear"
-msgstr ""
+msgstr "Nettoyer"
 
 #. module: web_responsive
 #. openerp-web
@@ -69,14 +69,14 @@ msgstr "Editer"
 #: code:addons/web_responsive/static/src/components/search_panel/search_panel.xml:0
 #, python-format
 msgid "FILTER"
-msgstr ""
+msgstr "FILTRER"
 
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/components/apps_menu/apps_menu.xml:0
 #, python-format
 msgid "Home Menu"
-msgstr ""
+msgstr "Menu d’accueil"
 
 #. module: web_responsive
 #. openerp-web
@@ -110,14 +110,14 @@ msgstr "Actions rapides"
 #: code:addons/web_responsive/static/src/components/search_panel/search_panel.xml:0
 #, python-format
 msgid "SEE RESULT"
-msgstr ""
+msgstr "VOIR RÉSULTAT"
 
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #, python-format
 msgid "Save"
-msgstr "Sauvegarder"
+msgstr "Enregistrer"
 
 #. module: web_responsive
 #. openerp-web
@@ -131,7 +131,7 @@ msgstr "Rechercher dans les menus..."
 #: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
 #, python-format
 msgid "Search..."
-msgstr ""
+msgstr "Rechercher…"
 
 #. module: web_responsive
 #: model:ir.model.fields.selection,name:web_responsive.selection__res_users__chatter_position__sided
@@ -143,14 +143,14 @@ msgstr "À coté"
 #: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #, python-format
 msgid "Today"
-msgstr ""
+msgstr "Aujourd’hui"
 
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/legacy/js/kanban_renderer_mobile.js:0
 #, python-format
 msgid "Undefined"
-msgstr ""
+msgstr "Non défini"
 
 #. module: web_responsive
 #: model:ir.model,name:web_responsive.model_res_users
@@ -162,21 +162,21 @@ msgstr "Utilisateurs"
 #: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
 #, python-format
 msgid "View switcher"
-msgstr ""
+msgstr "Bascule de vue"
 
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/components/hotkey/hotkey.xml:0
 #, python-format
 msgid "props.withAccessKey ? 'x' : false"
-msgstr ""
+msgstr "props.withAccessKey ? 'x' : false"
 
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/components/hotkey/hotkey.xml:0
 #, python-format
 msgid "props.withAccessKey ? 'z' : false"
-msgstr ""
+msgstr "props.withAccessKey ? 'z' : false"
 
 #~ msgid "#menu_id=#{app.menuID}&action_id=#{app.actionID}"
 #~ msgstr "#menu_id=#{app.menuID}&action_id=#{app.actionID}"
