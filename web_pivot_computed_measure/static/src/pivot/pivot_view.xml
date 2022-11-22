@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+  <t t-inherit="web.PivotView.Buttons" t-inherit-mode="extension" owl="1">
+    <xpath expr="//t[@t-call='web.ReportViewMeasures']" position="inside">
+        <t t-set="add_computed_measures" t-value="true" />
+        <t t-set="model" t-value="model" />
+    </xpath>
+  </t>
+</templates>
