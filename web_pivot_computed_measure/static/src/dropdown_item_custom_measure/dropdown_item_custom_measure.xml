@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!--
-Copyright 2020 Tecnativa - Alexandre Díaz
-License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
--->
-<templates>
-    <t t-name="web_pivot_computed_measure.ComputedMeasureOperations">
+<templates xml:space="preserve">
+    <t t-name="web_pivot_computed_measure.ComputedMeasureOperations" owl="1">
         <option name="sum" value="m1+m2">
             Sum (m1 + m2)
         </option>
@@ -24,7 +20,8 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
             Custom
         </option>
     </t>
-    <t t-name="web_pivot_computed_measure.ComputedMeasureFormats">
+
+    <t t-name="web_pivot_computed_measure.ComputedMeasureFormats" owl="1">
         <option name="int" value="integer">
             Integer
         </option>
@@ -35,30 +32,19 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
             Percentage
         </option>
     </t>
-    <t t-name="web_pivot_computed_measure.ExtendedMenu">
-        <div role="separator" class="dropdown-divider" />
-        <t t-foreach="computed_measures" t-as="cm">
-            <a
-                role="menuitem"
-                href="#"
-                t-attf-class="dropdown-item {{cm[1].active and 'selected' or ''}}"
-                t-data-computed="1"
-                t-att-data-field="cm[0]"
-            >
-                <t t-esc="cm[1].string" />
-            </a>
-        </t>
-        <div class="o_menu_item" data-id="__computed__">
-            <a href="#" role="menuitem" class="dropdown-item">
+
+    <t t-name="web_pivot_computed_measure.DropdownItemCustomMeasure" owl="1">
+        <div class="o_menu_item dropdown-item" data-id="__computed__">
+            <a href="#" role="menuitem" t-on-click="onClickComputedMeasure">
                 Computed Measure
 
                 <span class="o_submenu_switcher" data-id="__computed__">
                     <span
-                        t-att-class="isOpen ? 'fa fa-caret-down' : 'fa fa-caret-right'"
+                        t-att-class="isOpen.value ? 'fa fa-caret-down' : 'fa fa-caret-right'"
                     />
                 </span>
             </a>
-            <t t-if="isOpen">
+            <t t-if="isOpen.value">
                 <div id="add_computed_measure_wrapper" class="d-table">
                     <div class="d-table-row">
                         <div class="d-table-cell">
@@ -66,9 +52,16 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                         </div>
                         <div class="d-table-cell">
                             <select class="o_input" id="computed_measure_field_1">
-                                <t t-foreach="measures" t-as="measure">
-                                    <option t-att-value="measure[0]">
-                                        <t t-esc="measure[1].string" />
+                                <t
+                                    t-foreach="props.measures"
+                                    t-as="measure"
+                                    t-key="measure"
+                                >
+                                    <option
+                                        t-att-value="measure"
+                                        t-if="measure != '__count'"
+                                    >
+                                        <t t-esc="props.measures[measure].string" />
                                     </option>
                                 </t>
                             </select>
@@ -80,9 +73,16 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                         </div>
                         <div class="d-table-cell">
                             <select class="o_input" id="computed_measure_field_2">
-                                <t t-foreach="measures" t-as="measure">
-                                    <option t-att-value="measure[0]">
-                                        <t t-esc="measure[1].string" />
+                                <t
+                                    t-foreach="props.measures"
+                                    t-as="measure"
+                                    t-key="measure"
+                                >
+                                    <option
+                                        t-att-value="measure"
+                                        t-if="measure != '__count'"
+                                    >
+                                        <t t-esc="props.measures[measure].string" />
                                     </option>
                                 </t>
                             </select>
@@ -148,6 +148,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                             <button
                                 class="btn btn-primary o_add_computed_measure"
                                 type="button"
+                                t-on-click="addMeasure"
                             >Add</button>
                         </div>
                     </div>
@@ -155,4 +156,5 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
             </t>
         </div>
     </t>
+
 </templates>

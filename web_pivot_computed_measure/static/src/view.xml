@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+  <t t-inherit="web.ReportViewMeasures" t-inherit-mode="extension" owl="1">
+    <xpath expr="//DropdownItem" position="attributes">
+        <attribute name="t-if">!measure.startsWith('__computed_')</attribute>
+    </xpath>
+    <xpath expr="//t[@t-foreach='measures']" position="after">
+        <div role="separator" class="dropdown-divider" t-if="add_computed_measures" />
+        <t t-foreach="measures" t-as="measure" t-key="measure_value.name">
+                <DropdownItem
+                    t-if="add_computed_measures and measure.startsWith('__computed_')"
+                    class="o_menu_item dropdown-item"
+                    t-att-class="{ selected: activeMeasures.includes(measure) }"
+                    payload="{ measure: measure_value.name }"
+                    parentClosingMode="'none'"
+                >
+                    <t t-esc="measures[measure].string" />
+                </DropdownItem>
+            </t>
+        <DropdownItemCustomMeasure
+                measures="measures"
+                model="model"
+                t-if="add_computed_measures"
+            />
+    </xpath>
+  </t>
+</templates>
