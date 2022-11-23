@@ -41,11 +41,12 @@ addon | version | maintainers | summary
 [web_no_bubble](web_no_bubble/) | 15.0.1.0.0 |  | Remove the bubbles from the web interface
 [web_refresher](web_refresher/) | 15.0.1.0.0 |  | Web Refresher
 [web_remember_tree_column_width](web_remember_tree_column_width/) | 15.0.1.0.1 | [![frahikLV](https://github.com/frahikLV.png?size=30px)](https://github.com/frahikLV) [![luisg123v](https://github.com/luisg123v.png?size=30px)](https://github.com/luisg123v) | Remember the tree columns' widths across sessions.
-[web_responsive](web_responsive/) | 15.0.1.1.3 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) [![Tardo](https://github.com/Tardo.png?size=30px)](https://github.com/Tardo) [![SplashS](https://github.com/SplashS.png?size=30px)](https://github.com/SplashS) | Responsive web client, community-supported
+[web_responsive](web_responsive/) | 15.0.1.1.4 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) [![Tardo](https://github.com/Tardo.png?size=30px)](https://github.com/Tardo) [![SplashS](https://github.com/SplashS.png?size=30px)](https://github.com/SplashS) | Responsive web client, community-supported
 [web_search_with_and](web_search_with_and/) | 15.0.1.0.0 |  | Use AND conditions on omnibar search
 [web_sheet_full_width](web_sheet_full_width/) | 15.0.1.0.1 |  | Use the whole available screen width when displaying sheets
 [web_timeline](web_timeline/) | 15.0.1.0.1 | [![tarteo](https://github.com/tarteo.png?size=30px)](https://github.com/tarteo) | Interactive visualization chart to show events in time
 [web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 15.0.1.0.0 |  | Allows you to dynamically color fields on tree views
+[web_tree_image_tooltip](web_tree_image_tooltip/) | 15.0.1.0.0 |  | Show images in tree views via tooltip
 [web_view_calendar_list](web_view_calendar_list/) | 15.0.1.0.0 |  | Show calendars as a List
 [web_widget_bokeh_chart](web_widget_bokeh_chart/) | 15.0.1.1.1 | [![LoisRForgeFlow](https://github.com/LoisRForgeFlow.png?size=30px)](https://github.com/LoisRForgeFlow) [![ChrisOForgeFlow](https://github.com/ChrisOForgeFlow.png?size=30px)](https://github.com/ChrisOForgeFlow) | This widget allows to display charts using Bokeh library.
 [web_widget_child_selector](web_widget_child_selector/) | 15.0.1.0.0 |  | Widget used for navigation on hierarchy fields
@@ -53,11 +54,11 @@ addon | version | maintainers | summary
 [web_widget_dropdown_dynamic](web_widget_dropdown_dynamic/) | 15.0.1.0.0 |  | This module adds support for dynamic dropdown widget
 [web_widget_image_download](web_widget_image_download/) | 15.0.1.0.0 |  | Allows to download any image from its widget
 [web_widget_json_graph](web_widget_json_graph/) | 15.0.1.0.0 | [![luisg123v](https://github.com/luisg123v.png?size=30px)](https://github.com/luisg123v) [![frahikLV](https://github.com/frahikLV.png?size=30px)](https://github.com/frahikLV) | Draw json fields with graphs.
+[web_widget_many2one_simple](web_widget_many2one_simple/) | 15.0.1.0.0 | [![Tardo](https://github.com/Tardo.png?size=30px)](https://github.com/Tardo) | Simple many2one widget
 [web_widget_numeric_step](web_widget_numeric_step/) | 15.0.1.0.0 |  | Web Widget Numeric Step
 [web_widget_open_tab](web_widget_open_tab/) | 15.0.1.0.0 |  | Allow to open record from trees on new tab from tree views
 [web_widget_url_advanced](web_widget_url_advanced/) | 15.0.1.0.0 |  | This module extends URL widget for displaying anchors with custom labels.
 [web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 15.0.1.0.1 | [![ChrisOForgeFlow](https://github.com/ChrisOForgeFlow.png?size=30px)](https://github.com/ChrisOForgeFlow) | Show list fields as a matrix
-[web_notify](web_notify/) | 15.0.1.0.0 | [![Aswanth Babu S](https://github.com/gh-aswanth.png?size=30px)](https://github.com/gh-aswanth) | Web Notify
 
 [//]: # (end addons)
 
@@ -75,5 +76,3 @@ that explains its license.
 OCA, or the [Odoo Community Association](http://odoo-community.org/), is a nonprofit
 organization whose mission is to support the collaborative development of Odoo features
 and promote its widespread use.
-
-
