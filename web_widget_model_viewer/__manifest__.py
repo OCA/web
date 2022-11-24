@@ -4,7 +4,7 @@
 {
     "name": "Model viewer widget",
     "summary": "Easily display interactive 3D models on the web & in AR",
-    "version": "14.0.1.0.0",
+    "version": "15.0.1.0.0",
     "development_status": "Beta",
     "category": "Web",
     "website": "https://github.com/OCA/web",
@@ -14,12 +14,15 @@
     "depends": [
         "web",
     ],
-    "data": [
-        "views/assets.xml",
-    ],
-    "qweb": [
-        "static/src/xml/*.xml",
-    ],
+    "assets": {
+        "web.assets_backend": [
+            "/web_widget_model_viewer/static/lib/model-viewer-legacy.js",
+            "/web_widget_model_viewer/static/src/js/web_widget_model_viewer.js",
+        ],
+        "web.assets_qweb": [
+            "/web_widget_model_viewer/static/src/xml/web_widget_model_viewer.xml",
+        ],
+    },
     "application": False,
     "installable": True,
 }

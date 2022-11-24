@@ -8,7 +8,6 @@ odoo.define("web_widget_model_viewer.FieldBinaryModelViewer", function (require)
     var registry = require("web.field_registry");
     var session = require("web.session");
     var utils = require("web.utils");
-    var _t = core._t;
     var qweb = core.qweb;
 
     var FieldBinaryModelViewer = BasicFields.FieldBinaryFile.extend({
@@ -58,10 +57,8 @@ odoo.define("web_widget_model_viewer.FieldBinaryModelViewer", function (require)
             $glb.on("error", function () {
                 self._clearFile();
                 $glb.attr("src", "");
-                self.do_warn(
-                    _t("3D model"),
-                    _t("Could not display the selected model.")
-                );
+                console.warn("Could not display the selected model.");
+                // Self.do_warn(_t("3D model"), _t("Could not display the selected model."));
             });
         },
         /* eslint-disable complexity */
