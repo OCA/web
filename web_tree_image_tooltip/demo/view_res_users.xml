@@ -6,8 +6,8 @@
         <field name="arch" type="xml">
             <field name="name" position="before">
                 <field
-                    name="image_small"
-                    options="{'tooltip_image': 'image'}"
+                    name="image_128"
+                    options="{'tooltip_image': 'image_1920'}"
                     widget="image"
                     string="Image"
                 />
