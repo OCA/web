@@ -8,6 +8,6 @@ Visit this for `more info
 But, If you still want this module to work with websites without SSL / HTTPS.
 Here is the steps to do it easily (Always run in Adobe Flash fallback mode, but it is not desirable).
 
-Set the configuration parameter ``web_widget_image_webcam.flash_fallback_mode`` to ``1``
+Set the configuration parameter ``web_widget_image_webcam.flash_fallback_mode`` to ``1`` (note that configuration will be applied after browser reload).
 
 Its done! Now this module also work with websites without SSL / HTTPS.

@@ -2,11 +2,22 @@
 <!-- Copyright 2016 Siddharth Bhalgami <siddharth.bhalgami@gmail.com>
      Copyright 2019-Today: Druidoo (<https://www.druidoo.io>)
      License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
-<template id="template" xml:space="preserve">
-    <t t-extend="FieldBinaryImage">
-        <t t-jquery=".o_select_file_button" t-operation="after">
-            <span class="fa fa-eye o_form_binary_file_web_cam" title="WebCam" />
-        </t>
+<template>
+    <t
+        t-name="web_widget_image_webcam.ImageField"
+        t-inherit="web.ImageField"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//button[hasclass('o_clear_file_button')]" position="before">
+            <button
+                class="o_form_binary_file_web_cam btn btn-light border-0 rounded-circle m-1 p-1"
+                data-tooltip="WebCam"
+                aria-label="WebCam"
+            >
+                <i class="fa fa-eye" t-on-click="onWebcamClicked" />
+            </button>
+        </xpath>
     </t>
     <div t-name="WebCamDialog" id="WebCamModal">
         <div class="container-fluid">
