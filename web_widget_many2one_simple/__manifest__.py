@@ -10,6 +10,9 @@
     "depends": ["web"],
     "installable": True,
     "maintainers": ["Tardo"],
+    "demo": [
+        "demo/res_partner_view.xml",
+    ],
     "assets": {
         "web.assets_backend": [
             "web_widget_many2one_simple/static/src/css/many2one_simple.scss",

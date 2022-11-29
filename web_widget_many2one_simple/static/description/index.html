@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.15.1: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils: http://docutils.sourceforge.net/" />
 <title>Simple many2one widget</title>
 <style type="text/css">
 
@@ -422,6 +422,13 @@ without any extra features (no autocomplete and no partial search).</p>
 <h1><a class="toc-backref" href="#id4">Usage</a></h1>
 <p>You need to declare the usage of the new widget as follows:
 <tt class="docutils literal">&lt;field <span class="pre">name=&quot;xxx&quot;</span> <span class="pre">widget=&quot;many2one_simple&quot;</span> <span class="pre">options=&quot;...&quot;&gt;</span></tt></p>
+<p>If you have a database with demo data, you can test this widget following these instructions:</p>
+<ol class="arabic simple">
+<li>Go to Contacts.</li>
+<li>Create or edit a record.</li>
+<li>Set “Industry” field (in Sales &amp; Purchase tab).</li>
+<li>Only if you set the correct industry name (“Administrative” for example), it will be defined. Otherwise, it will try to create one with that name.</li>
+</ol>
 <div class="section" id="example">
 <h2><a class="toc-backref" href="#id5">Example:</a></h2>
 <pre class="code xml literal-block">
