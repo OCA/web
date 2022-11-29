@@ -7,7 +7,7 @@
 
 {
     "name": "Show images in tree views via tooltip",
-    "version": "15.0.1.0.0",
+    "version": "15.0.1.1.0",
     "author": "Therp BV, "
     "MONK Software, "
     "Odoo Community Association (OCA), "
