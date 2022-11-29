@@ -46,7 +46,7 @@ addon | version | maintainers | summary
 [web_sheet_full_width](web_sheet_full_width/) | 15.0.1.0.1 |  | Use the whole available screen width when displaying sheets
 [web_timeline](web_timeline/) | 15.0.1.0.1 | [![tarteo](https://github.com/tarteo.png?size=30px)](https://github.com/tarteo) | Interactive visualization chart to show events in time
 [web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 15.0.1.0.0 |  | Allows you to dynamically color fields on tree views
-[web_tree_image_tooltip](web_tree_image_tooltip/) | 15.0.1.0.0 |  | Show images in tree views via tooltip
+[web_tree_image_tooltip](web_tree_image_tooltip/) | 15.0.1.1.0 |  | Show images in tree views via tooltip
 [web_view_calendar_list](web_view_calendar_list/) | 15.0.1.0.0 |  | Show calendars as a List
 [web_widget_bokeh_chart](web_widget_bokeh_chart/) | 15.0.1.1.1 | [![LoisRForgeFlow](https://github.com/LoisRForgeFlow.png?size=30px)](https://github.com/LoisRForgeFlow) [![ChrisOForgeFlow](https://github.com/ChrisOForgeFlow.png?size=30px)](https://github.com/ChrisOForgeFlow) | This widget allows to display charts using Bokeh library.
 [web_widget_child_selector](web_widget_child_selector/) | 15.0.1.0.0 |  | Widget used for navigation on hierarchy fields
