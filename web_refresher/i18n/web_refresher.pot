@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: web_refresher
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_refresher/static/src/xml/pager_button.xml:0
 #: code:addons/web_refresher/static/src/xml/pager_button.xml:0
 #, python-format
