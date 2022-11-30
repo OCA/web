@@ -3,7 +3,7 @@
 
 {
     "name": "Simple many2one widget",
-    "version": "15.0.1.0.0",
+    "version": "15.0.1.1.0",
     "license": "AGPL-3",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
