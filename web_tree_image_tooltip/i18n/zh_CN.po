@@ -1,0 +1,4 @@
+#. module: web_tree_image_tooltip
+#: model_terms:ir.ui.view,arch_db:web_tree_image_tooltip.view_users_tree
+msgid "Image"
+msgstr ""

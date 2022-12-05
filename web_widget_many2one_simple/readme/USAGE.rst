@@ -1,6 +1,13 @@
 You need to declare the usage of the new widget as follows:
 ``<field name="xxx" widget="many2one_simple" options="...">``
 
+If you have a database with demo data, you can test this widget following these instructions:
+
+#. Go to Contacts.
+#. Create or edit a record.
+#. Set "Industry" field (in Sales & Purchase tab).
+#. Only if you set the correct industry name ("Administrative" for example), it will be defined. Otherwise, it will try to create one with that name.
+
 Example:
 ~~~~~~~~
 
