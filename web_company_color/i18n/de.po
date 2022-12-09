@@ -6,15 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2021-10-13 20:28+0000\n"
-"Last-Translator: Corneliuus <cornelius@clk-it.de>\n"
+"PO-Revision-Date: 2022-12-09 14:45+0000\n"
+"Last-Translator: Nils Coenen | NICO SOLUTIONS - ENGINEERING & IT <nils.coenen"
+"@nico-solutions.de>\n"
 "Language-Team: none\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. module: web_company_color
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
@@ -47,7 +48,7 @@ msgstr "Unternehmensstile"
 #. module: web_company_color
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
 msgid "Compute colors from logo"
-msgstr ""
+msgstr "Farben aus Logo generieren"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_bg
