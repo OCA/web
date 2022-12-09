@@ -6,12 +6,10 @@
 -->
 <templates>
     <t t-name="web_advanced_search.AdvancedFilterItem" owl="1">
-        <DropdownItem
-            t-ref="dropdown-item"
+        <a
+            role="menuitem"
             t-on-click="onClick"
-            class="o_add_advanced_search"
-        >
-            Add Advanced Filter
-        </DropdownItem>
+            class=" dropdown-item o_add_advanced_search"
+        > Add Advanced Filter </a>
     </t>
 </templates>

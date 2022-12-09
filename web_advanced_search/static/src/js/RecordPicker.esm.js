@@ -2,12 +2,29 @@
 
 import BasicModel from "web.BasicModel";
 import {ComponentAdapter} from "web.OwlCompatibility";
-import {FieldMany2One} from "web.relational_fields";
+import {Dropdown} from "@web/core/dropdown/dropdown";
 import FieldManagerMixin from "web.FieldManagerMixin";
+import {FieldMany2One} from "web.relational_fields";
 import {SelectCreateDialog} from "web.view_dialogs";
+import {patch} from "@web/core/utils/patch";
+import {session} from "@web/session";
 
-const {Component} = owl;
-const {xml} = owl.tags;
+const {Component, xml} = owl;
+
+patch(Dropdown.prototype, "dropdown", {
+    onWindowClicked(ev) {
+        // This patch is created to prevent the closing of the Filter menu
+        // when a selection is made in the RecordPicker
+        if (
+            $(ev.target.closest("ul.dropdown-menu")).attr("id") !== undefined &&
+            $(ev.target.closest("ul.dropdown-menu")).attr("id") ===
+                $("body > ul.dropdown-menu").attr("id")
+        ) {
+            return;
+        }
+        this._super(ev);
+    },
+});
 
 export const FakeMany2oneFieldWidget = FieldMany2One.extend(FieldManagerMixin, {
     /**
@@ -55,6 +72,7 @@ export const FakeMany2oneFieldWidget = FieldMany2One.extend(FieldManagerMixin, {
      * Get record
      *
      * @param {BasicModel} model
+     * @returns {String}
      */
     _get_record: function (model) {
         return model.get(this.dataPointID);
@@ -66,16 +84,6 @@ export const FakeMany2oneFieldWidget = FieldMany2One.extend(FieldManagerMixin, {
         this.componentAdapter.trigger("change", event.data.changes[fields[0]]);
         this.dataPointID = id;
         return this.reset(this._get_record(this.model), event);
-    },
-    /**
-     * Stop propagation of the autocompleteselect event.
-     * Otherwise, the filter's dropdown will be closed after a selection.
-     *
-     * @override to stop propagating autocompleteselect event
-     */
-    start: function () {
-        this._super(...arguments);
-        this.$input.on("autocompleteselect", (event) => event.stopPropagation());
     },
     /**
      * Stop propagation of the 'Search more..' dialog click event.
@@ -102,17 +110,56 @@ export const FakeMany2oneFieldWidget = FieldMany2One.extend(FieldManagerMixin, {
         );
         return dialog.open();
     },
+    _onFieldChanged: function (event) {
+        const self = this;
+        event.stopPropagation();
+        if (event.data.changes.dummy.display_name === undefined) {
+            return this._rpc({
+                model: this.field.relation,
+                method: "name_get",
+                args: [event.data.changes.dummy.id],
+                context: session.user_context,
+            }).then(function (result) {
+                event.data.changes.dummy.display_name = result[0][1];
+                return (
+                    self
+                        ._applyChanges(
+                            event.data.dataPointID,
+                            event.data.changes,
+                            event
+                        )
+                        // eslint-disable-next-line no-empty-function
+                        .then(event.data.onSuccess || function () {})
+                        // eslint-disable-next-line no-empty-function
+                        .guardedCatch(event.data.onFailure || function () {})
+                );
+            });
+        }
+        return (
+            this._applyChanges(event.data.dataPointID, event.data.changes, event)
+                // eslint-disable-next-line no-empty-function
+                .then(event.data.onSuccess || function () {})
+                // eslint-disable-next-line no-empty-function
+                .guardedCatch(event.data.onFailure || function () {})
+        );
+    },
 });
 
 export class FakeMany2oneFieldWidgetAdapter extends ComponentAdapter {
-    setup() {
-        this.env = owl.Component.env;
+    constructor() {
+        super(...arguments);
+        this.env = Component.env;
     }
-    async updateWidget() {
-        /* eslint-disable no-empty-function */
+
+    renderWidget() {
+        this.widget._render();
     }
-    async renderWidget() {
-        /* eslint-disable no-empty-function */
+
+    get widgetArgs() {
+        if (this.props.widgetArgs) {
+            return this.props.widgetArgs;
+        }
+        return [this.props.attrs];
     }
 }
 
