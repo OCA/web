@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo-addon-web_dark_mode>=16.0dev,<16.1dev',
+        'odoo-addon-web_domain_field>=16.0dev,<16.1dev',
         'odoo-addon-web_environment_ribbon>=16.0dev,<16.1dev',
         'odoo-addon-web_refresher>=16.0dev,<16.1dev',
     ],
