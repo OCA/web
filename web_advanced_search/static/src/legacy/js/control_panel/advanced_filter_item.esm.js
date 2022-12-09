@@ -1,22 +1,21 @@
 /** @odoo-module **/
 
-import {getHumanDomain} from "../utils.esm";
-
-import config from "web.config";
-import DomainSelectorDialog from "web.DomainSelectorDialog";
 import Domain from "web.Domain";
-import {ComponentAdapter} from "web.OwlCompatibility";
+import DomainSelectorDialog from "web.DomainSelectorDialog";
+import config from "web.config";
+import {getHumanDomain} from "../../../js/utils.esm";
+import {standaloneAdapter} from "web.OwlCompatibility";
+import {useModel} from "web.Model";
+const {Component, useRef} = owl;
 
-const {Component, hooks} = owl;
-const {useRef} = hooks;
-
-export default class AdvancedFilterItem extends Component {
+class AdvancedFilterItem extends Component {
     setup() {
         this.itemRef = useRef("dropdown-item");
+        this.model = useModel("searchModel");
     }
     /**
      * Prevent propagation of dropdown-item-selected event, so that it
-     * doesn't reaches the FilterMenu onFilterSelected event handler.
+     * doesn't reach the FilterMenu onFilterSelected event handler.
      */
     mounted() {
         $(this.itemRef.el).on("dropdown-item-selected", (event) =>
@@ -29,10 +28,10 @@ export default class AdvancedFilterItem extends Component {
      * @returns {DomainSelectorDialog} The opened dialog itself.
      */
     onClick() {
-        const adapterParent = new ComponentAdapter(null, {Component});
+        const adapterParent = standaloneAdapter({Component});
         const dialog = new DomainSelectorDialog(
             adapterParent,
-            this.env.searchModel.resModel,
+            this.model.config.modelName,
             "[]",
             {
                 debugMode: config.isDebug(),
@@ -48,10 +47,13 @@ export default class AdvancedFilterItem extends Component {
                 domain: Domain.prototype.arrayToString(e.data.domain),
                 type: "filter",
             };
-            this.env.searchModel.createNewFilters([preFilter]);
+            this.model.dispatch("createNewFilters", [preFilter]);
         });
         return dialog.open();
     }
 }
 
+AdvancedFilterItem.components = {AdvancedFilterItem};
+
 AdvancedFilterItem.template = "web_advanced_search.AdvancedFilterItem";
+export default AdvancedFilterItem;

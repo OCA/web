@@ -14,7 +14,7 @@
                     model="fields[condition.field].relation"
                     string="fields[condition.field].string"
                     context="fields[condition.field].context"
-                    t-on-change="onRelationalChanged(condition)"
+                    t-on-change="(ev) => this.onRelationalChanged(condition,ev)"
                 />
             </t>
         </xpath>

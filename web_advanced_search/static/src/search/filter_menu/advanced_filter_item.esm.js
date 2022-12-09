@@ -1,23 +1,19 @@
 /** @odoo-module **/
 
-import {getHumanDomain} from "../utils.esm";
-
-import config from "web.config";
-import DomainSelectorDialog from "web.DomainSelectorDialog";
 import Domain from "web.Domain";
-import {useModel} from "web.Model";
+import DomainSelectorDialog from "web.DomainSelectorDialog";
+import config from "web.config";
+import {getHumanDomain} from "../../js/utils.esm";
+import {standaloneAdapter} from "web.OwlCompatibility";
+const {Component, useRef} = owl;
 
-const {Component, hooks} = owl;
-const {useRef} = hooks;
-
-export default class AdvancedFilterItem extends Component {
+class AdvancedFilterItem extends Component {
     setup() {
         this.itemRef = useRef("dropdown-item");
-        this.model = useModel("searchModel");
     }
     /**
      * Prevent propagation of dropdown-item-selected event, so that it
-     * doesn't reaches the FilterMenu onFilterSelected event handler.
+     * doesn't reach the FilterMenu onFilterSelected event handler.
      */
     mounted() {
         $(this.itemRef.el).on("dropdown-item-selected", (event) =>
@@ -30,9 +26,10 @@ export default class AdvancedFilterItem extends Component {
      * @returns {DomainSelectorDialog} The opened dialog itself.
      */
     onClick() {
+        const adapterParent = standaloneAdapter({Component});
         const dialog = new DomainSelectorDialog(
-            this,
-            this.model.config.modelName,
+            adapterParent,
+            this.env.searchModel.resModel,
             "[]",
             {
                 debugMode: config.isDebug(),
@@ -48,21 +45,13 @@ export default class AdvancedFilterItem extends Component {
                 domain: Domain.prototype.arrayToString(e.data.domain),
                 type: "filter",
             };
-            this.model.dispatch("createNewFilters", [preFilter]);
+            this.env.searchModel.createNewFilters([preFilter]);
         });
         return dialog.open();
     }
-    /**
-     * Mocks _trigger_up to redirect Odoo legacy events to OWL events.
-     *
-     * @private
-     * @param {OdooEvent} event
-     */
-    _trigger_up(event) {
-        const {name, data} = event;
-        data.__targetWidget = event.target;
-        this.trigger(name.replace(/_/g, "-"), data);
-    }
 }
 
+AdvancedFilterItem.components = {AdvancedFilterItem};
+
 AdvancedFilterItem.template = "web_advanced_search.AdvancedFilterItem";
+export default AdvancedFilterItem;
