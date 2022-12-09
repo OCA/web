@@ -49,3 +49,20 @@ The field used as domain must provide the domain as a JSON encoded string.
            rec.product_id_domain = json.dumps(
                [('type', '=', 'product'), ('name', 'like', rec.name)]
            )
+
+.. note::
+   You do not actually need this module to craft a dynamic domain. Odoo comes
+   with its own `py.js <https://github.com/odoo/odoo/tree/16.0/addons/web/static/lib/py.js>`_
+   web library to parse expressions such as domains. `py.js` supports more
+   complex expressions than just static lists.
+
+   Here is an example of a conditional domain based on the value of another
+   field:
+
+   .. code-block:: python
+
+      (order_id or partner_id) and [('id', 'in', allowed_picking_ids)]
+      or [('state', '=', 'done'), ('picking_type_id.code', '=', 'outgoing')]
+
+   For OCA modules, this method is preferred over adding this module as an
+   additional dependency.
