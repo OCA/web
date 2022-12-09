@@ -1,14 +1,14 @@
 /** @odoo-module **/
 
-import {patch} from "@web/core/utils/patch";
 import CustomFilterItem from "web.CustomFilterItem";
-import {RecordPicker} from "../RecordPicker.esm";
+import {RecordPicker} from "../../../js/RecordPicker.esm";
+import {patch} from "@web/core/utils/patch";
 
 /**
  * Patches the CustomFilterItem for legacy widgets.
  *
  * Tree views still use this old legacy widget, so we need to patch it.
- * This is likely to dissapear in 16.0
+ * This is likely to disappear in 17.0
  */
 patch(CustomFilterItem.prototype, "web_advanced_search.legacy.CustomFilterItem", {
     /**

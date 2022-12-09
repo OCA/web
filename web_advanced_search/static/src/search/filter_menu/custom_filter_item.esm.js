@@ -1,15 +1,11 @@
 /** @odoo-module **/
 
-import {patch} from "@web/core/utils/patch";
 import {CustomFilterItem} from "@web/search/filter_menu/custom_filter_item";
-import {RecordPicker} from "../RecordPicker.esm";
+import {RecordPicker} from "../../js/RecordPicker.esm";
+import {patch} from "@web/core/utils/patch";
 
 /**
  * Patches the CustomFilterItem for owl widgets.
- *
- * Pivot and Graph views use this new owl widget, so we need to patch it.
- * Other views like Tree use the old legacy widget that will probably dissapear
- * in 16.0. Until then, we need to patch both.
  */
 patch(CustomFilterItem.prototype, "web_advanced_search.CustomFilterItem", {
     /**
@@ -51,12 +47,17 @@ patch(CustomFilterItem.prototype, "web_advanced_search.CustomFilterItem", {
                     const idx = this.indexOf(condition);
                     const preFilter = preFilters[idx];
                     const operator = self.OPERATORS[type][condition.operator];
-                    const descriptionArray = [
-                        field.string,
-                        operator.description,
-                        `"${condition.displayedValue}"`,
-                    ];
-                    preFilter.description = descriptionArray.join(" ");
+                    if (
+                        ["=", "!="].includes(operator.symbol) &&
+                        operator.value === undefined
+                    ) {
+                        const descriptionArray = [
+                            field.string,
+                            operator.description,
+                            `"${condition.displayedValue}"`,
+                        ];
+                        preFilter.description = descriptionArray.join(" ");
+                    }
                 }
             }
             return preFilters;
@@ -75,6 +76,19 @@ patch(CustomFilterItem.prototype, "web_advanced_search.CustomFilterItem", {
         if (ev.detail) {
             condition.value = ev.detail.id;
             condition.displayedValue = ev.detail.display_name;
+        }
+    },
+    onValueChange(condition, ev) {
+        if (!ev.target.value) {
+            return this.setDefaultValue(condition);
+        }
+        const field = this.fields[condition.field];
+        const type = this.FIELD_TYPES[field.type];
+        if (type === "relational") {
+            condition.value = ev.target.value;
+            condition.displayedValue = ev.target.value;
+        } else {
+            this._super.apply(this, arguments);
         }
     },
 });

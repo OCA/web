@@ -7,7 +7,6 @@
 */
 
 import {_t} from "web.core";
-
 const JOIN_MAPPING = {
     "&": _t(" and "),
     "|": _t(" or "),
@@ -39,8 +38,8 @@ const HUMAN_DOMAIN_METHODS = {
         for (let x = 0; x < len; ++x) {
             const element = chain_splitted[x];
             chain.push(
-                _.findWhere(this.fieldSelector.pages[x], {name: element}).string ||
-                    element
+                _.findWhere(this.fieldSelector.popover.pages[x], {name: element})
+                    .string || element
             );
         }
         // Special beautiness for some values
