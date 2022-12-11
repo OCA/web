@@ -27,6 +27,11 @@ repos:
         entry: found forbidden files; remove them
         language: fail
         files: "\\.rej$"
+      - id: en-po-files
+        name: en.po files cannot exist
+        entry: found a en.po file
+        language: fail
+        files: '[a-zA-Z0-9_]*/i18n/en\.po$'
   - repo: https://github.com/oca/maintainer-tools
     rev: ab1d7f6
     hooks:
