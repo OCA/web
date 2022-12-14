@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-09-26 15:07+0000\n"
+"PO-Revision-Date: 2022-12-14 16:45+0000\n"
 "Last-Translator: Alessandro Uffreduzzi <alessandro.uffreduzzi@pytech.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. module: web_company_color
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
@@ -25,28 +25,29 @@ msgid ""
 "                        the page."
 msgstr ""
 "<span class=\"fa fa-info fa-2x\"/>\n"
-"                        Perché i cambiamenti abbiano effetto, prego "
-"aggiornare la pagina."
+"                       Perché i cambiamenti abbiano effetto, prego "
+"aggiornare\n"
+"                        la pagina."
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_button_bg
 msgid "Button Background Color"
-msgstr ""
+msgstr "Colore sfondo bottone"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_button_bg_hover
 msgid "Button Background Color Hover"
-msgstr ""
+msgstr "Colore hover sfondo bottone"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_button_text
 msgid "Button Text Color"
-msgstr ""
+msgstr "Colore testo bottone"
 
 #. module: web_company_color
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
 msgid "Colors"
-msgstr ""
+msgstr "Colori"
 
 #. module: web_company_color
 #: model:ir.model,name:web_company_color.model_res_company
@@ -89,27 +90,27 @@ msgstr "Ultima modifica il"
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_link_text
 msgid "Link Text Color"
-msgstr ""
+msgstr "Colore testo collegamento"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_link_text_hover
 msgid "Link Text Color Hover"
-msgstr ""
+msgstr "Colore hover testo collegamento"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_bg
 msgid "Navbar Background Color"
-msgstr "Sfondo Barra Navigazione"
+msgstr "Sfondo barra navigazione"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_bg_hover
 msgid "Navbar Background Color Hover"
-msgstr "Colore Hover Sfondo Barra Navigazione"
+msgstr "Colore hover sfondo barra navigazione"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_text
 msgid "Navbar Text Color"
-msgstr "Colori Testo Barra Navigazione"
+msgstr "Colore testo barra navigazione"
 
 #. module: web_company_color
 #: model:ir.model,name:web_company_color.model_ir_qweb
@@ -119,7 +120,7 @@ msgstr "Qweb"
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__scss_modif_timestamp
 msgid "SCSS Modif. Timestamp"
-msgstr ""
+msgstr "Timestamp Modifica SCSS"
 
 #~ msgid "Navbar Colors"
 #~ msgstr "Colori Barra Navigazione"
