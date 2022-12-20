@@ -3,6 +3,7 @@
 
   * João Marques
   * Alexandre D. Díaz
+  * Carlos Roca
 
 * Thanakrit Pintana
 * `Factorlibre <https://www.factorlibre.com>`__:
