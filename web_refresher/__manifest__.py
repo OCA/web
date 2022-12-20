@@ -10,8 +10,10 @@
     "assets": {
         "web.assets_backend": [
             "web_refresher/static/src/scss/refresher.scss",
-            "web_refresher/static/src/js/refresher.js",
+            "web_refresher/static/src/js/refresher.esm.js",
+            "web_refresher/static/src/js/pager.esm.js",
             "web_refresher/static/src/xml/refresher.xml",
+            "web_refresher/static/src/xml/pager.xml",
         ],
     },
 }
