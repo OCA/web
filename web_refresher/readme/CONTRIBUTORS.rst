@@ -3,5 +3,6 @@
 
   * João Marques
   * Alexandre D. Díaz
+  * Carlos Roca
 
 * Thanakrit Pintana

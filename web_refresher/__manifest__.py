@@ -10,8 +10,12 @@
     "assets": {
         "web.assets_backend": [
             "web_refresher/static/src/scss/refresher.scss",
-            "web_refresher/static/src/js/refresher.js",
+            "web_refresher/static/src/js/refresher.esm.js",
+            "web_refresher/static/src/js/control_panel.esm.js",
         ],
-        "web.assets_qweb": ["web_refresher/static/src/xml/pager_button.xml"],
+        "web.assets_qweb": [
+            "web_refresher/static/src/xml/refresher.xml",
+            "web_refresher/static/src/xml/control_panel.xml",
+        ],
     },
 }
