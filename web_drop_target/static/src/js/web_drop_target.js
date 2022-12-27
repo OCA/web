@@ -151,18 +151,9 @@ odoo.define("web_drop_target", function (require) {
          * @private
          * @param {MouseEvent} ev
          */
-        _onBodyFileDragover: function (ev) {
+        _onBodyFileDragover: function(ev) {
             ev.preventDefault();
-            const actionManager = this.findAncestor(function (ancestor) {
-                return ancestor instanceof ActionManager;
-            });
-            const controller = actionManager.currentDialogController;
-            if (
-                _.isEmpty(this._get_drop_items(ev)) &&
-                this._checkDragOver() &&
-                (controller === undefined ||
-                    (controller && controller.jsID === this.controllerID))
-            ) {
+            if (_.isEmpty(this._get_drop_items(ev)) && this._checkDragOver()) {
                 const drop_zone_offset = this.$drop_zone.offset();
                 const overlay_css = {
                     top: drop_zone_offset.top,
@@ -173,8 +164,11 @@ odoo.define("web_drop_target", function (require) {
                 if (!this._get_record_id()) {
                     overlay_css.background = "#FF000020";
                 }
-                this._drop_overlay.css(overlay_css);
-                this._drop_overlay.removeClass("d-none");
+                if (this._drop_overlay) {
+                    this._drop_overlay.css(overlay_css);
+                    this._drop_overlay.removeClass("d-none");
+                }
+
             }
         },
 
@@ -186,9 +180,10 @@ odoo.define("web_drop_target", function (require) {
          * @private
          * @param {MouseEvent} ev
          */
-        _onBodyFileDrop: function (ev) {
+        _onBodyFileDrop: function(ev) {
             ev.preventDefault();
-            this._drop_overlay.addClass("d-none");
+            if (this._drop_overlay)
+                this._drop_overlay.addClass("d-none");
         },
 
         /**
