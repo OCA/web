@@ -5,7 +5,6 @@
 
 odoo.define("web_drop_target", function (require) {
     "use strict";
-    const ActionManager = require("web.ActionManager");
     const FormController = require("web.FormController");
     const core = require("web.core");
     const qweb = core.qweb;
@@ -151,7 +150,7 @@ odoo.define("web_drop_target", function (require) {
          * @private
          * @param {MouseEvent} ev
          */
-        _onBodyFileDragover: function(ev) {
+        _onBodyFileDragover: function (ev) {
             ev.preventDefault();
             if (_.isEmpty(this._get_drop_items(ev)) && this._checkDragOver()) {
                 const drop_zone_offset = this.$drop_zone.offset();
@@ -168,7 +167,6 @@ odoo.define("web_drop_target", function (require) {
                     this._drop_overlay.css(overlay_css);
                     this._drop_overlay.removeClass("d-none");
                 }
-
             }
         },
 
@@ -180,10 +178,9 @@ odoo.define("web_drop_target", function (require) {
          * @private
          * @param {MouseEvent} ev
          */
-        _onBodyFileDrop: function(ev) {
+        _onBodyFileDrop: function (ev) {
             ev.preventDefault();
-            if (this._drop_overlay)
-                this._drop_overlay.addClass("d-none");
+            if (this._drop_overlay) this._drop_overlay.addClass("d-none");
         },
 
         /**
