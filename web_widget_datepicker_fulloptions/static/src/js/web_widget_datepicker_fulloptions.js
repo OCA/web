@@ -1,9 +1,11 @@
 /* Copyright 2021 Quentin DUPONT
  * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
-odoo.define('web_widget_datepicker_fulloptions.datepicker_fulloptions', function (require) {
-"use strict";
+odoo.define("web_widget_datepicker_fulloptions.datepicker_fulloptions", function (
+    require
+) {
+    "use strict";
 
-    var DatePicker = require('web.datepicker');
+    var DatePicker = require("web.datepicker");
 
     var DatePickerFullOptions = DatePicker.DateWidget.include({
         /**
@@ -17,5 +19,4 @@ odoo.define('web_widget_datepicker_fulloptions.datepicker_fulloptions', function
             this.options.buttons.showClose = true;
         },
     });
-
 });
