@@ -3,12 +3,11 @@
 {
     "name": "Web Widget DatePicker Full Options",
     "version": "12.0.1.0.1",
-    "author": "GRAP, "
-              "Odoo Community Association (OCA)",
+    "author": "GRAP, " "Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "category": "Web",
     "website": "https://github.com/OCA/web",
-    'installable': True,
+    "installable": True,
     "depends": [
         "web",
     ],
