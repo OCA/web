@@ -7,7 +7,7 @@ odoo.define("web_widget_datepicker_fulloptions.datepicker_fulloptions", function
 
     var DatePicker = require("web.datepicker");
 
-    var DatePickerFullOptions = DatePicker.DateWidget.include({
+    DatePicker.DateWidget.include({
         /**
          * @override
          */
