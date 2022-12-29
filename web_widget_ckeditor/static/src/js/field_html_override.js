@@ -3,7 +3,7 @@
     @author Iván Todorovich <ivan.todorovich@camptocamp.com>
     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 */
-odoo.define("web_widget_ckeditor.field_html_override", function (require) {
+odoo.define("web_widget_ckeditor.field_html_override", function(require) {
     "use strict";
 
     const FieldHtml = require("web_editor.field.html");
