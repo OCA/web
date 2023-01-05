@@ -1,8 +1,5 @@
-# pylint: disable=missing-docstring
 # Copyright 2016 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
-
 from odoo import _, api, exceptions, fields, models
 
 from odoo.addons.bus.models.bus import channel_with_db, json_dump
@@ -82,7 +79,6 @@ class ResUsers(models.Model):
         sticky=False,
         target=None,
     ):
-        # pylint: disable=protected-access
         if not self.env.user._is_admin() and any(
             user.id != self.env.uid for user in self
         ):
