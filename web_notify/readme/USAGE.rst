@@ -29,7 +29,7 @@ or
 
    self.env.user.notify_default(message='My default message')
 
-.. figure:: static/description/notifications_screenshot.png
+.. figure:: static/description/notifications_screenshot.gif
    :scale: 80 %
    :alt: Sample notifications
 
