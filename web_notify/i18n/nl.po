@@ -29,25 +29,10 @@ msgid "Default"
 msgstr "Standaard"
 
 #. module: web_notify
-#: model:ir.model.fields,field_description:web_notify.field_res_users__display_name
-msgid "Display Name"
-msgstr "Weergavenaam"
-
-#. module: web_notify
-#: model:ir.model.fields,field_description:web_notify.field_res_users__id
-msgid "ID"
-msgstr "ID"
-
-#. module: web_notify
 #: code:addons/web_notify/models/res_users.py:0
 #, python-format
 msgid "Information"
 msgstr "Informatie"
-
-#. module: web_notify
-#: model:ir.model.fields,field_description:web_notify.field_res_users____last_update
-msgid "Last Modified on"
-msgstr "Laatst Gewijzigd op"
 
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users__notify_danger_channel_name
@@ -126,3 +111,12 @@ msgstr "Gebruikers"
 #, python-format
 msgid "Warning"
 msgstr "Waarschuwing"
+
+#~ msgid "Display Name"
+#~ msgstr "Weergavenaam"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Laatst Gewijzigd op"
