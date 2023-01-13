@@ -453,7 +453,22 @@ options='{&quot;fg_color&quot;: &quot;red:red_color == True; green:green_color =
  </span>overrides<span class="w"> </span>the<span class="w"> </span>rest<span class="w"> </span>of<span class="w"> </span>`colors`<span class="w"> </span>attributes,<span class="w"> </span>and<span class="w"> </span>that<span class="w"> </span>you<span class="w"> </span>need<span class="w"> </span>the<span class="w"> </span>tree<span class="w">
  </span>to<span class="w"> </span>load<span class="w"> </span>your<span class="w"> </span>field<span class="w"> </span>in<span class="w"> </span>the<span class="w"> </span>first<span class="w"> </span>place<span class="w"> </span>by<span class="w"> </span>adding<span class="w"> </span>it<span class="w"> </span>as<span class="w"> </span>invisible<span class="w"> </span>field.
 </pre>
-<p><strong>Note that you should always use single quotes for fields’ ``options`` and wrap nested values in double quotes since ``options`` is a JSON object.</strong></p>
+<ul>
+<li><p class="first">Can use strings too… In the tree view declaration, put <tt class="docutils literal"><span class="pre">options=&quot;{'fg_color':</span> 'green:customer_state == <span class="pre">\'success\''}&quot;</span></tt> attribute in the <tt class="docutils literal">field</tt> tag:</p>
+<pre class="literal-block">
+...
+&lt;field name=&quot;arch&quot; type=&quot;xml&quot;&gt;
+    &lt;tree string=&quot;View name&quot;&gt;
+        ...
+        &lt;field name=&quot;name&quot; options=&quot;{'fg_color': 'green:customer_state == \'success\''}&quot;/&gt;
+        ...
+    &lt;/tree&gt;
+&lt;/field&gt;
+...
+</pre>
+</li>
+</ul>
+<p><strong>Note that you can use single or normal quotes. If the declaration of the options doesn’t follow the JSON format, the options string will be evaluated using py.eval()</strong></p>
 </div>
 <div class="section" id="known-issues-roadmap">
 <h1>Known issues / Roadmap</h1>
