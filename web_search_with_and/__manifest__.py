@@ -4,7 +4,7 @@
 
 {
     "name": "Use AND conditions on omnibar search",
-    "version": "15.0.1.0.0",
+    "version": "16.0.1.0.0",
     "author": "Versada UAB, ACSONE SA/NV, Serincloud, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "category": "web",
@@ -12,8 +12,8 @@
     "depends": ["web"],
     "assets": {
         "web.assets_backend": [
-            "/web_search_with_and/static/src/js/control_panel_model_extension.js",
-            "/web_search_with_and/static/src/js/search_bar.js",
+            "/web_search_with_and/static/src/js/search_model.esm.js",
+            "/web_search_with_and/static/src/js/search_bar.esm.js",
         ],
     },
 }
