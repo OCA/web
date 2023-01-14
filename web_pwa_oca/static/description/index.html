@@ -464,7 +464,7 @@ need to use the following workaround:</p>
 <pre class="code javascript literal-block">
 <span class="kd">var</span> <span class="nx">MyClass</span> <span class="o">=</span> <span class="nx">OdooClass</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
     <span class="nx">myFunc</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="ow">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="k">async</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="k">async</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
             <span class="kd">const</span> <span class="nx">mydata</span> <span class="o">=</span> <span class="k">await</span> <span class="p">...</span><span class="k">do</span> <span class="k">await</span> <span class="nx">stuff</span><span class="p">...</span>
             <span class="k">return</span> <span class="nx">resolve</span><span class="p">(</span><span class="nx">mydata</span><span class="p">);</span>
         <span class="p">});</span>
