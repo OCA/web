@@ -1,6 +1,6 @@
 /* Copyright 2021 Tecnativa - Alexandre D. Díaz
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
-odoo.define("web_time_range_menu_custom.SearchFacet", function(require) {
+odoo.define("web_time_range_menu_custom.SearchFacet", function (require) {
     "use strict";
 
     const core = require("web.core");
@@ -12,7 +12,7 @@ odoo.define("web_time_range_menu_custom.SearchFacet", function(require) {
         /**
          * @override
          */
-        _getFilterDescription: function(filter) {
+        _getFilterDescription: function (filter) {
             if (
                 filter.type === "timeRange" &&
                 (filter.timeRangeId === "custom_period" ||

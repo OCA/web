@@ -1,4 +1,4 @@
-odoo.define("web_time_range_menu_custom.ControlPanelController", function(require) {
+odoo.define("web_time_range_menu_custom.ControlPanelController", function (require) {
     "use strict";
 
     const ControlPanelController = require("web.ControlPanelController");
@@ -11,7 +11,7 @@ odoo.define("web_time_range_menu_custom.ControlPanelController", function(requir
         /**
          * @override
          */
-        _onActivateCustomTimeRange: function(ev) {
+        _onActivateCustomTimeRange: function (ev) {
             ev.stopPropagation();
             this.model.activateTimeRangeCustom(
                 ev.data.id,
