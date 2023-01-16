@@ -36,6 +36,7 @@ setuptools.setup(
         'odoo-addon-web_timeline>=15.0dev,<15.1dev',
         'odoo-addon-web_tree_dynamic_colored_field>=15.0dev,<15.1dev',
         'odoo-addon-web_tree_image_tooltip>=15.0dev,<15.1dev',
+        'odoo-addon-web_tree_many2one_clickable>=15.0dev,<15.1dev',
         'odoo-addon-web_view_calendar_list>=15.0dev,<15.1dev',
         'odoo-addon-web_widget_bokeh_chart>=15.0dev,<15.1dev',
         'odoo-addon-web_widget_child_selector>=15.0dev,<15.1dev',
