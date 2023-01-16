@@ -1,6 +1,6 @@
 /* Copyright 2021 Tecnativa - Alexandre D. Díaz
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
-odoo.define("web_time_range_menu_custom.Domain", function(require) {
+odoo.define("web_time_range_menu_custom.Domain", function (require) {
     "use strict";
 
     const Domain = require("web.Domain");
@@ -9,7 +9,7 @@ odoo.define("web_time_range_menu_custom.Domain", function(require) {
         /**
          * @override
          */
-        constructCustomDomain: function(
+        constructCustomDomain: function (
             fieldName,
             period,
             type,
@@ -26,7 +26,7 @@ odoo.define("web_time_range_menu_custom.Domain", function(require) {
             function makeInterval() {
                 switch (comparisonPeriod) {
                     case "previous_period":
-                        _.each(offsetPeriodParams, function(value, key) {
+                        _.each(offsetPeriodParams, function (value, key) {
                             if (
                                 !leftBoundaryParams[key] ||
                                 _.isNumber(leftBoundaryParams[key])
@@ -59,22 +59,20 @@ odoo.define("web_time_range_menu_custom.Domain", function(require) {
                         break;
                     case "custom_comparison_period":
                         // This case is the addition for custom periods
-                        leftBoundaryParams[
-                            comparisonPeriodCustom.type
-                        ] = leftBoundaryParams[comparisonPeriodCustom.type]
-                            ? leftBoundaryParams[comparisonPeriodCustom.type] -
-                              comparisonPeriodCustom.value
-                            : -comparisonPeriodCustom.value;
-                        rightBoundaryParams[
-                            comparisonPeriodCustom.type
-                        ] = rightBoundaryParams[comparisonPeriodCustom.type]
-                            ? rightBoundaryParams[comparisonPeriodCustom.type] -
-                              comparisonPeriodCustom.value
-                            : -comparisonPeriodCustom.value;
+                        leftBoundaryParams[comparisonPeriodCustom.type] =
+                            leftBoundaryParams[comparisonPeriodCustom.type]
+                                ? leftBoundaryParams[comparisonPeriodCustom.type] -
+                                  comparisonPeriodCustom.value
+                                : -comparisonPeriodCustom.value;
+                        rightBoundaryParams[comparisonPeriodCustom.type] =
+                            rightBoundaryParams[comparisonPeriodCustom.type]
+                                ? rightBoundaryParams[comparisonPeriodCustom.type] -
+                                  comparisonPeriodCustom.value
+                                : -comparisonPeriodCustom.value;
                         break;
                 }
 
-                var stringifyParams = function(value, key) {
+                var stringifyParams = function (value, key) {
                     return key + "=" + value;
                 };
                 var leftBoundaryStringifyParams = _.map(

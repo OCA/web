@@ -1,6 +1,6 @@
 /* Copyright 2021 Tecnativa - Alexandre D. Díaz
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
-odoo.define("web_time_range_menu_custom.TimeRangeMenu", function(require) {
+odoo.define("web_time_range_menu_custom.TimeRangeMenu", function (require) {
     "use strict";
 
     const TimeRangeMenu = require("web.TimeRangeMenu");
@@ -12,7 +12,7 @@ odoo.define("web_time_range_menu_custom.TimeRangeMenu", function(require) {
                 "_onChangeComparisonTimeRangeSelector",
         }),
 
-        renderElement: function() {
+        renderElement: function () {
             this._super.apply(this, arguments);
             this.$time_range_selector = this.$el.find("#time_range_selector");
             this.$comparison_time_range_selector = this.$el.find(
@@ -28,12 +28,14 @@ odoo.define("web_time_range_menu_custom.TimeRangeMenu", function(require) {
             this.$selector_comparison_custom = this.$el.find(
                 "#comparison_time_range_selector_custom"
             );
-            this.$selector_comparison_custom_field_value = this.$selector_comparison_custom.find(
-                "#date_field_selector_comparison_custom_value"
-            );
-            this.$selector_comparison_custom_field_type = this.$selector_comparison_custom.find(
-                "#date_field_selector_comparison_custom_type"
-            );
+            this.$selector_comparison_custom_field_value =
+                this.$selector_comparison_custom.find(
+                    "#date_field_selector_comparison_custom_value"
+                );
+            this.$selector_comparison_custom_field_type =
+                this.$selector_comparison_custom.find(
+                    "#date_field_selector_comparison_custom_type"
+                );
 
             this.$selector_custom.toggleClass(
                 "d-none",
@@ -59,21 +61,21 @@ odoo.define("web_time_range_menu_custom.TimeRangeMenu", function(require) {
             }
         },
 
-        _onChangeTimeRangeSelector: function(ev) {
+        _onChangeTimeRangeSelector: function (ev) {
             this.$selector_custom.toggleClass(
                 "d-none",
                 ev.target.value !== "custom_period"
             );
         },
 
-        _onChangeComparisonTimeRangeSelector: function(ev) {
+        _onChangeComparisonTimeRangeSelector: function (ev) {
             this.$selector_comparison_custom.toggleClass(
                 "d-none",
                 ev.target.value !== "custom_comparison_period"
             );
         },
 
-        _onCheckBoxClick: function() {
+        _onCheckBoxClick: function () {
             this._super.apply(this, arguments);
             const comparisonTimeRangeId = this.$(
                 ".o_comparison_time_range_selector"
@@ -85,7 +87,7 @@ odoo.define("web_time_range_menu_custom.TimeRangeMenu", function(require) {
             );
         },
 
-        _onApplyButtonClick: function() {
+        _onApplyButtonClick: function () {
             const id = this.$(".o_date_field_selector").val();
             const timeRangeId = this.$(".o_time_range_selector").val();
             let comparisonTimeRangeId = false;
