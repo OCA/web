@@ -1,7 +1,25 @@
 /** @odoo-module **/
 
-import {registry} from "@web/core/registry";
 import Dialog from "web.Dialog";
+import {registry} from "@web/core/registry";
+
+function _refreshWidget(env) {
+    const controller = env.services.action.currentController;
+    const props = controller.props;
+    const view = controller.view;
+    // LEGACY CODE COMPATIBILITY: remove when controllers will be written in owl
+    if (view.isLegacy) {
+        // Case where a legacy view is reloaded via the view switcher
+        const {__legacy_widget__} = controller.getLocalState();
+        const params = {};
+        if ("resId" in props) {
+            params.currentId = props.resId;
+        }
+        return __legacy_widget__.reload(params);
+    }
+    // END LEGACY CODE COMPATIBILITY
+    env.services.action.switchView(props.type, {resId: props.resId});
+}
 
 function ir_actions_act_window_message_get_buttons(env, action, close_func) {
     // Return an array of button definitions from action
@@ -22,11 +40,7 @@ function ir_actions_act_window_message_get_buttons(env, action, close_func) {
                             if (_.isObject(result)) {
                                 return env.services.action.doAction(result);
                             }
-                            // Always refresh the view after the action
-                            // ex: action updates a status
-                            const {__legacy_widget__} =
-                                env.services.action.currentController.getLocalState();
-                            __legacy_widget__.reload({});
+                            _refreshWidget(env);
                         });
                 } else {
                     return env.services.action.doAction(button_definition);
@@ -44,9 +58,7 @@ async function _executeWindowMessageAction({env, action}) {
             text: action.close_button_title || env._t("Close"),
             click: function () {
                 // Refresh the view before closing the dialog
-                const {__legacy_widget__} =
-                    env.services.action.currentController.getLocalState();
-                __legacy_widget__.reload({});
+                _refreshWidget(env);
                 this.close();
             },
             classes: "btn-default",
