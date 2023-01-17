@@ -10,7 +10,7 @@
     "website": "https://github.com/OCA/web",
     "depends": ["web"],
     "data": [],
-    "external_dependencies": {"python": ["mpld3", "beautifulsoup4"]},
+    "external_dependencies": {"python": ["mpld3==0.5.7", "beautifulsoup4"]},
     "auto_install": False,
     "development_status": "Beta",
     "maintainers": ["JordiBForgeFlow", "ChrisOForgeFlow"],
