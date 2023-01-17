@@ -1,2 +1,4 @@
 # generated from manifests external_dependencies
+beautifulsoup4
 bokeh==2.4.2
+mpld3==0.5.7
