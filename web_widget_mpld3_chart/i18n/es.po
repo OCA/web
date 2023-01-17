@@ -12,3 +12,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: web_widget_mpld3_chart
+#: model:ir.model,name:web_widget_mpld3_chart.model_abstract_mpld3_parser
+msgid "Utility to parse ploot figure to json data for widget Mpld3"
+msgstr ""
