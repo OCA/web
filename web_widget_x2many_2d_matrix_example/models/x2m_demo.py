@@ -7,7 +7,15 @@ class X2MDemo(models.Model):
     _description = 'X2Many Demo'
 
     name = fields.Char()
+
+    display_name = fields.Char(compute="_compute_display_name")
+
     line_ids = fields.One2many('x2m.demo.line', 'demo_id')
+
+    @api.depends("name")
+    def _compute_display_name(self):
+        for demo in self:
+            demo.display_name = "%s (#%s)" % (demo.name, demo.id)
 
     @api.multi
     def _open_x2m_matrix(self, view_xmlid):
@@ -46,7 +54,9 @@ class X2MDemoLine(models.Model):
 
     name = fields.Char()
     demo_id = fields.Many2one('x2m.demo')
+    demo_display_name = fields.Char(related="demo_id.display_name")
     user_id = fields.Many2one('res.users')
+    user_display_name = fields.Char(related="user_id.matrix_display_name")
     value = fields.Integer()
     value_selection = fields.Selection(
         [('val1', 'Value 1'), ('val2', 'Value 2')],
