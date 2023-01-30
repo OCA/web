@@ -19,12 +19,12 @@
     }
     // For FULL HD devices
     @media (min-width: 1900px) {
-        .o_cp_top_left,
-        .o_cp_bottom_left {
+        .o_action_manager & .o_cp_top_left,
+        .o_action_manager & .o_cp_bottom_left {
             width: 60%;
         }
-        .o_cp_top_right,
-        .o_cp_bottom_right {
+        .o_action_manager & .o_cp_top_right,
+        .o_action_manager & .o_cp_bottom_right {
             width: 40%;
         }
     }
