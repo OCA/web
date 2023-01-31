@@ -1,7 +1,7 @@
 # Copyright 2023 Sunflower IT
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo.exceptions import AccessError
+from odoo.exceptions import AccessError, UserError
 from odoo.tests.common import TransactionCase
 
 
@@ -45,3 +45,15 @@ class TestSupportBranding(TransactionCase):
         self.assertEquals(value_1, value_2)
         self.assertEquals(value_1, self.demo_support_company_branding_url.value)
         self.assertEquals(value_2, self.demo_support_company_branding_url.value)
+
+        # check if return if key is invalid
+        empty_val = self.company_obj.with_user(
+            self.admin_user
+        ).get_ir_config_param_data("testing")
+        self.assertEquals(empty_val, "")
+
+        # check if return of key if invalid
+        with self.assertRaises(UserError):
+            empty_val = self.company_obj.with_user(
+                self.admin_user
+            ).get_ir_config_param_data(True)

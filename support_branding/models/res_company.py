@@ -1,11 +1,8 @@
 # Copyright 2023 Sunflower IT
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-import logging
-
-from odoo import api, models
-
-_logger = logging.getLogger(__name__)
+from odoo import _, api, models
+from odoo.exceptions import UserError
 
 
 class ResCompany(models.Model):
@@ -19,8 +16,7 @@ class ResCompany(models.Model):
             )
             res = self.env.cr.fetchone()
         except Exception as e:
-            _logger.error("\n\n ERROR: %s \n\n", e)
-            return ""
+            raise UserError(_("Error: %s" % e))
         else:
             if res:
                 return "%s" % res
