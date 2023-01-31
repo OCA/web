@@ -19,40 +19,40 @@ odoo.define("support_branding.CrashManager", function (require) {
             var self = this;
             $.when(this._super.apply(this, arguments)).then(function () {
                 self._rpc({
-                    model: "ir.config_parameter",
-                    method: "get_param",
+                    model: "res.company",
+                    method: "get_ir_config_param_data",
                     args: ["support_company"],
                 }).then(function (name) {
                     self.support_cp_name = name;
                 });
 
                 self._rpc({
-                    model: "ir.config_parameter",
-                    method: "get_param",
+                    model: "res.company",
+                    method: "get_ir_config_param_data",
                     args: ["support_company_url"],
                 }).then(function (url) {
                     self.support_cp_url = url;
                 });
 
                 self._rpc({
-                    model: "ir.config_parameter",
-                    method: "get_param",
+                    model: "res.company",
+                    method: "get_ir_config_param_data",
                     args: ["support_email"],
                 }).then(function (email) {
                     self.support_cp_email = email;
                 });
 
                 self._rpc({
-                    model: "ir.config_parameter",
-                    method: "get_param",
+                    model: "res.company",
+                    method: "get_ir_config_param_data",
                     args: ["support_release"],
                 }).then(function (release) {
                     self.support_cp_release = release;
                 });
 
                 self._rpc({
-                    model: "ir.config_parameter",
-                    method: "get_param",
+                    model: "res.company",
+                    method: "get_ir_config_param_data",
                     args: ["support_branding_color"],
                 }).then(function (color) {
                     self.support_cp_color = color;

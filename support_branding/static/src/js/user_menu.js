@@ -12,8 +12,8 @@ odoo.define("support_branding.UserMenu", function (require) {
             var self = this;
             var def = self
                 ._rpc({
-                    model: "ir.config_parameter",
-                    method: "get_param",
+                    model: "res.company",
+                    method: "get_ir_config_param_data",
                     args: ["support_company_url"],
                 })
                 .then(function (site) {
