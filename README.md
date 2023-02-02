@@ -51,7 +51,7 @@ addon | version | maintainers | summary
 [web_notify](web_notify/) | 14.0.1.0.1 |  | Send notification messages to user
 [web_pwa_oca](web_pwa_oca/) | 14.0.1.0.0 | [![eLBati](https://github.com/eLBati.png?size=30px)](https://github.com/eLBati) | Make Odoo a PWA
 [web_refresher](web_refresher/) | 14.0.2.0.0 |  | Web Refresher
-[web_responsive](web_responsive/) | 14.0.1.2.1 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) [![Tardo](https://github.com/Tardo.png?size=30px)](https://github.com/Tardo) | Responsive web client, community-supported
+[web_responsive](web_responsive/) | 14.0.1.2.2 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) [![Tardo](https://github.com/Tardo.png?size=30px)](https://github.com/Tardo) | Responsive web client, community-supported
 [web_search_with_and](web_search_with_and/) | 14.0.1.0.0 |  | Use AND conditions on omnibar search
 [web_send_message_popup](web_send_message_popup/) | 14.0.1.0.0 |  | Web Send Message as Popup
 [web_sheet_full_width](web_sheet_full_width/) | 14.0.1.0.1 |  | Use the whole available screen width when displaying sheets
