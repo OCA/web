@@ -247,7 +247,7 @@ odoo.define("web_responsive", function (require) {
                     continue;
                 } else {
                     const root = this._isInMenuTree(node.children, id);
-                    if (root !== null) {
+                    if (root) {
                         return root;
                     }
                 }
@@ -273,6 +273,9 @@ odoo.define("web_responsive", function (require) {
             });
             // Find app that owns the chosen menu
             const app = this.menuData.children.find((app_menu) => {
+                if (app_menu.id == data.menuId) {
+                    return true;
+                }
                 return this._isInMenuTree(app_menu, data.menuId);
             });
             if (!app) {
