@@ -12,6 +12,7 @@ class TestSupportBranding(TransactionCase):
         self.ir_config_obj = self.env["ir.config_parameter"].sudo()
         self.demo_user = self.env.ref("base.user_demo")
         self.admin_user = self.env.ref("base.user_admin")
+        self.portal_user = self.env.ref("base.demo_user0")
         self.demo_support_branding_company_name = self.env.ref(
             "support_branding.demo_config_parameter_company_name"
         )
@@ -20,6 +21,12 @@ class TestSupportBranding(TransactionCase):
         )
 
     def test_fetch_support_branding_vals_from_res_company(self):
+
+        # Check if user has the right access rights e.g. portal user not allowed
+        with self.assertRaises(AccessError):
+            self.ir_config_obj.with_user(self.portal_user).get_param(
+                self.demo_support_company_branding_url.key
+            )
 
         # Check if demo user is able to access.
         # NB: ir.config_parameter model requires admin access rights.
