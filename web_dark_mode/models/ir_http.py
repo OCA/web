@@ -12,8 +12,9 @@ class IrHttp(models.AbstractModel):
     def _set_color_scheme(cls, response):
         scheme = request.httprequest.cookies.get("color_scheme")
         user = request.env.user
-        user_scheme = "dark" if user.dark_mode else "light"
-        if (not user.dark_mode_device_dependent) and scheme != user_scheme:
+        user_scheme = "dark" if getattr(user, "dark_mode", None) else "light"
+        device_dependent = getattr(user, "dark_mode_device_dependent", None)
+        if (not device_dependent) and scheme != user_scheme:
             response.set_cookie("color_scheme", user_scheme)
 
     @classmethod
