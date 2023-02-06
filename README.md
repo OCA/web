@@ -21,7 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[web_dark_mode](web_dark_mode/) | 16.0.1.0.0 |  | Enabled Dark Mode for the Odoo Backend
+[web_dark_mode](web_dark_mode/) | 16.0.1.0.1 |  | Enabled Dark Mode for the Odoo Backend
 [web_domain_field](web_domain_field/) | 16.0.1.0.0 |  | Use computed field as domain
 [web_environment_ribbon](web_environment_ribbon/) | 16.0.1.0.0 |  | Web Environment Ribbon
 [web_refresher](web_refresher/) | 16.0.2.0.0 |  | Web Refresher
