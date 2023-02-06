@@ -5,7 +5,7 @@
     "name": "Dark Mode",
     "summary": "Enabled Dark Mode for the Odoo Backend",
     "license": "AGPL-3",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "website": "https://github.com/OCA/web",
     "author": "initOS GmbH, Odoo Community Association (OCA)",
     "depends": ["web"],
