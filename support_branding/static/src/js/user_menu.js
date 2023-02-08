@@ -13,12 +13,13 @@ odoo.define("support_branding.UserMenu", function (require) {
             var def = self
                 ._rpc({
                     model: "res.company",
-                    method: "get_ir_config_param_data",
-                    args: ["support_company_url"],
+                    method: "get_support_branding_config_param_data",
+                    args: [],
                 })
-                .then(function (site) {
-                    if (site && site !== "") {
-                        self.support_url = site;
+                .then(function (result) {
+                    if (result && 'support_company_url' in result &&
+                        result['support_company_url'] !== "") {
+                        self.support_url = result['support_company_url'];
                     }
                 });
             return $.when(this._super.apply(this, arguments), def);

@@ -20,42 +20,20 @@ odoo.define("support_branding.CrashManager", function (require) {
             $.when(this._super.apply(this, arguments)).then(function () {
                 self._rpc({
                     model: "res.company",
-                    method: "get_ir_config_param_data",
-                    args: ["support_company"],
-                }).then(function (name) {
-                    self.support_cp_name = name;
-                });
-
-                self._rpc({
-                    model: "res.company",
-                    method: "get_ir_config_param_data",
-                    args: ["support_company_url"],
-                }).then(function (url) {
-                    self.support_cp_url = url;
-                });
-
-                self._rpc({
-                    model: "res.company",
-                    method: "get_ir_config_param_data",
-                    args: ["support_email"],
-                }).then(function (email) {
-                    self.support_cp_email = email;
-                });
-
-                self._rpc({
-                    model: "res.company",
-                    method: "get_ir_config_param_data",
-                    args: ["support_release"],
-                }).then(function (release) {
-                    self.support_cp_release = release;
-                });
-
-                self._rpc({
-                    model: "res.company",
-                    method: "get_ir_config_param_data",
-                    args: ["support_branding_color"],
-                }).then(function (color) {
-                    self.support_cp_color = color;
+                    method: "get_support_branding_config_param_data",
+                    args: [],
+                }).then(function (result) {
+                    if (result && 'support_company' in result)
+                        self.support_cp_name = result['support_company'];
+                    if (result && 'support_company_url' in result)
+                        self.support_cp_url = result['support_company_url'];
+                    if (result && 'support_email' in result)
+                        self.support_cp_email = result['support_email'];
+                    if (result && 'support_release' in result)
+                        self.support_cp_release = result['support_release'];
+                    if (result && 'support_branding_color' in result)
+                        self.support_branding_color = result[
+                        'support_branding_color'];
                 });
             });
         },
