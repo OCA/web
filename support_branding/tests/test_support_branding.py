@@ -21,7 +21,6 @@ class TestSupportBranding(TransactionCase):
         )
 
     def test_fetch_support_branding_vals_from_res_company(self):
-
         # Check if user has the right access rights e.g. portal user not allowed
         with self.assertRaises(AccessError):
             self.ir_config_obj.with_user(self.portal_user).get_param(
@@ -34,6 +33,13 @@ class TestSupportBranding(TransactionCase):
             self.ir_config_obj.with_user(self.demo_user).get_param(
                 self.demo_support_branding_company_name.key
             )
+
+        # Check if user has the right access rights e.g. portal user not allowed
+        # by calling 'get_support_branding_config_param_data'
+        with self.assertRaises(AccessError):
+            self.company_obj.with_user(
+                self.portal_user
+            ).get_support_branding_config_param_data()
 
         vals = self.company_obj.with_user(
             self.demo_user
