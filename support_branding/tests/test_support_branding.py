@@ -1,7 +1,7 @@
 # Copyright 2023 Sunflower IT
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo.exceptions import AccessError, UserError
+from odoo.exceptions import AccessError
 from odoo.tests.common import TransactionCase
 
 
@@ -36,20 +36,25 @@ class TestSupportBranding(TransactionCase):
             )
 
         vals = self.company_obj.with_user(
-            self.demo_user).get_support_branding_config_param_data()
+            self.demo_user
+        ).get_support_branding_config_param_data()
 
-        self.assertEquals(vals['support_company'],
-                          self.demo_support_branding_company_name.value)
+        self.assertEquals(
+            vals["support_company"], self.demo_support_branding_company_name.value
+        )
 
         # Check if admin user is able to access
         # admin has access all through
         vals_1 = self.company_obj.with_user(
-            self.admin_user).get_support_branding_config_param_data()
+            self.admin_user
+        ).get_support_branding_config_param_data()
         vals_2 = self.company_obj.with_user(
-            self.admin_user).get_support_branding_config_param_data()
+            self.admin_user
+        ).get_support_branding_config_param_data()
         self.assertEquals(vals_1, vals_2)
-        self.assertEquals(vals_1['support_company_url'],
-                          self.demo_support_company_branding_url.value)
-        self.assertEquals(vals_2['support_company_url'],
-                          self.demo_support_company_branding_url.value)
-
+        self.assertEquals(
+            vals_1["support_company_url"], self.demo_support_company_branding_url.value
+        )
+        self.assertEquals(
+            vals_2["support_company_url"], self.demo_support_company_branding_url.value
+        )

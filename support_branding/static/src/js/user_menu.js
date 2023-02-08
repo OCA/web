@@ -17,9 +17,12 @@ odoo.define("support_branding.UserMenu", function (require) {
                     args: [],
                 })
                 .then(function (result) {
-                    if (result && 'support_company_url' in result &&
-                        result['support_company_url'] !== "") {
-                        self.support_url = result['support_company_url'];
+                    if (
+                        result &&
+                        "support_company_url" in result &&
+                        result.support_company_url !== ""
+                    ) {
+                        self.support_url = result.support_company_url;
                     }
                 });
             return $.when(this._super.apply(this, arguments), def);
