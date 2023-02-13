@@ -31,6 +31,7 @@ setuptools.setup(
         'odoo14-addon-web_m2x_options_manager',
         'odoo14-addon-web_no_bubble',
         'odoo14-addon-web_notify',
+        'odoo14-addon-web_notify_channel_message',
         'odoo14-addon-web_pwa_oca',
         'odoo14-addon-web_refresher',
         'odoo14-addon-web_responsive',
