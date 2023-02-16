@@ -21,17 +21,7 @@ patch(WebClient.prototype, "web_responsive.DefaultAppsMenu", {
         this._super();
         useBus(this.env.bus, "APPS_MENU:STATE_CHANGED", (payload) => {
             this.el.classList.toggle("o_apps_menu_opened", payload);
-            this.el.classList.toggle("o_first_app", false);
         });
-    },
-    _loadDefaultApp() {
-        var menu_apps_dropdown = document.querySelector(
-            ".o_navbar_apps_menu .dropdown-toggle"
-        );
-        menu_apps_dropdown.click();
-        this.el.classList.toggle("o_apps_menu_opened", true);
-        this.el.classList.toggle("o_first_app", true);
-        return true;
     },
 });
 
