@@ -3,9 +3,9 @@ import {browser} from "@web/core/browser/browser";
 import {registry} from "@web/core/registry";
 
 export const webNotificationService = {
-    dependencies: ["notification"],
+    dependencies: ["bus_service", "notification"],
 
-    start(env, {notification}) {
+    start(env, {bus_service, notification}) {
         let webNotifTimeouts = {};
         /**
          * Displays the web notification on user's screen
@@ -28,17 +28,15 @@ export const webNotificationService = {
                 });
             });
         }
-        env.bus.on("WEB_CLIENT_READY", null, async () => {
-            const legacyEnv = owl.Component.env;
-            legacyEnv.services.bus_service.onNotification(this, (notifications) => {
-                for (const {payload, type} of notifications) {
-                    if (type === "web.notify") {
-                        displaywebNotification(payload);
-                    }
+
+        bus_service.addEventListener("notification", ({detail: notifications}) => {
+            for (const {payload, type} of notifications) {
+                if (type === "web.notify") {
+                    displaywebNotification(payload);
                 }
-            });
-            legacyEnv.services.bus_service.startPolling();
+            }
         });
+        bus_service.start();
     },
 };
 
