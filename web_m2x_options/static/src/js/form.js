@@ -38,13 +38,13 @@ odoo.define("web_m2x_options.web_m2x_options", function (require) {
                         text: _t("Create"),
                         classes: "btn-primary",
                         click: function () {
-                            if (this.$("input").val()) {
+                            if (this.value) {
                                 this.trigger_up("quick_create", {
-                                    value: this.$("input").val(),
+                                    value: this.value,
                                 });
                                 this.close(true);
                             } else {
-                                this.$("input").focus();
+                                parent.$("input").focus();
                             }
                         },
                     },
@@ -55,7 +55,7 @@ odoo.define("web_m2x_options.web_m2x_options", function (require) {
                         click: function () {
                             this.trigger_up("search_create_popup", {
                                 view_type: "form",
-                                value: this.$("input").val(),
+                                value: this.value,
                             });
                         },
                     },
