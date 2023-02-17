@@ -40,6 +40,7 @@ msgstr ""
 
 #. module: web_widget_x2many_2d_matrix_example
 #: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo__display_name
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__demo_display_name
 #: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__display_name
 #: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_matrix_demo_wiz__display_name
 msgid "Display Name"
@@ -80,6 +81,12 @@ msgid "Line"
 msgstr ""
 
 #. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_res_users__matrix_display_name
+#: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__user_display_name
+msgid "Matrix Display Name"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
 #: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo__name
 #: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__name
 msgid "Name"
@@ -103,6 +110,11 @@ msgstr ""
 #. module: web_widget_x2many_2d_matrix_example
 #: model:ir.model.fields,field_description:web_widget_x2many_2d_matrix_example.field_x2m_demo_line__user_id
 msgid "User"
+msgstr ""
+
+#. module: web_widget_x2many_2d_matrix_example
+#: model:ir.model,name:web_widget_x2many_2d_matrix_example.model_res_users
+msgid "Users"
 msgstr ""
 
 #. module: web_widget_x2many_2d_matrix_example

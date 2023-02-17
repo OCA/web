@@ -19,6 +19,7 @@ class X2mMatrixDemoWiz(models.TransientModel):
                 'name': "{}'s task on {}".format(usr.name, rec.name),
                 'demo_id': rec.id,
                 'user_id': usr.id,
+                'user_display_name': usr.matrix_display_name,
             })
             # if there isn't a demo line record for the user, create a new one
             if not rec.line_ids.filtered(lambda x: x.user_id == usr) else

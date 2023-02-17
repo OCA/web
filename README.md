@@ -36,7 +36,7 @@ addon | version | maintainers | summary
 [web_dashboard_tile](web_dashboard_tile/) | 12.0.1.0.2 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Add Overview Dashboards with Tiles
 [web_decimal_numpad_dot](web_decimal_numpad_dot/) | 12.0.1.0.0 |  | Allows using numpad dot to enter period decimal separator
 [web_dialog_size](web_dialog_size/) | 12.0.1.0.1 |  | A module that lets the user expand a dialog box to the full screen width.
-[web_disable_browser_autocomplete](web_disable_browser_autocomplete/) | 12.0.1.0.1 |  | Allow disable browser autocomplete.
+[web_disable_browser_autocomplete](web_disable_browser_autocomplete/) | 12.0.1.0.2 |  | Allow disable browser autocomplete.
 [web_disable_export_group](web_disable_export_group/) | 12.0.1.0.0 |  | Web Disable Export Group
 [web_domain_field](web_domain_field/) | 12.0.1.0.0 |  | Use computed field as domain
 [web_domain_field_example](web_domain_field_example/) | 12.0.1.0.0 |  | Show and test web_domain_field module
@@ -60,7 +60,7 @@ addon | version | maintainers | summary
 [web_pivot_computed_measure](web_pivot_computed_measure/) | 12.0.1.0.3 |  | Web Pivot Computed Measure
 [web_pwa_oca](web_pwa_oca/) | 12.0.3.2.0 | [![eLBati](https://github.com/eLBati.png?size=30px)](https://github.com/eLBati) | Make Odoo a PWA
 [web_refresher](web_refresher/) | 12.0.1.0.0 |  | Web Refresher
-[web_responsive](web_responsive/) | 12.0.2.4.0 |  | Responsive web client, community-supported
+[web_responsive](web_responsive/) | 12.0.2.4.1 |  | Responsive web client, community-supported
 [web_responsive_company](web_responsive_company/) | 12.0.1.0.0 |  | Improve the diplay of the list of the companies
 [web_search_with_and](web_search_with_and/) | 12.0.1.0.0 |  | Use AND conditions on omnibar search
 [web_searchbar_full_width](web_searchbar_full_width/) | 12.0.1.0.1 |  | Show search bar in full screen width
@@ -104,8 +104,8 @@ addon | version | maintainers | summary
 [web_widget_timepicker](web_widget_timepicker/) | 12.0.1.0.1 |  | Web Timepicker Widget
 [web_widget_url_advanced](web_widget_url_advanced/) | 12.0.1.0.1 |  | This module extends URL widget for displaying anchors with custom labels.
 [web_widget_url_translatable](web_widget_url_translatable/) | 12.0.1.0.0 |  | Enable to set translation on fields using URL widget
-[web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 12.0.2.2.2 |  | Show list fields as a matrix
-[web_widget_x2many_2d_matrix_example](web_widget_x2many_2d_matrix_example/) | 12.0.1.1.0 |  | A small example on how to use `web_widget_x2many_2d_matrix`.
+[web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 12.0.2.2.3 |  | Show list fields as a matrix
+[web_widget_x2many_2d_matrix_example](web_widget_x2many_2d_matrix_example/) | 12.0.1.1.1 |  | A small example on how to use `web_widget_x2many_2d_matrix`.
 
 [//]: # (end addons)
 
