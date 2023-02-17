@@ -1,10 +1,11 @@
 /** @odoo-module **/
 
+import {SearchModel} from "@web/search/search_model";
 import {patch} from "@web/core/utils/patch";
 import {rankInterval} from "@web/search/utils/dates";
-import {SearchModel} from "@web/search/search_model";
 
 patch(SearchModel.prototype, "web_search_with_and/static/src/js/search_model.js", {
+    // eslint-disable-next-line complexity
     _getGroups() {
         const preGroups = [];
         for (const queryElem of this.query) {
@@ -30,6 +31,7 @@ patch(SearchModel.prototype, "web_search_with_and/static/src/js/search_model.js"
             for (const queryElem of queryElements) {
                 const {searchItemId} = queryElem;
                 let activeItem = activeItems.find(
+                    // eslint-disable-next-line no-shadow -- safe
                     ({searchItemId: id}) => id === searchItemId
                 );
                 if ("generatorId" in queryElem) {
