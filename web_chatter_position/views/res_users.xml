@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <record id="view_users_form_simple_modif_chatter_position" model="ir.ui.view">
-        <field name="name">view.users.form.simple.modif.chatter.position</field>
+    <record id="view_users_form_simple_modif" model="ir.ui.view">
         <field name="model">res.users</field>
         <field name="inherit_id" ref="base.view_users_form_simple_modif" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='email']" position="after">
-                <field name="chatter_position" readonly="0" />
-            </xpath>
+            <field name="email" position="after">
+                <field name="chatter_position" widget="radio" />
+            </field>
         </field>
     </record>
 </odoo>
