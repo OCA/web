@@ -8,11 +8,13 @@ class ResUsers(models.Model):
     _inherit = "res.users"
 
     chatter_position = fields.Selection(
-        [("bottom", "Bottom"), ("sided", "Sided")],
-        default="sided",
+        [
+            ("auto", "Responsive"),
+            ("bottom", "Bottom"),
+            ("sided", "Sided"),
+        ],
+        default="auto",
     )
-
-    #  Override so that the user can change the chatter_position field
 
     @property
     def SELF_READABLE_FIELDS(self):

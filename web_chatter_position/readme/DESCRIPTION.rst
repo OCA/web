@@ -1,4 +1,3 @@
-Configurable Chatter Position.
-Change Chatter Position in User Preferences.
-Change Chatter Position on the fly.
+Configurable chatter position from the user preferences.
+
 Supports Both Community & Enterprise Edition.
