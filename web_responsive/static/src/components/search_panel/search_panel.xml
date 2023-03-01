@@ -7,7 +7,7 @@
             <div
                 t-if="ui.isSmall"
                 class="o_search_panel_summary"
-                t-on-click.stop="state.mobileSearch = true"
+                t-on-click.stop="() => this.state.mobileSearch = true"
             >
                 <div class="d-flex flex-wrap align-items-center">
                     <i class="fa fa-fw fa-filter mr-1" />

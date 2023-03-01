@@ -16,8 +16,8 @@
         >
             <div
                 t-if="!state.maximized"
-                class="o_AttachmentViewer_headerItem o_AttachmentViewer_headerItemButton o_AttachmentViewer_headerItemButtonMaximize"
-                t-on-click="state.maximized=true"
+                class="o_AttachmentViewer_headerItem o_AttachmentViewer_headerItemButton o_AttachmentViewer_headerItemButtonMaximize d-flex align-items-center mb-0 px-3 h4 text-reset cursor-pointer"
+                t-on-click="() => { state.maximized = true }"
                 role="button"
                 title="Maximize"
                 aria-label="Maximize"
@@ -26,8 +26,8 @@
             </div>
             <div
                 t-if="state.maximized"
-                class="o_AttachmentViewer_headerItem o_AttachmentViewer_headerItemButton o_AttachmentViewer_headerItemButtonMinimize"
-                t-on-click="state.maximized=false"
+                class="o_AttachmentViewer_headerItem o_AttachmentViewer_headerItemButton o_AttachmentViewer_headerItemButtonMinimize d-flex align-items-center mb-0 px-3 h4 text-reset cursor-pointer"
+                t-on-click="() => { state.maximized = false }"
                 role="button"
                 title="Minimize"
                 aria-label="Minimize"
