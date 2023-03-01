@@ -1,6 +1,7 @@
 /** @odoo-module **/
 /* Copyright 2018 Tecnativa - Jairo Llopis
  * Copyright 2021 ITerra - Sergey Shebanin
+ * Copyright 2023 Onestein - Anjeel Haria
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
 import {NavBar} from "@web/webclient/navbar/navbar";
@@ -11,16 +12,16 @@ import {debounce} from "@web/core/utils/timing";
 import {fuzzyLookup} from "@web/core/utils/search";
 import {WebClient} from "@web/webclient/webclient";
 import {patch} from "web.utils";
+import {escapeRegExp} from "@web/core/utils/strings";
 
-const {Component} = owl;
-const {useState, useRef} = owl.hooks;
+const {Component, useState, onPatched, onWillPatch} = owl;
 
 // Patch WebClient to show AppsMenu instead of default app
 patch(WebClient.prototype, "web_responsive.DefaultAppsMenu", {
     setup() {
         this._super();
-        useBus(this.env.bus, "APPS_MENU:STATE_CHANGED", (payload) => {
-            this.el.classList.toggle("o_apps_menu_opened", payload);
+        useBus(this.env.bus, "APPS_MENU:STATE_CHANGED", ({detail: state}) => {
+            document.body.classList.toggle("o_apps_menu_opened", state);
         });
     },
 });
@@ -32,16 +33,96 @@ export class AppsMenu extends Component {
     setup() {
         super.setup();
         this.state = useState({open: false});
+        this.menuService = useService("menu");
         useBus(this.env.bus, "ACTION_MANAGER:UI-UPDATED", () => {
-            this.setState(false);
+            this.setOpenState(false, false);
         });
-        useBus(this.env.bus, "APPS_MENU:CLOSE", () => {
-            this.setState(false);
+        this._setupKeyNavigation();
+    }
+    setOpenState(open_state, from_home_menu_click) {
+        this.state.open = open_state;
+        // Load home page with proper systray when opening it from website
+        if (from_home_menu_click) {
+            var currentapp = this.menuService.getCurrentApp();
+            if (currentapp && currentapp.name == "Website") {
+                if (window.location.pathname != "/web") {
+                    const icon = $(
+                        document.querySelector(".o_navbar_apps_menu button > i")
+                    );
+                    icon.removeClass("fa fa-th-large").append(
+                        $("<span/>", {class: "fa fa-spin fa-spinner"})
+                    );
+                }
+                window.location.href = "/web#home";
+            } else {
+                this.env.bus.trigger("APPS_MENU:STATE_CHANGED", open_state);
+            }
+        } else {
+            this.env.bus.trigger("APPS_MENU:STATE_CHANGED", open_state);
+        }
+    }
+
+    /**
+     * Setup navigation among app menus
+     */
+    _setupKeyNavigation() {
+        const repeatable = {
+            allowRepeat: true,
+        };
+        useHotkey(
+            "ArrowRight",
+            () => {
+                this._onWindowKeydown("next");
+            },
+            repeatable
+        );
+        useHotkey(
+            "ArrowLeft",
+            () => {
+                this._onWindowKeydown("prev");
+            },
+            repeatable
+        );
+        useHotkey(
+            "ArrowDown",
+            () => {
+                this._onWindowKeydown("next");
+            },
+            repeatable
+        );
+        useHotkey(
+            "ArrowUp",
+            () => {
+                this._onWindowKeydown("prev");
+            },
+            repeatable
+        );
+        useHotkey("Escape", () => {
+            this.env.bus.trigger("ACTION_MANAGER:UI-UPDATED");
         });
     }
-    setState(state) {
-        this.state.open = state;
-        this.env.bus.trigger("APPS_MENU:STATE_CHANGED", state);
+
+    _onWindowKeydown(direction) {
+        const focusableInputElements = document.querySelectorAll(`.o_app`);
+        if (focusableInputElements.length) {
+            const focusable = [...focusableInputElements];
+            const index = focusable.indexOf(document.activeElement);
+            let nextIndex = 0;
+            if (direction == "prev" && index >= 0) {
+                if (index > 0) {
+                    nextIndex = index - 1;
+                } else {
+                    nextIndex = focusable.length - 1;
+                }
+            } else if (direction == "next") {
+                if (index + 1 < focusable.length) {
+                    nextIndex = index + 1;
+                } else {
+                    nextIndex = 0;
+                }
+            }
+            focusableInputElements[nextIndex].focus();
+        }
     }
 }
 
@@ -86,6 +167,16 @@ export class AppsMenu extends Component {
  */
 function findNames(memo, menu) {
     if (menu.actionID) {
+        var result = "";
+        if (menu.webIconData) {
+            const prefix = menu.webIconData.startsWith("P")
+                ? "data:image/svg+xml;base64,"
+                : "data:image/png;base64,";
+            result = menu.webIconData.startsWith("data:image")
+                ? menu.webIconData
+                : prefix + menu.webIconData.replace(/\s/g, "");
+        }
+        menu.webIconData = result;
         memo[menu.name.trim()] = menu;
     }
     if (menu.childrenTree) {
@@ -108,8 +199,7 @@ export class AppsMenuSearchBar extends Component {
             offset: 0,
             hasResults: false,
         });
-        useAutofocus({selector: "input"});
-        this.searchBarInput = useRef("SearchBarInput");
+        this.searchBarInput = useAutofocus({refName: "SearchBarInput"});
         this._searchMenus = debounce(this._searchMenus, 100);
         // Store menu data in a format searchable by fuzzy.js
         this._searchableMenus = [];
@@ -122,26 +212,24 @@ export class AppsMenuSearchBar extends Component {
         }
         // Set up key navigation
         this._setupKeyNavigation();
-    }
-
-    willPatch() {
-        // Allow looping on results
-        if (this.state.offset < 0) {
-            this.state.offset = this.state.results.length + this.state.offset;
-        } else if (this.state.offset >= this.state.results.length) {
-            this.state.offset -= this.state.results.length;
-        }
-    }
-
-    patched() {
-        // Scroll to selected element on keyboard navigation
-        if (this.state.results.length) {
-            const listElement = this.el.querySelector(".search-results");
-            const activeElement = this.el.querySelector(".highlight");
-            if (activeElement) {
-                scrollTo(activeElement, listElement);
+        onWillPatch(() => {
+            // Allow looping on results
+            if (this.state.offset < 0) {
+                this.state.offset = this.state.results.length + this.state.offset;
+            } else if (this.state.offset >= this.state.results.length) {
+                this.state.offset -= this.state.results.length;
             }
-        }
+        });
+        onPatched(() => {
+            // Scroll to selected element on keyboard navigation
+            if (this.state.results.length) {
+                const listElement = document.querySelector(".search-results");
+                const activeElement = listElement.querySelector(".highlight");
+                if (activeElement) {
+                    scrollTo(activeElement, listElement);
+                }
+            }
+        });
     }
 
     /**
@@ -168,47 +256,11 @@ export class AppsMenuSearchBar extends Component {
      * Setup navigation among search results
      */
     _setupKeyNavigation() {
-        const repeatable = {
-            allowRepeat: true,
-        };
-        useHotkey(
-            "ArrowDown",
-            () => {
-                this.state.offset++;
-            },
-            repeatable
-        );
-        useHotkey(
-            "ArrowUp",
-            () => {
-                this.state.offset--;
-            },
-            repeatable
-        );
-        useHotkey(
-            "Tab",
-            () => {
-                this.state.offset++;
-            },
-            repeatable
-        );
-        useHotkey(
-            "Shift+Tab",
-            () => {
-                this.state.offset--;
-            },
-            repeatable
-        );
         useHotkey("Home", () => {
             this.state.offset = 0;
         });
         useHotkey("End", () => {
             this.state.offset = this.state.results.length - 1;
-        });
-        useHotkey("Enter", () => {
-            if (this.state.results.length) {
-                this.el.querySelector(".highlight").click();
-            }
         });
     }
 
@@ -224,9 +276,60 @@ export class AppsMenuSearchBar extends Component {
             } else {
                 this.env.bus.trigger("ACTION_MANAGER:UI-UPDATED");
             }
+        } else if (ev.code === "Tab") {
+            if (document.querySelector(".search-results")) {
+                ev.preventDefault();
+                if (event.shiftKey) {
+                    this.state.offset--;
+                } else {
+                    this.state.offset++;
+                }
+            }
+        } else if (ev.code === "ArrowUp") {
+            if (document.querySelector(".search-results")) {
+                ev.preventDefault();
+                this.state.offset--;
+            }
+        } else if (ev.code === "ArrowDown") {
+            if (document.querySelector(".search-results")) {
+                ev.preventDefault();
+                this.state.offset++;
+            }
+        } else if (ev.code === "Enter") {
+            if (this.state.results.length) {
+                ev.preventDefault();
+                document.querySelector(".search-results .highlight").click();
+            }
         }
     }
+
+    _splitName(name) {
+        const searchValue = this.searchBarInput.el.value;
+        if (name) {
+            const splitName = name.split(
+                new RegExp(`(${escapeRegExp(searchValue)})`, "ig")
+            );
+            return searchValue.length && splitName.length > 1 ? splitName : [name];
+        }
+        return [];
+    }
 }
+
+// Patch Navbar to add proper icon for apps
+patch(NavBar.prototype, "web_responsive.navbar", {
+    getWebIconData(menu) {
+        var result = "/web_responsive/static/img/default_icon_app.png";
+        if (menu.webIconData) {
+            const prefix = menu.webIconData.startsWith("P")
+                ? "data:image/svg+xml;base64,"
+                : "data:image/png;base64,";
+            result = menu.webIconData.startsWith("data:image")
+                ? menu.webIconData
+                : prefix + menu.webIconData.replace(/\s/g, "");
+        }
+        return result;
+    },
+});
 AppsMenu.template = "web_responsive.AppsMenu";
 AppsMenuSearchBar.template = "web_responsive.AppsMenuSearchResults";
 Object.assign(NavBar.components, {AppsMenu, AppsMenuSearchBar});

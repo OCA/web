@@ -54,7 +54,7 @@
             .o_dropdown {
                 width: 100%;
                 margin: 15px 5px 0px 5px;
-                border: solid 1px darken(gray("200"), 20%);
+                border: solid 1px darken($gray-200, 20%);
             }
             .o_dropdown_toggler_btn {
                 width: 100%;
@@ -78,7 +78,7 @@
                 transform: translate3d(0, 0, 0) !important;
                 box-shadow: none;
                 border: none;
-                color: gray("600");
+                color: $gray-600;
                 .divider {
                     margin: 0px;
                 }

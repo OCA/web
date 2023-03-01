@@ -1,11 +1,12 @@
 /** @odoo-module **/
 /* Copyright 2021 ITerra - Sergey Shebanin
+ * Copyright 2023 Onestein - Anjeel Haria
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
 import {AttachmentViewer} from "@mail/components/attachment_viewer/attachment_viewer";
 import {patch} from "web.utils";
-
-const {useState} = owl.hooks;
+import {registerPatch} from "@mail/model/model_core";
+const {useState} = owl;
 
 // Patch attachment viewer to add min/max buttons capability
 patch(AttachmentViewer.prototype, "web_responsive.AttachmentViewer", {
@@ -15,8 +16,22 @@ patch(AttachmentViewer.prototype, "web_responsive.AttachmentViewer", {
             maximized: false,
         });
     },
-    // Disable auto-close to allow to use form in edit mode.
-    isCloseable() {
-        return false;
+});
+
+registerPatch({
+    name: "Dialog",
+    fields: {
+        isCloseable: {
+            compute() {
+                if (this.attachmentViewer) {
+                    /**
+                     * Prevent closing the dialog when clicking on the mask when the user is
+                     * currently dragging the image.
+                     */
+                    return false;
+                }
+                return this._super();
+            },
+        },
     },
 });

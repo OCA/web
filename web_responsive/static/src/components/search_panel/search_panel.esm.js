@@ -6,14 +6,12 @@ import SearchPanel from "@web/legacy/js/views/search_panel";
 import {deviceContext} from "@web_responsive/components/ui_context.esm";
 import {patch} from "web.utils";
 
-const {useContext} = owl.hooks;
-
 // Patch search panel to add functionality for mobile view
 patch(SearchPanel.prototype, "web_responsive.SearchPanelMobile", {
     setup() {
         this._super();
         this.state.mobileSearch = false;
-        this.ui = useContext(deviceContext);
+        this.ui = deviceContext;
     },
     getActiveSummary() {
         const selection = [];
