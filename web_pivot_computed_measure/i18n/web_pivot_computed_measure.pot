@@ -6,8 +6,6 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-22 12:42+0000\n"
-"PO-Revision-Date: 2022-11-22 12:42+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -150,7 +148,7 @@ msgstr ""
 
 #. module: web_pivot_computed_measure
 #. openerp-web
-#: code:addons/web_pivot_computed_measure/static/src/pivot/pivot_model.js:0
+#: code:addons/web_pivot_computed_measure/static/src/pivot/pivot_model.esm.js:0
 #, python-format
 msgid ""
 "This measure is currently used by a 'computed measure'. Please, disable the "
