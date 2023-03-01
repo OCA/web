@@ -4,108 +4,165 @@
     Copyright 2018 Alexandre Díaz
     Copyright 2018 Tecnativa - Jairo Llopis
     Copyright 2021 ITerra - Sergey Shebanin
+    Copyright 2023 Onestein - Anjeel Haria
     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 -->
 <templates id="form_view" xml:space="preserve">
     <!-- Template for buttons that display only the icon in xs -->
-    <t t-name="web_responsive.icon_button">
+    <t t-name="web_responsive.icon_button" owl="1">
         <i t-attf-class="fa fa-#{icon}" t-att-title="label" />
         <span class="d-none d-sm-inline" t-esc="label" />
     </t>
-    <t t-name="web_responsive.MenuStatusbarButtons">
-        <div class="dropdown">
+    <t
+        t-name="web.ResponsiveFormView.Buttons"
+        t-inherit="web.FormView.Buttons"
+        owl="1"
+        t-inherit-mode="extension"
+    >
+        <!-- Change "Discard" button hotkey to "D" -->
+        <xpath
+            expr="//button[contains(@class, 'o_form_button_cancel')]"
+            position="attributes"
+        >
+            <attribute name="data-hotkey">d</attribute>
+        </xpath>
+        <xpath
+            expr="//button[contains(@class, 'o_form_button_create')]"
+            position="replace"
+        >
             <button
-                class="o_statusbar_buttons_dropdown btn btn-secondary dropdown-toggle"
                 type="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
+                class="btn btn-secondary o_form_button_create"
+                data-hotkey="c"
+                t-on-click.stop="create"
             >
                 <t t-call="web_responsive.icon_button">
-                    <t t-set="icon" t-value="'cogs'" />
-                    <t t-set="label">Quick actions</t>
+                    <t t-set="icon" t-value="'plus'" />
+                    <t t-set="label"> Create</t>
                 </t>
             </button>
-            <!-- A div.o_statusbar_buttons.dropdown-menu
-                 is appended here from JS -->
-        </div>
+        </xpath>
     </t>
-    <t t-extend="FormView.buttons">
-        <!-- Change "Edit" button hotkey to "E" -->
-        <t t-jquery=".o_form_button_edit" t-operation="attributes">
-            <attribute name="accesskey">e</attribute>
-        </t>
+
+    <t
+        t-name="web.ResponsiveFormView"
+        t-inherit="web.FormView"
+        owl="1"
+        t-inherit-mode="extension"
+    >
+        <xpath
+            expr="//button[contains(@class, 'o_form_button_create')]"
+            position="replace"
+        >
+            <button
+                type="button"
+                class="btn btn-outline-primary o_form_button_create"
+                data-hotkey="c"
+                t-on-click.stop="create"
+                t-att-disabled="state.isDisabled"
+            >
+                <t t-call="web_responsive.icon_button">
+                    <t t-set="icon" t-value="'plus'" />
+                    <t t-set="label"> Create</t>
+                </t>
+            </button>
+        </xpath>
+    </t>
+
+    <t
+        t-name="web.ResponsiveFormStatusIndicator"
+        t-inherit="web.FormStatusIndicator"
+        owl="1"
+    >
         <!-- Change "Discard" button hotkey to "D" -->
-        <t t-jquery=".o_form_button_cancel" t-operation="attributes">
-            <attribute name="accesskey">d</attribute>
-        </t>
-        <!-- Add responsive icons to buttons -->
-        <t t-jquery=".o_form_button_edit" t-operation="inner">
-            <t t-call="web_responsive.icon_button">
-                <t t-set="icon" t-value="'pencil'" />
-                <t t-set="label">Edit</t>
-            </t>
-        </t>
-        <t t-jquery=".o_form_button_create" t-operation="inner">
-            <t t-call="web_responsive.icon_button">
-                <t t-set="icon" t-value="'plus'" />
-                <t t-set="label">Create</t>
-            </t>
-        </t>
-        <t t-jquery=".o_form_button_save" t-operation="inner">
-            <t t-call="web_responsive.icon_button">
-                <t t-set="icon" t-value="'check'" />
-                <t t-set="label">Save</t>
-            </t>
-        </t>
-        <t t-jquery=".o_form_button_cancel" t-operation="inner">
-            <t t-call="web_responsive.icon_button">
-                <t t-set="icon" t-value="'times'" />
-                <t t-set="label">Discard</t>
-            </t>
-        </t>
+        <xpath
+            expr="//button[contains(@class, 'o_form_button_cancel')]"
+            position="attributes"
+        >
+            <attribute name="data-hotkey">d</attribute>
+        </xpath>
     </t>
-    <t t-extend="KanbanView.buttons">
+    <t
+        t-name="web.ResponsiveKanbanView.Buttons"
+        t-inherit="web.KanbanView.Buttons"
+        owl="1"
+        t-inherit-mode="extension"
+    >
         <!-- Add responsive icons to buttons -->
-        <t t-jquery="button" t-operation="inner">
-            <t t-call="web_responsive.icon_button">
-                <t t-set="icon" t-value="'plus'" />
-                <t t-set="label" t-value="create_text || _t('Create')" />
-            </t>
-        </t>
+        <xpath
+            expr="//button[contains(@class, 'o-kanban-button-new')]"
+            position="replace"
+        >
+            <button
+                type="button"
+                class="btn btn-primary o-kanban-button-new"
+                accesskey="c"
+                t-on-click="() => this.createRecord(null)"
+                data-bounce-button=""
+            >
+                <t t-call="web_responsive.icon_button">
+                    <t t-set="icon" t-value="'plus'" />
+                    <t t-set="label"> Create</t>
+                </t>
+            </button>
+        </xpath>
     </t>
-    <t t-extend="ListView.buttons">
-        <!-- Change "Discard" button hotkey to "D" -->
-        <t t-jquery=".o_list_button_discard" t-operation="attributes">
-            <attribute name="accesskey">d</attribute>
-        </t>
+    <t
+        t-name="web.ResponsiveListView.Buttons"
+        t-inherit="web.ListView.Buttons"
+        owl="1"
+        t-inherit-mode="extension"
+    >
         <!-- Add responsive icons to buttons -->
-        <t t-jquery=".o_list_button_add" t-operation="inner">
-            <t t-call="web_responsive.icon_button">
-                <t t-set="icon" t-value="'plus'" />
-                <t t-set="label">Create</t>
-            </t>
-        </t>
-        <t t-jquery=".o_list_button_save" t-operation="inner">
-            <t t-call="web_responsive.icon_button">
-                <t t-set="icon" t-value="'check'" />
-                <t t-set="label">Save</t>
-            </t>
-        </t>
-        <t t-jquery=".o_list_button_discard" t-operation="inner">
-            <t t-call="web_responsive.icon_button">
-                <t t-set="icon" t-value="'times'" />
-                <t t-set="label">Discard</t>
-            </t>
-        </t>
-    </t>
-    <t t-extend="CalendarView.navigation_buttons">
-        <!-- Add responsive icons to buttons -->
-        <t t-jquery=".o_calendar_button_today" t-operation="inner">
-            <t t-call="web_responsive.icon_button">
-                <t t-set="icon" t-value="'calendar-check-o'" />
-                <t t-set="label">Today</t>
-            </t>
-        </t>
+        <xpath
+            expr="//button[contains(@class, 'o_list_button_add')]"
+            position="replace"
+        >
+            <button
+                type="button"
+                class="btn btn-primary o_list_button_add"
+                data-hotkey="c"
+                t-on-click="onClickCreate"
+                data-bounce-button=""
+            >
+                <t t-call="web_responsive.icon_button">
+                    <t t-set="icon" t-value="'plus'" />
+                    <t t-set="label"> Create</t>
+                </t>
+            </button>
+        </xpath>
+        <xpath
+            expr="//button[contains(@class, 'o_list_button_save')]"
+            position="replace"
+        >
+            <button
+                type="button"
+                class="btn btn-primary o_list_button_save"
+                data-hotkey="s"
+                t-on-click.stop="onClickSave"
+            >
+                <t t-call="web_responsive.icon_button">
+                    <t t-set="icon" t-value="'check'" />
+                    <t t-set="label"> Save</t>
+                </t>
+            </button>
+        </xpath>
+        <xpath
+            expr="//button[contains(@class, 'o_list_button_discard')]"
+            position="replace"
+        >
+            <button
+                type="button"
+                class="btn btn-secondary o_list_button_discard"
+                data-hotkey="d"
+                t-on-click="onClickDiscard"
+                t-on-mousedown="onMouseDownDiscard"
+            >
+                <t t-call="web_responsive.icon_button">
+                    <t t-set="icon" t-value="'times'" />
+                    <t t-set="label"> Discard</t>
+                </t>
+            </button>
+        </xpath>
     </t>
 </templates>
