@@ -36,7 +36,7 @@
             <HelpButton
                 resModel="props.actionProps.resModel"
                 viewType="props.actionProps.type"
-                btnClass="'btn-link p-1'"
+                btnClass="env.isSmall and 'btn-link p-1 text-white' or 'btn-link p-1'"
             />
         </xpath>
     </t>

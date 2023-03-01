@@ -5,12 +5,12 @@ import {registry} from "@web/core/registry";
 export class UserTrip extends Trip {
     setup() {
         this.addStep({
-            selector: ".o_list_button_add",
+            selector: ".o_list_button_add, .o-kanban-button-new",
             content: this.env._t("To create a new user click here."),
         });
 
         this.addStep({
-            selector: ".o_cp_searchview",
+            selector: ".o_cp_searchview, .o_enable_searchview",
             content: this.env._t("Use the searchbar to find specific users."),
             renderContext: {
                 cbBtnText: this.env._t("Next"),
@@ -27,5 +27,6 @@ export class UserTrip extends Trip {
 
 registry.category("trips").add("user_trip", {
     Trip: UserTrip,
-    selector: (model, viewType) => model === "res.users" && viewType === "list",
+    selector: (model, viewType) =>
+        model === "res.users" && ["list", "kanban"].includes(viewType),
 });
