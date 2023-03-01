@@ -19,12 +19,12 @@
     }
     // For FULL HD devices
     @media (min-width: 1900px) {
-        .o_action_manager & .o_cp_top_left,
-        .o_action_manager & .o_cp_bottom_left {
+        .o_cp_top_left,
+        .o_cp_bottom_left {
             width: 60%;
         }
-        .o_action_manager & .o_cp_top_right,
-        .o_action_manager & .o_cp_bottom_right {
+        .o_cp_top_right,
+        .o_cp_bottom_right {
             width: 40%;
         }
     }
@@ -42,9 +42,6 @@
         // It doesn't work on iOS Safari, but it looks similar as
         // without this patch. With this patch it looks better for
         // other browsers.
-        position: sticky;
-        left: 0;
-        z-index: 3;
 
         // Arrange buttons to use space better
         .o_cp_top_left,
@@ -53,24 +50,24 @@
         }
 
         .o_cp_top_left {
-            flex-basis: 80%;
-            max-width: 80%;
+            flex-basis: 89%;
+            max-width: 89%;
         }
 
         .o_cp_top_right {
-            flex-basis: 20%;
+            flex-basis: 11%;
         }
 
         .o_cp_bottom {
             position: relative; // Necessary for dropdown menu positioning
             display: block;
             margin: 0;
+            min-height: 30px !important;
         }
 
         .o_cp_bottom_left {
             float: left;
             margin: 5px 0;
-            max-width: 80%;
         }
 
         .o_cp_bottom_right {
@@ -102,7 +99,6 @@
             .dropdown-toggle {
                 margin: 0px 2px;
                 height: 100%;
-                padding-right: 0.5rem !important;
             }
             .dropdown {
                 height: 100%;
@@ -230,16 +226,18 @@
     z-index: $zindex-modal;
     overflow: auto;
     .o_mobile_search_header {
-        height: 46px;
-        margin-bottom: 10px;
+        background-color: var(--mobileSearch__header-bg, #{$o-brand-odoo});
+        display: flex;
+        min-height: $o-navbar-height;
+        justify-content: space-between;
         width: 100%;
-        background-color: $o-brand-odoo;
-        color: white;
-        span:active {
-            background-color: darken($o-brand-primary, 10%);
-        }
-        span {
-            cursor: pointer;
+
+        .o_mobile_search_button {
+            color: white;
+
+            &:active {
+                background-color: darken($o-brand-primary, 10%);
+            }
         }
     }
     .o_searchview_input_container {
@@ -266,10 +264,10 @@
             line-height: 2rem;
             width: 100%;
             margin: 15px 5px 0px 5px;
-            border: solid 1px darken(gray("200"), 20%);
+            border: solid 1px darken($gray-200, 20%);
         }
         .dropdown.show > .dropdown-toggle {
-            background-color: gray("200");
+            background-color: $gray-200;
         }
         .dropdown-toggle {
             width: 100%;
@@ -294,7 +292,7 @@
             max-height: 100%;
             box-shadow: none;
             border: none;
-            color: gray("600");
+            color: $gray-600;
             .divider {
                 margin: 0px;
             }

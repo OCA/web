@@ -3,10 +3,12 @@
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
 // Attachment Viewer
-.o_web_client.o_chatter_position_sided .o_DialogManager_dialog {
+.o_web_client .o_DialogManager_dialog {
     /* Show sided viewer on large screens */
-    @include media-breakpoint-up(lg) {
-        position: static;
+    @media (min-width: 1533px) {
+        &:not(:has(.o_AttachmentDeleteConfirm)) {
+            position: static;
+        }
         .o_AttachmentViewer_main {
             padding-bottom: 20px;
         }
@@ -22,7 +24,7 @@
 
             width: $chatter_zone_width;
             &.o_AttachmentViewer_maximized {
-                width: 100%;
+                width: 100% !important;
             }
 
             /* Show/Hide control buttons (next, prev, etc..) */
@@ -39,18 +41,21 @@
             }
         }
     }
-    @include media-breakpoint-down(md) {
+    @media (max-width: 1533px) {
         .o_AttachmentViewer_headerItemButtonMinimize,
         .o_AttachmentViewer_headerItemButtonMaximize {
-            display: none;
+            display: none !important;
         }
     }
 }
-
 /* Attachment Viewer Max/Min buttons only are useful in sided mode */
-.o_web_client:not(.o_chatter_position_sided) {
+.o_FormRenderer_chatterContainer:not(.o-aside) {
     .o_AttachmentViewer_headerItemButtonMinimize,
     .o_AttachmentViewer_headerItemButtonMaximize {
-        display: none;
+        display: none !important;
     }
+}
+
+.o_apps_menu_opened .o_AttachmentViewer {
+    display: none !important;
 }

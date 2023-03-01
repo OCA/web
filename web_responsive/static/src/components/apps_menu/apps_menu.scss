@@ -12,13 +12,12 @@
     width: 100vw;
     z-index: 200;
     left: 0 !important;
-    top: $o-navbar-height !important;
 }
 
 .o_apps_menu_opened .o_main_navbar {
     .o_menu_brand,
     .o_menu_sections {
-        display: none;
+        display: none !important;
     }
 }
 
@@ -32,7 +31,7 @@
     .fade-leave-to {
         opacity: 0;
     }
-    .dropdown-menu {
+    .dropdown-menu-custom {
         @include full-screen-dropdown();
         cursor: pointer;
         background: url("../../img/home-menu-bg-overlay.svg"),
@@ -62,7 +61,24 @@
         }
 
         .o_app {
-            background: none;
+            outline: 0;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            flex-direction: column;
+            justify-content: flex-start;
+            white-space: normal;
+            color: $white !important;
+            padding: 15px 0 10px;
+            font-size: 1.25rem;
+            text-shadow: 1px 1px 1px rgba($black, 0.4);
+            border-radius: 4px;
+            transition: 300ms ease;
+            transition-property: background-color;
+            &:focus {
+                background-color: rgba($white, 0.05) !important;
+            }
             img {
                 box-shadow: none;
                 margin-bottom: 5px;
@@ -70,31 +86,10 @@
                 transition-property: box-shadow, transform;
             }
 
-            a {
-                outline: 0;
-                height: 100%;
-                display: flex;
-                align-items: center;
-                text-align: center;
-                flex-direction: column;
-                justify-content: flex-start;
-                white-space: normal;
-                color: gray("white") !important;
-                padding: 15px 0 10px;
-                font-size: 1.25rem;
-                text-shadow: 1px 1px 1px rgba(gray("black"), 0.4);
-                border-radius: 4px;
-                transition: 300ms ease;
-                transition-property: background-color;
-                background: none;
-                &:focus {
-                    background-color: rgba(gray("white"), 0.05);
-                }
-            }
             &:hover img,
             a:focus img {
                 transform: translateY(-3px);
-                box-shadow: 0 9px 12px -4px rgba(gray("black"), 0.3);
+                box-shadow: 0 9px 12px -4px rgba($black, 0.3);
             }
 
             // Size depends on screen
@@ -129,21 +124,20 @@
 
             .search-input {
                 display: flex;
-                justify-items: middle;
-                box-shadow: inset 0 1px 0 rgba(gray("white"), 0.1),
-                    0 1px 0 rgba(gray("black"), 0.1);
-                text-shadow: 0 1px 0 rgba(gray("black"), 0.5);
+                justify-items: center;
+                box-shadow: inset 0 1px 0 rgba($white, 0.1), 0 1px 0 rgba($black, 0.1);
+                text-shadow: 0 1px 0 rgba($black, 0.5);
                 border-radius: 4px;
                 padding: 0.4rem 0.8rem;
                 margin-bottom: 1rem;
-                background-color: rgba(gray("white"), 0.1);
+                background-color: rgba($white, 0.1);
 
                 @include media-breakpoint-up(md) {
                     padding: 0.8rem 1.2rem;
                 }
 
                 .search-icon {
-                    color: gray("white");
+                    color: $white;
                     font-size: 1.5rem;
                     margin-right: 1rem;
                     padding-top: 1px;
@@ -153,19 +147,27 @@
                     height: 2rem;
                     background: none;
                     border: none;
-                    color: gray("white");
+                    color: $white;
                     display: block;
                     padding: 1px 2px 2px 2px;
                     box-shadow: none;
 
                     &::placeholder {
-                        color: gray("white");
+                        color: $white;
                         opacity: 0.5;
                     }
                 }
             }
             // Allow to scroll only on results, keeping static search box above
             .search-results {
+                .text-ellipsis {
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                }
+                .text-primary {
+                    color: red !important;
+                }
                 margin-top: 1rem;
                 max-height: calc(100vh - #{$o-navbar-height} - 8rem) !important;
                 overflow: auto;
@@ -177,7 +179,7 @@
                 background-position: left;
                 background-repeat: no-repeat;
                 background-size: contain;
-                color: gray("white");
+                color: $white;
                 cursor: pointer;
                 line-height: 2.5rem;
                 padding-left: 3.5rem;
@@ -185,7 +187,7 @@
                 font-weight: 100;
                 &.highlight,
                 &:hover {
-                    background-color: rgba(gray("black"), 0.11);
+                    background-color: rgba($black, 0.11);
                 }
                 b {
                     font-weight: 700;
@@ -193,4 +195,11 @@
             }
         }
     }
+}
+
+.dropdown-menu-custom {
+    max-height: 70vh;
+    overflow: auto;
+    background-clip: border-box;
+    box-shadow: $o-dropdown-box-shadow;
 }

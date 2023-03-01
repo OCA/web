@@ -14,13 +14,13 @@ Web Responsive
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/15.0/web_responsive
+    :target: https://github.com/OCA/web/tree/16.0/web_responsive
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-15-0/web-15-0-web_responsive
+    :target: https://translation.odoo-community.org/projects/web-16-0/web-16-0-web_responsive
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/162/15.0
+    :target: https://runbot.odoo-community.org/runbot/162/16.0
     :alt: Try me on Runbot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
@@ -31,83 +31,83 @@ This module adds responsiveness to web backend.
 
 * New navigation with the fullscreen app menu
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/appmenu.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/appmenu.gif
 
 * Quick menu search inside the app menu
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/appsearch.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/appsearch.gif
 
 * Sticky header & footer in list view
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/listview.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/listview.gif
 
 * Sticky statusbar in form view
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/formview.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/formview.gif
 
 * Bigger checkboxes in list view
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/listview.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/listview.gif
 
 * Increase the size of the labels in extra large screens
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/label_size_small.png
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/label_size_small.png
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/label_size_large.png
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/label_size_large.png
 
 **Features for mobile**:
 
 * App-specific submenus are shown on full screen when toggling them from the
   "hamburger" menu
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/hamburger.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/hamburger.gif
 
 * User-specific submenus are shown on full screen when toggling them from the
   "avatar" menu
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/usermenu.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/usermenu.gif
 
 * View type picker dropdown displays comfortably
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/viewtype.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/viewtype.gif
 
 * Top app bar is always visible, but the control panel is hidden when
   scrolling down, to save some valuable vertical space
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/navbar.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/navbar.gif
 
 * Form status bar action and status buttons are collapsed in dropdowns.
   Other control panel buttons use icons to save space.
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/form_buttons.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/form_buttons.gif
 
 * Breadcrumbs navigation is collapsed with a "back arrow" button.
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/breadcrumbs.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/breadcrumbs.gif
 
 * Search panel is collapsed to mobile version on small screens.
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/search_panel.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/search_panel.gif
 
 * Followers and send button is displayed on mobile. Avatar is hidden.
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/chatter.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/chatter.gif
 
 * Scrollable dropdowns
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/dropdown_scroll.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/dropdown_scroll.gif
 
 * Kanban interface adopted to mobile
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/kanban.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/kanban.gif
 
 * Calendar interface adopted to mobile
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/calendar.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/calendar.gif
 
 * Interface is adapted dynamically on device rotation
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/device_rotation.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/device_rotation.gif
 
 * Big inputs on form in edit mode
 
@@ -120,29 +120,29 @@ This module adds responsiveness to web backend.
   accessible by fingers of one hand.
   F.x. `Alt + S` for `Save`
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/shortcuts.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/shortcuts.gif
 
 * Autofocus on search menu box when opening the app menu
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/appsearch.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/appsearch.gif
 
 * Full width form sheets
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/formview.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/formview.gif
 
 * Set chatter on the side of the screen, optional per user
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/chatter_sided.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/chatter_sided.gif
 
 * Sticky chatter topbar
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/chatter_topbar.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/chatter_topbar.gif
 
 * When the chatter is configured on the side part, the document viewer fills that
   part for side-by-side reading instead of full screen. You can still put it on full
   width preview clicking on the new maximize button.
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/15.0/web_responsive/static/img/document_viewer.gif
+  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/document_viewer.gif
 
 **Table of contents**
 
@@ -170,7 +170,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_responsive%0Aversion:%2015.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_responsive%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -223,6 +223,6 @@ Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-Yajo| |maintainer-Tardo| |maintainer-SplashS| 
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/15.0/web_responsive>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/16.0/web_responsive>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
