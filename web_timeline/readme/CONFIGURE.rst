@@ -51,24 +51,49 @@ Example:
                 <timeline date_start="date_assign"
                           date_stop="date_end"
                           string="Tasks"
-                          default_group_by="user_id"
+                          default_group_by="project_id"
                           event_open_popup="true"
-                          zoomKey="ctrlKey"
-                          colors="#ec7063:user_id == false;#2ecb71:kanban_state=='done';"
-                          dependency_arrow="task_dependency_ids">
-                    <field name="user_id"/>
+                          colors="white: user_ids == []; #2ecb71: kanban_state == 'done'; #ec7063: kanban_state == 'blocked'"
+                          dependency_arrow="depend_on_ids"
+                >
+                    <field name="user_ids" />
+                    <field name="planned_hours" />
                     <templates>
-                        <div t-name="timeline-item">
-                            <div t-esc="record.display_name"/>
-                            Assigned to:
-                            <span t-esc="record.user_id[1]"/>
-                        </div>
+                        <t t-name="timeline-item">
+                            <div class="o_project_timeline_item">
+                                <t t-foreach="record.user_ids" t-as="user">
+                                    <img
+                                        t-if="record.user_ids"
+                                        t-attf-src="/web/image/res.users/#{user}/image_128/16x16"
+                                        t-att-title="record.user"
+                                        width="16"
+                                        height="16"
+                                        class="mr8"
+                                        alt="User"
+                                    />
+                                </t>
+                                <span name="display_name">
+                                    <t t-esc="record.display_name" />
+                                </span>
+                                <small
+                                    name="planned_hours"
+                                    class="text-info ml4"
+                                    t-if="record.planned_hours"
+                                >
+                                    <t
+                                        t-esc="field_utils.format.float_time(record.planned_hours)"
+                                    />
+                                </small>
+                            </div>
+                        </t>
                     </templates>
                 </timeline>
             </field>
         </record>
 
         <record id="project.action_view_task" model="ir.actions.act_window">
-            <field name="view_mode">kanban,tree,form,calendar,gantt,timeline,graph</field>
+            <field
+                name="view_mode"
+            >kanban,tree,form,calendar,timeline,pivot,graph,activity</field>
         </record>
     </odoo>
