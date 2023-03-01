@@ -2,6 +2,7 @@
 /* Odoo web_timeline
  * Copyright 2015 ACSONE SA/NV
  * Copyright 2016 Pedro M. Baeza <pedro.baeza@tecnativa.com>
+ * Copyright 2023 Onestein - Anjeel Haria
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
 odoo.define("web_timeline.TimelineView", function (require) {
@@ -23,7 +24,7 @@ odoo.define("web_timeline.TimelineView", function (require) {
 
     var TimelineView = AbstractView.extend({
         display_name: _lt("Timeline"),
-        icon: "fa-tasks",
+        icon: "fa fa-tasks",
         jsLibs: ["/web_timeline/static/lib/vis-timeline/vis-timeline-graph2d.js"],
         cssLibs: ["/web_timeline/static/lib/vis-timeline/vis-timeline-graph2d.css"],
         config: _.extend({}, AbstractView.prototype.config, {

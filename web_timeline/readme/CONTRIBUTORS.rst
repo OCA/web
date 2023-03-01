@@ -2,7 +2,6 @@
 * Adrien Peiffer <adrien.peiffer@acsone.eu>
 * Leonardo Donelli <donelli@webmonks.it>
 * Adrien Didenot <adrien.didenot@horanet.com>
-* Dennis Sluijk <d.sluijk@onestein.nl>
 * Thong Nguyen Van <thongnv@trobz.com>
 * Murtaza Mithaiwala <mmithaiwala@opensourceintegrators.com>
 * Ammar Officewala <aofficewala@opensourceintegrators.com>
@@ -11,3 +10,6 @@
   * Pedro M. Baeza
   * Alexandre Díaz
   * César A. Sánchez
+* `Onestein <https://www.onestein.nl>`_:
+    * Dennis Sluijk <d.sluijk@onestein.nl>
+    * Anjeel Haria
