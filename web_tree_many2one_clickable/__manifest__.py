@@ -7,12 +7,13 @@
 {
     "name": "Clickable many2one fields for tree views",
     "summary": "Open the linked resource when clicking on their name",
-    "version": "15.0.1.0.0",
+    "version": "16.0.1.0.0",
     "category": "Hidden",
     "website": "https://github.com/OCA/web",
     "author": "Therp BV, "
     "Tecnativa, "
     "Camptocamp, "
+    "Onestein, "
     "Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "installable": True,
@@ -20,10 +21,12 @@
     "data": [],
     "assets": {
         "web.assets_backend": [
-            "web_tree_many2one_clickable/static/src/js/*.js",
-        ],
-        "web.assets_common": [
-            "web_tree_many2one_clickable/static/src/css/web_tree_many2one_clickable.scss",
-        ],
+            "web_tree_many2one_clickable/static/src/components/"
+            "many2one_button/many2one_button.esm.js",
+            "web_tree_many2one_clickable/static/src/components/"
+            "many2one_button/many2one_button.scss",
+            "web_tree_many2one_clickable/static/src/components/"
+            "many2one_button/many2one_button.xml",
+        ]
     },
 }
