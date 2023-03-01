@@ -22,41 +22,15 @@ This module adds responsiveness to web backend.
 
   .. image:: ../static/img/listview.gif
 
-* Increase the size of the labels in extra large screens
-
-  .. image:: ../static/img/label_size_small.png
-
-  .. image:: ../static/img/label_size_large.png
 
 **Features for mobile**:
-
-* App-specific submenus are shown on full screen when toggling them from the
-  "hamburger" menu
-
-  .. image:: ../static/img/hamburger.gif
-
-* User-specific submenus are shown on full screen when toggling them from the
-  "avatar" menu
-
-  .. image:: ../static/img/usermenu.gif
-
 * View type picker dropdown displays comfortably
 
   .. image:: ../static/img/viewtype.gif
 
-* Top app bar is always visible, but the control panel is hidden when
-  scrolling down, to save some valuable vertical space
-
-  .. image:: ../static/img/navbar.gif
-
-* Form status bar action and status buttons are collapsed in dropdowns.
-  Other control panel buttons use icons to save space.
+* Control panel buttons use icons to save space.
 
   .. image:: ../static/img/form_buttons.gif
-
-* Breadcrumbs navigation is collapsed with a "back arrow" button.
-
-  .. image:: ../static/img/breadcrumbs.gif
 
 * Search panel is collapsed to mobile version on small screens.
 
@@ -65,22 +39,6 @@ This module adds responsiveness to web backend.
 * Followers and send button is displayed on mobile. Avatar is hidden.
 
   .. image:: ../static/img/chatter.gif
-
-* Scrollable dropdowns
-
-  .. image:: ../static/img/dropdown_scroll.gif
-
-* Kanban interface adopted to mobile
-
-  .. image:: ../static/img/kanban.gif
-
-* Calendar interface adopted to mobile
-
-  .. image:: ../static/img/calendar.gif
-
-* Interface is adapted dynamically on device rotation
-
-  .. image:: ../static/img/device_rotation.gif
 
 * Big inputs on form in edit mode
 
@@ -103,15 +61,7 @@ This module adds responsiveness to web backend.
 
   .. image:: ../static/img/formview.gif
 
-* Set chatter on the side of the screen, optional per user
-
-  .. image:: ../static/img/chatter_sided.gif
-
-* Sticky chatter topbar
-
-  .. image:: ../static/img/chatter_topbar.gif
-
-* When the chatter is configured on the side part, the document viewer fills that
+* When the chatter is on the side part, the document viewer fills that
   part for side-by-side reading instead of full screen. You can still put it on full
   width preview clicking on the new maximize button.
 

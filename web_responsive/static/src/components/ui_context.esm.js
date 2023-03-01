@@ -1,5 +1,6 @@
 /** @odoo-module **/
 /* Copyright 2021 ITerra - Sergey Shebanin
+ * Copyright 2023 Onestein - Anjeel Haria
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
 import {registry} from "@web/core/registry";
@@ -7,7 +8,7 @@ import {debounce} from "@web/core/utils/timing";
 import config from "web.config";
 import core from "web.core";
 
-const {Context} = owl;
+import Context from "web.Context";
 
 // Legacy variant
 // TODO: remove when legacy code will dropped from odoo
@@ -16,7 +17,7 @@ export const deviceContext = new Context({
     isSmall: config.device.isMobile,
     size: config.device.size_class,
     SIZES: config.device.SIZES,
-});
+}).eval();
 
 // New wowl variant
 // TODO: use default odoo device context when it will be realized
@@ -26,7 +27,7 @@ const uiContextService = {
         window.addEventListener(
             "resize",
             debounce(() => {
-                const state = deviceContext.state;
+                const state = deviceContext;
                 if (state.size !== ui.size) {
                     state.size = ui.size;
                 }

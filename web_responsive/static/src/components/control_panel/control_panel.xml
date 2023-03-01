@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- Copyright 2021 Sergey Shebanin
+     Copyright 2023 Onestein - Anjeel Haria
      License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
 <templates>
     <!-- Legacy control panel templates -->
@@ -43,7 +44,7 @@
                 t-att-class="state.mobileSearchMode == 'quick' ? 'o_searchview_quick' : 'o_searchview_mobile'"
                 role="search"
                 aria-autocomplete="list"
-                t-on-click.self="state.mobileSearchMode = ui.isSmall ? 'quick' : ''"
+                t-on-click.self="() => { state.mobileSearchMode = ui.isSmall ? 'quick' : '' }"
             >
                 <t t-if="!ui.isSmall">
                     <i
@@ -59,12 +60,12 @@
                         <button
                             t-if="props.withBreadcrumbs"
                             class="btn btn-link fa fa-arrow-left"
-                            t-on-click.stop="state.mobileSearchMode = ''"
+                            t-on-click.stop="() => { state.mobileSearchMode = '' }"
                         />
                         <SearchBar fields="fields" />
                         <button
                             class="btn fa fa-filter"
-                            t-on-click.stop="state.mobileSearchMode = 'full'"
+                            t-on-click.stop="() => { state.mobileSearchMode = 'full' }"
                         />
                     </t>
                     <t
@@ -74,7 +75,7 @@
                     <t t-if="state.mobileSearchMode == ''">
                         <button
                             class="btn btn-link fa fa-search"
-                            t-on-click.stop="state.mobileSearchMode = 'quick'"
+                            t-on-click.stop="() => { state.mobileSearchMode = 'quick' }"
                         />
                     </t>
                 </t>
@@ -97,19 +98,21 @@
     <t t-name="web_responsive.LegacyMobileSearchView" owl="1">
         <div class="o_cp_mobile_search">
             <div class="o_mobile_search_header">
-                <span
-                    class="o_mobile_search_close float-left mt16 mb16 mr8 ml16"
-                    t-on-click.stop="state.mobileSearchMode = 'quick'"
+                <button
+                    type="button"
+                    class="o_mobile_search_button btn"
+                    t-on-click="() => state.mobileSearchMode = false"
                 >
                     <i class="fa fa-arrow-left" />
-                    <strong class="float-right ml8">FILTER</strong>
-                </span>
-                <span
-                    class="float-right o_mobile_search_clear_facets mt16 mr16"
-                    t-on-click.stop="model.dispatch('clearQuery')"
+                    <strong class="ms-2">FILTER</strong>
+                </button>
+                <button
+                    type="button"
+                    class="o_mobile_search_button btn"
+                    t-on-click="() => this.model.dispatch('clearQuery')"
                 >
-                    <t>CLEAR</t>
-                </span>
+                    CLEAR
+                </button>
             </div>
             <SearchBar fields="fields" />
             <div class="o_mobile_search_filter o_search_options mb8 mt8 ml16 mr16">
@@ -134,91 +137,13 @@
             </div>
             <div
                 class="btn btn-primary o_mobile_search_show_result fixed-bottom"
-                t-on-click.stop="state.mobileSearchMode = (props.withBreadcrumbs ? '' : 'quick')"
+                t-on-click="() => { state.mobileSearchMode = (props.withBreadcrumbs ? '' : 'quick') }"
             >
                 <t>SEE RESULT</t>
             </div>
         </div>
     </t>
-    <!-- Wowl control panel templates -->
-    <t t-inherit="web.ControlPanel" t-inherit-mode="extension" owl="1">
-        <xpath expr="//nav[hasclass('o_cp_switch_buttons')]" position="replace">
-            <t t-if="ui.size lt= ui.SIZES.LG">
-                <t
-                    t-set="view"
-                    t-value="env.config.viewSwitcherEntries.find((v) => v.active)"
-                />
-                <Dropdown
-                    position="'bottom-end'"
-                    menuClass="'d-inline-flex o_cp_switch_buttons'"
-                    togglerClass="'btn btn-link'"
-                >
-                    <t t-set-slot="toggler">
-                        <i
-                            class="fa fa-lg o_switch_view"
-                            t-attf-class="o_{{view.type}} {{view.icon}} active"
-                        />
-                    </t>
-                    <t
-                        t-foreach="env.config.viewSwitcherEntries"
-                        t-as="view"
-                        t-key="view.type"
-                    >
-                        <button
-                            class="btn btn-light fa o_switch_view"
-                            t-attf-class="o_{{view.type}} {{view.icon}} {{view.active ? 'active' : ''}}"
-                            t-att-data-tooltip="view.name"
-                            t-on-click="onViewClicked(view.type)"
-                        />
-                    </t>
-                </Dropdown>
-            </t>
-            <t t-else="">
-                <nav class="btn-group o_cp_switch_buttons">
-                    <t
-                        t-foreach="env.config.viewSwitcherEntries"
-                        t-as="view"
-                        t-key="view.type"
-                    >
-                        <button
-                            class="btn btn-light fa fa-lg o_switch_view "
-                            t-attf-class="o_{{view.type}} {{view.icon}} {{view.active ? 'active' : ''}}"
-                            t-att-data-tooltip="view.name"
-                            t-on-click="onViewClicked(view.type)"
-                        />
-                    </t>
-                </nav>
-            </t>
-        </xpath>
-        <xpath expr="//SearchBar" position="replace">
-            <!-- This duplication is hack because owl has a bug https://github.com/odoo/owl/issues/949 -->
-            <SearchBar
-                t-if="state.mobileSearchMode == 'quick'"
-                mobileSearchMode="state.mobileSearchMode"
-                searchMenus="searchMenus"
-                t-on-set-mobile-view.stop="setMobileSearchMode"
-            />
-            <SearchBar
-                t-else=""
-                mobileSearchMode="state.mobileSearchMode"
-                searchMenus="searchMenus"
-                t-on-set-mobile-view.stop="setMobileSearchMode"
-            />
-        </xpath>
-        <xpath expr="//div[hasclass('o_cp_top_left')]" position="attributes">
-            <attribute
-                name="t-att-class"
-                t-translation="off"
-            >ui.isSmall and state.mobileSearchMode == 'quick' ? 'o_hidden' : ''</attribute>
-        </xpath>
-        <xpath expr="//div[hasclass('o_search_options')]" position="attributes">
-            <attribute name="t-if" t-translation="off">!ui.isSmall</attribute>
-            <attribute
-                name="t-att-class"
-                t-translation="off"
-            >ui.size == ui.SIZES.MD ? 'o_search_options_hide_labels' : ''</attribute>
-        </xpath>
-    </t>
+
     <t t-name="web_responsive.SearchBar" owl="1">
         <div>
             <t t-if="!env.isSmall" t-call="web.SearchBar" />
@@ -228,7 +153,7 @@
                         <button
                             t-if="props.withBreadcrumbs"
                             class="btn btn-link fa fa-arrow-left"
-                            t-on-click.stop="trigger('set-mobile-view', '')"
+                            t-on-click.stop="() => this.trigger('set-mobile-view', '')"
                         />
                         <div class="o_searchview_input_container">
                             <t t-call="web.SearchBar.Facets" />
@@ -239,7 +164,7 @@
                         </div>
                         <button
                             class="btn fa fa-filter"
-                            t-on-click.stop="trigger('set-mobile-view', 'full')"
+                            t-on-click.stop="() => this.trigger('set-mobile-view', 'full')"
                         />
                     </div>
                 </t>
@@ -252,7 +177,7 @@
                         class="o_searchview o_searchview_mobile"
                         role="search"
                         aria-autocomplete="list"
-                        t-on-click.stop="trigger('set-mobile-view', 'quick')"
+                        t-on-click.stop="() => this.trigger('set-mobile-view', 'quick')"
                     >
                             <button class="btn btn-link fa fa-search" />
                     </div>
@@ -266,14 +191,14 @@
                 <div class="o_mobile_search_header">
                     <span
                         class="o_mobile_search_close float-left mt16 mb16 mr8 ml16"
-                        t-on-click.stop="trigger('set-mobile-view', 'quick')"
+                        t-on-click.stop="() => this.trigger('set-mobile-view', 'quick')"
                     >
                         <i class="fa fa-arrow-left" />
                         <strong class="float-right ml8">FILTER</strong>
                     </span>
                     <span
                         class="float-right o_mobile_search_clear_facets mt16 mr16"
-                        t-on-click.stop="env.searchModel.clearQuery()"
+                        t-on-click.stop="() => env.searchModel.clearQuery()"
                     >
                         <t>CLEAR</t>
                     </span>
@@ -292,7 +217,7 @@
                 </div>
                 <div
                     class="btn btn-primary o_mobile_search_show_result fixed-bottom"
-                    t-on-click.stop="trigger('set-mobile-view', '')"
+                    t-on-click.stop="() => this.trigger('set-mobile-view', '')"
                 >
                     <t>SEE RESULT</t>
                 </div>
