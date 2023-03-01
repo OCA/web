@@ -14,13 +14,13 @@ Web timeline
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/15.0/web_timeline
+    :target: https://github.com/OCA/web/tree/16.0/web_timeline
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-15-0/web-15-0-web_timeline
+    :target: https://translation.odoo-community.org/projects/web-16-0/web-16-0-web_timeline
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/162/15.0
+    :target: https://runbot.odoo-community.org/runbot/162/16.0
     :alt: Try me on Runbot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
@@ -91,25 +91,50 @@ Example:
                 <timeline date_start="date_assign"
                           date_stop="date_end"
                           string="Tasks"
-                          default_group_by="user_id"
+                          default_group_by="project_id"
                           event_open_popup="true"
-                          zoomKey="ctrlKey"
-                          colors="#ec7063:user_id == false;#2ecb71:kanban_state=='done';"
-                          dependency_arrow="task_dependency_ids">
-                    <field name="user_id"/>
+                          colors="white: user_ids == []; #2ecb71: kanban_state == 'done'; #ec7063: kanban_state == 'blocked'"
+                          dependency_arrow="depend_on_ids"
+                >
+                    <field name="user_ids" />
+                    <field name="planned_hours" />
                     <templates>
-                        <div t-name="timeline-item">
-                            <div t-esc="record.display_name"/>
-                            Assigned to:
-                            <span t-esc="record.user_id[1]"/>
-                        </div>
+                        <t t-name="timeline-item">
+                            <div class="o_project_timeline_item">
+                                <t t-foreach="record.user_ids" t-as="user">
+                                    <img
+                                        t-if="record.user_ids"
+                                        t-attf-src="/web/image/res.users/#{user}/image_128/16x16"
+                                        t-att-title="record.user"
+                                        width="16"
+                                        height="16"
+                                        class="mr8"
+                                        alt="User"
+                                    />
+                                </t>
+                                <span name="display_name">
+                                    <t t-esc="record.display_name" />
+                                </span>
+                                <small
+                                    name="planned_hours"
+                                    class="text-info ml4"
+                                    t-if="record.planned_hours"
+                                >
+                                    <t
+                                        t-esc="field_utils.format.float_time(record.planned_hours)"
+                                    />
+                                </small>
+                            </div>
+                        </t>
                     </templates>
                 </timeline>
             </field>
         </record>
 
         <record id="project.action_view_task" model="ir.actions.act_window">
-            <field name="view_mode">kanban,tree,form,calendar,gantt,timeline,graph</field>
+            <field
+                name="view_mode"
+            >kanban,tree,form,calendar,timeline,pivot,graph,activity</field>
         </record>
     </odoo>
 
@@ -165,7 +190,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_timeline%0Aversion:%2015.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_timeline%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -188,7 +213,6 @@ Contributors
 * Adrien Peiffer <adrien.peiffer@acsone.eu>
 * Leonardo Donelli <donelli@webmonks.it>
 * Adrien Didenot <adrien.didenot@horanet.com>
-* Dennis Sluijk <d.sluijk@onestein.nl>
 * Thong Nguyen Van <thongnv@trobz.com>
 * Murtaza Mithaiwala <mmithaiwala@opensourceintegrators.com>
 * Ammar Officewala <aofficewala@opensourceintegrators.com>
@@ -197,6 +221,9 @@ Contributors
   * Pedro M. Baeza
   * Alexandre Díaz
   * César A. Sánchez
+* `Onestein <https://www.onestein.nl>`_:
+    * Dennis Sluijk <d.sluijk@onestein.nl>
+    * Anjeel Haria
 
 Maintainers
 ~~~~~~~~~~~
@@ -219,6 +246,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-tarteo| 
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/15.0/web_timeline>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/16.0/web_timeline>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
