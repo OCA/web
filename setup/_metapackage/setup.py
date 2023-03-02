@@ -11,6 +11,7 @@ setuptools.setup(
         'odoo-addon-web_dark_mode>=16.0dev,<16.1dev',
         'odoo-addon-web_domain_field>=16.0dev,<16.1dev',
         'odoo-addon-web_environment_ribbon>=16.0dev,<16.1dev',
+        'odoo-addon-web_help>=16.0dev,<16.1dev',
         'odoo-addon-web_refresher>=16.0dev,<16.1dev',
         'odoo-addon-web_search_with_and>=16.0dev,<16.1dev',
         'odoo-addon-web_select_all_companies>=16.0dev,<16.1dev',
