@@ -54,3 +54,7 @@
         display: none;
     }
 }
+
+.o_apps_menu_opened .o_AttachmentViewer {
+    display: none !important;
+}
