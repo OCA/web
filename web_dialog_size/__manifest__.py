@@ -15,7 +15,7 @@
     "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "category": "web",
-    "version": "15.0.1.0.1",
+    "version": "16.0.1.0.0",
     "license": "AGPL-3",
     "depends": ["web"],
     "installable": True,
@@ -25,8 +25,6 @@
             "/web_dialog_size/static/src/js/web_dialog_size.esm.js",
             "/web_dialog_size/static/src/js/web_dialog_draggable.esm.js",
             "/web_dialog_size/static/src/scss/web_dialog_size.scss",
-        ],
-        "web.assets_qweb": [
             "/web_dialog_size/static/src/xml/web_dialog_size.xml",
             "/web_dialog_size/static/src/xml/ExpandButton.xml",
             "/web_dialog_size/static/src/xml/DialogDraggable.xml",
