@@ -24,6 +24,7 @@ addon | version | maintainers | summary
 [web_dark_mode](web_dark_mode/) | 16.0.1.0.1 |  | Enabled Dark Mode for the Odoo Backend
 [web_domain_field](web_domain_field/) | 16.0.1.0.0 |  | Use computed field as domain
 [web_environment_ribbon](web_environment_ribbon/) | 16.0.1.0.0 |  | Web Environment Ribbon
+[web_help](web_help/) | 16.0.1.0.0 |  | Help Framework
 [web_refresher](web_refresher/) | 16.0.2.0.0 |  | Web Refresher
 [web_search_with_and](web_search_with_and/) | 16.0.1.0.0 |  | Use AND conditions on omnibar search
 [web_select_all_companies](web_select_all_companies/) | 16.0.1.0.0 |  | Allows you to select all companies in one click.
