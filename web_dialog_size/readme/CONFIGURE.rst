@@ -1,3 +1,4 @@
+By default, the module respects the caller's ``dialog_size`` option.
 If you want to set dialog boxes maximized by default, you need to:
 
 #. Go to *Settings -> Technical -> Parameters -> System Parameters*
