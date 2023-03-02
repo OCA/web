@@ -470,25 +470,50 @@ These are the variables available in template rendering:</p>
             <span class="nt">&lt;timeline</span> <span class="na">date_start=</span><span class="s">&quot;date_assign&quot;</span>
                       <span class="na">date_stop=</span><span class="s">&quot;date_end&quot;</span>
                       <span class="na">string=</span><span class="s">&quot;Tasks&quot;</span>
-                      <span class="na">default_group_by=</span><span class="s">&quot;user_id&quot;</span>
+                      <span class="na">default_group_by=</span><span class="s">&quot;project_id&quot;</span>
                       <span class="na">event_open_popup=</span><span class="s">&quot;true&quot;</span>
-                      <span class="na">zoomKey=</span><span class="s">&quot;ctrlKey&quot;</span>
-                      <span class="na">colors=</span><span class="s">&quot;#ec7063:user_id == false;#2ecb71:kanban_state=='done';&quot;</span>
-                      <span class="na">dependency_arrow=</span><span class="s">&quot;task_dependency_ids&quot;</span><span class="nt">&gt;</span>
-                <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;user_id&quot;</span><span class="nt">/&gt;</span>
+                      <span class="na">colors=</span><span class="s">&quot;white: user_ids == []; #2ecb71: kanban_state == 'done'; #ec7063: kanban_state == 'blocked'&quot;</span>
+                      <span class="na">dependency_arrow=</span><span class="s">&quot;depend_on_ids&quot;</span>
+            <span class="nt">&gt;</span>
+                <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;user_ids&quot;</span> <span class="nt">/&gt;</span>
+                <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;planned_hours&quot;</span> <span class="nt">/&gt;</span>
                 <span class="nt">&lt;templates&gt;</span>
-                    <span class="nt">&lt;div</span> <span class="na">t-name=</span><span class="s">&quot;timeline-item&quot;</span><span class="nt">&gt;</span>
-                        <span class="nt">&lt;div</span> <span class="na">t-esc=</span><span class="s">&quot;record.display_name&quot;</span><span class="nt">/&gt;</span>
-                        Assigned to:
-                        <span class="nt">&lt;span</span> <span class="na">t-esc=</span><span class="s">&quot;record.user_id[1]&quot;</span><span class="nt">/&gt;</span>
-                    <span class="nt">&lt;/div&gt;</span>
+                    <span class="nt">&lt;t</span> <span class="na">t-name=</span><span class="s">&quot;timeline-item&quot;</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;o_project_timeline_item&quot;</span><span class="nt">&gt;</span>
+                            <span class="nt">&lt;t</span> <span class="na">t-foreach=</span><span class="s">&quot;record.user_ids&quot;</span> <span class="na">t-as=</span><span class="s">&quot;user&quot;</span><span class="nt">&gt;</span>
+                                <span class="nt">&lt;img</span>
+                                    <span class="na">t-if=</span><span class="s">&quot;record.user_ids&quot;</span>
+                                    <span class="na">t-attf-src=</span><span class="s">&quot;/web/image/res.users/#{user}/image_128/16x16&quot;</span>
+                                    <span class="na">t-att-title=</span><span class="s">&quot;record.user&quot;</span>
+                                    <span class="na">width=</span><span class="s">&quot;16&quot;</span>
+                                    <span class="na">height=</span><span class="s">&quot;16&quot;</span>
+                                    <span class="na">class=</span><span class="s">&quot;mr8&quot;</span>
+                                    <span class="na">alt=</span><span class="s">&quot;User&quot;</span>
+                                <span class="nt">/&gt;</span>
+                            <span class="nt">&lt;/t&gt;</span>
+                            <span class="nt">&lt;span</span> <span class="na">name=</span><span class="s">&quot;display_name&quot;</span><span class="nt">&gt;</span>
+                                <span class="nt">&lt;t</span> <span class="na">t-esc=</span><span class="s">&quot;record.display_name&quot;</span> <span class="nt">/&gt;</span>
+                            <span class="nt">&lt;/span&gt;</span>
+                            <span class="nt">&lt;small</span>
+                                <span class="na">name=</span><span class="s">&quot;planned_hours&quot;</span>
+                                <span class="na">class=</span><span class="s">&quot;text-info ml4&quot;</span>
+                                <span class="na">t-if=</span><span class="s">&quot;record.planned_hours&quot;</span>
+                            <span class="nt">&gt;</span>
+                                <span class="nt">&lt;t</span>
+                                    <span class="na">t-esc=</span><span class="s">&quot;field_utils.format.float_time(record.planned_hours)&quot;</span>
+                                <span class="nt">/&gt;</span>
+                            <span class="nt">&lt;/small&gt;</span>
+                        <span class="nt">&lt;/div&gt;</span>
+                    <span class="nt">&lt;/t&gt;</span>
                 <span class="nt">&lt;/templates&gt;</span>
             <span class="nt">&lt;/timeline&gt;</span>
         <span class="nt">&lt;/field&gt;</span>
     <span class="nt">&lt;/record&gt;</span>
 
     <span class="nt">&lt;record</span> <span class="na">id=</span><span class="s">&quot;project.action_view_task&quot;</span> <span class="na">model=</span><span class="s">&quot;ir.actions.act_window&quot;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;view_mode&quot;</span><span class="nt">&gt;</span>kanban,tree,form,calendar,gantt,timeline,graph<span class="nt">&lt;/field&gt;</span>
+        <span class="nt">&lt;field</span>
+            <span class="na">name=</span><span class="s">&quot;view_mode&quot;</span>
+        <span class="nt">&gt;</span>kanban,tree,form,calendar,timeline,pivot,graph,activity<span class="nt">&lt;/field&gt;</span>
     <span class="nt">&lt;/record&gt;</span>
 <span class="nt">&lt;/odoo&gt;</span>
 </pre>
@@ -561,7 +586,6 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 <li>Adrien Peiffer &lt;<a class="reference external" href="mailto:adrien.peiffer&#64;acsone.eu">adrien.peiffer&#64;acsone.eu</a>&gt;</li>
 <li>Leonardo Donelli &lt;<a class="reference external" href="mailto:donelli&#64;webmonks.it">donelli&#64;webmonks.it</a>&gt;</li>
 <li>Adrien Didenot &lt;<a class="reference external" href="mailto:adrien.didenot&#64;horanet.com">adrien.didenot&#64;horanet.com</a>&gt;</li>
-<li>Dennis Sluijk &lt;<a class="reference external" href="mailto:d.sluijk&#64;onestein.nl">d.sluijk&#64;onestein.nl</a>&gt;</li>
 <li>Thong Nguyen Van &lt;<a class="reference external" href="mailto:thongnv&#64;trobz.com">thongnv&#64;trobz.com</a>&gt;</li>
 <li>Murtaza Mithaiwala &lt;<a class="reference external" href="mailto:mmithaiwala&#64;opensourceintegrators.com">mmithaiwala&#64;opensourceintegrators.com</a>&gt;</li>
 <li>Ammar Officewala &lt;<a class="reference external" href="mailto:aofficewala&#64;opensourceintegrators.com">aofficewala&#64;opensourceintegrators.com</a>&gt;</li>
@@ -570,6 +594,15 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 <li>Alexandre Díaz</li>
 <li>César A. Sánchez</li>
 </ul>
+</li>
+<li><dl class="first docutils">
+<dt><a class="reference external" href="https://www.onestein.nl">Onestein</a>:</dt>
+<dd><ul class="first last">
+<li>Dennis Sluijk &lt;<a class="reference external" href="mailto:d.sluijk&#64;onestein.nl">d.sluijk&#64;onestein.nl</a>&gt;</li>
+<li>Anjeel Haria</li>
+</ul>
+</dd>
+</dl>
 </li>
 </ul>
 </div>
