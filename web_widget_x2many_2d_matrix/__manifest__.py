@@ -5,7 +5,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "2D matrix for x2many fields",
-    "version": "15.0.1.0.2",
+    "version": "16.0.1.0.0",
     "maintainers": ["ChrisOForgeFlow"],
     "development_status": "Production/Stable",
     "author": (
@@ -13,6 +13,7 @@
         "Tecnativa, "
         "Camptocamp, "
         "CorporateHub, "
+        "Onestein, "
         "Odoo Community Association (OCA)"
     ),
     "website": "https://github.com/OCA/web",
@@ -24,11 +25,16 @@
     "installable": True,
     "assets": {
         "web.assets_backend": [
-            "web_widget_x2many_2d_matrix/static/src/scss/web_widget_x2many_2d_matrix.scss",
-            "web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js",
-            "web_widget_x2many_2d_matrix/static/src/js/2d_matrix_view.js",
-            "web_widget_x2many_2d_matrix/static/src/js/abstract_view_matrix_limit_extend.js",
-            "web_widget_x2many_2d_matrix/static/src/js/widget_x2many_2d_matrix.js",
+            "web_widget_x2many_2d_matrix/static/src/components/x2many_2d_matrix_renderer/"
+            "x2many_2d_matrix_renderer.esm.js",
+            "web_widget_x2many_2d_matrix/static/src/components/x2many_2d_matrix_renderer/"
+            "x2many_2d_matrix_renderer.xml",
+            "web_widget_x2many_2d_matrix/static/src/components/x2many_2d_matrix_field/"
+            "x2many_2d_matrix_field.esm.js",
+            "web_widget_x2many_2d_matrix/static/src/components/x2many_2d_matrix_field/"
+            "x2many_2d_matrix_field.xml",
+            "web_widget_x2many_2d_matrix/static/src/components/x2many_2d_matrix_field/"
+            "x2many_2d_matrix_field.scss",
         ],
     },
 }

@@ -6,7 +6,7 @@ $x2many_2d_matrix_max_height: 450px;
         overflow-y: auto;
     }
 
-    .o_x2many_2d_matrix.o_list_view {
+    .table {
         > thead > tr > th {
             white-space: pre-line;
             position: sticky;
@@ -42,6 +42,7 @@ $x2many_2d_matrix_max_height: 450px;
                         box-shadow: -1px 5px 10px $gray-300;
                     }
                     &.row-total {
+                        padding: 0.75rem;
                         font-weight: bold;
                         position: sticky;
                         right: 0;
@@ -54,7 +55,7 @@ $x2many_2d_matrix_max_height: 450px;
             }
         }
 
-        > tfoot > tr > td {
+        > tfoot > tr > th {
             padding: 0.75rem;
             text-align: left;
             background-color: $o-list-footer-bg-color;
