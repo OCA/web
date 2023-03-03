@@ -5,13 +5,17 @@
     "maintainers": ["robyf70"],
     "website": "https://github.com/OCA/web",
     "category": "Web",
-    "version": "14.0.1.0.0",
+    "version": "16.0.1.0.0",
     "depends": ["web"],
-    "data": [
-        "views/web_widget_plotly_chart.xml",
-    ],
+    "data": [],
     "external_dependencies": {
-        "python": ["plotly==5.4.0"],
+        "python": ["plotly==5.13.1"],
+    },
+    "assets": {
+        "web.assets_backend": [
+            "web_widget_plotly_chart/static/src/js/widget_plotly.esm.js",
+            "web_widget_plotly_chart/static/src/js/widget_plotly.xml",
+        ],
     },
     "license": "LGPL-3",
 }
