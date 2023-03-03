@@ -23,10 +23,6 @@ field_x_axis
     The field that indicates the x value of a point
 field_y_axis
     The field that indicates the y value of a point
-field_label_x_axis
-    Use another field to display in the table header
-field_label_y_axis
-    Use another field to display in the table header
 field_value
     Show this field as value
 show_row_totals
