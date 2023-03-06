@@ -1,6 +1,7 @@
 /** @odoo-module **/
 /* Copyright 2018 Tecnativa - Jairo Llopis
  * Copyright 2021 ITerra - Sergey Shebanin
+ * Copyright 2021 Onestein - Anjeel Haria
  * License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). */
 
 import {NavBar} from "@web/webclient/navbar/navbar";
@@ -14,6 +15,7 @@ import {patch} from "web.utils";
 
 const {Component} = owl;
 const {useState, useRef} = owl.hooks;
+import {unlinkAll} from "@mail/model/model_field_command";
 
 // Patch WebClient to show AppsMenu instead of default app
 patch(WebClient.prototype, "web_responsive.DefaultAppsMenu", {
@@ -32,8 +34,12 @@ export class AppsMenu extends Component {
     setup() {
         super.setup();
         this.state = useState({open: false});
-        useBus(this.env.bus, "ACTION_MANAGER:UI-UPDATED", () => {
+        useBus(this.env.bus, "ACTION_MANAGER:UI-UPDATED", async () => {
             this.setState(false);
+            const messaging = await Component.env.services.messaging.get();
+            messaging.dialogManager.update({
+                dialogs: unlinkAll(),
+            });
         });
         useBus(this.env.bus, "APPS_MENU:CLOSE", () => {
             this.setState(false);
