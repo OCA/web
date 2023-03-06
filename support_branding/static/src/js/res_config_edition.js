@@ -20,7 +20,7 @@ odoo.define("support_branding.ResConfigEdition", function (require) {
                 if (result && "support_release" in result)
                     self.support_cp_release = result.support_release;
                 if (result && "support_branding_color" in result)
-                    self.support_branding_color = result.support_branding_color;
+                    self.support_cp_color = result.support_branding_color;
             });
 
             return $.when(this._super.apply(this, arguments), def_1);
