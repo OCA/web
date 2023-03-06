@@ -19,8 +19,7 @@ class ResCompany(models.Model):
                 )
             )
         self.env.cr.execute(
-            "select key, value from ir_config_parameter where key ilike "
-            "'support_%';"
+            "select key, value from ir_config_parameter where key ilike " "'support_%';"
         )
         res = self.env.cr.dictfetchall()
         if any(res):
