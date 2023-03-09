@@ -180,7 +180,6 @@
     // Cut long filters names in the filters menu
     .o_filter_menu {
         .o_menu_item {
-            width: auto;
             @include media-breakpoint-up(md) {
                 max-width: 250px;
             }
