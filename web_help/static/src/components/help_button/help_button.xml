@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="web_help.HelpButton" owl="1">
+        <button
+            class="btn ml-2 js_web_help_btn"
+            t-att-class="(props.btnClass || 'btn-light') + (state.TripClass ? '' : ' d-none')"
+            t-on-click="onClick"
+        >
+            <i class="fa fa-question" />
+        </button>
+    </t>
+    <t t-inherit="web.Legacy.ControlPanel" t-inherit-mode="extension" t-owl="1">
+        <xpath expr="//div[hasclass('o_cp_bottom')]" t-operation="inside">
+            <nav class="btn-group">
+                <HelpButton resModel="env.action and env.action.res_model" viewType="env.view and env.view.type" />
+            </nav>
+        </xpath>
+    </t>
+    <t t-inherit="web.ControlPanel" t-inherit-mode="extension" t-owl="1">
+        <xpath expr="//div[hasclass('o_cp_bottom')]" t-operation="inside">
+            <nav class="btn-group">
+                <HelpButton resModel="env.action and env.action.res_model" viewType="env.view and env.view.type" />
+            </nav>
+        </xpath>
+    </t>
+
+    <t t-inherit="web.ActionDialog" t-inherit-mode="extension" t-owl="1">
+        <xpath expr="//h4[hasclass('modal-title')]" t-operation="after">
+            <HelpButton
+                resModel="props.actionProps.resModel"
+                viewType="props.actionProps.type"
+                btnClass="'btn-link p-1'"
+            />
+        </xpath>
+    </t>
+</templates>
