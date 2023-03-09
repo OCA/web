@@ -23,7 +23,7 @@ web_m2x_options
     :target: https://runbot.odoo-community.org/runbot/162/15.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 This modules modifies "many2one" and "many2manytags" form widgets so as to add some new display
 control options.
@@ -85,9 +85,10 @@ in the field's options dict
 
   Makes many2many_tags and one2many rows buttons that open the linked resource
 
-``no_color_picker`` *boolean* (Default: ``False``)
+``no_color_picker`` *boolean* (Default: ``False``) (obselete: use native option: ``no_edit_color`` instead)
 
   Deactivates the color picker on many2many_tags buttons to do nothing (ignored if open is set)
+
 
 ir.config_parameter options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
