@@ -34,7 +34,7 @@
         }
     }
     .o_cp_bottom_right {
-        height: 30px;
+        height: 10%;
     }
     // Mobile Control panel (breadcrumbs, search box, buttons...)
     @include media-breakpoint-down(sm) {
@@ -72,7 +72,6 @@
 
         .o_cp_bottom_right {
             float: right;
-            height: 30px;
             padding-left: 10px;
             margin: 5px 0;
         }
