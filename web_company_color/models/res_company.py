@@ -14,7 +14,8 @@ URL_SCSS_GEN_TEMPLATE = URL_BASE + "custom_colors.%d.gen.scss"
 class ResCompany(models.Model):
     _inherit = "res.company"
 
-    SCSS_TEMPLATE = """
+    def _get_scss_template(self):
+        return """
         .o_main_navbar {
           background-color: %(color_navbar_bg)s !important;
           color: %(color_navbar_text)s !important;
@@ -191,7 +192,7 @@ class ResCompany(models.Model):
         # ir.attachment need files with content to work
         if not self.company_colors:
             return "// No Web Company Color SCSS Content\n"
-        return self.SCSS_TEMPLATE % self._scss_get_sanitized_values()
+        return self._get_scss_template() % self._scss_get_sanitized_values()
 
     def scss_get_url(self):
         self.ensure_one()
