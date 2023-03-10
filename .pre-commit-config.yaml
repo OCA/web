@@ -15,7 +15,7 @@ exclude: |
   # You don't usually want a bot to modify your legal texts
   (LICENSE.*|COPYING.*)
 default_language_version:
-  python: python3
+  python: python3.6
 repos:
   - repo: https://github.com/oca/maintainer-tools
     rev: ab1d7f6
@@ -25,7 +25,7 @@ repos:
       - id: oca-fix-manifest-website
         args: ["https://github.com/OCA/web"]
   - repo: https://github.com/acsone/setuptools-odoo
-    rev: 3.0.6
+    rev: 3.1.8
     hooks:
       - id: setuptools-odoo-make-default
       - id: setuptools-odoo-get-requirements
@@ -38,7 +38,6 @@ repos:
     rev: v3.4.1
     hooks:
       - id: flake8
-        language_version: python3.6
         name: flake8 excluding __init__.py
         exclude: __init__\.py
   - repo: https://github.com/pre-commit/mirrors-pylint
