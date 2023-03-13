@@ -13,11 +13,8 @@
     "depends": ["web"],
     "assets": {
         "web.assets_backend": [
-            "web_widget_image_download/static/src/js/**/*",
-            "web_widget_image_download/static/src/scss/**/*",
-        ],
-        "web.assets_qweb": [
             "web_widget_image_download/static/src/xml/**/*",
+            "web_widget_image_download/static/src/js/**/*",
         ],
     },
 }

@@ -14,7 +14,7 @@ Web Widget - Image Download
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/15.0/web_widget_image_download
+    :target: https://github.com/OCA/web/tree/16.0/web_widget_image_download
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
     :target: https://translation.odoo-community.org/projects/web-15-0/web-15-0-web_widget_image_download
@@ -90,6 +90,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/15.0/web_widget_image_download>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/16.0/web_widget_image_download>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
