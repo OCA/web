@@ -22,7 +22,6 @@ class M2xCreateEditOption(models.Model):
     field_name = fields.Char(
         related="field_id.name",
         store=True,
-        string="Field Name",
     )
 
     model_id = fields.Many2one(
@@ -124,12 +123,8 @@ class M2xCreateEditOption(models.Model):
     def _check_field_in_model(self):
         for opt in self:
             if opt.field_id.model_id != opt.model_id:
-                msg = _(
-                    "%(field)s is not a valid field for model %(model)s!",
-                    field=opt.field_name,
-                    model=opt.model_name,
-                )
-                raise ValidationError(msg)
+                msg = _("'{0}' is not a valid field for model '{1}'!")
+                raise ValidationError(msg.format(opt.field_name, opt.model_name))
 
     @api.constrains("field_id")
     def _check_field_type(self):
@@ -144,6 +139,7 @@ class M2xCreateEditOption(models.Model):
         options = node.attrib.get("options") or {}
         if isinstance(options, str):
             options = safe_eval(options, dict(self.env.context or [])) or {}
+
         for k in ("create", "create_edit"):
             opt = self["option_%s" % k]
             if opt == "none":

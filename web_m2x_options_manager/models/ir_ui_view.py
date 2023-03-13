@@ -11,8 +11,7 @@ class IrUiView(models.Model):
         res = super()._postprocess_tag_field(node, name_manager, node_info)
         if node.tag == "field":
             mname = name_manager.model._name
-            fname = node.attrib["name"]
-            field = self.env[mname]._fields.get(fname)
+            field = name_manager.model._fields.get(node.get("name"))
             if field and field.type in ("many2many", "many2one"):
                 rec = self.env["m2x.create.edit.option"].get(mname, field.name)
                 if rec:
