@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0\n"
+"Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -16,7 +16,7 @@ msgstr ""
 #. module: web_m2x_options_manager
 #: code:addons/web_m2x_options_manager/models/m2x_create_edit_option.py:0
 #, python-format
-msgid "%(field)s is not a valid field for model %(model)s!"
+msgid "'%s' is not a valid field for model '%s'!"
 msgstr ""
 
 #. module: web_m2x_options_manager
@@ -81,6 +81,9 @@ msgid ""
 msgstr ""
 
 #. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model__display_name
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model_fields__display_name
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_ui_view__display_name
 #: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__display_name
 msgid "Display Name"
 msgstr ""
@@ -113,6 +116,11 @@ msgstr ""
 
 #. module: web_m2x_options_manager
 #: model_terms:ir.ui.view,arch_db:web_m2x_options_manager.view_model_form_inherit
+msgid "Fields Description"
+msgstr ""
+
+#. module: web_m2x_options_manager
+#: model_terms:ir.ui.view,arch_db:web_m2x_options_manager.view_model_form_inherit
 msgid "Fill"
 msgstr ""
 
@@ -129,11 +137,17 @@ msgid "Force Remove"
 msgstr ""
 
 #. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model__id
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model_fields__id
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_ui_view__id
 #: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option__id
 msgid "ID"
 msgstr ""
 
 #. module: web_m2x_options_manager
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model____last_update
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_model_fields____last_update
+#: model:ir.model.fields,field_description:web_m2x_options_manager.field_ir_ui_view____last_update
 #: model:ir.model.fields,field_description:web_m2x_options_manager.field_m2x_create_edit_option____last_update
 msgid "Last Modified on"
 msgstr ""
