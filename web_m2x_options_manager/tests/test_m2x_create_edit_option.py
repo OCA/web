@@ -75,7 +75,7 @@ class TestM2xCreateEditOption(TransactionCase):
             )
 
     def test_apply_options(self):
-        res = self.env["res.partner"].fields_view_get(self.view.id)
+        res = self.env["res.partner"].get_view(self.view.id)
 
         # Check fields on res.partner form view
         form_arch = res["arch"]
@@ -97,37 +97,24 @@ class TestM2xCreateEditOption(TransactionCase):
             safe_eval(categ_node.attrib.get("options"), nocopy=True),
             {"create": False, "create_edit": True},
         )
-        self.assertEqual(
-            (
-                categ_node.attrib.get("can_create"),
-                categ_node.attrib.get("can_write"),
-            ),
-            ("true", "true"),
-        )
-
         # Check fields on res.users tree view (contained in ``user_ids`` field)
-        tree_arch = res["fields"]["user_ids"]["views"]["tree"]["arch"]
-        tree_doc = etree.XML(tree_arch)
-        company_node = tree_doc.xpath("//field[@name='company_id']")[0]
+        company_node = form_doc.xpath("//field[@name='company_id']")[0]
         self.assertEqual(
             safe_eval(company_node.attrib.get("options"), nocopy=True),
-            {"create": True, "create_edit": True},
+            {
+                "create": False,
+                "no_create": False,
+                "create_edit": True,
+                "no_quick_create": True,
+            },
         )
-        self.assertEqual(
-            (
-                company_node.attrib.get("can_create"),
-                company_node.attrib.get("can_write"),
-            ),
-            ("false", "false"),
-        )
-
         # Update options, check that node has been updated too
         self.title_opt.option_create_edit = "force_false"
-        res = self.env["res.partner"].fields_view_get(self.view.id)
+        res = self.env["res.partner"].get_view(self.view.id)
         form_arch = res["arch"]
         form_doc = etree.XML(form_arch)
         title_node = form_doc.xpath("//field[@name='title']")[0]
         self.assertEqual(
             safe_eval(title_node.attrib.get("options"), nocopy=True),
-            {"create": True, "create_edit": False},
+            {"create": True, "create_edit": False, "no_create_edit": True},
         )

@@ -1,7 +1,7 @@
 # Copyright 2021 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class IrModel(models.Model):
@@ -36,17 +36,4 @@ class IrModel(models.Model):
 
 class IrModelFields(models.Model):
     _inherit = "ir.model.fields"
-
-    @api.model
-    def name_search(self, name="", args=None, operator="ilike", limit=100):
-        res = super().name_search(name, args, operator, limit)
-        if not (name and self.env.context.get("search_by_technical_name")):
-            return res
-        domain = list(args or []) + [("name", operator, name)]
-        new_fids = self.search(domain, limit=limit).ids
-        for fid in [x[0] for x in res]:
-            if fid not in new_fids:
-                new_fids.append(fid)
-        if limit and limit > 0:
-            new_fids = new_fids[:limit]
-        return self.browse(new_fids).sudo().name_get()
+    _rec_names_search = ["name", "field_description"]

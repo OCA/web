@@ -22,7 +22,6 @@ class M2xCreateEditOption(models.Model):
     field_name = fields.Char(
         related="field_id.name",
         store=True,
-        string="Field Name",
     )
 
     model_id = fields.Many2one(
@@ -125,9 +124,9 @@ class M2xCreateEditOption(models.Model):
         for opt in self:
             if opt.field_id.model_id != opt.model_id:
                 msg = _(
-                    "%(field)s is not a valid field for model %(model)s!",
-                    field=opt.field_name,
-                    model=opt.model_name,
+                    "'%(field_name)s' is not a valid field for model '%(model_name)s'!",
+                    field_name=opt.field_name,
+                    model_name=opt.model_name,
                 )
                 raise ValidationError(msg)
 
@@ -144,17 +143,19 @@ class M2xCreateEditOption(models.Model):
         options = node.attrib.get("options") or {}
         if isinstance(options, str):
             options = safe_eval(options, dict(self.env.context or [])) or {}
+
         for k in ("create", "create_edit"):
             opt = self["option_%s" % k]
             if opt == "none":
                 continue
             mode, val = opt.split("_")
-            if mode == "force" or k not in options:
+            if k not in options:
                 options[k] = val == "true"
-        node.set("options", str(options))
+            if mode == "force":
+                options["no_%s" % k] = val == "false"
         if not self.option_create_edit_wizard:
-            node.set("can_create", "false")
-            node.set("can_write", "false")
+            options["no_quick_create"] = True
+        node.set("options", str(options))
 
     @api.model
     def get(self, model_name, field_name):

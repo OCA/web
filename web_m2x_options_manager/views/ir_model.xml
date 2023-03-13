@@ -21,7 +21,7 @@
                             <field name="model_name" invisible="1" />
                             <field
                                 name="field_id"
-                                context="{'search_by_technical_name': True, 'display_technical_name': True}"
+                                context="{'display_technical_name': True}"
                                 domain="[('ttype', 'in', ('many2many', 'many2one')), ('model_id.model', '=', model_name)]"
                                 options="{'create': False, 'create_edit': False}"
                             />
