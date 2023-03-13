@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-11-17 08:47+0000\n"
-"Last-Translator: Vincent Hatakeyama <vincent+github@hatakeyama.fr>\n"
+"PO-Revision-Date: 2023-03-13 14:23+0000\n"
+"Last-Translator: Rémi <remi@le-filament.com>\n"
 "Language-Team: none\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: code:addons/web_responsive/static/src/components/chatter_topbar/chatter_topbar.xml:0
 #, python-format
 msgid "Activities"
-msgstr ""
+msgstr "Activités"
 
 #. module: web_responsive
 #. odoo-javascript
@@ -35,14 +35,14 @@ msgstr "Tout"
 #: code:addons/web_responsive/static/src/components/chatter_topbar/chatter_topbar.xml:0
 #, python-format
 msgid "Attachment counter loading..."
-msgstr ""
+msgstr "Chargement du compteur de pièces jointes..."
 
 #. module: web_responsive
 #. odoo-javascript
 #: code:addons/web_responsive/static/src/components/chatter_topbar/chatter_topbar.xml:0
 #, python-format
 msgid "Attachments"
-msgstr ""
+msgstr "Pièces Jointes"
 
 #. module: web_responsive
 #. odoo-javascript
@@ -85,7 +85,7 @@ msgstr "Menu d’accueil"
 #: code:addons/web_responsive/static/src/components/chatter_topbar/chatter_topbar.xml:0
 #, python-format
 msgid "Log note"
-msgstr ""
+msgstr "Enregistrer une note"
 
 #. module: web_responsive
 #. odoo-javascript
@@ -135,7 +135,7 @@ msgstr "Rechercher…"
 #: code:addons/web_responsive/static/src/components/chatter_topbar/chatter_topbar.xml:0
 #, python-format
 msgid "Send message"
-msgstr ""
+msgstr "Envoyer un message"
 
 #. module: web_responsive
 #. odoo-javascript
