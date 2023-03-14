@@ -94,6 +94,8 @@ show_row_totals
 show_column_totals
     If field_value is a numeric field, it indicates if you want to calculate
     column totals. True by default
+field_att_<name>
+    Declare `disabled` or `hidden` options prefixed with this string as you need for binding a field value with an HTML node attribute called as the <name> passed in the option.
 
 Example
 ~~~~~~~
@@ -149,6 +151,8 @@ Now in our wizard, we can use:
             <field name="planned_hours"/>
         </tree>
     </field>
+
+Note that all values in the matrix must exist, so you need to create them previously if not present, but you can control visually the editability of the fields in the matrix through field_att_disabled option with a control field.
 
 Known issues / Roadmap
 ======================

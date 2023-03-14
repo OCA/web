@@ -270,9 +270,6 @@ odoo.define("web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer", function (requ
                 }
             }
 
-            // TODO roadmap: here we should collect possible extra params
-            // the user might want to attach to each single cell.
-
             var $td = $("<td>", {
                 class: tdClassName,
             });
@@ -307,7 +304,20 @@ odoo.define("web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer", function (requ
             if (node.tag === "widget") {
                 return $td.append(this._renderWidget(record, node));
             }
-            var $el = this._renderFieldWidget(node, record, _.pick(options, "mode"));
+            // Here we attach extra params that user want to attach
+            // to each single cell.
+            // we use a copy of the node (column) to define the extra param by cell
+            var node_copy = $.extend(true, {}, node);
+            for (var attribute in this.matrix_data.fields_att) {
+                if (attribute && record.data[this.matrix_data.fields_att[attribute]]) {
+                    node_copy.attrs[attribute] = attribute;
+                }
+            }
+            var $el = this._renderFieldWidget(
+                node_copy,
+                record,
+                _.pick(options, "mode")
+            );
             return $td.append($el);
         },
 
