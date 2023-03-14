@@ -1,6 +1,6 @@
 # Copyright 2020 Alexandre Díaz <dev@redneboa.es>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo import models
+from odoo import models, tools
 
 from .assetsbundle import AssetsBundleCompanyColor
 
@@ -29,12 +29,17 @@ class QWeb(models.AbstractModel):
             res += [asset.get_company_color_asset_node()]
         return res
 
-    def _get_asset_content(
-        self, bundle, nodeAttrs=None, defer_load=False, lazy_load=False
-    ):
+    @tools.ormcache(
+        "bundle",
+        "defer_load",
+        "lazy_load",
+        "media",
+        "tuple(self.env.context.get(k) for k in self._get_template_cache_keys())",
+    )
+    def _get_asset_content(self, bundle, defer_load=False, lazy_load=False, media=None):
         """Handle 'special' web_company_color bundle"""
         if bundle == "web_company_color.company_color_assets":
             return [], []
         return super()._get_asset_content(
-            bundle, nodeAttrs, defer_load=defer_load, lazy_load=lazy_load
+            bundle=bundle, defer_load=defer_load, lazy_load=lazy_load, media=media
         )
