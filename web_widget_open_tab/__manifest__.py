@@ -5,7 +5,7 @@
     "name": "Widget Open on new Tab",
     "summary": """
         Allow to open record from trees on new tab from tree views""",
-    "version": "15.0.1.0.0",
+    "version": "16.0.1.0.0",
     "license": "AGPL-3",
     "author": "Creu Blanca,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
