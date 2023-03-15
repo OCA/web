@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="web_remember_tree_column_width_backend"
+        name="web_remember_tree_column_width assets"
+        inherit_id="web.assets_backend"
+    >
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/web_remember_tree_column_width/static/src/js/list_renderer.js"
+            />
+            <link
+                rel="stylesheet"
+                type="text/scss"
+                href="/web_remember_tree_column_width/static/src/scss/main.scss"
+            />
+        </xpath>
+    </template>
+</odoo>
