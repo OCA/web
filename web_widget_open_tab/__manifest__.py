@@ -12,6 +12,9 @@
     "depends": ["web"],
     "demo": ["demo/res_users_view.xml"],
     "assets": {
-        "web.assets_backend": ["web_widget_open_tab/static/src/js/widget.js"],
+        "web.assets_backend": [
+            "web_widget_open_tab/static/src/xml/open_tab_widget.xml",
+            "web_widget_open_tab/static/src/js/open_tab_widget.esm.js",
+        ],
     },
 }
