@@ -151,13 +151,27 @@ class ResCompany(models.Model):
             # Calc. optimal text color (b/w)
             # Grayscale human vision perception (Rec. 709 values)
             _a = 1 - (0.2126 * _r + 0.7152 * _g + 0.0722 * _b)
+            color_navbar_bg = n_rgb_to_hex(_r, _g, _b)
+
+            _s += 0.25 if _s < 0.5 else -0.25
+            color_button_bg = n_rgb_to_hex(*hls_to_rgb(_h, _l, _s))
+            color_button_bg_hover = n_rgb_to_hex(
+                *hls_to_rgb(_h, _l, _s + 0.2 if _s < 0.8 else 1.0)
+            )
+
             values.update(
                 {
-                    "color_navbar_bg": n_rgb_to_hex(_r, _g, _b),
+                    "color_navbar_bg": color_navbar_bg,
                     "color_navbar_bg_hover": n_rgb_to_hex(_rd, _gd, _bd),
                     "color_navbar_text": "#000" if _a < 0.5 else "#fff",
+                    "color_button_bg": color_button_bg,
+                    "color_button_bg_hover": color_button_bg_hover,
+                    "color_button_text": "#000" if _a < 0.5 else "#fff",
+                    "color_link_text": color_navbar_bg,
+                    "color_link_text_hover": color_button_bg,
                 }
             )
+
         self.write(values)
 
     def _scss_get_sanitized_values(self):
