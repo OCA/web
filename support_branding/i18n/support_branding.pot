@@ -52,6 +52,11 @@ msgid "Branding color"
 msgstr ""
 
 #. module: support_branding
+#: model:ir.model,name:support_branding.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: support_branding
 #: model:ir.model.fields,field_description:support_branding.field_res_config_settings__support_company
 msgid "Company Name"
 msgstr ""
@@ -72,6 +77,7 @@ msgid "Creates an error (i.e ZeroDivisionError) to test support branding"
 msgstr ""
 
 #. module: support_branding
+#: model:ir.model.fields,field_description:support_branding.field_res_company__display_name
 #: model:ir.model.fields,field_description:support_branding.field_res_config_settings__display_name
 msgid "Display Name"
 msgstr ""
@@ -100,11 +106,13 @@ msgid "For Support visit our"
 msgstr ""
 
 #. module: support_branding
+#: model:ir.model.fields,field_description:support_branding.field_res_company__id
 #: model:ir.model.fields,field_description:support_branding.field_res_config_settings__id
 msgid "ID"
 msgstr ""
 
 #. module: support_branding
+#: model:ir.model.fields,field_description:support_branding.field_res_company____last_update
 #: model:ir.model.fields,field_description:support_branding.field_res_config_settings____last_update
 msgid "Last Modified on"
 msgstr ""
@@ -162,6 +170,14 @@ msgstr ""
 #: code:addons/support_branding/static/src/xml/base.xml:0
 #, python-format
 msgid "Use HTML Editor"
+msgstr ""
+
+#. module: support_branding
+#: code:addons/support_branding/models/res_company.py:0
+#, python-format
+msgid ""
+"You are not allowed to access this functionality, please contact Admin for "
+"more support"
 msgstr ""
 
 #. module: support_branding
