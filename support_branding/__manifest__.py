@@ -8,7 +8,7 @@
     "name": "Support Branding",
     "summary": "Adds your branding to an Odoo instance",
     "category": "Hidden/Tools",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "license": "AGPL-3",
     "author": "Therp BV,Sunflower IT,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
