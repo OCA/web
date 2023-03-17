@@ -279,7 +279,7 @@ export class AppsMenuSearchBar extends Component {
         } else if (ev.code === "Tab") {
             if (document.querySelector(".search-results")) {
                 ev.preventDefault();
-                if (event.shiftKey) {
+                if (ev.shiftKey) {
                     this.state.offset--;
                 } else {
                     this.state.offset++;
