@@ -13,7 +13,7 @@
     ],
     "assets": {
         "web.assets_backend": [
-            "web_copy_confirm/static/src/js/web_copy_confirm.js",
+            "web_copy_confirm/static/src/js/web_copy_confirm.esm.js",
         ],
         "web.qunit_suite_tests": [
             "web_copy_confirm/static/tests/**/*",
