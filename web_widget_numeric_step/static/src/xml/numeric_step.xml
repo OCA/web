@@ -10,7 +10,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
             <div class="input-group widget_numeric_step">
                 <div class="input-group-prepend">
                     <button
-                        class="fa fa-minus btn btn-default btn_numeric_step"
+                        class="fa fa-minus btn btn-secondary btn_numeric_step"
                         aria-label="Minus"
                         title="Minus"
                         type="button"
@@ -21,10 +21,11 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                     type="tel"
                     class="form-control input_numeric_step"
                     aria-label="Value"
+                    style="z-index: 10"
                 />
                 <div class="input-group-append">
                     <button
-                        class="fa fa-plus btn btn-default btn_numeric_step"
+                        class="fa fa-plus btn btn-secondary btn_numeric_step"
                         aria-label="Plus"
                         title="Plus"
                         type="button"
