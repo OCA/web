@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-inherit="web.FilterMenu" t-inherit-mode="extension" owl="1">
+        <xpath
+            expr="//t[@t-if='item.options']//t[@t-foreach='item.options']"
+            position="after"
+        >
+            <t t-if="item.type === 'dateFilter'">
+                <DropdownItemCustomPeriod field="item" type="'filter'" />
+            </t>
+        </xpath>
+    </t>
+
+</templates>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="web_time_range_menu_custom.DropdownItemCustomPeriod" owl="1">
+        <div class="o_menu_item dropdown-item" data-id="__computed__">
+            <a href="#" role="menuitem" t-on-click="onClickCustomPeriod">
+                Custom period
+
+                <span class="o_submenu_switcher" data-id="__computed__">
+                    <span
+                        t-att-class="isOpen.value ? 'fa fa-caret-down' : 'fa fa-caret-right'"
+                    />
+                </span>
+            </a>
+            <t t-if="isOpen.value">
+                <div id="add_custom_period_wrapper" class="d-table">
+                    <div class="d-table-row" t-if="props.type === 'comparison'">
+                        <div class="d-table-cell">
+                            <select
+                                id="field_comparison"
+                                class="o_input o_date_field_selector"
+                                t-model="field.value"
+                            >
+                                <t
+                                    t-foreach="fields_selected"
+                                    t-as="field_item"
+                                    t-key="field_item"
+                                >
+                                    <option t-att-value="field_item"><span
+                                            t-esc="env.searchModel.searchItems[field_item].description"
+                                        /></option>
+                                </t>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="d-table-row">
+                        <div class="d-table-cell" style="width: 50%">
+                            <input
+                                type="number"
+                                min="0"
+                                id="period_quantity"
+                                class="o_input"
+                                t-model="quantity.value"
+                            />
+                        </div>
+                        <div class="d-table-cell">
+                            <select
+                                id="period_type"
+                                class="o_input o_date_field_selector"
+                                t-model="type.value"
+                            >
+                                <option value="day">Day</option>
+                                <option value="week">Week</option>
+                                <option value="month">Month</option>
+                                <option value="year">Year</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="d-table-row">
+                        <div class="d-table-cell">
+                            <button
+                                class="btn btn-primary o_add_computed_measure"
+                                type="button"
+                                t-on-click="onClickAdd"
+                            >Add</button>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>
