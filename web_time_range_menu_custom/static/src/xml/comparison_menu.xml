@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-inherit="web.ComparisonMenu" t-inherit-mode="extension" owl="1">
+        <xpath expr="//t[@t-foreach='items']" position="after">
+            <DropdownItemCustomPeriod comparisonItems="items" type="'comparison'" />
+        </xpath>
+    </t>
+
+</templates>
