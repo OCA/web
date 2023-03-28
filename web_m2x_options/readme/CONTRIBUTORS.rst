@@ -12,3 +12,5 @@
   * Carlos Roca
 * Bhavesh Odedra <bodedra@opensourceintegrators.com>
 * Dhara Solanki <dhara.solanki@initos.com> (http://www.initos.com)
+* `Trobz <https://trobz.com>`_:
+    * Hoang Diep <hoang@trobz.com>
