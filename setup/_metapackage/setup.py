@@ -13,6 +13,7 @@ setuptools.setup(
         'odoo-addon-web_domain_field>=16.0dev,<16.1dev',
         'odoo-addon-web_environment_ribbon>=16.0dev,<16.1dev',
         'odoo-addon-web_help>=16.0dev,<16.1dev',
+        'odoo-addon-web_no_bubble>=16.0dev,<16.1dev',
         'odoo-addon-web_refresher>=16.0dev,<16.1dev',
         'odoo-addon-web_responsive>=16.0dev,<16.1dev',
         'odoo-addon-web_search_with_and>=16.0dev,<16.1dev',
