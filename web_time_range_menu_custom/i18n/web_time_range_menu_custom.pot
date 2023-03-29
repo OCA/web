@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 13.0\n"
+"Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -15,52 +15,42 @@ msgstr ""
 
 #. module: web_time_range_menu_custom
 #. openerp-web
-#: code:addons/web_time_range_menu_custom/static/src/js/control_panel_view_parameters.js:0
-#: code:addons/web_time_range_menu_custom/static/src/js/control_panel_view_parameters.js:0
+#: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
 #, python-format
-msgid "Custom Period"
+msgid "Add"
 msgstr ""
 
 #. module: web_time_range_menu_custom
 #. openerp-web
-#: code:addons/web_time_range_menu_custom/static/src/xml/time_range_menu.xml:0
+#: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
+#, python-format
+msgid "Custom period"
+msgstr ""
+
+#. module: web_time_range_menu_custom
+#. openerp-web
+#: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
 #, python-format
 msgid "Day"
 msgstr ""
 
 #. module: web_time_range_menu_custom
 #. openerp-web
-#: code:addons/web_time_range_menu_custom/static/src/js/control_panel_model.js:0
-#: code:addons/web_time_range_menu_custom/static/src/js/search_facet.js:0
-#, python-format
-msgid "Last "
-msgstr ""
-
-#. module: web_time_range_menu_custom
-#. openerp-web
-#: code:addons/web_time_range_menu_custom/static/src/xml/time_range_menu.xml:0
+#: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
 #, python-format
 msgid "Month"
 msgstr ""
 
 #. module: web_time_range_menu_custom
 #. openerp-web
-#: code:addons/web_time_range_menu_custom/static/src/js/control_panel_model.js:0
-#: code:addons/web_time_range_menu_custom/static/src/js/search_facet.js:0
-#, python-format
-msgid "Previous "
-msgstr ""
-
-#. module: web_time_range_menu_custom
-#. openerp-web
-#: code:addons/web_time_range_menu_custom/static/src/xml/time_range_menu.xml:0
+#: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
 #, python-format
 msgid "Week"
 msgstr ""
 
 #. module: web_time_range_menu_custom
 #. openerp-web
-#: code:addons/web_time_range_menu_custom/static/src/xml/time_range_menu.xml:0
+#: code:addons/web_time_range_menu_custom/static/src/xml/date_selector.xml:0
 #, python-format
 msgid "Year"
 msgstr ""
