@@ -34,6 +34,7 @@ setuptools.setup(
         'odoo-addon-web_responsive>=15.0dev,<15.1dev',
         'odoo-addon-web_search_with_and>=15.0dev,<15.1dev',
         'odoo-addon-web_sheet_full_width>=15.0dev,<15.1dev',
+        'odoo-addon-web_time_range_menu_custom>=15.0dev,<15.1dev',
         'odoo-addon-web_timeline>=15.0dev,<15.1dev',
         'odoo-addon-web_tree_dynamic_colored_field>=15.0dev,<15.1dev',
         'odoo-addon-web_tree_image_tooltip>=15.0dev,<15.1dev',
