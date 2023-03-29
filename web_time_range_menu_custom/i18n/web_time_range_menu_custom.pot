@@ -1,0 +1,66 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_time_range_menu_custom
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_time_range_menu_custom
+#. openerp-web
+#: code:addons/web_time_range_menu_custom/static/src/js/control_panel_view_parameters.js:0
+#: code:addons/web_time_range_menu_custom/static/src/js/control_panel_view_parameters.js:0
+#, python-format
+msgid "Custom Period"
+msgstr ""
+
+#. module: web_time_range_menu_custom
+#. openerp-web
+#: code:addons/web_time_range_menu_custom/static/src/xml/time_range_menu.xml:0
+#, python-format
+msgid "Day"
+msgstr ""
+
+#. module: web_time_range_menu_custom
+#. openerp-web
+#: code:addons/web_time_range_menu_custom/static/src/js/control_panel_model.js:0
+#: code:addons/web_time_range_menu_custom/static/src/js/search_facet.js:0
+#, python-format
+msgid "Last "
+msgstr ""
+
+#. module: web_time_range_menu_custom
+#. openerp-web
+#: code:addons/web_time_range_menu_custom/static/src/xml/time_range_menu.xml:0
+#, python-format
+msgid "Month"
+msgstr ""
+
+#. module: web_time_range_menu_custom
+#. openerp-web
+#: code:addons/web_time_range_menu_custom/static/src/js/control_panel_model.js:0
+#: code:addons/web_time_range_menu_custom/static/src/js/search_facet.js:0
+#, python-format
+msgid "Previous "
+msgstr ""
+
+#. module: web_time_range_menu_custom
+#. openerp-web
+#: code:addons/web_time_range_menu_custom/static/src/xml/time_range_menu.xml:0
+#, python-format
+msgid "Week"
+msgstr ""
+
+#. module: web_time_range_menu_custom
+#. openerp-web
+#: code:addons/web_time_range_menu_custom/static/src/xml/time_range_menu.xml:0
+#, python-format
+msgid "Year"
+msgstr ""
