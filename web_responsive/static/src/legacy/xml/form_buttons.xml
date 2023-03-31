@@ -9,9 +9,17 @@
 -->
 <templates id="form_view" xml:space="preserve">
     <!-- Template for buttons that display only the icon in xs -->
-    <t t-name="web_responsive.icon_button" owl="1">
-        <i t-attf-class="fa fa-#{icon}" t-att-title="label" />
-        <span class="d-none d-sm-inline" t-esc="label" />
+    <t t-name="web_responsive.icon_button_create" owl="1">
+        <i t-attf-class="fa fa-plus" title="New" />
+        <span class="d-none d-sm-inline"> New</span>
+    </t>
+    <t t-name="web_responsive.icon_button_save" owl="1">
+        <i t-attf-class="fa fa-check" title="Save" />
+        <span class="d-none d-sm-inline"> Save</span>
+    </t>
+    <t t-name="web_responsive.icon_button_discard" owl="1">
+        <i t-attf-class="fa fa-times" title="Discard" />
+        <span class="d-none d-sm-inline"> Discard</span>
     </t>
     <t
         t-name="web.ResponsiveFormView.Buttons"
@@ -36,10 +44,7 @@
                 data-hotkey="c"
                 t-on-click.stop="create"
             >
-                <t t-call="web_responsive.icon_button">
-                    <t t-set="icon" t-value="'plus'" />
-                    <t t-set="label"> Create</t>
-                </t>
+                <t t-call="web_responsive.icon_button_create" />
             </button>
         </xpath>
     </t>
@@ -61,10 +66,7 @@
                 t-on-click.stop="create"
                 t-att-disabled="state.isDisabled"
             >
-                <t t-call="web_responsive.icon_button">
-                    <t t-set="icon" t-value="'plus'" />
-                    <t t-set="label"> Create</t>
-                </t>
+                <t t-call="web_responsive.icon_button_create" />
             </button>
         </xpath>
     </t>
@@ -100,10 +102,7 @@
                 t-on-click="() => this.createRecord(null)"
                 data-bounce-button=""
             >
-                <t t-call="web_responsive.icon_button">
-                    <t t-set="icon" t-value="'plus'" />
-                    <t t-set="label"> Create</t>
-                </t>
+                <t t-call="web_responsive.icon_button_create" />
             </button>
         </xpath>
     </t>
@@ -125,10 +124,7 @@
                 t-on-click="onClickCreate"
                 data-bounce-button=""
             >
-                <t t-call="web_responsive.icon_button">
-                    <t t-set="icon" t-value="'plus'" />
-                    <t t-set="label"> Create</t>
-                </t>
+                <t t-call="web_responsive.icon_button_create" />
             </button>
         </xpath>
         <xpath
@@ -141,10 +137,7 @@
                 data-hotkey="s"
                 t-on-click.stop="onClickSave"
             >
-                <t t-call="web_responsive.icon_button">
-                    <t t-set="icon" t-value="'check'" />
-                    <t t-set="label"> Save</t>
-                </t>
+                <t t-call="web_responsive.icon_button_save" />
             </button>
         </xpath>
         <xpath
@@ -158,10 +151,7 @@
                 t-on-click="onClickDiscard"
                 t-on-mousedown="onMouseDownDiscard"
             >
-                <t t-call="web_responsive.icon_button">
-                    <t t-set="icon" t-value="'times'" />
-                    <t t-set="label"> Discard</t>
-                </t>
+                <t t-call="web_responsive.icon_button_discard" />
             </button>
         </xpath>
     </t>
