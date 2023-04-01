@@ -1,6 +1,6 @@
 {
     "name": "Web Widget JSON Graph",
-    "version": "15.0.1.0.0",
+    "version": "16.0.1.0.0",
     "author": "Vauxoo, Odoo Community Association (OCA)",
     "license": "LGPL-3",
     "category": "Hidden/Dependency",
@@ -16,10 +16,8 @@
     "data": [],
     "assets": {
         "web.assets_backend": [
-            "web_widget_json_graph/static/src/js/web_widget_json_graph.js",
-        ],
-        "web.assets_qweb": [
             "web_widget_json_graph/static/src/xml/web_widget_json_graph.xml",
+            "web_widget_json_graph/static/src/js/web_widget_json_graph.js",
         ],
     },
     "auto_install": False,
