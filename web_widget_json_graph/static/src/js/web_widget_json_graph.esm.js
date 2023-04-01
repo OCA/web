@@ -25,6 +25,7 @@ export class JSONGraphWidget extends Component {
         if (this.chart) {
             this.chart.destroy();
         }
+        // eslint-disable-next-line no-undef
         this.chart = new Chart(this.canvasRef.el, this.data);
         return this.chart;
     }
