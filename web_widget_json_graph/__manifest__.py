@@ -17,7 +17,7 @@
     "assets": {
         "web.assets_backend": [
             "web_widget_json_graph/static/src/xml/web_widget_json_graph.xml",
-            "web_widget_json_graph/static/src/js/web_widget_json_graph.js",
+            "web_widget_json_graph/static/src/js/web_widget_json_graph.esm.js",
         ],
     },
     "auto_install": False,
