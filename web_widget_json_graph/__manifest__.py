@@ -1,6 +1,6 @@
 {
     "name": "Web Widget JSON Graph",
-    "version": "15.0.1.0.0",
+    "version": "16.0.1.0.0",
     "author": "Vauxoo, Odoo Community Association (OCA)",
     "license": "LGPL-3",
     "category": "Hidden/Dependency",
