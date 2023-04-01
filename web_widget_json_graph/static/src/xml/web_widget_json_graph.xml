@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <t t-name="web_widget_json_graph.JSONGraph" owl="1">
-        <canvas t-ref="canvas"/>
+        <canvas t-ref="canvas" />
     </t>
 </odoo>

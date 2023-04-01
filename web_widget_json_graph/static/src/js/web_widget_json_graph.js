@@ -1,8 +1,8 @@
 /** @odoo-module **/
 
 const {useEffect, Component, onWillStart, useRef} = owl;
-import { loadJS } from "@web/core/assets";
-import { registry } from "@web/core/registry";
+import {loadJS} from "@web/core/assets";
+import {registry} from "@web/core/registry";
 
 export class JSONGraphWidget extends Component {
     setup() {
@@ -10,7 +10,7 @@ export class JSONGraphWidget extends Component {
         this.canvasRef = useRef("canvas");
         this.data = JSON.parse(this.props.value);
 
-        super.setup();            
+        super.setup();
         onWillStart(() => loadJS("/web/static/lib/Chart/Chart.js"));
         useEffect(() => {
             this.renderChart();
