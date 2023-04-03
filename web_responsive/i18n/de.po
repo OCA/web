@@ -59,13 +59,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #, python-format
-msgid "Create"
-msgstr "Erstellen"
-
-#. module: web_responsive
-#. odoo-javascript
-#: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
-#, python-format
 msgid "Discard"
 msgstr "Verwerfen"
 
@@ -104,6 +97,13 @@ msgstr "maximieren"
 #, python-format
 msgid "Minimize"
 msgstr "minimieren"
+
+#. module: web_responsive
+#. odoo-javascript
+#: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
+#, python-format
+msgid "New"
+msgstr ""
 
 #. module: web_responsive
 #. odoo-javascript
@@ -147,6 +147,10 @@ msgstr ""
 #, python-format
 msgid "View switcher"
 msgstr ""
+
+#, python-format
+#~ msgid "Create"
+#~ msgstr "Erstellen"
 
 #~ msgid "Chatter Position"
 #~ msgstr "Chatter-Position"
