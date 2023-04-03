@@ -55,13 +55,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #, python-format
-msgid "Create"
-msgstr ""
-
-#. module: web_responsive
-#. odoo-javascript
-#: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
-#, python-format
 msgid "Discard"
 msgstr ""
 
@@ -99,6 +92,13 @@ msgstr ""
 #: code:addons/web_responsive/static/src/components/attachment_viewer/attachment_viewer.xml:0
 #, python-format
 msgid "Minimize"
+msgstr ""
+
+#. module: web_responsive
+#. odoo-javascript
+#: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
+#, python-format
+msgid "New"
 msgstr ""
 
 #. module: web_responsive

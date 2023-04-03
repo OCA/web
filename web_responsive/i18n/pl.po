@@ -56,13 +56,6 @@ msgstr "WYCZYŚĆ"
 #. odoo-javascript
 #: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #, python-format
-msgid "Create"
-msgstr "Utwórz"
-
-#. module: web_responsive
-#. odoo-javascript
-#: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
-#, python-format
 msgid "Discard"
 msgstr "Odrzuć"
 
@@ -101,6 +94,13 @@ msgstr "Zmaksymalizuj"
 #, python-format
 msgid "Minimize"
 msgstr "Zminimalizuj"
+
+#. module: web_responsive
+#. odoo-javascript
+#: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
+#, python-format
+msgid "New"
+msgstr ""
 
 #. module: web_responsive
 #. odoo-javascript
@@ -144,6 +144,10 @@ msgstr ""
 #, python-format
 msgid "View switcher"
 msgstr "Przełącznik widoku"
+
+#, python-format
+#~ msgid "Create"
+#~ msgstr "Utwórz"
 
 #~ msgid "Chatter Position"
 #~ msgstr "Pozycja Czatu"

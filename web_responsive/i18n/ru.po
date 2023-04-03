@@ -56,13 +56,6 @@ msgstr "Очистить"
 #. odoo-javascript
 #: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #, python-format
-msgid "Create"
-msgstr "Создать"
-
-#. module: web_responsive
-#. odoo-javascript
-#: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
-#, python-format
 msgid "Discard"
 msgstr "Отменить"
 
@@ -101,6 +94,13 @@ msgstr "Увеличить"
 #, python-format
 msgid "Minimize"
 msgstr "Уменьшить"
+
+#. module: web_responsive
+#. odoo-javascript
+#: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
+#, python-format
+msgid "New"
+msgstr ""
 
 #. module: web_responsive
 #. odoo-javascript
@@ -144,6 +144,10 @@ msgstr ""
 #, python-format
 msgid "View switcher"
 msgstr "Сменить вид"
+
+#, python-format
+#~ msgid "Create"
+#~ msgstr "Создать"
 
 #~ msgid "Chatter Position"
 #~ msgstr "Расположение Чата"

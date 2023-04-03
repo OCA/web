@@ -55,13 +55,6 @@ msgstr "TEMİZLEME"
 #. odoo-javascript
 #: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #, python-format
-msgid "Create"
-msgstr "Oluşturma"
-
-#. module: web_responsive
-#. odoo-javascript
-#: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
-#, python-format
 msgid "Discard"
 msgstr "Vazgeç"
 
@@ -100,6 +93,13 @@ msgstr "Büyütme"
 #, python-format
 msgid "Minimize"
 msgstr "Küçültme"
+
+#. module: web_responsive
+#. odoo-javascript
+#: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
+#, python-format
+msgid "New"
+msgstr ""
 
 #. module: web_responsive
 #. odoo-javascript
@@ -143,3 +143,7 @@ msgstr ""
 #, python-format
 msgid "View switcher"
 msgstr "Görüntü Değiştiriciyi"
+
+#, python-format
+#~ msgid "Create"
+#~ msgstr "Oluşturma"
