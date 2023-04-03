@@ -12,6 +12,7 @@ class IrConfigParameter(models.Model):
             "web_m2x_options.limit",
             "web_m2x_options.search_more",
             "web_m2x_options.m2o_dialog",
+            "web_m2x_options.m2o_dialog_remove_buttons",
             "web_m2x_options.field_limit_entries",
         ]
         values = self.sudo().search_read([["key", "in", opts]], ["key", "value"])

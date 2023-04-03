@@ -61,9 +61,14 @@ If you disable one option, you can enable it for particular field by setting "cr
 
   Whether to display the many2one dialog in case of validation error for all fields in the odoo instance.
 
-``web_m2x_options.limit`` *int* (Default: openerp default value is ``7``)
+``web_m2x_options.m2o_dialog_remove_buttons`` *boolean* (Default: default value is ``False``)
 
-  Number of displayed record in drop-down panel for all fields in the odoo instance
+  Whether to display the "Create..." or "Create and Edit..." button on the many2one dialog according to
+  the ``web_m2x_options.create`` and ``web_m2x_options.create_edit`` settings.
+
+``web_m2x_options.limit`` *int* (Default: default value is ``7``)
+
+  Number of displayed record in drop-down panel for all fields in the odoo instance.
 
 ``web_m2x_options.search_more`` *boolean* (Default: default value is ``False``)
 
@@ -71,13 +76,14 @@ If you disable one option, you can enable it for particular field by setting "cr
 
 ``web_m2x_options.field_limit_entries`` *int*
 
-  Number of displayed lines on all One2many fields
+  Number of displayed lines on all One2many fields.
 
 To add these parameters go to Configuration -> Technical -> Parameters -> System Parameters and add new parameters like:
 
 - web_m2x_options.create: False
 - web_m2x_options.create_edit: False
 - web_m2x_options.m2o_dialog: False
+- web_m2x_options.m2o_dialog_remove_buttons: True
 - web_m2x_options.limit: 10
 - web_m2x_options.search_more: True
 - web_m2x_options.field_limit_entries: 5
