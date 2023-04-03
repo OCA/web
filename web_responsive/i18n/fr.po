@@ -55,13 +55,6 @@ msgstr "NETTOYER"
 #. odoo-javascript
 #: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #, python-format
-msgid "Create"
-msgstr "Créer"
-
-#. module: web_responsive
-#. odoo-javascript
-#: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
-#, python-format
 msgid "Discard"
 msgstr "Annuler"
 
@@ -100,6 +93,13 @@ msgstr "Maximiser"
 #, python-format
 msgid "Minimize"
 msgstr "Minimiser"
+
+#. module: web_responsive
+#. odoo-javascript
+#: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
+#, python-format
+msgid "New"
+msgstr ""
 
 #. module: web_responsive
 #. odoo-javascript
@@ -143,6 +143,10 @@ msgstr "Envoyer un message"
 #, python-format
 msgid "View switcher"
 msgstr "Bascule de vue"
+
+#, python-format
+#~ msgid "Create"
+#~ msgstr "Créer"
 
 #~ msgid "Chatter Position"
 #~ msgstr "Position de la messagerie"
