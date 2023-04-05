@@ -20,83 +20,81 @@ msgstr ""
 "X-Generator: Weblate 3.10\n"
 
 #. module: web_m2x_options
-#. openerp-web
-#: code:addons/web_m2x_options/static/src/xml/base.xml:0
+#. odoo-javascript
+#: code:addons/web_m2x_options/static/src/components/base.xml:0
 #, python-format
-msgid ""
-"!(widget.nodeOptions.no_open || widget.nodeOptions.no_open_edit || widget."
-"noOpen)"
+msgid ", are you sure it does not exist yet?"
 msgstr ""
 
 #. module: web_m2x_options
-#. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:0
-#, python-format
-msgid "Cancel"
-msgstr "Annuler"
-
-#. module: web_m2x_options
-#. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:0
+#. odoo-javascript
+#: code:addons/web_m2x_options/static/src/components/base.xml:0
 #, python-format
 msgid "Create"
 msgstr "Créer"
 
 #. module: web_m2x_options
-#. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:0
+#. odoo-javascript
+#: code:addons/web_m2x_options/static/src/components/relational_utils.esm.js:0
 #, python-format
-msgid "Create \"<strong>%s</strong>\""
-msgstr "Creer \"<strong>%s</strong>\""
+msgid "Create \"%s\""
+msgstr ""
 
 #. module: web_m2x_options
-#. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:0
+#. odoo-javascript
+#: code:addons/web_m2x_options/static/src/components/base.xml:0
 #, python-format
-msgid "Create a %s"
-msgstr "Créer un %s"
+msgid "Create and Edit"
+msgstr ""
 
 #. module: web_m2x_options
-#. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:0
+#. odoo-javascript
+#: code:addons/web_m2x_options/static/src/components/relational_utils.esm.js:0
 #, python-format
-msgid "Create and Edit..."
-msgstr "Créer et modifier..."
+msgid "Create and edit..."
+msgstr ""
 
 #. module: web_m2x_options
-#. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:0
+#. odoo-javascript
+#: code:addons/web_m2x_options/static/src/components/base.xml:0
 #, python-format
-msgid "Create and edit"
-msgstr "Créer et modifier"
+msgid "Discard"
+msgstr ""
 
 #. module: web_m2x_options
-#. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:0
+#. odoo-javascript
+#: code:addons/web_m2x_options/static/src/components/form.esm.js:0
 #, python-format
-msgid "No results to show..."
-msgstr "Aucun résultat à afficher..."
+msgid "New: %s"
+msgstr ""
 
 #. module: web_m2x_options
-#. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:0
+#. odoo-javascript
+#: code:addons/web_m2x_options/static/src/components/relational_utils.esm.js:0
+#, python-format
+msgid "No records"
+msgstr ""
+
+#. module: web_m2x_options
+#. odoo-javascript
+#: code:addons/web_m2x_options/static/src/components/form.esm.js:0
 #, python-format
 msgid "Open: "
 msgstr "Ouvrir : "
 
 #. module: web_m2x_options
-#. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:0
-#, python-format
-msgid "Quick search: %s"
-msgstr "Recherche rapide: %s"
-
-#. module: web_m2x_options
-#. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:0
+#. odoo-javascript
+#: code:addons/web_m2x_options/static/src/components/relational_utils.esm.js:0
 #, python-format
 msgid "Search More..."
 msgstr "Rechercher plus..."
+
+#. module: web_m2x_options
+#. odoo-javascript
+#: code:addons/web_m2x_options/static/src/components/relational_utils.esm.js:0
+#, python-format
+msgid "Start typing..."
+msgstr ""
 
 #. module: web_m2x_options
 #: model:ir.model,name:web_m2x_options.model_ir_config_parameter
@@ -104,12 +102,52 @@ msgid "System Parameter"
 msgstr "Paramètres système"
 
 #. module: web_m2x_options
-#. openerp-web
-#: code:addons/web_m2x_options/static/src/js/form.js:0
+#. odoo-javascript
+#: code:addons/web_m2x_options/static/src/components/base.xml:0
 #, python-format
-msgid "You are creating a new %s, are you sure it does not exist yet?"
+msgid "You are creating a new"
 msgstr ""
-"Vous créez un nouveau %s, est-ce que vous êtes sur qu'il n'existe pas déjà ?"
+
+#. module: web_m2x_options
+#. odoo-javascript
+#: code:addons/web_m2x_options/static/src/components/base.xml:0
+#, python-format
+msgid "as a new"
+msgstr ""
+
+#, python-format
+#~ msgid "Cancel"
+#~ msgstr "Annuler"
+
+#, python-format
+#~ msgid "Create \"<strong>%s</strong>\""
+#~ msgstr "Creer \"<strong>%s</strong>\""
+
+#, python-format
+#~ msgid "Create a %s"
+#~ msgstr "Créer un %s"
+
+#, python-format
+#~ msgid "Create and Edit..."
+#~ msgstr "Créer et modifier..."
+
+#, python-format
+#~ msgid "Create and edit"
+#~ msgstr "Créer et modifier"
+
+#, python-format
+#~ msgid "No results to show..."
+#~ msgstr "Aucun résultat à afficher..."
+
+#, python-format
+#~ msgid "Quick search: %s"
+#~ msgstr "Recherche rapide: %s"
+
+#, python-format
+#~ msgid "You are creating a new %s, are you sure it does not exist yet?"
+#~ msgstr ""
+#~ "Vous créez un nouveau %s, est-ce que vous êtes sur qu'il n'existe pas "
+#~ "déjà ?"
 
 #~ msgid "!(widget.nodeOptions.no_open || widget.nodeOptions.no_open_edit)"
 #~ msgstr "!(widget.nodeOptions.no_open || widget.nodeOptions.no_open_edit)"
