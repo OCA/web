@@ -40,13 +40,16 @@ class TileCategory(models.Model):
 
     def _prepare_action(self):
         self.ensure_one()
+        # Do not write domain [('hidden', '=', False)]
+        # to avoid to call _compute_data on all tiles
+        # see tile_tile.search()
         return {
             'name': self.name,
             'res_model': 'tile.tile',
             'type': 'ir.actions.act_window',
             'view_mode': 'kanban',
+            'context': "{'no_hidden_tiles': True}",
             'domain': """[
-                ('hidden', '=', False),
                 '|', ('user_id', '=', False), ('user_id', '=', uid),
                 ('category_id', '=', {self.id})
             ]""".format(self=self),
