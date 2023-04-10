@@ -1,4 +1,5 @@
 /** @odoo-module **/
+import {Markup} from "web.utils";
 import {browser} from "@web/core/browser/browser";
 import {registry} from "@web/core/registry";
 
@@ -19,7 +20,7 @@ export const webNotificationService = {
 
             notifications.forEach(function (notif) {
                 browser.setTimeout(function () {
-                    notification.add(notif.message, {
+                    notification.add(Markup(notif.message), {
                         title: notif.title,
                         type: notif.type,
                         sticky: notif.sticky,
