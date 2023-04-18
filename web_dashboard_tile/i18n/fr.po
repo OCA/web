@@ -108,8 +108,8 @@ msgid "Domain"
 msgstr "Domaine"
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/models/tile_tile.py:202
-#: code:addons/web_dashboard_tile/models/tile_tile.py:240
+#: code:addons/web_dashboard_tile/models/tile_tile.py:209
+#: code:addons/web_dashboard_tile/models/tile_tile.py:247
 #, python-format
 msgid "Error"
 msgstr "Erreur"
@@ -271,7 +271,7 @@ msgid "Overview"
 msgstr "Vue d'ensemble"
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/models/tile_tile.py:317
+#: code:addons/web_dashboard_tile/models/tile_tile.py:324
 #, python-format
 msgid "Please select a field from the selected model."
 msgstr "Veuillez sélectionner un champ correspondant au modèle sélectionné."
@@ -393,7 +393,7 @@ msgid "Total value of '%s'"
 msgstr "Somme du champ '%s'"
 
 #. module: web_dashboard_tile
-#: code:addons/web_dashboard_tile/models/tile_tile.py:288
+#: code:addons/web_dashboard_tile/models/tile_tile.py:295
 #, python-format
 msgid "Unimplemented Feature. Search on Active field disabled."
 msgstr ""
