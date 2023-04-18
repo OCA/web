@@ -51,7 +51,7 @@ $button-border-color: #dee2e6;
         Form View : Handle Background for required fields
 ************************************************************/
 
-.o_required_modifier {
+.o_required_modifier:not(.o_readonly_modifier) {
     .o_input {
         /* Add background for all editable and required fields */
         background-color: $input-background-color-required !important;
@@ -63,7 +63,7 @@ $button-border-color: #dee2e6;
     }
 }
 
-.o_required_modifier.o_field_selection {
+.o_required_modifier.o_field_selection:not(.o_readonly_modifier) {
     /* Specific case for field selection */
     background-color: $input-background-color-required !important;
 }
