@@ -90,3 +90,13 @@ div.o_searchview_facet[role="img"] {
 i.o_searchview_icon[role="img"] {
     padding-right: 2px;
 }
+
+/***********************************************************
+        Tree View : Handle style for required fields
+************************************************************/
+.o_list_renderer
+    .o_data_row.o_selected_row
+    > .o_data_cell.o_required_modifier:not(.o_readonly_modifier) {
+    /* Disable border bottom as the field has now a background */
+    border-bottom: 0px solid;
+}
