@@ -379,7 +379,8 @@ a field’s value as color.</p>
 <ul class="simple">
 <li>Add attribute <tt class="docutils literal">bg_color</tt> on field’s <tt class="docutils literal">options</tt> to color background of a cell in tree view</li>
 <li>Add attribute <tt class="docutils literal">fg_color</tt> on field’s <tt class="docutils literal">options</tt> to change text color of a cell in tree view</li>
-<li>Add attribute <tt class="docutils literal">color_field</tt> on the tree element’s <tt class="docutils literal">colors</tt> to use as color</li>
+<li>Add attribute <tt class="docutils literal">color_field</tt> on the tree element’s <tt class="docutils literal">colors</tt> to use as text color</li>
+<li>Add attribute <tt class="docutils literal">bg_color_field</tt> on the tree element’s <tt class="docutils literal">colors</tt> to use as background color</li>
 </ul>
 <p><strong>Table of contents</strong></p>
 </div>
@@ -420,9 +421,10 @@ With this example, column which renders 'name' field will have its text colored 
 <pre class="literal-block">
 ...
 &lt;field name=&quot;arch&quot; type=&quot;xml&quot;&gt;
-    &lt;tree string=&quot;View name&quot; colors=&quot;color_field: my_color&quot; &gt;
+    &lt;tree string=&quot;View name&quot; colors=&quot;color_field: my_color; bg_color_field: my_background_color&quot; &gt;
         ...
         &lt;field name=&quot;my_color&quot; invisible=&quot;1&quot;/&gt;
+        &lt;field name=&quot;my_background_color&quot; invisible=&quot;1&quot;/&gt;
         ...
     &lt;/tree&gt;
 &lt;/field&gt;
