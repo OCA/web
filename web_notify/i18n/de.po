@@ -20,18 +20,21 @@ msgstr ""
 "X-Generator: Weblate 3.10\n"
 
 #. module: web_notify
+#. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
 #, python-format
 msgid "Danger"
 msgstr "Gefahr"
 
 #. module: web_notify
+#. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
 #, python-format
 msgid "Default"
 msgstr "Standard"
 
 #. module: web_notify
+#. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
 #, python-format
 msgid "Information"
@@ -63,12 +66,14 @@ msgid "Notify Warning Channel Name"
 msgstr "Name Warnungskanal Benachritigung"
 
 #. module: web_notify
+#. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
 #, python-format
 msgid "Sending a notification to another user is forbidden."
 msgstr "Es ist verboten eine Nachricht an einem anderen Benutzer zu senden."
 
 #. module: web_notify
+#. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
 #, python-format
 msgid "Success"
@@ -106,11 +111,15 @@ msgstr "Test Webbenachrichtigung"
 
 #. module: web_notify
 #: model:ir.model,name:web_notify.model_res_users
-msgid "Users"
-msgstr "Benutzer"
+msgid "User"
+msgstr ""
 
 #. module: web_notify
+#. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
 #, python-format
 msgid "Warning"
 msgstr "Warnung"
+
+#~ msgid "Users"
+#~ msgstr "Benutzer"
