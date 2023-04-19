@@ -28,6 +28,7 @@ addon | version | maintainers | summary
 [web_help](web_help/) | 16.0.1.0.0 |  | Help Framework
 [web_m2x_options](web_m2x_options/) | 16.0.1.1.0 |  | web_m2x_options
 [web_no_bubble](web_no_bubble/) | 16.0.1.0.0 |  | Remove the bubbles from the web interface
+[web_notify](web_notify/) | 16.0.1.0.0 |  | Send notification messages to user
 [web_refresher](web_refresher/) | 16.0.2.0.0 |  | Web Refresher
 [web_responsive](web_responsive/) | 16.0.1.1.0 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) [![Tardo](https://github.com/Tardo.png?size=30px)](https://github.com/Tardo) [![SplashS](https://github.com/SplashS.png?size=30px)](https://github.com/SplashS) | Responsive web client, community-supported
 [web_search_with_and](web_search_with_and/) | 16.0.1.0.0 |  | Use AND conditions on omnibar search
