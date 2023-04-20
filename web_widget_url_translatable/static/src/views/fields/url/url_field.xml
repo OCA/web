@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-inherit="web.FormUrlField" t-inherit-mode="extension">
+        <xpath expr="//a[@t-if='props.value']" position="after">
+            <t t-if="props.isTranslatable">
+                <div class="o_translatable_url">
+                    <TranslationButton fieldName="props.name" record="props.record" />
+                </div>
+            </t>
+        </xpath>
+    </t>
+</templates>
