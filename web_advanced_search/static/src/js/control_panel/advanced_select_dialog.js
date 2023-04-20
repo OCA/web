@@ -37,7 +37,6 @@ odoo.define("web_advanced_search.AdvancedSelectDialog", function (require) {
                         const state = event.data.state;
                         const domain = state.getDomain();
                         if (domain && domain.length > 0) {
-                            this.$footer.find(".o_use_criteria_button").prop("disabled", false)
                             this.$footer.find(".o_use_criteria_button").show()
                         } else { 
                             this.$footer.find(".o_use_criteria_button").hide()
@@ -76,7 +75,7 @@ odoo.define("web_advanced_search.AdvancedSelectDialog", function (require) {
                 {
                     text: _t("Use criteria"),
                     classes: "btn-primary o_use_criteria_button",
-                    disabled: true,
+                    disabled: false,
                     close: true,
                     click: function () {
                         let description = "Criteria Selected";
