@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="view_popup_message_tree" model="ir.ui.view">
+            <field name="name">view.popup.message.tree</field>
+            <field name="model">popup.message</field>
+            <field name="arch" type="xml">
+                <tree string="Popup Message">
+                    <field name="model_id" />
+                    <field name="field_ids" widget="many2many_tags" />
+                    <field name="popup_type" />
+                    <field name="title" />
+                    <field name="message" />
+                    <field name="active" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_popup_message_form" model="ir.ui.view">
+            <field name="name">view.popup.message.form</field>
+            <field name="model">popup.message</field>
+            <field name="arch" type="xml">
+                <form string="Popup Message">
+                    <sheet>
+                        <widget
+                            name="web_ribbon"
+                            title="Archived"
+                            bg_color="bg-danger"
+                            attrs="{'invisible': [('active', '=', True)]}"
+                        />
+                        <group>
+                            <field name="model_id" />
+                            <field name="model" invisible="1" />
+                            <field
+                                name="field_ids"
+                                domain="[('model','=',model)]"
+                                widget="many2many_tags"
+                            />
+                            <field name="popup_type" />
+                            <field name="title" />
+                            <field name="message" />
+                            <field name="active" widget="boolean_toggle" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_popup_message_view" model="ir.actions.act_window">
+            <field name="name">Popup message</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">popup.message</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Add your pop-up!
+                </p>
+            </field>
+        </record>
+
+        <menuitem
+            id="menu_popup_message_categ"
+            name="Popup message"
+            parent="base.menu_custom"
+            sequence="90"
+        />
+
+        <menuitem
+            id="menu_popup_message_view"
+            name="Popup message"
+            parent="web_create_write_confirm.menu_popup_message_categ"
+            action="action_popup_message_view"
+            sequence="10"
+        />
+
+    </data>
+</odoo>

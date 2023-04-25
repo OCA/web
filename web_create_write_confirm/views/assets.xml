@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <template id="assets_backend_extension" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script
+                    type="text/javascript"
+                    src="/web_create_write_confirm/static/src/js/pop_up_confirmation.js"
+                />
+            </xpath>
+        </template>
+
+    </data>
+</odoo>
