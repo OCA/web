@@ -1,5 +1,5 @@
 You need to declare the usage of the new widget as follows:
-``<field name="xxx" widget="many2one_simple" options="{'mailto_field': 'name_of_field'}">``
+``<field name="xxx" widget="many2one_mailto" options="{'mailto_field': 'name_of_field'}">``
 
 Example:
 ~~~~~~~~
