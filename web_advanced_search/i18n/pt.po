@@ -17,8 +17,29 @@ msgstr ""
 "X-Generator: Weblate 3.7.1\n"
 
 #. module: web_advanced_search
-#. openerp-web
-#: code:addons/web_advanced_search/static/src/xml/web_advanced_search.xml:0
+#. odoo-javascript
+#: code:addons/web_advanced_search/static/src/js/utils.esm.js:0
+#, python-format
+msgid " and "
+msgstr ""
+
+#. module: web_advanced_search
+#. odoo-javascript
+#: code:addons/web_advanced_search/static/src/js/utils.esm.js:0
+#, python-format
+msgid " is not "
+msgstr ""
+
+#. module: web_advanced_search
+#. odoo-javascript
+#: code:addons/web_advanced_search/static/src/js/utils.esm.js:0
+#, python-format
+msgid " or "
+msgstr ""
+
+#. module: web_advanced_search
+#. odoo-javascript
+#: code:addons/web_advanced_search/static/src/search/filter_menu/advanced_filter_item.xml:0
 #, python-format
 msgid "Add Advanced Filter"
 msgstr "Adicionar Filtro Avançado"
