@@ -51,7 +51,7 @@ $button-border-color: #dee2e6;
         Form View : Handle Background for required fields
 ************************************************************/
 
-.o_required_modifier {
+.o_required_modifier:not(.o_readonly_modifier) {
     .o_input {
         /* Add background for all editable and required fields */
         background-color: $input-background-color-required !important;
@@ -63,7 +63,7 @@ $button-border-color: #dee2e6;
     }
 }
 
-.o_required_modifier.o_field_selection {
+.o_required_modifier.o_field_selection:not(.o_readonly_modifier) {
     /* Specific case for field selection */
     background-color: $input-background-color-required !important;
 }
@@ -89,4 +89,14 @@ div.o_searchview_facet[role="img"] {
 
 i.o_searchview_icon[role="img"] {
     padding-right: 2px;
+}
+
+/***********************************************************
+        Tree View : Handle style for required fields
+************************************************************/
+.o_list_renderer
+    .o_data_row.o_selected_row
+    > .o_data_cell.o_required_modifier:not(.o_readonly_modifier) {
+    /* Disable border bottom as the field has now a background */
+    border-bottom: 0px solid;
 }
