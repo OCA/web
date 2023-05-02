@@ -17,10 +17,10 @@ Web Widget Numeric Step
     :target: https://github.com/OCA/web/tree/16.0/web_widget_numeric_step
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-15-0/web-15-0-web_widget_numeric_step
+    :target: https://translation.odoo-community.org/projects/web-16-0/web-16-0-web_widget_numeric_step
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/162/15.0
+    :target: https://runbot.odoo-community.org/runbot/162/16.0
     :alt: Try me on Runbot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
@@ -42,7 +42,7 @@ In your xml view, add ``widget="numeric_step"``
 This will add the 2 buttons "+" and "-" just next to the input field in edit mode.
 Iteration step by default is 1.
 
-.. figure:: https://raw.githubusercontent.com/OCA/web/15.0/web_widget_numeric_step/static/description/add_two_buttons.png
+.. figure:: https://raw.githubusercontent.com/OCA/web/16.0/web_widget_numeric_step/static/description/add_two_buttons.png
 
 
 **Optional**
@@ -60,6 +60,7 @@ Example for an 0.25 step, min to -1 and max to 10 :
 - step > Amount to increase/decrease (default: 1.0)
 - min > Min. value allowed (default: no limit)
 - max > Max. value allowed (default: no limit)
+- auto_select > Select the content when the element get focus (default: False)
 - placeholder > Define the placeholder text (default: None)
 
 **Examples**
@@ -68,11 +69,11 @@ Iteration with 0.25 step, min to -1 and max to 10.
 
 Start to increment with button, continue incrementing with scrolling mouse.
 
-.. figure:: https://raw.githubusercontent.com/OCA/web/15.0/web_widget_numeric_step/static/description/step0,25andlimits.gif
+.. figure:: https://raw.githubusercontent.com/OCA/web/16.0/web_widget_numeric_step/static/description/step0,25andlimits.gif
 
 Iteration with 10 step, max limit 15, placeholder with onchange
 
-.. figure:: https://raw.githubusercontent.com/OCA/web/15.0/web_widget_numeric_step/static/description/step10_limit15_placeholder117_with_onchange.gif
+.. figure:: https://raw.githubusercontent.com/OCA/web/16.0/web_widget_numeric_step/static/description/step10_limit15_placeholder117_with_onchange.gif
 
 Bug Tracker
 ===========
@@ -80,7 +81,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_widget_numeric_step%0Aversion:%2015.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_widget_numeric_step%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
