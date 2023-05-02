@@ -26,6 +26,7 @@ setuptools.setup(
         'odoo-addon-web_theme_classic>=16.0dev,<16.1dev',
         'odoo-addon-web_timeline>=16.0dev,<16.1dev',
         'odoo-addon-web_tree_many2one_clickable>=16.0dev,<16.1dev',
+        'odoo-addon-web_widget_numeric_step>=16.0dev,<16.1dev',
     ],
     classifiers=[
         'Programming Language :: Python',
