@@ -39,7 +39,8 @@ Features
 
 * Add attribute ``bg_color`` on field's ``options`` to color background of a cell in tree view
 * Add attribute ``fg_color`` on field's ``options`` to change text color of a cell in tree view
-* Add attribute ``color_field`` on the tree element's ``colors`` to use as color
+* Add attribute ``color_field`` on the tree element's ``colors`` to use as text color
+* Add attribute ``bg_color_field`` on the tree element's ``colors`` to use as background color
 
 **Table of contents**
 
@@ -81,9 +82,10 @@ Usage
 
     ...
     <field name="arch" type="xml">
-        <tree string="View name" colors="color_field: my_color" >
+        <tree string="View name" colors="color_field: my_color; bg_color_field: my_background_color" >
             ...
             <field name="my_color" invisible="1"/>
+            <field name="my_background_color" invisible="1"/>
             ...
         </tree>
     </field>

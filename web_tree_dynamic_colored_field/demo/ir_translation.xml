@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_translation_tree_view">
+        <field name="name">ir.translation.tree#demo@web_tree_dynamic_colored_field</field>
+        <field name="model">ir.translation</field>
+        <field name="inherit_id" ref="base.view_translation_tree"/>
+        <field name="arch" type="xml">
+            <tree position="attributes">
+                <attribute name="colors">color_field: value; bgcolor_field: source</attribute>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Create fake translation for demoing  -->
+    <record id="colored_sample_1" model="ir.translation">
+        <field name="name">Light Green</field>
+        <field name="source">#90ffb1</field>
+        <field name="value">yellow</field>
+    </record>
+
+    <!-- Create fake translation for demoing  -->
+    <record id="colored_sample_2" model="ir.translation">
+        <field name="name">Light Red</field>
+        <field name="source">#ffb0ba</field>
+        <field name="value">blue</field>
+    </record>
+
+</odoo>

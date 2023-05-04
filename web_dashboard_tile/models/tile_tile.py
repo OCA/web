@@ -185,6 +185,13 @@ class TileTile(models.Model):
 
     error = fields.Char(string="Error Details", compute="_compute_data")
 
+    def search(self, args, offset=0, limit=None, order=None, count=False):
+        res = super().search(args, offset=offset, limit=limit, order=order, count=count)
+        if self.env.context.get("no_hidden_tiles", False):
+            # late research on the hidden field.
+            return res.filtered(lambda x: not x.hidden)
+        return res
+
     # Compute Section
     @api.depends("primary_format", "secondary_format", "model_id", "domain")
     def _compute_data(self):
