@@ -48,6 +48,7 @@ setuptools.setup(
         'odoo14-addon-web_widget_char_size',
         'odoo14-addon-web_widget_child_selector',
         'odoo14-addon-web_widget_ckeditor',
+        'odoo14-addon-web_widget_datepicker_fulloptions',
         'odoo14-addon-web_widget_domain_editor_dialog',
         'odoo14-addon-web_widget_dropdown_dynamic',
         'odoo14-addon-web_widget_image_download',
