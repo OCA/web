@@ -66,6 +66,7 @@ addon | version | maintainers | summary
 [web_widget_char_size](web_widget_char_size/) | 14.0.1.0.1 |  | Add size option to Char widget
 [web_widget_child_selector](web_widget_child_selector/) | 14.0.1.0.1 |  | Widget used for navigation on hierarchy fields
 [web_widget_ckeditor](web_widget_ckeditor/) | 14.0.1.0.2 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Provides a widget for editing HTML fields using CKEditor
+[web_widget_datepicker_fulloptions](web_widget_datepicker_fulloptions/) | 14.0.1.0.0 |  | Web Widget DatePicker Full Options
 [web_widget_domain_editor_dialog](web_widget_domain_editor_dialog/) | 14.0.1.0.1 |  | Recovers the Domain Editor Dialog functionality
 [web_widget_dropdown_dynamic](web_widget_dropdown_dynamic/) | 14.0.1.0.0 |  | This module adds support for dynamic dropdown widget
 [web_widget_image_download](web_widget_image_download/) | 14.0.1.0.0 |  | Allows to download any image from its widget
