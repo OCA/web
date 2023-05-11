@@ -137,13 +137,25 @@ patch(dates, "patch dates", {
             setParam.month = dates.QUARTERS[setParam.quarter].coveredMonths[0];
             delete setParam.quarter;
         }
-        const plusParamReferenceMoment = referenceMoment.plus(plusParam || {});
         const date = referenceMoment.set(setParam).plus(plusParam || {});
         // Compute domain
-        const leftDate = date.startOf(granularity);
+        var leftDate = date.startOf(granularity);
         var rightDate = date.endOf(granularity);
-        if (custom_period.is_custom_period) {
-            rightDate = plusParamReferenceMoment;
+        if (
+            custom_period.is_custom_period &&
+            parseInt(custom_period.last_period) !== 0
+        ) {
+            if (granularity === "day") {
+                const plusParamReferenceMoment = referenceMoment.plus(plusParam || {});
+                leftDate = leftDate.plus({days: 1});
+                rightDate = plusParamReferenceMoment;
+            } else {
+                var customPlusParam = {};
+                customPlusParam[granularity + "s"] = parseInt(
+                    custom_period.last_period
+                );
+                rightDate = leftDate.plus(customPlusParam);
+            }
         }
         let leftBound;
         let rightBound;
