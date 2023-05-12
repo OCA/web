@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_model_form_inherit" model="ir.ui.view">
+        <field name="name">view.model.form.inherit</field>
+        <field name="model">ir.model</field>
+        <field name="inherit_id" ref="base.view_model_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='fields']" position="after">
+                <page
+                    string="Custom Required Fields"
+                    name="custom_required_restriction"
+                >
+                    <field
+                        name="custom_required_restriction_ids"
+                        nolabel="1"
+                        context="{'default_required_model_id': model}"
+                    >
+                        <tree string="Fields">
+                            <field name="required_model_id" invisible="1" />
+                            <field name="invisible_model_id" invisible="1" />
+                            <field name="model_name" invisible="1" />
+                            <field
+                                name="field_id"
+                                context="{'search_by_technical_name': True, 'display_technical_name': True}"
+                                domain="[('model_id.model', '=', model_name)]"
+                                options="{'create': False, 'create_edit': False}"
+                            />
+                            <field name="default_required" invisible="1" />
+                            <field
+                                name="required"
+                                attrs="{'readonly':[('default_required', '=', True)]}"
+                            />
+                            <field name="condition_domain" />
+                            <field name="group_ids" widget="many2many_tags" />
+                        </tree>
+                    </field>
+                </page>
+                <page
+                    string="Custom Invisible Fields"
+                    name="custom_invisible_restriction"
+                >
+                    <field
+                        name="custom_invisible_restriction_ids"
+                        nolabel="1"
+                        context="{'default_invisible_model_id': model}"
+                    >
+                        <tree string="Fields">
+                            <field name="required_model_id" invisible="1" />
+                            <field name="invisible_model_id" invisible="1" />
+                            <field name="model_name" invisible="1" />
+                            <field
+                                name="field_id"
+                                context="{'search_by_technical_name': True, 'display_technical_name': True}"
+                                domain="[('model_id.model', '=', model_name)]"
+                                options="{'create': False, 'create_edit': False}"
+                            />
+                            <field name="default_required" invisible="1" />
+                            <field name="field_invisible" />
+                            <field name="condition_domain" />
+                            <field name="group_ids" widget="many2many_tags" />
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_custom_field_restriction_form" model="ir.ui.view">
+        <field name="name">custom.field.restriction.form.view</field>
+        <field name="model">custom.field.restriction</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group><group>
+
+                        <field name="required_model_id" invisible="1" />
+                        <field name="invisible_model_id" invisible="1" />
+                        <field name="model_name" invisible="1" />
+                        <field
+                                name="field_id"
+                                context="{'search_by_technical_name': True, 'display_technical_name': True}"
+                                domain="[('model_id.model', '=', model_name)]"
+                                options="{'create': False, 'create_edit': False}"
+                            />
+                        <field name="default_required" invisible="1" />
+                        <field
+                                name="required"
+                                attrs="{'readonly':[('default_required', '=', True)],
+                                        'invisible':[('required_model_id', '=', False)]}"
+                            />
+                        <field
+                                name="field_invisible"
+                                attrs="{'readonly':[('default_required', '=', True)],
+                                        'invisible':[('invisible_model_id', '=', False)]}"
+                            />
+                        <field
+                                name="condition_domain"
+                                widget="domain"
+                                options="{'model': 'model_name', 'in_dialog': True}"
+                            />
+                        <field name="group_ids" widget="many2many_tags" />
+                        </group></group>
+                    </sheet>
+                </form>
+
+            </field>
+        </record>
+
+</odoo>
