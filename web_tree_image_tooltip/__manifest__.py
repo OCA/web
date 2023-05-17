@@ -7,7 +7,7 @@
 
 {
     "name": "Show images in tree views via tooltip",
-    "version": "15.0.1.1.0",
+    "version": "16.0.1.0.0",
     "author": "Therp BV, "
     "MONK Software, "
     "Odoo Community Association (OCA), "
@@ -23,7 +23,7 @@
     "assets": {
         "web.assets_backend": [
             "web_tree_image_tooltip/static/src/scss/common.scss",
-            "web_tree_image_tooltip/static/src/js/tooltip.js",
+            "web_tree_image_tooltip/static/src/js/tooltip.esm.js",
         ],
     },
     "installable": True,
