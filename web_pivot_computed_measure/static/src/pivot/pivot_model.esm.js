@@ -135,7 +135,7 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
      */
     _fillComputedMeasuresData(subGroupData) {
         for (const cm of this._computed_measures) {
-            if (!this._isMeasureEnabled(cm.id)) return;
+            if (!this._isMeasureEnabled(cm.id)) continue;
             if (subGroupData.__count === 0) {
                 subGroupData[cm.id] = false;
             } else {
@@ -234,5 +234,47 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
             }
         }
         return this._super(...arguments);
+    },
+    /**
+     * Load the measures added to selected favorite filters
+     *
+     * @override
+     */
+    async load(searchParams) {
+        var _super = this._super.bind(this);
+        if ("context" in searchParams) {
+            this._computed_measures =
+                searchParams.context.pivot_computed_measures ||
+                searchParams.computed_measures ||
+                [];
+        }
+        for (const cmDef of this._computed_measures) {
+            if (this._isMeasureEnabled(cmDef.id)) {
+                continue;
+            }
+            await this._createVirtualMeasure(cmDef);
+        }
+        const fieldNames = Object.keys(this.metaData.fields);
+        for (const fieldName of fieldNames) {
+            const field = this.metaData.fields[fieldName];
+            if (field.__computed_id) {
+                const cm = _.find(this._computed_measures, {
+                    id: field.__computed_id,
+                });
+                if (!cm) {
+                    delete this.metaData.fields[fieldName];
+                    delete this.metaData.measures[fieldName];
+                    this.metaData.activeMeasures = _.without(
+                        this.metaData.activeMeasures,
+                        fieldName
+                    );
+                    const config = {metaData: this.metaData, data: this.data};
+                    this._loadData(config).then(() => {
+                        this.notify();
+                    });
+                }
+            }
+        }
+        return _super(...arguments);
     },
 });
