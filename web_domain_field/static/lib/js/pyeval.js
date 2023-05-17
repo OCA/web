@@ -153,9 +153,17 @@ odoo.define('web.domain_field', function (require) {
             if (_.isString(domain)) {
                 // Modified part or the original method
                 if (domain in evaluation_context) {
-                    result_domain.push.apply(
-                        result_domain, $.parseJSON(evaluation_context[domain]));
-                    return;
+                    var fail_parse_domain = false;
+                    try {
+                        var domain_parse = $.parseJSON(evaluation_context[domain]);
+                        console.warn("`web_domain_field is deprecated. If you want to use this functionality you can assign a unserialised domain to a fields.Binary");
+                    } catch (e) {
+                        fail_parse_domain = true;
+                    }
+                    if (!fail_parse_domain) {
+                        result_domain.push.apply(result_domain, domain_parse);
+                        return;
+                    }
                 }
                 // End of modifications
 
