@@ -5,6 +5,7 @@
 
 import {PivotModel} from "@web/views/pivot/pivot_model";
 import {patch} from "web.utils";
+import {computeReportMeasures} from "@web/views/helpers/utils";
 
 patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
     /**
@@ -242,6 +243,17 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
      */
     async load(searchParams) {
         var _super = this._super.bind(this);
+        if (!this.metaData.measures) {
+            const metaData = this._buildMetaData();
+            metaData.measures = computeReportMeasures(
+                metaData.fields,
+                metaData.fieldAttrs,
+                metaData.activeMeasures,
+                metaData.additionalMeasures
+            );
+            const config = {metaData, data: this.data};
+            await this._loadData(config);
+        }
         if ("context" in searchParams) {
             this._computed_measures =
                 searchParams.context.pivot_computed_measures ||
