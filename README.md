@@ -25,7 +25,7 @@ addon | version | maintainers | summary
 [web_chatter_position](web_chatter_position/) | 16.0.1.0.0 |  | Add an option to change the chatter position
 [web_dark_mode](web_dark_mode/) | 16.0.1.0.1 |  | Enabled Dark Mode for the Odoo Backend
 [web_dialog_size](web_dialog_size/) | 16.0.1.0.0 |  | A module that lets the user expand a dialog box to the full screen width.
-[web_domain_field](web_domain_field/) | 16.0.1.0.0 |  | Use computed field as domain
+[web_domain_field](web_domain_field/) | 16.0.1.0.1 |  | Use computed field as domain
 [web_environment_ribbon](web_environment_ribbon/) | 16.0.1.0.0 |  | Web Environment Ribbon
 [web_help](web_help/) | 16.0.1.0.0 |  | Help Framework
 [web_m2x_options](web_m2x_options/) | 16.0.1.1.0 |  | web_m2x_options
