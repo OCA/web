@@ -1,0 +1,14 @@
+<odoo>
+
+    <record id="view_model_form_inherit" model="ir.ui.view">
+        <field name="name">view.model.form.inherit</field>
+        <field name="model">ir.model</field>
+        <field name="inherit_id" ref="base.view_model_form" />
+        <field name="arch" type="xml">
+            <field name="state" position="after">
+                <field name="readonly_group_ids" widget="many2many_tags" />
+            </field>
+        </field>
+    </record>
+
+</odoo>
