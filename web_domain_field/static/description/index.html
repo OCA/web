@@ -368,6 +368,12 @@ ul.auto-toc {
 !! changes will be overwritten.                   !!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <p><a class="reference external" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external" href="https://github.com/OCA/web/tree/16.0/web_domain_field"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external" href="https://translation.odoo-community.org/projects/web-16-0/web-16-0-web_domain_field"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external" href="https://runbot.odoo-community.org/runbot/162/16.0"><img alt="Try me on Runbot" src="https://img.shields.io/badge/runbot-Try%20me-875A7B.png" /></a></p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This module is deprecated.
+If you want to use this functionality you can assign a unserialised
+domain to a fields.Binary, <a class="reference external" href="https://github.com/OCA/OCB/blob/16.0/addons/account/models/account_tax.py#L1308">example</a></p>
+</div>
 <p>This technical addon allows developers to specify a field domain in a view
 using the value of another field in that view, rather than as a static
 XML attribute.</p>
