@@ -10,9 +10,9 @@ async function executeCloseAndRefreshView({env, action, options}) {
     return actionService.doAction(
         {type: "ir.actions.act_window_close"},
         {
-            onClose: function() {
+            onClose: function () {
                 actionService.doAction(originalAction);
-            }
+            },
         }
     );
 }
