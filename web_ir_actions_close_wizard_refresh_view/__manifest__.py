@@ -15,7 +15,7 @@
     "data": ["security/ir.model.access.csv"],
     "assets": {
         "web.assets_backend": [
-            "web_ir_actions_close_wizard_refresh_view/static/src/js/web_ir_actions_close_wizard_refresh_view.js"
+            "web_ir_actions_close_wizard_refresh_view/static/src/js/*.js"
         ]
     },
     "application": False,
