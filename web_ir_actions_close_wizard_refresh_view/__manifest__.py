@@ -7,7 +7,7 @@
     "summary": """Allow to refresh view data without reload the page.""",
     "version": "16.0.1.0.0",
     "development_status": "Beta",
-    "author": "LevelPrime srl, Nova Code" "Odoo Community Association (OCA)",
+    "author": "LevelPrime srl, Nova Code, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "license": "AGPL-3",
     "category": "Web",
