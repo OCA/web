@@ -73,6 +73,11 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
      * @returns a promise
      */
     _createVirtualMeasure(cmDef, fields) {
+        this._createVirtualField(cmDef, fields);
+        // Activate computed field
+        return this.toggleMeasure(cmDef.id);
+    },
+    _createVirtualField(cmDef, fields, config) {
         const arrFields = fields || this.metaData.fields;
         // This is a minimal 'fake' field info
         arrFields[cmDef.id] = {
@@ -88,11 +93,9 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
             // Operator used for group the measure added.
             group_operator: "sum",
         };
-        this.metaData.measures[cmDef.id] = arrFields[cmDef.id];
-        // Activate computed field
-        return this.toggleMeasure(cmDef.id);
+        const metaData = (config && config.metaData) || this.metaData;
+        metaData.measures[cmDef.id] = arrFields[cmDef.id];
     },
-
     /**
      * Active the measures related to the 'fake' field
      *
@@ -124,8 +127,12 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
      * @private
      * @param {String} field
      */
-    _isMeasureEnabled(field) {
-        return _.contains(this.metaData.activeMeasures, field);
+    _isMeasureEnabled(field, config) {
+        const activeMeasures =
+            (config && config.metaData.activeMeasures) ||
+            this.metaData.activeMeasures ||
+            [];
+        return _.contains(activeMeasures, field);
     },
 
     /**
@@ -134,9 +141,9 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
      * @private
      * @param {Object} subGroupData
      */
-    _fillComputedMeasuresData(subGroupData) {
+    _fillComputedMeasuresData(subGroupData, config) {
         for (const cm of this._computed_measures) {
-            if (!this._isMeasureEnabled(cm.id)) continue;
+            if (!this._isMeasureEnabled(cm.id, config)) continue;
             if (subGroupData.__count === 0) {
                 subGroupData[cm.id] = false;
             } else {
@@ -151,10 +158,10 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
      *
      * @override
      */
-    _prepareData(group, groupSubdivisions) {
+    _prepareData(group, groupSubdivisions, config) {
         for (const groupSubdivision of groupSubdivisions) {
             for (const subGroup of groupSubdivision.subGroups) {
-                this._fillComputedMeasuresData(subGroup);
+                this._fillComputedMeasuresData(subGroup, config);
             }
         }
         this._super(...arguments);
@@ -243,6 +250,7 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
      */
     async load(searchParams) {
         var _super = this._super.bind(this);
+        var config = {metaData: this.metaData, data: this.data};
         if (!this.metaData.measures) {
             const metaData = this._buildMetaData();
             metaData.measures = computeReportMeasures(
@@ -251,8 +259,7 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
                 metaData.activeMeasures,
                 metaData.additionalMeasures
             );
-            const config = {metaData, data: this.data};
-            await this._loadData(config);
+            config = {metaData, data: this.data};
         }
         if ("context" in searchParams) {
             this._computed_measures =
@@ -261,10 +268,10 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
                 [];
         }
         for (const cmDef of this._computed_measures) {
-            if (this._isMeasureEnabled(cmDef.id)) {
+            if (this._isMeasureEnabled(cmDef.id, config)) {
                 continue;
             }
-            await this._createVirtualMeasure(cmDef);
+            await this._createVirtualField(cmDef, undefined, config);
         }
         const fieldNames = Object.keys(this.metaData.fields);
         for (const fieldName of fieldNames) {
@@ -280,10 +287,6 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
                         this.metaData.activeMeasures,
                         fieldName
                     );
-                    const config = {metaData: this.metaData, data: this.data};
-                    this._loadData(config).then(() => {
-                        this.notify();
-                    });
                 }
             }
         }
