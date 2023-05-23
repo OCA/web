@@ -15,12 +15,16 @@ patch(Dropdown.prototype, "dropdown", {
     onWindowClicked(ev) {
         // This patch is created to prevent the closing of the Filter menu
         // when a selection is made in the RecordPicker
-        if (
-            $(ev.target.closest("ul.dropdown-menu")).attr("id") !== undefined &&
-            $(ev.target.closest("ul.dropdown-menu")).attr("id") ===
-                $("body > ul.dropdown-menu").attr("id")
-        ) {
-            return;
+        if ($(ev.target.closest("ul.dropdown-menu")).attr("id") !== undefined) {
+            const dropdown = $("body > ul.dropdown-menu");
+            for (let i = 0; i < dropdown.length; i++) {
+                if (
+                    $(ev.target.closest("ul.dropdown-menu")).attr("id") ===
+                    $(dropdown[i]).attr("id")
+                ) {
+                    return;
+                }
+            }
         }
         this._super(ev);
     },
