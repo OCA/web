@@ -1,6 +1,3 @@
-This module is in an alpha state. It is still being developed and should be
-considered as experimental.
-
 Does not work currently:
 
 * Filtering (including defining where to start in the hierarchy): the search

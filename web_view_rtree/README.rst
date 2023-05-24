@@ -29,6 +29,9 @@ This module defines a new rtree view type. RTree stands for “real tree” or
 “recursive tree”. It allows to display recursive and hierarchical data
 structures.
 
+.. figure:: https://raw.githubusercontent.com/OCA/web/16.0/web_view_rtree/static/description/rtree.png
+   :alt: An example rtree view displaying projects and tasks
+
 .. IMPORTANT::
    This is an alpha version, the data model and design can change at any time without warning.
    Only for development or testing purpose, do not use in production.
@@ -98,9 +101,6 @@ of view modes (``view_mode`` field) of the window action.
 
 Known issues / Roadmap
 ======================
-
-This module is in an alpha state. It is still being developed and should be
-considered as experimental.
 
 Does not work currently:
 
