@@ -459,3 +459,8 @@ html .o_web_client .o_action_manager .o_action {
         padding-right: 0;
     }
 }
+
+// Many2one li items with wrap
+ul.ui-autocomplete .dropdown-item.ui-menu-item-wrapper {
+    white-space: initial;
+}
