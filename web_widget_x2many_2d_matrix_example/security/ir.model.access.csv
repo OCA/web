@@ -3,3 +3,5 @@ access_x2m_demo_line,access_x2m_demo_line,model_x2m_demo_line,base.group_user,1,
 access_x2m_demo_line_admin,access_x2m_demo_line_admin,model_x2m_demo_line,base.group_system,1,1,1,1
 access_x2m_demo,access_x2m_demo,model_x2m_demo,base.group_user,1,0,0,0
 access_x2m_demo_admin,access_x2m_demo_admin,model_x2m_demo,base.group_system,1,1,1,1
+access_x2m_matrix_demo_wiz,access_x2m_matrix_demo_wiz,model_x2m_matrix_demo_wiz,base.group_user,1,0,0,0
+access_x2m_matrix_demo_wiz_admin,access_x2m_matrix_demo_wiz_admin,model_x2m_matrix_demo_wiz,base.group_system,1,1,1,1
