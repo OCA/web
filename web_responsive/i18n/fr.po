@@ -164,19 +164,13 @@ msgstr "Utilisateurs"
 msgid "View switcher"
 msgstr "Bascule de vue"
 
-#. module: web_responsive
-#. openerp-web
-#: code:addons/web_responsive/static/src/components/hotkey/hotkey.xml:0
 #, python-format
-msgid "props.withAccessKey ? 'x' : false"
-msgstr "props.withAccessKey ? 'x' : false"
+#~ msgid "props.withAccessKey ? 'x' : false"
+#~ msgstr "props.withAccessKey ? 'x' : false"
 
-#. module: web_responsive
-#. openerp-web
-#: code:addons/web_responsive/static/src/components/hotkey/hotkey.xml:0
 #, python-format
-msgid "props.withAccessKey ? 'z' : false"
-msgstr "props.withAccessKey ? 'z' : false"
+#~ msgid "props.withAccessKey ? 'z' : false"
+#~ msgstr "props.withAccessKey ? 'z' : false"
 
 #~ msgid "#menu_id=#{app.menuID}&action_id=#{app.actionID}"
 #~ msgstr "#menu_id=#{app.menuID}&action_id=#{app.actionID}"

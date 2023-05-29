@@ -164,20 +164,6 @@ msgstr "Brugere"
 msgid "View switcher"
 msgstr ""
 
-#. module: web_responsive
-#. openerp-web
-#: code:addons/web_responsive/static/src/components/hotkey/hotkey.xml:0
-#, python-format
-msgid "props.withAccessKey ? 'x' : false"
-msgstr ""
-
-#. module: web_responsive
-#. openerp-web
-#: code:addons/web_responsive/static/src/components/hotkey/hotkey.xml:0
-#, python-format
-msgid "props.withAccessKey ? 'z' : false"
-msgstr ""
-
 #~ msgid "<span class=\"sr-only\">Toggle App Drawer</span>"
 #~ msgstr "<span class=\"sr-only\">Skift App skuffe</span>"
 
