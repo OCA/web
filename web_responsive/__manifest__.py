@@ -43,6 +43,7 @@
             "/web_responsive/static/src/components/attachment_viewer/attachment_viewer.scss",
             "/web_responsive/static/src/components/attachment_viewer/attachment_viewer.esm.js",
             "/web_responsive/static/src/components/attachment_viewer/attachment_viewer.xml",
+            "/web_responsive/static/src/views/form/form_controller.scss",
         ],
         "web.assets_tests": [
             "/web_responsive/static/tests/test_patch.js",
