@@ -10,6 +10,12 @@ class Base(models.AbstractModel):
     _inherit = "base"
 
     @api.model
+    def _get_name_field(self, tree):
+        if tree.xpath('./field[@name="display_name"]'):
+            return tree.xpath('./field[@name="display_name"]')
+        return tree.xpath('./field[@name="name"]')
+
+    @api.model
     def fields_view_get(
         self, view_id=None, view_type="form", toolbar=False, submenu=False
     ):
@@ -22,7 +28,7 @@ class Base(models.AbstractModel):
             id_elem = """<field name="id" widget="open_tab" nolabel="1"/>"""
             id_elem = etree.fromstring(id_elem)
             tree = arch.xpath("//tree")[0]
-            name_field = tree.xpath('./field[@name="name"]')
+            name_field = self._get_name_field(tree)
             if name_field:
                 tree = arch.xpath("//tree")[0]
                 tree.insert(name_field[0].getparent().index(name_field[0]) + 1, id_elem)
