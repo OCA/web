@@ -227,7 +227,11 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
                 this.qweb.add_template(tmpl);
             }
 
-            this.timeline = new vis.Timeline(this.$timeline.get(0));
+            this.timeline = new vis.Timeline(
+                this.$timeline.get(0),
+                {},
+                {xss: {disabled: true}}
+            );
             this.timeline.setOptions(this.options);
             if (this.mode && this["on_scale_" + this.mode + "_clicked"]) {
                 this["on_scale_" + this.mode + "_clicked"]();
