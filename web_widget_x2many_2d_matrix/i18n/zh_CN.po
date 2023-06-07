@@ -17,22 +17,20 @@ msgstr ""
 "X-Generator: Weblate 3.8\n"
 
 #. module: web_widget_x2many_2d_matrix
-#. openerp-web
-#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:0
+#. odoo-javascript
+#: code:addons/web_widget_x2many_2d_matrix/static/src/components/x2many_2d_matrix_renderer/x2many_2d_matrix_renderer.xml:0
 #, python-format
-msgid "Sorry no matrix data to display."
-msgstr "抱歉没有要显示的矩阵数据。"
+msgid "Nothing to display."
+msgstr ""
 
-#. module: web_widget_x2many_2d_matrix
-#. openerp-web
-#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:0
 #, python-format
-msgid "Sum"
-msgstr "总和"
+#~ msgid "Sorry no matrix data to display."
+#~ msgstr "抱歉没有要显示的矩阵数据。"
 
-#. module: web_widget_x2many_2d_matrix
-#. openerp-web
-#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:0
 #, python-format
-msgid "Sum Total"
-msgstr "总和"
+#~ msgid "Sum"
+#~ msgstr "总和"
+
+#, python-format
+#~ msgid "Sum Total"
+#~ msgstr "总和"
