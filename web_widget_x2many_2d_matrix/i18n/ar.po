@@ -21,22 +21,12 @@ msgstr ""
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
 #. module: web_widget_x2many_2d_matrix
-#. openerp-web
-#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:0
+#. odoo-javascript
+#: code:addons/web_widget_x2many_2d_matrix/static/src/components/x2many_2d_matrix_renderer/x2many_2d_matrix_renderer.xml:0
 #, python-format
-msgid "Sorry no matrix data to display."
+msgid "Nothing to display."
 msgstr ""
 
-#. module: web_widget_x2many_2d_matrix
-#. openerp-web
-#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:0
-#, python-format
-msgid "Sum"
-msgstr ""
-
-#. module: web_widget_x2many_2d_matrix
-#. openerp-web
-#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:0
 #, fuzzy, python-format
-msgid "Sum Total"
-msgstr "المجموع الاجمالي"
+#~ msgid "Sum Total"
+#~ msgstr "المجموع الاجمالي"
