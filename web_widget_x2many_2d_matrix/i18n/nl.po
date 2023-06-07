@@ -17,23 +17,20 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: web_widget_x2many_2d_matrix
-#. openerp-web
-#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:0
+#. odoo-javascript
+#: code:addons/web_widget_x2many_2d_matrix/static/src/components/x2many_2d_matrix_renderer/x2many_2d_matrix_renderer.xml:0
 #, python-format
-msgid "Sorry no matrix data to display."
-msgstr "Sorry er is geen matrix data om weertegeven."
+msgid "Nothing to display."
+msgstr ""
 
-#. module: web_widget_x2many_2d_matrix
-#. openerp-web
-#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:0
-#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:0
 #, python-format
-msgid "Sum"
-msgstr "Som"
+#~ msgid "Sorry no matrix data to display."
+#~ msgstr "Sorry er is geen matrix data om weertegeven."
 
-#. module: web_widget_x2many_2d_matrix
-#. openerp-web
-#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:0
 #, python-format
-msgid "Sum Total"
-msgstr "Totaal"
+#~ msgid "Sum"
+#~ msgstr "Som"
+
+#, python-format
+#~ msgid "Sum Total"
+#~ msgstr "Totaal"
