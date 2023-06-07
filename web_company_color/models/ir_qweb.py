@@ -29,12 +29,10 @@ class QWeb(models.AbstractModel):
             res += [asset.get_company_color_asset_node()]
         return res
 
-    def _get_asset_content(
-        self, bundle, nodeAttrs=None, defer_load=False, lazy_load=False
-    ):
+    def _get_asset_content(self, bundle, defer_load=False, lazy_load=False, media=None):
         """Handle 'special' web_company_color bundle"""
         if bundle == "web_company_color.company_color_assets":
             return [], []
         return super()._get_asset_content(
-            bundle, nodeAttrs, defer_load=defer_load, lazy_load=lazy_load
+            bundle, defer_load=defer_load, lazy_load=lazy_load, media=media
         )
