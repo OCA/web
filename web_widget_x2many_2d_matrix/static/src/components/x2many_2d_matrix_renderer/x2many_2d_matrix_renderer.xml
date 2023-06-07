@@ -30,7 +30,10 @@
                             t-props="getValueFieldProps(column.value, row.value)"
                         />
                     </td>
-                    <td t-if="props.showRowTotals" class="row-total">
+                    <td
+                        t-if="props.showRowTotals and _canAggregate()"
+                        class="row-total"
+                    >
                         <t
                             t-component="ValueFieldComponent"
                             readonly="true"
@@ -40,7 +43,7 @@
                 </tr>
             </tbody>
             <tfoot>
-                <tr t-if="props.showColumnTotals">
+                <tr t-if="props.showColumnTotals and _canAggregate()">
                     <th />
                     <th t-foreach="columns" t-as="column" t-key="column.value">
                         <t
