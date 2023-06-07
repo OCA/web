@@ -116,6 +116,12 @@ export class X2Many2DMatrixRenderer extends Component {
             .reduce((aggr, y) => aggr + y);
     }
 
+    _canAggregate() {
+        return ["integer", "float", "monetary"].includes(
+            this.list.fields[this.matrixFields.value].type
+        );
+    }
+
     update(x, y, value) {
         this.matrix[y][x].value = value;
         const xFieldValue = this.columns[x].value;
