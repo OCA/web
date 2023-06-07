@@ -152,7 +152,7 @@ msgstr "Sum (m1 + m2)"
 
 #. module: web_pivot_computed_measure
 #. openerp-web
-#: code:addons/web_pivot_computed_measure/static/src/pivot/pivot_model.js:0
+#: code:addons/web_pivot_computed_measure/static/src/pivot/pivot_model.esm.js:0
 #, python-format
 msgid ""
 "This measure is currently used by a 'computed measure'. Please, disable the "
