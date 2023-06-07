@@ -133,10 +133,22 @@ export class X2Many2DMatrixRenderer extends Component {
     getValueFieldProps(column, row) {
         const x = this.columns.findIndex((c) => c.value === column);
         const y = this.rows.findIndex((r) => r.value === row);
+        const props = this.list.activeFields[this.matrixFields.value].props;
+        const propsFromAttrs =
+            this.list.activeFields[this.matrixFields.value].propsFromAttrs;
+        const record = this.matrix[y][x].records[0];
+        let value = this.matrix[y][x].value;
+        if (!this._canAggregate()) {
+            value = record.data[this.matrixFields.value];
+        }
+
         return {
-            value: this.matrix[y][x].value,
+            ...props,
+            ...propsFromAttrs,
+            value: value,
             update: (value) => this.update(x, y, value),
             readonly: this.props.readonly,
+            record: record,
         };
     }
 }
