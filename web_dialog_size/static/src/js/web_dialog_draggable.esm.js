@@ -1,10 +1,10 @@
 /** @odoo-module **/
 
-import {patch} from "@web/core/utils/patch";
+const {Component} = owl;
 import {Dialog} from "@web/core/dialog/dialog";
+import {patch} from "@web/core/utils/patch";
 const {useExternalListener} = owl.hooks;
 import {useListener} from "web.custom_hooks";
-const {Component} = owl;
 
 export class DialogDraggable extends Component {
     setup() {
