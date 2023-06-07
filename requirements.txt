@@ -1,0 +1,2 @@
+# generated from manifests external_dependencies
+plotly==5.13.1
