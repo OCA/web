@@ -23,7 +23,7 @@ Drop target support
     :target: https://runbot.odoo-community.org/runbot/162/15.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 This module is meant as a base drag&drop module supporting other actions after some file is dropped so that other modules can add more features.
 
@@ -85,6 +85,7 @@ Contributors
 * Akim Juillerat <akim.juillerat@camptocamp.com>
 * Enric Tobella <etobella@creublanca.es>
 * Lois Rilo <lois.rilo@forgeflow.com>
+* Cécile Jallais <cjallais@archeti.com>
 * `Tecnativa <https://www.tecnativa.com>`__:
 
   * Alexandre D. Díaz
