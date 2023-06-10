@@ -6,36 +6,38 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-06-11 00:11+0000\n"
+"Last-Translator: Claude R Perrin <claude@alpis.fr>\n"
 "Language-Team: none\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: web_notify_channel_message
 #: model:ir.model,name:web_notify_channel_message.model_mail_channel
 msgid "Discussion Channel"
-msgstr ""
+msgstr "Canal de discussion"
 
 #. module: web_notify_channel_message
 #: model:ir.model.fields,field_description:web_notify_channel_message.field_mail_channel__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom affiché"
 
 #. module: web_notify_channel_message
 #: model:ir.model.fields,field_description:web_notify_channel_message.field_mail_channel__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: web_notify_channel_message
 #: model:ir.model.fields,field_description:web_notify_channel_message.field_mail_channel____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Dernière modification le"
 
 #. module: web_notify_channel_message
 #: code:addons/web_notify_channel_message/models/mail_channel.py:0
 #, python-format
 msgid "You have a new message in channel %s"
-msgstr ""
+msgstr "Vous avez un nouveau message dans le canal %s"
