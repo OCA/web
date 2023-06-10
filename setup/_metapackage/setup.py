@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo-addon-web_advanced_search>=16.0dev,<16.1dev',
         'odoo-addon-web_chatter_position>=16.0dev,<16.1dev',
+        'odoo-addon-web_company_color>=16.0dev,<16.1dev',
         'odoo-addon-web_dark_mode>=16.0dev,<16.1dev',
         'odoo-addon-web_dialog_size>=16.0dev,<16.1dev',
         'odoo-addon-web_domain_field>=16.0dev,<16.1dev',
