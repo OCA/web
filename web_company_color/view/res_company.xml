@@ -19,15 +19,18 @@
                         <field name="color_navbar_bg" widget="color" />
                         <field name="color_navbar_bg_hover" widget="color" />
                         <field name="color_navbar_text" widget="color" />
-                        <button
-                            class="btn-primary"
-                            name="button_compute_color"
-                            type="object"
-                            string="Compute colors from logo"
-                        />
                     </group>
-                    <div class="alert alert-info info_icon" role="alert">
-                        <span class="fa fa-info fa-2x" />
+                    <button
+                        class="btn-primary"
+                        name="button_compute_color"
+                        type="object"
+                        string="Compute colors from logo"
+                    />
+                    <div
+                        class="alert alert-info info_icon mt-2 d-flex align-items-center"
+                        role="alert"
+                    >
+                        <span class="fa fa-info fa-2x me-2" />
                         In order for the changes to take effect, please refresh
                         the page.
                     </div>
