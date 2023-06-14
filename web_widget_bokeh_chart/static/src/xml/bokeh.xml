@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+   <t t-name="web_widget_bokeh_chart.BokehChartField" owl="1">
+       <t t-out="json_value.div" />
+       <script type="text/javascript" t-out="json_value.script" />
+    </t>
+</templates>
