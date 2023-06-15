@@ -26,19 +26,20 @@ odoo.define(
                             queryElem_val.operator === operator
                     );
                     if (!queryElem) {
-                        const {groupId} = this.state.filters[filterId];
-                        this.state.query.push({
-                            filterId,
-                            groupId,
-                            label,
-                            value,
-                            operator,
-                        });
                         if (isShiftKey) {
-                            const group_id = Math.random();
+                            const groupId = Math.random();
                             this.state.query.push({
                                 filterId,
-                                group_id,
+                                groupId,
+                                label,
+                                value,
+                                operator,
+                            });
+                        } else {
+                            const {groupId} = this.state.filters[filterId];
+                            this.state.query.push({
+                                filterId,
+                                groupId,
                                 label,
                                 value,
                                 operator,
