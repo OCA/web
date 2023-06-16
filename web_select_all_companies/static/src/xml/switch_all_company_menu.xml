@@ -30,7 +30,7 @@
                         title="Select All Companies"
                         name="select_all_companies"
                     >
-                            <span>Companies</span>
+                            <span>All Companies</span>
                     </div>
                 </div>
             </DropdownItem>
