@@ -17,7 +17,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_select_all_companies/static/src/xml/switch_all_company_menu.xml:0
 #, python-format
-msgid "Companies"
+msgid "All Companies"
 msgstr ""
 
 #. module: web_select_all_companies
