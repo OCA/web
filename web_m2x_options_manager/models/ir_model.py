@@ -50,3 +50,17 @@ class IrModelFields(models.Model):
         if limit and limit > 0:
             new_fids = new_fids[:limit]
         return self.browse(new_fids).sudo().name_get()
+
+    def name_get(self):
+        res = []
+        if self.env.context.get("display_technical_name"):
+            for field in self:
+                res.append(
+                    (
+                        field.id,
+                        "%s (%s), model: (%s)"
+                        % (field.field_description, field.name, field.model),
+                    )
+                )
+            return res
+        return super(IrModelFields, self).name_get()

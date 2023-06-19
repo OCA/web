@@ -15,13 +15,13 @@
                     <field
                         name="m2x_create_edit_option_ids"
                         nolabel="1"
-                        context="{'default_model_name': model}"
+                        context="{'default_model_name': model, 'display_technical_name': True}"
                     >
                         <tree string="Fields Description" editable="bottom">
                             <field name="model_name" invisible="1" />
                             <field
                                 name="field_id"
-                                context="{'search_by_technical_name': True, 'display_technical_name': True}"
+                                context="{'search_by_technical_name': True}"
                                 domain="[('ttype', 'in', ('many2many', 'many2one')), ('model_id.model', '=', model_name)]"
                                 options="{'create': False, 'create_edit': False}"
                             />
