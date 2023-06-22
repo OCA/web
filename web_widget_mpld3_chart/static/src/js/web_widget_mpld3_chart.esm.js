@@ -6,7 +6,7 @@ import fieldRegistry from "web.field_registry";
 const Mpld3ChartWidget = basicFields.FieldChar.extend({
     jsLibs: [
         "/web_widget_mpld3_chart/static/src/lib/d3/d3.v5.js",
-        "/web_widget_mpld3_chart/static/src/lib/mpld3/mpld3.v0.5.7.js",
+        "/web_widget_mpld3_chart/static/src/lib/mpld3/mpld3.v0.5.9.js",
     ],
     _renderReadonly: function () {
         try {
