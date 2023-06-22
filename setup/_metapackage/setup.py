@@ -34,6 +34,7 @@ setuptools.setup(
         'odoo14-addon-web_notify_channel_message',
         'odoo14-addon-web_pwa_oca',
         'odoo14-addon-web_refresher',
+        'odoo14-addon-web_remember_tree_column_width',
         'odoo14-addon-web_responsive',
         'odoo14-addon-web_search_with_and',
         'odoo14-addon-web_send_message_popup',
