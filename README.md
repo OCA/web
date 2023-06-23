@@ -40,6 +40,7 @@ addon | version | maintainers | summary
 [web_domain_field](web_domain_field/) | 14.0.1.0.2 |  | Use computed field as domain
 [web_drop_target](web_drop_target/) | 14.0.1.1.1 |  | Allows to drag files into Odoo
 [web_environment_ribbon](web_environment_ribbon/) | 14.0.1.0.0 |  | Web Environment Ribbon
+[web_field_required_invisible_manager](web_field_required_invisible_manager/) | 14.0.1.0.0 | [![ilyasProgrammer](https://github.com/ilyasProgrammer.png?size=30px)](https://github.com/ilyasProgrammer) | Web Field Required Invisible Manager
 [web_group_expand](web_group_expand/) | 14.0.1.0.0 |  | Group Expand Buttons
 [web_ir_actions_act_multi](web_ir_actions_act_multi/) | 14.0.1.0.0 |  | Enables triggering of more than one action on ActionManager
 [web_ir_actions_act_view_reload](web_ir_actions_act_view_reload/) | 14.0.1.0.1 |  | Enables reload of the current view via ActionManager
