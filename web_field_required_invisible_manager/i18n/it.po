@@ -6,134 +6,136 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-06-26 11:10+0000\n"
+"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model,name:web_field_required_invisible_manager.model_base
 msgid "Base"
-msgstr ""
+msgstr "Base"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__condition_domain
 msgid "Condition Domain"
-msgstr ""
+msgstr "Dominio condizione"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creato da"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creato il"
 
 #. module: web_field_required_invisible_manager
 #: model_terms:ir.ui.view,arch_db:web_field_required_invisible_manager.view_model_form_inherit
 msgid "Custom Invisible Fields"
-msgstr ""
+msgstr "Campi invisibili personalizzati"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_model__custom_invisible_restriction_ids
 msgid "Custom Invisible Restriction"
-msgstr ""
+msgstr "Restrizione invisibile personalizzata"
 
 #. module: web_field_required_invisible_manager
 #: model_terms:ir.ui.view,arch_db:web_field_required_invisible_manager.view_model_form_inherit
 msgid "Custom Required Fields"
-msgstr ""
+msgstr "Campi obbligatori personalizzati"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_model__custom_required_restriction_ids
 msgid "Custom Required Restriction"
-msgstr ""
+msgstr "Restrizione obbligatoria personalizzata"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__display_name
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_model__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__field_id
 msgid "Field"
-msgstr ""
+msgstr "Campo"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__field_invisible
 msgid "Field Invisible"
-msgstr ""
+msgstr "Campo invisibile"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__field_name
 msgid "Field Name"
-msgstr ""
+msgstr "Nome campo"
 
 #. module: web_field_required_invisible_manager
 #: model_terms:ir.ui.view,arch_db:web_field_required_invisible_manager.view_model_form_inherit
 msgid "Fields"
-msgstr ""
+msgstr "Campi"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__group_ids
 msgid "Group"
-msgstr ""
+msgstr "Gruppo"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__id
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_model__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction____last_update
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_model____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultimo aggiornamento di"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultimo aggiornamento il"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model,name:web_field_required_invisible_manager.model_custom_field_restriction
 msgid "Make field invisible or required"
-msgstr ""
+msgstr "Rendi invisibile o obbligatorio"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__model_name
 msgid "Model Name"
-msgstr ""
+msgstr "Nome modello"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model,name:web_field_required_invisible_manager.model_ir_model
 msgid "Models"
-msgstr ""
+msgstr "Modelli"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__default_required
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__required
 msgid "Required"
-msgstr ""
+msgstr "Obbligatorio"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__invisible_model_id
 msgid "invisible_model_id"
-msgstr ""
+msgstr "invisible_model_id"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__required_model_id
 msgid "required_model_id"
-msgstr ""
+msgstr "required_model_id"
