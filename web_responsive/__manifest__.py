@@ -7,7 +7,7 @@
 {
     "name": "Web Responsive",
     "summary": "Responsive web client, community-supported",
-    "version": "15.0.1.1.9",
+    "version": "15.0.1.1.10",
     "category": "Website",
     "website": "https://github.com/OCA/web",
     "author": "LasLabs, Tecnativa, ITerra, " "Odoo Community Association (OCA)",
