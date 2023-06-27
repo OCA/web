@@ -18,6 +18,9 @@
         "web.assets_backend": [
             "/web_theme_classic/static/src/scss/web_theme_classic.scss",
         ],
+        "web._assets_primary_variables": [
+            "/web_theme_classic/static/src/scss/primary_variables.scss",
+        ],
     },
     "installable": True,
     "application": True,
