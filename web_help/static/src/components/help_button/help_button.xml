@@ -3,15 +3,16 @@
     <t t-name="web_help.HelpButton" owl="1">
         <button
             class="btn ml-2 js_web_help_btn"
-            t-att-class="props.btnClass || 'btn-secondary'"
+            t-att-class="props.btnClass || 'btn-light'"
             t-on-click="onClick"
+            tabindex="-1"
             t-if="state.TripClass"
         >
             <i class="fa fa-question" />
         </button>
     </t>
     <t t-inherit="web.ControlPanel.Regular" t-inherit-mode="extension">
-        <xpath expr="//div[hasclass('o_cp_bottom')]" t-operation="inside">
+        <xpath expr="//div[hasclass('o_cp_bottom_right')]" t-operation="inside">
             <nav class="btn-group">
                 <HelpButton
                     resModel="env.searchModel.resModel"
@@ -21,7 +22,7 @@
         </xpath>
     </t>
     <t t-inherit="web.ControlPanel.Small" t-inherit-mode="extension">
-        <xpath expr="//div[hasclass('o_cp_bottom')]" t-operation="inside">
+        <xpath expr="//div[hasclass('o_cp_bottom_right')]" t-operation="inside">
             <nav class="btn-group">
                 <HelpButton
                     resModel="env.searchModel.resModel"

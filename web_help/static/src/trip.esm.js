@@ -86,7 +86,11 @@ export class Trip {
         const $stepRender = $(
             renderToString(this._getStepTemplate(), this._getStepRenderContext())
         );
-        $stepRender.find(".web_help_cb_button").click(cb.bind(this));
+        const $cbButton = $stepRender.find(".web_help_cb_button");
+        $cbButton.click(() => {
+            $cbButton.attr("disabled", "disabled");
+            cb.bind(this)();
+        });
         $stepRender.find(".web_help_close").click(this.stop.bind(this));
         await step.beforeHighlight();
         this.highlighterService.highlight(
