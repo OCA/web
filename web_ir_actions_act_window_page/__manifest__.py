@@ -7,10 +7,14 @@
         "or next next record in the form view"
     ),
     "author": "Hunki Enterprises BV, Therp BV,Odoo Community Association (OCA)",
-    "version": "13.0.1.0.0",
+    "version": "16.0.1.0.0",
     "category": "Technical",
     "depends": ["web"],
-    "data": ["views/assets.xml"],
+    "assets": {
+        "web.assets_backend": [
+            "web_ir_actions_act_window_page/static/src/web_ir_actions_act_window_page.esm.js",
+        ]
+    },
     "demo": ["demo/demo_action.xml"],
     "installable": True,
     "license": "AGPL-3",
