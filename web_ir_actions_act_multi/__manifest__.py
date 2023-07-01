@@ -8,7 +8,7 @@
     "name": "Web Actions Multi",
     "summary": "Enables triggering of more than one action on ActionManager",
     "category": "Web",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "license": "LGPL-3",
     "author": "Modoolar, " "CorporateHub, " "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
