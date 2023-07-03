@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record id="tooltip_manage_all" model="ir.rule">
+        <field name="name">All Tooltips</field>
+        <field name="model_id" ref="model_ir_model_fields_tooltip" />
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field
+            name="groups"
+            eval="[(4, ref('web_field_tooltip.group_tooltip_manager'))]"
+        />
+    </record>
+
+    <record id="tooltip_manage_own" model="ir.rule">
+        <field name="name">Tooltips per user</field>
+        <field name="model_id" ref="model_ir_model_fields_tooltip" />
+        <field name="domain_force">[('create_uid','=', user.id)]</field>
+        <field
+            name="groups"
+            eval="[(4, ref('web_field_tooltip.group_tooltip_user'))]"
+        />
+    </record>
+
+    <record id="tooltip_read_all" model="ir.rule">
+        <field name="name">Tooltips read access is for everyone</field>
+        <field name="model_id" ref="model_ir_model_fields_tooltip" />
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]" />
+        <field name="perm_create" eval="0" />
+        <field name="perm_write" eval="0" />
+        <field name="perm_unlink" eval="0" />
+    </record>
+
+</odoo>
