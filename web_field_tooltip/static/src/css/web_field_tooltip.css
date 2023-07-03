@@ -1,0 +1,12 @@
+.tooltip-icon {
+    color: #666666;
+    margin-left: 5px;
+    background: none;
+    border: none;
+}
+
+.popover-footer {
+    margin: 0;
+    padding: 8px 14px;
+    background-color: #f7f7f7;
+}

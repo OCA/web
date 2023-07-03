@@ -1,0 +1,168 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_field_tooltip
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-07-06 07:59+0000\n"
+"PO-Revision-Date: 2023-07-06 07:59+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_field_tooltip
+#: code:addons/web_field_tooltip/models/ir_model_fields_tooltip.py:0
+#, python-format
+msgid "A tooltip already exists for this field"
+msgstr ""
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__active
+msgid "Active"
+msgstr ""
+
+#. module: web_field_tooltip
+#: model_terms:ir.ui.view,arch_db:web_field_tooltip.ir_model_fields_tooltip_form_view
+#: model_terms:ir.ui.view,arch_db:web_field_tooltip.ir_model_fields_tooltip_search_view
+msgid "Archived"
+msgstr ""
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_field_tooltip
+#. openerp-web
+#: code:addons/web_field_tooltip/static/src/js/web_field_tooltip.js:0
+#, python-format
+msgid "Edit a Tooltip"
+msgstr ""
+
+#. module: web_field_tooltip
+#. openerp-web
+#: code:addons/web_field_tooltip/static/src/js/web_field_tooltip.js:0
+#, python-format
+msgid "Edit the tooltip"
+msgstr ""
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__field_id
+msgid "Field"
+msgstr ""
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__field_name
+msgid "Field Name"
+msgstr ""
+
+#. module: web_field_tooltip
+#: model:ir.model,name:web_field_tooltip.model_ir_model_fields_tooltip
+msgid "Field Tooltip"
+msgstr ""
+
+#. module: web_field_tooltip
+#: model:ir.actions.act_window,name:web_field_tooltip.ir_model_fields_tooltip_act_window
+#: model:ir.ui.menu,name:web_field_tooltip.ir_model_fields_tooltip_menu
+msgid "Fields Tooltips"
+msgstr ""
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__id
+msgid "ID"
+msgstr ""
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: web_field_tooltip
+#. openerp-web
+#: code:addons/web_field_tooltip/static/src/js/web_field_tooltip.js:0
+#, python-format
+msgid "Last Updated by: "
+msgstr ""
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: web_field_tooltip
+#. openerp-web
+#: code:addons/web_field_tooltip/static/src/js/web_field_tooltip.js:0
+#: code:addons/web_field_tooltip/static/src/js/web_field_tooltip.js:0
+#, python-format
+msgid "Manage Tooltips"
+msgstr ""
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__model_id
+msgid "Model"
+msgstr ""
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__model
+msgid "Model Name"
+msgstr ""
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,help:web_field_tooltip.field_ir_model_fields_tooltip__model_id
+msgid "Model for the Field Tooltip."
+msgstr ""
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__name
+msgid "Name"
+msgstr ""
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,help:web_field_tooltip.field_ir_model_fields_tooltip__active
+msgid "Set active to false to hide the Tooltip without removing it."
+msgstr ""
+
+#. module: web_field_tooltip
+#: model:res.groups,comment:web_field_tooltip.group_tooltip_manager
+msgid "The user will be able to manage all the tooltips."
+msgstr ""
+
+#. module: web_field_tooltip
+#: model:res.groups,comment:web_field_tooltip.group_tooltip_user
+msgid "The user will be able to manage his own tooltips."
+msgstr ""
+
+#. module: web_field_tooltip
+#: model:res.groups,name:web_field_tooltip.group_tooltip_manager
+msgid "Tooltip Manager"
+msgstr ""
+
+#. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__tooltip_text
+msgid "Tooltip Text"
+msgstr ""
+
+#. module: web_field_tooltip
+#: model:res.groups,name:web_field_tooltip.group_tooltip_user
+msgid "Tooltip User"
+msgstr ""
