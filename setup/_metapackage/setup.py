@@ -15,6 +15,7 @@ setuptools.setup(
         'odoo-addon-web_company_color>=15.0dev,<15.1dev',
         'odoo-addon-web_copy_confirm>=15.0dev,<15.1dev',
         'odoo-addon-web_dialog_size>=15.0dev,<15.1dev',
+        'odoo-addon-web_disable_export_group>=15.0dev,<15.1dev',
         'odoo-addon-web_domain_field>=15.0dev,<15.1dev',
         'odoo-addon-web_drop_target>=15.0dev,<15.1dev',
         'odoo-addon-web_environment_ribbon>=15.0dev,<15.1dev',
