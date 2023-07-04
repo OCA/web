@@ -81,8 +81,9 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
 
             // FIXME: Choose a better way to get the active controller or model objects
             this.parent_controller = parent.getParent();
+            this.indexGroup = 0;
             if (this.view) {
-                this._processGroups();
+                this.indexGroup = this._processGroups();
             }
 
             this._currentSearchBatchID = 0;
@@ -127,7 +128,7 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                         // Show Lines
                         self._updateSearchContext(-1);
                     } else {
-                        self._updateSearchContext(0);
+                        self._updateSearchContext(self.indexGroup);
                     }
                     self._searchContext.text = "";
                 });
@@ -268,13 +269,15 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
          */
         _processGroups: function() {
             this.searchGroups = [];
+            var activeIndex = 0;
             var hasUserActive = false;
             var groups = this.options.groups;
             for (var groupIndex in groups) {
                 var group_def = groups[groupIndex];
-                if (group_def.active) {
-                    group_def.active = !hasUserActive;
+                if (group_def.active && !hasUserActive) {
                     hasUserActive = true;
+                    // Set index + 1 because the first position is for All option
+                    activeIndex = parseInt(groupIndex) + 1;
                 }
                 if (!group_def.records_per_page) {
                     group_def.records_per_page = 16;
@@ -290,7 +293,8 @@ odoo.define("web_widget_one2many_product_picker.FieldOne2ManyProductPicker", fun
                 active: !hasUserActive,
                 records_per_page: 16,
             });
-            this._activeSearchGroup = this.searchGroups[0];
+            this._activeSearchGroup = this.searchGroups[activeIndex];
+            return activeIndex;
         },
 
         /**
