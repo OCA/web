@@ -71,7 +71,7 @@ addon | version | maintainers | summary
 [web_widget_many2one_simple](web_widget_many2one_simple/) | 13.0.1.0.0 | [![Tardo](https://github.com/Tardo.png?size=30px)](https://github.com/Tardo) | Simple many2one widget
 [web_widget_mpld3_chart](web_widget_mpld3_chart/) | 13.0.1.0.0 |  | This widget allows to display charts using MPLD3 library.
 [web_widget_numeric_step](web_widget_numeric_step/) | 13.0.1.1.0 |  | Web Widget Numeric Step
-[web_widget_one2many_product_picker](web_widget_one2many_product_picker/) | 13.0.2.0.2 |  | Widget to select products on one2many fields
+[web_widget_one2many_product_picker](web_widget_one2many_product_picker/) | 13.0.2.0.3 |  | Widget to select products on one2many fields
 [web_widget_one2many_product_picker_sale_secondary_unit](web_widget_one2many_product_picker_sale_secondary_unit/) | 13.0.1.0.0 |  | Adds support for sale secondary unit in the one2many product picker widget
 [web_widget_one2many_product_picker_sale_stock](web_widget_one2many_product_picker_sale_stock/) | 13.0.1.0.0 |  | Adds support for stock in the one2many product picker widget
 [web_widget_one2many_tree_line_duplicate](web_widget_one2many_tree_line_duplicate/) | 13.0.1.0.2 |  | Web Widget One2many Tree Line Duplicate
