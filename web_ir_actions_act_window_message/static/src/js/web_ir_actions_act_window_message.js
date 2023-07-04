@@ -90,11 +90,13 @@ odoo.define("web.web_ir_actions_act_window_message", function (require) {
                                 if (_.isObject(result)) {
                                     self.do_action(result);
                                 }
-                                // Always refresh the view after the action
+                                // Refresh the view after the action
                                 // ex: action updates a status
-                                var controller = self.getCurrentController();
-                                if (controller && controller.widget) {
-                                    controller.widget.reload();
+                                if (!action.context.avoid_message_view_reload) {
+                                    var controller = self.getCurrentController();
+                                    if (controller && controller.widget) {
+                                        controller.widget.reload();
+                                    }
                                 }
                             });
                         } else {

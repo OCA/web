@@ -80,6 +80,9 @@ Depend on this module and return
 
 You are responsible for translating the messages.
 
+A special context `avoid_message_view_reload` can be passed through the message dict to avoid
+reloading the main view after closing the message view.
+
 Known issues / Roadmap
 ======================
 
