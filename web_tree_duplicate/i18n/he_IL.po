@@ -20,11 +20,11 @@ msgstr ""
 #: code:addons/web_tree_duplicate/static/src/web_tree_duplicate.esm.js:0
 #, python-format
 msgid "Duplicate"
-msgstr ""
+msgstr "שכפול"
 
 #. module: web_tree_duplicate
 #. odoo-javascript
 #: code:addons/web_tree_duplicate/static/src/web_tree_duplicate.esm.js:0
 #, python-format
 msgid "Duplicated Records"
-msgstr ""
+msgstr "רשומות משוכפלות"
