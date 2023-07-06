@@ -19,6 +19,6 @@
     <field
         name="char_field"
         widget="dynamic_dropdown"
-        values="method_name"
+        options="{'values':'method_name'}"
         context="{'depending_on': other_field}"
     />
