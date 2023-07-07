@@ -23,17 +23,23 @@ odoo.define("web_field_tooltip.FieldTooltip", function(require) {
 
             // Check if there's any tooltip that must be rendered for the given view
 
-            rpc.query({
-                model: "ir.model.fields.tooltip",
-                method: "search_read",
-                domain: [
-                    ["field_name", "=", fieldName],
-                    ["model", "=", self.state.model],
-                ],
-            }).then(function(data) {
+            var tooltips = {};
+
+            if (self.tooltips) {
+                tooltips = self.tooltips;
+            } else {
+                tooltips = rpc.query({
+                    model: "ir.model.fields.tooltip",
+                    method: "search_read",
+                    domain: [["model", "=", self.state.model]],
+                });
+                self.tooltips = tooltips;
+            }
+
+            tooltips.then(function(data) {
                 if (data) {
                     _.each(data, function(tooltip) {
-                        if (tooltip) {
+                        if (tooltip.field_name === fieldName) {
                             var $after_elem = $("<button>", {
                                 class: "fa fa fa-question-circle tooltip-icon",
                                 for: self._getIDForLabel(fieldName),
