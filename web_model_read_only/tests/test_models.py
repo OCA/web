@@ -77,15 +77,15 @@ class TestIrModel(SavepointCase):
         )
         self.assertTrue(
             test_record.check_access_rights("write", False),
-            msg="Write access right should be False",
+            msg="Write access right should be True",
         )
         self.assertTrue(
             test_record.check_access_rights("create", False),
-            msg="Create access right should be False",
+            msg="Create access right should be True",
         )
         self.assertTrue(
             test_record.check_access_rights("unlink", False),
-            msg="Unlink access right should be False",
+            msg="Unlink access right should be True",
         )
 
         # Add group_manager to readonly_group_ids
