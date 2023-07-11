@@ -35,6 +35,7 @@
             "x2many_2d_matrix_field.xml",
             "web_widget_x2many_2d_matrix/static/src/components/x2many_2d_matrix_field/"
             "x2many_2d_matrix_field.scss",
+            "web_widget_x2many_2d_matrix/static/src/views/fields/boolean/boolean_field.esm.js",
         ],
     },
 }
