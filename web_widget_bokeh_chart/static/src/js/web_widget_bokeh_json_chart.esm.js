@@ -1,24 +1,22 @@
 /** @odoo-module **/
 
-import {CharField} from "@web/views/fields/char/char_field";
 import {loadBundle} from "@web/core/assets";
 import {registry} from "@web/core/registry";
-const {onWillStart, markup, onMounted, onPatched, useRef} = owl;
+const {onWillStart, markup, Component, onMounted, onPatched, useRef} = owl;
 
-export default class BokehChartWidget extends CharField {
+export default class BokehChartJsonWidget extends Component {
     setup() {
         this.widget = useRef("widget");
         onPatched(() => {
             var script = document.createElement("script");
-            script.text = this.json_value.script;
+            script.text = this.props.value.script;
             this.widget.el.append(script);
         });
         onMounted(() => {
             var script = document.createElement("script");
-            script.text = this.json_value.script;
+            script.text = this.props.value.script;
             this.widget.el.append(script);
         });
-        super.setup();
         onWillStart(() =>
             loadBundle({
                 jsLibs: [
@@ -32,13 +30,11 @@ export default class BokehChartWidget extends CharField {
             })
         );
     }
-    get json_value() {
-        var value = JSON.parse(this.props.value);
-        if (value) {
-            value.div = markup(value.div.trim());
-        }
-        return value;
+    markup(value) {
+        console.log("Marking up...");
+        return markup(value);
     }
 }
-BokehChartWidget.template = "web_widget_bokeh_chart.BokehChartField";
-registry.category("fields").add("bokeh_chart", BokehChartWidget);
+
+BokehChartJsonWidget.template = "web_widget_bokeh_chart.BokehChartlJsonField";
+registry.category("fields").add("bokeh_chart_json", BokehChartJsonWidget);
