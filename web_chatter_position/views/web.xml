@@ -9,12 +9,4 @@
             />
         </xpath>
     </template>
-    <template id="view_web_layout" inherit_id="web.layout" name="View Layout">
-        <xpath expr="//meta[last()]" position="after">
-            <meta
-                name="viewport"
-                content="width=device-width, initial-scale=1, user-scalable=no"
-            />
-        </xpath>
-    </template>
 </odoo>

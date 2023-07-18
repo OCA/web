@@ -8,15 +8,20 @@ class ResUsers(models.Model):
     _inherit = "res.users"
 
     chatter_position = fields.Selection(
-        [("bottom", "Bottom"), ("sided", "Sided")], default="sided",
+        [("bottom", "Bottom"), ("sided", "Sided")],
+        default="sided",
+        string="Chatter Position",
     )
 
-    #  Override so that the user can change the chatter_position field
-
-    @property
-    def SELF_READABLE_FIELDS(self):
-        return super().SELF_READABLE_FIELDS + ["chatter_position"]
-
-    @property
-    def SELF_WRITEABLE_FIELDS(self):
-        return super().SELF_WRITEABLE_FIELDS + ["chatter_position"]
+    def __init__(self, pool, cr):
+        """ Override of __init__ to add access rights.
+        Access rights are disabled by default, but allowed on some specific
+        fields defined in self.SELF_{READ/WRITE}ABLE_FIELDS.
+        """
+        super(ResUsers, self).__init__(pool, cr)
+        # duplicate list to avoid modifying the original reference
+        type(self).SELF_WRITEABLE_FIELDS = list(self.SELF_WRITEABLE_FIELDS)
+        type(self).SELF_WRITEABLE_FIELDS.extend(["chatter_position"])
+        # duplicate list to avoid modifying the original reference
+        type(self).SELF_READABLE_FIELDS = list(self.SELF_READABLE_FIELDS)
+        type(self).SELF_READABLE_FIELDS.extend(["chatter_position"])
