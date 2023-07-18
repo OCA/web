@@ -12,7 +12,12 @@
     "website": "https://github.com/OCA/web",
     "depends": ["web"],
     "data": [],
-    "external_dependencies": {"python": ["bokeh==3.1.1"]},
+    "external_dependencies": {
+        "python": [
+            "bokeh==2.4.3; python_version == '3.7'",
+            "bokeh==3.1.1; python_version > '3.7'",
+        ]
+    },
     "auto_install": False,
     "license": "LGPL-3",
     "assets": {
