@@ -1,7 +1,7 @@
 // Copyright 2022 Hynsys Technologies
 // License LGPL - 3.0 or later(http://www.gnu.org/licenses/lgpl).
 
-odoo.define("web_chatter_position.ChatterPositionFormController", function (require) {
+odoo.define("web_chatter_position.ChatterPositionFormController", function(require) {
     "use strict";
 
     var config = require("web.config");
@@ -9,7 +9,7 @@ odoo.define("web_chatter_position.ChatterPositionFormController", function (requ
     var FormRenderer = require("web.FormRenderer");
 
     var ChatterPositionFormController = FormController.include({
-        renderButtons: function () {
+        renderButtons: function() {
             this._super.apply(this, arguments);
             if (this.$buttons) {
                 this.$buttons.on(
@@ -20,7 +20,7 @@ odoo.define("web_chatter_position.ChatterPositionFormController", function (requ
             }
         },
 
-        _onChatterPosition: function () {
+        _onChatterPosition: function() {
             if (this.$el.offsetParent().hasClass("o_chatter_position_bottom")) {
                 this.$el
                     .offsetParent()
@@ -34,7 +34,7 @@ odoo.define("web_chatter_position.ChatterPositionFormController", function (requ
     });
 
     FormRenderer.include({
-        _applyFormSizeClass: function () {
+        _applyFormSizeClass: function() {
             const formEl = this.$el[0];
             if (config.device.size_class <= config.device.SIZES.XS) {
                 formEl.classList.add("o_xxs_form_view");

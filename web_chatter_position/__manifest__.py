@@ -18,9 +18,7 @@
             "/web_chatter_position/static/src/scss/attachment_viewer.scss",
             "/web_chatter_position/static/src/js/form_chatter_position.js",
         ],
-        "web.assets_qweb": [
-            "/web_chatter_position/static/src/xml/form_buttons.xml",
-        ],
+        "web.assets_qweb": ["/web_chatter_position/static/src/xml/form_buttons.xml"],
     },
     "installable": True,
     "auto_install": False,
