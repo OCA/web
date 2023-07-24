@@ -1,0 +1,124 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_create_write_confirm
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_create_write_confirm
+#: model:ir.model.fields,field_description:web_create_write_confirm.field_popup_message__active
+msgid "Active"
+msgstr ""
+
+#. module: web_create_write_confirm
+#: model_terms:ir.actions.act_window,help:web_create_write_confirm.action_popup_message_view
+msgid "Add your pop-up!"
+msgstr ""
+
+#. module: web_create_write_confirm
+#: model:ir.model.fields.selection,name:web_create_write_confirm.selection__popup_message__popup_type__alert
+msgid "Alert"
+msgstr ""
+
+#. module: web_create_write_confirm
+#: model_terms:ir.ui.view,arch_db:web_create_write_confirm.view_popup_message_form
+msgid "Archived"
+msgstr ""
+
+#. module: web_create_write_confirm
+#: model:ir.model,name:web_create_write_confirm.model_base
+msgid "Base"
+msgstr ""
+
+#. module: web_create_write_confirm
+#: model:ir.model.fields.selection,name:web_create_write_confirm.selection__popup_message__popup_type__confirm
+msgid "Confirmation"
+msgstr ""
+
+#. module: web_create_write_confirm
+#: model:ir.model.fields,field_description:web_create_write_confirm.field_popup_message__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: web_create_write_confirm
+#: model:ir.model.fields,field_description:web_create_write_confirm.field_popup_message__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: web_create_write_confirm
+#: model:ir.model.fields,field_description:web_create_write_confirm.field_popup_message__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_create_write_confirm
+#: model:ir.model.fields,field_description:web_create_write_confirm.field_popup_message__field_name
+msgid "Field Name"
+msgstr ""
+
+#. module: web_create_write_confirm
+#: model:ir.model.fields,field_description:web_create_write_confirm.field_popup_message__field_ids
+msgid "Fields"
+msgstr ""
+
+#. module: web_create_write_confirm
+#: model:ir.model.fields,field_description:web_create_write_confirm.field_popup_message__id
+msgid "ID"
+msgstr ""
+
+#. module: web_create_write_confirm
+#: model:ir.model.fields,field_description:web_create_write_confirm.field_popup_message____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: web_create_write_confirm
+#: model:ir.model.fields,field_description:web_create_write_confirm.field_popup_message__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: web_create_write_confirm
+#: model:ir.model.fields,field_description:web_create_write_confirm.field_popup_message__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: web_create_write_confirm
+#: model:ir.model.fields,field_description:web_create_write_confirm.field_popup_message__message
+msgid "Message"
+msgstr ""
+
+#. module: web_create_write_confirm
+#: model:ir.model.fields,field_description:web_create_write_confirm.field_popup_message__model
+#: model:ir.model.fields,field_description:web_create_write_confirm.field_popup_message__model_id
+msgid "Model"
+msgstr ""
+
+#. module: web_create_write_confirm
+#: model_terms:ir.ui.view,arch_db:web_create_write_confirm.view_popup_message_form
+#: model_terms:ir.ui.view,arch_db:web_create_write_confirm.view_popup_message_tree
+msgid "Popup Message"
+msgstr ""
+
+#. module: web_create_write_confirm
+#: model:ir.actions.act_window,name:web_create_write_confirm.action_popup_message_view
+#: model:ir.model,name:web_create_write_confirm.model_popup_message
+#: model:ir.ui.menu,name:web_create_write_confirm.menu_popup_message_categ
+#: model:ir.ui.menu,name:web_create_write_confirm.menu_popup_message_view
+msgid "Popup message"
+msgstr ""
+
+#. module: web_create_write_confirm
+#: model:ir.model.fields,field_description:web_create_write_confirm.field_popup_message__title
+msgid "Title"
+msgstr ""
+
+#. module: web_create_write_confirm
+#: model:ir.model.fields,field_description:web_create_write_confirm.field_popup_message__popup_type
+msgid "Type"
+msgstr ""
