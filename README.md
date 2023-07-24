@@ -34,6 +34,7 @@ addon | version | maintainers | summary
 [web_calendar_slot_duration](web_calendar_slot_duration/) | 14.0.1.0.0 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) | Customizable calendar slot durations
 [web_company_color](web_company_color/) | 14.0.2.0.0 |  | Web Company Color
 [web_copy_confirm](web_copy_confirm/) | 14.0.1.0.0 |  | Show confirmation dialogue before copying records
+[web_create_write_confirm](web_create_write_confirm/) | 14.0.1.0.0 |  | Confirm/Alert pop-up before saving
 [web_decimal_numpad_dot](web_decimal_numpad_dot/) | 14.0.1.0.0 |  | Allows using numpad dot to enter period decimal separator
 [web_dialog_size](web_dialog_size/) | 14.0.1.0.0 |  | A module that lets the user expand a dialog box to the full screen width.
 [web_disable_export_group](web_disable_export_group/) | 14.0.2.0.0 |  | Web Disable Export Group
