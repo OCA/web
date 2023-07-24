@@ -132,8 +132,9 @@ patch(FormCompiler.prototype, "web_chatter_position", {
                     sheetBgChatterContainerHookXml.classList.add("o-isInFormSheetBg");
                     sheetBgChatterContainerHookXml.setAttribute("t-if", true);
                     append(formSheetBgXml, sheetBgChatterContainerHookXml);
-                    const sheetBgChatterContainerXml =
-                        sheetBgChatterContainerHookXml.querySelector("ChatterContainer");
+                    const sheetBgChatterContainerXml = sheetBgChatterContainerHookXml.querySelector(
+                        "ChatterContainer"
+                    );
                     sheetBgChatterContainerXml.setAttribute("isInFormSheetBg", "true");
                     chatterContainerHookXml.setAttribute("t-if", false);
                 }
