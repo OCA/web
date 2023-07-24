@@ -126,6 +126,9 @@ patch(FormCompiler.prototype, "web_chatter_position", {
                 chatterContainerHookXml.setAttribute("t-if", false);
             } else {
                 const formSheetBgXml = res.querySelector(".o_form_sheet_bg");
+                if (!formSheetBgXml) {
+                    return res;
+                }
                 const sheetBgChatterContainerHookXml =
                     chatterContainerHookXml.cloneNode(true);
                 sheetBgChatterContainerHookXml.classList.add("o-isInFormSheetBg");
