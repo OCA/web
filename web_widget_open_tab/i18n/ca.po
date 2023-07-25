@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_widget_open_tab
+# 	* web_widget_open_tab
 #
 msgid ""
 msgstr ""
@@ -17,15 +17,23 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: web_widget_open_tab
-#. openerp-web
-#: code:addons/web_widget_open_tab/static/src/js/widget.js:47
+#. odoo-javascript
+#: code:addons/web_widget_open_tab/static/src/js/open_tab_widget.esm.js:0
 #, python-format
-msgid "Click in order to open on new tab"
-msgstr "Feu clic per obrir la pestanya nova"
+msgid "Click to open on new tab"
+msgstr ""
 
 #. module: web_widget_open_tab
-#. openerp-web
-#: code:addons/web_widget_open_tab/static/src/js/widget.js:48
+#. odoo-javascript
+#: code:addons/web_widget_open_tab/static/src/js/open_tab_widget.esm.js:0
 #, python-format
-msgid "Widget"
-msgstr "Widget"
+msgid "Open Tab"
+msgstr ""
+
+#, python-format
+#~ msgid "Click in order to open on new tab"
+#~ msgstr "Feu clic per obrir la pestanya nova"
+
+#, python-format
+#~ msgid "Widget"
+#~ msgstr "Widget"
