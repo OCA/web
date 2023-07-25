@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo13-addon-web_advanced_search',
         'odoo13-addon-web_boolean_button',
         'odoo13-addon-web_calendar_slot_duration',
+        'odoo13-addon-web_chatter_position',
         'odoo13-addon-web_company_color',
         'odoo13-addon-web_confirm_duplicate',
         'odoo13-addon-web_decimal_numpad_dot',
