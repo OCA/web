@@ -45,7 +45,7 @@ addon | version | maintainers | summary
 [web_ir_actions_act_view_reload](web_ir_actions_act_view_reload/) | 13.0.1.0.0 |  | Enables reload of the current view via ActionManager
 [web_ir_actions_act_window_message](web_ir_actions_act_window_message/) | 13.0.1.0.0 |  | Show a message box to users
 [web_listview_range_select](web_listview_range_select/) | 13.0.1.0.0 |  | Enables selecting a range of records using the shift key
-[web_m2x_options](web_m2x_options/) | 13.0.1.0.3 |  | web_m2x_options
+[web_m2x_options](web_m2x_options/) | 13.0.1.0.4 |  | web_m2x_options
 [web_no_bubble](web_no_bubble/) | 13.0.1.0.0 |  | Remove the bubbles from the web interface
 [web_notify](web_notify/) | 13.0.1.0.2 |  | Send notification messages to user
 [web_pivot_computed_measure](web_pivot_computed_measure/) | 13.0.1.1.0 |  | Web Pivot Computed Measure
