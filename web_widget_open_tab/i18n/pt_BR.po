@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_widget_open_tab
+# 	* web_widget_open_tab
 #
 msgid ""
 msgstr ""
@@ -15,15 +15,35 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 
 #. module: web_widget_open_tab
-#. openerp-web
-#: code:addons/web_widget_open_tab/static/src/js/widget.js:47
-#, python-format
-msgid "Click in order to open on new tab"
+#: model:ir.model.fields,field_description:web_widget_open_tab.field_ir_model__add_open_tab_field
+msgid "Add Open Tab Field"
 msgstr ""
 
 #. module: web_widget_open_tab
-#. openerp-web
-#: code:addons/web_widget_open_tab/static/src/js/widget.js:48
+#: model:ir.model.fields,help:web_widget_open_tab.field_ir_model__add_open_tab_field
+msgid "Adds open-tab field in list views."
+msgstr ""
+
+#. module: web_widget_open_tab
+#: model:ir.model,name:web_widget_open_tab.model_base
+msgid "Base"
+msgstr ""
+
+#. module: web_widget_open_tab
+#. odoo-javascript
+#: code:addons/web_widget_open_tab/static/src/js/open_tab_widget.esm.js:0
 #, python-format
-msgid "Widget"
+msgid "Click to open on new tab"
+msgstr ""
+
+#. module: web_widget_open_tab
+#: model:ir.model,name:web_widget_open_tab.model_ir_model
+msgid "Models"
+msgstr ""
+
+#. module: web_widget_open_tab
+#. odoo-javascript
+#: code:addons/web_widget_open_tab/static/src/js/open_tab_widget.esm.js:0
+#, python-format
+msgid "Open Tab"
 msgstr ""
