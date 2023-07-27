@@ -27,7 +27,7 @@ Web Widget Bokeh Chart
 
 This module add the possibility to insert Bokeh charts into Odoo standard views.
 
-.. image:: https://raw.githubusercontent.com/web_widget_bokeh_chart/static/description/example.png
+.. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_widget_bokeh_chart/static/description/example.png
    :alt: Bokeh Chart inserted into an Odoo view
    :width: 600 px
 
