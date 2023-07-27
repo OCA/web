@@ -9,7 +9,7 @@ Confirm res.partner change:
 
     msg = self.env['popup.message'].create(
         {
-            'model_id': self.env['ir.model'].search([('model', '=', 'res.partner')]).id,
+            'model_id': self.env['ir.model']._get_id('res.partner')
             'field_ids': [(6, 0, self.env['ir.model.fields'].search([('model', '=', 'res.partner')]).ids)],
             'popup_type': 'confirm',
             'title': 'Warning',
@@ -24,7 +24,7 @@ Sale order alert:
 
     msg = self.env['popup.message'].create(
         {
-            'model_id': self.env['ir.model'].search([('model', '=', 'sale.order')]).id,
+            'model_id': self.env['ir.model']._get_id('sale.order'),
             'field_ids': [(6, 0, self.env['ir.model.fields'].search([('model', '=', 'sale.order')]).ids)],
             'popup_type': 'alert',
             'title': 'Attention',
