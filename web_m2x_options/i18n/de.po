@@ -63,6 +63,11 @@ msgid "Discard"
 msgstr "Verwerfen"
 
 #. module: web_m2x_options
+#: model:ir.model,name:web_m2x_options.model_ir_http
+msgid "HTTP Routing"
+msgstr ""
+
+#. module: web_m2x_options
 #. odoo-javascript
 #: code:addons/web_m2x_options/static/src/components/form.esm.js:0
 #, python-format
