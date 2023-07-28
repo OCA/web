@@ -3,8 +3,7 @@
 import {Many2XAutocomplete} from "@web/views/fields/relational_utils";
 import {patch} from "@web/core/utils/patch";
 import {sprintf} from "@web/core/utils/strings";
-import {useService} from "@web/core/utils/hooks";
-const {Component, onWillStart} = owl;
+const {Component} = owl;
 
 export function is_option_set(option) {
     if (_.isUndefined(option)) return false;
@@ -16,16 +15,7 @@ export function is_option_set(option) {
 patch(Many2XAutocomplete.prototype, "web_m2x_options.Many2XAutocomplete", {
     setup() {
         this._super(...arguments);
-        const ormService = useService("orm");
-        this.user_context = Component.env.session.user_context;
-        onWillStart(async () => {
-            this.ir_options = await ormService.call(
-                "ir.config_parameter",
-                "get_web_m2x_options",
-                [],
-                {context: this.user_context}
-            );
-        });
+        this.ir_options = Component.env.session.web_m2x_options;
     },
 
     async loadOptionsSource(request) {
