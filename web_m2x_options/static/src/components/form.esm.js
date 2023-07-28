@@ -19,7 +19,7 @@ import {patch} from "@web/core/utils/patch";
 import {sprintf} from "@web/core/utils/strings";
 import {useService} from "@web/core/utils/hooks";
 
-const {Component, onWillStart} = owl;
+const {Component} = owl;
 
 /**
  *  Patch Many2ManyTagsField
@@ -157,16 +157,7 @@ CreateConfirmationDialog.template =
 patch(Many2OneField.prototype, "web_m2x_options.Many2OneField", {
     setup() {
         this._super(...arguments);
-        const ormService = useService("orm");
-        this.user_context = Component.env.session.user_context;
-        onWillStart(async () => {
-            this.ir_options = await ormService.call(
-                "ir.config_parameter",
-                "get_web_m2x_options",
-                [],
-                {context: this.user_context}
-            );
-        });
+        this.ir_options = Component.env.session.web_m2x_options;
     },
     /**
      * @override
@@ -371,12 +362,7 @@ patch(FormController.prototype, "web_m2x_options.FormController", {
      * add more method to add subview limit on formview
      */
     async _setSubViewLimit() {
-        const ir_options = await this.model.orm.call(
-            "ir.config_parameter",
-            "get_web_m2x_options",
-            [],
-            {context: this.user_context}
-        );
+        const ir_options = Component.env.session.web_m2x_options;
 
         const activeFields = this.archInfo.activeFields,
             fields = this.props.fields,
