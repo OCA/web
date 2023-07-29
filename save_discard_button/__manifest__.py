@@ -8,7 +8,7 @@
     "license": "AGPL-3",
     "category": "Tools",
     "author": "Synconics Technologies Pvt. Ltd., Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/server-tools",
+    "website": "https://github.com/OCA/web",
     "depends": ["web"],
     "data": [],
     "images": ["static/description/main_screen.png"],
