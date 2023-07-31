@@ -27,8 +27,8 @@ odoo.define("web_search_with_and/static/src/js/search_bar.js", function (require
                     filterId: source.filterId,
                     value:
                         "value" in source
-                            ? source.value.trim()
-                            : this._parseWithSource(labelValue, source).trim(),
+                            ? source.value
+                            : this._parseWithSource(labelValue.trim(), source),
                     label: labelValue.trim(),
                     operator: source.filterOperator || source.operator,
                     isShiftKey: this.isShiftKey,
