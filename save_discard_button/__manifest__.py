@@ -9,6 +9,7 @@
     "category": "Tools",
     "author": "Synconics Technologies Pvt. Ltd., Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
+    "maintainers": ["synconics"],
     "depends": ["web"],
     "data": [],
     "images": ["static/description/main_screen.png"],

@@ -1,3 +1,3 @@
 Change Save & Discard Button style.
 
-.. image:: ./static/description/icon.png
+.. image:: ../static/description/save_button.png
