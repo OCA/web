@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-06 07:59+0000\n"
-"PO-Revision-Date: 2023-07-06 07:59+0000\n"
+"POT-Creation-Date: 2023-08-01 08:32+0000\n"
+"PO-Revision-Date: 2023-08-01 08:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -24,6 +24,13 @@ msgstr ""
 #. module: web_field_tooltip
 #: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__active
 msgid "Active"
+msgstr ""
+
+#. module: web_field_tooltip
+#. openerp-web
+#: code:addons/web_field_tooltip/static/src/js/web_field_tooltip.js:0
+#, python-format
+msgid "Add a Tooltip"
 msgstr ""
 
 #. module: web_field_tooltip
@@ -80,6 +87,11 @@ msgstr ""
 #: model:ir.actions.act_window,name:web_field_tooltip.ir_model_fields_tooltip_act_window
 #: model:ir.ui.menu,name:web_field_tooltip.ir_model_fields_tooltip_menu
 msgid "Fields Tooltips"
+msgstr ""
+
+#. module: web_field_tooltip
+#: model:ir.model,name:web_field_tooltip.model_ir_http
+msgid "HTTP Routing"
 msgstr ""
 
 #. module: web_field_tooltip
@@ -143,13 +155,13 @@ msgid "Set active to false to hide the Tooltip without removing it."
 msgstr ""
 
 #. module: web_field_tooltip
-#: model:res.groups,comment:web_field_tooltip.group_tooltip_manager
-msgid "The user will be able to manage all the tooltips."
+#: model:ir.model.fields,field_description:web_field_tooltip.field_res_users__tooltip_show_add_helper
+msgid "Show helper to add tooltips on fields"
 msgstr ""
 
 #. module: web_field_tooltip
-#: model:res.groups,comment:web_field_tooltip.group_tooltip_user
-msgid "The user will be able to manage his own tooltips."
+#: model:res.groups,comment:web_field_tooltip.group_tooltip_manager
+msgid "The user will be able to manage all the tooltips."
 msgstr ""
 
 #. module: web_field_tooltip
@@ -158,11 +170,16 @@ msgid "Tooltip Manager"
 msgstr ""
 
 #. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_res_users__tooltip_show_add_helper_allowed
+msgid "Tooltip Show Add Helper Allowed"
+msgstr ""
+
+#. module: web_field_tooltip
 #: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__tooltip_text
 msgid "Tooltip Text"
 msgstr ""
 
 #. module: web_field_tooltip
-#: model:res.groups,name:web_field_tooltip.group_tooltip_user
-msgid "Tooltip User"
+#: model:ir.model,name:web_field_tooltip.model_res_users
+msgid "Users"
 msgstr ""

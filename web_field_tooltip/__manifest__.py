@@ -14,8 +14,8 @@
     "data": [
         "security/res_groups.xml",
         "security/ir_model_access.xml",
-        "security/ir_rule.xml",
         "views/ir_model_fields_tooltip.xml",
+        "views/res_users.xml",
         "views/template.xml",
     ],
 }
