@@ -149,6 +149,7 @@ export class X2Many2DMatrixRenderer extends Component {
             update: (value) => this.update(x, y, value),
             readonly: this.props.readonly,
             record: record,
+            name: this.matrixFields.value,
         };
     }
 }
