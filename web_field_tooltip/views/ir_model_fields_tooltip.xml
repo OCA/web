@@ -5,6 +5,7 @@
 
     <record model="ir.ui.view" id="ir_model_fields_tooltip_form_view">
         <field name="model">ir.model.fields.tooltip</field>
+        <field name="inherit_id" eval="0" />
         <field name="arch" type="xml">
             <form duplicate="0">
                 <sheet>
