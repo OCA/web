@@ -1,8 +1,15 @@
+sup.field-tooltip {
+    margin-right: 5px;
+}
+
 .tooltip-icon {
     color: #666666;
-    margin-left: 5px;
     background: none;
     border: none;
+    display: inline-block;
+    width: 0;
+    font-size: 12px;
+    margin-left: -2px;
 }
 
 .popover-footer {

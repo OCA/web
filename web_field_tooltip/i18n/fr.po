@@ -6,11 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-06 07:59+0000\n"
-"PO-Revision-Date: 2023-07-06 07:42+0000\n"
+"POT-Creation-Date: 2023-08-01 08:24+0000\n"
+"PO-Revision-Date: 2023-08-01 08:24+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -25,7 +24,14 @@ msgstr "Une infobulle existe déjà pour ce champ"
 #. module: web_field_tooltip
 #: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__active
 msgid "Active"
-msgstr "Active"
+msgstr ""
+
+#. module: web_field_tooltip
+#. openerp-web
+#: code:addons/web_field_tooltip/static/src/js/web_field_tooltip.js:0
+#, python-format
+msgid "Add a Tooltip"
+msgstr "Ajouter une infobulle"
 
 #. module: web_field_tooltip
 #: model_terms:ir.ui.view,arch_db:web_field_tooltip.ir_model_fields_tooltip_form_view
@@ -84,9 +90,14 @@ msgid "Fields Tooltips"
 msgstr "Infobulles"
 
 #. module: web_field_tooltip
+#: model:ir.model,name:web_field_tooltip.model_ir_http
+msgid "HTTP Routing"
+msgstr "Routage HTTP"
+
+#. module: web_field_tooltip
 #: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: web_field_tooltip
 #: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip____last_update
@@ -112,6 +123,7 @@ msgstr "Dernière mise à jour le"
 
 #. module: web_field_tooltip
 #. openerp-web
+#: code:addons/web_field_tooltip/static/src/js/web_field_tooltip.js:0
 #: code:addons/web_field_tooltip/static/src/js/web_field_tooltip.js:0
 #, python-format
 msgid "Manage Tooltips"
@@ -144,14 +156,14 @@ msgstr ""
 "Mettre le champ actif à faux pour masquer l'Infobulle sans la supprimer."
 
 #. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_res_users__tooltip_show_add_helper
+msgid "Show helper to add tooltips on fields"
+msgstr "Afficher l'aide pour l'ajout des infobulles sur les champs"
+
+#. module: web_field_tooltip
 #: model:res.groups,comment:web_field_tooltip.group_tooltip_manager
 msgid "The user will be able to manage all the tooltips."
 msgstr "L'utilisateur pourra gérer toutes les infobulles."
-
-#. module: web_field_tooltip
-#: model:res.groups,comment:web_field_tooltip.group_tooltip_user
-msgid "The user will be able to manage his own tooltips."
-msgstr "L'utilisateur pourra gérer ses infobulles."
 
 #. module: web_field_tooltip
 #: model:res.groups,name:web_field_tooltip.group_tooltip_manager
@@ -159,11 +171,16 @@ msgid "Tooltip Manager"
 msgstr "Gestionnaire des infobulles"
 
 #. module: web_field_tooltip
+#: model:ir.model.fields,field_description:web_field_tooltip.field_res_users__tooltip_show_add_helper_allowed
+msgid "Tooltip Show Add Helper Allowed"
+msgstr ""
+
+#. module: web_field_tooltip
 #: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__tooltip_text
 msgid "Tooltip Text"
 msgstr "Texte de l'Infobulle"
 
 #. module: web_field_tooltip
-#: model:res.groups,name:web_field_tooltip.group_tooltip_user
-msgid "Tooltip User"
-msgstr "Utilisateur des infobulles"
+#: model:ir.model,name:web_field_tooltip.model_res_users
+msgid "Users"
+msgstr "Utilisateurs"

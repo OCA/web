@@ -31,12 +31,27 @@ class IrModelFieldsTooltip(models.Model):
         help="Set active to false to hide the Tooltip without removing it.",
     )
     field_name = fields.Char(related="field_id.name")
-    tooltip_text = fields.Html(string="Tooltip Text")
+    tooltip_text = fields.Html(string="Tooltip Text", required=True)
+
+    @api.model
+    def default_get(self, fields_list):
+        res = super().default_get(fields_list)
+        context = self.env.context
+        default_model = context.get("default_model")
+        default_field = context.get("default_field_name")
+        if default_model and default_field:
+            field = self.env["ir.model.fields"].search(
+                [("model_id.model", "=", default_model), ("name", "=", default_field)],
+                limit=1,
+            )
+            res.update({"model_id": field.model_id.id, "field_id": field.id})
+        return res
 
     @api.constrains("model_id", "field_id")
     def _check_duplicate_tooltip(self):
+        all_self = self.with_context(active_test=False)
         for rec in self:
-            if self.search(
+            if all_self.search(
                 [
                     ("model_id", "=", rec.model_id.id),
                     ("field_id", "=", rec.field_id.id),
