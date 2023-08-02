@@ -130,7 +130,7 @@ patch(FormCompiler.prototype, "web_chatter_position", {
                     chatterContainerHookXml.cloneNode(true);
                 sheetBgChatterContainerHookXml.classList.add("o-isInFormSheetBg");
                 sheetBgChatterContainerHookXml.setAttribute("t-if", true);
-                if (formSheetBgXml != null && sheetBgChatterContainerHookXml != null) {
+                if (formSheetBgXml !== null && sheetBgChatterContainerHookXml !== null) {
                     append(formSheetBgXml, sheetBgChatterContainerHookXml);
                     const sheetBgChatterContainerXml =
                         sheetBgChatterContainerHookXml.querySelector(
