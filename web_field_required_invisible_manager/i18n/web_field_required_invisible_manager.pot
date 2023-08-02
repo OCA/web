@@ -45,6 +45,16 @@ msgstr ""
 
 #. module: web_field_required_invisible_manager
 #: model_terms:ir.ui.view,arch_db:web_field_required_invisible_manager.view_model_form_inherit
+msgid "Custom Readonly Fields"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_model__custom_readonly_restriction_ids
+msgid "Custom Readonly Restriction"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model_terms:ir.ui.view,arch_db:web_field_required_invisible_manager.view_model_form_inherit
 msgid "Custom Required Fields"
 msgstr ""
 
@@ -72,6 +82,11 @@ msgstr ""
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__field_name
 msgid "Field Name"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__field_readonly
+msgid "Field Readonly"
 msgstr ""
 
 #. module: web_field_required_invisible_manager
@@ -122,14 +137,34 @@ msgid "Models"
 msgstr ""
 
 #. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__readonly_field_id
+msgid "Readonly Field"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__default_required
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__required
 msgid "Required"
 msgstr ""
 
 #. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__required_field_id
+msgid "Required Field"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__visibility_field_id
+msgid "Visibility Field"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__invisible_model_id
 msgid "invisible_model_id"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__readonly_model_id
+msgid "readonly_model_id"
 msgstr ""
 
 #. module: web_field_required_invisible_manager
