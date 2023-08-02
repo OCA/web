@@ -130,11 +130,13 @@ patch(FormCompiler.prototype, "web_chatter_position", {
                     chatterContainerHookXml.cloneNode(true);
                 sheetBgChatterContainerHookXml.classList.add("o-isInFormSheetBg");
                 sheetBgChatterContainerHookXml.setAttribute("t-if", true);
-                append(formSheetBgXml, sheetBgChatterContainerHookXml);
-                const sheetBgChatterContainerXml =
+                if(formSheetBgXml != null && sheetBgChatterContainerHookXml != null){
+                    append(formSheetBgXml, sheetBgChatterContainerHookXml);
+                    const sheetBgChatterContainerXml =
                     sheetBgChatterContainerHookXml.querySelector("ChatterContainer");
-                sheetBgChatterContainerXml.setAttribute("isInFormSheetBg", "true");
-                chatterContainerHookXml.setAttribute("t-if", false);
+                    sheetBgChatterContainerXml.setAttribute("isInFormSheetBg", "true");
+                    chatterContainerHookXml.setAttribute("t-if", false);
+                }
             }
         }
         return res;
