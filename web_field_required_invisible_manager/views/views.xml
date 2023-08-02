@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
     <record id="view_model_form_inherit" model="ir.ui.view">
@@ -33,6 +32,7 @@
                             />
                             <field name="condition_domain" />
                             <field name="group_ids" widget="many2many_tags" />
+                            <field name="required_field_id" optional="hide" />
                         </tree>
                     </field>
                 </page>
@@ -59,6 +59,35 @@
                             <field name="field_invisible" />
                             <field name="condition_domain" />
                             <field name="group_ids" widget="many2many_tags" />
+                            <field name="visibility_field_id" optional="hide" />
+                        </tree>
+                    </field>
+                </page>
+                <page
+                    string="Custom Readonly Fields"
+                    name="custom_readonly_restriction"
+                >
+                    <field
+                        name="custom_readonly_restriction_ids"
+                        nolabel="1"
+                        context="{'default_readonly_model_id': model}"
+                    >
+                        <tree string="Fields">
+                            <field name="required_model_id" invisible="1" />
+                            <field name="invisible_model_id" invisible="1" />
+                            <field name="readonly_model_id" invisible="1" />
+                            <field name="model_name" invisible="1" />
+                            <field
+                                name="field_id"
+                                context="{'search_by_technical_name': True, 'display_technical_name': True}"
+                                domain="[('model_id.model', '=', model_name)]"
+                                options="{'create': False, 'create_edit': False}"
+                            />
+                            <field name="default_required" invisible="1" />
+                            <field name="field_readonly" />
+                            <field name="condition_domain" />
+                            <field name="group_ids" widget="many2many_tags" />
+                            <field name="readonly_field_id" optional="hide" />
                         </tree>
                     </field>
                 </page>
@@ -76,6 +105,7 @@
 
                         <field name="required_model_id" invisible="1" />
                         <field name="invisible_model_id" invisible="1" />
+                        <field name="readonly_model_id" invisible="1" />
                         <field name="model_name" invisible="1" />
                         <field
                                 name="field_id"
@@ -91,8 +121,11 @@
                             />
                         <field
                                 name="field_invisible"
-                                attrs="{'readonly':[('default_required', '=', True)],
-                                        'invisible':[('invisible_model_id', '=', False)]}"
+                                attrs="{'invisible':[('invisible_model_id', '=', False)]}"
+                            />
+                        <field
+                                name="field_readonly"
+                                attrs="{'invisible':[('readonly_model_id', '=', False)]}"
                             />
                         <field
                                 name="condition_domain"
