@@ -131,7 +131,7 @@ patch(FormCompiler.prototype, "web_chatter_position", {
                 sheetBgChatterContainerHookXml.classList.add("o-isInFormSheetBg");
                 sheetBgChatterContainerHookXml.setAttribute("t-if", true);
                 if (
-                    formSheetBgXml !== null && 
+                    formSheetBgXml !== null &&
                     sheetBgChatterContainerHookXml !== null
                 ) {
                     append(formSheetBgXml, sheetBgChatterContainerHookXml);
