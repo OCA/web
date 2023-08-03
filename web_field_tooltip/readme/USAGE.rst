@@ -9,8 +9,5 @@ To use this module, you need to:
   add a tooltip and use the Manage tooltips Action to add a new tooltip, or edit
   or delete existing tooltips for this model.
 
-* Internal Users can read all created tooltips. Then there are two new groups:
-
-  * Tooltip users who are able to manage their own tooltips.
-
-  * Tooltip managers who are able to manage all tooltips.
+* For manager users, they can decide to display an helper to add a tooltip
+  on a field as some fields are not displayed with a label.
