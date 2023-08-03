@@ -18,17 +18,23 @@ class TestWebFieldTooltip(SavepointCase):
             [("model", "=", cls.partner_model_name), ("name", "=", "email")]
         )
         cls.email_tooltip = cls.Tooltip.create(
-            {"model_id": cls.partner_model.id, "field_id": cls.email_partner_field.id}
+            {
+                "model_id": cls.partner_model.id,
+                "field_id": cls.email_partner_field.id,
+                "tooltip_text": "this explains a lot",
+            }
         )
 
     def test_duplicate_constrains(self):
-        with self.assertRaises(UserError):
+        with self.assertRaises(UserError) as e:
             self.email_tooltip = self.Tooltip.create(
                 {
                     "model_id": self.partner_model.id,
                     "field_id": self.email_partner_field.id,
+                    "tooltip_text": "this explains a lot",
                 }
             )
+        self.assertIn(e.exception.name, "A tooltip already exists for this field")
 
     def test_tooltip_name(self):
         self.assertEqual(

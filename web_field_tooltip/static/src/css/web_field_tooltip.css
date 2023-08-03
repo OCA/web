@@ -2,6 +2,10 @@ sup.field-tooltip {
     margin-right: 5px;
 }
 
+sup.field-tooltip:hover {
+    cursor: pointer;
+}
+
 .tooltip-icon {
     color: #666666;
     background: none;
@@ -9,7 +13,7 @@ sup.field-tooltip {
     display: inline-block;
     width: 0;
     font-size: 12px;
-    margin-left: -2px;
+    margin-left: 0px;
 }
 
 .popover-footer {
