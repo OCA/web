@@ -5,17 +5,14 @@
 odoo.define("web_field_tooltip.FieldTooltip", function(require) {
     "use strict";
 
-    const FormRenderer = require("web.FormRenderer");
-    const ListRenderer = require("web.ListRenderer");
-    const FormController = require("web.FormController");
-
     const core = require("web.core");
+    const dialogs = require("web.view_dialogs");
     const field_utils = require("web.field_utils");
     const rpc = require("web.rpc");
     const session = require("web.session");
     const _t = core._t;
 
-    const Tooltip = {
+    const TooltipRenderer = {
         add_tooltip: function($result, node) {
             const self = this;
             const tooltip_title = $result.text();
@@ -66,21 +63,14 @@ odoo.define("web_field_tooltip.FieldTooltip", function(require) {
 
         get_add_tooltip_elem: function(fieldName) {
             const self = this;
-            const $after_elem = $("<button>", {
+            const $after_elem = $("<a>", {
                 class: "fa fa fa-question-circle tooltip-icon text-info",
-                role: "button",
             });
 
             $after_elem.on("click", function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                self.do_action({
-                    type: "ir.actions.act_window",
-                    name: _t("Add a Tooltip"),
-                    res_model: "ir.model.fields.tooltip",
-                    target: "new",
-                    views: [[false, "form"]],
-                    view_mode: "form",
+                self.trigger_up("add_tooltip", {
                     context: {
                         default_model: self.state.model,
                         default_field_name: fieldName,
@@ -96,9 +86,9 @@ odoo.define("web_field_tooltip.FieldTooltip", function(require) {
 
         get_tooltip_elem: function(fieldName, tooltip_title, tooltip) {
             const self = this;
-            const $after_elem = $("<button>", {
+            const $after_elem = $("<a>", {
                 class: "fa fa fa-question-circle tooltip-icon",
-                role: "button",
+                tabIndex: 0,
             });
 
             const $popup_div = $("<div/>", {
@@ -127,14 +117,8 @@ odoo.define("web_field_tooltip.FieldTooltip", function(require) {
                 $edit_button.on("click", function(e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    self.do_action({
-                        type: "ir.actions.act_window",
-                        name: _t("Edit a Tooltip"),
-                        res_model: "ir.model.fields.tooltip",
-                        target: "new",
+                    self.trigger_up("edit_tooltip", {
                         res_id: tooltip.id,
-                        views: [[false, "form"]],
-                        view_mode: "form",
                     });
                 });
 
@@ -167,86 +151,39 @@ odoo.define("web_field_tooltip.FieldTooltip", function(require) {
         },
     };
 
-    FormRenderer.include(
-        Object.assign({}, Tooltip, {
-            init: function() {
-                this._super.apply(this, arguments);
-                this.tooltips = undefined;
-            },
-
-            /**
-             * @override
-             */
-            _renderTagLabel: function(node) {
-                const self = this;
-                const $result = this._super.apply(this, arguments);
-                const fieldName =
-                    node.tag === "label" ? node.attrs.for : node.attrs.name;
-                if (!fieldName) {
-                    return $result;
-                }
-                self.add_tooltip($result, node);
-
-                return $result;
-            },
-        })
-    );
-
-    ListRenderer.include(
-        Object.assign({}, Tooltip, {
-            init: function() {
-                this._super.apply(this, arguments);
-                this.tooltips = undefined;
-            },
-
-            /**
-             * @override
-             */
-            _renderHeaderCell: function(node) {
-                const self = this;
-                const $result = this._super.apply(this, arguments);
-                const fieldName =
-                    node.tag === "label" ? node.attrs.for : node.attrs.name;
-                if (!fieldName) {
-                    return $result;
-                }
-                self.add_tooltip($result, node);
-
-                return $result;
-            },
-        })
-    );
-
-    FormController.include({
-        init: function() {
-            console.log("FormController");
-            this._super.apply(this, arguments);
-        },
-
-        renderSidebar: function($node) {
-            this._super($node);
-            if (this.sidebar && session.can_manage_tooltips) {
-                this.sidebar.items.other.push({
-                    label: _t("Manage Tooltips"),
-                    callback: this.on_manage_tooltips,
-                });
-            }
-        },
-        on_manage_tooltips: function() {
-            var self = this;
-            return self.do_action({
-                type: "ir.actions.act_window",
-                name: _t("Manage Tooltips"),
+    const TooltipController = {
+        _onAddTooltip: function(params) {
+            const self = this;
+            new dialogs.FormViewDialog(self, {
                 res_model: "ir.model.fields.tooltip",
-                target: "current",
-                views: [
-                    [false, "list"],
-                    [false, "form"],
-                ],
-                view_mode: "list",
-                domain: [["model", "=", self.modelName]],
-                context: {tooltip_model: self.modelName},
-            });
+                context: _.extend(session.user_context, params.data.context),
+                title: _t("Add a tooltip"),
+                disable_multiple_selection: true,
+            }).open();
         },
-    });
+        _onEditTooltip: function(params) {
+            const self = this;
+            const tooltipId = params.data.res_id;
+            new dialogs.FormViewDialog(self, {
+                res_model: "ir.model.fields.tooltip",
+                res_id: tooltipId,
+                context: session.user_context,
+                title: _t("Edit a tooltip"),
+                disable_multiple_selection: false,
+                deletable: true,
+                on_remove: function() {
+                    rpc.query({
+                        model: "ir.model.fields.tooltip",
+                        method: "unlink",
+                        args: [tooltipId],
+                    });
+                },
+            }).open();
+        },
+    };
+
+    return {
+        TooltipRenderer: TooltipRenderer,
+        TooltipController: TooltipController,
+    };
 });
