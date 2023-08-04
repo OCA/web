@@ -130,3 +130,8 @@ class TestFieldRequiredIvisibleManager(common.SavepointCase):
         self.invisible_title_rec_id.unlink()
         field_id = self.env["ir.model.fields"].search([("name", "=", field_name)])
         self.assertFalse(field_id)
+        # default get
+        self.env["res.partner"].default_get(["name"])
+        self.env["res.partner"].default_get(["city"])
+        self.env["res.partner.title"].default_get(["name"])
+        self.env["res.partner.title"].default_get(["shortcut"])
