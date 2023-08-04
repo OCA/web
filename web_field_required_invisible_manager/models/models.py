@@ -44,9 +44,7 @@ class Base(models.AbstractModel):
                 ("group_ids", "in", self.env.user.groups_id.ids),
             ]
         )
-        if not restrictions:
-            return arch
-        else:
+        if restrictions:
             return self.create_restrictions_fields(restrictions, view_type, arch)
         return arch
 
@@ -127,3 +125,32 @@ class Base(models.AbstractModel):
                 elif r.group_ids:
                     if r.group_ids & self.env.user.groups_id:
                         record[field_name] = True
+
+    def default_get(self, fields_list):
+        res = super(Base, self).default_get(fields_list)
+        vals = self._default_get_compute_restrictions_fields()
+        if vals:
+            res.update(vals)
+        return res
+
+    def _default_get_compute_restrictions_fields(self):
+        restrictions = self.env["custom.field.restriction"].search(
+            [("model_name", "=", self._name)]
+        )
+        values = {}
+        if not restrictions:
+            return values
+        for r in restrictions:
+            if r.visibility_field_id:
+                field_name = r.visibility_field_id.name
+                values[field_name] = False
+            if r.required_field_id:
+                field_name = r.required_field_id.name
+                values[field_name] = False
+            if r.readonly_field_id:
+                field_name = r.readonly_field_id.name
+                values[field_name] = False
+            if r.group_ids:
+                if r.group_ids & self.env.user.groups_id:
+                    values[field_name] = True
+        return values
