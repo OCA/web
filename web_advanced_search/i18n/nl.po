@@ -9,36 +9,36 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-03 03:49+0000\n"
-"PO-Revision-Date: 2020-11-11 13:08+0000\n"
-"Last-Translator: Dennis Sluijk <d.sluijk@onestein.nl>\n"
+"PO-Revision-Date: 2023-08-07 16:10+0000\n"
+"Last-Translator: \"Jan Tapper [Onestein]\" <j.tapper@onestein.nl>\n"
 "Language-Team: Dutch (https://www.transifex.com/oca/teams/23907/nl/)\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: web_advanced_search
 #. odoo-javascript
 #: code:addons/web_advanced_search/static/src/js/utils.esm.js:0
 #, python-format
 msgid " and "
-msgstr ""
+msgstr " en "
 
 #. module: web_advanced_search
 #. odoo-javascript
 #: code:addons/web_advanced_search/static/src/js/utils.esm.js:0
 #, python-format
 msgid " is not "
-msgstr ""
+msgstr " is niet "
 
 #. module: web_advanced_search
 #. odoo-javascript
 #: code:addons/web_advanced_search/static/src/js/utils.esm.js:0
 #, python-format
 msgid " or "
-msgstr ""
+msgstr " of "
 
 #. module: web_advanced_search
 #. odoo-javascript
