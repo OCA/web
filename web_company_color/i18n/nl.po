@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2020-11-11 13:08+0000\n"
-"Last-Translator: Dennis Sluijk <d.sluijk@onestein.nl>\n"
+"PO-Revision-Date: 2023-08-07 16:10+0000\n"
+"Last-Translator: \"Jan Tapper [Onestein]\" <j.tapper@onestein.nl>\n"
 "Language-Team: none\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.10\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: web_company_color
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
@@ -24,6 +24,10 @@ msgid ""
 "refresh\n"
 "                        the page."
 msgstr ""
+"<span class=\"fa fa-info fa-2x me-2\"/>\n"
+"                        Om de aanpassingen actief te maken, ververs "
+"alstublieft\n"
+"                        de pagina."
 
 #. module: web_company_color
 #: model:ir.model,name:web_company_color.model_res_company
@@ -43,7 +47,7 @@ msgstr "Bedrijfsstijlen"
 #. module: web_company_color
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
 msgid "Compute colors from logo"
-msgstr ""
+msgstr "Genereer kleuren vanuit het logo"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_navbar_bg
