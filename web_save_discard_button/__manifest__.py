@@ -15,7 +15,7 @@
     "images": ["static/description/main_screen.png"],
     "assets": {
         "web.assets_backend": [
-            "save_discard_button/static/src/scss/indicator_button.scss"
+            "web_save_discard_button/static/src/scss/indicator_button.scss"
         ],
     },
     "installable": True,
