@@ -27,7 +27,7 @@ addon | version | maintainers | summary
 [web_chatter_position](web_chatter_position/) | 15.0.1.0.0 |  | Add an option to change the chatter position
 [web_company_color](web_company_color/) | 15.0.1.1.0 |  | Web Company Color
 [web_copy_confirm](web_copy_confirm/) | 15.0.1.0.0 |  | Show confirmation dialogue before copying records
-[web_dialog_size](web_dialog_size/) | 15.0.1.0.1 |  | A module that lets the user expand a dialog box to the full screen width.
+[web_dialog_size](web_dialog_size/) | 15.0.1.1.0 |  | A module that lets the user expand a dialog box to the full screen width.
 [web_disable_export_group](web_disable_export_group/) | 15.0.2.0.0 |  | Web Disable Export Group
 [web_domain_field](web_domain_field/) | 15.0.1.0.1 |  | Use computed field as domain
 [web_drop_target](web_drop_target/) | 15.0.1.0.1 |  | Allows to drag files into Odoo
