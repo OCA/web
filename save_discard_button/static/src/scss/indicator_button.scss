@@ -35,7 +35,7 @@
                 transition: none;
                 width: 100%;
                 text-transform: uppercase;
-                font-family: "ubuntu";
+                font-family: $o-system-fonts;
             }
         }
         .fa-undo {
@@ -57,7 +57,7 @@
                 transition: none;
                 width: 100%;
                 text-transform: uppercase;
-                font-family: "ubuntu";
+                font-family: $o-system-fonts;
             }
         }
     }
