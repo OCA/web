@@ -5,14 +5,14 @@ odoo.define("web_advanced_search.AdvancedSelectDialog", function (require) {
     const dialogs = require("web.view_dialogs");
 
     const AdvancedSelectDialog = dialogs.SelectCreateDialog.extend({
-    open: function (open) {
+        open: function () {
             var self = this;
-     	    return this._super().then(function() {
-	           self.opened().then( function() {
-			       self.trigger_up("controller_update", {'start': true});
-		       });
-	        })
-     },
+            return this._super().then(function () {
+                self.opened().then(function () {
+                    self.trigger_up("controller_update", {start: true});
+                });
+            });
+        },
         /**
          * - Prevent dialog from closing when clicking on line.
          * - Make sure Use Criteria button only shown when criteria selected.
@@ -30,17 +30,17 @@ odoo.define("web_advanced_search.AdvancedSelectDialog", function (require) {
                 controller_update: function (event) {
                     event.stopPropagation();
                     if (this.$footer) {
-	                    if (event.data.start === true) {
-                           this.$footer.find(".o_use_criteria_button").hide()
-		        	      return
-            	        }
+                        if (event.data.start === true) {
+                            this.$footer.find(".o_use_criteria_button").hide();
+                            return;
+                        }
                         const state = event.data.state;
                         const domain = state.getDomain();
                         if (domain && domain.length > 0) {
-                            this.$footer.find(".o_use_criteria_button").show()
-                        } else { 
-                            this.$footer.find(".o_use_criteria_button").hide()
-			}
+                            this.$footer.find(".o_use_criteria_button").show();
+                        } else {
+                            this.$footer.find(".o_use_criteria_button").hide();
+                        }
                     }
                 },
             }

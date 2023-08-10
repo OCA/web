@@ -8,7 +8,7 @@ odoo.define("web_advanced_search.select_create_list_controller", function (requi
     var controller_registry = require("web.select_create_controllers_registry");
     require("web._select_create_controllers_registry");
     var selectCreateController = controller_registry.SelectCreateListController;
-    
+
     selectCreateController.include({
         async _update(state, params) {
             return this._super(state, params).then(
