@@ -16,6 +16,7 @@ setuptools.setup(
         'odoo-addon-web_dialog_size>=16.0dev,<16.1dev',
         'odoo-addon-web_domain_field>=16.0dev,<16.1dev',
         'odoo-addon-web_environment_ribbon>=16.0dev,<16.1dev',
+        'odoo-addon-web_field_numeric_formatting>=16.0dev,<16.1dev',
         'odoo-addon-web_help>=16.0dev,<16.1dev',
         'odoo-addon-web_ir_actions_act_window_page>=16.0dev,<16.1dev',
         'odoo-addon-web_m2x_options>=16.0dev,<16.1dev',
