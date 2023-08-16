@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-06-26 11:10+0000\n"
+"PO-Revision-Date: 2023-08-16 11:11+0000\n"
 "Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -44,17 +44,17 @@ msgstr "Campi invisibili personalizzati"
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_model__custom_invisible_restriction_ids
 msgid "Custom Invisible Restriction"
-msgstr "Restrizione invisibile personalizzata"
+msgstr "Restrizione invisibile"
 
 #. module: web_field_required_invisible_manager
 #: model_terms:ir.ui.view,arch_db:web_field_required_invisible_manager.view_model_form_inherit
 msgid "Custom Readonly Fields"
-msgstr ""
+msgstr "Campi in sola lettura personalizzati"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_model__custom_readonly_restriction_ids
 msgid "Custom Readonly Restriction"
-msgstr ""
+msgstr "Restrizione sola lettura"
 
 #. module: web_field_required_invisible_manager
 #: model_terms:ir.ui.view,arch_db:web_field_required_invisible_manager.view_model_form_inherit
@@ -64,7 +64,7 @@ msgstr "Campi obbligatori personalizzati"
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_model__custom_required_restriction_ids
 msgid "Custom Required Restriction"
-msgstr "Restrizione obbligatoria personalizzata"
+msgstr "Restrizione obbligatorio"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__display_name
@@ -90,7 +90,7 @@ msgstr "Nome campo"
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__field_readonly
 msgid "Field Readonly"
-msgstr ""
+msgstr "Campo in sola lettura"
 
 #. module: web_field_required_invisible_manager
 #: model_terms:ir.ui.view,arch_db:web_field_required_invisible_manager.view_model_form_inherit
@@ -142,7 +142,7 @@ msgstr "Modelli"
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__readonly_field_id
 msgid "Readonly Field"
-msgstr ""
+msgstr "Campo in sola lettura"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__default_required
@@ -153,12 +153,12 @@ msgstr "Obbligatorio"
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__required_field_id
 msgid "Required Field"
-msgstr ""
+msgstr "Campo obbligatorio"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__visibility_field_id
 msgid "Visibility Field"
-msgstr ""
+msgstr "Visibilità campo"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__invisible_model_id
@@ -168,7 +168,7 @@ msgstr "invisible_model_id"
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__readonly_model_id
 msgid "readonly_model_id"
-msgstr ""
+msgstr "readonly_model_id"
 
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__required_model_id
