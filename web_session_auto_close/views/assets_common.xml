@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="assets_common"
+        inherit_id="web.assets_common"
+        name="Web Session Auto Close Assets Common"
+    >
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/web_session_auto_close/static/src/js/local_storage_mixin.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_session_auto_close/static/src/js/session.js"
+            />
+        </xpath>
+    </template>
+</odoo>
