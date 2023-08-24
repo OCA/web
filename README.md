@@ -23,7 +23,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [web_action_conditionable](web_action_conditionable/) | 16.0.1.0.0 |  | web_action_conditionable
 [web_advanced_search](web_advanced_search/) | 16.0.1.0.2 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Easier and more powerful searching tools
-[web_chatter_position](web_chatter_position/) | 16.0.1.0.0 |  | Add an option to change the chatter position
+[web_chatter_position](web_chatter_position/) | 16.0.1.0.1 |  | Add an option to change the chatter position
 [web_company_color](web_company_color/) | 16.0.1.1.0 |  | Web Company Color
 [web_dark_mode](web_dark_mode/) | 16.0.1.0.1 |  | Enabled Dark Mode for the Odoo Backend
 [web_dialog_size](web_dialog_size/) | 16.0.1.0.0 |  | A module that lets the user expand a dialog box to the full screen width.
