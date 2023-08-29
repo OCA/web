@@ -290,7 +290,7 @@ export default AbstractController.extend({
         this.Dialog = Component.env.services.dialog.add(
             FormViewDialog,
             {
-                resId: null,
+                resId: false,
                 context: _.extend(default_context, this.context),
                 onRecordSaved: (record) => this.create_completed([record.res_id]),
                 resModel: this.model.modelName,
