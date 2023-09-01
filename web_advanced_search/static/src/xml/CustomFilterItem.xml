@@ -8,7 +8,7 @@
     <t t-inherit="web.CustomFilterItem" t-inherit-mode="extension" owl="1">
         <xpath expr="//select[@t-elif]" position="after">
             <t
-                t-elif="fieldType === 'many2one' and ['=', '!='].includes(selectedOperator.symbol)"
+                t-elif="['many2one', 'many2many', 'one2many'].includes(fieldType) and ['=', '!='].includes(selectedOperator.symbol)"
             >
                 <RecordPicker
                     model="fields[condition.field].relation"
