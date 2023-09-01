@@ -22,6 +22,8 @@ patch(CustomFilterItem.prototype, "web_advanced_search.legacy.CustomFilterItem",
     async willStart() {
         this.OPERATORS.relational = this.OPERATORS.char;
         this.FIELD_TYPES.many2one = "relational";
+        this.FIELD_TYPES.many2many = "relational";
+        this.FIELD_TYPES.one2many = "relational";
         return this._super(...arguments);
     },
     /**
