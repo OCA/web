@@ -31,6 +31,7 @@ patch(Dropdown.prototype, "dropdown", {
 });
 
 export const FakeMany2oneFieldWidget = FieldMany2One.extend(FieldManagerMixin, {
+    supportedFieldTypes: ["many2many", "many2one", "one2many"],
     /**
      * @override
      */
