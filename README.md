@@ -22,7 +22,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [web_action_conditionable](web_action_conditionable/) | 15.0.1.0.0 |  | web_action_conditionable
-[web_advanced_search](web_advanced_search/) | 15.0.1.1.2 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Easier and more powerful searching tools
+[web_advanced_search](web_advanced_search/) | 15.0.1.1.3 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Easier and more powerful searching tools
 [web_calendar_slot_duration](web_calendar_slot_duration/) | 15.0.1.0.0 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) | Customizable calendar slot durations
 [web_chatter_position](web_chatter_position/) | 15.0.1.0.0 |  | Add an option to change the chatter position
 [web_company_color](web_company_color/) | 15.0.1.1.0 |  | Web Company Color
