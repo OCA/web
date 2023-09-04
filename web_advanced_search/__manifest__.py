@@ -6,7 +6,7 @@
 {
     "name": "Advanced search",
     "summary": "Easier and more powerful searching tools",
-    "version": "15.0.1.1.2",
+    "version": "15.0.1.1.3",
     "author": "Therp BV, Tecnativa, Camptocamp, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "maintainers": ["ivantodorovich"],
