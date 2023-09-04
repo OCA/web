@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-03-19 21:17+0000\n"
-"Last-Translator: Alessandro Fiorino <alessandro.fiorino@digitaldomus.it>\n"
+"PO-Revision-Date: 2023-09-04 18:38+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: web_widget_image_download
 #. openerp-web
@@ -22,4 +22,4 @@ msgstr ""
 #: code:addons/web_widget_image_download/static/src/xml/web_widget_image_download.xml:0
 #, python-format
 msgid "Download"
-msgstr "Download"
+msgstr "Scarica"
