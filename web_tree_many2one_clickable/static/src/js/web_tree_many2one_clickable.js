@@ -51,13 +51,21 @@ odoo.define("web_tree_many2one_clickable.many2one_clickable", function (require)
                 }).on("click", function (ev) {
                     ev.preventDefault();
                     ev.stopPropagation();
-
+                    // Allow to define target from attrs
+                    var open_target = self.attrs.open_target
+                        ? self.attrs.open_target
+                        : "target";
+                    var flags = {};
+                    if (open_target == "new") {
+                        flags = {mode: "readonly"};
+                    }
                     self.do_action({
                         type: "ir.actions.act_window",
                         res_model: self.field.relation,
                         res_id: self.value.res_id,
                         views: [[false, "form"]],
-                        target: "target",
+                        target: open_target,
+                        flags: flags,
                         context: self.record.getContext({
                             additionalContext: self.attrs.context || {},
                         }),
