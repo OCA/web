@@ -50,7 +50,7 @@ addon | version | maintainers | summary
 [web_widget_numeric_step](web_widget_numeric_step/) | 16.0.1.0.0 |  | Web Widget Numeric Step
 [web_widget_open_tab](web_widget_open_tab/) | 16.0.1.0.0 |  | Allow to open record from trees on new tab from tree views
 [web_widget_plotly_chart](web_widget_plotly_chart/) | 16.0.1.0.0 | [![robyf70](https://github.com/robyf70.png?size=30px)](https://github.com/robyf70) | Allow to draw plotly charts.
-[web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 16.0.1.1.0 | [![ChrisOForgeFlow](https://github.com/ChrisOForgeFlow.png?size=30px)](https://github.com/ChrisOForgeFlow) | Show list fields as a matrix
+[web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 16.0.1.1.1 | [![ChrisOForgeFlow](https://github.com/ChrisOForgeFlow.png?size=30px)](https://github.com/ChrisOForgeFlow) | Show list fields as a matrix
 
 [//]: # (end addons)
 
