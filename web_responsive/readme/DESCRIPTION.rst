@@ -66,3 +66,8 @@ This module adds responsiveness to web backend.
   width preview clicking on the new maximize button.
 
   .. image:: ../static/img/document_viewer.gif
+
+* When the user chooses to send a public message the color of the composer is different
+  from the one when the message is an internal log.
+
+  .. image:: ../static/img/chatter-colors.gif
