@@ -3,3 +3,4 @@
 * `Tecnativa <https://www.tecnativa.com>`_:
 
   * Ernesto Tejeda
+* Nilesh Sheliya <nilesh@synodica.com>
