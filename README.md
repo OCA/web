@@ -50,7 +50,7 @@ addon | version | maintainers | summary
 [web_send_message_popup](web_send_message_popup/) | 15.0.1.0.0 |  | Web Send Message as Popup
 [web_sheet_full_width](web_sheet_full_width/) | 15.0.1.0.1 |  | Use the whole available screen width when displaying sheets
 [web_time_range_menu_custom](web_time_range_menu_custom/) | 15.0.1.0.1 |  | Web Time Range Menu Custom
-[web_timeline](web_timeline/) | 15.0.1.0.2 | [![tarteo](https://github.com/tarteo.png?size=30px)](https://github.com/tarteo) | Interactive visualization chart to show events in time
+[web_timeline](web_timeline/) | 15.0.1.1.0 | [![tarteo](https://github.com/tarteo.png?size=30px)](https://github.com/tarteo) | Interactive visualization chart to show events in time
 [web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 15.0.1.0.0 |  | Allows you to dynamically color fields on tree views
 [web_tree_image_tooltip](web_tree_image_tooltip/) | 15.0.1.1.0 |  | Show images in tree views via tooltip
 [web_tree_many2one_clickable](web_tree_many2one_clickable/) | 15.0.1.0.0 |  | Open the linked resource when clicking on their name
