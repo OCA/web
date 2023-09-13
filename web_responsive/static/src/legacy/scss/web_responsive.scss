@@ -464,3 +464,13 @@ html .o_web_client .o_action_manager .o_action {
 ul.ui-autocomplete .dropdown-item.ui-menu-item-wrapper {
     white-space: initial;
 }
+
+// Color clue to tell the difference between a note and a public message
+.o_Chatter_composer {
+    // HACK: has() pseudo class is broadly supported in desktop, even FF will deploy
+    // full support soon (now it's available behind a config flag)
+    // https://caniuse.com/css-has
+    &:has(div.o_Composer_coreHeader) {
+        background-color: lighten($o-brand-primary, 40%);
+    }
+}
