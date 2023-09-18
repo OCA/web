@@ -314,6 +314,7 @@ odoo.define('web_responsive', function(require) {
             this.$searchInput = $('#appDrawerSearchInput').focus();
             var Menus = new DataModel('ir.ui.menu');
             Menus.query(['action', 'display_name', 'id'])
+                .context({"responsive_search": true})
                 .filter([['name', 'ilike', this.$searchInput.val()],
                          ['action', '!=', false]
                          ])
