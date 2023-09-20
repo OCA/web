@@ -17,15 +17,23 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: web_group_expand
-#. openerp-web
-#: code:addons/web_group_expand/static/src/xml/expand_buttons.xml:12
+#. odoo-javascript
+#: code:addons/web_group_expand/static/src/xml/list_controller.xml:0
 #, python-format
-msgid "Collapse groups"
-msgstr "Groepen inklappen"
+msgid "Compress"
+msgstr ""
 
 #. module: web_group_expand
-#. openerp-web
-#: code:addons/web_group_expand/static/src/xml/expand_buttons.xml:8
+#. odoo-javascript
+#: code:addons/web_group_expand/static/src/xml/list_controller.xml:0
 #, python-format
-msgid "Expand groups"
-msgstr "Groepen uitvouwen"
+msgid "Expand"
+msgstr ""
+
+#, python-format
+#~ msgid "Collapse groups"
+#~ msgstr "Groepen inklappen"
+
+#, python-format
+#~ msgid "Expand groups"
+#~ msgstr "Groepen uitvouwen"

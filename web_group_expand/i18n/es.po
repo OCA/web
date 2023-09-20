@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_group_expand
+# 	* web_group_expand
 #
 msgid ""
 msgstr ""
@@ -17,15 +17,23 @@ msgstr ""
 "X-Generator: Weblate 3.10\n"
 
 #. module: web_group_expand
-#. openerp-web
-#: code:addons/web_group_expand/static/src/xml/expand_buttons.xml:12
+#. odoo-javascript
+#: code:addons/web_group_expand/static/src/xml/list_controller.xml:0
 #, python-format
-msgid "Collapse groups"
-msgstr "Colapsar grupos"
+msgid "Compress"
+msgstr ""
 
 #. module: web_group_expand
-#. openerp-web
-#: code:addons/web_group_expand/static/src/xml/expand_buttons.xml:8
+#. odoo-javascript
+#: code:addons/web_group_expand/static/src/xml/list_controller.xml:0
 #, python-format
-msgid "Expand groups"
-msgstr "Expandir grupos"
+msgid "Expand"
+msgstr ""
+
+#, python-format
+#~ msgid "Collapse groups"
+#~ msgstr "Colapsar grupos"
+
+#, python-format
+#~ msgid "Expand groups"
+#~ msgstr "Expandir grupos"
