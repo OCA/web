@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-02-04 08:29+0000\n"
-"PO-Revision-Date: 2023-06-13 16:09+0000\n"
+"PO-Revision-Date: 2023-09-21 15:37+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-web-8-0/language/it/"
 ")\n"
@@ -31,7 +31,7 @@ msgstr "Ok"
 #: code:addons/web_offline_warning/static/src/js/web_offline_warning.js:23
 #, python-format
 msgid "The server cannot be reached. You are probably offline."
-msgstr ""
+msgstr "Il server non è raggiungibile. Probabilmente si è scollegati."
 
 #. module: web_offline_warning
 #. openerp-web
