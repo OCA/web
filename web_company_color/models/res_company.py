@@ -16,6 +16,7 @@ class ResCompany(models.Model):
 
     SCSS_TEMPLATE = """
         .o_main_navbar {
+          background: %(color_navbar_bg)s !important;
           background-color: %(color_navbar_bg)s !important;
           color: %(color_navbar_text)s !important;
 
@@ -113,10 +114,7 @@ class ResCompany(models.Model):
         values.update(
             {
                 "color_navbar_bg": (values.get("color_navbar_bg") or "$o-brand-odoo"),
-                "color_navbar_bg_hover": (
-                    values.get("color_navbar_bg_hover")
-                    or "$o-navbar-inverse-link-hover-bg"
-                ),
+                "color_navbar_bg_hover": (values.get("color_navbar_bg_hover")),
                 "color_navbar_text": (values.get("color_navbar_text") or "#FFF"),
             }
         )
