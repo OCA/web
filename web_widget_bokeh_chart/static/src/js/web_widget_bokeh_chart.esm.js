@@ -21,9 +21,12 @@ class BokehChartWidget extends CharField {
         );
     }
     get json_value() {
-        var value = JSON.parse(this.props.value);
-        value.div = markup(value.div.trim());
-        return value;
+    try {
+      var value = JSON.parse(this.props.record.data[this.props.field]);
+      value.div = markup(value.div.trim());
+      return value;
+    } catch (error) {
+      return {};
     }
 }
 BokehChartWidget.template = "web_widget_bokeh_chart.BokehChartField";
