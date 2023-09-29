@@ -1,0 +1,52 @@
+<odoo>
+
+    <record id="view_model_form_inherit" model="ir.ui.view">
+        <field name="name">view.model.form.inherit</field>
+        <field name="model">ir.model</field>
+        <field name="inherit_id" ref="base.view_model_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='fields']" position="after">
+                <page string="Hide Button Rules" name="hide_button_rules_page">
+                    <field
+                        name="hide_button_rule_ids"
+                        nolabel="1"
+                        context="{'default_required_model_id': model}"
+                    >
+                        <tree>
+                            <field name="model_id" invisible="1" />
+                            <field name="model_name" invisible="1" />
+                            <field name="button_name" />
+                            <field name="condition_domain" />
+                            <field name="group_ids" widget="many2many_tags" />
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hide_button_rule_form" model="ir.ui.view">
+        <field name="name">model.button.rule.form.view</field>
+        <field name="model">model.button.rule</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group><group>
+
+                        <field name="model_id" invisible="1" />
+                        <field name="model_name" invisible="1" />
+                        <field name="button_name" />
+                        <field
+                                name="condition_domain"
+                                widget="domain"
+                                options="{'model': 'model_name', 'in_dialog': True}"
+                            />
+                        <field name="group_ids" widget="many2many_tags" />
+                    </group></group>
+                </sheet>
+            </form>
+
+        </field>
+    </record>
+
+</odoo>
