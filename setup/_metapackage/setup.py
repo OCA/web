@@ -52,6 +52,7 @@ setuptools.setup(
         'odoo-addon-web_widget_mpld3_chart>=15.0dev,<15.1dev',
         'odoo-addon-web_widget_numeric_step>=15.0dev,<15.1dev',
         'odoo-addon-web_widget_open_tab>=15.0dev,<15.1dev',
+        'odoo-addon-web_widget_remote_measure>=15.0dev,<15.1dev',
         'odoo-addon-web_widget_url_advanced>=15.0dev,<15.1dev',
         'odoo-addon-web_widget_x2many_2d_matrix>=15.0dev,<15.1dev',
     ],
