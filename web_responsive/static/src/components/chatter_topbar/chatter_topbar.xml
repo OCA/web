@@ -100,7 +100,7 @@
                                 'btn-odoo': !chatterTopbar.chatter.composerView,
                                 'btn-light': chatterTopbar.chatter.composerView and chatterTopbar.chatter.composerView.composer.isLog,
                             }"
-                            t-att-disabled="!chatterTopbar.chatter.isTemporary and !chatterTopbar.chatter.hasWriteAccess"
+                            t-att-disabled="!chatterTopbar.chatter.canPostMessage"
                             data-hotkey="m"
                             t-on-click="chatterTopbar.chatter.onClickSendMessage"
                         >
@@ -113,7 +113,7 @@
                                 'o-active btn-odoo': chatterTopbar.chatter.composerView and chatterTopbar.chatter.composerView.composer.isLog,
                                 'btn-light': chatterTopbar.chatter.composerView and !chatterTopbar.chatter.composerView.composer.isLog or !chatterTopbar.chatter.composerView,
                             }"
-                            t-att-disabled="!chatterTopbar.chatter.isTemporary and !chatterTopbar.chatter.hasWriteAccess"
+                            t-att-disabled="!chatterTopbar.chatter.canPostMessage"
                             t-on-click="chatterTopbar.chatter.onClickLogNote"
                             data-hotkey="shift+m"
                         >
@@ -130,7 +130,7 @@
                             <button
                                 class="o_ChatterTopbar_button o_ChatterTopbar_buttonScheduleActivity btn btn-light text-nowrap"
                                 type="button"
-                                t-att-disabled="!chatterTopbar.chatter.isTemporary and !chatterTopbar.chatter.hasWriteAccess"
+                                t-att-disabled="!chatterTopbar.chatter.canPostMessage"
                                 t-on-click="chatterTopbar.chatter.onClickScheduleActivity"
                                 data-hotkey="shift+a"
                             >
