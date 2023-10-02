@@ -2,7 +2,7 @@
 {
     "name": "Web Field Required Invisible Readonly Managerr",
     "category": "Web",
-    "version": "14.0.2.1.0",
+    "version": "14.0.2.1.1",
     "license": "AGPL-3",
     "author": "Ilyas, ooops404, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
