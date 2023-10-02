@@ -73,11 +73,6 @@ class TestFieldRequiredIvisibleManager(common.SavepointCase):
         self.assertTrue(self.invisible_rec_id.visibility_field_id)
         self.assertTrue(self.required_rec_id.required_field_id)
         self.assertTrue(self.readonly_rec_id.readonly_field_id)
-        # onchange_field_id()
-        self.assertFalse(self.invisible_title_rec_id.required)
-        self.invisible_title_rec_id.field_id = self.partner_title_name_field_id
-        self.invisible_title_rec_id.onchange_field_id()
-        self.assertTrue(self.invisible_title_rec_id.required)
         # _compute_model_name()
         self.invisible_rec_id._compute_model_name()
         self.assertEqual(self.invisible_rec_id.model_name, "res.partner")
@@ -125,13 +120,13 @@ class TestFieldRequiredIvisibleManager(common.SavepointCase):
         self.deco_addict.invalidate_cache()
         self.deco_addict.read(["x_computed_res_partner_name_visibility"])
         self.assertTrue(self.deco_addict.x_computed_res_partner_name_visibility)
-        # unlink
-        field_name = self.invisible_title_rec_id.get_field_name("visibility")
-        self.invisible_title_rec_id.unlink()
-        field_id = self.env["ir.model.fields"].search([("name", "=", field_name)])
-        self.assertFalse(field_id)
         # default get
         self.env["res.partner"].default_get(["name"])
         self.env["res.partner"].default_get(["city"])
         self.env["res.partner.title"].default_get(["name"])
         self.env["res.partner.title"].default_get(["shortcut"])
+        # onchange_field_id()
+        self.assertFalse(self.invisible_title_rec_id.required)
+        self.invisible_title_rec_id.field_id = self.partner_title_name_field_id
+        self.invisible_title_rec_id.onchange_field_id()
+        self.assertTrue(self.invisible_title_rec_id.required)

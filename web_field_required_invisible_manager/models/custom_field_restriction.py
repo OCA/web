@@ -49,9 +49,9 @@ class CustomFieldRestriction(models.Model):
     field_invisible = fields.Boolean()
     field_readonly = fields.Boolean()
     # generated technical fields used in form attrs:
-    visibility_field_id = fields.Many2one("ir.model.fields", ondelete="cascade")
-    readonly_field_id = fields.Many2one("ir.model.fields", ondelete="cascade")
-    required_field_id = fields.Many2one("ir.model.fields", ondelete="cascade")
+    visibility_field_id = fields.Many2one("ir.model.fields")
+    readonly_field_id = fields.Many2one("ir.model.fields")
+    required_field_id = fields.Many2one("ir.model.fields")
 
     @api.onchange("field_id")
     def onchange_field_id(self):
@@ -83,6 +83,20 @@ class CustomFieldRestriction(models.Model):
         elif rec.required_model_id and rec.required:
             rec.create_restriction_field("required")
         return rec
+
+    def write(self, vals):
+        res = super().write(vals)
+        if vals.get("field_id"):
+            if self.visibility_field_id:
+                self.visibility_field_id.unlink()
+                self.create_restriction_field("visibility")
+            elif self.readonly_field_id:
+                self.readonly_field_id.unlink()
+                self.create_restriction_field("readonly")
+            elif self.required_field_id:
+                self.required_field_id.unlink()
+                self.create_restriction_field("required")
+        return res
 
     def create_restriction_field(self, f_type):
         field_name = self.get_field_name(f_type)
