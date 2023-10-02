@@ -1,0 +1,30 @@
+.o_field_widget {
+    &.o_field_remote_device {
+        display: inline-flex;
+        > span,
+        > button {
+            flex: 0 0 auto;
+        }
+    }
+    &.o_field_remote_device {
+        &.o_input {
+            align-items: baseline;
+
+            > input {
+                width: 100px;
+                flex: 1 0 auto;
+            }
+        }
+    }
+}
+.o_list_view {
+    .o_list_table {
+        .o_data_row.o_selected_row
+            > .o_data_cell:not(.o_readonly_modifier):not(.o_invisible_modifier) {
+            .o_field_remote_device input {
+                width: 0;
+                margin: 0 4px;
+            }
+        }
+    }
+}

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+web_widget_remote_measure.access_remote_measure_device_user,access_remote_measure_device users,web_widget_remote_measure.model_remote_measure_device,base.group_user,1,0,0,0
+web_widget_remote_measure.access_remote_measure_device_admin,access_remote_measure_device admin,web_widget_remote_measure.model_remote_measure_device,base.group_system,1,1,1,1

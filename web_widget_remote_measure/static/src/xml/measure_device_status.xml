@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<template>
+    <t t-name="web_widget_remote_measure.measure_device_status">
+        <div class="float-right" name="is_up">
+            <span
+                t-attf-class="fa fa-circle {{widget.className}}"
+                role="img"
+                aria-label="Host is up?"
+                t-attf-title="{{widget.title}}"
+                name="is_up"
+            >
+            </span>
+        </div>
+    </t>
+</template>
