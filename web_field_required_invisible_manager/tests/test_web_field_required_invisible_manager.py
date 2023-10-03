@@ -130,3 +130,5 @@ class TestFieldRequiredIvisibleManager(common.SavepointCase):
         self.invisible_title_rec_id.field_id = self.partner_title_name_field_id
         self.invisible_title_rec_id.onchange_field_id()
         self.assertTrue(self.invisible_title_rec_id.required)
+        # unlink
+        self.invisible_rec_id.unlink()
