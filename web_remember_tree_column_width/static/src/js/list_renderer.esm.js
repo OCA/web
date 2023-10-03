@@ -11,10 +11,15 @@ patch(ListRenderer.prototype, "web_remember_tree_column_width.ListRenderer", {
     computeColumnWidthsFromContent() {
         const columnWidths = this._super.apply(this, arguments);
         const table = this.tableRef.el;
-        const thElements = [...table.querySelectorAll("thead th:not(.o_list_button)")];
+        const thElements = [...table.querySelectorAll("thead th")];
         thElements.forEach((el, elIndex) => {
             const fieldName = $(el).data("name");
-            if (this.props.list.resModel && fieldName && browser.localStorage) {
+            if (
+                !el.classList.contains("o_list_button") &&
+                this.props.list.resModel &&
+                fieldName &&
+                browser.localStorage
+            ) {
                 const storedWidth = browser.localStorage.getItem(
                     `odoo.columnWidth.${this.props.list.resModel}.${fieldName}`
                 );
