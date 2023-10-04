@@ -1,6 +1,7 @@
 # Copyright 2023 ooops404
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html)
 from odoo import api, fields, models
+from odoo.tools.safe_eval import safe_eval
 
 
 class CustomFieldRestriction(models.Model):
@@ -100,7 +101,9 @@ class CustomFieldRestriction(models.Model):
 
     def create_restriction_field(self, f_type):
         field_name = self.get_field_name(f_type)
-        field_id = self.env["ir.model.fields"].search([("name", "=", field_name)])
+        field_id = self.env["ir.model.fields"].search(
+            [("name", "=", field_name), ("state", "=", "manual")]
+        )
         if f_type == "required":
             rec_model_id = self.required_model_id.id
             rec_field_name = "required_field_id"
@@ -111,6 +114,14 @@ class CustomFieldRestriction(models.Model):
             rec_model_id = self.invisible_model_id.id
             rec_field_name = "visibility_field_id"
         if not field_id:
+            deps = ""
+            if self.condition_domain:
+                deps = ",".join(
+                    [
+                        r[0] if r[0] not in ["id"] else ""
+                        for r in safe_eval(self.condition_domain)
+                    ]
+                )
             field_id = self.env["ir.model.fields"].create(
                 {
                     "name": field_name,
@@ -120,6 +131,7 @@ class CustomFieldRestriction(models.Model):
                     "store": False,
                     "ttype": "boolean",
                     "compute": "for r in self: r._compute_restrictions_fields()",
+                    "depends": deps,
                 }
             )
         self[rec_field_name] = field_id
@@ -132,3 +144,10 @@ class CustomFieldRestriction(models.Model):
             f_type,
         )
         return res
+
+    def unlink(self):
+        for rec in self:
+            rec.visibility_field_id.unlink()
+            rec.readonly_field_id.unlink()
+            rec.required_field_id.unlink()
+        return super(CustomFieldRestriction, self).unlink()
