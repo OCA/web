@@ -128,9 +128,10 @@ class Base(models.AbstractModel):
 
     def default_get(self, fields_list):
         res = super(Base, self).default_get(fields_list)
-        vals = self._default_get_compute_restrictions_fields()
-        if vals:
-            res.update(vals)
+        if self.env.user.has_group("base.group_user"):
+            vals = self._default_get_compute_restrictions_fields()
+            if vals:
+                res.update(vals)
         return res
 
     def _default_get_compute_restrictions_fields(self):
