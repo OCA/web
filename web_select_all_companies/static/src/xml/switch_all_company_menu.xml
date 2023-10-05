@@ -6,15 +6,15 @@
         t-inherit-mode="extension"
         owl="1"
     >
-        <xpath expr="//t[@t-key='company.id']" position="before">
-            <DropdownItem class="'p-0 bg-white'">
+        <xpath expr="//t[@t-as='company']" position="before">
+            <DropdownItem class="p-0 bg-white">
                 <div class="d-flex">
                     <div
                         role="menuitemcheckbox"
                         tabindex="0"
                         t-attf-class="{{isCurrent ? 'border-primary' : ''}}"
                         class="border-end toggle_company"
-                        t-on-click.stop="() => this.toggleSelectAllCompanies()"
+                        t-on-click.stop="toggleSelectAllCompanies()"
                     >
                             <span class="btn btn-light border-0 p-2">
                                 <i
