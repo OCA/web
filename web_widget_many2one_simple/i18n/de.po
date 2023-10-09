@@ -34,7 +34,6 @@ msgstr "Erstellen: "
 #. module: web_widget_many2one_simple
 #. openerp-web
 #: code:addons/web_widget_many2one_simple/static/src/xml/many2one_simple.xml:0
-#: code:addons/web_widget_many2one_simple/static/src/xml/many2one_simple.xml:0
 #, python-format
 msgid "External link"
 msgstr "Externer Link"
