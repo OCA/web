@@ -17,50 +17,35 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: web_timeline
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_timeline/static/src/js/timeline_renderer.js:0
 #, python-format
 msgid "<b>UNASSIGNED</b>"
 msgstr "<b>NICHT ZUGEWIESEN</b>"
 
 #. module: web_timeline
-#. openerp-web
-#: code:addons/web_timeline/static/src/js/timeline_controller.js:0
+#. odoo-javascript
+#: code:addons/web_timeline/static/src/js/timeline_controller.esm.js:0
 #, python-format
 msgid "Are you sure you want to delete this record?"
 msgstr "Sind Sie sicher, dass Sie diesen Datensatz löschen wollen?"
 
 #. module: web_timeline
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_timeline/static/src/xml/web_timeline.xml:0
 #, python-format
 msgid "Day"
 msgstr "Tag"
 
 #. module: web_timeline
-#: model:ir.model.fields,field_description:web_timeline.field_ir_ui_view__display_name
-msgid "Display Name"
-msgstr "Anzeigename"
-
-#. module: web_timeline
-#: model:ir.model.fields,field_description:web_timeline.field_ir_ui_view__id
-msgid "ID"
-msgstr "ID"
-
-#. module: web_timeline
-#: model:ir.model.fields,field_description:web_timeline.field_ir_ui_view____last_update
-msgid "Last Modified on"
-msgstr "Zuletzt bearbeitet am"
-
-#. module: web_timeline
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_timeline/static/src/xml/web_timeline.xml:0
 #, python-format
 msgid "Month"
 msgstr "Monat"
 
 #. module: web_timeline
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_timeline/static/src/js/timeline_renderer.js:0
 #, python-format
 msgid "Template \"timeline-item\" not present in timeline view definition."
@@ -69,7 +54,7 @@ msgstr ""
 "vorhanden."
 
 #. module: web_timeline
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_timeline/static/src/js/timeline_view.js:0
 #: model:ir.model.fields.selection,name:web_timeline.selection__ir_ui_view__type__timeline
 #, python-format
@@ -77,14 +62,14 @@ msgid "Timeline"
 msgstr "Zeitachse"
 
 #. module: web_timeline
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_timeline/static/src/js/timeline_renderer.js:0
 #, python-format
 msgid "Timeline view has not defined 'date_start' attribute."
 msgstr "Die Zeitachsenansicht hat das Attribut \"date_start\" nicht definiert."
 
 #. module: web_timeline
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_timeline/static/src/xml/web_timeline.xml:0
 #, python-format
 msgid "Today"
@@ -101,22 +86,31 @@ msgid "View Type"
 msgstr "Ansichtstyp"
 
 #. module: web_timeline
-#. openerp-web
-#: code:addons/web_timeline/static/src/js/timeline_controller.js:0
+#. odoo-javascript
+#: code:addons/web_timeline/static/src/js/timeline_controller.esm.js:0
 #, python-format
 msgid "Warning"
 msgstr "Warnung"
 
 #. module: web_timeline
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_timeline/static/src/xml/web_timeline.xml:0
 #, python-format
 msgid "Week"
 msgstr "Woche"
 
 #. module: web_timeline
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_timeline/static/src/xml/web_timeline.xml:0
 #, python-format
 msgid "Year"
 msgstr "Jahr"
+
+#~ msgid "Display Name"
+#~ msgstr "Anzeigename"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Zuletzt bearbeitet am"
