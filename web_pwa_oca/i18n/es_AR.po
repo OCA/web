@@ -17,6 +17,11 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: web_pwa_oca
+#: model_terms:ir.ui.view,arch_db:web_pwa_oca.res_config_settings_view_form
+msgid "<span class=\"fa fa-lg fa-globe\" title=\"Icon next to name\"/>"
+msgstr ""
+
+#. module: web_pwa_oca
 #: model:ir.model.fields,field_description:web_pwa_oca.field_res_config_settings__pwa_background_color
 msgid "Background Color"
 msgstr "Color de Fondo"
