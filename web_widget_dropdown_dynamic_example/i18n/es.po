@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_widget_dropdown_dynamic_example
+# 	* web_widget_dropdown_dynamic_example
 #
 msgid ""
 msgstr ""
