@@ -103,4 +103,5 @@ msgstr "Sistem Parametreleri"
 #: code:addons/web_m2x_options/static/src/js/form.js:67
 #, python-format
 msgid "You are creating a new %s, are you sure it does not exist yet?"
-msgstr "Yeni bir %s kaydı oluşturuyorsunuz, henüz varolmadığından emin misiniz?"
+msgstr ""
+"Yeni bir %s kaydı oluşturuyorsunuz, henüz varolmadığından emin misiniz?"
