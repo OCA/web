@@ -135,4 +135,5 @@ msgstr "fals"
 #: code:addons/web_responsive/static/src/xml/document_viewer.xml:0
 #, python-format
 msgid "modal o_modal_fullscreen o_document_viewer o_responsive_document_viewer"
-msgstr "modal o_modal_fullscreen o_document_viewer o_responsive_document_viewer"
+msgstr ""
+"modal o_modal_fullscreen o_document_viewer o_responsive_document_viewer"
