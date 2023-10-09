@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_widget_x2many_2d_matrix
+# 	* web_widget_x2many_2d_matrix
 #
 msgid ""
 msgstr ""
