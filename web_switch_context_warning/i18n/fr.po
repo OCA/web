@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_switch_context_warning
+# 	* web_switch_context_warning
 #
 msgid ""
 msgstr ""
@@ -18,23 +18,29 @@ msgstr ""
 
 #. module: web_switch_context_warning
 #. openerp-web
-#: code:addons/web_switch_context_warning/static/src/xml/switch_context_warning.xml:6
+#: code:addons/web_switch_context_warning/static/src/xml/switch_context_warning.xml:0
 #, python-format
 msgid "Reload"
 msgstr "Recharger"
 
 #. module: web_switch_context_warning
 #. openerp-web
-#: code:addons/web_switch_context_warning/static/src/xml/switch_context_warning.xml:5
+#: code:addons/web_switch_context_warning/static/src/xml/switch_context_warning.xml:0
 #, python-format
-msgid "You switched to a different user, company or database with another tab or window"
+msgid "You switched to a different user or database with another tab or window"
 msgstr ""
-"Vous avez changé d'utilisateur, de société ou de base de donnes dans un "
-"autre onglet ou fenêtre"
 
 #. module: web_switch_context_warning
 #. openerp-web
-#: code:addons/web_switch_context_warning/static/src/xml/switch_context_warning.xml:6
+#: code:addons/web_switch_context_warning/static/src/xml/switch_context_warning.xml:0
 #, python-format
 msgid "to refresh your session"
 msgstr "pour rafraîchir votre session"
+
+#, python-format
+#~ msgid ""
+#~ "You switched to a different user, company or database with another tab or "
+#~ "window"
+#~ msgstr ""
+#~ "Vous avez changé d'utilisateur, de société ou de base de donnes dans un "
+#~ "autre onglet ou fenêtre"
