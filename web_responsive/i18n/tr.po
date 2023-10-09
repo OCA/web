@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_responsive
+# 	* web_responsive
 #
 msgid ""
 msgstr ""
@@ -162,4 +162,5 @@ msgstr "false"
 #: code:addons/web_responsive/static/src/xml/document_viewer.xml:8
 #, python-format
 msgid "modal o_modal_fullscreen o_document_viewer o_responsive_document_viewer"
-msgstr "modal o_modal_fullscreen o_document_viewer o_responsive_document_viewer"
+msgstr ""
+"modal o_modal_fullscreen o_document_viewer o_responsive_document_viewer"
