@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_advanced_filter
+# 	* web_advanced_filter
 #
 msgid ""
 msgstr ""
@@ -137,7 +137,9 @@ msgstr "Gelé"
 
 #. module: web_advanced_filter
 #: model_terms:ir.ui.view,arch_db:web_advanced_filter.ir_filters_view_form
-msgid "Have this filter contain exactly the records it currently contains, with no changes in the future. Be careful, you can't undo this operation!"
+msgid ""
+"Have this filter contain exactly the records it currently contains, with no "
+"changes in the future. Be careful, you can't undo this operation!"
 msgstr ""
 "Que ce filtre contienne exactement les enregistrements qu’il contient "
 "actuellement, sans aucune modification à l’avenir. Attention, vous ne pouvez "
@@ -233,14 +235,17 @@ msgstr "Essaie %s"
 
 #. module: web_advanced_filter
 #: model:ir.model.fields,help:web_advanced_filter.field_ir_filters__evaluate_before_negate
-msgid "This is necessary if this filter contains positive operatorson x2many fields"
+msgid ""
+"This is necessary if this filter contains positive operatorson x2many fields"
 msgstr ""
 "Cela est nécessaire si ce filtre contient des opérateurs positifs sur des "
 "champs x2many"
 
 #. module: web_advanced_filter
 #: model:ir.model.fields,help:web_advanced_filter.field_ir_filters__evaluate_before_join
-msgid "This is necessary if this filter contains x2many fields with_auto_join activated"
+msgid ""
+"This is necessary if this filter contains x2many fields with_auto_join "
+"activated"
 msgstr ""
 "Cela est nécessaire si ce filtre contient des champs x2many avec "
 "with_auto_join activés"

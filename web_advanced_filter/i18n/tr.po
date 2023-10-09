@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_advanced_filter
+# 	* web_advanced_filter
 #
 msgid ""
 msgstr ""
@@ -137,7 +137,9 @@ msgstr "Dondurulmuş"
 
 #. module: web_advanced_filter
 #: model_terms:ir.ui.view,arch_db:web_advanced_filter.ir_filters_view_form
-msgid "Have this filter contain exactly the records it currently contains, with no changes in the future. Be careful, you can't undo this operation!"
+msgid ""
+"Have this filter contain exactly the records it currently contains, with no "
+"changes in the future. Be careful, you can't undo this operation!"
 msgstr ""
 "Bu filtrenin ileride değişiklik olmayacak şekilde sadece içerdiği kayıtları "
 "içermesini sağla. Dikkat bu işlemi geri alamazsınız!"
@@ -232,13 +234,16 @@ msgstr "Deneniyor %s"
 
 #. module: web_advanced_filter
 #: model:ir.model.fields,help:web_advanced_filter.field_ir_filters__evaluate_before_negate
-msgid "This is necessary if this filter contains positive operatorson x2many fields"
+msgid ""
+"This is necessary if this filter contains positive operatorson x2many fields"
 msgstr ""
 "Eğer filtre x2many alanlar üzerinde operatörler içeriyorsa bu gereklidir"
 
 #. module: web_advanced_filter
 #: model:ir.model.fields,help:web_advanced_filter.field_ir_filters__evaluate_before_join
-msgid "This is necessary if this filter contains x2many fields with_auto_join activated"
+msgid ""
+"This is necessary if this filter contains x2many fields with_auto_join "
+"activated"
 msgstr ""
 "Eğer bu filtre oto_birleştirmeli x2many alanlar içeriyorsa bu alan gereklidir"
 
