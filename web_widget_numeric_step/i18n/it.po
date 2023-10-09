@@ -17,22 +17,26 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: web_widget_numeric_step
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_widget_numeric_step/static/src/xml/numeric_step.xml:0
 #, python-format
 msgid "Minus"
 msgstr "Meno"
 
 #. module: web_widget_numeric_step
-#. openerp-web
+#. odoo-javascript
+#: code:addons/web_widget_numeric_step/static/src/js/numeric_step.esm.js:0
+#, python-format
+msgid "Numeric Step"
+msgstr ""
+
+#. module: web_widget_numeric_step
+#. odoo-javascript
 #: code:addons/web_widget_numeric_step/static/src/xml/numeric_step.xml:0
 #, python-format
 msgid "Plus"
 msgstr "Più"
 
-#. module: web_widget_numeric_step
-#. openerp-web
-#: code:addons/web_widget_numeric_step/static/src/xml/numeric_step.xml:0
 #, python-format
-msgid "Value"
-msgstr "Valore"
+#~ msgid "Value"
+#~ msgstr "Valore"
