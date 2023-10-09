@@ -94,8 +94,8 @@ msgstr "Name"
 #. module: web_ir_actions_act_multi
 #: model:ir.model.fields,help:web_ir_actions_act_multi.field_ir_actions_act_multi__help
 msgid ""
-"Optional help text for the users with a description of the target view, such"
-" as its usage and purpose."
+"Optional help text for the users with a description of the target view, such "
+"as its usage and purpose."
 msgstr ""
 "Optionaler Hilfetext für die Benutzer mit einer Beschreibung der "
 "Zielansicht, z. B. ihrer Verwendung und ihres Zwecks."
