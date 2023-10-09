@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_view_calendar_list
+# 	* web_view_calendar_list
 #
 msgid ""
 msgstr ""
@@ -22,8 +22,7 @@ msgid "Action Window View"
 msgstr "Vista de la finestra d'acció"
 
 #. module: web_view_calendar_list
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
+#: selection:ir.actions.act_window.view,view_mode:0 selection:ir.ui.view,type:0
 msgid "Activity"
 msgstr "Activitat"
 
@@ -35,16 +34,14 @@ msgid "All day"
 msgstr "Tot el día"
 
 #. module: web_view_calendar_list
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
+#: selection:ir.actions.act_window.view,view_mode:0 selection:ir.ui.view,type:0
 msgid "Calendar"
 msgstr "Calendari"
 
 #. module: web_view_calendar_list
 #. openerp-web
 #: code:addons/web_view_calendar_list/static/src/js/calendar_list_view.js:16
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
+#: selection:ir.actions.act_window.view,view_mode:0 selection:ir.ui.view,type:0
 #, python-format
 msgid "Calendar List"
 msgstr "Llista del calendari"
@@ -55,32 +52,27 @@ msgid "Diagram"
 msgstr "Diagrama"
 
 #. module: web_view_calendar_list
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
+#: selection:ir.actions.act_window.view,view_mode:0 selection:ir.ui.view,type:0
 msgid "Form"
 msgstr "Formulari"
 
 #. module: web_view_calendar_list
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
+#: selection:ir.actions.act_window.view,view_mode:0 selection:ir.ui.view,type:0
 msgid "Gantt"
 msgstr "Gantt"
 
 #. module: web_view_calendar_list
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
+#: selection:ir.actions.act_window.view,view_mode:0 selection:ir.ui.view,type:0
 msgid "Graph"
 msgstr "Gràfic"
 
 #. module: web_view_calendar_list
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
+#: selection:ir.actions.act_window.view,view_mode:0 selection:ir.ui.view,type:0
 msgid "Kanban"
 msgstr "Kanban"
 
 #. module: web_view_calendar_list
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
+#: selection:ir.actions.act_window.view,view_mode:0 selection:ir.ui.view,type:0
 msgid "Pivot"
 msgstr "Pivot"
 
@@ -100,8 +92,7 @@ msgid "Timeline"
 msgstr "Cronologia"
 
 #. module: web_view_calendar_list
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
+#: selection:ir.actions.act_window.view,view_mode:0 selection:ir.ui.view,type:0
 msgid "Tree"
 msgstr "Arbre"
 
