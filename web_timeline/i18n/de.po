@@ -38,21 +38,6 @@ msgid "Day"
 msgstr "Tag"
 
 #. module: web_timeline
-#: model:ir.model.fields,field_description:web_timeline.field_ir_ui_view__display_name
-msgid "Display Name"
-msgstr "Anzeigename"
-
-#. module: web_timeline
-#: model:ir.model.fields,field_description:web_timeline.field_ir_ui_view__id
-msgid "ID"
-msgstr "ID"
-
-#. module: web_timeline
-#: model:ir.model.fields,field_description:web_timeline.field_ir_ui_view____last_update
-msgid "Last Modified on"
-msgstr "Zuletzt bearbeitet am"
-
-#. module: web_timeline
 #. openerp-web
 #: code:addons/web_timeline/static/src/xml/web_timeline.xml:0
 #, python-format
@@ -120,3 +105,12 @@ msgstr "Woche"
 #, python-format
 msgid "Year"
 msgstr "Jahr"
+
+#~ msgid "Display Name"
+#~ msgstr "Anzeigename"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Zuletzt bearbeitet am"
