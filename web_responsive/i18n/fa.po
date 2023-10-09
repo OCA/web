@@ -38,14 +38,12 @@ msgstr "موقعیت چت باکس"
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/xml/form_buttons.xml:0
-#: code:addons/web_responsive/static/src/xml/form_buttons.xml:0
 #, python-format
 msgid "Create"
 msgstr "ایجاد"
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/xml/form_buttons.xml:0
 #: code:addons/web_responsive/static/src/xml/form_buttons.xml:0
 #, python-format
 msgid "Discard"
@@ -84,14 +82,12 @@ msgstr "آخرین ویرایش در"
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/xml/attachment_viewer.xml:0
-#: code:addons/web_responsive/static/src/xml/attachment_viewer.xml:0
 #, python-format
 msgid "Maximize"
 msgstr "بزرگ کردن"
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/xml/attachment_viewer.xml:0
 #: code:addons/web_responsive/static/src/xml/attachment_viewer.xml:0
 #, python-format
 msgid "Minimize"
@@ -120,7 +116,6 @@ msgstr "مشاهده نتیجه"
 #. module: web_responsive
 #. openerp-web
 #: code:addons/web_responsive/static/src/xml/form_buttons.xml:0
-#: code:addons/web_responsive/static/src/xml/form_buttons.xml:0
 #, python-format
 msgid "Save"
 msgstr "ذخیره"
@@ -134,7 +129,6 @@ msgstr "جستجو در منو..."
 
 #. module: web_responsive
 #. openerp-web
-#: code:addons/web_responsive/static/src/xml/control_panel.xml:0
 #: code:addons/web_responsive/static/src/xml/control_panel.xml:0
 #, python-format
 msgid "Search..."
