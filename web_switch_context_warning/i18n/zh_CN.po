@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_switch_context_warning
+# 	* web_switch_context_warning
 #
 msgid ""
 msgstr ""
@@ -27,7 +27,9 @@ msgstr "刷新"
 #. openerp-web
 #: code:addons/web_switch_context_warning/static/src/xml/switch_context_warning.xml:5
 #, python-format
-msgid "You switched to a different user, company or database with another tab or window"
+msgid ""
+"You switched to a different user, company or database with another tab or "
+"window"
 msgstr "您使用其他选项卡或窗口切换到其他用户，公司或数据库"
 
 #. module: web_switch_context_warning
