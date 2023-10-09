@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_view_calendar_column
+# 	* web_view_calendar_column
 #
 msgid ""
 msgstr ""
