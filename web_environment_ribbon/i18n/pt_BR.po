@@ -21,21 +21,15 @@ msgstr ""
 "X-Generator: Weblate 3.1.1\n"
 
 #. module: web_environment_ribbon
-#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend__display_name
-msgid "Display Name"
-msgstr "Exibir Nome"
-
-#. module: web_environment_ribbon
-#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend__id
-msgid "ID"
-msgstr "Identificação"
-
-#. module: web_environment_ribbon
-#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend____last_update
-msgid "Last Modified on"
-msgstr "Última Modificação em"
-
-#. module: web_environment_ribbon
 #: model:ir.model,name:web_environment_ribbon.model_web_environment_ribbon_backend
 msgid "Web Environment Ribbon Backend"
 msgstr "Back-end da fita do ambiente da Web"
+
+#~ msgid "Display Name"
+#~ msgstr "Exibir Nome"
+
+#~ msgid "ID"
+#~ msgstr "Identificação"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última Modificação em"
