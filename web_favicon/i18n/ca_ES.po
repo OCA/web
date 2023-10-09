@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_favicon
+# 	* web_favicon
 #
 msgid ""
 msgstr ""
