@@ -19,14 +19,12 @@ msgstr ""
 #. module: web_widget_numeric_step
 #. openerp-web
 #: code:addons/web_widget_numeric_step/static/src/xml/numeric_step.xml:0
-#: code:addons/web_widget_numeric_step/static/src/xml/numeric_step.xml:0
 #, python-format
 msgid "Minus"
 msgstr "Minus"
 
 #. module: web_widget_numeric_step
 #. openerp-web
-#: code:addons/web_widget_numeric_step/static/src/xml/numeric_step.xml:0
 #: code:addons/web_widget_numeric_step/static/src/xml/numeric_step.xml:0
 #, python-format
 msgid "Plus"
