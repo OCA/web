@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_pwa_oca
+# 	* web_pwa_oca
 #
 msgid ""
 msgstr ""
@@ -68,7 +68,9 @@ msgstr ""
 #. openerp-web
 #: code:addons/web_pwa_oca/static/src/js/pwa_manager.js:21
 #, python-format
-msgid "Service workers are not supported! Maybe you are not using HTTPS or you work in private mode."
+msgid ""
+"Service workers are not supported! Maybe you are not using HTTPS or you work "
+"in private mode."
 msgstr ""
 
 #. module: web_pwa_oca
