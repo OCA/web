@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_responsive_company
+# 	* web_responsive_company
 #
 msgid ""
 msgstr ""
@@ -45,10 +45,13 @@ msgstr "کنترل"
 #: model:res.company,overdue_msg:web_responsive_company.company_coop_it_easy
 #: model:res.company,overdue_msg:web_responsive_company.company_grap
 #: model:res.company,overdue_msg:web_responsive_company.company_tecnativa
-msgid "Dear Sir/Madam,\n"
+msgid ""
+"Dear Sir/Madam,\n"
 "\n"
-"Our records indicate that some payments on your account are still due. Please find details below.\n"
-"If the amount has already been paid, please disregard this notice. Otherwise, please forward us the total amount stated below.\n"
+"Our records indicate that some payments on your account are still due. "
+"Please find details below.\n"
+"If the amount has already been paid, please disregard this notice. "
+"Otherwise, please forward us the total amount stated below.\n"
 "If you have any queries regarding your account, Please contact us.\n"
 "\n"
 "Thank you in advance for your cooperation.\n"
