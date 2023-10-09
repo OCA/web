@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_view_searchpanel
+# 	* web_view_searchpanel
 #
 msgid ""
 msgstr ""
@@ -46,7 +46,9 @@ msgstr "No fixat"
 #. module: web_view_searchpanel
 #: code:addons/web_view_searchpanel/models/base.py:34
 #, python-format
-msgid "Only types %(supported_types)s are supported for category(found type %(field_type)s)"
+msgid ""
+"Only types %(supported_types)s are supported for category(found type "
+"%(field_type)s)"
 msgstr ""
 "Només s'admeten els tipus %(supported_types)s per a la categoria (s'ha "
 "trobat el tipus %(field_type)s)"
@@ -54,7 +56,9 @@ msgstr ""
 #. module: web_view_searchpanel
 #: code:addons/web_view_searchpanel/models/base.py:82
 #, python-format
-msgid "Only types %(supported_types)s are supported for filter (found type %(field_type)s)"
+msgid ""
+"Only types %(supported_types)s are supported for filter (found type "
+"%(field_type)s)"
 msgstr ""
 "Només s'admeten els tipus %(supported_types)s per al filtre (s'ha trobat el "
 "tipus %(field_type)s)"
