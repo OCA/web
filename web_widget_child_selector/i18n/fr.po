@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_widget_child_selector
+# 	* web_widget_child_selector
 #
 msgid ""
 msgstr ""
