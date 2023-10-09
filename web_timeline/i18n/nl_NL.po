@@ -11,8 +11,8 @@ msgstr ""
 "POT-Creation-Date: 2018-01-03 03:50+0000\n"
 "PO-Revision-Date: 2020-12-10 13:36+0000\n"
 "Last-Translator: Dennis Sluijk <d.sluijk@onestein.nl>\n"
-"Language-Team: Dutch (Netherlands) (https://www.transifex.com/oca/teams/"
-"23907/nl_NL/)\n"
+"Language-Team: Dutch (Netherlands) (https://www.transifex.com/oca/"
+"teams/23907/nl_NL/)\n"
 "Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -40,6 +40,21 @@ msgstr "Weet je zeker dat je dit record wilt verwijderen?"
 #, python-format
 msgid "Day"
 msgstr "Dag"
+
+#. module: web_timeline
+#: model:ir.model.fields,field_description:web_timeline.field_ir_ui_view__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_timeline
+#: model:ir.model.fields,field_description:web_timeline.field_ir_ui_view__id
+msgid "ID"
+msgstr ""
+
+#. module: web_timeline
+#: model:ir.model.fields,field_description:web_timeline.field_ir_ui_view____last_update
+msgid "Last Modified on"
+msgstr ""
 
 #. module: web_timeline
 #. openerp-web

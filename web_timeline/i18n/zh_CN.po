@@ -38,6 +38,21 @@ msgid "Day"
 msgstr "天"
 
 #. module: web_timeline
+#: model:ir.model.fields,field_description:web_timeline.field_ir_ui_view__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_timeline
+#: model:ir.model.fields,field_description:web_timeline.field_ir_ui_view__id
+msgid "ID"
+msgstr ""
+
+#. module: web_timeline
+#: model:ir.model.fields,field_description:web_timeline.field_ir_ui_view____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: web_timeline
 #. openerp-web
 #: code:addons/web_timeline/static/src/xml/web_timeline.xml:0
 #, python-format
