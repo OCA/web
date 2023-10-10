@@ -397,7 +397,7 @@ odoo.define("web_widget_html_markdown.FieldHtmlMarkDown", function (require) {
                     .not("p.web_widget_html_markdown_source")
                     .not("p.web_widget_html_markdown_checksum")
                     .each(function () {
-                        tagless_content += this.html();
+                        tagless_content += this;
                     });
                 var new_checksum = this._generate_checksum(tagless_content);
                 return saved_checksum == new_checksum;
