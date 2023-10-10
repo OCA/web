@@ -32,10 +32,25 @@ msgid "Default"
 msgstr "Standard"
 
 #. module: web_notify
+#: model:ir.model.fields,field_description:web_notify.field_res_users__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_notify
+#: model:ir.model.fields,field_description:web_notify.field_res_users__id
+msgid "ID"
+msgstr ""
+
+#. module: web_notify
 #: code:addons/web_notify/models/res_users.py:0
 #, python-format
 msgid "Information"
 msgstr "Information"
+
+#. module: web_notify
+#: model:ir.model.fields,field_description:web_notify.field_res_users____last_update
+msgid "Last Modified on"
+msgstr ""
 
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users__notify_danger_channel_name
