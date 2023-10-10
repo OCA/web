@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_environment_ribbon
+# 	* web_environment_ribbon
 #
 msgid ""
 msgstr ""
@@ -17,21 +17,15 @@ msgstr ""
 "X-Generator: Weblate 3.8\n"
 
 #. module: web_environment_ribbon
-#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend__display_name
-msgid "Display Name"
-msgstr "显示名称"
-
-#. module: web_environment_ribbon
-#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend__id
-msgid "ID"
-msgstr "ID"
-
-#. module: web_environment_ribbon
-#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend____last_update
-msgid "Last Modified on"
-msgstr "最后修改时间"
-
-#. module: web_environment_ribbon
 #: model:ir.model,name:web_environment_ribbon.model_web_environment_ribbon_backend
 msgid "Web Environment Ribbon Backend"
 msgstr "Web环境功能区后台"
+
+#~ msgid "Display Name"
+#~ msgstr "显示名称"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Last Modified on"
+#~ msgstr "最后修改时间"
