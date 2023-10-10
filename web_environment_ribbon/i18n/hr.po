@@ -21,21 +21,15 @@ msgstr ""
 "X-Generator: Weblate 4.14.1\n"
 
 #. module: web_environment_ribbon
-#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend__display_name
-msgid "Display Name"
-msgstr "Naziv za prikaz"
-
-#. module: web_environment_ribbon
-#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend__id
-msgid "ID"
-msgstr "ID"
-
-#. module: web_environment_ribbon
-#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend____last_update
-msgid "Last Modified on"
-msgstr "Zadnje modificirano"
-
-#. module: web_environment_ribbon
 #: model:ir.model,name:web_environment_ribbon.model_web_environment_ribbon_backend
 msgid "Web Environment Ribbon Backend"
 msgstr "Pozadina trake okoline"
+
+#~ msgid "Display Name"
+#~ msgstr "Naziv za prikaz"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Zadnje modificirano"
