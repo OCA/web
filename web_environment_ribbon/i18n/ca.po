@@ -17,21 +17,15 @@ msgstr ""
 "X-Generator: Weblate 3.10\n"
 
 #. module: web_environment_ribbon
-#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend__display_name
-msgid "Display Name"
-msgstr "Nom mostrat"
-
-#. module: web_environment_ribbon
-#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend__id
-msgid "ID"
-msgstr "ID"
-
-#. module: web_environment_ribbon
-#: model:ir.model.fields,field_description:web_environment_ribbon.field_web_environment_ribbon_backend____last_update
-msgid "Last Modified on"
-msgstr "Última modificació el"
-
-#. module: web_environment_ribbon
 #: model:ir.model,name:web_environment_ribbon.model_web_environment_ribbon_backend
 msgid "Web Environment Ribbon Backend"
 msgstr "Backend \"Web Environment Ribbon\""
+
+#~ msgid "Display Name"
+#~ msgstr "Nom mostrat"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última modificació el"
