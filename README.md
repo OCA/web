@@ -33,7 +33,7 @@ addon | version | maintainers | summary
 [web_button_no_save](web_button_no_save/) | 12.0.1.0.0 |  | define buttons that do not require saving the form
 [web_calendar_slot_duration](web_calendar_slot_duration/) | 12.0.1.0.0 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) | Customizable calendar slot durations
 [web_company_color](web_company_color/) | 12.0.1.2.0 |  | Web Company Color
-[web_dashboard_tile](web_dashboard_tile/) | 12.0.1.0.2 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Add Overview Dashboards with Tiles
+[web_dashboard_tile](web_dashboard_tile/) | 12.0.2.0.0 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Add Overview Dashboards with Tiles
 [web_decimal_numpad_dot](web_decimal_numpad_dot/) | 12.0.1.0.0 |  | Allows using numpad dot to enter period decimal separator
 [web_dialog_size](web_dialog_size/) | 12.0.1.0.1 |  | A module that lets the user expand a dialog box to the full screen width.
 [web_disable_browser_autocomplete](web_disable_browser_autocomplete/) | 12.0.1.0.2 |  | Allow disable browser autocomplete.
@@ -71,7 +71,7 @@ addon | version | maintainers | summary
 [web_timeline](web_timeline/) | 12.0.1.1.2 | [![tarteo](https://github.com/tarteo.png?size=30px)](https://github.com/tarteo) | Interactive visualization chart to show events in time
 [web_translate_dialog](web_translate_dialog/) | 12.0.1.2.1 |  | Easy-to-use pop-up to translate fields in several languages
 [web_tree_duplicate](web_tree_duplicate/) | 12.0.1.0.0 | [![tarteo](https://github.com/tarteo.png?size=30px)](https://github.com/tarteo) | Duplicate records directly from the tree view.
-[web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 12.0.1.1.0 |  | Allows you to dynamically color fields on tree views
+[web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 12.0.1.1.1 |  | Allows you to dynamically color fields on tree views
 [web_tree_image_tooltip](web_tree_image_tooltip/) | 12.0.1.0.1 |  | Show images in tree views via tooltip
 [web_tree_many2one_clickable](web_tree_many2one_clickable/) | 12.0.1.0.3 |  | Open the linked resource when clicking on their name
 [web_tree_resize_column](web_tree_resize_column/) | 12.0.1.0.0 |  | Resize columns in tree views
