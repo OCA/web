@@ -87,8 +87,8 @@ odoo.define('web_widget_digitized_signature.web_digital_sign', function(require)
                         ? this.options.preview_image
                                 : this.name;
                     new Model(this.view.dataset.model).call("read", [this.view.datarecord.id, [field_name]]).done(function(data) {
-                        if (data) {
-                            var field_desc = _.values(_.pick(data, field_name));
+                        if (data.length) {
+                            var field_desc = _.values(_.pick(data[0], field_name));
                             self.$el.find(".signature").jSignature("reset");
                             self.$el.find(".signature").jSignature("setData",'data:image/png;base64,'+field_desc[0]);
                         }
