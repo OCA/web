@@ -26,7 +26,10 @@ odoo.define("web_widget_domain_editor_dialog.basic_fields", function(require) {
                 readonly: false,
                 disable_multiple_selection: false,
                 no_create: true,
-
+                context: this.record.getContext({
+                    fieldName: this.name,
+                    viewType: this.viewType,
+                }),
                 on_selected: function(selected_ids) {
                     _this.inDomainEditor = true;
                     _this.domainSelector
