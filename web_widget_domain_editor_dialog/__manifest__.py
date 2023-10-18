@@ -3,7 +3,7 @@
 {
     "name": "Web Widget Domain Editor Dialog",
     "summary": "Recovers the Domain Editor Dialog functionality",
-    "version": "13.0.1.0.3",
+    "version": "13.0.1.0.4",
     "category": "Web",
     "author": "Tecnativa," "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
