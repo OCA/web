@@ -40,6 +40,7 @@ addon | version | maintainers | summary
 [web_disable_export_group](web_disable_export_group/) | 14.0.2.0.0 |  | Web Disable Export Group
 [web_domain_field](web_domain_field/) | 14.0.1.0.2 |  | Use computed field as domain
 [web_drop_target](web_drop_target/) | 14.0.1.1.1 |  | Allows to drag files into Odoo
+[web_edit_user_filter](web_edit_user_filter/) | 14.0.1.0.0 |  | Edit User Filters
 [web_environment_ribbon](web_environment_ribbon/) | 14.0.1.0.0 |  | Web Environment Ribbon
 [web_field_required_invisible_manager](web_field_required_invisible_manager/) | 14.0.2.1.3 | [![ilyasProgrammer](https://github.com/ilyasProgrammer.png?size=30px)](https://github.com/ilyasProgrammer) | Web Field Required Invisible Readonly Managerr
 [web_group_expand](web_group_expand/) | 14.0.1.0.0 |  | Group Expand Buttons
