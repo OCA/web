@@ -20,8 +20,8 @@ class PopupMessage(models.Model):
         default="confirm",
         selection=[("confirm", "Confirmation"), ("alert", "Alert")],
     )
-    title = fields.Char(string="Title")
-    message = fields.Text(string="Message", required=True)
+    title = fields.Char(string="Title", translate=True)
+    message = fields.Text(string="Message", required=True, translate=True)
     active = fields.Boolean(string="Active", default=True)
 
     @api.depends("field_ids")

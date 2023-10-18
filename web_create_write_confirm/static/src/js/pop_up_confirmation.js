@@ -22,11 +22,11 @@ odoo.define("web_create_write_confirm.pop_up_confirmation", function (require) {
             var changes = self.model.localData[self.handle]._changes;
             self.getMessageInformation(
                 modelName,
-                "get_message_informations",
+                "get_popup_message_info",
                 record_id,
                 changes === null ? {} : changes
             ).then(function (results) {
-                this.display_popup(results, record, record_id, ev, changes, modelName);
+                self.display_popup(results, record, record_id, ev, changes, modelName);
             });
         },
 
@@ -76,11 +76,11 @@ odoo.define("web_create_write_confirm.pop_up_confirmation", function (require) {
                                 } else if (popup_values.length === index) {
                                     self.getMessageInformation(
                                         modelName,
-                                        "execute_processing",
+                                        "process_popup_message",
                                         record_id,
                                         datas
                                     );
-                                    this.save(ev);
+                                    this.save();
                                 }
                             },
                         }).on("closed", null, resolve);
@@ -90,14 +90,13 @@ odoo.define("web_create_write_confirm.pop_up_confirmation", function (require) {
                         });
                     }
                 } else {
-                    this.save(ev);
+                    self.save();
                 }
             });
         },
 
         save: function ev() {
             var self = this;
-            ev.stopPropagation();
             self._disableButtons();
             self.saveRecord()
                 .then(self._enableButtons.bind(self))

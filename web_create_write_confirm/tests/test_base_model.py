@@ -36,7 +36,7 @@ class TestBaseModel(SavepointCase):
 
     def test_get_message_informations(self):
         """Test correct flow of get_message_informations method"""
-        ret_value_of_method = self.base_model.get_message_informations()
+        ret_value_of_method = self.base_model.get_popup_message_info()
         check_ret_value = False
         if (ret_value_of_method is False) or isinstance(
             ret_value_of_method, type(self.env["popup.message"])
@@ -51,5 +51,5 @@ class TestBaseModel(SavepointCase):
     def test_execute_processing(self):
         """Test correct flow of execute_processing method"""
         self.assertFalse(
-            self.base_model.execute_processing(), msg="Return value must be False"
+            self.base_model.process_popup_message(), msg="Return value must be False"
         )

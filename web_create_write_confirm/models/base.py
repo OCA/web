@@ -6,10 +6,9 @@ from odoo import models
 class BaseModel(models.AbstractModel):
     _inherit = "base"
 
-    def get_message_informations(self, values=False):
+    def get_popup_message_info(self, values=False):
         """
-        This function gives us the possibility to know
-        if we display the message or not
+        Retrieve popup messages' data.
         - In create self is empty
         - In write self is not empty contains current ID
         :param values:
@@ -22,7 +21,7 @@ class BaseModel(models.AbstractModel):
         """
         return False
 
-    def execute_processing(self, values=False):
+    def process_popup_message(self, values=False):
         """
         This function gives us the possibility to execute a
             specific treatment after the confirmation of the message
