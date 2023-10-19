@@ -118,7 +118,7 @@ odoo.define("web_edit_user_filter/static/src/js/backend.js", function (require) 
             var selectedFacet = self.model.get("filters").filter(function (facet) {
                 return (
                     facet.type === facet_type &&
-                    facet.groupId === facetId &&
+                    facet.groupId == facetId &&
                     facet.isActive === true
                 );
             });
@@ -129,7 +129,7 @@ odoo.define("web_edit_user_filter/static/src/js/backend.js", function (require) 
                 var FavFacets = [];
                 var currentFacet = self.model.get(
                     "filters",
-                    (f) => f.type === "favorite" && f.groupId === facetId
+                    (f) => f.type === "favorite" && f.groupId == facetId
                 );
                 if (currentFacet[0].groupBys.length) {
                     _.each(currentFacet[0].groupBys, function (description) {
