@@ -113,6 +113,10 @@ patch(FormCompiler.prototype, "web_chatter_position", {
             // For "sided", we have to remote the bottom chatter
             // (except if there is an attachment viewer, as we have to force bottom)
         } else if (odoo.web_chatter_position === "sided") {
+            const formSheetBgXml = res.querySelector(".o_form_sheet_bg");
+            if (!formSheetBgXml) {
+                return res;
+            }
             chatterContainerHookXml.setAttribute("t-if", false);
             // For "bottom", we keep the chatter in the form sheet
             // (the one used for the attachment viewer case)
