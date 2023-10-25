@@ -65,6 +65,7 @@ setuptools.setup(
         'odoo14-addon-web_widget_open_tab',
         'odoo14-addon-web_widget_plotly_chart',
         'odoo14-addon-web_widget_text_markdown',
+        'odoo14-addon-web_widget_uom',
         'odoo14-addon-web_widget_url_advanced',
         'odoo14-addon-web_widget_x2many_2d_matrix',
     ],
