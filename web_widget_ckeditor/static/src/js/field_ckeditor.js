@@ -3,7 +3,7 @@
     @author Iván Todorovich <ivan.todorovich@camptocamp.com>
     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 */
-odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
+odoo.define("web_widget_ckeditor.field_ckeditor", function(require) {
     "use strict";
 
     const core = require("web.core");
@@ -49,7 +49,7 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
             /**
              * @override
              */
-            willStart: function () {
+            willStart: function() {
                 return Promise.all([
                     this._super.apply(this, arguments),
                     loadCKEditorLanguagePromise,
@@ -59,7 +59,7 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
             /**
              * @override
              */
-            destroy: function () {
+            destroy: function() {
                 if (this.ckeditor) {
                     this.ckeditor.destroy();
                     this.ckeditor = undefined;
@@ -74,7 +74,7 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
             /**
              * @override
              */
-            activate: function () {
+            activate: function() {
                 if (this.ckeditor) {
                     this.ckeditor.focus();
                     return true;
@@ -85,11 +85,14 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
              *
              * @override
              */
-            isSet: function () {
+            isSet: function() {
                 // Removing spaces & html spaces
                 const value =
                     this.value &&
-                    this.value.split("&nbsp;").join("").replace(/\s/g, "");
+                    this.value
+                        .split("&nbsp;")
+                        .join("")
+                        .replace(/\s/g, "");
                 return (
                     value &&
                     value !== "<p></p>" &&
@@ -102,7 +105,7 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
              *
              * @override
              */
-            getFocusableElement: function () {
+            getFocusableElement: function() {
                 return this.$target || $();
             },
             /**
@@ -111,7 +114,7 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
              *
              * @override
              */
-            reset: function (record, event) {
+            reset: function(record, event) {
                 this._reset(record, event);
                 const value = this._textToHtml(this.value);
                 if (!event || event.target !== this) {
@@ -131,7 +134,7 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
             /**
              * @override
              */
-            _getValue: function () {
+            _getValue: function() {
                 if (this.mode === "edit" && this.ckeditor) {
                     return this.ckeditor.getData();
                 }
@@ -141,11 +144,11 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
              * Gets the CKEditor toolbar items configuration.
              * If not found, returns the default configuration.
              */
-            _getCKEditorToolbarItems: async function () {
+            _getCKEditorToolbarItems: async function() {
                 try {
                     const ckconfig = await getCKEditorConfigPromise;
                     if (ckconfig.toolbar) {
-                        return ckconfig.toolbar.split(/[\s,]+/).filter((item) => item);
+                        return ckconfig.toolbar.split(/[\s,]+/).filter(item => item);
                     }
                 } catch (error) {
                     console.warn(
@@ -193,7 +196,7 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
              *
              * @returns EditorConfig
              */
-            _getCKEditorConfig: async function () {
+            _getCKEditorConfig: async function() {
                 const res = {
                     toolbar: {
                         items: await this._getCKEditorToolbarItems(),
@@ -231,7 +234,7 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
              * @private
              * @returns {$.Promise}
              */
-            _createCKEditorIntance: async function () {
+            _createCKEditorIntance: async function() {
                 const editorConfig = await this._getCKEditorConfig();
                 this.ckeditor = await window.ClassicEditor.create(
                     this.$target.get(0),
@@ -248,16 +251,18 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
             /**
              * @override
              */
-            _renderEdit: function () {
+            _renderEdit: function() {
                 const value = this._textToHtml(this.value);
-                this.$target = $("<textarea>").val(value).hide();
+                this.$target = $("<textarea>")
+                    .val(value)
+                    .hide();
                 this.$target.appendTo(this.$el);
                 return this._createCKEditorIntance();
             },
             /**
              * @override
              */
-            _renderReadonly: function () {
+            _renderReadonly: function() {
                 const value = this._textToHtml(this.value);
                 this.$el.empty();
                 this.$content = $('<div class="o_readonly"/>').html(value);
@@ -270,7 +275,7 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
              * @param {String} text
              * @returns {String} the text converted to html
              */
-            _textToHtml: function (text) {
+            _textToHtml: function(text) {
                 let value = text || "";
                 try {
                     // Crashes if text isn't html
@@ -302,7 +307,7 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
              *
              * @private
              */
-            _onLoadCKEditor: function () {
+            _onLoadCKEditor: function() {
                 const $button = this._renderTranslateButton();
                 $button.css({
                     "font-size": "15px",
@@ -318,7 +323,7 @@ odoo.define("web_widget_ckeditor.field_ckeditor", function (require) {
              * @private
              * @param {OdooEvent} ev
              */
-            _onChange: function () {
+            _onChange: function() {
                 this._doDebouncedAction.apply(this, arguments);
             },
         }
