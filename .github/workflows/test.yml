@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Detect unreleased dependencies
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: |
           for reqfile in requirements.txt test-requirements.txt ; do
               if [ -f ${reqfile} ] ; then
@@ -36,10 +36,10 @@ jobs:
       matrix:
         include:
           - container: ghcr.io/oca/oca-ci/py3.8-odoo15.0:latest
-            makepot: "true"
             name: test with Odoo
           - container: ghcr.io/oca/oca-ci/py3.8-ocb15.0:latest
             name: test with OCB
+            makepot: "true"
     services:
       postgres:
         image: postgres:9.6
@@ -50,7 +50,7 @@ jobs:
         ports:
           - 5432:5432
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           persist-credentials: false
       - name: Install addons and dependencies
