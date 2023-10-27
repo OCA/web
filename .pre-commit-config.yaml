@@ -12,6 +12,8 @@ exclude: |
   /static/(src/)?lib/|
   # Repos using Sphinx to generate docs don't need prettying
   ^docs/_templates/.*\.html$|
+  # Don't bother non-technical authors with formatting issues in docs
+  readme/.*\.(rst|md)$|
   # You don't usually want a bot to modify your legal texts
   (LICENSE.*|COPYING.*)
 default_language_version:
@@ -43,6 +45,7 @@ repos:
         args:
           - --addons-dir=.
           - --branch=16.0
+          - --org-name=OCA
           - --repo-name=web
           - --if-source-changed
   - repo: https://github.com/OCA/odoo-pre-commit-hooks
