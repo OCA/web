@@ -48,5 +48,19 @@ msgstr ""
 msgid "Add Advanced Filter"
 msgstr "Voeg geavanceerde filter toe"
 
+#. module: web_advanced_search
+#. openerp-web
+#: code:addons/web_advanced_search/static/src/js/DomainSelector.esm.js:0
+#, python-format
+msgid "Domain not properly formed"
+msgstr ""
+
+#. module: web_advanced_search
+#. openerp-web
+#: code:addons/web_advanced_search/static/src/js/DomainSelector.esm.js:0
+#, python-format
+msgid "Syntax error"
+msgstr ""
+
 #~ msgid "is in selection"
 #~ msgstr "Is in selectie"
