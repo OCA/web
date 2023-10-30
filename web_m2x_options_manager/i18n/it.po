@@ -126,11 +126,6 @@ msgstr "Campi"
 
 #. module: web_m2x_options_manager
 #: model_terms:ir.ui.view,arch_db:web_m2x_options_manager.view_model_form_inherit
-msgid "Fields Description"
-msgstr "Descrizione campi"
-
-#. module: web_m2x_options_manager
-#: model_terms:ir.ui.view,arch_db:web_m2x_options_manager.view_model_form_inherit
 msgid "Fill"
 msgstr "Popola"
 
@@ -218,3 +213,6 @@ msgstr ""
 #: model:ir.model,name:web_m2x_options_manager.model_ir_ui_view
 msgid "View"
 msgstr ""
+
+#~ msgid "Fields Description"
+#~ msgstr "Descrizione campi"
