@@ -116,11 +116,6 @@ msgstr ""
 
 #. module: web_m2x_options_manager
 #: model_terms:ir.ui.view,arch_db:web_m2x_options_manager.view_model_form_inherit
-msgid "Fields Description"
-msgstr ""
-
-#. module: web_m2x_options_manager
-#: model_terms:ir.ui.view,arch_db:web_m2x_options_manager.view_model_form_inherit
 msgid "Fill"
 msgstr ""
 
