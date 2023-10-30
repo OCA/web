@@ -90,11 +90,6 @@ msgid "Field Readonly"
 msgstr ""
 
 #. module: web_field_required_invisible_manager
-#: model_terms:ir.ui.view,arch_db:web_field_required_invisible_manager.view_model_form_inherit
-msgid "Fields"
-msgstr ""
-
-#. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__group_ids
 msgid "Group"
 msgstr ""
