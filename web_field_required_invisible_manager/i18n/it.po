@@ -93,11 +93,6 @@ msgid "Field Readonly"
 msgstr "Campo in sola lettura"
 
 #. module: web_field_required_invisible_manager
-#: model_terms:ir.ui.view,arch_db:web_field_required_invisible_manager.view_model_form_inherit
-msgid "Fields"
-msgstr "Campi"
-
-#. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__group_ids
 msgid "Group"
 msgstr "Gruppo"
@@ -174,3 +169,6 @@ msgstr "readonly_model_id"
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__required_model_id
 msgid "required_model_id"
 msgstr "required_model_id"
+
+#~ msgid "Fields"
+#~ msgstr "Campi"
