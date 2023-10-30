@@ -101,7 +101,6 @@ msgstr ""
 
 #. module: web_create_write_confirm
 #: model_terms:ir.ui.view,arch_db:web_create_write_confirm.view_popup_message_form
-#: model_terms:ir.ui.view,arch_db:web_create_write_confirm.view_popup_message_tree
 msgid "Popup Message"
 msgstr ""
 
