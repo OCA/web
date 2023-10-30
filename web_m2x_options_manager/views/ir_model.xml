@@ -17,7 +17,7 @@
                         nolabel="1"
                         context="{'default_model_name': model}"
                     >
-                        <tree string="Fields Description" editable="bottom">
+                        <tree editable="bottom">
                             <field name="model_name" invisible="1" />
                             <field
                                 name="field_id"
