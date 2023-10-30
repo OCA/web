@@ -15,7 +15,7 @@
                         nolabel="1"
                         context="{'default_required_model_id': model}"
                     >
-                        <tree string="Fields">
+                        <tree>
                             <field name="required_model_id" invisible="1" />
                             <field name="invisible_model_id" invisible="1" />
                             <field name="model_name" invisible="1" />
@@ -45,7 +45,7 @@
                         nolabel="1"
                         context="{'default_invisible_model_id': model}"
                     >
-                        <tree string="Fields">
+                        <tree>
                             <field name="required_model_id" invisible="1" />
                             <field name="invisible_model_id" invisible="1" />
                             <field name="model_name" invisible="1" />
@@ -72,7 +72,7 @@
                         nolabel="1"
                         context="{'default_readonly_model_id': model}"
                     >
-                        <tree string="Fields">
+                        <tree>
                             <field name="required_model_id" invisible="1" />
                             <field name="invisible_model_id" invisible="1" />
                             <field name="readonly_model_id" invisible="1" />
