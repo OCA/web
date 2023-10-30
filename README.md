@@ -26,7 +26,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[support_branding](support_branding/) | 14.0.1.0.1 |  | Adds your branding to an Odoo instance
+[support_branding](support_branding/) | 14.0.1.1.0 |  | Adds your branding to an Odoo instance
 [web_access_rule_buttons](web_access_rule_buttons/) | 14.0.1.0.1 |  | Disable Edit button if access rules prevent this action
 [web_action_conditionable](web_action_conditionable/) | 14.0.1.0.1 |  | web_action_conditionable
 [web_advanced_search](web_advanced_search/) | 14.0.1.0.1 |  | Easier and more powerful searching tools
@@ -34,7 +34,7 @@ addon | version | maintainers | summary
 [web_calendar_slot_duration](web_calendar_slot_duration/) | 14.0.1.0.0 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) | Customizable calendar slot durations
 [web_company_color](web_company_color/) | 14.0.2.0.0 |  | Web Company Color
 [web_copy_confirm](web_copy_confirm/) | 14.0.1.0.0 |  | Show confirmation dialogue before copying records
-[web_create_write_confirm](web_create_write_confirm/) | 14.0.1.1.0 | [![ilyasProgrammer](https://github.com/ilyasProgrammer.png?size=30px)](https://github.com/ilyasProgrammer) | Confirm/Alert pop-up before saving
+[web_create_write_confirm](web_create_write_confirm/) | 14.0.1.2.0 | [![ilyasProgrammer](https://github.com/ilyasProgrammer.png?size=30px)](https://github.com/ilyasProgrammer) | Confirm/Alert pop-up before saving
 [web_decimal_numpad_dot](web_decimal_numpad_dot/) | 14.0.1.0.0 |  | Allows using numpad dot to enter period decimal separator
 [web_dialog_size](web_dialog_size/) | 14.0.1.0.0 |  | A module that lets the user expand a dialog box to the full screen width.
 [web_disable_export_group](web_disable_export_group/) | 14.0.2.0.0 |  | Web Disable Export Group
@@ -42,25 +42,25 @@ addon | version | maintainers | summary
 [web_drop_target](web_drop_target/) | 14.0.1.1.1 |  | Allows to drag files into Odoo
 [web_edit_user_filter](web_edit_user_filter/) | 14.0.1.0.1 |  | Edit User Filters
 [web_environment_ribbon](web_environment_ribbon/) | 14.0.1.0.0 |  | Web Environment Ribbon
-[web_field_required_invisible_manager](web_field_required_invisible_manager/) | 14.0.2.1.3 | [![ilyasProgrammer](https://github.com/ilyasProgrammer.png?size=30px)](https://github.com/ilyasProgrammer) | Web Field Required Invisible Readonly Managerr
+[web_field_required_invisible_manager](web_field_required_invisible_manager/) | 14.0.2.2.0 | [![ilyasProgrammer](https://github.com/ilyasProgrammer.png?size=30px)](https://github.com/ilyasProgrammer) | Web Field Required Invisible Readonly Managerr
 [web_group_expand](web_group_expand/) | 14.0.1.0.0 |  | Group Expand Buttons
 [web_ir_actions_act_multi](web_ir_actions_act_multi/) | 14.0.1.0.1 |  | Enables triggering of more than one action on ActionManager
 [web_ir_actions_act_view_reload](web_ir_actions_act_view_reload/) | 14.0.1.0.2 |  | Enables reload of the current view via ActionManager
 [web_ir_actions_act_window_message](web_ir_actions_act_window_message/) | 14.0.1.0.1 |  | Show a message box to users
 [web_listview_range_select](web_listview_range_select/) | 14.0.1.0.0 |  | Enables selecting a range of records using the shift key
 [web_m2x_options](web_m2x_options/) | 14.0.1.1.1 |  | web_m2x_options
-[web_m2x_options_manager](web_m2x_options_manager/) | 14.0.1.1.0 |  | Adds an interface to manage the "Create" and "Create and Edit" options for specific models and fields.
-[web_no_bubble](web_no_bubble/) | 14.0.1.0.0 |  | Remove the bubbles from the web interface
+[web_m2x_options_manager](web_m2x_options_manager/) | 14.0.1.2.0 |  | Adds an interface to manage the "Create" and "Create and Edit" options for specific models and fields.
+[web_no_bubble](web_no_bubble/) | 14.0.1.1.0 |  | Remove the bubbles from the web interface
 [web_notify](web_notify/) | 14.0.1.0.1 |  | Send notification messages to user
 [web_notify_channel_message](web_notify_channel_message/) | 14.0.1.0.0 |  | Send an instant notification to channel users when a new message is posted
-[web_pwa_oca](web_pwa_oca/) | 14.0.1.0.0 | [![eLBati](https://github.com/eLBati.png?size=30px)](https://github.com/eLBati) | Make Odoo a PWA
+[web_pwa_oca](web_pwa_oca/) | 14.0.1.1.0 | [![eLBati](https://github.com/eLBati.png?size=30px)](https://github.com/eLBati) | Make Odoo a PWA
 [web_refresher](web_refresher/) | 14.0.2.0.0 |  | Web Refresher
 [web_remember_tree_column_width](web_remember_tree_column_width/) | 14.0.1.0.0 | [![frahikLV](https://github.com/frahikLV.png?size=30px)](https://github.com/frahikLV) [![luisg123v](https://github.com/luisg123v.png?size=30px)](https://github.com/luisg123v) | Remember the tree columns' widths across sessions.
 [web_responsive](web_responsive/) | 14.0.1.2.2 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) [![Tardo](https://github.com/Tardo.png?size=30px)](https://github.com/Tardo) | Responsive web client, community-supported
 [web_search_with_and](web_search_with_and/) | 14.0.1.0.1 |  | Use AND conditions on omnibar search
 [web_send_message_popup](web_send_message_popup/) | 14.0.1.0.0 |  | Web Send Message as Popup
 [web_sheet_full_width](web_sheet_full_width/) | 14.0.1.0.1 |  | Use the whole available screen width when displaying sheets
-[web_switch_context_warning](web_switch_context_warning/) | 14.0.1.0.0 |  | Show a warning if current user, company or database have been switched in another tab or window.
+[web_switch_context_warning](web_switch_context_warning/) | 14.0.1.1.0 |  | Show a warning if current user, company or database have been switched in another tab or window.
 [web_timeline](web_timeline/) | 14.0.2.0.2 | [![tarteo](https://github.com/tarteo.png?size=30px)](https://github.com/tarteo) | Interactive visualization chart to show events in time
 [web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 14.0.1.0.0 |  | Allows you to dynamically color fields on tree views
 [web_tree_image_tooltip](web_tree_image_tooltip/) | 14.0.1.0.0 |  | Show images in tree views via tooltip

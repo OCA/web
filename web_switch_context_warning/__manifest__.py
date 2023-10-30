@@ -4,7 +4,7 @@
     "name": "Switch Context Warning",
     "summary": "Show a warning if current user, company or database "
     "have been switched in another tab or window.",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.1.0",
     "category": "web",
     "website": "https://github.com/OCA/web",
     "license": "AGPL-3",

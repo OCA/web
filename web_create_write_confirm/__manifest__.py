@@ -3,7 +3,7 @@
 
 {
     "name": "Confirm/Alert pop-up before saving",
-    "version": "14.0.1.1.0",
+    "version": "14.0.1.2.0",
     "depends": ["web"],
     "author": "Smile, Odoo Community Association (OCA)",
     "maintainers": ["ilyasProgrammer"],
