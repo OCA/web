@@ -10,10 +10,12 @@ patch(CalendarModel.prototype, "WebCalendarSlotDurationCalendarModel", {
     buildRawRecord(partialRecord, options = {}) {
         if (
             this.env.searchModel.context.calendar_slot_duration &&
-            partialRecord.isAllDay != true
+            !partialRecord.isAllDay
         ) {
             const slot_duration = this.env.searchModel.context.calendar_slot_duration;
-            const [hours, minutes, seconds] = slot_duration.match(/(\d+):(\d+):(\d+)/);
+            const [hours, minutes, seconds] = slot_duration
+                .match(/(\d+):(\d+):(\d+)/)
+                .slice(1, 4);
             const durationFloat = hours + minutes / 60 + seconds / 3600;
             partialRecord.end = partialRecord.start.plus({hours: durationFloat});
         }
