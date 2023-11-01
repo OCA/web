@@ -34,11 +34,18 @@ export class AppsMenu extends Component {
         super.setup();
         this.state = useState({open: false});
         this.menuService = useService("menu");
+        let initialOpenState = this._getInitialOpenState();
         useBus(this.env.bus, "ACTION_MANAGER:UI-UPDATED", () => {
-            this.setOpenState(false, false);
+            this.setOpenState(initialOpenState, false);
+            initialOpenState = false;
         });
         this._setupKeyNavigation();
     }
+
+    _getInitialOpenState() {
+        return false;
+    }
+
     setOpenState(open_state, from_home_menu_click) {
         this.state.open = open_state;
         // Load home page with proper systray when opening it from website
@@ -55,9 +62,11 @@ export class AppsMenu extends Component {
                 }
                 window.location.href = "/web#home";
             } else {
+                console.log("Blah1", open_state);
                 this.env.bus.trigger("APPS_MENU:STATE_CHANGED", open_state);
             }
         } else {
+            console.log("Blah2", open_state);
             this.env.bus.trigger("APPS_MENU:STATE_CHANGED", open_state);
         }
     }
