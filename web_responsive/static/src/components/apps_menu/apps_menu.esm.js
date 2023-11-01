@@ -62,11 +62,9 @@ export class AppsMenu extends Component {
                 }
                 window.location.href = "/web#home";
             } else {
-                console.log("Blah1", open_state);
                 this.env.bus.trigger("APPS_MENU:STATE_CHANGED", open_state);
             }
         } else {
-            console.log("Blah2", open_state);
             this.env.bus.trigger("APPS_MENU:STATE_CHANGED", open_state);
         }
     }
