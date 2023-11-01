@@ -7,8 +7,7 @@
     "version": "16.0.1.0.0",
     "category": "Website",
     "website": "https://github.com/OCA/web",
-    "author": "gpothier, "
-    "Odoo Community Association (OCA)",
+    "author": "gpothier, Odoo Community Association (OCA)",
     "license": "LGPL-3",
     "installable": True,
     "depends": ["web_enterprise", "web_responsive"],
