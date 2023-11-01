@@ -21,5 +21,5 @@ patch(WebClientEnterprise.prototype, "web_responsive_enterprise._loadDefaultApp"
 patch(AppsMenu.prototype, "web_responsive_enterprise._getInitialOpenState", {
     _getInitialOpenState() {
         return true;
-    }
+    },
 });
