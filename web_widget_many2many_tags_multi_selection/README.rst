@@ -38,6 +38,7 @@ Contributors
 * Sylvain Calador <sylvain.calador@akretion.com>
 * Jamin Shah <jaiminshah2009@gmail.com>
 * Maxence Groine <mgroine@fiefmanage.ch>
+* Guenter Selbert <guenter.selbert@sewisoft.de>
 
 Do not contact contributors directly about support or help with technical issues.
 
