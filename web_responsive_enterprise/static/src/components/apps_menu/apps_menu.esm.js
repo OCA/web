@@ -27,7 +27,7 @@ patch(AppsMenu.prototype, "web_responsive_enterprise._getInitialOpenState", {
     },
     _getInitialOpenState() {
         // Open apps menu on startup if no action is specified in the URL
-        const { hash } = this.router.current;
+        const {hash} = this.router.current;
         return hash.action === undefined;
     },
 });
