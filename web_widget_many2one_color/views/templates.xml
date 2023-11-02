@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="assets_backend" name="many2one_color_widget" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link href="/web_widget_many2one_color/static/src/less/links.less" rel="stylesheet" type="text/less"/>
+            <script src="/web_widget_many2one_color/static/src/js/many2one_color_widget.js" type="text/javascript"/>
+        </xpath>
+    </template>
+</odoo>
