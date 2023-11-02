@@ -102,6 +102,7 @@ Contributors
 * Jose Maria Bernet <josemaria.bernet@guadaltech.es>
 * Alexandre Díaz <dev@redneboa.es>
 * Valtteri Lattu <valtteri.lattu@tawasta.fi>
+* Pere Albujer (`Planeta Huerto <https://planetahuerto.es>`_) <perealbujer@planetahuerto.es>
 * `Tecnativa <https://www.tecnativa.com>`_:
 
   * David Vidal
