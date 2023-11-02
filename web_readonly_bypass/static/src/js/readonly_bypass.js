@@ -152,11 +152,11 @@ odoo.define('web_readonly_bypass', function(require) {
          *     on_changes. Only used by the BufferedDataSet to make the o2m work correctly.
          * @returns super {$.Deferred}
          */
-        create : function(data, options) {
+        create : function(datas, options) {
             var self = this;
-            var context = pyeval.eval('contexts', self.context.get_eval_context());
-            readonly_bypass.ignore_readonly(data, options, true, context);
-            return self._super(data,options);
+            var context = pyeval.eval('contexts', new data.CompoundContext(self.context).get_eval_context());
+            readonly_bypass.ignore_readonly(datas, options, true, context);
+            return self._super(datas,options);
         },
         /**
          * Write Overriding
@@ -167,11 +167,11 @@ odoo.define('web_readonly_bypass', function(require) {
          *     on_changes. Only used by the BufferedDataSet to make the o2m work correctly.
          * @returns super {$.Deferred}
          */
-        write : function(id, data, options) {
+        write : function(id, datas, options) {
             var self = this;
-            var context = pyeval.eval('contexts', self.context.get_eval_context());
-            readonly_bypass.ignore_readonly(data, options, false, context);
-            return self._super(id,data,options);
+            var context = pyeval.eval('contexts',new data.CompoundContext(self.context).get_eval_context());
+            readonly_bypass.ignore_readonly(datas, options, false, context);
+            return self._super(id,datas,options);
         },
 
     });
