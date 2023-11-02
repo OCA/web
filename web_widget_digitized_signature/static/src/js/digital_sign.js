@@ -26,8 +26,8 @@ odoo.define('web_widget_digitized_signature.web_digital_sign', function(require)
                 'decor-color': '#D1D0CE',
                 'color': '#000',
                 'background-color': '#fff',
-                'height': '150',
-                'width': '550'
+                'height': this.attrs['height'] || '150',
+                'width': this.attrs['width'] || '550'
             };
             this.empty_sign = [];
         },
@@ -49,8 +49,8 @@ odoo.define('web_widget_digitized_signature.web_digital_sign', function(require)
                 'decor-color': '#D1D0CE',
                 'color': '#000',
                 'background-color': '#fff',
-                'height': '150',
-                'width': '550',
+                'height': this.attrs['height'] || '150',
+                'width': this.attrs['width'] || '550',
                 'clear': true
             };
             this.$(".signature").jSignature(sign_options);
@@ -120,8 +120,8 @@ odoo.define('web_widget_digitized_signature.web_digital_sign', function(require)
                         'decor-color': '#D1D0CE',
                         'color': '#000',
                         'background-color': '#fff',
-                        'height': '150',
-                        'width': '550'
+                        'height': this.attrs['height'] || '150',
+                        'width': this.attrs['width'] || '550'
                     };
                     this.$(".signature").jSignature("init", sign_options);
                 }
@@ -133,8 +133,8 @@ odoo.define('web_widget_digitized_signature.web_digital_sign', function(require)
                         'decor-color': '#D1D0CE',
                         'color': '#000',
                         'background-color': '#fff',
-                        'height': '150',
-                        'width': '550'
+                        'height': this.attrs['height'] || '150',
+                        'width': this.attrs['width'] || '550'
                     });
                 }
             }
