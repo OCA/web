@@ -13,6 +13,7 @@ import {fuzzyLookup} from "@web/core/utils/search";
 import {WebClient} from "@web/webclient/webclient";
 import {patch} from "web.utils";
 import {escapeRegExp} from "@web/core/utils/strings";
+import {session} from "@web/session";
 
 const {Component, useState, onPatched, onWillPatch} = owl;
 
@@ -34,16 +35,31 @@ export class AppsMenu extends Component {
         super.setup();
         this.state = useState({open: false});
         this.menuService = useService("menu");
-        let initialOpenState = this._getInitialOpenState();
+        this.router = useService("router");
+
+        // Determine initial state of menu according to user preferences
+        let initialOpenState;
+        switch (session.show_apps_menu_on_load) {
+            case 'default':
+                initialOpenState = false;
+                break;
+            case 'noaction':
+                const {hash} = this.router.current;
+                initialOpenState = hash.action === undefined;
+                break;
+            case 'always':
+                initialOpenState = true;
+                break;
+            default:
+                console.warn(`Unhandled value for show_apps_menu_on_load: ${session.show_apps_menu_on_load}`);
+                initialOpenState = false;
+        }
+
         useBus(this.env.bus, "ACTION_MANAGER:UI-UPDATED", () => {
             this.setOpenState(initialOpenState, false);
             initialOpenState = false;
         });
         this._setupKeyNavigation();
-    }
-
-    _getInitialOpenState() {
-        return false;
     }
 
     setOpenState(open_state, from_home_menu_click) {

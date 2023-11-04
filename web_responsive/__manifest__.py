@@ -18,7 +18,10 @@
     "depends": ["web", "mail"],
     "development_status": "Production/Stable",
     "maintainers": ["Yajo", "Tardo", "SplashS"],
-    "data": ["views/web.xml"],
+    "data": [
+        "views/res_users.xml",
+        "views/web.xml",
+    ],
     "assets": {
         "web.assets_backend": [
             "/web_responsive/static/src/views/form/form_controller.esm.js",
