@@ -38,7 +38,7 @@ export class AppsMenu extends Component {
         this.router = useService("router");
 
         // Determine initial state of menu according to user preferences
-        let initialOpenState;
+        let initialOpenState = false;
         switch (session.show_apps_menu_on_load) {
             case "default":
                 initialOpenState = false;
