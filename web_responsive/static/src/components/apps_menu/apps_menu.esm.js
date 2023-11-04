@@ -40,7 +40,7 @@ export class AppsMenu extends Component {
         // Determine initial state of menu according to user preferences
         let initialOpenState = false;
         switch (session.show_apps_menu_on_load) {
-            case "default":
+            case "never":
                 initialOpenState = false;
                 break;
             case "noaction":
