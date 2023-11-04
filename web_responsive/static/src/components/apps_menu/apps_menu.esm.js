@@ -40,18 +40,20 @@ export class AppsMenu extends Component {
         // Determine initial state of menu according to user preferences
         let initialOpenState;
         switch (session.show_apps_menu_on_load) {
-            case 'default':
+            case "default":
                 initialOpenState = false;
                 break;
-            case 'noaction':
+            case "noaction":
                 const {hash} = this.router.current;
                 initialOpenState = hash.action === undefined;
                 break;
-            case 'always':
+            case "always":
                 initialOpenState = true;
                 break;
             default:
-                console.warn(`Unhandled value for show_apps_menu_on_load: ${session.show_apps_menu_on_load}`);
+                console.warn(
+                    `Unhandled value for show_apps_menu_on_load: ${session.show_apps_menu_on_load}`
+                );
                 initialOpenState = false;
         }
 
