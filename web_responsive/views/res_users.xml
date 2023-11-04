@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_res_users_preferences_form" model="ir.ui.view">
+        <field name="name">User Preferences - Home Menu Type</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='preferences']" position="inside">
+                <group>
+                    <field name="show_apps_menu_on_load" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
