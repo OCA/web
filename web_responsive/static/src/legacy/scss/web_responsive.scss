@@ -393,3 +393,7 @@ body:not(.o_statusbar_buttons) {
         background-color: lighten($o-brand-primary, 40%);
     }
 }
+
+.o_searchview_autocomplete {
+    z-index: 999;
+}
