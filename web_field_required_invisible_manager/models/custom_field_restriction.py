@@ -117,10 +117,7 @@ class CustomFieldRestriction(models.Model):
             deps = ""
             if self.condition_domain:
                 deps = ",".join(
-                    [
-                        r[0] if r[0] not in ["id"] else ""
-                        for r in safe_eval(self.condition_domain)
-                    ]
+                    {r[0] for r in safe_eval(self.condition_domain)} - {"id", "&", "|"}
                 )
             field_id = self.env["ir.model.fields"].create(
                 {
