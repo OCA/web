@@ -26,7 +26,7 @@ addon | version | maintainers | summary
 [web_apply_field_style](web_apply_field_style/) | 16.0.1.0.1 |  | Apply css class style to fields from a dict parameters
 [web_calendar_slot_duration](web_calendar_slot_duration/) | 16.0.1.0.0 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) | Customizable calendar slot durations
 [web_chatter_position](web_chatter_position/) | 16.0.1.0.2 |  | Add an option to change the chatter position
-[web_company_color](web_company_color/) | 16.0.1.1.1 |  | Web Company Color
+[web_company_color](web_company_color/) | 16.0.1.2.0 |  | Web Company Color
 [web_dark_mode](web_dark_mode/) | 16.0.1.0.1 |  | Enabled Dark Mode for the Odoo Backend
 [web_dialog_size](web_dialog_size/) | 16.0.1.0.0 |  | A module that lets the user expand a dialog box to the full screen width.
 [web_domain_field](web_domain_field/) | 16.0.1.0.1 |  | Use computed field as domain
