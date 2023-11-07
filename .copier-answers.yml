@@ -1,0 +1,25 @@
+# Do NOT update manually; changes here will be overwritten by Copier
+_commit: v1.18
+_src_path: gh:oca/oca-addons-repo-template
+additional_ruff_rules: []
+ci: GitHub
+generate_requirements_txt: true
+github_check_license: true
+github_ci_extra_env: {}
+github_enable_codecov: true
+github_enable_makepot: true
+github_enable_stale_action: true
+github_enforce_dev_status_compatibility: true
+include_wkhtmltopdf: false
+odoo_test_flavor: Both
+odoo_version: 17.0
+org_name: Odoo Community Association (OCA)
+org_slug: OCA
+rebel_module_groups: []
+repo_description: 'TODO: add repo description.'
+repo_name: web
+repo_slug: web
+repo_website: https://github.com/OCA/web
+use_pyproject_toml: true
+use_ruff: true
+
