@@ -9,6 +9,7 @@ import {patch} from "@web/core/utils/patch";
 patch(CalendarModel.prototype, "WebCalendarSlotDurationCalendarModel", {
     buildRawRecord(partialRecord, options = {}) {
         if (
+            !partialRecord.end &&
             this.env.searchModel.context.calendar_slot_duration &&
             !partialRecord.isAllDay
         ) {
