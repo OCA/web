@@ -2,7 +2,7 @@ This module extend the Odoo Community Edition ``web`` module to improve visibili
 of form view.
 
 **Rational:**
-In Odoo V16, the design is very pure. That's great, but it generates some problem for
+Since Odoo V17, the design is very pure. That's great, but it generates some problem for
 users :
 
 * buttons and fields are not identifiable. (we can not know exactly where there are
