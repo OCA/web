@@ -284,7 +284,7 @@ try {
             "@mass_mailing/js/mailing_m2o_filter"
         );
         if (installed_mass_mailing) {
-            var FieldMany2OneMailingFilter = await odoo.runtimeImport(
+            const {FieldMany2OneMailingFilter} = await odoo.runtimeImport(
                 "@mass_mailing/js/mailing_m2o_filter"
             );
             FieldMany2OneMailingFilter.props = {
