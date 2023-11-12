@@ -41,7 +41,7 @@ repos:
     hooks:
       - id: whool-init
   - repo: https://github.com/oca/maintainer-tools
-    rev: 568cacd1d6eef453063a524a5ce63dcd49c7259b
+    rev: f71041f22b8cd68cf7c77b73a14ca8d8cd190a60
     hooks:
       # update the NOT INSTALLABLE ADDONS section above
       - id: oca-update-pre-commit-excluded-addons
@@ -54,6 +54,8 @@ repos:
           - --org-name=OCA
           - --repo-name=web
           - --if-source-changed
+          - --keep-source-digest
+          - --convert-fragments-to-markdown
       - id: oca-gen-external-dependencies
   - repo: https://github.com/OCA/odoo-pre-commit-hooks
     rev: v0.0.25

@@ -1,8 +1,9 @@
 # Do NOT update manually; changes here will be overwritten by Copier
-_commit: v1.18
+_commit: v1.19
 _src_path: gh:oca/oca-addons-repo-template
 additional_ruff_rules: []
 ci: GitHub
+convert_readme_fragments_to_markdown: true
 generate_requirements_txt: true
 github_check_license: true
 github_ci_extra_env: {}
