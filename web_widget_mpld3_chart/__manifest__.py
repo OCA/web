@@ -17,7 +17,8 @@
     "license": "LGPL-3",
     "assets": {
         "web.assets_backend": [
-            "web_widget_mpld3_chart/static/src/js/web_widget_mpld3_chart.esm.js",
+            "web_widget_mpld3_chart/static/src/js/*.js",
+            "web_widget_mpld3_chart/static/src/xml/*.xml",
         ],
     },
 }

@@ -27,7 +27,7 @@ class AbstractMpld3Parser(models.AbstractModel):
         soup = BeautifulSoup(html_string, "lxml")
         json_data = {
             "style": soup.style.decode(),
-            "div": soup.div.get("id"),
+            "div": str(soup.div),
             "script": soup.script.decode_contents(),
         }
         return json.dumps(json_data)
