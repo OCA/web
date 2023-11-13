@@ -1,0 +1,88 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_help
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-11-13 10:27+0000\n"
+"PO-Revision-Date: 2023-11-13 11:36+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ca_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.1\n"
+
+#. module: web_help
+#. odoo-javascript
+#: code:addons/web_help/static/src/user_trip.esm.js:0
+#, python-format
+msgid "Cancel"
+msgstr "Cancel·lar"
+
+#. module: web_help
+#. odoo-javascript
+#: code:addons/web_help/static/src/change_password_trip.esm.js:0
+#, python-format
+msgid "Change the password here, make sure it's secure."
+msgstr "Canvieu la contrasenya aquí, assegureu-vos que sigui segura."
+
+#. module: web_help
+#. odoo-javascript
+#: code:addons/web_help/static/src/change_password_trip.esm.js:0
+#, python-format
+msgid "Click here to confirm it."
+msgstr "Feu clic aquí per confirmar-ho."
+
+#. module: web_help
+#. odoo-javascript
+#: code:addons/web_help/static/src/trip.esm.js:0
+#, python-format
+msgid "Close"
+msgstr "Tanca"
+
+#. module: web_help
+#. odoo-javascript
+#: code:addons/web_help/static/src/trip.esm.js:0
+#, python-format
+msgid "Finish"
+msgstr "Acabar"
+
+#. module: web_help
+#. odoo-javascript
+#: code:addons/web_help/static/src/trip.esm.js:0
+#, python-format
+msgid "Got it"
+msgstr "Entès"
+
+#. module: web_help
+#. odoo-javascript
+#: code:addons/web_help/static/src/user_trip.esm.js:0
+#, python-format
+msgid "Next"
+msgstr "Següent"
+
+#. module: web_help
+#. odoo-javascript
+#: code:addons/web_help/static/src/user_trip.esm.js:0
+#, python-format
+msgid "To create a new user click here."
+msgstr "Per crear un nou usuari feu clic aquí."
+
+#. module: web_help
+#. odoo-javascript
+#: code:addons/web_help/static/src/user_trip.esm.js:0
+#, python-format
+msgid "Use the searchbar to find specific users."
+msgstr "Utilitzeu la barra de cerca per trobar usuaris específics."
+
+#. module: web_help
+#. odoo-javascript
+#: code:addons/web_help/static/src/user_trip.esm.js:0
+#, python-format
+msgid "You can switch to different views here."
+msgstr "Podeu canviar a diferents vistes aquí."
