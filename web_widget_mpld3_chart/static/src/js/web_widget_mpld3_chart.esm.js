@@ -1,31 +1,32 @@
 /** @odoo-module **/
 
-import basicFields from "web.basic_fields";
-import fieldRegistry from "web.field_registry";
-
-const Mpld3ChartWidget = basicFields.FieldChar.extend({
-    jsLibs: [
-        "/web_widget_mpld3_chart/static/src/lib/d3/d3.v5.js",
-        "/web_widget_mpld3_chart/static/src/lib/mpld3/mpld3.v0.5.9.js",
-    ],
-    _renderReadonly: function () {
+import {CharField} from "@web/views/fields/char/char_field";
+import {loadBundle} from "@web/core/assets";
+import {registry} from "@web/core/registry";
+const {onWillStart, markup} = owl;
+class Mpld3ChartWidget extends CharField {
+    setup() {
+        super.setup();
+        onWillStart(() =>
+            loadBundle({
+                jsLibs: [
+                    "/web_widget_mpld3_chart/static/src/lib/d3/d3.v5.js",
+                    "/web_widget_mpld3_chart/static/src/lib/mpld3/mpld3.v0.5.9.js",
+                ],
+            })
+        );
+    }
+    get json_value() {
         try {
-            const val = JSON.parse(this.value);
-            const new_div = document.createElement("div");
-            new_div.setAttribute("id", val.div);
-            this.$el.html(new_div);
-            this.$el.ready(function () {
-                const script = document.createElement("script");
-                script.setAttribute("type", "text/javascript");
-                if ("textContent" in script) script.textContent = val.script;
-                else script.text = val.script;
-                $("head").append(script);
-            });
+            var value = JSON.parse(this.props.value);
+            value.div = markup(value.div.trim());
+            return value;
         } catch (error) {
-            return this._super(...arguments);
+            return {};
         }
-    },
-});
+    }
+}
+Mpld3ChartWidget.template = "web_widget_mpld3_chart.Mpld3ChartField";
+registry.category("fields").add("mpld3_chart", Mpld3ChartWidget);
 
-fieldRegistry.add("mpld3_chart", Mpld3ChartWidget);
 export default Mpld3ChartWidget;
