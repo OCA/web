@@ -6,7 +6,7 @@
 
 {
     "name": "Web Environment Ribbon",
-    "version": "16.0.1.0.0",
+    "version": "17.0.1.0.0",
     "category": "Web",
     "author": "Francesco OpenCode Apruzzese, "
     "Tecnativa, "
@@ -20,8 +20,8 @@
     "auto_install": False,
     "installable": True,
     "assets": {
-        "web.assets_common": [
-            "web_environment_ribbon/static/**/*",
+        "web.assets_backend": [
+            "web_environment_ribbon/static/src/components/environment_ribbon/*",
         ],
     },
 }

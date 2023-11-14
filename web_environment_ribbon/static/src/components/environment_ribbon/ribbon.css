@@ -27,10 +27,3 @@
 .test-ribbon b {
     font-size: 20px;
 }
-
-header:hover ~ .test-ribbon,
-nav:hover ~ .test-ribbon {
-    /* Ease out ribbon when user is using the navigation in Odoo */
-    opacity: 0;
-    transition: 0.2s ease;
-}
