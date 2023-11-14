@@ -3,7 +3,7 @@
 {
     "name": "Web Widget Domain Editor Dialog",
     "summary": "Recovers the Domain Editor Dialog functionality",
-    "version": "15.0.1.0.1",
+    "version": "16.0.1.0.0",
     "category": "Web",
     "author": "Tecnativa," "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
@@ -11,7 +11,7 @@
     "depends": ["web"],
     "assets": {
         "web.assets_backend": [
-            "/web_widget_domain_editor_dialog/static/src/js/*.js",
+            "/web_widget_domain_editor_dialog/static/src/js/*.esm.js",
         ],
     },
     "installable": True,
