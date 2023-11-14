@@ -18,7 +18,7 @@ class TestEnvironmentRibbonData(common.TransactionCase):
         ribbon = self.env["web.environment.ribbon.backend"].get_environment_ribbon()
 
         expected_ribbon = {
-            "name": "Test Ribbon {db_name}".format(db_name=self.env.cr.dbname),
+            "name": f"Test Ribbon {self.env.cr.dbname}",
             "color": "#000000",
             "background_color": "#FFFFFF",
         }
