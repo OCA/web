@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- Copyright 2022 Tecnativa - Carlos Roca
+<!-- Copyright 2022 Tecnativa - Alexandre Díaz
+     Copyright 2023 Taras Shabaranskyi
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <template>
     <t
-        t-name="web_refresher.Pager"
-        t-inherit="web.Pager"
+        t-name="web_refresher.ControlPanel"
+        t-inherit="web.ControlPanel"
         t-inherit-mode="extension"
-        owl="1"
     >
-        <xpath expr="//span[hasclass('o_pager_counter')]" position="before">
+        <xpath expr="//div[hasclass('o_cp_pager')]" position="before">
             <div class="oe_cp_refresher" role="search" t-ref="refresher">
-                <Refresher t-props="props" />
+                <Refresher t-props="refresherProps" />
             </div>
         </xpath>
     </t>
