@@ -1,0 +1,38 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_refresher
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0-20231113\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-11-15 08:17+0000\n"
+"PO-Revision-Date: 2023-11-15 08:17+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_refresher
+#. odoo-javascript
+#: code:addons/web_refresher/static/src/xml/refresher.xml:0
+#: code:addons/web_refresher/static/src/xml/refresher.xml:0
+#, python-format
+msgid "Refresh"
+msgstr "Оновити"
+
+#. module: web_refresher
+#. odoo-javascript
+#: code:addons/web_refresher/static/src/js/refresher.esm.js:0
+#, python-format
+msgid "Refreshed"
+msgstr "Оновлено"
+
+#. module: web_refresher
+#. odoo-javascript
+#: code:addons/web_refresher/static/src/xml/refresher.xml:0
+#, python-format
+msgid "Refresher"
+msgstr "Оновлювач"
