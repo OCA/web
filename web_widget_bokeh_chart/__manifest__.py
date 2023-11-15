@@ -18,6 +18,7 @@
     "assets": {
         "web.assets_backend": [
             "web_widget_bokeh_chart/static/src/js/web_widget_bokeh_chart.esm.js",
+            "web_widget_bokeh_chart/static/src/js/web_widget_bokeh_json_chart.esm.js",
             "web_widget_bokeh_chart/static/src/xml/bokeh.xml",
         ],
     },
