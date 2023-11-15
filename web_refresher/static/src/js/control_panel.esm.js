@@ -9,8 +9,8 @@ import {ControlPanel} from "@web/search/control_panel/control_panel";
 import {Refresher} from "./refresher.esm";
 
 patch(ControlPanel, {
-    components: {...ControlPanel.components, Refresher}
-})
+    components: {...ControlPanel.components, Refresher},
+});
 
 patch(ControlPanel.prototype, {
     /**
@@ -21,8 +21,8 @@ patch(ControlPanel.prototype, {
             return {
                 searchModel: this.env.searchModel,
                 pagerProps: this.pagerProps,
-            }
+            };
         }
-        return {}
-    }
-})
+        return {};
+    },
+});

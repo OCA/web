@@ -13,7 +13,7 @@ export class Refresher extends Component {
     static props = {
         searchModel: {type: Object, optional: true},
         pagerProps: {type: Object, optional: true},
-    }
+    };
 
     setup() {
         super.setup();
@@ -25,7 +25,7 @@ export class Refresher extends Component {
      */
     get displayButton() {
         const {searchModel, pagerProps} = this.props;
-        return Boolean(searchModel?.search || pagerProps?.onUpdate)
+        return Boolean(searchModel?.search || pagerProps?.onUpdate);
     }
 
     _searchModelRefresh() {
@@ -54,7 +54,7 @@ export class Refresher extends Component {
     async onClickRefresh() {
         await this.refresh();
         this.notification.add(_t("Refreshed"), {
-            type: "info"
-        })
+            type: "info",
+        });
     }
 }

@@ -7,13 +7,13 @@ import {SearchBar} from "@web/search/search_bar/search_bar";
 import {Refresher} from "./refresher.esm";
 
 patch(SearchBar, {
-    components: {...SearchBar.components, Refresher}
-})
+    components: {...SearchBar.components, Refresher},
+});
 
 patch(SearchBar.prototype, {
     get refresherProps() {
         return {
             searchModel: this.env.searchModel,
-        }
-    }
-})
+        };
+    },
+});
