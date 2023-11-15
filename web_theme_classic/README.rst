@@ -28,27 +28,30 @@ Web Theme Classic
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module extend the Odoo Community Edition ``web`` module to improve visibility
-of form view.
+This module extend the Odoo Community Edition ``web`` module to improve
+visibility of form view.
 
-**Rational:**
-Since Odoo V17, the design is very pure. That's great, but it generates some problem for
-users :
+**Rational:** Since Odoo V17, the design is very pure. That's great, but
+it generates some problem for users :
 
-* buttons and fields are not identifiable. (we can not know exactly where there are
-  until you hover over them with the cursor)
+-  buttons and fields are not identifiable. (we can not know exactly
+   where there are until you hover over them with the cursor)
+-  there is no indication for the required fields until trying to save
+   (or exit the screen)
 
-* there is no indication for the required fields until trying to save (or exit the screen)
-
-In a way, this module restores the form display of version 15, but preserving the "save on the fly" new feature.
+In a way, this module restores the form display of version 15, but
+preserving the "save on the fly" new feature.
 
 **Without this module**
 
-.. figure:: https://raw.githubusercontent.com/OCA/web/17.0/web_theme_classic/static/description/product_template_form_without_module.png
+|image1|
 
 **With this module**
 
-.. figure:: https://raw.githubusercontent.com/OCA/web/17.0/web_theme_classic/static/description/product_template_form_with_module.png
+|image2|
+
+.. |image1| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_theme_classic/static/description/product_template_form_without_module.png
+.. |image2| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_theme_classic/static/description/product_template_form_with_module.png
 
 **Table of contents**
 
@@ -58,8 +61,8 @@ In a way, this module restores the form display of version 15, but preserving th
 Known issues / Roadmap
 ======================
 
-* For the time being, the module improves form and search view. Some other improvement could
-  be done on other part of the UI.
+-  For the time being, the module improves form and search view. Some
+   other improvement could be done on other part of the UI.
 
 Bug Tracker
 ===========
@@ -75,17 +78,17 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * GRAP
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Sylvain LE GAL (https://www.twitter.com/legalsylvain)
+-  Sylvain LE GAL (https://www.twitter.com/legalsylvain)
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
