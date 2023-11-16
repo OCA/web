@@ -1,9 +1,9 @@
 /** @odoo-module */
 
+import {Component} from "@odoo/owl";
+import {_t} from "@web/core/l10n/translation";
 import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
-import {_lt} from "@web/core/l10n/translation";
-import {Component} from "@odoo/owl";
 
 export class OpenTabWidget extends Component {
     openNewTab(ev) {
@@ -13,7 +13,7 @@ export class OpenTabWidget extends Component {
         var url = window.location.href;
         var searchParams = new URLSearchParams(url.split("#")[1]);
         searchParams.set("view_type", "form");
-        searchParams.set("id", this.props.value);
+        searchParams.set("id", this.props.record.data.id);
         if (
             !searchParams.has("model") ||
             searchParams.get("model") !== this.props.record.resModel
@@ -34,12 +34,13 @@ OpenTabWidget.props = {
     title: {type: String, optional: true},
 };
 
-OpenTabWidget.displayName = _lt("Open Tab");
-OpenTabWidget.supportedTypes = ["integer"];
-OpenTabWidget.extractProps = () => {
-    return {
-        title: _lt("Click to open on new tab"),
-    };
+export const openTabWidget = {
+    component: OpenTabWidget,
+    displayName: _t("Open Tab"),
+    supportedTypes: ["integer"],
+    extractProps: () => ({
+        title: _t("Click to open on new tab"),
+    }),
 };
 
-registry.category("fields").add("open_tab", OpenTabWidget);
+registry.category("fields").add("open_tab", openTabWidget);
