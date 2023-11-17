@@ -1,13 +1,15 @@
 from odoo import models
 
+from odoo.addons.web_notify.models.res_users import DEFAULT, DEFAULT_MESSAGE
+
 
 class ResUsers(models.Model):
     _inherit = "res.users"
 
     def _notify_channel(
         self,
-        type_message="default",
-        message="Default message",
+        type_message=DEFAULT,
+        message=DEFAULT_MESSAGE,
         title=None,
         sticky=False,
         target=None,
