@@ -17,13 +17,13 @@ Web Responsive
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/16.0/web_responsive
+    :target: https://github.com/OCA/web/tree/17.0/web_responsive
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-16-0/web-16-0-web_responsive
+    :target: https://translation.odoo-community.org/projects/web-17-0/web-17-0-web_responsive
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -32,75 +32,76 @@ This module adds responsiveness to web backend.
 
 **Features for all devices**:
 
-* New navigation with the fullscreen app menu
+-  New navigation with the fullscreen app menu
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/appmenu.gif
+   |image|
 
-* Quick menu search inside the app menu
+-  Quick menu search inside the app menu
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/appsearch.gif
+   |image1|
 
-* Sticky header & footer in list view
+-  Sticky header & footer in list view
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/listview.gif
+   |image2|
 
-* Sticky statusbar in form view
+-  Sticky statusbar in form view
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/formview.gif
+   |image3|
 
-* Bigger checkboxes in list view
+-  Bigger checkboxes in list view
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/listview.gif
+   |image4|
 
+**Features for mobile**: \* View type picker dropdown displays
+comfortably
 
-**Features for mobile**:
-* View type picker dropdown displays comfortably
+-  Control panel buttons use icons to save space.
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/viewtype.gif
+   |image5|
 
-* Control panel buttons use icons to save space.
+-  Followers and send button is displayed on mobile. Avatar is hidden.
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/form_buttons.gif
+   |image6|
 
-* Search panel is collapsed to mobile version on small screens.
-
-  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/search_panel.gif
-
-* Followers and send button is displayed on mobile. Avatar is hidden.
-
-  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/chatter.gif
-
-* Big inputs on form in edit mode
+-  Big inputs on form in edit mode
 
 **Features for desktop computers**:
 
-* Keyboard shortcuts for easier navigation,
-  **using `Alt + Shift + [NUM]`** combination instead of
-  just `Alt + [NUM]` to avoid conflict with Firefox Tab switching.
-  Standard Odoo keyboard hotkeys changed to be more intuitive or
-  accessible by fingers of one hand.
-  F.x. `Alt + S` for `Save`
+-  Keyboard shortcuts for easier navigation, **using \`Alt + Shift +
+   [NUM]\`** combination instead of just Alt + [NUM] to avoid conflict
+   with Firefox Tab switching. Standard Odoo keyboard hotkeys changed to
+   be more intuitive or accessible by fingers of one hand. F.x. Alt + S
+   for Save
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/shortcuts.gif
+   |image7|
 
-* Autofocus on search menu box when opening the app menu
+-  Autofocus on search menu box when opening the app menu
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/appsearch.gif
+   |image8|
 
-* Full width form sheets
+-  When the chatter is on the side part, the document viewer fills that
+   part for side-by-side reading instead of full screen. You can still
+   put it on full width preview clicking on the new maximize button.
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/formview.gif
+   |image9|
 
-* When the chatter is on the side part, the document viewer fills that
-  part for side-by-side reading instead of full screen. You can still put it on full
-  width preview clicking on the new maximize button.
+-  When the user chooses to send a public message the color of the
+   composer is different from the one when the message is an internal
+   log.
 
-  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/document_viewer.gif
+   |image10|
 
-* When the user chooses to send a public message the color of the composer is different
-  from the one when the message is an internal log.
-
-  .. image:: https://raw.githubusercontent.com/OCA/web/16.0/web_responsive/static/img/chatter-colors.gif
+.. |image| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/appmenu.gif
+.. |image1| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/appsearch.gif
+.. |image2| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/listview.gif
+.. |image3| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/formview.gif
+.. |image4| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/listview.gif
+.. |image5| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/form_buttons.gif
+.. |image6| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/chatter.png
+.. |image7| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/shortcuts.gif
+.. |image8| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/appsearch.gif
+.. |image9| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/document_viewer.gif
+.. |image10| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/chatter-colors.png
 
 **Table of contents**
 
@@ -112,15 +113,15 @@ Usage
 
 The following keyboard shortcuts are implemented:
 
-* Navigate app search results - Arrow keys
-* Choose app result - ``Enter``
-* ``Esc`` to close app drawer
+-  Navigate app search results - Arrow keys
+-  Choose app result - ``Enter``
+-  ``Esc`` to close app drawer
 
 Known issues / Roadmap
 ======================
 
-* App navigation with keyboard.
-* Handle long titles on forms in a better way
+-  App navigation with keyboard.
+-  Handle long titles on forms in a better way
 
 Bug Tracker
 ===========
@@ -128,7 +129,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_responsive%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_responsive%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -136,7 +137,7 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * LasLabs
 * Tecnativa
@@ -144,22 +145,33 @@ Authors
 * Onestein
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Dave Lasley <dave@laslabs.com>
-* Jairo Llopis <jairo.llopis@tecnativa.com>
-* `Onestein <https://www.onestein.nl>`_:
-    * Dennis Sluijk <d.sluijk@onestein.nl>
-    * Anjeel Haria
-* Sergio Teruel <sergio.teruel@tecnativa.com>
-* Alexandre Díaz <dev@redneboa.es>
-* Mathias Markl <mathias.markl@mukit.at>
-* Iván Todorovich <ivan.todorovich@gmail.com>
-* Sergey Shebanin <sergey@shebanin.ru>
-* David Vidal <david.vidal@tecnativa.com>
+-  Dave Lasley <dave@laslabs.com>
+
+-  Jairo Llopis <jairo.llopis@tecnativa.com>
+
+-  `Onestein <https://www.onestein.nl>`__:
+
+   -  Dennis Sluijk <d.sluijk@onestein.nl>
+   -  Anjeel Haria
+
+-  Sergio Teruel <sergio.teruel@tecnativa.com>
+
+-  Alexandre Díaz <dev@redneboa.es>
+
+-  Mathias Markl <mathias.markl@mukit.at>
+
+-  Iván Todorovich <ivan.todorovich@gmail.com>
+
+-  Sergey Shebanin <sergey@shebanin.ru>
+
+-  David Vidal <david.vidal@tecnativa.com>
+
+-  Taras Shabaranskyi <shabaranskij@gmail.com>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -185,6 +197,6 @@ Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-Yajo| |maintainer-Tardo| |maintainer-SplashS| 
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/16.0/web_responsive>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/17.0/web_responsive>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
