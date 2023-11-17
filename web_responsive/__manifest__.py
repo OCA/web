@@ -3,12 +3,13 @@
 # Copyright 2018-2019 Tecnativa - Alexandre Díaz
 # Copyright 2021 ITerra - Sergey Shebanin
 # Copyright 2023 Onestein - Anjeel Haria
+# Copyright 2023 Taras Shabaranskyi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 {
     "name": "Web Responsive",
     "summary": "Responsive web client, community-supported",
-    "version": "16.0.1.2.3",
+    "version": "17.0.1.0.0",
     "category": "Website",
     "website": "https://github.com/OCA/web",
     "author": "LasLabs, Tecnativa, ITerra, Onestein, "
@@ -19,34 +20,44 @@
     "development_status": "Production/Stable",
     "maintainers": ["Yajo", "Tardo", "SplashS"],
     "excludes": ["web_enterprise"],
-    "data": ["views/web.xml"],
+    "data": [
+        "views/res_users_views.xml",
+    ],
     "assets": {
+        "web._assets_primary_variables": {
+            "/web_responsive/static/src/legacy/scss/form_variable.scss",
+            "/web_responsive/static/src/legacy/scss/primary_variable.scss",
+        },
         "web.assets_backend": [
-            "/web_responsive/static/src/views/form/form_controller.esm.js",
+            "web_responsive/static/src/lib/fuse/fuse.basic.min.js",
             "/web_responsive/static/src/legacy/scss/web_responsive.scss",
-            "/web_responsive/static/src/legacy/js/web_responsive.js",
-            "/web_responsive/static/src/components/ui_context.esm.js",
-            "/web_responsive/static/src/components/apps_menu/apps_menu.scss",
-            "/web_responsive/static/src/components/apps_menu/apps_menu.esm.js",
-            "/web_responsive/static/src/components/control_panel/control_panel.scss",
-            "/web_responsive/static/src/components/control_panel/control_panel.esm.js",
-            "/web_responsive/static/src/components/search_panel/search_panel.scss",
-            "/web_responsive/static/src/components/search_panel/search_panel.esm.js",
-            "/web_responsive/static/src/components/hotkey/hotkey.scss",
+            "/web_responsive/static/src/legacy/scss/big_boxes.scss",
+            "/web_responsive/static/src/legacy/scss/list_sticky_header.scss",
+            "/web_responsive/static/src/legacy/js/web_responsive.esm.js",
             "/web_responsive/static/src/legacy/xml/form_buttons.xml",
-            "/web_responsive/static/src/components/apps_menu/apps_menu.xml",
-            "/web_responsive/static/src/components/control_panel/control_panel.xml",
-            "/web_responsive/static/src/components/search_panel/search_panel.xml",
-            "/web_responsive/static/src/components/hotkey/hotkey.xml",
-            "/web_responsive/static/src/components/chatter_topbar/chatter_topbar.esm.js",
-            "/web_responsive/static/src/components/chatter_topbar/chatter_topbar.xml",
-            "/web_responsive/static/src/components/attachment_viewer/attachment_viewer.scss",
-            "/web_responsive/static/src/components/attachment_viewer/attachment_viewer.esm.js",
-            "/web_responsive/static/src/components/attachment_viewer/attachment_viewer.xml",
+            "/web_responsive/static/src/legacy/xml/custom_favorite_item.xml",
+            "/web_responsive/static/src/components/apps_menu_tools.esm.js",
+            "/web_responsive/static/src/components/apps_menu/*",
+            "/web_responsive/static/src/components/apps_menu_item/*",
+            "/web_responsive/static/src/components/menu_canonical_searchbar/*",
+            "/web_responsive/static/src/components/menu_odoo_searchbar/*",
+            "/web_responsive/static/src/components/menu_fuse_searchbar/*",
+            "/web_responsive/static/src/components/menu_searchbar/*",
+            "/web_responsive/static/src/components/hotkey/*",
+            "/web_responsive/static/src/components/file_viewer/*",
+            "/web_responsive/static/src/components/chatter/*",
+            "/web_responsive/static/src/components/control_panel/*",
+            "/web_responsive/static/src/components/command_palette/*",
             "/web_responsive/static/src/views/form/form_controller.scss",
+            "/web_responsive/static/src/views/form/status_bar_buttons.xml",
+            "/web_responsive/static/src/views/form/form_statusbar.scss",
         ],
         "web.assets_tests": [
             "/web_responsive/static/tests/test_patch.js",
+        ],
+        "web.qunit_suite_tests": [
+            "/web_responsive/static/tests/apps_menu_tests.esm.js",
+            "/web_responsive/static/tests/apps_menu_search_tests.esm.js",
         ],
     },
     "sequence": 1,
