@@ -66,6 +66,13 @@ msgid "Notify Warning Channel Name"
 msgstr "Notificar advertencia Nombre del canal"
 
 #. module: web_notify
+#. odoo-javascript
+#: code:addons/web_notify/static/src/js/services/notification_services.esm.js:0
+#, python-format
+msgid "Open"
+msgstr ""
+
+#. module: web_notify
 #. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
 #, python-format
