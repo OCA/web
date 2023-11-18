@@ -47,6 +47,11 @@ $button-border-color: #dee2e6;
             border-color: $button-border-color;
         }
     }
+
+    .o_input {
+        padding-left: 4px;
+        padding-right: 2px;
+    }
 }
 /***********************************************************
         Form View : Handle Background for required fields
