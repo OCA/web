@@ -79,7 +79,7 @@ class ResUsers(models.Model):
         sticky=False,
         target=None,
     ):
-        if not self.env.user._is_admin() and any(
+        if not (self.env.user._is_admin() or self.env.su) and any(
             user.id != self.env.uid for user in self
         ):
             raise exceptions.UserError(
