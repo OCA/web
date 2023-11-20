@@ -40,6 +40,7 @@ addon | version | maintainers | summary
 [web_drop_target](web_drop_target/) | 13.0.1.2.0 |  | Allows to drag files into Odoo
 [web_editor_background_color](web_editor_background_color/) | 13.0.1.0.0 |  | Set any background color for web editor snippets
 [web_environment_ribbon](web_environment_ribbon/) | 13.0.1.0.0 |  | Web Environment Ribbon
+[web_field_tooltip](web_field_tooltip/) | 13.0.1.0.0 |  | Displays customizable tooltips for fields
 [web_group_expand](web_group_expand/) | 13.0.1.0.0 |  | Group Expand Buttons
 [web_ir_actions_act_multi](web_ir_actions_act_multi/) | 13.0.1.0.0 |  | Enables triggering of more than one action on ActionManager
 [web_ir_actions_act_view_reload](web_ir_actions_act_view_reload/) | 13.0.1.0.0 |  | Enables reload of the current view via ActionManager
