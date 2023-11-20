@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+hbr1,hbr1,model_model_button_rule,base.group_system,1,1,1,1
+hbr2,hbr2,model_model_button_rule,base.group_user,1,0,0,0
