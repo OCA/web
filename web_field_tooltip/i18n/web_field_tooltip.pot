@@ -4,10 +4,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 13.0+e\n"
+"Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-01 08:32+0000\n"
-"PO-Revision-Date: 2023-08-01 08:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -30,7 +28,7 @@ msgstr ""
 #. openerp-web
 #: code:addons/web_field_tooltip/static/src/js/web_field_tooltip.js:0
 #, python-format
-msgid "Add a Tooltip"
+msgid "Add a tooltip"
 msgstr ""
 
 #. module: web_field_tooltip
@@ -58,7 +56,7 @@ msgstr ""
 #. openerp-web
 #: code:addons/web_field_tooltip/static/src/js/web_field_tooltip.js:0
 #, python-format
-msgid "Edit a Tooltip"
+msgid "Edit a tooltip"
 msgstr ""
 
 #. module: web_field_tooltip
@@ -123,8 +121,8 @@ msgstr ""
 
 #. module: web_field_tooltip
 #. openerp-web
-#: code:addons/web_field_tooltip/static/src/js/web_field_tooltip.js:0
-#: code:addons/web_field_tooltip/static/src/js/web_field_tooltip.js:0
+#: code:addons/web_field_tooltip/static/src/js/controller.js:0
+#: code:addons/web_field_tooltip/static/src/js/controller.js:0
 #, python-format
 msgid "Manage Tooltips"
 msgstr ""
