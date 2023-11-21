@@ -6,128 +6,130 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-11-21 12:34+0000\n"
+"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: web_button_visibility
 #: model:ir.model.fields,field_description:web_button_visibility.field_model_button_rule__action
 msgid "Action"
-msgstr ""
+msgstr "Azione"
 
 #. module: web_button_visibility
 #: model_terms:ir.ui.view,arch_db:web_button_visibility.view_users_demo_form
 #: model_terms:ir.ui.view,arch_db:web_button_visibility.view_users_demo_form2
 msgid "Archive"
-msgstr ""
+msgstr "Archivia"
 
 #. module: web_button_visibility
 #: model:ir.model,name:web_button_visibility.model_base
 msgid "Base"
-msgstr ""
+msgstr "Base"
 
 #. module: web_button_visibility
 #: model:ir.model.fields,field_description:web_button_visibility.field_model_button_rule__button_name
 msgid "Button Name"
-msgstr ""
+msgstr "Nome bottone"
 
 #. module: web_button_visibility
 #: model:ir.model.fields,field_description:web_button_visibility.field_model_button_rule__button_visibility_field_id
 msgid "Button Visibility Field"
-msgstr ""
+msgstr "Campo visibilità bottone"
 
 #. module: web_button_visibility
 #: model:ir.model.fields,field_description:web_button_visibility.field_model_button_rule__condition_domain
 msgid "Condition Domain"
-msgstr ""
+msgstr "Dominio condizione"
 
 #. module: web_button_visibility
 #: model_terms:ir.ui.view,arch_db:web_button_visibility.view_users_demo_form
 #: model_terms:ir.ui.view,arch_db:web_button_visibility.view_users_demo_form2
 #: model_terms:ir.ui.view,arch_db:web_button_visibility.view_users_demo_form3
 msgid "Contact"
-msgstr ""
+msgstr "Contatto"
 
 #. module: web_button_visibility
 #: model:ir.model.fields,field_description:web_button_visibility.field_model_button_rule__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creato da"
 
 #. module: web_button_visibility
 #: model:ir.model.fields,field_description:web_button_visibility.field_model_button_rule__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creato il"
 
 #. module: web_button_visibility
 #: model:ir.model.fields,field_description:web_button_visibility.field_ir_model__display_name
 #: model:ir.model.fields,field_description:web_button_visibility.field_model_button_rule__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: web_button_visibility
 #: model:ir.model.fields,field_description:web_button_visibility.field_model_button_rule__group_ids
 msgid "Group"
-msgstr ""
+msgstr "Gruppo"
 
 #. module: web_button_visibility
 #: model:ir.model.fields.selection,name:web_button_visibility.selection__model_button_rule__action__hide
 msgid "Hide"
-msgstr ""
+msgstr "Nascondi"
 
 #. module: web_button_visibility
 #: model:ir.model.fields,field_description:web_button_visibility.field_ir_model__hide_button_rule_ids
 msgid "Hide Button Rule"
-msgstr ""
+msgstr "Regola nascondi bottone"
 
 #. module: web_button_visibility
 #: model_terms:ir.ui.view,arch_db:web_button_visibility.view_model_form_inherit
 msgid "Hide Button Rules"
-msgstr ""
+msgstr "Regole nascondi bottone"
 
 #. module: web_button_visibility
 #: model:ir.model.fields,field_description:web_button_visibility.field_ir_model__id
 #: model:ir.model.fields,field_description:web_button_visibility.field_model_button_rule__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: web_button_visibility
 #: model:ir.model.fields,field_description:web_button_visibility.field_ir_model____last_update
 #: model:ir.model.fields,field_description:web_button_visibility.field_model_button_rule____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: web_button_visibility
 #: model:ir.model.fields,field_description:web_button_visibility.field_model_button_rule__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultimo aggiornamento di"
 
 #. module: web_button_visibility
 #: model:ir.model.fields,field_description:web_button_visibility.field_model_button_rule__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultimo aggiornamento il"
 
 #. module: web_button_visibility
 #: model:ir.model.fields,field_description:web_button_visibility.field_model_button_rule__model_id
 #: model:ir.model.fields,field_description:web_button_visibility.field_model_button_rule__model_name
 msgid "Model"
-msgstr ""
+msgstr "Modello"
 
 #. module: web_button_visibility
 #: code:addons/web_button_visibility/models/hide_button_rule.py:0
 #, python-format
 msgid "Model %s has no method %s."
-msgstr ""
+msgstr "Il modello %s non ha il metodo %s."
 
 #. module: web_button_visibility
 #: model:ir.model,name:web_button_visibility.model_ir_model
 msgid "Models"
-msgstr ""
+msgstr "Modelli"
 
 #. module: web_button_visibility
 #: model:ir.model,name:web_button_visibility.model_model_button_rule
 msgid "Rule to hide a button"
-msgstr ""
+msgstr "Regola per nascondere un bottone"
