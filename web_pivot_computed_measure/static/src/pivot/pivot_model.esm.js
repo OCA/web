@@ -6,6 +6,7 @@
 import {PivotModel} from "@web/views/pivot/pivot_model";
 import {patch} from "web.utils";
 import {computeReportMeasures} from "@web/views/helpers/utils";
+import {evalOperation} from "../helpers/utils.esm";
 
 patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
     /**
@@ -148,7 +149,7 @@ patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
                 subGroupData[cm.id] = false;
             } else {
                 // eslint-disable-next-line no-undef
-                subGroupData[cm.id] = py.eval(cm.operation, subGroupData);
+                subGroupData[cm.id] = evalOperation(cm.operation, subGroupData);
             }
         }
     },
