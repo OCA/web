@@ -1,42 +1,58 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-11-21 12:34+0000\n"
+"PO-Revision-Date: 2023-11-21 12:34+0000\n"
+"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: ENCODING\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
 #. module: web_widget_uom
 #: model:ir.model.fields,field_description:web_widget_uom.field_uom_uom__decimal_places
 msgid "Decimal Places"
-msgstr ""
+msgstr "Posizioni decimali"
 
 #. module: web_widget_uom
 #: model:ir.model.constraint,message:web_widget_uom.constraint_uom_uom_uom_decimal_places_positive
 msgid "Decimal places must be strictly bigger or equal than zero"
-msgstr ""
+msgstr "Le posizioni decimali devono essere maggiori o uguali a zero"
 
 #. module: web_widget_uom
 #: model:ir.model.fields,field_description:web_widget_uom.field_uom_uom__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: web_widget_uom
 #: model:ir.model.fields,field_description:web_widget_uom.field_uom_uom__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: web_widget_uom
 #: model:ir.model.fields,help:web_widget_uom.field_uom_uom__show_only_inputed_decimals
 msgid "It shows only inputed decimals up to Decimal Places"
-msgstr ""
+msgstr "Mostra solo decimali inseriti fino alle Posizioni decimali"
 
 #. module: web_widget_uom
 #: model:ir.model.fields,field_description:web_widget_uom.field_uom_uom____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
 
 #. module: web_widget_uom
 #: model:ir.model,name:web_widget_uom.model_uom_uom
 msgid "Product Unit of Measure"
-msgstr ""
+msgstr "Unità di misura del prodotto"
 
 #. module: web_widget_uom
 #: model:ir.model.fields,field_description:web_widget_uom.field_uom_uom__show_only_inputed_decimals
 msgid "Show only inputed decimals"
-msgstr ""
+msgstr "Mostra solo decimali inseriti"
 
 #. module: web_widget_uom
 #: code:addons/web_widget_uom/models/uom_uom.py:0
@@ -46,9 +62,12 @@ msgid ""
 "This may cause inconsistencies in computations.\n"
 "Please set Decimal Places between 0 and %s."
 msgstr ""
+"Le posizioni decimali sono maggiori dell'accuratezza decimale (%s digits).\n"
+"Questo può causare inconsistenze nei calcoli.\n"
+"Imposta le posizioni decimali tra 0 e %s."
 
 #. module: web_widget_uom
 #: code:addons/web_widget_uom/models/uom_uom.py:0
 #, python-format
 msgid "Warning!"
-msgstr ""
+msgstr "Attenzione!"
