@@ -37,6 +37,7 @@ setuptools.setup(
         'odoo-addon-web_sheet_full_width>=16.0dev,<16.1dev',
         'odoo-addon-web_theme_classic>=16.0dev,<16.1dev',
         'odoo-addon-web_timeline>=16.0dev,<16.1dev',
+        'odoo-addon-web_tree_duplicate>=16.0dev,<16.1dev',
         'odoo-addon-web_tree_many2one_clickable>=16.0dev,<16.1dev',
         'odoo-addon-web_widget_bokeh_chart>=16.0dev,<16.1dev',
         'odoo-addon-web_widget_dropdown_dynamic>=16.0dev,<16.1dev',
