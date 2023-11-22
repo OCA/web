@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_tree_duplicate
+# 	* web_tree_duplicate
 #
 msgid ""
 msgstr ""
@@ -17,15 +17,15 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: web_tree_duplicate
-#. openerp-web
-#: code:addons/web_tree_duplicate/static/src/js/backend.js:47
+#. odoo-javascript
+#: code:addons/web_tree_duplicate/static/src/web_tree_duplicate.esm.js:0
 #, python-format
 msgid "Duplicate"
 msgstr "Duplicar"
 
 #. module: web_tree_duplicate
-#. openerp-web
-#: code:addons/web_tree_duplicate/static/src/js/backend.js:84
+#. odoo-javascript
+#: code:addons/web_tree_duplicate/static/src/web_tree_duplicate.esm.js:0
 #, python-format
 msgid "Duplicated Records"
 msgstr "Registres duplicats"
