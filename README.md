@@ -43,7 +43,7 @@ addon | version | maintainers | summary
 [web_drop_target](web_drop_target/) | 14.0.1.1.2 |  | Allows to drag files into Odoo
 [web_edit_user_filter](web_edit_user_filter/) | 14.0.1.0.1 |  | Edit User Filters
 [web_environment_ribbon](web_environment_ribbon/) | 14.0.1.0.0 |  | Web Environment Ribbon
-[web_field_required_invisible_manager](web_field_required_invisible_manager/) | 14.0.2.2.0 | [![ilyasProgrammer](https://github.com/ilyasProgrammer.png?size=30px)](https://github.com/ilyasProgrammer) | Web Field Required Invisible Readonly Managerr
+[web_field_required_invisible_manager](web_field_required_invisible_manager/) | 14.0.2.2.1 | [![ilyasProgrammer](https://github.com/ilyasProgrammer.png?size=30px)](https://github.com/ilyasProgrammer) | Web Field Required Invisible Readonly Managerr
 [web_group_expand](web_group_expand/) | 14.0.1.0.0 |  | Group Expand Buttons
 [web_ir_actions_act_multi](web_ir_actions_act_multi/) | 14.0.1.0.1 |  | Enables triggering of more than one action on ActionManager
 [web_ir_actions_act_view_reload](web_ir_actions_act_view_reload/) | 14.0.1.0.2 |  | Enables reload of the current view via ActionManager
