@@ -6,3 +6,6 @@
   colors or just set to "False" to use default values.
 * You can add the database name in the ribbon by adding "{db_name}" in the
   system parameter "ribbon.name".
+* By appending ".code", you can fill in a Python expression to generate the
+  ribbon name or colors: "ribbon.name.code" could contain "env.cr.dbname",
+  which just returns the current database's name.
