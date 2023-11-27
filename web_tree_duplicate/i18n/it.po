@@ -28,4 +28,4 @@ msgstr "Duplica"
 #: code:addons/web_tree_duplicate/static/src/web_tree_duplicate.esm.js:0
 #, python-format
 msgid "Duplicated Records"
-msgstr ""
+msgstr "Record duplicati"
