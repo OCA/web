@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-12-14 16:45+0000\n"
-"Last-Translator: Alessandro Uffreduzzi <alessandro.uffreduzzi@pytech.it>\n"
+"PO-Revision-Date: 2023-11-27 11:39+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: web_company_color
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
@@ -32,17 +32,17 @@ msgstr ""
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_button_bg
 msgid "Button Background Color"
-msgstr "Colore sfondo bottone"
+msgstr "Colore sfondo pulsante"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_button_bg_hover
 msgid "Button Background Color Hover"
-msgstr "Colore hover sfondo bottone"
+msgstr "Colore hover sfondo pulsante"
 
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__color_button_text
 msgid "Button Text Color"
-msgstr "Colore testo bottone"
+msgstr "Colore testo pulsante"
 
 #. module: web_company_color
 #: model_terms:ir.ui.view,arch_db:web_company_color.view_company_form
@@ -120,7 +120,7 @@ msgstr "Qweb"
 #. module: web_company_color
 #: model:ir.model.fields,field_description:web_company_color.field_res_company__scss_modif_timestamp
 msgid "SCSS Modif. Timestamp"
-msgstr "Timestamp Modifica SCSS"
+msgstr "Timestamp modifica SCSS"
 
 #~ msgid "Navbar Colors"
 #~ msgstr "Colori Barra Navigazione"
