@@ -5,15 +5,6 @@
 [![codecov](https://codecov.io/gh/OCA/web/branch/16.0/graph/badge.svg)](https://codecov.io/gh/OCA/web)
 [![Translation Status](https://translation.odoo-community.org/widgets/web-16-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/web-16-0/?utm_source=widget)
 
-<!-- /!\ do not modify above this line -->
-
-# web
-
-TODO: add repo description.
-
-<!-- /!\ do not modify below this line -->
-
-<!-- prettier-ignore-start -->
 
 [//]: # (addons)
 
@@ -74,4 +65,4 @@ that explains its license.
 ----
 OCA, or the [Odoo Community Association](http://odoo-community.org/), is a nonprofit
 organization whose mission is to support the collaborative development of Odoo features
-and promote its widespread use.
+and promote its widespread use. (2)
