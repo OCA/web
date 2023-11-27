@@ -26,6 +26,7 @@ setuptools.setup(
         'odoo14-addon-web_edit_user_filter',
         'odoo14-addon-web_environment_ribbon',
         'odoo14-addon-web_field_required_invisible_manager',
+        'odoo14-addon-web_fix_modules_load',
         'odoo14-addon-web_group_expand',
         'odoo14-addon-web_ir_actions_act_multi',
         'odoo14-addon-web_ir_actions_act_view_reload',
