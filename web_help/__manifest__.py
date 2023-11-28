@@ -4,7 +4,7 @@
     "author": "Onestein,Odoo Community Association (OCA)",
     "category": "Technical",
     "license": "AGPL-3",
-    "version": "16.0.1.0.0",
+    "version": "16.0.2.0.0",
     "website": "https://github.com/OCA/web",
     "depends": [
         "web",
