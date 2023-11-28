@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="view_calendar_event_calendar" model="ir.ui.view">
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_calendar" />
+        <field name="arch" type="xml">
+            <calendar position="attributes">
+                <attribute name="color">color</attribute>
+            </calendar>
+            <field name="categ_ids" position="after">
+                <field name="color" invisible="1" />
+            </field>
+        </field>
+    </record>
+</odoo>

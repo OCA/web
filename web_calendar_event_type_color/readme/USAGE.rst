@@ -1,0 +1,1 @@
+Set color on tree view for event type to colorize calendar view

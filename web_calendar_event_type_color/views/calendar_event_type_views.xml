@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="view_calendar_event_type_tree" model="ir.ui.view">
+        <field name="model">calendar.event.type</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_type_tree" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="color" widget="color_picker" optional="show" />
+            </field>
+        </field>
+    </record>
+    <record id="calendar_event_type_action" model="ir.actions.act_window">
+        <field name="name">Calendar Event Type</field>
+        <field name="res_model">calendar.event.type</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <menuitem
+        id="calendar_management_menu"
+        name="Calendar Event Type"
+        parent="calendar.mail_menu_calendar"
+        action="calendar_event_type_action"
+    />
+</odoo>
