@@ -2,7 +2,6 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 
-import json
 import logging
 
 from odoo import api, models
@@ -26,8 +25,7 @@ class AbstractMpld3Parser(models.AbstractModel):
         html_string = mpld3.fig_to_html(figure, no_extras=True, include_libraries=False)
         soup = BeautifulSoup(html_string, "lxml")
         json_data = {
-            "style": soup.style.decode(),
             "div": str(soup.div),
             "script": soup.script.decode_contents(),
         }
-        return json.dumps(json_data)
+        return json_data

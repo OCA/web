@@ -9,9 +9,9 @@ To insert a mpld3 chart in a view proceed as follows:
 
     import matplotlib.pyplot as plt
 
-#. Declare a text computed field like this::
+#. Declare a json computed field like this::
 
-    mpld3_chart = fields.Text(
+    mpld3_chart = fields.Json(
         string='Mpld3 Chart',
         compute='_compute_mpld3_chart',
     )

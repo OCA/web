@@ -23,7 +23,7 @@ Web Widget mpld3 Chart
     :target: https://runbot.odoo-community.org/runbot/162/15.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| |badge5|
 
 This module adds the possibility to insert mpld3 charts into Odoo standard views.
 This is an interactive D3js-based viewer which brings matplotlib graphics to the browser.
@@ -59,7 +59,7 @@ To insert a mpld3 chart in a view proceed as follows:
 
 #. Declare a text computed field like this::
 
-    mpld3_chart = fields.Text(
+    mpld3_chart = fields.Json(
         string='Mpld3 Chart',
         compute='_compute_mpld3_chart',
     )
@@ -138,7 +138,7 @@ promote its widespread use.
 
 Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-JordiBForgeFlow| |maintainer-ChrisOForgeFlow| 
+|maintainer-JordiBForgeFlow| |maintainer-ChrisOForgeFlow|
 
 This module is part of the `OCA/web <https://github.com/OCA/web/tree/15.0/web_widget_mpld3_chart>`_ project on GitHub.
 

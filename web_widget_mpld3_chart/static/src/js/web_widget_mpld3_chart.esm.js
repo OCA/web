@@ -1,12 +1,22 @@
 /** @odoo-module **/
 
-import {CharField} from "@web/views/fields/char/char_field";
 import {loadBundle} from "@web/core/assets";
 import {registry} from "@web/core/registry";
-const {onWillStart, markup} = owl;
-class Mpld3ChartWidget extends CharField {
+const {onWillStart, markup, Component, onMounted, onPatched, useRef} = owl;
+
+class Mpld3ChartJsonWidget extends Component {
     setup() {
-        super.setup();
+        this.widget = useRef("widget");
+        onPatched(() => {
+            var script = document.createElement("script");
+            script.text = this.props.value.script;
+            this.widget.el.append(script);
+        });
+        onMounted(() => {
+            var script = document.createElement("script");
+            script.text = this.props.value.script;
+            this.widget.el.append(script);
+        });
         onWillStart(() =>
             loadBundle({
                 jsLibs: [
@@ -16,17 +26,12 @@ class Mpld3ChartWidget extends CharField {
             })
         );
     }
-    get json_value() {
-        try {
-            var value = JSON.parse(this.props.value);
-            value.div = markup(value.div.trim());
-            return value;
-        } catch (error) {
-            return {};
-        }
+    markup(value) {
+        console.log("Marking up...");
+        return markup(value);
     }
 }
-Mpld3ChartWidget.template = "web_widget_mpld3_chart.Mpld3ChartField";
-registry.category("fields").add("mpld3_chart", Mpld3ChartWidget);
+Mpld3ChartJsonWidget.template = "web_widget_mpld3_chart.Mpld3ChartJsonWidget";
+registry.category("fields").add("mpld3_chart", Mpld3ChartJsonWidget);
 
-export default Mpld3ChartWidget;
+export default Mpld3ChartJsonWidget;
