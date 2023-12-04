@@ -1,3 +1,5 @@
 # generated from manifests external_dependencies
+beautifulsoup4
 bokeh==3.1.1
+mpld3==0.5.9
 plotly==5.13.1
