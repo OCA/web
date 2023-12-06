@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-21 12:34+0000\n"
-"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
+"PO-Revision-Date: 2023-12-06 10:36+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -35,12 +35,12 @@ msgstr "Base"
 #. module: web_button_visibility
 #: model:ir.model.fields,field_description:web_button_visibility.field_model_button_rule__button_name
 msgid "Button Name"
-msgstr "Nome bottone"
+msgstr "Nome pulsante"
 
 #. module: web_button_visibility
 #: model:ir.model.fields,field_description:web_button_visibility.field_model_button_rule__button_visibility_field_id
 msgid "Button Visibility Field"
-msgstr "Campo visibilità bottone"
+msgstr "Campo visibilità pulsante"
 
 #. module: web_button_visibility
 #: model:ir.model.fields,field_description:web_button_visibility.field_model_button_rule__condition_domain
@@ -83,12 +83,12 @@ msgstr "Nascondi"
 #. module: web_button_visibility
 #: model:ir.model.fields,field_description:web_button_visibility.field_ir_model__hide_button_rule_ids
 msgid "Hide Button Rule"
-msgstr "Regola nascondi bottone"
+msgstr "Regola nascondi pulsante"
 
 #. module: web_button_visibility
 #: model_terms:ir.ui.view,arch_db:web_button_visibility.view_model_form_inherit
 msgid "Hide Button Rules"
-msgstr "Regole nascondi bottone"
+msgstr "Regole nascondi pulsante"
 
 #. module: web_button_visibility
 #: model:ir.model.fields,field_description:web_button_visibility.field_ir_model__id
@@ -132,4 +132,4 @@ msgstr "Modelli"
 #. module: web_button_visibility
 #: model:ir.model,name:web_button_visibility.model_model_button_rule
 msgid "Rule to hide a button"
-msgstr "Regola per nascondere un bottone"
+msgstr "Regola per nascondere un pulsante"
