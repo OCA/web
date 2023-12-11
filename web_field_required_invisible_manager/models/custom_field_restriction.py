@@ -56,13 +56,30 @@ class CustomFieldRestriction(models.Model):
 
     @api.onchange("field_id")
     def onchange_field_id(self):
-        self.update(
-            {
-                "required": self.field_id.required,
-                "field_invisible": False,
-                "field_readonly": self.field_id.readonly,
-            }
-        )
+        vals = {
+            "required": self.field_id.required,
+            "field_invisible": False,
+            "field_readonly": self.field_id.readonly,
+        }
+        if self.env.context.get("default_readonly_model_id"):
+            vals["readonly_model_id"] = (
+                self.env["ir.model"]
+                ._get(self.env.context.get("default_readonly_model_id"))
+                .id
+            )
+        elif self.env.context.get("default_required_model_id"):
+            vals["required_model_id"] = (
+                self.env["ir.model"]
+                ._get(self.env.context.get("default_required_model_id"))
+                .id
+            )
+        elif self.env.context.get("default_invisible_model_id"):
+            vals["invisible_model_id"] = (
+                self.env["ir.model"]
+                ._get(self.env.context.get("default_invisible_model_id"))
+                .id
+            )
+        self.update(vals)
 
     @api.depends("required_model_id", "invisible_model_id", "readonly_model_id")
     def _compute_model_name(self):
