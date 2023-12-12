@@ -11,11 +11,11 @@ export class NumericStep extends FloatField {
     }
     _onFocusInput(ev) {
         const $el = $(ev.target).parent().find(".widget_numeric_step_btn");
-        $el.removeClass("d-none");
+        $el.removeClass("d-lg-none");
     }
     _onFocusOutInput(ev) {
         const $el = $(ev.target).find(".widget_numeric_step_btn");
-        $el.addClass("d-none");
+        $el.addClass("d-lg-none");
     }
     _onStepClick(ev) {
         const $el = $(ev.target).parent().parent().find("input");
