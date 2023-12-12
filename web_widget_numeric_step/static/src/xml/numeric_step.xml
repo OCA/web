@@ -11,7 +11,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
             t-on-mouseleave="_onFocusOutInput"
             t-on-mouseenter="_onFocusInput"
         >
-            <div class="input-group-prepend d-none widget_numeric_step_btn">
+            <div class="input-group-prepend d-lg-none widget_numeric_step_btn">
                 <button
                     class="fa fa-minus btn btn-default btn_numeric_step"
                     aria-label="Minus"
@@ -27,11 +27,12 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                 t-att-placeholder="props.placeholder"
                 t-att-type="props.inputType"
                 class="o_input input_numeric_step"
+                inputmode="decimal"
                 t-att-step="props.step"
                 t-on-keydown="_onKeyDown"
                 t-on-wheel="_onWheel"
             />
-            <div class="input-group-append d-none widget_numeric_step_btn">
+            <div class="input-group-append d-lg-none widget_numeric_step_btn">
                 <button
                     class="fa fa-plus btn btn-default btn_numeric_step"
                     aria-label="Plus"
