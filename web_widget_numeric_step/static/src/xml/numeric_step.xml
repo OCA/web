@@ -18,6 +18,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                     title="Minus"
                     type="button"
                     data-mode="minus"
+                    t-att-disabled="props.readonly"
                     t-on-click="_onStepClick"
                 />
             </div>
@@ -39,6 +40,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                     title="Plus"
                     type="button"
                     data-mode="plus"
+                    t-att-disabled="props.readonly"
                     t-on-click="_onStepClick"
                 />
             </div>
