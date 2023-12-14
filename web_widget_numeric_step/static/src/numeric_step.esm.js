@@ -9,14 +9,6 @@ export class NumericStep extends FloatField {
     setup() {
         super.setup();
     }
-    _onFocusInput(ev) {
-        const $el = $(ev.target).parent().find(".widget_numeric_step_btn");
-        $el.removeClass("d-lg-none");
-    }
-    _onFocusOutInput(ev) {
-        const $el = $(ev.target).find(".widget_numeric_step_btn");
-        $el.addClass("d-lg-none");
-    }
     _onStepClick(ev) {
         const $el = $(ev.target).parent().parent().find("input");
         $el.focus();
@@ -65,7 +57,6 @@ export class NumericStep extends FloatField {
 NumericStep.template = "web_widget_numeric_step";
 NumericStep.props = {
     ...standardFieldProps,
-    name: {type: String, optional: true},
     inputType: {type: String, optional: true},
     step: {type: Number, optional: true},
     min: {type: Number, optional: true},
