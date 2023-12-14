@@ -12,10 +12,10 @@
     "depends": ["web"],
     "assets": {
         "web.assets_backend": [
-            "web_widget_numeric_step/static/src/xml/numeric_step.xml",
-            "web_widget_numeric_step/static/src/js/numeric_step.esm.js",
+            "web_widget_numeric_step/static/src/*",
         ],
     },
+    "maintainers": ["rafaelbn", "yajo"],
     "auto_install": False,
     "installable": True,
 }
