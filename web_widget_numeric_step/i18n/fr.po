@@ -18,21 +18,21 @@ msgstr ""
 
 #. module: web_widget_numeric_step
 #. odoo-javascript
-#: code:addons/web_widget_numeric_step/static/src/xml/numeric_step.xml:0
+#: code:addons/web_widget_numeric_step/static/src/numeric_step.xml:0
 #, python-format
 msgid "Minus"
 msgstr "Moins"
 
 #. module: web_widget_numeric_step
 #. odoo-javascript
-#: code:addons/web_widget_numeric_step/static/src/js/numeric_step.esm.js:0
+#: code:addons/web_widget_numeric_step/static/src/numeric_step.esm.js:0
 #, python-format
 msgid "Numeric Step"
 msgstr ""
 
 #. module: web_widget_numeric_step
 #. odoo-javascript
-#: code:addons/web_widget_numeric_step/static/src/xml/numeric_step.xml:0
+#: code:addons/web_widget_numeric_step/static/src/numeric_step.xml:0
 #, python-format
 msgid "Plus"
 msgstr "Plus"
