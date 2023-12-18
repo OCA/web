@@ -11,6 +11,7 @@ class ResUsers(models.Model):
         title=None,
         sticky=False,
         target=None,
+        html=False,
         action=None,
         params=None,
     ):
@@ -21,6 +22,7 @@ class ResUsers(models.Model):
                 title=title,
                 sticky=sticky,
                 target=target,
+                html=html,
                 action=action,
                 params=params,
             )
@@ -30,6 +32,7 @@ class ResUsers(models.Model):
             title=title,
             sticky=sticky,
             target=target,
+            html=html,
             action=action,
             params=params,
         )
