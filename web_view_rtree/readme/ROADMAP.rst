@@ -11,7 +11,5 @@ Does not work currently:
 
 Known issues:
 
-* The view template is currently a copy of the list view template with some
-  tweaks. It should instead inherit from that view and apply changes to it.
 * All models are assumed to have a ``name`` field (used to display groups).
   Instead, the real ``_rec_name`` model property should be used.
