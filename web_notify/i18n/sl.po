@@ -1,0 +1,120 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_notify
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-06-07 07:07+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
+"Language-Team: none\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.15.2\n"
+
+#. module: web_notify
+#. odoo-python
+#: code:addons/web_notify/models/res_users.py:0
+msgid "Danger"
+msgstr "Nevarnost"
+
+#. module: web_notify
+#. odoo-python
+#: code:addons/web_notify/models/res_users.py:0
+msgid "Default"
+msgstr "Privzeto"
+
+#. module: web_notify
+#. odoo-python
+#: code:addons/web_notify/models/res_users.py:0
+msgid "Information"
+msgstr "Informacije"
+
+#. module: web_notify
+#: model:ir.model.fields,field_description:web_notify.field_res_users__notify_danger_channel_name
+msgid "Notify Danger Channel Name"
+msgstr "Naziv kanala za obveščanje o nevarnosti"
+
+#. module: web_notify
+#: model:ir.model.fields,field_description:web_notify.field_res_users__notify_default_channel_name
+msgid "Notify Default Channel Name"
+msgstr "Naziv privzetega kanala za obveščanje"
+
+#. module: web_notify
+#: model:ir.model.fields,field_description:web_notify.field_res_users__notify_info_channel_name
+msgid "Notify Info Channel Name"
+msgstr "Naziv informacijskega kanala za obveščanje"
+
+#. module: web_notify
+#: model:ir.model.fields,field_description:web_notify.field_res_users__notify_success_channel_name
+msgid "Notify Success Channel Name"
+msgstr "Naziv kanala za obveščanje o uspehu"
+
+#. module: web_notify
+#: model:ir.model.fields,field_description:web_notify.field_res_users__notify_warning_channel_name
+msgid "Notify Warning Channel Name"
+msgstr "Naziv kanala za obveščanje o opozorilih"
+
+#. module: web_notify
+#. odoo-javascript
+#: code:addons/web_notify/static/src/js/services/notification_services.esm.js:0
+msgid "Open"
+msgstr "Odpri"
+
+#. module: web_notify
+#. odoo-python
+#: code:addons/web_notify/models/res_users.py:0
+msgid "Sending a notification to another user is forbidden."
+msgstr "Pošiljanje obvestil drugemu uporabniku ni dovoljeno."
+
+#. module: web_notify
+#. odoo-python
+#: code:addons/web_notify/models/res_users.py:0
+msgid "Success"
+msgstr "Uspeh"
+
+#. module: web_notify
+#: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
+msgid "Test danger notification"
+msgstr "Test obvestila o nevarnosti"
+
+#. module: web_notify
+#: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
+msgid "Test default notification"
+msgstr "Test privzetega obvestila"
+
+#. module: web_notify
+#: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
+msgid "Test info notification"
+msgstr "Test informacijskega obvestila"
+
+#. module: web_notify
+#: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
+msgid "Test success notification"
+msgstr "Test obvestila o uspehu"
+
+#. module: web_notify
+#: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
+msgid "Test warning notification"
+msgstr "Test opozorilnega obvestila"
+
+#. module: web_notify
+#: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
+msgid "Test web notify"
+msgstr "Test spletnega obvestila"
+
+#. module: web_notify
+#: model:ir.model,name:web_notify.model_res_users
+msgid "User"
+msgstr "Uporabnik"
+
+#. module: web_notify
+#. odoo-python
+#: code:addons/web_notify/models/res_users.py:0
+msgid "Warning"
+msgstr "Opozorilo"
