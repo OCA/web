@@ -1,125 +1,119 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * web_notify
+# 	* web_notify
 #
-# Translators:
-# Pedro M. Baeza <pedro.baeza@gmail.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-23 02:13+0000\n"
-"PO-Revision-Date: 2026-04-13 08:14+0000\n"
-"Last-Translator: Ed-Spain <eduamoros@gmail.com>\n"
-"Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
-"Language: es\n"
+"PO-Revision-Date: 2026-06-15 09:40+0000\n"
+"Last-Translator: Yann Papouin <ypa@decgroupe.com>\n"
+"Language-Team: none\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 5.15.2\n"
 
 #. module: web_notify
 #. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
 msgid "Danger"
-msgstr "Peligro"
+msgstr "Danger"
 
 #. module: web_notify
 #. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
 msgid "Default"
-msgstr "Predeterminado"
+msgstr "Par défaut"
 
 #. module: web_notify
 #. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
 msgid "Information"
-msgstr "Información"
+msgstr "Information"
 
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users__notify_danger_channel_name
 msgid "Notify Danger Channel Name"
-msgstr "Notificar el nombre del canal de peligro"
+msgstr "Nom du canal de notification Danger"
 
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users__notify_default_channel_name
 msgid "Notify Default Channel Name"
-msgstr "Notificar Nombre de Canal por Defecto"
+msgstr "Nom du canal de notification par défaut"
 
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users__notify_info_channel_name
 msgid "Notify Info Channel Name"
-msgstr "Notificar información Nombre del canal"
+msgstr "Nom du canal de notification Info"
 
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users__notify_success_channel_name
 msgid "Notify Success Channel Name"
-msgstr "Notificar con éxito Nombre del canal"
+msgstr "Nom du canal de notification Réussi"
 
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users__notify_warning_channel_name
 msgid "Notify Warning Channel Name"
-msgstr "Notificar advertencia Nombre del canal"
+msgstr "Nom du canal de notification Avertissement"
 
 #. module: web_notify
 #. odoo-javascript
 #: code:addons/web_notify/static/src/js/services/notification_services.esm.js:0
 msgid "Open"
-msgstr "Abrir"
+msgstr "Ouvert"
 
 #. module: web_notify
 #. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
 msgid "Sending a notification to another user is forbidden."
-msgstr "Está prohibido enviar una notificación a otro usuario."
+msgstr "Il est interdit d'envoyer une notification à un autre utilisateur."
 
 #. module: web_notify
 #. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
 msgid "Success"
-msgstr "Éxito"
+msgstr "Réussite"
 
 #. module: web_notify
 #: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
 msgid "Test danger notification"
-msgstr "Notificación de peligro de prueba"
+msgstr "Essai de notification de danger"
 
 #. module: web_notify
 #: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
 msgid "Test default notification"
-msgstr "Probar notificación predeterminada"
+msgstr "Essai de notification par défaut"
 
 #. module: web_notify
 #: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
 msgid "Test info notification"
-msgstr "Notificación de información de prueba"
+msgstr "Essai de notification d'information"
 
 #. module: web_notify
 #: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
 msgid "Test success notification"
-msgstr "Notificación de éxito de la prueba"
+msgstr "Essai de notification de réussite"
 
 #. module: web_notify
 #: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
 msgid "Test warning notification"
-msgstr "Notificación de advertencia de prueba"
+msgstr "Essai de notification d'avertissement"
 
 #. module: web_notify
 #: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
 msgid "Test web notify"
-msgstr "Notificación web de prueba"
+msgstr "Tester les notifications web"
 
 #. module: web_notify
 #: model:ir.model,name:web_notify.model_res_users
 msgid "User"
-msgstr "Usuario"
+msgstr "Utilisateur"
 
 #. module: web_notify
 #. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
 msgid "Warning"
-msgstr "Aviso"
-
-#~ msgid "Users"
-#~ msgstr "Usuarios"
+msgstr "Avertissement"

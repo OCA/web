@@ -1,125 +1,120 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * web_notify
+# 	* web_notify
 #
-# Translators:
-# Pedro M. Baeza <pedro.baeza@gmail.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-23 02:13+0000\n"
-"PO-Revision-Date: 2026-04-13 08:14+0000\n"
-"Last-Translator: Ed-Spain <eduamoros@gmail.com>\n"
-"Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
-"Language: es\n"
+"PO-Revision-Date: 2026-06-07 07:07+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
+"Language-Team: none\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Generator: Weblate 5.15.2\n"
 
 #. module: web_notify
 #. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
 msgid "Danger"
-msgstr "Peligro"
+msgstr "Nevarnost"
 
 #. module: web_notify
 #. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
 msgid "Default"
-msgstr "Predeterminado"
+msgstr "Privzeto"
 
 #. module: web_notify
 #. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
 msgid "Information"
-msgstr "Información"
+msgstr "Informacije"
 
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users__notify_danger_channel_name
 msgid "Notify Danger Channel Name"
-msgstr "Notificar el nombre del canal de peligro"
+msgstr "Naziv kanala za obveščanje o nevarnosti"
 
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users__notify_default_channel_name
 msgid "Notify Default Channel Name"
-msgstr "Notificar Nombre de Canal por Defecto"
+msgstr "Naziv privzetega kanala za obveščanje"
 
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users__notify_info_channel_name
 msgid "Notify Info Channel Name"
-msgstr "Notificar información Nombre del canal"
+msgstr "Naziv informacijskega kanala za obveščanje"
 
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users__notify_success_channel_name
 msgid "Notify Success Channel Name"
-msgstr "Notificar con éxito Nombre del canal"
+msgstr "Naziv kanala za obveščanje o uspehu"
 
 #. module: web_notify
 #: model:ir.model.fields,field_description:web_notify.field_res_users__notify_warning_channel_name
 msgid "Notify Warning Channel Name"
-msgstr "Notificar advertencia Nombre del canal"
+msgstr "Naziv kanala za obveščanje o opozorilih"
 
 #. module: web_notify
 #. odoo-javascript
 #: code:addons/web_notify/static/src/js/services/notification_services.esm.js:0
 msgid "Open"
-msgstr "Abrir"
+msgstr "Odpri"
 
 #. module: web_notify
 #. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
 msgid "Sending a notification to another user is forbidden."
-msgstr "Está prohibido enviar una notificación a otro usuario."
+msgstr "Pošiljanje obvestil drugemu uporabniku ni dovoljeno."
 
 #. module: web_notify
 #. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
 msgid "Success"
-msgstr "Éxito"
+msgstr "Uspeh"
 
 #. module: web_notify
 #: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
 msgid "Test danger notification"
-msgstr "Notificación de peligro de prueba"
+msgstr "Test obvestila o nevarnosti"
 
 #. module: web_notify
 #: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
 msgid "Test default notification"
-msgstr "Probar notificación predeterminada"
+msgstr "Test privzetega obvestila"
 
 #. module: web_notify
 #: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
 msgid "Test info notification"
-msgstr "Notificación de información de prueba"
+msgstr "Test informacijskega obvestila"
 
 #. module: web_notify
 #: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
 msgid "Test success notification"
-msgstr "Notificación de éxito de la prueba"
+msgstr "Test obvestila o uspehu"
 
 #. module: web_notify
 #: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
 msgid "Test warning notification"
-msgstr "Notificación de advertencia de prueba"
+msgstr "Test opozorilnega obvestila"
 
 #. module: web_notify
 #: model_terms:ir.ui.view,arch_db:web_notify.view_users_form_simple_modif_inherit
 msgid "Test web notify"
-msgstr "Notificación web de prueba"
+msgstr "Test spletnega obvestila"
 
 #. module: web_notify
 #: model:ir.model,name:web_notify.model_res_users
 msgid "User"
-msgstr "Usuario"
+msgstr "Uporabnik"
 
 #. module: web_notify
 #. odoo-python
 #: code:addons/web_notify/models/res_users.py:0
 msgid "Warning"
-msgstr "Aviso"
-
-#~ msgid "Users"
-#~ msgstr "Usuarios"
+msgstr "Opozorilo"

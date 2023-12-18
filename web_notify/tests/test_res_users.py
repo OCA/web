@@ -18,6 +18,7 @@ class TestResUsers(common.TransactionCase):
             "message": "message",
             "title": "title",
             "sticky": True,
+            "html": False,
             "action": None,
             "params": {},
         }
@@ -37,6 +38,7 @@ class TestResUsers(common.TransactionCase):
             "message": "message",
             "title": "title",
             "sticky": True,
+            "html": False,
             "action": None,
             "params": {},
         }
@@ -56,6 +58,7 @@ class TestResUsers(common.TransactionCase):
             "message": "message",
             "title": "title",
             "sticky": True,
+            "html": False,
             "action": None,
             "params": {},
         }
@@ -75,6 +78,7 @@ class TestResUsers(common.TransactionCase):
             "message": "message",
             "title": "title",
             "sticky": True,
+            "html": False,
             "action": None,
             "params": {},
         }
@@ -94,6 +98,7 @@ class TestResUsers(common.TransactionCase):
             "message": "message",
             "title": "title",
             "sticky": True,
+            "html": False,
             "action": None,
             "params": {},
         }
