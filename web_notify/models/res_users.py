@@ -42,34 +42,59 @@ class ResUsers(models.Model):
     notify_default_channel_name = fields.Char(compute="_compute_channel_names")
 
     def notify_success(
-        self, message="Default message", title=None, sticky=False, target=None
+        self,
+        message="Default message",
+        title=None,
+        sticky=False,
+        target=None,
+        html=False,
     ):
         title = title or _("Success")
-        self._notify_channel(SUCCESS, message, title, sticky, target)
+        self._notify_channel(SUCCESS, message, title, sticky, target, html)
 
     def notify_danger(
-        self, message="Default message", title=None, sticky=False, target=None
+        self,
+        message="Default message",
+        title=None,
+        sticky=False,
+        target=None,
+        html=False,
     ):
         title = title or _("Danger")
-        self._notify_channel(DANGER, message, title, sticky, target)
+        self._notify_channel(DANGER, message, title, sticky, target, html)
 
     def notify_warning(
-        self, message="Default message", title=None, sticky=False, target=None
+        self,
+        message="Default message",
+        title=None,
+        sticky=False,
+        target=None,
+        html=False,
     ):
         title = title or _("Warning")
-        self._notify_channel(WARNING, message, title, sticky, target)
+        self._notify_channel(WARNING, message, title, sticky, target, html)
 
     def notify_info(
-        self, message="Default message", title=None, sticky=False, target=None
+        self,
+        message="Default message",
+        title=None,
+        sticky=False,
+        target=None,
+        html=False,
     ):
         title = title or _("Information")
-        self._notify_channel(INFO, message, title, sticky, target)
+        self._notify_channel(INFO, message, title, sticky, target, html)
 
     def notify_default(
-        self, message="Default message", title=None, sticky=False, target=None
+        self,
+        message="Default message",
+        title=None,
+        sticky=False,
+        target=None,
+        html=False,
     ):
         title = title or _("Default")
-        self._notify_channel(DEFAULT, message, title, sticky, target)
+        self._notify_channel(DEFAULT, message, title, sticky, target, html)
 
     def _notify_channel(
         self,
@@ -78,6 +103,7 @@ class ResUsers(models.Model):
         title=None,
         sticky=False,
         target=None,
+        html=False,
     ):
         if not (self.env.user._is_admin() or self.env.su) and any(
             user.id != self.env.uid for user in self
@@ -92,6 +118,7 @@ class ResUsers(models.Model):
             "message": message,
             "title": title,
             "sticky": sticky,
+            "html": html,
         }
 
         notifications = [[partner, "web.notify", [bus_message]] for partner in target]
