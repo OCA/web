@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-12-19 23:52+0000\n"
+"PO-Revision-Date: 2023-12-20 02:38+0000\n"
 "Last-Translator: jappi00 <jappi2000@ewetel.net>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -24,19 +24,19 @@ msgstr "Unten"
 #. module: web_chatter_position
 #: model:ir.model.fields,field_description:web_chatter_position.field_res_users__chatter_position
 msgid "Chatter Position"
-msgstr "Chatter Position"
+msgstr "Chatter-Position"
 
 #. module: web_chatter_position
 #: model:ir.model.fields.selection,name:web_chatter_position.selection__res_users__chatter_position__auto
 msgid "Responsive"
-msgstr ""
+msgstr "Responsiv"
 
 #. module: web_chatter_position
 #: model:ir.model.fields.selection,name:web_chatter_position.selection__res_users__chatter_position__sided
 msgid "Sided"
-msgstr ""
+msgstr "Seitlich"
 
 #. module: web_chatter_position
 #: model:ir.model,name:web_chatter_position.model_res_users
 msgid "User"
-msgstr ""
+msgstr "Benutzer"
