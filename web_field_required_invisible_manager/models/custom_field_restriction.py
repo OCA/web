@@ -22,19 +22,19 @@ class CustomFieldRestriction(models.Model):
     required_model_id = fields.Many2one(
         "ir.model",
         ondelete="cascade",
-        string="required_model_id",
+        string="Model (required)",
         index=True,
     )
     invisible_model_id = fields.Many2one(
         "ir.model",
         ondelete="cascade",
-        string="invisible_model_id",
+        string="Model (visibility)",
         index=True,
     )
     readonly_model_id = fields.Many2one(
         "ir.model",
         ondelete="cascade",
-        string="readonly_model_id",
+        string="Model (readonly)",
         index=True,
     )
     model_name = fields.Char(
@@ -45,7 +45,9 @@ class CustomFieldRestriction(models.Model):
     )
     condition_domain = fields.Char()
     group_ids = fields.Many2many("res.groups", required=True)
-    default_required = fields.Boolean(related="field_id.required")
+    default_required = fields.Boolean(
+        related="field_id.required", string="Required by Default"
+    )
     required = fields.Boolean()
     field_invisible = fields.Boolean()
     field_readonly = fields.Boolean()
@@ -56,11 +58,7 @@ class CustomFieldRestriction(models.Model):
 
     @api.onchange("field_id")
     def onchange_field_id(self):
-        vals = {
-            "required": self.field_id.required,
-            "field_invisible": False,
-            "field_readonly": self.field_id.readonly,
-        }
+        vals = {}
         if self.env.context.get("default_readonly_model_id"):
             vals["readonly_model_id"] = (
                 self.env["ir.model"]
@@ -86,10 +84,13 @@ class CustomFieldRestriction(models.Model):
         for rec in self:
             if rec.required_model_id:
                 rec.model_name = rec.required_model_id.model
+                rec.required = True
             elif rec.invisible_model_id:
                 rec.model_name = rec.invisible_model_id.model
+                rec.field_invisible = True
             elif rec.readonly_model_id:
                 rec.model_name = rec.readonly_model_id.model
+                rec.field_readonly = True
 
     @api.model
     def create(self, vals):
