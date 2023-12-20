@@ -18,6 +18,21 @@ export class RTreeRenderer extends ListRenderer {
     isFirstColumn(column) {
         return this.state.columns.findIndex((col) => col === column) === 0;
     }
+
+    openGroupRecord(group) {
+        if (!this.props.archInfo.noOpen) {
+            this.props.openRecord(group);
+        }
+    }
+
+    onCellKeydownReadOnlyMode(hotkey, cell, group, record) {
+        const cellIsInGroupRow = Boolean(group && !record);
+        if (cellIsInGroupRow && hotkey === "enter") {
+            // Open the group record form instead of toggling the group.
+            return this.openGroupRecord(group);
+        }
+        return super.onCellKeydownReadOnlyMode(hotkey, cell, group, record);
+    }
 }
 
 RTreeRenderer.rowsTemplate = "web_view_rtree.RTreeRenderer.Rows";

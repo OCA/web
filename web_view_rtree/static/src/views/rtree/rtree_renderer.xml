@@ -47,6 +47,19 @@
         owl="1"
     >
         <!--
+            open the record form when clicking on a group row instead of
+            toggling its expansion
+        -->
+        <xpath expr="tr" position="attributes">
+            <attribute name="t-on-click">() => this.openGroupRecord(group)</attribute>
+        </xpath>
+
+        <!-- toggle expansion of the group when clicking on the caret -->
+        <xpath expr="tr/th/div[@class='d-flex']/span" position="attributes">
+            <attribute name="t-on-click.stop">() => this.toggleGroup(group)</attribute>
+        </xpath>
+
+        <!--
             add an empty cell at the beginning of the row to match the number
             of cells for record rows in case they are selectable
         -->

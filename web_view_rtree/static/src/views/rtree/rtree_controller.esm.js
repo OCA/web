@@ -15,6 +15,7 @@ export class RTreeController extends ListController {
         this.userService = useService("user");
         this.rpc = useService("rpc");
         this.rootRef = useRef("root");
+        this.orm = useService("orm");
 
         this.archInfo = this.props.archInfo;
         this.editable = this.props.editable ? this.archInfo.editable : false;
@@ -38,6 +39,22 @@ export class RTreeController extends ListController {
             rootState,
             parentDefs: this.archInfo.parentDefs,
         });
+    }
+
+    async openRecord(record) {
+        if (record.isRecord) {
+            return super.openRecord(record);
+        }
+        // Record is a group: get and launch its form action.
+        const action = await this.orm.call(
+            record.resModel,
+            "get_formview_action",
+            [[record.resId]],
+            {
+                context: this.props.context,
+            }
+        );
+        return this.actionService.doAction(action);
     }
 }
 

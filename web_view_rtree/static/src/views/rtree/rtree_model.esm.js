@@ -120,6 +120,9 @@ class RTreeRecord extends Record {
     }
 
     async toggle() {
+        if (!this.hasChildren) {
+            return;
+        }
         this.isFolded = !this.isFolded;
         await this.model.keepLast.add(this.loadChildren());
         this.model.notify();
