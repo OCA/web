@@ -5,7 +5,7 @@
         <field name="name">Custom Modifier List View</field>
         <field name="model">web.custom.modifier</field>
         <field name="arch" type="xml">
-            <tree string="Custom Modifiers" editable="top">
+            <tree editable="top">
                 <field
                     name="model_ids"
                     widget="many2many_tags"
