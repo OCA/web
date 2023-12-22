@@ -4,6 +4,7 @@ import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
 import {_lt} from "@web/core/l10n/translation";
 import {FloatField} from "@web/views/fields/float/float_field";
+import {hasTouch} from "@web/core/browser/feature_detection";
 
 export class NumericStep extends FloatField {
     setup() {
@@ -11,7 +12,9 @@ export class NumericStep extends FloatField {
     }
     _onStepClick(ev) {
         const $el = $(ev.target).parent().parent().find("input");
-        $el.focus();
+        if (!hasTouch()) {
+            $el.focus();
+        }
         const mode = $(ev.target).data("mode");
         this._doStep(mode);
     }
