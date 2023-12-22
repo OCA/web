@@ -1,0 +1,178 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_custom_modifier
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-15 15:07+0000\n"
+"PO-Revision-Date: 2022-07-15 15:07+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_custom_modifier
+#: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__active
+msgid "Active"
+msgstr "Actif"
+
+#. module: web_custom_modifier
+#: model_terms:ir.ui.view,arch_db:web_custom_modifier.custom_modifier_search
+msgid "Archived"
+msgstr "Archivé"
+
+#. module: web_custom_modifier
+#: model:ir.model,name:web_custom_modifier.model_base
+msgid "Base"
+msgstr "Base"
+
+#. module: web_custom_modifier
+#: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: web_custom_modifier
+#: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: web_custom_modifier
+#: model:ir.actions.act_window,name:web_custom_modifier.custom_modifier_action
+#: model:ir.ui.menu,name:web_custom_modifier.custom_modifier_menu
+#: model_terms:ir.ui.view,arch_db:web_custom_modifier.custom_modifier_list
+#: model_terms:ir.ui.view,arch_db:web_custom_modifier.custom_modifier_search
+msgid "Custom Modifiers"
+msgstr "Modificateurs personnalisés"
+
+#. module: web_custom_modifier
+#: model:ir.model,name:web_custom_modifier.model_web_custom_modifier
+msgid "Custom View Modifier"
+msgstr "Modificateurs de vue personnalisés"
+
+#. module: web_custom_modifier
+#: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: web_custom_modifier
+#: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__excluded_group_ids
+msgid "Excluded Groups"
+msgstr "Groupes exclus"
+
+#. module: web_custom_modifier
+#: model_terms:ir.ui.view,arch_db:web_custom_modifier.custom_modifier_list
+#: model_terms:ir.ui.view,arch_db:web_custom_modifier.custom_modifier_search
+#: selection:web.custom.modifier,type_:0
+msgid "Field"
+msgstr "Champ"
+
+#. module: web_custom_modifier
+#: selection:web.custom.modifier,modifier:0
+msgid "Force Save"
+msgstr "Forcer la sauvegarde"
+
+#. module: web_custom_modifier
+#: model_terms:ir.ui.view,arch_db:web_custom_modifier.custom_modifier_search
+msgid "Group By"
+msgstr "Grouper par"
+
+#. module: web_custom_modifier
+#: selection:web.custom.modifier,modifier:0
+msgid "Hide Selection Item"
+msgstr "Cacher un choix de sélection"
+
+#. module: web_custom_modifier
+#: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__id
+msgid "ID"
+msgstr "ID"
+
+#. module: web_custom_modifier
+#: selection:web.custom.modifier,modifier:0
+msgid "Invisible"
+msgstr "Invisible"
+
+#. module: web_custom_modifier
+#: selection:web.custom.modifier,modifier:0
+msgid "Invisible (List Views)"
+msgstr "Invisible (vues listes)"
+
+#. module: web_custom_modifier
+#: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__key
+msgid "Key"
+msgstr "Clé"
+
+#. module: web_custom_modifier
+#: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: web_custom_modifier
+#: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: web_custom_modifier
+#: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: web_custom_modifier
+#: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__model_ids
+msgid "Model"
+msgstr "Modèle"
+
+#. module: web_custom_modifier
+#: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__modifier
+#: model_terms:ir.ui.view,arch_db:web_custom_modifier.custom_modifier_search
+msgid "Modifier"
+msgstr "Modificateur"
+
+#. module: web_custom_modifier
+#: selection:web.custom.modifier,modifier:0
+msgid "Number of lines per page (List Views)"
+msgstr "Nombre de lignes par page (Vues listes)"
+
+#. module: web_custom_modifier
+#: selection:web.custom.modifier,modifier:0
+msgid "Readonly"
+msgstr "Lecture seule"
+
+#. module: web_custom_modifier
+#: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__reference
+msgid "Reference"
+msgstr "Référence"
+
+#. module: web_custom_modifier
+#: selection:web.custom.modifier,modifier:0
+msgid "Required"
+msgstr "Obligatoire"
+
+#. module: web_custom_modifier
+#: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__type_
+#: model_terms:ir.ui.view,arch_db:web_custom_modifier.custom_modifier_search
+msgid "Type"
+msgstr "Type"
+
+#. module: web_custom_modifier
+#: model:ir.model,name:web_custom_modifier.model_ir_ui_view
+msgid "View"
+msgstr "View"
+
+#. module: web_custom_modifier
+#: selection:web.custom.modifier,modifier:0
+msgid "Widget"
+msgstr "Widget"
+
+#. module: web_custom_modifier
+#: selection:web.custom.modifier,type_:0
+msgid "Xpath"
+msgstr "Xpath"
+
+#. module: web_custom_modifier
+#: model:ir.model.fields.selection,name:web_custom_modifier.selection__web_custom_modifier__modifier__optional
+msgid "Optional"
+msgstr "Optionnel"
