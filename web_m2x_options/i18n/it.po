@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-03 03:50+0000\n"
-"PO-Revision-Date: 2023-11-27 11:33+0000\n"
+"PO-Revision-Date: 2023-12-24 18:42+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -52,7 +52,7 @@ msgstr "Crea e modifica"
 #: code:addons/web_m2x_options/static/src/components/relational_utils.esm.js:0
 #, python-format
 msgid "Create and edit..."
-msgstr "Crea e modifica"
+msgstr "Crea e modifica..."
 
 #. module: web_m2x_options
 #. odoo-javascript
