@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright (C) 2023-Today GRAP (http://www.grap.coop)
+    @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+
+    <record id="view_ir_ui_view_merge_notebook_tab_tree" model="ir.ui.view">
+        <field name="model">ir.ui.view.merge.notebook.tab</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom" decoration-muted="view_id == False">
+                <field name="view_xml_id" />
+                <field name="view_id" />
+                <field name="tab_description" />
+                <field name="tab_name" />
+                <field name="merge_tab_names" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_ir_ui_view_merge_notebook_tab" model="ir.actions.act_window">
+        <field name="name">Merge Notebook Tab Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ir.ui.view.merge.notebook.tab</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem
+        id="menu_ir_ui_view_merge_notebook_tab"
+        parent="base.next_id_2"
+        action="action_ir_ui_view_merge_notebook_tab"
+        sequence="4"
+    />
+</odoo>
