@@ -87,7 +87,7 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
             var is_string = typeof option === 'string'
             var is_bool = typeof option === 'boolean'
             if (is_string) {
-                return option === 'true' || option === 'True'
+                return option === 'true' || option === 'True' || option === '1'
             } else if (is_bool) {
                 return option
             }
