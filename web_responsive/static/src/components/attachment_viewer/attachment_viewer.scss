@@ -6,7 +6,7 @@
 .o_web_client .o_DialogManager_dialog {
     /* Show sided viewer on large screens */
     @media (min-width: 1533px) {
-        &:not(:has(.o_AttachmentDeleteConfirm)) {
+        &:has(.o_AttachmentViewer) {
             position: static;
         }
         .o_AttachmentViewer_main {
