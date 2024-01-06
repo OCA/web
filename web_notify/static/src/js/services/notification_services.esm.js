@@ -24,6 +24,7 @@ export const webNotificationService = {
                         type: notif.type,
                         sticky: notif.sticky,
                         className: notif.className,
+                        messageIsHtml: notif.html,
                     });
                 });
             });
