@@ -10,6 +10,12 @@
   * Pedro M. Baeza
   * Alexandre Díaz
   * César A. Sánchez
+
 * `Onestein <https://www.onestein.nl>`_:
-    * Dennis Sluijk <d.sluijk@onestein.nl>
-    * Anjeel Haria
+
+  * Dennis Sluijk <d.sluijk@onestein.nl>
+  * Anjeel Haria
+
+* `XCG Consulting <https://xcg-consulting.fr>`_:
+
+  * Houzéfa Abbasbhay
