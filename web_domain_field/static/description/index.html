@@ -369,16 +369,16 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:38caddd3efd0bf3c90c5b3a84068ef6e757e1bb72698ee16451a62c210e7a154
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/web/tree/16.0/web_domain_field"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/web-16-0/web-16-0-web_domain_field"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/web&amp;target_branch=16.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/web/tree/17.0/web_domain_field"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/web-17-0/web-17-0-web_domain_field"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/web&amp;target_branch=17.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">This module is deprecated.
-If you want to use this functionality you can assign a unserialised
-domain to a fields.Binary, <a class="reference external" href="https://github.com/OCA/OCB/blob/16.0/addons/account/models/account_tax.py#L1308">example</a></p>
+<p class="last">This module is deprecated. If you want to use this functionality you
+can assign a unserialised domain to a fields.Binary,
+<a class="reference external" href="https://github.com/OCA/OCB/blob/16.0/addons/account/models/account_tax.py#L1308">example</a></p>
 </div>
-<p>This technical addon allows developers to specify a field domain in a view
-using the value of another field in that view, rather than as a static
-XML attribute.</p>
+<p>This technical addon allows developers to specify a field domain in a
+view using the value of another field in that view, rather than as a
+static XML attribute.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -395,38 +395,40 @@ XML attribute.</p>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#toc-entry-1">Usage</a></h1>
 <p>When you define a view you can specify on the relational fields a domain
-attribute. This attribute is evaluated as filter to apply when displaying
-existing records for selection.</p>
+attribute. This attribute is evaluated as filter to apply when
+displaying existing records for selection.</p>
 <pre class="code xml literal-block">
 <span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;product_id&quot;</span><span class="w"> </span><span class="na">domain=</span><span class="s">&quot;[('type','=','product')]&quot;</span><span class="nt">/&gt;</span>
 </pre>
-<p>The value provided for the domain attribute must be a string representing a
-valid Odoo domain. This string is evaluated on the client side in a
-restricted context where we can reference as right operand the values of
-fields present into the form and a limited set of functions.</p>
-<p>In this context it’s hard to build complex domain and we are facing to some
-limitations as:</p>
+<p>The value provided for the domain attribute must be a string
+representing a valid Odoo domain. This string is evaluated on the client
+side in a restricted context where we can reference as right operand the
+values of fields present into the form and a limited set of functions.</p>
+<p>In this context it’s hard to build complex domain and we are facing to
+some limitations as:</p>
 <blockquote>
 <ul class="simple">
-<li>The syntax to include in your domain a criteria involving values from a
-x2many field is complex.</li>
-<li>The right side of domain in case of x2many can involve huge amount of ids
-(performance problem).</li>
-<li>Domains computed by an onchange on an other field are not recomputed when
-you modify the form and don’t modify the field triggering the onchange.</li>
-<li>It’s not possible to extend an existing domain. You must completely redefine
-the domain in your specialized addon</li>
+<li>The syntax to include in your domain a criteria involving values
+from a x2many field is complex.</li>
+<li>The right side of domain in case of x2many can involve huge amount
+of ids (performance problem).</li>
+<li>Domains computed by an onchange on an other field are not
+recomputed when you modify the form and don’t modify the field
+triggering the onchange.</li>
+<li>It’s not possible to extend an existing domain. You must
+completely redefine the domain in your specialized addon</li>
 <li>etc…</li>
 </ul>
 </blockquote>
-<p>In order to mitigate these limitations this new addon allows you to use the
-value of a field as domain of an other field in the xml definition of your
-view.</p>
+<p>In order to mitigate these limitations this new addon allows you to use
+the value of a field as domain of an other field in the xml definition
+of your view.</p>
 <pre class="code xml literal-block">
 <span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;product_id_domain&quot;</span><span class="w"> </span><span class="na">invisible=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span><span class="w">
 </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;product_id&quot;</span><span class="w"> </span><span class="na">domain=</span><span class="s">&quot;product_id_domain&quot;</span><span class="nt">/&gt;</span>
 </pre>
-<p>The field used as domain must provide the domain as a JSON encoded string.</p>
+<p>The field used as domain must provide the domain as a JSON encoded
+string.</p>
 <pre class="code python literal-block">
 <span class="n">product_id_domain</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Char</span><span class="p">(</span><span class="w">
 </span>    <span class="n">compute</span><span class="o">=</span><span class="s2">&quot;_compute_product_id_domain&quot;</span><span class="p">,</span><span class="w">
@@ -443,18 +445,19 @@ view.</p>
 </pre>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>You do not actually need this module to craft a dynamic domain. Odoo comes
-with its own <a class="reference external" href="https://github.com/odoo/odoo/tree/16.0/addons/web/static/lib/py.js">py.js</a>
-web library to parse expressions such as domains. <cite>py.js</cite> supports more
+<p>You do not actually need this module to craft a dynamic domain. Odoo
+comes with its own
+<a class="reference external" href="https://github.com/odoo/odoo/tree/16.0/addons/web/static/lib/py.js">py.js</a>
+web library to parse expressions such as domains. py.js supports more
 complex expressions than just static lists.</p>
-<p>Here is an example of a conditional domain based on the value of another
-field:</p>
+<p>Here is an example of a conditional domain based on the value of
+another field:</p>
 <pre class="code python literal-block">
 <span class="p">(</span><span class="n">order_id</span> <span class="ow">or</span> <span class="n">partner_id</span><span class="p">)</span> <span class="ow">and</span> <span class="p">[(</span><span class="s1">'id'</span><span class="p">,</span> <span class="s1">'in'</span><span class="p">,</span> <span class="n">allowed_picking_ids</span><span class="p">)]</span><span class="w">
 </span><span class="ow">or</span> <span class="p">[(</span><span class="s1">'state'</span><span class="p">,</span> <span class="s1">'='</span><span class="p">,</span> <span class="s1">'done'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'picking_type_id.code'</span><span class="p">,</span> <span class="s1">'='</span><span class="p">,</span> <span class="s1">'outgoing'</span><span class="p">)]</span>
 </pre>
-<p class="last">For OCA modules, this method is preferred over adding this module as an
-additional dependency.</p>
+<p class="last">For OCA modules, this method is preferred over adding this module as
+an additional dependency.</p>
 </div>
 </div>
 <div class="section" id="bug-tracker">
@@ -462,7 +465,7 @@ additional dependency.</p>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/web/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/OCA/web/issues/new?body=module:%20web_domain_field%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/OCA/web/issues/new?body=module:%20web_domain_field%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
@@ -488,7 +491,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
-<p>This module is part of the <a class="reference external" href="https://github.com/OCA/web/tree/16.0/web_domain_field">OCA/web</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/web/tree/17.0/web_domain_field">OCA/web</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
 </div>
 </div>
