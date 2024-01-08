@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<openerp>
+<odoo>
 <data noupdate="1">
 
 <template id="tpl_help">
@@ -37,4 +37,4 @@
 
 
 </data>
-</openerp>
+</odoo>

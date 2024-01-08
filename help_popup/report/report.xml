@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<openerp>
-<data>
+<odoo>
 
 <report id="report_help_popup"
     model="ir.actions.act_window"
@@ -9,5 +8,4 @@
     name="help_popup.tpl_help"
     report_type="qweb-html"/>
 
-</data>
-</openerp>
+</odoo>

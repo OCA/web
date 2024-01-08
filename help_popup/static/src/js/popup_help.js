@@ -1,35 +1,37 @@
-openerp.help_popup = function(instance, local) {
+odoo.define('help_popup.help_button', function(require) {
+    "use strict";
 
-    var _t = instance.web._t;
-    instance.web.ViewManager.include({
+    var view_manager = require('web.ViewManager');
+    var extended_manager = view_manager.include({
 
-        do_create_view: function(view_type) {
+        start : function() {
             var self = this;
-            var res = self._super(view_type);
-            self.$el.find('span.view_help').each(function () {
+            var res = self._super();
+            $('button.button_view_help_oca').each(function() {
                 var $elem = $(this);
-                if ($elem.data('click-init')) {
-                    return true;
+                var advanced_help = self.action.advanced_help;
+                var enduser_help = self.action.enduser_help;
+                if (typeof self.action.id === "undefined" || 
+                        (advanced_help.length === 0 || 
+                                typeof advanced_help.length === "undefined" 
+                                    && $(enduser_help).text().length === 0)) {
+                    $('button.button_view_help_oca').hide();
+                    $('ol.breadcrumb').addClass('breadcrumb_hide').removeClass('breadcrumb_show');
+                } else {
+                    $('button.button_view_help_oca').show()
+                    $('ol.breadcrumb').addClass('breadcrumb_show').removeClass('breadcrumb_hide');
                 }
-                $elem.data('click-init', true);
-                //alert('ee' + self.action)
-                console.log(self.action.id)
-                if (self.action.id == undefined || (self.action.advanced_help == '' && self.action.enduser_help == '')) {
-                    self.$el.find('span.view_help').hide()
-                }
-                $elem.on('click', function(e) {
+                $elem.on('click', function (event) {
                     var params = 'height=650, width=800, location=no, ';
                     params += 'resizable=yes, menubar=yes';
-                    path = self.action.id;
-                    my_window = window.open('/report/html/help_popup.tpl_help/' + path, 'Help', params);
+                    var path = self.action.id;
+                    var my_window = window.open('/report/html/help_popup.tpl_help/'
+                            + path, 'Help', params);
                     // allows to back to the window if opened previoulsy
-                    setTimeout('my_window.focus()', 1);
+                    setTimeout(my_window.focus(), 1);
                 });
-
-                return true;
-
             });
             return res;
-        },
+        }
     });
-}
+});

@@ -1,0 +1,7 @@
+.breadcrumb_hide {
+    width: 0%;
+}
+
+.breadcrumb_show {
+    width: 44% !important;
+}

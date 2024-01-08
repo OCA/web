@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<openerp>
-    <data noupdate="1">
-
+<odoo noupdate="1">
         <record id="base.action_partner_form" model="ir.actions.act_window">
             <field name="enduser_help"><![CDATA[
 <b>Hi Odooer,</b>
@@ -22,7 +20,6 @@ Don't hesitate to customized me with your own words and syntax
 
           ]]></field>
         </record>
-    </data>
 
     <data noupdate="0">
         <record id="base.action_partner_form" model="ir.actions.act_window">
@@ -50,6 +47,5 @@ Allows to developers to write documentation on their work.
 
           ]]></field>
         </record>
-
-</data>
-</openerp>
+    </data>
+</odoo>
