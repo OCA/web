@@ -399,7 +399,7 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
                             await this._rpc({
                                 model: this.modelName,
                                 method: "fields_get",
-                                args: [grouped_field],
+                                args: [[grouped_field]],
                                 context: this.getSession().user_context,
                             }).then(async (fields) => {
                                 if (fields[grouped_field].type === "many2many") {
