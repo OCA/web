@@ -4,7 +4,7 @@
 {
     "name": "Web Touchscreen",
     "summary": "UX improvements for touch screens",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "development_status": "Alpha",
     "category": "Extra Tools",
     "website": "https://github.com/OCA/web",
