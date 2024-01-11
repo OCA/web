@@ -11,6 +11,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                 <button
                     class="fa fa-minus btn btn-default btn_numeric_step"
                     aria-label="Minus"
+                    tabindex="-1"
                     title="Minus"
                     type="button"
                     data-mode="minus"
@@ -33,6 +34,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                 <button
                     class="fa fa-plus btn btn-default btn_numeric_step"
                     aria-label="Plus"
+                    tabindex="-1"
                     title="Plus"
                     type="button"
                     data-mode="plus"
