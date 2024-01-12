@@ -30,6 +30,7 @@ addon | version | maintainers | summary
 [web_access_rule_buttons](web_access_rule_buttons/) | 14.0.1.0.1 |  | Disable Edit button if access rules prevent this action
 [web_action_conditionable](web_action_conditionable/) | 14.0.1.0.1 |  | web_action_conditionable
 [web_advanced_search](web_advanced_search/) | 14.0.1.0.1 |  | Easier and more powerful searching tools
+[web_assets_warmup](web_assets_warmup/) | 14.0.1.0.0 |  | Ensure that assets are generated when Odoo starts.
 [web_button_visibility](web_button_visibility/) | 14.0.1.0.0 | [![ilyasProgrammer](https://github.com/ilyasProgrammer.png?size=30px)](https://github.com/ilyasProgrammer) | Web Button Visibility
 [web_calendar_color_field](web_calendar_color_field/) | 14.0.1.0.0 |  | Calendar Color Field
 [web_calendar_slot_duration](web_calendar_slot_duration/) | 14.0.1.0.0 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) | Customizable calendar slot durations
