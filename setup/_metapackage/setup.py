@@ -20,6 +20,7 @@ setuptools.setup(
         'odoo-addon-web_drop_target>=15.0dev,<15.1dev',
         'odoo-addon-web_environment_ribbon>=15.0dev,<15.1dev',
         'odoo-addon-web_group_expand>=15.0dev,<15.1dev',
+        'odoo-addon-web_hide_user_menu_item>=15.0dev,<15.1dev',
         'odoo-addon-web_ir_actions_act_multi>=15.0dev,<15.1dev',
         'odoo-addon-web_ir_actions_act_view_reload>=15.0dev,<15.1dev',
         'odoo-addon-web_ir_actions_act_window_message>=15.0dev,<15.1dev',
