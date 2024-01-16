@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<template
-    id="assets_backend"
-    name="web_addline_large_btn Assets"
-    inherit_id="web.assets_backend"
-  >
-    <script
-        type="text/javascript"
-        src="/web_addline_large_btn/static/src/js/list_editable_renderer.js"
-      />
-</template>
+<odoo>
+    <template
+        id="assets_backend"
+        name="web_addline_large_btn Assets"
+        inherit_id="web.assets_backend"
+    >
+     <xpath expr="." position="inside">
+        <script
+                type="text/javascript"
+                src="/web_addline_large_btn/static/src/js/list_editable_renderer.js"
+            />
+    </xpath>
+    </template>
+</odoo>

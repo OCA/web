@@ -1,5 +1,6 @@
-Install module and in the editable tree view in question add the
-required options as show below:
+Once the module is installed, locate a form view with 
+one2many field defined by a <tree/> tag with editable attribute set. 
+Add the attributes below depending on your desired use case.
 
 - **use_large_addline_btn** - string *true* small case or string value of JS
   boolean true.
@@ -19,3 +20,9 @@ see a format example of setting it in xml code below:
            <field name="inspector_notes" />
         </tree>
     </field>
+
+
+.. image:: ./static/description/sample.gif
+   :width: 800
+   :alt: Sample
+   :align: center

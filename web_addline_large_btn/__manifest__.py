@@ -5,12 +5,10 @@
     "name": "Web Addline Large Button",
     "version": "14.0.1.0.0",
     "category": "Extra Tools",
-    "author": "Therp BV",
+    "author": "Therp BV, Odoo Community Association (OCA)",
     "license": "LGPL-3",
     "website": "https://github.com/OCA/web",
     "depends": ["web"],
-    "data": [
-        "views/assets.xml"
-    ],
+    "data": ["views/assets.xml"],
     "installable": True,
 }
