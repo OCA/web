@@ -8,8 +8,3 @@ Does not work currently:
 * Sorting of columns
 * Navigating between records accessed from the view
 * Validation of the view definition
-
-Known issues:
-
-* All models are assumed to have a ``name`` field (used to display groups).
-  Instead, the real ``_rec_name`` model property should be used.

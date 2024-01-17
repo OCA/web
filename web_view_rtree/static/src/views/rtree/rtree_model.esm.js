@@ -192,7 +192,7 @@ class DynamicRTreeRecordList extends DynamicRecordList {
                     recordModel: this.recordModel,
                     numChildren: data.numChildren,
                     isRecord: data.record !== null,
-                    displayName: data.name,
+                    displayName: data.displayName,
                     level: this.level,
                     recordFields: this.recordFields,
                     recordActiveFields: this.recordActiveFields,
@@ -222,14 +222,14 @@ class DynamicRTreeRecordList extends DynamicRecordList {
                 mergedGroups.push(modelGroups);
             }
             for (const group of groups) {
-                const [id, name] = group[params.groupBy];
+                const [id, displayName] = group[params.groupBy];
                 const numChildren = group[params.groupBy + "_count"];
                 let groupObj = modelGroups.groupsByID[id];
                 if (groupObj === undefined) {
                     groupObj = {
                         id,
                         model,
-                        name,
+                        displayName,
                         numChildren,
                         record: null,
                     };
@@ -270,8 +270,10 @@ class DynamicRTreeRecordList extends DynamicRecordList {
                     resultRecords.push({
                         id: record.id,
                         model,
-                        // FIXME: use the actual name field
-                        name: record.name,
+                        // The record's display_name is not always available
+                        // (depending on the fieldNames), and for records this
+                        // property is anyway never displayed.
+                        displayName: null,
                         numChildren,
                         record,
                     });
@@ -286,8 +288,7 @@ class DynamicRTreeRecordList extends DynamicRecordList {
                         const groupObj = {
                             id: record.id,
                             model,
-                            // FIXME: use the actual name field
-                            name: record.name,
+                            displayName: record.display_name,
                             numChildren: 0,
                             record: null,
                         };
@@ -312,8 +313,7 @@ class DynamicRTreeRecordList extends DynamicRecordList {
         if (model === this.recordModel) {
             fieldNames = this.fieldNames;
         } else {
-            // FIXME: get the actual name field
-            fieldNames = ["name"];
+            fieldNames = ["display_name"];
         }
         const kwargs = {};
         return this.model.orm.webSearchRead(model, domain, fieldNames, kwargs);
