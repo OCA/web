@@ -10,7 +10,10 @@ export class RTreeRenderer extends ListRenderer {
     getGroupNameCellColSpan(group) {
         const colspan = super.getGroupNameCellColSpan(group);
         if (this.hasSelectors) {
-            return colspan + 1;
+            // When selectors are enabled, an empty cell is added at the
+            // beginning of group rows to align their contents with those of
+            // record rows.
+            return colspan - 1;
         }
         return colspan;
     }

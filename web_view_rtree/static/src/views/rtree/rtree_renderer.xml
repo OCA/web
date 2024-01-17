@@ -60,8 +60,8 @@
         </xpath>
 
         <!--
-            add an empty cell at the beginning of the row to match the number
-            of cells for record rows in case they are selectable
+            add an empty cell at the beginning of the row to align the
+            contents with those of record rows in case they are selectable
         -->
         <xpath expr="tr/th[@tabindex='-1']" position="before">
             <td t-if="hasSelectors" />
