@@ -37,4 +37,4 @@ export class RTreeRenderer extends ListRenderer {
 
 RTreeRenderer.rowsTemplate = "web_view_rtree.RTreeRenderer.Rows";
 RTreeRenderer.recordRowTemplate = "web_view_rtree.RTreeRenderer.RecordRow";
-ListRenderer.groupRowTemplate = "web_view_rtree.RTreeRenderer.GroupRow";
+RTreeRenderer.groupRowTemplate = "web_view_rtree.RTreeRenderer.GroupRow";
