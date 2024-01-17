@@ -3,6 +3,7 @@ odoo.define('web_notify.Notification', function (require) {
 
     var Notification = require('web.Notification');
 
+
     Notification.include({
         icon_mapping: {
             'success': 'fa-thumbs-up',
@@ -21,6 +22,7 @@ odoo.define('web_notify.Notification', function (require) {
                 this.icon_mapping['default'];
             this.className += ' o_' + this.type;
         },
+
     });
 
 });

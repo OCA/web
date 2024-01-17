@@ -2,7 +2,6 @@ odoo.define('web_notify.WebClient', function (require) {
     "use strict";
 
     var WebClient = require('web.WebClient');
-    var base_bus = require('bus.Longpolling');
     var session = require('web.session');
     require('bus.BusService');
 
@@ -61,16 +60,26 @@ odoo.define('web_notify.WebClient', function (require) {
             });
         },
         on_message: function (message) {
-            return this.call(
-                'notification', 'notify', {
-                    type: message.type,
-                    title: message.title,
-                    message: message.message,
-                    sticky: message.sticky,
-                    className: message.className,
-                }
-            );
+        	var notif_method = 'notify';
+        	var service_class =  'notification' ;
+
+        	if(message.allow_native_notifications){
+        		//Choose native service to notify desktop
+        		notif_method = 'sendNotification';
+            	service_class =  'bus_service' ;
+        	}
+	        return this.call(
+	                service_class, notif_method, {
+	                    type: message.type,
+	                    title: message.title,
+	                    message: message.message,
+	                    sticky: message.sticky,
+	                    className: message.className,
+	                }
+	            );
+
         },
+
     });
 
 });
