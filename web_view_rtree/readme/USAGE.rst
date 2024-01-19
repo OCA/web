@@ -11,6 +11,8 @@ has the following attributes:
 * ``field``: the field of the child model to access the parent.
 * ``domain`` (optional): an optional domain to use when loading the children
   for this relationship.
+* ``expand`` (optional): an optional boolean value that controls whether this
+  relationship should be expanded automatically (false by default).
 
 The order of the ``<parent>`` elements controls the order of group types on
 each level of the tree.
@@ -21,7 +23,10 @@ Here is an example to display projects with their tasks and sub-tasks
 (recursively). At the root, it will display all projects (as groups) as well
 as all tasks (as records) that have no parent and no project. Note that the
 first relationship has a domain: this is to ensure that only tasks that have
-no parent will be shown as children of their project.
+no parent will be shown as children of their project. Moreover, the first
+relationship has the ``expand`` boolean set to true, while the second hasn't:
+this means that project groups will be expanded automatically, but tasks with
+sub-tasks will not.
 
 .. code-block:: XML
 
@@ -35,6 +40,7 @@ no parent will be shown as children of their project.
                     child="project.task"
                     field="project_id"
                     domain="[('parent_id', '=', False)]"
+                    expand="true"
                 />
                 <parent
                     parent="project.task"

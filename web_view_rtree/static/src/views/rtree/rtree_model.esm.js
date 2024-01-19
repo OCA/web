@@ -105,6 +105,11 @@ class RTreeRecord extends Record {
         this.list = this.model.createDataPoint("list", listParams, state.listState);
     }
 
+    async load() {
+        await super.load();
+        await this.loadChildren();
+    }
+
     get hasChildren() {
         return this.numChildren > 0;
     }
@@ -196,6 +201,7 @@ class DynamicRTreeRecordList extends DynamicRecordList {
                     level: this.level,
                     recordFields: this.recordFields,
                     recordActiveFields: this.recordActiveFields,
+                    isFolded: data.isFolded,
                 });
                 await record.load({values: values});
                 return record;
@@ -232,6 +238,7 @@ class DynamicRTreeRecordList extends DynamicRecordList {
                         displayName,
                         numChildren,
                         record: null,
+                        isFolded: !params.expand,
                     };
                     modelGroups.groupsByID[id] = groupObj;
                     modelGroups.groups.push(groupObj);
@@ -263,9 +270,11 @@ class DynamicRTreeRecordList extends DynamicRecordList {
                 for (const record of records) {
                     const group = groupsByID[record.id];
                     let numChildren = 0;
+                    let isFolded = true;
                     if (group !== undefined) {
                         numChildren = group.numChildren;
                         group.record = record;
+                        isFolded = group.isFolded;
                     }
                     resultRecords.push({
                         id: record.id,
@@ -276,6 +285,7 @@ class DynamicRTreeRecordList extends DynamicRecordList {
                         displayName: null,
                         numChildren,
                         record,
+                        isFolded,
                     });
                 }
             } else {
@@ -291,6 +301,7 @@ class DynamicRTreeRecordList extends DynamicRecordList {
                             displayName: record.display_name,
                             numChildren: 0,
                             record: null,
+                            isFolded: true,
                         };
                         modelGroups.groupsByID[record.id] = groupObj;
                         // FIXME: insert at correct sorted position
@@ -348,6 +359,7 @@ export class RTreeModel extends RelationalModel {
                 model: parent.child,
                 field: parent.field,
                 domain: parent.domain || null,
+                expand: parent.expand,
             });
             let childMap = childrenMap[parent.child];
             if (childMap === undefined) {
@@ -359,6 +371,7 @@ export class RTreeModel extends RelationalModel {
                 model: parent.parent,
                 field: parent.field,
                 domain: parent.domain || null,
+                expand: parent.expand,
             });
         }
         return {
@@ -379,6 +392,7 @@ export class RTreeModel extends RelationalModel {
         return {
             model: child.model,
             domain,
+            expand: child.expand,
         };
     }
 
@@ -440,6 +454,7 @@ export class RTreeModel extends RelationalModel {
                 recordParams.push({
                     model,
                     domain: [],
+                    expand: false,
                 });
             }
             const children = parentsMap[model];

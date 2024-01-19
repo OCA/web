@@ -57,6 +57,7 @@ export class RTreeArchParser extends ListArchParser {
                     child: node.getAttribute("child"),
                     field: node.getAttribute("field"),
                     domain,
+                    expand: archParseBoolean(node.getAttribute("expand") || ""),
                 });
             }
         });
