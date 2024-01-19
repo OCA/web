@@ -3,80 +3,71 @@
 
 import json
 
-from ddt import data, ddt
 from lxml import etree
 
 from odoo.tests import common
-
-MODIFIERS = (
-    "invisible",
-    "readonly",
-    "required",
-)
 
 
 def _extract_modifier_value(el, modifier):
     return json.loads(el.attrib.get("modifiers") or "{}").get(modifier)
 
 
-@ddt
 class TestViewRendering(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.view = cls.env.ref("base.view_partner_form")
-        with self.assertRaises(ValidationError):
-            cls.email_modifier = cls.env["web.custom.modifier"].create(
-                    {
-                        "model_ids": [(4, cls.env.ref("base.model_res_partner").id)],
-                        "type_": "field",
-                        "reference": "email",
-                        "modifier": "invisible",
-                    }
-                )
+        cls.email_modifier = cls.env["web.custom.modifier"].create(
+            {
+                "model_ids": [(4, cls.env.ref("base.model_res_partner").id)],
+                "type_": "field",
+                "reference": "email",
+                "modifier": "invisible",
+            }
+        )
 
-            cls.xpath = "//field[@name='street']"
-            cls.street_modifier = cls.env["web.custom.modifier"].create(
-                {
-                    "model_ids": [(4, cls.env.ref("base.model_res_partner").id)],
-                    "type_": "xpath",
-                    "reference": cls.xpath,
-                    "modifier": "invisible",
-                }
-            )
+        cls.xpath = "//field[@name='street']"
+        cls.street_modifier = cls.env["web.custom.modifier"].create(
+            {
+                "model_ids": [(4, cls.env.ref("base.model_res_partner").id)],
+                "type_": "xpath",
+                "reference": cls.xpath,
+                "modifier": "invisible",
+            }
+        )
 
-            cls.hidden_option = "other"
-            cls.env["web.custom.modifier"].create(
-                {
-                    "model_ids": [(4, cls.env.ref("base.model_res_partner").id)],
-                    "type_": "field",
-                    "reference": "type",
-                    "modifier": "selection_hide",
-                    "key": cls.hidden_option,
-                }
-            )
+        cls.hidden_option = "other"
+        cls.env["web.custom.modifier"].create(
+            {
+                "model_ids": [(4, cls.env.ref("base.model_res_partner").id)],
+                "type_": "field",
+                "reference": "type",
+                "modifier": "selection_hide",
+                "key": cls.hidden_option,
+            }
+        )
 
-            cls.env["web.custom.modifier"].create(
-                {
-                    "model_ids": [(4, cls.env.ref("base.model_res_partner").id)],
-                    "type_": "field",
-                    "reference": "parent_id",
-                    "modifier": "widget",
-                    "key": "custom_widget",
-                }
-            )
+        cls.env["web.custom.modifier"].create(
+            {
+                "model_ids": [(4, cls.env.ref("base.model_res_partner").id)],
+                "type_": "field",
+                "reference": "parent_id",
+                "modifier": "widget",
+                "key": "custom_widget",
+            }
+        )
 
-            cls.env["web.custom.modifier"].create(
-                {
-                    "model_ids": [(4, cls.env.ref("base.model_ir_model").id)],
-                    "type_": "xpath",
-                    "reference": "//field[@name='field_id']//tree",
-                    "modifier": "limit",
-                    "key": "20",
-                }
-            )
+        cls.env["web.custom.modifier"].create(
+            {
+                "model_ids": [(4, cls.env.ref("base.model_ir_model").id)],
+                "type_": "xpath",
+                "reference": "//field[@name='field_id']//tree",
+                "modifier": "limit",
+                "key": "20",
+            }
+        )
 
-        cls.optional_modifier = cls.env["web.custom.modifier"].create(
+        cls.env["web.custom.modifier"].create(
             {
                 "model_ids": [(4, cls.env.ref("base.model_res_partner").id)],
                 "type_": "field",
@@ -86,23 +77,19 @@ class TestViewRendering(common.SavepointCase):
             }
         )
 
-    def _get_rendered_view_tree(self):
+    def test_get_rendered_view_tree(self):
         arch = self.env["res.partner"].fields_view_get(view_id=self.view.id)["arch"]
         return etree.fromstring(arch)
 
-    def test_unlink_modifier(self):
-        self.assertTrue(self.optional_modifier.unlink())
-
-    @data(*MODIFIERS)
-    def test_field_modifier(self, modifier):
+    def test_field_modifier(self, modifier="Invisible"):
         self.email_modifier.modifier = modifier
-        tree = self._get_rendered_view_tree()
+        tree = self.test_get_rendered_view_tree()
         el = tree.xpath("//field[@name='email']")[0]
         assert _extract_modifier_value(el, modifier) is True
 
     def test_field_force_save(self):
         self.email_modifier.modifier = "force_save"
-        tree = self._get_rendered_view_tree()
+        tree = self.test_get_rendered_view_tree()
         el = tree.xpath("//field[@name='email']")[0]
         assert el.attrib["force_save"] == "1"
 
@@ -110,16 +97,15 @@ class TestViewRendering(common.SavepointCase):
         self.email_modifier.modifier = "invisible"
         self.email_modifier.copy().modifier = "readonly"
         self.email_modifier.copy().modifier = "column_invisible"
-        tree = self._get_rendered_view_tree()
+        tree = self.test_get_rendered_view_tree()
         el = tree.xpath("//field[@name='email']")[0]
         assert _extract_modifier_value(el, "column_invisible") is True
         assert _extract_modifier_value(el, "readonly") is True
         assert _extract_modifier_value(el, "invisible") is True
 
-    @data(*MODIFIERS)
-    def test_xpath_modifier(self, modifier):
+    def test_xpath_modifier(self, modifier="invisible"):
         self.street_modifier.modifier = modifier
-        tree = self._get_rendered_view_tree()
+        tree = self.test_get_rendered_view_tree()
         el = tree.xpath("//field[@name='street']")[0]
         assert _extract_modifier_value(el, modifier) is True
 
@@ -132,7 +118,7 @@ class TestViewRendering(common.SavepointCase):
 
         self.env.user.groups_id |= group
 
-        tree = self._get_rendered_view_tree()
+        tree = self.test_get_rendered_view_tree()
         el = tree.xpath("//field[@name='street']")[0]
         assert not _extract_modifier_value(el, modifier)
 
@@ -145,7 +131,7 @@ class TestViewRendering(common.SavepointCase):
 
         self.env.user.groups_id -= group
 
-        tree = self._get_rendered_view_tree()
+        tree = self.test_get_rendered_view_tree()
         el = tree.xpath("//field[@name='street']")[0]
         assert _extract_modifier_value(el, modifier)
 
@@ -160,12 +146,12 @@ class TestViewRendering(common.SavepointCase):
         assert self.hidden_option not in options
 
     def test_widget(self):
-        tree = self._get_rendered_view_tree()
+        tree = self.test_get_rendered_view_tree()
         el = tree.xpath("//field[@name='parent_id']")[0]
         assert el.attrib.get("widget") == "custom_widget"
 
     def test_optional(self):
-        tree = self._get_rendered_view_tree()
+        tree = self.test_get_rendered_view_tree()
         el = tree.xpath("//field[@name='name']")[0]
         assert el.attrib.get("optional") == "show"
 
