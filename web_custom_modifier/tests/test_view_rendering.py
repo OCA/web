@@ -4,7 +4,7 @@
 import json
 
 from ddt import data, ddt
-from lxml import etree as ET
+from lxml import etree
 
 from odoo.tests import common
 
@@ -87,7 +87,7 @@ class TestViewRendering(common.SavepointCase):
 
     def _get_rendered_view_tree(self):
         arch = self.env["res.partner"].fields_view_get(view_id=self.view.id)["arch"]
-        return ET.fromstring(arch)
+        return etree.fromstring(arch)
 
     @data(*MODIFIERS)
     def test_field_modifier(self, modifier):
@@ -170,6 +170,6 @@ class TestViewRendering(common.SavepointCase):
         arch = self.env["ir.model"].fields_view_get(view_id=model_view.id)["fields"][
             "field_id"
         ]["views"]["tree"]["arch"]
-        tree = ET.fromstring(arch)
+        tree = etree.fromstring(arch)
         el = tree.xpath("//tree")[0]
         assert el.attrib.get("limit") == "20"
