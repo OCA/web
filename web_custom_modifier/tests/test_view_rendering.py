@@ -173,3 +173,15 @@ class TestViewRendering(common.SavepointCase):
         tree = etree.fromstring(arch)
         el = tree.xpath("//tree")[0]
         assert el.attrib.get("limit") == "20"
+
+    def test_unlink(self):
+        my_custom_modifier = self.env["web.custom.modifier"].create(
+            {
+                "model_ids": [(4, self.env.ref("base.model_res_partner").id)],
+                "type_": "field",
+                "reference": "name",
+                "modifier": "optional",
+                "key": "show",
+            }
+        )
+        self.assertTrue(my_custom_modifier.unlink())
