@@ -5,7 +5,6 @@ import json
 
 from ddt import data, ddt
 from lxml import etree
-
 from odoo.tests import common
 
 MODIFIERS = (
