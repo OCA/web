@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import json
+
 from ddt import data, ddt
 from lxml import etree
 
@@ -84,20 +85,20 @@ class TestViewRendering(common.SavepointCase):
             }
         )
 
-    def _get_rendered_view_tree(self):
+    def test_get_rendered_view_tree(self):
         arch = self.env["res.partner"].fields_view_get(view_id=self.view.id)["arch"]
         return etree.fromstring(arch)
 
     @data(*MODIFIERS)
     def test_field_modifier(self, modifier):
         self.email_modifier.modifier = modifier
-        tree = self._get_rendered_view_tree()
+        tree = self.test_get_rendered_view_tree()
         el = tree.xpath("//field[@name='email']")[0]
         assert _extract_modifier_value(el, modifier) is True
 
     def test_field_force_save(self):
         self.email_modifier.modifier = "force_save"
-        tree = self._get_rendered_view_tree()
+        tree = self.test_get_rendered_view_tree()
         el = tree.xpath("//field[@name='email']")[0]
         assert el.attrib["force_save"] == "1"
 
@@ -105,7 +106,7 @@ class TestViewRendering(common.SavepointCase):
         self.email_modifier.modifier = "invisible"
         self.email_modifier.copy().modifier = "readonly"
         self.email_modifier.copy().modifier = "column_invisible"
-        tree = self._get_rendered_view_tree()
+        tree = self.test_get_rendered_view_tree()
         el = tree.xpath("//field[@name='email']")[0]
         assert _extract_modifier_value(el, "column_invisible") is True
         assert _extract_modifier_value(el, "readonly") is True
@@ -114,7 +115,7 @@ class TestViewRendering(common.SavepointCase):
     @data(*MODIFIERS)
     def test_xpath_modifier(self, modifier):
         self.street_modifier.modifier = modifier
-        tree = self._get_rendered_view_tree()
+        tree = self.test_get_rendered_view_tree()
         el = tree.xpath("//field[@name='street']")[0]
         assert _extract_modifier_value(el, modifier) is True
 
@@ -127,7 +128,7 @@ class TestViewRendering(common.SavepointCase):
 
         self.env.user.groups_id |= group
 
-        tree = self._get_rendered_view_tree()
+        tree = self.test_get_rendered_view_tree()
         el = tree.xpath("//field[@name='street']")[0]
         assert not _extract_modifier_value(el, modifier)
 
@@ -140,7 +141,7 @@ class TestViewRendering(common.SavepointCase):
 
         self.env.user.groups_id -= group
 
-        tree = self._get_rendered_view_tree()
+        tree = self.test_get_rendered_view_tree()
         el = tree.xpath("//field[@name='street']")[0]
         assert _extract_modifier_value(el, modifier)
 
@@ -155,12 +156,12 @@ class TestViewRendering(common.SavepointCase):
         assert self.hidden_option not in options
 
     def test_widget(self):
-        tree = self._get_rendered_view_tree()
+        tree = self.test_get_rendered_view_tree()
         el = tree.xpath("//field[@name='parent_id']")[0]
         assert el.attrib.get("widget") == "custom_widget"
 
     def test_optional(self):
-        tree = self._get_rendered_view_tree()
+        tree = self.test_get_rendered_view_tree()
         el = tree.xpath("//field[@name='name']")[0]
         assert el.attrib.get("optional") == "show"
 
