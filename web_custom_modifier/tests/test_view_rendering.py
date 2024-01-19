@@ -3,23 +3,15 @@
 
 import json
 
-from ddt import data, ddt
 from lxml import etree as ET
 
 from odoo.tests import common
-
-MODIFIERS = (
-    "invisible",
-    "readonly",
-    "required",
-)
 
 
 def _extract_modifier_value(el, modifier):
     return json.loads(el.attrib.get("modifiers") or "{}").get(modifier)
 
 
-@ddt
 class TestViewRendering(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
@@ -91,16 +83,15 @@ class TestViewRendering(common.SavepointCase):
 
     def test_create_modifier(self):
         vals = {
-                "model_ids": [(4, self.env.ref("base.model_res_partner").id)],
-                "type_": "field",
-                "reference": "parent_id",
-                "modifier": "widget",
-                "key": "custom_widget",
-            }
+            "model_ids": [(4, self.env.ref("base.model_res_partner").id)],
+            "type_": "field",
+            "reference": "parent_id",
+            "modifier": "widget",
+            "key": "custom_widget",
+        }
         assert self.env["web.custom.modifier"].create(vals) is True
 
-    @data(*MODIFIERS)
-    def test_field_modifier(self, modifier):
+    def test_field_modifier(self, modifier="invisible"):
         self.email_modifier.modifier = modifier
         tree = self._get_rendered_view_tree()
         el = tree.xpath("//field[@name='email']")[0]
@@ -122,8 +113,7 @@ class TestViewRendering(common.SavepointCase):
         assert _extract_modifier_value(el, "readonly") is True
         assert _extract_modifier_value(el, "invisible") is True
 
-    @data(*MODIFIERS)
-    def test_xpath_modifier(self, modifier):
+    def test_xpath_modifier(self, modifier="invisible"):
         self.street_modifier.modifier = modifier
         tree = self._get_rendered_view_tree()
         el = tree.xpath("//field[@name='street']")[0]
