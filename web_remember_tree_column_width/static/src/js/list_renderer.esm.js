@@ -2,14 +2,14 @@
 
 import {ListRenderer} from "@web/views/list/list_renderer";
 import {browser} from "@web/core/browser/browser";
-import {patch} from "web.utils";
+import {patch} from "@web/core/utils/patch";
 
-patch(ListRenderer.prototype, "web_remember_tree_column_width.ListRenderer", {
+patch(ListRenderer.prototype, {
     /**
      * @override
      */
-    computeColumnWidthsFromContent() {
-        const columnWidths = this._super.apply(this, arguments);
+    computeColumnWidthsFromContent(allowedWidth) {
+        const columnWidths = super.computeColumnWidthsFromContent(allowedWidth);
         const table = this.tableRef.el;
         const thElements = [...table.querySelectorAll("thead th")];
         thElements.forEach((el, elIndex) => {
@@ -35,7 +35,7 @@ patch(ListRenderer.prototype, "web_remember_tree_column_width.ListRenderer", {
      * @override
      */
     onStartResize(ev) {
-        this._super.apply(this, arguments);
+        super.onStartResize(ev);
         const resizeStoppingEvents = ["keydown", "mousedown", "mouseup"];
         const $th = $(ev.target.closest("th"));
         if (!$th || !$th.is("th")) {
