@@ -75,7 +75,7 @@ class TestViewRendering(common.SavepointCase):
                 "reference": "name",
                 "modifier": "optional",
                 "key": "show",
-             }
+            }
         )
 
     def test_get_rendered_view_tree(self):
