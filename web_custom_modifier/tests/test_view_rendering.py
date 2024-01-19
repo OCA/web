@@ -17,15 +17,14 @@ class TestViewRendering(common.SavepointCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.view = cls.env.ref("base.view_partner_form")
-
         cls.email_modifier = cls.env["web.custom.modifier"].create(
-                {
-                    "model_ids": [(4, cls.env.ref("base.model_res_partner").id)],
-                    "type_": "field",
-                    "reference": "email",
-                    "modifier": "invisible",
-                }
-            )
+            {
+                "model_ids": [(4, cls.env.ref("base.model_res_partner").id)],
+                "type_": "field",
+                "reference": "email",
+                "modifier": "invisible",
+            }
+        )
 
         cls.xpath = "//field[@name='street']"
         cls.street_modifier = cls.env["web.custom.modifier"].create(
