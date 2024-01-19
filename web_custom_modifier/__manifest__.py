@@ -3,7 +3,7 @@
 
 {
     "name": "Web Custom Modifier",
-    "version": "14.0.1.0.0",
+    "version": "14.0.2.0.1",
     "author": "Numigi, " "Odoo Community Association (OCA)",
     "maintainer": "Numigi",
     "website": "https://github.com/OCA/web",

@@ -61,22 +61,22 @@ This is useful when rendering an element readonly or invisible only for a subset
 
 
 ## Optional
-Since the version **14.0.2.0.1**, it is possible to customize the optional of a given field on a tree view. 
+Since the version **14.0.2.0.1**, it is possible to customize the optional of a given field on a tree view.
 
-The `Optional` modifier takes 2 possible keys: 
+The `Optional` modifier takes 2 possible keys:
 - show : To make the field displayed by default in the tree view.
 - hide : To make the field hidden by default in the 3 dots of a tree view.
 
 > [!IMPORTANT]
 > The field must be present by default on the tree view and displayed.
 
-Example: 
+Example:
 
-As system administrator, I go to `Settings / Technical / User Interface / Custom Modifiers`. 
+As system administrator, I go to `Settings / Technical / User Interface / Custom Modifiers`.
 
-I add the field name (labelled as `Number` in Quotation List View) of the model `sale.order`. 
+I add the field name (labelled as `Number` in Quotation List View) of the model `sale.order`.
 
-I select the modifier `Optional` and then set the key `show`. 
+I select the modifier `Optional` and then set the key `show`.
 ![Optional Modifier](../static/description/optional_modifier.png)
 
 I go to the Quotation List View and notice that the field is now shown by default and that it is possible to hide it.
