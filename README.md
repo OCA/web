@@ -24,6 +24,7 @@ addon | version | maintainers | summary
 [web_environment_ribbon](web_environment_ribbon/) | 17.0.1.0.0 |  | Web Environment Ribbon
 [web_no_bubble](web_no_bubble/) | 17.0.1.0.0 |  | Remove the bubbles from the web interface
 [web_refresher](web_refresher/) | 17.0.1.0.0 |  | Web Refresher
+[web_responsive](web_responsive/) | 17.0.1.0.0 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) [![Tardo](https://github.com/Tardo.png?size=30px)](https://github.com/Tardo) [![SplashS](https://github.com/SplashS.png?size=30px)](https://github.com/SplashS) | Responsive web client, community-supported
 
 [//]: # (end addons)
 
