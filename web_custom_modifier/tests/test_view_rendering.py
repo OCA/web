@@ -89,6 +89,16 @@ class TestViewRendering(common.SavepointCase):
         arch = self.env["res.partner"].fields_view_get(view_id=self.view.id)["arch"]
         return ET.fromstring(arch)
 
+    def test_create_modifier(self):
+        vals = {
+                "model_ids": [(4, self.env.ref("base.model_res_partner").id)],
+                "type_": "field",
+                "reference": "parent_id",
+                "modifier": "widget",
+                "key": "custom_widget",
+            }
+        assert self.env["web.custom.modifier"].create(vals) is True
+
     @data(*MODIFIERS)
     def test_field_modifier(self, modifier):
         self.email_modifier.modifier = modifier
