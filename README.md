@@ -35,6 +35,7 @@ addon | version | maintainers | summary
 [web_group_expand](web_group_expand/) | 16.0.1.0.0 |  | Group Expand Buttons
 [web_help](web_help/) | 16.0.2.0.0 |  | Help Framework
 [web_ir_actions_act_multi](web_ir_actions_act_multi/) | 16.0.1.0.0 |  | Enables triggering of more than one action on ActionManager
+[web_ir_actions_act_window_message](web_ir_actions_act_window_message/) | 16.0.1.0.1 |  | Show a message box to users
 [web_ir_actions_act_window_page](web_ir_actions_act_window_page/) | 16.0.1.0.0 |  | Allows a developer to trigger a pager to show the previous or next next record in the form view
 [web_listview_range_select](web_listview_range_select/) | 16.0.1.0.0 |  | Enables selecting a range of records using the shift key
 [web_m2x_options](web_m2x_options/) | 16.0.1.1.2 |  | web_m2x_options
