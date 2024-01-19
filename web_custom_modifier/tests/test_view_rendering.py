@@ -17,7 +17,7 @@ class TestViewRendering(common.SavepointCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.view = cls.env.ref("base.view_partner_form")
-       
+
         cls.email_modifier = cls.env["web.custom.modifier"].create(
                 {
                     "model_ids": [(4, cls.env.ref("base.model_res_partner").id)],
@@ -69,21 +69,20 @@ class TestViewRendering(common.SavepointCase):
         )
 
         cls.env["web.custom.modifier"].create(
-        {
-            "model_ids": [(4, cls.env.ref("base.model_res_partner").id)],
-            "type_": "field",
-            "reference": "name",
-            "modifier": "optional",
-            "key": "show",
-        }
-    )
+            {
+                "model_ids": [(4, cls.env.ref("base.model_res_partner").id)],
+                "type_": "field",
+                "reference": "name",
+                "modifier": "optional",
+                "key": "show",
+             }
+        )
 
     def test_get_rendered_view_tree(self):
         arch = self.env["res.partner"].fields_view_get(view_id=self.view.id)["arch"]
         return etree.fromstring(arch)
 
-
-    def test_field_modifier(self, modifier):
+    def test_field_modifier(self, modifier="invisible"):
         self.email_modifier.modifier = modifier
         tree = self.test_get_rendered_view_tree()
         el = tree.xpath("//field[@name='email']")[0]
