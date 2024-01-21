@@ -6,7 +6,6 @@ from .main import PWA
 
 
 class ServiceWorker(PWA):
-
     JS_PWA_CORE_EVENT_INSTALL = """
         self.addEventListener('install', evt => {{
             console.log('[ServiceWorker] Installing...');

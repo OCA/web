@@ -71,8 +71,7 @@ class PWA(Controller):
                 )
             )
             for icon in all_icons:
-                icon_size_name = icon.url.split(
-                    "/")[-1].lstrip("icon").split(".")[0]
+                icon_size_name = icon.url.split("/")[-1].lstrip("icon").split(".")[0]
                 icons.append(
                     {"src": icon.url, "sizes": icon_size_name, "type": icon.mimetype}
                 )
@@ -101,8 +100,7 @@ class PWA(Controller):
         background_color = config_param_sudo.get_param(
             "pwa.manifest.background_color", "#2E69B5"
         )
-        theme_color = config_param_sudo.get_param(
-            "pwa.manifest.theme_color", "#2E69B5")
+        theme_color = config_param_sudo.get_param("pwa.manifest.theme_color", "#2E69B5")
         return {
             "name": pwa_name,
             "short_name": pwa_short_name,
