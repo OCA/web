@@ -1,0 +1,128 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_pwa_oca
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2021-11-20 20:36+0000\n"
+"Last-Translator: Ignacio Buioli <ibuioli@gmail.com>\n"
+"Language-Team: none\n"
+"Language: es_AR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: web_pwa_oca
+#: model:ir.model.fields,field_description:web_pwa_oca.field_res_config_settings__pwa_background_color
+msgid "Background Color"
+msgstr "Color de Fondo"
+
+#. module: web_pwa_oca
+#: model:ir.model,name:web_pwa_oca.model_res_config_settings
+msgid "Config Settings"
+msgstr "Configurar Ajustes"
+
+#. module: web_pwa_oca
+#: model:ir.model.fields,field_description:web_pwa_oca.field_res_config_settings__pwa_icon
+msgid "Icon"
+msgstr "Ícono"
+
+#. module: web_pwa_oca
+#: model_terms:ir.ui.view,arch_db:web_pwa_oca.res_config_settings_view_form
+msgid "Name"
+msgstr "Nombre"
+
+#. module: web_pwa_oca
+#: model_terms:ir.ui.view,arch_db:web_pwa_oca.res_config_settings_view_form
+msgid "Name and icon of your PWA"
+msgstr "Nombre e ícono para su PWA"
+
+#. module: web_pwa_oca
+#: model:ir.model.fields,help:web_pwa_oca.field_res_config_settings__pwa_name
+msgid "Name of the Progressive Web Application"
+msgstr "Nombre de la Aplicación Web Progresiva"
+
+#. module: web_pwa_oca
+#: model_terms:ir.ui.view,arch_db:web_pwa_oca.res_config_settings_view_form
+msgid "PWA Title"
+msgstr "Título del PWA"
+
+#. module: web_pwa_oca
+#: model_terms:ir.ui.view,arch_db:web_pwa_oca.res_config_settings_view_form
+msgid "Progressive Web App"
+msgstr "Aplicación Web Progresiva"
+
+#. module: web_pwa_oca
+#: model:ir.model.fields,field_description:web_pwa_oca.field_res_config_settings__pwa_name
+msgid "Progressive Web App Name"
+msgstr "Nombre de la Aplicación Web Progresiva"
+
+#. module: web_pwa_oca
+#: model:ir.model.fields,field_description:web_pwa_oca.field_res_config_settings__pwa_short_name
+msgid "Progressive Web App Short Name"
+msgstr "Nombre Corto de la Aplicación Web Progresiva"
+
+#. module: web_pwa_oca
+#. openerp-web
+#: code:addons/web_pwa_oca/static/src/js/pwa_manager.js:0
+#, python-format
+msgid ""
+"Service workers are not supported! Maybe you are not using HTTPS or you work "
+"in private mode."
+msgstr ""
+"¡Los trabajadores de servicios no son compatibles! Quizás no esté usando "
+"HTTPS o trabaje en modo privado."
+
+#. module: web_pwa_oca
+#: model_terms:ir.ui.view,arch_db:web_pwa_oca.res_config_settings_view_form
+msgid "Short Name"
+msgstr "Nombre Corto"
+
+#. module: web_pwa_oca
+#: model:ir.model.fields,help:web_pwa_oca.field_res_config_settings__pwa_short_name
+msgid "Short Name of the Progressive Web Application"
+msgstr "Nombre Corto de la Aplicación Web Progresiva"
+
+#. module: web_pwa_oca
+#: model:ir.model.fields,field_description:web_pwa_oca.field_res_config_settings__pwa_theme_color
+msgid "Theme Color"
+msgstr "Color del Tema"
+
+#. module: web_pwa_oca
+#: code:addons/web_pwa_oca/models/res_config_settings.py:0
+#, python-format
+msgid "You can only upload PNG files bigger than 512x512"
+msgstr "Puede solo cargar archivos PNG mayores a 512x512"
+
+#. module: web_pwa_oca
+#: code:addons/web_pwa_oca/models/res_config_settings.py:0
+#, python-format
+msgid "You can only upload SVG or PNG files. Found: %s."
+msgstr "Solo se pueden Subir archivos SVG o PNG. Se encontró: %s."
+
+#. module: web_pwa_oca
+#: code:addons/web_pwa_oca/models/res_config_settings.py:0
+#, python-format
+msgid "You can't upload a file with more than 2 MB."
+msgstr "No puede cargar un archivo con un peso superior a 2 MB."
+
+#. module: web_pwa_oca
+#. openerp-web
+#: code:addons/web_pwa_oca/static/src/js/pwa_manager.js:0
+#, python-format
+msgid "[ServiceWorker] Registered:"
+msgstr "[ServiceWorker] Registrado:"
+
+#. module: web_pwa_oca
+#. openerp-web
+#: code:addons/web_pwa_oca/static/src/js/pwa_manager.js:0
+#, python-format
+msgid "[ServiceWorker] Registration failed: "
+msgstr "[ServiceWorker] Registro fallido: "
+
+#~ msgid "You can only upload SVG or PNG files"
+#~ msgstr "Puede solo cargar archivos SVG o PNG"
