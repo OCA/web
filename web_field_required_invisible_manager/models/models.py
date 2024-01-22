@@ -52,7 +52,7 @@ class Base(models.AbstractModel):
         return arch
 
     def process_child_fields(self, arch, view_type):
-        """Collect all relational fields and update its views"""
+        """Collect all relational fields and update their views"""
         related_fields = [
             (k, v.comodel_name) for k, v in self._fields.items() if v.comodel_name
         ]
@@ -80,7 +80,8 @@ class Base(models.AbstractModel):
                         z_arch = self.create_restrictions_fields(
                             restr, view_type, z_arch
                         )
-                        z_arch["arch"] = z_arch["arch"].decode("utf-8")
+                        if type(z_arch["arch"]) is bytes:
+                            z_arch["arch"] = z_arch["arch"].decode("utf-8")
                         name_manager = NameManager(False, self.env[restr.model_name])
                         if restr.readonly_field_id and restr.readonly_model_id:
                             model_field_infos = name_manager.fields_get.get(
