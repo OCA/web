@@ -110,6 +110,15 @@ class RTreeRecord extends Record {
         await this.loadChildren();
     }
 
+    exportState() {
+        return {
+            ...super.exportState(),
+            resModel: this.resModel,
+            isFolded: this.isFolded,
+            listState: this.list.exportState(),
+        };
+    }
+
     get hasChildren() {
         return this.numChildren > 0;
     }
@@ -135,7 +144,7 @@ class RTreeRecord extends Record {
 }
 
 class DynamicRTreeRecordList extends DynamicRecordList {
-    setup(params) {
+    setup(params, state) {
         super.setup(...arguments);
         this.parentModel = params.parentModel;
         this.parentID = params.parentID;
@@ -146,9 +155,14 @@ class DynamicRTreeRecordList extends DynamicRecordList {
         this.recordFields = params.recordFields || params.fields;
         this.recordActiveFields = params.recordActiveFields || params.activeFields;
         this.computeParentParams = params.computeParentParams;
+        this.recordsState = state.recordsState || [];
+        this.loaded = false;
     }
 
     async load() {
+        if (this.loaded) {
+            return;
+        }
         const parentParams = this.computeParentParams(this.parentModel, this.parentID);
         const recordPromises = parentParams.records.map(async (data) =>
             this._fetchRecords(data)
@@ -178,6 +192,18 @@ class DynamicRTreeRecordList extends DynamicRecordList {
             mergedGroups,
             records
         );
+        const recordStateByModel = {};
+        for (const recordState of this.recordsState) {
+            let recordStateByID = recordStateByModel[recordState.resModel];
+            if (recordStateByID === undefined) {
+                recordStateByID = {};
+                recordStateByModel[recordState.resModel] = recordStateByID;
+            }
+            recordStateByID[recordState.resId] = recordState;
+        }
+        for (const recordState of this.recordsState) {
+            recordStateByModel[recordState.resModel][recordState.resId] = recordState;
+        }
         this.records = await Promise.all(
             result.map(async (data) => {
                 let fields = {},
@@ -188,26 +214,47 @@ class DynamicRTreeRecordList extends DynamicRecordList {
                     activeFields = this.recordActiveFields;
                     values = data.record;
                 }
-                const record = this.model.createDataPoint("record", {
-                    resModel: data.model,
-                    resId: data.id,
-                    fields: fields,
-                    activeFields: activeFields,
-                    rawContext: this.rawContext,
-                    recordModel: this.recordModel,
-                    numChildren: data.numChildren,
-                    isRecord: data.record !== null,
-                    displayName: data.displayName,
-                    level: this.level,
-                    recordFields: this.recordFields,
-                    recordActiveFields: this.recordActiveFields,
-                    isFolded: data.isFolded,
-                });
+                let recordState = {};
+                const recordStateByID = recordStateByModel[data.model];
+                if (recordStateByID !== undefined) {
+                    recordState = recordStateByID[data.id] || {};
+                }
+                const record = this.model.createDataPoint(
+                    "record",
+                    {
+                        resModel: data.model,
+                        resId: data.id,
+                        fields: fields,
+                        activeFields: activeFields,
+                        rawContext: this.rawContext,
+                        recordModel: this.recordModel,
+                        numChildren: data.numChildren,
+                        isRecord: data.record !== null,
+                        displayName: data.displayName,
+                        level: this.level,
+                        recordFields: this.recordFields,
+                        recordActiveFields: this.recordActiveFields,
+                        isFolded: data.isFolded,
+                    },
+                    recordState
+                );
                 await record.load({values: values});
                 return record;
             })
         );
         this.count = this.records.length;
+        this.loaded = true;
+    }
+
+    exportState() {
+        const recordsState = [];
+        for (const record of this.records) {
+            recordsState.push(record.exportState());
+        }
+        return {
+            ...super.exportState(),
+            recordsState,
+        };
     }
 
     _mergeGroups(groupParams, groupsResponse) {

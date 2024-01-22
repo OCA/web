@@ -4,6 +4,7 @@ import {ListController} from "@web/views/list/list_controller";
 import {useModel} from "@web/views/model";
 import {useRef} from "@odoo/owl";
 import {useService} from "@web/core/utils/hooks";
+import {useSetupView} from "@web/views/view_hook";
 
 export class RTreeController extends ListController {
     setup() {
@@ -38,6 +39,15 @@ export class RTreeController extends ListController {
             multiEdit: this.multiEdit,
             rootState,
             parentDefs: this.archInfo.parentDefs,
+        });
+
+        useSetupView({
+            rootRef: this.rootRef,
+            getLocalState: () => {
+                return {
+                    rootState: this.model.root.exportState(),
+                };
+            },
         });
     }
 
