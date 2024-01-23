@@ -121,6 +121,7 @@ class TestFieldRequiredIvisibleManager(common.SavepointCase):
                 "<field name='name'/></tree>",
             }
         )
+        cls.view_users_form_arch_orig = cls.view_users_form.arch
         cls.view_users_form.arch = cls.view_users_form.arch.replace(
             "</notebook>",
             "</notebook><field name='company_ids'><tree><field name='city'/>"
@@ -220,3 +221,11 @@ class TestFieldRequiredIvisibleManager(common.SavepointCase):
         self.assertTrue(self.invisible_title_rec_id.required)
         # unlink
         self.invisible_rec_id.unlink()
+        # case when child view has no fields
+        self.view_users_form.arch = self.view_users_form_arch_orig
+        self.view_users_form.arch = self.view_users_form.arch.replace(
+            "</notebook>",
+            "</notebook><field name='company_ids'><form><br/></form></field>",
+        )
+        self.env.user.fields_view_get(view_id=self.view_users_form.id, view_type="form")
+        self.env.user.fields_view_get(view_id=self.view_users_tree.id, view_type="tree")
