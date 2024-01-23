@@ -12,3 +12,11 @@
         visibility: visible;
     }
 }
+
+.o_numeric_step_cell {
+    // Default for old browsers
+    min-width: 15 * $btn-padding-x;
+    // Value hardcoded in `FIXED_FIELD_COLUMN_WIDTHS.float` + width of 2
+    // FontAwesome icons + 2 buttons * 2 horizontal paddings
+    min-width: calc(92px + 2ex + 4 * #{$btn-padding-x});
+}
