@@ -18,4 +18,7 @@
             "web_ir_actions_act_view_reload/static/src/**/*.esm.js",
         ],
     },
+    "data": [
+        "security/ir.model.access.csv",
+    ],
 }
