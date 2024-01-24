@@ -25,7 +25,7 @@ odoo.define('web_ir_actions_act_view_reload.ir_actions_act_view_reload', functio
          * @returns {$.Promise}
          */
         _executeReloadAction: function () {
-            var controller = this.getCurrentController();
+            var controller = this.currentDialogController || this.getCurrentController();
             if (controller && controller.widget) {
                 controller.widget.reload();
             }
