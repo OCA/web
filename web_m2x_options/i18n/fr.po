@@ -24,7 +24,7 @@ msgstr ""
 #: code:addons/web_m2x_options/static/src/components/base.xml:0
 #, python-format
 msgid ", are you sure it does not exist yet?"
-msgstr ""
+msgstr ", êtes-vous sûr qu'il n'existe pas déjà ?"
 
 #. module: web_m2x_options
 #. odoo-javascript
@@ -111,7 +111,7 @@ msgstr "Paramètres système"
 #: code:addons/web_m2x_options/static/src/components/base.xml:0
 #, python-format
 msgid "You are creating a new"
-msgstr ""
+msgstr "Vous créez un nouveau"
 
 #. module: web_m2x_options
 #. odoo-javascript
