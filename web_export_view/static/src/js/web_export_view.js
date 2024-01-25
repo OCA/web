@@ -45,6 +45,11 @@ odoo.define('web_export_view', function (require) {
                     export_columns_keys.push(this.id);
                     export_columns_names.push(this.string);
                 }
+                if (this.tag == 'button') {
+                    // non-fields like `_group` or buttons
+                    export_columns_keys.push(this.id);
+                    export_columns_names.push(this.name);
+                }
             });
             var export_rows = [];
             $.blockUI();
@@ -56,29 +61,39 @@ odoo.define('web_export_view', function (require) {
                     var export_row = [];
                     $.each(export_columns_keys, function () {
                         var $cell = $row.find('td[data-field="' + this + '"]')
+                        var $cellbutton = $cell.find('button');
                         var $cellcheckbox = $cell.find('.o_checkbox input:checkbox');
-                        if ($cellcheckbox.length) {
+
+                        if ($cellbutton.length) {
+                            // The cell is filled
                             export_row.push(
-                                $cellcheckbox.is(":checked")
-                                ? _t("True") : _t("False")
+                                "True"
                             );
                         }
                         else {
-                            var text = $cell.text().trim();
-                            if ($cell.hasClass("o_list_number")) {
-                                export_row.push(parseFloat(
-                                    text
-                                    // Remove thousands separator
-                                    .split(_t.database.parameters.thousands_sep)
-                                    .join("")
-                                    // Always use a `.` as decimal separator
-                                    .replace(_t.database.parameters.decimal_point, ".")
-                                    // Remove non-numeric characters
-                                    .replace(/[^\d\.-]/g, "")
-                                ));
+                            if ($cellcheckbox.length) {
+                                export_row.push(
+                                    $cellcheckbox.is(":checked")
+                                    ? _t("True") : _t("False")
+                                );
                             }
                             else {
-                                export_row.push(text);
+                                var text = $cell.text().trim();
+                                if ($cell.hasClass("o_list_number")) {
+                                    export_row.push(parseFloat(
+                                        text
+                                        // Remove thousands separator
+                                        .split(_t.database.parameters.thousands_sep)
+                                        .join("")
+                                        // Always use a `.` as decimal separator
+                                        .replace(_t.database.parameters.decimal_point, ".")
+                                        // Remove non-numeric characters
+                                        .replace(/[^\d\.-]/g, "")
+                                    ));
+                                }
+                                else {
+                                    export_row.push(text);
+                                }
                             }
                         }
                     });
