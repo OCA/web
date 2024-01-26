@@ -82,6 +82,9 @@ class RTreeRecord extends Record {
         } else {
             this.isFolded = true;
         }
+        if (!this.hasChildren) {
+            return;
+        }
         const listParams = {
             data: params.data,
             rawContext: params.rawContext,
@@ -115,7 +118,7 @@ class RTreeRecord extends Record {
             ...super.exportState(),
             resModel: this.resModel,
             isFolded: this.isFolded,
-            listState: this.list.exportState(),
+            listState: this.hasChildren ? this.list.exportState() : null,
         };
     }
 
