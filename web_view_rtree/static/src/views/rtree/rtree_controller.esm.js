@@ -66,6 +66,49 @@ export class RTreeController extends ListController {
         );
         return this.actionService.doAction(action);
     }
+
+    async _unfoldGroup(group) {
+        if (!group.hasChildren) {
+            return;
+        }
+        if (group.isFolded) {
+            group.isFolded = false;
+            await group.loadChildren();
+        }
+        return this._unfoldGroupList(group.list);
+    }
+
+    async _unfoldGroupList(list) {
+        return Promise.all(list.records.map(this._unfoldGroup, this));
+    }
+
+    async expandAllGroups() {
+        await this._unfoldGroupList(this.model.root);
+        this.model.notify();
+    }
+
+    _foldGroup(group) {
+        if (!group.hasChildren) {
+            return;
+        }
+        if (!group.isFolded) {
+            group.isFolded = true;
+        }
+        this._foldGroupList(group.list);
+    }
+
+    _foldGroupList(list) {
+        list.records.map(this._foldGroup, this);
+    }
+
+    async collapseAllGroups() {
+        // This resets the state of all groups to folded. It traverses the
+        // whole loaded tree, so even if a parent is folded, its children will
+        // still be checked, because otherwise unfolding the parent afterwards
+        // would display its children as unfolded.
+        this._foldGroupList(this.model.root);
+        this.model.notify();
+    }
 }
 
 RTreeController.defaultProps = {

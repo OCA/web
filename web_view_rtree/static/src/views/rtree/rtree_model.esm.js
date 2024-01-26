@@ -146,6 +146,10 @@ class RTreeRecord extends Record {
 class DynamicRTreeRecordList extends DynamicRecordList {
     setup(params, state) {
         super.setup(...arguments);
+        // This is only set to let other modules know that this model has
+        // groups, which is useful to play well with modules like
+        // web_group_expand.
+        this.isGrouped = true;
         this.parentModel = params.parentModel;
         this.parentID = params.parentID;
         //
@@ -164,12 +168,8 @@ class DynamicRTreeRecordList extends DynamicRecordList {
             return;
         }
         const parentParams = this.computeParentParams(this.parentModel, this.parentID);
-        const recordPromises = parentParams.records.map(async (data) =>
-            this._fetchRecords(data)
-        );
-        const groupPromises = parentParams.groups.map(async (data) =>
-            this._fetchGroups(data)
-        );
+        const recordPromises = parentParams.records.map(this._fetchRecords, this);
+        const groupPromises = parentParams.groups.map(this._fetchGroups, this);
         const records = await Promise.all(recordPromises);
         const groups = await Promise.all(groupPromises);
         // We want a list where "groups" are first, then "records".

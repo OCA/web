@@ -36,6 +36,12 @@ export class RTreeRenderer extends ListRenderer {
         }
         return super.onCellKeydownReadOnlyMode(hotkey, cell, group, record);
     }
+
+    // This is to avoid the parent method to try to access the non-existing
+    // this.props.list.groups.
+    get aggregates() {
+        return {};
+    }
 }
 
 RTreeRenderer.rowsTemplate = "web_view_rtree.RTreeRenderer.Rows";
