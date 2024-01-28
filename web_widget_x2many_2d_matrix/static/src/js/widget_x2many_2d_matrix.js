@@ -39,8 +39,8 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function (require) {
             this.field_y_axis = node.field_y_axis || this.field_y_axis;
             this.field_label_x_axis = node.field_label_x_axis || this.field_x_axis;
             this.field_label_y_axis = node.field_label_y_axis || this.field_y_axis;
-            this.x_axis_clickable = this.parse_boolean(node.x_axis_clickable || "1");
-            this.y_axis_clickable = this.parse_boolean(node.y_axis_clickable || "1");
+            this.x_axis_clickable = _.str.toBool(node.x_axis_clickable || "1");
+            this.y_axis_clickable = _.str.toBool(node.y_axis_clickable || "1");
             this.field_value = node.field_value || this.field_value;
             // TODO: is this really needed? Holger?
             for (var property in node) {
@@ -59,17 +59,13 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function (require) {
                     )
                 );
             }
-            this.show_row_totals = this.parse_boolean(
+            this.show_row_totals = _.str.toBool(
                 node.show_row_totals ||
                     this.is_aggregatable(field_defs[this.field_value])
-                    ? "1"
-                    : ""
             );
-            this.show_column_totals = this.parse_boolean(
+            this.show_column_totals = _.str.toBool(
                 node.show_column_totals ||
                     this.is_aggregatable(field_defs[this.field_value])
-                    ? "1"
-                    : ""
             );
         },
 
@@ -181,19 +177,6 @@ odoo.define("web_widget_x2many_2d_matrix.widget", function (require) {
          */
         is_aggregatable: function (field_def) {
             return field_def.type in {float: 1, monetary: 1, integer: 1};
-        },
-
-        /**
-         * Parse a String containing a bool and convert it to a JS bool.
-         *
-         * @param {String} val: the string to be parsed.
-         * @returns {Boolean} The parsed boolean.
-         */
-        parse_boolean: function (val) {
-            if (val.toLowerCase() === "true" || val === "1") {
-                return true;
-            }
-            return false;
         },
 
         /**
