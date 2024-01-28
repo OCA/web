@@ -35,6 +35,9 @@ class X2MDemo(models.Model):
     def open_x2m_matrix_many2one(self):
         return self._open_x2m_matrix("x2many_2d_matrix_demo_many2one")
 
+    def open_x2m_matrix_boolean(self):
+        return self._open_x2m_matrix("x2many_2d_matrix_demo_boolean")
+
 
 class X2MDemoLine(models.Model):
     _name = "x2m.demo.line"
@@ -48,3 +51,4 @@ class X2MDemoLine(models.Model):
         [("val1", "Value 1"), ("val2", "Value 2")],
     )
     value_many2one = fields.Many2one("res.groups")
+    value_boolean = fields.Boolean()
