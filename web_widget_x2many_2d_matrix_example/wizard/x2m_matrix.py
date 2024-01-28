@@ -20,15 +20,15 @@ class X2mMatrixDemoWiz(models.TransientModel):
                 0,
                 0,
                 {
-                    "name": "{}'s task on {}".format(usr.name, rec.name),
+                    "name": f"{usr.name}'s task on {rec.name}",
                     "demo_id": rec.id,
                     "user_id": usr.id,
                 },
             )
             # if there isn't a demo line record for the user, create a new one
-            if not rec.line_ids.filtered(lambda x: x.user_id == usr) else
+            if not rec.line_ids.filtered(lambda x: x.user_id == usr)
             # otherwise, return the line
-            (4, rec.line_ids.filtered(lambda x: x.user_id == usr)[0].id)
+            else (4, rec.line_ids.filtered(lambda x: x.user_id == usr)[0].id)
             for rec in recs
             for usr in users
         ]
