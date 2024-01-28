@@ -14,33 +14,45 @@
                                 <field name="value" />
                                 <field name="value_selection" />
                                 <field name="value_many2one" />
+                                <field name="value_boolean" />
                                 <field name="user_id" />
                             </tree>
                         </field>
                     </group>
-                    <footer>
-                        <button
-                            name="open_x2m_matrix"
-                            type="object"
-                            string="Try x2m 2d matrix"
-                            class="oe_link"
-                            icon="fa-edit"
-                        />
-                        <button
-                            name="open_x2m_matrix_selection"
-                            type="object"
-                            string="Try x2m 2d matrix (selection)"
-                            class="oe_link"
-                            icon="fa-edit"
-                        />
-                        <button
-                            name="open_x2m_matrix_many2one"
-                            type="object"
-                            string="Try x2m 2d matrix (many2one)"
-                            class="oe_link"
-                            icon="fa-edit"
-                        />
-                    </footer>
+                    <group>
+                        <group col="1">
+                            <button
+                                name="open_x2m_matrix"
+                                type="object"
+                                string="Try x2m 2d matrix"
+                                class="btn btn-primary"
+                                icon="fa-edit"
+                            />
+                            <button
+                                name="open_x2m_matrix_selection"
+                                type="object"
+                                string="Try x2m 2d matrix (selection)"
+                                class="btn btn-primary"
+                                icon="fa-edit"
+                            />
+                        </group>
+                        <group col="1">
+                            <button
+                                name="open_x2m_matrix_many2one"
+                                type="object"
+                                string="Try x2m 2d matrix (many2one)"
+                                class="btn btn-primary"
+                                icon="fa-edit"
+                            />
+                            <button
+                                name="open_x2m_matrix_boolean"
+                                type="object"
+                                string="Try x2m 2d matrix (boolean)"
+                                class="btn btn-primary"
+                                icon="fa-edit"
+                            />
+                        </group>
+                    </group>
                 </sheet>
             </form>
         </field>
