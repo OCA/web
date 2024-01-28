@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates>
-    <t t-name="web_widget_x2many_2d_matrix.X2Many2DMatrixRenderer" owl="1">
+    <t t-name="web_widget_x2many_2d_matrix.X2Many2DMatrixRenderer">
         <table
             class="o_list_table table table-responsive table-sm table-hover position-relative mb-0 o_list_table_ungrouped table-striped"
             t-if="rows.length > 0"

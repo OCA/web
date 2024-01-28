@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates>
-    <t t-name="web_widget_x2many_2d_matrix.X2Many2DMatrixField" owl="1">
+    <t t-name="web_widget_x2many_2d_matrix.X2Many2DMatrixField">
         <div class="table-responsive">
             <X2Many2DMatrixRenderer
                 list="list"
