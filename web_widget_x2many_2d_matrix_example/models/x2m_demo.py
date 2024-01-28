@@ -38,6 +38,9 @@ class X2MDemo(models.Model):
     def open_x2m_matrix_boolean(self):
         return self._open_x2m_matrix("x2many_2d_matrix_demo_boolean")
 
+    def open_x2m_matrix_monetary(self):
+        return self._open_x2m_matrix("x2many_2d_matrix_demo_monetary")
+
 
 class X2MDemoLine(models.Model):
     _name = "x2m.demo.line"
@@ -52,3 +55,6 @@ class X2MDemoLine(models.Model):
     )
     value_many2one = fields.Many2one("res.groups")
     value_boolean = fields.Boolean()
+    currency_id = fields.Many2one("res.currency")
+    value_monetary = fields.Monetary()
+

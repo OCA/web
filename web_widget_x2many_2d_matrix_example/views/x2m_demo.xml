@@ -15,6 +15,8 @@
                                 <field name="value_selection" />
                                 <field name="value_many2one" />
                                 <field name="value_boolean" />
+                                <field name="currency_id" />
+                                <field name="value_monetary" />
                                 <field name="user_id" />
                             </tree>
                         </field>
@@ -48,6 +50,15 @@
                                 name="open_x2m_matrix_boolean"
                                 type="object"
                                 string="Try x2m 2d matrix (boolean)"
+                                class="btn btn-primary"
+                                icon="fa-edit"
+                            />
+                        </group>
+                        <group col="1">
+                            <button
+                                name="open_x2m_matrix_monetary"
+                                type="object"
+                                string="Try x2m 2d matrix (monetary)"
                                 class="btn btn-primary"
                                 icon="fa-edit"
                             />
