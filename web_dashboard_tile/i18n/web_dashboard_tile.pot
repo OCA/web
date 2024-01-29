@@ -1,13 +1,11 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#   * web_dashboard_tile
+# 	* web_dashboard_tile
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-26 21:53+0000\n"
-"PO-Revision-Date: 2022-10-26 21:53+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -38,6 +36,7 @@ msgid "Average"
 msgstr ""
 
 #. module: web_dashboard_tile
+#. odoo-python
 #: code:addons/web_dashboard_tile/models/tile_tile.py:0
 #, python-format
 msgid "Average value of '%s'"
@@ -111,6 +110,7 @@ msgid "Domain"
 msgstr ""
 
 #. module: web_dashboard_tile
+#. odoo-python
 #: code:addons/web_dashboard_tile/models/tile_tile.py:0
 #: model:ir.model.fields,field_description:web_dashboard_tile.field_tile_tile__domain_error
 #, python-format
@@ -118,6 +118,7 @@ msgid "Domain Error"
 msgstr ""
 
 #. module: web_dashboard_tile
+#. odoo-python
 #: code:addons/web_dashboard_tile/models/tile_tile.py:0
 #, python-format
 msgid "Error"
@@ -202,6 +203,7 @@ msgid "Maximum"
 msgstr ""
 
 #. module: web_dashboard_tile
+#. odoo-python
 #: code:addons/web_dashboard_tile/models/tile_tile.py:0
 #, python-format
 msgid "Maximum value of '%s'"
@@ -214,6 +216,7 @@ msgid "Median"
 msgstr ""
 
 #. module: web_dashboard_tile
+#. odoo-python
 #: code:addons/web_dashboard_tile/models/tile_tile.py:0
 #, python-format
 msgid "Median value of '%s'"
@@ -226,6 +229,7 @@ msgid "Minimum"
 msgstr ""
 
 #. module: web_dashboard_tile
+#. odoo-python
 #: code:addons/web_dashboard_tile/models/tile_tile.py:0
 #, python-format
 msgid "Minimum value of '%s'"
@@ -248,6 +252,7 @@ msgid "Name"
 msgstr ""
 
 #. module: web_dashboard_tile
+#. odoo-python
 #: code:addons/web_dashboard_tile/models/tile_tile.py:0
 #, python-format
 msgid "Number of records"
@@ -274,6 +279,7 @@ msgid "Overview Settings"
 msgstr ""
 
 #. module: web_dashboard_tile
+#. odoo-python
 #: code:addons/web_dashboard_tile/models/tile_tile.py:0
 #, python-format
 msgid "Please select a field from the selected model."
@@ -397,12 +403,14 @@ msgid "Tiles Quantity"
 msgstr ""
 
 #. module: web_dashboard_tile
+#. odoo-python
 #: code:addons/web_dashboard_tile/models/tile_tile.py:0
 #, python-format
 msgid "Total value of '%s'"
 msgstr ""
 
 #. module: web_dashboard_tile
+#. odoo-python
 #: code:addons/web_dashboard_tile/models/tile_tile.py:0
 #, python-format
 msgid "Unimplemented Feature. Search on Active field disabled."
