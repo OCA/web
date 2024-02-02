@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-12-10 07:06+0000\n"
-"PO-Revision-Date: 2023-05-24 10:11+0000\n"
+"PO-Revision-Date: 2024-02-02 14:35+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-web-8-0/language/it/"
 ")\n"
@@ -134,7 +134,7 @@ msgstr ""
 #. module: web_dashboard_tile
 #: field:tile.tile,font_color:0
 msgid "Font color"
-msgstr "Colore del Font"
+msgstr "Colore del carattere"
 
 #. module: web_dashboard_tile
 #: field:tile.tile,primary_format:0
