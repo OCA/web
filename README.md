@@ -93,7 +93,7 @@ addon | version | maintainers | summary
 [//]: # (end addons)
 
 ## Translation Status
-[![Translation status](https://translation.odoo-community.org/widgets/web-12-0/-/multi-auto.svg)](https://translation.odoo-community.org/engage/web-12-0/?utm_source=widget)
+[![Translation status](https://translation.odoo-community.org/widgets/web-14-0/-/multi-auto.svg)](https://translation.odoo-community.org/engage/web-14-0/?utm_source=widget)
 
 <!-- prettier-ignore-end -->
 
