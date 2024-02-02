@@ -15,13 +15,16 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
 
     const TimelineRenderer = AbstractRenderer.extend({
         template: "TimelineView",
-
+        jsLibs: ["/web/static/lib/daterangepicker/daterangepicker.js"],
+        cssLibs: ["/web/static/lib/daterangepicker/daterangepicker.css"],
         events: _.extend({}, AbstractRenderer.prototype.events, {
             "click .oe_timeline_button_today": "_onTodayClicked",
             "click .oe_timeline_button_scale_day": "_onScaleDayClicked",
             "click .oe_timeline_button_scale_week": "_onScaleWeekClicked",
             "click .oe_timeline_button_scale_month": "_onScaleMonthClicked",
             "click .oe_timeline_button_scale_year": "_onScaleYearClicked",
+            "click .oe_timeline_button_previous": "_onButtonPreviousClicked",
+            "click .oe_timeline_button_next": "_onButtonNextClicked",
         }),
 
         init: function(parent, state, params) {
@@ -29,7 +32,7 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
             this.modelName = params.model;
             this.mode = params.mode;
             this.options = params.options;
-            this.min_height = params.min_height;
+            this.min_height = (params.min_height && parseInt(params.min_height)) || 0;
             this.date_start = params.date_start;
             this.date_stop = params.date_stop;
             this.date_delay = params.date_delay;
@@ -38,8 +41,23 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
             this.dependency_arrow = params.dependency_arrow;
             this.modelClass = params.view.model;
             this.fields = params.fields;
-
             this.timeline = false;
+            this.dateRangePickerOptions = {
+                timePicker: true,
+                timePicker24Hour: true,
+                autoUpdateInput: false,
+                timePickerIncrement: 5,
+                timePickerSeconds: false,
+                showWeekNumbers: true,
+                startDate: moment(),
+                endDate: moment().add(1, "days"),
+                autoUpdateInput: true,
+                locale: {
+                    applyLabel: _t("Apply"),
+                    cancelLabel: _t("Cancel"),
+                    format: time.getLangDatetimeFormat(),
+                },
+            };
         },
 
         /**
@@ -60,7 +78,47 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
                     _t("Timeline view has not defined 'date_start' attribute.")
                 );
             }
+            this.$dateRangePicker = this.$(".oe_timeline_range");
+            this.$dateRangePicker.daterangepicker(this.dateRangePickerOptions);
+            this.$el.on(
+                "apply.daterangepicker",
+                this._dateRangePickerApplyChanges.bind(this)
+            );
+            this._dateRangePickerPushParams();
             this._super.apply(this, arguments);
+        },
+
+        /**
+         * Apply changes from the daterangepicker on the timeline
+         *
+         * @private
+         */
+        _dateRangePickerApplyChanges: function(ev, picker) {
+            this.current_window = {
+                start: picker.startDate,
+                end: picker.endDate,
+            };
+            this._updateWindowWithDates();
+        },
+
+        /**
+         * Update preselected date and time values on the daterangepicker widget
+         *
+         * @private
+         */
+        _dateRangePickerPushParams: function() {
+            // Set datepicker dates in widget
+            this.$dateRangePicker
+                .data("daterangepicker")
+                .setStartDate(this.current_window.start);
+            this.$dateRangePicker
+                .data("daterangepicker")
+                .setEndDate(this.current_window.end);
+            // Resize input field to it's content
+            this.$dateRangePicker.css(
+                "width",
+                this.$dateRangePicker.val().length + "ch"
+            );
         },
 
         /**
@@ -69,9 +127,9 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
         on_attach_callback: function() {
             const height =
                 this.$el.parent().height() - this.$(".oe_timeline_buttons").height();
-            if (height > this.min_height && this.timeline) {
+            if (height < this.min_height && this.timeline) {
                 this.timeline.setOptions({
-                    height: height,
+                    height: this.min_height,
                 });
             }
         },
@@ -90,6 +148,40 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
         },
 
         /**
+         * Set the timeline window to the previous time range.
+         *
+         * @private
+         */
+        _onButtonPreviousClicked: function() {
+            var diff_days = this.current_window.end.diff(
+                this.current_window.start,
+                "days"
+            );
+            this.current_window = {
+                start: this.current_window.start.subtract(diff_days, "days"),
+                end: this.current_window.end.subtract(diff_days, "days"),
+            };
+            this._updateWindowWithDates();
+        },
+
+        /**
+         * Set the timeline window to the next time range.
+         *
+         * @private
+         */
+        _onButtonNextClicked: function() {
+            var diff_days = this.current_window.end.diff(
+                this.current_window.start,
+                "days"
+            );
+            this.current_window = {
+                start: this.current_window.start.add(diff_days, "days"),
+                end: this.current_window.end.add(diff_days, "days"),
+            };
+            this._updateWindowWithDates();
+        },
+
+        /**
          * Set the timeline window to today (day).
          *
          * @private
@@ -99,10 +191,21 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
                 start: new moment(),
                 end: new moment().add(24, "hours"),
             };
+            this._updateWindowWithDates();
+        },
 
+        /**
+         * Update date range fields and timeline range.
+         *
+         * @private
+         */
+        _updateWindowWithDates: function() {
+            // Set timeline windows range
             if (this.timeline) {
                 this.timeline.setWindow(this.current_window);
             }
+            // Push changes to daterange picker
+            this._dateRangePickerPushParams();
         },
 
         /**
@@ -154,11 +257,12 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
         _scaleCurrentWindow: function(factor) {
             if (this.timeline) {
                 this.current_window = this.timeline.getWindow();
+                this.current_window.start = moment(this.current_window.start);
                 this.current_window.end = moment(this.current_window.start).add(
                     factor,
                     "hours"
                 );
-                this.timeline.setWindow(this.current_window);
+                this._updateWindowWithDates();
             }
         },
 
@@ -372,11 +476,13 @@ odoo.define("web_timeline.TimelineRenderer", function(require) {
          * @returns {Array}
          */
         split_groups: function(events, group_bys) {
+            // Todo: Add support for nested groups
+            // Todo: Only show unassigned group if needed
             if (group_bys.length === 0) {
                 return events;
             }
             const groups = [];
-            groups.push({id: -1, content: _t("<b>UNASSIGNED</b>")});
+            groups.push({id: -1, content: _t("Unassigned")});
             for (const evt of events) {
                 const group_name = evt[_.first(group_bys)];
                 if (group_name) {

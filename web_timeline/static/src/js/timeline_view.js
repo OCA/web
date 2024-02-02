@@ -60,7 +60,10 @@ odoo.define("web_timeline.TimelineView", function(require) {
 
             for (const field of fieldsToGather) {
                 if (attrs[field]) {
-                    fieldNames.push(attrs[field]);
+                    const field_names = attrs[field].split(",");
+                    for (const field_name of field_names) {
+                        fieldNames.push(field_name);
+                    }
                 }
             }
 
@@ -122,7 +125,7 @@ odoo.define("web_timeline.TimelineView", function(require) {
         _preapre_vis_timeline_options: function(attrs) {
             return {
                 groupOrder: this.group_order,
-                orientation: "both",
+                orientation: attrs.orientation || "top",
                 selectable: true,
                 multiselect: true,
                 showCurrentTime: true,
@@ -131,6 +134,7 @@ odoo.define("web_timeline.TimelineView", function(require) {
                     : utils.toBoolElse(attrs.stack, true),
                 margin: attrs.margin ? JSON.parse(attrs.margin) : {item: 2},
                 zoomKey: attrs.zoomKey || "ctrlKey",
+                min_height: this.min_height,
             };
         },
 
@@ -143,10 +147,10 @@ odoo.define("web_timeline.TimelineView", function(require) {
         group_order: function(grp1, grp2) {
             // Display non grouped elements first
             if (grp1.id === -1) {
-                return -1;
+                return 1;
             }
             if (grp2.id === -1) {
-                return 1;
+                return -1;
             }
 
             return grp1.content.localeCompare(grp2.content);

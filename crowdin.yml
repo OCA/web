@@ -1,0 +1,6 @@
+pull_request_title: "[CI] i18n Update"
+commit_message: "[CI] Update i18n: (%language%) %original_file_name%"
+append_commit_message: false
+files:
+  - source: /**/i18n/*.pot
+    translation: /**/i18n/%two_letters_code%.po
