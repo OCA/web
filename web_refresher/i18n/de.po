@@ -18,15 +18,15 @@ msgstr ""
 "X-Generator: Weblate 4.14.1\n"
 
 #. module: web_refresher
-#. openerp-web
-#: code:addons/web_refresher/static/src/xml/refresher.xml:0
-#, python-format
-msgid "Pager"
-msgstr ""
-
-#. module: web_refresher
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_refresher/static/src/xml/refresher.xml:0
 #, python-format
 msgid "Refresh"
 msgstr "Aktualisieren"
+
+#. module: web_refresher
+#. odoo-javascript
+#: code:addons/web_refresher/static/src/xml/refresher.xml:0
+#, python-format
+msgid "Refresher"
+msgstr ""
