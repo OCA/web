@@ -18,37 +18,50 @@ msgstr ""
 
 #. module: web_responsive
 #. odoo-javascript
-#: code:addons/web_responsive/static/src/components/chatter_topbar/chatter_topbar.xml:0
+#: code:addons/web_responsive/static/src/views/form/status_bar_buttons.xml:0
 #, python-format
-msgid "Activities"
+msgid "Action"
 msgstr ""
 
 #. module: web_responsive
 #. odoo-javascript
-#: code:addons/web_responsive/static/src/components/search_panel/search_panel.xml:0
+#: code:addons/web_responsive/static/src/components/menu_canonical_searchbar/searchbar.xml:0
 #, python-format
-msgid "All"
+msgid "App Icon"
 msgstr ""
 
 #. module: web_responsive
-#. odoo-javascript
-#: code:addons/web_responsive/static/src/components/chatter_topbar/chatter_topbar.xml:0
-#, python-format
-msgid "Attachment counter loading..."
+#: model:ir.actions.act_window,name:web_responsive.res_users_view_form_apps_menu_preferences_action
+msgid "Apps Menu Preferences"
 msgstr ""
 
 #. module: web_responsive
-#. odoo-javascript
-#: code:addons/web_responsive/static/src/components/chatter_topbar/chatter_topbar.xml:0
-#, python-format
-msgid "Attachments"
+#: model:ir.model.fields,field_description:web_responsive.field_res_users__apps_menu_search_type
+#: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
+msgid "Apps Menu Search Type"
 msgstr ""
 
 #. module: web_responsive
-#. odoo-javascript
-#: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
-#, python-format
-msgid "CLEAR"
+#: model:ir.model.fields,field_description:web_responsive.field_res_users__apps_menu_theme
+#: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
+msgid "Apps Menu Theme"
+msgstr ""
+
+#. module: web_responsive
+#: model:ir.model.fields.selection,name:web_responsive.selection__res_users__apps_menu_search_type__canonical
+#: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
+msgid "Canonical"
+msgstr ""
+
+#. module: web_responsive
+#: model:ir.model.fields.selection,name:web_responsive.selection__res_users__apps_menu_search_type__command_palette
+#: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
+msgid "Command Palette"
+msgstr ""
+
+#. module: web_responsive
+#: model:ir.model.fields.selection,name:web_responsive.selection__res_users__apps_menu_theme__community
+msgid "Community"
 msgstr ""
 
 #. module: web_responsive
@@ -60,10 +73,20 @@ msgstr "Negeren"
 
 #. module: web_responsive
 #. odoo-javascript
-#: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
-#: code:addons/web_responsive/static/src/components/search_panel/search_panel.xml:0
+#: code:addons/web_responsive/static/src/components/command_palette/main.xml:0
 #, python-format
-msgid "FILTER"
+msgid "Exit"
+msgstr ""
+
+#. module: web_responsive
+#: model:ir.model.fields.selection,name:web_responsive.selection__res_users__apps_menu_search_type__fuse
+#: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
+msgid "Fuse"
+msgstr ""
+
+#. module: web_responsive
+#: model:ir.model,name:web_responsive.model_ir_http
+msgid "HTTP Routing"
 msgstr ""
 
 #. module: web_responsive
@@ -75,21 +98,26 @@ msgstr ""
 
 #. module: web_responsive
 #. odoo-javascript
-#: code:addons/web_responsive/static/src/components/chatter_topbar/chatter_topbar.xml:0
+#: code:addons/web_responsive/static/src/components/chatter/chatter.xml:0
 #, python-format
 msgid "Log note"
 msgstr ""
 
 #. module: web_responsive
 #. odoo-javascript
-#: code:addons/web_responsive/static/src/components/attachment_viewer/attachment_viewer.xml:0
+#: code:addons/web_responsive/static/src/components/file_viewer/file_viewer.xml:0
 #, python-format
 msgid "Maximize"
 msgstr "Maximaliseren"
 
 #. module: web_responsive
+#: model:ir.model.fields.selection,name:web_responsive.selection__res_users__apps_menu_theme__milk
+msgid "Milk"
+msgstr ""
+
+#. module: web_responsive
 #. odoo-javascript
-#: code:addons/web_responsive/static/src/components/attachment_viewer/attachment_viewer.xml:0
+#: code:addons/web_responsive/static/src/components/file_viewer/file_viewer.xml:0
 #, python-format
 msgid "Minimize"
 msgstr "Minimaliseren"
@@ -103,10 +131,9 @@ msgstr ""
 
 #. module: web_responsive
 #. odoo-javascript
-#: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
-#: code:addons/web_responsive/static/src/components/search_panel/search_panel.xml:0
+#: code:addons/web_responsive/static/src/components/menu_canonical_searchbar/searchbar.xml:0
 #, python-format
-msgid "SEE RESULT"
+msgid "Nothing to show"
 msgstr ""
 
 #. module: web_responsive
@@ -117,31 +144,53 @@ msgid "Save"
 msgstr "Opslaan"
 
 #. module: web_responsive
+#: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
+msgid "Search Type"
+msgstr ""
+
+#. module: web_responsive
+#: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
+msgid "Search Type Help"
+msgstr ""
+
+#. module: web_responsive
 #. odoo-javascript
-#: code:addons/web_responsive/static/src/components/apps_menu/apps_menu.xml:0
+#: code:addons/web_responsive/static/src/components/menu_canonical_searchbar/searchbar.xml:0
+#: code:addons/web_responsive/static/src/components/menu_odoo_searchbar/searchbar.xml:0
 #, python-format
 msgid "Search menus..."
 msgstr "Zoek menu's..."
 
 #. module: web_responsive
 #. odoo-javascript
-#: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
-#, python-format
-msgid "Search..."
-msgstr ""
-
-#. module: web_responsive
-#. odoo-javascript
-#: code:addons/web_responsive/static/src/components/chatter_topbar/chatter_topbar.xml:0
+#: code:addons/web_responsive/static/src/components/chatter/chatter.xml:0
 #, python-format
 msgid "Send message"
 msgstr ""
 
 #. module: web_responsive
-#. odoo-javascript
-#: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
-#, python-format
-msgid "View switcher"
+#: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
+msgid "Theme"
+msgstr ""
+
+#. module: web_responsive
+#: model:ir.model,name:web_responsive.model_res_users
+msgid "User"
+msgstr ""
+
+#. module: web_responsive
+#: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
+msgid "a new search algorithm is used"
+msgstr ""
+
+#. module: web_responsive
+#: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
+msgid "the standard odoo search tool"
+msgstr ""
+
+#. module: web_responsive
+#: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
+msgid "uses a standard algorithm"
 msgstr ""
 
 #, python-format
