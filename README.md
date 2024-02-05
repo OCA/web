@@ -27,7 +27,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [web_action_conditionable](web_action_conditionable/) | 12.0.1.0.1 |  | web_action_conditionable
-[web_advanced_filter](web_advanced_filter/) | 12.0.1.0.1 |  | Set operations on filter results
+[web_advanced_filter](web_advanced_filter/) | 12.0.1.1.0 |  | Set operations on filter results
 [web_advanced_search](web_advanced_search/) | 12.0.1.1.3 |  | Easier and more powerful searching tools
 [web_advanced_search_wildcard](web_advanced_search_wildcard/) | 12.0.1.0.0 |  | Webmodule to add wildcard operators in advanced search field
 [web_button_no_save](web_button_no_save/) | 12.0.1.0.0 |  | define buttons that do not require saving the form
