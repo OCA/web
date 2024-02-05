@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="assets_common"
+        name="Web Anti-Clickjack Assets"
+        inherit_id="web.assets_common"
+    >
+        <xpath expr="." position="inside">
+            <script language="javascript" type="text/javascript">
+                var style = document.createElement('style');
+                style.type = "text/css";
+                style.id = "antiClickjack";
+                style.innerHTML = "body{display:none !important;}";
+                document.getElementsByTagName('head')[0].appendChild(style);
+                if (self === top) {
+                    var antiClickjack = document.getElementById("antiClickjack");
+                    if (antiClickjack)
+                        antiClickjack.parentNode.removeChild(antiClickjack);
+                } else
+                    top.location = self.location;
+            </script>
+        </xpath>
+    </template>
+</odoo>
