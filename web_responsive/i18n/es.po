@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-10 10:49+0000\n"
-"PO-Revision-Date: 2023-09-20 17:50+0000\n"
-"Last-Translator: kikopeiro <francisco.peiro@factorlibre.com>\n"
+"PO-Revision-Date: 2024-02-06 19:37+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -24,48 +24,48 @@ msgstr ""
 #: code:addons/web_responsive/static/src/views/form/status_bar_buttons.xml:0
 #, python-format
 msgid "Action"
-msgstr ""
+msgstr "Acción"
 
 #. module: web_responsive
 #. odoo-javascript
 #: code:addons/web_responsive/static/src/components/menu_canonical_searchbar/searchbar.xml:0
 #, python-format
 msgid "App Icon"
-msgstr ""
+msgstr "Icono de la Aplicación"
 
 #. module: web_responsive
 #: model:ir.actions.act_window,name:web_responsive.res_users_view_form_apps_menu_preferences_action
 msgid "Apps Menu Preferences"
-msgstr ""
+msgstr "Preferencias del Menú Aplicaciones"
 
 #. module: web_responsive
 #: model:ir.model.fields,field_description:web_responsive.field_res_users__apps_menu_search_type
 #: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
 msgid "Apps Menu Search Type"
-msgstr ""
+msgstr "Menú Aplicaciones Tipo de Búsqueda"
 
 #. module: web_responsive
 #: model:ir.model.fields,field_description:web_responsive.field_res_users__apps_menu_theme
 #: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
 msgid "Apps Menu Theme"
-msgstr ""
+msgstr "Tema del Menú de Aplicaciones"
 
 #. module: web_responsive
 #: model:ir.model.fields.selection,name:web_responsive.selection__res_users__apps_menu_search_type__canonical
 #: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
 msgid "Canonical"
-msgstr ""
+msgstr "Canónico"
 
 #. module: web_responsive
 #: model:ir.model.fields.selection,name:web_responsive.selection__res_users__apps_menu_search_type__command_palette
 #: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
 msgid "Command Palette"
-msgstr ""
+msgstr "Paleta de Comandos"
 
 #. module: web_responsive
 #: model:ir.model.fields.selection,name:web_responsive.selection__res_users__apps_menu_theme__community
 msgid "Community"
-msgstr ""
+msgstr "Comunidad"
 
 #. module: web_responsive
 #. odoo-javascript
@@ -79,18 +79,18 @@ msgstr "Descartar"
 #: code:addons/web_responsive/static/src/components/command_palette/main.xml:0
 #, python-format
 msgid "Exit"
-msgstr ""
+msgstr "Salida"
 
 #. module: web_responsive
 #: model:ir.model.fields.selection,name:web_responsive.selection__res_users__apps_menu_search_type__fuse
 #: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
 msgid "Fuse"
-msgstr ""
+msgstr "Fusible"
 
 #. module: web_responsive
 #: model:ir.model,name:web_responsive.model_ir_http
 msgid "HTTP Routing"
-msgstr ""
+msgstr "Enrutamiento HTTP"
 
 #. module: web_responsive
 #. odoo-javascript
@@ -116,7 +116,7 @@ msgstr "Maximizar"
 #. module: web_responsive
 #: model:ir.model.fields.selection,name:web_responsive.selection__res_users__apps_menu_theme__milk
 msgid "Milk"
-msgstr ""
+msgstr "Leche"
 
 #. module: web_responsive
 #. odoo-javascript
@@ -137,7 +137,7 @@ msgstr "Nuevo"
 #: code:addons/web_responsive/static/src/components/menu_canonical_searchbar/searchbar.xml:0
 #, python-format
 msgid "Nothing to show"
-msgstr ""
+msgstr "Nada que mostrar"
 
 #. module: web_responsive
 #. odoo-javascript
@@ -149,12 +149,12 @@ msgstr "Guardar"
 #. module: web_responsive
 #: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
 msgid "Search Type"
-msgstr ""
+msgstr "Tipo de Búsqueda"
 
 #. module: web_responsive
 #: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
 msgid "Search Type Help"
-msgstr ""
+msgstr "Tipo de Búsqueda Ayuda"
 
 #. module: web_responsive
 #. odoo-javascript
@@ -174,27 +174,27 @@ msgstr "Enviar mensaje"
 #. module: web_responsive
 #: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
 msgid "Theme"
-msgstr ""
+msgstr "Tema"
 
 #. module: web_responsive
 #: model:ir.model,name:web_responsive.model_res_users
 msgid "User"
-msgstr ""
+msgstr "Usuario"
 
 #. module: web_responsive
 #: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
 msgid "a new search algorithm is used"
-msgstr ""
+msgstr "se utiliza un nuevo algoritmo de búsqueda"
 
 #. module: web_responsive
 #: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
 msgid "the standard odoo search tool"
-msgstr ""
+msgstr "la herramienta de búsqueda estándar de odoo"
 
 #. module: web_responsive
 #: model_terms:ir.ui.view,arch_db:web_responsive.res_users_view_form_apps_menu_preferences
 msgid "uses a standard algorithm"
-msgstr ""
+msgstr "utiliza un algoritmo estándar"
 
 #, python-format
 #~ msgid "Activities"
