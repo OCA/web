@@ -10,6 +10,7 @@
     "assets": {
         "web.assets_backend": [
             "web_refresher/static/src/scss/refresher.scss",
+            "web_refresher/static/src/js/client_action_adapter.esm.js",
             "web_refresher/static/src/js/refresher.esm.js",
             "web_refresher/static/src/js/control_panel.esm.js",
         ],
