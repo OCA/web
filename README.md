@@ -69,7 +69,7 @@ addon | version | maintainers | summary
 [web_sheet_full_width](web_sheet_full_width/) | 12.0.1.0.1 |  | Use the whole available screen width when displaying sheets
 [web_switch_context_warning](web_switch_context_warning/) | 12.0.2.0.0 |  | Show a warning if current user, company or database have been switched in another tab or window.
 [web_timeline](web_timeline/) | 12.0.1.1.2 | [![tarteo](https://github.com/tarteo.png?size=30px)](https://github.com/tarteo) | Interactive visualization chart to show events in time
-[web_translate_dialog](web_translate_dialog/) | 12.0.1.2.1 |  | Easy-to-use pop-up to translate fields in several languages
+[web_translate_dialog](web_translate_dialog/) | 12.0.1.2.2 |  | Easy-to-use pop-up to translate fields in several languages
 [web_tree_duplicate](web_tree_duplicate/) | 12.0.1.0.0 | [![tarteo](https://github.com/tarteo.png?size=30px)](https://github.com/tarteo) | Duplicate records directly from the tree view.
 [web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 12.0.1.1.2 |  | Allows you to dynamically color fields on tree views
 [web_tree_image_tooltip](web_tree_image_tooltip/) | 12.0.1.0.1 |  | Show images in tree views via tooltip
