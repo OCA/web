@@ -51,7 +51,7 @@ var TranslateDialog = Dialog.extend({
         this.languages = null;
         this.languages_loaded = $.Deferred();
         this.lang_data = new data.DataSetSearch(
-            this, 'res.lang', parent.searchView.dataset.get_context(),
+            this, 'res.lang', parent.context,
             [['translatable', '=', '1']]
         );
         this.lang_data.set_sort(['tr_sequence asc','id asc']);
