@@ -44,7 +44,7 @@ addon | version | maintainers | summary
 [web_notify](web_notify/) | 15.0.1.1.0 |  | Send notification messages to user
 [web_pivot_computed_measure](web_pivot_computed_measure/) | 15.0.1.0.3 |  | Web Pivot Computed Measure
 [web_pwa_oca](web_pwa_oca/) | 15.0.1.0.0 | [![eLBati](https://github.com/eLBati.png?size=30px)](https://github.com/eLBati) | Make Odoo a PWA
-[web_refresher](web_refresher/) | 15.0.2.0.0 |  | Web Refresher
+[web_refresher](web_refresher/) | 15.0.2.0.1 |  | Web Refresher
 [web_remember_tree_column_width](web_remember_tree_column_width/) | 15.0.1.0.1 | [![frahikLV](https://github.com/frahikLV.png?size=30px)](https://github.com/frahikLV) [![luisg123v](https://github.com/luisg123v.png?size=30px)](https://github.com/luisg123v) | Remember the tree columns' widths across sessions.
 [web_responsive](web_responsive/) | 15.0.1.1.12 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) [![Tardo](https://github.com/Tardo.png?size=30px)](https://github.com/Tardo) [![SplashS](https://github.com/SplashS.png?size=30px)](https://github.com/SplashS) | Responsive web client, community-supported
 [web_search_with_and](web_search_with_and/) | 15.0.1.0.2 |  | Use AND conditions on omnibar search
