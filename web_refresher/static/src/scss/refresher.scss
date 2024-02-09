@@ -5,3 +5,7 @@
     user-select: none;
     flex-grow: 1;
 }
+.o_cp_bottom_right.oe_cp_refresher {
+    display: flex;
+    flex-direction: row-reverse;
+}
