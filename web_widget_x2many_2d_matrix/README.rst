@@ -94,9 +94,13 @@ field_value
 show_row_totals
     If field_value is a numeric field, it indicates if you want to calculate
     row totals. True by default
+    In case of monetary values, it is expected that the currency is the same for
+    all cells; otherwise set this to False.
 show_column_totals
     If field_value is a numeric field, it indicates if you want to calculate
     column totals. True by default
+    In case of monetary values, it is expected that the currency is the same for
+    all cells; otherwise set this to False.
 
 Example
 ~~~~~~~
@@ -245,7 +249,7 @@ promote its widespread use.
 
 Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-ChrisOForgeFlow| 
+|maintainer-ChrisOForgeFlow|
 
 This module is part of the `OCA/web <https://github.com/OCA/web/tree/15.0/web_widget_x2many_2d_matrix>`_ project on GitHub.
 
