@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-27 11:39+0000\n"
+"PO-Revision-Date: 2024-02-12 10:44+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -29,7 +29,7 @@ msgstr "ID"
 #. module: web_dialog_size
 #: model:ir.model.fields,field_description:web_dialog_size.field_ir_config_parameter____last_update
 msgid "Last Modified on"
-msgstr "Ultima Modifica il"
+msgstr "Ultima modifica il"
 
 #. module: web_dialog_size
 #: model:ir.model,name:web_dialog_size.model_ir_config_parameter
