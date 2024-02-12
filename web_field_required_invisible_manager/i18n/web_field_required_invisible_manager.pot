@@ -72,6 +72,7 @@ msgstr ""
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__display_name
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_model__display_name
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_ui_view__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -108,6 +109,7 @@ msgstr ""
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__id
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_model__id
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_ui_view__id
 msgid "ID"
 msgstr ""
 
@@ -125,6 +127,7 @@ msgstr ""
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction____last_update
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_model____last_update
+#: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_ir_ui_view____last_update
 msgid "Last Modified on"
 msgstr ""
 
@@ -208,6 +211,11 @@ msgstr ""
 #. module: web_field_required_invisible_manager
 #: model:ir.model.fields,field_description:web_field_required_invisible_manager.field_custom_field_restriction__default_required
 msgid "Required by Default"
+msgstr ""
+
+#. module: web_field_required_invisible_manager
+#: model:ir.model,name:web_field_required_invisible_manager.model_ir_ui_view
+msgid "View"
 msgstr ""
 
 #. module: web_field_required_invisible_manager
