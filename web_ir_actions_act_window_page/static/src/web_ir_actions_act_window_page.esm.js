@@ -15,7 +15,16 @@ async function executeWindowActionPage({env}, direction) {
 }
 
 async function executeWindowActionList({env}) {
-    return env.services.action.switchView("list");
+    if (
+        env.services.action.currentController.views.map((x) => x.type).includes("list")
+    ) {
+        return env.services.action.switchView("list");
+    }
+    try {
+        await env.services.action.restore();
+    } catch {
+        return env.services.action.doAction({type: "ir.actions.act_window_close"});
+    }
 }
 
 actionHandlersRegistry.add("ir.actions.act_window.page.prev", async (params) =>
