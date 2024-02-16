@@ -151,6 +151,9 @@ Contributors
 
    -  David Vidal
 
+-  Nikul Chaudhary <nchaudhary@opensourceintegrators.com>
+-  Tris Doan <tridm@trobz.com>
+
 Maintainers
 -----------
 

@@ -5,3 +5,5 @@
 - Kevin Khao \<<kevin.khao@akretion.com>\>
 - [Tecnativa](https://www.tecnativa.com):
   - David Vidal
+- Nikul Chaudhary \<<nchaudhary@opensourceintegrators.com>\>
+- Tris Doan \<<tridm@trobz.com>\>
