@@ -15,21 +15,23 @@ export class Refresher extends Component {
 
         onMounted(async () => {
 
-            //console.debug("MOUNTED", this);
+            if (this.env && this.env.config && this.env.config.actionId) {
+                console.debug("MOUNTED", this);
 
-            const action    = await this.actionService.loadAction(this.env.config.actionId);
-            const checkBox  = this.__owl__.bdom.el.querySelector('input#web_refresher_automatic');
+                const action    = await this.actionService.loadAction(this.env.config.actionId);
+                const checkBox  = this.__owl__.bdom.el.querySelector('input#web_refresher_automatic');
 
-            //console.debug("MOUNTED LOADED", action, checkBox);
+                console.debug("MOUNTED LOADED", action, checkBox);
 
-            if (checkBox && action && action.context && action.context.web_refresher_autorefresh) {
-                this._refreshInterval = Number(action.context.web_refresher_autorefresh) || 30;
-                checkBox.checked = true;
-                this._scheduleRefresh(this);
+                if (checkBox && action && action.context && action.context.web_refresher_autorefresh) {
+                    this._refreshInterval = Number(action.context.web_refresher_autorefresh) || 30;
+                    checkBox.checked = true;
+                    this._scheduleRefresh(this);
+                }
+
+                this._checkBox = checkBox;
+                this._refreshInterval = this._refreshInterval || 30;
             }
-
-            this._checkBox = checkBox;
-            this._refreshInterval = this._refreshInterval || 30;
         });
     }
 
@@ -59,7 +61,7 @@ export class Refresher extends Component {
     }
 
     _cancelRefresh() {
-        //console.log("_cancelRefresh", this);
+        console.log("_cancelRefresh", this);
         if (this.__currentTimer) {
             clearTimeout(this.__currentTimer);
         }
