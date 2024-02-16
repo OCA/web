@@ -3,7 +3,7 @@
 
 import json
 
-from odoo import exceptions
+from odoo import SUPERUSER_ID, exceptions
 from odoo.tests import common
 
 from ..models.res_users import DANGER, DEFAULT, INFO, SUCCESS, WARNING
@@ -83,6 +83,12 @@ class TestResUsers(common.TransactionCase):
         other_user_model = self.env["res.users"].with_user(other_user)
         with self.assertRaises(exceptions.UserError):
             other_user_model.browse(self.env.uid).notify_info(message="hello")
+
+        # This method for SUPER user
+        other_user = self.env.ref("base.user_demo")
+        other_user_model = self.env["res.users"].with_user(other_user)
+        with self.assertRaises(exceptions.UserError):
+            other_user_model.browse(SUPERUSER_ID).notify_info(message="hello")
 
     def test_notify_admin_allowed_other_user(self):
         other_user = self.env.ref("base.user_demo")
