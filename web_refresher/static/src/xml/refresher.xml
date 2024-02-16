@@ -12,6 +12,12 @@
                     title="Refresh"
                     tabindex="-1"
                 />
+                <input
+                    type="checkbox"
+                    t-on-click="_autoRefresh"
+                    id="web_refresher_automatic"
+                    class="btn"
+                />
             </span>
         </nav>
     </t>
