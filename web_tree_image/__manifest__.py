@@ -8,7 +8,7 @@
 
 {
     'name': 'Show images in tree views',
-    'version': '11.0.1.0.0',
+    'version': '11.0.1.0.1',
     'author': "Therp BV, "
               "MONK Software, "
               "Odoo Community Association (OCA), "

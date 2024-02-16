@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Show sheets with full width",
-    "version": "11.0.1.0.1",
+    "version": "11.0.1.0.2",
     "author": "Therp BV, Sudokeys, GRAP, Métal Sartigan, "
               "Odoo Community Association (OCA)",
     "license": "AGPL-3",
