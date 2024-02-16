@@ -6,6 +6,7 @@
     "author": "Therp BV, Sudokeys, GRAP, Métal Sartigan, "
               "Odoo Community Association (OCA)",
     "license": "AGPL-3",
+    'website': 'https://github.com/OCA/web',
     "summary": "Use the whole available screen width when displaying sheets",
     "category": "Tools",
     "depends": [

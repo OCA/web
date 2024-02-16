@@ -22,6 +22,7 @@
         'static/src/xml/widget.xml',
     ],
     'license': 'AGPL-3',
+    'website': 'https://github.com/OCA/web',
     'auto_install': False,
     'installable': True,
     'web_preload': True,

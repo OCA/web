@@ -9,7 +9,7 @@
     'description': 'Web Notify',
     'license': 'AGPL-3',
     'author': 'ACSONE SA/NV,Odoo Community Association (OCA)',
-    'website': 'https://acsone.eu/',
+    'website': 'https://github.com/OCA/web',
     'depends': [
         'web',
         'bus',

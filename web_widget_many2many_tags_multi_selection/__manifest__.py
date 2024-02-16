@@ -8,7 +8,7 @@
         'web',
     ],
     'demo': [],
-    'website': 'https://www.akretion.com',
+    'website': 'https://github.com/OCA/web',
     'data': [
         'views/web_widget_many2many_tags_multi_selection.xml',
     ],

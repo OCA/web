@@ -13,7 +13,7 @@
               "MONK Software, "
               "Odoo Community Association (OCA), "
               "Serpent Consulting Services Pvt. Ltd.",
-    'website': 'https://github.com/OCA/Web',
+    'website': 'https://github.com/OCA/web',
     'license': 'AGPL-3',
     'category': 'Web',
     'depends': [

@@ -11,7 +11,7 @@
     "depends": [
         "web",
     ],
-    "website": "https://github.com/OCA/web/tree/11.0/web_access_rule_buttons",
+    "website": "https://github.com/OCA/web",
     "data": [
         "views/web_access_rule_buttons.xml",
     ],
