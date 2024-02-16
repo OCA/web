@@ -49,9 +49,10 @@ class ResUsers(models.Model):
         sticky=False,
         target=None,
         action=None,
+        params=None,
     ):
         title = title or _("Success")
-        self._notify_channel(SUCCESS, message, title, sticky, target, action)
+        self._notify_channel(SUCCESS, message, title, sticky, target, action, params)
 
     def notify_danger(
         self,
@@ -60,9 +61,10 @@ class ResUsers(models.Model):
         sticky=False,
         target=None,
         action=None,
+        params=None,
     ):
         title = title or _("Danger")
-        self._notify_channel(DANGER, message, title, sticky, target, action)
+        self._notify_channel(DANGER, message, title, sticky, target, action, params)
 
     def notify_warning(
         self,
@@ -71,9 +73,10 @@ class ResUsers(models.Model):
         sticky=False,
         target=None,
         action=None,
+        params=None,
     ):
         title = title or _("Warning")
-        self._notify_channel(WARNING, message, title, sticky, target, action)
+        self._notify_channel(WARNING, message, title, sticky, target, action, params)
 
     def notify_info(
         self,
@@ -82,9 +85,10 @@ class ResUsers(models.Model):
         sticky=False,
         target=None,
         action=None,
+        params=None,
     ):
         title = title or _("Information")
-        self._notify_channel(INFO, message, title, sticky, target, action)
+        self._notify_channel(INFO, message, title, sticky, target, action, params)
 
     def notify_default(
         self,
@@ -93,9 +97,10 @@ class ResUsers(models.Model):
         sticky=False,
         target=None,
         action=None,
+        params=None,
     ):
         title = title or _("Default")
-        self._notify_channel(DEFAULT, message, title, sticky, target, action)
+        self._notify_channel(DEFAULT, message, title, sticky, target, action, params)
 
     def _notify_channel(
         self,
@@ -105,6 +110,7 @@ class ResUsers(models.Model):
         sticky=False,
         target=None,
         action=None,
+        params=None,
     ):
         if not (self.env.user._is_admin() or self.env.su) and any(
             user.id != self.env.uid for user in self
@@ -122,6 +128,7 @@ class ResUsers(models.Model):
             "title": title,
             "sticky": sticky,
             "action": action,
+            "params": dict(params or []),
         }
 
         notifications = [[partner, "web.notify", [bus_message]] for partner in target]
