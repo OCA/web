@@ -1,5 +1,6 @@
 /** @odoo-module **/
-import {Markup} from "web.utils";
+
+import {markup} from "@odoo/owl";
 import {browser} from "@web/core/browser/browser";
 import {registry} from "@web/core/registry";
 
@@ -34,7 +35,7 @@ export const webNotificationService = {
                             },
                         ];
                     }
-                    const notificationRemove = notification.add(Markup(notif.message), {
+                    const notificationRemove = notification.add(markup(notif.message), {
                         title: notif.title,
                         type: notif.type,
                         sticky: notif.sticky,
