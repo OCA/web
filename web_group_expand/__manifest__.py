@@ -9,7 +9,7 @@
               "AvanzOSC, "
               "Tecnativa, "
               "Odoo Community Association (OCA)",
-    "website": "https://github.com/oca/web",
+    "website": "https://github.com/OCA/web",
     'license': 'AGPL-3',
     "depends": [
         "web"

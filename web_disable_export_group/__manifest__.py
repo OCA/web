@@ -8,7 +8,7 @@
     'author': 'Onestein, '
               'Tecnativa, '
               'Odoo Community Association (OCA)',
-    'website': 'http://www.github.com/OCA/web',
+    'website': 'https://github.com/OCA/web',
     'category': 'Web',
     'depends': [
         'web',

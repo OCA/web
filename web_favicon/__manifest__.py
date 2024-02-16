@@ -10,6 +10,7 @@
               "Tecnativa, "
               "Odoo Community Association (OCA)",
     "license": "AGPL-3",
+    'website': 'https://github.com/OCA/web',
     "category": "Website",
     "summary": "Allows to set a custom shortcut icon (aka favicon)",
     "depends": [

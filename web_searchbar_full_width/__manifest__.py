@@ -8,6 +8,7 @@
               "Odoo Community Association (OCA), "
               "Siddharth Bhalgami",
     "license": "AGPL-3",
+    'website': 'https://github.com/OCA/web',
     "category": "Tools",
     "summary": "Show search bar in full screen width",
     "depends": [

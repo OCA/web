@@ -5,7 +5,7 @@
     "summary": "Set any background color for web editor snippets",
     "version": "11.0.1.0.0",
     "category": "Website",
-    "website": "https://www.tecnativa.com",
+    "website": "https://github.com/OCA/web",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "LGPL-3",
     "application": False,

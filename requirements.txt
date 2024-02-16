@@ -1,2 +1,2 @@
-# web_widget_bokeh_chart
-bokeh==0.12.7
+# generated from manifests external_dependencies
+bokeh

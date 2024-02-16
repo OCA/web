@@ -14,7 +14,7 @@
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "website": "http://acsone.eu",
+    "website": "https://github.com/OCA/web",
     'depends': [
         'web',
     ],
