@@ -56,6 +56,7 @@ addon | version | maintainers | summary
 [web_tree_duplicate](web_tree_duplicate/) | 16.0.1.0.0 | [![tarteo](https://github.com/tarteo.png?size=30px)](https://github.com/tarteo) | Duplicate records directly from the tree view.
 [web_tree_many2one_clickable](web_tree_many2one_clickable/) | 16.0.1.0.0 |  | Open the linked resource when clicking on their name
 [web_widget_bokeh_chart](web_widget_bokeh_chart/) | 16.0.1.1.0 | [![LoisRForgeFlow](https://github.com/LoisRForgeFlow.png?size=30px)](https://github.com/LoisRForgeFlow) [![ChrisOForgeFlow](https://github.com/ChrisOForgeFlow.png?size=30px)](https://github.com/ChrisOForgeFlow) | This widget allows to display charts using Bokeh library.
+[web_widget_datepicker_fulloptions](web_widget_datepicker_fulloptions/) | 16.0.1.0.0 |  | Web Widget DatePicker Full Options
 [web_widget_dropdown_dynamic](web_widget_dropdown_dynamic/) | 16.0.1.0.0 |  | This module adds support for dynamic dropdown widget
 [web_widget_mpld3_chart](web_widget_mpld3_chart/) | 16.0.1.0.0 | [![JordiBForgeFlow](https://github.com/JordiBForgeFlow.png?size=30px)](https://github.com/JordiBForgeFlow) [![ChrisOForgeFlow](https://github.com/ChrisOForgeFlow.png?size=30px)](https://github.com/ChrisOForgeFlow) | This widget allows to display charts using MPLD3 library.
 [web_widget_numeric_step](web_widget_numeric_step/) | 16.0.1.1.3 | [![rafaelbn](https://github.com/rafaelbn.png?size=30px)](https://github.com/rafaelbn) [![yajo](https://github.com/yajo.png?size=30px)](https://github.com/yajo) | Web Widget Numeric Step
