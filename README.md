@@ -54,7 +54,7 @@ addon | version | maintainers | summary
 [web_m2x_options](web_m2x_options/) | 14.0.1.1.1 |  | web_m2x_options
 [web_m2x_options_manager](web_m2x_options_manager/) | 14.0.1.2.0 |  | Adds an interface to manage the "Create" and "Create and Edit" options for specific models and fields.
 [web_no_bubble](web_no_bubble/) | 14.0.1.1.0 |  | Remove the bubbles from the web interface
-[web_notify](web_notify/) | 14.0.1.0.2 |  | Send notification messages to user
+[web_notify](web_notify/) | 14.0.1.1.0 |  | Send notification messages to user
 [web_notify_channel_message](web_notify_channel_message/) | 14.0.1.0.0 |  | Send an instant notification to channel users when a new message is posted
 [web_pwa_oca](web_pwa_oca/) | 14.0.1.1.0 | [![eLBati](https://github.com/eLBati.png?size=30px)](https://github.com/eLBati) | Make Odoo a PWA
 [web_refresher](web_refresher/) | 14.0.2.0.0 |  | Web Refresher
