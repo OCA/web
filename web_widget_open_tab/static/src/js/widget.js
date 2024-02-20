@@ -12,7 +12,7 @@ odoo.define("web_widget_open_tab.FieldOpenTab", function (require) {
     var FieldOpenTab = AbstractField.extend({
         description: "",
         // We want to maintain it black in order to show nothing on the header
-        supportedFieldTypes: ["integer"],
+        supportedFieldTypes: ["char", "integer"],
         events: _.extend({}, AbstractField.prototype.events, {
             click: "_onClick",
         }),
@@ -36,6 +36,7 @@ odoo.define("web_widget_open_tab.FieldOpenTab", function (require) {
         _renderReadonly: function () {
             var $content = $("<a/>", {
                 href: this._getReference(),
+                html: this.formatType == "char" ? this.value : "",
                 class: "open_tab_widget fa fa-external-link",
             });
             var self = this;
