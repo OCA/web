@@ -67,4 +67,16 @@ Example:
     overrides the rest of `colors` attributes, and that you need the tree
     to load your field in the first place by adding it as invisible field.
 
-**Note that you should always use single quotes for fields' ``options`` and wrap nested values in double quotes since ``options`` is a JSON object.**
+* Can use strings too... In the tree view declaration, put ``options="{'fg_color': 'green:customer_state == \'success\''}"`` attribute in the ``field`` tag::
+
+    ...
+    <field name="arch" type="xml">
+        <tree string="View name">
+            ...
+            <field name="name" options="{'fg_color': 'green:customer_state == \'success\''}"/>
+            ...
+        </tree>
+    </field>
+    ...
+
+**Note that you can use single or normal quotes. If the declaration of the options doesn't follow the JSON format, the options string will be evaluated using py.eval()**
