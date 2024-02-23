@@ -15,10 +15,7 @@ odoo.define("web_widget_text_markdown.FieldTextMarkDown", function (require) {
     var CUST_LIBS_PATH = "/web_widget_text_markdown/static/src/css/";
 
     var FieldTextMarkDown = basic_fields.FieldText.extend({
-        className: [
-            basic_fields.FieldText.prototype.className,
-            "o_field_text_markdown",
-        ].join(" "),
+        className: "o_field_text_markdown",
         jsLibs: [
             LIBS_PATH + "bootstrap-markdown.js",
             LIBS_PATH + "showdown.js",
