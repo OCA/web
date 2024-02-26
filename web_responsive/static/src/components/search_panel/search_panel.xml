@@ -12,7 +12,12 @@
                 <div class="d-flex flex-wrap align-items-center">
                     <i class="fa fa-fw fa-filter mr-1" />
                     <t t-set="filters" t-value="getActiveSummary()" />
-                    <span t-foreach="filters" t-as="filter" class="mx-1">
+                    <span
+                        t-foreach="filters"
+                        t-as="filter"
+                        t-key="filter.id"
+                        class="mx-1"
+                    >
                         <i
                             t-if="filter.icon"
                             t-attf-class="fa {{ filter.icon }} mr-2"
