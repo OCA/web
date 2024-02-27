@@ -4,8 +4,8 @@
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html) */
 
 import {PivotModel} from "@web/views/pivot/pivot_model";
-import {patch} from "web.utils";
-import {computeReportMeasures} from "@web/views/helpers/utils";
+import {patch} from "@web/core/utils/patch";
+import {computeReportMeasures} from "@web/views/utils";
 import {evalOperation} from "../helpers/utils.esm";
 
 patch(PivotModel.prototype, "web_pivot_computed_measure.PivotModel", {
