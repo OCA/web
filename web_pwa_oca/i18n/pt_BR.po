@@ -72,7 +72,7 @@ msgid "Progressive Web App Short Name"
 msgstr "Nome Curto do App Web Progressivo"
 
 #. module: web_pwa_oca
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_pwa_oca/static/src/js/pwa_manager.js:0
 #, python-format
 msgid ""
@@ -98,32 +98,35 @@ msgid "Theme Color"
 msgstr "Cor do Tema"
 
 #. module: web_pwa_oca
+#. odoo-python
 #: code:addons/web_pwa_oca/models/res_config_settings.py:0
 #, python-format
 msgid "You can only upload PNG files bigger than 512x512"
 msgstr "Você só pode carregar arquivos PNG até 512x512"
 
 #. module: web_pwa_oca
+#. odoo-python
 #: code:addons/web_pwa_oca/models/res_config_settings.py:0
 #, python-format
 msgid "You can only upload SVG or PNG files. Found: %s."
 msgstr "Você só pode fazer upload de arquivos SVG ou PNG. Encontrado: %s."
 
 #. module: web_pwa_oca
+#. odoo-python
 #: code:addons/web_pwa_oca/models/res_config_settings.py:0
 #, python-format
 msgid "You can't upload a file with more than 2 MB."
 msgstr "Você não pode carregar um arquivo maior que 2MB."
 
 #. module: web_pwa_oca
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_pwa_oca/static/src/js/pwa_manager.js:0
 #, python-format
 msgid "[ServiceWorker] Registered:"
 msgstr "[ServiceWorker] Registrado:"
 
 #. module: web_pwa_oca
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_pwa_oca/static/src/js/pwa_manager.js:0
 #, python-format
 msgid "[ServiceWorker] Registration failed: "
