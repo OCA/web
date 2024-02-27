@@ -11,9 +11,11 @@ tour.register(
         test: true,
     },
     [
-        tour.stepUtils.showAppsMenuItem(),
         {
-            trigger: 'a[data-menu-xmlid="base.menu_administration"]',
+            trigger: ".o_navbar_apps_menu button",
+        },
+        {
+            trigger: '.o_app[data-menu-xmlid="base.menu_administration"]',
         },
         {
             trigger: 'button[data-menu-xmlid="base.menu_users"]',
