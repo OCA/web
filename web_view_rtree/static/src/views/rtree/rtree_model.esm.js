@@ -384,6 +384,53 @@ class DynamicRTreeRecordList extends DynamicRecordList {
         const kwargs = {};
         return this.model.orm.webReadGroup(model, domain, [groupBy], [groupBy], kwargs);
     }
+
+    _findRecordParent(id) {
+        // Find the record list that contains a record with the corresponding
+        // (datapoint) id.
+        for (const record of this.records) {
+            if (record.id === id) {
+                return this;
+            }
+            if (record.hasChildren) {
+                const subResult = record.list._findRecordParent(id);
+                if (subResult !== null) {
+                    return subResult;
+                }
+            }
+        }
+        return null;
+    }
+
+    _replaceRecords(records) {
+        // Replace the records (of model this.recordModel, which are always
+        // contiguous), by the provided new array of records.
+        const isRecord = (r) => r.resModel === this.recordModel;
+        const firstRecordIndex = this.records.findIndex(isRecord);
+        const numRecords = this.records.filter(isRecord).length;
+        this.records.splice(firstRecordIndex, numRecords, ...records);
+    }
+
+    async resequence(movedID, targetID) {
+        // We need to find the list of records from which movedID comes and
+        // the one that contains targetID. If it is not the same list, this
+        // means that the record is being reparented. For now, this is not
+        // supported.
+        const recordList = this._findRecordParent(movedID);
+        let records = recordList.records.filter((r) => r.resModel === this.recordModel);
+        // Undefined targetID means that a record is moved at the top of the
+        // list.
+        if (
+            targetID !== undefined &&
+            records.findIndex((r) => r.id === targetID) === -1
+        ) {
+            console.error("It is not possible to reparent records in an rtree view.");
+            return;
+        }
+        records = await this._resequence(records, this.recordModel, movedID, targetID);
+        recordList._replaceRecords(records);
+        this.model.notify();
+    }
 }
 
 export class RTreeModel extends RelationalModel {

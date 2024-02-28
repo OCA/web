@@ -60,11 +60,13 @@
         </xpath>
 
         <!--
-            add an empty cell at the beginning of the row to align the
-            contents with those of record rows in case they are selectable
+            add empty cells at the beginning of the row to align the
+            contents with those of record rows in case they are selectable or
+            if the first column uses a handle widget
         -->
         <xpath expr="tr/th[@tabindex='-1']" position="before">
             <td t-if="hasSelectors" />
+            <td t-if="firstColumnIsHandle" />
         </xpath>
 
         <!--

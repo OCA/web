@@ -12,3 +12,6 @@ class IrUiView(models.Model):
         selection_add=[("rtree", "RTree")],
         ondelete={"rtree": "cascade"},
     )
+
+    def _onchange_able_view_rtree(self, node):
+        return True

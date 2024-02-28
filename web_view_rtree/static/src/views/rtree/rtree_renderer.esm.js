@@ -3,23 +3,45 @@
 import {ListRenderer} from "@web/views/list/list_renderer";
 
 export class RTreeRenderer extends ListRenderer {
+    getActiveColumns() {
+        // Overriding this because handles should be displayed.
+        return this.allColumns.filter((col) => {
+            return !col.optional || this.optionalActiveFields[col.name];
+        });
+    }
+
     getGroupLevel(group) {
         return group.level;
     }
 
     getGroupNameCellColSpan(group) {
-        const colspan = super.getGroupNameCellColSpan(group);
+        let colspan = super.getGroupNameCellColSpan(group);
+        // When selectors are enabled or when the first column uses a handle
+        // widget, empty cells are added at the beginning of group rows to
+        // align their contents with those of record rows.
         if (this.hasSelectors) {
-            // When selectors are enabled, an empty cell is added at the
-            // beginning of group rows to align their contents with those of
-            // record rows.
-            return colspan - 1;
+            colspan -= 1;
+        }
+        if (this.firstColumnIsHandle) {
+            colspan -= 1;
         }
         return colspan;
     }
 
+    get firstColumnIsHandle() {
+        return this.state.columns[0].widget === "handle";
+    }
+
     isFirstColumn(column) {
-        return this.state.columns.findIndex((col) => col === column) === 0;
+        // Check whether this column is the first column that doesn’t use a
+        // handle widget.
+        let firstColumnIndex = 0;
+        if (this.firstColumnIsHandle) {
+            firstColumnIndex = 1;
+        }
+        return (
+            this.state.columns.findIndex((col) => col === column) === firstColumnIndex
+        );
     }
 
     openGroupRecord(group) {

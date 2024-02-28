@@ -1,0 +1,6 @@
+// ------- List renderer -------
+.o_list_renderer {
+    .o_rtree_view & {
+        --ListRenderer-table-padding-h: #{$o-horizontal-padding};
+    }
+}
