@@ -19,6 +19,7 @@ setuptools.setup(
         'odoo14-addon-web_company_color',
         'odoo14-addon-web_copy_confirm',
         'odoo14-addon-web_create_write_confirm',
+        'odoo14-addon-web_custom_modifier',
         'odoo14-addon-web_decimal_numpad_dot',
         'odoo14-addon-web_dialog_size',
         'odoo14-addon-web_disable_export_group',
