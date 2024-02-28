@@ -4,13 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-15 15:07+0000\n"
-"PO-Revision-Date: 2022-07-15 15:07+0000\n"
-"Last-Translator: <>\n"
+"Last-Translator: \n"
 "Language-Team: \n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -19,163 +16,163 @@ msgstr ""
 #. module: web_custom_modifier
 #: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__active
 msgid "Active"
-msgstr "Actif"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model_terms:ir.ui.view,arch_db:web_custom_modifier.custom_modifier_search
 msgid "Archived"
-msgstr "Archivé"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model,name:web_custom_modifier.model_base
 msgid "Base"
-msgstr "Base"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__create_uid
 msgid "Created by"
-msgstr "Créé par"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__create_date
 msgid "Created on"
-msgstr "Créé le"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.actions.act_window,name:web_custom_modifier.custom_modifier_action
 #: model:ir.ui.menu,name:web_custom_modifier.custom_modifier_menu
 #: model_terms:ir.ui.view,arch_db:web_custom_modifier.custom_modifier_search
 msgid "Custom Modifiers"
-msgstr "Modificateurs personnalisés"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model,name:web_custom_modifier.model_web_custom_modifier
 msgid "Custom View Modifier"
-msgstr "Modificateurs de vue personnalisés"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model.fields,field_description:web_custom_modifier.field_ir_ui_view__display_name
 #: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__display_name
 msgid "Display Name"
-msgstr "Nom affiché"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__excluded_group_ids
 msgid "Excluded Groups"
-msgstr "Groupes exclus"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model.fields.selection,name:web_custom_modifier.selection__web_custom_modifier__type___field
 #: model_terms:ir.ui.view,arch_db:web_custom_modifier.custom_modifier_list
 #: model_terms:ir.ui.view,arch_db:web_custom_modifier.custom_modifier_search
 msgid "Field"
-msgstr "Champ"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model.fields.selection,name:web_custom_modifier.selection__web_custom_modifier__modifier__force_save
 msgid "Force Save"
-msgstr "Forcer la sauvegarde"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model_terms:ir.ui.view,arch_db:web_custom_modifier.custom_modifier_search
 msgid "Group By"
-msgstr "Grouper par"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model.fields.selection,name:web_custom_modifier.selection__web_custom_modifier__modifier__selection_hide
 msgid "Hide Selection Item"
-msgstr "Cacher un choix de sélection"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model.fields,field_description:web_custom_modifier.field_ir_ui_view__id
 #: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model.fields.selection,name:web_custom_modifier.selection__web_custom_modifier__modifier__invisible
 msgid "Invisible"
-msgstr "Invisible"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model.fields.selection,name:web_custom_modifier.selection__web_custom_modifier__modifier__column_invisible
 msgid "Invisible (List Views)"
-msgstr "Invisible (vues listes)"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__key
 msgid "Key"
-msgstr "Clé"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model.fields,field_description:web_custom_modifier.field_ir_ui_view____last_update
 #: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier____last_update
 msgid "Last Modified on"
-msgstr "Dernière modification le"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__write_uid
 msgid "Last Updated by"
-msgstr "Dernière mise à jour par"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__write_date
 msgid "Last Updated on"
-msgstr "Dernière mise à jour le"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__model_ids
 msgid "Model"
-msgstr "Modèle"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__modifier
 #: model_terms:ir.ui.view,arch_db:web_custom_modifier.custom_modifier_search
 msgid "Modifier"
-msgstr "Modificateur"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model.fields.selection,name:web_custom_modifier.selection__web_custom_modifier__modifier__limit
 msgid "Number of lines per page (List Views)"
-msgstr "Nombre de lignes par page (Vues listes)"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model.fields.selection,name:web_custom_modifier.selection__web_custom_modifier__modifier__optional
 msgid "Optional"
-msgstr "Optionnel"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model.fields.selection,name:web_custom_modifier.selection__web_custom_modifier__modifier__readonly
 msgid "Readonly"
-msgstr "Lecture seule"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__reference
 msgid "Reference"
-msgstr "Référence"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model.fields.selection,name:web_custom_modifier.selection__web_custom_modifier__modifier__required
 msgid "Required"
-msgstr "Obligatoire"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model.fields,field_description:web_custom_modifier.field_web_custom_modifier__type_
 #: model_terms:ir.ui.view,arch_db:web_custom_modifier.custom_modifier_search
 msgid "Type"
-msgstr "Type"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model,name:web_custom_modifier.model_ir_ui_view
 msgid "View"
-msgstr "View"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model.fields.selection,name:web_custom_modifier.selection__web_custom_modifier__modifier__widget
 msgid "Widget"
-msgstr "Widget"
+msgstr ""
 
 #. module: web_custom_modifier
 #: model:ir.model.fields.selection,name:web_custom_modifier.selection__web_custom_modifier__type___xpath
 msgid "Xpath"
-msgstr "Xpath"
+msgstr ""
