@@ -30,6 +30,7 @@ setuptools.setup(
         'odoo-addon-web_no_bubble>=16.0dev,<16.1dev',
         'odoo-addon-web_notify>=16.0dev,<16.1dev',
         'odoo-addon-web_notify_channel_message>=16.0dev,<16.1dev',
+        'odoo-addon-web_pivot_computed_measure>=16.0dev,<16.1dev',
         'odoo-addon-web_pwa_oca>=16.0dev,<16.1dev',
         'odoo-addon-web_refresher>=16.0dev,<16.1dev',
         'odoo-addon-web_remember_tree_column_width>=16.0dev,<16.1dev',
