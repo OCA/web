@@ -1,0 +1,5 @@
+- David Dufresne david.dufresne@numigi.com (www.numigi.com)
+- Majda El Mariouli majda.elmariouli@numigi.com (www.numigi.com)
+- Lanto Razafindrabe lanto.razafindrabe@numigi.com (www.numigi.com)
+- Julie LeBrun julie.lebrun@numigi.com (www.numigi.com)
+- Abdellatif Benzbiria abdellatif.benzbiria@numigi.com (www.numigi.com)

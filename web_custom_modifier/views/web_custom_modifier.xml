@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="custom_modifier_list" model="ir.ui.view">
+        <field name="name">Custom Modifier List View</field>
+        <field name="model">web.custom.modifier</field>
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field
+                    name="model_ids"
+                    widget="many2many_tags"
+                    options="{'no_create': 1}"
+                />
+                <field name="type_" />
+                <field name="reference" string="Field" />
+                <field name="modifier" />
+                <field
+                    name="key"
+                    attrs="{'readonly': [('modifier', 'not in', ('selection_hide', 'widget', 'limit', 'optional'))],
+                            'required': [('modifier', 'in', ('selection_hide', 'limit', 'optional'))]}"
+                />
+                <field name="excluded_group_ids" widget="many2many_tags" />
+                <field name="active" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="custom_modifier_search" model="ir.ui.view">
+        <field name="name">Custom Modifier Search View</field>
+        <field name="model">web.custom.modifier</field>
+        <field name="arch" type="xml">
+            <search string="Custom Modifiers">
+                <field name="model_ids" />
+                <field name="reference" />
+                <field name="modifier" />
+                <separator />
+                <filter
+                    string="Archived"
+                    name="inactive"
+                    domain="[('active', '=', False)]"
+                />
+                <group expand="0" string="Group By">
+                    <filter
+                        name="group_by_reference"
+                        string="Field"
+                        context="{'group_by': 'reference'}"
+                    />
+                    <filter
+                        name="group_by_type_"
+                        string="Type"
+                        context="{'group_by': 'type_'}"
+                    />
+                    <filter
+                        name="group_by_modifier"
+                        string="Modifier"
+                        context="{'group_by': 'modifier'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="custom_modifier_action" model="ir.actions.act_window">
+        <field name="name">Custom Modifiers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">web.custom.modifier</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="custom_modifier_list" />
+    </record>
+    <menuitem
+        action="custom_modifier_action"
+        id="custom_modifier_menu"
+        parent="base.next_id_2"
+        sequence="99"
+    />
+
+</odoo>
