@@ -155,7 +155,7 @@ export class X2Many2DMatrixRenderer extends Component {
             ...props,
             ...propsFromAttrs,
             value: value,
-            update: (value) => this.update(x, y, value),
+            update: (val) => this.update(x, y, val),
             readonly: this.props.readonly,
             record: record,
             name: this.matrixFields.value,
