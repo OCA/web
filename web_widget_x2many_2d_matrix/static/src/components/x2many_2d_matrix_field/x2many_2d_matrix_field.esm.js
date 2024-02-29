@@ -1,10 +1,10 @@
 /** @odoo-module **/
 
 import {Component} from "@odoo/owl";
-import {standardFieldProps} from "@web/views/fields/standard_field_props";
-import {registry} from "@web/core/registry";
-import {archParseBoolean} from "@web/views/utils";
 import {X2Many2DMatrixRenderer} from "@web_widget_x2many_2d_matrix/components/x2many_2d_matrix_renderer/x2many_2d_matrix_renderer.esm";
+import {archParseBoolean} from "@web/views/utils";
+import {registry} from "@web/core/registry";
+import {standardFieldProps} from "@web/views/fields/standard_field_props";
 
 export class X2Many2DMatrixField extends Component {
     setup() {
