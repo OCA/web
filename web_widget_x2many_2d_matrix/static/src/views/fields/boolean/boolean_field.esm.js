@@ -1,7 +1,7 @@
 /** @odoo-module **/
 
-import {patch} from "@web/core/utils/patch";
 import {BooleanField} from "@web/views/fields/boolean/boolean_field";
+import {patch} from "@web/core/utils/patch";
 
 patch(BooleanField.prototype, "web_widget_x2many_2d_matrix", {
     get isReadonly() {
