@@ -10,11 +10,14 @@ QUnit.module("RTree", () => {
                 child: "project.task",
                 field: "project_id",
                 domain: [["parent_id", "=", false]],
+                expand: true,
             },
             {
                 parent: "project.task",
                 child: "project.task",
                 field: "parent_id",
+                domain: null,
+                expand: false,
             },
         ];
         let model = new RTreeModel({}, {parentDefs: taskParentDefs}, {});
@@ -41,6 +44,7 @@ QUnit.module("RTree", () => {
                         ["parent_id", "=", false],
                         ["project_id", "!=", false],
                     ],
+                    expand: true,
                 },
                 {
                     model: "project.task",
@@ -50,6 +54,7 @@ QUnit.module("RTree", () => {
                         ["parent_id.parent_id", "=", false],
                         ["parent_id.project_id", "=", false],
                     ],
+                    expand: false,
                 },
             ],
         });
@@ -72,6 +77,7 @@ QUnit.module("RTree", () => {
                         ["parent_id.parent_id", "=", false],
                         ["parent_id.project_id", "=", 42],
                     ],
+                    expand: false,
                 },
             ],
         });
@@ -88,6 +94,7 @@ QUnit.module("RTree", () => {
                     groupBy: "parent_id",
                     groupModel: "project.task",
                     domain: [["parent_id.parent_id", "=", 40]],
+                    expand: false,
                 },
             ],
         });
@@ -96,11 +103,15 @@ QUnit.module("RTree", () => {
                 parent: "filesystem.directory",
                 child: "filesystem.directory",
                 field: "parent_id",
+                domain: null,
+                expand: false,
             },
             {
                 parent: "filesystem.directory",
                 child: "filesystem.file",
                 field: "directory_id",
+                domain: null,
+                expand: false,
             },
         ];
         model = new RTreeModel({}, {parentDefs: fileParentDefs}, {});
@@ -121,12 +132,14 @@ QUnit.module("RTree", () => {
                     groupBy: "parent_id",
                     groupModel: "filesystem.directory",
                     domain: [["parent_id.parent_id", "=", false]],
+                    expand: false,
                 },
                 {
                     model: "filesystem.file",
                     groupBy: "directory_id",
                     groupModel: "filesystem.directory",
                     domain: [["directory_id.parent_id", "=", false]],
+                    expand: false,
                 },
             ],
         });
@@ -147,12 +160,14 @@ QUnit.module("RTree", () => {
                     groupBy: "parent_id",
                     groupModel: "filesystem.directory",
                     domain: [["parent_id.parent_id", "=", 42]],
+                    expand: false,
                 },
                 {
                     model: "filesystem.file",
                     groupBy: "directory_id",
                     groupModel: "filesystem.directory",
                     domain: [["directory_id.parent_id", "=", 42]],
+                    expand: false,
                 },
             ],
         });
@@ -162,43 +177,56 @@ QUnit.module("RTree", () => {
                 child: "abc.b",
                 field: "a_id",
                 domain: [["parent_id", "=", false]],
+                expand: false,
             },
             {
                 parent: "abc.b",
                 child: "abc.b",
                 field: "parent_id",
+                domain: null,
+                expand: false,
             },
             {
                 parent: "abc.b",
                 child: "abc.c",
                 field: "b_id",
+                domain: null,
+                expand: false,
             },
             {
                 parent: "abc.c",
                 child: "abc.d",
                 field: "c_id",
                 domain: [["parent_id", "=", false]],
+                expand: false,
             },
             {
                 parent: "abc.d",
                 child: "abc.d",
                 field: "parent_id",
+                domain: null,
+                expand: false,
             },
             {
                 parent: "abc.d",
                 child: "abc.e",
                 field: "d_id",
                 domain: [["parent_id", "=", false]],
+                expand: false,
             },
             {
                 parent: "abc.e",
                 child: "abc.e",
                 field: "parent_id",
+                domain: null,
+                expand: false,
             },
             {
                 parent: "abc.e",
                 child: "abc.f",
                 field: "e_id",
+                domain: null,
+                expand: false,
             },
         ];
         model = new RTreeModel({}, {parentDefs: abcParentDefs}, {});
@@ -247,6 +275,7 @@ QUnit.module("RTree", () => {
                         ["parent_id", "=", false],
                         ["a_id", "!=", false],
                     ],
+                    expand: false,
                 },
                 {
                     model: "abc.b",
@@ -256,6 +285,7 @@ QUnit.module("RTree", () => {
                         ["parent_id.parent_id", "=", false],
                         ["parent_id.a_id", "=", false],
                     ],
+                    expand: false,
                 },
                 {
                     model: "abc.c",
@@ -265,6 +295,7 @@ QUnit.module("RTree", () => {
                         ["b_id.parent_id", "=", false],
                         ["b_id.a_id", "=", false],
                     ],
+                    expand: false,
                 },
                 {
                     model: "abc.d",
@@ -274,6 +305,7 @@ QUnit.module("RTree", () => {
                         ["parent_id", "=", false],
                         ["c_id.b_id", "=", false],
                     ],
+                    expand: false,
                 },
                 {
                     model: "abc.d",
@@ -283,6 +315,7 @@ QUnit.module("RTree", () => {
                         ["parent_id.parent_id", "=", false],
                         ["parent_id.c_id", "=", false],
                     ],
+                    expand: false,
                 },
                 {
                     model: "abc.e",
@@ -293,6 +326,7 @@ QUnit.module("RTree", () => {
                         ["d_id.parent_id", "=", false],
                         ["d_id.c_id", "=", false],
                     ],
+                    expand: false,
                 },
                 {
                     model: "abc.e",
@@ -302,6 +336,7 @@ QUnit.module("RTree", () => {
                         ["parent_id.parent_id", "=", false],
                         ["parent_id.d_id", "=", false],
                     ],
+                    expand: false,
                 },
                 {
                     model: "abc.f",
@@ -311,6 +346,7 @@ QUnit.module("RTree", () => {
                         ["e_id.parent_id", "=", false],
                         ["e_id.d_id", "=", false],
                     ],
+                    expand: false,
                 },
             ],
         });
@@ -333,6 +369,7 @@ QUnit.module("RTree", () => {
                         ["parent_id.parent_id", "=", false],
                         ["parent_id.a_id", "=", 42],
                     ],
+                    expand: false,
                 },
                 {
                     model: "abc.c",
@@ -342,6 +379,7 @@ QUnit.module("RTree", () => {
                         ["b_id.parent_id", "=", false],
                         ["b_id.a_id", "=", 42],
                     ],
+                    expand: false,
                 },
             ],
         });
@@ -362,12 +400,14 @@ QUnit.module("RTree", () => {
                     groupBy: "parent_id",
                     groupModel: "abc.b",
                     domain: [["parent_id.parent_id", "=", 42]],
+                    expand: false,
                 },
                 {
                     model: "abc.c",
                     groupBy: "b_id",
                     groupModel: "abc.b",
                     domain: [["b_id.parent_id", "=", 42]],
+                    expand: false,
                 },
                 {
                     model: "abc.d",
@@ -377,6 +417,7 @@ QUnit.module("RTree", () => {
                         ["parent_id", "=", false],
                         ["c_id.b_id", "=", 42],
                     ],
+                    expand: false,
                 },
             ],
         });
@@ -399,6 +440,7 @@ QUnit.module("RTree", () => {
                         ["parent_id.parent_id", "=", false],
                         ["parent_id.c_id", "=", 42],
                     ],
+                    expand: false,
                 },
                 {
                     model: "abc.e",
@@ -409,6 +451,7 @@ QUnit.module("RTree", () => {
                         ["d_id.parent_id", "=", false],
                         ["d_id.c_id", "=", 42],
                     ],
+                    expand: false,
                 },
             ],
         });
@@ -432,6 +475,7 @@ QUnit.module("RTree", () => {
                     groupBy: "parent_id",
                     groupModel: "abc.d",
                     domain: [["parent_id.parent_id", "=", 42]],
+                    expand: false,
                 },
                 {
                     model: "abc.e",
@@ -441,6 +485,7 @@ QUnit.module("RTree", () => {
                         ["parent_id", "=", false],
                         ["d_id.parent_id", "=", 42],
                     ],
+                    expand: false,
                 },
                 {
                     model: "abc.e",
@@ -450,6 +495,7 @@ QUnit.module("RTree", () => {
                         ["parent_id.parent_id", "=", false],
                         ["parent_id.d_id", "=", 42],
                     ],
+                    expand: false,
                 },
                 {
                     model: "abc.f",
@@ -459,6 +505,7 @@ QUnit.module("RTree", () => {
                         ["e_id.parent_id", "=", false],
                         ["e_id.d_id", "=", 42],
                     ],
+                    expand: false,
                 },
             ],
         });
@@ -479,12 +526,14 @@ QUnit.module("RTree", () => {
                     groupBy: "parent_id",
                     groupModel: "abc.e",
                     domain: [["parent_id.parent_id", "=", 42]],
+                    expand: false,
                 },
                 {
                     model: "abc.f",
                     groupBy: "e_id",
                     groupModel: "abc.e",
                     domain: [["e_id.parent_id", "=", 42]],
+                    expand: false,
                 },
             ],
         });

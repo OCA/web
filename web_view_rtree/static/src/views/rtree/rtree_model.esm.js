@@ -294,6 +294,7 @@ class DynamicRTreeRecordList extends DynamicRecordList {
                     modelGroups.groups.push(groupObj);
                 } else {
                     groupObj.numChildren += numChildren;
+                    groupObj.isFolded = groupObj.isFolded && !params.expand;
                 }
             }
         }
@@ -455,7 +456,7 @@ export class RTreeModel extends RelationalModel {
             parentMap.push({
                 model: parent.child,
                 field: parent.field,
-                domain: parent.domain || null,
+                domain: parent.domain,
                 expand: parent.expand,
             });
             let childMap = childrenMap[parent.child];
@@ -467,7 +468,7 @@ export class RTreeModel extends RelationalModel {
             childMap.unshift({
                 model: parent.parent,
                 field: parent.field,
-                domain: parent.domain || null,
+                domain: parent.domain,
                 expand: parent.expand,
             });
         }
@@ -489,7 +490,6 @@ export class RTreeModel extends RelationalModel {
         return {
             model: child.model,
             domain,
-            expand: child.expand,
         };
     }
 
@@ -512,6 +512,7 @@ export class RTreeModel extends RelationalModel {
         }
         return {
             ...this._computeChildParam(child, parentDomain),
+            expand: child.expand,
             groupModel,
             groupBy: child.field,
         };
@@ -551,7 +552,6 @@ export class RTreeModel extends RelationalModel {
                 recordParams.push({
                     model,
                     domain: [],
-                    expand: false,
                 });
             }
             const children = parentsMap[model];
