@@ -14,7 +14,7 @@
         "views/web_widget_mpld3_chart.xml",
     ],
     "external_dependencies": {
-        "python": ['mpld3'],
+        # "python": ['mpld3'],
     },
     "auto_install": False,
     "license": "LGPL-3",
