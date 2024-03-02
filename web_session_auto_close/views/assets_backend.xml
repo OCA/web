@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="assets_backend"
+        inherit_id="web.assets_backend"
+        name="Web Session Auto Close Assets Backend"
+    >
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/web_session_auto_close/static/src/js/bus_service.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_session_auto_close/static/src/js/web_client.js"
+            />
+        </xpath>
+    </template>
+</odoo>
