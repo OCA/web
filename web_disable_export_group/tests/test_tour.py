@@ -19,8 +19,10 @@ class TestTour(odoo.tests.HttpCase):
             self.env,
             login="user_export_xlsx",
             password="user_export_xlsx",
-            groups="base.group_user,base.group_system,%s"
-            % ("web_disable_export_group.group_export_xlsx_data"),
+            groups=(
+                "base.group_user,base.group_system,"
+                "web_disable_export_group.group_export_xlsx_data"
+            ),
         )
 
     def test_admin(self):
