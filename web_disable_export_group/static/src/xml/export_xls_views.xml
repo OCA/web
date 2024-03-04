@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <templates>
 
-<t t-extend="ListView.buttons">
-    <t t-jquery="t[t-if*='widget.isExportEnable']" t-operation="attributes">
+<t
+        t-name="web.ListView.Buttons.disbaleExport"
+        t-inherit="web.ListView.Buttons"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+    <xpath expr="//t[contains(@t-if, 'isExportEnable')]" position="attributes">
         <attribute
                 name="t-if"
-            >widget.is_action_enabled('export_xlsx') and widget.isExportXlsEnable</attribute>
-    </t>
+            >nbTotal and !nbSelected and activeActions.exportXlsx and isExportXlsEnable and !env.isSmall</attribute>
+    </xpath>
 </t>
 
 </templates>
