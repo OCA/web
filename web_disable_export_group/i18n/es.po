@@ -31,12 +31,9 @@ msgstr "Exportación directa (xlsx)"
 msgid "HTTP Routing"
 msgstr "Ruta HTTP"
 
-#. module: web_disable_export_group
-#. openerp-web
-#: code:addons/web_disable_export_group/static/src/xml/export_xls_views.xml:0
 #, python-format
-msgid "widget.is_action_enabled('export_xlsx') and widget.isExportXlsEnable"
-msgstr "widget.is_action_enabled('export_xlsx') y widget.isExportXlsEnable"
+#~ msgid "widget.is_action_enabled('export_xlsx') and widget.isExportXlsEnable"
+#~ msgstr "widget.is_action_enabled('export_xlsx') y widget.isExportXlsEnable"
 
 #, python-format
 #~ msgid "Export"
