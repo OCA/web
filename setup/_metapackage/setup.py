@@ -17,6 +17,7 @@ setuptools.setup(
         'odoo-addon-web_dark_mode>=16.0dev,<16.1dev',
         'odoo-addon-web_dashboard_tile>=16.0dev,<16.1dev',
         'odoo-addon-web_dialog_size>=16.0dev,<16.1dev',
+        'odoo-addon-web_disable_export_group>=16.0dev,<16.1dev',
         'odoo-addon-web_domain_field>=16.0dev,<16.1dev',
         'odoo-addon-web_environment_ribbon>=16.0dev,<16.1dev',
         'odoo-addon-web_field_numeric_formatting>=16.0dev,<16.1dev',
