@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates>
+
+<t
+        t-name="web.ListView.Buttons.disbaleExport"
+        t-inherit="web.ListView.Buttons"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+    <xpath expr="//t[contains(@t-if, 'isExportEnable')]" position="attributes">
+        <attribute
+                name="t-if"
+            >nbTotal and !nbSelected and activeActions.exportXlsx and isExportXlsEnable and !env.isSmall</attribute>
+    </xpath>
+</t>
+
+</templates>
