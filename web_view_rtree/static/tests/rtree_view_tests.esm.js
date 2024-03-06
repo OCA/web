@@ -538,4 +538,308 @@ QUnit.module("RTree", () => {
             ],
         });
     });
+    QUnit.test(
+        "should compute the correct query parameters with a root domain",
+        (assert) => {
+            const taskParentDefs = [
+                {
+                    parent: "project.project",
+                    child: "project.project",
+                    field: "parent_id",
+                    domain: null,
+                    expand: false,
+                },
+                {
+                    parent: "project.project",
+                    child: "project.task",
+                    field: "project_id",
+                    domain: [["parent_id", "=", false]],
+                    expand: false,
+                },
+                {
+                    parent: "project.task",
+                    child: "project.task",
+                    field: "parent_id",
+                    domain: null,
+                    expand: false,
+                },
+            ];
+            let model = new RTreeModel(
+                {},
+                {resModel: "project.project", parentDefs: taskParentDefs},
+                {}
+            );
+            assert.deepEqual(model.computeParentParams(null, null), {
+                records: [
+                    {
+                        model: "project.project",
+                        domain: [["parent_id", "=", false]],
+                    },
+                    {
+                        model: "project.task",
+                        domain: [
+                            ["parent_id", "=", false],
+                            ["project_id", "=", false],
+                        ],
+                    },
+                ],
+                groups: [
+                    {
+                        model: "project.project",
+                        groupBy: "parent_id",
+                        groupModel: "project.project",
+                        domain: [["parent_id.parent_id", "=", false]],
+                        expand: false,
+                    },
+                    {
+                        model: "project.task",
+                        groupBy: "project_id",
+                        groupModel: "project.project",
+                        domain: [
+                            ["parent_id", "=", false],
+                            ["project_id.parent_id", "=", false],
+                        ],
+                        expand: false,
+                    },
+                    {
+                        model: "project.task",
+                        groupBy: "parent_id",
+                        groupModel: "project.task",
+                        domain: [
+                            ["parent_id.parent_id", "=", false],
+                            ["parent_id.project_id", "=", false],
+                        ],
+                        expand: false,
+                    },
+                ],
+            });
+            assert.deepEqual(
+                model.computeParentParams(null, null, [["parent_id", "=", 4]]),
+                {
+                    records: [
+                        {
+                            model: "project.project",
+                            domain: [["parent_id", "=", 4]],
+                        },
+                    ],
+                    groups: [
+                        {
+                            model: "project.project",
+                            groupBy: "parent_id",
+                            groupModel: "project.project",
+                            domain: [["parent_id.parent_id", "=", 4]],
+                            expand: false,
+                        },
+                        {
+                            model: "project.task",
+                            groupBy: "project_id",
+                            groupModel: "project.project",
+                            domain: [
+                                ["parent_id", "=", false],
+                                ["project_id.parent_id", "=", 4],
+                            ],
+                            expand: false,
+                        },
+                    ],
+                }
+            );
+            // Domain should be ignored if parentID is not null.
+            assert.deepEqual(
+                model.computeParentParams("project.project", 42, [
+                    ["parent_id", "=", 4],
+                ]),
+                {
+                    records: [
+                        {
+                            model: "project.project",
+                            domain: [["parent_id", "=", 42]],
+                        },
+                        {
+                            model: "project.task",
+                            domain: [
+                                ["parent_id", "=", false],
+                                ["project_id", "=", 42],
+                            ],
+                        },
+                    ],
+                    groups: [
+                        {
+                            model: "project.project",
+                            groupBy: "parent_id",
+                            groupModel: "project.project",
+                            domain: [["parent_id.parent_id", "=", 42]],
+                            expand: false,
+                        },
+                        {
+                            model: "project.task",
+                            groupBy: "project_id",
+                            groupModel: "project.project",
+                            domain: [
+                                ["parent_id", "=", false],
+                                ["project_id.parent_id", "=", 42],
+                            ],
+                            expand: false,
+                        },
+                        {
+                            model: "project.task",
+                            groupBy: "parent_id",
+                            groupModel: "project.task",
+                            domain: [
+                                ["parent_id.parent_id", "=", false],
+                                ["parent_id.project_id", "=", 42],
+                            ],
+                            expand: false,
+                        },
+                    ],
+                }
+            );
+            assert.deepEqual(
+                model.computeParentParams("project.task", 40, [["parent_id", "=", 4]]),
+                {
+                    records: [
+                        {
+                            model: "project.task",
+                            domain: [["parent_id", "=", 40]],
+                        },
+                    ],
+                    groups: [
+                        {
+                            model: "project.task",
+                            groupBy: "parent_id",
+                            groupModel: "project.task",
+                            domain: [["parent_id.parent_id", "=", 40]],
+                            expand: false,
+                        },
+                    ],
+                }
+            );
+            const abcParentDefs = [
+                {
+                    parent: "abc.a",
+                    child: "abc.a",
+                    field: "parent_id",
+                    domain: null,
+                    expand: false,
+                },
+                {
+                    parent: "abc.a",
+                    child: "abc.b",
+                    field: "a_id",
+                    domain: null,
+                    expand: false,
+                },
+                {
+                    parent: "abc.c",
+                    child: "abc.d",
+                    field: "c_id",
+                    domain: null,
+                    expand: false,
+                },
+            ];
+            model = new RTreeModel(
+                {},
+                {resModel: "abc.a", parentDefs: abcParentDefs},
+                {}
+            );
+            assert.deepEqual(
+                model.computeParentParams(null, null, [["value", "=", 42]]),
+                {
+                    records: [
+                        {
+                            model: "abc.a",
+                            domain: [["value", "=", 42]],
+                        },
+                    ],
+                    groups: [
+                        {
+                            model: "abc.a",
+                            groupBy: "parent_id",
+                            groupModel: "abc.a",
+                            domain: [["parent_id.value", "=", 42]],
+                            expand: false,
+                        },
+                        {
+                            model: "abc.b",
+                            groupBy: "a_id",
+                            groupModel: "abc.a",
+                            domain: [["a_id.value", "=", 42]],
+                            expand: false,
+                        },
+                    ],
+                }
+            );
+        }
+    );
+    QUnit.test(
+        "should compute the correct query parameters with an empty root domain",
+        (assert) => {
+            const taskParentDefs = [
+                {
+                    parent: "project.project",
+                    child: "project.task",
+                    field: "project_id",
+                    domain: [["parent_id", "=", false]],
+                    expand: false,
+                },
+                {
+                    parent: "project.task",
+                    child: "project.task",
+                    field: "parent_id",
+                    domain: null,
+                    expand: false,
+                },
+            ];
+            const expectedRootResult = {
+                records: [
+                    {
+                        model: "project.project",
+                        domain: [],
+                    },
+                    {
+                        model: "project.task",
+                        domain: [
+                            ["parent_id", "=", false],
+                            ["project_id", "=", false],
+                        ],
+                    },
+                ],
+                groups: [
+                    {
+                        model: "project.task",
+                        groupBy: "project_id",
+                        groupModel: "project.project",
+                        domain: [
+                            ["parent_id", "=", false],
+                            ["project_id", "!=", false],
+                        ],
+                        expand: false,
+                    },
+                    {
+                        model: "project.task",
+                        groupBy: "parent_id",
+                        groupModel: "project.task",
+                        domain: [
+                            ["parent_id.parent_id", "=", false],
+                            ["parent_id.project_id", "=", false],
+                        ],
+                        expand: false,
+                    },
+                ],
+            };
+            let model = new RTreeModel({}, {parentDefs: taskParentDefs}, {});
+            assert.deepEqual(
+                model.computeParentParams(null, null, []),
+                expectedRootResult
+            );
+            model = new RTreeModel(
+                {},
+                {resModel: "project.task", parentDefs: taskParentDefs},
+                {}
+            );
+            assert.deepEqual(
+                model.computeParentParams(null, null, []),
+                expectedRootResult
+            );
+        }
+    );
 });

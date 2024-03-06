@@ -170,7 +170,11 @@ class DynamicRTreeRecordList extends DynamicRecordList {
         if (this.loaded) {
             return;
         }
-        const parentParams = this.computeParentParams(this.parentModel, this.parentID);
+        const parentParams = this.computeParentParams(
+            this.parentModel,
+            this.parentID,
+            this.domain
+        );
         const recordPromises = parentParams.records.map(this._fetchRecords, this);
         const groupPromises = parentParams.groups.map(this._fetchGroups, this);
         const records = await Promise.all(recordPromises);
@@ -523,9 +527,24 @@ export class RTreeModel extends RelationalModel {
         parentID,
         parentsMap,
         recordParams,
-        groupParams
+        groupParams,
+        domain
     ) {
-        const recordParam = this._computeRecordParam(child, parentID);
+        if (
+            !parentID &&
+            domain.length !== 0 &&
+            child.model !== this.rootParams.resModel
+        ) {
+            // When a domain is defined, root-level elements of other models
+            // than the record model should be ignored.
+            return;
+        }
+        let recordParam = null;
+        if (parentID || domain.length === 0) {
+            recordParam = this._computeRecordParam(child, parentID);
+        } else {
+            recordParam = this._computeChildParam(child, domain);
+        }
         recordParams.push(recordParam);
         const groupChildren = parentsMap[child.model];
         if (groupChildren !== undefined) {
@@ -541,31 +560,37 @@ export class RTreeModel extends RelationalModel {
         }
     }
 
-    _computeRootParentParams(parentsMap, childrenMap, parentModels) {
+    _computeRootParentParams(parentsMap, childrenMap, parentModels, domain) {
         // FIXME: This part is hacky. It should be much simpler. Maybe include
         // a null parent in the parentsMaps?
         let recordParams = [];
         let groupParams = [];
         for (const model of parentModels) {
+            if (domain.length !== 0 && model !== this.rootParams.resModel) {
+                // When a domain is defined, it must be applied only to
+                // elements of the record model.
+                continue;
+            }
             const parents = childrenMap[model];
             if (parents === undefined) {
                 recordParams.push({
                     model,
-                    domain: [],
+                    domain,
                 });
             }
             const children = parentsMap[model];
             if (children !== undefined) {
                 for (const child of children) {
                     if (parents === undefined) {
-                        groupParams.push(this._computeGroupParam(child, model, []));
+                        groupParams.push(this._computeGroupParam(child, model, domain));
                     }
                     this._computeRecordAndGroupParams(
                         child,
                         false,
                         parentsMap,
                         recordParams,
-                        groupParams
+                        groupParams,
+                        domain
                     );
                 }
             }
@@ -594,7 +619,7 @@ export class RTreeModel extends RelationalModel {
         };
     }
 
-    computeParentParams(parentModel = null, parentID = null) {
+    computeParentParams(parentModel = null, parentID = null, domain = []) {
         const {parentsMap, childrenMap, parentModels} = this.parentsMap;
         let recordParams = [];
         let groupParams = [];
@@ -602,7 +627,8 @@ export class RTreeModel extends RelationalModel {
             ({recordParams, groupParams} = this._computeRootParentParams(
                 parentsMap,
                 childrenMap,
-                parentModels
+                parentModels,
+                domain
             ));
         } else {
             for (const child of parentsMap[parentModel]) {
@@ -611,7 +637,8 @@ export class RTreeModel extends RelationalModel {
                     parentID,
                     parentsMap,
                     recordParams,
-                    groupParams
+                    groupParams,
+                    domain
                 );
             }
         }
@@ -622,8 +649,8 @@ export class RTreeModel extends RelationalModel {
     }
 
     createDataPoint(type, params) {
-        params.computeParentParams = (parentModel, parentID) => {
-            return this.computeParentParams(parentModel, parentID);
+        params.computeParentParams = (parentModel, parentID, domain) => {
+            return this.computeParentParams(parentModel, parentID, domain);
         };
         return super.createDataPoint(...arguments);
     }
