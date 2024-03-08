@@ -155,7 +155,7 @@ odoo.define("web_drop_target", function (require) {
             const abstractAction = this.findAncestor(function (ancestor) {
                 return ancestor instanceof AbstractAction;
             });
-            const controller = abstractAction.currentDialogController;
+            const controller = abstractAction && abstractAction.currentDialogController;
             if (
                 _.isEmpty(this._get_drop_items(ev)) &&
                 this._checkDragOver() &&
@@ -186,7 +186,9 @@ odoo.define("web_drop_target", function (require) {
          */
         _onBodyFileDrop: function (ev) {
             ev.preventDefault();
-            this._drop_overlay.addClass("d-none");
+            if (this._drop_overlay) {
+                this._drop_overlay.addClass("d-none");
+            }
         },
 
         /**
