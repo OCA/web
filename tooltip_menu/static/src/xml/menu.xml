@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <t t-extend="AppsMenu">
+        <t t-jquery=".dropdown-item.o_app" t-operation="replace">
+            <a
+                role="menuitem"
+                class="dropdown-item o_app"
+                t-att-data-menu-id="app.menuID"
+                t-att-data-menu-xmlid="app.xmlID"
+                t-att-data-action-id="app.actionID"
+                t-att-title="app.description || ''"
+            >
+                    <t t-esc="app.name" />
+            </a>
+        </t>
+    </t>
+
+    <t t-extend="Menu.sections">
+        <t
+            t-jquery=".dropdown-toggle.o-no-caret.o_menu_header_lvl_1"
+            t-operation="replace"
+        >
+            <a
+                href="#"
+                class="dropdown-toggle o-no-caret o_menu_header_lvl_1"
+                t-att-data-menu-xmlid="second_level_menu.xmlid"
+                data-toggle="dropdown"
+                data-display="static"
+                role="button"
+                t-att-title="second_level_menu.description || ''"
+                aria-expanded="false"
+            >
+                <t t-esc="second_level_menu.name" />
+            </a>
+        </t>
+    </t>
+
+    <t t-extend="Menu.link">
+        <t t-jquery="a" t-operation="replace">
+            <a
+                role="menuitem"
+                t-attf-href="#menu_id=#{menu.id}&amp;action=#{menu.action ? menu.action.split(',')[1] : ''}"
+                t-att-data-menu="menu.id"
+                t-att-data-action-model="menu.action ? menu.action.split(',')[0] : ''"
+                t-att-data-action-id="menu.action ? menu.action.split(',')[1] : ''"
+                t-att-data-menu-xmlid="menu.xmlid"
+                t-att-title="menu.description || ''"
+                t-attf-class="#{inNavbar ? '' : 'dropdown-item '}o_menu_entry_lvl_#{depth}"
+                data-toggle="collapse"
+                data-target="#o_navbar_collapse.in"
+            >
+                <span><t t-esc="menu.name" /></span>
+            </a>
+        </t>
+    </t>
+</templates>
