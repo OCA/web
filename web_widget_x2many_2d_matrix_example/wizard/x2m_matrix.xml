@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="x2many_2d_matrix_demo" model="ir.ui.view">
+        <field name="name">x2m.matrix.demo.wiz</field>
+        <field name="model">x2m.matrix.demo.wiz</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <field
+                    name="line_ids"
+                    widget="x2many_2d_matrix"
+                    field_x_axis="demo_id"
+                    field_y_axis="user_id"
+                    field_value="value"
+                >
+                    <tree>
+                        <field name="demo_id" />
+                        <field name="user_id" />
+                        <field name="value" />
+                    </tree>
+                </field>
+            </form>
+        </field>
+    </record>
+    <record id="x2many_2d_matrix_demo_selection" model="ir.ui.view">
+        <field name="name">x2m.matrix.demo.wiz</field>
+        <field name="model">x2m.matrix.demo.wiz</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <field
+                    name="line_ids"
+                    widget="x2many_2d_matrix"
+                    field_x_axis="demo_id"
+                    field_y_axis="user_id"
+                    field_value="value_selection"
+                >
+                    <tree>
+                        <field name="demo_id" />
+                        <field name="user_id" />
+                        <field name="value_selection" />
+                    </tree>
+                </field>
+            </form>
+        </field>
+    </record>
+    <record id="x2many_2d_matrix_demo_many2one" model="ir.ui.view">
+        <field name="name">x2m.matrix.demo.wiz</field>
+        <field name="model">x2m.matrix.demo.wiz</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <field
+                    name="line_ids"
+                    widget="x2many_2d_matrix"
+                    field_x_axis="demo_id"
+                    field_y_axis="user_id"
+                    field_value="value_many2one"
+                >
+                    <tree>
+                        <field name="demo_id" />
+                        <field name="user_id" />
+                        <field
+                            name="value_many2one"
+                            domain="[('users', '=', user_id)]"
+                        />
+                    </tree>
+                </field>
+            </form>
+        </field>
+    </record>
+</odoo>
