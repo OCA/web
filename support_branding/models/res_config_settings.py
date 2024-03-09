@@ -29,7 +29,7 @@ class ResConfigSettings(models.TransientModel):
         param_obj.set_param("support_branding_color", self.support_branding_color)
         return res
 
-    support_company = fields.Char(string="Company Name")
+    support_company = fields.Char(string="Support Company Name")
     support_company_url = fields.Char(string="Company URL")
     support_branding_color = fields.Char(string="Branding color")
     support_email = fields.Char(string="Support email")
