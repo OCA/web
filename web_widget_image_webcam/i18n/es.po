@@ -17,29 +17,14 @@ msgstr ""
 "X-Generator: Weblate 3.10\n"
 
 #. module: web_widget_image_webcam
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_widget_image_webcam/static/src/js/webcam_widget.js:0
 #, python-format
 msgid "Close"
 msgstr "Cerrar"
 
 #. module: web_widget_image_webcam
-#: model:ir.model.fields,field_description:web_widget_image_webcam.field_ir_config_parameter__display_name
-msgid "Display Name"
-msgstr ""
-
-#. module: web_widget_image_webcam
-#: model:ir.model.fields,field_description:web_widget_image_webcam.field_ir_config_parameter__id
-msgid "ID"
-msgstr ""
-
-#. module: web_widget_image_webcam
-#: model:ir.model.fields,field_description:web_widget_image_webcam.field_ir_config_parameter____last_update
-msgid "Last Modified on"
-msgstr ""
-
-#. module: web_widget_image_webcam
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_widget_image_webcam/static/src/js/webcam_widget.js:0
 #, python-format
 msgid "Save & Close"
@@ -51,21 +36,21 @@ msgid "System Parameter"
 msgstr "Parámetro del sistema"
 
 #. module: web_widget_image_webcam
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_widget_image_webcam/static/src/js/webcam_widget.js:0
 #, python-format
 msgid "Take Snapshot"
 msgstr "Tomar instantánea"
 
 #. module: web_widget_image_webcam
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_widget_image_webcam/static/src/xml/web_widget_image_webcam.xml:0
 #, python-format
 msgid "WebCam"
 msgstr "WebCam"
 
 #. module: web_widget_image_webcam
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_widget_image_webcam/static/src/js/webcam_widget.js:0
 #, python-format
 msgid "WebCam Booth"
