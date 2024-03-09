@@ -49,6 +49,7 @@ setuptools.setup(
         'odoo13-addon-web_view_calendar_list',
         'odoo13-addon-web_widget_bokeh_chart',
         'odoo13-addon-web_widget_child_selector',
+        'odoo13-addon-web_widget_ckeditor',
         'odoo13-addon-web_widget_domain_editor_dialog',
         'odoo13-addon-web_widget_dropdown_dynamic',
         'odoo13-addon-web_widget_dropdown_dynamic_example',

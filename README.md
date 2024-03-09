@@ -67,6 +67,7 @@ addon | version | maintainers | summary
 [web_view_calendar_list](web_view_calendar_list/) | 13.0.1.0.1 |  | Show calendars as a List
 [web_widget_bokeh_chart](web_widget_bokeh_chart/) | 13.0.1.1.0 | [![LoisRForgeFlow](https://github.com/LoisRForgeFlow.png?size=30px)](https://github.com/LoisRForgeFlow) | This widget allows to display charts using Bokeh library.
 [web_widget_child_selector](web_widget_child_selector/) | 13.0.1.0.0 |  | Widget used for navigation on hierarchy fields
+[web_widget_ckeditor](web_widget_ckeditor/) | 13.0.1.0.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Provides a widget for editing HTML fields using CKEditor
 [web_widget_domain_editor_dialog](web_widget_domain_editor_dialog/) | 13.0.1.0.4 |  | Recovers the Domain Editor Dialog functionality
 [web_widget_dropdown_dynamic](web_widget_dropdown_dynamic/) | 13.0.1.0.0 |  | This module adds support for dynamic dropdown widget
 [web_widget_dropdown_dynamic_example](web_widget_dropdown_dynamic_example/) | 13.0.1.0.0 |  | Demonstration of web_widget_dropdown_dynamic
