@@ -52,11 +52,19 @@ odoo.define("web_dialog_size.web_dialog_size", function (require) {
             return this._super.apply(this, arguments);
         },
 
+        _trigger_resize: function () {
+            if (this.getParent() && this.getParent().trigger_up) {
+                this.trigger_up("resize");
+            }
+        },
+
         _extending: function () {
             var dialog = this.$modal.find(".modal-dialog");
             dialog.addClass("dialog_full_screen");
             dialog.find(".dialog_button_extend").hide();
             dialog.find(".dialog_button_restore").show();
+            // Recompute o2m columns width if needed
+            this._trigger_resize();
         },
 
         _restore: function () {
@@ -64,6 +72,8 @@ odoo.define("web_dialog_size.web_dialog_size", function (require) {
             dialog.removeClass("dialog_full_screen");
             dialog.find(".dialog_button_restore").hide();
             dialog.find(".dialog_button_extend").show();
+            // Recompute o2m columns width if needed
+            this._trigger_resize();
         },
     });
 });
