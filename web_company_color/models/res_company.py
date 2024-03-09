@@ -230,5 +230,5 @@ class ResCompany(models.Model):
                 custom_attachment.sudo().write(values)
             else:
                 values.update({"type": "binary", "mimetype": "text/scss"})
-                IrAttachmentObj.sudo().create(values)
+                IrAttachmentObj.with_context(not_force_website_id=True).sudo().create(values)
         self.env["ir.qweb"].sudo().clear_caches()
