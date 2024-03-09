@@ -17,15 +17,15 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: web_copy_confirm
-#. openerp-web
-#: code:addons/web_copy_confirm/static/src/js/web_copy_confirm.js:0
+#. odoo-javascript
+#: code:addons/web_copy_confirm/static/src/js/web_copy_confirm.esm.js:0
 #, python-format
 msgid "Are you sure that you would like to copy this record?"
 msgstr "Sind Sie sicher, dass Sie diesen Datensatz kopieren möchten?"
 
 #. module: web_copy_confirm
-#. openerp-web
-#: code:addons/web_copy_confirm/static/src/js/web_copy_confirm.js:0
+#. odoo-javascript
+#: code:addons/web_copy_confirm/static/src/js/web_copy_confirm.esm.js:0
 #, python-format
 msgid "Duplicate"
 msgstr "Duplizieren"
