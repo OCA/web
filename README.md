@@ -64,6 +64,7 @@ addon | version | maintainers | summary
 [web_widget_datepicker_fulloptions](web_widget_datepicker_fulloptions/) | 16.0.1.0.0 |  | Web Widget DatePicker Full Options
 [web_widget_domain_editor_dialog](web_widget_domain_editor_dialog/) | 16.0.1.0.0 |  | Recovers the Domain Editor Dialog functionality
 [web_widget_dropdown_dynamic](web_widget_dropdown_dynamic/) | 16.0.1.0.0 |  | This module adds support for dynamic dropdown widget
+[web_widget_image_webcam](web_widget_image_webcam/) | 16.0.1.0.0 |  | Allows to take image with WebCam
 [web_widget_mpld3_chart](web_widget_mpld3_chart/) | 16.0.1.0.0 | [![JordiBForgeFlow](https://github.com/JordiBForgeFlow.png?size=30px)](https://github.com/JordiBForgeFlow) [![ChrisOForgeFlow](https://github.com/ChrisOForgeFlow.png?size=30px)](https://github.com/ChrisOForgeFlow) | This widget allows to display charts using MPLD3 library.
 [web_widget_numeric_step](web_widget_numeric_step/) | 16.0.1.1.3 | [![rafaelbn](https://github.com/rafaelbn.png?size=30px)](https://github.com/rafaelbn) [![yajo](https://github.com/yajo.png?size=30px)](https://github.com/yajo) | Web Widget Numeric Step
 [web_widget_open_tab](web_widget_open_tab/) | 16.0.2.0.0 |  | Allow to open record from trees on new tab from tree views

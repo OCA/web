@@ -51,6 +51,7 @@ setuptools.setup(
         'odoo-addon-web_widget_datepicker_fulloptions>=16.0dev,<16.1dev',
         'odoo-addon-web_widget_domain_editor_dialog>=16.0dev,<16.1dev',
         'odoo-addon-web_widget_dropdown_dynamic>=16.0dev,<16.1dev',
+        'odoo-addon-web_widget_image_webcam>=16.0dev,<16.1dev',
         'odoo-addon-web_widget_mpld3_chart>=16.0dev,<16.1dev',
         'odoo-addon-web_widget_numeric_step>=16.0dev,<16.1dev',
         'odoo-addon-web_widget_open_tab>=16.0dev,<16.1dev',
