@@ -88,7 +88,7 @@ addon | version | maintainers | summary
 [web_widget_dropdown_dynamic_example](web_widget_dropdown_dynamic_example/) | 12.0.1.0.1 |  | Demonstration of web_widget_dropdown_dynamic
 [web_widget_float_formula](web_widget_float_formula/) | 12.0.1.0.1 |  | Allow use of simple formulas in float fields
 [web_widget_image_download](web_widget_image_download/) | 12.0.1.0.0 |  | Allows to download any image from its widget
-[web_widget_image_url](web_widget_image_url/) | 12.0.1.0.1 |  | This module provides web widget for displaying image from URL
+[web_widget_image_url](web_widget_image_url/) | 12.0.1.1.0 |  | This module provides web widget for displaying image from URL
 [web_widget_image_webcam](web_widget_image_webcam/) | 12.0.1.0.0 |  | Allows to take image with WebCam
 [web_widget_json_graph](web_widget_json_graph/) | 12.0.1.0.0 | [![luisg123v](https://github.com/luisg123v.png?size=30px)](https://github.com/luisg123v) | Draw json fields with graphs.
 [web_widget_many2many_tags_multi_selection](web_widget_many2many_tags_multi_selection/) | 12.0.1.0.1 |  | Tags multiple selection
