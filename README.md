@@ -24,6 +24,7 @@ addon | version | maintainers | summary
 [web_access_rule_buttons](web_access_rule_buttons/) | 11.0.1.0.1 |  | Disable Edit button if access rules prevent this action
 [web_action_conditionable](web_action_conditionable/) | 11.0.1.1.0 |  | web_action_conditionable
 [web_advanced_search](web_advanced_search/) | 11.0.1.0.2 |  | Easier and more powerful searching tools
+[web_clickjack_protection](web_clickjack_protection/) | 11.0.1.0.0 |  | Protects Odoo instancess from possible Clickjacking attacks
 [web_company_title](web_company_title/) | 11.0.1.0.2 |  | Web Company Title
 [web_decimal_numpad_dot](web_decimal_numpad_dot/) | 11.0.1.0.3 |  | Allows using numpad dot to enter period decimal separator
 [web_dialog_size](web_dialog_size/) | 11.0.1.0.4 |  | A module that lets the user expand a dialog box to the full screen width.
