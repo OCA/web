@@ -1,0 +1,35 @@
+/*
+    Copyright 2016 Siddharth Bhalgami <siddharth.bhalgami@gmail.com>
+    Copyright 2019-Today: Druidoo (<https://www.druidoo.io>)
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+*/
+.o_form_view.o_form_editable
+    .o_form_field_image
+    .o_form_image_controls
+    .o_form_binary_file_web_cam {
+    color: inherit;
+}
+.o_field_widget.o_field_image .o_form_image_controls > .fa {
+    margin: 3px;
+}
+.o_form_view .o_form_field_image .o_form_image_controls > .fa {
+    margin: 3px;
+}
+.live_webcam_outer_div,
+.webcam_result_outer_div {
+    padding-left: 20px;
+}
+
+#webcam_result img {
+    max-width: 320px;
+    max-height: 240px;
+}
+
+#live_webcam {
+    width: 320px;
+    height: 240px;
+}
+
+.direction_icon {
+    text-align: center;
+}
