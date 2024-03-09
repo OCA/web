@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates id="template" xml:space="preserve">
+    <div t-name="web_widget_html_markdown.radio_info">
+        <div
+            id="radio_container"
+            class="o_field_radio o_field_widget o_required_modifier o_light_label"
+        >
+            <div class="custom-control custom-radio o_radio_item" aria-atomic="true">
+                <input
+                    id="markdown"
+                    type="radio"
+                    name="_switcher"
+                    value="markdown"
+                    class="custom-control-input o_radio_input"
+                > </input>
+                <label
+                    id="markdown_label"
+                    for="markdown"
+                    class="custom-control-label o_form_label"
+                >
+                    Markdown
+                </label>
+            </div>
+            <div
+                class="custom-control custom-radio o_radio_item"
+                aria-atomic="true"
+                t-if="!widget.options.only_markdown_on_new"
+            >
+                <input
+                    type="radio"
+                    id="html"
+                    name="_switcher"
+                    value="html"
+                    class="custom-control-input o_radio_input"
+                    t-if="!widget.options.only_markdown_on_new"
+                > </input>
+                <label
+                    id="html_label"
+                    for="html"
+                    t-if="!widget.options.only_markdown_on_new"
+                    class="custom-control-label o_form_label"
+                >
+                    HTML
+                </label>
+            </div>
+        </div>
+        <div id="md_infoarea" class="badge badge-primary">
+        </div>
+    </div>
+</templates>
