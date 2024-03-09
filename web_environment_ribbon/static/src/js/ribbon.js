@@ -34,7 +34,7 @@ odoo.define("web_environment_ribbon.ribbon", function (require) {
     }
 
     core.bus.on("web_client_ready", null, function () {
-        var ribbon = $('<div class="test-ribbon hidden"/>');
+        var ribbon = $('<div class="test-ribbon"/>');
         $("body").append(ribbon);
         ribbon.hide();
         // Get ribbon data from backend
