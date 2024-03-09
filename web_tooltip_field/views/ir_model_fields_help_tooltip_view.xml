@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2023 Komit - Cuong Nguyen Mtm
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+<record id="ir_model_fields_help_tooltip_view_tree" model="ir.ui.view">
+    <field name="name">ir.model.fields.help.tooltip.view.tree</field>
+    <field name="model">ir.model.fields.help.tooltip</field>
+    <field name="arch" type="xml">
+        <tree>
+            <field name="model" />
+            <field name="field_id" />
+            <field name="help" />
+        </tree>
+    </field>
+</record>
+
+<record id="ir_model_fields_help_tooltip_view_form" model="ir.ui.view">
+    <field name="name">ir.model.fields.help.tooltip.view.form</field>
+    <field name="model">ir.model.fields.help.tooltip</field>
+    <field name="arch" type="xml">
+        <form>
+            <sheet>
+                <group>
+                    <group>
+                        <field name="field_id" />
+                        <field name="help" />
+                    </group>
+                    <group>
+                        <field name="model" />
+                    </group>
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+<record id="ir_model_fields_help_tooltip_view_search" model="ir.ui.view">
+    <field name="name">ir.model.fields.help.tooltip.view.search</field>
+    <field name="model">ir.model.fields.help.tooltip</field>
+    <field name="arch" type="xml">
+        <search>
+            <field name="field_id" />
+            <field name="help" />
+            <group expand="0" string="Group By...">
+                <filter
+                        string="Model"
+                        name="groupby_model"
+                        context="{'group_by': 'model'}"
+                    />
+            </group>
+        </search>
+    </field>
+</record>
+
+<record id="ir_model_fields_help_tooltip_action" model="ir.actions.act_window">
+    <field name="name">Fields Help Tooltip</field>
+    <field name="res_model">ir.model.fields.help.tooltip</field>
+    <field name="view_mode">tree,form</field>
+    <field name="view_id" ref="ir_model_fields_help_tooltip_view_tree" />
+    <field name="search_view_id" ref="ir_model_fields_help_tooltip_view_search" />
+</record>
+
+<menuitem
+        id="ir_model_fields_help_tooltip_menu"
+        name="Fields Help Tooltip"
+        parent="base.next_id_9"
+        action="ir_model_fields_help_tooltip_action"
+        sequence="15"
+    />
+
+<!-- Change sequence of other menu to place ir_model_fields_help_tooltip_menu in the middle -->
+<record id="base.ir_model_constraint_menu" model="ir.ui.menu">
+    <field name="sequence">20</field>
+</record>
+<record id="base.ir_model_relation_menu" model="ir.ui.menu">
+    <field name="sequence">25</field>
+</record>
+<record id="base.menu_action_attachment" model="ir.ui.menu">
+    <field name="sequence">30</field>
+</record>
+<record id="base.ir_logging_all_menu" model="ir.ui.menu">
+    <field name="sequence">35</field>
+</record>
+
+</odoo>
