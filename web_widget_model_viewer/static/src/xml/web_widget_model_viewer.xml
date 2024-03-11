@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <t t-name="FieldBinaryModelViewer">
+        <div
+            class="o_field_image"
+            aria-atomic="true"
+            style="background-color: #FFFFFF;"
+        >
+            <t t-if="widget.mode !== 'readonly'">
+                <div class="o_form_image_controls">
+                    <button
+                        class="fa fa-pencil float-left o_select_file_button fa-2x"
+                        title="Edit"
+                        aria-label="Edit"
+                    />
+                    <button
+                        class="fa fa-trash-o float-right o_clear_file_button fa-2x"
+                        title="Clear"
+                        aria-label="Clear"
+                    />
+                    <span class="o_form_binary_progress">Uploading...</span>
+                    <t t-call="HiddenInputFile">
+                        <t t-set="image_only" t-value="true" />
+                        <t t-set="fileupload_id" t-value="widget.fileupload_id" />
+                    </t>
+                </div>
+            </t>
+        </div>
+    </t>
+    <t t-name="FieldBinaryModelViewer-glb">
+        <model-viewer
+            t-att-src='url'
+            t-att-border="widget.readonly ? 0 : 1"
+            t-att-name="widget.name"
+            alt="3D model"
+            auto-rotate="1"
+            camera-controls="1"
+        >
+                <div class="text-center mt-2 mb-2 mr-2">
+                    <span
+                    id="model-viewer-fullscreen"
+                    title="View fullscreen"
+                    role="img"
+                    aria-label="Fullscreen"
+                >
+                        <i class="fa fa-arrows-alt fa-2x" />
+                    </span>
+                </div>
+        </model-viewer>
+    </t>
+</templates>
