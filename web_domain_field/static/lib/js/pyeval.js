@@ -153,8 +153,9 @@ odoo.define('web.domain_field', function (require) {
             if (_.isString(domain)) {
                 // Modified part or the original method
                 if (domain in evaluation_context) {
-                    result_domain.push.apply(
-                        result_domain, $.parseJSON(evaluation_context[domain]));
+                    let domain_json_contents = evaluation_context[domain];
+                    let json_evaled_domain = $.parseJSON(domain_json_contents || "[]");
+                    result_domain.push.apply(result_domain, json_evaled_domain);
                     return;
                 }
                 // End of modifications
