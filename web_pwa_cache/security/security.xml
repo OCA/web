@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="0">
+        <record id="group_pwa_cache" model="res.groups">
+            <field name="name">Enable PWA Cache</field>
+            <field name="category_id" ref="base.module_category_hidden" />
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="pwa_cache_rule" model="ir.rule">
+            <field name="name">PWA Cache</field>
+            <field ref="web_pwa_cache.model_pwa_cache" name="model_id" />
+            <field eval="True" name="perm_unlink" />
+            <field eval="True" name="perm_write" />
+            <field eval="False" name="perm_read" />
+            <field eval="False" name="perm_create" />
+            <field eval="True" name="global" />
+            <field name="domain_force">[('internal', '=', False)]</field>
+        </record>
+    </data>
+</odoo>

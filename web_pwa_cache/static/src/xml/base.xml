@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <t t-extend="UserMenu.Actions">
+        <t t-jquery=".dropdown-divider" t-operation="after">
+            <a
+                role="menuitem"
+                href="#"
+                data-menu="pwaMode"
+                class="dropdown-item d-none"
+            >
+                Offline Mode
+            </a>
+            <a
+                role="menuitem"
+                href="#"
+                data-menu="pwaQueueSync"
+                class="dropdown-item d-none"
+            >
+                <span class="text-info">
+                    <span id='pwa_sync_records_count'>0</span>
+                    Recods queued to sync.
+                </span>
+            </a>
+            <div role="separator" class="dropdown-divider pwa-separator d-none" />
+        </t>
+        <t t-jquery="a:first" t-operation="before">
+            <h6
+                class="dropdown-header text-center text-uppercase text-black d-none"
+                id="pwa_status"
+            />
+            <div role="separator" class="dropdown-divider pwa-separator d-none" />
+        </t>
+    </t>
+    <t t-name="web_pwa_cache.SWInfo">
+        <div
+            class="modal fade"
+            id="pwaSWInfo"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="PWA Info"
+            aria-hidden="true"
+            data-backdrop="static"
+            data-keyboard="false"
+        >
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">PWA Info</h5>
+                    </div>
+                    <div class="modal-body">
+                        <span id="swinfo_message">Waiting service worker...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="web_pwa_cache.PrefetchProgress">
+        <div
+            class="modal fade"
+            id="pwaPrefetchProgress"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="PWA Prefetch Progress"
+            aria-hidden="true"
+            data-backdrop="static"
+            data-keyboard="false"
+        >
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Getting server data...</h5>
+                        <span>SW Ver: <span t-esc="sw_version" /></span>
+                    </div>
+                    <div class="modal-error-message bg-danger w-100 p-2 d-none">
+                        <strong>ERROR!</strong><br />
+                        <span id="pwa_prefectch_error_message" />
+                    </div>
+                    <div class="modal-body" />
+                    <div class="modal-footer d-none">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            id="pwa_prefetch_try_again__force_mode"
+                        >Try Again (Force Mode)</button>
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            id="pwa_prefetch_try_again"
+                        >Try Again</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+    <t t-name="web_pwa_cache.PrefetchProgressTasks">
+        <div class="section-progress" t-attf-id="pwa_task_{{task_id}}">
+            <p class="prefetch-message mb-0" />
+            <div class="progress" style="height: 20px;">
+                <div
+                    class="progress-bar"
+                    role="progressbar"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                />
+            </div>
+        </div>
+        <hr />
+    </t>
+    <t t-name="web_pwa_cache.PWAModeSelector">
+        <div class="text-center">
+            <button class="btn btn-secondary p-4 mr-3" data-mode="offline">
+                <i class="fa fa-4x fa-unlink" />
+                <br />
+                OFFLINE
+            </button>
+            <button class="btn btn-secondary p-4 ml-3" data-mode="online">
+                <i class="fa fa-4x fa-link" />
+                <br />
+                ONLINE
+            </button>
+        </div>
+    </t>
+    <t t-name="web_pwa_cache.PWASyncModal">
+        <div class="text-center">
+            <t t-if="records.length">
+                <div>
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th class="sticky-top" scope="col">#</th>
+                                <th class="sticky-top" scope="col">Method</th>
+                                <th class="sticky-top" scope="col">Model</th>
+                                <th class="sticky-top" scope="col">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="records" t-as="record">
+                                <t t-set="rindex" t-value="record_index + 1" />
+                                <tr t-attf-id="record_sync_{{record.id}}">
+                                    <th scope="row">
+                                        <t t-esc="rindex" />
+                                    </th>
+                                    <td>
+                                        <t t-esc="record.method" />
+                                    </td>
+                                    <td>
+                                        <t t-esc="record.model" />
+                                    </td>
+                                    <td>
+                                        <t
+                                            t-esc="moment(record.date).format(langDateTimeFormat)"
+                                        />
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+            <t t-else="">
+                <strong class="muted">NO RECORDS QUEUED TO SYNCHRONIZE :)</strong>
+            </t>
+        </div>
+    </t>
+    <t t-name="web_pwa_cache.PWASyncError">
+        <p>An error ocurred while synchronizing records:</p>
+        <p t-esc="errormsg" />
+    </t>
+    <t t-name="web_pwa_cache.update_caches">
+        <button
+            t-if="widget and widget.modelName == 'pwa.cache'"
+            type="button"
+            class="btn btn-secondary o_button_pwa_update_caches"
+        >
+            Update Caches
+        </button>
+    </t>
+    <t t-extend="ListView.buttons">
+        <t t-jquery="button.o_list_button_add" t-operation="after">
+            <t t-call="web_pwa_cache.update_caches" />
+        </t>
+    </t>
+</templates>

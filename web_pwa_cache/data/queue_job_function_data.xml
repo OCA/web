@@ -1,0 +1,16 @@
+<odoo noupdate="1">
+    <record
+        id="job_function_pwa_cache_onchange_update_onchange_cache"
+        model="queue.job.function"
+    >
+        <field name="model_id" ref="model_pwa_cache_onchange" />
+        <field name="method">update_onchange_cache</field>
+    </record>
+    <record
+        id="job_function_pwa_cache_onchange_compute_record"
+        model="queue.job.function"
+    >
+        <field name="model_id" ref="model_pwa_cache_onchange" />
+        <field name="method">_update_onchange_cache_value</field>
+    </record>
+</odoo>

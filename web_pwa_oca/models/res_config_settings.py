@@ -1,4 +1,5 @@
 # Copyright 2020 Tecnativa - João Marques
+# Copyright 2021 Tecnativa - Alexandre D. Díaz
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 import base64
 import io
@@ -8,6 +9,12 @@ from PIL import Image
 
 from odoo import _, api, exceptions, fields, models
 from odoo.tools.mimetypes import guess_mimetype
+
+DEFAULT_ICON_SIZE = 512
+PWA_ICON_SIZES = (
+    (512, 512),
+    (192, 192),
+)
 
 
 class ResConfigSettings(models.TransientModel):
@@ -24,6 +31,12 @@ class ResConfigSettings(models.TransientModel):
     pwa_icon = fields.Binary("Icon", readonly=False)
     pwa_background_color = fields.Char("Background Color")
     pwa_theme_color = fields.Char("Theme Color")
+    pwa_action_id = fields.Many2one(
+        "ir.actions.actions",
+        string="Home Action",
+        help="If specified, this action will be opened at pwa opened, in addition "
+        "to the standard menu.",
+    )
 
     @api.model
     def get_values(self):
@@ -49,7 +62,19 @@ class ResConfigSettings(models.TransientModel):
         res["pwa_theme_color"] = config_parameter_obj_sudo.get_param(
             "pwa.manifest.theme_color", default="#2E69B5"
         )
+        action_id = config_parameter_obj_sudo.get_param(
+            "pwa.config.action_id", default=False
+        )
+        res["pwa_action_id"] = action_id and int(action_id)
         return res
+
+    @api.model
+    def get_pwa_home_action(self):
+        return (
+            self.env["ir.config_parameter"]
+            .sudo()
+            .get_param("pwa.config.action_id", default=False)
+        )
 
     def _unpack_icon(self, icon):
         # Wrap decoded_icon in BytesIO object
@@ -103,11 +128,17 @@ class ResConfigSettings(models.TransientModel):
         config_parameter_obj_sudo.set_param(
             "pwa.manifest.theme_color", self.pwa_theme_color
         )
+        config_parameter_obj_sudo.set_param(
+            "pwa.config.action_id", self.pwa_action_id.id
+        )
         # Retrieve previous value for pwa_icon from ir_attachment
         pwa_icon_ir_attachments = (
             self.env["ir.attachment"]
             .sudo()
             .search([("url", "like", self._pwa_icon_url_base)])
+        )
+        config_parameter_obj_sudo.set_param(
+            "pwa.manifest.custom_icon", True if self.pwa_icon else False
         )
         # Delete or ignore if no icon provided
         if not self.pwa_icon:
@@ -138,19 +169,20 @@ class ResConfigSettings(models.TransientModel):
         self._write_icon_to_attachment(pwa_icon_extension, pwa_icon_mimetype)
         # write multiple sizes if not SVG
         if pwa_icon_extension != ".svg":
-            # Fail if provided PNG is smaller than 512x512
-            if self._unpack_icon(self.pwa_icon).size < (512, 512):
+            # Fail if provided PNG is smaller than DEFAULT_ICON_SIZE
+            if self._unpack_icon(self.pwa_icon).size < (
+                DEFAULT_ICON_SIZE,
+                DEFAULT_ICON_SIZE,
+            ):
                 raise exceptions.UserError(
-                    _("You can only upload PNG files bigger than 512x512")
+                    _(
+                        "You can only upload PNG files bigger "
+                        + "than {icon_size}x{icon_size}".format(
+                            icon_size=DEFAULT_ICON_SIZE
+                        )
+                    )
                 )
-            for size in [
-                (128, 128),
-                (144, 144),
-                (152, 152),
-                (192, 192),
-                (256, 256),
-                (512, 512),
-            ]:
+            for size in PWA_ICON_SIZES:
                 self._write_icon_to_attachment(
                     pwa_icon_extension, pwa_icon_mimetype, size=size
                 )

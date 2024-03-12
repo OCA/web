@@ -187,7 +187,7 @@ promote its widespread use.
 
 Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-eLBati| 
+|maintainer-eLBati|
 
 This module is part of the `OCA/web <https://github.com/OCA/web/tree/13.0/web_pwa_oca>`_ project on GitHub.
 

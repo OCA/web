@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="pwa_cache_view_form" model="ir.ui.view">
+        <field name="name">pwa.cache.form</field>
+        <field name="model">pwa.cache</field>
+        <field name="arch" type="xml">
+            <form string="PWA Cache">
+                <header>
+                    <button
+                        name="enqueue_onchange_cache"
+                        type="object"
+                        string="Enqueue whole refresh"
+                        attrs="{'invisible': [('cache_type', '!=', 'onchange')]}"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <widget
+                            name="web_ribbon"
+                            text="Archived"
+                            bg_color="bg-danger"
+                            attrs="{'invisible': [('active', '=', True)]}"
+                        />
+                        <field name="active" invisible="1" />
+                    </div>
+                    <field name="model_name" invisible="1" />
+                    <group col="4">
+                        <field name="name" />
+                        <field name="cache_type" />
+                    </group>
+                    <group>
+                        <field name="group_ids" widget="many2many_tags" />
+                        <field
+                            name="differentiation_group_id"
+                            attrs="{'invisible': [('cache_type', '!=', 'onchange')]}"
+                        />
+                    </group>
+                    <group>
+                        <field name="sequence" />
+                    </group>
+                    <group
+                        attrs="{'invisible': [('cache_type', 'not in', ['model', 'onchange', 'onchange_formula', 'default_formula', 'function'])]}"
+                    >
+                        <field
+                            name="model_id"
+                            attrs="{'required': [('cache_type', 'in', ['model', 'onchange', 'onchange_formula', 'default_formula', 'function'])]}"
+                        />
+                    </group>
+                    <group attrs="{'invisible': [('cache_type', '!=', 'model')]}">
+                        <field
+                            name="model_domain"
+                            widget="domain"
+                            options="{'model': 'model_name', 'in_dialog': True}"
+                            attrs="{'required': [('cache_type', '=', 'model')]}"
+                        />
+                        <field
+                            name="model_domain_raw"
+                            attrs="{'required': [('cache_type', '=', 'model')]}"
+                        />
+                        <field
+                            name="model_field_included_ids"
+                            widget="many2many_tags"
+                        />
+                    </group>
+                    <group attrs="{'invisible': [('cache_type', '!=', 'function')]}">
+                        <field
+                            name="function_name"
+                            attrs="{'required': [('cache_type', '=', 'function')]}"
+                        />
+                        <field name="function_params" />
+                    </group>
+                    <group
+                        attrs="{'invisible': [('cache_type', '!=', 'onchange_formula')]}"
+                    >
+                        <group colspan="4">
+                            <field
+                                name="onchange_field_id"
+                                attrs="{'invisible': [('model_id', '=', False)], 'required': [('cache_type', '=', 'onchange_formula')]}"
+                            />
+                        </group>
+                    </group>
+                    <group attrs="{'invisible': [('cache_type', '!=', 'onchange')]}">
+                        <group colspan="4">
+                            <field
+                                name="onchange_field_id"
+                                attrs="{'invisible': [('model_id', '=', False)], 'required': [('cache_type', '=', 'onchange')]}"
+                            />
+                        </group>
+                        <group colspan="4">
+                            <field
+                                name="onchange_selector_ids"
+                                attrs="{'invisible': [('model_id', '=', False)]}"
+                            >
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle" />
+                                    <field name="field_name" />
+                                    <field name="expression" />
+                                    <field name="disposable" />
+                                    <field name="required" />
+                                </tree>
+                            </field>
+                            <field
+                                name="onchange_discriminator_selector_id"
+                                attrs="{'invisible': [('model_id', '=', False)]}"
+                            />
+                        </group>
+                        <group colspan="4">
+                            <field
+                                name="onchange_trigger_ids"
+                                attrs="{'invisible': [('model_id', '=', False)]}"
+                            >
+                                <tree editable="bottom">
+                                    <field name="field_name" />
+                                    <field name="trigger_type" />
+                                    <field name="model" />
+                                    <field name="selector_expression" />
+                                    <field
+                                        name="vals_discriminant"
+                                        attrs="{'readonly': [('trigger_type', 'not in', ['update', 'complete'])]}"
+                                    />
+                                </tree>
+                            </field>
+                        </group>
+                    </group>
+                    <group attrs="{'invisible': [('cache_type', '!=', 'clientqweb')]}">
+                        <field
+                            name="xml_refs"
+                            attrs="{'required': [('cache_type', '=', 'clientqweb')]}"
+                        />
+                        <div colspan="2" class="text-right">
+                            <span>
+                                <i class="fa fa-info" />
+                                Use one line per view ref.
+                            </span>
+                        </div>
+                    </group>
+                    <group attrs="{'invisible': [('cache_type', '!=', 'post')]}">
+                        <field
+                            name="post_url"
+                            attrs="{'required': [('cache_type', '=', 'post')]}"
+                        />
+                        <field
+                            name="post_params"
+                            attrs="{'required': [('cache_type', '=', 'post')]}"
+                        />
+                    </group>
+                    <group attrs="{'invisible': [('cache_type', '!=', 'get')]}">
+                        <field
+                            name="get_urls"
+                            attrs="{'required': [('cache_type', '=', 'get')]}"
+                        />
+                        <div colspan="2" class="text-right">
+                            <span>
+                                <i class="fa fa-info" />
+                                Use one line per url.
+                            </span>
+                        </div>
+                    </group>
+                    <notebook>
+                        <page
+                            string="Javascript Code"
+                            name='code'
+                            autofocus="autofocus"
+                            attrs="{'invisible': [('cache_type', 'not in', ['onchange_formula', 'default_formula'])]}"
+                        >
+                            <field
+                                name="code_js"
+                                widget="ace"
+                                options="{'mode': 'python'}"
+                                placeholder="Enter Javascript code here."
+                            />
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pwa_cache_view_search" model="ir.ui.view">
+        <field name="name">pwa.cache.search</field>
+        <field name="model">pwa.cache</field>
+        <field eval="100" name="priority" />
+        <field name="arch" type="xml">
+            <search string="PWA Cache">
+                <field name="internal" />
+                <filter
+                    name="pwa_cache_only_internal"
+                    string="Only Internal"
+                    domain="[('internal', '=', True)]"
+                />
+                <filter
+                    name="pwa_cache_no_internal"
+                    string="Hide Internal"
+                    domain="[('internal', '!=', True)]"
+                />
+            </search>
+        </field>
+    </record>
+    <record id="pwa_cache_view_tree" model="ir.ui.view">
+        <field name="name">pwa.cache.tree</field>
+        <field name="model">pwa.cache</field>
+        <field name="arch" type="xml">
+            <tree string="PWA Cache Rules">
+                <field name="name" />
+                <field name="cache_type" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_pwa_cache_form" model="ir.actions.act_window">
+        <field name="name">PWA Cache</field>
+        <field name="res_model">pwa.cache</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{"search_default_pwa_cache_no_internal":1}</field>
+        <field name="search_view_id" ref="web_pwa_cache.pwa_cache_view_search" />
+    </record>
+    <!-- Menu -->
+    <menuitem id="menu_pwa" name="PWA" parent="base.menu_custom" />
+    <menuitem
+        name="PWA Cache"
+        action="action_pwa_cache_form"
+        id="menu_action_pwa_cache_form"
+        parent="menu_pwa"
+        sequence="1"
+    />
+    <record id="pwa_cache_onchange_view_tree" model="ir.ui.view">
+        <field name="name">pwa.cache.onchange.tree</field>
+        <field name="model">pwa.cache.onchange</field>
+        <field name="arch" type="xml">
+            <tree string="PWA Cache Onchange Selector">
+                <field name="field_name" />
+                <field name="grouping_field" />
+                <field name="expression" />
+            </tree>
+        </field>
+    </record>
+</odoo>
