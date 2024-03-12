@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -368,21 +369,32 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:4d2a045e0badb54f2ac7bd7ae62c086e68960c402df8bbce1ba7fc76716b7452
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/web/tree/15.0/web_tree_dynamic_colored_field"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/web-15-0/web-15-0-web_tree_dynamic_colored_field"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/web&amp;target_branch=15.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
-<p>This module aims to add support for dynamically coloring fields in tree view
-according to data in the record.</p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/web/tree/17.0/web_tree_dynamic_colored_field"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/web-17-0/web-17-0-web_tree_dynamic_colored_field"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/web&amp;target_branch=17.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p>This module aims to add support for dynamically coloring fields in tree
+view according to data in the record.</p>
 <div class="section" id="features">
 <h1>Features</h1>
 <ul class="simple">
-<li>Add attribute <tt class="docutils literal">bg_color</tt> on field’s <tt class="docutils literal">options</tt> to color background of a cell in tree view</li>
-<li>Add attribute <tt class="docutils literal">fg_color</tt> on field’s <tt class="docutils literal">options</tt> to change text color of a cell in tree view</li>
+<li>Add attribute <tt class="docutils literal">bg_color</tt> on field’s <tt class="docutils literal">options</tt> to color background
+of a cell in tree view</li>
+<li>Add attribute <tt class="docutils literal">fg_color</tt> on field’s <tt class="docutils literal">options</tt> to change text
+color of a cell in tree view</li>
 </ul>
 <p><strong>Table of contents</strong></p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#usage" id="toc-entry-1">Usage</a></li>
+<li><a class="reference internal" href="#known-issues-roadmap" id="toc-entry-2">Known issues / Roadmap</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="toc-entry-3">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="toc-entry-4">Credits</a></li>
+</ul>
 </div>
 <div class="section" id="usage">
-<h1>Usage</h1>
+<h2><a class="toc-backref" href="#toc-entry-1">Usage</a></h2>
 <ul>
-<li><p class="first">In the tree view declaration, put <tt class="docutils literal"><span class="pre">options='{&quot;bg_color&quot;:</span> &quot;red: <span class="pre">customer==True&quot;}</span></tt> attribute in the <tt class="docutils literal">field</tt> tag:</p>
+<li><p class="first">In the tree view declaration, put
+<tt class="docutils literal"><span class="pre">options='{&quot;bg_color&quot;:</span> &quot;red: <span class="pre">customer==True&quot;}</span></tt> attribute in the
+<tt class="docutils literal">field</tt> tag:</p>
 <pre class="literal-block">
 ...
 &lt;field name=&quot;arch&quot; type=&quot;xml&quot;&gt;
@@ -397,7 +409,9 @@ according to data in the record.</p>
 With this example, column which renders 'name' field will have its background colored in red.
 </pre>
 </li>
-<li><p class="first">In the tree view declaration, put <tt class="docutils literal"><span class="pre">options='{&quot;fg_color&quot;:</span> &quot;white:customer == <span class="pre">True&quot;}'</span></tt> attribute in the <tt class="docutils literal">field</tt> tag:</p>
+<li><p class="first">In the tree view declaration, put
+<tt class="docutils literal"><span class="pre">options='{&quot;fg_color&quot;:</span> &quot;white:customer == <span class="pre">True&quot;}'</span></tt> attribute in the
+<tt class="docutils literal">field</tt> tag:</p>
 <pre class="literal-block">
 ...
 &lt;field name=&quot;arch&quot; type=&quot;xml&quot;&gt;
@@ -412,7 +426,9 @@ With this example, column which renders 'name' field will have its background co
 With this example, column which renders 'name' field will have its text colored in white on a customer records.
 </pre>
 </li>
-<li><p class="first">In the tree view declaration, use <tt class="docutils literal"><span class="pre">options='&quot;color_field&quot;:</span> &quot;my_color&quot;'</tt> attribute in the <tt class="docutils literal">tree</tt> tag:</p>
+<li><p class="first">In the tree view declaration, use
+<tt class="docutils literal"><span class="pre">options='&quot;color_field&quot;:</span> &quot;my_color&quot;'</tt> attribute in the <tt class="docutils literal">tree</tt>
+tag:</p>
 <pre class="literal-block">
 ...
 &lt;field name=&quot;arch&quot; type=&quot;xml&quot;&gt;
@@ -425,13 +441,14 @@ With this example, column which renders 'name' field will have its text colored 
 ...
 </pre>
 </li>
-<li><p class="first">You can also use <tt class="docutils literal"><span class="pre">colors=&quot;bg_color_field:</span> my_color&quot;</tt> to defined the field name that will be used
-for the background color of the line.</p>
+<li><p class="first">You can also use <tt class="docutils literal"><span class="pre">colors=&quot;bg_color_field:</span> my_color&quot;</tt> to defined the
+field name that will be used for the background color of the line.</p>
 </li>
-<li><p class="first">If you want to use more than one color, you can split the attributes using ‘;’:</p>
+<li><p class="first">If you want to use more than one color, you can split the attributes
+using ‘;’:</p>
 </li>
 </ul>
-<pre class="code literal-block">
+<pre class="literal-block">
 options='{&quot;fg_color&quot;: &quot;red:red_color == True; green:green_color == True&quot;}'
 </pre>
 <p>Example:</p>
@@ -453,7 +470,9 @@ options='{&quot;fg_color&quot;: &quot;red:red_color == True; green:green_color =
  </span>to<span class="w"> </span>load<span class="w"> </span>your<span class="w"> </span>field<span class="w"> </span>in<span class="w"> </span>the<span class="w"> </span>first<span class="w"> </span>place<span class="w"> </span>by<span class="w"> </span>adding<span class="w"> </span>it<span class="w"> </span>as<span class="w"> </span>invisible<span class="w"> </span>field.
 </pre>
 <ul>
-<li><p class="first">Can use strings too… In the tree view declaration, put <tt class="docutils literal"><span class="pre">options=&quot;{'fg_color':</span> 'green:customer_state == <span class="pre">\'success\''}&quot;</span></tt> attribute in the <tt class="docutils literal">field</tt> tag:</p>
+<li><p class="first">Can use strings too… In the tree view declaration, put
+<tt class="docutils literal"><span class="pre">options=&quot;{'fg_color':</span> 'green:customer_state == <span class="pre">\'success\''}&quot;</span></tt>
+attribute in the <tt class="docutils literal">field</tt> tag:</p>
 <pre class="literal-block">
 ...
 &lt;field name=&quot;arch&quot; type=&quot;xml&quot;&gt;
@@ -467,37 +486,42 @@ options='{&quot;fg_color&quot;: &quot;red:red_color == True; green:green_color =
 </pre>
 </li>
 </ul>
-<p><strong>Note that you can use single or normal quotes. If the declaration of the options doesn’t follow the JSON format, the options string will be evaluated using py.eval()</strong></p>
+<p><strong>Note that you can use single or normal quotes. If the declaration of
+the options doesn’t follow the JSON format, the options string will be
+evaluated using py.eval()</strong></p>
 </div>
 <div class="section" id="known-issues-roadmap">
-<h1>Known issues / Roadmap</h1>
+<h2><a class="toc-backref" href="#toc-entry-2">Known issues / Roadmap</a></h2>
 <ul class="simple">
-<li>Before version 13.0, this module had a feature allowing to change the color of
-a line depending on a field, using a <tt class="docutils literal">colors</tt> attribute with the name of the
-field on the <tt class="docutils literal">&lt;tree&gt;</tt> element. Since 13.0, the <tt class="docutils literal">colors</tt> attribute is no
-longer in the RelaxNG schema of the tree view, so we can’t use it anymore.
-This feature has then been dropped, but could be reimplement in another way.</li>
+<li>Before version 13.0, this module had a feature allowing to change the
+color of a line depending on a field, using a <tt class="docutils literal">colors</tt> attribute
+with the name of the field on the <tt class="docutils literal">&lt;tree&gt;</tt> element. Since 13.0, the
+<tt class="docutils literal">colors</tt> attribute is no longer in the RelaxNG schema of the tree
+view, so we can’t use it anymore. This feature has then been dropped,
+but could be reimplement in another way.</li>
 </ul>
 </div>
 <div class="section" id="bug-tracker">
-<h1>Bug Tracker</h1>
+<h2><a class="toc-backref" href="#toc-entry-3">Bug Tracker</a></h2>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/web/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/OCA/web/issues/new?body=module:%20web_tree_dynamic_colored_field%0Aversion:%2015.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/OCA/web/issues/new?body=module:%20web_tree_dynamic_colored_field%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1>Credits</h1>
+<h2><a class="toc-backref" href="#toc-entry-4">Credits</a></h2>
+</div>
+</div>
 <div class="section" id="authors">
-<h2>Authors</h2>
+<h1>Authors</h1>
 <ul class="simple">
 <li>Camptocamp</li>
 <li>Therp BV</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h2>Contributors</h2>
+<h1>Contributors</h1>
 <ul class="simple">
 <li>Damien Crier &lt;<a class="reference external" href="mailto:damien.crier&#64;camptocamp.com">damien.crier&#64;camptocamp.com</a>&gt;</li>
 <li>Holger Brunn &lt;<a class="reference external" href="mailto:hbrunn&#64;therp.nl">hbrunn&#64;therp.nl</a>&gt;</li>
@@ -508,22 +532,21 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 </ul>
 </div>
 <div class="section" id="other-credits">
-<h2>Other credits</h2>
+<h1>Other credits</h1>
 <p>The development of this module has been financially supported by:</p>
 <ul class="simple">
 <li>Camptocamp</li>
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2>Maintainers</h2>
+<h1>Maintainers</h1>
 <p>This module is maintained by the OCA.</p>
 <a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
-<p>This module is part of the <a class="reference external" href="https://github.com/OCA/web/tree/15.0/web_tree_dynamic_colored_field">OCA/web</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/web/tree/17.0/web_tree_dynamic_colored_field">OCA/web</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
-</div>
 </div>
 </div>
 </body>
