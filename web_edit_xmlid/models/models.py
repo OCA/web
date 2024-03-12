@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import models
 
 
 class BaseModel(models.BaseModel):
@@ -7,12 +7,11 @@ class BaseModel(models.BaseModel):
     def ensure_xml_id(self, skip=False):
         """Public version of `__ensure_xml_id` used by DebugManager.
         Since `__ensure_xml_id` use raw SQL queries to create data
-        standard ORM fields (`create_uid`, `write_uid`, `create_date`,
-        `write_date`) are not filled correctly.
+        standard ORM fields (`create_uid`, `write_uid`) are not filled correctly.
         """
         res = self.__ensure_xml_id(skip)
         xids = []
-        for record, xid in res:
+        for _record, xid in res:
             xids.append(self.env["ir.model.data"].xmlid_lookup(xid)[0])
         # To avoid having our record manually linked with a XML_ID to be
         # deleted when the module that owns this record will be updated, we
@@ -21,11 +20,5 @@ class BaseModel(models.BaseModel):
         xml_ids = self.env["ir.model.data"].search(
             [("id", "in", xids), ("write_uid", "=", False)]
         )
-        xml_ids.write(
-            {
-                "noupdate": True,
-                "date_init": fields.Datetime.now(),
-                "date_update": fields.Datetime.now(),
-            }
-        )
+        xml_ids.write({"noupdate": True})
         return res

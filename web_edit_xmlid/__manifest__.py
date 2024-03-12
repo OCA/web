@@ -1,7 +1,7 @@
 {
     "name": "Web Edit XML ID",
     "summary": "Extend development view to allow adding/editing records " "xml-ids",
-    "version": "12.0.1.0.0",
+    "version": "14.0.1.0.0",
     "category": "Base",
     "website": "https://github.com/OCA/web",
     "development_status": "Production/Stable",
