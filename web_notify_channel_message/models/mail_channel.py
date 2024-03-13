@@ -1,5 +1,4 @@
-# pylint: disable=missing-docstring
-# Copyright 2016 ACSONE SA/NV
+# Copyright 2023 ForgeFlow
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import _, models
@@ -15,7 +14,7 @@ class MailChannel(models.Model):
             for user in users:
                 if user in message.author_id.user_ids:
                     continue
-                user.notify_info(
+                user.with_context(_notify_channel_message=True).notify_info(
                     message=_("You have a new message in channel %s") % self.name
                 )
         return message
