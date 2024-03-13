@@ -37,7 +37,7 @@ If you're building a web app today, you're already on the path towards building 
 
 + Developers Info.
 
-The service worker is contructed using 'Odoo Class' to have the same class inheritance behaviour that in the 'user pages'. Be noticed
+The service worker is constructed using 'Odoo Class' to have the same class inheritance behaviour that in the 'user pages'. Be noticed
 that 'Odoo Bootstrap' is not supported so, you can't use 'require' here.
 
 All service worker content can be found in 'static/src/js/worker'. The management between 'user pages' and service worker is done in
