@@ -6,46 +6,14 @@ import json
 
 from odoo.http import Controller, request, route
 
+from ..models.res_config_settings import PWA_ICON_SIZES
+
 
 class PWA(Controller):
-    def _get_pwa_scripts(self):
-        """Scripts to be imported in the service worker (Order is important)"""
-        return [
-            "/web/static/lib/underscore/underscore.js",
-            "/web_pwa_oca/static/src/js/worker/jquery-sw-compat.js",
-            "/web/static/src/js/promise_extension.js",
-            "/web/static/src/js/boot.js",
-            "/web/static/src/js/core/class.js",
-            "/web_pwa_oca/static/src/js/worker/pwa.js",
-        ]
-
-    @route("/service-worker.js", type="http", auth="public")
-    def render_service_worker(self):
-        """Route to register the service worker in the 'main' scope ('/')"""
-        return request.render(
-            "web_pwa_oca.service_worker",
-            {
-                "pwa_scripts": self._get_pwa_scripts(),
-                "pwa_params": self._get_pwa_params(),
-            },
-            headers=[("Content-Type", "text/javascript;charset=utf-8")],
-        )
-
-    def _get_pwa_params(self):
-        """Get javascript PWA class initialzation params"""
-        return {}
-
     def _get_pwa_manifest_icons(self, pwa_icon):
         icons = []
         if not pwa_icon:
-            for size in [
-                (128, 128),
-                (144, 144),
-                (152, 152),
-                (192, 192),
-                (256, 256),
-                (512, 512),
-            ]:
+            for size in PWA_ICON_SIZES:
                 icons.append(
                     {
                         "src": "/web_pwa_oca/static/img/icons/icon-%sx%s.png"
@@ -75,12 +43,14 @@ class PWA(Controller):
                     {"src": icon.url, "sizes": icon_size_name, "type": icon.mimetype}
                 )
         else:
+            icon_sizes = " ".join(
+                map(
+                    lambda size: "{}x{}".format(size[0], size[1]),
+                    PWA_ICON_SIZES,
+                )
+            )
             icons = [
-                {
-                    "src": pwa_icon.url,
-                    "sizes": "128x128 144x144 152x152 192x192 256x256 512x512",
-                    "type": pwa_icon.mimetype,
-                }
+                {"src": pwa_icon.url, "sizes": icon_sizes, "type": pwa_icon.mimetype}
             ]
         return icons
 
