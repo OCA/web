@@ -93,6 +93,14 @@ Authors
 
 * Therp BV
 * Tecnativa
+* OERP Canada
+
+Contributors
+------------
+
+-  OERP Canada <https://www.oerp.ca/>:
+
+   -  Daryl Chen <dc@oerp.ca>
 
 Maintainers
 -----------
