@@ -2,6 +2,7 @@
 <templates>
     <t t-name="web_dialog_size.ExpandButton" owl="1">
         <button
+            t-if="props.getsize() == 'dialog_full_screen'"
             type="button"
             class="btn btn-secondary dialog_button_extend"
             t-on-click="dialog_button_restore"
@@ -9,6 +10,7 @@
             <i class="fa fa-compress" />
         </button>
         <button
+            t-if="props.getsize() != 'dialog_full_screen'"
             type="button"
             class="btn btn-secondary dialog_button_restore"
             t-on-click="dialog_button_extend"

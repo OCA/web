@@ -16,13 +16,13 @@
         </t>
     </t>
 
-    <!-- <t t-inherit="web.ActionDialog.header" t-inherit-mode="extension" owl="1">
+    <t t-inherit="web.ActionDialog.header" t-inherit-mode="extension" owl="1">
         <xpath expr="//button[hasclass('btn-close')]" position="before">
             <ExpandButton getsize="getSize" setsize="setSize" t-if="!isFullscreen" />
         </xpath>
-    </t> -->
+    </t>
 
-    <!-- <t t-inherit="web.Dialog.header" t-inherit-mode="extension" owl="1">
+    <t t-inherit="web.Dialog.header" t-inherit-mode="extension" owl="1">
         <xpath expr="//button[hasclass('btn-close')]" position="before">
             <ExpandButton
                 getsize="getSize"
@@ -30,7 +30,7 @@
                 t-if="!isFullscreen and getSize and setSize"
             />
         </xpath>
-    </t> -->
+    </t>
 
     <t t-inherit="web.SelectCreateDialog" t-inherit-mode="extension" owl="1">
         <xpath expr="//Dialog" position="attributes">
