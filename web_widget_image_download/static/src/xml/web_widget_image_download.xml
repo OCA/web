@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2016 Flavio Corpa <flavio.corpa@tecnativa.com>
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
+<templates>
+    <t t-name="web.ImageField" t-inherit="web.ImageField" t-inherit-mode="primary">
+        <xpath expr="//button[hasclass('o_clear_file_button')]" position="after">
+                <button
+                t-if="props.value and props.record.data.id"
+                class="o_image_file_download float-left btn btn-light border-0 rounded-circle m-1 p-1"
+                title="Download"
+                aria-label="Download"
+                t-on-click="onImageDownload"
+            >
+                    <i class="fa fa-download fa-lg" />
+                </button>
+        </xpath>
+    </t>
+</templates>
