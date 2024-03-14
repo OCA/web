@@ -4,3 +4,4 @@
   `colors` attribute is no longer in the RelaxNG schema of the tree
   view, so we can't use it anymore. This feature has then been dropped,
   but could be reimplement in another way.
+- Since version 17.0 coloring is written into ``style`` attribute of (td) element
