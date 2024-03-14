@@ -1,10 +1,9 @@
 /** @odoo-module **/
 
+import {Component, onMounted, useExternalListener} from "@odoo/owl";
 import {ActionDialog} from "@web/webclient/actions/action_dialog";
-import {onMounted, useExternalListener} from "@odoo/owl";
-import {useListener} from "@web/core/utils/hooks";
-import { Component} from "@odoo/owl";
 import {Dialog} from "@web/core/dialog/dialog";
+import {useListener} from "@web/core/utils/hooks";
 
 export class DialogDraggable extends Component {
     setup() {

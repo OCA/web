@@ -1,11 +1,11 @@
 /** @odoo-module **/
 
-import {ActionDialog} from "@web/webclient/actions/action_dialog";
-import {patch} from "@web/core/utils/patch";
 import {Component, onMounted} from "@odoo/owl";
+import {ActionDialog} from "@web/webclient/actions/action_dialog";
 import {Dialog} from "@web/core/dialog/dialog";
+import {jsonrpc} from "@web/core/network/rpc_service";
+import {patch} from "@web/core/utils/patch";
 import {SelectCreateDialog} from "@web/views/view_dialogs/select_create_dialog";
-import { jsonrpc } from "@web/core/network/rpc_service";
 
 export class ExpandButton extends Component {
     setup() {
@@ -13,7 +13,7 @@ export class ExpandButton extends Component {
 
         onMounted(() => {
             var self = this;
-            jsonrpc('/dialogsize',{}).then(function (r) {
+            jsonrpc("/dialogsize", {}).then(function (r) {
                 if (r.default_maximize && stop) {
                     self.dialog_button_extend();
                 }
