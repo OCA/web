@@ -1,10 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 OERP Canada <https://www.oerp.ca>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
-    <template id="layout" inherit_id="web.layout">
-        <xpath expr="//link[@rel='shortcut icon']" position="before">
-            <t t-if="not website">
-                <t t-set="x_icon" t-value="'/web_favicon/favicon'" />
-            </t>
+    <template id="favicon_icon" inherit_id="web.layout" name="Web layout">
+        <xpath expr="//head/link[@rel='shortcut icon']" position="attributes">
+            <attribute
+                name="t-att-href"
+            >env['res.company'].sudo()._get_favicon() or '/web/static/img/favicon.ico'</attribute>
         </xpath>
     </template>
 </odoo>
