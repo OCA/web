@@ -369,11 +369,11 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:4af1c92721d131728f92364370ba5145f45bac9b8e4d4396572737b9ccacd56e
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/web/tree/12.0/web_favicon"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/web-12-0/web-12-0-web_favicon"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/web&amp;target_branch=12.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
-<p>This module was written to allow you to customize your Odoo instance’s shortcut
-icon (aka favicon). This is useful for branding purposes, but also for
-integrators who have many different Odoo instances running and need to see at a
-glance which browser tab does what.</p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/web/tree/17.0/web_favicon"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/web-17-0/web-17-0-web_favicon"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/web&amp;target_branch=17.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p>This module was written to allow you to customize your Odoo instance’s
+shortcut icon (aka favicon). This is useful for branding purposes, but
+also for integrators who have many different Odoo instances running and
+need to see at a glance which browser tab does what.</p>
 <p>The icon is shown also for portal users when the website modules are not
 installed.</p>
 <p>More info about favicon: <a class="reference external" href="https://en.wikipedia.org/wiki/Favicon">https://en.wikipedia.org/wiki/Favicon</a></p>
@@ -393,27 +393,30 @@ installed.</p>
 <div class="section" id="configuration">
 <h1><a class="toc-backref" href="#toc-entry-1">Configuration</a></h1>
 <p>Upload your favicon (16x16, 32x32, 64x64 or “as big as possible”) on the
-company form. The file format would be ico, gif or png with 16x16, 32x32 or
-64x64 pixels and 16 colors. Highers resolutions or colors support depends on
-the used browser, but most modern browsers do.</p>
-<p>Note that most browsers cache favicons basically forever, so if you want your
-icon to show up, you’ll most probably have to delete you browser cache.
-Some browsers can refresh the favicon, accessing the URL
+company form. The file format would be ico, gif or png with 16x16, 32x32
+or 64x64 pixels and 16 colors. Highers resolutions or colors support
+depends on the used browser, but most modern browsers do.</p>
+<p>Note that most browsers cache favicons basically forever, so if you want
+your icon to show up, you’ll most probably have to delete you browser
+cache. Some browsers can refresh the favicon, accessing the URL
 &lt;base_url&gt;/web_favicon/favicon.</p>
-<p>You have a sample SVG that can be used as template for generating your icon
-in /static/src/img/master_original_favicon.svg. You can also search for some
-favicon generators across the web.</p>
-<p>To allow a user to edit the favicon it has to be member of group “Administration / Settings”.</p>
+<p>You have a sample SVG that can be used as template for generating your
+icon in /static/src/img/master_original_favicon.svg. You can also search
+for some favicon generators across the web.</p>
+<p>To allow a user to edit the favicon it has to be member of group
+“Administration / Settings”.</p>
 </div>
 <div class="section" id="known-issues-roadmap">
 <h1><a class="toc-backref" href="#toc-entry-2">Known issues / Roadmap</a></h1>
 <ul class="simple">
-<li>Allow to upload some big icon (preferrably SVG or the like) and generate
-all the icons from it</li>
-<li>Generate icons suitable for mobile devices and web apps (see /static/src/img/
-folder inside the module for a sample of the possible current formats.</li>
-<li>Put the icon definition at system level, not at company level. It doesn’t
-make sense (as the icon is cached) to have a different icon per company.</li>
+<li>Allow to upload some big icon (preferrably SVG or the like) and
+generate all the icons from it</li>
+<li>Generate icons suitable for mobile devices and web apps (see
+/static/src/img/ folder inside the module for a sample of the
+possible current formats.</li>
+<li>Put the icon definition at system level, not at company level. It
+doesn’t make sense (as the icon is cached) to have a different icon
+per company.</li>
 </ul>
 </div>
 <div class="section" id="bug-tracker">
@@ -421,7 +424,7 @@ make sense (as the icon is cached) to have a different icon per company.</li>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/web/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/OCA/web/issues/new?body=module:%20web_favicon%0Aversion:%2012.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/OCA/web/issues/new?body=module:%20web_favicon%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
@@ -440,7 +443,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
-<p>This module is part of the <a class="reference external" href="https://github.com/OCA/web/tree/12.0/web_favicon">OCA/web</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/web/tree/17.0/web_favicon">OCA/web</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
 </div>
 </div>

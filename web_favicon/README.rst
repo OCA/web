@@ -17,22 +17,21 @@ Custom shortcut icon
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/12.0/web_favicon
+    :target: https://github.com/OCA/web/tree/17.0/web_favicon
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-12-0/web-12-0-web_favicon
+    :target: https://translation.odoo-community.org/projects/web-17-0/web-17-0-web_favicon
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=12.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-
-This module was written to allow you to customize your Odoo instance's shortcut
-icon (aka favicon). This is useful for branding purposes, but also for
-integrators who have many different Odoo instances running and need to see at a
-glance which browser tab does what.
+This module was written to allow you to customize your Odoo instance's
+shortcut icon (aka favicon). This is useful for branding purposes, but
+also for integrators who have many different Odoo instances running and
+need to see at a glance which browser tab does what.
 
 The icon is shown also for portal users when the website modules are not
 installed.
@@ -48,30 +47,33 @@ Configuration
 =============
 
 Upload your favicon (16x16, 32x32, 64x64 or "as big as possible") on the
-company form. The file format would be ico, gif or png with 16x16, 32x32 or
-64x64 pixels and 16 colors. Highers resolutions or colors support depends on
-the used browser, but most modern browsers do.
+company form. The file format would be ico, gif or png with 16x16, 32x32
+or 64x64 pixels and 16 colors. Highers resolutions or colors support
+depends on the used browser, but most modern browsers do.
 
-Note that most browsers cache favicons basically forever, so if you want your
-icon to show up, you'll most probably have to delete you browser cache.
-Some browsers can refresh the favicon, accessing the URL
+Note that most browsers cache favicons basically forever, so if you want
+your icon to show up, you'll most probably have to delete you browser
+cache. Some browsers can refresh the favicon, accessing the URL
 <base_url>/web_favicon/favicon.
 
-You have a sample SVG that can be used as template for generating your icon
-in /static/src/img/master_original_favicon.svg. You can also search for some
-favicon generators across the web.
+You have a sample SVG that can be used as template for generating your
+icon in /static/src/img/master_original_favicon.svg. You can also search
+for some favicon generators across the web.
 
-To allow a user to edit the favicon it has to be member of group "Administration / Settings".
+To allow a user to edit the favicon it has to be member of group
+"Administration / Settings".
 
 Known issues / Roadmap
 ======================
 
-* Allow to upload some big icon (preferrably SVG or the like) and generate
-  all the icons from it
-* Generate icons suitable for mobile devices and web apps (see /static/src/img/
-  folder inside the module for a sample of the possible current formats.
-* Put the icon definition at system level, not at company level. It doesn't
-  make sense (as the icon is cached) to have a different icon per company.
+-  Allow to upload some big icon (preferrably SVG or the like) and
+   generate all the icons from it
+-  Generate icons suitable for mobile devices and web apps (see
+   /static/src/img/ folder inside the module for a sample of the
+   possible current formats.
+-  Put the icon definition at system level, not at company level. It
+   doesn't make sense (as the icon is cached) to have a different icon
+   per company.
 
 Bug Tracker
 ===========
@@ -79,7 +81,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_favicon%0Aversion:%2012.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_favicon%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -87,13 +89,13 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Therp BV
 * Tecnativa
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -105,6 +107,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/12.0/web_favicon>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/17.0/web_favicon>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
