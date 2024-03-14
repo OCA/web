@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -406,7 +405,7 @@ color of a cell in tree view</li>
 &lt;/field&gt;
 ...
 
-With this example, column which renders 'name' field will have its background colored in red.
+With this example, column which renders 'name' field will have its **background** colored in red on customer records.
 </pre>
 </li>
 <li><p class="first">In the tree view declaration, put
@@ -423,26 +422,8 @@ With this example, column which renders 'name' field will have its background co
 &lt;/field&gt;
 ...
 
-With this example, column which renders 'name' field will have its text colored in white on a customer records.
+With this example, column which renders 'name' field will have its **text** colored in white on customer records.
 </pre>
-</li>
-<li><p class="first">In the tree view declaration, use
-<tt class="docutils literal"><span class="pre">options='&quot;color_field&quot;:</span> &quot;my_color&quot;'</tt> attribute in the <tt class="docutils literal">tree</tt>
-tag:</p>
-<pre class="literal-block">
-...
-&lt;field name=&quot;arch&quot; type=&quot;xml&quot;&gt;
-    &lt;tree string=&quot;View name&quot; colors=&quot;color_field: my_color&quot; &gt;
-        ...
-        &lt;field name=&quot;my_color&quot; invisible=&quot;1&quot;/&gt;
-        ...
-    &lt;/tree&gt;
-&lt;/field&gt;
-...
-</pre>
-</li>
-<li><p class="first">You can also use <tt class="docutils literal"><span class="pre">colors=&quot;bg_color_field:</span> my_color&quot;</tt> to defined the
-field name that will be used for the background color of the line.</p>
 </li>
 <li><p class="first">If you want to use more than one color, you can split the attributes
 using ‘;’:</p>
@@ -461,13 +442,7 @@ options='{&quot;fg_color&quot;: &quot;red:red_color == True; green:green_color =
          </span>...<span class="w">
      </span><span class="nt">&lt;/tree&gt;</span><span class="w">
  </span><span class="nt">&lt;/field&gt;</span><span class="w">
- </span>...<span class="w">
-
- </span>With<span class="w"> </span>this<span class="w"> </span>example,<span class="w"> </span>the<span class="w"> </span>content<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>field<span class="w"> </span>named<span class="w"> </span>`my_color`<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>used<span class="w"> </span>to<span class="w">
- </span>populate<span class="w"> </span>the<span class="w"> </span>`my_color`<span class="w"> </span>CSS<span class="w"> </span>value.<span class="w"> </span>Use<span class="w"> </span>a<span class="w"> </span>function<span class="w"> </span>field<span class="w"> </span>to<span class="w"> </span>return<span class="w"> </span>whichever<span class="w">
- </span>color<span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>depending<span class="w"> </span>on<span class="w"> </span>the<span class="w"> </span>other<span class="w"> </span>record<span class="w"> </span>values.<span class="w"> </span>Note<span class="w"> </span>that<span class="w"> </span>this<span class="w">
- </span>overrides<span class="w"> </span>the<span class="w"> </span>rest<span class="w"> </span>of<span class="w"> </span>`colors`<span class="w"> </span>attributes,<span class="w"> </span>and<span class="w"> </span>that<span class="w"> </span>you<span class="w"> </span>need<span class="w"> </span>the<span class="w"> </span>tree<span class="w">
- </span>to<span class="w"> </span>load<span class="w"> </span>your<span class="w"> </span>field<span class="w"> </span>in<span class="w"> </span>the<span class="w"> </span>first<span class="w"> </span>place<span class="w"> </span>by<span class="w"> </span>adding<span class="w"> </span>it<span class="w"> </span>as<span class="w"> </span>invisible<span class="w"> </span>field.
+ </span>...
 </pre>
 <ul>
 <li><p class="first">Can use strings too… In the tree view declaration, put
@@ -499,6 +474,8 @@ with the name of the field on the <tt class="docutils literal">&lt;tree&gt;</tt>
 <tt class="docutils literal">colors</tt> attribute is no longer in the RelaxNG schema of the tree
 view, so we can’t use it anymore. This feature has then been dropped,
 but could be reimplement in another way.</li>
+<li>Since version 17.0 coloring is written into <tt class="docutils literal">style</tt> attribute of
+(td) element</li>
 </ul>
 </div>
 <div class="section" id="bug-tracker">
@@ -529,6 +506,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <li>Guewen Baconnier &lt;<a class="reference external" href="mailto:guewen.baconnier&#64;camptocamp.com">guewen.baconnier&#64;camptocamp.com</a>&gt;</li>
 <li>Phuc Tran Thanh &lt;<a class="reference external" href="mailto:phuc&#64;trobz.com">phuc&#64;trobz.com</a>&gt;</li>
 <li>Sylvain LE GAL &lt;<a class="reference external" href="https://twitter.com/legalsylvain">https://twitter.com/legalsylvain</a>&gt;</li>
+<li>Jurgis Pralgauskis &lt;<a class="reference external" href="mailto:jurgis&#64;versada.eu">jurgis&#64;versada.eu</a>&gt;</li>
 </ul>
 </div>
 <div class="section" id="other-credits">
@@ -536,6 +514,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>The development of this module has been financially supported by:</p>
 <ul class="simple">
 <li>Camptocamp</li>
+<li>Versada</li>
 </ul>
 </div>
 <div class="section" id="maintainers">
