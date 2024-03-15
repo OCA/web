@@ -15,7 +15,7 @@
         </xpath>
     </t>
 
-    <t
+    <!-- <t
         t-name="web_m2x_options.Many2ManyTagsField"
         t-inherit="web.Many2ManyTagsField"
         t-inherit-mode="extension"
@@ -24,7 +24,7 @@
         <xpath expr="//Many2XAutocomplete" position="attributes">
             <attribute name="nodeOptions">props.nodeOptions</attribute>
         </xpath>
-    </t>
+    </t> -->
 
     <t t-name="web_m2x_options.Many2OneField.CreateConfirmationDialog" owl="1">
         <Dialog title="title" size="'md'">

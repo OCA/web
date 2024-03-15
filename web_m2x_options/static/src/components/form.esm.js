@@ -1,5 +1,5 @@
 /** @odoo-module **/
-
+import {session} from "@web/session";
 import {
     Many2ManyTagsField,
     Many2ManyTagsFieldColorEditable,
@@ -10,7 +10,8 @@ import {FormController} from "@web/views/form/form_controller";
 import {FormViewDialog} from "@web/views/view_dialogs/form_view_dialog";
 import {Many2OneAvatarField} from "@web/views/fields/many2one_avatar/many2one_avatar_field";
 import {Many2OneBarcodeField} from "@web/views/fields/many2one_barcode/many2one_barcode_field";
-import {Many2OneField} from "@web/views/fields/many2one/many2one_field";
+import {Many2OneField, many2OneField} from "@web/views/fields/many2one/many2one_field";
+import {PartnerMany2XAutocomplete} from "@partner_autocomplete/js/partner_autocomplete_many2one";
 import {ReferenceField} from "@web/views/fields/reference/reference_field";
 import {X2ManyField} from "@web/views/fields/x2many/x2many_field";
 import {isX2Many} from "@web/views/utils";
@@ -18,22 +19,24 @@ import {is_option_set} from "@web_m2x_options/components/relational_utils.esm";
 import {patch} from "@web/core/utils/patch";
 import {sprintf} from "@web/core/utils/strings";
 import {useService} from "@web/core/utils/hooks";
+import {Many2XAutocomplete} from "@web/views/fields/relational_utils";
+import {_t} from "@web/core/l10n/translation";
 
 const {Component} = owl;
 
 /**
  *  Patch Many2ManyTagsField
  **/
-patch(Many2ManyTagsField.prototype, "web_m2x_options.Many2ManyTagsField", {
+patch(Many2ManyTagsField.prototype, {
     setup() {
-        this._super(...arguments);
+        super.setup(...arguments);
         this.actionService = useService("action");
     },
     /**
      * @override
      */
     getTagProps(record) {
-        const props = this._super(...arguments);
+        const props = super.getTagProps(...arguments);
         props.onClick = (ev) => this.onMany2ManyBadgeClick(ev, record);
         return props;
     },
@@ -71,7 +74,7 @@ patch(Many2ManyTagsField.prototype, "web_m2x_options.Many2ManyTagsField", {
                     resModel: self.props.relation,
                     resId: id,
                     context: context,
-                    title: self.env._t("Open: ") + self.string,
+                    title: _t("Open: ") + self.string,
                     viewId: view_id,
                     mode: !can_write || !write_access ? "readonly" : "edit",
                     onRecordSaved: () => self.props.value.model.load(),
@@ -102,23 +105,19 @@ Many2ManyTagsField.extractProps = ({attrs, field}) => {
 /**
  *  Many2ManyTagsFieldColorEditable
  **/
-patch(
-    Many2ManyTagsFieldColorEditable.prototype,
-    "web_m2x_options.Many2ManyTagsFieldColorEditable",
-    {
-        async onBadgeClick(event, record) {
-            if (this.props.canEditColor && !this.props.open) {
-                this._super(...arguments);
-            }
-            if (this.props.open) {
-                Many2ManyTagsField.prototype.onMany2ManyBadgeClick.bind(this)(
-                    event,
-                    record
-                );
-            }
-        },
-    }
-);
+patch(Many2ManyTagsFieldColorEditable.prototype, {
+    async onBadgeClick(event, record) {
+        if (this.props.canEditColor && !this.props.open) {
+            super.onBadgeClick(...arguments);
+        }
+        if (this.props.open) {
+            Many2ManyTagsField.prototype.onMany2ManyBadgeClick.bind(this)(
+                event,
+                record
+            );
+        }
+    },
+});
 
 Many2ManyTagsFieldColorEditable.props = {
     ...Many2ManyTagsFieldColorEditable.props,
@@ -134,7 +133,7 @@ Many2ManyTagsFieldColorEditable.props = {
 
 class CreateConfirmationDialog extends Component {
     get title() {
-        return sprintf(this.env._t("New: %s"), this.props.name);
+        return sprintf(_t("New: %s"), this.props.name);
     }
 
     async onCreate() {
@@ -154,18 +153,36 @@ CreateConfirmationDialog.template =
  *  Many2OneField
  **/
 
-patch(Many2OneField.prototype, "web_m2x_options.Many2OneField", {
+patch(PartnerMany2XAutocomplete.prototype, {
     setup() {
-        this._super(...arguments);
-        this.ir_options = Component.env.session.web_m2x_options;
+        super.setup(...arguments);
+    },
+});
+PartnerMany2XAutocomplete.props = {
+    ...PartnerMany2XAutocomplete.props,
+    canCreate: {type: Boolean, optional: true},
+    canWrite: {type: Boolean, optional: true},
+    nodeOptions: {type: Object, optional: true},
+    searchMore: {type: Object, optional: true},
+};
+
+patch(Many2XAutocomplete.prototype, {
+    setup() {
+        super.setup(...arguments);
+    },
+});
+
+patch(Many2OneField.prototype, {
+    setup() {
+        super.setup(...arguments);
+        this.ir_options = session.web_m2x_options;
     },
     /**
      * @override
      */
     get Many2XAutocompleteProps() {
-        const props = this._super(...arguments);
         return {
-            ...props,
+            ...super.Many2XAutocompleteProps,
             searchLimit: this.props.searchLimit,
             searchMore: this.props.searchMore,
             canCreate: this.props.canCreate,
@@ -176,10 +193,10 @@ patch(Many2OneField.prototype, "web_m2x_options.Many2OneField", {
     async openConfirmationDialog(request) {
         var m2o_dialog_opt =
             is_option_set(this.props.nodeOptions.m2o_dialog) ||
-            (_.isUndefined(this.props.nodeOptions.m2o_dialog) &&
+            (this.props.nodeOptions.m2o_dialog === "undefined" &&
                 is_option_set(this.ir_options["web_m2x_options.m2o_dialog"])) ||
-            (_.isUndefined(this.props.nodeOptions.m2o_dialog) &&
-                _.isUndefined(this.ir_options["web_m2x_options.m2o_dialog"]));
+            (this.props.nodeOptions.m2o_dialog === "undefined" &&
+                this.ir_options["web_m2x_options.m2o_dialog"] === "undefined");
         if (this.props.canCreate && this.state.isFloating && m2o_dialog_opt) {
             return new Promise((resolve, reject) => {
                 this.addDialog(CreateConfirmationDialog, {
@@ -212,13 +229,32 @@ patch(Many2OneField.prototype, "web_m2x_options.Many2OneField", {
     },
 });
 
-const Many2OneFieldExtractProps = Many2OneField.extractProps;
-Many2OneField.extractProps = ({attrs, field}) => {
-    return Object.assign(Many2OneFieldExtractProps({attrs, field}), {
-        searchLimit: attrs.options.limit,
-        searchMore: attrs.options.search_more,
-        nodeOptions: attrs.options,
-    });
+Many2XAutocomplete.props = {
+    ...Many2XAutocomplete.props,
+    searchMore: {type: Boolean, optional: true},
+    canCreate: {type: Boolean, optional: true},
+    canWrite: {type: Boolean, optional: true},
+    nodeOptions: {type: Object, optional: true},
+};
+
+const Many2OneFieldExtractProps = many2OneField.extractProps;
+many2OneField.extractProps = (
+    {attrs, context, decorations, options, string},
+    dynamicInfo
+) => {
+    return Object.assign(
+        Many2OneFieldExtractProps(
+            {attrs, context, decorations, options, string},
+            dynamicInfo
+        ),
+        {
+            canCreate: options.create,
+            canCreateEdit: options.create_edit,
+            searchLimit: options.limit,
+            searchMore: options.search_more,
+            nodeOptions: options,
+        }
+    );
 };
 
 Many2OneField.props = {
@@ -279,14 +315,13 @@ Many2OneAvatarField.props = {
  */
 try {
     (async () => {
-        // Make sure component mailing_m2o_filter in mass mailing module loaded
-        const installed_mass_mailing = await odoo.ready(
+        // // Make sure component mailing_m2o_filter in mass mailing module loaded
+
+        const FieldMany2OneMailingFilter = await odoo.loader.modules.get(
             "@mass_mailing/js/mailing_m2o_filter"
         );
-        if (installed_mass_mailing) {
-            const {FieldMany2OneMailingFilter} = await odoo.runtimeImport(
-                "@mass_mailing/js/mailing_m2o_filter"
-            );
+
+        if (FieldMany2OneMailingFilter) {
             FieldMany2OneMailingFilter.props = {
                 ...FieldMany2OneMailingFilter.props,
                 searchMore: {type: Boolean, optional: true},
@@ -303,7 +338,7 @@ try {
 /**
  *  X2ManyField
  **/
-patch(X2ManyField.prototype, "web_m2x_options.X2ManyField", {
+patch(X2ManyField.prototype, {
     /**
      * @override
      */
@@ -319,7 +354,7 @@ patch(X2ManyField.prototype, "web_m2x_options.X2ManyField", {
             );
             return self.env.model.actionService.doAction(action);
         }
-        return this._super.apply(this, arguments);
+        return super.openRecord(record);
     },
 });
 
@@ -339,13 +374,13 @@ X2ManyField.props = {
 /**
  *  FormController
  **/
-patch(FormController.prototype, "web_m2x_options.FormController", {
+patch(FormController.prototype, {
     /**
      * @override
      */
     setup() {
         var self = this;
-        this._super(...arguments);
+        super.setup(...arguments);
 
         /**  Due to problem of 2 onWillStart in native web core
          * (see: https://github.com/odoo/odoo/blob/16.0/addons/web/static/src/views/model.js#L142)
@@ -362,14 +397,14 @@ patch(FormController.prototype, "web_m2x_options.FormController", {
      * add more method to add subview limit on formview
      */
     async _setSubViewLimit() {
-        const ir_options = Component.env.session.web_m2x_options;
+        const ir_options = session.web_m2x_options;
 
         const activeFields = this.archInfo.activeFields,
             fields = this.props.fields,
             isSmall = this.user;
 
         var limit = ir_options["web_m2x_options.field_limit_entries"];
-        if (!_.isUndefined(limit)) {
+        if (!limit == "undefined") {
             limit = parseInt(limit, 10);
         }
 

@@ -1,30 +1,32 @@
 /** @odoo-module **/
 
+import {session} from "@web/session";
 import {Many2XAutocomplete} from "@web/views/fields/relational_utils";
 import {patch} from "@web/core/utils/patch";
 import {sprintf} from "@web/core/utils/strings";
-const {Component} = owl;
+import {_t} from "@web/core/l10n/translation";
 
 export function is_option_set(option) {
-    if (_.isUndefined(option)) return false;
+    if (option === "undefined") return false;
     if (typeof option === "string") return option === "true" || option === "True";
     if (typeof option === "boolean") return option;
     return false;
 }
 
-patch(Many2XAutocomplete.prototype, "web_m2x_options.Many2XAutocomplete", {
+patch(Many2XAutocomplete.prototype, {
     setup() {
-        this._super(...arguments);
-        this.ir_options = Component.env.session.web_m2x_options;
+        super.setup(...arguments);
+        this.ir_options = session.web_m2x_options;
     },
 
     async loadOptionsSource(request) {
         if (this.lastProm) {
             this.lastProm.abort(false);
         }
+
         // Add options limit used to change number of selections record
         // returned.
-        if (!_.isUndefined(this.ir_options["web_m2x_options.limit"])) {
+        if (!this.ir_options["web_m2x_options.limit"] == "undefined") {
             this.props.searchLimit = parseInt(
                 this.ir_options["web_m2x_options.limit"],
                 10
@@ -40,7 +42,6 @@ patch(Many2XAutocomplete.prototype, "web_m2x_options.Many2XAutocomplete", {
         // Add options field_color and colors to color item(s) depending on field_color value
         this.field_color = this.props.nodeOptions.field_color;
         this.colors = this.props.nodeOptions.colors;
-
         this.lastProm = this.orm.call(this.props.resModel, "name_search", [], {
             name: request,
             operator: "ilike",
@@ -60,7 +61,6 @@ patch(Many2XAutocomplete.prototype, "web_m2x_options.Many2XAutocomplete", {
         if (this.limit) {
             options = options.slice(0, this.props.searchLimit);
         }
-
         // Search result value colors
         if (this.colors && this.field_color) {
             var value_ids = options.map((result) => result.value);
@@ -79,8 +79,12 @@ patch(Many2XAutocomplete.prototype, "web_m2x_options.Many2XAutocomplete", {
                         // Find value in values by comparing ids
                         var option = options[index_value];
                         // Find color with field value as key
-                        var color =
-                            this.colors[objects[index][this.field_color]] || "black";
+                        var color = "black";
+                        if (objects[index][this.field_color]) {
+                            if (this.colors[this.field_color]) {
+                                color = this.colors[this.field_color];
+                            }
+                        }
                         option.style = "color:" + color;
                         break;
                     }
@@ -95,13 +99,15 @@ patch(Many2XAutocomplete.prototype, "web_m2x_options.Many2XAutocomplete", {
         var create_enabled =
             this.props.quickCreate && !this.props.nodeOptions.no_create;
 
-        var raw_result = _.map(records, function (x) {
+        var raw_result = Object.values(records).map((x) => {
             return x[1];
         });
-        var quick_create = is_option_set(this.props.nodeOptions.create),
-            quick_create_undef = _.isUndefined(this.props.nodeOptions.create),
-            m2x_create_undef = _.isUndefined(this.ir_options["web_m2x_options.create"]),
-            m2x_create = is_option_set(this.ir_options["web_m2x_options.create"]);
+        var quick_create = is_option_set(this.props.nodeOptions.create);
+        var quick_create_undef = typeof this.props.nodeOptions.create === "undefined";
+        var m2x_create_undef =
+            typeof this.ir_options["web_m2x_options.create"] === "undefined";
+        var m2x_create = is_option_set(this.ir_options["web_m2x_options.create"]);
+
         var show_create =
             (!this.props.nodeOptions && (m2x_create_undef || m2x_create)) ||
             (this.props.nodeOptions &&
@@ -111,11 +117,11 @@ patch(Many2XAutocomplete.prototype, "web_m2x_options.Many2XAutocomplete", {
             create_enabled &&
             !this.props.nodeOptions.no_quick_create &&
             request.length > 0 &&
-            !_.contains(raw_result, request) &&
+            !raw_result.includes(request) &&
             show_create
         ) {
             options.push({
-                label: sprintf(this.env._t(`Create "%s"`), request),
+                label: sprintf(_t(`Create "%s"`), request),
                 classList: "o_m2o_dropdown_option o_m2o_dropdown_option_create",
                 action: async (params) => {
                     try {
@@ -136,9 +142,9 @@ patch(Many2XAutocomplete.prototype, "web_m2x_options.Many2XAutocomplete", {
         // 4- if set globally, apply its value
         // 5- if not set globally either, check if returned values are more than node's limit
         var search_more = false;
-        if (!_.isUndefined(this.props.nodeOptions.search_more)) {
+        if (this.props.nodeOptions.search_more !== "undefined") {
             search_more = is_option_set(this.props.nodeOptions.search_more);
-        } else if (!_.isUndefined(this.ir_options["web_m2x_options.search_more"])) {
+        } else if (this.ir_options["web_m2x_options.search_more"] !== "undefined") {
             search_more = is_option_set(this.ir_options["web_m2x_options.search_more"]);
         } else {
             search_more =
@@ -146,7 +152,7 @@ patch(Many2XAutocomplete.prototype, "web_m2x_options.Many2XAutocomplete", {
         }
         if (search_more) {
             options.push({
-                label: this.env._t("Search More..."),
+                label: _t("Search More..."),
                 action: this.onSearchMore.bind(this, request),
                 classList: "o_m2o_dropdown_option o_m2o_dropdown_option_search_more",
             });
@@ -163,7 +169,7 @@ patch(Many2XAutocomplete.prototype, "web_m2x_options.Many2XAutocomplete", {
             (this.props.quickCreate || canCreateEdit)
         ) {
             options.push({
-                label: this.env._t("Start typing..."),
+                label: _t("Start typing..."),
                 classList: "o_m2o_start_typing",
                 unselectable: true,
             });
@@ -174,11 +180,10 @@ patch(Many2XAutocomplete.prototype, "web_m2x_options.Many2XAutocomplete", {
                 is_option_set(this.props.nodeOptions.create) ||
                 is_option_set(this.props.nodeOptions.create_edit),
             create_edit_undef =
-                _.isUndefined(this.props.nodeOptions.create) &&
-                _.isUndefined(this.props.nodeOptions.create_edit),
-            m2x_create_edit_undef = _.isUndefined(
-                this.ir_options["web_m2x_options.create_edit"]
-            ),
+                typeof this.props.nodeOptions.create === "undefined" &&
+                typeof this.props.nodeOptions.create_edit === "undefined",
+            m2x_create_edit_undef =
+                typeof this.ir_options["web_m2x_options.create_edit"] === "undefined",
             m2x_create_edit = is_option_set(
                 this.ir_options["web_m2x_options.create_edit"]
             );
@@ -196,7 +201,7 @@ patch(Many2XAutocomplete.prototype, "web_m2x_options.Many2XAutocomplete", {
         ) {
             const context = this.getCreationContext(request);
             options.push({
-                label: this.env._t("Create and edit..."),
+                label: _t("Create and edit..."),
                 classList: "o_m2o_dropdown_option o_m2o_dropdown_option_create_edit",
                 action: () => this.openMany2X({context}),
             });
@@ -205,7 +210,7 @@ patch(Many2XAutocomplete.prototype, "web_m2x_options.Many2XAutocomplete", {
         // No records
         if (!records.length && !this.activeActions.create) {
             options.push({
-                label: this.env._t("No records"),
+                label: _t("No records"),
                 classList: "o_m2o_no_result",
                 unselectable: true,
             });
