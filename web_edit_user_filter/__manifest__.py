@@ -4,13 +4,20 @@
 {
     "name": "Edit User Filters",
     "category": "Extra Tools",
-    "version": "14.0.1.0.1",
+    "version": "15.0.1.0.0",
     "author": "Onestein,Level Prime Srl,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "development_status": "Production/Stable",
     "license": "AGPL-3",
     "depends": ["web"],
-    "data": ["templates/assets.xml"],
-    "qweb": ["static/src/xml/backend.xml", "static/src/xml/search_extended.xml"],
     "installable": True,
+    "assets": {
+        "web.assets_backend": [
+            "web_edit_user_filter/static/src/js/*.js",
+            "web_edit_user_filter/static/src/scss/*.scss",
+        ],
+        "web.assets_qweb": [
+            "web_edit_user_filter/static/src/xml/*.xml",
+        ],
+    },
 }
