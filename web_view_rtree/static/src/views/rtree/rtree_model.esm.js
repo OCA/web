@@ -1,6 +1,7 @@
 /** @odoo-module */
 
 import {DynamicRecordList, Record, RelationalModel} from "@web/views/relational_model";
+import {WarningDialog} from "@web/core/errors/error_dialogs";
 
 // Here is an explanation of how the data loading works.
 //
@@ -105,7 +106,13 @@ class RTreeRecord extends Record {
             recordFields: params.recordFields,
             recordActiveFields: params.recordActiveFields,
         };
-        this.list = this.model.createDataPoint("list", listParams, state.listState);
+        // The listState can be null if a record that has children had its
+        // children removed by filtering before being reloaded.
+        this.list = this.model.createDataPoint(
+            "list",
+            listParams,
+            state.listState || {}
+        );
     }
 
     async load() {
@@ -438,11 +445,14 @@ class DynamicRTreeRecordList extends DynamicRecordList {
     }
 }
 
+const GLOBAL_FILTER_FIELD = "display_name";
+
 export class RTreeModel extends RelationalModel {
     setup(params, args) {
         super.setup(params, args);
         this.parentDefs = params.parentDefs;
         this.parentsMap = this._buildParentsMap(this.parentDefs);
+        this.previousDomain = null;
     }
 
     _buildParentsMap(parentDefs) {
@@ -476,12 +486,150 @@ export class RTreeModel extends RelationalModel {
                 expand: parent.expand,
             });
         }
+        const allModels = [...parentModels];
+        const allModelsSet = new Set(allModels);
+        for (const model of childModels) {
+            if (!allModelsSet.has(model)) {
+                allModels.push(model);
+                allModelsSet.add(model);
+            }
+        }
         return {
             parentsMap,
             childrenMap,
             parentModels,
             childModels,
+            allModels,
         };
+    }
+
+    async _expandAll(list) {
+        // This is needed to avoid declaring a function in a loop.
+        const makeExpandAllPromise = (recordList) => {
+            return async () => this._expandAll(recordList);
+        };
+        const promises = [];
+        for (const record of list.records) {
+            if (record.hasChildren) {
+                if (record.isFolded) {
+                    record.isFolded = false;
+                    promises.push(
+                        record.loadChildren().then(makeExpandAllPromise(record.list))
+                    );
+                } else {
+                    promises.push(this._expandAll(record.list));
+                }
+            }
+        }
+        return Promise.all(promises);
+    }
+
+    async _getGlobalFilterResult(globalFilterElement) {
+        const promises = [];
+        const name = globalFilterElement[2];
+        const filterResult = {};
+        for (const model of this.parentsMap.allModels) {
+            promises.push(this._addGlobalFilterResult(filterResult, model, name));
+        }
+        await Promise.all(promises);
+        return filterResult;
+    }
+
+    async _addGlobalFilterResult(filterResult, model, name) {
+        const result = await this.orm.call(model, "name_search", [], {
+            name,
+            limit: null,
+            context: this.rootParams.context,
+        });
+        filterResult[model] = new Set(result.map((record) => record[0]));
+    }
+
+    _filterAll(list, filterResult) {
+        const newRecordsList = [];
+        for (const record of list.records) {
+            if (record.hasChildren) {
+                record.numChildren = this._filterAll(record.list, filterResult);
+            }
+            if (record.hasChildren || filterResult[record.resModel].has(record.resId)) {
+                newRecordsList.push(record);
+            }
+        }
+        list.records = newRecordsList;
+        return newRecordsList.length;
+    }
+
+    // Here is an explanation of how filtering (on display_name of all records
+    // of all models) works. This is a naive and slow, but straightforward and
+    // easy approach.
+    //
+    // 1. If a domain is provided, it is parsed to check whether one of its
+    //    elements uses the GLOBAL_FILTER_FIELD field. If one does, it is
+    //    removed from the domain to not conflict with the default domain of
+    //    the view.
+    // 2. The model is loaded if it is not already loaded. This is checked by
+    //    comparing the previous domain used to load with the new one.
+    // 3. The tree is fully expanded (which results in the whole tree being
+    //    loaded).
+    // 4. In parallel to the loading of the whole tree, a set of name_search
+    //    calls are made, one for each model present in the view, with the
+    //    name extracted from the domain. From this, sets of matching ids for
+    //    each model are constructed. These are stored in the
+    //    globalFilterResult variable.
+    // 5. The tree is traversed recursively to filter it, to only display
+    //    matching records and their parents, up to the root.
+    //
+    // Known issues:
+    //
+    // * The filtering only works with a simple filter, not with | or &
+    //   operators, thus entering two values to filter on does not work.
+    // * The tree loses its state when applying filtering: all elements that
+    //   pass the filter and have (even filtered-out) children are expanded,
+    //   and filtered-out elements will return to their default state when the
+    //   filter will be removed.
+
+    async load(params = {}) {
+        const domain = params.domain;
+        const newDomain = [];
+        let globalFilterElement = null;
+        // FIXME: This does not support complex domains with | or & operators.
+        if (domain.length !== 0) {
+            for (const element of domain) {
+                if (typeof element === "string") {
+                    this.dialogService.add(WarningDialog, {
+                        title: this.env._t("Error"),
+                        message: this.env._t(
+                            "This type of search domain is not supported " +
+                                "in an rtree view."
+                        ),
+                    });
+                    return;
+                }
+                if (element[0] === GLOBAL_FILTER_FIELD) {
+                    globalFilterElement = element;
+                } else {
+                    newDomain.push(element);
+                }
+            }
+        }
+        if (globalFilterElement === null) {
+            this.previousDomain = domain;
+            return await super.load(params);
+        }
+        params.domain = newDomain;
+        let mainPromise = null;
+        if (JSON.stringify(this.previousDomain) === JSON.stringify(newDomain)) {
+            mainPromise = Promise.resolve();
+        } else {
+            mainPromise = super.load(params);
+        }
+        this.previousDomain = null;
+        mainPromise = mainPromise.then(async () => this._expandAll(this.root));
+        const globalFilterResult = await this._getGlobalFilterResult(
+            globalFilterElement
+        );
+        await mainPromise;
+        this._filterAll(this.root, globalFilterResult);
+        this.notify();
     }
 
     _computeChildParam(child, parentDomain) {
