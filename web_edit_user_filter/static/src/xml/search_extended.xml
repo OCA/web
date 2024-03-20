@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <t
+        t-name="SearchExtender"
+        t-inherit="web.SearchBar"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//div[hasclass('o_searchview_facet')]" position="replace">
+            <div
+                t-foreach="model.get('facets')"
+                t-as="facet"
+                t-key="facet_index"
+                tabindex="0"
+                class="o_searchview_facet"
+                role="img"
+                aria-label="search"
+                t-on-keydown="_onFacetKeydown(facet, facet_index)"
+                t-att-data-type="facet.type"
+                t-att-data-gp="facet.groupId"
+            >
+                <span
+                    t-if="facet.icon"
+                    t-attf-class="o_searchview_facet_label {{ facet.icon }}"
+                />
+                <span t-else="" class="o_searchview_facet_label" t-esc="facet.title" />
+                <div class="o_facet_values">
+                    <t
+                        t-foreach="facet.values"
+                        t-as="facetValue"
+                        t-key="facetValue_index"
+                    >
+                        <span
+                            t-if="!facetValue_first"
+                            class="o_facet_values_sep"
+                            t-esc="facet.separator"
+                        />
+                        <span class="o_facet_value" t-esc="facetValue" />
+                    </t>
+                </div>
+            <i
+                    class="fa fa-sm fa-remove o_facet_remove"
+                    role="img"
+                    aria-label="Remove"
+                    title="Remove"
+                    t-on-click="_onFacetRemove(facet)"
+                />
+        </div>
+        </xpath>
+    </t>
+</templates>

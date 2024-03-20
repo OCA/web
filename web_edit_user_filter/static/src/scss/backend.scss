@@ -1,0 +1,27 @@
+/* Copyright 2019 Onestein
+ * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
+
+.o_favorites_menu {
+    .o-edit-user-filter {
+        @include o-position-absolute(50%, 30px);
+        margin-top: -6px;
+        cursor: pointer;
+    }
+}
+
+.o-edit-user-filter-popover {
+    a {
+        cursor: pointer;
+        padding: 0.3rem 0.75rem;
+        font-size: 1.2rem;
+
+        .fa-close {
+            padding-left: 13px;
+            font-size: 1.2rem;
+        }
+    }
+}
+
+.o-edit-user-filter-editable {
+    cursor: pointer;
+}
