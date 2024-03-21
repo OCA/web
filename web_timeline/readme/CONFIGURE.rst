@@ -38,7 +38,9 @@ These are the variables available in template rendering:
 
 You also need to declare the view in an action window of the involved model.
 
-Example:
+See ``web_timeline/demo/ir_cron_view.xml`` for a very basic timeline view example added onto cron tasks.
+
+More evolved example, from ``project_timeline``:
 
 .. code-block:: xml
 
