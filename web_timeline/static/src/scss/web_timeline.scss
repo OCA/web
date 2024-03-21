@@ -1,3 +1,4 @@
+$vis-hover-background-color: linen;
 $vis-weekend-background-color: #dcdcdc;
 $vis-item-content-padding: 0 3px !important;
 
@@ -10,16 +11,18 @@ $vis-item-content-padding: 0 3px !important;
     }
 
     .vis-item {
-        &.vis-box:hover {
+        &:hover {
+            background-color: $vis-hover-background-color !important;
             cursor: pointer !important;
         }
-        &.vis-item-overflow {
+        .vis-item-overflow {
             overflow: visible;
         }
-
         .vis-item-content {
-            width: 100%;
             padding: $vis-item-content-padding;
+            &:hover {
+                background-color: $vis-hover-background-color !important;
+            }
         }
     }
 }
