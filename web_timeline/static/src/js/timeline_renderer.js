@@ -531,9 +531,9 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
                 evt: evt,
                 style: `background-color: ${this.color};`,
             };
-            // Check if the event is instantaneous,
-            // if so, display it with a point on the timeline (no 'end')
-            if (date_stop && !moment(date_start).isSame(date_stop)) {
+            // Only specify range end when there actually is one.
+            // ➔ Instantaneous events / those with inverted dates are displayed as points.
+            if (date_stop && moment(date_start).isBefore(date_stop)) {
                 r.end = date_stop;
             }
             this.color = null;
