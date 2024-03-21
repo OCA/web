@@ -43,8 +43,16 @@ odoo.define("web_advanced_search.AdvancedSelectDialog", function (require) {
                         }
                     }
                 },
+                load_optional_fields: "_onLoadOptionalFields",
+                save_optional_fields: "_onSaveOptionalFields",
             }
         ),
+        _onLoadOptionalFields: function (ev) {
+            ev.stopPropagation();
+        },
+        _onSaveOptionalFields: function (ev) {
+            ev.stopPropagation();
+        },
         /**
          * Fully overide function to just show Select and Use Criteria.
          */
