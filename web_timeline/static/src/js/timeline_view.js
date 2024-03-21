@@ -86,10 +86,6 @@ odoo.define("web_timeline.TimelineView", function (require) {
             const mode = attrs.mode || attrs.default_window || "fit";
             const min_height = attrs.min_height || 300;
 
-            const current_window = {
-                start: new moment(),
-                end: new moment().add(24, "hours"),
-            };
             if (!isNullOrUndef(attrs.quick_create_instance)) {
                 this.quick_create_instance = "instance." + attrs.quick_create_instance;
             }
@@ -104,7 +100,6 @@ odoo.define("web_timeline.TimelineView", function (require) {
             this.rendererParams.model = this.modelName;
             this.rendererParams.view = this;
             this.rendererParams.options = this._preapre_vis_timeline_options(attrs);
-            this.rendererParams.current_window = current_window;
             this.rendererParams.date_start = date_start;
             this.rendererParams.date_stop = date_stop;
             this.rendererParams.date_delay = date_delay;
