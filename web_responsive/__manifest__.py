@@ -19,10 +19,9 @@
     "development_status": "Production/Stable",
     "maintainers": ["Tardo", "SplashS"],
     "excludes": ["web_enterprise"],
-    "data": ["views/web.xml"],
+    "data": ["views/web.xml", "views/res_users.xml"],
     "assets": {
         "web.assets_backend": [
-            "/web_responsive/static/src/views/form/form_controller.esm.js",
             "/web_responsive/static/src/legacy/scss/web_responsive.scss",
             "/web_responsive/static/src/legacy/js/web_responsive.js",
             "/web_responsive/static/src/components/ui_context.esm.js",
@@ -44,6 +43,7 @@
             "/web_responsive/static/src/components/attachment_viewer/attachment_viewer.esm.js",
             "/web_responsive/static/src/components/attachment_viewer/attachment_viewer.xml",
             "/web_responsive/static/src/views/form/form_controller.scss",
+            "/web_responsive/static/src/views/form/form_controller.esm.js",
         ],
         "web.assets_tests": [
             "/web_responsive/static/tests/test_patch.js",

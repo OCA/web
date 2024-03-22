@@ -22,6 +22,8 @@ This module adds responsiveness to web backend.
 
   .. image:: ../static/img/listview.gif
 
+* Configurable attachment preview from user preferences.
+
 
 **Features for mobile**:
 * View type picker dropdown displays comfortably
