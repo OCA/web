@@ -10,7 +10,7 @@ odoo.define("web_button_no_save.FormController", function (require) {
                 event.stopPropagation();
                 this._disableButtons();
                 var def = this._callButtonAction(attrs, event.data.record);
-                def.always(this._enableButtons.bind(this));
+                def.finally(this._enableButtons.bind(this));
             } else {
                 return this._super.apply(this, arguments);
             }
