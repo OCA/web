@@ -14,7 +14,7 @@
                 record="record"
                 field="record.fields[column.name]"
                 value="record.data[column.name]"
-                t-if="record.fields[column.name].type == 'many2one' and record.data[column.name] and canUseFormatter(column, record) and !props.archInfo.fieldNodes[column.name].options.no_open"
+                t-if="record.fields[column.name].type == 'many2one' and record.data[column.name] and canUseFormatter(column, record) and !column.options.no_open"
             />
         </xpath>
     </t>

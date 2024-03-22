@@ -6,3 +6,4 @@
 - Anand Kansagra \<<kansagraanand@hotmail.com>\>
 - Alexandre Díaz \<<alexandre.diaz@tecnativa.com>\>
 - Dennis Sluijk \<<d.sluijk@onestein.nl>\>
+- Maciej Wichowski \<<maciej@versada.eu>\>

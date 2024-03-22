@@ -5,6 +5,7 @@
  * Copyright 2017 Sodexis <dev@sodexis.com>
  * Copyright 2018 Camptocamp SA
  * Copyright 2019 Alexandre Díaz <alexandre.diaz@tecnativa.com>
+ * Copyright 2024 Versada (https://versada.eu)
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 
 import {ListRenderer} from "@web/views/list/list_renderer";
