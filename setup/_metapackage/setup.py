@@ -24,6 +24,7 @@ setuptools.setup(
         'odoo-addon-web_field_numeric_formatting>=16.0dev,<16.1dev',
         'odoo-addon-web_group_expand>=16.0dev,<16.1dev',
         'odoo-addon-web_help>=16.0dev,<16.1dev',
+        'odoo-addon-web_hide_field_with_key>=16.0dev,<16.1dev',
         'odoo-addon-web_ir_actions_act_multi>=16.0dev,<16.1dev',
         'odoo-addon-web_ir_actions_act_window_message>=16.0dev,<16.1dev',
         'odoo-addon-web_ir_actions_act_window_page>=16.0dev,<16.1dev',
