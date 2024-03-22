@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template
+        id="assets_backend"
+        name="web_field_reference_domain assets_backend"
+        inherit_id="web.assets_backend"
+    >
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/web_field_reference_domain/static/src/js/basic_model.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_field_reference_domain/static/src/js/relational_fields.js"
+            />
+        </xpath>
+    </template>
+
+</odoo>
