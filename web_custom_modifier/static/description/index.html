@@ -1,0 +1,523 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils: https://docutils.sourceforge.io/" />
+<title>Web Custom Modifier</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 8954 2022-01-20 10:10:25Z milde $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See https://docutils.sourceforge.io/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+.subscript {
+  vertical-align: sub;
+  font-size: smaller }
+
+.superscript {
+  vertical-align: super;
+  font-size: smaller }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+  overflow: hidden;
+}
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title, .code .error {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left, .figure.align-left, object.align-left, table.align-left {
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
+
+img.align-right, .figure.align-right, object.align-right, table.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
+
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table.align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: inherit }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+.align-top    {
+  vertical-align: top }
+
+.align-middle {
+  vertical-align: middle }
+
+.align-bottom {
+  vertical-align: bottom }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font: inherit }
+
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+pre.code .ln { color: grey; } /* line numbers */
+pre.code, code { background-color: #eeeeee }
+pre.code .comment, code .comment { color: #5C6576 }
+pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
+pre.code .literal.string, code .literal.string { color: #0C5404 }
+pre.code .name.builtin, code .name.builtin { color: #352B84 }
+pre.code .deleted, code .deleted { background-color: #DEB0A1}
+pre.code .inserted, code .inserted { background-color: #A3D289}
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+/* "booktabs" style (no vertical lines) */
+table.docutils.booktabs {
+  border: 0px;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-collapse: collapse;
+}
+table.docutils.booktabs * {
+  border: 0px;
+}
+table.docutils.booktabs th {
+  border-bottom: thin solid;
+  text-align: left;
+}
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="web-custom-modifier">
+<h1 class="title">Web Custom Modifier</h1>
+
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! This file is generated by oca-gen-addon-readme !!
+!! changes will be overwritten.                   !!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! source digest: sha256:c8053c61c048a6e07e38e3597973a017bbb9ee40b04a75c319495059eb07c34e
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/lgpl-3.0-standalone.html"><img alt="License: LGPL-3" src="https://img.shields.io/badge/licence-LGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/web/tree/14.0/web_custom_modifier"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/web-14-0/web-14-0-web_custom_modifier"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/web&amp;target_branch=14.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p>This module allows to customize modifiers on form and tree view nodes.</p>
+<p>For example, it allows to make a field readonly, invisible or required.</p>
+<p><strong>Table of contents</strong></p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#use-cases-context" id="toc-entry-1">Use Cases / Context</a></li>
+<li><a class="reference internal" href="#usage" id="toc-entry-2">Usage</a><ul>
+<li><a class="reference internal" href="#access-to-the-module" id="toc-entry-3">Access to the module</a></li>
+<li><a class="reference internal" href="#requiered-field" id="toc-entry-4">Requiered Field</a></li>
+<li><a class="reference internal" href="#hide-selection-item" id="toc-entry-5">Hide selection item</a></li>
+<li><a class="reference internal" href="#force-save" id="toc-entry-6">Force Save</a></li>
+<li><a class="reference internal" href="#custom-widget" id="toc-entry-7">Custom Widget</a></li>
+<li><a class="reference internal" href="#number-of-lines-per-page-list-views" id="toc-entry-8">Number of lines per page (List Views)</a></li>
+<li><a class="reference internal" href="#advanced-usage" id="toc-entry-9">Advanced Usage</a></li>
+<li><a class="reference internal" href="#excluded-groups" id="toc-entry-10">Excluded Groups</a></li>
+<li><a class="reference internal" href="#optional" id="toc-entry-11">Optional</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#known-issues-roadmap" id="toc-entry-12">Known issues / Roadmap</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="toc-entry-13">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="toc-entry-14">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="toc-entry-15">Authors</a></li>
+<li><a class="reference internal" href="#maintainers" id="toc-entry-16">Maintainers</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="use-cases-context">
+<h1><a class="toc-backref" href="#toc-entry-1">Use Cases / Context</a></h1>
+<p>In Odoo, when you want to customize some fields or views such as hiding
+a field, changing the number of line of a list view or make a field
+mandatory, you need to have technical knowledge.</p>
+<p>This module allows functional people to apply some customizations
+without having to code.</p>
+</div>
+<div class="section" id="usage">
+<h1><a class="toc-backref" href="#toc-entry-2">Usage</a></h1>
+<div class="section" id="access-to-the-module">
+<h2><a class="toc-backref" href="#toc-entry-3">Access to the module</a></h2>
+<p>As system administrator, I go to <em>Settings / Technical / User Interface
+/ Custom Modifiers</em>. <img alt="Custom Modifier Menu" src="https://raw.githubusercontent.com/OCA/web/14.0/web_custom_modifier/static/description/custom_modifier_menu.png" /></p>
+</div>
+<div class="section" id="requiered-field">
+<h2><a class="toc-backref" href="#toc-entry-4">Requiered Field</a></h2>
+<p>I create a new custom modifier. <img alt="New Modifier" src="https://raw.githubusercontent.com/OCA/web/14.0/web_custom_modifier/static/description/new_custom_modifier.png" /></p>
+<p>The modifier is configured to make the field <tt class="docutils literal">default_code</tt> of a
+product required.</p>
+<p>After refreshing my screen, I go to the form view of a product.</p>
+<p>I notice that the field <tt class="docutils literal">default_code</tt> is required. <img alt="Product form" src="https://raw.githubusercontent.com/OCA/web/14.0/web_custom_modifier/static/description/product_form.png" /></p>
+</div>
+<div class="section" id="hide-selection-item">
+<h2><a class="toc-backref" href="#toc-entry-5">Hide selection item</a></h2>
+<p>The module allows to hide an item (option) of a selection field. <img alt="Hide Selction Item Modifier" src="https://raw.githubusercontent.com/OCA/web/14.0/web_custom_modifier/static/description/hide_selection_item_modifier.png" /></p>
+<p>The above example hides the type of address <tt class="docutils literal">Other</tt>. <img alt="Contact Form Witout Selection Item" src="https://raw.githubusercontent.com/OCA/web/14.0/web_custom_modifier/static/description/contact_form_without_selection_item.png" /></p>
+<p>Beware that if the hidden option is already selected on a record, it
+will look as it was never set. <img alt="Contact Form Type not Selected" src="https://raw.githubusercontent.com/OCA/web/14.0/web_custom_modifier/static/description/contact_form_type_not_selected.png" /></p>
+<p>Therefore, this feature should only be used to hide options that are
+never used.</p>
+</div>
+<div class="section" id="force-save">
+<h2><a class="toc-backref" href="#toc-entry-6">Force Save</a></h2>
+<p>A new option <tt class="docutils literal">Force Save</tt> is available. <img alt="Force Save Modifier" src="https://raw.githubusercontent.com/OCA/web/14.0/web_custom_modifier/static/description/force_save_modifier.png" /></p>
+<p>This modifier may be used along with the <tt class="docutils literal">Readonly</tt> modifier so that
+the field value is saved to the server.</p>
+</div>
+<div class="section" id="custom-widget">
+<h2><a class="toc-backref" href="#toc-entry-7">Custom Widget</a></h2>
+<p>It is possible to customize the widget used for a given field. <img alt="Custom Widget" src="https://raw.githubusercontent.com/OCA/web/14.0/web_custom_modifier/static/description/custom_widget.png" /> <img alt="Task Form with Custom Widget" src="https://raw.githubusercontent.com/OCA/web/14.0/web_custom_modifier/static/description/task_form_with_custom_widget.png" /></p>
+</div>
+<div class="section" id="number-of-lines-per-page-list-views">
+<h2><a class="toc-backref" href="#toc-entry-8">Number of lines per page (List Views)</a></h2>
+<p>A new modifier is added to set the number of lines per page in list
+view.</p>
+<p>In the following example, we set a limit of 20 sale order lines per page
+on a sale order form view.</p>
+<p><img alt="Number of lines per Page Modifier" src="https://raw.githubusercontent.com/OCA/web/14.0/web_custom_modifier/static/description/number_lines_per_page_modifier.png" /> <img alt="Sale Order with Limited SOL per Page" src="https://raw.githubusercontent.com/OCA/web/14.0/web_custom_modifier/static/description/sale_order_with_limited_sol_per_page.png" /></p>
+</div>
+<div class="section" id="advanced-usage">
+<h2><a class="toc-backref" href="#toc-entry-9">Advanced Usage</a></h2>
+<p>In the field <tt class="docutils literal">Type</tt>, I can select <tt class="docutils literal">Xpath</tt>. This allows to set a
+modifier for a specific view node, such as a button. <img alt="Button Modifier" src="https://raw.githubusercontent.com/OCA/web/14.0/web_custom_modifier/static/description/button_modifier.png" />
+The example above hides the a button in the form view of a product.</p>
+</div>
+<div class="section" id="excluded-groups">
+<h2><a class="toc-backref" href="#toc-entry-10">Excluded Groups</a></h2>
+<p>A new field <tt class="docutils literal">Excluded Groups</tt> is available. <img alt="Excluded Groups" src="https://raw.githubusercontent.com/OCA/web/14.0/web_custom_modifier/static/description/excluded_groups.png" /></p>
+<p>If at least one group of users is selected, the modifier is not applied
+for users that are member of any of these groups.</p>
+<p>This is useful when rendering an element readonly or invisible only for
+a subset of users.</p>
+</div>
+<div class="section" id="optional">
+<h2><a class="toc-backref" href="#toc-entry-11">Optional</a></h2>
+<p>Since the version <strong>14.0.2.0.1</strong>, it is possible to customize the
+optional of a given field on a tree view.</p>
+<p>The <tt class="docutils literal">Optional</tt> modifier takes 2 possible keys:</p>
+<ul class="simple">
+<li>show : To make the field displayed by default in the tree view.</li>
+<li>hide : To make the field hidden by default in the 3 dots of a tree
+view.</li>
+</ul>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">The field must be present by default on the tree view and displayed.</p>
+</div>
+<p>Example:</p>
+<p>As system administrator, I go to
+<tt class="docutils literal">Settings / Technical / User Interface / Custom Modifiers</tt>.</p>
+<p>I add the field name (labelled as <tt class="docutils literal">Number</tt> in Quotation List View) of
+the model <tt class="docutils literal">sale.order</tt>.</p>
+<p>I select the modifier <tt class="docutils literal">Optional</tt> and then set the key <tt class="docutils literal">show</tt>.
+<img alt="Optional Modifier" src="https://raw.githubusercontent.com/OCA/web/14.0/web_custom_modifier/static/description/optional_modifier.png" /></p>
+<p>I go to the Quotation List View and notice that the field is now shown
+by default and that it is possible to hide it. <img alt="Optional Modifier Applied" src="https://raw.githubusercontent.com/OCA/web/14.0/web_custom_modifier/static/description/optional_modifier_applied.png" /></p>
+</div>
+</div>
+<div class="section" id="known-issues-roadmap">
+<h1><a class="toc-backref" href="#toc-entry-12">Known issues / Roadmap</a></h1>
+<ul class="simple">
+<li>Set a default value on a field for all users.</li>
+</ul>
+</div>
+<div class="section" id="bug-tracker">
+<h1><a class="toc-backref" href="#toc-entry-13">Bug Tracker</a></h1>
+<p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/web/issues">GitHub Issues</a>.
+In case of trouble, please check there if your issue has already been reported.
+If you spotted it first, help us to smash it by providing a detailed and welcomed
+<a class="reference external" href="https://github.com/OCA/web/issues/new?body=module:%20web_custom_modifier%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<p>Do not contact contributors directly about support or help with technical issues.</p>
+</div>
+<div class="section" id="credits">
+<h1><a class="toc-backref" href="#toc-entry-14">Credits</a></h1>
+<div class="section" id="authors">
+<h2><a class="toc-backref" href="#toc-entry-15">Authors</a></h2>
+<ul class="simple">
+<li>Numigi</li>
+</ul>
+</div>
+<div class="section" id="maintainers">
+<h2><a class="toc-backref" href="#toc-entry-16">Maintainers</a></h2>
+<p>This module is maintained by the OCA.</p>
+<a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
+<p>OCA, or the Odoo Community Association, is a nonprofit organization whose
+mission is to support the collaborative development of Odoo features and
+promote its widespread use.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/web/tree/14.0/web_custom_modifier">OCA/web</a> project on GitHub.</p>
+<p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
+</div>
+</div>
+</div>
+</body>
+</html>

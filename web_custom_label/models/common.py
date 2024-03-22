@@ -16,27 +16,27 @@ def set_custom_labels_on_fields(labels: List[dict], fields: Mapping[str, dict]):
 
 
 def _set_custom_field_names(labels, fields):
-    field_labels = _iter_field_labels_with_position(labels, 'string')
+    field_labels = _iter_field_labels_with_position(labels, "string")
     for label in field_labels:
         _set_single_custom_field_name(label, fields)
 
 
 def _set_single_custom_field_name(label, fields):
-    field = fields.get(label['reference'])
+    field = fields.get(label["reference"])
     if field:
-        field['string'] = label['term']
+        field["string"] = label["term"]
 
 
 def _set_custom_field_helpers(labels, fields):
-    field_helps = _iter_field_labels_with_position(labels, 'help')
+    field_helps = _iter_field_labels_with_position(labels, "help")
     for label in field_helps:
         _set_single_custom_field_helper(label, fields)
 
 
 def _set_single_custom_field_helper(label, fields):
-    field = fields.get(label['reference'])
+    field = fields.get(label["reference"])
     if field:
-        field['help'] = label['term']
+        field["help"] = label["term"]
 
 
 def _iter_field_labels_with_position(labels, position):
@@ -58,9 +58,9 @@ def _set_custom_selection_labels(labels, fields):
 
 
 def _set_single_custom_selection_label(label, fields):
-    field = fields.get(label['reference'])
-    if field and 'selection' in field:
-        field['selection'] = [
-            (k, label['term'] if k == label['key'] else v)
-            for k, v in field['selection']
+    field = fields.get(label["reference"])
+    if field and "selection" in field:
+        field["selection"] = [
+            (k, label["term"] if k == label["key"] else v)
+            for k, v in field["selection"]
         ]
