@@ -31,11 +31,12 @@ $x2many_2d_matrix_max_height: 450px;
                 }
 
                 > td {
-                    text-align: left;
+                    text-align: right;
 
                     &:first-child {
                         position: sticky;
                         left: 0;
+                        text-align: left;
                         border-right-width: 1px;
                         border-right-color: $gray-300;
                         border-right-style: solid;
@@ -56,8 +57,7 @@ $x2many_2d_matrix_max_height: 450px;
         }
 
         > tfoot > tr > th {
-            padding: 0.75rem;
-            text-align: left;
+            text-align: right;
             background-color: $o-list-footer-bg-color;
             position: sticky;
             bottom: 0;
@@ -67,6 +67,7 @@ $x2many_2d_matrix_max_height: 450px;
                 border-left-width: 1px;
                 border-left-color: $gray-300;
                 border-left-style: solid;
+                background-color: white;
             }
         }
     }
