@@ -28,8 +28,8 @@ In Selection operator
 
 It is also possible when having selected a relational field to filter on, to
 choose for the 'is in selection' operator. This will result in opening a list view for
-the related model, where it is possible either to select some records, and then use the
-'Select' butto, or to enter filters on the related model, and then click the
+the related model, where it is possible to either select some records, and then use the
+'Select' button, or to enter filters on the related model, and then click the
 'Use Criteria' button.
 
 Example: select the 'Created By' field to filter Invoices, and then 'is in selection'
