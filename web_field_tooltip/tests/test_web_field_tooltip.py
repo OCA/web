@@ -2,10 +2,10 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError
-from odoo.tests.common import Form, SavepointCase
+from odoo.tests.common import Form, TransactionCase
 
 
-class TestWebFieldTooltip(SavepointCase):
+class TestWebFieldTooltip(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -34,7 +34,7 @@ class TestWebFieldTooltip(SavepointCase):
                     "tooltip_text": "this explains a lot",
                 }
             )
-        self.assertIn(e.exception.name, "A tooltip already exists for this field")
+        self.assertIn(e.exception.args[0], "A tooltip already exists for this field")
 
     def test_tooltip_name(self):
         self.assertEqual(
@@ -43,6 +43,6 @@ class TestWebFieldTooltip(SavepointCase):
 
     def test_tooltip_model_id(self):
         res_partner_form = Form(
-            self.Tooltip.with_context(tooltip_model=self.partner_model_name)
+            self.Tooltip.with_context(default_model=self.partner_model_name)
         )
         self.assertEqual(res_partner_form.model_id, self.partner_model)
