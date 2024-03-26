@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t
+        t-name="web_field_tooltip.FormLabel"
+        t-inherit="web.FormLabel"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//sup" position="before">
+            <t t-if="hasFieldTooltip or showTooltipAddHelper">
+                <FieldTooltip t-props="getFieldTooltipProps" />
+            </t>
+        </xpath>
+    </t>
+
+</templates>

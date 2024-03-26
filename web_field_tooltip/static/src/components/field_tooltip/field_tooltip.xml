@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+
+    <t t-name="web_field_tooltip.FieldTooltip" owl="1">
+        <sup
+            class="field-tooltip"
+            t-on-click="(ev) => this.onClickTooltip(ev)"
+            t-on-mouseenter="(ev) => this.onMouseEnter(ev)"
+            t-on-mouseleave="(ev) => this.onMouseLeave(ev)"
+        >
+            <a
+                class="fa fa fa-question-circle tooltip-icon text-info"
+                t-att-has-tooltip="props.hasFieldTooltip"
+            />
+        </sup>
+    </t>
+
+    <t t-name="web_field_tooltip.FieldTooltipPopover" owl="1">
+        <div class="popup-div">
+            <div class="popover-title">
+                <span t-esc="props.title" />
+            </div>
+            <p class="popover-content">
+                <t t-out="props.help or ''" />
+            </p>
+        </div>
+    </t>
+
+</templates>

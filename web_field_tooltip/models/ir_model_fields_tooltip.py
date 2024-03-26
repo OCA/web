@@ -18,20 +18,24 @@ class IrModelFieldsTooltip(models.Model):
         help="Model for the Field Tooltip.",
         default=lambda self: self._get_default_model_id(),
     )
-    model = fields.Char(related="model_id.model", string="Model Name")
+    model = fields.Char(related="model_id.model", string="Model Name", store=True)
     field_id = fields.Many2one(
         string="Field",
         required=True,
         comodel_name="ir.model.fields",
         ondelete="cascade",
     )
-    name = fields.Char(compute="_compute_name", readonly=True,)
+    field_name = fields.Char(related="field_id.name", store=True)
+    name = fields.Char(
+        compute="_compute_name",
+        readonly=True,
+    )
     active = fields.Boolean(
         default=True,
         help="Set active to false to hide the Tooltip without removing it.",
     )
     field_name = fields.Char(related="field_id.name")
-    tooltip_text = fields.Html(string="Tooltip Text", required=True)
+    tooltip_text = fields.Html(required=True)
 
     @api.model
     def default_get(self, fields_list):
@@ -61,7 +65,7 @@ class IrModelFieldsTooltip(models.Model):
                 raise UserError(_("A tooltip already exists for this field"))
 
     def _get_default_model_id(self):
-        tooltip_model = self.env.context.get("tooltip_model")
+        tooltip_model = self.env.context.get("default_model")
         model = self.env["ir.model"].search([("model", "=", tooltip_model)], limit=1)
         return model.id or False
 

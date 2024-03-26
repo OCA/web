@@ -16,11 +16,17 @@ class ResUsers(models.Model):
         compute="_compute_tooltip_show_add_helper_allowed"
     )
 
-    def __init__(self, pool, cr):
-        super().__init__(pool, cr)
-        field_names = ["tooltip_show_add_helper"]
-        self.SELF_READABLE_FIELDS.extend(field_names)
-        self.SELF_WRITEABLE_FIELDS.extend(field_names)
+    @property
+    def TOOLTIP_READABLE_FIELDS(self):
+        return ["tooltip_show_add_helper"]
+
+    @property
+    def SELF_READABLE_FIELDS(self):
+        return super().SELF_READABLE_FIELDS + self.TOOLTIP_READABLE_FIELDS
+
+    @property
+    def SELF_WRITEABLE_FIELDS(self):
+        return super().SELF_WRITEABLE_FIELDS + self.TOOLTIP_READABLE_FIELDS
 
     def _compute_tooltip_show_add_helper_allowed(self):
         for rec in self:

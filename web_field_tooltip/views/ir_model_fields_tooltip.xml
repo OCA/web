@@ -15,17 +15,22 @@
                         bg_color="bg-danger"
                         attrs="{'invisible': [('active', '=', True)]}"
                     />
-                    <group>
-                        <field name="active" invisible="1" />
-                        <field name="model_id" />
-                        <field name="field_id" domain="[('model_id', '=', model_id)]" />
+                    <group name="first">
+                        <group name="left">
+                            <field name="active" invisible="1" />
+                            <field name="model_id" />
+                            <field
+                                name="field_id"
+                                domain="[('model_id', '=', model_id)]"
+                            />
+                        </group>
+                        <group name="right">
+                            <field name="write_date" />
+                            <field name="write_uid" />
+                        </group>
                     </group>
-                    <group>
+                    <group name="second">
                         <field name="tooltip_text" />
-                    </group>
-                    <group>
-                        <field name="write_date" />
-                        <field name="write_uid" />
                     </group>
                 </sheet>
             </form>
@@ -33,11 +38,14 @@
     </record>
 
     <record model="ir.ui.view" id="ir_model_fields_tooltip_search_view">
+        <field name="name">Fields Tooltips</field>
         <field name="model">ir.model.fields.tooltip</field>
         <field name="arch" type="xml">
             <search>
                 <field name="model_id" />
+                <field name="model" />
                 <field name="field_id" />
+                <field name="field_name" />
                 <separator />
                 <filter
                     string="Archived"
