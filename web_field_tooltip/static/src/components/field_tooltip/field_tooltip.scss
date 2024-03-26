@@ -1,0 +1,35 @@
+sup.field-tooltip {
+    .tooltip-icon {
+        background: none;
+        border: none;
+        display: inline-block;
+        width: fit-content;
+        margin-left: 0px;
+
+        &[has-tooltip] {
+            color: #666666 !important;
+        }
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.popup-div {
+    min-width: 100px;
+    min-height: 30px;
+
+    > * {
+        padding: 5px;
+    }
+
+    .popover-title {
+        font-weight: bold;
+        background-color: #f7f7f7;
+    }
+
+    .popover-content {
+        background-color: white;
+    }
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <template
+        id="web_field_tooltip_asset"
+        inherit_id="web.assets_backend"
+        name="Web Field Tooltip assets"
+    >
+        <xpath expr="." position="inside">
+            <link
+                rel="stylesheet"
+                href="web_field_tooltip/static/src/css/web_field_tooltip.css"
+            />
+            <script
+                type="text/javascript"
+                src="/web_field_tooltip/static/src/js/controller.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_field_tooltip/static/src/js/renderer.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_field_tooltip/static/src/js/web_field_tooltip.js"
+            />
+        </xpath>
+    </template>
+
+</odoo>

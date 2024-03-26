@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t
+        t-name="web_field_tooltip.ListRenderer"
+        t-inherit="web.ListRenderer"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath
+            expr="//t[@t-foreach='state.columns']//span[@t-esc='column.label']"
+            position="after"
+        >
+            <div class="d-block min-w-0 text-truncate flex-grow-1">
+                <t t-if="hasFieldTooltip(column) or showTooltipAddHelper()">
+                    <FieldTooltip t-props="getFieldTooltipProps(column)" />
+                </t>
+            </div>
+        </xpath>
+        <xpath
+            expr="//t[@t-foreach='state.columns']//span[@t-esc='column.label']"
+            position="attributes"
+        >
+            <attribute name="class">d-block min-w-0 text-truncate</attribute>
+        </xpath>
+    </t>
+
+</templates>
