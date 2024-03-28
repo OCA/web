@@ -3,7 +3,7 @@
 {
     "name": "Calendar slot duration",
     "summary": "Customizable calendar slot durations",
-    "version": "16.0.1.0.1",
+    "version": "17.0.1.0.0",
     "development_status": "Production/Stable",
     "category": "Extra Tools",
     "website": "https://github.com/OCA/web",
