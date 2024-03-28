@@ -43,8 +43,8 @@ Configuration
 This documentation is for developers.
 
 If you want to configure your calendar view's snap duration, make sure
-that you action includes a context similar to this (example is the
-default value):
+that your window action includes a context similar to this (example is
+the default value):
 
 ::
 
@@ -53,11 +53,21 @@ default value):
 It can be added in actions defined on python or as
 ``ir.actions.act_window`` records.
 
+|edit action settings|
+
+|result|
+
+.. |edit action settings| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_calendar_slot_duration/static/description/edit_action.png
+.. |result| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_calendar_slot_duration/static/description/calendar_result.png
+
 Usage
 =====
 
 To use this module, you need to install some other addon that uses it,
 as it doesn't provide any end-user functionality.
+
+As demo data, this module modifies the "Scheduled Actions" calendar to
+have slots of 10 minutes as feature demonstration.
 
 Known issues / Roadmap
 ======================

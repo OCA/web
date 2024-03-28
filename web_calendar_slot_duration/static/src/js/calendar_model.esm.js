@@ -6,7 +6,7 @@
 import {CalendarModel} from "@web/views/calendar/calendar_model";
 import {patch} from "@web/core/utils/patch";
 
-patch(CalendarModel.prototype, "WebCalendarSlotDurationCalendarModel", {
+patch(CalendarModel.prototype, {
     buildRawRecord(partialRecord, options = {}) {
         if (
             !partialRecord.end &&
@@ -20,6 +20,6 @@ patch(CalendarModel.prototype, "WebCalendarSlotDurationCalendarModel", {
             const durationFloat = hours + minutes / 60 + seconds / 3600;
             partialRecord.end = partialRecord.start.plus({hours: durationFloat});
         }
-        return this._super(partialRecord, options);
+        return super.buildRawRecord(partialRecord, options);
     },
 });

@@ -392,18 +392,22 @@ regarding event duration and snapping.</p>
 <h1><a class="toc-backref" href="#toc-entry-1">Configuration</a></h1>
 <p>This documentation is for developers.</p>
 <p>If you want to configure your calendar view’s snap duration, make sure
-that you action includes a context similar to this (example is the
-default value):</p>
+that your window action includes a context similar to this (example is
+the default value):</p>
 <pre class="literal-block">
 {&quot;calendar_slot_duration&quot;: &quot;00:30:00&quot;}
 </pre>
 <p>It can be added in actions defined on python or as
 <tt class="docutils literal">ir.actions.act_window</tt> records.</p>
+<p><img alt="edit action settings" src="https://raw.githubusercontent.com/OCA/web/17.0/web_calendar_slot_duration/static/description/edit_action.png" /></p>
+<p><img alt="result" src="https://raw.githubusercontent.com/OCA/web/17.0/web_calendar_slot_duration/static/description/calendar_result.png" /></p>
 </div>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#toc-entry-2">Usage</a></h1>
 <p>To use this module, you need to install some other addon that uses it,
 as it doesn’t provide any end-user functionality.</p>
+<p>As demo data, this module modifies the “Scheduled Actions” calendar to
+have slots of 10 minutes as feature demonstration.</p>
 </div>
 <div class="section" id="known-issues-roadmap">
 <h1><a class="toc-backref" href="#toc-entry-3">Known issues / Roadmap</a></h1>
