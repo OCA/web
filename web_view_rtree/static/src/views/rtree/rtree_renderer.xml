@@ -7,23 +7,16 @@
         t-inherit-mode="primary"
         owl="1"
     >
-        <!-- select between group and record template -->
+        <!--
+            as only the record row template is used and it can have children,
+            move the part displaying the contents after each record row
+            (instead of using it for groups)
+        -->
         <xpath
             expr="t/t/t[@t-call='{{ constructor.recordRowTemplate }}']"
-            position="replace"
+            position="after"
         >
             <t t-set="group" t-value="record" />
-            <t t-if="record.isRecord">
-                <t t-call="{{ constructor.recordRowTemplate }}" />
-            </t>
-            <t t-else="">
-                <t t-call="{{ constructor.groupRowTemplate }}" />
-            </t>
-            <!--
-                as both records and groups can have children, move the part
-                displaying the contents here (instead of only using it for
-                groups)
-            -->
             <xpath expr="//t[@t-if='!group.isFolded']" position="move" />
         </xpath>
 
@@ -41,60 +34,6 @@
     </t>
 
     <t
-        t-name="web_view_rtree.RTreeRenderer.GroupRow"
-        t-inherit="web.ListRenderer.GroupRow"
-        t-inherit-mode="primary"
-        owl="1"
-    >
-        <!--
-            open the record form when clicking on a group row instead of
-            toggling its expansion
-        -->
-        <xpath expr="tr" position="attributes">
-            <attribute name="t-on-click">() => this.openGroupRecord(group)</attribute>
-        </xpath>
-
-        <!-- toggle expansion of the group when clicking on the caret -->
-        <xpath expr="tr/th/div[@class='d-flex']/span" position="attributes">
-            <attribute name="t-on-click.stop">() => this.toggleGroup(group)</attribute>
-        </xpath>
-
-        <!--
-            add empty cells at the beginning of the row to align the
-            contents with those of record rows in case they are selectable or
-            if the first column uses a handle widget
-        -->
-        <xpath expr="tr/th[@tabindex='-1']" position="before">
-            <td t-if="hasSelectors" />
-            <td t-if="firstColumnIsHandle" />
-        </xpath>
-
-        <!--
-            display a caret only if there are children
-        -->
-        <xpath expr="tr/th/div[@class='d-flex']/span" position="before">
-            <t t-if="group.hasChildren">
-                <!--
-                    the original caret span will be moved here (see next xpath
-                    node)
-                -->
-            </t>
-            <t t-else="">
-                <!-- same span but without a caret -->
-                <span
-                    class="o_group_caret fa fa-fw me-1"
-                    t-attf-style="--o-list-group-level: {{getGroupLevel(group)}}"
-                />
-            </t>
-        </xpath>
-
-        <!-- move original caret span inside the if node -->
-        <xpath expr="tr/th/div/t[@t-if='group.hasChildren']" position="inside">
-            <xpath expr="tr/th/div[@class='d-flex']/span" position="move" />
-        </xpath>
-    </t>
-
-    <t
         t-name="web_view_rtree.RTreeRenderer.RecordRow"
         t-inherit="web.ListRenderer.RecordRow"
         t-inherit-mode="primary"
@@ -107,7 +46,7 @@
         <xpath expr="tr[@class='o_data_row']" position="attributes">
             <attribute
                 name="t-attf-class"
-            >{{group.count > 0 ? 'o_group_has_content' : ''}} o_group_header {{!group.isFolded ? 'o_group_open' : ''}}</attribute>
+            >{{record.count > 0 ? 'o_group_has_content' : ''}} o_group_header {{!record.isFolded ? 'o_group_open' : ''}}</attribute>
         </xpath>
 
         <!--
@@ -118,20 +57,46 @@
             expr="tr/t/t/td/t/t[@t-if='canUseFormatter(column, record)']"
             position="before"
         >
-            <t t-if="isFirstColumn(column)">
-                <t t-if="group.hasChildren">
+            <t t-if="isFirstNonWidgetColumn(column)">
+                <t t-if="record.hasChildren">
                     <span
-                        t-attf-class="o_group_caret fa fa-fw {{group.isFolded ? 'fa-caret-right' : 'fa-caret-down' }} me-1"
-                        t-attf-style="--o-list-group-level: {{getGroupLevel(group)}}"
-                        t-on-click.stop="() => this.toggleGroup(group)"
+                        t-attf-class="o_group_caret fa fa-fw {{record.isFolded ? 'fa-caret-right' : 'fa-caret-down' }} me-1"
+                        t-attf-style="--o-list-group-level: {{getGroupLevel(record)}}"
+                        t-on-click.stop="() => this.toggleGroup(record)"
                     />
                 </t>
                 <t t-else="">
                     <span
                         t-attf-class="o_group_caret fa fa-fw me-1"
-                        t-attf-style="--o-list-group-level: {{getGroupLevel(group)}}"
+                        t-attf-style="--o-list-group-level: {{getGroupLevel(record)}}"
                     />
                 </t>
+            </t>
+        </xpath>
+
+        <!--
+            add the number of children after the contents of the first column.
+        -->
+        <xpath expr="tr/t/t/td/t/Field" position="after">
+            <t t-if="isFirstNonWidgetColumn(column) and record.hasChildren">
+                <span class="text-muted ms-2">(<t t-esc="record.count" />)</span>
+            </t>
+        </xpath>
+
+        <!--
+            display an empty cell for placeholder fields
+        -->
+        <xpath
+            expr="tr/t/t[@t-if=&quot;column.type === 'widget'&quot;]"
+            position="after"
+        >
+            <t t-if="column.type === 'placeholder'">
+                <td
+                    t-on-keydown.synthetic="(ev) => this.onCellKeydown(ev, record, record)"
+                    class="o_data_cell cursor-pointer"
+                    t-on-click="(ev) => this.onCellClicked(record, column, ev)"
+                    tabindex="-1"
+                />
             </t>
         </xpath>
     </t>

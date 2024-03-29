@@ -75,6 +75,7 @@ class RTreeRecord extends Record {
         this.aggregates = {};
         this.groupByField = {};
         this.level = params.level;
+        this.parent = params.parent;
 
         if ("isFolded" in state) {
             this.isFolded = state.isFolded;
@@ -100,6 +101,7 @@ class RTreeRecord extends Record {
             // onRecordWillSwitchMode: params.onRecordWillSwitchMode,
             defaultContext: params.defaultContext,
             parentModel: params.resModel,
+            parent: this,
             parentID: this.resId,
             recordModel: params.recordModel,
             level: params.level + 1,
@@ -115,8 +117,8 @@ class RTreeRecord extends Record {
         );
     }
 
-    async load() {
-        await super.load();
+    async load(params = {}) {
+        await super.load(params);
         await this.loadChildren();
     }
 
@@ -151,6 +153,20 @@ class RTreeRecord extends Record {
         await this.model.keepLast.add(this.loadChildren());
         this.model.notify();
     }
+
+    async _update(changes, {silent} = {}) {
+        if (this.isRecord) {
+            return super._update(...arguments);
+        }
+        // Map fields to real field names
+        const mappedChanges = {};
+        for (const [k, v] of Object.entries(changes)) {
+            mappedChanges[
+                this.model.secondaryModelFieldsInverseMapping[this.resModel][k]
+            ] = v;
+        }
+        return super._update(mappedChanges, {silent});
+    }
 }
 
 class DynamicRTreeRecordList extends DynamicRecordList {
@@ -162,13 +178,13 @@ class DynamicRTreeRecordList extends DynamicRecordList {
         this.isGrouped = true;
         this.parentModel = params.parentModel;
         this.parentID = params.parentID;
+        this.parent = params.parent;
         //
         // this.domain = params.domain;
         this.recordModel = params.recordModel || this.resModel;
         this.level = params.level || 0;
         this.recordFields = params.recordFields || params.fields;
         this.recordActiveFields = params.recordActiveFields || params.activeFields;
-        this.computeParentParams = params.computeParentParams;
         this.recordsState = state.recordsState || [];
         this.loaded = false;
     }
@@ -177,7 +193,7 @@ class DynamicRTreeRecordList extends DynamicRecordList {
         if (this.loaded) {
             return;
         }
-        const parentParams = this.computeParentParams(
+        const parentParams = this.model.computeParentParams(
             this.parentModel,
             this.parentID,
             this.domain
@@ -220,13 +236,23 @@ class DynamicRTreeRecordList extends DynamicRecordList {
         }
         this.records = await Promise.all(
             result.map(async (data) => {
-                let fields = {},
-                    activeFields = {},
-                    values = null;
-                if (data.model === this.recordModel) {
+                let fields = null,
+                    activeFields = null;
+                let values = data.record;
+                const isRecord = data.model === this.recordModel;
+                if (isRecord) {
                     fields = this.recordFields;
                     activeFields = this.recordActiveFields;
-                    values = data.record;
+                } else {
+                    fields = this.model.secondaryModelFields[data.model];
+                    activeFields = fields;
+                    const fieldsMapping =
+                        this.model.secondaryModelFieldsMapping[data.model];
+                    const mappedValues = {};
+                    for (const [k, v] of Object.entries(fieldsMapping)) {
+                        mappedValues[k] = values[v];
+                    }
+                    values = mappedValues;
                 }
                 let recordState = {};
                 const recordStateByID = recordStateByModel[data.model];
@@ -243,9 +269,10 @@ class DynamicRTreeRecordList extends DynamicRecordList {
                         rawContext: this.rawContext,
                         recordModel: this.recordModel,
                         numChildren: data.numChildren,
-                        isRecord: data.record !== null,
+                        isRecord,
                         displayName: data.displayName,
                         level: this.level,
+                        parent: this.parent,
                         recordFields: this.recordFields,
                         recordActiveFields: this.recordActiveFields,
                         isFolded: data.isFolded,
@@ -362,20 +389,24 @@ class DynamicRTreeRecordList extends DynamicRecordList {
                             model,
                             displayName: record.display_name,
                             numChildren: 0,
-                            record: null,
+                            record,
                             isFolded: true,
                         };
                         modelGroups.groupsByID[record.id] = groupObj;
                         // FIXME: insert at correct sorted position
                         modelGroups.groups.push(groupObj);
+                    } else {
+                        group.record = record;
                     }
                 }
             }
         }
         let result = [];
-        // Remove groups that have a corresponding record
+        // Remove groups that are of the primary model
         for (const group of groups.groups) {
-            result = result.concat(group.groups.filter((g) => g.record === null));
+            result = result.concat(
+                group.groups.filter((g) => g.model !== this.recordModel)
+            );
         }
         result = result.concat(resultRecords);
         return result;
@@ -384,9 +415,9 @@ class DynamicRTreeRecordList extends DynamicRecordList {
     async _fetchRecords({model, domain}) {
         let fieldNames = [];
         if (model === this.recordModel) {
-            fieldNames = this.fieldNames;
+            fieldNames = Object.keys(this.model.rootParams.activeFields);
         } else {
-            fieldNames = ["display_name"];
+            fieldNames = Object.values(this.model.secondaryModelFieldsMapping[model]);
         }
         const kwargs = {};
         return this.model.orm.webSearchRead(model, domain, fieldNames, kwargs);
@@ -397,15 +428,15 @@ class DynamicRTreeRecordList extends DynamicRecordList {
         return this.model.orm.webReadGroup(model, domain, [groupBy], [groupBy], kwargs);
     }
 
-    _findRecordParent(id) {
-        // Find the record list that contains a record with the corresponding
-        // (datapoint) id.
+    _findRecordAndParentList(id) {
+        // Find the record with the corresponding (datapoint) id and the
+        // record list that contains it.
         for (const record of this.records) {
             if (record.id === id) {
-                return this;
+                return [record, this];
             }
             if (record.hasChildren) {
-                const subResult = record.list._findRecordParent(id);
+                const subResult = record.list._findRecordAndParentList(id);
                 if (subResult !== null) {
                     return subResult;
                 }
@@ -414,33 +445,104 @@ class DynamicRTreeRecordList extends DynamicRecordList {
         return null;
     }
 
-    _replaceRecords(records) {
-        // Replace the records (of model this.recordModel, which are always
-        // contiguous), by the provided new array of records.
-        const isRecord = (r) => r.resModel === this.recordModel;
-        const firstRecordIndex = this.records.findIndex(isRecord);
-        const numRecords = this.records.filter(isRecord).length;
+    _replaceRecords(model, records) {
+        // Replace the records (of the same model, which are always
+        // contiguous) by the provided new array of records.
+        const isModelRecord = (r) => r.resModel === model;
+        const firstRecordIndex = this.records.findIndex(isModelRecord);
+        const numRecords = this.records.filter(isModelRecord).length;
         this.records.splice(firstRecordIndex, numRecords, ...records);
     }
 
-    async resequence(movedID, targetID) {
-        // We need to find the list of records from which movedID comes and
-        // the one that contains targetID. If it is not the same list, this
-        // means that the record is being reparented. For now, this is not
-        // supported.
-        const recordList = this._findRecordParent(movedID);
-        let records = recordList.records.filter((r) => r.resModel === this.recordModel);
-        // Undefined targetID means that a record is moved at the top of the
-        // list.
+    _getValidTargetID(record, records, targetID) {
+        if (targetID === null) {
+            // A null targetID means the top of the rtree view. This is valid
+            // only for the first root elements of the same model.
+            const visibleRecords = this.model.getVisibleRecords();
+            if (visibleRecords[0].id === records[0].id) {
+                return targetID;
+            }
+            return false;
+        }
+        let targetRecord = records.find((r) => r.id === targetID);
+        if (targetRecord !== undefined) {
+            // The target record is a record from the same list as the moved
+            // record.
+            if (targetRecord.isFolded) {
+                return targetID;
+            }
+            // If the target record is unfolded, it means that the record is
+            // moved between the target and its first child.
+            return false;
+        }
+        // We need to find whether targetID corresponds to the element that is
+        // just above the first one of the list. This should work, as it means
+        // that it is moved to the top of the list. In that case, targetID
+        // should be null.
+        const visibleRecords = this.model.getVisibleRecords();
+        const firstRecordID = records[0].id;
+        const firstRecordIndex = visibleRecords.findIndex(
+            (r) => r.id === firstRecordID
+        );
         if (
-            targetID !== undefined &&
-            records.findIndex((r) => r.id === targetID) === -1
+            firstRecordIndex !== 0 &&
+            visibleRecords[firstRecordIndex - 1].id === targetID
         ) {
-            console.error("It is not possible to reparent records in an rtree view.");
+            return null;
+        }
+        // Last case to handle: the record is moved under the last visible
+        // child of an unfolded sibling record. We need to find the parent of
+        // the target that has the same level and the same model. This doesn't
+        // necessarily mean that it is in the list, as itself can have a
+        // different parent than the moved record.
+        targetRecord = visibleRecords.find((r) => r.id === targetID);
+        let parentRecord = targetRecord;
+        while (parentRecord.level > record.level) {
+            parentRecord = parentRecord.parent;
+        }
+        if (
+            parentRecord.level !== record.level ||
+            parentRecord.resModel !== record.resModel ||
+            !records.includes(parentRecord)
+        ) {
+            return false;
+        }
+        const visibleChildren = this.model.getVisibleRecordsOfList(parentRecord.list);
+        if (visibleChildren[visibleChildren.length - 1] === targetRecord) {
+            return parentRecord.id;
+        }
+        return false;
+    }
+
+    async resequence(movedID, targetID) {
+        // We need to find the list of records from which movedID comes.
+        const [record, recordList] = this._findRecordAndParentList(movedID);
+        let records = recordList.records.filter((r) => r.resModel === record.resModel);
+        // TargetID could be a record from the list, but it could also be
+        // from outside the list and still be valid. If it is invalid, it
+        // meast that the record is being reparented. For now, this is not
+        // supported.
+        const validTargetID = this._getValidTargetID(record, records, targetID);
+        // We cannot use !validTargetID because null is a valid target id.
+        if (validTargetID === false) {
+            this.model.errorDialog(
+                "Error",
+                "It is not possible to reparent records in an rtree view."
+            );
             return;
         }
-        records = await this._resequence(records, this.recordModel, movedID, targetID);
-        recordList._replaceRecords(records);
+        try {
+            this.model.setModelForHandleField(record.resModel);
+            records = await this._resequence(
+                records,
+                record.resModel,
+                movedID,
+                validTargetID
+            );
+        } finally {
+            this.model.setModelForHandleField(null);
+        }
+        recordList._replaceRecords(record.resModel, records);
         this.model.notify();
     }
 }
@@ -449,10 +551,12 @@ const GLOBAL_FILTER_FIELD = "display_name";
 
 export class RTreeModel extends RelationalModel {
     setup(params, args) {
+        this._origHandleField = null;
         super.setup(params, args);
         this.parentDefs = params.parentDefs;
         this.parentsMap = this._buildParentsMap(this.parentDefs);
         this.previousDomain = null;
+        this._processFields();
     }
 
     _buildParentsMap(parentDefs) {
@@ -501,6 +605,53 @@ export class RTreeModel extends RelationalModel {
             childModels,
             allModels,
         };
+    }
+
+    _processFields() {
+        const secondaryModelFields = {};
+        const secondaryModelFieldsMapping = {};
+        const secondaryModelFieldsInverseMapping = {};
+        for (const model of this.parentsMap.allModels) {
+            if (model === this.rootParams.resModel) {
+                continue;
+            }
+            secondaryModelFields[model] = {
+                display_name: {name: "display_name"},
+            };
+            secondaryModelFieldsMapping[model] = {
+                display_name: "display_name",
+            };
+            secondaryModelFieldsInverseMapping[model] = {
+                display_name: "display_name",
+            };
+        }
+        for (const [fieldName, field] of Object.entries(this.rootParams.activeFields)) {
+            if (field.secondaryFields === undefined) {
+                continue;
+            }
+            for (const [model, secondaryFieldName] of Object.entries(
+                field.secondaryFields
+            )) {
+                const rawAttrs = {
+                    ...field.rawAttrs,
+                    name: secondaryFieldName,
+                };
+                secondaryModelFields[model][fieldName] = {
+                    ...field,
+                    name: secondaryFieldName,
+                    rawAttrs,
+                    // OnChange is not supported, as it would use the primary
+                    // field name.
+                    onChange: false,
+                };
+                secondaryModelFieldsMapping[model][fieldName] = secondaryFieldName;
+                secondaryModelFieldsInverseMapping[model][secondaryFieldName] =
+                    fieldName;
+            }
+        }
+        this.secondaryModelFields = secondaryModelFields;
+        this.secondaryModelFieldsMapping = secondaryModelFieldsMapping;
+        this.secondaryModelFieldsInverseMapping = secondaryModelFieldsInverseMapping;
     }
 
     async _expandAll(list) {
@@ -595,13 +746,11 @@ export class RTreeModel extends RelationalModel {
         if (domain.length !== 0) {
             for (const element of domain) {
                 if (typeof element === "string") {
-                    this.dialogService.add(WarningDialog, {
-                        title: this.env._t("Error"),
-                        message: this.env._t(
-                            "This type of search domain is not supported " +
-                                "in an rtree view."
-                        ),
-                    });
+                    this.errorDialog(
+                        "Error",
+                        "This type of search domain is not supported in an " +
+                            "rtree view."
+                    );
                     return;
                 }
                 if (element[0] === GLOBAL_FILTER_FIELD) {
@@ -796,11 +945,45 @@ export class RTreeModel extends RelationalModel {
         };
     }
 
-    createDataPoint(type, params) {
-        params.computeParentParams = (parentModel, parentID, domain) => {
-            return this.computeParentParams(parentModel, parentID, domain);
-        };
-        return super.createDataPoint(...arguments);
+    errorDialog(title, message) {
+        this.dialogService.add(WarningDialog, {
+            title: this.env._t(title),
+            message: this.env._t(message),
+        });
+    }
+
+    get handleField() {
+        return this._currentHandleField || this._origHandleField;
+    }
+
+    set handleField(field) {
+        this._origHandleField = field;
+    }
+
+    setModelForHandleField(model) {
+        if (model in this.secondaryModelFields) {
+            this._currentHandleField =
+                this.secondaryModelFields[model][this._origHandleField].name;
+        } else {
+            this._currentHandleField = null;
+        }
+    }
+
+    getVisibleRecordsOfList(list) {
+        const result = [];
+        for (const record of list.records) {
+            result.push(record);
+            if (record.hasChildren && !record.isFolded) {
+                result.push(...this.getVisibleRecordsOfList(record.list));
+            }
+        }
+        return result;
+    }
+
+    // Compute the list of all records that are visible (not child of a folded
+    // parent) and return it as a flat list.
+    getVisibleRecords() {
+        return this.getVisibleRecordsOfList(this.root);
     }
 }
 

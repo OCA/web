@@ -5,6 +5,20 @@ import {Domain} from "@web/core/domain";
 import {ListArchParser} from "@web/views/list/list_arch_parser";
 
 export class RTreeArchParser extends ListArchParser {
+    parseFieldNode(node, models, modelName) {
+        const result = super.parseFieldNode(node, models, modelName);
+        const secondaryFields = {};
+        for (const childNode of node.children) {
+            if (childNode.nodeName !== "field") {
+                continue;
+            }
+            secondaryFields[childNode.getAttribute("model")] =
+                childNode.getAttribute("name");
+        }
+        result.secondaryFields = secondaryFields;
+        return result;
+    }
+
     parse(arch, models, modelName) {
         const xmlDoc = this.parseXML(arch);
         const treeAttr = {};
