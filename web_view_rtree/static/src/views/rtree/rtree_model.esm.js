@@ -14,11 +14,14 @@ import {WarningDialog} from "@web/core/errors/error_dialogs";
 // using webSearchRead() and creates a Record object for each.
 //
 // In the rtree view, groups and records can appear at any level and records
-// can have children. The distinction is that what is called group here is not
-// a record of the base model (and has only an id and a name), while a record
-// is (and has thus all the fields displayed in the view). Because of this,
-// only 2 classes are used: DynamicRTreeRecordList and RTreeRecord, which
-// handle all the cases.
+// can have children. The distinction is that what is called a group here is
+// actually a record of a secondary model, as opposed to those of the base or
+// primary model that are called records. Because of this, only 2 classes are
+// used: DynamicRTreeRecordList and RTreeRecord, which handle all the cases.
+//
+// A record has thus all the fields displayed in the view, while a group has
+// by default only an id and a display_name, but other fields can also be
+// used.
 //
 // What data is loaded (and how it is loaded) when opening a parent (a group
 // or a record) to display its children (or when displaying the root) depends
@@ -45,18 +48,9 @@ import {WarningDialog} from "@web/core/errors/error_dialogs";
 //
 // The isRecord property controls how the RTreeRecord will be displayed: if it
 // is true, it will appear as a record row with all its field values in the
-// columns; if it is false, it will appear as a group spanning all columns
-// with only its name and the number of its children.
-//
-// Why display empty groups? It would be logical to think that empty groups
-// could be ignored. It would indeed make sense to not display them because
-// they do not show other data than their own name and are thus not that
-// useful. However, they are shown for a simple reason: with the way the data
-// is loaded, it is not possible to detect that children are empty groups. A
-// parent could contain only empty groups. In that case, it would be possible
-// to unfold it, but it would show no children, which would be confusing.
-// Also, the number of children is displayed after the group name. If empty
-// groups are not shown, the count could be wrong.
+// columns; if it is false, it will appear as a row with only its display_name
+// and possibly some other values depending on which fields are defined in the
+// secondary model field mapping.
 
 // This class is used for groups as well as for records.
 class RTreeRecord extends Record {

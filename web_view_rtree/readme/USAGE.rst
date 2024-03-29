@@ -57,3 +57,24 @@ sub-tasks will not.
 
 To make the view available, the ``rtree`` view mode must be added to the list
 of view modes (``view_mode`` field) of the window action.
+
+Filtering
+~~~~~~~~~
+
+If the search view defines a search on the ``display_name`` field, using it in
+the rtree view will filter all elements (of any model) on their
+``display_name``. This uses the ``name_search()`` model method.
+
+Using secondary model fields
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It is possible to use some fields of the secondary models, for example to
+allow to reorder those records with a handle widget. This is done by adding
+children ``field`` elements to the corresponding ``field`` element of the
+view. For example, this would allow to reorder projects as well as tasks:
+
+.. code-block:: XML
+
+    <field name="sequence" widget="handle">
+        <field model="project.project" name="sequence" />
+    </field>
