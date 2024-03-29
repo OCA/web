@@ -48,6 +48,9 @@ export class RTreeController extends ListController {
                     rootState: this.model.root.exportState(),
                 };
             },
+            getOrderBy: () => {
+                return this.model.root.orderBy;
+            },
         });
     }
 

@@ -52,6 +52,11 @@ import {WarningDialog} from "@web/core/errors/error_dialogs";
 // and possibly some other values depending on which fields are defined in the
 // secondary model field mapping.
 
+// This is copied from web/views/relational_model, because not exported.
+function orderByToString(orderBy) {
+    return orderBy.map((o) => `${o.name} ${o.asc ? "ASC" : "DESC"}`).join(", ");
+}
+
 // This class is used for groups as well as for records.
 class RTreeRecord extends Record {
     setup(params, state) {
@@ -181,10 +186,15 @@ class DynamicRTreeRecordList extends DynamicRecordList {
         this.recordActiveFields = params.recordActiveFields || params.activeFields;
         this.recordsState = state.recordsState || [];
         this.loaded = false;
+        this._setPreviousOrderBy();
     }
 
     async load() {
+        // This is also called when the sort order has changed.
         if (this.loaded) {
+            if (JSON.stringify(this.orderBy) !== this.previousOrderByJSON) {
+                return this._reorderRecords();
+            }
             return;
         }
         const parentParams = this.model.computeParentParams(
@@ -261,6 +271,7 @@ class DynamicRTreeRecordList extends DynamicRecordList {
                         fields: fields,
                         activeFields: activeFields,
                         rawContext: this.rawContext,
+                        orderBy: this.orderBy,
                         recordModel: this.recordModel,
                         numChildren: data.numChildren,
                         isRecord,
@@ -279,6 +290,7 @@ class DynamicRTreeRecordList extends DynamicRecordList {
         );
         this.count = this.records.length;
         this.loaded = true;
+        this._setPreviousOrderBy();
     }
 
     exportState() {
@@ -408,12 +420,13 @@ class DynamicRTreeRecordList extends DynamicRecordList {
 
     async _fetchRecords({model, domain}) {
         let fieldNames = [];
+        const kwargs = {};
         if (model === this.recordModel) {
             fieldNames = Object.keys(this.model.rootParams.activeFields);
+            kwargs.order = orderByToString(this.orderBy);
         } else {
             fieldNames = Object.values(this.model.secondaryModelFieldsMapping[model]);
         }
-        const kwargs = {};
         return this.model.orm.webSearchRead(model, domain, fieldNames, kwargs);
     }
 
@@ -538,6 +551,91 @@ class DynamicRTreeRecordList extends DynamicRecordList {
         }
         recordList._replaceRecords(record.resModel, records);
         this.model.notify();
+    }
+
+    _setPreviousOrderBy() {
+        // The previous order is saved as JSON because this.orderBy is
+        // modified in-place.
+        this.previousOrderByJSON = JSON.stringify(this.orderBy);
+    }
+
+    async _fetchReorderIDs({model, domain}) {
+        const fieldNames = ["id"];
+        const kwargs = {order: orderByToString(this.orderBy)};
+        const result = await this.model.orm.webSearchRead(
+            model,
+            domain,
+            fieldNames,
+            kwargs
+        );
+        return result.records.map((r) => r.id);
+    }
+
+    _getReorderedRecords(records, ids) {
+        const idMap = {};
+        for (const record of records) {
+            idMap[record.resId] = record;
+        }
+        const result = [];
+        for (const id of ids) {
+            result.push(idMap[id]);
+        }
+        return result;
+    }
+
+    async _reorderChildren() {
+        const childrenPromises = [];
+        for (const record of this.records) {
+            if (!record.hasChildren) {
+                continue;
+            }
+            record.list.orderBy = this.orderBy;
+            if (!record.list.loaded) {
+                continue;
+            }
+            // This list is loaded. It order needs thus to be updated, whether
+            // it is folded or not.
+            childrenPromises.push(record.list._reorderRecords());
+        }
+        await Promise.all(childrenPromises);
+    }
+
+    async _reorderRecords() {
+        // The orderBy property has changed. We need to:
+        // 1. load the new order of the records
+        // 2. re-order the records in-place
+        // 3. do this recursively
+        const parentParams = this.model.computeParentParams(
+            this.parentModel,
+            this.parentID,
+            this.domain
+        );
+        // Filter parentParams.records to only keep the ones that match
+        // recordModel.
+        const recordQueryParams = parentParams.records.filter(
+            (r) => r.model === this.recordModel
+        );
+        if (recordQueryParams.length > 1) {
+            throw new Error(
+                `Multiple query params found for model ${this.recordModel}`
+            );
+        }
+        let orderPromise = null;
+        let records = null;
+        if (recordQueryParams.length === 1) {
+            records = this.records.filter((r) => r.resModel === this.recordModel);
+            if (records.length !== 0) {
+                orderPromise = this._fetchReorderIDs(recordQueryParams[0]);
+            }
+        }
+        const childrenPromise = this._reorderChildren();
+        if (orderPromise !== null) {
+            const ids = await orderPromise;
+            const reorderedRecords = this._getReorderedRecords(records, ids);
+            this._replaceRecords(this.recordModel, reorderedRecords);
+        }
+        await childrenPromise;
+        this._setPreviousOrderBy();
     }
 }
 
