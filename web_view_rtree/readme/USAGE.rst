@@ -14,19 +14,19 @@ has the following attributes:
 * ``expand`` (optional): an optional boolean value that controls whether this
   relationship should be expanded automatically (false by default).
 
-The order of the ``<parent>`` elements controls the order of group types on
+The order of the ``<parent>`` elements controls the order of model records on
 each level of the tree.
 
-The root of the tree displays all groups and records that have no parent.
+The root of the tree displays all records of all models that have no parent.
 
 Here is an example to display projects with their tasks and sub-tasks
-(recursively). At the root, it will display all projects (as groups) as well
-as all tasks (as records) that have no parent and no project. Note that the
-first relationship has a domain: this is to ensure that only tasks that have
-no parent will be shown as children of their project. Moreover, the first
-relationship has the ``expand`` boolean set to true, while the second hasn't:
-this means that project groups will be expanded automatically, but tasks with
-sub-tasks will not.
+(recursively). At the root, it will display all projects (with only their
+``display_name``) followed by all tasks that have no parent and no project (as
+regular records, with all fields). Note that the first relationship has a
+domain: this is to ensure that only tasks that have no parent will be shown as
+children of their project. Moreover, the first relationship has the ``expand``
+boolean set to true, while the second hasn't: this means that project rows
+will be expanded automatically, but tasks with sub-tasks will not.
 
 .. code-block:: XML
 
@@ -62,7 +62,7 @@ Filtering
 ~~~~~~~~~
 
 If the search view defines a search on the ``display_name`` field, using it in
-the rtree view will filter all elements (of any model) on their
+the rtree view will filter all records (of any model) on their
 ``display_name``. This uses the ``name_search()`` model method.
 
 Using secondary model fields
