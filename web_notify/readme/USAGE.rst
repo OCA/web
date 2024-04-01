@@ -37,26 +37,27 @@ The notifications can bring interactivity with some buttons.
 
 The reload button is activated when sending the notification with:
 
-
-The action can be used using the ``action`` keyword:
+The action can be used using the ``action`` keyword and we can choose which name to
+give to our button with the ``button_name`` key in the action context `params` key:
 
 .. code-block:: python
 
     action = self.env["ir.actions.act_window"]._for_xml_id('sale.action_orders')
     action.update({
-        'res_id': self.id,
-        'views': [(False, 'form')],
+       'res_id': self.id,
+       'views': [(False, 'form')],
     })
-   self.env.user.notify_info('My information message', action=action)
+    action["context"].setdefault("params", {})
+    action["context"]["params"]["button_name"] = "Sales"
+    action["context"]["params"]["button_icon"] = "fa-eye"
+    self.env.user.notify_info('My information message', action=action)
 
 
-.. figure:: static/description/notifications_screenshot.gif
-   :scale: 80 %
+.. figure:: ../static/img/notifications_screenshot.gif
    :alt: Sample notifications
 
 You can test the behaviour of the notifications by installing this module in a demo database.
 Access the users form through Settings -> Users & Companies. You'll see a tab called "Test web notify", here you'll find two buttons that'll allow you test the module.
 
-.. figure:: static/description/test_notifications_demo.png
-   :scale: 80 %
+.. figure:: ../static/img/test_notifications_demo.png
    :alt: Sample notifications
