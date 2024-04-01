@@ -11,8 +11,8 @@ msgstr ""
 "POT-Creation-Date: 2017-06-22 08:27+0000\n"
 "PO-Revision-Date: 2023-11-09 13:36+0000\n"
 "Last-Translator: Adriano Prado <adrianojprado@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
-"23907/pt_BR/)\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
+"teams/23907/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -65,6 +65,13 @@ msgstr "Notificar o nome do canal de sucesso"
 #: model:ir.model.fields,field_description:web_notify.field_res_users__notify_warning_channel_name
 msgid "Notify Warning Channel Name"
 msgstr "Notificar o nome do canal de alerta"
+
+#. module: web_notify
+#. odoo-javascript
+#: code:addons/web_notify/static/src/js/services/notification_services.esm.js:0
+#, python-format
+msgid "Open"
+msgstr ""
 
 #. module: web_notify
 #. odoo-python
