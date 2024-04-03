@@ -128,7 +128,7 @@ odoo.define("web_timeline.TimelineView", function (require) {
         _preapre_vis_timeline_options: function (attrs) {
             return {
                 groupOrder: "order",
-                orientation: "both",
+                orientation: {axis: "both", item: "top"},
                 selectable: true,
                 multiselect: true,
                 showCurrentTime: true,
