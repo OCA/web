@@ -1,6 +1,6 @@
 The duplicate option is enabled by default.
 To disable it you have to add attribute `duplicate` to the tree view.
-Set `duplicate` to `false` to enable it or `true` to (explicitly) disable it.
+Set `duplicate` to `true` to enable it or `false` to (explicitly) disable it.
 
 Example:
 
