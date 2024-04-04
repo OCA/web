@@ -22,6 +22,10 @@ odoo.define("web_timeline.TimelineView", function (require) {
         return _.isUndefined(value) || _.isNull(value);
     }
 
+    function toBoolDefaultTrue(value) {
+        return isNullOrUndef(value) ? true : utils.toBoolElse(value, true);
+    }
+
     var TimelineView = AbstractView.extend({
         display_name: _lt("Timeline"),
         icon: "fa fa-tasks",
@@ -100,6 +104,9 @@ odoo.define("web_timeline.TimelineView", function (require) {
             this.rendererParams.model = this.modelName;
             this.rendererParams.view = this;
             this.rendererParams.options = this._preapre_vis_timeline_options(attrs);
+            this.rendererParams.can_create = toBoolDefaultTrue(attrs.create);
+            this.rendererParams.can_update = toBoolDefaultTrue(attrs.edit);
+            this.rendererParams.can_delete = toBoolDefaultTrue(attrs.delete);
             this.rendererParams.date_start = date_start;
             this.rendererParams.date_stop = date_stop;
             this.rendererParams.date_delay = date_delay;
@@ -127,9 +134,7 @@ odoo.define("web_timeline.TimelineView", function (require) {
                 selectable: true,
                 multiselect: true,
                 showCurrentTime: true,
-                stack: isNullOrUndef(attrs.stack)
-                    ? true
-                    : utils.toBoolElse(attrs.stack, true),
+                stack: toBoolDefaultTrue(attrs.stack),
                 margin: attrs.margin ? JSON.parse(attrs.margin) : {item: 2},
                 zoomKey: attrs.zoomKey || "ctrlKey",
             };

@@ -29,6 +29,9 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
             this.modelName = params.model;
             this.mode = params.mode;
             this.options = params.options;
+            this.can_create = params.can_create;
+            this.can_update = params.can_update;
+            this.can_delete = params.can_delete;
             this.min_height = params.min_height;
             this.date_start = params.date_start;
             this.date_stop = params.date_stop;
@@ -192,22 +195,25 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
          */
         init_timeline: function () {
             this._computeMode();
-            this.options.editable = {
-                // Add new items by double tapping
-                add: this.modelClass.data.rights.create,
+            this.options.editable = {};
+            if (this.can_update && this.modelClass.data.rights.write) {
+                this.options.onMove = this.on_move;
+                this.options.onUpdate = this.on_update;
                 // Drag items horizontally
-                updateTime: this.modelClass.data.rights.write,
+                this.options.editable.updateTime = true;
                 // Drag items from one group to another
-                updateGroup: this.modelClass.data.rights.write,
+                this.options.editable.updateGroup = true;
+                if (this.can_create && this.modelClass.data.rights.create) {
+                    this.options.onAdd = this.on_add;
+                    // Add new items by double tapping
+                    this.options.editable.add = true;
+                }
+            }
+            if (this.can_delete && this.modelClass.data.rights.unlink) {
+                this.options.onRemove = this.on_remove;
                 // Delete an item by tapping the delete button top right
-                remove: this.modelClass.data.rights.unlink,
-            };
-            $.extend(this.options, {
-                onAdd: this.on_add,
-                onMove: this.on_move,
-                onUpdate: this.on_update,
-                onRemove: this.on_remove,
-            });
+                this.options.editable.remove = true;
+            }
             this.options.xss = {disabled: true};
             this.qweb = new QWeb(session.debug, {_s: session.origin}, false);
             if (this.arch.children.length) {
@@ -218,7 +224,11 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
             }
 
             this.timeline = new vis.Timeline(this.$timeline.get(0), {}, this.options);
-            this.timeline.on("click", this.on_group_click);
+            this.timeline.on("click", this.on_timeline_click);
+            if (!this.options.onUpdate) {
+                // In read-only mode, catch double-clicks this way.
+                this.timeline.on("doubleClick", this.on_timeline_double_click);
+            }
             const group_bys = this.arch.attrs.default_group_by.split(",");
             this.last_group_bys = group_bys;
             this.last_domains = this.modelClass.data.domain;
@@ -553,12 +563,12 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
         },
 
         /**
-         * Handle a click on a group header.
+         * Handle a click within the timeline.
          *
          * @param {ClickEvent} e
          * @private
          */
-        on_group_click: function (e) {
+        on_timeline_click: function (e) {
             if (e.what === "group-label" && e.group !== -1) {
                 this._trigger(
                     e,
@@ -566,6 +576,24 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
                         // Do nothing
                     },
                     "onGroupClick"
+                );
+            }
+        },
+
+        /**
+         * Handle a double-click within the timeline.
+         *
+         * @param {ClickEvent} e
+         * @private
+         */
+        on_timeline_double_click: function (e) {
+            if (e.what === "item" && e.item !== -1) {
+                this._trigger(
+                    e.item,
+                    () => {
+                        // No callback
+                    },
+                    "onItemDoubleClick"
                 );
             }
         },
@@ -615,7 +643,7 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
         },
 
         /**
-         * Trigger_up encapsulation adds by default the rights, and the renderer.
+         * Trigger_up encapsulation adds by default the renderer.
          *
          * @param {HTMLElement} item
          * @param {Function} callback
@@ -626,7 +654,6 @@ odoo.define("web_timeline.TimelineRenderer", function (require) {
             this.trigger_up(trigger, {
                 item: item,
                 callback: callback,
-                rights: this.modelClass.data.rights,
                 renderer: this,
             });
         },
