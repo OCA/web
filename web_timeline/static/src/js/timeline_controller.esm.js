@@ -12,6 +12,7 @@ import {Component} from "@odoo/owl";
 export default AbstractController.extend({
     custom_events: _.extend({}, AbstractController.prototype.custom_events, {
         onGroupClick: "_onGroupClick",
+        onItemDoubleClick: "_onItemDoubleClick",
         onUpdate: "_onUpdate",
         onRemove: "_onRemove",
         onMove: "_onMove",
@@ -102,6 +103,17 @@ export default AbstractController.extend({
     },
 
     /**
+     * Triggered on double-click on an item in read-only mode (otherwise, we use _onUpdate).
+     *
+     * @private
+     * @param {EventObject} event
+     * @returns {jQuery.Deferred}
+     */
+    _onItemDoubleClick: function (event) {
+        return this.openItem(event.data.item, false);
+    },
+
+    /**
      * Opens a form view of a clicked timeline
      * item (triggered by the TimelineRenderer).
      *
@@ -109,33 +121,35 @@ export default AbstractController.extend({
      * @param {EventObject} event
      */
     _onUpdate: function (event) {
-        this.renderer = event.data.renderer;
-        const rights = event.data.rights;
         const item = event.data.item;
-        const id = Number(item.evt.id) || item.evt.id;
-        const title = item.evt.__name;
+        const item_id = Number(item.evt.id) || item.evt.id;
+        return this.openItem(item_id, true);
+    },
+
+    /** Open specified item, either through modal, or by navigating to form view. */
+    openItem: function (item_id, is_editable) {
         if (this.open_popup_action) {
+            const options = {
+                resModel: this.model.modelName,
+                resId: item_id,
+                context: this.getSession().user_context,
+            };
+            if (is_editable) {
+                options.onRecordSaved = () => this.write_completed();
+            } else {
+                options.preventEdit = true;
+            }
             this.Dialog = Component.env.services.dialog.add(
                 FormViewDialog,
-                {
-                    resId: id,
-                    context: this.getSession().user_context,
-                    title: title,
-                    onRecordSaved: () => this.write_completed(),
-                    resModel: this.model.modelName,
-                },
+                options,
                 {}
             );
         } else {
-            let mode = "readonly";
-            if (rights.write) {
-                mode = "edit";
-            }
             this.trigger_up("switch_view", {
                 view_type: "form",
-                res_id: id,
-                mode: mode,
                 model: this.model.modelName,
+                res_id: item_id,
+                mode: is_editable ? "edit" : "readonly",
             });
         }
     },
