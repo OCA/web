@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2021-11-20 20:36+0000\n"
+"PO-Revision-Date: 2024-04-08 00:57+0000\n"
 "Last-Translator: Ignacio Buioli <ibuioli@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es_AR\n"
@@ -14,12 +14,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: web_pwa_oca
 #: model_terms:ir.ui.view,arch_db:web_pwa_oca.res_config_settings_view_form
 msgid "<span class=\"fa fa-lg fa-globe\" title=\"Icon next to name\"/>"
-msgstr ""
+msgstr "<span class=\"fa fa-lg fa-globe\" title=\"Icono al lado del nombre\"/>"
 
 #. module: web_pwa_oca
 #: model:ir.model.fields,field_description:web_pwa_oca.field_res_config_settings__pwa_background_color
