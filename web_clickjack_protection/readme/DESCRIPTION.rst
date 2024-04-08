@@ -1,0 +1,3 @@
+Clickjacking is a technique by which a malicious party embeds your website in an <iframe>, then hovers buttons over it to make the user think he is clicking on your site when in fact he is communicating with the parent frame.
+
+Clickjacking can be prevented on the webserver side by adding headers, but there are `ways around this <https://github.com/niutech/x-frame-bypass>`_. This module prevents clickjacking more thoroughly by making it impossible for your site to be embedded. It does so by adding a small "framebreaker" Javascript which creates a CSS style element on the fly to hide the body of the current page by default. Then, if it doesn't detect a parent frame, it removes it again.
