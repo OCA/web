@@ -4,12 +4,7 @@
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <template>
     <t t-name="web_refresher.Button">
-        <nav
-            class="oe_refresher"
-            aria-label="Refresher"
-            aria-atomic="true"
-            t-if="displayButton"
-        >
+        <nav class="oe_refresher" aria-label="Refresher" aria-atomic="true">
             <button
                 class="fa fa-refresh btn btn-icon oe_pager_refresh"
                 aria-label="Refresh"
