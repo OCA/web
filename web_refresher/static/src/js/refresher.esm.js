@@ -6,6 +6,7 @@
 
 import {Component} from "@odoo/owl";
 import {useDebounced} from "@web/core/utils/timing";
+import {useService} from "@web/core/utils/hooks";
 
 export function useRefreshAnimation(timeout) {
     const refreshClass = "o_content__refresh";
@@ -41,17 +42,9 @@ export function useRefreshAnimation(timeout) {
 export class Refresher extends Component {
     setup() {
         super.setup();
+        this.action = useService("action");
         this.refreshAnimation = useRefreshAnimation(1000);
         this.onClickRefresh = useDebounced(this.onClickRefresh, 200);
-    }
-
-    /**
-     * @returns {Boolean}
-     */
-    get displayButton() {
-        const {searchModel, pagerProps} = this.props;
-        const hasSearchModel = searchModel && searchModel.search;
-        return Boolean(hasSearchModel || (pagerProps && pagerProps.onUpdate));
     }
 
     /**
@@ -92,7 +85,28 @@ export class Refresher extends Component {
         return updated;
     }
 
+    /**
+     * Function to refresh the views that has not the props
+     * required by the refresher, like ir.actions.report or
+     * ir.actions.client.
+     */
+    async refreshReport() {
+        const viewAction = this.action.currentController.action;
+        const options = {};
+        if (this.env.config.breadcrumbs.length > 1) {
+            const breadcrumb = this.env.config.breadcrumbs.slice(-1);
+            await this.action.restore(breadcrumb.jsId);
+        } else {
+            options.clearBreadcrumbs = true;
+        }
+        this.action.doAction(viewAction, options);
+    }
+
     async onClickRefresh() {
+        const {searchModel, pagerProps} = this.props;
+        if (!searchModel && !pagerProps) {
+            return this.refreshReport();
+        }
         const updated = await this.refresh();
         if (updated) {
             this.refreshAnimation();
