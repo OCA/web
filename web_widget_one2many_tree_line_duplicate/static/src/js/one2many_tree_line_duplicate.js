@@ -3,7 +3,7 @@
 
 odoo.define(
     "web_widget_one2many_tree_line_duplicate.One2manyTreeLineDuplicate",
-    function(require) {
+    function (require) {
         "use strict";
 
         const core = require("web.core");
@@ -20,7 +20,7 @@ odoo.define(
             /**
              * @override
              */
-            init: function(parent) {
+            init: function (parent) {
                 this._super.apply(this, arguments);
                 let allow_clone =
                     parent.attrs &&
@@ -38,7 +38,7 @@ odoo.define(
              * @private
              * @override
              */
-            _renderHeader: function() {
+            _renderHeader: function () {
                 var $thead = this._super.apply(this, arguments);
                 if (this.addCloneIcon) {
                     $thead
@@ -52,7 +52,7 @@ odoo.define(
              * @override
              * @private
              */
-            _renderFooter: function() {
+            _renderFooter: function () {
                 const $footer = this._super.apply(this, arguments);
                 if (this.addCloneIcon) {
                     $footer.find("tr").append($("<td>"));
@@ -66,7 +66,7 @@ odoo.define(
              * @private
              * @override
              */
-            _renderRow: function(record, index) {
+            _renderRow: function (record, index) {
                 const $row = this._super.apply(this, arguments);
                 if (this.addCloneIcon) {
                     const $icon = $("<button>", {
@@ -84,7 +84,7 @@ odoo.define(
              * @private
              * @override
              */
-            _getNumberOfCols: function() {
+            _getNumberOfCols: function () {
                 var n = this._super();
                 if (this.addCloneIcon) {
                     n++;
@@ -97,7 +97,7 @@ odoo.define(
              *
              * @param {MouseEvent} ev
              */
-            _onCloneIconClick: function(ev) {
+            _onCloneIconClick: function (ev) {
                 ev.preventDefault();
                 ev.stopPropagation();
                 var $row = $(ev.target).closest("tr");
@@ -121,7 +121,7 @@ odoo.define(
             /**
              * @param {CustomEvent} ev
              */
-            _onCloneRecord: function(ev) {
+            _onCloneRecord: function (ev) {
                 const data = ev.data || {};
                 ev.stopPropagation();
                 if (!this.cloningRecord && this.activeActions.create) {
