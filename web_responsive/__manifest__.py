@@ -48,9 +48,7 @@
             "/web_responsive/static/src/components/chatter/*",
             "/web_responsive/static/src/components/control_panel/*",
             "/web_responsive/static/src/components/command_palette/*",
-            "/web_responsive/static/src/views/form/form_controller.scss",
-            "/web_responsive/static/src/views/form/status_bar_buttons.xml",
-            "/web_responsive/static/src/views/form/form_statusbar.scss",
+            "/web_responsive/static/src/views/form/*",
         ],
         "web.assets_tests": [
             "/web_responsive/static/tests/test_patch.js",
