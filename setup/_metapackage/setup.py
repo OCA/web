@@ -29,6 +29,7 @@ setuptools.setup(
         'odoo-addon-web_ir_actions_act_multi>=16.0dev,<16.1dev',
         'odoo-addon-web_ir_actions_act_window_message>=16.0dev,<16.1dev',
         'odoo-addon-web_ir_actions_act_window_page>=16.0dev,<16.1dev',
+        'odoo-addon-web_ir_actions_close_wizard_refresh_view>=16.0dev,<16.1dev',
         'odoo-addon-web_listview_range_select>=16.0dev,<16.1dev',
         'odoo-addon-web_m2x_options>=16.0dev,<16.1dev',
         'odoo-addon-web_no_bubble>=16.0dev,<16.1dev',
