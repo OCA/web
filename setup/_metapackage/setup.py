@@ -22,6 +22,7 @@ setuptools.setup(
         'odoo-addon-web_domain_field>=16.0dev,<16.1dev',
         'odoo-addon-web_environment_ribbon>=16.0dev,<16.1dev',
         'odoo-addon-web_field_numeric_formatting>=16.0dev,<16.1dev',
+        'odoo-addon-web_field_tooltip>=16.0dev,<16.1dev',
         'odoo-addon-web_group_expand>=16.0dev,<16.1dev',
         'odoo-addon-web_help>=16.0dev,<16.1dev',
         'odoo-addon-web_hide_field_with_key>=16.0dev,<16.1dev',
