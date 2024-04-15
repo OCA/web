@@ -57,11 +57,6 @@ msgid "Companies"
 msgstr ""
 
 #. module: support_branding
-#: model:ir.model.fields,field_description:support_branding.field_res_config_settings__support_company
-msgid "Company Name"
-msgstr ""
-
-#. module: support_branding
 #: model:ir.model.fields,field_description:support_branding.field_res_config_settings__support_company_url
 msgid "Company URL"
 msgstr ""
@@ -122,6 +117,11 @@ msgstr ""
 #: code:addons/support_branding/static/src/xml/base.xml:0
 #, python-format
 msgid "Please fill in how you produced this error..."
+msgstr ""
+
+#. module: support_branding
+#: model:ir.model.fields,field_description:support_branding.field_res_config_settings__support_company
+msgid "Support Company Name"
 msgstr ""
 
 #. module: support_branding
