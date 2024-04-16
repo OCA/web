@@ -4,12 +4,22 @@
 {
     "name": "Web Widget One2many Tree Line Duplicate",
     "category": "web",
-    "version": "13.0.1.0.2",
+    "version": "16.0.1.0.0",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "website": "https://github.com/OCA/web",
     "depends": ["web"],
-    "data": ["view/assets.xml"],
     "auto_install": False,
     "installable": True,
+    "assets": {
+        "web.assets_backend": [
+            "/web_widget_one2many_tree_line_duplicate/static/src/legacy/**/*.js",
+            "/web_widget_one2many_tree_line_duplicate/static/src/**/*.esm.js",
+            (
+                "after",
+                "/web/static/src/views/list/list_renderer.xml",
+                "/web_widget_one2many_tree_line_duplicate/static/src/list/list_renderer.xml",
+            ),
+        ],
+    },
 }
