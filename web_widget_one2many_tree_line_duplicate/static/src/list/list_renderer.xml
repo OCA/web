@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t
+        t-name="web_widget_one2many_tree_line_duplicate.ListRenderer"
+        t-inherit="web.ListRenderer"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath
+            expr="//th[@t-if='displayOptionalFields or activeActions.onDelete']"
+            position="before"
+        >
+            <th
+                t-if="displayDuplicateLine"
+                class="o_list_controller o_list_actions_header position-static"
+                style="width: 32px; min-width: 32px"
+            />
+        </xpath>
+    </t>
+    <t
+        t-name="web_widget_one2many_tree_line_duplicate.ListRenderer.RecordRow"
+        t-inherit="web.ListRenderer.RecordRow"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//td[hasclass('o_list_record_remove')]" position="before">
+            <td
+                class="o_list_record_remove text-center"
+                t-if="displayDuplicateLine"
+                t-on-click.stop="() => this.onCloneIconClick(record)"
+                tabindex="-1"
+            >
+                <button
+                    class="fa fa-clone"
+                    name="duplicate"
+                    aria-label="Duplicate row"
+                    tabindex="-1"
+                />
+            </td>
+        </xpath>
+    </t>
+
+</templates>

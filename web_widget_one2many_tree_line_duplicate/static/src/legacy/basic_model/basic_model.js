@@ -203,60 +203,81 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function (requ
             return Promise.all(defs).then(() => _.keys(changes));
         },
 
-        /**
-         * Modified implementation of '_performOnChange' to properly unfold the cloned
-         * record properties son we can interact with it as if we'd created it. We
-         * don't really do an onchange and the only fields that we're getting are those
-         * relational.
-         *
-         * @param {Object} record
-         * @param {String} [viewType] current viewType. If not set, we will assume
-         *   main viewType from the record
-         * @returns {Promise}
-         */
-        _pseudoOnChange: function (record, viewType) {
-            var self = this;
-            var onchangeSpec = this._buildOnchangeSpecs(record, viewType);
-            if (!onchangeSpec) {
-                return Promise.resolve();
-            }
-            var idList = record.data.id ? [record.data.id] : [];
-            var options = {
-                full: true,
-            };
-            var context = this._getContext(record, options);
-            var currentData = this._generateOnChangeData(record, {changesOnly: false});
+        applyDefaultValues: function (recordID, values, options) {
+            options = options || {};
+            var record = this.localData[recordID];
+            var viewType = options.viewType || record.viewType;
+            var fieldNames =
+                options.fieldNames || Object.keys(record.fieldsInfo[viewType]);
+            record._changes = record._changes || {};
 
-            return self
-                ._rpc({
-                    model: record.model,
-                    method: "onchange",
-                    args: [idList, currentData, [], onchangeSpec],
-                    context: context,
-                })
-                .then(function (result) {
-                    if (!record._changes) {
-                        // If the _changes key does not exist anymore, it means that
-                        // it was removed by discarding the changes after the rpc
-                        // to onchange. So, in that case, the proper response is to
-                        // ignore the onchange.
-                        return;
+            // Ignore values for non requested fields (for instance, fields that are
+            // not in the view)
+            values = _.pick(values, fieldNames);
+
+            // Fill default values for missing fields
+            for (var i = 0; i < fieldNames.length; i++) {
+                var fieldName = fieldNames[i];
+                if (!(fieldName in values) && !(fieldName in record._changes)) {
+                    var field = record.fields[fieldName];
+                    if (
+                        field.type === "float" ||
+                        field.type === "integer" ||
+                        field.type === "monetary"
+                    ) {
+                        values[fieldName] = 0;
+                    } else if (
+                        field.type === "one2many" ||
+                        field.type === "many2many"
+                    ) {
+                        values[fieldName] = [];
+                    } else {
+                        values[fieldName] = null;
                     }
-                    if (result.warning) {
-                        self.trigger_up("warning", result.warning);
-                        record._warning = true;
-                    }
-                    if (result.domain) {
-                        record._domains = _.extend(record._domains, result.domain);
-                    }
-                    // We're only interested in relational fields
-                    const values = _.pick(result.value, (v) => {
-                        return typeof v === "object";
+                }
+            }
+
+            // Parse each value and create dataPoints for relational fields
+            var defs = [];
+            for (var fieldName in values) {
+                var field = record.fields[fieldName];
+                record.data[fieldName] = null;
+                if (field.type === "many2one" && values[fieldName]) {
+                    var dp = this._makeDataPoint({
+                        context: record.context,
+                        data: {id: values[fieldName]},
+                        modelName: field.relation,
+                        parentID: record.id,
                     });
-                    return self._applyOnChange(values, record).then(function () {
-                        return result;
+                    record._changes[fieldName] = dp.id;
+                } else if (field.type === "reference" && values[fieldName]) {
+                    var ref = values[fieldName].split(",");
+                    var dp = this._makeDataPoint({
+                        context: record.context,
+                        data: {id: parseInt(ref[1])},
+                        modelName: ref[0],
+                        parentID: record.id,
                     });
-                });
+                    defs.push(this._fetchNameGet(dp));
+                    record._changes[fieldName] = dp.id;
+                } else if (field.type === "one2many" || field.type === "many2many") {
+                    defs.push(
+                        this._processX2ManyCommands(
+                            record,
+                            fieldName,
+                            values[fieldName],
+                            options
+                        )
+                    );
+                } else {
+                    record._changes[fieldName] = this._parseServerValue(
+                        field,
+                        values[fieldName]
+                    );
+                }
+            }
+
+            return Promise.all(defs);
         },
 
         _makeCloneRecord: function (modelName, params, values) {
@@ -302,20 +323,6 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function (requ
                 record_parent_id: params.clone_parent_record_id,
                 copy_data: params.clone_copy_data || values,
             };
-
-            // We want to overwrite the default value of the handle field (if any),
-            // in order for new lines to be added at the correct position.
-            // -> This is a rare case where the defaul_get from the server
-            //    will be ignored by the view for a certain field (usually "sequence").
-
-            var overrideDefaultFields = this._computeOverrideDefaultFields(
-                params.parentID,
-                params.position
-            );
-
-            if (overrideDefaultFields) {
-                values[overrideDefaultFields.field] = overrideDefaultFields.value;
-            }
             const _this = this;
             return (
                 this.applyDefaultValues(record.id, values, {fieldNames: fieldNames})
@@ -333,19 +340,45 @@ odoo.define("web_widget_one2many_tree_line_duplicate.BasicModel", function (requ
                                 resolve();
                             };
                             _this
-                                ._pseudoOnChange(record, targetView)
+                                ._performOnChange(record, [], {})
                                 .then(always)
                                 .guardedCatch(always);
                         });
                         return def;
                     })
                     .then(() => {
-                        return this._fetchRelationalData(record);
-                    })
-                    .then(() => {
+                        // Inject always_reload to many2one fieldsInfo
+                        for (var key of Object.keys(record.fieldsInfo[targetView])) {
+                            if (record.fields[key].type === "many2one") {
+                                const old_reload_value =
+                                    record.fieldsInfo[targetView][key].options &&
+                                    record.fieldsInfo[targetView][key].options
+                                        .always_reload;
+                                record.fieldsInfo[targetView][key].options = {
+                                    ...record.fieldsInfo[targetView][key].options,
+                                    always_reload: true,
+                                    old_reload_value,
+                                };
+                            }
+                        }
                         return this._postprocess(record);
                     })
                     .then(() => {
+                        // Recover always_reload state before injection to many2one fieldsInfo
+                        for (var key of Object.keys(record.fieldsInfo[targetView])) {
+                            if (
+                                record.fieldsInfo[targetView][key].options &&
+                                "old_reload_value" in
+                                    record.fieldsInfo[targetView][key].options
+                            ) {
+                                const old_reload_value =
+                                    record.fieldsInfo[targetView][key].options
+                                        .old_reload_value;
+                                record.fieldsInfo[targetView][
+                                    key
+                                ].options.always_reload = old_reload_value;
+                            }
+                        }
                         // Save initial changes, so they can be restored later,
                         // if we need to discard.
                         this.save(record.id, {savePoint: true});
