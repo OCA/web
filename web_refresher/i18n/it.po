@@ -20,13 +20,16 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_refresher/static/src/xml/refresher.xml:0
 #, python-format
-msgid "Pager"
-msgstr "Paginatore"
+msgid "Refresh"
+msgstr "Aggiorna"
 
 #. module: web_refresher
 #. odoo-javascript
 #: code:addons/web_refresher/static/src/xml/refresher.xml:0
-#: code:addons/web_refresher/static/src/xml/refresher.xml:0
 #, python-format
-msgid "Refresh"
-msgstr "Aggiorna"
+msgid "Refresher"
+msgstr ""
+
+#, python-format
+#~ msgid "Pager"
+#~ msgstr "Paginatore"
