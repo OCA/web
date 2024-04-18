@@ -24,7 +24,7 @@ addon | version | maintainers | summary
 [web_calendar_slot_duration](web_calendar_slot_duration/) | 17.0.1.0.0 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) | Customizable calendar slot durations
 [web_environment_ribbon](web_environment_ribbon/) | 17.0.1.0.0 |  | Web Environment Ribbon
 [web_no_bubble](web_no_bubble/) | 17.0.1.0.0 |  | Remove the bubbles from the web interface
-[web_refresher](web_refresher/) | 17.0.1.0.0 |  | Web Refresher
+[web_refresher](web_refresher/) | 17.0.1.0.1 |  | Web Refresher
 [web_responsive](web_responsive/) | 17.0.1.0.0 | [![Yajo](https://github.com/Yajo.png?size=30px)](https://github.com/Yajo) [![Tardo](https://github.com/Tardo.png?size=30px)](https://github.com/Tardo) [![SplashS](https://github.com/SplashS.png?size=30px)](https://github.com/SplashS) | Responsive web client, community-supported
 [web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 17.0.1.0.0 |  | Allows you to dynamically color fields on tree views
 
