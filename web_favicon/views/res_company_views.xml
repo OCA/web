@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 OERP Canada <https://www.oerp.ca>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <data noupdate="1">
+        <record id="base.main_company" model="res.company">
+            <field
+                name="favicon"
+                model="res.company"
+                eval="obj()._get_default_favicon(original=True)"
+            />
+        </record>
+    </data>
+
+    <record id="view_company_form_inherit" model="ir.ui.view">
+        <field name="name">res.company.form.inherit</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='color']" position="after">
+                <field
+                    name="favicon"
+                    widget="image"
+                    class="float-start oe_avatar"
+                    groups="base.group_no_one"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
