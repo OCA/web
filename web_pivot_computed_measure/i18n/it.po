@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-03-05 14:40+0000\n"
+"PO-Revision-Date: 2024-04-19 14:37+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -158,53 +158,53 @@ msgstr ""
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "custom"
-msgstr ""
+msgstr "personalizzato"
 
 #. module: web_pivot_computed_measure
 #. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "float"
-msgstr ""
+msgstr "float"
 
 #. module: web_pivot_computed_measure
 #. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "integer"
-msgstr ""
+msgstr "integer"
 
 #. module: web_pivot_computed_measure
 #. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "m1*m2"
-msgstr ""
+msgstr "m1*m2"
 
 #. module: web_pivot_computed_measure
 #. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "m1+m2"
-msgstr ""
+msgstr "m1+m2"
 
 #. module: web_pivot_computed_measure
 #. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "m1-m2"
-msgstr ""
+msgstr "m1-m2"
 
 #. module: web_pivot_computed_measure
 #. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "m1/m2"
-msgstr ""
+msgstr "m1/m2"
 
 #. module: web_pivot_computed_measure
 #. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "percentage"
-msgstr ""
+msgstr "percentuale"
