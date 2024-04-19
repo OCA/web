@@ -42,6 +42,7 @@ msgstr ""
 #. module: web_widget_image_webcam
 #. odoo-javascript
 #: code:addons/web_widget_image_webcam/static/src/xml/web_widget_image_webcam.xml:0
+#: code:addons/web_widget_image_webcam/static/src/xml/web_widget_image_webcam.xml:0
 #, python-format
 msgid "WebCam"
 msgstr ""
