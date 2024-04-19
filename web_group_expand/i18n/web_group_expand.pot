@@ -16,12 +16,14 @@ msgstr ""
 #. module: web_group_expand
 #. odoo-javascript
 #: code:addons/web_group_expand/static/src/xml/list_controller.xml:0
+#: code:addons/web_group_expand/static/src/xml/list_controller.xml:0
 #, python-format
 msgid "Compress"
 msgstr ""
 
 #. module: web_group_expand
 #. odoo-javascript
+#: code:addons/web_group_expand/static/src/xml/list_controller.xml:0
 #: code:addons/web_group_expand/static/src/xml/list_controller.xml:0
 #, python-format
 msgid "Expand"
