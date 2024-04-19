@@ -18,140 +18,133 @@ msgstr ""
 "X-Generator: Weblate 4.17\n"
 
 #. module: web_pivot_computed_measure
-#. openerp-web
-#: code:addons/web_pivot_computed_measure/static/src/view.xml:0
-#, python-format
-msgid "!measure.startsWith('__computed_')"
-msgstr "!measure.startsWith('__computed_')"
-
-#. module: web_pivot_computed_measure
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "Add"
 msgstr "Añadir"
 
 #. module: web_pivot_computed_measure
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "Can be empty"
 msgstr "Puede estar vacío"
 
 #. module: web_pivot_computed_measure
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "Computed Measure"
 msgstr "Medida computada"
 
 #. module: web_pivot_computed_measure
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "Custom"
 msgstr "Customizado"
 
 #. module: web_pivot_computed_measure
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "Div (m1 / m2)"
 msgstr "Div (m1 / m2)"
 
 #. module: web_pivot_computed_measure
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "Float"
 msgstr "Flotador"
 
 #. module: web_pivot_computed_measure
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "Format"
 msgstr "Formato"
 
 #. module: web_pivot_computed_measure
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "Formula"
 msgstr "Fórmula"
 
 #. module: web_pivot_computed_measure
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "Integer"
 msgstr "Entero"
 
 #. module: web_pivot_computed_measure
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "Measure 1"
 msgstr "Medida 1"
 
 #. module: web_pivot_computed_measure
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "Measure 2"
 msgstr "Medida 2"
 
 #. module: web_pivot_computed_measure
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "Mult (m1 * m2)"
 msgstr "Mult (m1 * m2)"
 
 #. module: web_pivot_computed_measure
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "Name"
 msgstr "Nombre"
 
 #. module: web_pivot_computed_measure
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "Operation"
 msgstr "Operación"
 
 #. module: web_pivot_computed_measure
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "Perc (m1 * 100 / m2)"
 msgstr "Perc (m1 * 100 / m2)"
 
 #. module: web_pivot_computed_measure
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "Percentage"
 msgstr "Porcentaje"
 
 #. module: web_pivot_computed_measure
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "Sub (m1 - m2)"
 msgstr "Sub (m1 - m2)"
 
 #. module: web_pivot_computed_measure
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
 #, python-format
 msgid "Sum (m1 + m2)"
 msgstr "Sum (m1 + m2)"
 
 #. module: web_pivot_computed_measure
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_pivot_computed_measure/static/src/pivot/pivot_model.esm.js:0
 #, python-format
 msgid ""
@@ -160,3 +153,63 @@ msgid ""
 msgstr ""
 "Esta medida está utilizada por una 'medida computada'. Por favor, desabilita "
 "la medida computada primero."
+
+#. module: web_pivot_computed_measure
+#. odoo-javascript
+#: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
+#, python-format
+msgid "custom"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. odoo-javascript
+#: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
+#, python-format
+msgid "float"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. odoo-javascript
+#: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
+#, python-format
+msgid "integer"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. odoo-javascript
+#: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
+#, python-format
+msgid "m1*m2"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. odoo-javascript
+#: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
+#, python-format
+msgid "m1+m2"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. odoo-javascript
+#: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
+#, python-format
+msgid "m1-m2"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. odoo-javascript
+#: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
+#, python-format
+msgid "m1/m2"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. odoo-javascript
+#: code:addons/web_pivot_computed_measure/static/src/dropdown_item_custom_measure/dropdown_item_custom_measure.xml:0
+#, python-format
+msgid "percentage"
+msgstr ""
+
+#, python-format
+#~ msgid "!measure.startsWith('__computed_')"
+#~ msgstr "!measure.startsWith('__computed_')"
