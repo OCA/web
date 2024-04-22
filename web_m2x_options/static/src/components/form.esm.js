@@ -14,6 +14,8 @@ import {Many2OneField, many2OneField} from "@web/views/fields/many2one/many2one_
 import {PartnerMany2XAutocomplete} from "@partner_autocomplete/js/partner_autocomplete_many2one";
 import {ReferenceField} from "@web/views/fields/reference/reference_field";
 import {X2ManyField} from "@web/views/fields/x2many/x2many_field";
+import {Many2OneAvatarUserField} from "@mail/views/web/fields/many2one_avatar_user_field/many2one_avatar_user_field";
+import { SaleOrderLineProductField } from '@sale/js/sale_product_field';
 import {isX2Many} from "@web/views/utils";
 import {is_option_set} from "@web_m2x_options/components/relational_utils.esm";
 import {patch} from "@web/core/utils/patch";
@@ -21,8 +23,22 @@ import {sprintf} from "@web/core/utils/strings";
 import {useService} from "@web/core/utils/hooks";
 import {Many2XAutocomplete} from "@web/views/fields/relational_utils";
 import {_t} from "@web/core/l10n/translation";
+import { Component } from "@odoo/owl";
+// const {Component} = owl;
 
-const {Component} = owl;
+
+// Doesn't work
+// owl.validateProps = function(name, props, comp) {
+//     // Do nothing
+//     console.log("OVERWRITTEN FUNCTION validateProps executed2")
+// };
+//
+//
+// function validateProps(name, props, comp) {
+//     console.log("OVERWRITTEN FUNCTION validateProps executed")
+//     // overwriting the original function
+// }
+
 
 /**
  *  Patch Many2ManyTagsField
@@ -303,6 +319,22 @@ Many2OneAvatarField.props = {
     searchMore: {type: Boolean, optional: true},
     nodeOptions: {type: Object, optional: true},
 };
+
+// Add props to field widgets throwing error
+
+Many2OneAvatarUserField.props = {
+    ...Many2OneAvatarUserField.props,
+    searchMore: {type: Boolean, optional: true},
+    nodeOptions: {type: Object, optional: true},
+};
+
+SaleOrderLineProductField.props = {
+    ...SaleOrderLineProductField.props,
+    searchMore: {type: Boolean, optional: true},
+    nodeOptions: {type: Object, optional: true},
+};
+
+
 
 /**
  * FIXME: find better way to extend props in Many2OneField

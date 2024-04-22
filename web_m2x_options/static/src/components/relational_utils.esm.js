@@ -26,12 +26,14 @@ patch(Many2XAutocomplete.prototype, {
 
         // Add options limit used to change number of selections record
         // returned.
+        console.log("this.ir_options: ",this.ir_options);
         if (!this.ir_options["web_m2x_options.limit"] == "undefined") {
             this.props.searchLimit = parseInt(
                 this.ir_options["web_m2x_options.limit"],
                 10
             );
             this.limit = this.props.searchLimit;
+            console.log("Limit saved in the Many2XAutocomplete:", this.limit);
         }
 
         if (typeof this.props.nodeOptions.limit === "number") {

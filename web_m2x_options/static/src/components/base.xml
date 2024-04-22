@@ -8,7 +8,7 @@
         t-name="web_m2x_options.AutoComplete"
         t-inherit="web.AutoComplete"
         t-inherit-mode="extension"
-        owl="1"
+
     >
         <xpath expr="//t[@t-foreach='source.options']/li/a" position="attributes">
             <attribute name="t-attf-style">{{ option.style }}</attribute>
@@ -26,7 +26,7 @@
         </xpath>
     </t> -->
 
-    <t t-name="web_m2x_options.Many2OneField.CreateConfirmationDialog" owl="1">
+    <t t-name="web_m2x_options.Many2OneField.CreateConfirmationDialog" >
         <Dialog title="title" size="'md'">
             <div>
                 You are creating a new <strong t-esc="props.value" /> as a new <t
