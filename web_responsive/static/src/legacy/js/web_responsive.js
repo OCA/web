@@ -146,6 +146,7 @@ odoo.define("web_responsive", function (require) {
             const options = this._super.apply(this, arguments);
             _.extend(options, {
                 on_clear: () => this.reinitialize(false),
+                domain: this.record.getDomain(this.recordParams),
             });
             return options;
         },
