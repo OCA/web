@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-inherit="web.CharField" t-inherit-mode="extension" owl="1">
+        <input position="attributes">
+            <attribute name="t-att-pattern">props.pattern</attribute>
+        </input>
+    </t>
+</templates>

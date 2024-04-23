@@ -1,0 +1,3 @@
+- allow to optionally validate fields against its pattern server side
+- support text, url, email, phone, ... fields
+- support using a pattern from a computed field
