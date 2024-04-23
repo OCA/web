@@ -2,19 +2,20 @@
 
 import {loadBundle} from "@web/core/assets";
 import {registry} from "@web/core/registry";
-const {onWillStart, markup, Component, onMounted, onPatched, useRef} = owl;
+import {Component, onWillStart, markup, onMounted, onPatched, useRef} from "@odoo/owl";
 
 export default class BokehChartJsonWidget extends Component {
+    static template = "web_widget_bokeh_chart.BokehChartlJsonField";
     setup() {
         this.widget = useRef("widget");
         onPatched(() => {
             var script = document.createElement("script");
-            script.text = this.props.value.script;
+            script.text = this.props.record.data[this.props.name].script;
             this.widget.el.append(script);
         });
         onMounted(() => {
             var script = document.createElement("script");
-            script.text = this.props.value.script;
+            script.text = this.props.record.data[this.props.name].script;
             this.widget.el.append(script);
         });
         onWillStart(() =>
@@ -36,5 +37,8 @@ export default class BokehChartJsonWidget extends Component {
     }
 }
 
-BokehChartJsonWidget.template = "web_widget_bokeh_chart.BokehChartlJsonField";
-registry.category("fields").add("bokeh_chart_json", BokehChartJsonWidget);
+export const bokehChartJsonWidget = {
+    component: BokehChartJsonWidget,
+};
+
+registry.category("fields").add("bokeh_chart_json", bokehChartJsonWidget);

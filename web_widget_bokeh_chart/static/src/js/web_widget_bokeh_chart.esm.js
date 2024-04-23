@@ -3,7 +3,7 @@
 import {CharField} from "@web/views/fields/char/char_field";
 import {loadBundle} from "@web/core/assets";
 import {registry} from "@web/core/registry";
-const {onWillStart, markup, onMounted, onPatched, useRef} = owl;
+import {markup, onMounted, onPatched, onWillStart, useRef} from "@odoo/owl";
 
 export default class BokehChartWidget extends CharField {
     setup() {
@@ -33,12 +33,21 @@ export default class BokehChartWidget extends CharField {
         );
     }
     get json_value() {
-        var value = JSON.parse(this.props.value);
-        if (value) {
-            value.div = markup(value.div.trim());
+        var value = false
+        if (this.props.record.data[this.props.name]){
+            value = JSON.parse(this.props.record.data[this.props.name]);
+            if (value) {
+                value.div = markup(value.div.trim());
+            }
         }
         return value;
     }
 }
 BokehChartWidget.template = "web_widget_bokeh_chart.BokehChartField";
-registry.category("fields").add("bokeh_chart", BokehChartWidget);
+
+export const bokehChartWidget = {
+    ...CharField,
+    component: BokehChartWidget,
+};
+
+registry.category("fields").add("bokeh_chart", bokehChartWidget);
