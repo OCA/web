@@ -13,7 +13,14 @@
             "web_refresher/static/src/js/refresher.esm.js",
             "web_refresher/static/src/js/control_panel.esm.js",
             "web_refresher/static/src/xml/refresher.xml",
-            "web_refresher/static/src/xml/control_panel.xml",
+            # Load the modification of the master template just after it,
+            # for having the modification in all the primary extensions.
+            # Example: the project primary view.
+            (
+                "after",
+                "web/static/src/search/control_panel/control_panel.xml",
+                "web_refresher/static/src/xml/control_panel.xml",
+            ),
         ],
     },
 }
