@@ -25,6 +25,7 @@ class RemoteMeasureDevice(models.Model):
         selection=[
             ("websockets", "Web Sockets"),
             ("webservices", "Web Services"),
+            ("tcp", "Direct connection"),
         ],
         required=True,
     )

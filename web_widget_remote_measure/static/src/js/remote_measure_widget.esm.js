@@ -82,6 +82,57 @@ export const RemoteMeasureMixin = {
         return;
     },
     /**
+     * Process call
+     * @returns {Number}
+     */
+    async _read_from_device_tcp() {
+        const data = await this._rpc({
+            route: `/remote_measure_device/${this.remote_device_data.id}` || [],
+        });
+        if (!data) {
+            return null;
+        }
+        const processed_data = this[`_proccess_msg_${this.protocol}`](data);
+        if (isNaN(processed_data.value)) {
+            processed_data.value = 0;
+        }
+        return processed_data;
+    },
+    /**
+     * Connect to the local controller, which makes the direct connection to the
+     * scale.
+     */
+    async _connect_to_tcp() {
+        var icon = "fa-thermometer-empty";
+        var stream_success_counter = 20;
+        this._unstableMeasure();
+        // Don't keep going forever
+        for (let attemps_left = 1000; attemps_left > 0; attemps_left--) {
+            const processed_data = await this._read_from_device_tcp();
+            if (!processed_data) {
+                continue;
+            }
+            if (processed_data.stable) {
+                this._stableMeasure();
+            } else {
+                this._unstableMeasure();
+                stream_success_counter = 20;
+            }
+            if (processed_data.stable && stream_success_counter <= 0) {
+                this._stableMeasure();
+                this._awaitingMeasure();
+                this._recordMeasure();
+                break;
+            }
+            if (stream_success_counter) {
+                --stream_success_counter;
+            }
+            icon = this._nextStateIcon(icon);
+            this.amount = processed_data.value;
+            this._setMeasure();
+        }
+    },
+    /**
      * Convert the measured units to the units expecte by the record if different
      * @param {Number} amount
      * @returns {Number} converted amount
@@ -162,15 +213,29 @@ export const RemoteMeasureMixin = {
         this.start_add = false;
     },
     /**
+     * Request measure to remote device
+     */
+    measure() {
+        this.$start_measure.addClass("d-none");
+        this.$stop_measure.removeClass("d-none");
+        this.$icon = this.$stop_measure.find("i");
+        this[`_connect_to_${this.connection_mode}`]();
+    },
+    /**
+     * Stop requesting measures from device
+     */
+    measure_stop() {
+        this._closeSocket();
+        this._awaitingMeasure();
+        this._recordMeasure();
+    },
+    /**
      * Start requesting measures from the remote device
      * @param {MouseEvent} ev
      */
     _onMeasure(ev) {
         ev.preventDefault();
-        this.$start_measure.addClass("d-none");
-        this.$stop_measure.removeClass("d-none");
-        this.$icon = this.$stop_measure.find("i");
-        this[`_connect_to_${this.connection_mode}`]();
+        this.measure();
     },
     _onMeasureAdd(ev) {
         ev.preventDefault();
@@ -187,9 +252,7 @@ export const RemoteMeasureMixin = {
      */
     _onValidateMeasure(ev) {
         ev.preventDefault();
-        this._closeSocket();
-        this._awaitingMeasure();
-        this._recordMeasure();
+        this.measure_stop();
     },
     /**
      * Remote measure handle to start measuring

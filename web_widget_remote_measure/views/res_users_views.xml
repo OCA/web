@@ -14,4 +14,18 @@
             </page>
         </field>
     </record>
+    <record id="res_users_form_view" model="ir.ui.view">
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif" />
+        <field name="arch" type="xml">
+            <group name="preferences" position="inside">
+                <group name="devices" string="Devices">
+                    <field
+                        name="remote_measure_device_id"
+                        string="Preferred remote device"
+                    />
+                </group>
+            </group>
+        </field>
+    </record>
 </odoo>
