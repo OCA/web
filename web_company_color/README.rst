@@ -82,6 +82,10 @@ Contributors
    -  Alexandre Díaz
    -  Carlos Roca
 
+-  `APSL <https://www.apsl.tech>`__:
+
+   -  Antoni Marroig <amarroig@apsl.net>
+
 Maintainers
 -----------
 
