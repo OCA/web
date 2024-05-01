@@ -16,6 +16,8 @@ exclude: |
   readme/.*\.(rst|md)$|
   # Ignore build and dist directories in addons
   /build/|/dist/|
+  # Ignore test files in addons
+  /tests/samples/.*|
   # You don't usually want a bot to modify your legal texts
   (LICENSE.*|COPYING.*)
 default_language_version:
