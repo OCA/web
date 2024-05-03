@@ -1,42 +1,51 @@
 /** @odoo-module **/
 
-import {loadJS} from "@web/core/assets";
+import {CharField} from "@web/views/fields/char/char_field";
+import {loadBundle} from "@web/core/assets";
 import {registry} from "@web/core/registry";
 
-import {Component, onPatched, onWillStart, useEffect, useRef} from "@odoo/owl";
+import {onPatched, onWillStart, useEffect, useRef} from "@odoo/owl";
 
-export class PlotlyChartWidgetField extends Component {
+export class PlotlyChartWidget extends CharField {
     setup() {
-        this.divRef = useRef("plotly");
+        super.setup();
 
-        onWillStart(async () => {
-            await loadJS(
-                "/web_widget_plotly_chart/static/src/lib/plotly/plotly-2.18.2.min.js"
-            );
-            this.updatePlotly(this.props.value);
-        });
+        this.widget = useRef("widget");
 
         onPatched(() => {
-            this.updatePlotly(this.props.value);
+            this.updatePlotly(this.props.record.data[this.props.name]);
         });
 
         useEffect(() => {
-            this.updatePlotly(this.props.value);
+            this.updatePlotly(this.props.record.data[this.props.name]);
         });
+
+        onWillStart(() =>
+            loadBundle({
+                jsLibs: [
+                    "/web_widget_plotly_chart/static/src/lib/plotly/plotly-2.32.0.min.js",
+                ],
+            })
+        );
     }
     updatePlotly(value) {
         const value_html = $(value);
         const div = value_html.find(".plotly-graph-div").get(0).outerHTML || "";
         const script = value_html.find("script").get(0).textContent || "";
 
-        if (this.divRef.el) {
-            this.divRef.el.innerHTML = div;
+        if (this.widget.el) {
+            this.widget.el.innerHTML = div;
             new Function(script)();
         }
     }
 }
 
-PlotlyChartWidgetField.template = "web_widget_plotly_chart.PlotlyChartWidgetField";
-PlotlyChartWidgetField.supportedTypes = ["char", "text"];
+PlotlyChartWidget.template = "web_widget_plotly_chart.PlotlyChartWidgetField";
+PlotlyChartWidget.supportedTypes = ["char", "text"];
 
-registry.category("fields").add("plotly_chart", PlotlyChartWidgetField);
+export const plotlyChartWidget = {
+    ...CharField,
+    component: PlotlyChartWidget,
+};
+
+registry.category("fields").add("plotly_chart", plotlyChartWidget);
