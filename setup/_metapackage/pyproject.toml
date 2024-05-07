@@ -1,12 +1,13 @@
 [project]
 name = "odoo-addons-oca-web"
-version = "17.0.20240422.0"
+version = "17.0.20240507.0"
 dependencies = [
     "odoo-addon-web_calendar_slot_duration>=17.0dev,<17.1dev",
     "odoo-addon-web_environment_ribbon>=17.0dev,<17.1dev",
     "odoo-addon-web_favicon>=17.0dev,<17.1dev",
     "odoo-addon-web_no_bubble>=17.0dev,<17.1dev",
     "odoo-addon-web_refresher>=17.0dev,<17.1dev",
+    "odoo-addon-web_remember_tree_column_width>=17.0dev,<17.1dev",
     "odoo-addon-web_responsive>=17.0dev,<17.1dev",
     "odoo-addon-web_tree_dynamic_colored_field>=17.0dev,<17.1dev",
     "odoo-addon-web_tree_many2one_clickable>=17.0dev,<17.1dev",
