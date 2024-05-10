@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -396,6 +395,15 @@ action includes a context similar to this (example is the default value):</p>
 <pre class="literal-block">
 {&quot;calendar_slot_duration&quot;: &quot;00:30:00&quot;}
 </pre>
+<p>In addition, you can also configure the calendar view’s default mode by adding:</p>
+<pre class="literal-block">
+{&quot;calendar_slot_duration&quot;: &quot;00:30:00&quot;, &quot;adapt_view_to_slot_duration&quot;: False}
+</pre>
+<p>The <tt class="docutils literal">adapt_view_to_slot_duration</tt> key is optional and defaults to <tt class="docutils literal">True</tt>.
+When set to <tt class="docutils literal">False</tt>, the calendar view will not adapt its view to the slot size.</p>
+<p>For example, if you want to set the default slot duration to 1 hour and 30 minutes,
+by default the calendar view will adapt its view to show slots of 1 hour and 30 minutes.
+Sometimes this is not desired, for example when you want to show every time slots by hour.</p>
 <p>It can be added in actions defined on python or as <tt class="docutils literal">ir.actions.act_window</tt>
 records.</p>
 </div>
