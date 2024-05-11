@@ -4,6 +4,11 @@
         <xpath expr="." position="inside">
             <script type="text/javascript"
                     src="/web_widget_digitized_signature/static/src/js/digital_sign.js"/>
+            <style type="text/css">
+                .jSignature {
+                    border: 2px dotted gray !important;
+                }
+            </style>
         </xpath>
     </template>
 
