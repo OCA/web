@@ -48,9 +48,8 @@ class PWA(Controller):
             ]:
                 icons.append(
                     {
-                        "src": "/web_pwa_oca/static/img/icons/icon-%sx%s.png"
-                        % (str(size[0]), str(size[1])),
-                        "sizes": "{}x{}".format(str(size[0]), str(size[1])),
+                        "src": "/web_pwa_oca/static/img/icons/icon-%sx%s.png".format(),
+                        "sizes": f"{str(size[0])}x{str(size[1])}",
                         "type": "image/png",
                         "purpose": "any maskable",
                     }
