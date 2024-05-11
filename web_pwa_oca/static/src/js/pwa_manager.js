@@ -1,14 +1,22 @@
 /* Copyright 2020 Tecnativa - Alexandre D. Díaz
  * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
 
-odoo.define("web_pwa_oca.PWAManager", function (require) {
+
+odoo.define("web_pwa_oca.PWAManager", ["@web.core", '@web.Widget', "@web.config"], function (require) {  //"web.config"
     "use strict";
 
-    var core = require("web.core");
+    debugger;
+
+    var _t = core._t;
     var config = require("web.config");
     var Widget = require("web.Widget");
 
-    var _t = core._t;
+    //const { _t, translationLoaded, translatedTerms } = require("@web/core/l10n/translation");
+    //var config = require('web.config');
+    //var Widget = require('@web/legacy/js/core/widget')[Symbol.for("default")];
+    //var core = require("web.core");
+
+    //
 
     /**
      * @returns {Boolean}

@@ -6,6 +6,7 @@ from .main import PWA
 
 
 class ServiceWorker(PWA):
+
     JS_PWA_CORE_EVENT_INSTALL = """
         self.addEventListener('install', evt => {{
             console.log('[ServiceWorker] Installing...');
@@ -46,17 +47,19 @@ class ServiceWorker(PWA):
         """
 
     def _get_js_pwa_init(self):
-        return f"""
+        return """
             let promise_start = Promise.resolve();
             if (typeof self.oca_pwa === "undefined") {{
-                self.oca_pwa = new PWA({self._get_pwa_params()});
+                self.oca_pwa = new PWA({});
                 promise_start = self.oca_pwa.start();
                 if (self.serviceWorker.state === "activated") {{
                     promise_start = promise_start.then(
                         () => self.oca_pwa.activateWorker(true));
                 }}
             }}
-        """
+        """.format(
+            self._get_pwa_params()
+        )
 
     def _get_js_pwa_core_event_install_impl(self):
         return """

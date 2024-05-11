@@ -28,7 +28,7 @@ class ResConfigSettings(models.TransientModel):
     @api.model
     def get_values(self):
         config_parameter_obj_sudo = self.env["ir.config_parameter"].sudo()
-        res = super().get_values()
+        res = super(ResConfigSettings, self).get_values()
         res["pwa_name"] = config_parameter_obj_sudo.get_param(
             "pwa.manifest.name", default="Odoo PWA"
         )
@@ -67,7 +67,12 @@ class ResConfigSettings(models.TransientModel):
             icon_bytes_output = io.BytesIO()
             resized_image.save(icon_bytes_output, format=extension.lstrip(".").upper())
             icon = base64.b64encode(icon_bytes_output.getvalue())
-            url = f"{self._pwa_icon_url_base}{str(size[0])}x{str(size[1])}{extension}"
+            url = "{}{}x{}{}".format(
+                self._pwa_icon_url_base,
+                str(size[0]),
+                str(size[1]),
+                extension,
+            )
         # Retreive existing attachment
         existing_attachment = (
             self.env["ir.attachment"].sudo().search([("url", "like", url)])
@@ -90,7 +95,7 @@ class ResConfigSettings(models.TransientModel):
     @api.model
     def set_values(self):
         config_parameter_obj_sudo = self.env["ir.config_parameter"].sudo()
-        res = super().set_values()
+        res = super(ResConfigSettings, self).set_values()
         config_parameter_obj_sudo.set_param("pwa.manifest.name", self.pwa_name)
         config_parameter_obj_sudo.set_param(
             "pwa.manifest.short_name", self.pwa_short_name

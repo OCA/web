@@ -15,12 +15,17 @@
     "license": "LGPL-3",
     "application": True,
     "installable": True,
-    "depends": ["web", "mail"],
+    "depends": ["web", "mail", "base_setup"],
     "data": ["templates/assets.xml", "views/res_config_settings_views.xml"],
     "assets": {
         "web.assets_backend": [
             "/web_pwa_oca/static/src/js/pwa_manager.js",
             "/web_pwa_oca/static/src/js/webclient.js",
+        ],
+        "web.assets_common": [
+            "/web_pwa_oca/static/src/js/pwa_manager.js",
+            "/web_pwa_oca/static/src/js/webclient.js",
+
         ]
     },
     "images": ["static/description/pwa.png"],
