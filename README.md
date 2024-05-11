@@ -82,7 +82,7 @@ addon | version | maintainers | summary
 [web_widget_child_selector](web_widget_child_selector/) | 12.0.1.0.0 |  | Widget used for navigation on hierarchy fields
 [web_widget_color](web_widget_color/) | 12.0.1.0.1 |  | Web Widget Color
 [web_widget_datepicker_fulloptions](web_widget_datepicker_fulloptions/) | 12.0.1.0.1 |  | Web Widget DatePicker Full Options
-[web_widget_digitized_signature](web_widget_digitized_signature/) | 12.0.2.0.0 | [![mgosai](https://github.com/mgosai.png?size=30px)](https://github.com/mgosai) | Web Widget Digitized Signature
+[web_widget_digitized_signature](web_widget_digitized_signature/) | 12.0.2.1.0 | [![mgosai](https://github.com/mgosai.png?size=30px)](https://github.com/mgosai) | Web Widget Digitized Signature
 [web_widget_domain_editor_dialog](web_widget_domain_editor_dialog/) | 12.0.1.0.1 |  | Recovers the Domain Editor Dialog functionality
 [web_widget_dropdown_dynamic](web_widget_dropdown_dynamic/) | 12.0.1.0.1 |  | This module adds support for dynamic dropdown widget
 [web_widget_dropdown_dynamic_example](web_widget_dropdown_dynamic_example/) | 12.0.1.0.1 |  | Demonstration of web_widget_dropdown_dynamic
