@@ -14,3 +14,6 @@
 * Sudhir Arya <sudhir@erpharbor.com>
 * Pierre Pizzetta <pierre@devreaction.com>
 * Mantas Šniukas <mantas@vialaurea.lt>
+* `Trobz <https://trobz.com/>`_:
+
+  * Tris Doan
