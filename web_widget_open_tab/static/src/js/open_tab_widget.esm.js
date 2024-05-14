@@ -1,9 +1,9 @@
 /** @odoo-module */
 
-import {registry} from "@web/core/registry";
-import {standardFieldProps} from "@web/views/fields/standard_field_props";
 import {_lt} from "@web/core/l10n/translation";
 import {Component} from "@odoo/owl";
+import {registry} from "@web/core/registry";
+import {standardFieldProps} from "@web/views/fields/standard_field_props";
 
 export class OpenTabWidget extends Component {
     openNewTab(ev) {
