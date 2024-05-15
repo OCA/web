@@ -201,3 +201,10 @@ msgstr "Zócalos web"
 #: model_terms:ir.ui.view,arch_db:web_widget_remote_measure.measure_device_form
 msgid "e.g. Dock 1 Scale"
 msgstr "p. ej. Muelle 1 Escala"
+
+#. module: web_widget_remote_measure
+#. openerp-web
+#: code:addons/web_widget_remote_measure/static/src/xml/measure_device_status.xml:0
+#, python-format
+msgid "{{widget.title}}"
+msgstr ""
