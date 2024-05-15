@@ -2,6 +2,7 @@ odoo.define("web_dialog_size.web_dialog_size", function (require) {
     "use strict";
 
     var Dialog = require("web.Dialog");
+    var session = require("web.session");
 
     Dialog.include({
         willStart: function () {
@@ -12,7 +13,11 @@ odoo.define("web_dialog_size.web_dialog_size", function (require) {
                     .on("click", self.proxy("_extending"));
                 self.$modal
                     .find(".dialog_button_restore")
-                    .on("click", self.proxy("_restore"));
+                    .on("click", self.proxy("_restore"))
+                    .css("display", "none");
+                if (session.default_maximize) {
+                    self._extending();
+                }
             });
         },
 
