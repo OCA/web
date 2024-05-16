@@ -17,21 +17,24 @@ Web Widget Numeric Step
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
-    :target: https://github.com/OCA/web/tree/16.0/web_widget_numeric_step
+    :target: https://github.com/OCA/web/tree/17.0/web_widget_numeric_step
     :alt: OCA/web
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/web-16-0/web-16-0-web_widget_numeric_step
+    :target: https://translation.odoo-community.org/projects/web-17-0/web-17-0-web_widget_numeric_step
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/web&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This widget changes input number field and make it easier to increment the number thanks to 2 buttons (+ and -).
-Use JS native logic for input number, so you can use the options ``min``, ``max``, ``step``, ``placeholder``.
+This widget changes input number field and make it easier to increment
+the number thanks to 2 buttons (+ and -). Use JS native logic for input
+number, so you can use the options ``min``, ``max``, ``step``,
+``placeholder``.
 
-Demo available at `Settings > Users & Companies > Users > *Select One* > See 'Credit Limit' field`
+Demo available at Settings > Users & Companies > Users > \*Select One\*
+> See 'Credit Limit' field
 
 **Table of contents**
 
@@ -41,42 +44,48 @@ Demo available at `Settings > Users & Companies > Users > *Select One* > See 'Cr
 Usage
 =====
 
-In your xml view, add ``widget="numeric_step"``
-This will add the 2 buttons "+" and "-" just next to the input field in edit mode.
-Iteration step by default is 1.
+In your xml view, add ``widget="numeric_step"`` This will add the 2
+buttons "+" and "-" just next to the input field in edit mode. Iteration
+step by default is 1.
 
-.. figure:: https://raw.githubusercontent.com/OCA/web/16.0/web_widget_numeric_step/static/description/add_two_buttons.png
-
+|image1|
 
 **Optional**
 
-Add an option to choose the step iteration and limits (min and max values).
+Add an option to choose the step iteration and limits (min and max
+values).
 
 Example for an 0.25 step, min to -1 and max to 10 :
 
 .. code:: xml
 
-  <field name="sale_delay" widget="numeric_step" options="{'step': 0.25, 'min': -1, 'max': 10}" /> days
+   <field name="sale_delay" widget="numeric_step" options="{'step': 0.25, 'min': -1, 'max': 10}" /> days
 
 **Available Options**
 
-- step > Amount to increase/decrease (default: 1.0)
-- min > Min. value allowed (default: no limit)
-- max > Max. value allowed (default: no limit)
-- auto_select > Select the content when the element get focus (default: False)
-- placeholder > Define the placeholder text (default: None)
+-  step > Amount to increase/decrease (default: 1.0)
+-  min > Min. value allowed (default: no limit)
+-  max > Max. value allowed (default: no limit)
+-  auto_select > Select the content when the element get focus (default:
+   False)
+-  placeholder > Define the placeholder text (default: None)
 
 **Examples**
 
 Iteration with 0.25 step, min to -1 and max to 10.
 
-Start to increment with button, continue incrementing with scrolling mouse.
+Start to increment with button, continue incrementing with scrolling
+mouse.
 
-.. figure:: https://raw.githubusercontent.com/OCA/web/16.0/web_widget_numeric_step/static/description/step0,25andlimits.gif
+|image2|
 
 Iteration with 10 step, max limit 15, placeholder with onchange
 
-.. figure:: https://raw.githubusercontent.com/OCA/web/16.0/web_widget_numeric_step/static/description/step10_limit15_placeholder117_with_onchange.gif
+|image3|
+
+.. |image1| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_widget_numeric_step/static/description/add_two_buttons.png
+.. |image2| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_widget_numeric_step/static/description/step0,25andlimits.gif
+.. |image3| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_widget_numeric_step/static/description/step10_limit15_placeholder117_with_onchange.gif
 
 Bug Tracker
 ===========
@@ -84,7 +93,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/web/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_widget_numeric_step%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/web/issues/new?body=module:%20web_widget_numeric_step%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -92,29 +101,29 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * GRAP
 * Tecnativa
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* `GRAP <http://www.grap.coop>`_:
+-  `GRAP <http://www.grap.coop>`__:
 
-  * Quentin DUPONT <quentin.dupont@grap.coop>
+   -  Quentin DUPONT <quentin.dupont@grap.coop>
 
-* `Tecnativa <https://www.tecnativa.com/>`_:
+-  `Tecnativa <https://www.tecnativa.com/>`__:
 
-  * Alexandre Díaz
-  * Carlos Roca
+   -  Alexandre Díaz
+   -  Carlos Roca
 
-* Helly kapatel <helly.kapatel@initos.com>
-* Thanakrit Pintana <thanakrit.p39@gmail.com>
-* Dhara Solanki <dhara.solanki@initos.com>
+-  Helly kapatel <helly.kapatel@initos.com>
+-  Thanakrit Pintana <thanakrit.p39@gmail.com>
+-  Dhara Solanki <dhara.solanki@initos.com>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -137,6 +146,6 @@ Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-rafaelbn| |maintainer-yajo| 
 
-This module is part of the `OCA/web <https://github.com/OCA/web/tree/16.0/web_widget_numeric_step>`_ project on GitHub.
+This module is part of the `OCA/web <https://github.com/OCA/web/tree/17.0/web_widget_numeric_step>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
