@@ -8,10 +8,11 @@
 
 /*
 :Author: David Goodger (goodger@python.org)
-:Id: $Id: html4css1.css 8954 2022-01-20 10:10:25Z milde $
+:Id: $Id: html4css1.css 9511 2024-01-13 09:50:07Z milde $
 :Copyright: This stylesheet has been placed in the public domain.
 
 Default cascading style sheet for the HTML output of Docutils.
+Despite the name, some widely supported CSS2 features are used.
 
 See https://docutils.sourceforge.io/docs/howto/html-stylesheets.html for how to
 customize this style sheet.
@@ -274,7 +275,7 @@ pre.literal-block, pre.doctest-block, pre.math, pre.code {
   margin-left: 2em ;
   margin-right: 2em }
 
-pre.code .ln { color: grey; } /* line numbers */
+pre.code .ln { color: gray; } /* line numbers */
 pre.code, code { background-color: #eeeeee }
 pre.code .comment, code .comment { color: #5C6576 }
 pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
@@ -300,7 +301,7 @@ span.option {
 span.pre {
   white-space: pre }
 
-span.problematic {
+span.problematic, pre.problematic {
   color: red }
 
 span.section-subtitle {
@@ -368,10 +369,13 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:aa00ea1d2e4245170c8f2a6e774bffe29af982ceddd43292a7871cf6f194fc25
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/web/tree/16.0/web_widget_numeric_step"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/web-16-0/web-16-0-web_widget_numeric_step"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/web&amp;target_branch=16.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
-<p>This widget changes input number field and make it easier to increment the number thanks to 2 buttons (+ and -).
-Use JS native logic for input number, so you can use the options <tt class="docutils literal">min</tt>, <tt class="docutils literal">max</tt>, <tt class="docutils literal">step</tt>, <tt class="docutils literal">placeholder</tt>.</p>
-<p>Demo available at <cite>Settings &gt; Users &amp; Companies &gt; Users &gt; *Select One* &gt; See ‘Credit Limit’ field</cite></p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/web/tree/17.0/web_widget_numeric_step"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/web-17-0/web-17-0-web_widget_numeric_step"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/web&amp;target_branch=17.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p>This widget changes input number field and make it easier to increment
+the number thanks to 2 buttons (+ and -). Use JS native logic for input
+number, so you can use the options <tt class="docutils literal">min</tt>, <tt class="docutils literal">max</tt>, <tt class="docutils literal">step</tt>,
+<tt class="docutils literal">placeholder</tt>.</p>
+<p>Demo available at Settings &gt; Users &amp; Companies &gt; Users &gt; *Select One*
+&gt; See ‘Credit Limit’ field</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -387,14 +391,13 @@ Use JS native logic for input number, so you can use the options <tt class="docu
 </div>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#toc-entry-1">Usage</a></h1>
-<p>In your xml view, add <tt class="docutils literal"><span class="pre">widget=&quot;numeric_step&quot;</span></tt>
-This will add the 2 buttons “+” and “-” just next to the input field in edit mode.
-Iteration step by default is 1.</p>
-<div class="figure">
-<img alt="https://raw.githubusercontent.com/OCA/web/16.0/web_widget_numeric_step/static/description/add_two_buttons.png" src="https://raw.githubusercontent.com/OCA/web/16.0/web_widget_numeric_step/static/description/add_two_buttons.png" />
-</div>
+<p>In your xml view, add <tt class="docutils literal"><span class="pre">widget=&quot;numeric_step&quot;</span></tt> This will add the 2
+buttons “+” and “-” just next to the input field in edit mode. Iteration
+step by default is 1.</p>
+<p><img alt="image1" src="https://raw.githubusercontent.com/OCA/web/17.0/web_widget_numeric_step/static/description/add_two_buttons.png" /></p>
 <p><strong>Optional</strong></p>
-<p>Add an option to choose the step iteration and limits (min and max values).</p>
+<p>Add an option to choose the step iteration and limits (min and max
+values).</p>
 <p>Example for an 0.25 step, min to -1 and max to 10 :</p>
 <pre class="code xml literal-block">
 <span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;sale_delay&quot;</span><span class="w"> </span><span class="na">widget=</span><span class="s">&quot;numeric_step&quot;</span><span class="w"> </span><span class="na">options=</span><span class="s">&quot;{'step': 0.25, 'min': -1, 'max': 10}&quot;</span><span class="w"> </span><span class="nt">/&gt;</span><span class="w"> </span>days
@@ -404,26 +407,24 @@ Iteration step by default is 1.</p>
 <li>step &gt; Amount to increase/decrease (default: 1.0)</li>
 <li>min &gt; Min. value allowed (default: no limit)</li>
 <li>max &gt; Max. value allowed (default: no limit)</li>
-<li>auto_select &gt; Select the content when the element get focus (default: False)</li>
+<li>auto_select &gt; Select the content when the element get focus (default:
+False)</li>
 <li>placeholder &gt; Define the placeholder text (default: None)</li>
 </ul>
 <p><strong>Examples</strong></p>
 <p>Iteration with 0.25 step, min to -1 and max to 10.</p>
-<p>Start to increment with button, continue incrementing with scrolling mouse.</p>
-<div class="figure">
-<img alt="https://raw.githubusercontent.com/OCA/web/16.0/web_widget_numeric_step/static/description/step0,25andlimits.gif" src="https://raw.githubusercontent.com/OCA/web/16.0/web_widget_numeric_step/static/description/step0,25andlimits.gif" />
-</div>
+<p>Start to increment with button, continue incrementing with scrolling
+mouse.</p>
+<p><img alt="image2" src="https://raw.githubusercontent.com/OCA/web/17.0/web_widget_numeric_step/static/description/step0,25andlimits.gif" /></p>
 <p>Iteration with 10 step, max limit 15, placeholder with onchange</p>
-<div class="figure">
-<img alt="https://raw.githubusercontent.com/OCA/web/16.0/web_widget_numeric_step/static/description/step10_limit15_placeholder117_with_onchange.gif" src="https://raw.githubusercontent.com/OCA/web/16.0/web_widget_numeric_step/static/description/step10_limit15_placeholder117_with_onchange.gif" />
-</div>
+<p><img alt="image3" src="https://raw.githubusercontent.com/OCA/web/17.0/web_widget_numeric_step/static/description/step10_limit15_placeholder117_with_onchange.gif" /></p>
 </div>
 <div class="section" id="bug-tracker">
 <h1><a class="toc-backref" href="#toc-entry-2">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/web/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/OCA/web/issues/new?body=module:%20web_widget_numeric_step%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/OCA/web/issues/new?body=module:%20web_widget_numeric_step%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
@@ -455,13 +456,15 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <div class="section" id="maintainers">
 <h2><a class="toc-backref" href="#toc-entry-6">Maintainers</a></h2>
 <p>This module is maintained by the OCA.</p>
-<a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
+<a class="reference external image-reference" href="https://odoo-community.org">
+<img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" />
+</a>
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
 <p>Current <a class="reference external" href="https://odoo-community.org/page/maintainer-role">maintainers</a>:</p>
 <p><a class="reference external image-reference" href="https://github.com/rafaelbn"><img alt="rafaelbn" src="https://github.com/rafaelbn.png?size=40px" /></a> <a class="reference external image-reference" href="https://github.com/yajo"><img alt="yajo" src="https://github.com/yajo.png?size=40px" /></a></p>
-<p>This module is part of the <a class="reference external" href="https://github.com/OCA/web/tree/16.0/web_widget_numeric_step">OCA/web</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/web/tree/17.0/web_widget_numeric_step">OCA/web</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
 </div>
 </div>
