@@ -1,10 +1,10 @@
 /** @odoo-module */
 
-import {registry} from "@web/core/registry";
-import {standardFieldProps} from "@web/views/fields/standard_field_props";
-import {_lt} from "@web/core/l10n/translation";
-import {FloatField} from "@web/views/fields/float/float_field";
 import {hasTouch} from "@web/core/browser/feature_detection";
+import {_lt} from "@web/core/l10n/translation";
+import {registry} from "@web/core/registry";
+import {FloatField} from "@web/views/fields/float/float_field";
+import {standardFieldProps} from "@web/views/fields/standard_field_props";
 
 export class NumericStep extends FloatField {
     setup() {
@@ -19,9 +19,9 @@ export class NumericStep extends FloatField {
         this._doStep(mode);
     }
     _onKeyDown(ev) {
-        if (ev.keyCode === $.ui.keyCode.UP) {
+        if (ev.keyCode === 38) {
             this._doStep("plus");
-        } else if (ev.keyCode === $.ui.keyCode.DOWN) {
+        } else if (ev.keyCode === 40) {
             this._doStep("minus");
         }
     }
@@ -34,10 +34,10 @@ export class NumericStep extends FloatField {
         }
     }
     updateField(val) {
-        return Promise.resolve(this.props.update(val));
+        return this.props.record.update({[this.props.name]: val});
     }
     _doStep(mode) {
-        let cval = this.props.value;
+        let cval = this.props.record.data[this.props.name];
         if (mode === "plus") {
             cval += this.props.step;
         } else if (mode === "minus") {
@@ -49,11 +49,6 @@ export class NumericStep extends FloatField {
             cval = this.props.max;
         }
         this.updateField(cval);
-        this.props.setDirty(this._isSetDirty(cval));
-        this.props.setDirty(false);
-    }
-    _isSetDirty(val) {
-        return this.props.value != val;
     }
 }
 
@@ -66,21 +61,25 @@ NumericStep.props = {
     max: {type: Number, optional: true},
     placeholder: {type: String, optional: true},
 };
-
-NumericStep.displayName = _lt("Numeric Step");
-NumericStep.supportedTypes = ["float"];
 NumericStep.defaultProps = {
+    ...FloatField.defaultProps,
     inputType: "text",
 };
-NumericStep.extractProps = ({attrs}) => {
-    return {
-        name: attrs.name,
-        inputType: attrs.options.type,
-        step: attrs.options.step || 1,
-        min: attrs.options.min,
-        max: attrs.options.max,
-        placeholder: attrs.options.placeholder,
-    };
+
+export const numericStep = {
+    component: NumericStep,
+    supportedTypes: ["float"],
+    displayName: _lt("Numeric Step"),
+    extractProps: ({attrs, options}) => {
+        return {
+            name: attrs.name,
+            inputType: attrs.type,
+            step: options.step || 1,
+            min: options.min,
+            max: options.max,
+            placeholder: attrs.placeholder,
+        };
+    },
 };
 
-registry.category("fields").add("numeric_step", NumericStep);
+registry.category("fields").add("numeric_step", numericStep);
