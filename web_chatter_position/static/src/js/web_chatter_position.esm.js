@@ -48,7 +48,6 @@ import {patch} from "@web/core/utils/patch";
  * a specific position regardless of the screen size, depending on an user setting.
  */
 
-
 patch(FormCompiler.prototype, {
     /**
      * Patch the css classes of the `Form`, to include an extra `h-100` class.
