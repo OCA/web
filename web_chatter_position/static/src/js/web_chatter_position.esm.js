@@ -49,7 +49,7 @@ import {patch} from "@web/core/utils/patch";
  */
 
 
-patch(FormCompiler.prototype , {
+patch(FormCompiler.prototype, {
     /**
      * Patch the css classes of the `Form`, to include an extra `h-100` class.
      * Without it, the form sheet will not be full height in some situations,
