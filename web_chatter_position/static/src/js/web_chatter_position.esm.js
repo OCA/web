@@ -7,7 +7,6 @@
 
 import {FormCompiler} from "@web/views/form/form_compiler";
 import {FormController} from "@web/views/form/form_controller";
-//import {MailFormCompiler} from "@mail/views/form/form_compiler";
 import {append} from "@web/core/utils/xml";
 import {patch} from "@web/core/utils/patch";
 
@@ -74,7 +73,9 @@ patch(FormCompiler.prototype , {
      */
     compile(node, params) {
         const res = super.compile(node, params);
-        const webClientViewAttachmentViewHookXml = res.querySelector(".o_attachment_preview");
+        const webClientViewAttachmentViewHookXml = res.querySelector(
+            ".o_attachment_preview"
+        );
         const chatterContainerHookXml = res.querySelector(
             ".o-mail-Form-chatter:not(.o-isInFormSheetBg)"
         );
@@ -116,9 +117,10 @@ patch(FormCompiler.prototype , {
                 sheetBgChatterContainerHookXml.setAttribute("t-if", true);
                 sheetBgChatterContainerHookXml.setAttribute("t-attf-class", " ");
                 append(formSheetBgXml, sheetBgChatterContainerHookXml);
-                const sheetBgChatterContainerXml = sheetBgChatterContainerHookXml.querySelector(
-                    "t[t-component='__comp__.mailComponents.Chatter']"
-                );
+                const sheetBgChatterContainerXml =
+                    sheetBgChatterContainerHookXml.querySelector(
+                        "t[t-component='__comp__.mailComponents.Chatter']"
+                    );
                 sheetBgChatterContainerXml.setAttribute("isInFormSheetBg", "true");
                 chatterContainerHookXml.setAttribute("t-if", false);
             }
@@ -127,7 +129,7 @@ patch(FormCompiler.prototype , {
     },
 });
 
-patch(FormController.prototype , {
+patch(FormController.prototype, {
     /**
      * Patch the css classes of the form container, to include an extra `flex-row` class.
      * Without it, it'd go for flex columns direction and it won't look good.
