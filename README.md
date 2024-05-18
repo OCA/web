@@ -60,7 +60,7 @@ addon | version | maintainers | summary
 [web_view_transition](web_view_transition/) | 11.0.1.0.1 |  | This module adds transitions to display views
 [web_widget_bokeh_chart](web_widget_bokeh_chart/) | 11.0.1.1.1 |  | This widget allows to display charts using Bokeh library.
 [web_widget_child_selector](web_widget_child_selector/) | 11.0.1.0.1 |  | Widget used for navigation on hierarchy fields
-[web_widget_color](web_widget_color/) | 11.0.1.0.1 |  | Web Widget Color
+[web_widget_color](web_widget_color/) | 11.0.1.0.2 |  | Web Widget Color
 [web_widget_digitized_signature](web_widget_digitized_signature/) | 11.0.1.0.0 |  | Web Widget Digitized Signature
 [web_widget_domain_editor_dialog](web_widget_domain_editor_dialog/) | 11.0.1.0.1 |  | Recovers the Domain Editor Dialog functionality
 [web_widget_dropdown_dynamic](web_widget_dropdown_dynamic/) | 11.0.1.0.1 |  | This module adds support for dynamic dropdown widget
