@@ -50,22 +50,16 @@ msgid "By Name"
 msgstr "Per Nom"
 
 #. module: web_widget_one2many_product_picker
-#: code:addons/web_widget_one2many_product_picker/models/base.py:42
+#: code:addons/web_widget_one2many_product_picker/models/base.py:43
 #, python-format
-msgid "Can't create the %s: Duplicated product! (Already in database)"
-msgstr "No es pot crear el %s: producte duplicat! (Ja a la base de dades)"
+msgid "Can't create the %s: Duplicated product (%s)! (Already in database)"
+msgstr ""
 
 #. module: web_widget_one2many_product_picker
-#: code:addons/web_widget_one2many_product_picker/models/base.py:22
+#: code:addons/web_widget_one2many_product_picker/models/base.py:24
 #, python-format
 msgid "Can't create the %s: Duplicated product! (Inside query)"
 msgstr "No es pot crear el %s: producte duplicat! (Consulta interna)"
-
-#. module: web_widget_one2many_product_picker
-#: code:addons/web_widget_one2many_product_picker/models/base.py:73
-#, python-format
-msgid "Can't write the %s: Duplicated product! (Already in database)"
-msgstr "No es pot escriure el %s: producte duplicat! (Ja a la base de dades)"
 
 #. module: web_widget_one2many_product_picker
 #. openerp-web
@@ -137,6 +131,15 @@ msgstr "Subtotal:"
 #, python-format
 msgid "[No widget %s]"
 msgstr "[Sense widget %s]"
+
+#, python-format
+#~ msgid "Can't create the %s: Duplicated product! (Already in database)"
+#~ msgstr "No es pot crear el %s: producte duplicat! (Ja a la base de dades)"
+
+#, python-format
+#~ msgid "Can't write the %s: Duplicated product! (Already in database)"
+#~ msgstr ""
+#~ "No es pot escriure el %s: producte duplicat! (Ja a la base de dades)"
 
 #~ msgid "Price:"
 #~ msgstr "Preu:"
