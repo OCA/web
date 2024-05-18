@@ -96,7 +96,7 @@ addon | version | maintainers | summary
 [web_widget_model_viewer](web_widget_model_viewer/) | 12.0.2.0.0 | [![eLBati](https://github.com/eLBati.png?size=30px)](https://github.com/eLBati) | Easily display interactive 3D models on the web & in AR
 [web_widget_mpld3_chart](web_widget_mpld3_chart/) | 12.0.1.0.0 |  | This widget allows to display charts using MPLD3 library.
 [web_widget_numeric_step](web_widget_numeric_step/) | 12.0.1.2.0 |  | Web Widget Numeric Step
-[web_widget_one2many_product_picker](web_widget_one2many_product_picker/) | 12.0.3.0.0 |  | Widget to select products on one2many fields
+[web_widget_one2many_product_picker](web_widget_one2many_product_picker/) | 12.0.3.0.1 |  | Widget to select products on one2many fields
 [web_widget_one2many_product_picker_sale_stock](web_widget_one2many_product_picker_sale_stock/) | 12.0.2.0.1 |  | Adds support for stock in the one2many product picker widget
 [web_widget_one2many_product_picker_sale_stock_available_info_popup](web_widget_one2many_product_picker_sale_stock_available_info_popup/) | 12.0.1.0.1 |  | Adds support for stock in the one2many product picker widget
 [web_widget_open_tab](web_widget_open_tab/) | 12.0.1.0.1 |  | Allow to open record from trees on new tab from tree views
