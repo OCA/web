@@ -57,6 +57,7 @@ addon | version | maintainers | summary
 [web_no_bubble](web_no_bubble/) | 14.0.1.1.0 |  | Remove the bubbles from the web interface
 [web_notify](web_notify/) | 14.0.1.1.0 |  | Send notification messages to user
 [web_notify_channel_message](web_notify_channel_message/) | 14.0.1.0.0 |  | Send an instant notification to channel users when a new message is posted
+[web_pivot_hide_total](web_pivot_hide_total/) | 14.0.1.0.1 |  | This addon adds a new inherited version of pivot view. It intends to hide the last total column when required.
 [web_pwa_oca](web_pwa_oca/) | 14.0.1.1.0 | [![eLBati](https://github.com/eLBati.png?size=30px)](https://github.com/eLBati) | Make Odoo a PWA
 [web_refresher](web_refresher/) | 14.0.2.0.0 |  | Web Refresher
 [web_remember_tree_column_width](web_remember_tree_column_width/) | 14.0.1.0.0 | [![frahikLV](https://github.com/frahikLV.png?size=30px)](https://github.com/frahikLV) [![luisg123v](https://github.com/luisg123v.png?size=30px)](https://github.com/luisg123v) | Remember the tree columns' widths across sessions.

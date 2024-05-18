@@ -6,7 +6,7 @@
     "summary": """
         This addon adds a new inherited version of pivot view.
         It intends to hide the last total column when required.""",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
