@@ -49,7 +49,7 @@ addon | version | maintainers | summary
 [web_group_by_percentage](web_group_by_percentage/) | 12.0.1.0.0 |  | Show the percentage of the total sum in group by rows
 [web_group_expand](web_group_expand/) | 12.0.1.0.1 |  | Group Expand Buttons
 [web_ir_actions_act_multi](web_ir_actions_act_multi/) | 12.0.1.0.2 |  | Enables triggering of more than one action on ActionManager
-[web_ir_actions_act_view_reload](web_ir_actions_act_view_reload/) | 12.0.1.0.1 |  | Enables reload of the current view via ActionManager
+[web_ir_actions_act_view_reload](web_ir_actions_act_view_reload/) | 12.0.1.0.2 |  | Enables reload of the current view via ActionManager
 [web_ir_actions_act_window_message](web_ir_actions_act_window_message/) | 12.0.1.0.1 |  | Show a message box to users
 [web_ir_actions_close_wizard_refresh_view](web_ir_actions_close_wizard_refresh_view/) | 12.0.1.0.1 |  | Allow to refresh view data without reload the page.
 [web_listview_range_select](web_listview_range_select/) | 12.0.1.0.1 |  | Enables selecting a range of records using the shift key
