@@ -44,14 +44,14 @@ odoo.define('web_view_calendar_column.CalendarModel', function (require) {
         _getFullCalendarOptions: function () {
              var result = this._super.apply(this, arguments);
              if (this.fieldColumn)
-		        result.resources = [];
-		     return result;
-		},
-		calendarEventToRecord: function (event) {
-		    var result = this._super.apply(this, arguments);
-		    if (event.resourceId)
-		        result[this.fieldColumn] = event.resourceId;
-		    return result;
-		},
+                        result.resources = [];
+                     return result;
+                },
+                calendarEventToRecord: function (event) {
+                    var result = this._super.apply(this, arguments);
+                    if (event.resourceId)
+                        result[this.fieldColumn] = event.resourceId;
+                    return result;
+                },
     });
 });
