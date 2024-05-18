@@ -12,3 +12,4 @@ you can write the following code to reduce the load duration of the tree view.
 .. code:: xml
 
     <field name="image_small" widget="image" options="{'tooltip_image': 'image'}"/>
+

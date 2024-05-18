@@ -10,7 +10,7 @@ from dateutil.relativedelta import relativedelta
 from collections import OrderedDict
 
 from odoo import api, fields, models
-from odoo.tools.safe_eval import safe_eval as eval
+from odoo.tools.safe_eval import safe_eval
 from odoo.tools.translate import _
 from odoo.exceptions import ValidationError, except_orm
 
@@ -202,7 +202,7 @@ class TileTile(models.Model):
             eval_context = self._get_eval_context()
             domain = tile.domain or "[]"
             try:
-                count = model.search_count(eval(domain, eval_context))
+                count = model.search_count(safe_eval(domain, eval_context))
             except Exception as e:
                 tile.primary_value = 0.0
                 tile.primary_formated_value =\
@@ -216,7 +216,7 @@ class TileTile(models.Model):
             ]
             read_vals = (
                 fields
-                and model.search_read(eval(domain, eval_context), fields)
+                and model.search_read(safe_eval(domain, eval_context), fields)
                 or []
             )
             for f in ["primary_", "secondary_"]:
@@ -261,13 +261,13 @@ class TileTile(models.Model):
                 f_helper = f + "helper"
                 tile[f_helper] = ""
                 field_func = FIELD_FUNCTIONS.get(tile[f_function], {})
-                help = field_func.get("help", False)
-                if help:
+                help_text = field_func.get("help", False)
+                if help_text:
                     if tile[f_function] != "count" and tile[f_field_id]:
                         desc = tile[f_field_id].field_description
-                        tile[f_helper] = help % desc
+                        tile[f_helper] = help_text % desc
                     else:
-                        tile[f_helper] = help
+                        tile[f_helper] = help_text
 
     def _compute_active(self):
         ima = self.env["ir.model.access"]
