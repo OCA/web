@@ -46,11 +46,17 @@ class BaseModel(models.BaseModel):
 
     @api.model_create_multi
     def create(self, vals_list):
-        """Avoid create lines that have a product currently used when use the product picker"""
+        """
+        Avoid create lines that have a product currently used
+        when use the product picker
+        """
         self._check_product_picker_duplicated_products(vals_list)
         return super().create(vals_list)
 
     def write(self, values):
-        """Avoid write lines that have a product currently used when use the product picker"""
+        """
+        Avoid write lines that have a product currently used
+        when use the product picker
+        """
         self._check_product_picker_duplicated_products([values])
         return super().write(values)
