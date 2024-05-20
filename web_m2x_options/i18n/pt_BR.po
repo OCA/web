@@ -10,16 +10,17 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-03 03:50+0000\n"
-"PO-Revision-Date: 2019-08-26 16:01+0000\n"
-"Last-Translator: Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
-"teams/23907/pt_BR/)\n"
+"PO-Revision-Date: 2024-05-20 19:35+0000\n"
+"Last-Translator: Rodrigo Macedo <sottomaiormacedotec@users.noreply."
+"translation.odoo-community.org>\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
+"23907/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.8\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: web_m2x_options
 #. openerp-web
@@ -75,17 +76,17 @@ msgstr "Criar e editar"
 #. module: web_m2x_options
 #: model:ir.model.fields,field_description:web_m2x_options.field_ir_config_parameter__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Exibir Nome"
 
 #. module: web_m2x_options
 #: model:ir.model.fields,field_description:web_m2x_options.field_ir_config_parameter__id
 msgid "ID"
-msgstr ""
+msgstr "Identificação"
 
 #. module: web_m2x_options
 #: model:ir.model.fields,field_description:web_m2x_options.field_ir_config_parameter____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última Modificação em"
 
 #. module: web_m2x_options
 #. openerp-web
