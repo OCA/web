@@ -8,8 +8,9 @@ msgstr ""
 "Project-Id-Version: web (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-03-11 02:18+0000\n"
-"PO-Revision-Date: 2019-09-03 01:23+0000\n"
-"Last-Translator: Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>\n"
+"PO-Revision-Date: 2024-05-21 03:08+0000\n"
+"Last-Translator: Rodrigo Macedo <sottomaiormacedotec@users.noreply."
+"translation.odoo-community.org>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-web-8-0/"
 "language/pt_BR/)\n"
 "Language: pt_BR\n"
@@ -17,14 +18,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.8\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: web_widget_x2many_2d_matrix
 #. odoo-javascript
 #: code:addons/web_widget_x2many_2d_matrix/static/src/components/x2many_2d_matrix_renderer/x2many_2d_matrix_renderer.xml:0
 #, python-format
 msgid "Nothing to display."
-msgstr ""
+msgstr "Nada a exibir."
 
 #, python-format
 #~ msgid "Sorry no matrix data to display."
