@@ -9,10 +9,11 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-06-22 08:27+0000\n"
-"PO-Revision-Date: 2023-11-09 13:36+0000\n"
-"Last-Translator: Adriano Prado <adrianojprado@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
-"teams/23907/pt_BR/)\n"
+"PO-Revision-Date: 2024-05-21 03:08+0000\n"
+"Last-Translator: Rodrigo Macedo <sottomaiormacedotec@users.noreply."
+"translation.odoo-community.org>\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
+"23907/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -71,7 +72,7 @@ msgstr "Notificar o nome do canal de alerta"
 #: code:addons/web_notify/static/src/js/services/notification_services.esm.js:0
 #, python-format
 msgid "Open"
-msgstr ""
+msgstr "Aberto"
 
 #. module: web_notify
 #. odoo-python
