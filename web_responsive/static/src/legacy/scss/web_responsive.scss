@@ -5,15 +5,6 @@
 
 $chatter_zone_width: 35% !important;
 
-// Support for long titles
-@include media-breakpoint-up(md) {
-    .o_form_view .oe_button_box + .oe_title,
-    .o_form_view .oe_button_box + .oe_avatar + .oe_title {
-        /* Button-box has a hardcoded width of 132px per button and have three columns */
-        width: calc(100% - 450px);
-    }
-}
-
 // Scroll all but top bar
 html .o_web_client .o_action_manager .o_action {
     @include media-breakpoint-down(sm) {
