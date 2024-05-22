@@ -5,48 +5,19 @@
     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
 */
 
-import {FormCompiler} from "@web/views/form/form_compiler";
-import {FormController} from "@web/views/form/form_controller";
-import {append} from "@web/core/utils/xml";
-import {patch} from "@web/core/utils/patch";
-
-/**
- * So, you've landed here and you have no idea what this is about. Don't worry, you're
- * not the only one. Here's a quick summary of what's going on:
- *
- * In core, the chatter position depends on the size of the screen and wether there is
- * an attachment viewer or not. There are 3 possible positions, and for each position a
- * different chatter instance is displayed.
- *
- * So, in fact, we have 3 chatter instances running, and we switch their visibility
- * depending on the desired position.
- *
- * A) Bottom position
- *    https://github.com/odoo/odoo/blob/2ef010907/addons/mail/static/src/views/form/form_compiler.js#L160
- *    Condition: `!(__comp__.hasFileViewer() and __comp__.uiService.size >= ${SIZES.XXL})`
- *
- *    This is the bottom position you would except. However it can only be there until
- *    XXL screen sizes, because the container is a flexbox and changes from row to
- *    column display. It's hidden in the presence of an attachment viewer.
- *
- * B) Bottom In-sheet position
- *    https://github.com/odoo/odoo/blob/2ef010907/addons/mail/static/src/views/form/form_compiler.js#L181
- *    Condition: `__comp__.hasFileViewer()`
- *
- *    This is the bottom position that's used when there's an attachment viewer in place.
- *    It's rendered within the form sheet, possibly to by-pass the flexbox issue
- *    beforementioned. It's only instanciated when there's an attachment viewer.
- *
- * C) Sided position
- *    https://github.com/odoo/odoo/blob/2ef010907/addons/mail/static/src/views/form/form_compiler.js#L83
- *    Condition: `__comp__.hasFileViewer() and __comp__.uiService.size >= ${SIZES.XXL}`
- *
- *    This is the sided position, hidden in the presence of an attachment viewer.
- *    It's the better half of `A`.
- *
- * The patches and overrides you see below are here to alter these conditions to force
- * a specific position regardless of the screen size, depending on an user setting.
- */
+import { FormCompiler } from "@web/views/form/form_compiler";
+import { FormController } from "@web/views/form/form_controller";
+import { append } from "@web/core/utils/xml";
+import { patch } from "@web/core/utils/patch";
+import { SIZES } from "@web/core/ui/ui_service";
+import { hasTouch } from "@web/core/browser/feature_detection";
+import {
+    combineAttributes,
+    setAttributes,
+    createElement,
+    createTextNode,
+    getTag,
+} from "@web/core/utils/xml";
 
 patch(FormCompiler.prototype, {
     /**
@@ -57,75 +28,120 @@ patch(FormCompiler.prototype, {
      * @override
      */
     compileForm(el, params) {
-        const res = super.compileForm(el, params);
-        if (odoo.web_chatter_position === "sided") {
-            const classes = res.getAttribute("t-attf-class");
-            res.setAttribute("t-attf-class", `${classes} h-100`);
-        }
-        return res;
-    },
-    /**
-     * Patch the visibility of bottom chatters (`A` and `B` above).
-     * `B` may not exist in some situations, so we ensure it does by creating it.
-     *
-     * @override
-     */
-    compile(node, params) {
-        const res = super.compile(node, params);
-        const webClientViewAttachmentViewHookXml = res.querySelector(
-            ".o_attachment_preview"
-        );
-        const chatterContainerHookXml = res.querySelector(
-            ".o-mail-Form-chatter:not(.o-isInFormSheetBg)"
-        );
-        if (!chatterContainerHookXml) {
-            return res;
-        }
-        if (chatterContainerHookXml.parentNode.classList.contains("o_form_sheet")) {
-            return res;
-        }
-        // Don't patch anything if the setting is "auto": this is the core behaviour
-        if (odoo.web_chatter_position === "auto") {
-            return res;
-            // For "sided", we have to remote the bottom chatter
-            // (except if there is an attachment viewer, as we have to force bottom)
-        } else if (odoo.web_chatter_position === "sided") {
-            const formSheetBgXml = res.querySelector(".o_form_sheet_bg");
-            if (!formSheetBgXml) {
-                return res;
-            }
-            chatterContainerHookXml.setAttribute("t-if", true);
-            // For "bottom", we keep the chatter in the form sheet
-            // (the one used for the attachment viewer case)
-            // If it's not there, we create it.
-        } else if (odoo.web_chatter_position === "bottom") {
-            if (webClientViewAttachmentViewHookXml) {
-                const sheetBgChatterContainerHookXml = res.querySelector(
-                    ".o-mail-Form-chatter.o-isInFormSheetBg"
-                );
-                sheetBgChatterContainerHookXml.setAttribute("t-if", true);
-                chatterContainerHookXml.setAttribute("t-if", false);
-            } else {
-                const formSheetBgXml = res.querySelector(".o_form_sheet_bg");
-                if (!formSheetBgXml) {
-                    return res;
+        const sheetNode = el.querySelector("sheet");
+        const displayClasses = sheetNode
+            ? `d-flex {{ ((__comp__.uiService.size < ${SIZES.XXL} && ${odoo.web_chatter_position != "sided"}) || ${odoo.web_chatter_position === "bottom"}) ? "flex-column" : "flex-nowrap h-100" }}`
+            : "d-block";
+        const stateClasses =
+            "{{ __comp__.props.record.dirty ? 'o_form_dirty' : !__comp__.props.record.isNew ? 'o_form_saved' : '' }}";
+        const form = createElement("div", {
+            class: "o_form_renderer",
+            "t-att-class": "__comp__.props.class",
+            "t-attf-class": `{{__comp__.props.record.isInEdition ? 'o_form_editable' : 'o_form_readonly'}} ${displayClasses} ${stateClasses}`,
+        });
+        if (!sheetNode) {
+            for (const child of el.childNodes) {
+                // ButtonBox are already compiled for the control panel and should not
+                // be recompiled for the renderer of the view
+                if (child.attributes?.name?.value !== "button_box") {
+                    append(form, this.compileNode(child, params));
                 }
-                const sheetBgChatterContainerHookXml =
-                    chatterContainerHookXml.cloneNode(true);
-                sheetBgChatterContainerHookXml.classList.add("o-isInFormSheetBg");
-                sheetBgChatterContainerHookXml.setAttribute("t-if", true);
-                sheetBgChatterContainerHookXml.setAttribute("t-attf-class", " ");
-                append(formSheetBgXml, sheetBgChatterContainerHookXml);
-                const sheetBgChatterContainerXml =
-                    sheetBgChatterContainerHookXml.querySelector(
-                        "t[t-component='__comp__.mailComponents.Chatter']"
-                    );
-                sheetBgChatterContainerXml.setAttribute("isInFormSheetBg", "true");
-                chatterContainerHookXml.setAttribute("t-if", false);
             }
+            form.classList.add("o_form_nosheet");
+        } else {
+            let compiledList = [];
+            for (const child of el.childNodes) {
+                const compiled = this.compileNode(child, params);
+                if (getTag(child, true) === "sheet") {
+                    append(form, compiled);
+                    compiled.prepend(...compiledList);
+                    compiledList = [];
+                } else if (compiled) {
+                    compiledList.push(compiled);
+                }
+            }
+            append(form, compiledList);
         }
+        return form;
+    },
+    compile(node, params) {
+    // TODO no chatter if in dialog?
+        const res = super.compile(node, params);
+        const chatterContainerHookXml = res.querySelector(".o-mail-Form-chatter");
+        if (!chatterContainerHookXml) {
+            return res; // no chatter, keep the result as it is
+        }
+        const chatterContainerXml = chatterContainerHookXml.querySelector(
+            "t[t-component='__comp__.mailComponents.Chatter']"
+        );
+        setAttributes(chatterContainerXml, {
+            isChatterAside: "false",
+            isInFormSheetBg: "false",
+            saveRecord: "__comp__.props.saveRecord",
+        });
+        if (chatterContainerHookXml.parentNode.classList.contains("o_form_sheet")) {
+            return res; // if chatter is inside sheet, keep it there
+        }
+        const formSheetBgXml = res.querySelector(".o_form_sheet_bg");
+        const parentXml = formSheetBgXml && formSheetBgXml.parentNode;
+        if (!parentXml) {
+            return res; // miss-config: a sheet-bg is required for the rest
+        }
+
+        const webClientViewAttachmentViewHookXml = res.querySelector(".o_attachment_preview");
+        if (webClientViewAttachmentViewHookXml) {
+            // in sheet bg (attachment viewer present)
+            setAttributes(webClientViewAttachmentViewHookXml, {
+                "t-if": `__comp__.hasFileViewer() and __comp__.uiService.size >= ${SIZES.XXL}`,
+            });
+            const sheetBgChatterContainerHookXml = chatterContainerHookXml.cloneNode(true);
+            sheetBgChatterContainerHookXml.classList.add("o-isInFormSheetBg", "w-auto");
+            setAttributes(sheetBgChatterContainerHookXml, {
+                "t-if": `__comp__.hasFileViewer() and __comp__.uiService.size >= ${SIZES.XXL}`,
+            });
+            append(formSheetBgXml, sheetBgChatterContainerHookXml);
+            const sheetBgChatterContainerXml = sheetBgChatterContainerHookXml.querySelector(
+                "t[t-component='__comp__.mailComponents.Chatter']"
+            );
+            setAttributes(sheetBgChatterContainerXml, {
+                isInFormSheetBg: "true",
+                isChatterAside: "false",
+            });
+        }
+        // after sheet bg (standard position, either aside or below)
+        if (webClientViewAttachmentViewHookXml) {
+            setAttributes(chatterContainerHookXml, {
+                "t-if": `!(__comp__.hasFileViewer() and __comp__.uiService.size >= ${SIZES.XXL})`,
+                "t-attf-class": `{{ __comp__.uiService.size >= ${SIZES.XXL} and !(__comp__.hasFileViewer() and __comp__.uiService.size >= ${SIZES.XXL}) ? "o-aside" : "" }}`,
+            });
+            setAttributes(chatterContainerXml, {
+                isInFormSheetBg: "__comp__.hasFileViewer()",
+                isChatterAside: `__comp__.uiService.size >= ${SIZES.XXL} and !(__comp__.hasFileViewer() and __comp__.uiService.size >= ${SIZES.XXL})`,
+            });
+        } else {
+            if (odoo.web_chatter_position === "sided") {
+                setAttributes(chatterContainerXml, {
+                    isInFormSheetBg: "false",
+                    isChatterAside: "true",
+                });
+                setAttributes(chatterContainerHookXml, {
+                    "t-attf-class": "o-aside",
+                });
+            }else{
+                setAttributes(chatterContainerXml, {
+                    isInFormSheetBg: "false",
+                    isChatterAside: `__comp__.uiService.size >= ${SIZES.XXL}`,
+                });
+                setAttributes(chatterContainerHookXml, {
+                    "t-attf-class": `{{ (__comp__.uiService.size >= ${SIZES.XXL} && ${odoo.web_chatter_position != "bottom"}) ? "o-aside" : "mt-4 mt-md-0" }}`,
+                });
+            }
+
+        }
+        append(parentXml, chatterContainerHookXml);
         return res;
     },
+
 });
 
 patch(FormController.prototype, {
@@ -136,7 +152,18 @@ patch(FormController.prototype, {
      * @override
      */
     get className() {
-        const result = super.className;
+        const res = super.className;
+        const result = {};
+        const { size } = this.ui;
+        if (size <= SIZES.XS) {
+            result.o_xxs_form_view = true;
+        } else if ((!this.env.inDialog && size === SIZES.XXL && odoo.web_chatter_position !="bottom") || odoo.web_chatter_position === "sided") {
+            result["o_xxl_form_view h-100"] = true;
+        }
+        if (this.props.className) {
+            result[this.props.className] = true;
+        }
+        result["o_field_highlight"] = size < SIZES.SM || hasTouch();
         if (odoo.web_chatter_position === "sided") {
             result["flex-row"] = true;
         }

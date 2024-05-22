@@ -11,7 +11,7 @@
         max-width: $o-form-view-sheet-max-width;
         width: 100%;
         @include media-breakpoint-up(md) {
-            margin: $o-sheet-vpadding * 0.2 auto;
+            margin: $o-sheet-vpadding*0.2 auto;
         }
     }
 }
