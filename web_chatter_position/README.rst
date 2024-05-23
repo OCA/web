@@ -61,6 +61,7 @@ Authors
 
 * Hynsys Technologies
 * Camptocamp
+* Alitec Pte Ltd
 
 Contributors
 ------------
@@ -70,6 +71,10 @@ Contributors
 -  `Camptocamp <https://www.camptocamp.com>`__
 
    -  Iván Todorovich <ivan.todorovich@camptocamp.com>
+
+-  `Alitec Pte Ltd <http://www.alitec.sg>`__
+
+   -  Jay Patel <jay@alitec.sg>
 
 Maintainers
 -----------
