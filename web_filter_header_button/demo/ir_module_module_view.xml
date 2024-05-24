@@ -14,6 +14,11 @@
                     name="context"
                 >{'shown_in_panel': {'icon': 'fa-toggle-off', 'hotkey': 'u'}}</attribute>
             </filter>
+            <filter name="state" position="attributes">
+                <attribute
+                    name="context"
+                >{'group_by':'state', 'shown_in_panel': {'icon': 'fa-th-list', 'hotkey': 's'}}</attribute>
+            </filter>
         </field>
     </record>
 </odoo>

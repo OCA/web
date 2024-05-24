@@ -32,5 +32,17 @@ patch(
             }
             return preFilter;
         },
+        /**
+         * Allow groupBy filters to show up as buttons
+         * @override
+         * @param {Object} filter
+         * @param {Object} attrs
+         */
+        _extractAttributes(filter, attrs) {
+            this._super(...arguments);
+            if (filter.type === "groupBy" && attrs.context.shown_in_panel) {
+                filter.context = attrs.context;
+            }
+        },
     }
 );
