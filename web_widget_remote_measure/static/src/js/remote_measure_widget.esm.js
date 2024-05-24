@@ -82,12 +82,20 @@ export const RemoteMeasureMixin = {
         return;
     },
     /**
+     * Send read params to the remote device
+     * @returns {Object}
+     */
+    _read_from_device_tcp_params() {
+        return {command: false};
+    },
+    /**
      * Process call
      * @returns {Number}
      */
     async _read_from_device_tcp() {
         const data = await this._rpc({
             route: `/remote_measure_device/${this.remote_device_data.id}` || [],
+            params: this._read_from_device_tcp_params(),
         });
         if (!data) {
             return null;
@@ -106,8 +114,18 @@ export const RemoteMeasureMixin = {
         var icon = "fa-thermometer-empty";
         var stream_success_counter = 20;
         this._unstableMeasure();
-        // Don't keep going forever
-        for (let attemps_left = 1000; attemps_left > 0; attemps_left--) {
+        // Used to set the read interval if any
+        const timer = (ms) => new Promise((res) => setTimeout(res, ms));
+        // Don't keep going forever unless non stop reading
+        for (
+            let attemps_left = this.remote_device_data.non_stop_read ? Infinity : 1000;
+            attemps_left > 0;
+            attemps_left--
+        ) {
+            // Allow to break the loop manually
+            if (this.stop) {
+                break;
+            }
             const processed_data = await this._read_from_device_tcp();
             if (!processed_data) {
                 continue;
@@ -123,6 +141,9 @@ export const RemoteMeasureMixin = {
                 this._awaitingMeasure();
                 this._recordMeasure();
                 break;
+            } else if (this.remote_device_data.non_stop_read) {
+                stream_success_counter = 20;
+                this._recordMeasure();
             }
             if (stream_success_counter) {
                 --stream_success_counter;
@@ -130,6 +151,10 @@ export const RemoteMeasureMixin = {
             icon = this._nextStateIcon(icon);
             this.amount = processed_data.value;
             this._setMeasure();
+            // Set sleep interval
+            if (this.remote_device_data.read_interval) {
+                await timer(this.remote_device_data.read_interval);
+            }
         }
     },
     /**
@@ -216,6 +241,7 @@ export const RemoteMeasureMixin = {
      * Request measure to remote device
      */
     measure() {
+        this.stop = false;
         this.$start_measure.addClass("d-none");
         this.$stop_measure.removeClass("d-none");
         this.$icon = this.$stop_measure.find("i");
@@ -226,6 +252,7 @@ export const RemoteMeasureMixin = {
      */
     measure_stop() {
         this._closeSocket();
+        this.stop = true;
         this._awaitingMeasure();
         this._recordMeasure();
     },
@@ -401,6 +428,17 @@ export const RemoteMeasure = FieldFloat.extend(RemoteMeasureMixin, {
         }
         this.$el.prepend(this.$start_measure, this.$stop_measure);
         return def;
+    },
+    /**
+     * Read right on if configured
+     * @override
+     */
+    start() {
+        this._super(...arguments).then(() => {
+            if (this.remote_device_data.instant_read) {
+                this.measure();
+            }
+        });
     },
     /**
      * Ensure that the socket is allways closed

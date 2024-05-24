@@ -25,6 +25,13 @@
                             <field name="connection_mode" />
                         </group>
                     </group>
+                    <group>
+                        <group string="Read behavior">
+                            <field name="instant_read" />
+                            <field name="non_stop_read" />
+                            <field name="read_interval" />
+                        </group>
+                    </group>
                 </sheet>
             </form>
         </field>

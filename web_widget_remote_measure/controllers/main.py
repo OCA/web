@@ -16,6 +16,8 @@ class RemoteDeviceTcpConnection(Controller):
             device.connect((host, port))
             try:
                 if data:
+                    if isinstance(data, str):
+                        data = data.encode("utf-8")
                     device.sendall(data)
                 # Get in one shot. The info won't be longer than a few bytes
                 response = device.recv(64)

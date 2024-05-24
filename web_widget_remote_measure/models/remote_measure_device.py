@@ -30,4 +30,11 @@ class RemoteMeasureDevice(models.Model):
         required=True,
     )
     host = fields.Char(required=True)
+    instant_read = fields.Boolean(help="Read right on as the widget gets rendered")
+    non_stop_read = fields.Boolean(
+        help="Don't stop reading until the widget is disposed"
+    )
+    read_interval = fields.Integer(
+        help="(0 for no sleep between reads) Miliseconds to wait between device reads"
+    )
     test_measure = fields.Float(default=0.0)
