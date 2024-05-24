@@ -30,6 +30,9 @@ export class FilterButton extends Component {
             favorite: {
                 color: "warning",
             },
+            groupBy: {
+                color: "info",
+            },
         };
         return mapping[filter.type];
     }
