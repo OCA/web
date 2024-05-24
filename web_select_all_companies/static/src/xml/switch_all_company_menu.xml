@@ -7,18 +7,18 @@
         owl="1"
     >
         <xpath expr="//t[@t-key='company.id']" position="before">
-            <DropdownItem class="'p-0 bg-white'">
+            <DropdownItem class="'p-0'">
                 <div class="d-flex">
                     <div
                         role="menuitemcheckbox"
                         tabindex="0"
-                        t-attf-class="{{isCurrent ? 'border-primary' : ''}}"
+                        t-att-class="{ 'border-primary': isCurrent }"
                         class="border-end toggle_company"
                         t-on-click.stop="() => this.toggleSelectAllCompanies()"
                     >
-                            <span class="btn btn-light border-0 p-2">
+                            <span class="btn border-0 p-2">
                                 <i
-                                class="fa fa-fw py-2 text-primary"
+                                class="fa fa-fw py-2"
                                 t-att-class="isAllCompaniesSelected ? 'fa-check-square text-primary' : 'fa-square-o'"
                             />
                             </span>
@@ -26,11 +26,14 @@
                     <div
                         role="button"
                         tabindex="0"
-                        class="d-flex flex-grow-1 align-items-center py-0 ps-2 ms-1 me-2 all-companies-item"
+                        class="d-flex flex-grow-1 align-items-center py-0 log_into ps-2"
                         title="Select All Companies"
                         name="select_all_companies"
+                        t-on-click.stop="() => this.toggleSelectAllCompanies()"
                     >
-                            <span>All Companies</span>
+                            <span
+                            class="company_label pe-3 text-900 fw-bold"
+                        >All Companies</span>
                     </div>
                 </div>
             </DropdownItem>

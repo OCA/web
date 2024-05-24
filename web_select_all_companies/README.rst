@@ -57,11 +57,13 @@ Authors
 -------
 
 * Camptocamp
+* Alitec Pte Ltd
 
 Contributors
 ------------
 
 -  Telmo Santos <telmo.santos@camptocamp.com>
+-  Jay Patel <jay@alitec.sg>
 
 Maintainers
 -----------
