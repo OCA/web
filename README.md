@@ -44,7 +44,7 @@ addon | version | maintainers | summary
 [web_ir_actions_act_window_page](web_ir_actions_act_window_page/) | 16.0.1.0.0 |  | Allows a developer to trigger a pager to show the previous or next next record in the form view
 [web_ir_actions_close_wizard_refresh_view](web_ir_actions_close_wizard_refresh_view/) | 16.0.1.0.0 |  | Allow to refresh view data without reload the page.
 [web_listview_range_select](web_listview_range_select/) | 16.0.1.0.0 |  | Enables selecting a range of records using the shift key
-[web_m2x_options](web_m2x_options/) | 16.0.1.1.2 |  | web_m2x_options
+[web_m2x_options](web_m2x_options/) | 16.0.1.1.3 |  | web_m2x_options
 [web_no_bubble](web_no_bubble/) | 16.0.1.0.0 |  | Remove the bubbles from the web interface
 [web_notify](web_notify/) | 16.0.2.0.0 |  | Send notification messages to user
 [web_notify_channel_message](web_notify_channel_message/) | 16.0.1.0.0 |  | Send an instant notification to channel users when a new message is posted
