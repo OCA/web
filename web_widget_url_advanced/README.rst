@@ -88,11 +88,6 @@ both can be applied inside the options attribute too:
 .. |image1| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_widget_url_advanced/static/description/before.png
 .. |image2| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_widget_url_advanced/static/description/after.png
 
-Known issues / Roadmap
-======================
-
--  ``<field text_field="foo"/>`` is not supported in tree views.
-
 Bug Tracker
 ===========
 
@@ -123,6 +118,7 @@ Contributors
 -  Swapnesh Shah <s.shah.serpentcs@gmail.com>
 -  Joan Sisquella <joan.sisquella@forgeflow.com>
 -  Peerapong Supasompob <peerapong.supasompob@gmail.com>
+-  Nedas Žilinskas <nedas.zilinskas@avoin.systems>
 
 Maintainers
 -----------

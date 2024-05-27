@@ -13,7 +13,7 @@
     "data": [],
     "assets": {
         "web.assets_backend": [
-            "web_widget_url_advanced/static/src/fields/url_field.js",
+            "web_widget_url_advanced/static/src/fields/url_field.esm.js",
             "web_widget_url_advanced/static/src/fields/url_field.xml",
         ],
     },
