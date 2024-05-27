@@ -26,7 +26,7 @@ to
 Or user can add any hyperlink text using 'prefix_name' attribute
 
 ``` xml
-<field name="skype_name" widget="url" 'prefix_name': 'skype'/>
+<field name="skype_name" widget="url" prefix_name="skype"/>
 ```
 
 both can be applied inside the options attribute too:
