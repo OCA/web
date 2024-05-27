@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -369,15 +368,15 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:c59446ba9b925182f7f539451bdc856f54709cb1c575d33698658f497c8872ba
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/lgpl-3.0-standalone.html"><img alt="License: LGPL-3" src="https://img.shields.io/badge/licence-LGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/web/tree/15.0/web_widget_url_advanced"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/web-15-0/web-15-0-web_widget_url_advanced"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/web&amp;target_branch=15.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/lgpl-3.0-standalone.html"><img alt="License: LGPL-3" src="https://img.shields.io/badge/licence-LGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/web/tree/17.0/web_widget_url_advanced"><img alt="OCA/web" src="https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/web-17-0/web-17-0-web_widget_url_advanced"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/web&amp;target_branch=17.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
 <p>Extend URL widget features to ease customization of anchor’s text.</p>
-<p>By default, the URL widget will show the plain URL.
-You can specify an attribute to provide a static label too.</p>
-<p>With this module, you can use a field for link’s inner text using attribute
-‘text_field’. You can also add a prefix to the link using attribute
-‘prefix_name’.</p>
-<p>Until 13.0 this functionality was separated in modules ‘web_widget_url_advanced’
-and ‘web_widget_prefixed_url’</p>
+<p>By default, the URL widget will show the plain URL. You can specify an
+attribute to provide a static label too.</p>
+<p>With this module, you can use a field for link’s inner text using
+attribute ‘text_field’. You can also add a prefix to the link using
+attribute ‘prefix_name’.</p>
+<p>Until 13.0 this functionality was separated in modules
+‘web_widget_url_advanced’ and ‘web_widget_prefixed_url’</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -394,25 +393,22 @@ and ‘web_widget_prefixed_url’</p>
 </div>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#toc-entry-1">Usage</a></h1>
-<p>Use <cite>url</cite> widget as you do usually, then add an extra parameter <cite>text_field</cite>
-to indicate which field (present in the view already) must be used for the anchor text.</p>
+<p>Use url widget as you do usually, then add an extra parameter text_field
+to indicate which field (present in the view already) must be used for
+the anchor text.</p>
 <pre class="code xml literal-block">
 <span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;some_url&quot;</span><span class="w"> </span><span class="na">widget=</span><span class="s">&quot;url&quot;</span><span class="w"> </span><span class="na">text_field=</span><span class="s">&quot;another_field&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
 </pre>
-<p>M2O fields are supported: <cite>display_name</cite> is used automatically.</p>
-<p>For example, in the partner form,
-if you want to display the website link with partner’s name as anchor you can do:</p>
+<p>M2O fields are supported: display_name is used automatically.</p>
+<p>For example, in the partner form, if you want to display the website
+link with partner’s name as anchor you can do:</p>
 <pre class="code xml literal-block">
 <span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;website&quot;</span><span class="w"> </span><span class="na">widget=</span><span class="s">&quot;url&quot;</span><span class="w"> </span><span class="na">text_field=</span><span class="s">&quot;name&quot;</span><span class="w"> </span><span class="na">placeholder=</span><span class="s">&quot;e.g. www.odoo.com&quot;</span><span class="nt">/&gt;</span>
 </pre>
 <p>This is going to change the rendering from</p>
-<div class="figure">
-<img alt="https://raw.githubusercontent.com/OCA/web/15.0/web_widget_url_advanced/static/description/before.png" src="https://raw.githubusercontent.com/OCA/web/15.0/web_widget_url_advanced/static/description/before.png" />
-</div>
+<p><img alt="image1" src="https://raw.githubusercontent.com/OCA/web/17.0/web_widget_url_advanced/static/description/before.png" /></p>
 <p>to</p>
-<div class="figure">
-<img alt="https://raw.githubusercontent.com/OCA/web/15.0/web_widget_url_advanced/static/description/after.png" src="https://raw.githubusercontent.com/OCA/web/15.0/web_widget_url_advanced/static/description/after.png" />
-</div>
+<p><img alt="image2" src="https://raw.githubusercontent.com/OCA/web/17.0/web_widget_url_advanced/static/description/after.png" /></p>
 <p>Or user can add any hyperlink text using ‘prefix_name’ attribute</p>
 <pre class="code xml literal-block">
 <span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;skype_name&quot;</span><span class="w"> </span><span class="na">widget=</span><span class="s">&quot;url&quot;</span><span class="w"> </span><span class="err">'prefix_name':</span><span class="w"> </span><span class="err">'skype'</span><span class="nt">/&gt;</span>
@@ -433,7 +429,7 @@ if you want to display the website link with partner’s name as anchor you can 
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/web/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/OCA/web/issues/new?body=module:%20web_widget_url_advanced%0Aversion:%2015.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/OCA/web/issues/new?body=module:%20web_widget_url_advanced%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
@@ -465,7 +461,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
-<p>This module is part of the <a class="reference external" href="https://github.com/OCA/web/tree/15.0/web_widget_url_advanced">OCA/web</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/web/tree/17.0/web_widget_url_advanced">OCA/web</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
 </div>
 </div>
