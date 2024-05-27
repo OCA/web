@@ -8,10 +8,11 @@
 
 /*
 :Author: David Goodger (goodger@python.org)
-:Id: $Id: html4css1.css 8954 2022-01-20 10:10:25Z milde $
+:Id: $Id: html4css1.css 9511 2024-01-13 09:50:07Z milde $
 :Copyright: This stylesheet has been placed in the public domain.
 
 Default cascading style sheet for the HTML output of Docutils.
+Despite the name, some widely supported CSS2 features are used.
 
 See https://docutils.sourceforge.io/docs/howto/html-stylesheets.html for how to
 customize this style sheet.
@@ -274,7 +275,7 @@ pre.literal-block, pre.doctest-block, pre.math, pre.code {
   margin-left: 2em ;
   margin-right: 2em }
 
-pre.code .ln { color: grey; } /* line numbers */
+pre.code .ln { color: gray; } /* line numbers */
 pre.code, code { background-color: #eeeeee }
 pre.code .comment, code .comment { color: #5C6576 }
 pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
@@ -300,7 +301,7 @@ span.option {
 span.pre {
   white-space: pre }
 
-span.problematic {
+span.problematic, pre.problematic {
   color: red }
 
 span.section-subtitle {
@@ -381,12 +382,11 @@ attribute ‘prefix_name’.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><a class="reference internal" href="#usage" id="toc-entry-1">Usage</a></li>
-<li><a class="reference internal" href="#known-issues-roadmap" id="toc-entry-2">Known issues / Roadmap</a></li>
-<li><a class="reference internal" href="#bug-tracker" id="toc-entry-3">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="toc-entry-4">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="toc-entry-5">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="toc-entry-6">Contributors</a></li>
-<li><a class="reference internal" href="#maintainers" id="toc-entry-7">Maintainers</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="toc-entry-2">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="toc-entry-3">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="toc-entry-4">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="toc-entry-5">Contributors</a></li>
+<li><a class="reference internal" href="#maintainers" id="toc-entry-6">Maintainers</a></li>
 </ul>
 </li>
 </ul>
@@ -411,21 +411,15 @@ link with partner’s name as anchor you can do:</p>
 <p><img alt="image2" src="https://raw.githubusercontent.com/OCA/web/17.0/web_widget_url_advanced/static/description/after.png" /></p>
 <p>Or user can add any hyperlink text using ‘prefix_name’ attribute</p>
 <pre class="code xml literal-block">
-<span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;skype_name&quot;</span><span class="w"> </span><span class="na">widget=</span><span class="s">&quot;url&quot;</span><span class="w"> </span><span class="err">'prefix_name':</span><span class="w"> </span><span class="err">'skype'</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;skype_name&quot;</span><span class="w"> </span><span class="na">widget=</span><span class="s">&quot;url&quot;</span><span class="w"> </span><span class="na">prefix_name=</span><span class="s">&quot;skype&quot;</span><span class="nt">/&gt;</span>
 </pre>
 <p>both can be applied inside the options attribute too:</p>
 <pre class="code xml literal-block">
 <span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;skype_name&quot;</span><span class="w"> </span><span class="na">widget=</span><span class="s">&quot;url&quot;</span><span class="w"> </span><span class="na">options=</span><span class="s">&quot;{'prefix_name': 'skype'}&quot;</span><span class="nt">/&gt;</span>
 </pre>
 </div>
-<div class="section" id="known-issues-roadmap">
-<h1><a class="toc-backref" href="#toc-entry-2">Known issues / Roadmap</a></h1>
-<ul class="simple">
-<li><tt class="docutils literal">&lt;field <span class="pre">text_field=&quot;foo&quot;/&gt;</span></tt> is not supported in tree views.</li>
-</ul>
-</div>
 <div class="section" id="bug-tracker">
-<h1><a class="toc-backref" href="#toc-entry-3">Bug Tracker</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-2">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/web/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
@@ -433,15 +427,15 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1><a class="toc-backref" href="#toc-entry-4">Credits</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-3">Credits</a></h1>
 <div class="section" id="authors">
-<h2><a class="toc-backref" href="#toc-entry-5">Authors</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-4">Authors</a></h2>
 <ul class="simple">
 <li>Camptocamp</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h2><a class="toc-backref" href="#toc-entry-6">Contributors</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-5">Contributors</a></h2>
 <ul class="simple">
 <li>Simone Orsi &lt;<a class="reference external" href="mailto:simone.orsi&#64;camptocamp.com">simone.orsi&#64;camptocamp.com</a>&gt;</li>
 <li><a class="reference external" href="https://corporatehub.eu/">CorporateHub</a><ul>
@@ -452,12 +446,15 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <li>Swapnesh Shah &lt;<a class="reference external" href="mailto:s.shah.serpentcs&#64;gmail.com">s.shah.serpentcs&#64;gmail.com</a>&gt;</li>
 <li>Joan Sisquella &lt;<a class="reference external" href="mailto:joan.sisquella&#64;forgeflow.com">joan.sisquella&#64;forgeflow.com</a>&gt;</li>
 <li>Peerapong Supasompob &lt;<a class="reference external" href="mailto:peerapong.supasompob&#64;gmail.com">peerapong.supasompob&#64;gmail.com</a>&gt;</li>
+<li>Nedas Žilinskas &lt;<a class="reference external" href="mailto:nedas.zilinskas&#64;avoin.systems">nedas.zilinskas&#64;avoin.systems</a>&gt;</li>
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2><a class="toc-backref" href="#toc-entry-7">Maintainers</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-6">Maintainers</a></h2>
 <p>This module is maintained by the OCA.</p>
-<a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
+<a class="reference external image-reference" href="https://odoo-community.org">
+<img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" />
+</a>
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
