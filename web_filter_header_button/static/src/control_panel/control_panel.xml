@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates>
     <t t-inherit="web.Legacy.ControlPanel" t-inherit-mode="extension" owl="1">
-        <xpath expr="//div[hasclass('o_cp_buttons')]" position="after">
+        <xpath expr="//div[hasclass('o_cp_bottom')]" position="after">
             <t t-if="env.view.type !== 'form'">
                 <FilterButton />
             </t>
