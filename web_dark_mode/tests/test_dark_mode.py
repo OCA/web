@@ -14,6 +14,9 @@ class TestDarkMode(common.TransactionCase):
         cls.request = MagicMock(env=cls.env)
         odoo.http._request_stack.push(cls.request)
 
+
+    print("Merhaba ben Umut")
+
     def test_dark_mode_cookie(self):
         response = MagicMock()
 
