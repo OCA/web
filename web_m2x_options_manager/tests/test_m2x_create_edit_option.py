@@ -10,7 +10,7 @@ from odoo.tools.safe_eval import safe_eval
 
 class TestM2xCreateEditOption(TransactionCase):
     def setUp(self):
-        super(TestM2xCreateEditOption, self).setUp()
+        super().setUp()
         ref = self.env.ref
         # View to be used
         self.view = ref("web_m2x_options_manager.res_partner_demo_form_view")
