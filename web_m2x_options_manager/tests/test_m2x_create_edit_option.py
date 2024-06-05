@@ -10,7 +10,7 @@ from odoo.tools.safe_eval import safe_eval
 
 class TestM2xCreateEditOption(TransactionCase):
     def setUp(self):
-        super(TestM2xCreateEditOption, self).setUp()
+        super().setUp()
         ref = self.env.ref
         # View to be used
         self.view = ref("web_m2x_options_manager.res_partner_demo_form_view")
@@ -90,7 +90,7 @@ class TestM2xCreateEditOption(TransactionCase):
                 title_node.attrib.get("can_create"),
                 title_node.attrib.get("can_write"),
             ),
-            ("true", "true"),
+            ("True", "True"),
         )
         categ_node = form_doc.xpath("//field[@name='category_id']")[0]
         self.assertEqual(

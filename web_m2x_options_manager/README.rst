@@ -73,6 +73,7 @@ Contributors
    -  Silvio Gregorini
 
 -  Duong (Tran Quoc) <duongtq@trobz.com>
+-  Chau Le <chaulb@trobz.com>
 
 Maintainers
 -----------
