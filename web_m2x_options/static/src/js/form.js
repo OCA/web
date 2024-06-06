@@ -183,10 +183,11 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                         values.push({
                             label: _t("Search More..."),
                             action: function () {
-                                // limit = 80 for improving performance, similar
-                                // to Odoo implementation here:
-                                // https://github.com/odoo/odoo/commit/8c3cdce539d87775b59b3f2d5ceb433f995821bf
-                                self._rpc({
+                                if (search_val) {
+                                    // limit = 80 for improving performance, similar
+                                    // to Odoo implementation here:
+                                    // https://github.com/odoo/odoo/commit/8c3cdce539d87775b59b3f2d5ceb433f995821bf
+                                    self._rpc({
                                         model: self.field.relation,
                                         method: 'name_search',
                                         kwargs: {
@@ -198,6 +199,9 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
                                         },
                                     })
                                     .then(self._searchCreatePopup.bind(self, "search"));
+                                } else {
+                                    self._searchCreatePopup("search");
+                                }
                             },
                             classname: 'o_m2o_dropdown_option',
                         });
