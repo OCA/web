@@ -1,0 +1,43 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_view_rtree
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_view_rtree
+#: model:ir.model,name:web_view_rtree.model_ir_actions_act_window_view
+msgid "Action Window View"
+msgstr ""
+
+#. module: web_view_rtree
+#: model:ir.model.fields.selection,name:web_view_rtree.selection__ir_actions_act_window_view__view_mode__rtree
+#: model:ir.model.fields.selection,name:web_view_rtree.selection__ir_ui_view__type__rtree
+msgid "RTree"
+msgstr ""
+
+#. module: web_view_rtree
+#. odoo-javascript
+#: code:addons/web_view_rtree/static/src/views/rtree/rtree_view.esm.js:0
+#, python-format
+msgid "Tree"
+msgstr ""
+
+#. module: web_view_rtree
+#: model:ir.model,name:web_view_rtree.model_ir_ui_view
+msgid "View"
+msgstr ""
+
+#. module: web_view_rtree
+#: model:ir.model.fields,field_description:web_view_rtree.field_ir_actions_act_window_view__view_mode
+#: model:ir.model.fields,field_description:web_view_rtree.field_ir_ui_view__type
+msgid "View Type"
+msgstr ""

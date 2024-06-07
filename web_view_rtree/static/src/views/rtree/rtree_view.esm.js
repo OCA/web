@@ -4,13 +4,14 @@ import {RTreeArchParser} from "./rtree_arch_parser.esm";
 import {RTreeController} from "./rtree_controller.esm";
 import {RTreeModel} from "./rtree_model.esm";
 import {RTreeRenderer} from "./rtree_renderer.esm";
+import {_lt} from "@web/core/l10n/translation";
 import {listView} from "@web/views/list/list_view";
 import {registry} from "@web/core/registry";
 
 export const rTreeView = {
     ...listView,
     type: "rtree",
-    display_name: "RTree",
+    display_name: _lt("Tree"),
     // FIXME: change this to fa-list-tree as soon as font awesome is updated
     // to version 6+.
     icon: "fa fa-sitemap",
