@@ -2,6 +2,7 @@
 
 import {Component, onWillUpdateProps} from "@odoo/owl";
 import {registry} from "@web/core/registry";
+const fieldRegistry = registry.category("fields");
 
 export class X2Many2DMatrixRenderer extends Component {
     setup() {
@@ -9,6 +10,7 @@ export class X2Many2DMatrixRenderer extends Component {
         this.columns = this._getColumns();
         this.rows = this._getRows();
         this.matrix = this._getMatrix();
+        this.ValueFieldType = this._getValueFieldType();
 
         onWillUpdateProps((newProps) => {
             this.columns = this._getColumns(newProps.list.records);
@@ -90,30 +92,48 @@ export class X2Many2DMatrixRenderer extends Component {
     }
 
     _getValueFieldComponent() {
-        const field = this.list.activeFields[this.matrixFields.value];
+        const field = this.list.fields[this.matrixFields.value];
         if (!field.widget) {
-            return this.list.activeFields[this.matrixFields.value].FieldComponent;
+            return fieldRegistry.get(field.type).component;
         }
-        return registry.category("fields").get(field.widget);
+        return fieldRegistry.get(field.widget).component;
+    }
+
+    _getValueFieldType() {
+        const field = this.list.fields[this.matrixFields.value];
+        return field.type;
     }
 
     _aggregateRow(row) {
         const y = this.rows.findIndex((r) => r.value === row);
-        return this.matrix[y].map((r) => r.value).reduce((aggr, x) => aggr + x);
+        const total = this.matrix[y].map((r) => r.value).reduce((aggr, x) => aggr + x);
+        if (this.ValueFieldType === "integer") {
+            return total;
+        }
+        return Number(total).toFixed(2);
     }
 
     _aggregateColumn(column) {
         const x = this.columns.findIndex((c) => c.value === column);
-        return this.matrix
+
+        const total = this.matrix
             .map((r) => r[x])
             .map((r) => r.value)
             .reduce((aggr, y) => aggr + y);
+        if (this.ValueFieldType === "integer") {
+            return total;
+        }
+        return Number(total).toFixed(2);
     }
 
     _aggregateAll() {
-        return this.matrix
+        const total = this.matrix
             .map((r) => r.map((x) => x.value).reduce((aggr, x) => aggr + x))
             .reduce((aggr, y) => aggr + y);
+        if (this.ValueFieldType === "integer") {
+            return total;
+        }
+        return Number(total).toFixed(2);
     }
 
     _canAggregate() {
@@ -122,18 +142,9 @@ export class X2Many2DMatrixRenderer extends Component {
         );
     }
 
-    update(x, y, value) {
-        this.matrix[y][x].value = value;
-        const xFieldValue = this.columns[x].value;
-        const yFieldValue = this.rows[y].value;
-
-        this.props.onUpdate(xFieldValue, yFieldValue, value);
-    }
-
     getValueFieldProps(column, row) {
         const x = this.columns.findIndex((c) => c.value === column);
         const y = this.rows.findIndex((r) => r.value === row);
-        const {props, propsFromAttrs} = this.list.activeFields[this.matrixFields.value];
         let record = null;
         let value = null;
         if (
@@ -144,18 +155,9 @@ export class X2Many2DMatrixRenderer extends Component {
             record = this.matrix[y][x].records[0];
             value = this.matrix[y][x].value;
         }
-        if (this.list.fields[this.matrixFields.value].type === "boolean") {
-            record.bypass_readonly = true;
-        }
-        value =
-            !this._canAggregate() && record
-                ? record.data[this.matrixFields.value]
-                : value;
+        value = record ? record.data[this.matrixFields.value] : value;
+        this.matrix[y][x].value = value;
         const result = {
-            ...props,
-            ...propsFromAttrs,
-            value: value,
-            update: (val) => this.update(x, y, val),
             readonly: this.props.readonly,
             record: record,
             name: this.matrixFields.value,
@@ -169,11 +171,9 @@ export class X2Many2DMatrixRenderer extends Component {
 
 X2Many2DMatrixRenderer.template = "web_widget_x2many_2d_matrix.X2Many2DMatrixRenderer";
 X2Many2DMatrixRenderer.props = {
-    list: Object,
-    matrixFields: Object,
-    setDirty: Function,
-    onUpdate: Function,
-    readonly: Boolean,
-    showRowTotals: Boolean,
-    showColumnTotals: Boolean,
+    list: {type: Object, optional: true},
+    matrixFields: {type: Object, optional: true},
+    readonly: {type: Boolean, optional: true},
+    showRowTotals: {type: Boolean, optional: true},
+    showColumnTotals: {type: Boolean, optional: true},
 };
