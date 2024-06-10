@@ -6,6 +6,10 @@ $x2many_2d_matrix_max_height: 450px;
         overflow-y: auto;
     }
 
+    .o_input {
+        padding: 1px 0px;
+    }
+
     .table {
         > thead > tr > th {
             white-space: pre-line;
@@ -31,18 +35,23 @@ $x2many_2d_matrix_max_height: 450px;
                 }
 
                 > td {
-                    text-align: left;
+                    text-align: right;
+
+                    .o_field_many2one_selection {
+                        text-align: left;
+                    }
 
                     &:first-child {
                         position: sticky;
                         left: 0;
+                        text-align: left;
                         border-right-width: 1px;
                         border-right-color: $gray-300;
                         border-right-style: solid;
                         box-shadow: -1px 5px 10px $gray-300;
                     }
                     &.row-total {
-                        padding: 0.75rem;
+                        padding: 0.5rem 0.75rem;
                         font-weight: bold;
                         position: sticky;
                         right: 0;
@@ -56,17 +65,18 @@ $x2many_2d_matrix_max_height: 450px;
         }
 
         > tfoot > tr > th {
-            padding: 0.75rem;
-            text-align: left;
+            text-align: right;
             background-color: $o-list-footer-bg-color;
             position: sticky;
             bottom: 0;
 
             &.col-total {
+                padding: 0.75rem;
                 right: 0;
                 border-left-width: 1px;
                 border-left-color: $gray-300;
                 border-left-style: solid;
+                background-color: white;
             }
         }
     }

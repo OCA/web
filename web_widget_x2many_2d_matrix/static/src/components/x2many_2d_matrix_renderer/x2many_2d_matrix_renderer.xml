@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates>
-    <t t-name="web_widget_x2many_2d_matrix.X2Many2DMatrixRenderer" owl="1">
+    <t t-name="web_widget_x2many_2d_matrix.X2Many2DMatrixRenderer">
         <table
             class="o_list_table table table-responsive table-sm table-hover position-relative mb-0 o_list_table_ungrouped table-striped"
             t-if="rows.length > 0"
@@ -28,17 +28,14 @@
                         <t
                             t-component="ValueFieldComponent"
                             t-props="getValueFieldProps(column.value, row.value)"
+                            record="getValueFieldProps(column.value, row.value).record"
                         />
                     </td>
                     <td
                         t-if="props.showRowTotals and _canAggregate()"
                         class="row-total"
                     >
-                        <t
-                            t-component="ValueFieldComponent"
-                            readonly="true"
-                            value="_aggregateRow(row.value)"
-                        />
+                        <span t-esc="_aggregateRow(row.value)" />
                     </td>
                 </tr>
             </tbody>
@@ -46,18 +43,10 @@
                 <tr t-if="props.showColumnTotals and _canAggregate()">
                     <th />
                     <th t-foreach="columns" t-as="column" t-key="column.value">
-                        <t
-                            t-component="ValueFieldComponent"
-                            readonly="true"
-                            value="_aggregateColumn(column.value)"
-                        />
+                        <span t-esc="_aggregateColumn(column.value)" />
                     </th>
                     <th t-if="props.showRowTotals" class="col-total">
-                        <t
-                            t-component="ValueFieldComponent"
-                            readonly="true"
-                            value="_aggregateAll()"
-                        />
+                        <span t-esc="_aggregateAll()" />
                     </th>
                 </tr>
             </tfoot>
