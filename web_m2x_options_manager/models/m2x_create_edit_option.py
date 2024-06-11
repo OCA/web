@@ -94,17 +94,17 @@ class M2xCreateEditOption(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         # Clear cache to avoid misbehavior from cached :meth:`_get()`
-        type(self)._get.clear_cache(self.browse())
+        self.env.registry.clear_cache()
         return super().create(vals_list)
 
     def write(self, vals):
         # Clear cache to avoid misbehavior from cached :meth:`_get()`
-        type(self)._get.clear_cache(self.browse())
+        self.env.registry.clear_cache()
         return super().write(vals)
 
     def unlink(self):
         # Clear cache to avoid misbehavior from cached :meth:`_get()`
-        type(self)._get.clear_cache(self.browse())
+        self.env.registry.clear_cache()
         return super().unlink()
 
     @api.depends("model_id")

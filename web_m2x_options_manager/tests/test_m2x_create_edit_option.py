@@ -75,7 +75,7 @@ class TestM2xCreateEditOption(TransactionCase):
             )
 
     def test_apply_options(self):
-        res = self.env["res.partner"].fields_view_get(self.view.id)
+        res = self.env["res.partner"].get_view(self.view.id)
 
         # Check fields on res.partner form view
         form_arch = res["arch"]
@@ -90,7 +90,7 @@ class TestM2xCreateEditOption(TransactionCase):
                 title_node.attrib.get("can_create"),
                 title_node.attrib.get("can_write"),
             ),
-            ("true", "true"),
+            ("True", "True"),
         )
         categ_node = form_doc.xpath("//field[@name='category_id']")[0]
         self.assertEqual(
@@ -102,11 +102,11 @@ class TestM2xCreateEditOption(TransactionCase):
                 categ_node.attrib.get("can_create"),
                 categ_node.attrib.get("can_write"),
             ),
-            ("true", "true"),
+            ("True", "True"),
         )
 
         # Check fields on res.users tree view (contained in ``user_ids`` field)
-        tree_arch = res["fields"]["user_ids"]["views"]["tree"]["arch"]
+        tree_arch = res["arch"]
         tree_doc = etree.XML(tree_arch)
         company_node = tree_doc.xpath("//field[@name='company_id']")[0]
         self.assertEqual(
@@ -123,11 +123,14 @@ class TestM2xCreateEditOption(TransactionCase):
 
         # Update options, check that node has been updated too
         self.title_opt.option_create_edit = "force_false"
-        res = self.env["res.partner"].fields_view_get(self.view.id)
+        res = self.env["res.partner"].get_view(self.view.id)
         form_arch = res["arch"]
         form_doc = etree.XML(form_arch)
         title_node = form_doc.xpath("//field[@name='title']")[0]
+        processed_arch = self.view.postprocess_and_fields(title_node)
+        processed_doc = etree.XML(processed_arch[0])
+        processed_title_node = processed_doc.xpath("//field[@name='title']")[0]
         self.assertEqual(
-            safe_eval(title_node.attrib.get("options"), nocopy=True),
+            safe_eval(processed_title_node.attrib.get("options"), nocopy=True),
             {"create": True, "create_edit": False},
         )
