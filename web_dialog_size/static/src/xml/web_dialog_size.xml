@@ -3,9 +3,6 @@
     <!-- This is for old Dialog template.
     Because Odoo haven't done every template to OWL. -->
     <t t-extend="web.DialogWidget">
-        <t t-jquery="button.btn-close" t-operation="inner">
-            <i class="fa fa-close" />
-        </t>
         <t t-jquery="button.btn-close" t-operation="before">
             <button type="button" class="dialog_button_extend btn btn-secondary">
                 <i class="fa fa-expand" />
