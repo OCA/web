@@ -24,6 +24,8 @@ odoo.define('web_widget_open_tab.FieldOpenTab', function(require) {
             var searchParams = new URLSearchParams(url.split('#')[1]);
             searchParams.set('view_type', 'form');
             searchParams.set('id', this.res_id);
+            searchParams.delete('menu_id')
+            searchParams.delete('action')
             if (! searchParams.has('model')) {
                 searchParams.set('model', this.model)
             }
