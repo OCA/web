@@ -10,7 +10,7 @@
             >
                 <span
                     t-att-data-field="field_map[field_uom_qty]"
-                    t-attf-data-esc="'{{floatFixed(field_map.product_uom_qty)}}' + ' x ' + {{field_map.product_uom}}.data.display_name"
+                    t-attf-data-esc="str(floatFixed('{{field_map.product_uom_qty}}')) + ' x ' + obj.{{field_map.product_uom}}.data.display_name"
                     class="badge badge-primary mw-100 text-truncate overflow-hidden d-inline-block float-left font-weight-bold rounded-0 m-0 p-2"
                 />
             </t>
