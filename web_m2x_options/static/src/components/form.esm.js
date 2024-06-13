@@ -16,6 +16,7 @@ import {X2ManyField} from "@web/views/fields/x2many/x2many_field";
 import {isX2Many} from "@web/views/utils";
 import {is_option_set} from "@web_m2x_options/components/relational_utils.esm";
 import {patch} from "@web/core/utils/patch";
+import {session} from "@web/session";
 import {sprintf} from "@web/core/utils/strings";
 import {useService} from "@web/core/utils/hooks";
 
@@ -24,16 +25,16 @@ const {Component} = owl;
 /**
  *  Patch Many2ManyTagsField
  **/
-patch(Many2ManyTagsField.prototype, "web_m2x_options.Many2ManyTagsField", {
+patch(Many2ManyTagsField.prototype, {
     setup() {
-        this._super(...arguments);
+        super.setup(...arguments);
         this.actionService = useService("action");
     },
     /**
      * @override
      */
     getTagProps(record) {
-        const props = this._super(...arguments);
+        const props = super.getTagProps(...arguments);
         props.onClick = (ev) => this.onMany2ManyBadgeClick(ev, record);
         return props;
     },
@@ -102,23 +103,19 @@ Many2ManyTagsField.extractProps = ({attrs, field}) => {
 /**
  *  Many2ManyTagsFieldColorEditable
  **/
-patch(
-    Many2ManyTagsFieldColorEditable.prototype,
-    "web_m2x_options.Many2ManyTagsFieldColorEditable",
-    {
-        async onBadgeClick(event, record) {
-            if (this.props.canEditColor && !this.props.open) {
-                this._super(...arguments);
-            }
-            if (this.props.open) {
-                Many2ManyTagsField.prototype.onMany2ManyBadgeClick.bind(this)(
-                    event,
-                    record
-                );
-            }
-        },
-    }
-);
+patch(Many2ManyTagsFieldColorEditable.prototype, {
+    async onBadgeClick(event, record) {
+        if (this.props.canEditColor && !this.props.open) {
+            super.onBadgeClick(...arguments);
+        }
+        if (this.props.open) {
+            Many2ManyTagsField.prototype.onMany2ManyBadgeClick.bind(this)(
+                event,
+                record
+            );
+        }
+    },
+});
 
 Many2ManyTagsFieldColorEditable.props = {
     ...Many2ManyTagsFieldColorEditable.props,
@@ -154,16 +151,16 @@ CreateConfirmationDialog.template =
  *  Many2OneField
  **/
 
-patch(Many2OneField.prototype, "web_m2x_options.Many2OneField", {
+patch(Many2OneField.prototype, {
     setup() {
-        this._super(...arguments);
-        this.ir_options = Component.env.session.web_m2x_options;
+        super.setup(...arguments);
+        this.ir_options = session.web_m2x_options;
     },
     /**
      * @override
      */
     get Many2XAutocompleteProps() {
-        const props = this._super(...arguments);
+        const props = super.Many2XAutocompleteProps;
         return {
             ...props,
             searchLimit: this.props.searchLimit,
@@ -303,7 +300,7 @@ try {
 /**
  *  X2ManyField
  **/
-patch(X2ManyField.prototype, "web_m2x_options.X2ManyField", {
+patch(X2ManyField.prototype, {
     /**
      * @override
      */
@@ -319,7 +316,7 @@ patch(X2ManyField.prototype, "web_m2x_options.X2ManyField", {
             );
             return self.env.model.actionService.doAction(action);
         }
-        return this._super.apply(this, arguments);
+        return super.apply(this, arguments);
     },
 });
 
@@ -339,13 +336,13 @@ X2ManyField.props = {
 /**
  *  FormController
  **/
-patch(FormController.prototype, "web_m2x_options.FormController", {
+patch(FormController.prototype, {
     /**
      * @override
      */
     setup() {
         var self = this;
-        this._super(...arguments);
+        super.setup(...arguments);
 
         /**  Due to problem of 2 onWillStart in native web core
          * (see: https://github.com/odoo/odoo/blob/16.0/addons/web/static/src/views/model.js#L142)
@@ -362,7 +359,7 @@ patch(FormController.prototype, "web_m2x_options.FormController", {
      * add more method to add subview limit on formview
      */
     async _setSubViewLimit() {
-        const ir_options = Component.env.session.web_m2x_options;
+        const ir_options = session.web_m2x_options;
 
         const activeFields = this.archInfo.activeFields,
             fields = this.props.fields,

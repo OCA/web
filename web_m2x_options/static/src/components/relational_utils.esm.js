@@ -2,8 +2,14 @@
 
 import {Many2XAutocomplete} from "@web/views/fields/relational_utils";
 import {patch} from "@web/core/utils/patch";
+<<<<<<< HEAD
 import {sprintf} from "@web/core/utils/strings";
 const {Component} = owl;
+import { session } from "@web/session";
+=======
+import {session} from "@web/session";
+import {sprintf} from "@web/core/utils/strings";
+>>>>>>> 8a8dac5af ([UPD] web_m2x_options: applying style fixes)
 
 export function is_option_set(option) {
     if (_.isUndefined(option)) return false;
@@ -12,10 +18,10 @@ export function is_option_set(option) {
     return false;
 }
 
-patch(Many2XAutocomplete.prototype, "web_m2x_options.Many2XAutocomplete", {
+patch(Many2XAutocomplete.prototype, {
     setup() {
-        this._super(...arguments);
-        this.ir_options = Component.env.session.web_m2x_options;
+        super.setup(...arguments);
+        this.ir_options = session.web_m2x_options;
     },
 
     async loadOptionsSource(request) {
