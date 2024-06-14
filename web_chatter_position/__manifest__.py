@@ -8,6 +8,7 @@
     "author": "Hynsys Technologies, Camptocamp, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
     "license": "LGPL-3",
+    "license": "LGPL-3",
     "category": "Extra Tools",
     "depends": ["web", "mail"],
     "data": ["views/res_users.xml", "views/web.xml"],
