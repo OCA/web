@@ -70,6 +70,7 @@ addon | version | maintainers | summary
 [web_widget_image_webcam](web_widget_image_webcam/) | 16.0.1.0.0 |  | Allows to take image with WebCam
 [web_widget_mpld3_chart](web_widget_mpld3_chart/) | 16.0.1.0.0 | [![JordiBForgeFlow](https://github.com/JordiBForgeFlow.png?size=30px)](https://github.com/JordiBForgeFlow) [![ChrisOForgeFlow](https://github.com/ChrisOForgeFlow.png?size=30px)](https://github.com/ChrisOForgeFlow) | This widget allows to display charts using MPLD3 library.
 [web_widget_numeric_step](web_widget_numeric_step/) | 16.0.1.1.3 | [![rafaelbn](https://github.com/rafaelbn.png?size=30px)](https://github.com/rafaelbn) [![yajo](https://github.com/yajo.png?size=30px)](https://github.com/yajo) | Web Widget Numeric Step
+[web_widget_one2many_tree_line_duplicate](web_widget_one2many_tree_line_duplicate/) | 16.0.1.0.0 |  | Web Widget One2many Tree Line Duplicate
 [web_widget_open_tab](web_widget_open_tab/) | 16.0.2.0.0 |  | Allow to open record from trees on new tab from tree views
 [web_widget_pattern](web_widget_pattern/) | 16.0.1.0.0 | [![hbrunn](https://github.com/hbrunn.png?size=30px)](https://github.com/hbrunn) | Allows to define a regex for validating input on the backend
 [web_widget_pattern_partner_autocomplete](web_widget_pattern_partner_autocomplete/) | 16.0.1.0.0 | [![hbrunn](https://github.com/hbrunn.png?size=30px)](https://github.com/hbrunn) | Allows to define a regex for validating input on the backend
