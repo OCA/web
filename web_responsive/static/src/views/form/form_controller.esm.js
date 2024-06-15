@@ -9,6 +9,7 @@ import {FormController} from "@web/views/form/form_controller";
 patch(FormController.prototype, "web_responsive.FormController", {
     setup() {
         this._super();
-        this.hasAttachmentViewerInArch = false;
+        this.hasAttachmentViewerInArch =
+            this.hasAttachmentViewerInArch && odoo.allow_attachment_preview == "yes";
     },
 });

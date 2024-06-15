@@ -18,4 +18,14 @@
             />
         </xpath>
     </template>
+
+     <template id="webclient_bootstrap" inherit_id="web.webclient_bootstrap">
+        <t t-set="head_web" position="inside">
+            <script type="text/javascript">
+                odoo.allow_attachment_preview = "<t
+                    t-out="request.env.user.allow_attachment_preview"
+                />";
+            </script>
+        </t>
+    </template>
 </odoo>
