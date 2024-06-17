@@ -82,6 +82,6 @@ class ResCompany(models.Model):
             sha = hashlib.sha512(str(company.write_date).encode("utf-8")).hexdigest()[
                 :7
             ]
-            return f"/web/image/{self._name}/{company_id}/favicon?unique={sha}"
+            return f"/web/image/{self._name}/{company.id}/favicon?unique={sha}"
         else:
             return False
