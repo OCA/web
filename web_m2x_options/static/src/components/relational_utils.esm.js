@@ -2,14 +2,8 @@
 
 import {Many2XAutocomplete} from "@web/views/fields/relational_utils";
 import {patch} from "@web/core/utils/patch";
-<<<<<<< HEAD
-import {sprintf} from "@web/core/utils/strings";
-const {Component} = owl;
-import { session } from "@web/session";
-=======
 import {session} from "@web/session";
 import {sprintf} from "@web/core/utils/strings";
->>>>>>> 8a8dac5af ([UPD] web_m2x_options: applying style fixes)
 
 export function is_option_set(option) {
     if (_.isUndefined(option)) return false;
@@ -56,6 +50,10 @@ patch(Many2XAutocomplete.prototype, {
         });
         const records = await this.lastProm;
 
+        return await this.fillOptions(request, records);
+    },
+
+    async fillOptions(request, records) {
         var options = records.map((result) => ({
             value: result[0],
             id: result[0],
@@ -69,57 +67,14 @@ patch(Many2XAutocomplete.prototype, {
 
         // Search result value colors
         if (this.colors && this.field_color) {
-            var value_ids = options.map((result) => result.value);
-            const objects = await this.orm.call(
-                this.props.resModel,
-                "search_read",
-                [],
-                {
-                    domain: [["id", "in", value_ids]],
-                    fields: [this.field_color],
-                }
-            );
-            for (var index in objects) {
-                for (var index_value in options) {
-                    if (options[index_value].id === objects[index].id) {
-                        // Find value in values by comparing ids
-                        var option = options[index_value];
-                        // Find color with field value as key
-                        var color =
-                            this.colors[objects[index][this.field_color]] || "black";
-                        option.style = "color:" + color;
-                        break;
-                    }
-                }
-            }
+            options = await this.colorizeOptions(options);
         }
 
         // Quick create
         // Note: Create should be before `search_more` (reserve native order)
         // One more reason: when calling `onInputBlur`, native select the first option (activeSourceOption)
         // which triggers m2o_dialog if m2o_dialog=true
-        var create_enabled =
-            this.props.quickCreate && !this.props.nodeOptions.no_create;
-
-        var raw_result = _.map(records, function (x) {
-            return x[1];
-        });
-        var quick_create = is_option_set(this.props.nodeOptions.create),
-            quick_create_undef = _.isUndefined(this.props.nodeOptions.create),
-            m2x_create_undef = _.isUndefined(this.ir_options["web_m2x_options.create"]),
-            m2x_create = is_option_set(this.ir_options["web_m2x_options.create"]);
-        var show_create =
-            (!this.props.nodeOptions && (m2x_create_undef || m2x_create)) ||
-            (this.props.nodeOptions &&
-                (quick_create ||
-                    (quick_create_undef && (m2x_create_undef || m2x_create))));
-        if (
-            create_enabled &&
-            !this.props.nodeOptions.no_quick_create &&
-            request.length > 0 &&
-            !_.contains(raw_result, request) &&
-            show_create
-        ) {
+        if (this.canCreate(request, records)) {
             options.push({
                 label: sprintf(this.env._t(`Create "%s"`), request),
                 classList: "o_m2o_dropdown_option o_m2o_dropdown_option_create",
@@ -135,22 +90,7 @@ patch(Many2XAutocomplete.prototype, {
         }
 
         // Search more...
-        // Resolution order:
-        // 1- check if "search_more" is set locally in node's options
-        // 2- if set locally, apply its value
-        // 3- if not set locally, check if it's set globally via ir.config_parameter
-        // 4- if set globally, apply its value
-        // 5- if not set globally either, check if returned values are more than node's limit
-        var search_more = false;
-        if (!_.isUndefined(this.props.nodeOptions.search_more)) {
-            search_more = is_option_set(this.props.nodeOptions.search_more);
-        } else if (!_.isUndefined(this.ir_options["web_m2x_options.search_more"])) {
-            search_more = is_option_set(this.ir_options["web_m2x_options.search_more"]);
-        } else {
-            search_more =
-                !this.props.noSearchMore && this.props.searchLimit < records.length;
-        }
-        if (search_more) {
+        if (this.shouldSearchMore(records.length)) {
             options.push({
                 label: this.env._t("Search More..."),
                 action: this.onSearchMore.bind(this, request),
@@ -159,14 +99,10 @@ patch(Many2XAutocomplete.prototype, {
         }
 
         // Create and Edit
-        const canCreateEdit =
-            "createEdit" in this.activeActions
-                ? this.activeActions.createEdit
-                : this.activeActions.create;
         if (
             !request.length &&
             !this.props.value &&
-            (this.props.quickCreate || canCreateEdit)
+            (this.props.quickCreate || this.isCreateEditEnabled())
         ) {
             options.push({
                 label: this.env._t("Start typing..."),
@@ -176,30 +112,7 @@ patch(Many2XAutocomplete.prototype, {
         }
 
         // Create and edit ...
-        var create_edit =
-                is_option_set(this.props.nodeOptions.create) ||
-                is_option_set(this.props.nodeOptions.create_edit),
-            create_edit_undef =
-                _.isUndefined(this.props.nodeOptions.create) &&
-                _.isUndefined(this.props.nodeOptions.create_edit),
-            m2x_create_edit_undef = _.isUndefined(
-                this.ir_options["web_m2x_options.create_edit"]
-            ),
-            m2x_create_edit = is_option_set(
-                this.ir_options["web_m2x_options.create_edit"]
-            );
-        var show_create_edit =
-            (!this.props.nodeOptions && (m2x_create_edit_undef || m2x_create_edit)) ||
-            (this.props.nodeOptions &&
-                (create_edit ||
-                    (create_edit_undef && (m2x_create_edit_undef || m2x_create_edit))));
-        if (
-            create_enabled &&
-            !this.props.nodeOptions.no_create_edit &&
-            show_create_edit &&
-            request.length &&
-            canCreateEdit
-        ) {
+        if (this.canCreateEdit(request.length)) {
             const context = this.getCreationContext(request);
             options.push({
                 label: this.env._t("Create and edit..."),
@@ -218,6 +131,108 @@ patch(Many2XAutocomplete.prototype, {
         }
 
         return options;
+    },
+
+    async colorizeOptions(options) {
+        var value_ids = options.map((result) => result.value);
+        const objects = await this.orm.call(this.props.resModel, "search_read", [], {
+            domain: [["id", "in", value_ids]],
+            fields: [this.field_color],
+        });
+        for (var index in objects) {
+            for (var index_value in options) {
+                if (options[index_value].id === objects[index].id) {
+                    // Find value in values by comparing ids
+                    var option = options[index_value];
+                    // Find color with field value as key
+                    var color =
+                        this.colors[objects[index][this.field_color]] || "black";
+                    option.style = "color:" + color;
+                    break;
+                }
+            }
+        }
+        return options;
+    },
+
+    isCreateEnabled() {
+        return this.props.quickCreate && !this.props.nodeOptions.no_create;
+    },
+
+    isCreateEditEnabled() {
+        return "createEdit" in this.activeActions
+            ? this.activeActions.createEdit
+            : this.activeActions.create;
+    },
+
+    canCreate(request, records) {
+        if (!this.isCreateEnabled()) {
+            return false;
+        }
+
+        var raw_result = _.map(records, function (x) {
+            return x[1];
+        });
+        var quick_create = is_option_set(this.props.nodeOptions.create),
+            quick_create_undef = _.isUndefined(this.props.nodeOptions.create),
+            m2x_create_undef = _.isUndefined(this.ir_options["web_m2x_options.create"]),
+            m2x_create = is_option_set(this.ir_options["web_m2x_options.create"]);
+        var show_create =
+            (!this.props.nodeOptions && (m2x_create_undef || m2x_create)) ||
+            (this.props.nodeOptions &&
+                (quick_create ||
+                    (quick_create_undef && (m2x_create_undef || m2x_create))));
+        return (
+            !this.props.nodeOptions.no_quick_create &&
+            request.length > 0 &&
+            !_.contains(raw_result, request) &&
+            show_create
+        );
+    },
+
+    canCreateEdit(request_length) {
+        var create_edit =
+                is_option_set(this.props.nodeOptions.create) ||
+                is_option_set(this.props.nodeOptions.create_edit),
+            create_edit_undef =
+                _.isUndefined(this.props.nodeOptions.create) &&
+                _.isUndefined(this.props.nodeOptions.create_edit),
+            m2x_create_edit_undef = _.isUndefined(
+                this.ir_options["web_m2x_options.create_edit"]
+            ),
+            m2x_create_edit = is_option_set(
+                this.ir_options["web_m2x_options.create_edit"]
+            );
+        var show_create_edit =
+            (!this.props.nodeOptions && (m2x_create_edit_undef || m2x_create_edit)) ||
+            (this.props.nodeOptions &&
+                (create_edit ||
+                    (create_edit_undef && (m2x_create_edit_undef || m2x_create_edit))));
+        return (
+            this.isCreateEnabled() &&
+            !this.props.nodeOptions.no_create_edit &&
+            show_create_edit &&
+            request_length &&
+            this.isCreateEditEnabled()
+        );
+    },
+
+    // Search more...
+    // Resolution order:
+    // 1- check if "search_more" is set locally in node's options
+    // 2- if set locally, apply its value
+    // 3- if not set locally, check if it's set globally via ir.config_parameter
+    // 4- if set globally, apply its value
+    // 5- if not set globally either, check if returned values are more than node's limit
+    shouldSearchMore(records_length) {
+        if (!_.isUndefined(this.props.nodeOptions.search_more)) {
+            return is_option_set(this.props.nodeOptions.search_more);
+        }
+        if (!_.isUndefined(this.ir_options["web_m2x_options.search_more"])) {
+            return is_option_set(this.ir_options["web_m2x_options.search_more"]);
+        }
+
+        return !this.props.noSearchMore && this.props.searchLimit < records_length;
     },
 });
 
