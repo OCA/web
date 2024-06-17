@@ -266,38 +266,6 @@ Many2OneAvatarField.props = {
 };
 
 /**
- * FIXME: find better way to extend props in Many2OneField
- * Override mailing_m2o_filter
- * Since extracted/added props: nodeOptions and searchMore into Many2OneField props
- * and this component inherited props from Many2OneField
- * So, must override props here to avoid constraint validateProps (props schema) in owl core
- * This component is in module mass_mailing as optional module,
- * So need to import dynamic way
- */
-try {
-    (async () => {
-        // Make sure component mailing_m2o_filter in mass mailing module loaded
-        const installed_mass_mailing = await odoo.ready(
-            "@mass_mailing/js/mailing_m2o_filter"
-        );
-        if (installed_mass_mailing) {
-            const {FieldMany2OneMailingFilter} = await odoo.runtimeImport(
-                "@mass_mailing/js/mailing_m2o_filter"
-            );
-            FieldMany2OneMailingFilter.props = {
-                ...FieldMany2OneMailingFilter.props,
-                searchMore: {type: Boolean, optional: true},
-                nodeOptions: {type: Object, optional: true},
-            };
-        }
-    })();
-} catch {
-    console.log(
-        "Ignore overriding props of component mailing_m2o_filter since the module is not installed"
-    );
-}
-
-/**
  *  X2ManyField
  **/
 patch(X2ManyField.prototype, {
