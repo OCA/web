@@ -7,7 +7,7 @@ from odoo.tests import common
 class TestIrConfigParameter(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(TestIrConfigParameter, cls).setUpClass()
+        super().setUpClass()
         cls.env["ir.config_parameter"].set_param("web_m2x_options.limit", 10)
         cls.env["ir.config_parameter"].set_param("web_m2x_options.create_edit", "True")
         cls.env["ir.config_parameter"].set_param("web_m2x_options.create", "True")
