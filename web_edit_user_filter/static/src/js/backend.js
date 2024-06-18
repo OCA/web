@@ -143,6 +143,19 @@ odoo.define("web_edit_user_filter/static/src/js/backend.js", function (require) 
                     });
                 }
             }
+            if (facet_type == "field" && selectedFacet.length) {
+                for (let i = 0; i < selectedFacet.length; i++) {
+                    for (const [key, value] of Object.entries(selectedFacet[i])) {
+                        if (key === "autoCompleteValues") {
+                            const new_description = [];
+                            for (const [, desc] of Object.entries(value)) {
+                                new_description.push(desc.label);
+                            }
+                            selectedFacet[i].description = new_description;
+                        }
+                    }
+                }
+            }
             var $facet = $($el);
             var $content = $(
                 qweb.render("web_edit_user_filter.Popover", {
@@ -174,7 +187,7 @@ odoo.define("web_edit_user_filter/static/src/js/backend.js", function (require) 
                     } else {
                         self.model.dispatch("toggleFilter", facetIdEl);
                     }
-                } else if (type === "groupBy") {
+                } else if (type === "groupBy" || type === "field") {
                     self.model.dispatch("toggleFilter", facetIdEl);
                 } else if (type === "favorite") {
                     event.stopImmediatePropagation();
