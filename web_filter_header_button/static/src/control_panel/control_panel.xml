@@ -2,7 +2,7 @@
 <templates>
     <t t-inherit="web.Legacy.ControlPanel" t-inherit-mode="extension" owl="1">
         <xpath expr="//div[hasclass('o_cp_bottom')]" position="after">
-            <t t-if="env.view.type !== 'form'">
+            <t t-if="env.view and env.view.type !== 'form'">
                 <FilterButton />
             </t>
         </xpath>
