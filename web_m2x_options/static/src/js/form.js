@@ -373,4 +373,13 @@ odoo.define('web_m2x_options.web_m2x_options', function (require) {
             }
         },
     });
+
+    return{
+        M2ODialog: M2ODialog,
+        FieldMany2One: FieldMany2One,
+        FieldMany2ManyTags: FieldMany2ManyTags,
+        FieldOne2Many: FieldOne2Many,
+        FormFieldMany2ManyTags: FormFieldMany2ManyTags,
+        FormView: FormView,
+    };
 });
