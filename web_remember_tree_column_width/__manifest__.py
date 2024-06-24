@@ -6,10 +6,7 @@
     "license": "LGPL-3",
     "category": "Extra Tools",
     "version": "14.0.1.0.0",
-    "maintainers": [
-        "frahikLV",
-        "luisg123v",
-    ],
+    "maintainers": ["frahikLV", "luisg123v"],
     "depends": ["web"],
     "data": ["views/assets.xml"],
     "installable": True,

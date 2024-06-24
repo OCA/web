@@ -1,4 +1,4 @@
-odoo.define("web_remember_tree_column_width.ListRenderer", function (require) {
+odoo.define("web_remember_tree_column_width.ListRenderer", function(require) {
     "use strict";
 
     const ListRenderer = require("web.ListRenderer");
@@ -7,13 +7,13 @@ odoo.define("web_remember_tree_column_width.ListRenderer", function (require) {
             "pointerdown th .o_resize": "_onMouseDownResize",
             mouseup: "_onMouseUpResize",
         }),
-        _onMouseDownResize: function () {
+        _onMouseDownResize: function() {
             this.resizeInProgress = true;
         },
-        _getLocalStorageWidthColumnName: function (model, field) {
+        _getLocalStorageWidthColumnName: function(model, field) {
             return "odoo.columnWidth." + model + "." + field;
         },
-        _onMouseUpResize: function (ev) {
+        _onMouseUpResize: function(ev) {
             if (this.resizeInProgress) {
                 this.resizeInProgress = false;
                 const target = $(ev.target);
@@ -35,7 +35,7 @@ odoo.define("web_remember_tree_column_width.ListRenderer", function (require) {
                 }
             }
         },
-        _squeezeTable: function () {
+        _squeezeTable: function() {
             const columnWidths = this._super.apply(this, arguments);
 
             const table = this.el.getElementsByTagName("table")[0];
@@ -43,7 +43,7 @@ odoo.define("web_remember_tree_column_width.ListRenderer", function (require) {
             const thElements = [...thead.getElementsByTagName("th")];
 
             const self = this;
-            thElements.forEach(function (el, elIndex) {
+            thElements.forEach(function(el, elIndex) {
                 const fieldName = $(el).data("name");
                 if (
                     self.state &&
