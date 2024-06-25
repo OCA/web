@@ -15,7 +15,7 @@ class ResCompany(models.Model):
     _inherit = "res.company"
 
     def _get_scss_template(self):
-      return """
+        return """
         .o_main_navbar {
           background-color: %(color_navbar_bg)s !important;
           color: %(color_navbar_text)s !important;
@@ -201,26 +201,21 @@ class ResCompany(models.Model):
         )
         return values
 
-    def _scss_generate_content(self, uninstall=False):
+    def _scss_generate_content(self):
         self.ensure_one()
         # ir.attachment need files with content to work
         if not self.company_colors:
             return "// No Web Company Color SCSS Content\n"
-        if uninstall:
-          return self._get_scss_template_uninstall() % self._scss_get_sanitized_values()
         return self._get_scss_template() % self._scss_get_sanitized_values()
 
     def scss_get_url(self):
         self.ensure_one()
         return URL_SCSS_GEN_TEMPLATE % self.id
 
-    def scss_create_or_update_attachment(self, uninstall=False):
+    def scss_create_or_update_attachment(self):
         IrAttachmentObj = self.env["ir.attachment"]
         for record in self:
-            if not uninstall:
-              datas = base64.b64encode(record._scss_generate_content().encode("utf-8"))
-            else:
-              datas = base64.b64encode(record._scss_generate_content(uninstall).encode("utf-8"))
+            datas = base64.b64encode(record._scss_generate_content().encode("utf-8"))
             custom_url = record.scss_get_url()
             custom_attachment = IrAttachmentObj.sudo().search(
                 [("url", "=", custom_url), ("company_id", "=", record.id)]
