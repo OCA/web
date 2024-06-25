@@ -19,7 +19,6 @@
     "development_status": "Production/Stable",
     "maintainers": ["Tardo", "SplashS"],
     "excludes": ["web_enterprise"],
-    "data": ["views/web.xml"],
     "assets": {
         "web.assets_backend": [
             "/web_responsive/static/src/views/form/form_controller.esm.js",
