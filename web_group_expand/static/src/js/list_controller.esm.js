@@ -3,28 +3,33 @@
 import {patch} from "@web/core/utils/patch";
 import {ListController} from "@web/views/list/list_controller";
 
-patch(ListController.prototype, "web_group_expand.ListController", {
+function flatten(arr) {
+    return arr.reduce((flat, toFlatten) => {
+        return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
+    }, []);
+}
+
+patch(ListController.prototype, {
     async expandAllGroups() {
         // We expand layer by layer. So first we need to find the highest
         // layer that's not already fully expanded.
         let layer = this.model.root.groups;
         while (layer.length) {
             const closed = layer.filter(function (group) {
-                return group.isFolded;
+                return group._config.isFolded;
             });
             if (closed.length) {
                 // This layer is not completely expanded, expand it
                 await layer.forEach((group) => {
-                    group.isFolded = false;
+                    group._config.isFolded = false;
                 });
                 break;
             }
             // This layer is completely expanded, move to the next
-            layer = _.flatten(
+            layer = flatten(
                 layer.map(function (group) {
                     return group.list.groups || [];
-                }),
-                true
+                })
             );
         }
         await this.model.root.load();
@@ -36,18 +41,17 @@ patch(ListController.prototype, "web_group_expand.ListController", {
         // layer that's not already fully collapsed.
         let layer = this.model.root.groups;
         while (layer.length) {
-            const next = _.flatten(
+            const next = flatten(
                 layer.map(function (group) {
                     return group.list.groups || [];
-                }),
-                true
+                })
             ).filter(function (group) {
-                return !group.isFolded;
+                return !group._config.isFolded;
             });
             if (!next.length) {
                 // Next layer is fully collapsed, so collapse this one
                 await layer.forEach((group) => {
-                    group.isFolded = true;
+                    group._config.isFolded = true;
                 });
                 break;
             }

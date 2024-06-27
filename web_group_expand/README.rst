@@ -73,6 +73,9 @@ Contributors
 -  Manuel Calero <manuelcalerosolis@gmail.com>
 -  Alvaro Estebanez (brain-tec AG) <alvaro.estebanez@bt-group.com>
 -  Mayank Patel <mayankpatel3555@gmail.com>
+-  `360ERP <https://www.360erp.com>`__:
+
+   -  Andrea Stirpe
 
 Maintainers
 -----------
