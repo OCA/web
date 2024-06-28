@@ -2,6 +2,13 @@ This module adds responsiveness to web backend.
 
 **Features for all devices**:
 
+- Redirect to the dashboard after logging in.
+Users will only be redirected to the home page after login
+if they have enabled the 'Redirect to Home' option in
+their profile settings.
+
+  ![image](../static/img/redirecthome.gif)
+
 - New navigation with the fullscreen app menu
 
   ![image](../static/img/appmenu.gif)
