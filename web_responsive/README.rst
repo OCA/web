@@ -32,36 +32,42 @@ This module adds responsiveness to web backend.
 
 **Features for all devices**:
 
--  New navigation with the fullscreen app menu
+-  Redirect to the dashboard after logging in. Users will only be
+   redirected to the home page after login if they have enabled the
+   'Redirect to Home' option in their profile settings.
 
    |image|
 
--  Quick menu search inside the app menu
+-  New navigation with the fullscreen app menu
 
    |image1|
 
--  Sticky header & footer in list view
+-  Quick menu search inside the app menu
 
    |image2|
 
--  Sticky statusbar in form view
+-  Sticky header & footer in list view
 
    |image3|
 
--  Bigger checkboxes in list view
+-  Sticky statusbar in form view
 
    |image4|
+
+-  Bigger checkboxes in list view
+
+   |image5|
 
 **Features for mobile**: \* View type picker dropdown displays
 comfortably
 
 -  Control panel buttons use icons to save space.
 
-   |image5|
+   |image6|
 
 -  Followers and send button is displayed on mobile. Avatar is hidden.
 
-   |image6|
+   |image7|
 
 -  Big inputs on form in edit mode
 
@@ -73,35 +79,36 @@ comfortably
    be more intuitive or accessible by fingers of one hand. F.x. Alt + S
    for Save
 
-   |image7|
+   |image8|
 
 -  Autofocus on search menu box when opening the app menu
 
-   |image8|
+   |image9|
 
 -  When the chatter is on the side part, the document viewer fills that
    part for side-by-side reading instead of full screen. You can still
    put it on full width preview clicking on the new maximize button.
 
-   |image9|
+   |image10|
 
 -  When the user chooses to send a public message the color of the
    composer is different from the one when the message is an internal
    log.
 
-   |image10|
+   |image11|
 
-.. |image| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/appmenu.gif
-.. |image1| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/appsearch.gif
-.. |image2| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/listview.gif
-.. |image3| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/formview.gif
-.. |image4| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/listview.gif
-.. |image5| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/form_buttons.gif
-.. |image6| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/chatter.png
-.. |image7| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/shortcuts.gif
-.. |image8| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/appsearch.gif
-.. |image9| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/document_viewer.gif
-.. |image10| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/chatter-colors.png
+.. |image| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/redirecthome.gif
+.. |image1| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/appmenu.gif
+.. |image2| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/appsearch.gif
+.. |image3| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/listview.gif
+.. |image4| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/formview.gif
+.. |image5| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/listview.gif
+.. |image6| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/form_buttons.gif
+.. |image7| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/chatter.png
+.. |image8| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/shortcuts.gif
+.. |image9| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/appsearch.gif
+.. |image10| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/document_viewer.gif
+.. |image11| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_responsive/static/img/chatter-colors.png
 
 **Table of contents**
 
@@ -169,6 +176,8 @@ Contributors
 -  David Vidal <david.vidal@tecnativa.com>
 
 -  Taras Shabaranskyi <shabaranskij@gmail.com>
+
+-  Angel Patel <patelangel1414@gmail.com>
 
 Maintainers
 -----------
