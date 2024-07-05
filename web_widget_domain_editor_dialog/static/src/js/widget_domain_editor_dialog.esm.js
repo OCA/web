@@ -2,8 +2,9 @@
 /* Copyright 2019 Tecnativa - David Vidal
  * Copyright 2024 Tecnativa - Carlos Roca
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
-import {SelectCreateDialog} from "@web/views/view_dialogs/select_create_dialog";
+import {deepEqual} from "@web/core/utils/objects";
 import {Domain} from "@web/core/domain";
+import {SelectCreateDialog} from "@web/views/view_dialogs/select_create_dialog";
 
 export function findChildren(comp, predicate = (e) => e) {
     const queue = [];
@@ -33,23 +34,18 @@ export class DomainEditorDialog extends SelectCreateDialog {
     }
 
     _getDomainOfGroups(groups, domain) {
-        const groups_unfolded = _.filter(groups, (g) => !g.isFolded);
-        var groups_domain = [];
-        for (var group of groups_unfolded) {
-            var group_list = group.list;
+        const groups_unfolded = groups.filter((g) => !g.isFolded);
+        const groups_domain = [];
+        for (const group of groups_unfolded) {
+            const group_list = group.list;
             if (group_list.groupBy.length) {
                 groups_domain.push(this._getDomainOfGroups(group_list.groups, domain));
             } else {
-                var group_domain = group_list.domain;
-                _.each(domain, (d) => {
-                    group_domain = _.without(
-                        group_domain,
-                        _.filter(group_domain, (x) => {
-                            return _.isEqual(x, d);
-                        })[0]
-                    );
+                let group_domain = group_list.domain.slice();
+                domain.forEach((d) => {
+                    group_domain = group_domain.filter((x) => !deepEqual(x, d));
                 });
-                group_domain = _.without(group_domain, "&");
+                group_domain = group_domain.filter((x) => x !== "&");
                 groups_domain.push(group_domain);
             }
         }

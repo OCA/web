@@ -2,14 +2,15 @@
 /* Copyright 2019 Tecnativa - David Vidal
  * Copyright 2024 Tecnativa - Carlos Roca
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
-import {DomainField} from "@web/views/fields/domain/domain_field";
-import {DomainEditorDialog} from "./widget_domain_editor_dialog.esm";
+import {_t} from "@web/core/l10n/translation";
 import {patch} from "@web/core/utils/patch";
+import {DomainEditorDialog} from "./widget_domain_editor_dialog.esm";
+import {DomainField} from "@web/views/fields/domain/domain_field";
 
-patch(DomainField.prototype, "web_widget_domain_editor_dialog.DomainField", {
+patch(DomainField.prototype, {
     onButtonClick(ev) {
-        ev.preventDefault();
         const self = this;
+        ev.preventDefault();
         if (this.props.readonly) {
             return this._super.apply(this, arguments);
         }
@@ -17,20 +18,17 @@ patch(DomainField.prototype, "web_widget_domain_editor_dialog.DomainField", {
             this.props.value = "[]";
         }
         this.addDialog(DomainEditorDialog, {
-            title: this.env._t("Select records..."),
+            title: _t("Select records..."),
             noCreate: true,
             multiSelect: true,
-            resModel: this.getResModel(this.props),
+            resModel: this.getResModel(),
             dynamicFilters: [
                 {
-                    description: this.env._t("Selected domain"),
-                    domain:
-                        this.getDomain(this.props.value).toList(
-                            this.getContext(this.props)
-                        ) || [],
+                    description: _t("Selected domain"),
+                    domain: this.getEvaluatedDomain(),
                 },
             ],
-            context: this.getContext(this.props) || {},
+            context: this.getContext(),
             onSelected: function (resIds) {
                 self.update(this.get_domain(resIds));
             },
