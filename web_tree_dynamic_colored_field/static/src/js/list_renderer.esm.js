@@ -2,9 +2,9 @@
 
 import {patch} from "@web/core/utils/patch";
 import {ListRenderer} from "@web/views/list/list_renderer";
-import {evaluateBooleanExpr} from "@web/core/py_js/py";
+import {evaluateExpr} from "@web/core/py_js/py";
 
-patch(ListRenderer.prototype, {
+patch(ListRenderer.prototype, "web_tree_dynamic_colored_field_list_renderer", {
     /**
      * @param {Object} column represents field
      * @param {Record} record
@@ -43,12 +43,7 @@ patch(ListRenderer.prototype, {
                 const color_to_expression = this.pairColorParse(color_def);
                 if (color_to_expression !== undefined) {
                     const [color, expression] = color_to_expression;
-                    if (
-                        evaluateBooleanExpr(
-                            expression,
-                            record.evalContextWithVirtualIds
-                        )
-                    ) {
+                    if (evaluateExpr(expression, record.evalContextWithVirtualIds)) {
                         // We don't return first match,
                         // as it can be default color (with "True" expression),
                         // and later more precise condition may be found.
