@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <t t-name="FieldMany2OneMailto">
+        <div class="oe_inline" t-if="value">
+            <a
+                class="o_form_uri o_field_widget o_field_link"
+                t-att-href="url"
+                t-if="!noMailtoOpen"
+            ><t t-esc="value" /></a>
+            <span t-esc="value" t-if="noMailtoOpen" />
+            <a
+                class="fa fa-envelope partner_mailto_button"
+                tabindex="-1"
+                t-if="email"
+                t-attf-title="Mail to {{value}}"
+                t-attf-href="mailto:{{email}}"
+            />
+        </div>
+    </t>
+</templates>
