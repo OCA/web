@@ -12,3 +12,4 @@ Improvements to the search view in this addon:
 Issues:
 
 * Grouped totals can show incorrect values. See https://github.com/odoo/odoo/issues/47950
+* DomainSelector Dialog cannot correctly show 'in selection' domains.
