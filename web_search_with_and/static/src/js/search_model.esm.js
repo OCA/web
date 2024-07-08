@@ -4,7 +4,7 @@ import {patch} from "@web/core/utils/patch";
 import {rankInterval} from "@web/search/utils/dates";
 import {SearchModel} from "@web/search/search_model";
 
-patch(SearchModel.prototype, "web_search_with_and/static/src/js/search_model.js", {
+patch(SearchModel.prototype, {
     _getGroups() {
         const preGroups = [];
         for (const queryElem of this.query) {
