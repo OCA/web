@@ -22,6 +22,10 @@ odoo.define("web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer", function (requ
     // X2Many2dMatrixRenderer is heavily inspired by Odoo's ListRenderer
     // and is reusing portions of code from list_renderer.js
     var X2Many2dMatrixRenderer = BasicRenderer.extend({
+        events: {
+            "keyup input": "_onKeyUp",
+        },
+
         /**
          * @override
          */
@@ -29,6 +33,18 @@ odoo.define("web_widget_x2many_2d_matrix.X2Many2dMatrixRenderer", function (requ
             this._super.apply(this, arguments);
             this.editable = params.editable;
             this._saveMatrixData(params.matrix_data);
+        },
+
+        /**
+         * Input data to accept only number
+         *
+         * @private
+         * @param {keyEvent} event
+         */
+        _onKeyUp: function (ev) {
+            if (isNaN(ev.target.value)) {
+                ev.target.value = null;
+            }
         },
 
         /**
