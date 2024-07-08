@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 Stefan Rijnhart <stefan@opener.amsterdam>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <template
+        id="assets_backend"
+        name="web_widget_statusbar_visible_from_record assets"
+        inherit_id="web.assets_backend"
+    >
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/web_widget_statusbar_visible_from_record/static/src/js/web_widget_statusbar_visible_from_record.js"
+            />
+        </xpath>
+    </template>
+</odoo>
