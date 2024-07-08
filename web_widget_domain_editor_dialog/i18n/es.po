@@ -17,15 +17,15 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: web_widget_domain_editor_dialog
-#. openerp-web
-#: code:addons/web_widget_domain_editor_dialog/static/src/js/basic_fields.js:0
+#. odoo-javascript
+#: code:addons/web_widget_domain_editor_dialog/static/src/js/domain_field.esm.js:0
 #, python-format
 msgid "Select records..."
 msgstr "Seleccionar registros..."
 
 #. module: web_widget_domain_editor_dialog
-#. openerp-web
-#: code:addons/web_widget_domain_editor_dialog/static/src/js/widget_domain_editor_dialog.js:0
+#. odoo-javascript
+#: code:addons/web_widget_domain_editor_dialog/static/src/js/domain_field.esm.js:0
 #, python-format
 msgid "Selected domain"
 msgstr "Dominio seleccionado"
