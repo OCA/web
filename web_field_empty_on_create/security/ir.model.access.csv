@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+fer1,fer1,model_field_empty_rule,base.group_system,1,1,1,1
+fer2,fer2,model_field_empty_rule,base.group_user,1,0,0,0

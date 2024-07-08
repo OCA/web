@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="field_empty_view_form">
+        <field name="name">field.empty.rule.form.view</field>
+        <field name="model">field.empty.rule</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="model_id" />
+                            <field name="model_name" />
+                            <field name="field_id" />
+                            <field name="field_name" />
+                        </group>
+                        <group>
+                            <field name="group_ids" />
+                            <field
+                                name="edit_option_ids"
+                                widget="many2many_tags"
+                                readonly="1"
+                            />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="field_empty_view_tree">
+        <field name="name">field.empty.rule.tree.view</field>
+        <field name="model">field.empty.rule</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="model_id" />
+                <field name="field_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_field_empty_rule" model="ir.actions.act_window">
+        <field name="name">Fields Empty Rules</field>
+        <field name="res_model">field.empty.rule</field>
+    </record>
+
+    <menuitem
+        action="action_field_empty_rule"
+        id="menu_field_empty_rule"
+        parent="base.next_id_9"
+    />
+
+</odoo>
