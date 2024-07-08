@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="assets_backend"
+        name="Widget Domain Field No Computation Assets"
+        inherit_id="web.assets_backend"
+    >
+        <xpath expr="." position="inside">
+            <script
+                type="module"
+                src="/web_widget_model_disable_nbrecords_computation/static/src/js/basic_model.js"
+            />
+        </xpath>
+    </template>
+</odoo>
