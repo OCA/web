@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2021 - Sergey Shebanin
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
+<templates>
+    <t t-inherit="web.ControlPanel" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('o_cp_pager')]" position="inside">
+            <WebRefresh
+                t-if="env.view"
+                icon="'fa fa-refresh'"
+                allowWatchChanges="env.session['wr_watch'] || false"
+                allowRefreshEvery="!!env.session['wr_every']"
+                defaultRefreshEvery="env.session['wr_every'] ? env.session['wr_every'][0] : 0"
+                minRefreshEvery="env.session['wr_every'] ? env.session['wr_every'][1] : 0"
+            />
+        </xpath>
+    </t>
+    <t
+        t-name="web_refresh.WebRefresh"
+        t-inherit="web.DropdownMenu"
+        t-inherit-mode="primary"
+        owl="1"
+    >
+        <xpath expr="//div[hasclass('o_dropdown')]" position="attributes">
+            <attribute name="class" separator=" " add="o_web_refresh" />
+        </xpath>
+        <xpath
+            expr="//button[hasclass('o_dropdown_toggler_btn')]"
+            position="attributes"
+        >
+            <attribute
+                name="t-att-class"
+                t-translation="off"
+            >{'watching': state.watchChanges and !state.pending, 'blocked': state.pending}</attribute>
+        </xpath>
+        <xpath expr="//button" position="attributes">
+            <attribute
+                name="t-on-mousedown"
+                t-translation="off"
+            >_onMouseDown</attribute>
+            <attribute
+                name="t-on-touchstart.prevent"
+                t-translation="off"
+            >_onMouseDown</attribute>
+            <attribute name="t-on-click" t-translation="off">_onClick</attribute>
+            <attribute
+                name="t-on-touchend.prevent"
+                t-translation="off"
+            >_onClick</attribute>
+        </xpath>
+        <xpath expr="//i[@t-if='icon']" position="replace">
+            <t t-if="icon">
+                <svg
+                    t-if="state.refreshEvery and !state.refreshing"
+                    t-transition="fade"
+                    width="26"
+                    height="26"
+                >
+                    <circle
+                        stroke="rgba(0, 0, 0, .3)"
+                        stroke-width="2"
+                        stroke-dasharray="69,69"
+                        t-att-stroke-dashoffset="segmentOffset"
+                        fill="transparent"
+                        r="11"
+                        cx="13.5"
+                        cy="14"
+                    />
+                </svg>
+                <i t-att-class="(state.refreshing ? 'fa-spin ' : '') + icon" />
+            </t>
+        </xpath>
+        <xpath expr="//ul[@role='menu']" position="attributes">
+            <attribute
+                name="t-att-class"
+                t-translation="off"
+            >dropdownMenuAlignClass</attribute>
+        </xpath>
+        <xpath expr="//ul[@role='menu']" position="inside">
+            <CustomMenuItem
+                t-if="props.allowRefreshEvery"
+                isActive="state.refreshEvery"
+                value="state.refreshEverySeconds"
+                minValue="props.minRefreshEvery"
+                t-on-item-selected.stop="_toggleRefreshEvery"
+                t-on-value-changed.stop="_onRefreshEveryChanged"
+            >
+            </CustomMenuItem>
+            <DropdownMenuItem
+                t-if="props.allowWatchChanges"
+                description="'Refresh on server changes'"
+                isActive="state.watchChanges"
+                t-on-item-selected.stop="_toggleWatchChanges"
+            />
+        </xpath>
+    </t>
+</templates>
