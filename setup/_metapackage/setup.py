@@ -58,6 +58,7 @@ setuptools.setup(
         'odoo-addon-web_widget_one2many_tree_line_duplicate>=15.0dev,<15.1dev',
         'odoo-addon-web_widget_open_tab>=15.0dev,<15.1dev',
         'odoo-addon-web_widget_remote_measure>=15.0dev,<15.1dev',
+        'odoo-addon-web_widget_text_markdown>=15.0dev,<15.1dev',
         'odoo-addon-web_widget_url_advanced>=15.0dev,<15.1dev',
         'odoo-addon-web_widget_x2many_2d_matrix>=15.0dev,<15.1dev',
     ],
