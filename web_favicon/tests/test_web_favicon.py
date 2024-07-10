@@ -46,3 +46,29 @@ class TestWebFavicon(TransactionCase):
         Company = self.env["res.company"]
         company = Company.create({"name": "Test Company"})
         self.assertTrue(company.favicon, "Default favicon not set on company creation.")
+
+    def test_03_website_favicon(self):
+        """Test if favicon URL is correctly returned when website_id is in context."""
+        if self.env["ir.module.module"].search(
+            [("name", "=", "website"), ("state", "=", "installed")]
+        ):
+            company = self.env["res.company"].create(
+                {
+                    "name": "Test Company with Website",
+                }
+            )
+            website = self.env["website"].create(
+                {
+                    "name": "Test Website",
+                    "domain": "www.test.com",
+                    "company_id": company.id,
+                }
+            )
+            website.favicon = website._default_favicon()
+            favicon_url = company.with_context(website_id=website.id)._get_favicon()
+            expected_favicon_url = website.image_url(website, "favicon")
+            self.assertEqual(
+                favicon_url,
+                expected_favicon_url,
+                "The favicon URL should match the expected value.",
+            )
