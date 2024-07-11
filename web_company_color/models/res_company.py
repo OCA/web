@@ -92,6 +92,9 @@ class ResCompany(models.Model):
             color: %(color_button_text)s !important;
           }
         }
+    """
+
+    WEB_RESPONSIVE_SCSS_TEMPLATE = """
         .o_menu_apps .dropdown-menu {
           background: linear-gradient(
             to bottom,
@@ -222,7 +225,16 @@ class ResCompany(models.Model):
         # ir.attachment need files with content to work
         if not self.company_colors:
             return "// No Web Company Color SCSS Content\n"
-        return self.SCSS_TEMPLATE % self._scss_get_sanitized_values()
+        is_web_responsive_installed = (
+            self.env["ir.module.module"]
+            .sudo()
+            .search([("name", "=", "web_responsive"), ("state", "=", "installed")])
+        )
+        return (
+            self.SCSS_TEMPLATE
+            if is_web_responsive_installed
+            else self.SCSS_TEMPLATE + self.WEB_RESPONSIVE_SCSS_TEMPLATE
+        ) % self._scss_get_sanitized_values()
 
     def scss_get_url(self):
         self.ensure_one()
