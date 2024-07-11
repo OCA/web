@@ -18,7 +18,7 @@ class ResCompany(models.Model):
         .o_main_navbar {
           background-color: %(color_navbar_bg)s !important;
           color: %(color_navbar_text)s !important;
-          border-botton-color: darken(%(color_navbar_text)s, 10%%) !important;
+          border-bottom-color: darken(%(color_navbar_text)s, 10%%) !important;
 
           > .o_menu_brand {
             color: %(color_navbar_text)s !important;
