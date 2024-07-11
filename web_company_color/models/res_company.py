@@ -92,7 +92,7 @@ class ResCompany(models.Model):
             color: %(color_button_text)s !important;
           }
         }
-        .dropdown-menu {
+        .o_menu_apps .dropdown-menu {
           background: linear-gradient(
             to bottom,
             %(color_navbar_bg)s,
