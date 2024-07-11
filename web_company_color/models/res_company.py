@@ -85,6 +85,9 @@ class ResCompany(models.Model):
         .o_required_modifier.o_input, .o_required_modifier .o_input {
           background-color: lighten(%(color_button_bg)s, 10%%) !important;
         }
+        .o_selection_focus {
+          background-color: lighten(%(color_button_bg)s, 10%%) !important;
+        }
     """
 
     company_colors = fields.Serialized()
