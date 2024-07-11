@@ -231,9 +231,9 @@ class ResCompany(models.Model):
             .search([("name", "=", "web_responsive"), ("state", "=", "installed")])
         )
         return (
-            self.SCSS_TEMPLATE
+            self.SCSS_TEMPLATE + self.WEB_RESPONSIVE_SCSS_TEMPLATE
             if is_web_responsive_installed
-            else self.SCSS_TEMPLATE + self.WEB_RESPONSIVE_SCSS_TEMPLATE
+            else self.SCSS_TEMPLATE
         ) % self._scss_get_sanitized_values()
 
     def scss_get_url(self):
