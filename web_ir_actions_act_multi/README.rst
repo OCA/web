@@ -82,6 +82,7 @@ Contributors
   * Alexey Pelykh <alexey.pelykh@corphub.eu>
 
 * Manuel Calero - Tecnativa
+* Sajad KK
 
 Maintainers
 ~~~~~~~~~~~
