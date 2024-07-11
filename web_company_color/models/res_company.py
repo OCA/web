@@ -86,7 +86,7 @@ class ResCompany(models.Model):
           background-color: lighten(%(color_button_bg)s, 10%%) !important;
         }
         .o_selection_focus {
-          background-color: lighten(%(color_button_bg)s, 10%%) !important;
+          background-color: lighten(%(color_link_text)s, 30%%) !important;
         }
     """
 
