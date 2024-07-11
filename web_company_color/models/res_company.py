@@ -91,6 +91,16 @@ class ResCompany(models.Model):
             color: %(color_button_text)s !important;
           }
         }
+        .dropdown-menu {
+          background: linear-gradient(
+            to bottom,
+            %(color_navbar_bg)s,
+            desaturate(lighten(%(color_navbar_bg)s, 20%%), 15)
+          ) !important;
+          .o-app-name {
+            color: %(color_navbar_text)s !important;
+          }
+        }
     """
 
     company_colors = fields.Serialized()
