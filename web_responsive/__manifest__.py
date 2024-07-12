@@ -18,7 +18,7 @@
     "installable": True,
     "depends": ["web", "mail"],
     "development_status": "Production/Stable",
-    "maintainers": ["Yajo", "Tardo", "SplashS"],
+    "maintainers": ["Tardo", "SplashS"],
     "excludes": ["web_enterprise"],
     "data": [
         "views/res_users_views.xml",

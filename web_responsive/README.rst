@@ -183,9 +183,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-.. |maintainer-Yajo| image:: https://github.com/Yajo.png?size=40px
-    :target: https://github.com/Yajo
-    :alt: Yajo
 .. |maintainer-Tardo| image:: https://github.com/Tardo.png?size=40px
     :target: https://github.com/Tardo
     :alt: Tardo
@@ -195,7 +192,7 @@ promote its widespread use.
 
 Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-Yajo| |maintainer-Tardo| |maintainer-SplashS| 
+|maintainer-Tardo| |maintainer-SplashS| 
 
 This module is part of the `OCA/web <https://github.com/OCA/web/tree/17.0/web_responsive>`_ project on GitHub.
 
