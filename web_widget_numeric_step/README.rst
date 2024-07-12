@@ -63,12 +63,13 @@ Example for an 0.25 step, min to -1 and max to 10 :
 
 **Available Options**
 
-- step > Amount to increase/decrease (default: 1.0)
-- min > Min. value allowed (default: no limit)
-- max > Max. value allowed (default: no limit)
-- auto_select > Select the content when the element get focus (default:
-  False)
-- placeholder > Define the placeholder text (default: None)
+-  step > Amount to increase/decrease (default: 1.0)
+-  min > Min. value allowed (default: no limit)
+-  max > Max. value allowed (default: no limit)
+-  auto_select > Select the content when the element get focus (default:
+   False)
+-  placeholder > Define the placeholder text (default: None)
+-  class > Define additional classes for the input (default: None)
 
 **Examples**
 
@@ -121,18 +122,18 @@ Authors
 Contributors
 ------------
 
-- `GRAP <http://www.grap.coop>`__:
+-  `GRAP <http://www.grap.coop>`__:
 
-  - Quentin DUPONT <quentin.dupont@grap.coop>
+   -  Quentin DUPONT <quentin.dupont@grap.coop>
 
-- `Tecnativa <https://www.tecnativa.com/>`__:
+-  `Tecnativa <https://www.tecnativa.com/>`__:
 
-  - Alexandre Díaz
-  - Carlos Roca
+   -  Alexandre Díaz
+   -  Carlos Roca
 
-- Helly kapatel <helly.kapatel@initos.com>
-- Thanakrit Pintana <thanakrit.p39@gmail.com>
-- Dhara Solanki <dhara.solanki@initos.com>
+-  Helly kapatel <helly.kapatel@initos.com>
+-  Thanakrit Pintana <thanakrit.p39@gmail.com>
+-  Dhara Solanki <dhara.solanki@initos.com>
 
 Maintainers
 -----------

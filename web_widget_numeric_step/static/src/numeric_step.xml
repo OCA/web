@@ -6,7 +6,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 -->
 <template>
     <t t-name="web_widget_numeric_step">
-        <div class="d-flex widget_numeric_step">
+        <div t-attf-class="d-flex widget_numeric_step {{props.additional_class or ''}}">
             <div class="input-group-prepend widget_numeric_step_btn">
                 <button
                     class="fa fa-minus btn btn-default btn_numeric_step"
@@ -24,7 +24,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                 t-ref="numpadDecimal"
                 t-att-placeholder="props.placeholder"
                 t-att-type="props.inputType"
-                class="o_input input_numeric_step"
+                class="o_input"
                 inputmode="decimal"
                 t-att-step="props.step"
                 t-on-keydown="_onKeyDown"
