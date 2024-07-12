@@ -22,6 +22,8 @@ Example for an 0.25 step, min to -1 and max to 10 :
 - max > Max. value allowed (default: no limit)
 - auto_select > Select the content when the element get focus (default: False)
 - placeholder > Define the placeholder text (default: None)
+- add_class > Define additional classes for the input (default: None)
+- remove_class > Remove default classes from the input (default: None)
 
 **Examples**
 
