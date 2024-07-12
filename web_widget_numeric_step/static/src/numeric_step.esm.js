@@ -62,6 +62,7 @@ NumericStep.props = {
     min: {type: Number, optional: true},
     max: {type: Number, optional: true},
     placeholder: {type: String, optional: true},
+    additional_class: {type: String, optional: true},
 };
 NumericStep.defaultProps = {
     ...FloatField.defaultProps,
@@ -80,6 +81,7 @@ export const numericStep = {
             min: options.min,
             max: options.max,
             placeholder: attrs.placeholder,
+            additional_class: attrs.class,
         };
     },
 };
