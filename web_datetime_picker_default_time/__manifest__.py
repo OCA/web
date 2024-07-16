@@ -14,7 +14,8 @@
     ],
     "assets": {
         "web.assets_backend": [
-            "/web_datetime_picker_default_time/static/src/js/datepicker.esm.js",
+            "/web_datetime_picker_default_time/static/src/js/*.js",
+            "/web_datetime_picker_default_time/static/src/xml/*.xml",
         ],
     },
 }

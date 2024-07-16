@@ -2,7 +2,7 @@
 /* Copyright 2024 Camptocamp
  * License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl) */
 
-import {DatePicker, DateTimePicker} from "@web/core/datepicker/datepicker";
+import {DateTimePicker} from "@web/core/datepicker/datepicker";
 import {patch} from "@web/core/utils/patch";
 
 patch(DateTimePicker.prototype, "DateTimePickerDefaultTime", {
@@ -23,7 +23,7 @@ patch(DateTimePicker.prototype, "DateTimePickerDefaultTime", {
     },
 });
 
-DateTimePicker.props = _.extend({}, DatePicker.props, {
+DateTimePicker.props = _.extend({}, DateTimePicker.props, {
     defaultTime: {
         type: Object,
         shape: {
