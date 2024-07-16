@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="assets_backend"
+        name="web_hide_on_edit assets"
+        inherit_id="web.assets_backend"
+    >
+        <xpath expr="." position="inside">
+            <script
+                src="/web_hide_on_edit/static/src/js/form_controller.js"
+                type="text/javascript"
+            />
+        </xpath>
+    </template>
+</odoo>
