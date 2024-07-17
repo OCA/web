@@ -28,7 +28,7 @@ addon | version | maintainers | summary
 [web_no_bubble](web_no_bubble/) | 17.0.1.0.0 |  | Remove the bubbles from the web interface
 [web_refresher](web_refresher/) | 17.0.1.1.0 |  | Web Refresher
 [web_remember_tree_column_width](web_remember_tree_column_width/) | 17.0.1.0.0 | [![frahikLV](https://github.com/frahikLV.png?size=30px)](https://github.com/frahikLV) [![luisg123v](https://github.com/luisg123v.png?size=30px)](https://github.com/luisg123v) [![cuongnmtm](https://github.com/cuongnmtm.png?size=30px)](https://github.com/cuongnmtm) | Remember the tree columns' widths across sessions.
-[web_responsive](web_responsive/) | 17.0.1.0.1 | [![Tardo](https://github.com/Tardo.png?size=30px)](https://github.com/Tardo) [![SplashS](https://github.com/SplashS.png?size=30px)](https://github.com/SplashS) | Responsive web client, community-supported
+[web_responsive](web_responsive/) | 17.0.1.1.0 | [![Tardo](https://github.com/Tardo.png?size=30px)](https://github.com/Tardo) [![SplashS](https://github.com/SplashS.png?size=30px)](https://github.com/SplashS) | Responsive web client, community-supported
 [web_theme_classic](web_theme_classic/) | 17.0.1.0.0 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Contrasted style on fields to improve the UI.
 [web_tree_dynamic_colored_field](web_tree_dynamic_colored_field/) | 17.0.1.0.0 |  | Allows you to dynamically color fields on tree views
 [web_tree_many2one_clickable](web_tree_many2one_clickable/) | 17.0.1.0.0 |  | Open the linked resource when clicking on their name
