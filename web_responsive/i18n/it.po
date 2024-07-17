@@ -67,7 +67,6 @@ msgstr "Comunità"
 #. module: web_responsive
 #. odoo-javascript
 #: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
-#: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #, python-format
 msgid "Discard"
 msgstr "Abbandona"
@@ -107,7 +106,6 @@ msgstr "Registra nota"
 #. module: web_responsive
 #. odoo-javascript
 #: code:addons/web_responsive/static/src/components/file_viewer/file_viewer.xml:0
-#: code:addons/web_responsive/static/src/components/file_viewer/file_viewer.xml:0
 #, python-format
 msgid "Maximize"
 msgstr "Massimizza"
@@ -120,14 +118,12 @@ msgstr "Latte"
 #. module: web_responsive
 #. odoo-javascript
 #: code:addons/web_responsive/static/src/components/file_viewer/file_viewer.xml:0
-#: code:addons/web_responsive/static/src/components/file_viewer/file_viewer.xml:0
 #, python-format
 msgid "Minimize"
 msgstr "Minimizza"
 
 #. module: web_responsive
 #. odoo-javascript
-#: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #, python-format
 msgid "New"
@@ -141,8 +137,17 @@ msgid "Nothing to show"
 msgstr "Nulla da visualizzare"
 
 #. module: web_responsive
+#: model:ir.model.fields,field_description:web_responsive.field_res_users__is_redirect_home
+msgid "Redirect to Home"
+msgstr ""
+
+#. module: web_responsive
+#: model:ir.model.fields,help:web_responsive.field_res_users__is_redirect_home
+msgid "Redirect to dashboard after signing in"
+msgstr ""
+
+#. module: web_responsive
 #. odoo-javascript
-#: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #, python-format
 msgid "Save"
