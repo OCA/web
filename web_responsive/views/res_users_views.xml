@@ -61,4 +61,17 @@
                ]"
         />
     </record>
+
+    <record id="view_users_form_web_responsive" model="ir.ui.view">
+        <field name="name">res.users.form.web.responsive</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form" />
+        <field name="arch" type="xml">
+            <data>
+                <field name="action_id" position="after">
+                    <field name="is_redirect_home" invisible="action_id" />
+                </field>
+            </data>
+        </field>
+    </record>
 </odoo>
