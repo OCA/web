@@ -140,6 +140,16 @@ msgid "Nothing to show"
 msgstr ""
 
 #. module: web_responsive
+#: model:ir.model.fields,field_description:web_responsive.field_res_users__is_redirect_home
+msgid "Redirect to Home"
+msgstr ""
+
+#. module: web_responsive
+#: model:ir.model.fields,help:web_responsive.field_res_users__is_redirect_home
+msgid "Redirect to dashboard after signing in"
+msgstr ""
+
+#. module: web_responsive
 #. odoo-javascript
 #: code:addons/web_responsive/static/src/legacy/xml/form_buttons.xml:0
 #, python-format
