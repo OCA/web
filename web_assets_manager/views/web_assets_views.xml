@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_web_assets_form" model="ir.ui.view">
+        <field name="model">web.assets</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button
+                        name="action_download"
+                        type="object"
+                        string="Download"
+                        class="oe_highlight"
+                    />
+                    <button
+                        name="action_upload"
+                        type="object"
+                        string="Upload"
+                        class="oe_highlight"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            name="action_open_files"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-bars"
+                        >
+                            <div class="o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="file_included" />
+                                    /
+                                    <field name="file_total" />
+                                </span>
+                                <span class="o_stat_text">Files</span>
+                            </div>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name" />
+                        <field name="bundle" />
+                        <field name="active" widget="boolean_toggle" />
+                        <field name="path_regex" />
+                        <field name="hashsum" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_web_assets_tree" model="ir.ui.view">
+        <field name="model">web.assets</field>
+        <field name="arch" type="xml">
+            <tree decoration-muted="not active">
+                <field name="active" />
+                <field name="name" />
+                <field name="bundle" />
+                <field name="path_regex" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_web_assets_file_tree" model="ir.ui.view">
+        <field name="model">web.assets.file</field>
+        <field name="arch" type="xml">
+            <tree decoration-muted="not include" editable="bottom">
+                <field name="asset_id" invisible="1" />
+                <field name="include" />
+                <field name="name" />
+                <field name="mimetype" />
+                <field name="module" />
+                <field name="size_included" />
+                <field name="size" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_web_assets_file_search" model="ir.ui.view">
+        <field name="model">web.assets.file</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <separator />
+                <filter
+                    string="Included"
+                    name="include"
+                    domain="[('include', '=', True)]"
+                />
+                <filter
+                    string="Excluded"
+                    name="exclude"
+                    domain="[('include', '=', False)]"
+                />
+                <separator />
+                <group expand="0">
+                    <filter
+                        name="module"
+                        string="Module"
+                        context="{'group_by': 'module'}"
+                    />
+                    <filter
+                        name="mimetype"
+                        string="MIME Type"
+                        context="{'group_by': 'mimetype'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_include_all" model="ir.actions.server">
+        <field name="name">Include All</field>
+        <field name="model_id" ref="web_assets_manager.model_web_assets_file" />
+        <field name="binding_model_id" ref="web_assets_manager.model_web_assets_file" />
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_include()</field>
+    </record>
+
+    <record id="action_exclude_all" model="ir.actions.server">
+        <field name="name">Exclude All</field>
+        <field name="model_id" ref="web_assets_manager.model_web_assets_file" />
+        <field name="binding_model_id" ref="web_assets_manager.model_web_assets_file" />
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_exclude()</field>
+    </record>
+
+    <record id="action_web_assets" model="ir.actions.act_window">
+        <field name="name">Web Assets</field>
+        <field name="res_model">web.assets</field>
+        <field name="context">{'active_test': False}</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="menu_web_assets"
+        name="Web Assets"
+        parent="base.menu_custom"
+        action="action_web_assets"
+        sequence="9000"
+    />
+</odoo>
