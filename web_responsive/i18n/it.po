@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-02-12 11:39+0000\n"
+"PO-Revision-Date: 2024-07-18 06:35+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: web_responsive
 #. odoo-javascript
@@ -139,12 +139,12 @@ msgstr "Nulla da visualizzare"
 #. module: web_responsive
 #: model:ir.model.fields,field_description:web_responsive.field_res_users__is_redirect_home
 msgid "Redirect to Home"
-msgstr ""
+msgstr "Inoltra alla home"
 
 #. module: web_responsive
 #: model:ir.model.fields,help:web_responsive.field_res_users__is_redirect_home
 msgid "Redirect to dashboard after signing in"
-msgstr ""
+msgstr "Inoltra al cruscotto dopo l'accesso"
 
 #. module: web_responsive
 #. odoo-javascript
