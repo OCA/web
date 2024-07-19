@@ -71,6 +71,7 @@ Contributors
 -  `Camptocamp <https://www.camptocamp.com>`__
 
    -  Iván Todorovich <ivan.todorovich@camptocamp.com>
+   -  Tris Doan <tridm@trobz.com>
 
 -  `Alitec Pte Ltd <http://www.alitec.sg>`__
 
