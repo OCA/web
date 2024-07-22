@@ -103,6 +103,9 @@ class ResCompany(models.Model):
           }
           .input-group-prepend > span, input{
             color: black !important;
+            ::placeholder {
+              color: #222222 !important;
+            }
           }
         }
     """
