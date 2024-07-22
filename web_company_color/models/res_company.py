@@ -98,7 +98,7 @@ class ResCompany(models.Model):
         .o_menu_apps .dropdown-menu {
           background: white !important;
           .o-app-name {
-            color: %(color_navbar_text)s !important;
+            color: black !important;
           }
         }
     """
