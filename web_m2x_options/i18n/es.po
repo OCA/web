@@ -20,105 +20,66 @@ msgstr ""
 "X-Generator: Weblate 4.17\n"
 
 #. module: web_m2x_options
-#. odoo-javascript
-#: code:addons/web_m2x_options/static/src/components/base.xml:0
-#, python-format
-msgid ", are you sure it does not exist yet?"
-msgstr ",¿Está seguro de que aún no existe?"
-
-#. module: web_m2x_options
-#. odoo-javascript
-#: code:addons/web_m2x_options/static/src/components/base.xml:0
-#, python-format
-msgid "Create"
-msgstr "Crear"
-
-#. module: web_m2x_options
-#. odoo-javascript
-#: code:addons/web_m2x_options/static/src/components/relational_utils.esm.js:0
-#, python-format
-msgid "Create \"%s\""
-msgstr "Crear \"%s\""
-
-#. module: web_m2x_options
-#. odoo-javascript
-#: code:addons/web_m2x_options/static/src/components/base.xml:0
-#, python-format
-msgid "Create and Edit"
-msgstr "Crear y Editar"
-
-#. module: web_m2x_options
-#. odoo-javascript
-#: code:addons/web_m2x_options/static/src/components/relational_utils.esm.js:0
-#, python-format
-msgid "Create and edit..."
-msgstr "Crear y editar..."
-
-#. module: web_m2x_options
-#. odoo-javascript
-#: code:addons/web_m2x_options/static/src/components/base.xml:0
-#, python-format
-msgid "Discard"
-msgstr "Descartar"
-
-#. module: web_m2x_options
 #: model:ir.model,name:web_m2x_options.model_ir_http
 msgid "HTTP Routing"
 msgstr "Enrutamiento HTTP"
-
-#. module: web_m2x_options
-#. odoo-javascript
-#: code:addons/web_m2x_options/static/src/components/form.esm.js:0
-#, python-format
-msgid "New: %s"
-msgstr "Nuevo: %s"
-
-#. module: web_m2x_options
-#. odoo-javascript
-#: code:addons/web_m2x_options/static/src/components/relational_utils.esm.js:0
-#, python-format
-msgid "No records"
-msgstr "Sin registros"
-
-#. module: web_m2x_options
-#. odoo-javascript
-#: code:addons/web_m2x_options/static/src/components/form.esm.js:0
-#, python-format
-msgid "Open: "
-msgstr "Abrir "
-
-#. module: web_m2x_options
-#. odoo-javascript
-#: code:addons/web_m2x_options/static/src/components/relational_utils.esm.js:0
-#, python-format
-msgid "Search More..."
-msgstr "Buscar más..."
-
-#. module: web_m2x_options
-#. odoo-javascript
-#: code:addons/web_m2x_options/static/src/components/relational_utils.esm.js:0
-#, python-format
-msgid "Start typing..."
-msgstr "Empieza a escribir..."
 
 #. module: web_m2x_options
 #: model:ir.model,name:web_m2x_options.model_ir_config_parameter
 msgid "System Parameter"
 msgstr "Parámetro del Sistema"
 
-#. module: web_m2x_options
-#. odoo-javascript
-#: code:addons/web_m2x_options/static/src/components/base.xml:0
 #, python-format
-msgid "You are creating a new"
-msgstr "Estás creando un nuevo"
+#~ msgid ", are you sure it does not exist yet?"
+#~ msgstr ",¿Está seguro de que aún no existe?"
 
-#. module: web_m2x_options
-#. odoo-javascript
-#: code:addons/web_m2x_options/static/src/components/base.xml:0
 #, python-format
-msgid "as a new"
-msgstr "como un nuevo"
+#~ msgid "Create"
+#~ msgstr "Crear"
+
+#, python-format
+#~ msgid "Create \"%s\""
+#~ msgstr "Crear \"%s\""
+
+#, python-format
+#~ msgid "Create and Edit"
+#~ msgstr "Crear y Editar"
+
+#, python-format
+#~ msgid "Create and edit..."
+#~ msgstr "Crear y editar..."
+
+#, python-format
+#~ msgid "Discard"
+#~ msgstr "Descartar"
+
+#, python-format
+#~ msgid "New: %s"
+#~ msgstr "Nuevo: %s"
+
+#, python-format
+#~ msgid "No records"
+#~ msgstr "Sin registros"
+
+#, python-format
+#~ msgid "Open: "
+#~ msgstr "Abrir "
+
+#, python-format
+#~ msgid "Search More..."
+#~ msgstr "Buscar más..."
+
+#, python-format
+#~ msgid "Start typing..."
+#~ msgstr "Empieza a escribir..."
+
+#, python-format
+#~ msgid "You are creating a new"
+#~ msgstr "Estás creando un nuevo"
+
+#, python-format
+#~ msgid "as a new"
+#~ msgstr "como un nuevo"
 
 #, python-format
 #~ msgid "Cancel"
