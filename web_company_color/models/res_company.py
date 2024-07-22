@@ -101,7 +101,7 @@ class ResCompany(models.Model):
             color: black !important;
             text-shadow: 1px 1px 1px white !important;
           }
-          .input-group-prepend  > span{
+          .input-group-prepend > span, input{
             color: black !important;
           }
         }
