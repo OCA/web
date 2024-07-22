@@ -96,9 +96,12 @@ class ResCompany(models.Model):
 
     WEB_RESPONSIVE_SCSS_TEMPLATE = """
         .o_menu_apps .dropdown-menu {
-          background: url("../img/home-menu-bg-overlay.svg"),
-                    linear-gradient(to bottom, gray("200"), gray("white"));
+          background: linear-gradient(to bottom, gray("200"), gray("white"));
           .o-app-name {
+            color: black !important;
+            text-shadow: 1px 1px 1px white !important;
+          }
+          .input-group-prepend {
             color: black !important;
           }
         }

@@ -20,8 +20,9 @@ $chatter_zone_width: 35%;
 
 // Support for long titles
 @include media-breakpoint-up(md) {
-    .o_form_view .oe_button_box + .oe_title,
-    .o_form_view .oe_button_box + .oe_avatar + .oe_title {
+
+    .o_form_view .oe_button_box+.oe_title,
+    .o_form_view .oe_button_box+.oe_avatar+.oe_title {
         /* Button-box has a hardcoded width of 132px per button and have three columns */
         width: calc(100% - 450px);
     }
@@ -34,7 +35,7 @@ $chatter_zone_width: 35%;
         display: flex;
 
         // Remove clutter to only have small icons that fit in a small screen
-        > .dropdown {
+        >.dropdown {
             display: flex;
 
             .navbar-toggler {
@@ -82,7 +83,7 @@ $chatter_zone_width: 35%;
                 }
             }
 
-            > li,
+            >li,
             .o_menu_entry_lvl_1,
             .o_menu_header_lvl_1 {
                 // Homogeneous background color
@@ -132,17 +133,20 @@ $chatter_zone_width: 35%;
         }
     }
 }
+
 .o_main_navbar {
     color: color-yiq($o-brand-odoo);
 
-    > ul > li > a,
-    > ul > li > label {
+    >ul>li>a,
+    >ul>li>label {
         color: color-yiq($o-brand-odoo);
     }
+
     .dropdown-menu.show {
         max-height: calc(100vh - #{$o-navbar-height});
     }
 }
+
 // Iconized full screen apps menu
 .o_menu_apps {
     user-select: none;
@@ -164,11 +168,9 @@ $chatter_zone_width: 35%;
         visibility: hidden;
         transition: visibility 100ms ease, opacity 100ms ease;
         background: url("../img/home-menu-bg-overlay.svg"),
-            linear-gradient(
-                to bottom,
+            linear-gradient(to bottom,
                 $o-brand-odoo,
-                desaturate(lighten($o-brand-odoo, 20%), 15)
-            );
+                desaturate(lighten($o-brand-odoo, 20%), 15));
         background-size: cover;
         border-radius: 0;
         // Display apps in a grid
@@ -210,9 +212,11 @@ $chatter_zone_width: 35%;
 
             // Size depends on screen
             width: 33.33333333%;
+
             @include media-breakpoint-up(sm) {
                 width: 25%;
             }
+
             @include media-breakpoint-up(md) {
                 width: 16.6666666%;
             }
@@ -224,7 +228,7 @@ $chatter_zone_width: 35%;
         }
 
         // Hide app icons when searching
-        .has-results ~ .o_app {
+        .has-results~.o_app {
             display: none;
         }
 
@@ -239,6 +243,7 @@ $chatter_zone_width: 35%;
             font-size: 1.25rem;
             text-shadow: 1px 1px 1px rgba(gray("black"), 0.4);
         }
+
         // Search input for menus
         .form-row {
             width: 100%;
@@ -300,9 +305,11 @@ $chatter_zone_width: 35%;
                 }
             }
         }
+
         // Allow to scroll only on results, keeping static search box above
         .search-container.has-results {
             height: 100%;
+
             .search-results {
                 max-height: calc(100vh - 47px - 6em);
                 overflow-y: hidden;
@@ -332,35 +339,43 @@ html .o_web_client .o_action_manager .o_action {
 
 // Make enough space for search panel filters buttons
 .o_control_panel {
+
     // There is no media breakpoint for XL upper bound
     @include media-breakpoint-up(lg) {
         @media (max-width: 1360px) {
+
             .o_cp_top_left,
             .o_cp_bottom_left {
                 width: 40%;
             }
+
             .o_cp_top_right,
             .o_cp_bottom_right {
                 width: 60%;
             }
         }
     }
+
     // For FULL HD devices
     @media (min-width: 1900px) {
+
         .o_cp_top_left,
         .o_cp_bottom_left {
             width: 60%;
         }
+
         .o_cp_top_right,
         .o_cp_bottom_right {
             width: 40%;
         }
     }
+
     @include media-breakpoint-only(md) {
         .o_search_options_hide_labels .o_dropdown_title {
             display: none;
         }
     }
+
     .o_cp_bottom_right {
         height: 30px;
     }
@@ -413,24 +428,29 @@ html .o_web_client .o_action_manager .o_action {
         .o_cp_pager {
             white-space: nowrap;
         }
+
         .o_cp_pager {
             margin-bottom: 0;
         }
 
-        .o_cp_bottom_left > .o_cp_action_menus {
+        .o_cp_bottom_left>.o_cp_action_menus {
             padding-right: 0;
+
             .o_dropdown_title,
             .fa-chevron-right,
             .fa-chevron-down {
                 display: none;
             }
+
             .o_dropdown_toggler_btn {
                 margin: 0px 2px;
             }
+
             @include media-breakpoint-down(xs) {
                 .o_dropdown {
                     position: static;
                 }
+
                 .dropdown-menu {
                     right: 0;
                     left: 0;
@@ -482,53 +502,68 @@ html .o_web_client .o_action_manager .o_action {
 
         .o_searchview {
             padding: 1px 0px 3px 0px;
+
             &.o_searchview_mobile {
                 cursor: pointer;
             }
+
             &.o_searchview_quick {
                 display: flex;
                 flex: 1 1 auto;
                 align-items: center;
+
                 .o_searchview_input_container {
                     flex: 1 1 auto;
                 }
             }
         }
     }
+
     .o_calendar_view .o_calendar_widget {
+
         .fc-timeGridDay-view .fc-axis,
         .fc-timeGridWeek-view .fc-axis {
             padding-left: 0px;
         }
+
         .fc-dayGridMonth-view {
             padding-left: 0px;
+
             .fc-week-number {
                 display: none;
             }
         }
+
         .fc-dayGridYear-view {
             padding-left: 0px;
-            > .fc-month-container > .fc-month {
+
+            >.fc-month-container>.fc-month {
                 width: 100%;
             }
         }
+
         .fc-timeGridDay-view .fc-widget-header {
             margin: 0 4px;
         }
+
         .fc-timeGridWeek-view .fc-widget-header {
             word-spacing: 4em;
             white-space: normal;
             text-align: center;
         }
     }
+
     .o_base_settings .o_setting_container {
         display: block;
+
         .settings_tab {
             flex-flow: row nowrap;
             padding-top: 0px;
+
             .tab {
                 padding-right: 16px;
             }
+
             .selected {
                 background-color: #212529;
                 box-shadow: inset 0 -5px #7c7bad;
@@ -541,6 +576,7 @@ html .o_web_client .o_action_manager .o_action {
 .o_web_client {
     &.o_chatter_position_sided {
         .o_action_manager {
+
             .o_content,
             .modal-content {
                 @include media-breakpoint-up(xl, $o-extra-grid-breakpoints) {
@@ -550,6 +586,7 @@ html .o_web_client .o_action_manager .o_action {
                         }
                     }
                 }
+
                 @include media-breakpoint-between(lg, xl, $o-extra-grid-breakpoints) {
                     .o_group_col_6 {
                         width: 100% !important;
@@ -558,9 +595,11 @@ html .o_web_client .o_action_manager .o_action {
             }
         }
     }
+
     &:not(.o_chatter_position_sided) {
         @include media-breakpoint-up(lg, $o-extra-grid-breakpoints) {
             .o_action_manager {
+
                 .o_content,
                 .modal-content {
                     .o_inner_group {
@@ -588,19 +627,24 @@ html .o_web_client .o_action_manager .o_action {
 
         .o_FormRenderer_chatterContainer {
             padding-top: 0;
+
             .o_Activity_info {
                 flex-wrap: wrap;
             }
+
             .o_ActivityBox_title {
                 margin-bottom: 0;
             }
+
             .o_MessageList_separatorDate {
                 padding-bottom: 0;
             }
         }
+
         // Sided chatter scrolling behavior
         .o_Chatter {
             height: fit-content;
+
             .o_Chatter_fixedPanel {
                 position: sticky;
                 top: 0;
@@ -608,6 +652,7 @@ html .o_web_client .o_action_manager .o_action {
                 background-color: white;
                 padding-bottom: 10px;
             }
+
             .o_Chatter_scrollPanel {
                 overflow: initial;
             }
@@ -628,6 +673,7 @@ html .o_web_client .o_action_manager .o_action {
                 white-space: nowrap;
                 overflow: hidden;
                 width: initial;
+
                 &:active {
                     white-space: normal;
                 }
@@ -651,8 +697,8 @@ html .o_web_client .o_action_manager .o_action {
                 max-width: 100%;
             }
 
-            .oe_button_box + .oe_title,
-            .oe_button_box + .oe_avatar + .oe_title {
+            .oe_button_box+.oe_title,
+            .oe_button_box+.oe_avatar+.oe_title {
                 width: 100%;
             }
 
@@ -679,9 +725,11 @@ html .o_web_client .o_action_manager .o_action {
                     radius: 0;
                     top: 0;
                 }
+
                 height: 100%;
             }
-            .o_statusbar_buttons.dropdown-menu > .btn {
+
+            .o_statusbar_buttons.dropdown-menu>.btn {
                 border-radius: 0;
                 border: 0;
                 width: 100%;
@@ -693,6 +741,7 @@ html .o_web_client .o_action_manager .o_action {
             }
 
             .o_statusbar_status {
+
                 // Arrow from rightmost button exceeds allowed width
                 .o_arrow_button:first-child::before {
                     content: none;
@@ -724,13 +773,14 @@ html .o_web_client .o_action_manager .o_action {
                     .o_composer_button_send {
                         display: initial !important; // Forced in core
                     }
+
                     .o_chatter_avatar {
                         display: none;
                     }
                 }
 
                 .o_chatter_topbar {
-                    > .o_topbar_right_area {
+                    >.o_topbar_right_area {
                         flex: 1 0 auto;
                         flex-wrap: wrap;
                         max-width: 100%;
@@ -754,9 +804,11 @@ html .o_web_client .o_action_manager .o_action {
         .o_view_nocontent {
             top: 80px;
         }
+
         .o_nocontent_help {
             box-shadow: none;
         }
+
         .o_sample_data_disabled {
             display: none;
         }
@@ -774,7 +826,7 @@ html .o_web_client .o_action_manager .o_action {
                     flex: 1 1 auto;
                     overflow: auto;
 
-                    > .o_form_sheet {
+                    >.o_form_sheet {
                         min-width: unset;
                     }
                 }
@@ -796,13 +848,16 @@ html .o_web_client .o_action_manager .o_action {
                         // Scrollable input text to avoid hide conversation & buttons
                         .o_composer_text_field {
                             max-height: 120px;
-                            overflow-y: auto !important; /* Forced because Odoo uses inline style */
+                            overflow-y: auto !important;
+                            /* Forced because Odoo uses inline style */
                         }
+
                         .o_attachments_list {
                             overflow: auto;
                             max-height: $o-mail-attachment-image-size * 3;
                             margin-top: 0.4em;
                         }
+
                         .o_attachments_previews {
                             overflow: auto;
                             max-height: $o-mail-attachment-image-size * 6;
@@ -818,20 +873,24 @@ html .o_web_client .o_action_manager .o_action {
 .o_list_view {
     .table-responsive {
         .o_list_table {
+
             // th & td are here for compatibility with chrome
             thead tr:nth-child(1) th {
                 position: sticky;
                 top: 0;
                 z-index: 1;
             }
+
             thead tr:nth-child(1) th {
                 background-color: $o-list-footer-bg-color;
             }
+
             tfoot,
             tfoot tr:nth-child(1) td {
                 position: sticky;
                 bottom: 0;
             }
+
             tfoot tr:nth-child(1) td {
                 background-color: $o-list-footer-bg-color;
             }
@@ -851,6 +910,7 @@ html .o_web_client .o_action_manager .o_action {
                 width: 24px;
                 height: 24px;
             }
+
             &::before {
                 outline: none !important;
                 border: 1px solid #4c4c4c;
@@ -868,12 +928,15 @@ html .o_web_client .o_action_manager .o_action {
 
 // Attachment Viewer
 .o_web_client.o_chatter_position_sided .o_Dialog_AttachmentViewer {
+
     /* Show sided viewer on large screens */
     @include media-breakpoint-up(lg) {
         position: static;
+
         .o_AttachmentViewer_main {
             padding-bottom: 20px;
         }
+
         .o_AttachmentViewer {
             // On-top of navbar
             z-index: 10;
@@ -889,6 +952,7 @@ html .o_web_client .o_action_manager .o_action {
             }
 
             width: $chatter_zone_width;
+
             &.o_AttachmentViewer_maximized {
                 width: 100%;
             }
@@ -898,24 +962,30 @@ html .o_web_client .o_action_manager .o_action {
             &:hover .o_AttachmentViewer_toolbar {
                 display: flex;
             }
+
             .o_AttachmentViewer_buttonNavigation,
             .o_AttachmentViewer_toolbar {
                 display: none;
             }
+
             .o_AttachmentViewer_viewIframe {
                 width: 95%;
             }
         }
     }
+
     @include media-breakpoint-down(md) {
+
         .o_AttachmentViewer_headerItemButtonMinimize,
         .o_AttachmentViewer_headerItemButtonMaximize {
             display: none;
         }
     }
 }
+
 /* Attachment Viewer Max/Min buttons only are useful in sided mode */
 .o_web_client:not(.o_chatter_position_sided) {
+
     .o_AttachmentViewer_headerItemButtonMinimize,
     .o_AttachmentViewer_headerItemButtonMaximize {
         display: none;
@@ -923,26 +993,31 @@ html .o_web_client .o_action_manager .o_action {
 }
 
 .o_control_panel {
+
     // Filter Menu
     // Cut long filters names in the filters menu
     .o_filter_menu {
         .o_menu_item {
             width: auto;
+
             @include media-breakpoint-up(md) {
                 max-width: 250px;
             }
+
             a {
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
         }
     }
+
     // Enable scroll on dropdowns
     .o_cp_buttons .dropdown-menu {
         max-height: 70vh;
         overflow-y: auto;
         overflow-x: hidden;
     }
+
     // Dropdown with buttons to switch the view type
     .o_cp_switch_buttons.show {
         .dropdown-menu {
@@ -958,6 +1033,7 @@ html .o_web_client .o_action_manager .o_action {
                     radius: 0;
                     top: 0;
                 }
+
                 font-size: 1.3em;
             }
         }
