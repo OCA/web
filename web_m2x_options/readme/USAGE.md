@@ -2,15 +2,11 @@
 
 `create` *boolean* (Default: depends if user have create rights)
 
-> Whether to display the "Create..." entry in dropdown panel.
+> Whether to display the "Create..." entry in dropdown panel. Only for m2o fields.
 
 `create_edit` *boolean* (Default: depends if user have create rights)
 
 > Whether to display "Create and Edit..." entry in dropdown panel
-
-`m2o_dialog` *boolean* (Default: depends if user have create rights)
-
-> Whether to display the many2one dialog in case of validation error.
 
 `limit` *int* (Default: odoo default value is `8`)
 
@@ -30,21 +26,9 @@
 > A dictionary to link field value with a HTML color. This option has to
 > be used with field_color.
 
-`no_open_edit` *boolean* (Default: value of `no_open` which is `False`
-if not set)
-
-> Causes a many2one not to offer to click through in edit mode, but well
-> in read mode
-
 `open` *boolean* (Default: `False`)
 
-> Makes many2many_tags and one2many rows buttons that open the linked
-> resource
-
-`no_color_picker` *boolean* (Default: `False`)
-
-> Deactivates the color picker on many2many_tags buttons to do nothing
-> (ignored if open is set)
+> Makes many2one buttons that open the linked resource.
 
 ## ir.config_parameter options
 
@@ -63,12 +47,6 @@ rights)
 create rights)
 
 > Whether to display "Create and Edit..." entry in dropdown panel for
-> all fields in the odoo instance.
-
-`web_m2x_options.m2o_dialog` *boolean* (Default: depends if user have
-create rights)
-
-> Whether to display the many2one dialog in case of validation error for
 > all fields in the odoo instance.
 
 `web_m2x_options.limit` *int* (Default: odoo default value is `8`)
@@ -90,7 +68,6 @@ To add these parameters go to Configuration -\> Technical -\> Parameters
 
 - web_m2x_options.create: False
 - web_m2x_options.create_edit: False
-- web_m2x_options.m2o_dialog: False
 - web_m2x_options.limit: 10
 - web_m2x_options.search_more: True
 - web_m2x_options.field_limit_entries: 5
@@ -101,6 +78,6 @@ Your XML form view definition could contain:
 
 ``` xml
 ...
-<field name="partner_id" options="{'limit': 10, 'create': false, 'create_edit': false, 'search_more': true, 'field_color':'state', 'colors':{'active':'green'}}"/>
+<field name="partner_id" options="{'limit': 10, 'create': false, 'create_edit': false, 'search_more': true, 'field_color':'type', 'colors':{'contact':'green', 'invoice': 'red', 'delivery': 'blue'}}"/>
 ...
 ```

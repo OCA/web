@@ -153,6 +153,3 @@ msgstr ""
 #~ msgstr ""
 #~ "Vous créez un nouveau %s, est-ce que vous êtes sur qu'il n'existe pas "
 #~ "déjà ?"
-
-#~ msgid "!(widget.nodeOptions.no_open || widget.nodeOptions.no_open_edit)"
-#~ msgstr "!(widget.nodeOptions.no_open || widget.nodeOptions.no_open_edit)"

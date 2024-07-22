@@ -148,6 +148,3 @@ msgstr ""
 #, python-format
 #~ msgid "You are creating a new %s, are you sure it does not exist yet?"
 #~ msgstr "你正在创建一个新的%s，你确定它还不存在吗？"
-
-#~ msgid "!(widget.nodeOptions.no_open || widget.nodeOptions.no_open_edit)"
-#~ msgstr "!(widget.nodeOptions.no_open || widget.nodeOptions.no_open_edit)"
