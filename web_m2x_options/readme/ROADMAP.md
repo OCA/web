@@ -7,7 +7,3 @@ your installation.
 - Instead of making the tags rectangle clickable, I think it's better to
   put the text as a clickable link, so we will get a consistent
   behaviour/aspect with other clickable elements (many2one...).
-- In edit mode, it would be great to add an icon like the one on
-  many2one fields to allow to open the many2many in a popup window.
-- Include this feature as a configurable option via parameter to have
-  this behaviour by default in all many2many tags.
