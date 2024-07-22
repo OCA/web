@@ -96,7 +96,7 @@ class ResCompany(models.Model):
 
     WEB_RESPONSIVE_SCSS_TEMPLATE = """
         .o_menu_apps .dropdown-menu {
-          background: white !important;
+          background: url("../../web_responsive/img/home-menu-bg-overlay.svg");
           .o-app-name {
             color: black !important;
           }
