@@ -106,7 +106,7 @@ class ResCompany(models.Model):
           }
           .input-group > input {
             color: black !important;
-          } 
+          }
           .input-group > input::placeholder {
             color: #222222 !important;
           }
