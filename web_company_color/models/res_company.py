@@ -97,11 +97,11 @@ class ResCompany(models.Model):
     WEB_RESPONSIVE_SCSS_TEMPLATE = """
         .o_menu_apps .dropdown-menu {
           background: linear-gradient(to bottom, #EEEEEE, #FFFFFF);
-          .o-app-name > span {
+          .o-app-name {
             color: black !important;
             text-shadow: 1px 1px 1px white !important;
           }
-          .input-group-prepend {
+          .input-group-prepend  > span{
             color: black !important;
           }
         }
