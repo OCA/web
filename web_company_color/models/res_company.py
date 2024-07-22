@@ -18,6 +18,7 @@ class ResCompany(models.Model):
         .o_main_navbar {
           background-color: %(color_navbar_bg)s !important;
           color: %(color_navbar_text)s !important;
+          border-bottom-color: darken(%(color_navbar_text)s, 10%%) !important;
 
           > .o_menu_brand {
             color: %(color_navbar_text)s !important;
@@ -84,6 +85,31 @@ class ResCompany(models.Model):
         }
         .o_required_modifier.o_input, .o_required_modifier .o_input {
           background-color: lighten(%(color_button_bg)s, 10%%) !important;
+        }
+        .o_selection_focus {
+          background-color: %(color_button_bg)s !important;
+          > a {
+            color: %(color_button_text)s !important;
+          }
+        }
+    """
+
+    WEB_RESPONSIVE_SCSS_TEMPLATE = """
+        .o_menu_apps .dropdown-menu {
+          background: linear-gradient(to bottom, #EEEEEE, #FFFFFF);
+          .o-app-name {
+            color: black !important;
+            text-shadow: 1px 1px 1px white !important;
+          }
+          .input-group-prepend > span{
+            color: black !important;
+          }
+          .input-group > input {
+            color: black !important;
+          }
+          .input-group > input::placeholder {
+            color: #222222 !important;
+          }
         }
     """
 
@@ -205,7 +231,16 @@ class ResCompany(models.Model):
         # ir.attachment need files with content to work
         if not self.company_colors:
             return "// No Web Company Color SCSS Content\n"
-        return self.SCSS_TEMPLATE % self._scss_get_sanitized_values()
+        is_web_responsive_installed = (
+            self.env["ir.module.module"]
+            .sudo()
+            .search([("name", "=", "web_responsive"), ("state", "=", "installed")])
+        )
+        return (
+            self.SCSS_TEMPLATE + self.WEB_RESPONSIVE_SCSS_TEMPLATE
+            if is_web_responsive_installed
+            else self.SCSS_TEMPLATE
+        ) % self._scss_get_sanitized_values()
 
     def scss_get_url(self):
         self.ensure_one()
