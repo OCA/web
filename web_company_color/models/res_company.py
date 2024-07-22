@@ -96,11 +96,7 @@ class ResCompany(models.Model):
 
     WEB_RESPONSIVE_SCSS_TEMPLATE = """
         .o_menu_apps .dropdown-menu {
-          background: linear-gradient(
-            to bottom,
-            %(color_navbar_bg)s,
-            desaturate(lighten(%(color_navbar_bg)s, 20%%), 15)
-          ) !important;
+          background: white !important;
           .o-app-name {
             color: %(color_navbar_text)s !important;
           }
