@@ -149,9 +149,6 @@ msgstr ""
 #~ msgid "You are creating a new %s, are you sure it does not exist yet?"
 #~ msgstr "U maakt een nieuw %s, weet u het zeker dat dit nog niet bestaat?"
 
-#~ msgid "!(widget.nodeOptions.no_open || widget.nodeOptions.no_open_edit)"
-#~ msgstr "!(widget.nodeOptions.no_open || widget.nodeOptions.no_open_edit)"
-
 #~ msgid "Display Name"
 #~ msgstr "Weergavenaam"
 
