@@ -89,9 +89,9 @@ export class Refresher extends Component {
      * @returns {Promise<Boolean>}
      */
     async refresh() {
-        let updated = this._searchModelRefresh();
+        let updated = await this._pagerRefresh();
         if (!updated) {
-            updated = await this._pagerRefresh();
+            updated = this._searchModelRefresh();
         }
         return updated;
     }

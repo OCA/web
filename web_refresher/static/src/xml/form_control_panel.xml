@@ -10,7 +10,7 @@
     >
         <xpath expr="//div[hasclass('o_cp_pager')]" position="before">
             <div class="oe_cp_refresher" role="search" t-ref="refresher">
-                <Refresher t-props="refresherProps" />
+                <Refresher t-if="displayRefresher" t-props="refresherProps" />
             </div>
         </xpath>
         <xpath expr="//div[hasclass('o_cp_bottom_right')]" position="before">
@@ -19,7 +19,7 @@
                 class="o_cp_bottom_right d-flex flex-row-reverse"
             >
                 <div class="oe_cp_refresher" role="search" t-ref="refresher">
-                    <Refresher refresherReport="true" />
+                    <Refresher t-if="displayRefresher" refresherReport="true" />
                 </div>
             </div>
         </xpath>

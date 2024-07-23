@@ -12,16 +12,23 @@ ControlPanel.components = Object.assign({}, ControlPanel.components, {
     Refresher,
 });
 
+/**
+ * @property {String[]} forbiddenSubTypes
+ * @property {Object<String, *>} refresherProps
+ */
 patch(ControlPanel.prototype, "web_refresher.ControlPanel", {
     setup() {
         this._super(...arguments);
-        const {config, searchModel} = this.env;
-        const forbiddenSubType = ["base_settings"];
-        if (!forbiddenSubType.includes(config.viewSubType)) {
-            this.refresherProps = {
-                searchModel: searchModel,
-                pagerProps: this.pagerProps,
-            };
-        }
+        this.forbiddenSubTypes = ["base_settings"];
+        this.refresherProps = {
+            searchModel: this.env.searchModel,
+            pagerProps: this.pagerProps,
+        };
+    },
+    /**
+     * @returns {Boolean}
+     */
+    get displayRefresher() {
+        return !this.forbiddenSubTypes.includes(this.env.config.viewSubType);
     },
 });
