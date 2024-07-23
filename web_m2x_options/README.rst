@@ -155,7 +155,7 @@ Your XML form view definition could contain:
 .. code:: xml
 
    ...
-   <field name="partner_id" options="{'limit': 10, 'create': false, 'create_edit': false, 'search_more': true, 'field_color':'state', 'colors':{'active':'green'}}"/>
+   <field name="partner_id" options="{'limit': 10, 'create': false, 'create_edit': false, 'search_more': true, 'field_color':'type', 'colors':{'contact':'green', 'invoice': 'red', 'delivery': 'blue'}}"/>
    ...
 
 Known issues / Roadmap
