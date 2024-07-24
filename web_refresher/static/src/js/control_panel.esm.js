@@ -24,11 +24,8 @@ patch(ControlPanel.prototype, "web_refresher.ControlPanel", {
             searchModel: this.env.searchModel,
             pagerProps: this.pagerProps,
         };
-    },
-    /**
-     * @returns {Boolean}
-     */
-    get displayRefresher() {
-        return !this.forbiddenSubTypes.includes(this.env.config.viewSubType);
+        this.displayRefresher = !this.forbiddenSubTypes.includes(
+            this.env.config.viewSubType
+        );
     },
 });
