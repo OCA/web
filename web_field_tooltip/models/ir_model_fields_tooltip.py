@@ -6,7 +6,6 @@ from odoo.exceptions import UserError
 
 
 class IrModelFieldsTooltip(models.Model):
-
     _name = "ir.model.fields.tooltip"
     _description = "Field Tooltip"
 
