@@ -13,7 +13,7 @@
                     name="tooltip_show_add_helper"
                     widget="boolean_toggle"
                     readonly="0"
-                    attrs="{'invisible': [('tooltip_show_add_helper_allowed', '=', False)]}"
+                    invisible="not tooltip_show_add_helper_allowed"
                 />
             </xpath>
         </field>

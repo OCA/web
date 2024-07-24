@@ -4,7 +4,6 @@ import {Component, markup} from "@odoo/owl";
 
 import {FormViewDialog} from "@web/views/view_dialogs/form_view_dialog";
 import {session} from "@web/session";
-import {usePopover} from "@web/core/popover/popover_hook";
 import {useService} from "@web/core/utils/hooks";
 
 export class FieldTooltipPopover extends Component {}
@@ -12,7 +11,7 @@ FieldTooltipPopover.template = "web_field_tooltip.FieldTooltipPopover";
 
 export class FieldTooltip extends Component {
     setup() {
-        this.popover = usePopover();
+        this.popover = useService("popover");
         this.tooltipPopover = null;
         this.hasFieldTooltip = this.props.hasFieldTooltip;
         this.canManageTooltip = session.can_manage_tooltips;
