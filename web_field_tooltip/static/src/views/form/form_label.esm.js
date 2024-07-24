@@ -7,7 +7,7 @@ import {patch} from "@web/core/utils/patch";
 
 import {session} from "@web/session";
 
-patch(FormLabel.prototype, "web_field_tooltip", {
+const web_field_tooltip = {
     get showTooltipAddHelper() {
         return session.tooltip_show_add_helper;
     },
@@ -27,7 +27,9 @@ patch(FormLabel.prototype, "web_field_tooltip", {
             fieldName: props.fieldName,
         };
     },
-});
+};
+
+patch(FormLabel.prototype, web_field_tooltip);
 
 FormLabel.components = Object.assign({}, FormLabel.components, {
     FieldTooltip,

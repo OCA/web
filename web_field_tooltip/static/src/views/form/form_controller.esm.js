@@ -1,18 +1,18 @@
 /** @odoo-module **/
 
 import {FormController} from "@web/views/form/form_controller";
+import {_t} from "@web/core/l10n/translation";
 import {patch} from "@web/core/utils/patch";
-
 import {session} from "@web/session";
 
-patch(FormController.prototype, "web_field_tooltip", {
-    getActionMenuItems() {
-        const menuItems = this._super(...arguments);
-        const otherMenuItems = menuItems.other;
+const web_field_tooltip = {
+    get actionMenuItems() {
+        const menuItems = super.actionMenuItems;
+        const otherMenuItems = menuItems.action;
         if (session.can_manage_tooltips) {
             otherMenuItems.push({
                 key: "manage_tooltips",
-                description: this.env._t("Manage tooltips"),
+                description: _t("Manage tooltips"),
                 callback: () => this.manageTooltips(),
             });
         }
@@ -31,4 +31,6 @@ patch(FormController.prototype, "web_field_tooltip", {
             }
         );
     },
-});
+};
+
+patch(FormController.prototype, web_field_tooltip);
