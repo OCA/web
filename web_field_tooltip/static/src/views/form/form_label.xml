@@ -7,10 +7,8 @@
         t-inherit-mode="extension"
         owl="1"
     >
-        <xpath expr="//sup" position="before">
-            <t t-if="hasFieldTooltip or showTooltipAddHelper">
-                <FieldTooltip t-props="getFieldTooltipProps" />
-            </t>
+        <xpath expr="//sup" position="attributes">
+            <attribute name="t-on-click">(ev) => this.onClickTooltip(ev)</attribute>
         </xpath>
     </t>
 

@@ -7,5 +7,5 @@ To use this module, you need to:
 - You can also go directly on the form view of a model on which you want
   to add a tooltip and use the Manage tooltips Action to add a new
   tooltip, or edit or delete existing tooltips for this model.
-- For manager users, they can decide to display an helper to add a
+- For manager users, they can decide to display a helper to add a
   tooltip on a field as some fields are not displayed with a label.
