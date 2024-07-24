@@ -19,14 +19,9 @@
     ],
     "assets": {
         "web.assets_backend": [
-            "/web_field_tooltip/static/src/components/field_tooltip/field_tooltip.esm.js",
-            "/web_field_tooltip/static/src/components/field_tooltip/field_tooltip.scss",
-            "/web_field_tooltip/static/src/components/field_tooltip/field_tooltip.xml",
             "/web_field_tooltip/static/src/views/form/form_controller.esm.js",
             "/web_field_tooltip/static/src/views/form/form_label.esm.js",
             "/web_field_tooltip/static/src/views/form/form_label.xml",
-            "/web_field_tooltip/static/src/views/list/list_renderer.esm.js",
-            "/web_field_tooltip/static/src/views/list/list_renderer.xml",
         ],
     },
 }
