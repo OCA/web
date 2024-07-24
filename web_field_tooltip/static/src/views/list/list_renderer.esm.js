@@ -7,7 +7,7 @@ import {patch} from "@web/core/utils/patch";
 
 import {session} from "@web/session";
 
-patch(ListRenderer.prototype, "web_field_tooltip", {
+const web_field_tooltip = {
     showTooltipAddHelper() {
         return session.tooltip_show_add_helper;
     },
@@ -29,7 +29,9 @@ patch(ListRenderer.prototype, "web_field_tooltip", {
             fieldName: fieldName,
         };
     },
-});
+};
+
+patch(ListRenderer.prototype, web_field_tooltip);
 
 ListRenderer.components = Object.assign({}, ListRenderer.components, {
     FieldTooltip,
