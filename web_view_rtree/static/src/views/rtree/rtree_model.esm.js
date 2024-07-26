@@ -421,7 +421,9 @@ class DynamicRTreeRecordList extends DynamicRecordList {
 
     async _fetchRecords({model, domain}) {
         let fieldNames = [];
-        const kwargs = {};
+        const kwargs = {
+            context: this.context,
+        };
         if (model === this.recordModel) {
             fieldNames = Object.keys(this.model.rootParams.activeFields);
             kwargs.order = orderByToString(this.orderBy);
@@ -432,7 +434,9 @@ class DynamicRTreeRecordList extends DynamicRecordList {
     }
 
     async _fetchGroups({model, groupBy, domain}) {
-        const kwargs = {};
+        const kwargs = {
+            context: this.context,
+        };
         return this.model.orm.webReadGroup(model, domain, [groupBy], [groupBy], kwargs);
     }
 
@@ -562,7 +566,10 @@ class DynamicRTreeRecordList extends DynamicRecordList {
 
     async _fetchReorderIDs({model, domain}) {
         const fieldNames = ["id"];
-        const kwargs = {order: orderByToString(this.orderBy)};
+        const kwargs = {
+            context: this.context,
+            order: orderByToString(this.orderBy),
+        };
         const result = await this.model.orm.webSearchRead(
             model,
             domain,
