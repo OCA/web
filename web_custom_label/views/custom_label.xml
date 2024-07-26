@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="custom_label_list" model="ir.ui.view">
+        <field name="name">Custom Label List View</field>
+        <field name="model">web.custom.label</field>
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field name="lang" />
+                <field
+                    name="model_ids"
+                    widget="many2many_tags"
+                    options="{'no_create': 1}"
+                />
+                <field name="type_" />
+                <field name="reference" string="Field" />
+                <field name="position" />
+                <field
+                    name="key"
+                    attrs="{'readonly': [('position', '!=', 'selection')]}"
+                    force_save="1"
+                />
+                <field name="term" />
+                <field name="active" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="custom_label_search" model="ir.ui.view">
+        <field name="name">Custom Label Search View</field>
+        <field name="model">web.custom.label</field>
+        <field name="arch" type="xml">
+            <search string="Custom Labels">
+                <field name="model_ids" />
+                <field name="reference" />
+                <field name="lang" />
+                <field name="position" />
+                <group expand="0" string="Group By">
+                    <filter
+                        name="group_by_lang"
+                        string="Language"
+                        context="{'group_by': 'lang'}"
+                    />
+                    <filter
+                        name="group_by_reference"
+                        string="Field"
+                        context="{'group_by': 'reference'}"
+                    />
+                    <filter
+                        name="group_by_type_"
+                        string="Type"
+                        context="{'group_by': 'type_'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="custom_label_action" model="ir.actions.act_window">
+        <field name="name">Custom Labels</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">web.custom.label</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="custom_label_list" />
+    </record>
+    <menuitem
+        action="custom_label_action"
+        id="custom_label_menu"
+        parent="base.menu_translation_app"
+        sequence="99"
+    />
+
+</odoo>
