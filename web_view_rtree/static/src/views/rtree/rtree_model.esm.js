@@ -1,6 +1,7 @@
 /** @odoo-module */
 
 import {DynamicRecordList, Record, RelationalModel} from "@web/views/relational_model";
+import {InvalidDomainError} from "@web/core/domain";
 import {WarningDialog} from "@web/core/errors/error_dialogs";
 
 // Here is an explanation of how the data loading works.
@@ -801,14 +802,89 @@ export class RTreeModel extends RelationalModel {
         return newRecordsList.length;
     }
 
+    _parseDomainOperator(operator) {
+        let numElements = 0;
+        switch (operator) {
+            case "&":
+            case "|":
+                numElements = 2;
+                break;
+            case "!":
+                numElements = 1;
+                break;
+            default:
+                return null;
+        }
+        return {
+            operator,
+            numElements,
+        };
+    }
+
+    _parseDomain(domain) {
+        // Check that GLOBAL_FILTER_FIELD is only used once and at the top
+        // level, possibly with an & operator.
+        const newDomain = [];
+        let globalFilterElement = null;
+        const operatorStack = [];
+        let currentOperator = null;
+        for (const element of domain) {
+            if (currentOperator !== null) {
+                --currentOperator.numElements;
+            }
+            if (typeof element === "string") {
+                if (currentOperator !== null) {
+                    operatorStack.push(currentOperator);
+                }
+                currentOperator = this._parseDomainOperator(element);
+                if (currentOperator === null) {
+                    throw new InvalidDomainError("Invalid domain: " + domain);
+                }
+                if (operatorStack.length === 0 && currentOperator.operator === "&") {
+                    // Ignore the & operator at the top level, as it is the
+                    // default way of combining domain elements.
+                    currentOperator = null;
+                } else {
+                    newDomain.push(currentOperator.operator);
+                }
+            } else if (element[0] === GLOBAL_FILTER_FIELD) {
+                if (globalFilterElement !== null || currentOperator !== null) {
+                    // GLOBAL_FILTER_FIELD is used more than once, is not at
+                    // the top level or is not used with an & operator.
+                    // This is not supported.
+                    return {
+                        newDomain: null,
+                        globalFilterElement,
+                    };
+                }
+                globalFilterElement = element;
+            } else {
+                newDomain.push(element);
+            }
+            while (currentOperator !== null) {
+                if (currentOperator.numElements !== 0) {
+                    break;
+                }
+                if (operatorStack.length) {
+                    currentOperator = operatorStack.pop();
+                } else {
+                    currentOperator = null;
+                }
+            }
+        }
+        return {
+            newDomain,
+            globalFilterElement,
+        };
+    }
+
     // Here is an explanation of how filtering (on display_name of all records
     // of all models) works. This is a naive and slow, but straightforward and
     // easy approach.
     //
     // 1. If a domain is provided, it is parsed to check whether one of its
     //    elements uses the GLOBAL_FILTER_FIELD field. If one does, it is
-    //    removed from the domain to not conflict with the default domain of
-    //    the view.
+    //    removed from the domain to not conflict with the domain of the view.
     // 2. The model is loaded if it is not already loaded. This is checked by
     //    comparing the previous domain used to load with the new one.
     // 3. The tree is fully expanded (which results in the whole tree being
@@ -832,25 +908,13 @@ export class RTreeModel extends RelationalModel {
 
     async load(params = {}) {
         const domain = params.domain;
-        const newDomain = [];
-        let globalFilterElement = null;
-        // FIXME: This does not support complex domains with | or & operators.
-        if (domain.length !== 0) {
-            for (const element of domain) {
-                if (typeof element === "string") {
-                    this.errorDialog(
-                        "Error",
-                        "This type of search domain is not supported in an " +
-                            "rtree view."
-                    );
-                    return;
-                }
-                if (element[0] === GLOBAL_FILTER_FIELD) {
-                    globalFilterElement = element;
-                } else {
-                    newDomain.push(element);
-                }
-            }
+        const {newDomain, globalFilterElement} = this._parseDomain(domain);
+        if (newDomain === null) {
+            this.errorDialog(
+                "Error",
+                "This type of search domain is not supported in an rtree view."
+            );
+            return;
         }
         if (globalFilterElement === null) {
             this.previousDomain = domain;

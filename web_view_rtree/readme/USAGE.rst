@@ -65,6 +65,9 @@ If the search view defines a search on the ``display_name`` field, using it in
 the rtree view will filter all records (of any model) on their
 ``display_name``. This uses the ``name_search()`` model method.
 
+The filtering only works with a simple filter, not with | or & operators, thus
+entering two values to filter on does not work.
+
 Using secondary model fields
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
