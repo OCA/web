@@ -12,3 +12,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#. module: web_ir_actions_act_view_reload
+#: model:ir.model,name:web_ir_actions_act_view_reload.model_ir_actions_act_view_reload
+msgid "View Reload"
+msgstr ""

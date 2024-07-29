@@ -1,27 +1,18 @@
 /** @odoo-module **/
 
+/* global require*/
+var session = require("web.session");
 import {ActionDialog} from "@web/webclient/actions/action_dialog";
-import {patch} from "@web/core/utils/patch";
-import rpc from "web.rpc";
 const {Component} = owl;
-const {onMounted} = owl.hooks;
+import {patch} from "@web/core/utils/patch";
 
 export class ExpandButton extends Component {
     setup() {
-        this.last_size = this.props.getsize();
-        this.config = rpc.query({
-            model: "ir.config_parameter",
-            method: "get_web_dialog_size_config",
-        });
-
-        onMounted(() => {
-            var self = this;
-            this.config.then(function (r) {
-                if (r.default_maximize && stop) {
-                    self.dialog_button_extend();
-                }
-            });
-        });
+        if (session.default_maximize) {
+            this.last_size = "modal-lg";
+        } else {
+            this.last_size = this.props.getsize();
+        }
     }
 
     dialog_button_extend() {
@@ -40,6 +31,11 @@ patch(ActionDialog.prototype, "web_dialog_size.ActionDialog", {
         this._super(...arguments);
         this.setSize = this.setSize.bind(this);
         this.getSize = this.getSize.bind(this);
+
+        if (session.default_maximize) {
+            this.last_size = "modal-lg";
+            this.size = "dialog_full_screen";
+        }
     },
 
     setSize(size) {

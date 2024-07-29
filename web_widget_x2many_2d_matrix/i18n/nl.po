@@ -26,7 +26,6 @@ msgstr "Sorry er is geen matrix data om weertegeven."
 #. module: web_widget_x2many_2d_matrix
 #. openerp-web
 #: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:0
-#: code:addons/web_widget_x2many_2d_matrix/static/src/js/2d_matrix_renderer.js:0
 #, python-format
 msgid "Sum"
 msgstr "Som"

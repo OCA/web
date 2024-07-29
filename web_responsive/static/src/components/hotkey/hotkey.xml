@@ -24,18 +24,6 @@
             >'shift+' + (sectionsVisibleCount + 1 % 10).toString()</attribute>
         </xpath>
     </t>
-    <t t-inherit="web.Pager" t-inherit-mode="extension" owl="1">
-        <xpath expr="//button[hasclass('o_pager_previous')]" position="attributes">
-            <attribute
-                name="t-att-accesskey"
-            >props.withAccessKey ? 'z' : false</attribute>
-        </xpath>
-        <xpath expr="//button[hasclass('o_pager_next')]" position="attributes">
-            <attribute
-                name="t-att-accesskey"
-            >props.withAccessKey ? 'x' : false</attribute>
-        </xpath>
-    </t>
     <t t-inherit="web.UserMenu.shortcutsTable" t-inherit-mode="extension" owl="1">
         <xpath expr="//div[hasclass('row')]" position="attributes">
             <attribute name="class" separator=" " add="justify-content-center" />

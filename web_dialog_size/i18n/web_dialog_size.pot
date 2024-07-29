@@ -14,6 +14,11 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: web_dialog_size
+#: model:ir.model,name:web_dialog_size.model_ir_http
+msgid "HTTP Routing"
+msgstr ""
+
+#. module: web_dialog_size
 #: model:ir.model,name:web_dialog_size.model_ir_config_parameter
 msgid "System Parameter"
 msgstr ""

@@ -12,7 +12,7 @@
         }
         .o_AttachmentViewer {
             // On-top of navbar
-            z-index: 10;
+            z-index: 1000;
             position: absolute;
             right: 0;
             top: 0;
@@ -53,4 +53,8 @@
     .o_AttachmentViewer_headerItemButtonMaximize {
         display: none;
     }
+}
+
+.o_apps_menu_opened .o_AttachmentViewer {
+    display: none !important;
 }
