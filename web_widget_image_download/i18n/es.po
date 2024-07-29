@@ -17,7 +17,7 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: web_widget_image_download
-#. openerp-web
+#. odoo-javascript
 #: code:addons/web_widget_image_download/static/src/xml/web_widget_image_download.xml:0
 #, python-format
 msgid "Download"
