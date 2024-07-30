@@ -83,8 +83,15 @@ class ResCompany(models.Model):
         .o_arrow_button.btn-primary.disabled {
           color: %(color_link_text)s !important;
         }
-        .o_required_modifier.o_input, .o_required_modifier .o_input {
-          background-color: lighten(%(color_button_bg)s, 10%%) !important;
+        .o_required_modifier{
+          :focus-within {
+            --o-input-border-color: %(color_button_bg)s !important;
+            --o-caret-color: %(color_button_bg)s !important;
+          }
+          input:hover, .o_field_many2one_selection:hover {
+            --o-input-border-color: %(color_button_bg)s !important;
+            --o-caret-color: %(color_button_bg)s !important;
+          }
         }
     """
 
@@ -172,14 +179,13 @@ class ResCompany(models.Model):
                 "color_navbar_bg": (values.get("color_navbar_bg") or "$o-brand-odoo"),
                 "color_navbar_bg_hover": (values.get("color_navbar_bg_hover")),
                 "color_navbar_text": (values.get("color_navbar_text") or "#FFF"),
-                "color_button_bg": values.get("color_button_bg") or "$primary",
+                "color_button_bg": values.get("color_button_bg") or "#71639e",
                 "color_button_bg_hover": values.get("color_button_bg_hover")
-                or 'darken(theme-color("primary"), 10%)',
+                or "darken(#71639e, 10%)",
                 "color_button_text": values.get("color_button_text") or "#FFF",
-                "color_link_text": values.get("color_link_text")
-                or 'theme-color("primary")',
+                "color_link_text": values.get("color_link_text") or "#71639e",
                 "color_link_text_hover": values.get("color_link_text_hover")
-                or 'darken(theme-color("primary"), 10%)',
+                or "darken(#71639e, 10%)",
             }
         )
         return values
