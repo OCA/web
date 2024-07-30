@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2017 Jairo Llopis <jairo.llopis@tecnativa.com>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<templates xml:space="preserve">
+
+    <t
+        t-name="web_m2x_options.AutoComplete"
+        t-inherit="web.AutoComplete"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//t[@t-foreach='source.options']/li/a" position="attributes">
+            <attribute name="t-attf-style">{{ option.style }}</attribute>
+        </xpath>
+    </t>
+
+     <t
+        t-name="web_m2x_options.Many2ManyTagsField"
+        t-inherit="web.Many2ManyTagsField"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//Many2XAutocomplete" position="attributes">
+            <attribute name="searchLimit">props.searchLimit</attribute>
+            <attribute name="fieldColor">props.fieldColor</attribute>
+            <attribute name="fieldColorOptions">props.fieldColorOptions</attribute>
+        </xpath>
+    </t>
+
+</templates>
