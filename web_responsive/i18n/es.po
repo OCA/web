@@ -22,13 +22,6 @@ msgstr ""
 
 #. module: web_responsive
 #. odoo-javascript
-#: code:addons/web_responsive/static/src/components/chatter_topbar/chatter_topbar.xml:0
-#, python-format
-msgid "Activities"
-msgstr "Actividades"
-
-#. module: web_responsive
-#. odoo-javascript
 #: code:addons/web_responsive/static/src/components/search_panel/search_panel.xml:0
 #, python-format
 msgid "All"
@@ -76,13 +69,6 @@ msgstr "FILTRAR"
 #, python-format
 msgid "Home Menu"
 msgstr "Menú de Inicio"
-
-#. module: web_responsive
-#. odoo-javascript
-#: code:addons/web_responsive/static/src/components/chatter_topbar/chatter_topbar.xml:0
-#, python-format
-msgid "Log note"
-msgstr "Registrar una nota"
 
 #. module: web_responsive
 #. odoo-javascript
@@ -136,17 +122,22 @@ msgstr "Búsqueda..."
 
 #. module: web_responsive
 #. odoo-javascript
-#: code:addons/web_responsive/static/src/components/chatter_topbar/chatter_topbar.xml:0
-#, python-format
-msgid "Send message"
-msgstr "Enviar mensaje"
-
-#. module: web_responsive
-#. odoo-javascript
 #: code:addons/web_responsive/static/src/components/control_panel/control_panel.xml:0
 #, python-format
 msgid "View switcher"
 msgstr "Vista del conmutador"
+
+#, python-format
+#~ msgid "Activities"
+#~ msgstr "Actividades"
+
+#, python-format
+#~ msgid "Log note"
+#~ msgstr "Registrar una nota"
+
+#, python-format
+#~ msgid "Send message"
+#~ msgstr "Enviar mensaje"
 
 #, python-format
 #~ msgid "Create"
