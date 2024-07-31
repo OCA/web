@@ -39,7 +39,7 @@ addon | version | maintainers | summary
 [web_ir_actions_act_view_reload](web_ir_actions_act_view_reload/) | 15.0.1.0.1 |  | Enables reload of the current view via ActionManager
 [web_ir_actions_act_window_message](web_ir_actions_act_window_message/) | 15.0.1.0.0 |  | Show a message box to users
 [web_listview_range_select](web_listview_range_select/) | 15.0.1.0.0 |  | Enables selecting a range of records using the shift key
-[web_m2x_options](web_m2x_options/) | 15.0.1.1.0 |  | web_m2x_options
+[web_m2x_options](web_m2x_options/) | 15.0.1.1.1 |  | web_m2x_options
 [web_m2x_options_manager](web_m2x_options_manager/) | 15.0.1.0.0 |  | Adds an interface to manage the "Create" and "Create and Edit" options for specific models and fields.
 [web_no_bubble](web_no_bubble/) | 15.0.1.0.0 |  | Remove the bubbles from the web interface
 [web_notify](web_notify/) | 15.0.2.0.0 |  | Send notification messages to user
