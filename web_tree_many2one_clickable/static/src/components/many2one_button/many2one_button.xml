@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-inherit="web.ListRenderer.RecordRow" t-inherit-mode="extension">
+        <xpath expr="//t[@t-if='!isInvisible']" position="inside">
+            <button
+                class="btn btn-sm btn-secondary fa fa-arrow-right web_tree_many2one_clickable"
+                t-on-click="(ev) => this.onClickM2oButton(record, column, ev)"
+                t-if="record.fields[column.name].type == 'many2one' and record.data[column.name] and canUseFormatter(column, record) and !column.options.no_open"
+            >
+        </button>
+        </xpath>
+    </t>
+</templates>

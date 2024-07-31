@@ -9,7 +9,7 @@
 {
     "name": "Web Responsive",
     "summary": "Responsive web client, community-supported",
-    "version": "17.0.1.0.0",
+    "version": "17.0.1.1.0",
     "category": "Website",
     "website": "https://github.com/OCA/web",
     "author": "LasLabs, Tecnativa, ITerra, Onestein, "
@@ -18,7 +18,7 @@
     "installable": True,
     "depends": ["web", "mail"],
     "development_status": "Production/Stable",
-    "maintainers": ["Yajo", "Tardo", "SplashS"],
+    "maintainers": ["Tardo", "SplashS"],
     "excludes": ["web_enterprise"],
     "data": [
         "views/res_users_views.xml",
@@ -48,9 +48,7 @@
             "/web_responsive/static/src/components/chatter/*",
             "/web_responsive/static/src/components/control_panel/*",
             "/web_responsive/static/src/components/command_palette/*",
-            "/web_responsive/static/src/views/form/form_controller.scss",
-            "/web_responsive/static/src/views/form/status_bar_buttons.xml",
-            "/web_responsive/static/src/views/form/form_statusbar.scss",
+            "/web_responsive/static/src/views/form/*",
         ],
         "web.assets_tests": [
             "/web_responsive/static/tests/test_patch.js",

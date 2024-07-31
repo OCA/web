@@ -16,6 +16,8 @@ exclude: |
   readme/.*\.(rst|md)$|
   # Ignore build and dist directories in addons
   /build/|/dist/|
+  # Ignore test files in addons
+  /tests/samples/.*|
   # You don't usually want a bot to modify your legal texts
   (LICENSE.*|COPYING.*)
 default_language_version:
@@ -41,7 +43,7 @@ repos:
     hooks:
       - id: whool-init
   - repo: https://github.com/oca/maintainer-tools
-    rev: f71041f22b8cd68cf7c77b73a14ca8d8cd190a60
+    rev: 9a170331575a265c092ee6b24b845ec508e8ef75
     hooks:
       # update the NOT INSTALLABLE ADDONS section above
       - id: oca-update-pre-commit-excluded-addons
@@ -110,7 +112,7 @@ repos:
         args: [--fix, --exit-non-zero-on-fix]
       - id: ruff-format
   - repo: https://github.com/OCA/pylint-odoo
-    rev: v8.0.19
+    rev: v9.0.4
     hooks:
       - id: pylint_odoo
         name: pylint with optional checks
