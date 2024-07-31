@@ -87,11 +87,6 @@ msgid "ID"
 msgstr ""
 
 #. module: web_field_tooltip
-#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip____last_update
-msgid "Last Modified on"
-msgstr "Dernière modification le"
-
-#. module: web_field_tooltip
 #: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__write_uid
 msgid "Last Updated by"
 msgstr "Dernière mise à jour par"
@@ -163,6 +158,9 @@ msgstr "Texte de l'Infobulle"
 #: model:ir.model,name:web_field_tooltip.model_res_users
 msgid "User"
 msgstr ""
+
+#~ msgid "Last Modified on"
+#~ msgstr "Dernière modification le"
 
 #, python-format
 #~ msgid "Add a Tooltip"

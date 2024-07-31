@@ -86,11 +86,6 @@ msgid "ID"
 msgstr "ID"
 
 #. module: web_field_tooltip
-#: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
-
-#. module: web_field_tooltip
 #: model:ir.model.fields,field_description:web_field_tooltip.field_ir_model_fields_tooltip__write_uid
 msgid "Last Updated by"
 msgstr "Ultimo aggiornamento di"
@@ -162,3 +157,6 @@ msgstr "Testo descrizione"
 #: model:ir.model,name:web_field_tooltip.model_res_users
 msgid "User"
 msgstr "Utente"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
