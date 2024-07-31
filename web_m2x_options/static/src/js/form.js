@@ -29,6 +29,11 @@ odoo.define("web_m2x_options.web_m2x_options", function (require) {
         init: function (parent, name, value) {
             this.name = name;
             this.value = value;
+            // Define methods for the dialog binding the parent Object to make the
+            // actions on the correct context.
+            this.quickCreate = parent._quickCreate.bind(parent);
+            this.searchCreatePopup = parent._searchCreatePopup.bind(parent);
+            this.createContext = parent._createContext.bind(parent);
             this._super(parent, {
                 title: _.str.sprintf(_t("Create a %s"), this.name),
                 size: "medium",
@@ -37,14 +42,8 @@ odoo.define("web_m2x_options.web_m2x_options", function (require) {
                         text: _t("Create"),
                         classes: "btn-primary",
                         click: function () {
-                            if (this.$("input").val()) {
-                                this.trigger_up("quick_create", {
-                                    value: this.$("input").val(),
-                                });
-                                this.close(true);
-                            } else {
-                                this.$("input").focus();
-                            }
+                            this.quickCreate(this.value);
+                            this.close(true);
                         },
                     },
                     {
@@ -52,10 +51,8 @@ odoo.define("web_m2x_options.web_m2x_options", function (require) {
                         classes: "btn-primary",
                         close: true,
                         click: function () {
-                            this.trigger_up("search_create_popup", {
-                                view_type: "form",
-                                value: this.$("input").val(),
-                            });
+                            const valueContext = this.createContext(this.value);
+                            this.searchCreatePopup("form", false, valueContext);
                         },
                     },
                     {
