@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.model.access" id="ir_model_fields_tooltip_access_reader">
+        <field name="name">ir.model.fields.tooltip access reader</field>
+        <field name="model_id" ref="model_ir_model_fields_tooltip" />
+        <field name="group_id" ref="base.group_user" />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="0" />
+        <field name="perm_write" eval="0" />
+        <field name="perm_unlink" eval="0" />
+    </record>
+
+    <record model="ir.model.access" id="ir_model_fields_tooltip_access_user">
+        <field name="name">ir.model.fields.tooltip access user</field>
+        <field name="model_id" ref="model_ir_model_fields_tooltip" />
+        <field name="group_id" ref="web_field_tooltip.group_tooltip_manager" />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="1" />
+        <field name="perm_write" eval="1" />
+        <field name="perm_unlink" eval="1" />
+    </record>
+
+    <record model="ir.model.access" id="ir_model_access_reader">
+        <field name="name">ir.model access reader</field>
+        <field name="model_id" ref="base.model_ir_model" />
+        <field name="group_id" ref="web_field_tooltip.group_tooltip_manager" />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="0" />
+        <field name="perm_write" eval="0" />
+        <field name="perm_unlink" eval="0" />
+    </record>
+
+    <record model="ir.model.access" id="ir_model_fields_access_reader">
+        <field name="name">ir.model.fields access reader</field>
+        <field name="model_id" ref="base.model_ir_model_fields" />
+        <field name="group_id" ref="web_field_tooltip.group_tooltip_manager" />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="0" />
+        <field name="perm_write" eval="0" />
+        <field name="perm_unlink" eval="0" />
+    </record>
+
+</odoo>
