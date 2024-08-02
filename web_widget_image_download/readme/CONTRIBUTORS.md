@@ -1,0 +1,9 @@
+- [Tecnativa](https://www.tecnativa.com):
+  - Flavio Corpa
+  - Jairo Llopis
+  - Pedro M. Baeza
+  - Ernesto Tejeda
+  - Alexandre Díaz
+- Kaushal Prajapati \<<kbprajapati@live.com>\>
+- Peerapong Supasompob \<<peerapong.supasompob@gmail.com>\>
+- Manuel Regidor \<<manuel.regidor@sygel.es>\>
