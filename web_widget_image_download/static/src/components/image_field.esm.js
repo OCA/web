@@ -8,7 +8,7 @@
 import {patch} from "@web/core/utils/patch";
 import {ImageField} from "@web/views/fields/image/image_field";
 
-patch(ImageField.prototype, "web_widget_image_download", {
+patch(ImageField.prototype, {
     download() {
         const downloadLink = document.createElement("a");
         downloadLink.setAttribute("href", this.getUrl(this.props.name));
