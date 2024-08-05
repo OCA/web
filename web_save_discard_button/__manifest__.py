@@ -3,7 +3,7 @@
 
 {
     "name": "Save & Discard Buttons",
-    "version": "16.0.1.0.2",
+    "version": "17.0.1.0.0",
     "summary": "Save & Discard Buttons",
     "license": "AGPL-3",
     "category": "Tools",
@@ -12,14 +12,9 @@
     "maintainers": ["synconics"],
     "depends": ["web"],
     "data": [],
-    "images": ["static/description/main_screen.png"],
     "assets": {
         "web.assets_backend": [
-            "web_save_discard_button/static/src/scss/indicator_button.scss",
             "web_save_discard_button/static/src/xml/template.xml",
         ],
     },
-    "installable": True,
-    "application": False,
-    "auto_install": False,
 }
