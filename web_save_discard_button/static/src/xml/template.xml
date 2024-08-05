@@ -5,13 +5,21 @@
         t-name="web_save_discard_button.FormStatusIndicator"
         t-inherit="web.FormStatusIndicator"
         t-inherit-mode="extension"
-        owl="1"
     >
+        <xpath
+            expr="//div[(hasclass('o_form_status_indicator_buttons'))]"
+            position="attributes"
+        >
+            <attribute name="class" add="gap-1" separator=" " />
+        </xpath>
+        <xpath expr="//button[(hasclass('o_form_button_save'))]" position="attributes">
+            <attribute name="class">o_form_button_save btn btn-primary</attribute>
+        </xpath>
         <xpath expr="//button/i[(hasclass('fa-cloud-upload'))]" position="replace">
-            <span class="save_button">Save</span>
+            <span>Save</span>
         </xpath>
         <xpath expr="//button/i[(hasclass('fa-undo'))]" position="replace">
-            <span class="discard_button">Discard</span>
+            <span>Discard</span>
         </xpath>
     </t>
 </templates>
