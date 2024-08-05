@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import logging
 
-from odoo import api, models
+from odoo import _, api, models
 
 from odoo.addons.bus.models.bus_presence import AWAY_TIMER, DISCONNECTION_TIMER
 
@@ -50,11 +50,12 @@ class IrModelData(models.Model):
     def _get_upgrade_notification_params(self):
         """Return the parameters to pass to the notify_info method."""
         return dict(
-            message="Your odoo instance has been upgraded, "
-            "please reload the web page.<br />"
+            message=_(
+                "Your odoo instance has been upgraded, " "please reload the web page."
+            )
+            + "<br />"
             '<button onclick="location.reload(true)" class="btn btn-primary mt-4">'
-            '<i class="fa fa-refresh"></i> Reload'
-            "</button>",
-            title="Upgrade Notification",
+            '<i class="fa fa-refresh"></i>' + _("Reload") + "</button>",
+            title=_("Upgrade Notification"),
             sticky=True,
         )
