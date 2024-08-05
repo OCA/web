@@ -32,6 +32,10 @@ This module uses web_notify send a notification to every active users whenever a
 
 The notification will ask the user to refresh the page to get the latest changes.
 
+
+.. figure:: https://raw.githubusercontent.com/OCA/web/16.0/web_notify_upgrade/static/description/notify.png
+    :alt: Refresh page
+
 **Table of contents**
 
 .. contents::
