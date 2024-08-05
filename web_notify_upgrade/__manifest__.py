@@ -5,7 +5,7 @@
 {
     "name": "Web Notify Upgrade",
     "summary": "Notify active users when a module is installed or updated",
-    "version": "14.0.1.0.1",
+    "version": "16.0.1.0.0",
     "license": "AGPL-3",
     "depends": ["web_notify"],
     "author": "Akretion, Odoo Community Association (OCA)",
