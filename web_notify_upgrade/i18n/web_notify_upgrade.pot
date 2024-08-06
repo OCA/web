@@ -16,25 +16,25 @@ msgstr ""
 #. module: web_notify_upgrade
 #: model:ir.model,name:web_notify_upgrade.model_ir_model_data
 msgid "Model Data"
-msgstr "Model Data"
+msgstr ""
 
 #. module: web_notify_upgrade
 #. odoo-python
 #: code:addons/web_notify_upgrade/models/ir_model.py:0
 #, python-format
 msgid "Reload"
-msgstr "Recharger"
+msgstr ""
 
 #. module: web_notify_upgrade
 #. odoo-python
 #: code:addons/web_notify_upgrade/models/ir_model.py:0
 #, python-format
 msgid "Upgrade Notification"
-msgstr "Notification de mise à jour"
+msgstr ""
 
 #. module: web_notify_upgrade
 #. odoo-python
 #: code:addons/web_notify_upgrade/models/ir_model.py:0
 #, python-format
 msgid "Your odoo instance has been upgraded, please reload the web page."
-msgstr "Votre instance odoo a été mise à jour, merci de recharger la page web."
+msgstr ""
