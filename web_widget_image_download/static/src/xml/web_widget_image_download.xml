@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2016 Flavio Corpa <flavio.corpa@tecnativa.com>
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl). -->
+<template>
+    <t
+        t-name="web_widget_image_download.ImageField"
+        t-inherit="web.ImageField"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//FileUploader/../.." position="after">
+            <div
+                t-attf-class="position-absolute top-0 opacity-0 opacity-100-hover {{isMobile ? 'o_mobile_controls' : ''}}"
+                aria-atomic="true"
+                t-att-style="sizeStyle"
+            >
+                <button
+                    t-if="props.record.data[props.name] and state.isValid"
+                    class="o_form_binary_file_download btn btn-light border-0 rounded-circle m-1 p-1"
+                    data-tooltip="Download"
+                    aria-label="Download"
+                    t-on-click="onFileDownload"
+                >
+                    <i class="fa fa-download fa-fw" />
+                </button>
+            </div>
+        </xpath>
+    </t>
+</template>
