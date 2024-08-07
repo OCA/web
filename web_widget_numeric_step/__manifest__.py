@@ -6,10 +6,11 @@
     "name": "Web Widget Numeric Step",
     "category": "web",
     "version": "17.0.1.0.0",
-    "author": "GRAP, Tecnativa, " "Odoo Community Association (OCA)",
+    "author": "GRAP, Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "website": "https://github.com/OCA/web",
     "depends": ["web"],
+    "demo": ["demo/ir_cron.xml"],
     "assets": {
         "web.assets_backend": [
             "web_widget_numeric_step/static/src/*",
