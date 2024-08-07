@@ -83,6 +83,12 @@ Iteration with 10 step, max limit 15, placeholder with onchange
 
 |image3|
 
+**Demo**
+
+You can test the feature by going to Settings > Technical > Scheduled
+Actions. The field "Execute Every" is configured to use the widget with
+2 step, min to 0 and max to 40.
+
 .. |image1| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_widget_numeric_step/static/description/add_two_buttons.png
 .. |image2| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_widget_numeric_step/static/description/step0,25andlimits.gif
 .. |image3| image:: https://raw.githubusercontent.com/OCA/web/17.0/web_widget_numeric_step/static/description/step10_limit15_placeholder117_with_onchange.gif

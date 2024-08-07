@@ -36,3 +36,9 @@ mouse.
 Iteration with 10 step, max limit 15, placeholder with onchange
 
 ![](../static/description/step10_limit15_placeholder117_with_onchange.gif)
+
+**Demo**
+
+You can test the feature by going to Settings > Technical > Scheduled Actions. The 
+field "Execute Every" is configured to use the widget with 2 step, min to 0 and max 
+to 40.
