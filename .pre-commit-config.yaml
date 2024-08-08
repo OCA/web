@@ -43,7 +43,7 @@ repos:
     hooks:
       - id: whool-init
   - repo: https://github.com/oca/maintainer-tools
-    rev: 9a170331575a265c092ee6b24b845ec508e8ef75
+    rev: d5fab7ee87fceee858a3d01048c78a548974d935
     hooks:
       # update the NOT INSTALLABLE ADDONS section above
       - id: oca-update-pre-commit-excluded-addons
