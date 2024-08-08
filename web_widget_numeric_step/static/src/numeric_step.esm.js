@@ -1,6 +1,5 @@
 /** @odoo-module */
 
-import {hasTouch} from "@web/core/browser/feature_detection";
 import {_lt} from "@web/core/l10n/translation";
 import {registry} from "@web/core/registry";
 import {FloatField} from "@web/views/fields/float/float_field";
@@ -11,10 +10,6 @@ export class NumericStep extends FloatField {
         super.setup();
     }
     _onStepClick(ev) {
-        const $el = $(ev.target).parent().parent().find("input");
-        if (!hasTouch()) {
-            $el.focus();
-        }
         const mode = $(ev.target).data("mode");
         this._doStep(mode);
     }
