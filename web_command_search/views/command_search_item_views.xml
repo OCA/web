@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_command_search_item_form" model="ir.ui.view">
+        <field name="name">command.search.item.form</field>
+        <field name="model">command.search.item</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="res_model_id" />
+                        <field name="domain" />
+                        <field
+                            name="field_ids"
+                            widget="many2many_tags"
+                            options="{'no_create_edit': True}"
+                        />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_command_search_item_tree" model="ir.ui.view">
+        <field name="name">command.search.item.tree</field>
+        <field name="model">command.search.item</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="res_model_id" />
+                <field name="domain" />
+                <field name="field_ids" />
+            </tree>
+        </field>
+    </record>
+
+</odoo>

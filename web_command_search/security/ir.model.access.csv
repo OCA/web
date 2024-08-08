@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_command_seach_manager,command.search.manager,model_command_search,base.group_system,1,1,1,1
+access_command_seach_user,command.search.user,model_command_search,base.group_user,1,0,1,0
+access_command_seach_item_manager,command.search.item.manager,model_command_search_item,base.group_system,1,1,1,1
+access_command_seach_item_user,command.search.item.user,model_command_search_item,base.group_user,1,0,1,0

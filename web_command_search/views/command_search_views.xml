@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_command_search_form" model="ir.ui.view">
+        <field name="name">command.search.form</field>
+        <field name="model">command.search</field>
+        <field name="arch" type="xml">
+            <form>
+                 <header>
+                    <button
+                        name="set_data"
+                        string="Fetch data"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                </header>
+                <sheet>
+                    <label for="name" />
+                    <h1>
+                        <field name="name" />
+                    </h1>
+                    <group>
+                        <group name="definition" string="Definition">
+                            <field name="technical_name" />
+                            <field name="character" />
+                            <field name="placeholder" />
+                            <field name="empty_message" />
+                        </group>
+                        <group name="applicability" string="Applicability">
+                            <field name="group_ids" widget="many2many_tags" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Configuration" name="configuration">
+                            <field name="command_search_item_ids" widget="one2many">
+                                <tree editable="bottom">
+                                    <field name="res_model_id" />
+                                    <field name="domain" />
+                                    <field
+                                        name="field_ids"
+                                        options="{'no_create': True, 'no_edit': True, 'no_open': True}"
+                                        widget="many2many_tags"
+                                    />
+                                    />
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Technical" name="technical">
+                            <group name="testing" string="Testing">
+                                <field name="data_length" />
+                                <field name="data" />
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_command_search_tree" model="ir.ui.view">
+        <field name="name">command.search.tree</field>
+        <field name="model">command.search</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="technical_name" />
+                <field name="character" />
+                <field name="placeholder" />
+                <field name="empty_message" />
+                <field name="group_ids" widget="many2many_tags" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="command_search_action" model="ir.actions.act_window">
+        <field name="name">Command Search</field>
+        <field name="res_model">command.search</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="menu_command_search_root"
+        name="Command Search"
+        parent="base.menu_custom"
+        sequence="5"
+    />
+    <menuitem
+        id="menu_command_search"
+        name="Searches"
+        parent="menu_command_search_root"
+        action="command_search_action"
+        sequence="10"
+    />
+
+</odoo>
