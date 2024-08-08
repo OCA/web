@@ -250,7 +250,6 @@ html .o_web_client .o_action_manager .o_action {
 // Sticky Header & Footer in List View
 .o_list_view {
     .table-responsive {
-        overflow: visible;
         .o_list_table {
             // th & td are here for compatibility with chrome
             thead tr:nth-child(1) th {
