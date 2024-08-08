@@ -31,7 +31,7 @@ patch(WebClient.prototype, {
                 ["is_redirect_home"]
             );
             this.env.services.user.updateContext({
-                is_redirect_to_home: is_redirect_home[0].is_redirect_home,
+                is_redirect_to_home: is_redirect_home[0]?.is_redirect_home,
             });
         });
         this.redirect = false;
