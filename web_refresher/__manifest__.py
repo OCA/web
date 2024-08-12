@@ -1,6 +1,6 @@
 {
     "name": "Web Refresher",
-    "version": "16.0.3.1.2",
+    "version": "16.0.3.1.3",
     "author": "Compassion Switzerland, Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "website": "https://github.com/OCA/web",
