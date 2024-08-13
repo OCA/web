@@ -1,29 +1,56 @@
 /** @odoo-module **/
-import core from "web.core";
+import {_lt} from "@web/core/l10n/translation";
 import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
-import {Component} from "@odoo/owl";
-
-var _lt = core._lt;
+import {Component, onWillStart, onWillUpdateProps} from "@odoo/owl";
 
 export class FieldDynamicDropdown extends Component {
+    static template = "web.SelectionField";
+    static props = {
+        ...standardFieldProps,
+        method: {type: String},
+        context: {type: Object},
+    };
+    setup() {
+        this.type = this.props.record.fields[this.props.name].type;
+        onWillStart(async () => {
+            this.specialData = await this._fetchSpecialData(this.props);
+        });
+        onWillUpdateProps(async (nextProps) => {
+            if (this.props.context.depending_on !== nextProps.context.depending_on) {
+                this.specialData = await this._fetchSpecialData(nextProps);
+            }
+        });
+    }
+    async _fetchSpecialData(props) {
+        const {resModel} = props.record.model.config;
+        const {specialDataCaches, orm} = props.record.model;
+        const key = `__reference__${props.name}-${props.context.depending_on}`;
+        if (!specialDataCaches[key]) {
+            specialDataCaches[key] = await orm.call(resModel, props.method, [], {
+                context: props.context,
+            });
+        }
+        return specialDataCaches[key];
+    }
     get options() {
-        var field_type = this.props.record.fields[this.props.name].type || "";
+        var field_type = this.type || "";
         if (["char", "integer", "selection"].includes(field_type)) {
-            this._setValues();
-            return this.props.record.fields[this.props.name].selection.filter(
-                (option) => option[0] !== false && option[1] !== ""
-            );
+            if (
+                this.props.record.data[this.props.name] &&
+                !this.specialData
+                    .map((val) => val[0])
+                    .includes(String(this.props.record.data[this.props.name]))
+            ) {
+                this.props.record.update({[this.props.name]: null});
+            }
+            return this.specialData;
         }
         return [];
     }
-
     get value() {
-        const rawValue = this.props.value;
-        this.props.setDirty(false);
-        return this.props.type === "many2one" && rawValue ? rawValue[0] : rawValue;
+        return String(this.props.record.data[this.props.name]);
     }
-
     parseInteger(value) {
         return Number(value);
     }
@@ -31,58 +58,32 @@ export class FieldDynamicDropdown extends Component {
      * @param {Event} ev
      */
     onChange(ev) {
-        let lastSetValue = null;
-        let isInvalid = false;
-        var isDirty = ev.target.value !== lastSetValue;
-        const field = this.props.record.fields[this.props.name];
-        let value = JSON.parse(ev.target.value);
-        if (isDirty) {
-            if (value && field.type === "integer") {
-                value = Number(value);
-                if (!value) {
-                    if (this.props.record) {
-                        this.props.record.setInvalidField(this.props.name);
-                    }
-                    isInvalid = true;
+        var isInvalid = false;
+        var value = JSON.parse(ev.target.value);
+        if (this.type === "integer") {
+            value = Number(value);
+            if (!value) {
+                if (this.props.record) {
+                    this.props.record.setInvalidField(this.props.name);
                 }
-            }
-            if (!isInvalid) {
-                Promise.resolve(this.props.update(value));
-                lastSetValue = ev.target.value;
+                isInvalid = true;
             }
         }
-        if (this.props.setDirty) {
-            this.props.setDirty(isDirty);
+        if (!isInvalid) {
+            this.props.record.update({[this.props.name]: value});
         }
     }
     stringify(value) {
         return JSON.stringify(value);
     }
-
-    _setValues() {
-        if (this.props.record.preloadedData[this.props.name]) {
-            var sel_value = this.props.record.preloadedData[this.props.name];
-            // Convert string element to integer if field is integer
-            if (this.props.record.fields[this.props.name].type === "integer") {
-                sel_value = sel_value.map((val_updated) => {
-                    return val_updated.map((e) => {
-                        if (typeof e === "string" && !isNaN(Number(e))) {
-                            return Number(e);
-                        }
-                        return e;
-                    });
-                });
-            }
-            this.props.record.fields[this.props.name].selection = sel_value;
-        }
-    }
 }
-
-FieldDynamicDropdown.description = _lt("Dynamic Dropdown");
-FieldDynamicDropdown.template = "web.SelectionField";
-FieldDynamicDropdown.legacySpecialData = "_fetchDynamicDropdownValues";
-FieldDynamicDropdown.props = {
-    ...standardFieldProps,
+export const dynamicDropdownField = {
+    component: FieldDynamicDropdown,
+    displayName: _lt("Dynamic Dropdown"),
+    supportedTypes: ["char", "integer", "selection"],
+    extractProps: (fieldInfo, dynamicInfo) => ({
+        method: fieldInfo.options?.values,
+        context: dynamicInfo.context,
+    }),
 };
-FieldDynamicDropdown.supportedTypes = ["char", "integer", "selection"];
-registry.category("fields").add("dynamic_dropdown", FieldDynamicDropdown);
+registry.category("fields").add("dynamic_dropdown", dynamicDropdownField);

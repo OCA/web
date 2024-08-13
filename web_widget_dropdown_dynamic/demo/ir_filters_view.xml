@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="ir_filters_view_form" model="ir.ui.view">
+        <field name="model">ir.filters</field>
+        <field name="inherit_id" ref="base.ir_filters_view_form" />
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field
+                    name="x_dynamic_dropdown_int"
+                    widget="dynamic_dropdown"
+                    options="{'values': 'dynamic_dropdown_int_method_demo'}"
+                    context="{'depending_on': user_id}"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
