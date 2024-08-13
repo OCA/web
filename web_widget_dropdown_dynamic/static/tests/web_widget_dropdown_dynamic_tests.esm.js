@@ -30,7 +30,7 @@ QUnit.module("web_widget_dropdown_dynamic", (hooks) => {
                     ],
                     methods: {
                         method_name() {
-                            return Promise.resolve([["value a", "Value A"]]);
+                            return [["value a", "Value A"]];
                         },
                     },
                 },
@@ -55,14 +55,14 @@ QUnit.module("web_widget_dropdown_dynamic", (hooks) => {
                 assert.step(args.method);
                 if (args.method === "method_name") {
                     if (args.kwargs.context.depending_on === "step-1") {
-                        return Promise.resolve([["value", "Title"]]);
+                        return [["value", "Title"]];
                     } else if (args.kwargs.context.depending_on === "step-2") {
-                        return Promise.resolve([
+                        return [
                             ["value", "Title"],
                             ["value_2", "Title 2"],
-                        ]);
+                        ];
                     }
-                    return Promise.resolve([]);
+                    return [];
                 }
             },
         });
@@ -84,7 +84,7 @@ QUnit.module("web_widget_dropdown_dynamic", (hooks) => {
         assert.containsN(target, "option", 1);
         assert.verifySteps([
             "get_views",
-            "read",
+            "web_read",
             "method_name",
             "method_name",
             "method_name",
@@ -109,13 +109,13 @@ QUnit.module("web_widget_dropdown_dynamic", (hooks) => {
                 assert.step(args.method);
                 if (args.method === "method_name") {
                     if (args.kwargs.context.depending_on) {
-                        return Promise.resolve([["value b", "Value B"]]);
+                        return [["value b", "Value B"]];
                     }
                 }
             },
         });
         const field_target = target.querySelector("div[name='content_string']");
-        assert.verifySteps(["get_views", "read", "method_name"]);
+        assert.verifySteps(["get_views", "web_read", "method_name"]);
         assert.containsN(field_target, "option", 2);
         assert.containsOnce(
             field_target,
@@ -142,15 +142,15 @@ QUnit.module("web_widget_dropdown_dynamic", (hooks) => {
                 assert.step(args.method);
                 if (args.method === "method_name") {
                     if (args.kwargs.context.depending_on) {
-                        return Promise.resolve([["10", "Value B"]]);
+                        return [["10", "Value B"]];
                     }
                 }
             },
         });
         const field_target = target.querySelector("div[name='content_integer']");
-        assert.verifySteps(["get_views", "read", "method_name"]);
+        assert.verifySteps(["get_views", "web_read", "method_name"]);
         assert.containsN(field_target, "option", 2);
-        assert.containsOnce(field_target, 'option[value="10"]');
+        assert.containsOnce(field_target, 'option[value="\\"10\\""]');
     });
 
     QUnit.test("values are fetched w/o context (selection)", async (assert) => {
@@ -169,13 +169,13 @@ QUnit.module("web_widget_dropdown_dynamic", (hooks) => {
                 assert.step(args.method);
                 if (args.method === "method_name") {
                     if (args.kwargs.context.depending_on) {
-                        return Promise.resolve([["choice b", "Choice B"]]);
+                        return [["choice b", "Choice B"]];
                     }
                 }
             },
         });
         const field_target = target.querySelector("div[name='content_selection']");
-        assert.verifySteps(["get_views", "read", "method_name"]);
+        assert.verifySteps(["get_views", "web_read", "method_name"]);
         assert.containsN(field_target, "option", 2);
         assert.containsOnce(field_target, "option[value='\"choice b\"']");
     });

@@ -11,3 +11,6 @@
 - [Trobz](https://trobz.com):
 
   > - Son Ho \<<sonho@trobz.com>\>
+
+- [Tecnativa](https://www.tecnativa.com):
+  - Carlos Roca
