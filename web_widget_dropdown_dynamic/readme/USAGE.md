@@ -22,3 +22,9 @@ def method_name(self):
     context="{'depending_on': other_field}"
 />
 ```
+
+**DEMO**
+
+On User defined filters added new field to show the feature, it is called 
+**Dropdown Integer**. If any user selected just One option shoud appear, but if 
+Mitchell Admin it should be possible to select option One and Two.

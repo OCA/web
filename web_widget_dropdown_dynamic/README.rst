@@ -71,6 +71,13 @@ Usage
        context="{'depending_on': other_field}"
    />
 
+**DEMO**
+
+On User defined filters added new field to show the feature, it is
+called **Dropdown Integer**. If any user selected just One option shoud
+appear, but if Mitchell Admin it should be possible to select option One
+and Two.
+
 Bug Tracker
 ===========
 
@@ -105,6 +112,10 @@ Contributors
 -  `Trobz <https://trobz.com>`__:
 
       -  Son Ho <sonho@trobz.com>
+
+-  `Tecnativa <https://www.tecnativa.com>`__:
+
+   -  Carlos Roca
 
 Other credits
 -------------
