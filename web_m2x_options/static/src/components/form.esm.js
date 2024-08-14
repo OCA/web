@@ -325,7 +325,7 @@ patch(FormController.prototype, {
      * add more method to add subview limit on formview
      */
     async _setSubViewLimit() {
-        const ir_options = session.web_m2x_options;
+        const ir_options = session.web_m2x_options || {};
         const activeFields = this.archInfo.fieldNodes,
             isSmall = this.user;
 
