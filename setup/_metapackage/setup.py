@@ -64,6 +64,7 @@ setuptools.setup(
         'odoo-addon-web_widget_pattern>=16.0dev,<16.1dev',
         'odoo-addon-web_widget_pattern_partner_autocomplete>=16.0dev,<16.1dev',
         'odoo-addon-web_widget_plotly_chart>=16.0dev,<16.1dev',
+        'odoo-addon-web_widget_remaining_days_exact_date>=16.0dev,<16.1dev',
         'odoo-addon-web_widget_x2many_2d_matrix>=16.0dev,<16.1dev',
     ],
     classifiers=[
