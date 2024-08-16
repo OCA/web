@@ -9,6 +9,7 @@
   - Pedro M. Baeza
   - Jairo Llopis
   - Ernesto Tejeda
+  - Carlos Roca
 - Sudhir Arya \<<sudhir@erpharbor.com>\>
 - Pierre Pizzetta \<<pierre@devreaction.com>\>
 - Mantas Šniukas \<<mantas@vialaurea.lt>\>
