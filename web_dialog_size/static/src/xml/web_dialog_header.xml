@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-inherit="web.Dialog.header" t-inherit-mode="extension" owl="1">
+        <xpath expr="//button[hasclass('btn-close')]" position="before">
+            <ExpandButton
+                getsize="getSize"
+                setsize="setSize"
+                t-if="!isFullscreen and getSize and setSize"
+            />
+        </xpath>
+    </t>
+</templates>

@@ -1,19 +1,20 @@
 /** @odoo-module **/
 
 import {ActionDialog} from "@web/webclient/actions/action_dialog";
-import {patch} from "@web/core/utils/patch";
-import rpc from "web.rpc";
 import {Component, onMounted} from "@odoo/owl";
 import {Dialog} from "@web/core/dialog/dialog";
 import {SelectCreateDialog} from "@web/views/view_dialogs/select_create_dialog";
+import {patch} from "@web/core/utils/patch";
+import {useService} from "@web/core/utils/hooks";
 
 export class ExpandButton extends Component {
     setup() {
+        this.orm = useService("orm");
         this.last_size = this.props.getsize();
-        this.config = rpc.query({
-            model: "ir.config_parameter",
-            method: "get_web_dialog_size_config",
-        });
+        this.config = this.orm.call(
+            "ir.config_parameter",
+            "get_web_dialog_size_config"
+        );
 
         onMounted(() => {
             var self = this;
@@ -38,9 +39,9 @@ export class ExpandButton extends Component {
 
 ExpandButton.template = "web_dialog_size.ExpandButton";
 
-patch(Dialog.prototype, "web_dialog_size.Dialog", {
+patch(Dialog.prototype, {
     setup() {
-        this._super(...arguments);
+        super.setup();
         this.setSize = this.setSize.bind(this);
         this.getSize = this.getSize.bind(this);
     },
@@ -55,9 +56,9 @@ patch(Dialog.prototype, "web_dialog_size.Dialog", {
     },
 });
 
-patch(SelectCreateDialog.prototype, "web_dialog_size.SelectCreateDialog", {
+patch(SelectCreateDialog.prototype, {
     setup() {
-        this._super(...arguments);
+        super.setup();
         this.setSize = this.setSize.bind(this);
         this.getSize = this.getSize.bind(this);
     },

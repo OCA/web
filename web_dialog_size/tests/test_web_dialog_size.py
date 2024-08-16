@@ -6,7 +6,7 @@ from odoo.tests.common import TransactionCase
 
 class TestWebDialogSize(TransactionCase):
     def setUp(self):
-        super(TestWebDialogSize, self).setUp()
+        super().setUp()
 
     def test_get_web_dialog_size_config(self):
         obj = self.env["ir.config_parameter"]
