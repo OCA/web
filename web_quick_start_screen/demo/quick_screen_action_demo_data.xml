@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="0">
+    <record id="quick_start_screen_action_contacts" model="quick.start.screen.action">
+        <field name="name">Contacts</field>
+        <field
+            name="description"
+        ><![CDATA[ <span>Browse <b>contacts</b></span>]]></field>
+        <field name="action_ref_id" ref="base.action_partner_form" />
+        <field name="icon_name">fa-users</field>
+        <field name="color">7</field>
+    </record>
+    <record
+        id="quick_start_screen_action_access_rights"
+        model="quick.start.screen.action"
+    >
+        <field name="name">Access rights</field>
+        <field
+            name="description"
+        ><![CDATA[ <span>Explore <b>access rights</b></span>]]></field>
+        <field name="action_ref_id" ref="base.ir_access_act" />
+        <field name="icon_name">fa-eye</field>
+        <field name="color">4</field>
+    </record>
+    <record
+        id="quick_start_screen_action_config_actions"
+        model="quick.start.screen.action"
+    >
+        <field name="name">Configure screen actions</field>
+        <field
+            name="description"
+        ><![CDATA[ <span>Configure this <b>screen actions</b></span>]]></field>
+        <field
+            name="action_ref_id"
+            ref="web_quick_start_screen.quick_start_screen_action_action"
+        />
+        <field
+            name="image"
+            type="base64"
+            file="web_quick_start_screen/static/description/icon.png"
+        />
+    </record>
+    <record id="quick_start_screen_demo" model="quick.start.screen">
+        <field name="name">Demo start screen</field>
+        <field
+            name="action_ids"
+            eval="[Command.link(ref('web_quick_start_screen.quick_start_screen_action_contacts')), Command.link(ref('web_quick_start_screen.quick_start_screen_action_config_actions'))]"
+        />
+    </record>
+    <record id="base.user_demo" model="res.users">
+        <field
+            name="groups_id"
+            eval="[Command.link(ref('web_quick_start_screen.group_quick_start_screen'))]"
+        />
+        <field name="quick_start_screen_id" ref="quick_start_screen_demo" />
+        <field name="action_id" ref="web_quick_start_screen.start_screen_action" />
+    </record>
+</odoo>
