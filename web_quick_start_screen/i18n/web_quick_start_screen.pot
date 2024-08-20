@@ -1,0 +1,249 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_quick_start_screen
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-08-23 12:20+0000\n"
+"PO-Revision-Date: 2024-08-23 12:20+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_quick_start_screen
+#: model_terms:quick.start.screen.action,description:web_quick_start_screen.quick_start_screen_action_contacts
+msgid "<span>Browse <b>contacts</b></span>"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model_terms:quick.start.screen.action,description:web_quick_start_screen.quick_start_screen_action_config_actions
+msgid "<span>Configure this <b>screen actions</b></span>"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model_terms:quick.start.screen.action,description:web_quick_start_screen.quick_start_screen_action_access_rights
+msgid "<span>Explore <b>access rights</b></span>"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:quick.start.screen.action,name:web_quick_start_screen.quick_start_screen_action_access_rights
+msgid "Access rights"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen__action_ids
+msgid "Action"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__action_ref_id
+msgid "Action Ref"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model,name:web_quick_start_screen.model_quick_start_screen_action
+msgid "Actions to be launched from a quick start screen"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__active
+msgid "Active"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,help:web_quick_start_screen.field_quick_start_screen_action__context
+msgid ""
+"Add extra context if needed. You can use `ref('<xml_id>')` and it will "
+"beevaluated. You can also use `datetime` and `context_today` in the same "
+"way`ir.filters` do."
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,help:web_quick_start_screen.field_quick_start_screen_action__domain
+msgid ""
+"Add extra domain if needed. You can use `ref('<xml_id>')` and it will "
+"beevaluated. You can also use `datetime` and `context_today` in the same "
+"way`ir.filters` do."
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,help:web_quick_start_screen.field_quick_start_screen_action__color
+msgid "Choose the icon color"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__color
+msgid "Color"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:quick.start.screen.action,name:web_quick_start_screen.quick_start_screen_action_config_actions
+msgid "Configure screen actions"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:quick.start.screen.action,name:web_quick_start_screen.quick_start_screen_action_contacts
+msgid "Contacts"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__context
+msgid "Context"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen__create_uid
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen__create_date
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:quick.start.screen,name:web_quick_start_screen.quick_start_screen_demo
+msgid "Demo start screen"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__description
+msgid "Description"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen__display_name
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__domain
+msgid "Domain"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model_terms:ir.ui.view,arch_db:web_quick_start_screen.quick_start_screen_tree_view
+msgid "Go to the start screen"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen__id
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__id
+msgid "ID"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__icon_name
+msgid "Icon Name"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,help:web_quick_start_screen.field_quick_start_screen_action__icon_name
+msgid "Just set the Font Awesome icon name. e.g.: fa-truck"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen____last_update
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen__write_uid
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen__write_date
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen__name
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__name
+msgid "Name"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.actions.server,name:web_quick_start_screen.start_screen_action
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_res_users__quick_start_screen_id
+#: model:res.groups,name:web_quick_start_screen.group_quick_start_screen
+msgid "Quick Start Screen"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.actions.act_window,name:web_quick_start_screen.quick_start_screen_action_action
+#: model:ir.ui.menu,name:web_quick_start_screen.menu_quick_start_screen_action
+msgid "Quick Start Screen Actions"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.actions.act_window,name:web_quick_start_screen.start_screen_action_config
+#: model:ir.ui.menu,name:web_quick_start_screen.menu_quick_start_screen_action_config
+msgid "Quick Start Screens"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model,name:web_quick_start_screen.model_quick_start_screen
+msgid "Quick action selection screen"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: web_quick_start_screen
+#. odoo-python
+#: code:addons/web_quick_start_screen/models/quick_start_screen.py:0
+#: code:addons/web_quick_start_screen/models/quick_start_screen.py:0
+#: model:ir.ui.menu,name:web_quick_start_screen.menu_start
+#: model:ir.ui.menu,name:web_quick_start_screen.menu_start_screen
+#, python-format
+msgid "Start"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields,field_description:web_quick_start_screen.field_quick_start_screen_action__image
+msgid "Start screen icon"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model,name:web_quick_start_screen.model_res_users
+msgid "User"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields.selection,name:web_quick_start_screen.selection__quick_start_screen_action__action_ref_id__ir_actions_act_url
+msgid "ir.actions.act_url"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields.selection,name:web_quick_start_screen.selection__quick_start_screen_action__action_ref_id__ir_actions_act_window
+msgid "ir.actions.act_window"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields.selection,name:web_quick_start_screen.selection__quick_start_screen_action__action_ref_id__ir_actions_client
+msgid "ir.actions.client"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields.selection,name:web_quick_start_screen.selection__quick_start_screen_action__action_ref_id__ir_actions_report
+msgid "ir.actions.report"
+msgstr ""
+
+#. module: web_quick_start_screen
+#: model:ir.model.fields.selection,name:web_quick_start_screen.selection__quick_start_screen_action__action_ref_id__ir_actions_server
+msgid "ir.actions.server"
+msgstr ""
