@@ -538,8 +538,10 @@ class DynamicRTreeRecordList extends DynamicRecordList {
         // We cannot use !validTargetID because null is a valid target id.
         if (validTargetID === false) {
             this.model.errorDialog(
-                "Error",
-                "It is not possible to reparent records in an rtree view."
+                this.model.env._t("Error"),
+                this.model.env._t(
+                    "It is not possible to reparent records in a tree view."
+                )
             );
             return;
         }
@@ -918,8 +920,10 @@ export class RTreeModel extends RelationalModel {
         const {newDomain, globalFilterElement} = this._parseDomain(domain);
         if (newDomain === null) {
             this.errorDialog(
-                "Error",
-                "This type of search domain is not supported in an rtree view."
+                this.env._t("Error"),
+                this.env._t(
+                    "This type of search domain is not supported in a tree view."
+                )
             );
             return;
         }
@@ -1110,8 +1114,8 @@ export class RTreeModel extends RelationalModel {
 
     errorDialog(title, message) {
         this.dialogService.add(WarningDialog, {
-            title: this.env._t(title),
-            message: this.env._t(message),
+            title,
+            message,
         });
     }
 
