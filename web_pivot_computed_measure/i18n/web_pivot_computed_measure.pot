@@ -1,0 +1,149 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_pivot_computed_measure
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/xml/web_pivot_computed_measure.xml:0
+#, python-format
+msgid "Add"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/xml/web_pivot_computed_measure.xml:0
+#, python-format
+msgid "Can be empty"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/xml/web_pivot_computed_measure.xml:0
+#, python-format
+msgid "Computed Measure"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/xml/web_pivot_computed_measure.xml:0
+#, python-format
+msgid "Custom"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/xml/web_pivot_computed_measure.xml:0
+#, python-format
+msgid "Div (m1 / m2)"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/xml/web_pivot_computed_measure.xml:0
+#, python-format
+msgid "Float"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/xml/web_pivot_computed_measure.xml:0
+#, python-format
+msgid "Format"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/xml/web_pivot_computed_measure.xml:0
+#, python-format
+msgid "Formula"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/xml/web_pivot_computed_measure.xml:0
+#, python-format
+msgid "Integer"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/xml/web_pivot_computed_measure.xml:0
+#, python-format
+msgid "Measure 1"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/xml/web_pivot_computed_measure.xml:0
+#, python-format
+msgid "Measure 2"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/xml/web_pivot_computed_measure.xml:0
+#, python-format
+msgid "Mult (m1 * m2)"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/xml/web_pivot_computed_measure.xml:0
+#, python-format
+msgid "Name"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/xml/web_pivot_computed_measure.xml:0
+#, python-format
+msgid "Operation"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/xml/web_pivot_computed_measure.xml:0
+#, python-format
+msgid "Perc (m1 * 100 / m2)"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/xml/web_pivot_computed_measure.xml:0
+#, python-format
+msgid "Percentage"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/xml/web_pivot_computed_measure.xml:0
+#, python-format
+msgid "Sub (m1 - m2)"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/xml/web_pivot_computed_measure.xml:0
+#, python-format
+msgid "Sum (m1 + m2)"
+msgstr ""
+
+#. module: web_pivot_computed_measure
+#. openerp-web
+#: code:addons/web_pivot_computed_measure/static/src/js/pivot_model.js:0
+#, python-format
+msgid ""
+"This measure is currently used by a 'computed measure'. Please, disable the "
+"computed measure first."
+msgstr ""

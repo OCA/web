@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/web_pivot_computed_measure/static/src/js/pivot_model.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_pivot_computed_measure/static/src/js/pivot_controller.js"
+            />
+            <link
+                rel="stylesheet"
+                href="/web_pivot_computed_measure/static/src/scss/web_pivot_computed_measure.scss"
+            />
+        </xpath>
+    </template>
+</odoo>
