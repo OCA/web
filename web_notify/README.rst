@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ==========
 Web Notify
 ==========
@@ -17,7 +13,7 @@ Web Notify
 .. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
     :target: https://odoo-community.org/page/development-status
     :alt: Production/Stable
-.. |badge2| image:: https://img.shields.io/badge/license-LGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-LGPL--3-blue.png
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fweb-lightgray.png?logo=github
@@ -88,6 +84,25 @@ or
 .. code:: python
 
    self.env.user.notify_default(message='My default message')
+
+You can also add sound to your notifications by using the ``sound``
+parameter. The sound parameter expects a string containing the URL path
+to the audio file that should be played when the notification is
+displayed.
+
+.. code:: python
+
+   self.env.user.notify_success(message='My success message', sound='/<YOUR_MODULE>/static/audio/success.mp3')
+
+or
+
+.. code:: python
+
+   self.env.user.notify_info(message='My information message', sound='/<YOUR_MODULE>/static/audio/info.mp3')
+
+The sound parameter can be used with any notification type (success,
+danger, warning, info, or default). If the sound parameter is not
+provided, the notification will be displayed without any sound.
 
 The notifications can bring interactivity with some buttons.
 
