@@ -21,6 +21,7 @@ class TestResUsers(common.TransactionCase):
             "html": False,
             "action": None,
             "params": {},
+            "sound": "/mail/static/src/audio/ting.mp3",
         }
         self.env.user.notify_success(**test_msg)
         self.env.cr.precommit.run()  # trigger the creation of bus.bus records
@@ -41,6 +42,7 @@ class TestResUsers(common.TransactionCase):
             "html": False,
             "action": None,
             "params": {},
+            "sound": "/mail/static/src/audio/ting.mp3",
         }
         self.env.user.notify_danger(**test_msg)
         self.env.cr.precommit.run()
@@ -61,6 +63,7 @@ class TestResUsers(common.TransactionCase):
             "html": False,
             "action": None,
             "params": {},
+            "sound": "/mail/static/src/audio/ting.mp3",
         }
         self.env.user.notify_warning(**test_msg)
         self.env.cr.precommit.run()
@@ -81,6 +84,7 @@ class TestResUsers(common.TransactionCase):
             "html": False,
             "action": None,
             "params": {},
+            "sound": "/mail/static/src/audio/ting.mp3",
         }
         self.env.user.notify_info(**test_msg)
         self.env.cr.precommit.run()
@@ -101,6 +105,7 @@ class TestResUsers(common.TransactionCase):
             "html": False,
             "action": None,
             "params": {},
+            "sound": "/mail/static/src/audio/ting.mp3",
         }
         self.env.user.notify_default(**test_msg)
         self.env.cr.precommit.run()

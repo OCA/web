@@ -51,10 +51,11 @@ class ResUsers(models.Model):
         action=None,
         html=False,
         params=None,
+        sound=None,
     ):
         title = title or _("Success")
         self._notify_channel(
-            SUCCESS, message, title, sticky, target, html, action, params
+            SUCCESS, message, title, sticky, target, html, action, params, sound
         )
 
     def notify_danger(
@@ -66,10 +67,11 @@ class ResUsers(models.Model):
         html=False,
         action=None,
         params=None,
+        sound=None,
     ):
         title = title or _("Danger")
         self._notify_channel(
-            DANGER, message, title, sticky, target, html, action, params
+            DANGER, message, title, sticky, target, html, action, params, sound
         )
 
     def notify_warning(
@@ -81,10 +83,11 @@ class ResUsers(models.Model):
         html=False,
         action=None,
         params=None,
+        sound=None,
     ):
         title = title or _("Warning")
         self._notify_channel(
-            WARNING, message, title, sticky, target, html, action, params
+            WARNING, message, title, sticky, target, html, action, params, sound
         )
 
     def notify_info(
@@ -96,9 +99,12 @@ class ResUsers(models.Model):
         html=False,
         action=None,
         params=None,
+        sound=None,
     ):
         title = title or _("Information")
-        self._notify_channel(INFO, message, title, sticky, target, html, action, params)
+        self._notify_channel(
+            INFO, message, title, sticky, target, html, action, params, sound
+        )
 
     def notify_default(
         self,
@@ -109,10 +115,11 @@ class ResUsers(models.Model):
         html=False,
         action=None,
         params=None,
+        sound=None,
     ):
         title = title or _("Default")
         self._notify_channel(
-            DEFAULT, message, title, sticky, target, html, action, params
+            DEFAULT, message, title, sticky, target, html, action, params, sound
         )
 
     def _notify_channel(
@@ -125,6 +132,7 @@ class ResUsers(models.Model):
         html=False,
         action=None,
         params=None,
+        sound=None,
     ):
         if not (self.env.user._is_admin() or self.env.su) and any(
             user.id != self.env.uid for user in self
@@ -144,6 +152,7 @@ class ResUsers(models.Model):
             "html": html,
             "action": action,
             "params": dict(params or []),
+            "sound": sound,
         }
         for partner in target:
             partner._bus_send(
