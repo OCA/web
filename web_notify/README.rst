@@ -83,6 +83,21 @@ or
 
    self.env.user.notify_default(message='My default message')
 
+You can also add sound to your notifications by using the sound parameter. The sound parameter expects a string containing the URL path to the audio file that should be played when the notification is displayed.
+
+Example:
+
+.. code-block:: python
+
+    self.env.user.notify_success(message='My success message', sound='/<YOUR_MODULE>/static/audio/success.mp3' )
+
+or
+
+.. code-block:: python
+
+    self.env.user.notify_info( message='My information message', sound='/<YOUR_MODULE>/static/audio/info.mp3' )
+
+The sound parameter can be used with any notification type (success, danger, warning, info, or default). If the sound parameter is not provided, the notification will be displayed without any sound.
 
 The notifications can bring interactivity with some buttons.
 
@@ -146,6 +161,8 @@ Contributors
 * `Tecnativa <https://www.tecnativa.com>`_:
 
   * David Vidal
+
+* Cetmix OÜ <https://cetmix.com/>
 
 Maintainers
 ~~~~~~~~~~~
