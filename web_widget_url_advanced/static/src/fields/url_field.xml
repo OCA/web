@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+
+    <t
+        t-name="web_widget_url_advanced.UrlField"
+        t-inherit="web.UrlField"
+        t-inherit-mode="extension"
+    >
+
+        <xpath expr="//a[hasclass('o_field_widget')]" position="attributes">
+            <attribute name="t-esc">title</attribute>
+            <attribute name="t-att-href">formattedHrefWithPrefix</attribute>
+        </xpath>
+
+    </t>
+
+    <t
+        t-name="web_widget_url_advanced.FormUrlField"
+        t-inherit="web.FormUrlField"
+        t-inherit-mode="extension"
+    >
+
+        <xpath expr="//a[hasclass('o_field_widget')]" position="attributes">
+            <attribute name="t-esc">title</attribute>
+            <attribute name="t-att-href">formattedHrefWithPrefix</attribute>
+        </xpath>
+
+    </t>
+
+</templates>
