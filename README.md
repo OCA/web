@@ -30,6 +30,7 @@ addon | version | maintainers | summary
 [web_copy_confirm](web_copy_confirm/) | 16.0.1.0.0 |  | Show confirmation dialogue before copying records
 [web_dark_mode](web_dark_mode/) | 16.0.1.0.2 |  | Enabled Dark Mode for the Odoo Backend
 [web_dashboard_tile](web_dashboard_tile/) | 16.0.1.0.2 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Add Overview Dashboards with Tiles
+[web_datetime_picker_default_time](web_datetime_picker_default_time/) | 16.0.1.0.0 | [![grindtildeath](https://github.com/grindtildeath.png?size=30px)](https://github.com/grindtildeath) | Allows to define a default time on datetime picker
 [web_dialog_size](web_dialog_size/) | 16.0.1.0.1 |  | A module that lets the user expand a dialog box to the full screen width.
 [web_disable_export_group](web_disable_export_group/) | 16.0.1.0.0 |  | Web Disable Export Group
 [web_domain_field](web_domain_field/) | 16.0.1.0.1 |  | Use computed field as domain

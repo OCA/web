@@ -17,6 +17,7 @@ setuptools.setup(
         'odoo-addon-web_copy_confirm>=16.0dev,<16.1dev',
         'odoo-addon-web_dark_mode>=16.0dev,<16.1dev',
         'odoo-addon-web_dashboard_tile>=16.0dev,<16.1dev',
+        'odoo-addon-web_datetime_picker_default_time>=16.0dev,<16.1dev',
         'odoo-addon-web_dialog_size>=16.0dev,<16.1dev',
         'odoo-addon-web_disable_export_group>=16.0dev,<16.1dev',
         'odoo-addon-web_domain_field>=16.0dev,<16.1dev',
