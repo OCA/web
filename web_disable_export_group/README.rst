@@ -90,6 +90,8 @@ Contributors
    -  Víctor Martínez
    -  David Vidal
 
+-  SodexisTeam dev@sodexis.com
+
 Maintainers
 -----------
 
