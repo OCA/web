@@ -1,0 +1,20 @@
+/** @odoo-module **/
+/* Copyright 2018 Tecnativa - David Vidal
+   License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). */
+import {archParseBoolean} from "@web/views/utils";
+import {exportAllItem} from "@web/views/list/export_all/export_all";
+import {patch} from "@web/core/utils/patch";
+
+patch(exportAllItem, {
+    async isDisplayed(env) {
+        const export_enable = await super.isDisplayed(...arguments);
+        const export_xls_enable =
+            env.config.viewType === "list" &&
+            !env.model.root.selection.length &&
+            (await env.model.user.hasGroup(
+                "web_disable_export_group.group_export_xlsx_data"
+            )) &&
+            archParseBoolean(env.config.viewArch.getAttribute("export_xlsx"), true);
+        return export_xls_enable || export_enable;
+    },
+});

@@ -7,3 +7,4 @@
   - Alexandre Díaz
   - Víctor Martínez
   - David Vidal
+-  SodexisTeam <dev@sodexis.com>
