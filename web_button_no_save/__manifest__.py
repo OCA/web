@@ -4,7 +4,7 @@
 {
     "name": "Web Button No Save",
     "summary": "define buttons that do not require saving the form",
-    "version": "15.0.1.0.0",
+    "version": "16.0.1.0.0",
     "development_status": "Beta",
     "author": "TAKOBI, " "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/web",
