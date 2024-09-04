@@ -70,7 +70,6 @@ addon | version | maintainers | summary
 [web_widget_numeric_step](web_widget_numeric_step/) | 15.0.1.1.0 |  | Web Widget Numeric Step
 [web_widget_one2many_tree_line_duplicate](web_widget_one2many_tree_line_duplicate/) | 15.0.1.0.0 |  | Web Widget One2many Tree Line Duplicate
 [web_widget_open_tab](web_widget_open_tab/) | 15.0.1.1.0 |  | Allow to open record from trees on new tab from tree views
-[web_widget_remote_measure](web_widget_remote_measure/) | 15.0.1.0.0 | [![chienandalu](https://github.com/chienandalu.png?size=30px)](https://github.com/chienandalu) | Allows to connect to remote devices to record measures
 [web_widget_text_markdown](web_widget_text_markdown/) | 15.0.1.0.0 |  | Widget to text fields that adds markdown support
 [web_widget_url_advanced](web_widget_url_advanced/) | 15.0.1.0.0 |  | This module extends URL widget for displaying anchors with custom labels.
 [web_widget_x2many_2d_matrix](web_widget_x2many_2d_matrix/) | 15.0.1.0.3 | [![ChrisOForgeFlow](https://github.com/ChrisOForgeFlow.png?size=30px)](https://github.com/ChrisOForgeFlow) | Show list fields as a matrix
