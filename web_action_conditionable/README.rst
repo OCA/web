@@ -87,11 +87,12 @@ Contributors
 -  `Trobz <https://trobz.com>`__:
 
    -  Nguyễn Minh Chiến <chien@trobz.com>
+   -  Tran Thanh Trai <traitt@trobz.com>
 
 Other credits
 -------------
 
-The migration of this module from 15.0 to 16.0 was financially supported
+The migration of this module from 15.0 to 17.0 was financially supported
 by Camptocamp
 
 Maintainers

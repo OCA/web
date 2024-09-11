@@ -10,3 +10,4 @@
 
 - [Trobz](https://trobz.com):  
   - Nguyễn Minh Chiến \<<chien@trobz.com>\>
+  - Tran Thanh Trai \<<traitt@trobz.com>\>
