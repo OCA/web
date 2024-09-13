@@ -198,95 +198,16 @@ class DynamicRTreeRecordList extends DynamicRecordList {
             }
             return;
         }
-        const parentParams = this.model.computeParentParams(
+        const result = await this.model.getRecordsData(
             this.parentModel,
             this.parentID,
-            this.domain
+            this.domain,
+            this.orderBy
         );
-        const recordPromises = parentParams.records.map(this._fetchRecords, this);
-        const groupPromises = parentParams.groups.map(this._fetchGroups, this);
-        const records = await Promise.all(recordPromises);
-        const groups = await Promise.all(groupPromises);
-        // We want a list where "groups" are first, then "records".
-        // A "group" is either an entry of a different model than the base
-        // model, or a group with no corresponding record (for example because
-        // of filtering).
-        // We have to match groups and records.
-        // For each model, we have either a group, a record, or both.
-        // How to control the final order? The order is controlled by the
-        // parent definitions.
-        // First, we have to merge the groups of the same model.
-        const mergedGroups = this._mergeGroups(parentParams.groups, groups);
-        // Then, we have to iterate over all records and:
-        // * Remove groups of the same model that have a corresponding record
-        //   and add the group information to the record.
-        // * Add groups of other models for records that don’t have a
-        //   corresponding group.
-        const result = this._mergeGroupsAndRecords(
-            parentParams.records,
-            mergedGroups,
-            records
-        );
-        const recordStateByModel = {};
-        for (const recordState of this.recordsState) {
-            let recordStateByID = recordStateByModel[recordState.resModel];
-            if (recordStateByID === undefined) {
-                recordStateByID = {};
-                recordStateByModel[recordState.resModel] = recordStateByID;
-            }
-            recordStateByID[recordState.resId] = recordState;
-        }
-        for (const recordState of this.recordsState) {
-            recordStateByModel[recordState.resModel][recordState.resId] = recordState;
-        }
+        const recordStateByModel = this._buildRecordStateIndex();
         this.records = await Promise.all(
             result.map(async (data) => {
-                let fields = null,
-                    activeFields = null;
-                let values = data.record;
-                const isRecord = data.model === this.recordModel;
-                if (isRecord) {
-                    fields = this.recordFields;
-                    activeFields = this.recordActiveFields;
-                } else {
-                    fields = this.model.secondaryModelFields[data.model];
-                    activeFields = fields;
-                    const fieldsMapping =
-                        this.model.secondaryModelFieldsMapping[data.model];
-                    const mappedValues = {};
-                    for (const [k, v] of Object.entries(fieldsMapping)) {
-                        mappedValues[k] = values[v];
-                    }
-                    values = mappedValues;
-                }
-                let recordState = {};
-                const recordStateByID = recordStateByModel[data.model];
-                if (recordStateByID !== undefined) {
-                    recordState = recordStateByID[data.id] || {};
-                }
-                const record = this.model.createDataPoint(
-                    "record",
-                    {
-                        resModel: data.model,
-                        resId: data.id,
-                        fields: fields,
-                        activeFields: activeFields,
-                        rawContext: this.rawContext,
-                        orderBy: this.orderBy,
-                        recordModel: this.recordModel,
-                        numChildren: data.numChildren,
-                        isRecord,
-                        displayName: data.displayName,
-                        level: this.level,
-                        parent: this.parent,
-                        recordFields: this.recordFields,
-                        recordActiveFields: this.recordActiveFields,
-                        isFolded: data.isFolded,
-                    },
-                    recordState
-                );
-                await record.load({values: values});
-                return record;
+                return await this._createAndLoadRecord(data, recordStateByModel);
             })
         );
         this.count = this.records.length;
@@ -305,110 +226,75 @@ class DynamicRTreeRecordList extends DynamicRecordList {
         };
     }
 
-    _mergeGroups(groupParams, groupsResponse) {
-        const mergedGroups = [];
-        const groupsByModel = {};
-        for (let i = 0; i < groupParams.length; ++i) {
-            const params = groupParams[i];
-            const groups = groupsResponse[i].groups;
-            const model = params.groupModel;
-            let modelGroups = groupsByModel[model];
-            if (modelGroups === undefined) {
-                modelGroups = {
-                    model,
-                    groupsByID: {},
-                    groups: [],
-                };
-                groupsByModel[params.groupModel] = modelGroups;
-                mergedGroups.push(modelGroups);
+    _buildRecordStateIndex() {
+        const recordStateByModel = {};
+        for (const recordState of this.recordsState) {
+            let recordStateByID = recordStateByModel[recordState.resModel];
+            if (recordStateByID === undefined) {
+                recordStateByID = {};
+                recordStateByModel[recordState.resModel] = recordStateByID;
             }
-            for (const group of groups) {
-                const [id, displayName] = group[params.groupBy];
-                const numChildren = group[params.groupBy + "_count"];
-                let groupObj = modelGroups.groupsByID[id];
-                if (groupObj === undefined) {
-                    groupObj = {
-                        id,
-                        model,
-                        displayName,
-                        numChildren,
-                        record: null,
-                        isFolded: !params.expand,
-                    };
-                    modelGroups.groupsByID[id] = groupObj;
-                    modelGroups.groups.push(groupObj);
-                } else {
-                    groupObj.numChildren += numChildren;
-                    groupObj.isFolded = groupObj.isFolded && !params.expand;
-                }
+            recordStateByID[recordState.resId] = recordState;
+        }
+        return recordStateByModel;
+    }
+
+    _mapFieldValues(data) {
+        let fields = null,
+            activeFields = null;
+        let values = data.record;
+        const isRecord = data.model === this.recordModel;
+        if (isRecord) {
+            fields = this.recordFields;
+            activeFields = this.recordActiveFields;
+        } else {
+            fields = this.model.secondaryModelFields[data.model];
+            activeFields = fields;
+            const fieldsMapping = this.model.secondaryModelFieldsMapping[data.model];
+            const mappedValues = {};
+            for (const [k, v] of Object.entries(fieldsMapping)) {
+                mappedValues[k] = values[v];
             }
+            values = mappedValues;
         }
         return {
-            groups: mergedGroups,
-            groupsByModel,
+            fields,
+            activeFields,
+            values,
+            isRecord,
         };
     }
 
-    _mergeGroupsAndRecords(recordParams, groups, recordsResponse) {
-        const result = [];
-        for (let i = 0; i < recordParams.length; ++i) {
-            const params = recordParams[i];
-            const records = recordsResponse[i].records;
-            const model = params.model;
-            const modelGroups = groups.groupsByModel[model];
-            let groupsByID = {};
-            if (modelGroups !== undefined) {
-                groupsByID = modelGroups.groupsByID;
-            }
-            // All groups are also listed as records (needed to list empty
-            // groups). Add group information the records if a corresponding
-            // group exists.
-            for (const record of records) {
-                const group = groupsByID[record.id];
-                // The record's display_name is not always available
-                // (depending on the fieldNames), and for records this
-                // property is anyway never displayed.
-                let displayName = record.display_name;
-                let numChildren = 0;
-                let isFolded = true;
-                if (group !== undefined) {
-                    numChildren = group.numChildren;
-                    group.record = record;
-                    displayName = group.displayName;
-                    isFolded = group.isFolded;
-                }
-                result.push({
-                    id: record.id,
-                    model,
-                    displayName,
-                    numChildren,
-                    record,
-                    isFolded,
-                });
-            }
+    async _createAndLoadRecord(data, recordStateByModel) {
+        const {fields, activeFields, values, isRecord} = this._mapFieldValues(data);
+        let recordState = {};
+        const recordStateByID = recordStateByModel[data.model];
+        if (recordStateByID !== undefined) {
+            recordState = recordStateByID[data.id] || {};
         }
-        return result;
-    }
-
-    async _fetchRecords({model, domain}) {
-        let fieldNames = [];
-        const kwargs = {
-            context: this.context,
-        };
-        if (model === this.recordModel) {
-            fieldNames = Object.keys(this.model.rootParams.activeFields);
-            kwargs.order = orderByToString(this.orderBy);
-        } else {
-            fieldNames = Object.values(this.model.secondaryModelFieldsMapping[model]);
-        }
-        return this.model.orm.webSearchRead(model, domain, fieldNames, kwargs);
-    }
-
-    async _fetchGroups({model, groupBy, domain}) {
-        const kwargs = {
-            context: this.context,
-        };
-        return this.model.orm.webReadGroup(model, domain, [groupBy], [groupBy], kwargs);
+        const record = this.model.createDataPoint(
+            "record",
+            {
+                resModel: data.model,
+                resId: data.id,
+                fields: fields,
+                activeFields: activeFields,
+                rawContext: this.rawContext,
+                orderBy: this.orderBy,
+                recordModel: this.recordModel,
+                numChildren: data.numChildren,
+                isRecord,
+                displayName: data.displayName,
+                level: this.level,
+                parent: this.parent,
+                recordFields: this.recordFields,
+                recordActiveFields: this.recordActiveFields,
+                isFolded: data.isFolded,
+            },
+            recordState
+        );
+        await record.load({values});
+        return record;
     }
 
     _findRecordAndParentList(id) {
@@ -1081,6 +967,143 @@ export class RTreeModel extends RelationalModel {
             records: recordParams,
             groups: groupParams,
         };
+    }
+
+    async _fetchRecords({model, domain}, orderBy) {
+        let fieldNames = [];
+        const kwargs = {
+            context: this.context,
+        };
+        if (model === this.rootParams.resModel) {
+            fieldNames = Object.keys(this.rootParams.activeFields);
+            kwargs.order = orderByToString(orderBy);
+        } else {
+            fieldNames = Object.values(this.secondaryModelFieldsMapping[model]);
+        }
+        return this.orm.webSearchRead(model, domain, fieldNames, kwargs);
+    }
+
+    async _fetchGroups({model, groupBy, domain}) {
+        const kwargs = {
+            context: this.context,
+        };
+        return this.orm.webReadGroup(model, domain, [groupBy], [groupBy], kwargs);
+    }
+
+    _mergeGroups(groupParams, groupsResponse) {
+        const mergedGroups = [];
+        const groupsByModel = {};
+        for (let i = 0; i < groupParams.length; ++i) {
+            const params = groupParams[i];
+            const groups = groupsResponse[i].groups;
+            const model = params.groupModel;
+            let modelGroups = groupsByModel[model];
+            if (modelGroups === undefined) {
+                modelGroups = {
+                    model,
+                    groupsByID: {},
+                    groups: [],
+                };
+                groupsByModel[params.groupModel] = modelGroups;
+                mergedGroups.push(modelGroups);
+            }
+            for (const group of groups) {
+                const [id, displayName] = group[params.groupBy];
+                const numChildren = group[params.groupBy + "_count"];
+                let groupObj = modelGroups.groupsByID[id];
+                if (groupObj === undefined) {
+                    groupObj = {
+                        id,
+                        model,
+                        displayName,
+                        numChildren,
+                        record: null,
+                        isFolded: !params.expand,
+                    };
+                    modelGroups.groupsByID[id] = groupObj;
+                    modelGroups.groups.push(groupObj);
+                } else {
+                    groupObj.numChildren += numChildren;
+                    groupObj.isFolded = groupObj.isFolded && !params.expand;
+                }
+            }
+        }
+        return {
+            groups: mergedGroups,
+            groupsByModel,
+        };
+    }
+
+    _mergeGroupsAndRecords(recordParams, groups, recordsResponse) {
+        const result = [];
+        for (let i = 0; i < recordParams.length; ++i) {
+            const params = recordParams[i];
+            const records = recordsResponse[i].records;
+            const model = params.model;
+            const modelGroups = groups.groupsByModel[model];
+            let groupsByID = {};
+            if (modelGroups !== undefined) {
+                groupsByID = modelGroups.groupsByID;
+            }
+            // All groups are also listed as records (needed to list empty
+            // groups). Add group information the records if a corresponding
+            // group exists.
+            for (const record of records) {
+                const group = groupsByID[record.id];
+                // The record's display_name is not always available
+                // (depending on the fieldNames), and for records this
+                // property is anyway never displayed.
+                let displayName = record.display_name;
+                let numChildren = 0;
+                let isFolded = true;
+                if (group !== undefined) {
+                    numChildren = group.numChildren;
+                    group.record = record;
+                    displayName = group.displayName;
+                    isFolded = group.isFolded;
+                }
+                result.push({
+                    id: record.id,
+                    model,
+                    displayName,
+                    numChildren,
+                    record,
+                    isFolded,
+                });
+            }
+        }
+        return result;
+    }
+
+    async getRecordsData(parentModel, parentID, domain, orderBy) {
+        const parentParams = this.computeParentParams(parentModel, parentID, domain);
+        const recordPromises = parentParams.records.map((result) =>
+            this._fetchRecords(result, orderBy)
+        );
+        const groupPromises = parentParams.groups.map(this._fetchGroups, this);
+        const records = await Promise.all(recordPromises);
+        const groups = await Promise.all(groupPromises);
+        // We want a list where "groups" are first, then "records".
+        // A "group" is either an entry of a different model than the base
+        // model, or a group with no corresponding record (for example because
+        // of filtering).
+        // We have to match groups and records.
+        // For each model, we have either a group, a record, or both.
+        // How to control the final order? The order is controlled by the
+        // parent definitions.
+        // First, we have to merge the groups of the same model.
+        const mergedGroups = this._mergeGroups(parentParams.groups, groups);
+        // Then, we have to iterate over all records and:
+        // * Remove groups of the same model that have a corresponding record
+        //   and add the group information to the record.
+        // * Add groups of other models for records that don’t have a
+        //   corresponding group.
+        const result = this._mergeGroupsAndRecords(
+            parentParams.records,
+            mergedGroups,
+            records
+        );
+        return result;
     }
 
     errorDialog(title, message) {
