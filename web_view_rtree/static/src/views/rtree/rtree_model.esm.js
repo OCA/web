@@ -350,7 +350,7 @@ class DynamicRTreeRecordList extends DynamicRecordList {
     }
 
     _mergeGroupsAndRecords(recordParams, groups, recordsResponse) {
-        const resultRecords = [];
+        const result = [];
         for (let i = 0; i < recordParams.length; ++i) {
             const params = recordParams[i];
             const records = recordsResponse[i].records;
@@ -360,62 +360,33 @@ class DynamicRTreeRecordList extends DynamicRecordList {
             if (modelGroups !== undefined) {
                 groupsByID = modelGroups.groupsByID;
             }
-            if (model === this.recordModel) {
-                // Records should stay as records, but receive group
-                // information from the corresponding group if it exists
-                for (const record of records) {
-                    const group = groupsByID[record.id];
-                    let numChildren = 0;
-                    let isFolded = true;
-                    if (group !== undefined) {
-                        numChildren = group.numChildren;
-                        group.record = record;
-                        isFolded = group.isFolded;
-                    }
-                    resultRecords.push({
-                        id: record.id,
-                        model,
-                        // The record's display_name is not always available
-                        // (depending on the fieldNames), and for records this
-                        // property is anyway never displayed.
-                        displayName: null,
-                        numChildren,
-                        record,
-                        isFolded,
-                    });
+            // All groups are also listed as records (needed to list empty
+            // groups). Add group information the records if a corresponding
+            // group exists.
+            for (const record of records) {
+                const group = groupsByID[record.id];
+                // The record's display_name is not always available
+                // (depending on the fieldNames), and for records this
+                // property is anyway never displayed.
+                let displayName = record.display_name;
+                let numChildren = 0;
+                let isFolded = true;
+                if (group !== undefined) {
+                    numChildren = group.numChildren;
+                    group.record = record;
+                    displayName = group.displayName;
+                    isFolded = group.isFolded;
                 }
-            } else {
-                // Records should become groups (if the corresponding group
-                // does not exist already)
-                for (const record of records) {
-                    const group = groupsByID[record.id];
-                    if (group === undefined) {
-                        // Insert a new group
-                        const groupObj = {
-                            id: record.id,
-                            model,
-                            displayName: record.display_name,
-                            numChildren: 0,
-                            record,
-                            isFolded: true,
-                        };
-                        modelGroups.groupsByID[record.id] = groupObj;
-                        // FIXME: insert at correct sorted position
-                        modelGroups.groups.push(groupObj);
-                    } else {
-                        group.record = record;
-                    }
-                }
+                result.push({
+                    id: record.id,
+                    model,
+                    displayName,
+                    numChildren,
+                    record,
+                    isFolded,
+                });
             }
         }
-        let result = [];
-        // Remove groups that are of the primary model
-        for (const group of groups.groups) {
-            result = result.concat(
-                group.groups.filter((g) => g.model !== this.recordModel)
-            );
-        }
-        result = result.concat(resultRecords);
         return result;
     }
 
