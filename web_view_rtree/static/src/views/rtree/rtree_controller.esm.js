@@ -39,6 +39,7 @@ export class RTreeController extends ListController {
             multiEdit: this.multiEdit,
             rootState,
             parentDefs: this.archInfo.parentDefs,
+            preload: this.archInfo.preload,
         });
 
         useSetupView({

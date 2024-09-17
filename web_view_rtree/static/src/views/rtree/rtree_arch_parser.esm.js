@@ -61,6 +61,9 @@ export class RTreeArchParser extends ListArchParser {
                 const action = xmlDoc.getAttribute("action");
                 const type = xmlDoc.getAttribute("type");
                 treeAttr.openAction = action && type ? {action, type} : null;
+
+                // Custom rtree attribute to allow to preload all the data
+                treeAttr.preload = archParseBoolean(node.getAttribute("preload") || "");
             } else if (node.tagName === "parent") {
                 let domain = node.getAttribute("domain");
                 if (domain !== null) {

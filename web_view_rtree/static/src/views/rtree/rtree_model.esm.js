@@ -514,6 +514,8 @@ export class RTreeModel extends RelationalModel {
         super.setup(params, args);
         this.parentDefs = params.parentDefs;
         this.parentsMap = this._buildParentsMap(this.parentDefs);
+        this.preload = params.preload;
+        this.preloadPromise = null;
         this.previousDomain = null;
         this._processFields();
     }
@@ -969,17 +971,20 @@ export class RTreeModel extends RelationalModel {
         };
     }
 
-    async _fetchRecords({model, domain}, orderBy) {
+    async _fetchRecords({model, domain}, orderBy = null, extraFields = []) {
         let fieldNames = [];
         const kwargs = {
             context: this.context,
         };
         if (model === this.rootParams.resModel) {
             fieldNames = Object.keys(this.rootParams.activeFields);
-            kwargs.order = orderByToString(orderBy);
+            if (orderBy !== null) {
+                kwargs.order = orderByToString(orderBy);
+            }
         } else {
             fieldNames = Object.values(this.secondaryModelFieldsMapping[model]);
         }
+        fieldNames = fieldNames.concat(extraFields);
         return this.orm.webSearchRead(model, domain, fieldNames, kwargs);
     }
 
@@ -1075,7 +1080,7 @@ export class RTreeModel extends RelationalModel {
         return result;
     }
 
-    async getRecordsData(parentModel, parentID, domain, orderBy) {
+    async _getRecordsDataOnDemand(parentModel, parentID, domain, orderBy) {
         const parentParams = this.computeParentParams(parentModel, parentID, domain);
         const recordPromises = parentParams.records.map((result) =>
             this._fetchRecords(result, orderBy)
@@ -1104,6 +1109,134 @@ export class RTreeModel extends RelationalModel {
             records
         );
         return result;
+    }
+
+    async _preloadModelData(modelData, recordParam, field = null) {
+        let promise = null;
+        if (field) {
+            promise = this._fetchRecords(recordParam, null, [field]).then((result) => {
+                // Index per parent field.
+                const index = {};
+                for (const record of result.records) {
+                    const id = record[field][0];
+                    let children = index[id];
+                    if (children === undefined) {
+                        children = [];
+                        index[id] = children;
+                    }
+                    children.push(record);
+                }
+                modelData.index = index;
+                return result;
+            });
+        } else {
+            promise = this._fetchRecords(recordParam).then((result) => {
+                const index = {};
+                index[undefined] = result.records;
+                modelData.index = index;
+                return result;
+            });
+        }
+        modelData.records = (await promise).records;
+    }
+
+    async _preloadData() {
+        // We will load all records of all models for each of the parent-child
+        // relationships, using the corresponding domain.
+        const promises = [];
+        const preloadedData = {};
+        // The root records are loaded separately.
+        const rootRecordParams = this.computeParentParams().records;
+        const rootData = [];
+        for (const recordParam of rootRecordParams) {
+            const modelData = {
+                model: recordParam.model,
+            };
+            rootData.push(modelData);
+            promises.push(this._preloadModelData(modelData, recordParam));
+        }
+        preloadedData[undefined] = {
+            data: rootData,
+            expand: true,
+        };
+        // Now the children records.
+        for (const model of this.parentsMap.parentModels) {
+            const childData = [];
+            let expand = false;
+            for (const child of this.parentsMap.parentsMap[model]) {
+                const domain = [[child.field, "!=", false]];
+                const recordParam = this._computeChildParam(child, domain);
+                const modelData = {
+                    model: child.model,
+                    field: child.field,
+                };
+                expand = expand || child.expand;
+                childData.push(modelData);
+                promises.push(
+                    this._preloadModelData(modelData, recordParam, child.field)
+                );
+            }
+            preloadedData[model] = {
+                data: childData,
+                expand,
+            };
+        }
+        await Promise.all(promises);
+        this.preloadedData = preloadedData;
+    }
+
+    _getPreloadedNumChildren(model, id) {
+        let numChildren = 0;
+        for (const modelData of this.preloadedData[model].data) {
+            const children = modelData.index[id];
+            if (children !== undefined) {
+                numChildren += children.length;
+            }
+        }
+        return numChildren;
+    }
+
+    async _getPreloadedRecordsData(parentModel, parentID) {
+        if (this.preloadPromise === null) {
+            this.preloadPromise = this._preloadData();
+        }
+        await this.preloadPromise;
+        const modelsData = this.preloadedData[parentModel];
+        const result = [];
+        for (const modelData of modelsData.data) {
+            const children = modelData.index[parentID];
+            if (children === undefined) {
+                continue;
+            }
+            const expand = this.preloadedData[modelData.model].expand;
+            for (const record of children) {
+                const numChildren = this._getPreloadedNumChildren(
+                    modelData.model,
+                    record.id
+                );
+                result.push({
+                    model: modelData.model,
+                    id: record.id,
+                    record: record,
+                    displayName: record.displayName,
+                    isFolded: !expand || !numChildren,
+                    numChildren,
+                });
+            }
+        }
+        return result;
+    }
+
+    async getRecordsData(parentModel, parentID, domain, orderBy) {
+        if (this.preload) {
+            // If a domain is provided, it is applied only at the root level.
+            // In that case, we can't use the preloaded data because the
+            // domain must be interpreted by the server.
+            if (domain.length === 0 || parentModel !== undefined) {
+                return this._getPreloadedRecordsData(parentModel, parentID);
+            }
+        }
+        return this._getRecordsDataOnDemand(parentModel, parentID, domain, orderBy);
     }
 
     errorDialog(title, message) {

@@ -81,3 +81,26 @@ view. For example, this would allow to reorder projects as well as tasks:
     <field name="sequence" widget="handle">
         <field model="project.project" name="sequence" />
     </field>
+
+Preloading
+~~~~~~~~~~
+
+By default, only the data that is needed to display the tree in its current
+open state is requested to the server. The data is loaded on demand as
+branches are opened. While this is efficient in most cases, opening many
+branches causes many requests to the server, for example when expanding the
+whole tree at once or when using filtering.
+
+The rtree view allows to preload all the data to avoid making many on-demand
+requests to the server. To enable this, the ``preload`` attribute must be set
+to ``true`` on the ``<rtree>`` element, like so:
+
+.. code-block:: XML
+
+    <rtree preload="true">
+        …
+    </rtree>
+
+Please note that this will eagerly load all available data of the involved
+models (according to the provided domains, if any), without setting a limit on
+the number of records. Use this carefully.
