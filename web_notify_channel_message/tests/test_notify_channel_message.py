@@ -8,7 +8,7 @@ from odoo.tests import common
 class TestWebNotifyChannelMessage(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(TestWebNotifyChannelMessage, cls).setUpClass()
+        super().setUpClass()
         cls.env.user = cls.env.ref("base.user_admin")
         cls.other_user = cls.env.ref("base.user_demo")
         cls.env = api.Environment(cls.cr, cls.env.user.id, {})
@@ -21,7 +21,7 @@ class TestWebNotifyChannelMessage(common.TransactionCase):
                 "email": "mark.brown23@example.com",
             }
         )
-        cls.channel = cls.env["mail.channel"].create(
+        cls.channel = cls.env["discuss.channel"].create(
             {
                 "name": "Test channel",
                 "channel_partner_ids": [
@@ -33,7 +33,7 @@ class TestWebNotifyChannelMessage(common.TransactionCase):
 
     def test_01_post_message_admin(self):
         initial_message = (
-            self.env["mail.channel"]
+            self.env["discuss.channel"]
             .search([("name", "=", "Test channel")], limit=1)
             .message_ids
         )
@@ -45,7 +45,7 @@ class TestWebNotifyChannelMessage(common.TransactionCase):
             subtype_xmlid="mail.mt_comment",
         )
         message = (
-            self.env["mail.channel"]
+            self.env["discuss.channel"]
             .search([("name", "=", "Test channel")], limit=1)
             .message_ids[0]
         )
@@ -53,7 +53,7 @@ class TestWebNotifyChannelMessage(common.TransactionCase):
 
     def test_02_post_message_non_admin(self):
         initial_message = (
-            self.env["mail.channel"]
+            self.env["discuss.channel"]
             .search([("name", "=", "Test channel")], limit=1)
             .message_ids
         )
@@ -65,7 +65,7 @@ class TestWebNotifyChannelMessage(common.TransactionCase):
             subtype_xmlid="mail.mt_comment",
         )
         message = (
-            self.env["mail.channel"]
+            self.env["discuss.channel"]
             .search([("name", "=", "Test channel")], limit=1)
             .message_ids[0]
         )

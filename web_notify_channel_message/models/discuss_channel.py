@@ -4,8 +4,8 @@
 from odoo import _, models
 
 
-class MailChannel(models.Model):
-    _inherit = "mail.channel"
+class DiscussChannel(models.Model):
+    _inherit = "discuss.channel"
 
     def message_post(self, *, message_type="notification", **kwargs):
         message = super().message_post(message_type=message_type, **kwargs)
