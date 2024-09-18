@@ -20,7 +20,7 @@ class ResUsers(models.Model):
                 sticky=sticky,
                 target=target,
             )
-        return super(ResUsers, self)._notify_channel(
+        return super()._notify_channel(
             type_message=type_message,
             message=message,
             title=title,

@@ -5,8 +5,8 @@
 from odoo import _, models
 
 
-class MailChannel(models.Model):
-    _inherit = "mail.channel"
+class DiscussChannel(models.Model):
+    _inherit = "discuss.channel"
 
     def _notify_message(self, message):
         for partner in self.channel_partner_ids:
