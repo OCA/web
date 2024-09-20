@@ -16,28 +16,34 @@ export const webNotificationService = {
                 browser.clearTimeout(notif)
             );
             webNotifTimeouts = {};
-            notifications.forEach(function (notif) {
-                browser.setTimeout(function () {
-                    let buttons = [];
-
-                    if (notif.action) {
-                        buttons = [
-                            {
-                                name: env._t("Open"),
-                                primary: true,
-                                onClick: async () => {
-                                    await action.doAction(notif.action);
-                                },
-                            },
-                        ];
-                    }
-                    notification.add(Markup(notif.message), {
+            notifications.forEach((notif) => {
+                browser.setTimeout(() => {
+                    const notificationRemove = notification.add(Markup(notif.message), {
                         title: notif.title,
                         type: notif.type,
                         sticky: notif.sticky,
                         className: notif.className,
                         messageIsHtml: notif.html,
-                        buttons: buttons,
+                        buttons:
+                            notif.action &&
+                            notif.action.context &&
+                            notif.action.context.params
+                                ? [
+                                      {
+                                          name:
+                                              notif.action.context.params.button_name ||
+                                              env._t("Open"),
+                                          primary: true,
+                                          onClick: async function () {
+                                              await action.doAction(notif.action);
+                                              notificationRemove();
+                                          },
+                                          icon:
+                                              notif.action.context.params.button_icon ||
+                                              undefined,
+                                      },
+                                  ]
+                                : [],
                     });
                 });
             });
