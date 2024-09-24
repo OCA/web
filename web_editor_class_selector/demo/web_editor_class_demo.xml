@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="class_button" model="web.editor.class">
+        <field name="name">Button</field>
+        <field name="class_name">demo_button</field>
+    </record>
+    <record id="class_menu" model="web.editor.class">
+        <field name="name">Menu</field>
+        <field name="class_name">demo_menu</field>
+    </record>
+    <record id="class_field" model="web.editor.class">
+        <field name="name">Field</field>
+        <field name="class_name">demo_field</field>
+    </record>
+
+</odoo>

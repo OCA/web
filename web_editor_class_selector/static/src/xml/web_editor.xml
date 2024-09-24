@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <t t-name="web_editor_class_selector.custom_class_css">
+        <t t-jquery="#decoration" t-operation="before">
+
+            <div id="custom_class" class="btn-group dropdown">
+                <button
+                    type="button"
+                    class="btn dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                    title="Custom CSS"
+                    tabindex="-1"
+                    data-bs-original-title="Custom CSS"
+                    aria-expanded="false"
+                >
+                    <span>Custom CSS</span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li t-foreach="custom_class_css" t-as="line">
+                        <a
+                            class="dropdown-item css_selector"
+                            t-att-id="line.class_name"
+                            href="#"
+                            data-call="setCustomCss"
+                            t-att-data-arg1="line.id"
+                        ><span t-att-class="line.class_name" t-out="line.name" /></a>
+                    </li>
+                </ul>
+            </div>
+        </t>
+
+    </t>
+</templates>
