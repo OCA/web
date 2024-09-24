@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <menuitem
+        id="web_editor_class_menu"
+        action="action_web_editor_class"
+        parent="base.next_id_2"
+        sequence="50"
+    />
+
+</odoo>
