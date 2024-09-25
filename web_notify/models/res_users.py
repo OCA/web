@@ -3,7 +3,7 @@
 from odoo import _, api, exceptions, fields, models
 
 from odoo.addons.bus.models.bus import channel_with_db, json_dump
-from odoo.addons.web.controllers.main import clean_action
+from odoo.addons.web.controllers.utils import clean_action
 
 DEFAULT_MESSAGE = "Default message"
 
