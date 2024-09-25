@@ -7,10 +7,10 @@ action includes a context similar to this (example is the default value)::
 
 In addition, you can also configure the calendar view's default mode by adding::
 
-{"calendar_slot_duration": "00:30:00", "adapt_view_to_slot_duration": False}
+    {"calendar_slot_duration": "00:30:00", "keep_default_view_slot_duration": True}
 
-The ``adapt_view_to_slot_duration`` key is optional and defaults to ``True``.
-When set to ``False``, the calendar view will not adapt its view to the slot size.
+The ``keep_default_view_slot_duration`` key is optional and defaults to ``False``.
+When set to ``True``, the calendar view will not adapt its view to the slot size.
 
 For example, if you want to set the default slot duration to 1 hour and 30 minutes,
 by default the calendar view will adapt its view to show slots of 1 hour and 30 minutes.
