@@ -13,7 +13,8 @@ attributes:
             <field name="my_field"/>
             <field name="my_field1"/>
             <field name="my_field2"/>
-            <field name="my_field3"/>
+            <field name="my_field3" attrs="{'readonly': [('my_field4', '=', True)]}"/>
+            <field name="my_field4"/>
         </tree>
     </field>
 
