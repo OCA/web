@@ -1,0 +1,114 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_editor_class_selector
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-10-07 10:06+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
+
+#. module: web_editor_class_selector
+#: model:ir.model.fields,field_description:web_editor_class_selector.field_web_editor_class__active
+msgid "Active"
+msgstr "Attiva"
+
+#. module: web_editor_class_selector
+#: model:ir.model.fields,field_description:web_editor_class_selector.field_web_editor_class__class_name
+msgid "Class Name"
+msgstr "Nome classe"
+
+#. module: web_editor_class_selector
+#: model:ir.model.constraint,message:web_editor_class_selector.constraint_web_editor_class_class_name_uniq
+msgid "Class name must be unique"
+msgstr "Il nome della classe deve essere univoco"
+
+#. module: web_editor_class_selector
+#: model_terms:ir.actions.act_window,help:web_editor_class_selector.action_web_editor_class
+msgid "Click here to add new Web Editor Class."
+msgstr "Fare clic qui per aggiungere una nuova classe editor web."
+
+#. module: web_editor_class_selector
+#: model:ir.model.fields,field_description:web_editor_class_selector.field_web_editor_class__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: web_editor_class_selector
+#: model:ir.model.fields,field_description:web_editor_class_selector.field_web_editor_class__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: web_editor_class_selector
+#. odoo-javascript
+#: code:addons/web_editor_class_selector/static/src/js/odoo-editor/OdooEditor.esm.js:0
+#: code:addons/web_editor_class_selector/static/src/xml/web_editor.xml:0
+#: code:addons/web_editor_class_selector/static/src/xml/web_editor.xml:0
+#, python-format
+msgid "Custom CSS"
+msgstr "CSS personalizzato"
+
+#. module: web_editor_class_selector
+#: model:ir.model.fields,field_description:web_editor_class_selector.field_web_editor_class__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: web_editor_class_selector
+#: model:ir.model.fields,field_description:web_editor_class_selector.field_web_editor_class__id
+msgid "ID"
+msgstr "ID"
+
+#. module: web_editor_class_selector
+#: model:ir.model.fields,field_description:web_editor_class_selector.field_web_editor_class____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: web_editor_class_selector
+#: model:ir.model.fields,field_description:web_editor_class_selector.field_web_editor_class__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: web_editor_class_selector
+#: model:ir.model.fields,field_description:web_editor_class_selector.field_web_editor_class__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: web_editor_class_selector
+#: model:ir.model.fields,field_description:web_editor_class_selector.field_web_editor_class__name
+msgid "Name"
+msgstr "Nome"
+
+#. module: web_editor_class_selector
+#: model_terms:ir.ui.view,arch_db:web_editor_class_selector.view_web_editor_class_form
+msgid "Name..."
+msgstr "Nome..."
+
+#. module: web_editor_class_selector
+#: model_terms:ir.ui.view,arch_db:web_editor_class_selector.view_web_editor_class_form
+msgid "Some CSS class"
+msgstr "Qualche classe CSS"
+
+#. module: web_editor_class_selector
+#: model:ir.model.fields,help:web_editor_class_selector.field_web_editor_class__class_name
+msgid ""
+"The class name to be added to the tag. It must be created in the CSS file."
+msgstr ""
+"Il nome della classe da aggiungere al tag. Deve essere creata nel file CSS."
+
+#. module: web_editor_class_selector
+#: model:ir.actions.act_window,name:web_editor_class_selector.action_web_editor_class
+#: model:ir.ui.menu,name:web_editor_class_selector.web_editor_class_menu
+msgid "Web Editor Class"
+msgstr "Classe editor web"
+
+#. module: web_editor_class_selector
+#: model:ir.model,name:web_editor_class_selector.model_web_editor_class
+msgid "Web editor class selector"
+msgstr "Selettore classe editore web"
