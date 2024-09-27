@@ -22,12 +22,12 @@ export default class BokehChartWidget extends CharField {
         onWillStart(() =>
             loadBundle({
                 jsLibs: [
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-3.1.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-api-3.1.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-widgets-3.1.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-tables-3.1.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-mathjax-3.1.1.min.js",
-                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-gl-3.1.1.min.js",
+                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-3.2.2.min.js",
+                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-api-3.2.2.min.js",
+                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-widgets-3.2.2.min.js",
+                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-tables-3.2.2.min.js",
+                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-mathjax-3.2.2.min.js",
+                    "/web_widget_bokeh_chart/static/src/lib/bokeh/bokeh-gl-3.2.2.min.js",
                 ],
             })
         );
