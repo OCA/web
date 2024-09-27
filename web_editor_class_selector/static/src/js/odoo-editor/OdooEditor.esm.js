@@ -11,7 +11,7 @@ import {OdooEditor} from "@web_editor/js/editor/odoo-editor/src/OdooEditor";
 patch(OdooEditor.prototype, "web_editor_class_selector.OdooEditor", {
     _updateToolbar(show) {
         const res = this._super(show);
-        if (!this.toolbar) {
+        if (!this.toolbar || !this.custom_class_css) {
             return res;
         }
         const sel = this.document.getSelection();
