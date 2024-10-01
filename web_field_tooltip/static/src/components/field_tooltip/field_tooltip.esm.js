@@ -66,7 +66,6 @@ export class FieldTooltip extends Component {
             {
                 closeOnClickAway: true,
                 position: "top",
-                title: "title",
             }
         );
     }
