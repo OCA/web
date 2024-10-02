@@ -23,13 +23,15 @@
     "installable": True,
     "assets": {
         "web.assets_backend": [
-            "web_timeline/static/src/scss/web_timeline.scss",
-            "web_timeline/static/src/js/timeline_view.js",
-            "web_timeline/static/src/js/timeline_renderer.js",
-            "web_timeline/static/src/js/timeline_controller.esm.js",
-            "web_timeline/static/src/js/timeline_model.js",
-            "web_timeline/static/src/js/timeline_canvas.js",
-            "web_timeline/static/src/xml/web_timeline.xml",
+            "web_timeline/static/src/views/timeline/timeline_view.scss",
+            "web_timeline/static/src/views/timeline/timeline_canvas.scss",
+            "web_timeline/static/src/views/timeline/timeline_view.esm.js",
+            "web_timeline/static/src/views/timeline/timeline_renderer.esm.js",
+            "web_timeline/static/src/views/timeline/timeline_controller.esm.js",
+            "web_timeline/static/src/views/timeline/timeline_model.esm.js",
+            "web_timeline/static/src/views/timeline/timeline_canvas.esm.js",
+            "web_timeline/static/src/views/timeline/timeline_view.xml",
+            "web_timeline/static/src/views/timeline/timeline_canvas.xml",
         ],
     },
 }
