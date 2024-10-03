@@ -83,7 +83,7 @@ class ResCompany(models.Model):
           color: %(color_link_text)s !important;
         }
         .o_required_modifier.o_input, .o_required_modifier .o_input {
-          background-color: lighten(%(color_button_bg)s, 10%%) !important;
+          background-color: %(color_required_input_bg)s !important;
         }
     """
 
@@ -97,6 +97,9 @@ class ResCompany(models.Model):
     color_button_bg = fields.Char("Button Background Color", sparse="company_colors")
     color_button_bg_hover = fields.Char(
         "Button Background Color Hover", sparse="company_colors"
+    )
+    color_required_input_bg = fields.Char(
+        "Required Input Background Color", sparse="company_colors"
     )
     color_link_text = fields.Char("Link Text Color", sparse="company_colors")
     color_link_text_hover = fields.Char(
@@ -129,6 +132,7 @@ class ResCompany(models.Model):
                 "color_button_text",
                 "color_link_text",
                 "color_link_text_hover",
+                "color_required_input_bg",
             )
             result = super().write(values)
             if any([field in values for field in fields_to_check]):
@@ -196,6 +200,8 @@ class ResCompany(models.Model):
                 or 'theme-color("primary")',
                 "color_link_text_hover": values.get("color_link_text_hover")
                 or 'darken(theme-color("primary"), 10%)',
+                "color_required_input_bg": values.get("color_required_input_bg")
+                or "#D2D2FF",
             }
         )
         return values
