@@ -7,7 +7,7 @@ import {registry} from "@web/core/registry";
 export class WebEnvironmentRibbon extends Component {
     setup() {
         this.orm = useService("orm");
-        useBus(this.env.bus, "WEB_CLIENT_READY", this.showRibbon.bind(this));
+        useBus(this.env.bus, "WEB_CLIENT_READY", () => this.showRibbon());
     }
 
     // Code from: http://jsfiddle.net/WK_of_Angmar/xgA5C/
@@ -32,31 +32,30 @@ export class WebEnvironmentRibbon extends Component {
         return image.style.color !== "rgb(255, 255, 255)";
     }
 
-    showRibbon() {
-        const ribbon = $(".test-ribbon");
-        const self = this;
-        ribbon.hide();
+    async showRibbon() {
+        const ribbon = document.getElementsByClassName("test-ribbon")[0];
+        ribbon.style.display = "none";
         // Get ribbon data from backend
-        self.orm
-            .call("web.environment.ribbon.backend", "get_environment_ribbon")
-            .then(function (ribbon_data) {
-                // Ribbon name
-                if (ribbon_data.name && ribbon_data.name !== "False") {
-                    ribbon.show();
-                    ribbon.html(ribbon_data.name);
-                }
-                // Ribbon color
-                if (ribbon_data.color && self.validStrColour(ribbon_data.color)) {
-                    ribbon.css("color", ribbon_data.color);
-                }
-                // Ribbon background color
-                if (
-                    ribbon_data.background_color &&
-                    self.validStrColour(ribbon_data.background_color)
-                ) {
-                    ribbon.css("background-color", ribbon_data.background_color);
-                }
-            });
+        const ribbon_data = await this.orm.call(
+            "web.environment.ribbon.backend",
+            "get_environment_ribbon"
+        );
+        // Ribbon name
+        if (ribbon_data.name && ribbon_data.name !== "False") {
+            ribbon.style.display = "block";
+            ribbon.innerHTML = ribbon_data.name;
+        }
+        // Ribbon color
+        if (ribbon_data.color && this.validStrColour(ribbon_data.color)) {
+            ribbon.style.color = ribbon_data.color;
+        }
+        // Ribbon background color
+        if (
+            ribbon_data.background_color &&
+            this.validStrColour(ribbon_data.background_color)
+        ) {
+            ribbon.style.backgroundColor = ribbon_data.background_color;
+        }
     }
 }
 
