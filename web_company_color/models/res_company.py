@@ -45,15 +45,22 @@ class ResCompany(models.Model):
             }
           }
         }
-        a[href],
-        a[tabindex],
-        .btn-link,
-        .o_external_button {
-          color: %(color_link_text)s !important;
-        }
+
+          a[href],
+          a[tabindex],
+          .btn-link,
+          .o_external_button {
+            color: %(color_link_text)s;
+            .o_main_navbar {
+            color: none;
+            }
+          }
         a:hover,
         .btn-link:hover {
-          color: %(color_link_text_hover)s !important;
+          color: %(color_link_text_hover)s;
+          .o_main_navbar {
+            color: none;
+          }
         }
         .btn-primary:not(.disabled),
         .ui-autocomplete .ui-menu-item > a.ui-state-active {
