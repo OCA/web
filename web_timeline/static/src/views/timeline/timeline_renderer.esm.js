@@ -1,663 +1,450 @@
-/* global vis, py */
-odoo.define("web_timeline.TimelineRenderer", function (require) {
-    "use strict";
+/** @odoo-module **/
+/* global vis */
+/**
+ * Copyright 2024 Tecnativa - Carlos López
+ * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+ */
+import {
+    Component,
+    onMounted,
+    onWillStart,
+    onWillUpdateProps,
+    useRef,
+    useState,
+} from "@odoo/owl";
+import {TimelineCanvas} from "./timeline_canvas.esm";
+import {_t} from "@web/core/l10n/translation";
+import {loadBundle} from "@web/core/assets";
+import {renderToString} from "@web/core/utils/render";
+import {useService} from "@web/core/utils/hooks";
 
-    const AbstractRenderer = require("web.AbstractRenderer");
-    const core = require("web.core");
-    const time = require("web.time");
-    const utils = require("web.utils");
-    const session = require("web.session");
-    const QWeb = require("web.QWeb");
-    const field_utils = require("web.field_utils");
-    const TimelineCanvas = require("web_timeline.TimelineCanvas");
+const {DateTime} = luxon;
 
-    const _t = core._t;
-
-    const TimelineRenderer = AbstractRenderer.extend({
-        template: "TimelineView",
-
-        events: _.extend({}, AbstractRenderer.prototype.events, {
-            "click .oe_timeline_button_today": "_onTodayClicked",
-            "click .oe_timeline_button_scale_day": "_onScaleDayClicked",
-            "click .oe_timeline_button_scale_week": "_onScaleWeekClicked",
-            "click .oe_timeline_button_scale_month": "_onScaleMonthClicked",
-            "click .oe_timeline_button_scale_year": "_onScaleYearClicked",
-        }),
-
-        init: function (parent, state, params) {
-            this._super.apply(this, arguments);
-            this.modelName = params.model;
-            this.mode = params.mode;
-            this.options = params.options;
-            this.can_create = params.can_create;
-            this.can_update = params.can_update;
-            this.can_delete = params.can_delete;
-            this.min_height = params.min_height;
-            this.date_start = params.date_start;
-            this.date_stop = params.date_stop;
-            this.date_delay = params.date_delay;
-            this.colors = params.colors;
-            this.fieldNames = params.fieldNames;
-            this.default_group_by = params.default_group_by;
-            this.dependency_arrow = params.dependency_arrow;
-            this.modelClass = params.view.model;
-            this.fields = params.fields;
-
-            this.timeline = false;
-            this.initial_data_loaded = false;
-        },
-
-        /**
-         * @override
-         */
-        start: function () {
-            const attrs = this.arch.attrs;
-            this.$el.addClass(attrs.class);
-            this.$timeline = this.$(".oe_timeline_widget");
-
-            if (!this.date_start) {
-                throw new Error(
-                    _t("Timeline view has not defined 'date_start' attribute.")
-                );
+export class TimelineRenderer extends Component {
+    setup() {
+        this.orm = useService("orm");
+        this.rootRef = useRef("root");
+        this.canvasRef = useRef("canvas");
+        this.model = this.props.model;
+        this.params = this.model.params;
+        this.mode = useState({data: this.params.mode});
+        this.options = this.params.options;
+        this.min_height = this.params.min_height;
+        this.date_start = this.params.date_start;
+        this.dependency_arrow = this.params.dependency_arrow;
+        this.fields = this.params.fields;
+        this.timeline = false;
+        this.initial_data_loaded = false;
+        this.canvas_ref = $(renderToString("TimelineView.Canvas", {}));
+        onWillUpdateProps(async (props) => {
+            this.on_data_loaded(props.model.data);
+        });
+        onWillStart(async () => {
+            await loadBundle("web_timeline.vis-timeline_lib");
+        });
+        onMounted(() => {
+            // Prevent Double Rendering on Updates
+            if (!this.timeline) {
+                this.init_timeline();
             }
-            this._super.apply(this, arguments);
-        },
+            this.on_attach_callback();
+        });
+    }
 
-        /**
-         * Triggered when the timeline is attached to the DOM.
-         */
-        on_attach_callback: function () {
-            const height =
-                this.$el.parent().height() - this.$(".oe_timeline_buttons").height();
-            if (height > this.min_height && this.timeline) {
-                this.timeline.setOptions({
-                    height: height,
-                });
-            }
-        },
-
-        /**
-         * @override
-         */
-        _render: function () {
-            return Promise.resolve().then(() => {
-                // Prevent Double Rendering on Updates
-                if (!this.timeline) {
-                    this.init_timeline();
-                }
+    /**
+     * Triggered when the timeline is attached to the DOM.
+     */
+    on_attach_callback() {
+        const $root = $(this.rootRef.el);
+        $root.addClass(this.params.class);
+        const height =
+            $root.parent().height() - $root.find(".oe_timeline_buttons").height();
+        if (height > this.min_height && this.timeline) {
+            this.timeline.setOptions({
+                height: height,
             });
-        },
-
-        /**
-         * Set the timeline window to today (day).
-         *
-         * @private
-         */
-        _onTodayClicked: function () {
-            if (this.timeline) {
-                this.timeline.setWindow({
-                    start: new moment(),
-                    end: new moment().add(24, "hours"),
-                });
-            }
-        },
-
-        /**
-         * Scale the timeline window to a day.
-         *
-         * @private
-         */
-        _onScaleDayClicked: function () {
-            this._scaleCurrentWindow(() => 24);
-        },
-
-        /**
-         * Scale the timeline window to a week.
-         *
-         * @private
-         */
-        _onScaleWeekClicked: function () {
-            this._scaleCurrentWindow(() => 24 * 7);
-        },
-
-        /**
-         * Scale the timeline window to a month.
-         *
-         * @private
-         */
-        _onScaleMonthClicked: function () {
-            this._scaleCurrentWindow((start) => 24 * moment(start).daysInMonth());
-        },
-
-        /**
-         * Scale the timeline window to a year.
-         *
-         * @private
-         */
-        _onScaleYearClicked: function () {
-            this._scaleCurrentWindow(
-                (start) => 24 * (moment(start).isLeapYear() ? 366 : 365)
-            );
-        },
-
-        /**
-         * Scales the timeline window based on the current window.
-         *
-         * @param {function} getHoursFromStart Function which returns the timespan
-         * (in hours) the window must be scaled to, starting from the "start" moment.
-         * @private
-         */
-        _scaleCurrentWindow: function (getHoursFromStart) {
-            if (this.timeline) {
-                const start = this.timeline.getWindow().start;
-                const end = moment(start).add(getHoursFromStart(start), "hours");
-                this.timeline.setWindow(start, end);
-            }
-        },
-
-        /**
-         * Computes the initial visible window.
-         *
-         * @private
-         */
-        _computeMode: function () {
-            if (this.mode) {
-                let start = false,
-                    end = false;
-                switch (this.mode) {
-                    case "day":
-                        start = new moment().startOf("day");
-                        end = new moment().endOf("day");
-                        break;
-                    case "week":
-                        start = new moment().startOf("week");
-                        end = new moment().endOf("week");
-                        break;
-                    case "month":
-                        start = new moment().startOf("month");
-                        end = new moment().endOf("month");
-                        break;
-                }
-                if (end && start) {
-                    this.options.start = start;
-                    this.options.end = end;
-                } else {
-                    this.mode = "fit";
-                }
-            }
-        },
-
-        /**
-         * Initializes the timeline
-         * (https://visjs.github.io/vis-timeline/docs/timeline).
-         *
-         * @private
-         */
-        init_timeline: function () {
-            this._computeMode();
-            this.options.editable = {};
-            if (this.can_update && this.modelClass.data.rights.write) {
-                this.options.onMove = this.on_move;
-                this.options.onUpdate = this.on_update;
-                // Drag items horizontally
-                this.options.editable.updateTime = true;
-                // Drag items from one group to another
-                this.options.editable.updateGroup = true;
-                if (this.can_create && this.modelClass.data.rights.create) {
-                    this.options.onAdd = this.on_add;
-                    // Add new items by double tapping
-                    this.options.editable.add = true;
-                }
-            }
-            if (this.can_delete && this.modelClass.data.rights.unlink) {
-                this.options.onRemove = this.on_remove;
-                // Delete an item by tapping the delete button top right
-                this.options.editable.remove = true;
-            }
-            this.options.xss = {disabled: true};
-            this.qweb = new QWeb(session.debug, {_s: session.origin}, false);
-            if (this.arch.children.length) {
-                const tmpl = utils.json_node_to_xml(
-                    _.filter(this.arch.children, (item) => item.tag === "templates")[0]
-                );
-                this.qweb.add_template(tmpl);
-            }
-
-            this.timeline = new vis.Timeline(this.$timeline.get(0), {}, this.options);
-            this.timeline.on("click", this.on_timeline_click);
-            if (!this.options.onUpdate) {
-                // In read-only mode, catch double-clicks this way.
-                this.timeline.on("doubleClick", this.on_timeline_double_click);
-            }
-            const group_bys = this.arch.attrs.default_group_by.split(",");
-            this.last_group_bys = group_bys;
-            this.last_domains = this.modelClass.data.domain;
-            this.$centerContainer = $(this.timeline.dom.centerContainer);
-            this.canvas = new TimelineCanvas(this);
-            this.canvas.appendTo(this.$centerContainer);
-            this.timeline.on("changed", () => {
-                this.draw_canvas();
-                this.load_initial_data();
+        }
+    }
+    /**
+     * Set the timeline window to today (day).
+     *
+     * @private
+     */
+    _onTodayClicked() {
+        this.mode.data = "today";
+        if (this.timeline) {
+            this.timeline.setWindow({
+                start: DateTime.now().toJSDate(),
+                end: DateTime.now().plus({hours: 24}).toJSDate(),
             });
-        },
+        }
+    }
 
-        /**
-         * Clears and draws the canvas items.
-         *
-         * @private
-         */
-        draw_canvas: function () {
-            this.canvas.clear();
-            if (this.dependency_arrow) {
-                this.draw_dependencies();
+    /**
+     * Scale the timeline window to a day.
+     *
+     * @private
+     */
+    _onScaleDayClicked() {
+        this.mode.data = "day";
+        this._scaleCurrentWindow(() => 24);
+    }
+
+    /**
+     * Scale the timeline window to a week.
+     *
+     * @private
+     */
+    _onScaleWeekClicked() {
+        this.mode.data = "week";
+        this._scaleCurrentWindow(() => 24 * 7);
+    }
+
+    /**
+     * Scale the timeline window to a month.
+     *
+     * @private
+     */
+    _onScaleMonthClicked() {
+        this.mode.data = "month";
+        this._scaleCurrentWindow((start) => 24 * start.daysInMonth);
+    }
+
+    /**
+     * Scale the timeline window to a year.
+     *
+     * @private
+     */
+    _onScaleYearClicked() {
+        this.mode.data = "year";
+        this._scaleCurrentWindow((start) => 24 * (start.isInLeapYear ? 366 : 365));
+    }
+
+    /**
+     * Scales the timeline window based on the current window.
+     *
+     * @param {function} getHoursFromStart Function which returns the timespan
+     * (in hours) the window must be scaled to, starting from the "start" moment.
+     * @private
+     */
+    _scaleCurrentWindow(getHoursFromStart) {
+        if (this.timeline) {
+            const start = DateTime.fromJSDate(this.timeline.getWindow().start);
+            const end = start.plus({hours: getHoursFromStart(start)});
+            this.timeline.setWindow(start.toJSDate(), end.toJSDate());
+        }
+    }
+
+    /**
+     * Computes the initial visible window.
+     *
+     * @private
+     */
+    _computeMode() {
+        if (this.mode.data) {
+            let start = false,
+                end = false;
+            const current_date = DateTime.now();
+            switch (this.mode.data) {
+                case "day":
+                    start = current_date.startOf("day");
+                    end = current_date.endOf("day");
+                    break;
+                case "week":
+                    start = current_date.startOf("week");
+                    end = current_date.endOf("week");
+                    break;
+                case "month":
+                    start = current_date.startOf("month");
+                    end = current_date.endOf("month");
+                    break;
             }
-        },
+            if (end && start) {
+                this.options.start = start.toJSDate();
+                this.options.end = end.toJSDate();
+            } else {
+                this.mode.data = "fit";
+            }
+        }
+    }
 
-        /**
-         * Draw item dependencies on canvas.
-         *
-         * @private
-         */
-        draw_dependencies: function () {
-            const items = this.timeline.itemSet.items;
-            const datas = this.timeline.itemsData;
-            if (!items || !datas) {
+    /**
+     * Initializes the timeline
+     * (https://visjs.github.io/vis-timeline/docs/timeline).
+     *
+     * @private
+     */
+    init_timeline() {
+        this._computeMode();
+        this.options.editable = {};
+        if (this.model.canEdit) {
+            this.options.onMove = this.on_move.bind(this);
+            this.options.onUpdate = this.on_update.bind(this);
+            // Drag items horizontally
+            this.options.editable.updateTime = true;
+            // Drag items from one group to another
+            this.options.editable.updateGroup = true;
+            if (this.model.canCreate) {
+                this.options.onAdd = this.on_add.bind(this);
+                // Add new items by double tapping
+                this.options.editable.add = true;
+            }
+        }
+        if (this.model.canDelete) {
+            this.options.onRemove = this.on_remove.bind(this);
+            // Delete an item by tapping the delete button top right
+            this.options.editable.remove = true;
+        }
+        this.options.xss = {disabled: true};
+        this.timeline = new vis.Timeline(this.canvasRef.el, {}, this.options);
+        this.timeline.on("click", this.on_timeline_click.bind(this));
+        if (!this.options.onUpdate) {
+            // In read-only mode, catch double-clicks this way.
+            this.timeline.on("doubleClick", this.on_timeline_double_click.bind(this));
+        }
+        this.$centerContainer = $(this.timeline.dom.centerContainer);
+        this.canvas = new TimelineCanvas(this.canvas_ref);
+        this.canvas_ref.appendTo(this.$centerContainer);
+        this.timeline.on("changed", () => {
+            this.draw_canvas();
+            this.load_initial_data();
+        });
+    }
+
+    /**
+     * Clears and draws the canvas items.
+     *
+     * @private
+     */
+    draw_canvas() {
+        this.canvas.clear();
+        if (this.dependency_arrow) {
+            this.draw_dependencies();
+        }
+    }
+
+    /**
+     * Draw item dependencies on canvas.
+     *
+     * @private
+     */
+    draw_dependencies() {
+        const items = this.timeline.itemSet.items;
+        const datas = this.timeline.itemsData;
+        if (!items || !datas) {
+            return;
+        }
+        const keys = Object.keys(items);
+        for (const key of keys) {
+            const item = items[key];
+            const data = datas.get(Number(key));
+            if (!data || !data.evt) {
                 return;
             }
-            const keys = Object.keys(items);
-            for (const key of keys) {
-                const item = items[key];
-                const data = datas.get(Number(key));
-                if (!data || !data.evt) {
-                    return;
-                }
-                for (const id of data.evt[this.dependency_arrow]) {
-                    if (keys.indexOf(id.toString()) !== -1) {
-                        this.draw_dependency(item, items[id]);
-                    }
+            for (const id of data.evt[this.dependency_arrow]) {
+                if (keys.indexOf(id.toString()) !== -1) {
+                    this.draw_dependency(item, items[id]);
                 }
             }
-        },
+        }
+    }
 
-        /**
-         * Draws a dependency arrow between 2 timeline items.
-         *
-         * @param {Object} from Start timeline item
-         * @param {Object} to Destination timeline item
-         * @param {Object} options
-         * @param {Object} options.line_color Color of the line
-         * @param {Object} options.line_width The width of the line
-         * @private
-         */
-        draw_dependency: function (from, to, options) {
-            if (!from.displayed || !to.displayed) {
-                return;
+    /**
+     * Draws a dependency arrow between 2 timeline items.
+     *
+     * @param {Object} from Start timeline item
+     * @param {Object} to Destination timeline item
+     * @param {Object} options
+     * @param {Object} options.line_color Color of the line
+     * @param {Object} options.line_width The width of the line
+     * @private
+     */
+    draw_dependency(from, to, options) {
+        if (!from.displayed || !to.displayed) {
+            return;
+        }
+        const defaults = Object.assign({line_color: "black", line_width: 1}, options);
+        this.canvas.draw_arrow(
+            from.dom.box,
+            to.dom.box,
+            defaults.line_color,
+            defaults.line_width
+        );
+    }
+
+    /* Load initial data. This is called once after each redraw; we only handle the first one.
+     * Deferring this initial load here avoids rendering issues. */
+    load_initial_data() {
+        if (!this.initial_data_loaded) {
+            this.on_data_loaded(this.model.data);
+            this.initial_data_loaded = true;
+            this.timeline.redraw();
+        }
+    }
+
+    /**
+     * Set groups and events.
+     *
+     * @param {Object[]} records
+     * @param {Boolean} adjust_window
+     * @private
+     */
+    async on_data_loaded(records, adjust_window) {
+        const data = [];
+        for (const record of records) {
+            if (record[this.date_start]) {
+                data.push(this.model._event_data_transform(record));
             }
-            const defaults = _.defaults({}, options, {
-                line_color: "black",
-                line_width: 1,
-            });
-            this.canvas.draw_arrow(
-                from.dom.box,
-                to.dom.box,
-                defaults.line_color,
-                defaults.line_width
-            );
-        },
+        }
+        const groups = await this.split_groups(records);
+        this.timeline.setGroups(groups);
+        this.timeline.setItems(data);
+        const mode = !this.mode.data || this.mode.data === "fit";
+        const adjust = typeof adjust_window === "undefined" || adjust_window;
+        if (mode && adjust) {
+            this.timeline.fit();
+        }
+    }
 
-        /* Load initial data. This is called once after each redraw; we only handle the first one.
-         * Deferring this initial load here avoids rendering issues. */
-        load_initial_data: function () {
-            if (!this.initial_data_loaded) {
-                this.on_data_loaded(this.modelClass.data.data, this.last_group_bys);
-                this.initial_data_loaded = true;
-                this.timeline.redraw();
-            }
-        },
-
-        /**
-         * Load display_name of records.
-         *
-         * @param {Object[]} events
-         * @param {String[]} group_bys
-         * @param {Boolean} adjust_window
-         * @private
-         * @returns {jQuery.Deferred}
-         */
-        on_data_loaded: function (events, group_bys, adjust_window) {
-            const ids = _.pluck(events, "id");
-            return this._rpc({
-                model: this.modelName,
-                method: "name_get",
-                args: [ids],
-                context: this.getSession().user_context,
-            }).then((names) => {
-                const nevents = _.map(events, (event) =>
-                    _.extend(
-                        {
-                            __name: _.detect(names, (name) => name[0] === event.id)[1],
-                        },
-                        event
-                    )
+    /**
+     * Get the groups.
+     *
+     * @param {Object[]} records
+     * @private
+     * @returns {Array}
+     */
+    async split_groups(records) {
+        if (this.model.last_group_bys.length === 0) {
+            return records;
+        }
+        const groups = [];
+        groups.push({id: -1, content: _t("<b>UNASSIGNED</b>"), order: -1});
+        var seq = 1;
+        for (const evt of records) {
+            const grouped_field = this.model.last_group_bys[0];
+            const group_name = evt[grouped_field];
+            if (group_name && group_name instanceof Array) {
+                const group = groups.find(
+                    (existing_group) => existing_group.id === group_name[0]
                 );
-                return this.on_data_loaded_2(nevents, group_bys, adjust_window);
-            });
-        },
-
-        /**
-         * Set groups and events.
-         *
-         * @param {Object[]} events
-         * @param {String[]} group_bys
-         * @param {Boolean} adjust_window
-         * @private
-         */
-        on_data_loaded_2: function (events, group_bys, adjust_window) {
-            const data = [];
-            this.grouped_by = group_bys;
-            for (const evt of events) {
-                if (evt[this.date_start]) {
-                    data.push(this.event_data_transform(evt));
+                if (group) {
+                    continue;
                 }
-            }
-            this.split_groups(events, group_bys).then((groups) => {
-                this.timeline.setGroups(groups);
-                this.timeline.setItems(data);
-                const mode = !this.mode || this.mode === "fit";
-                const adjust = _.isUndefined(adjust_window) || adjust_window;
-                if (mode && adjust) {
-                    this.timeline.fit();
-                }
-            });
-        },
-
-        /**
-         * Get the groups.
-         *
-         * @param {Object[]} events
-         * @param {String[]} group_bys
-         * @private
-         * @returns {Array}
-         */
-        split_groups: async function (events, group_bys) {
-            if (group_bys.length === 0) {
-                return events;
-            }
-            const groups = [];
-            groups.push({id: -1, content: _t("<b>UNASSIGNED</b>"), order: -1});
-            var seq = 1;
-            for (const evt of events) {
-                const grouped_field = _.first(group_bys);
-                const group_name = evt[grouped_field];
-                if (group_name) {
-                    if (group_name instanceof Array) {
-                        const group = _.find(
-                            groups,
-                            (existing_group) => existing_group.id === group_name[0]
-                        );
-                        if (_.isUndefined(group)) {
-                            // Check if group is m2m in this case add id -> value of all
-                            // found entries.
-                            await this._rpc({
-                                model: this.modelName,
-                                method: "fields_get",
-                                args: [[grouped_field]],
-                                context: this.getSession().user_context,
-                            }).then(async (fields) => {
-                                if (fields[grouped_field].type === "many2many") {
-                                    const list_values =
-                                        await this.get_m2m_grouping_datas(
-                                            fields[grouped_field].relation,
-                                            group_name
-                                        );
-                                    for (const vals of list_values) {
-                                        let is_inside = false;
-                                        for (const gr of groups) {
-                                            if (vals.id === gr.id) {
-                                                is_inside = true;
-                                                break;
-                                            }
-                                        }
-                                        if (!is_inside) {
-                                            vals.order = seq;
-                                            seq += 1;
-                                            groups.push(vals);
-                                        }
-                                    }
-                                } else {
-                                    groups.push({
-                                        id: group_name[0],
-                                        content: group_name[1],
-                                        order: seq,
-                                    });
-                                    seq += 1;
-                                }
-                            });
+                // Check if group is m2m in this case add id -> value of all
+                // found entries.
+                if (this.fields[grouped_field].type === "many2many") {
+                    const list_values = await this.get_m2m_grouping_datas(
+                        this.fields[grouped_field].relation,
+                        group_name
+                    );
+                    for (const vals of list_values) {
+                        const is_inside = groups.some((gr) => gr.id === vals.id);
+                        if (!is_inside) {
+                            vals.order = seq;
+                            seq += 1;
+                            groups.push(vals);
                         }
                     }
-                }
-            }
-            return groups;
-        },
-
-        get_m2m_grouping_datas: async function (model, group_name) {
-            const groups = [];
-            for (const gr of group_name) {
-                await this._rpc({
-                    model: model,
-                    method: "name_get",
-                    args: [gr],
-                    context: this.getSession().user_context,
-                }).then((name) => {
-                    groups.push({id: name[0][0], content: name[0][1]});
-                });
-            }
-            return groups;
-        },
-
-        /**
-         * Get dates from given event
-         *
-         * @param {TransformEvent} evt
-         * @returns {Object}
-         */
-        _get_event_dates: function (evt) {
-            let date_start = new moment();
-            let date_stop = null;
-
-            const date_delay = evt[this.date_delay] || false,
-                all_day = this.all_day ? evt[this.all_day] : false;
-
-            if (all_day) {
-                date_start = time.auto_str_to_date(
-                    evt[this.date_start].split(" ")[0],
-                    "start"
-                );
-                if (this.no_period) {
-                    date_stop = date_start;
                 } else {
-                    date_stop = this.date_stop
-                        ? time.auto_str_to_date(
-                              evt[this.date_stop].split(" ")[0],
-                              "stop"
-                          )
-                        : null;
-                }
-            } else {
-                date_start = time.auto_str_to_date(evt[this.date_start]);
-                date_stop = this.date_stop
-                    ? time.auto_str_to_date(evt[this.date_stop])
-                    : null;
-            }
-
-            if (!date_stop && date_delay) {
-                date_stop = date_start.clone().add(date_delay, "hours").toDate();
-            }
-
-            return [date_start, date_stop];
-        },
-
-        /**
-         * Transform Odoo event object to timeline event object.
-         *
-         * @param {TransformEvent} evt
-         * @private
-         * @returns {Object}
-         */
-        event_data_transform: function (evt) {
-            const [date_start, date_stop] = this._get_event_dates(evt);
-            let group = evt[this.last_group_bys[0]];
-            if (group && group instanceof Array && group.length > 0) {
-                group = _.first(group);
-            } else {
-                group = -1;
-            }
-
-            for (const color of this.colors) {
-                if (py.eval(`'${evt[color.field]}' ${color.opt} '${color.value}'`)) {
-                    this.color = color.color;
+                    groups.push({
+                        id: group_name[0],
+                        content: group_name[1],
+                        order: seq,
+                    });
+                    seq += 1;
                 }
             }
+        }
+        return groups;
+    }
 
-            let content = evt.__name || evt.display_name;
-            if (this.arch.children.length) {
-                content = this.render_timeline_item(evt);
-            }
+    async get_m2m_grouping_datas(model, group_name) {
+        const groups = [];
+        for (const gr of group_name) {
+            const record_info = await this.orm.call(model, "read", [
+                gr,
+                ["display_name"],
+            ]);
+            groups.push({id: record_info[0].id, content: record_info[0].display_name});
+        }
+        return groups;
+    }
 
-            const r = {
-                start: date_start,
-                content: content,
-                id: evt.id,
-                order: evt.order,
-                group: group,
-                evt: evt,
-                style: `background-color: ${this.color};`,
-            };
-            // Only specify range end when there actually is one.
-            // ➔ Instantaneous events / those with inverted dates are displayed as points.
-            if (date_stop && moment(date_start).isBefore(date_stop)) {
-                r.end = date_stop;
-            }
-            this.color = null;
-            return r;
-        },
+    /**
+     * Handle a click within the timeline.
+     *
+     * @param {Object} e
+     * @private
+     */
+    on_timeline_click(e) {
+        if (e.what === "group-label" && e.group !== -1) {
+            this.props.onGroupClick(e);
+        }
+    }
 
-        /**
-         * Render timeline item template.
-         *
-         * @param {Object} evt Record
-         * @private
-         * @returns {String} Rendered template
-         */
-        render_timeline_item: function (evt) {
-            if (this.qweb.has_template("timeline-item")) {
-                return this.qweb.render("timeline-item", {
-                    record: evt,
-                    field_utils: field_utils,
-                });
-            }
+    /**
+     * Handle a double-click within the timeline.
+     *
+     * @param {Object} e
+     * @private
+     */
+    on_timeline_double_click(e) {
+        if (e.what === "item" && e.item !== -1) {
+            this.props.onItemDoubleClick(e);
+        }
+    }
 
-            console.error(
-                _t('Template "timeline-item" not present in timeline view definition.')
-            );
-        },
+    /**
+     * Trigger onUpdate.
+     *
+     * @param {Object} item
+     * @private
+     */
+    on_update(item) {
+        this.props.onUpdate(item);
+    }
 
-        /**
-         * Handle a click within the timeline.
-         *
-         * @param {ClickEvent} e
-         * @private
-         */
-        on_timeline_click: function (e) {
-            if (e.what === "group-label" && e.group !== -1) {
-                this._trigger(
-                    e,
-                    () => {
-                        // Do nothing
-                    },
-                    "onGroupClick"
-                );
-            }
-        },
+    /**
+     * Trigger onMove.
+     *
+     * @param {Object} item
+     * @param {Function} callback
+     * @private
+     */
+    on_move(item, callback) {
+        this.props.onMove(item, callback);
+    }
 
-        /**
-         * Handle a double-click within the timeline.
-         *
-         * @param {ClickEvent} e
-         * @private
-         */
-        on_timeline_double_click: function (e) {
-            if (e.what === "item" && e.item !== -1) {
-                this._trigger(
-                    e.item,
-                    () => {
-                        // No callback
-                    },
-                    "onItemDoubleClick"
-                );
-            }
-        },
+    /**
+     * Trigger onRemove.
+     *
+     * @param {Object} item
+     * @param {Function} callback
+     * @private
+     */
+    on_remove(item, callback) {
+        this.props.onRemove(item, callback);
+    }
 
-        /**
-         * Trigger onUpdate.
-         *
-         * @param {Object} item
-         * @param {Function} callback
-         * @private
-         */
-        on_update: function (item, callback) {
-            this._trigger(item, callback, "onUpdate");
-        },
+    /**
+     * Trigger onAdd.
+     *
+     * @param {Object} item
+     * @param {Function} callback
+     * @private
+     */
+    on_add(item, callback) {
+        this.props.onAdd(item, callback);
+    }
+}
 
-        /**
-         * Trigger onMove.
-         *
-         * @param {Object} item
-         * @param {Function} callback
-         * @private
-         */
-        on_move: function (item, callback) {
-            this._trigger(item, callback, "onMove");
-        },
-
-        /**
-         * Trigger onRemove.
-         *
-         * @param {Object} item
-         * @param {Function} callback
-         * @private
-         */
-        on_remove: function (item, callback) {
-            this._trigger(item, callback, "onRemove");
-        },
-
-        /**
-         * Trigger onAdd.
-         *
-         * @param {Object} item
-         * @param {Function} callback
-         * @private
-         */
-        on_add: function (item, callback) {
-            this._trigger(item, callback, "onAdd");
-        },
-
-        /**
-         * Trigger_up encapsulation adds by default the renderer.
-         *
-         * @param {HTMLElement} item
-         * @param {Function} callback
-         * @param {String} trigger
-         * @private
-         */
-        _trigger: function (item, callback, trigger) {
-            this.trigger_up(trigger, {
-                item: item,
-                callback: callback,
-                renderer: this,
-            });
-        },
-    });
-
-    return TimelineRenderer;
-});
+TimelineRenderer.template = "web_timeline.TimelineRenderer";
+TimelineRenderer.props = {
+    model: Object,
+    onAdd: Function,
+    onGroupClick: Function,
+    onItemDoubleClick: Function,
+    onMove: Function,
+    onRemove: Function,
+    onUpdate: Function,
+};

@@ -516,8 +516,10 @@ rendering:</p>
 <ul class="simple">
 <li><tt class="docutils literal">record</tt>: to access the fields values selected in the timeline
 definition.</li>
-<li><tt class="docutils literal">field_utils</tt>: used to format and parse values (see available
-functions in <tt class="docutils literal">web.field_utils</tt>).</li>
+<li><tt class="docutils literal">formatters</tt>: used to format values (see available functions in
+<tt class="docutils literal">&#64;web/views/fields/formatters</tt>).</li>
+<li><tt class="docutils literal">parsers</tt>: used to parse values (see available functions in
+<tt class="docutils literal">&#64;web/views/fields/parsers</tt>).</li>
 </ul>
 <p>You also need to declare the view in an action window of the involved
 model.</p>
@@ -536,15 +538,15 @@ view example added onto cron tasks.</p>
                       </span><span class="na">string=</span><span class="s">&quot;Tasks&quot;</span><span class="w">
                       </span><span class="na">default_group_by=</span><span class="s">&quot;project_id&quot;</span><span class="w">
                       </span><span class="na">event_open_popup=</span><span class="s">&quot;true&quot;</span><span class="w">
-                      </span><span class="na">colors=</span><span class="s">&quot;white: user_ids == []; #2ecb71: kanban_state == 'done'; #ec7063: kanban_state == 'blocked'&quot;</span><span class="w">
+                      </span><span class="na">colors=</span><span class="s">&quot;white: user_ids == []; #2ecb71: state == '1_done'; #ec7063: state == '1_canceled'&quot;</span><span class="w">
                       </span><span class="na">dependency_arrow=</span><span class="s">&quot;depend_on_ids&quot;</span><span class="w">
             </span><span class="nt">&gt;</span><span class="w">
                 </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;user_ids&quot;</span><span class="w"> </span><span class="nt">/&gt;</span><span class="w">
-                </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;planned_hours&quot;</span><span class="w"> </span><span class="nt">/&gt;</span><span class="w">
+                </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;allocated_hours&quot;</span><span class="w"> </span><span class="nt">/&gt;</span><span class="w">
                 </span><span class="nt">&lt;templates&gt;</span><span class="w">
                     </span><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-name=</span><span class="s">&quot;timeline-item&quot;</span><span class="nt">&gt;</span><span class="w">
                         </span><span class="nt">&lt;div</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;o_project_timeline_item&quot;</span><span class="nt">&gt;</span><span class="w">
-                            </span><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-foreach=</span><span class="s">&quot;record.user_ids&quot;</span><span class="w"> </span><span class="na">t-as=</span><span class="s">&quot;user&quot;</span><span class="nt">&gt;</span><span class="w">
+                            </span><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-foreach=</span><span class="s">&quot;record.user_ids&quot;</span><span class="w"> </span><span class="na">t-as=</span><span class="s">&quot;user&quot;</span><span class="w"> </span><span class="na">t-key=</span><span class="s">&quot;user.id&quot;</span><span class="nt">&gt;</span><span class="w">
                                 </span><span class="nt">&lt;img</span><span class="w">
                                     </span><span class="na">t-if=</span><span class="s">&quot;record.user_ids&quot;</span><span class="w">
                                     </span><span class="na">t-attf-src=</span><span class="s">&quot;/web/image/res.users/#{user}/image_128/16x16&quot;</span><span class="w">
@@ -559,12 +561,12 @@ view example added onto cron tasks.</p>
                                 </span><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-esc=</span><span class="s">&quot;record.display_name&quot;</span><span class="w"> </span><span class="nt">/&gt;</span><span class="w">
                             </span><span class="nt">&lt;/span&gt;</span><span class="w">
                             </span><span class="nt">&lt;small</span><span class="w">
-                                </span><span class="na">name=</span><span class="s">&quot;planned_hours&quot;</span><span class="w">
+                                </span><span class="na">name=</span><span class="s">&quot;allocated_hours&quot;</span><span class="w">
                                 </span><span class="na">class=</span><span class="s">&quot;text-info ml4&quot;</span><span class="w">
-                                </span><span class="na">t-if=</span><span class="s">&quot;record.planned_hours&quot;</span><span class="w">
+                                </span><span class="na">t-if=</span><span class="s">&quot;record.allocated_hours&quot;</span><span class="w">
                             </span><span class="nt">&gt;</span><span class="w">
                                 </span><span class="nt">&lt;t</span><span class="w">
-                                    </span><span class="na">t-esc=</span><span class="s">&quot;field_utils.format.float_time(record.planned_hours)&quot;</span><span class="w">
+                                    </span><span class="na">t-out=</span><span class="s">&quot;formatters.get('float_time')(record.allocated_hours)&quot;</span><span class="w">
                                 </span><span class="nt">/&gt;</span><span class="w">
                             </span><span class="nt">&lt;/small&gt;</span><span class="w">
                         </span><span class="nt">&lt;/div&gt;</span><span class="w">
@@ -663,6 +665,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <li>Pedro M. Baeza</li>
 <li>Alexandre Díaz</li>
 <li>César A. Sánchez</li>
+<li>Carlos López</li>
 </ul>
 </li>
 <li><a class="reference external" href="https://www.onestein.nl">Onestein</a>:<ul>
